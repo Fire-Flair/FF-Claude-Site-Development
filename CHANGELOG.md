@@ -1,5 +1,25 @@
 # FireFlair prototype — changelog
 
+## v16.8 — 2026-10-13 — Home: FF Party, Training, Festivals
+Artifact version 1791913778-7ac5 · file `fireflair-v16.8.html`
+
+Home rebuilt as FireFlair's main selling page. It is the first page people see, so it now introduces everything FireFlair offers, in this order: what FireFlair is, FF Team, FF Party, Training, Festivals, FF Staff, FF VIP, then the map and the join cards. The same sections show on FF Team Home when signed in.
+
+For the developers:
+- Intro (from the coming-soon page): "The event connection platform", the three promises (Connect, Take reviews, Take bookings) and jump links to each section. Sect now takes an `id`; section anchors are ff-team, ff-party, ff-training, ff-festivals, ff-staff.
+- FF Team: four example Profile Cards (labelled as examples; the full people wall stays on Network), why join, and a Create your Profile Card button.
+- FF Party: the three steps, an Event Card you fill in on Home with a live preview (occasion, date, guests, area or venue, who you need, WhatsApp number). Saving stores the card as a lead (FF Party stage 1); bookings open with FF Party 1.0. New state `partyEvents`, action PARTY_EVENT_SAVE.
+- FF Party search: clients search FF Team members by skill, interest, qualification, language or area, with results as bookable Profile Cards. One shared `personSearchText(p)` now powers this and the Network search, which also gained interests, qualifications and languages.
+- "Found wherever people search": FF Party is where the public Profile Card pages live, written for Google and AI assistants like ChatGPT. Wording is aspirational, not a ranking promise.
+- Service Cards (coming soon) moved into the FF Party section, with the Party > Service > Review > Rebook line.
+- Training: eight training types (Introduction to Cocktails, Mixology, WSET Spirits, WSET Wine, spirit brand training, FireFlair Open Class, FireFlair Open Bar, FireFlair Masterclass). Tap to mark interest, then Register interest with a WhatsApp number. New state `trainingInterest`, action TRAINING_INTEREST. The separate Training feed row on FF Team Home was removed, as this section replaces it.
+- Festivals 2027: complete teams. Work festivals and other jobs with friends as one team. Shows an example team, Join FF Team and Invite a friend. Signed-in FF Team members get the Festivals 2027 wish list (ShiftRequests) right there. Team booking itself is marked coming soon.
+- Home FF AI now sends events to FF Party, training to Training and festivals to Festivals; actions are Join FF Team, Plan an event, Training, Hire staff.
+- Demo people now carry qualifications (WSET, Personal Licence, Food Hygiene). They show on their profiles and are searchable.
+- WhatsApp numbers: the prototype stores only a masked copy (last three digits). The real site sends the full number to Core with the person's WhatsApp opt-in.
+- Brand rule: the card theme previously keyed with the other word is now `burgundy` / "Burgundy". A profile saved with the old key falls back to Burgundy on load.
+- SEO: home meta description and the text crawlers read before scripts run now mention FF Party, training and festival teams. The SEO self-test still passes 36/36.
+
 ## v16.7 — 2026-10-13 — SEO metadata module and accessibility pass
 Artifact version 1791884567-4c1f · file `fireflair-v16.7.html`
 
