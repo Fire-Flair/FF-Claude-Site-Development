@@ -1,5 +1,22 @@
 # FireFlair prototype — changelog
 
+## v16.7 — 2026-10-13 — SEO metadata module and accessibility pass
+Artifact version 1791884567-4c1f · file `fireflair-v16.7.html`
+
+SEO and accessibility pass — no change to look, routes, sign-in, profile editing, XP or cards.
+
+For the developers:
+- New SEO module (FF_SEO, ffSeoFor, ffSeoApply, ffSeoValidate, ffSeoSelfTest) builds title, description, canonical, robots, social tags and JSON-LD for each view and writes them to the head. Port it as the metadata layer of the real site; it is plain JS with no dependencies.
+- Only signed-out Home is indexable. Signed-in and guest screens are noindex. A Profile Card is indexable only when person.public === true, it has a tag and FF_SEO.demoData is false (the sample people here are fictional, so it is true).
+- Published cards get ProfilePage + Person JSON-LD built from the fields the card shows; never phone or e-mail. No dateModified is invented — Core must supply createdAt / updatedAt (ISO) if wanted.
+- In the real site these tags must be in the server-rendered HTML, and each Profile Card needs its own URL (/TAG). Search engines may not honour a noindex or canonical that is only added by script.
+- Home description now fits the 160-character limit; home title unchanged. Twitter card changed to "summary" because there is no share image yet; add a real 1200x630 image URL and switch to summary_large_image.
+- Landing HTML now carries readable text before scripts run (replaced on first render).
+- Headings: Home and signed-in Home FF AI title is now the page h1; the person page name is an h1 (PlayerCard nameAs prop, FFAI titleAs prop). Defaults unchanged.
+- Accessibility: skip link, main landmark id, labelled navs, aria-current on the active tab, text alternative on profile photos (they are CSS backgrounds).
+- Self-test: window.__ffSeo.selfTest() checks every screen and production-mode cases (36 checks).
+- Hook point for analytics: FF_SEO.onView(seo). Nothing is sent from here.
+
 ## v16.6 — 2026-10-09 — FF AI CV reading tuned on real CVs
 Artifact version 1791554187-acd6 · file `fireflair-v16.6.html`
 
