@@ -1,5 +1,17 @@
 # FireFlair prototype — changelog
 
+## v16.10 — 2026-10-15 — Sticky desktop bar, new arrow
+Artifact version 1792058955-7aba · file `fireflair-v16.10.html`
+
+Desktop menu bar stays on screen; new dropdown arrow.
+
+For the developers:
+- Desktop (900px and wider): the menu bar (FireFlair menu, Home / Network / Bookings / Profile, coin, Add, Log in/out) now stays at the top of the screen while scrolling. It was always meant to be sticky, but `overflow-x: hidden` on the `.ff` wrapper made it a scroll container, which stopped `position: sticky` working. The wrapper now uses `overflow-x: clip` (with `hidden` kept before it as a fallback for older browsers); it still stops the page scrolling sideways.
+- Desktop: the XP row under the menu bar hides once the page is scrolled down (past 120px) and comes back near the top (above 20px). The gap between the two stops it flickering as the row collapses. If someone has a basket, the basket row stays so "Build team" is always reachable. State: `scrolled` in `Shell`, passive scroll listener.
+- Phones: the top bar is no longer sticky and scrolls away with the page, because the bottom nav with the five icons is always on screen and already gives the way between pages and the coin. The phone XP and basket bars at the bottom are unchanged.
+- The dropdown arrow beside FireFlair (top left) is now a larger plain triangle pointing down, drawn as a small SVG, with no circle round it. It still turns over when the menu is open.
+- The sticky bar uses `top: env(safe-area-inset-top, 0px)` so it clears a phone's status bar in the app.
+
 ## v16.9 — 2026-10-15 — Sites menu, Event Card, FF VIP
 Artifact version 1792058542-6c88 · file `fireflair-v16.9.html`
 
