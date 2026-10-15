@@ -1,5 +1,20 @@
 # FireFlair prototype — changelog
 
+## v16.13 — 2026-10-15 — FF Party site, Service Cards, Training, FF VIP lock
+Artifact version 1792088149-5f1f · file `fireflair-v16.13.html`
+
+- FF Party is now its own site (ffparty.uk), a copy of FF Staff for people planning events. In the prototype it is the same hirer role ("staff") with a new `state.site` ("staff" or "party", persisted; set by the ROLE action's `site`, default "staff"). `hireSiteOf(state)` gives the site's name and Event Card anchor. Shell label, account menu, "You're here" in the sites menu, SEO page names and the Event page eyebrow follow the site.
+- FF Party home (PartyHome): "Plan the perfect event", FF AI "Search FireFlair for your team", the FF Party Event Card (the ffme.uk-style EventPoster, typed onto, with background swatches, occasion and roles), five how-it-works steps, people by group (shared HirePeople component, tap or drag into the booking bar), FF Party Service Cards, and Coming soon.
+- The FF Party Event Card is saved as a normal event (EVENT_ADD) with the card in `event.poster`, so the booking bar, Event page, Shift Cards and Bookings all work as on FF Staff. eventFromPoster / posterFromEvent map between the two. People in the booking bar appear on the card's "Your team". The booking bar's small Event Card keeps the poster's colours. The Event page shows the poster for party events.
+- FF Party's Profile tab is the FF Staff hirer profile, relabelled ("Join FF Party", "Your name or company", "Your FF Party Card", "Welcome to FF Party"). Both sites share `state.company` in the prototype; core should decide whether party hosts get a lighter profile.
+- Home: the FF Party section is now a short link to the FF Party site (three steps, a "Go to FF Party" panel, and "Found wherever people search"). The old in-page search and lead-style Event Card (PartySearch, PartyEventCreator) are removed; `partyEvents` state is left for old saved data.
+- New full section "FF Party Service Cards" (eyebrow "Service Cards × FF Party") on Home and on FF Party home: an explanation; the FireFlair standard Service Cards (Bartending, Mixology, Masterclass) with a "From" figure in the footer (field `from` in PARTY_SERVICES; amounts set by Alex); then "Your own Service Cards" explaining that businesses and freelancers will create their own, with two square examples (Tom Beatson's DJ set, Jonah Reed's event photography, "Priced by" the person) and a Create your own tile (coming soon).
+- The white Staffing Service card now belongs to FF Staff only: shown on FF Staff home in a dark "FireFlair Staffing Service" panel (STAFFING_SERVICE, also with a `from` figure). It no longer appears on FF Party or in FF Team Bookings.
+- Training: the course cards keep their layout but each has its own colourway (COURSE_TONES) with a metal edge, gloss, lit medal, a large watermark icon, a sheen that sweeps across on hover and a lift with a slight 3D tilt. Selected cards get a gold edge, a gold tick pill and a check badge. Hover effects only on devices that hover; reduced-motion users get no movement.
+- FF VIP: removed from Home (VipSection and its styles deleted; the copy is in v16.12 if needed for the FF VIP site). In the sites menu and the closing "Find your place" cards FF VIP shows the new platinum FF logo (FF_VIP_LOGO, cut out of Alex's artwork) with a lock and "Coming soon"; tapping it shows "FF VIP is coming soon". FF VIP will become its own site, built from FF Team and ffme.uk.
+- Home jump links: FF Team, FF Party, Service Cards, Training, Festivals, FF Staff. FF AI on Home sends party/wedding/birthday requests straight to the FF Party site.
+- Tested headless at phone and desktop widths: Home sections, menu and finale, FF Party Event Card create/save, booking bar, Event page, FF Party profile, FF Staff with Staffing Service, the earlier FF Staff and FF Team flows. SEO self-test 36/36, no page errors.
+
 ## v16.12 — 2026-10-15 — FF Staff Event Card, booking bar, company profile
 Artifact version 1792072685-c201 · file `fireflair-v16.12.html`
 
