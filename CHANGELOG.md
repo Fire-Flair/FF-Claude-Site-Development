@@ -1,5 +1,20 @@
 # FireFlair prototype — changelog
 
+## v16.14 — 2026-10-15 — Dream jobs, Review Cards, square cards, map
+Artifact version 1792089883-1b55 · file `fireflair-v16.14.html`
+
+- Home intro: a large "What is FireFlair?" now sits above "The event connection platform." (new Sect `kicker` prop).
+- New "Are you a business?" block near the top of Home (WhoAreYou): two links, FF Team (freelance hospitality staff) and FF Staff (hospitality businesses). The FF Staff section further down Home is removed; FF Staff is reached from this link, the sites menu and the closing cards.
+- Large squares: FF Party, Training and Dream jobs each sit inside one large rounded square (new Sect `boxed` prop: true = cream, "dark" = black).
+- Shine cards: the v16.13 Training card look is now one shared component family. ShineChoice (a card you tick: Training, Dream jobs) and ShineSquare (a square card you open). Colourways live in SHINE and are applied with shineVars(). The old .ff-course styles are removed.
+- Festivals section replaced by "Dream jobs" (JobsSection, id ff-jobs): eight jobs to tick, laid out like Training (Music festivals, Food festivals & markets, Sports events, Motorsport, International jobs, Yacht jobs, After Dark (18+, opt-in), Flair jobs), a "What's your dream hospitality job?" box (type your own, or tap Weddings, House parties, Ski seasons, Cruise ships, Celebrity parties, Film & TV sets), and register interest like Training (signed-in people just confirm). Saved as state.jobsInterest (JOBS_INTEREST, persisted). The intro says FireFlair will negotiate the best rate and find the work, win-win.
+- "Verified by your community" is now a Review Cards section (id ff-reviews): two example Review Cards (worked together: stars, yes/yes/Excellent, accepted; would love to work together: not yet/yes, waiting on WhatsApp), four steps (Review, Send, Accept, Build) and the three community points. The cards use the same questions as the Add to team sheet.
+- "One family of cards" now shows square Shine cards (Company, Venue, Event, Job). FF Team home: the "Coming up" section is removed; Events, Job posts, Sponsorship, Online, Top cocktails, Bar content and Venues are all square Shine cards; the page finishes with the map. Signed-out Home now ends with the map too (after "Find your place on FireFlair").
+- Home jump links: FF Team, FF Party, Service Cards, Training, Dream jobs, Review Cards. FF AI on Home sends festival, yacht, motorsport, travel and dream-job requests to Dream jobs.
+- Network: the map ("Where FireFlair is", the same map as Home) now sits just under Connected, above Top Performers This Week.
+- FF Team Bookings: the FF Party Service Cards section replaces Show/Hide with "Register interest" per card (state.profile.serviceInterest). Registered cards say "we'll review your profile", with Withdraw. Copy: once FF Party launches, the profile is advertised alongside those Service Cards. Signed-out visitors are sent to create a Profile Card first.
+- Tested headless at phone and desktop widths: section order, Dream jobs pick/add/register, Review Cards, square cards, FF Team home, Network map position, Bookings register. SEO self-test 36/36, no page errors.
+
 ## v16.13 — 2026-10-15 — FF Party site, Service Cards, Training, FF VIP lock
 Artifact version 1792088149-5f1f · file `fireflair-v16.13.html`
 
