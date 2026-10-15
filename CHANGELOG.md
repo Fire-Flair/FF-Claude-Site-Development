@@ -1,5 +1,28 @@
 # FireFlair prototype — changelog
 
+## v16.11 — 2026-10-15 — Two-way Add to team, Section 5, Publish
+Artifact version 1792070271-02de · file `fireflair-v16.11.html`
+
+Network: two-way "Add to team" with a review, and Ask a question on FF Team. Profile page: Section 5 on the left line, card creator cleaned up, levels on Profession Cards, Publish on FF Party.
+
+How the network works (Alex's answer to the developers' questions):
+- You add people to your network, you review them, and they are invited to join your team. It is a two-way confirmation: nobody is connected until the other person accepts.
+
+For the developers:
+- Person profile (from Network): the Back button at the top stays. On FF Team (and for guests) "Add to basket" is replaced by "Ask a question", which opens the existing Ask a question sheet and adds a Question Card to their profile. FF Staff keeps Add to basket.
+- "Add to team" opens a sheet like the review box: "Have you worked with [name] before?" Yes/No, "Would you like to work with [name] again?" Yes/No, "How is [name] to work with?" (Excellent, Great, Good, Could improve; only when they have worked together) and a free-text review (a note instead when they haven't). Add is enabled once the questions are answered.
+- Add shows a confirmation: "Your team invitation and review will be sent to [name] on WhatsApp. [Name] will be notified that you'd like to add them to your team. You're connected once [name] accepts." Send invitation / Back.
+- Sending stores a team invitation (state `teamInvites`, action `TEAM_INVITE`, persisted) with status "pending": the answers, the how-to-work-with label mapped to a 1-5 rating, and the review. The button then reads "Invitation sent" with a waiting note.
+- When they accept (`TEAM_INVITE_ACCEPT`), they join your network (connections) and, if you've worked together, the review is posted to their profile. The prototype has a "Preview: [name] accepts" link to show this; the real accept comes from their WhatsApp notification. Core should require a signed-in sender and send the WhatsApp message.
+- Previously "Add to team" connected people instantly (`CONNECT`); that button no longer does.
+- Profile page, Section 5: the 05 marker now sits on the left-hand line, level with the middle of Save & Share, with the line and three dashes running down beneath it. The journey line continues from Section 4. After Save, the page extends and "Welcome to the Team" opens with its marker on the same line (`ff-s5row`, `ff-s5mark`, `ff-s5open`). Save & Share now lines up with the section column.
+- Profile Card creator: removed the second FF Tag under Professions (the footer keeps it) and the five level diamonds. The label is just "Professions". The colour picker is unchanged.
+- The finished Profile Card no longer shows five level diamonds under the title either; it has the single brand diamond on the gold rule, so creator and card match.
+- Profession Cards: the profession's level (record.level, 1-5, chosen in the card's editor) shows as five diamonds top right, grey until filled. Demo people show their level on their top profession.
+- Section 5, Welcome to the Team: the card, then the main button "Publish on FF Party", then Add FF, then Add to Apple Wallet and Add to Google Wallet.
+- Publish sets `profile.published` / `publishedAt` (and the publish XP, once) and opens a pop-up: "We've published your profile as a website", a "Click here to view it as a guest" button, and the note "For now we're publishing on FF Team, to help build the network. Once FF Party goes live, your profile will be ready for B2C bookings." Afterwards the button reads "View my published profile".
+- Guest view of your own profile: `VIEW` with `guest: true` sets `viewingAsGuest`. It shows the public layout (no editing, no hidden or proposed cards, your own network) under "This is your profile as a guest sees it", with "Back to my profile".
+
 ## v16.10 — 2026-10-15 — Sticky desktop bar, new arrow
 Artifact version 1792058955-7aba · file `fireflair-v16.10.html`
 
