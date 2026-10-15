@@ -1,5 +1,24 @@
 # FireFlair prototype — changelog
 
+## v16.9 — 2026-10-15 — Sites menu, Event Card, FF VIP
+Artifact version 1792058542-6c88 · file `fireflair-v16.9.html`
+
+Header, Home and FF Party changes across the site. The top-left FireFlair menu is now a standing rule for every FireFlair site.
+
+For the developers:
+- Top-left FireFlair button (every site, signed in or out): opens a "FireFlair sites" menu listing FF Team, FF Staff, FF Party and FF VIP with their domains (ffteam.uk, ffstaff.uk, ffparty.uk, ffvip.uk). The current site is marked "You're here". One list, `FF_SITES`, drives the menu and the closing section on Home; add a row to add a site. On the real sites each row is a link to its `url`. In the prototype FF Team and FF Staff switch role; FF Party and FF VIP open their section on FireFlair Home (`useGoSite`). Signed in, the menu still shows the name, tag and "FF Tag & sign-in". Escape closes it.
+- Desktop header: Home, Network, Bookings and Profile now sit in the centre of the bar (three-column grid). The XP coin, Add and Log in/Log out moved to the right-hand group. Phone bottom nav unchanged.
+- Buttons: the standard button is now a light gold gradient instead of cream. Black (primary) is unchanged; cream stays the page background. Each button kind keeps its own colour on hover (fixes primary, ghost and on-dark buttons turning cream on desktop hover). Home jump links are light gold too.
+- Home intro: Connect, Take reviews and Take bookings are one three-step journey. Their marks are drawn (`PromiseMark`), not taken from the icon library, in matching burgundy medallions, joined by gold diamonds. Rows on phones, cards from 640px.
+- FF Party, step 1 "Search FireFlair for your team" (was "Search the FF Team") now comes before the Event Card. Each result has "Add to my Event Card"; the people added show in a tray and on the card.
+- FF Party, step 2: the side form and preview are replaced by the ffme.uk card builder, used the same way as the Profile page: you type straight onto the Event Card (name, line under the title, note, guests, venue, area, date, start and finish times, your name). Occasion and roles are chips under the card; backgrounds are round swatches (Onyx, Ivory, Burgundy, Gold Confetti, Champagne). "Your team" on the card shows the people added and an open place for each role nobody covers yet. Component: `EventPoster` (CSS `.ff-ec-*`, sized in cqw like the ffme.uk Invite Card). The FF mark carries a spade, matching the Ace of Spades Event Card on the flyer. Saved cards keep all fields plus `team` (person ids) in `partyEvents`.
+- Training: easier to read. Stronger borders, a gold label band for the kind, bold titles, darker text and a clear "I'm interested" footer on each option. Multiple choices still work.
+- Signed-in visitors don't type a WhatsApp number on Training, the Event Card or the FF VIP list. They see "Signed in as TAG" and confirm (`signedInAs`, `SignedInContact`). Signed out, the number field is unchanged.
+- FF VIP rewritten. For the people who book the most (yearly Christmas and summer parties, regular staff bookings): a VIP profile with preferences, a regular team, suppliers added by phone, Event Cards and invoices for everything with the whole party on a single invoice; invitations worth having; favourite cocktails and an About you section later. VIP Experiences (not "venues"): package bookings at bars, restaurants, spas and wellness venues, also used as FF Team rewards; the venue is briefed before arrival so something is ready (champagne or favourite drinks); at select venues you choose your private bartender and waiter. New "Join the FF VIP list" form: state `vipInterest`, action `VIP_INTEREST`, persisted. Anchors `ff-vip` and `ff-vip-join`; FF VIP added to the Home jump links. Home FF AI sends VIP and experience questions there.
+- Closing section: "Join them." and the two role cards are replaced by "Find your place on FireFlair": one card per FireFlair site with a way in, plus "See a finished profile". Two across on phones, four across from 760px.
+- New colour alias `--burg` for burgundy, used by the new code.
+- SEO self-test still passes 36/36. No change to routes, sign-in, profile editing, XP or FF Staff booking.
+
 ## v16.8 — 2026-10-13 — Home: FF Party, Training, Festivals
 Artifact version 1791913778-7ac5 · file `fireflair-v16.8.html`
 
