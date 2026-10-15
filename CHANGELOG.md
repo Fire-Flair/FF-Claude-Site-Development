@@ -1,5 +1,18 @@
 # FireFlair prototype — changelog
 
+## v16.12 — 2026-10-15 — FF Staff Event Card, booking bar, company profile
+Artifact version 1792072685-c201 · file `fireflair-v16.12.html`
+
+- Definitions: FF Team is for freelance hospitality staff; FF Staff is for hospitality businesses of all kinds and is where they hire staff for their events. Updated in the sites menu (FF_SITES), the FF Team and FF Staff sections on Home, the FF Staff home page, the map legend and the SEO description.
+- FF Staff home: the Event Card is now made on the page itself (StaffEventSection / StaffEventCard), no separate "create event" screen. It follows the Shift Card picture: white card, black "Event Card" tab, FF coin, rows with black icon tiles (date, time, venue, company/client, dress code, guests and team), notes, and a black WhatsApp footer with a QR code. Typed straight onto, then saved; Edit and New Event Card under it. The old eventNew route lands here.
+- Booking bar (BookingBar) replaces the basket count. Works like the XP bar: fixed at the bottom on phones (stacks above the XP bar when both show), a row under the menu bar on desktop (stays when the XP row hides on scroll). Shows the Event Card as a small card (or a dashed blank card where it will go), then a small card for each person added. Appears once there's an Event Card or anyone in the basket.
+- Drag and drop on desktop: Profile Cards on FF Staff home are draggable (dragPerson); dropping on the booking bar adds that person (new SELECT_ADD action). The bar shows a "Drop" slot while dragging. The drag state change is deferred a tick so Chrome doesn't cancel the drag. Phones tap instead.
+- FF Staff company profile rebuilt on the FF Team Profile page pattern and card system: 1 Join FF Staff (company name and page address instead of an FF Tag, phone verified on WhatsApp, new COMPANY_SIGNED_IN action), 2 Company Card typed straight onto (logo upload, name, what you do, location, colour), 3 FF AI (proposes card and profile, approve before saving), 4 company profile as cards, then Save & Share and Section 5 (Welcome to FF Staff: Create an Event Card, Add FF). All on the Profile tab; CompanyEdit screen removed and every "Create/Edit Company Card" link now opens the Profile tab.
+- Company information uses the same records and card editor as FF Team: company.records, with REC_* actions carrying owner "company" (reducer re-runs them against the company's records). Categories in COMPANY_CATEGORIES: services, service locations, venues, documents, contact & social. T&Cs/NDA show as cards ("Sent with every booking"), hiring questions as Question Cards (new gold "hiring" colour), reviews as cards, regular team as Profile Cards. companyDocs() / companyLocations() merge the older company.documents / serviceLocations fields with the new records.
+- Information Cards redesigned: square with rounded corners (22px), calmer and closer to Apple's style, no grain. Label at the top, then the title, then either the description (up to four lines) or up to four images (1, 2, 3 or 4-image layouts). Profession Cards keep their five level diamonds in the top row. MAX_MEDIA_PER_CARD is now 4 and Qualifications can carry images too. Add tiles are matching dashed rounded squares.
+- Account menu shows the company name and page address when on FF Staff.
+- Tested headless at phone and desktop widths: Event Card create/view/edit, booking bar (tap, synthetic drag and drop), Event page, company join/card/FF AI/cards with images/save/welcome, square cards on FF Team. SEO self-test 36/36, no page errors.
+
 ## v16.11 — 2026-10-15 — Two-way Add to team, Section 5, Publish
 Artifact version 1792070271-02de · file `fireflair-v16.11.html`
 
