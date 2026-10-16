@@ -1,29 +1,49 @@
-# FF Team Phase 1 Final
+# FF Team Phase 1
 
-The definitive Phase 1 reference for FF Team: a professional profile and
-networking platform. It is a separate prototype, built from the FireFlair
-prototype v16.15 (the `fireflair-v*.html` files in the folder above, which
-are unchanged) and checked against Griffy's frontend and backend on GitHub.
+**v1.1 · in development, not final.**
 
-- `ff-team-phase-1-final-v1.0.html` — the prototype. One page; open it in a browser.
+The Phase 1 reference for FF Team: a professional profile and networking
+platform that gets hospitality and event professionals ready for bookings. It is
+a separate prototype, built from the FireFlair prototype v16.15 (the
+`fireflair-v*.html` files in the folder above, which are unchanged) and checked
+against Griffy's frontend and backend on GitHub.
+
+- `ff-team-phase-1-v1.1.html` — the latest prototype. One page; open it in a browser.
+- `ff-team-phase-1-final-v1.0.html` — the first version, kept for reference
+  (it was called "Phase 1 Final"; from v1.1 the name is "FF Team Phase 1").
 - `AUDIT.md` — the GitHub audit: feature-by-feature comparison, what was reused,
   restored or changed, how it was tested, and the open dependencies and decisions.
 
 Versions follow the repo's rule: point releases (v1.1, v1.2 …) for updates,
-whole numbers only for an entirely new version.
+whole numbers only for an entirely new version. The highest-numbered file is
+always the latest.
 
 ## What's in Phase 1
 
 Operational:
 
-1. **Home and sign-up** — FF AI welcome, what FireFlair is, FF Team, the network, Review Cards, a locked Coming Soon row, the map.
-2. **Profile** — FF Tag + phone + WhatsApp code; Profile Card; FF AI and CV reading (PDF, Word .doc/.docx, photo); every section (Professions, Qualifications, Skills, Experience, Venues, Work locations, Languages, Interests, Media, Network, Reviews, Q&A); Save, Share and Publish on FF Team.
-3. **Discovery** — search the network, browse Profile Cards by profession, open anyone's full profile, the map.
-4. **Networking** — whoever invited you is in your network automatically; add people to your team with a review; invite people you work with; review anyone in your network.
+1. **Home and sign-up** — FF AI welcome; What is FireFlair? (your first three
+   steps, then "FireFlair is here to get you bookings."); FF Team; the network;
+   Review Cards; Register interest for Training and for Dream jobs; a Coming
+   Soon section; the sites; the map.
+2. **Profile** — FF Tag + phone + WhatsApp code; Profile Card; FF AI and CV
+   reading (PDF, Word .doc/.docx, photo); every section (Professions,
+   Qualifications, Skills, Experience, Venues, Work locations, Languages,
+   Interests, Media, Network, Reviews, Q&A); Save, Share and Publish on FF Team.
+3. **Discovery** — search the network, browse Profile Cards by profession, open
+   anyone's full profile, the map.
+4. **Networking** — whoever invited you is in your network automatically; add
+   people to your team with a review; invite people you work with; review anyone
+   in your network.
+5. **Getting ready for bookings** (Bookings tab) — peak-date availability,
+   register for FF Party Service Cards, Training and Dream jobs.
+6. **FF XP Beta 2026** — opened from the FF coin only: next steps, your tier and
+   level, how FF XP works. Uses the prototype's existing XP and tier logic.
 
-Reachable but Coming Soon (nothing here can book, pay or award anything):
-FireFlair XP (its own screen), Bookings, FF Party, FF VIP, Service Cards,
-Training, Dream jobs, Cocktail Cards. FF Staff stays in the code but isn't offered.
+Shown as Coming Soon (nothing here can book, pay or award anything): requests
+from companies and booked shifts, booking passes, Apple Wallet and Google
+Wallet, FF Staff, FF Party (next to launch), FF VIP, your own Service Cards,
+Cocktail Cards.
 
 The whole boundary is the `PHASE1` object near the top of the page's script.
 
@@ -39,6 +59,8 @@ The whole boundary is the `PHASE1` object near the top of the page's script.
 - Prototype shortcuts: any six-digit code signs you up; log in with FF Tag
   `SAM42` to see a finished profile. Every visitor arrives on Don Gee's invite
   link, so Don is already in your network.
+- Check on both a phone-width and a desktop window: the FF coin sits in the
+  middle of the bottom bar on phones and on the right of the top bar on desktop.
 
 Anything that needs FireFlair Core sits behind a named adapter in the code
 (`AUTH_ADAPTER`, `PROFILE_ADAPTER`, `CV_ADAPTER`, `NETWORK_ADAPTER` and others).
@@ -46,6 +68,47 @@ Anything that needs FireFlair Core sits behind a named adapter in the code
 
 ## Changes
 
+### v1.1 — 16 October 2026 · in development
+
+Refinement of v1.0 from Alex's "FF Team Phase 1 v1.1" brief. Same artifact,
+updated in place. Details in `AUDIT.md` §7.
+
+- **Name**: "FF Team Phase 1", v1.1, in development. "Final" removed everywhere.
+- **What is FireFlair?**: one container, no gold gradient on cream. Part A, "Your
+  first three steps": Build your profile, Grow your network, Take reviews (no
+  Phase labels). Part B, straight below: "FireFlair is here to get you
+  bookings." with the Profile Card copy and the FF Party jobs line. No
+  guarantees of bookings or jobs.
+- **Work locations**: the guidance text is only inside Add location now; the
+  profile page shows the locations themselves. Venues stay a separate section.
+- **Professions**: "Pick your professions" stays; the separate Add profession
+  square is gone. Typing a profession still creates its card.
+- **Training and Dream jobs**: Register interest is back on Home and on Bookings
+  (the v16.15 sections, unchanged).
+- **FF XP**: the Coming Soon bar at the bottom and the XP screen are gone. The FF
+  coin opens one pop-up, "FF XP Beta 2026": Next steps, Your tier and level,
+  How FF XP works. Points and tiers use the existing logic (10 XP a step, 1 XP a
+  Question Card, Bronze 100, Silver 500, Gold for each quarter's top
+  performers). Steps a viewer completed in v1.0 are credited once, on first
+  load.
+- **Site selector**: FF Team, FF Staff (Coming soon), FF Party (Coming soon,
+  next to launch), FF VIP (Coming soon), in that order.
+- **Save & Share**: the 05 marker stays; the line now stops above and below it.
+  The three dashes are replaced by one gradient line that runs on down the page.
+  Beneath it, "Your complete card will display here", with Add to Apple Wallet
+  and Add to Google Wallet as locked Coming Soon cards (they are not buttons and
+  make no pass). Once the profile is saved, Welcome to the Team takes its place
+  with the finished card, as before.
+- **Bookings**: rebuilt from the Home page's cards. "Your bookings" (requests,
+  booked shifts, booking passes) is a Coming Soon panel; "Available now" holds
+  FF Party Service Cards registration, Availability (the existing peak-dates
+  list, no calendar), Training and Dream jobs.
+- **Coming Soon cards**: one card style everywhere (icon, title, a line of
+  text, a small lock label), grouped in one container.
+- **Desktop**: FF coin stays on the right; the Add FF button is hidden
+  (`PHASE1.desktopAdd`). Phone layout unchanged, coin centred.
+
 ### v1.0 — 16 October 2026
 
-First version. See `AUDIT.md` §3 for every change from v16.15.
+First version, "FF Team Phase 1 Final". See `AUDIT.md` §3 for every change from
+v16.15.

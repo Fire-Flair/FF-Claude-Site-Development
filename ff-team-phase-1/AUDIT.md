@@ -1,10 +1,12 @@
-# FF Team Phase 1 Final — code audit and consolidation notes
+# FF Team Phase 1 — code audit and consolidation notes
 
-Version 1.0 · 16 October 2026 · file `ff-team-phase-1-final-v1.0.html`
+Version 1.1 (in development) · 16 October 2026 · file `ff-team-phase-1-v1.1.html`
 
 This is the audit the Phase 1 brief asks for: what was inspected, how the two
 codebases compare feature by feature, what was reused, restored or changed,
-and what is still open.
+and what is still open. §1–§5 are the v1.0 audit, with the table updated where
+v1.1 changed the outcome; §7 lists the v1.1 changes. Version 1.0 was named
+"FF Team Phase 1 Final"; from v1.1 the name is "FF Team Phase 1".
 
 ## 1. What was inspected
 
@@ -30,15 +32,15 @@ names sent for card sections and FF AI match what the backend reads.
 Legend: **Both** = in both codebases · **Griffy** = only in Griffy's delivery ·
 **Prototype** = only in the prototype.
 
-| Feature | Prototype v16.15 | Griffy (dev) | Phase 1 Final |
+| Feature | Prototype v16.15 | Griffy (dev) | FF Team Phase 1 (v1.1) |
 | --- | --- | --- | --- |
 | Sign-up: FF Tag + phone + WhatsApp code, optional password, log in by code or password | Both. Prototype is a mock (`AUTH_ADAPTER`, any six digits) | Real endpoints: `send-otp`, `verify-otp`, `login`, `password`, `password/change`, `tag-availability`, `tag` | Kept the prototype journey. Each `AUTH_ADAPTER` call maps to one of Griffy's endpoints (table in §4) |
 | Profile Card builder (name, photo, professions, skills, interests, locations, languages; colours) | Both | Card saved through the section APIs (fixed 16 Oct), auto-save, card themes, profile image upload to S3 | Kept |
-| Profession search as you type | **Missing**: category chips only | **Griffy**: search field against `GET /user/professions?search=`, plus "add your own" | **Restored**: type-ahead across the 35 v1.6 professions, ranked starts-with first, plus "Add “…”" for anything else; FF AI asks for the category when the rules can't tell |
+| Profession search as you type | **Missing**: category chips only | **Griffy**: search field against `GET /user/professions?search=`, plus "add your own" | **Restored**: type-ahead across the 35 v1.6 professions, ranked starts-with first, plus "Add “…”" for anything else; FF AI asks for the category when the rules can't tell. v1.1: "Pick your professions" stays; the separate Add profession square is removed, since typing creates the card |
 | 7 categories × 5 professions (v1.6) | Both | Both (backend seed) | Kept |
 | Qualifications, Skills, Experience, Interests, Media | Both | Both (card template sections) | Kept |
 | Venues | Prototype: own section with address and "View on Google Maps" | **Switched off** (`SHOW_VENUES = false` in `ProfileSections.tsx`) and **no `venue` section in the backend card template** (`scripts/seedCards.js`) | Kept, editable, placed straight after Experience. Backend needs a `venue` section (see §6) |
-| Work locations | Free text, suggestions from a short list of nearby areas | **Griffy**: Google Places autocomplete limited to regions, with coordinates (`src/api/places.ts`) | Separate section with the required guidance copy (in the section and in its editor), a multi-add sheet with type-ahead over ~90 UK towns and areas, rename and remove, no limit, "5 recommended" meter. Production keeps Griffy's Google Places search (§6) |
+| Work locations | Free text, suggestions from a short list of nearby areas | **Griffy**: Google Places autocomplete limited to regions, with coordinates (`src/api/places.ts`) | Separate section; v1.1 shows the guidance copy only inside Add location (v1.0 had it in the section too); a multi-add sheet with type-ahead over ~90 UK towns and areas, rename and remove, no limit, "5 recommended" meter. Production keeps Griffy's Google Places search (§6) |
 | Section order | Professions, Qualifications, Skills, Signature cocktails, Interests, Work locations, Languages, Experience, Media, Venues | Backend template: Profession, Qualification, Skill, Interest, Work Location, Language, Experience, Media | Professions, **Qualifications, Skills**, Experience, **Venues**, Work locations, Languages, Interests, Media, then Network, Reviews, Q&A |
 | Languages and flags | 20 languages, flag **emoji** (Windows shows "FR" instead of a flag) | **Griffy**: 52-language master from "Language Flags Specification" v1.1, SVG flags, proficiency list | **Restored**: the same 52 languages and order, real flag images (Wales and Scotland included), a language picker with type-ahead, common aliases (Mandarin, Farsi, BSL…), globe for anything not on the list. Proficiency list already matched |
 | CV reading | In the browser: PDF (pdf.js), .docx, photos, text; **.doc refused** | Backend `POST /user/ffai/extract`: PDF, .docx, text, images; **.doc not supported** | All of the prototype's formats plus **.doc (Word 97–2003)**, read in the browser. Verified (§5) |
@@ -52,10 +54,10 @@ Legend: **Both** = in both codebases · **Griffy** = only in Griffy's delivery �
 | Network: add to team with review (worked before, work again, how to work with, written review) | Prototype | — | Kept |
 | Reviews | Review sheet, Review Cards section, ask for a review | Ask-for-review sheet (UI only) | Kept. Every review and invitation sheet now says it is kept in this preview only |
 | Map | Leaflet + CARTO tiles, falls back to a drawn map | No map; Google is used for place search only | Kept. Home shows Profile Cards and venues; Network shows Profile Cards only. Businesses and events return with FF Staff / FF Party |
-| XP | XP bar with points, tiers, levels, quarterly periods, "+10 XP" toasts | None | **XP Coming Soon screen** behind the XP bar and the FF coin; no points, tiers or leaderboards anywhere. Completed activities are still recorded with dates (`profile.xpLog`) for the retroactive award |
-| Site selector (top left) | FF Team, FF Staff, FF Party open; FF VIP locked | Not built | FF Team open; FF Party and FF VIP locked with a lock icon and "Coming soon". FF Staff stays in the code but isn't offered |
-| Bookings tab | Full FF Team bookings (shift requests, availability, Service Cards) | Static bookings page | Coming Soon page; nothing on it can send, book or pay |
-| Home | FF Team, FF Party, Service Cards, Training, Dream jobs, Review Cards, sites, map | Home page with FF AI | Phase 1 home: FF AI, What is FireFlair (build profile, grow network, take reviews), FF Team, Network, Review Cards, a locked Coming Soon row, sites, map |
+| XP | XP bar with points, tiers, levels, quarterly periods, "+10 XP" toasts | None | v1.1: **FF XP Beta 2026 pop-up** behind the FF coin only (next steps, tier and level, how FF XP works), on the prototype's existing XP and tier logic. No XP bar, no XP page, no leaderboards. Activities a viewer completed under v1.0 are credited once on load. (v1.0 had an XP Coming Soon screen with no points) |
+| Site selector (top left) | FF Team, FF Staff, FF Party open; FF VIP locked | Not built | v1.1: FF Team open; FF Staff, FF Party (next to launch) and FF VIP locked with a lock icon and "Coming soon", in that order. (v1.0 left FF Staff out) |
+| Bookings tab | Full FF Team bookings (shift requests, availability, Service Cards) | Static bookings page | v1.1: "Your bookings" (requests, booked shifts, booking passes) as a Coming Soon panel; "Available now": FF Party Service Cards registration, peak-dates availability, Training, Dream jobs — the v16.15 components. Nothing can send, book or pay. (v1.0 was a Coming Soon page) |
+| Home | FF Team, FF Party, Service Cards, Training, Dream jobs, Review Cards, sites, map | Home page with FF AI | Phase 1 home: FF AI, What is FireFlair? (first three steps, then "FireFlair is here to get you bookings."), FF Team, Network, Review Cards, Training, Dream jobs, Coming Soon, sites, map |
 | Saving your work | One shared `fireflair/state` document for every viewer (a bug: viewers overwrote each other) | Backend database | Each viewer's own private document (`data/users/<id>/ff-team-phase-1`) |
 | SEO | Head tags per view, self-test | `robots.txt`, `sitemap.xml`, per-page tags | Kept; FF Team wording; self-test passes 32/32 |
 
@@ -67,9 +69,11 @@ in one object near the top of the script, `PHASE1`:
 
 - `sitesShown` / `sitesOpen` — which sites the selector shows and which open.
 - `profileOrder` — Phase 1 sections and their order (Signature cocktails held back).
-- `xpLive: false` — activities recorded, no points shown or added.
-- `bookingsLive: false` — Bookings tab is a Coming Soon page; "Book" on profiles is locked.
+- `xpLive` — v1.0 `false` (activities recorded, no points); v1.1 `true` (FF XP Beta 2026 on the existing logic).
+- `xpBar` — v1.1 `false`: no XP bar; the FF coin pop-up is the only way in.
+- `bookingsLive: false` — requests and booked shifts are Coming Soon; "Book" on profiles is locked.
 - `leaderboards: false` — rankings hidden.
+- `desktopAdd` — v1.1 `false`: the desktop Add FF button is hidden.
 
 Flipping a flag brings the existing feature back; nothing was deleted.
 
@@ -80,6 +84,10 @@ New in the page: `XPComingSoon`, `NextStepsSheet`, `Phase1XPBar`,
 (`cfbStreams`, `docText`, `readDoc`). The reducer gained `SCREEN` (the XP
 screen) and `INVITE_JOINED` (preview of an invitee joining), and refuses to
 switch into FF Staff / FF Party while they are closed.
+
+In v1.1, `XPComingSoon`, `NextStepsSheet`, `Phase1XPBar`, `BookingsComingSoon`
+and the `SCREEN` action are gone, replaced by `XPPopup`, `P1Bookings`,
+`SoonCard`, `WalletSoon`, `CardPreviewSoon` and `WhatIsFireFlair` (§7).
 
 ## 4. Prototype adapters → Griffy's endpoints
 
@@ -127,6 +135,18 @@ page errors:
 Not verified here: FF AI's real answers (it runs only inside claude.ai, with the
 viewer's consent), the real map tiles, and anything that needs Griffy's backend.
 
+**v1.1** was tested the same way: 66 checks, all passing, no page errors on
+phone or desktop. They cover every item on the v1.1 brief's checklist — the
+three steps and the bookings message, Training and Dream jobs on Home and
+Bookings, no XP bar or XP page, the pop-up's three parts on the existing
+rewards, the selector order and locks, no Add profession square, guidance only
+inside Add location, the card preview with locked wallets and no dashes, the
+Bookings cards and availability, coin centred on phone and on the right on
+desktop, Add FF hidden — and the v1.0 journeys again (sign-up, professions,
+locations, a .doc CV through FF AI, save, publish, network with the inviter,
+viewing another profile, the map). Separately: a v1.0 save with three completed
+steps loads as 30 XP, credited once across reloads; SEO self-test 32/32.
+
 ## 6. Remaining dependencies, bugs and decisions
 
 **Backend (FireFlair Core)**
@@ -137,17 +157,45 @@ viewer's consent), the real map tiles, and anything that needs Griffy's backend.
 4. **.doc CVs**: `documentReader.js` accepts PDF, .docx, text and images only. Add Word 97–2003 support (for example a `.doc` text extractor) or keep refusing .doc with a clear message. The prototype's reader (`docText` in the page) shows the approach.
 5. **Sign-in code**: still the fixed `123456` until WhatsApp delivery is connected, so anyone can sign in as any number on the dev site.
 6. **API documentation** at `/api/docs` is public on the live backend (the condition gating it was removed on 14 Oct).
-7. **XP activity log**: to reward Phase 1 activity retroactively, Core should record dated activity events from now on (the prototype keeps `profile.xpLog`).
+7. **FF XP**: v1.1 awards XP live in the page. Core needs somewhere to keep it — points, the steps already claimed, dated activity events and the quarter's total (the prototype keeps `profile.xp`, `xpClaimed`, `xpLog` and `xpPeriod`). Griffy's backend has no XP yet.
 
 **Frontend (Griffy)**
 
 8. The frontend repo still commits `.env` with the Google Maps key. Move it to Amplify's environment variables and restrict the key to the FireFlair domains.
-9. Phase 1 UI to bring across: profession type-ahead already exists; add the Work Locations guidance copy and "5 recommended" meter, the XP Coming Soon screen, the locked site selector, the Bookings Coming Soon page, the invitation and review flows, and "Publish on FF Team".
+9. Phase 1 UI to bring across (as of v1.1): profession type-ahead already exists (no separate Add profession tile); the Work Locations guidance copy inside the add-location step and the "5 recommended" meter; What is FireFlair? with the three steps and the bookings message; the FF XP Beta 2026 pop-up on the FF coin (no XP bar); the site selector with FF Staff, FF Party and FF VIP locked; the Bookings layout (§7); the card preview with locked wallet cards; the invitation and review flows; "Publish on FF Team"; Add FF hidden on desktop.
 10. Google Maps / Places: the prototype can't load Google's script inside an artifact and must not carry the key, so it suggests from a fixed list. The live site keeps Griffy's Places search (regions only) for work locations.
 
 **Decisions for Alex**
 
-11. FF Staff is not in the Phase 1 site selector (the brief lists FF Team, FF Party and FF VIP). Confirm.
-12. The XP Coming Soon screen shows activities the person has already done (ticked, with no points). Confirm this is wanted, or show the list without ticks.
+11. ~~FF Staff in the site selector.~~ Settled in v1.1: restored, Coming soon, between FF Team and FF Party.
+12. ~~XP Coming Soon screen with ticks.~~ Settled in v1.1: no XP screen; FF XP Beta 2026 runs in the coin pop-up on the existing logic, completed steps marked Earned.
 13. Tags: the prototype allows 3–8 characters; earlier specs say five-character tags. Confirm which rule launches.
 14. The demo directory still shows ratings and review counts on example cards. Keep as examples, or hide numbers until real reviews exist.
+15. Bookings shows "Your bookings" (Coming soon) first, then "Available now". The brief asks to make available and future features easy to tell apart; if Alex prefers the working parts first, it is one move in `P1Bookings`.
+16. v16.15's Festivals 2027 shift-request cards are not on the Phase 1 Bookings tab (shift requests open with FF Staff and FF Party); festival work is covered by Dream jobs registration. Confirm.
+
+## 7. v1.1 changes (16 October 2026)
+
+From Alex's brief "Claude Artifact Update — FF Team Phase 1 v1.1". The artifact
+was updated in place, not rebuilt: same build from v16.15, same adapters, data
+model and components, with these edits on top of v1.0.
+
+| Brief item | What changed in the page |
+| --- | --- |
+| Name and status | `<title>` and footer: "FF Team Phase 1 · v1.1 · in development". `PHASE1.name`, `version`, `status` |
+| Work locations guidance | `WorkLocationsGuide` removed from the profile section; still at the top of `WorkLocationsSheet` (Add location). Section data and the Venues section unchanged |
+| Add profession square | The "add" tile is no longer rendered for Professions (`addTile` skips `catKey === "professions"`). "Pick your professions" and type-to-create unchanged |
+| Training and Dream jobs | v16.15's `TrainingSection` and `JobsSection` (Register interest, unchanged) back on Home and on Bookings |
+| What is FireFlair? | New `WhatIsFireFlair`: one container (`.ff-wif`), no gold gradient. Part A "Your first three steps" (Step 1–3, no Phase labels); Part B on dark, "FireFlair is here to get you bookings." with the brief's copy, the FF Party jobs line, a Create your Profile Card button and an example card |
+| FF XP | `Phase1XPBar`, `XPComingSoon`, `NextStepsSheet` and the XP screen removed (`PHASE1.xpBar = false`). New `XPPopup` titled "FF XP Beta 2026", opened by the FF coin (phone and desktop) and the profile's tier pill: Next steps (the existing `XP_TASKS` plus Question Cards, with their existing rewards), Your tier and level (`xpProgress`, `XP_LEVELS`, quarter total), How FF XP works (+ the existing `XPTimeline`). `claimXP` and the values are unchanged. Viewers' v1.0 steps (logged with 0 XP) are credited once on load |
+| Site selector | `sitesShown: ["team", "staff", "party", "vip"]`; FF Staff gets `locked: true`, "Coming soon". Only FF Team opens; the reducer still refuses to switch into a closed site |
+| Save & Share line | The 05 marker stays put; the line has a gap above and below it. The three dashes are gone; a gradient line runs down from Save & Share through the card preview and fades out |
+| Card preview and wallets | New `CardPreviewSoon` under Save & Share until the profile is saved: an outline card, "Your complete card will display here", and `WalletSoon` (Add to Apple Wallet, Add to Google Wallet) as locked cards with "Coming soon" — not buttons, no pass made. `WalletSoon` also replaces the wallet buttons in Welcome to the Team and the published panel |
+| Bookings | New `P1Bookings` (guest and signed in) built from existing parts: `FFAI`, `SectionHead`, `ServicePoster`, `PeakAvailability`, `TrainingSection`, `JobsSection`, and the new `SoonCard`. No calendar; the availability flow is v16.15's |
+| Coming Soon cards | One `SoonCard` style (icon with a small lock, title, a line, a small label) inside one `.ff-soonpanel`, on Home and Bookings. FF Party is marked "Next to launch" |
+| Desktop / phone | `PHASE1.desktopAdd = false` hides the top-bar Add FF button. The coin stays on the right on desktop and centred in the bottom bar on phones (no change there) |
+
+Not changed: the map (Leaflet with CARTO tiles, drawn fallback when they can't
+load — the prototype never had Google Maps, and the page must not carry a Google
+key), networking, profiles, publishing, saving, CV reading and the SEO tags.
+Google Places for work locations remains in Griffy's site.
