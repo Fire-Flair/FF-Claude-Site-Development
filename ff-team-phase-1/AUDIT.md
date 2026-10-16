@@ -1,6 +1,6 @@
 # FF Team Phase 1 — code audit and consolidation notes
 
-Version 1.2 (in development) · 16 October 2026 · file `ff-team-phase-1-v1.2.html`
+Version 1.3 (in development) · 16 October 2026 · file `ff-team-phase-1-v1.3.html`
 
 This is the audit the Phase 1 brief asks for: what was inspected, how the two
 codebases compare feature by feature, what was reused, restored or changed,
@@ -245,3 +245,37 @@ Headless Chromium, phone (390 px) and desktop (1280 px):
 - v1.0 XP credit still applied once; SEO self-test 32/32; no page errors.
 
 Not verified here: FF AI's real answers, the real map tiles, saving on claude.ai itself, and anything that needs Griffy's backend.
+
+
+## 9. v1.3 changes (16 October 2026)
+
+Supersedes parts of §8 (the Edit Profile draft, tick boxes and Save Changes).
+
+- **No draft.** `profileEdit` is now just `{ on }`. Moves apply straight to the
+  records (`PE_MOVE` → `moveRecord`), which carry `rank`. `rankAll()` writes
+  ranks onto older lists from their positions; `addRanked()` gives new cards a
+  guess (Primary if none, then Secondary up to two, then Tertiary), used by
+  `REC_ADD` and `RECORDS_MERGE`. `ImportToEdit` adds everything found (no
+  review), sorted by confidence, `verified: false`, and fills name, About and
+  photo only when empty.
+- **Editing mode**: on while the profile has never been saved; afterwards only
+  after Edit profile. `SaveShareCard`'s Save and Publish end it (`PE_DONE`).
+  On the finished profile page, `P1SaveWhileEditing` shows Save & Publish at
+  the foot while editing.
+- **Drag**: `TierEditor` listens on the whole card (pointer events). Mouse and
+  pen start after 6 px; touch after a 240 ms hold, with a non-passive
+  `touchmove` listener stopping the scroll once a drag starts. A drag never opens
+  the card; a tap does. The row auto-scrolls near its ends.
+- **Verification levels**: `VERIFICATION_LEVELS` (Base 0, Bronze 5, Silver 20,
+  Gold locked) from `myNetwork(...).list.length`. New coin tier `base` (the gold
+  logo greyed out; grey metal for the drawn fallback). `XPPopup` rewritten;
+  `MyVerificationPill` replaces the XP tier pill. `PHASE1.xpLive: false`.
+- **Desktop coin** in `ff-desknav` at the `__ff` slot.
+
+For Griffy: the live site needs a connection count per profile to work out
+the level (inviter counts as a connection), and `rank` on card section items
+(§8 point 1). No XP is awarded in version 1.
+
+Tested: journeys 82/82, features 26/26, CV import 9/9, drag 16/16 (mouse drag,
+tap opens, keyboard, the Secondary bump, Save ends editing, touch swipe scrolls,
+touch hold-and-drag), SEO 32/32, no page errors.

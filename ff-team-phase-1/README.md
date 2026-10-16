@@ -1,6 +1,6 @@
 # FF Team Phase 1
 
-**v1.2.1 · in development, not final.**
+**v1.3 · in development, not final.**
 
 The Phase 1 reference for FF Team: a professional profile and networking
 platform that gets hospitality and event professionals ready for bookings. It is
@@ -8,8 +8,8 @@ a separate prototype, built from the FireFlair prototype v16.15 (the
 `fireflair-v*.html` files in the folder above, which are unchanged) and checked
 against Griffy's frontend and backend on GitHub.
 
-- `ff-team-phase-1-v1.2.1.html` — the latest prototype. One page; open it in a browser.
-- `ff-team-phase-1-v1.2.html` — the previous version.
+- `ff-team-phase-1-v1.3.html` — the latest prototype. One page; open it in a browser.
+- `ff-team-phase-1-v1.2.1.html`, `ff-team-phase-1-v1.2.html` — earlier versions.
 - `ff-team-phase-1-v1.1.html` — the previous version.
 - `ff-team-phase-1-final-v1.0.html` — the first version, kept for reference
   (it was called "Phase 1 Final"; from v1.1 the name is "FF Team Phase 1").
@@ -69,6 +69,44 @@ Anything that needs FireFlair Core sits behind a named adapter in the code
 `AUDIT.md` §4 maps each one to Griffy's endpoint, or says it doesn't exist yet.
 
 ## Changes
+
+### v1.3 — 16 October 2026 · in development
+
+Placing cards, simplified (replaces v1.2's Edit Profile draft):
+
+- **Drag the whole card**: no handle. Mouse: press and drag. Touchscreen: press
+  and hold, then drag (a quick swipe still scrolls the row). A quick tap opens
+  the card to edit, hide or delete it. Arrow keys on a focused card: ← → reorder,
+  ↑ ↓ change tier.
+- **Primary, Secondary, Tertiary** only — the colours stay (gold, silver,
+  bronze finishes) but the words and the counts are gone. One short line of help:
+  "Drag and drop cards to place them. Primary attributes always show on your
+  Profile Card, followed by secondary where possible. Tertiary stay on your
+  profile page."
+- **No tick boxes**: everything FF AI finds goes straight onto the profile.
+- **Tier guesses**: new cards (from a CV, FF AI or added by hand, professions
+  included) fill Primary first, then Secondary's two places, then Tertiary;
+  CV items with higher confidence go first. A third Secondary card moves the last
+  one down to Tertiary, and says so.
+- **Always editing while you build**: no Edit Profile button until the first
+  Save. After that, Edit profile appears on your own profile.
+- **One save**: no Save Changes bar. Save in Save & Publish saves and ends
+  editing; when editing a saved profile, Save & Publish appears at the foot.
+- Changes apply to the profile as you make them (saved with it, as before);
+  ranks are stored on each card as `rank`.
+
+FF XP Beta 2026:
+
+- **XP isn't live in version 1** (`PHASE1.xpLive: false`): no XP amounts anywhere.
+- **Desktop**: the FF coin sits in the middle of the menu, between Network and
+  Bookings. Phones unchanged (coin centred in the bottom bar).
+- **The pop-up**: three next steps (Build your profile, Share your Profile Card,
+  Grow your network); **Verification levels** from network connections — Base
+  (a new greyed-out coin) to start, Bronze at 5 connections, Silver at 20, Gold
+  locked for now; then "FF XP · Coming soon: XP is rewarded for building, sharing
+  and growing your profile. The more connections you have, the more XP you're
+  rewarded, and the more your verification level grows." No rewards listed.
+- The profile's pill shows your verification level.
 
 ### v1.2.1 — 16 October 2026 · in development
 
