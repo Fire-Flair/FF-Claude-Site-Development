@@ -1,6 +1,6 @@
 # FF Team Phase 1
 
-**v1.1 · in development, not final.**
+**v1.2 · in development, not final.**
 
 The Phase 1 reference for FF Team: a professional profile and networking
 platform that gets hospitality and event professionals ready for bookings. It is
@@ -8,7 +8,8 @@ a separate prototype, built from the FireFlair prototype v16.15 (the
 `fireflair-v*.html` files in the folder above, which are unchanged) and checked
 against Griffy's frontend and backend on GitHub.
 
-- `ff-team-phase-1-v1.1.html` — the latest prototype. One page; open it in a browser.
+- `ff-team-phase-1-v1.2.html` — the latest prototype. One page; open it in a browser.
+- `ff-team-phase-1-v1.1.html` — the previous version.
 - `ff-team-phase-1-final-v1.0.html` — the first version, kept for reference
   (it was called "Phase 1 Final"; from v1.1 the name is "FF Team Phase 1").
 - `AUDIT.md` — the GitHub audit: feature-by-feature comparison, what was reused,
@@ -67,6 +68,46 @@ Anything that needs FireFlair Core sits behind a named adapter in the code
 `AUDIT.md` §4 maps each one to Griffy's endpoint, or says it doesn't exist yet.
 
 ## Changes
+
+### v1.2 — 16 October 2026 · in development
+
+From Alex's notes after reviewing v1.1, and the brief "FireFlair Team — Profile
+Edit Mode, Card Hierarchy & CV Import Workflow". Same artifact, updated in
+place. Details and what the live site needs in `AUDIT.md` §8.
+
+- **Home**: Dream jobs now sits above Training (and in the jump links).
+- **Bookings**: the green WhatsApp panel is back ("Requests come to you on
+  WhatsApp"), and Requests from companies carries the WhatsApp mark.
+- **Profile sections**: on your own profile every section starts closed except
+  Professions. Network starts open when someone invited you, with them first.
+- **Q&A**: one rounded panel with rounded Question Cards, To answer / Answered
+  tabs and round legend dots. Questions people ask from Network ("Ask a
+  question" on a profile) appear on that person's profile with "Asked by …" and
+  the date. Your own Q&A has "Asked on your profile" first (in this preview, a
+  question from whoever invited you), which you answer like any Question Card.
+- **Save & Publish** (was Save & Share): Save, and Publish (saves and publishes
+  on FF Team in one step). Share moved down beside the wallets.
+- **Share and wallets**: one stack — Share (WhatsApp), then Add to Apple Wallet
+  and Add to Google Wallet, all the same size and shape. The wallets are locked
+  ("Soon") and make nothing.
+- **Your finished profile**: no Book · Review · Join on your own page (visitors
+  still see them); Edit card straight under the card; Share is in the wallet
+  section.
+- **Profile Card**: under the main profession, a symbol for each of your top
+  three professions (martini, flame, clipboard and so on), the brand diamond
+  between them, and the car when you drive.
+- **Edit Profile** (new): an Edit profile button on your profile. In Edit Profile
+  each section shows three lanes — Primary (gold), Secondary (silver, two at
+  most) and Tertiary (bronze). Every card has a keep checkbox, a Move menu and a
+  drag handle (mouse, touch, or arrow keys). A third Secondary card asks which
+  one moves down. One Save Changes at the foot of the screen saves everything;
+  a failed save keeps your changes; leaving with changes asks first.
+- **Tiers in normal view**: cards show gold first, then up to two silver, then
+  bronze. The numbered arrows under cards are gone.
+- **CV and FF AI import**: no review screen. What FF AI finds goes straight onto
+  the profile, in Edit Profile, marked From CV (or New), ticked; name, About and
+  photo are offered at the top. Nothing is added until Save Changes; Cancel
+  discards it. Imported qualifications aren't marked verified.
 
 ### v1.1 — 16 October 2026 · in development
 

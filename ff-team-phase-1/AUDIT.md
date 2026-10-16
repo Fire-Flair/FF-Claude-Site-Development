@@ -1,11 +1,11 @@
 # FF Team Phase 1 — code audit and consolidation notes
 
-Version 1.1 (in development) · 16 October 2026 · file `ff-team-phase-1-v1.1.html`
+Version 1.2 (in development) · 16 October 2026 · file `ff-team-phase-1-v1.2.html`
 
 This is the audit the Phase 1 brief asks for: what was inspected, how the two
 codebases compare feature by feature, what was reused, restored or changed,
 and what is still open. §1–§5 are the v1.0 audit, with the table updated where
-v1.1 changed the outcome; §7 lists the v1.1 changes. Version 1.0 was named
+v1.1 changed the outcome; §7 lists the v1.1 changes and §8 the v1.2 changes. Version 1.0 was named
 "FF Team Phase 1 Final"; from v1.1 the name is "FF Team Phase 1".
 
 ## 1. What was inspected
@@ -199,3 +199,49 @@ Not changed: the map (Leaflet with CARTO tiles, drawn fallback when they can't
 load — the prototype never had Google Maps, and the page must not carry a Google
 key), networking, profiles, publishing, saving, CV reading and the SEO tags.
 Google Places for work locations remains in Griffy's site.
+
+
+## 8. v1.2 changes (16 October 2026)
+
+From Alex's review notes on v1.1 and the brief "FireFlair Team — Profile Edit
+Mode, Card Hierarchy & CV Import Workflow". Same artifact, updated in place;
+built as `build.py` (v1.1) plus `build12.py`, with the new parts in one block
+near the Phase 1 components.
+
+### What changed in the page
+
+| Item | Change |
+| --- | --- |
+| Home order | `JobsSection` above `TrainingSection`; jump links in the same order |
+| Bookings WhatsApp | v16.15's `.ff-wa` panel back in "Your bookings"; the Requests card uses the WhatsApp mark |
+| Sections closed | `ProfileAttributeSection`: on your own profile only Professions starts open. `profile_network` starts open when `inviterOf()` finds an inviter; Reviews and Q&A start closed. Saved show/hide choices still win |
+| Q&A | New `QuestionCardsCollection` and `PublicQA` (v16.15's kept as `…_v16`). `QuestionCard` takes `asker`, has rounded corners (`.ff-qcard`). Asked questions carry `byId`, `byName`, `askedAt`. `askedOfMe()` lists questions for "me" plus one example from the inviter; answers go to `profile.answers[id]` through the existing `ANSWER` action (+1 XP, as any Question Card) |
+| Save & Publish | `SaveShareCard` title and buttons: Save, Publish (save, `published`/`publishedAt`, `PUBLISH_XP`, opens Welcome with the confirmation) |
+| Share stack | `ShareStack` replaces `WalletSoon` in the card preview, Welcome and the published panel: Share (existing `useShareCard`), then two locked wallet buttons of the same size |
+| Own finished page | `TeamProfile`: `PlayerCard` without actions; Edit card full width under it; Share in `PublishedPanel`. `PersonProfile` no longer passes actions for "me" |
+| Profession symbols | `ProfessionMarks` in the card's rule: up to three distinct icons from `PROFESSION_MARKS` (name patterns, then the category), diamonds between, car last. Icons that the CDN's lucide version lacks fall back to the next name |
+| Tiers | `withRanks()` orders records primary → secondary (max 2) → tertiary, using `record.rank`; records without a rank keep the old positional look. `visibleRecs` (the card front) and `HorizontalCardRanker` use it. Arrows removed |
+| Edit Profile | `profileEdit` in the store (persisted with the rest): `layout` per section (`id`, `rank`, `keep`), `added` (cards FF AI found, not yet on the profile), `fills`, `extras`. Actions `PE_START`, `PE_KEEP`, `PE_MOVE` (with `makeRoom` for the Secondary limit), `PE_PATCH_NEW`, `PE_EXTRA`, `PE_CANCEL`, `PE_COMMIT`. UI: `ProfileEditHead`, `TierEditor` (pointer-event drag with auto-scroll, drop marker, keyboard ← → ↑ ↓, Move sheet, Secondary chooser), `NewCardSheet`, `ProfileEditBar` (one Save Changes, busy state, error kept in Edit Profile, confirm on leave, `beforeunload` while unsaved) |
+| Save Changes | `applyEdit()` builds the new records: kept new cards join with `proposed: false`; unticked saved cards become `hidden: true` (recoverable, as before); unticked new cards are dropped. Then `PROFILE_ADAPTER.save` (when signed in), `PE_COMMIT`, `RECORDS_FILL` for fills, and the Question Card answers FF AI found |
+| CV / FF AI import | `CVPanel` and `ProfileFFAI` render `ImportToEdit` instead of `ExtractionReview` (still in the file, unused). Same extraction, same `buildSuggestions` / `recordsFromSuggestions` mapping; duplicates are still skipped; new cards get `proposed: true, verified: false` and keep `source` (origin, page, evidence). The CV file itself is still saved as the CV document card on upload |
+
+### For the live site (Griffy)
+
+1. **Card tier field**: card section data needs a `rank` per item (`primary` / `secondary` / `tertiary`), saved with the order. `PATCH /api/user/card/sections/:sectionId/data/order` could take `[{ id, rank }]`. Rule: at most two `secondary`. Existing items without a rank: first = primary, next two = secondary, rest = tertiary (what the prototype does).
+2. **Hidden items**: unticking a saved card hides it (`hidden: true`), it isn't deleted. The section data needs a hidden flag if it doesn't have one.
+3. **Edit Profile draft**: the prototype keeps the unsaved draft in the viewer's saved state so it survives a reload. On the live site it can live in the browser until Save Changes; Save Changes should send one request (or one batch) for the whole profile and only report success when it completes.
+4. **CV import**: `POST /api/user/ffai/extract` stays. Instead of the review-and-apply screen, the frontend shows the extraction's items as unsaved cards in Edit Profile and sends the kept ones with Save Changes (or calls `…/apply` with only the kept items and their ranks). Imported qualifications must not be marked verified.
+5. **Asked questions**: "Ask a question" needs a backend: store the question against the profile with who asked and when; the profile owner answers it; both show on the public profile. None of this exists in the backend yet.
+6. **Profession symbols**: a mapping from profession (or category) to an icon; the prototype's `PROFESSION_MARKS` is a starting list.
+
+### Tested
+
+Headless Chromium, phone (390 px) and desktop (1280 px):
+
+- **v1.2 journeys, 82 checks** (all v1.1 journeys plus): Dream jobs above Training; the WhatsApp panel on Bookings; Save & Publish with Publish and no Share; Share above Apple and Google Wallet, all one size, wallets locked; sections closed except Professions; Network open with the inviter; CV (.doc) → Edit Profile with From CV cards and no review screen → Save Changes → cards on the profile, no arrows; Welcome and the finished page with the share stack; Edit card under the card.
+- **v1.2 features, 35 checks** on the demo profile with a stand-in private save: no Book · Review · Join on your own page; profession symbols with a spoken label; tiers in normal view; Q&A panel and rounded cards; answering a question from the inviter, with who asked; asking someone a question on Network and seeing "Asked by you" on their profile; Edit Profile lanes, checkboxes, Move, drag handles; the Secondary chooser; ↑ to promote with the keyboard; finishes change at once; a failed save keeps the changes and shows a message; leaving asks first; Save Changes; order, tiers and the hidden card survive a reload; the card front follows the tiers.
+- **CV import, 13 checks** with a stand-in for FF AI: mapping to qualification, venue and experience cards; the CV document card kept; "not verified" note; the draft survives a reload; Cancel adds nothing; unticked cards not added; a second import adds no duplicates and says so.
+- Drag and drop checked with a mouse and with touch input.
+- v1.0 XP credit still applied once; SEO self-test 32/32; no page errors.
+
+Not verified here: FF AI's real answers, the real map tiles, saving on claude.ai itself, and anything that needs Griffy's backend.
