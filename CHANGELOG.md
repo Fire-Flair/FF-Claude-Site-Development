@@ -1,5 +1,19 @@
 # FireFlair prototype — changelog
 
+## v16.15 — 2026-10-16 — Quick Event Card, Cocktails page, signatures
+Artifact version 1792150124-d0b9 · file `fireflair-v16.15.html`
+
+- FF Party quick Event Card builder (PartyEventSection): five tap-first questions (occasion, date, guests, where, who you need) beside a live card that fills itself in. The name comes from the occasion (and the host's first name if given), e.g. "Alex's Birthday". "Add more detail" opens the card for typing (name, times, venue, notes, colours) as before. The draft lives in the store (state.partyDraft, PARTY_DRAFT / PARTY_DRAFT_PATCH, not persisted), so going to the Cocktails page and back keeps everything.
+- Cocktail Cards (the spec's Menu Cards): ingredients with measures, garnish included ("Garnish: …" lines), and the glass as an icon (GLASSES + GlassIcon, ten glass shapes). No method or equipment, as agreed.
+- 52 FireFlair classics (CLASSICS), one per playing card: four suits of 13, Spades = whisky & brandy, Hearts = gin, Diamonds = vodka & sparkling, Clubs = rum & tequila, A down to 2. This is a starter list for Alex to confirm or replace.
+- New FF Party page "Cocktails" (route "cocktails", CocktailsPage): your cocktail menu panel, search, suit filters, Signature cocktails (square cards) and the 52 classics as playing cards. Tap + to add, or open a card for the full recipe. Reached from the builder ("Add cocktails"), the saved Event Card, the FF Party home teaser (CocktailTeaser) and the Event page.
+- Cocktail menu: { picks: [cocktail ids], mode: "start" | "whole", count } with "To get started" or "The whole event" and "How many cocktails?" (suggestions of 1, 2, 3 or 4 each from the guest count). It is stored on the open event (event.cocktails) or as a draft (state.cocktailMenu, persisted) until an Event Card is saved, then attached on save. One reducer action, COCKTAILS_PATCH, writes to whichever applies.
+- The chosen cocktails show as a "Cocktails" row on the FF Party Event Card, in a Cocktails panel on the Event page (Change cocktails, Recipe sheet), and the recipes are added to the invoice (InvoiceCard: a "Cocktail recipes" block, also in the copied/WhatsApp text). The Recipe sheet is the same list.
+- Signature Cocktail Cards: a new profile category "cocktails" (Signature cocktails) on the FF Team profile and the FF Staff / FF Party company profile, made with the same card editor as everything else. Two new editor fields: Ingredients (one per line) and Glass (picker). The square card shows the glass and the key ingredients. Demo: the finished demo profile has one; Sammy, Ava and The Loft Lounge have signatures (DEMO_SIGNATURES) shown on their profiles and on the Cocktails page.
+- Every Signature Cocktail Card (demo network, your own, your company's) is selectable on the Cocktails page and credited to whoever made it. Core should store classics and signatures as one cocktail record type, so searches, invoices, shopping lists and later menus all read the same data.
+- Copy: FF Party how-it-works is now Create, Choose, Cocktails, Book, Celebrate; the Home FF Party steps mention cocktails.
+- Tested headless at phone and desktop widths: quick builder, Cocktails page (52 cards, 3 signatures, add, detail, mode, count, recipe sheet), saving with cocktails, Event page panel, recipes on the invoice, Signature cocktails on the profile and the editor's glass picker; earlier FF Staff and Home flows. SEO self-test 36/36, no page errors.
+
 ## v16.14 — 2026-10-15 — Dream jobs, Review Cards, square cards, map
 Artifact version 1792089883-1b55 · file `fireflair-v16.14.html`
 
