@@ -1,6 +1,6 @@
 # FF Team Phase 1
 
-**v1.3.1 · in development, not final.**
+**v1.3.2 · in development, not final.**
 
 The Phase 1 reference for FF Team: a professional profile and networking
 platform that gets hospitality and event professionals ready for bookings. It is
@@ -8,8 +8,8 @@ a separate prototype, built from the FireFlair prototype v16.15 (the
 `fireflair-v*.html` files in the folder above, which are unchanged) and checked
 against Griffy's frontend and backend on GitHub.
 
-- `ff-team-phase-1-v1.3.1.html` — the latest prototype. One page; open it in a browser.
-- `ff-team-phase-1-v1.3.html` — the previous version.
+- `ff-team-phase-1-v1.3.2.html` — the latest prototype. One page; open it in a browser.
+- Earlier versions: `ff-team-phase-1-v1.3.1.html`, `-v1.3.html`, `-v1.2.1.html`, `-v1.2.html`, `-v1.1.html`, `-final-v1.0.html`.
 - `ff-team-phase-1-v1.2.1.html`, `ff-team-phase-1-v1.2.html` — earlier versions.
 - `ff-team-phase-1-v1.1.html` — the previous version.
 - `ff-team-phase-1-final-v1.0.html` — the first version, kept for reference
@@ -70,6 +70,17 @@ Anything that needs FireFlair Core sits behind a named adapter in the code
 `AUDIT.md` §4 maps each one to Griffy's endpoint, or says it doesn't exist yet.
 
 ## Changes
+
+### v1.3.2 — 16 October 2026 · in development
+
+The screen after Save (Welcome to the Team):
+
+- No "Publish on FF Team" button (Publish is beside Save) and no Add FF button.
+- A name is optional: with no name, the card shows the FF Tag.
+- No profile picture yet: "You don't have a profile picture yet. Add one now"
+  with Add photo — the picture goes straight onto the card (`P1PhotoPrompt`).
+- Underneath, only Share (WhatsApp, works) and, side by side below it, Add to
+  Apple Wallet and Add to Google Wallet (locked, coming soon).
 
 ### v1.3.1 — 16 October 2026 · in development
 
