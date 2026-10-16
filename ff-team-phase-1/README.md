@@ -1,6 +1,6 @@
 # FF Team Phase 1
 
-**v1.3.2 · in development, not final.**
+**v1.3.3 · in development, not final.**
 
 The Phase 1 reference for FF Team: a professional profile and networking
 platform that gets hospitality and event professionals ready for bookings. It is
@@ -8,8 +8,8 @@ a separate prototype, built from the FireFlair prototype v16.15 (the
 `fireflair-v*.html` files in the folder above, which are unchanged) and checked
 against Griffy's frontend and backend on GitHub.
 
-- `ff-team-phase-1-v1.3.2.html` — the latest prototype. One page; open it in a browser.
-- Earlier versions: `ff-team-phase-1-v1.3.1.html`, `-v1.3.html`, `-v1.2.1.html`, `-v1.2.html`, `-v1.1.html`, `-final-v1.0.html`.
+- `ff-team-phase-1-v1.3.3.html` — the latest prototype. One page; open it in a browser.
+- Earlier versions: `ff-team-phase-1-v1.3.2.html`, `-v1.3.1.html`, `-v1.3.html`, `-v1.2.1.html`, `-v1.2.html`, `-v1.1.html`, `-final-v1.0.html`.
 - `ff-team-phase-1-v1.2.1.html`, `ff-team-phase-1-v1.2.html` — earlier versions.
 - `ff-team-phase-1-v1.1.html` — the previous version.
 - `ff-team-phase-1-final-v1.0.html` — the first version, kept for reference
@@ -70,6 +70,31 @@ Anything that needs FireFlair Core sits behind a named adapter in the code
 `AUDIT.md` §4 maps each one to Griffy's endpoint, or says it doesn't exist yet.
 
 ## Changes
+
+### v1.3.3 — 16 October 2026 · in development
+
+- **FF Team is for everyone**: "Are you a freelancer or a business?" now says
+  FF Team is for everyone in hospitality — freelancers and the people who work
+  in and run businesses — and everyone starts with an FF Team page. FF Staff
+  shows "Notify me": signed in, it puts you on the list (`staffNotify`);
+  signed out, it takes you to create your FF Team page first. FF Staff is
+  "where we help you find staff and support your business in every way
+  possible". The FF Team label and site-selector line say "For everyone in
+  hospitality".
+- **Desktop menu**: no divider to the right of the FF coin.
+- **Base coin**: white and stencilled (colourless), no longer silver-looking.
+- **FF XP pop-up**: a new FF Rewards part at the foot — verification helps you
+  get bookings; rewards are coming — with Register interest, which goes to the
+  rewards on Home. The pop-up scrolls.
+- **Home, at the bottom**: FF XP (how you earn it: Build, Share, Grow; the
+  verification ladder Base → Bronze 5 connections → Silver 20 → Gold locked)
+  and **FF XP Rewards**, in the Dream jobs / Training style: eight rewards —
+  international bar shows with flights and hotel (Lisbon Bar Show, Perfect
+  Serve Amsterdam, Athens Bar Show, Bar Convent Berlin), free training tickets,
+  American Express Gold business card, FF NFC business card, Barfly cocktail
+  equipment, car rental, the FF January Christmas party, a professional
+  photoshoot — plus "What reward would help you most?" with suggestions, and
+  Register interest (`rewardsInterest`). Nothing is awarded.
 
 ### v1.3.2 — 16 October 2026 · in development
 
