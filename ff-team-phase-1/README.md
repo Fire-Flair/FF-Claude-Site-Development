@@ -1,6 +1,6 @@
 # FF Team Phase 1
 
-**v1.2 · in development, not final.**
+**v1.2.1 · in development, not final.**
 
 The Phase 1 reference for FF Team: a professional profile and networking
 platform that gets hospitality and event professionals ready for bookings. It is
@@ -8,7 +8,8 @@ a separate prototype, built from the FireFlair prototype v16.15 (the
 `fireflair-v*.html` files in the folder above, which are unchanged) and checked
 against Griffy's frontend and backend on GitHub.
 
-- `ff-team-phase-1-v1.2.html` — the latest prototype. One page; open it in a browser.
+- `ff-team-phase-1-v1.2.1.html` — the latest prototype. One page; open it in a browser.
+- `ff-team-phase-1-v1.2.html` — the previous version.
 - `ff-team-phase-1-v1.1.html` — the previous version.
 - `ff-team-phase-1-final-v1.0.html` — the first version, kept for reference
   (it was called "Phase 1 Final"; from v1.1 the name is "FF Team Phase 1").
@@ -68,6 +69,15 @@ Anything that needs FireFlair Core sits behind a named adapter in the code
 `AUDIT.md` §4 maps each one to Griffy's endpoint, or says it doesn't exist yet.
 
 ## Changes
+
+### v1.2.1 — 16 October 2026 · in development
+
+- **Are you a freelancer or a business?** v16.15's box is back on Home, straight
+  under What is FireFlair?. FF Team (freelancers) opens the profile; FF Staff
+  (businesses) shows Coming soon and can't be entered yet. Copy: "If you're a
+  business, FireFlair is here to connect you with the people you want to find —
+  that's FF Staff, coming soon." Component `P1WhoAreYou`, reusing v16.15's
+  `.ff-whoami` styles.
 
 ### v1.2 — 16 October 2026 · in development
 
