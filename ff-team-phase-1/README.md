@@ -1,6 +1,6 @@
 # FF Team Phase 1
 
-**v1.3 · in development, not final.**
+**v1.3.1 · in development, not final.**
 
 The Phase 1 reference for FF Team: a professional profile and networking
 platform that gets hospitality and event professionals ready for bookings. It is
@@ -8,7 +8,8 @@ a separate prototype, built from the FireFlair prototype v16.15 (the
 `fireflair-v*.html` files in the folder above, which are unchanged) and checked
 against Griffy's frontend and backend on GitHub.
 
-- `ff-team-phase-1-v1.3.html` — the latest prototype. One page; open it in a browser.
+- `ff-team-phase-1-v1.3.1.html` — the latest prototype. One page; open it in a browser.
+- `ff-team-phase-1-v1.3.html` — the previous version.
 - `ff-team-phase-1-v1.2.1.html`, `ff-team-phase-1-v1.2.html` — earlier versions.
 - `ff-team-phase-1-v1.1.html` — the previous version.
 - `ff-team-phase-1-final-v1.0.html` — the first version, kept for reference
@@ -69,6 +70,17 @@ Anything that needs FireFlair Core sits behind a named adapter in the code
 `AUDIT.md` §4 maps each one to Griffy's endpoint, or says it doesn't exist yet.
 
 ## Changes
+
+### v1.3.1 — 16 October 2026 · in development
+
+- **FF AI looks the same everywhere**: the gold gradient from the Profile page's
+  FF AI is now on every FF AI box (Home, Network, Bookings) — `FFAI` defaults
+  to `tint`.
+- **Network quick searches** under FF AI, like Bookings and Home: the three most
+  common professions and the three most common locations in the network
+  (`networkQuickSearches`). One tap searches for it.
+- **Desktop FF coin** moved to the right of Profile in the top menu. Phones
+  unchanged.
 
 ### v1.3 — 16 October 2026 · in development
 
