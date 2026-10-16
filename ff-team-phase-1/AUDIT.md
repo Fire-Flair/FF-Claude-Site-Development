@@ -300,3 +300,14 @@ sent), (2) a connection count to work out the verification level, (3) `rank`
 on each card item, and (4) a private postcode field per profile with a
 postcode lookup for the primary location and travel distance.
 
+## 11. v1.4 changes (16 October 2026)
+
+- **Biography / Introduction** is `profile.about` (same source of truth),
+  capped at 1,000 characters in the field (`BioField`) and in the store.
+  CV import no longer writes it.
+- **Public profile**: `PublicIntro`, `PubGrid`, `PUB_KIND`/`PUB_ORDER`;
+  `InformationCard` takes a `pub` size (m, x, d, s). Tiers still come from
+  `rank` via `withRanks`. `Sheet` is now an accessible modal dialog.
+- Griffy: store the biography as the profile's text field with a
+  server-side 1,000 limit; no other API change.
+

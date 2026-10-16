@@ -16,7 +16,7 @@ bodies are what FireFlair Core replaces.
 
 `ff-team-phase-1/` holds the separate Phase 1 reference prototype (FF Team as a
 profile and networking platform), built from v16.15 and checked against
-Griffy's frontend and backend. Latest: `ff-team-phase-1-v1.3.4.html` (v1.3.4, in
+Griffy's frontend and backend. Latest: `ff-team-phase-1-v1.4.html` (v1.4, in
 development). Start with `ff-team-phase-1/README.md`; the code audit is
 `ff-team-phase-1/AUDIT.md`.
 

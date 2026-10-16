@@ -1,6 +1,6 @@
 # FF Team Phase 1
 
-**v1.3.4 · in development, not final.**
+**v1.4 · in development, not final.**
 
 The Phase 1 reference for FF Team: a professional profile and networking
 platform that gets hospitality and event professionals ready for bookings. It is
@@ -8,8 +8,8 @@ a separate prototype, built from the FireFlair prototype v16.15 (the
 `fireflair-v*.html` files in the folder above, which are unchanged) and checked
 against Griffy's frontend and backend on GitHub.
 
-- `ff-team-phase-1-v1.3.4.html` — the latest prototype. One page; open it in a browser.
-- Earlier versions: `ff-team-phase-1-v1.3.3.html`, `-v1.3.2.html`, `-v1.3.1.html`, `-v1.3.html`, `-v1.2.1.html`, `-v1.2.html`, `-v1.1.html`, `-final-v1.0.html`.
+- `ff-team-phase-1-v1.4.html` — the latest prototype. One page; open it in a browser.
+- Earlier versions: `ff-team-phase-1-v1.3.4.html`, `-v1.3.3.html`, `-v1.3.2.html`, `-v1.3.1.html`, `-v1.3.html`, `-v1.2.1.html`, `-v1.2.html`, `-v1.1.html`, `-final-v1.0.html`.
 - `ff-team-phase-1-v1.2.1.html`, `ff-team-phase-1-v1.2.html` — earlier versions.
 - `ff-team-phase-1-v1.1.html` — the previous version.
 - `ff-team-phase-1-final-v1.0.html` — the first version, kept for reference
@@ -70,6 +70,57 @@ Anything that needs FireFlair Core sits behind a named adapter in the code
 `AUDIT.md` §4 maps each one to Griffy's endpoint, or says it doesn't exist yet.
 
 ## Changes
+
+### v1.4 — 16 October 2026 · in development
+
+Biography / Introduction, and a redesigned public profile.
+
+**Profile Card Creator (the only change there)**
+- New **Biography / Introduction** field: multiline, 1,000 characters,
+  visible counter ("245 / 1,000"), leading space dropped as you type, text
+  trimmed when you leave the field and on save. The limit is enforced by the
+  field, on paste, and again in the store (`PROFILE` patch).
+- It is the profile's existing `about` text (`state.profile.about`): no new
+  data store, no schema change. It saves, survives reload, and is what other
+  people see. The Biography section on your own profile edits the same field.
+- CV import no longer writes a biography (it used to fill an empty one);
+  the biography is only ever the person's own words.
+
+**Public profile (what a visitor sees from Network, and "view as guest")**
+- Centred intro first: photo with tier ring, name, headline (main profession,
+  then up to two more), location, rating/years where present, FF Tag, then the
+  biography (compact; "Read more" past about six lines), then Add to team /
+  Review / Ask a question. Nothing is shown for fields that are empty, and an
+  empty biography leaves no panel.
+- Content sits in a centred container (max 1,040 px). Hybrid layout, in the
+  reading order: Professions and featured work, Qualifications, Skills,
+  Experience, Work locations, Languages, Interests, anything else, then
+  Network, Reviews, Q&A (always last).
+  - Professions: medium cards. Experience: medium-wide with room for
+    employer, role, dates and a short description. Qualifications: compact
+    document cards (issuer, Doc badge; Verified only when the record is
+    actually verified, so CV imports are never shown verified). Skills,
+    Languages (with flags), Interests, Locations: compact chips.
+  - Cards are about 25-45 percent smaller than before depending on type,
+    laid out in a responsive grid (auto-fit, no fixed column count). Network
+    and Reviews rows are scaled to match.
+- Tiers come from the saved `rank` on each card: gold, silver (two at most),
+  bronze, in the order set while editing. Finish never implies verification.
+- Tap or press Enter on a card to open its full details (the existing
+  read-only card dialog). Dialogs now have `aria-modal`, move focus in, keep
+  Tab inside, close on Escape and return focus. Hover and pressed states on
+  cards; reduced-motion respected.
+- No editing controls, tick boxes or drag handles on a public profile.
+- Own profile, editing, CV upload, Network list, Bookings and Home are unchanged.
+
+For Griffy: no schema or API change beyond making sure the biography is
+saved as the profile's existing text field, capped at 1,000 characters on
+the server as well.
+
+Tested: journeys 88/88, features 26/26, CV import 9/9, drag 16/16, SEO 32/32,
+work locations 17/17, new biography and public view 24/24, visitor view of a
+full profile 14/14 (phone, iPad and desktop widths, no horizontal overflow,
+keyboard open and close), no page errors.
 
 ### v1.3.4 — 16 October 2026 · in development
 
