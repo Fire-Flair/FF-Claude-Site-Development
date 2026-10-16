@@ -1,6 +1,6 @@
 # FF Team Phase 1
 
-**v1.3.3 · in development, not final.**
+**v1.3.4 · in development, not final.**
 
 The Phase 1 reference for FF Team: a professional profile and networking
 platform that gets hospitality and event professionals ready for bookings. It is
@@ -8,8 +8,8 @@ a separate prototype, built from the FireFlair prototype v16.15 (the
 `fireflair-v*.html` files in the folder above, which are unchanged) and checked
 against Griffy's frontend and backend on GitHub.
 
-- `ff-team-phase-1-v1.3.3.html` — the latest prototype. One page; open it in a browser.
-- Earlier versions: `ff-team-phase-1-v1.3.2.html`, `-v1.3.1.html`, `-v1.3.html`, `-v1.2.1.html`, `-v1.2.html`, `-v1.1.html`, `-final-v1.0.html`.
+- `ff-team-phase-1-v1.3.4.html` — the latest prototype. One page; open it in a browser.
+- Earlier versions: `ff-team-phase-1-v1.3.3.html`, `-v1.3.2.html`, `-v1.3.1.html`, `-v1.3.html`, `-v1.2.1.html`, `-v1.2.html`, `-v1.1.html`, `-final-v1.0.html`.
 - `ff-team-phase-1-v1.2.1.html`, `ff-team-phase-1-v1.2.html` — earlier versions.
 - `ff-team-phase-1-v1.1.html` — the previous version.
 - `ff-team-phase-1-final-v1.0.html` — the first version, kept for reference
@@ -70,6 +70,35 @@ Anything that needs FireFlair Core sits behind a named adapter in the code
 `AUDIT.md` §4 maps each one to Griffy's endpoint, or says it doesn't exist yet.
 
 ## Changes
+
+### v1.3.4 — 16 October 2026 · in development
+
+Work locations (profile) gets its explanation back, and a postcode step.
+
+- **"Where you work" box** at the top of the Work locations section (same gold
+  box style as Pick your professions). It explains why to list more than one
+  place: it is for Google, so list the large towns you live in, work in, work
+  around and would like to work in; the more you list, the more searchable the
+  profile becomes. It also says the Primary location is used to calculate
+  travel distances for jobs, always measured from it, so a postcode is
+  recommended. The same wording is in the Add work locations sheet.
+- **Postcode step (FF AI):** enter a postcode, "Find my area" gives the
+  primary location (editable) plus large towns nearby and some further
+  afield (e.g. HP4 → Berkhamsted; St Albans, Aylesbury, Hemel Hempstead;
+  London, Central London, Birmingham). Each can be switched off; one tap adds
+  them. The area becomes the Primary location (an earlier primary moves to
+  Secondary). Only Primary and two Secondary show on the Profile Card; all of
+  them count for search.
+- **The postcode stays private:** saved as `workPostcode`, shown only as
+  "HP4 •••" on your own profile, never on the card or public profile.
+  Change postcode and Add more locations stay available, with no limit on
+  how many locations are added.
+- The postcode → area lookup is a built-in table of UK postcode areas.
+  For Griffy: use a postcode lookup service plus the existing Google Places
+  search, and keep the full postcode server-side for distance calculations.
+
+Tested: journeys 88/88, features 26/26, CV import 9/9, drag 16/16, SEO 32/32,
+new work-locations check 17/17, no page errors.
 
 ### v1.3.3 — 16 October 2026 · in development
 

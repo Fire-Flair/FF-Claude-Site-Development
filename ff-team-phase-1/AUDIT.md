@@ -279,3 +279,24 @@ the level (inviter counts as a connection), and `rank` on card section items
 Tested: journeys 82/82, features 26/26, CV import 9/9, drag 16/16 (mouse drag,
 tap opens, keyboard, the Secondary bump, Save ends editing, touch swipe scrolls,
 touch hold-and-drag), SEO 32/32, no page errors.
+
+## 10. v1.3.1 to v1.3.4 changes (16 October 2026)
+
+- **v1.3.1:** gold FF AI gradient on every FF AI box (`FFAI` defaults to
+  `tint`); Network quick searches (top three professions and locations, from
+  `networkQuickSearches`); desktop FF coin to the right of Profile.
+- **v1.3.2:** after-save Welcome screen: FF Tag when there is no name, "add a
+  profile picture" prompt (`P1PhotoPrompt`, photo shrunk to 640 px JPEG),
+  Share then Apple and Google Wallet side by side (`ShareStack`).
+- **v1.3.3:** FF Team for everyone; FF Staff "Notify me" (`staffNotify`); white
+  stencilled Base coin; XP pop-up FF Rewards; Home FF XP and FF XP Rewards
+  (`rewardsInterest`).
+- **v1.3.4:** Work locations box and postcode step (`workPostcode`,
+  `P1_SET_PRIMARY_LOC`, `PC_TABLE`).
+
+For Griffy: the live site needs (1) a stored notify list for FF Staff and
+rewards interest (prototype keeps these in the viewer's own state; nothing is
+sent), (2) a connection count to work out the verification level, (3) `rank`
+on each card item, and (4) a private postcode field per profile with a
+postcode lookup for the primary location and travel distance.
+
