@@ -311,3 +311,23 @@ postcode lookup for the primary location and travel distance.
 - Griffy: store the biography as the profile's text field with a
   server-side 1,000 limit; no other API change.
 
+
+## 12. v1.5 changes (17 October 2026)
+
+- **Public profile**: `MediaCarousel` (`mediaOf`), the unchanged `PlayerCard`,
+  `ProfileTabs` (ARIA tablist), `PublicProfileBody` with `AboutMeBlock`,
+  `AttrCarousel` (chunked), `CoverFlow` for Services and Reviews, `MemScroll`
+  for Teams, `useDragScroll` for mouse drag. Cards reuse `GenericAttributeCard`
+  / `InformationCard` (new `pub` sizes `c` and `r`, `subline`), `ServicePoster`,
+  `OwnServiceCard` (renders as a div when it has no click handler) and
+  `OrgCard` (people mark for "Team").
+- **Data**: counts come from `servicesOf` (registered interest plus own cards),
+  `teamsOf` (`person.teams`, plus "Your team" from `state.connections`),
+  `reviewsOf` (`reviewRecordsFor`, with shift context). Nothing is invented.
+- **Creator**: `CreatorMedia` (MEDIA_ADD / MEDIA_DELETE, new P1_MEDIA_MOVE and
+  P1_MEDIA_REPLACE), `CreatorAboutMe` (500, `aboutAssist`, `aboutFacts`).
+  The v1.4 Profile Card biography field and `PublicIntro` are removed.
+- **FFAI**: `compact` prop, smaller padding, coin, heading and text entry; the
+  submit button no longer overlaps the mic for long labels.
+- Griffy: `profile.about` limit is 500; media list (ordered, images) per
+  profile; team memberships per person; a server-side AI call for About Me.

@@ -1,6 +1,6 @@
 # FF Team Phase 1
 
-**v1.4 · in development, not final.**
+**v1.5 · in development, not final.**
 
 The Phase 1 reference for FF Team: a professional profile and networking
 platform that gets hospitality and event professionals ready for bookings. It is
@@ -8,8 +8,8 @@ a separate prototype, built from the FireFlair prototype v16.15 (the
 `fireflair-v*.html` files in the folder above, which are unchanged) and checked
 against Griffy's frontend and backend on GitHub.
 
-- `ff-team-phase-1-v1.4.html` — the latest prototype. One page; open it in a browser.
-- Earlier versions: `ff-team-phase-1-v1.3.4.html`, `-v1.3.3.html`, `-v1.3.2.html`, `-v1.3.1.html`, `-v1.3.html`, `-v1.2.1.html`, `-v1.2.html`, `-v1.1.html`, `-final-v1.0.html`.
+- `ff-team-phase-1-v1.5.html` — the latest prototype. One page; open it in a browser.
+- Earlier versions: `ff-team-phase-1-v1.4.html`, `-v1.3.4.html`, `-v1.3.3.html`, `-v1.3.2.html`, `-v1.3.1.html`, `-v1.3.html`, `-v1.2.1.html`, `-v1.2.html`, `-v1.1.html`, `-final-v1.0.html`.
 - `ff-team-phase-1-v1.2.1.html`, `ff-team-phase-1-v1.2.html` — earlier versions.
 - `ff-team-phase-1-v1.1.html` — the previous version.
 - `ff-team-phase-1-final-v1.0.html` — the first version, kept for reference
@@ -70,6 +70,67 @@ Anything that needs FireFlair Core sits behind a named adapter in the code
 `AUDIT.md` §4 maps each one to Griffy's endpoint, or says it doesn't exist yet.
 
 ## Changes
+
+### v1.5 — 17 October 2026 · in development
+
+Visitor profile with a media carousel and four tabs, new Media and About Me
+sections in the creator, and a smaller FF AI box.
+
+**Visitor profile (Network, "view as guest")**
+- Order: media carousel (only if the person uploaded pictures), the full
+  Profile Card (unchanged), the three actions (Add to Team and Review side by
+  side, Ask a Question full width; connected state kept), then tabs.
+- Tabs: **Overview, Services (N), Teams (N), Reviews (N)** with real counts, a
+  thin gold underline on the active tab, arrow-key / Home / End navigation. The
+  header (carousel, card, actions) stays put when you switch tabs; carousel
+  position and each tab's scroll or centre-card position are remembered.
+- **Media carousel**: wide, swipe and mouse drag, dots, previous/next on
+  desktop, Expand / Collapse. Uses only the person's own uploaded pictures
+  (`profile.media`, plus pictures on their Media cards). Images only today.
+  Omitted entirely when there are none or every image fails to load.
+- **Overview**: About Me (heading, saved text, Read more / Read less, nothing
+  if empty, no edit control for visitors), then **Professional Profile**: one
+  horizontal carousel of square attribute cards (professions, qualifications,
+  skills, experience, venues, locations, languages, interests and the rest, in
+  the same tier order) with **View all attributes** opening the grouped
+  browser. Cards render in chunks of 18 as you scroll, so hundreds are fine.
+  Q&A appears at the bottom only if there are questions.
+- **Services**: Cover Flow of real Service Cards: the FireFlair defaults the
+  person registered for, plus their own cards. Centre card enlarged,
+  neighbours visible; select the centre card for the full view.
+- **Teams**: replaces Network. Team cards reuse the organisation card.
+  Real team memberships only; see the dependency below.
+- **Reviews**: Cover Flow of the real Review Cards (reviewer, stars with a text
+  label, date, shift role and venue where the review is linked to a shift);
+  **View all reviews** lists them.
+- Empty states for Overview cards, Services, Teams and Reviews.
+
+**Creator**
+- Order: Have a CV?, **Media**, **About Me**, Professions, then the rest.
+- **Media**: grid of square tiles with Add; several at a time (up to 12),
+  replace, remove, move earlier/later; pictures only, 10 MB each, shrunk to
+  1,600 px JPEG; busy and error states. Saved with the profile; shown in order
+  on the carousel; never shown on the public page as a section.
+- **About Me**: multiline, 500 characters, live counter ("245 / 500"), limit
+  message, placeholder as briefed. It is the same `profile.about` field the
+  public page reads (v1.4's 1,000 limit and Profile Card field are gone).
+- **Help me write with FF AI**: write, improve or shorten from the person's own
+  profile items and note. Never invents credentials, retries shorter if over
+  500, shows an editable suggestion with Apply / Make it shorter / Reject, and
+  saves only on Apply. Uses the existing `sample` capability; if it is not
+  available the box says so and manual editing is unchanged.
+
+**FF AI box**
+- Shared `FFAI` is smaller everywhere (padding, coin, heading, spacing; text
+  entry starts at two rows and grows); new `compact` prop; mic and styling kept.
+
+**Dependencies for the live site**
+- Team memberships need a data source (`person.teams`); today only "Your team"
+  (someone you added) is real.
+- Media needs file storage; today pictures live in the profile state.
+- AI writing needs a server-side model call with the same prompt rules.
+- Service Cards per person need a stored list; today it is the registered
+  interest list and the seeded own-card examples.
 
 ### v1.4 — 16 October 2026 · in development
 
