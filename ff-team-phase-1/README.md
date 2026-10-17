@@ -1,6 +1,6 @@
 # FF Team Phase 1
 
-**v1.5 · in development, not final.**
+**v1.6 · in development, not final.**
 
 The Phase 1 reference for FF Team: a professional profile and networking
 platform that gets hospitality and event professionals ready for bookings. It is
@@ -8,8 +8,8 @@ a separate prototype, built from the FireFlair prototype v16.15 (the
 `fireflair-v*.html` files in the folder above, which are unchanged) and checked
 against Griffy's frontend and backend on GitHub.
 
-- `ff-team-phase-1-v1.5.html` — the latest prototype. One page; open it in a browser.
-- Earlier versions: `ff-team-phase-1-v1.4.html`, `-v1.3.4.html`, `-v1.3.3.html`, `-v1.3.2.html`, `-v1.3.1.html`, `-v1.3.html`, `-v1.2.1.html`, `-v1.2.html`, `-v1.1.html`, `-final-v1.0.html`.
+- `ff-team-phase-1-v1.6.html` — the latest prototype. One page; open it in a browser.
+- Earlier versions: `ff-team-phase-1-v1.5.html`, `-v1.4.html`, `-v1.3.4.html`, `-v1.3.3.html`, `-v1.3.2.html`, `-v1.3.1.html`, `-v1.3.html`, `-v1.2.1.html`, `-v1.2.html`, `-v1.1.html`, `-final-v1.0.html`.
 - `ff-team-phase-1-v1.2.1.html`, `ff-team-phase-1-v1.2.html` — earlier versions.
 - `ff-team-phase-1-v1.1.html` — the previous version.
 - `ff-team-phase-1-final-v1.0.html` — the first version, kept for reference
@@ -70,6 +70,48 @@ Anything that needs FireFlair Core sits behind a named adapter in the code
 `AUDIT.md` §4 maps each one to Griffy's endpoint, or says it doesn't exist yet.
 
 ## Changes
+
+### v1.6 — 17 October 2026 · in development
+
+Visitor profile layout, smaller FF AI box, and editing tools only while editing.
+
+**Visitor profile**
+- **Pictures lead the page** (where Back used to be): every picture the person
+  uploaded to Media **plus every picture on any of their cards**, in that order.
+- **Phone and tablet:** the carousel stays in place behind the page and the
+  Profile Card slides over it, starting about halfway down the profile
+  picture. Expand / Collapse, swipe, drag, dots.
+- **Desktop (900px and wider):** the Profile Card moves to the left and the
+  pictures fill the right side as a mosaic (up to five tiles, "+N" for the
+  rest). Click any picture to open a viewer on it.
+- **Back** now sits under the Profile Card, above Add to Team / Review and Ask a
+  Question. The "Book · Review · Join" row at the bottom is gone.
+- **Overview:** About Me, then **Professions**, then **Professional Profile**:
+  every other attribute in one carousel, fullest cards first (description,
+  details, pictures, documents), with **View all attributes** kept.
+- **Q&A moved to the Services tab.**
+
+**FF AI box (every screen)**
+- One tight row: microphone on the left, text (starts at one line, grows as you
+  type), round send button on the right. The send button is always visible and
+  switches on when there is text; it replaces the "Fill out my profile" /
+  "Go" buttons underneath (the label is kept for screen readers).
+- The heading and a one-line purpose sit next to the coin; long purposes are
+  cut with an ellipsis. Padding and spacing are smaller throughout.
+
+**Your own profile**
+- FF AI, Have a CV?, Media and About Me show **only while editing** (and while
+  first building the profile). Otherwise a **View your profile as a guest**
+  card shows in their place and opens the visitor view.
+- Media uploader: the Add tile is a real file picker (works where scripted
+  clicks are blocked), drop pictures onto the grid, and a clearly marked
+  prototype-only **Add sample pictures** button so the carousel can be tried
+  without uploading. The live site needs a proper uploader (below).
+
+**Dependencies for the live site**
+- A real media uploader and storage: ordered list of pictures per profile,
+  server-side resizing, moderation, and a way to attach pictures to cards.
+- Everything from v1.5 still applies (team memberships, AI call, Service Cards).
 
 ### v1.5 — 17 October 2026 · in development
 

@@ -331,3 +331,20 @@ postcode lookup for the primary location and travel distance.
   submit button no longer overlaps the mic for long labels.
 - Griffy: `profile.about` limit is 500; media list (ordered, images) per
   profile; team memberships per person; a server-side AI call for About Me.
+
+## 13. v1.6 changes (17 October 2026)
+
+- **Hero**: `PublicHero` (media, Profile Card, `below` = Back, guest note,
+  actions), `MediaCarousel` (sticky behind the card on phones, `flat` in a
+  dialog), `MediaMosaic` (desktop), `useWide(900)`. `mediaOf` now reads
+  `record.media` on every category, not only Media cards.
+- **Overview**: Professions via `PubGrid`; `attributesOf` leaves professions out
+  and sorts by `completeness`. Q&A (`PublicQA`) renders under the Services tab.
+  The Book / Review / Join row under public profiles is removed.
+- **FFAI**: new render, one row (`.ff-ai-row`: mic, auto-growing textarea, send).
+  `compact` kept. The `ProfileFFAI` purpose and placeholder are shorter.
+- **Own profile**: `OwnEditTools` shows `ProfileFFAI`, `CVPanel`, `CreatorMedia`
+  and `CreatorAboutMe` while `useEditing`; otherwise a guest-view prompt.
+  `CreatorMedia`: label-wrapped file input, drag and drop, prototype sample
+  pictures (canvas, three, marked "Sample picture").
+- Griffy: a real uploader and storage for profile media (see README).
