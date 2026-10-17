@@ -1,6 +1,6 @@
 # FF Team Phase 1
 
-**v1.6 · in development, not final.**
+**v1.7 · in development, not final.**
 
 The Phase 1 reference for FF Team: a professional profile and networking
 platform that gets hospitality and event professionals ready for bookings. It is
@@ -8,8 +8,8 @@ a separate prototype, built from the FireFlair prototype v16.15 (the
 `fireflair-v*.html` files in the folder above, which are unchanged) and checked
 against Griffy's frontend and backend on GitHub.
 
-- `ff-team-phase-1-v1.6.html` — the latest prototype. One page; open it in a browser.
-- Earlier versions: `ff-team-phase-1-v1.5.html`, `-v1.4.html`, `-v1.3.4.html`, `-v1.3.3.html`, `-v1.3.2.html`, `-v1.3.1.html`, `-v1.3.html`, `-v1.2.1.html`, `-v1.2.html`, `-v1.1.html`, `-final-v1.0.html`.
+- `ff-team-phase-1-v1.7.html` — the latest prototype. One page; open it in a browser.
+- Earlier versions: `ff-team-phase-1-v1.6.html`, `-v1.5.html`, `-v1.4.html`, `-v1.3.4.html`, `-v1.3.3.html`, `-v1.3.2.html`, `-v1.3.1.html`, `-v1.3.html`, `-v1.2.1.html`, `-v1.2.html`, `-v1.1.html`, `-final-v1.0.html`.
 - `ff-team-phase-1-v1.2.1.html`, `ff-team-phase-1-v1.2.html` — earlier versions.
 - `ff-team-phase-1-v1.1.html` — the previous version.
 - `ff-team-phase-1-final-v1.0.html` — the first version, kept for reference
@@ -71,7 +71,31 @@ Anything that needs FireFlair Core sits behind a named adapter in the code
 
 ## Changes
 
-### v1.6 — 17 October 2026 · in development
+### v1.7 — 17 October 2026 · in development
+
+Homepage update. One goal: **Create your Profile Card**. Less reading, more seeing and doing. The top and bottom navigation, colours, Profile Cards, routes, data and rules are unchanged.
+
+**Home, top to bottom**
+1. **Hero** "People. Events. Experiences." (now the page's H1): atmospheric still life, the official Coin, the existing FF AI input (mic kept, small FF AI indicator inside it) and a prominent Create your Profile Card button.
+2. **Featured professionals**: the existing Profile Cards in a carousel with previous / next controls and swipe; "See everyone" goes to the Network.
+3. **Freelancer or business?**: compact panel, FF Team and FF Staff buttons (FF Staff still "launching soon · Notify me").
+4. **What is FireFlair?**: light panel, medals, three steps with one sentence each (Build Your Profile, Grow Your Network, Make Events Happen); shorter "FireFlair is here to get you bookings." panel with the example card and a button. Jump chips removed.
+5. **FireFlair Teams** (new): "Your people. Your team. Your events." Individuals, then Team (existing Team card), then Live event, with a button.
+6. **Built on real relationships.**: Connect, Verify (levels grow with accepted connections), Build your reputation, with the existing Review Card.
+7. **What's next for FireFlair?**: six image-led tiles, existing availability states kept.
+8. **Where FireFlair is.**: the real map, now near the bottom, linking to the Network screen.
+9. **FF XP Beta**: same tiers and rules, less copy.
+10. **Dream jobs, Training, Rewards**: three image-led tiles that open the matching sections of the Booking screen.
+
+**Booking screen:** now holds Training, Dream jobs and **Rewards** (Rewards moved here from Home); the full sections are no longer repeated on Home. Home FF AI routes training, dream-job and reward questions there.
+
+**For developers**
+- `HOME_IMAGES` (one URL per slot) swaps in real photography; until then each slot shows a branded still life of glassware and bottles (objects only, no people).
+- `goBookingSection(dispatch, id)` opens the Booking screen at a section.
+- `FFAI` has a new `bare` prop (no heading, indicator inside the row).
+- Old Home components are replaced by `*V17` versions; no new dependencies.
+
+### v1.6 — 17 October 2026
 
 Visitor profile layout, smaller FF AI box, and editing tools only while editing.
 

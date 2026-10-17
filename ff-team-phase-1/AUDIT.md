@@ -348,3 +348,14 @@ postcode lookup for the primary location and travel distance.
   `CreatorMedia`: label-wrapped file input, drag and drop, prototype sample
   pictures (canvas, three, marked "Sample picture").
 - Griffy: a real uploader and storage for profile media (see README).
+
+## 14. v1.7 changes (17 October 2026)
+
+- **Home**: new `HomeHero`, `HomeFeatured` (`HomeCarousel`: buttons, swipe, drag), compact `P1WhoAreYouV17`, `WhatIsFireFlairV17` (three steps, shorter bookings panel), `HomeTeams`, `HomeRelationships`, image-led `P1ComingSoonSectionV17`, `HomeMapSection` (real `FFMap`), `P1XPSection` (shorter copy, same tiers), `HomeBookingTiles`. `TeamHomeV17` and the signed-out Landing share `P1FireFlairInfoV17`.
+- **Booking screen** (`P1Bookings`): `P1RewardsSection` added after Training and Dream jobs, with a Rewards chip and search route. Reward sign-up logic unchanged.
+- **Hero input**: `FFAI` `bare` mode; routing in `HomeFFAI` unchanged apart from sending training, dream jobs and rewards to the Booking screen.
+- **Images**: `HOME_IMAGES` slots with branded fallbacks; real licensed photography is outstanding.
+- **Not touched**: backend schemas, auth, booking logic, XP rules, nav bars, Profile Card and Review Card templates.
+- **Tested**: new homepage suite (94 checks) plus journeys (91), features (26), CV (9), location (17), debug (32), drag (16), profile (98), persistence.
+- **Decisions**: photography supply; final wording of Step 3, the hero subline and the Verify line; the example Team card is a labelled illustration of the existing Team card.
+
