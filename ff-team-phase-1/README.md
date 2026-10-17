@@ -1,6 +1,6 @@
 # FF Team Phase 1
 
-**v1.7 · in development, not final.**
+**v1.7.1 · in development, not final.**
 
 The Phase 1 reference for FF Team: a professional profile and networking
 platform that gets hospitality and event professionals ready for bookings. It is
@@ -8,8 +8,9 @@ a separate prototype, built from the FireFlair prototype v16.15 (the
 `fireflair-v*.html` files in the folder above, which are unchanged) and checked
 against Griffy's frontend and backend on GitHub.
 
-- `ff-team-phase-1-v1.7.html` — the latest prototype. One page; open it in a browser.
-- Earlier versions: `ff-team-phase-1-v1.6.html`, `-v1.5.html`, `-v1.4.html`, `-v1.3.4.html`, `-v1.3.3.html`, `-v1.3.2.html`, `-v1.3.1.html`, `-v1.3.html`, `-v1.2.1.html`, `-v1.2.html`, `-v1.1.html`, `-final-v1.0.html`.
+- `ff-team-phase-1-v1.7.1.html` — the latest prototype. One page; open it in a browser.
+- `assets/` — the optimised image pack the page embeds, with a README on where each image came from (`assets/README.md`).
+- Earlier versions: `ff-team-phase-1-v1.7.html`, `-v1.6.html`, `-v1.5.html`, `-v1.4.html`, `-v1.3.4.html`, `-v1.3.3.html`, `-v1.3.2.html`, `-v1.3.1.html`, `-v1.3.html`, `-v1.2.1.html`, `-v1.2.html`, `-v1.1.html`, `-final-v1.0.html`.
 - `ff-team-phase-1-v1.2.1.html`, `ff-team-phase-1-v1.2.html` — earlier versions.
 - `ff-team-phase-1-v1.1.html` — the previous version.
 - `ff-team-phase-1-final-v1.0.html` — the first version, kept for reference
@@ -27,7 +28,7 @@ Operational:
 
 1. **Home and sign-up** — FF AI welcome; What is FireFlair? (your first three
    steps, then "FireFlair is here to get you bookings."); FF Team; the network;
-   Review Cards; Register interest for Training and for Dream jobs; a Coming
+   Review Cards; swipe carousels for Dream jobs, Training and Rewards; a Coming
    Soon section; the sites; the map.
 2. **Profile** — FF Tag + phone + WhatsApp code; Profile Card; FF AI and CV
    reading (PDF, Word .doc/.docx, photo); every section (Professions,
@@ -70,6 +71,34 @@ Anything that needs FireFlair Core sits behind a named adapter in the code
 `AUDIT.md` §4 maps each one to Griffy's endpoint, or says it doesn't exist yet.
 
 ## Changes
+
+### v1.7.1 — 17 October 2026 · in development
+
+Home and Booking refinements on top of v1.7: swipeable image carousels, a new hero, the Beta badge, sign-in-only interest registration, and a FF AI chat panel (placeholder UI). Navigation, colours, typography, Profile and Review Cards, routes, auth and booking logic are unchanged. Rounded corners throughout.
+
+**Home**
+1. **Hero**: banner layout, text on the left and the whiskey-glass bar photo on the right. "People. Events. Experiences." (H1), "The event connection platform for hospitality professionals.", the small FF AI search bar, and **Create your Profile Card** directly below it. The official FireFlair Coin is overlaid on the bar by the page, never redrawn. Balanced on phone and desktop.
+2. **Beta badge**: small, top right beside Log in, "Beta V1.0". Signed in, it opens a feedback screen built on the existing feedback Q&A; signed out, it asks you to log in.
+3. **Dream jobs, Training, Rewards**: three swipeable image carousels (8 items each, small swipe icon, previous / next, dots, drag on desktop). The heading sits outside the cards and each card carries its item title. Each carousel has an **Open** button and its cards go to the matching section of the Booking screen. Registering interest is **not** on Home.
+4. **What's next for FireFlair?**: the six tiles and their states are kept (FF Party "Next to launch", the rest "Coming soon"). New one-line copy for each tile; FF Party uses the Rewards party image, FF Staff a bar image, FF VIP After Dark. Previews are real: Service Cards, a 3–5 Cocktail Card carousel and a phone mock-up with a real Profile Card (previews are not interactive).
+5. **FireFlair Teams**: new section image, the live-event thumbnail, and a new rounded Team card (several pictures, name, tag, `ffparty.uk/dreamteam`).
+
+**Booking screen**: Training, Dream jobs and Rewards use the same images instead of descriptions. Tap cards to choose, then register below. Keeps 8 items per section.
+
+**Register interest** (Training, Dream jobs, Rewards): signed-in only; no phone or WhatsApp fields; saved against the signed-in account's tag. One bar: type your own entry and Submit. After submitting it shows **Registered**, your choices, and **Change** and **Withdraw**. Signed out shows a short "Log in or create your Profile Card to register your interest." prompt with both buttons. No Service Cards by profession.
+
+**FF AI** (placeholder UI only): the compact "bare" box is on every page with fewer words and no hint lines; Network placeholder "FF AI, search the network. Describe who you're looking for."; mic and a small FF AI identifier kept. Plain keyword searches work as before. A question or a longer description opens a **chat panel** whose replies are tagged "Prototype response" (including "What can you do?"). Nothing is connected to a model.
+
+**For developers**
+- New: `SwipeCarousel`, `HomeBookingTiles`, `ShineImgChoice`, `InterestSection({kind})`, `BetaBadge`, `FeedbackSheet`, `FFAIChat` with `ffaiIntent` / `ffaiReply`, `TeamCard17`, `PreviewServices` / `PreviewCocktails` / `PreviewWallet`. `FFAI` gets `bare` and `chat` props (both on by default for the single-line box). Multiline and compact FFAI are unchanged.
+- Interest state is `trainingInterest`, `jobsInterest`, `rewardsInterest` (`{ids, own, account, at}`); a registration shows only when `account` matches the signed-in tag.
+- Images live in `assets/` and are embedded by the page as data URIs (`window.FF_IMG`). `assets/README.md` records their source.
+
+**Backend dependencies (nothing here is saved server-side)**
+- An account-level interest endpoint: register, change, withdraw and read back for Training, Dream jobs and Rewards. Until it exists the page saves on the device and says so on screen.
+- A feedback endpoint for the Beta feedback answers (held in `state.feedback` for now).
+- FF AI: the chat panel uses keyword-matched replies. The real assistant, the same chatbot as WhatsApp, replaces `ffaiReply`.
+- Real, licensed or approved images. The supplied pack is AI-generated and illustrative; the Rewards files needed re-matching (see `assets/README.md`).
 
 ### v1.7 — 17 October 2026 · in development
 
