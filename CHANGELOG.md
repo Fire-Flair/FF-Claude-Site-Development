@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## FF Team Phase 1 v1.8 — 2026-10-19 — Profile pages, card builder, Home content
+Artifact version 1792357829-5456 · file `ff-team-phase-1/ff-team-phase-1-v1.8.html`
+
+- Profile pages: photos sit behind the Profile Card; on phone, pulling down drags the card below the photos (no Expand button); desktop shows the photos beside the card, with a swipe carousel above four pictures.
+- Attributes: one 5:7 card per category listing titles, a centred pop-up with every item expanded, separate 5:7 Profession cards, and a rounded Back / Ask a question panel.
+- Dummy profiles (demo only) now have About text, photos and filler attribute descriptions.
+- Card builder: Professions open the Pick your professions box inside the card; removing an item with its X now deletes it (it was only hidden, so it came back).
+- Home: shorter What is FireFlair? with Find your place, How FF Team works (Build, Share, Grow), community verification, a larger UK map and globe box linking to the Network map, a more compact Teams section, and a new section order.
+- What's next: FF Staff and Service Cards are next to launch; Signature Cocktails, FF VIP and the Digital business card follow FF Party.
+
 ## v16.15 — 2026-10-16 — Quick Event Card, Cocktails page, signatures
 Artifact version 1792150124-d0b9 · file `fireflair-v16.15.html`
 

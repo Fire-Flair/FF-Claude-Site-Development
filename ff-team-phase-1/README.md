@@ -1,6 +1,6 @@
 # FF Team Phase 1
 
-**v1.7.1 · in development, not final.**
+**v1.8 · in development, not final.**
 
 The Phase 1 reference for FF Team: a professional profile and networking
 platform that gets hospitality and event professionals ready for bookings. It is
@@ -8,7 +8,7 @@ a separate prototype, built from the FireFlair prototype v16.15 (the
 `fireflair-v*.html` files in the folder above, which are unchanged) and checked
 against Griffy's frontend and backend on GitHub.
 
-- `ff-team-phase-1-v1.7.1.html` — the latest prototype. One page; open it in a browser.
+- `ff-team-phase-1-v1.8.html` — the latest prototype. One page; open it in a browser.
 - `assets/` — the optimised image pack the page embeds, with a README on where each image came from (`assets/README.md`).
 - Earlier versions: `ff-team-phase-1-v1.7.html`, `-v1.6.html`, `-v1.5.html`, `-v1.4.html`, `-v1.3.4.html`, `-v1.3.3.html`, `-v1.3.2.html`, `-v1.3.1.html`, `-v1.3.html`, `-v1.2.1.html`, `-v1.2.html`, `-v1.1.html`, `-final-v1.0.html`.
 - `ff-team-phase-1-v1.2.1.html`, `ff-team-phase-1-v1.2.html` — earlier versions.
@@ -71,6 +71,26 @@ Anything that needs FireFlair Core sits behind a named adapter in the code
 `AUDIT.md` §4 maps each one to Griffy's endpoint, or says it doesn't exist yet.
 
 ## Changes
+
+### v1.8 — 19 October 2026 · in development
+
+Profile pages, the card builder and a content rewrite of the top of Home, on top of v1.7.1.
+
+**Profile pages (public)**
+1. **Photos behind the Profile Card**: every profile has photos. Phone: pull down at the top of the page and the Profile Card drags down below the photos (page overscroll is off on these pages), then swipe through them; scroll down and it slides back. Desktop: card on the left, photos on the right (grid up to 4 pictures, swipe carousel beyond that). No Expand / Collapse button.
+2. **Dummy data (demo only)**: About text and 3-6 photos for all 18 dummy profiles (`DEMO_ABOUT`, `DEMO_GALLERY`) and filler descriptions on dummy attribute cards (`DEMO_ATTR_FILLER`). Remove when real data is connected.
+3. **Attributes**: heading "Attributes" with "View all". One 5:7 card per category (`AttrGroups`) listing the titles; tapping opens a centred pop-up (`ExpandedAttrs`, `Sheet center`) with every item expanded to fit its text, details and pictures. Professions are separate 5:7 cards with their descriptions.
+4. **Back / Ask a question** sit in one rounded panel under the card.
+
+**Card builder**
+5. **Professions on the card** open the existing `ProfessionPicker` inside the card (closes on an outside tap or Done; tapping a ticked profession removes it).
+6. **Bug fix**: removing an item with its X on the card used to only hide the record (`syncCardRecords`), so it came back reshuffled. It now deletes it, for professions, skills, interests, locations and languages.
+
+**Home** (new order: Featured, What is FireFlair? with Find your place, How FF Team works, Training, Teams, Dream jobs, What's next, Where FireFlair is, Community verification, Rewards, XP, example Review Card)
+7. **What is FireFlair?** is short: "The event connection platform." and Trust, Community, Freedom. **How FF Team works** is Build, Share, Grow with icon steps, and a You to FF Party / FF Staff flow. FireFlair Teams is more compact.
+8. **Community verification** replaces "Built on real relationships": recommendations from people you work with raise your level (Bronze, Silver, Gold). The Review Card example moved to the bottom.
+9. **Where FireFlair is** is a larger box (UK map with markers and a globe) linking to the Network page, which now always shows the map.
+10. **What's next**: FF Staff and Service Cards are Next to launch; then FF Party, Signature Cocktails (cocktail card previews, embedded as `FF_COCKTAIL_IMGS`; swap for real renders), FF VIP, Digital business card (two phones sharing a card).
 
 ### v1.7.1 — 17 October 2026 · in development
 
