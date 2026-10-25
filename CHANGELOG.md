@@ -1,5 +1,19 @@
 # FireFlair prototype — changelog
 
+## v16.20 — 2026-10-25 — FF Staff Bookings: one booking box
+Artifact version 1792954535-2690 · file `fireflair-v16.20.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Bookings is now one booking box (BookingBox in v11/flow11) with four centred buttons: Event Card, Shift Card, Staff, Confirm. They can be done in any order; a booking record is created behind the scenes the first time anything is saved.
+- Event Card: tap it and it opens as the real card; you type straight onto it (only location and date are required; start time, guests, name and type are optional). Saved, it shrinks to the finished card; tap it to change it. Editing the Event Card also updates the date and location stored on its Shift Cards.
+- Shift Card: opens as the real card with the fields on it: job role, how many people, starts, finishes, uniform, pay calculator (hours x per hour = shift rate, either direction), extra details and T&Cs. Duplicate a card and change the role to make a waiter, bartender, bar manager and so on. Saved Shift Cards show as finished cards that people are dropped onto.
+- Staff: three boxes that open and close: Your team (with Send to your whole team per Shift Card), FireFlair recommends (ranked by job role, availability for the date, area and team; switch which Shift Card it is for), and Search for staff (plus a link to the Network with the booking filled in). Each box scrolls sideways like the rest of the site.
+- Drag and drop: drag a person onto a Shift Card (or a Shift Card target at the top of Staff). Mouse drags straight away; touch needs a short press and hold so the rows still scroll. A drop fires an ff-drop event. Tap Add is the alternative (one Shift Card: goes straight on; several: choose; none yet: they wait as Your picks).
+- First come, first served: a Shift Card needs shift.qty people; shift.staffIds is who it is sent to and can be more. BOOK_SEND sends to everyone on the card; OFFER_ACCEPT confirms one and, once the card is full, marks the rest Shift filled. The earlier "send to team" flag is gone; the whole team is just added to the card.
+- Confirm: Review your order with an invoice preview (billed to, event, a line per Shift Card with people, hours, per-hour and amount, total), a list of anything still missing with a button to fix each, and Confirm booking. The invoice is described as sent on WhatsApp and by email once the booking is confirmed. For the beta the booking is confirmed without payment; with payment live the availability requests go out only after payment, and free bookings for Pro businesses are planned. After sending, replies show with prototype Accept buttons.
+- Your bookings is below the box as full Event Cards in a sideways row (current, then past). Tap one to open it in the box; past ones open read-only with reviews. Empty draft records are hidden from the row.
+- The Event Card builder on FF Party also only needs date and location now.
+- Tested headless at phone and desktop widths: shift first, then event, duplicate, staff drag and drop (stacking two on one card), tap Add, review order, confirm, accept, bookings row. No page errors.
+
 ## v16.19 — 2026-10-25 — FF Staff Bookings: four-step booking
 Artifact version 1792953241-3932 · file `fireflair-v16.19.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
