@@ -1,5 +1,19 @@
 # FireFlair prototype — changelog
 
+## v16.22 — 2026-10-25 — Gradient steps, five-box cards, terms page
+Artifact version 1792958440-9643 · file `fireflair-v16.22.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Booking box colours: one continuous gradient across the four steps (gold to wine) with arrows between them. The old teal is gone.
+- Event Card is five boxes: Type (opens into a list of choices in place), Date, Starts, Location, Guests. "More details" is now "Extra details" (placeholder: anything else the team should know). The WhatsApp line at the bottom of the card is removed.
+- Service Card is five boxes: Role (list of roles), Starts, Finishes, Pay (hours x per hour = shift rate, both ways) and Terms. One Service Card is one person, so there is no "how many people" and no uniform field (uniform belongs in the company terms). Duplicate + replaces Cancel. Cards sit side by side in a row and size to their container.
+- Terms: tapping Terms opens a full-page editor (company.tcOwn, company.tcDocs). Options: write or paste, "Use AI to create my terms" (a local template for now), "Add a document here". The FireFlair template choice, the "no T&Cs" option and every NDA mention are removed.
+- Staff step: the second set of cards and the drag-onto-card target are replaced by a slot list, one row per Service Card. Tap a slot, then Add people to it (or drag a person's mini card onto a slot). Several people on one slot is still first come, first served.
+- FF AI at the top of booking is one compact row; a sentence now creates one Service Card per person asked for. Still a prototype text parser.
+- Invoice and event guide: pay summary lists each Service Card with the agreed pay and a note that it is agreed between the hirer and the staff member and that payment terms are in the terms and conditions. The invoice total is calculated per Service Card (one constant in flow11.jsx).
+- Your bookings is now an open-and-close list (Coming up / Past) instead of Event Cards; each row opens to the details, Service Cards and an Open button.
+- Company profile: every section can be collapsed (About and Media included). About is a plain text box with no Add/Edit button. The Company Card layout choices are small unnamed icons about the size of the colour swatches.
+- FF coin guide wording updated for Service Cards.
+
 ## v16.21 — 2026-10-25 — Service Cards, event guide, FF AI box
 Artifact version 1792956115-be91 · file `fireflair-v16.21.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
