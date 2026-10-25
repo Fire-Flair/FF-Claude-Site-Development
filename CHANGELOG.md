@@ -1,5 +1,16 @@
 # FireFlair prototype — changelog
 
+## v16.21 — 2026-10-25 — Service Cards, event guide, FF AI box
+Artifact version 1792956115-be91 · file `fireflair-v16.21.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- "Shift Card" is now "Service Card" everywhere (teal card face, not black). Note: the coming-soon FF Party "Service Cards" module shares this name.
+- Booking box: Duplicate puts the new Service Card side by side in a horizontal row. Event Card no longer shows Needed/Optional labels; intro reads "Four steps, in any order. Tap a card to open it", and the step cards look tappable.
+- Event Card has a free-text "More details" field (event.details) for any extra info, mainly for B2C / FF Party clients.
+- Staff step: only "Your team" opens by default; "FireFlair recommends" and "Search for staff" start closed. Drag and drop now drags a mini copy of the person's card instead of a name tag.
+- Confirm step shows a full "Invoice and event guide" (event details, timings, every Service Card, pay summary, terms, how it works); the sent copy carries a "Sent" stamp.
+- New FF AI box at the top of booking: type or speak about the event and it fills the Event Card and Service Cards. Prototype only: a simple text parser, no model. Backend idea: expose the same card actions through an API so external assistants (e.g. ChatGPT) can create bookings.
+- FF coin button on FF Staff / FF Party no longer shows verification levels; it opens a "Your next step" guide with the 4 steps and quick how-it-works answers.
+
 ## v16.20 — 2026-10-25 — FF Staff Bookings: one booking box
 Artifact version 1792954535-2690 · file `fireflair-v16.20.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
