@@ -1,5 +1,18 @@
 # FireFlair prototype — changelog
 
+## v16.18 — 2026-10-25 — FF Staff Bookings: card stack and checkout
+Artifact version 1792950083-b24c · file `fireflair-v16.18.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- FF Staff and FF Party home: the same hero photograph and gold coin as FF Team for now, so the coin sits on the bar. The Event Card builder is no longer on the home page; Create your Event Card opens it on Bookings.
+- The booking bar, XP bar and basket sit flush on the bottom bar on phones: the bottom bar's measured height is kept in the CSS variable --ff-navh (navHeightSync) instead of a fixed 64px.
+- Card preview (CardPeek): on FF Staff and FF Party, tapping someone's card enlarges it with Add to your event and View profile, instead of opening the profile. VIEW actions from the hirer sites set state.peek; View profile sends VIEW with direct: true. Add to your event puts them in the booking bar and, if the open event has a Shift Card for their profession with room, on that Shift Card.
+- Bookings rebuilt as one screen for processing bookings (StaffBookings in v11/book11): a strip of upcoming events plus New Event Card, which opens the builder in place. The open event shows as a card stack, solitaire style: the Event Card on top, its Shift Cards under it, and the people on each Shift Card fanned underneath. Press and hold any card to open it up and edit it (useHold / Holdable, 450 ms; a small edit button does the same from a keyboard or mouse). Tapping a person opens them up too.
+- A Shift Card can now hold several people: shift.staffIds with shift.qty people needed (older shifts with one staffId still read). Empty places show as Add slots; One more adds a place. Picking people lists the booking bar, your team and people whose profession fits, with their availability for the date.
+- Checkout at the bottom of the booking: each Shift Card and who's on it, the T&Cs, hiring questions and documents that go with it, people to book and FireFlair credits, a payment method, and Pay and send. Sending creates one request per person per Shift Card (BOOK_SEND) on WhatsApp; the status of each person shows underneath, then Booking confirmed. No payment provider is connected in the prototype.
+- Previous bookings are listed last; opening one shows its stack read-only with Review buttons for the people who worked it.
+- The old Event page is no longer reached from Bookings or the booking bar (both now open the booking on Bookings).
+- Tested headless at phone and desktop widths: hero, card preview, bar flush with the bottom bar, stack, hold to edit (event and shift), adding people, checkout and confirm, new Event Card and Shift Card, View profile. No page errors.
+
 ## v16.17 — 2026-10-25 — FF Team & FF Staff v1.1 review copy
 Artifact version 1792946842-5002 · file `fireflair-v16.17.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB), built on v16.16
 
