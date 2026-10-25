@@ -1,5 +1,18 @@
 # FireFlair prototype — changelog
 
+## v16.19 — 2026-10-25 — FF Staff Bookings: four-step booking
+Artifact version 1792953241-3932 · file `fireflair-v16.19.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- FF Staff Bookings rebuilt as a four-step booking (StaffBookings, BookingFlow in v11/flow11): 1 Event Card, 2 Shift Card, 3 Staff, 4 Confirm. The card stack and hold-to-edit are removed from Bookings.
+- Top of Bookings: a Create event card box (the four steps listed). Under it, a row that scrolls sideways through current then past bookings, each with a status (Draft with its step, Sent, Confirmed, Past). A new user with no bookings goes straight into step 1 with an empty row.
+- Step 1: location and date are the only required fields; start time, guests, name and type are optional. The built cards sit on the left on desktop (sticky) and as a small summary above the step on phones.
+- Step 2: Shift Card with job role, how many people, start/finish, uniform, extra details, T&Cs and a pay calculator: hours x per hour = shift rate. Typing the per-hour figure sets the shift rate, typing the shift rate sets the per-hour figure; hours come from the start/finish times (or can be typed if there is no finish time). Stored on the shift as rate, total, hoursM, plus a pay text. Duplicate and remove on each Shift Card.
+- Step 3: each Shift Card can be sent to the whole team (shift.offer = "team", first come first served; team rule shown, favourites-first marked as coming later) and/or have people picked. Three suggested people per shift, ranked by job role, availability for the date, area and being in the team (rankPeople). Browse the Network opens the Network with a booking brief (state.netBrief) at the top: job role, date and area filled in from the booking and editable, people ranked best match first with Add to shift.
+- Step 4: summary of the booking and who each Shift Card goes to, then Confirm and send. BOOK_SEND now sends team offers to every team member; OFFER_ACCEPT confirms one person and, once a team Shift Card is full, marks the rest as Shift filled. Replies show on the step with prototype Accept buttons.
+- The Add people booking bar is hidden on the Bookings screen. Leaving the Network clears the booking brief.
+- Previous bookings open read-only with the cards and Review buttons.
+- Tested headless at phone and desktop widths: create, all four steps, pay calculator both ways, send to team, add suggested people, Network brief and back, confirm, accept, bookings row. No page errors.
+
 ## v16.18 — 2026-10-25 — FF Staff Bookings: card stack and checkout
 Artifact version 1792950083-b24c · file `fireflair-v16.18.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
