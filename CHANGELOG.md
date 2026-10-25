@@ -1,5 +1,32 @@
 # FireFlair prototype — changelog
 
+## v16.17 — 2026-10-25 — FF Team & FF Staff v1.1 review copy
+Artifact version 1792946842-5002 · file `fireflair-v16.17.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB), built on v16.16
+
+v1.01 brought across from the FF Team React front end:
+- The v1.01 Home (coins between sections that turn as you scroll, Join with the coin drop), Beta label, the 1-minute CV box, password minimum of 5, Create your own question, Media as one section, Help me write removed, the edge bounce, and the v1.01 colours and fonts. The v1.01 CSS is added as a rule-by-rule diff against the original, with the original's variant rules (e.g. `.ff-tile.dark`) re-asserted so nothing in the older screens changes.
+- Not yet brought across: the Live Action Bar, Save = Publish, five card icons and flags, the car icon, Share to WhatsApp, and the v1.01 public profile changes.
+
+v1.1:
+- FF Staff home rebuilt from the FF Team home (StaffHome11): hero (Find staff. Book staff.), Featured staff (no profession rows), What is FF Staff?, How booking works (Event Card → Shift Card → WhatsApp), Create your Event Card, Book a team (business teams), reviews, Your Company Card, the platforms (FF Party as phase 2), What's next for FF Staff (Service Cards, Signature Cocktails and the rest as coming soon), beta feedback and Join FF Staff with the coin drop.
+- FF Party home (PartyHome11): a simple how-it-works for people planning a party, the existing Event Card builder, featured bartenders, Book a bar company, reviews, cocktails and coming soon.
+- Event Card redesigned in the Team Card family (EventCard11). Only date, start time and location are needed; name, event type and guests are optional. Finish time, client, dress code, team size and notes move to the Shift Card.
+- Shift Card redesigned (ShiftCard11) with job role, start time, uniform, extra details and T&Cs, assigned to an Event Card and duplicable. The new Shift Card editor replaces ShiftSheet (same props) and drops the pay field.
+- FF Staff / FF Party Bookings rebuilt (StaffBookings): Events and Shifts tabs, past events as a list, Shift Cards grouped by event with Edit, Duplicate, Assign and Send, and a notifications bell (updates also go on WhatsApp). Two upcoming demo events added.
+- Join FF Staff: username (page address) and phone only; the company name goes on the card.
+- Company Card: "What areas do you cover?" replaces "Where you're based", and three layouts under the colours (Classic, Big logo, Centred), saved as `company.layout`.
+- Company profile reordered: About, Media (new, `company.media`), Contact & social, Areas covered, Venues, Documents, T&Cs, hiring questions, your team, reviews; Services and Signature cocktails are coming soon (FF Party).
+- Network: "Partner venues" becomes Companies (FF Staff and FF Team), each opening a company page (CompanyPublic, `state.viewingCompany`) with media, contact, their team (Book from their team on FF Staff), areas covered and reviews. Sample company pages in COMPANY_PAGES.
+- Availability Cards: stored exactly like Question Cards (`profile.answers["av_<date>"]`, choices Yes / No / Maybe). FF Team Bookings shows them (add a date, and requests from businesses). On any profile, Availability shows the saved answer straight away or sends an Availability Card on WhatsApp (`state.availabilityAsks`). Who is free is also shown when picking a person for a Shift Card.
+- Ask a question: sends a Question Card plus a WhatsApp message (preview shown), from any person or company page, on FF Team and FF Staff.
+- New actions go through v11Reducer in front of the main reducer: V11_SET, VIEW_COMPANY, AVAIL_ASK, AVAIL_ASK_PATCH, COMPANY_MEDIA_ADD, COMPANY_MEDIA_DELETE, NOTES_SEEN. Older replaced components are kept, renamed `_old`.
+- Tested headless at phone and desktop widths: FF Staff home, event and shift creation, duplicate, Bookings tabs and bell, join, card layouts, company pages, availability, ask a question, FF Party home, FF Team bookings and network. No page errors.
+
+## v16.16 — 2026-10-25 — Published prototype, as the base for v1.1
+File `fireflair-v16.16.html`
+
+- The FireFlair prototype artifact as published (PHASE1 version 16.16), saved so v16.17 can be compared against it.
+
 ## FF Team Phase 1 v1.8 — 2026-10-19 — Profile pages, card builder, Home content
 Artifact version 1792357829-5456 · file `ff-team-phase-1/ff-team-phase-1-v1.8.html`
 
