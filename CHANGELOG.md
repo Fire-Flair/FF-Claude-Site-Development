@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v16.23 — 2026-10-26 — Gold gradient, coin Confirm, T&Cs pop-up
+Artifact version 1793018670-bbbf · file `fireflair-v16.23.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Colours: one continuous gold gradient across the four booking steps, with the same dark text on all four (no red end, no mix of black and white text).
+- Layout: Event Card, Service Card and Staff now share one column width, so each header bar is the same size as the box it drops down from. Opening Staff no longer jumps to a full-width box.
+- Step 4 is now a round FF coin Confirm button after three boxes, with arrows between the steps.
+- Search boxes (staff search, home hire search) show the FF AI tag and a microphone.
+- Your bookings: "Coming up" and "Past" are dropdowns with horizontal scrolling date tiles, sorted by date (Coming up soonest first, Past most recent first). Tapping a tile shows details and an Open booking button.
+- Terms and conditions: no full-screen page. "View T&Cs" opens a normal pop-up with five standard terms that can be edited and saved to the company profile. The "use AI to create my terms" option is removed; adding a document is kept.
+
 ## v16.22 — 2026-10-25 — Gradient steps, five-box cards, terms page
 Artifact version 1792958440-9643 · file `fireflair-v16.22.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
