@@ -1,5 +1,19 @@
 # FireFlair prototype — changelog
 
+## v16.24 — 2026-10-26 — Shift details step, role picker, Party favourites
+Artifact version 1793047450-84f0 · file `fireflair-v16.24.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Bookings page: the heading is just "Create a booking" (no "New booking" label).
+- Event Card, Staff and Shift details can all be open at the same time. Opening one no longer closes another, and the booking no longer resets when it is first created.
+- Fix: saving an Event Card could send a new booking to "Previous bookings" with no team. A date typed with a two-digit year (read as year 0026) counted as past. Two-digit years now read as 20xx, and a date that has genuinely passed is refused with a message instead of being saved.
+- FF Staff order is now 1 Event Card, 2 Staff, 3 Shift details, 4 Confirm. "Service Card" is called "Shift details" on FF Staff (FF Party keeps "Service Card").
+- Staff step starts with "Who do you need?": roles grouped by the same categories as the FF Team profile (Bar, Front of House, Chefs, Management, Entertainment, Services, Back of House), plus an "Another role" box. Tapping a role adds one person's shift details with the times of the one before. Then choose people for each role. The same grouped picker is used for the Role box in Shift details.
+- A shift needs a role, start and finish time to count as complete. Missing items are listed on the Confirm step.
+- FF Party: Service Card step is a row of FireFlair templates (role, typical hours, short description). Pick one and it opens for editing. Pay is left blank for the hirer to enter.
+- FF Party: no team is assumed. "Favourite staff" sits at the bottom of the Staff step, below recommendations and search. A heart on staff tiles, "Add to favourites" on the card preview and on the profile (replacing "Add to team"). Favourites are kept in state.favs.
+- Card preview on the Network keeps "Add to your event" and "View profile"; on FF Party it also has "Add to favourites".
+- FF Staff home wording follows the new order and "shift details" naming.
+
 ## v16.23 — 2026-10-26 — Gold gradient, coin Confirm, T&Cs pop-up
 Artifact version 1793018670-bbbf · file `fireflair-v16.23.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
