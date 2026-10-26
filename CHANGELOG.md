@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v16.25 — 2026-10-26 — FF Party books the real Service Cards
+Artifact version 1793049777-6afb · file `fireflair-v16.25.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- FF Party Service Card step now uses the real FireFlair Service Cards from the FF Team "What's next" row (Bartending, Mixology, Masterclass, Full Service, Staff Service), taken from PARTY_SERVICES in the v1.01 repo, drawn with the same poster card. The earlier template idea is removed.
+- Each card has a "Book this" button. Booking one adds it to the booking and marks the card as booked, with "Booked · Remove". Everything on the card is fixed as listed on the home page.
+- The start time is not edited on the card: it comes from the Event Card, and the finish is worked out from the card's duration. If the Event Card start time changes, booked Service Cards follow it. If there is no start time yet, Confirm lists "Add the start time on your Event Card".
+- Staff step on FF Party shows each booked service as a slot and ranks recommendations by the matching role (Bartender, Mixologist, Event Staff).
+- Invoice and event guide on FF Party lists the booked services with their duration and the amounts shown on the cards, and a total ("From" when any card is a "From" card). FF Staff's invoice is unchanged.
+- Dev note: the prototype reads PARTY_SERVICES and PosterCard from the v1.01 port (exported through V101).
+
 ## v16.24 — 2026-10-26 — Shift details step, role picker, Party favourites
 Artifact version 1793047450-84f0 · file `fireflair-v16.24.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
