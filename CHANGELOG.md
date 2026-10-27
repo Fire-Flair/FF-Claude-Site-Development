@@ -1,5 +1,17 @@
 # FireFlair prototype — changelog
 
+## v16.28 — 2026-10-27 — Company tabs, Q&A, collapsed by default
+Artifact version 1793072727-647b · file `fireflair-v16.28.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Booking screen: tapping an open section bar (Event Card, Staff, Shift details) collapses it; Save/Cancel and "Done with staff" are gone, and collapsing the Event Card saves it. Black arrow buttons replaced by a chevron on the right of each bar.
+- "Create your Event Card" on Home opens the booking screen with the Event Card section open; returning from the Network opens Staff.
+- Staff step: "Your picks" removed; chosen-but-unplaced people sit in the basket (burgundy border) with the mini cards. Confirm coin has a smaller black bezel plus a burgundy outer ring. "Do it" buttons removed from the order review. Card plate reads "Shift card" (section stays "Shift details").
+- Everything collapsible on FF Staff / FF Party is collapsed by default (Profession stays open).
+- Company profile: media on top, then four tabs (Overview, Q&A, Team, Reviews). Q&A replaces Hiring questions: 5 website-feedback and 5 business questions, each Yes/No plus a type box, with add-your-own. Business answers show on the public company page; feedback stays private.
+- Company Card: social icons (WhatsApp, LinkedIn, Instagram, Facebook, TikTok) edited under Social links. New wording that the card is sent to anyone you hire and can be added to FF Party. FF AI company box shortened, no "prototype".
+- Join: "I already have an account" removed; Continue logs in when the phone number is recognised.
+- Network (FF Staff): Top staff, professions, map, Companies, Your team.
+
 ## v16.27 — 2026-10-27 — Ring on Confirm, cards below staff, direct edit
 Artifact version 1793071067-2842 · file `fireflair-v16.27.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
