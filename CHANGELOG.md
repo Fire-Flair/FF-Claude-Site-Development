@@ -1,5 +1,17 @@
 # FireFlair prototype — changelog
 
+## v16.35 — 2026-10-27 — FF Team home: Discover FireFlair, Core Values, new order
+Artifact version 1793111111-86e4 · file `fireflair-v16.35.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- FF Team homepage, from the "Core Values, Section Navigation & Content Hierarchy" brief. New order: hero and search (unchanged), Discover FireFlair, Core Values, Services, Put Yourself on the Map, Build Your Team, Collect Reviews, Career Support, Featured Professionals, then the remaining sections (What is FireFlair, the platforms, XP, beta feedback, join).
+- Discover FireFlair: a swipeable row of eight 5:7 squircle cards (Community, Profiles, Services, Events, Career Support, Build Your Team, Get Discovered, Reviews & Reputation), each with a photo, title and subtitle. The next card peeks at the edge on phones; arrows appear on wider screens. Each card opens a short text pop-up (the existing Sheet: focus trap, Escape and a close button) with one or two buttons.
+- Pop-up buttons go to existing places only: Community → Network; Profiles → Profile Card creation; Services → Services section; Events → the FireFlair platforms section, plus Training; Career Support → Career Support; Build Your Team → Build your team section, plus Network; Get Discovered → the map section, plus Profile Card creation; Reviews → Collect reviews section.
+- No dedicated events page exists yet, so Events points at the platforms section, where FF Party and FF Staff are explained.
+- Core Values: a circular diagram with COMMUNITY ("People, connected through events") at the centre, linked to six ways people connect: parties and celebrations, hospitality services, professional networking, training and learning, jobs and careers, business and team events. It scales down on phones.
+- Services: the existing Service Cards section (formerly "What's next for FireFlair?") is now headed "Services" with a one-line introduction, and sits straight after Core Values. Same cards and data.
+- Career Support: Training, Dream Jobs and Rewards are grouped under one Career Support heading. Their content and buttons are unchanged.
+- Code: glue-tail.jsx (DiscoverFireFlair, CoreValues, CareerSupport, Home101 order), v11.css (styles), build.mjs (the Services heading on the ported HomeComingSoon). The frontend repo is untouched.
+
 ## v16.34 — 2026-10-27 — Staff row, Shift cards first, business packages
 Artifact version 1793110590-f819 · file `fireflair-v16.34.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
