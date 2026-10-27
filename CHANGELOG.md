@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v16.60 — 2026-10-27 — Community coin: front rim matched to the back, slightly larger
+Artifact version 1793145162-5d76 · file `fireflair-v16.60.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Community coin front: the gold rim and red border now match the back exactly (same thickness and detail). The front face was rebuilt by taking the rim and red ring from the back's own coin artwork and placing the new black leather with gold veining inside it. Before, the supplied blank face had a thicker rim, so the two sides did not agree.
+- The coin is slightly larger on desktop, and the six icons and labels sit a little closer to the centre so every text box sits inside the red ring on both desktop and phone.
+- The Review & Confirm coin front uses the same rebuilt face, so both coins share one rim and one back style.
+- The face is stored once in the stylesheet (a shared variable) and used by both coins; the new face is also saved in assets/ff-coin.
+
 ## v16.59 — 2026-10-27 — Matching ampersand on Review & Confirm
 Artifact version 1793144725-27be · file `fireflair-v16.59.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
