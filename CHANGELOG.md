@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v16.38 — 2026-10-27 — Booking box links Shift details and Staff
+Artifact version 1793113066-e924 · file `fireflair-v16.38.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Booking box, as agreed: one row with a fixed height, always between Shift details and Staff. When empty it shows a single +, which opens Shift details with the role picker open. Once there are roles, a + at the end of the row adds another.
+- Tapping a role card selects it: two burgundy pointers mark the card, one up to Shift details and one down to Staff. Shift details shows only that role's Shift card ("Shift card 1: Bartender"); Staff shows only people with that profession ("Staff for Bartender"), your team first. Tapping a person puts them on that card, or swaps them in if it's already full.
+- Tapping the selected card again deselects it: Shift details shows every card again and Staff goes back to everyone.
+- People picked elsewhere (for example from the Network) wait as small faces at the start of the row; tapping one puts them on the selected role.
+
 ## v16.37 — 2026-10-27 — Company name join, compact booking box, FF AI in the Event Card
 Artifact version 1793112852-0cf4 · file `fireflair-v16.37.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
