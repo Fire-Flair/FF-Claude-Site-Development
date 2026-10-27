@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v16.45 — 2026-10-27 — Gold-ringed What is FireFlair? wheel; FF Team home follows Discover order, Community first
+Artifact version 1793127474-31a2 · file `fireflair-v16.45.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- FF Team home, "What is FireFlair?": the circle is now a solid dark disc with a thick gold gradient border all the way round, replacing the fading black vignette that looked like a smudge. Applies to all three sites.
+- FF Team Discover FireFlair cards are back in the earlier order with Community first: Community, Profiles, Services, Cocktail Menu, Events, Career Support, Build Your Team, Get Discovered, Reviews & Reputation, The Platforms (always last).
+- FF Team home sections now follow that order, the Discover list leading the page: Discover, What is FireFlair?, Community map, Featured professionals, Services, Career Support, Build your team, Reviews. "Your CV, brought into the 21st century" (the What is FF Team section) moves right down, just above The Platforms.
+
 ## v16.44 — 2026-10-27 — Wider booking boxes on desktop, arrow bubbles, spinning confirm coin
 Artifact version 1793127066-6785 · file `fireflair-v16.44.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
