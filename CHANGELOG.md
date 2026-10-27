@@ -1,5 +1,19 @@
 # FireFlair prototype — changelog
 
+## v16.39 — 2026-10-27 — Linked Shift card carousel and staff bubble; FF Party personal profile
+Artifact version 1793114021-12c0 · file `fireflair-v16.39.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Booking box, built to the four answers from the last round:
+  - Shift details is a swipeable row, one Shift card at a time. Swiping to a card selects its role in the booking bar; tapping a role swipes to its card. The first card is selected by default.
+  - The selected Shift card has a speech-bubble arrow at its bottom pointing down to its role. The staff box under Staff is a card-width bubble with an arrow at its top pointing up to the same role. Both arrows follow the role as you swipe or tap.
+  - The booking bar is about 120px tall. It shows only role cards (a + when empty) and a + to add another role. The earlier diamond markers are gone.
+- People picked elsewhere (such as Tom) no longer appear in the booking bar. They show as "Your pick" first in the staff box.
+- Shift cards: the Event Card's start time fills in on any Shift card without one (new or existing). Hours fill in as soon as both start and finish are set. The Staff row on the Shift card is gone; the card points to the booking bar instead.
+- FF Party profile, for a person rather than a business: no company wording, no FF AI company step and no "Coming with FF Party" box.
+  - Step 2 is a 5:7 FF Party Card, mostly the person's photo, with name, profession, interests, favourite cocktails and favourite drinks, and a line saying it's shared with the people they book.
+  - Step 3 has tabs: Overview (About me, My kind of party, Favourite cocktails, Favourite drinks, Interests), Favourite staff, and Reviews.
+  - FF Staff keeps the company profile.
+
 ## v16.38 — 2026-10-27 — Booking box links Shift details and Staff
 Artifact version 1793113066-e924 · file `fireflair-v16.38.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
