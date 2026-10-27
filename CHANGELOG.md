@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v16.54 — 2026-10-27 — Service Card figures on FF Team
+Artifact version 1793136635-429d · file `fireflair-v16.54.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- FF Team Service Cards now show a figure £50 below the FF Party equivalent (all five, including Staff); FF Party and FF Staff are unchanged apart from the Platinum Full Service card, which was updated on FF Party.
+- The reduction happens at display time in the shared ServicePoster; FF Party booking cards still read the unreduced data.
+- Home divider coins now start after DOMContentLoaded (with a load fallback) instead of waiting for the full window load.
+
 ## v16.53 — 2026-10-27 — Community coin front: leather, red ring, richer gold
 Artifact version 1793130028-199a · file `fireflair-v16.53.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
