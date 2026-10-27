@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v16.29 — 2026-10-27 — UK map, inline basket, one-button sections
+Artifact version 1793074468-6ff8 · file `fireflair-v16.29.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Map (FF Team, FF Staff, FF Party): the coins now sit on a real map of the UK, drawn from Natural Earth data (public domain) embedded in the page, so nothing is fetched from a map server. It opens on the UK with a London coin showing the count; tapping it, or the London switch, flies in to the London areas (boroughs and the Thames), where each coin opens its card as before. The UK switch flies back out. Areas only, never addresses.
+- In the real build, the same view can use Google Maps (VITE_GOOGLE_MAPS_API_KEY) or any tile provider; the coin placement and London fly-in carry over.
+- Booking screen: the matching area (people chosen but not placed, plus the mini cards) is no longer fixed to the bottom of the screen. It sits between Staff and Shift details. It had picked up the old fixed `.ff-basket` style by name; it is now `.ff-mbasket`.
+- Event Card, Staff and Shift details each collapse back to one large button with a dropdown chevron, showing a short summary (date, time and place; people chosen; number of shifts). Shift details also starts collapsed; tapping a mini card opens it at that shift.
+- Review your order: the to-do list is gone. Confirm only needs the Event Card date and location plus at least one person.
+- Map coins inside the live map were collapsing to zero width; fixed.
+
 ## v16.28 — 2026-10-27 — Company tabs, Q&A, collapsed by default
 Artifact version 1793072727-647b · file `fireflair-v16.28.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
