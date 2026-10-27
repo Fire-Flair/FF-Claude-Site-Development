@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v16.27 — 2026-10-27 — Ring on Confirm, cards below staff, direct edit
+Artifact version 1793071067-2842 · file `fireflair-v16.27.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Confirm button: the "4" badge and the "After steps 1 to 3" line are removed. The coin now has a black ring with a thin gold line inside it.
+- Staff step: the mini profile cards for chosen professions (and "Your picks") now sit below all the staff boxes, directly above Shift details, so each card is next to the shift it belongs to. No time is written on them.
+- Tapping a mini card selects it for adding people and scrolls to that card's shift details.
+- Shift details: no Edit button. Every card is editable straight away and saves as you type. Duplicate + and Remove stay. There is no "Add more shift details" button; shift details are created by choosing a profession in Staff.
+- If no professions are chosen yet, the Shift details step opens Staff.
+
 ## v16.26 — 2026-10-27 — Profession box, mini cards, less text
 Artifact version 1793070670-7f71 · file `fireflair-v16.26.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
