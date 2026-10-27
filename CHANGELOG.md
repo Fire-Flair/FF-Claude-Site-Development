@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v16.31 — 2026-10-27 — Shift details back as step 3
+Artifact version 1793098987-6edd · file `fireflair-v16.31.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- FF Staff booking screen: Shift details is back as section 3, so the order is 1 Event Card, 2 Staff, 3 Shift details, then Confirm. It opens to every shift card, side by side, as before.
+- The role cards between Staff and Shift details stay. A role card's + still opens the staff row; tapping a role card still opens its Shift card underneath. Only one copy of a Shift card is open at a time: opening a role card's Shift card closes the Shift details section, and opening Shift details closes the role card's Shift card.
+
 ## v16.30 — 2026-10-27 — World map, staff row and Shift card bubble
 Artifact version 1793075360-dd04 · file `fireflair-v16.30.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
