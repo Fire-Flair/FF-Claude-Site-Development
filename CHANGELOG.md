@@ -1,5 +1,18 @@
 # FireFlair prototype — changelog
 
+## v16.36 — 2026-10-27 — Booking box back, action bar off, payment screen, availability
+Artifact version 1793111699-12c2 · file `fireflair-v16.36.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Corrects the last round: the live action bar ("Add people: tap or drag their cards here · Open booking") is now switched off everywhere. The booking box stays and is back between Shift details and Staff, replacing the arrow once there is a role.
+- Picking a role on the blank Shift card adds it straight away: the card appears in the booking box at once. Tapping a card in the booking box drops down the staff with that profession on their profile (your team first) to choose from.
+- Phone number and email are two separate boxes at the top of the booking, each with its own Save button (a tick once saved). Join FF Staff now asks for an email as well as the phone number.
+- Invoices: the FF invoice is plain white like the event invoice; only the event invoice is stamped Preview. If there is no name, "Billed to" is a box to type one into instead of "You". The FF invoice ends with a total line and a Terms and conditions box ("Beta: no payment taken") that opens FireFlair's full terms.
+- Confirm booking now goes to a Payment screen (package line, total, Apple Pay / Google Pay / Card, beta note), then "Pay and send on WhatsApp". No payment is taken in the beta.
+- Review your order: the Close button is gone. Below Confirm booking: a note recommending a Company Card, the Company Card from the profile, and Save / Later. Save keeps the card and the booking's phone, email and name on the company, then opens the company profile.
+- Company Card: "What areas do you cover?" is now "Where are you based?".
+- New WhatsApp-themed Availability box above Business packages: You confirm → Sent on WhatsApp → Staff confirm, with the note on the 24-hour reward and the 48-hour follow-up offering to share the shift with other members.
+- Business packages: three perks each. Bronze: pay as you go, Company Card, custom Service Cards. Silver: unlimited Shift cards, priority staff matching, featured Company Card. Gold: unlimited Shift cards, shareholder privileges, dedicated account manager. Silver and Gold have Register interest buttons (stored on the page for now). The second and third perks for Silver, and the third for Gold, are placeholders until confirmed.
+
 ## v16.35 — 2026-10-27 — FF Team home: Discover FireFlair, Core Values, new order
 Artifact version 1793111111-86e4 · file `fireflair-v16.35.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
