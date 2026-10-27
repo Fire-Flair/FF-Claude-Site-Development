@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v16.56 — 2026-10-27 — M25 London map, real-map snapshots, richer coin leather
+Artifact version 1793143368-1c8b · file `fireflair-v16.56.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- London view of the map: now frames everything inside the M25. The area is one clean Greater London silhouette (the borough outlines are gone), with the Thames drawn as a smoothed river line and a dashed M25 ring labelled "M25". The area names that used to sit over the map are removed; the profile pins stay area-level.
+- London outline data: replaced the coarse borough shapes with a detailed outline merged from MIT-licensed London borough boundaries. The M25 ring is a hand-traced guide through the motorway junctions, not survey data; the real site should use proper map data for it.
+- The Thames and the UK county lines now show only at the zoom levels where they help, so the UK view no longer has a stray red river line.
+- "Put yourself on the map" card: the two hand-drawn images (UK squiggle and globe) are replaced with snapshots of the real map, taken from the Network map at high resolution (UK view and whole-world view, with the FF coin on London). They are static images, so the card stays light.
+- Community coin front: the leather background is now one large, non-repeating texture built from the full-size coin artwork (grain, scratches and a soft sheen), instead of a small tile stretched up. It matches the back of the coin.
+
 ## v16.55 — 2026-10-27 — Sharper leather on the Community coin
 Artifact version 1793142646-356c · file `fireflair-v16.55.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
