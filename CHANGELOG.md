@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v16.57 — 2026-10-27 — Community coin: new blank coin face
+Artifact version 1793144400-e475 · file `fireflair-v16.57.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Community coin front now uses the supplied blank coin face (black leather with gold veining, red ring, gold rim). It was cut out cleanly into a circle with a transparent background, so it sits on the page and spins like the other coin.
+- The old CSS-drawn rim, red ring and leather layers on the front are switched off; the centre Community disc, icons and labels are unchanged on top.
+- The six icons sit slightly closer to the centre so none of them cross the red ring.
+
 ## v16.56 — 2026-10-27 — M25 London map, real-map snapshots, richer coin leather
 Artifact version 1793143368-1c8b · file `fireflair-v16.56.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
