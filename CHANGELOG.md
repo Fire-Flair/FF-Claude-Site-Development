@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v16.34 — 2026-10-27 — Staff row, Shift cards first, business packages
+Artifact version 1793110590-f819 · file `fireflair-v16.34.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Booking bar between the sections removed for now; people go straight onto Shift cards.
+- Shift details: no profession picker at the top. A "Choose your role" line, then the Shift cards themselves; the Role box on each card holds the profession picker, and a blank next card is always at the end for another role. Each card has a Staff row showing who is on it, and three buttons: Confirm, Duplicate and a bin.
+- Staff (step 3): opens to one swipeable row of staff cards. Order: your picks and your team (gold glow, "Your team"), three Recommended, then a divider and everyone else sorted closest to the event's area. A search box filters the row. Tapping a card puts that person on an open Shift card for their profession, or makes a new Shift card for them, so staff can be chosen before shift details; tapping again takes them off. All sorting runs on the page.
+- Confirm coin: smaller bezel, reads "Review and confirm", and always opens the invoice preview, even with nothing entered.
+- Business packages now sit in their own box below the booking box: Bronze (pay per fulfilled Shift card), Silver (monthly, unlimited Shift cards) and Gold (yearly, amount still to be set, unlimited Shift cards). Silver and Gold are marked "Coming soon · 2027". Richer bronze, silver and gold colouring. Amounts are in the UI only.
+- The FF coin is now top right in every box: the packages, each package tile, and both invoices.
+
 ## v16.33 — 2026-10-27 — Contact box, shift-first booking, plans, two invoices
 Artifact version 1793108945-54bb · file `fireflair-v16.33.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
