@@ -1,5 +1,17 @@
 # FireFlair prototype — changelog
 
+## v16.37 — 2026-10-27 — Company name join, compact booking box, FF AI in the Event Card
+Artifact version 1793112852-0cf4 · file `fireflair-v16.37.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Join FF Staff: no username. You give your company name (your name on FF Party), and the page address is made from it. New companies start with a black (Onyx) card in the middle layout: big logo on the left, name on the right.
+- Company Card: "What you do" now has a small briefcase icon to match the location pin on "Where you're based". The Company Card shown in Review your order has no colour or layout options.
+- Company profile: the Q&A tab is now Services, with three sections: Services (custom Service Cards, coming soon), Cocktail menu (coming soon) and Q&A.
+- Create a booking: phone number and email sit side by side in the same style as the Join FF Staff fields, each with a Save button inside the box.
+- FF AI now sits inside the Event Card drop-down, with the microphone inside the text box on the right and the prompt "Paste in the details, or tell us what you're looking for, and we'll fill everything in."
+- Availability box: the You confirm and Staff confirm icons are gold; Sent on WhatsApp stays green.
+- Booking box: role cards are half the height, with a small + when empty and a small face once filled. The full staff cards only appear while choosing, and close once someone is picked.
+- Review your order: the event invoice no longer has Billed to; only the FF invoice asks for a name or company. Under the event invoice: Review terms and conditions and Edit terms and conditions (saved to the company profile). Apple Pay, Google Pay and Card sit under Confirm booking. The Company Card suggestion only shows for people who aren't signed in with a company yet.
+
 ## v16.36 — 2026-10-27 — Booking box back, action bar off, payment screen, availability
 Artifact version 1793111699-12c2 · file `fireflair-v16.36.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
