@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v16.44 — 2026-10-27 — Wider booking boxes on desktop, arrow bubbles, spinning confirm coin
+Artifact version 1793127066-6785 · file `fireflair-v16.44.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Booking page on desktop (900px and up): the Event Card, Shift details and Staff boxes, the booking box and the confirm area are now two-thirds of the screen wide (capped at 1180px). Phones and small screens keep the 440px width. The staff box shows many more cards at once. The phone and FF AI boxes at the top stay narrow.
+- "Your booking" (the mini Event Card) now sits beside the booking box instead of inside it, so it no longer shifts the role cards or the arrow bubbles.
+- Arrow bubbles (the pointers on the open Shift card and the Staff box) are rebuilt. They always point at the selected role card in the booking box, and at the + tile while a new role is being added. They are measured again on every scroll, swipe, resize and selection change. Tested with 2 roles at 400px and 1280px: all arrows land on the role card centre.
+- Review and confirm button: the logo and words are now centred together as one unit. Swiping (or dragging with a mouse) spins the coin in 3D to a plain gold back face and settles back to the front; a tap still opens the review. Reduced-motion users get no animation.
+
 ## v16.43 — 2026-10-27 — What is FireFlair?, Discover cards per site in home-page order, FF Party What we offer
 Artifact version 1793124771-d242 · file `fireflair-v16.43.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
