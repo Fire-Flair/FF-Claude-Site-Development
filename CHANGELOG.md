@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v16.50 — 2026-10-27 — Gold-on-gold coin edge; smaller logo back on the circle; FF coin logo files kept
+Artifact version 1793129604-4e06 · file `fireflair-v16.50.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Coin edge lines on both big spinning coins are now a different shade of gold (tone on tone, like an indented milled edge) instead of near-black, so they no longer stand out too much.
+- What is FireFlair? circle: the back of the coin goes back to the smaller FF logo on the dark disc with the gold border, until a larger, higher-resolution FF coin is supplied.
+- New FF coin logo files (gold dark, gold bright, gold white, silver white, silver white alt; lossless masters plus 1x and 2x WebP) are kept in the repo under assets/ff-coin/ for later use. They are not used on the site yet. They have solid backgrounds, not transparency.
+
 ## v16.49 — 2026-10-27 — Ridged coin edge, full-size FF coin on the back of the circle
 Artifact version 1793129119-6125 · file `fireflair-v16.49.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
