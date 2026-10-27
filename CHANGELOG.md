@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v16.41 — 2026-10-27 — Phone-only WhatsApp continue, mini cards on the steps, Your booking box
+Artifact version 1793122419-6232 · file `fireflair-v16.41.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Phone number only at the top of Create a booking and on Join FF Staff / FF Party. Email is no longer asked for there. Continue keeps its dark button and now has a green WhatsApp logo, as the one-time code comes by WhatsApp.
+- FF AI has moved out of the Event Card to sit under the phone box, tall enough to show its whole prompt.
+- Step buttons show a miniature of what opens: a mini Event Card (with the calendar), a mini Shift card, and three profile cards in a fan for Staff (the chosen people's photos once picked).
+- Booking box: only shown while Shift details or Staff is open; otherwise the arrow sits there. It's a little taller, and its left side is "Your booking" with a mini Event Card (date, time, place) that opens the Event Card. The role cards follow, and the arrows still line up with the Shift card and the staff box.
+- The staff box keeps the Staff button's colour when open and is roomy enough for whole staff cards.
+- Shift details: the "Choose your role" line is gone, and the Shift card joins straight onto the Shift details bar.
+
 ## v16.40 — 2026-10-27 — Phone-or-email join, Service Card and cocktail builders, aligned booking arrows, Tom fix
 Artifact version 1793115244-2d73 · file `fireflair-v16.40.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
