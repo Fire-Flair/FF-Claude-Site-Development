@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v16.30 — 2026-10-27 — World map, staff row and Shift card bubble
+Artifact version 1793075360-dd04 · file `fireflair-v16.30.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Map: three views, switched top left: World (globe icon), UK and London. The world outline comes from the same embedded Natural Earth data, so still nothing is fetched from a map server. In the World and UK views, all the coins sit behind one London coin with a count; tapping it flies in.
+- Network on all three sites (FF Team, FF Staff, FF Party): Top staff, then the map ("Where FireFlair is"), then the professions. On FF Staff and FF Party, Companies and Your team follow. FF Team keeps Your network and invitations above Top staff.
+- Booking box (FF Staff): the separate Shift details section is gone; shift details now live in the booking box. Each role added from Staff becomes a role card in the burgundy box under Staff.
+- Tapping a role card's + opens a row of staff underneath (best matches for that role first: your team, availability, area). Tapping a person fills the role card, then the box shows that person's Shift card.
+- Tapping a role card opens its Shift card underneath as a speech bubble whose point moves to whichever role card is selected. Shift cards save as they are edited and keep Duplicate and Remove.
+- FF Party keeps its Service Cards section; the role cards for booked services open the staff row the same way.
+
 ## v16.29 — 2026-10-27 — UK map, inline basket, one-button sections
 Artifact version 1793074468-6ff8 · file `fireflair-v16.29.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
