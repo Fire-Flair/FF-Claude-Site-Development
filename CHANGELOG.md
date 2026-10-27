@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v16.55 — 2026-10-27 — Sharper leather on the Community coin
+Artifact version 1793142646-356c · file `fireflair-v16.55.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- What is FireFlair? circle, front side: the leather background was rebuilt from the full-size coin artwork, so the grain and scratches are sharp on high-density screens and match the back of the coin.
+- The new tile is made seamless, so it repeats without visible joins; it is used on the circle's front and its central Community disc.
+
 ## v16.54 — 2026-10-27 — Service Card figures on FF Team
 Artifact version 1793136635-429d · file `fireflair-v16.54.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
