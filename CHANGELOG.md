@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v16.58 — 2026-10-27 — Review & Confirm coin: new face and back
+Artifact version 1793144539-5bcc · file `fireflair-v16.58.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Review & Confirm coin, front: now uses the same blank coin face as the Community coin (leather, red ring, gold rim), with no logo. It reads "Review", an italic "&" in the middle, then "Confirm" underneath. The "Booking sent / See who's replied" state is unchanged in wording.
+- Review & Confirm coin, back: now shows the full-size FF coin art, the same image as the back of the Community coin.
+- The blank coin face is stored once in the stylesheet and shared by both coins. The spinning edge now matches the coin's own size, so no striped rim shows around the face.
+
 ## v16.57 — 2026-10-27 — Community coin: new blank coin face
 Artifact version 1793144400-e475 · file `fireflair-v16.57.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
