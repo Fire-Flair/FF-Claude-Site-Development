@@ -1,5 +1,16 @@
 # FireFlair prototype — changelog
 
+## v16.53 — 2026-10-27 — Community coin front: leather, red ring, richer gold
+Artifact version 1793130028-199a · file `fireflair-v16.53.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- What is FireFlair? circle, front side: enhanced using the look of the coin's back, with the layout unchanged.
+  - Background: black leather with fine scratches, taken from the new FF coin artwork and made seamless, plus a soft warm light in the middle and a darker edge.
+  - A thin deep-red ring (with a dark gap either side) now runs just inside the rim, echoing the red ring on the coin.
+  - The outer rim is a richer, metallic gold gradient that goes round the circle, brighter at the upper left, instead of the earlier flat gold.
+  - The central Community circle keeps its shape and burgundy, now with leather texture, a gold rim and its own red ring, and a warmer glow.
+  - The six gold icons have a brighter metallic gold face with a dark gap and a fine gold ring; the spokes are a warmer gold; the labels have a gold edge and a soft shadow.
+- The texture adds about 10KB to the page. It is part of the circle's styling, so it appears wherever the circle does.
+
 ## v16.52 — 2026-10-27 — One-circle profile photo button
 Artifact version 1793129803-a7d2 · file `fireflair-v16.52.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
