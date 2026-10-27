@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v16.33 — 2026-10-27 — Contact box, shift-first booking, plans, two invoices
+Artifact version 1793108945-54bb · file `fireflair-v16.33.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- FF Staff booking: an email or phone number box sits at the top, under "Create a booking" and above FF AI. It is saved on the booking and shown on both invoices. Confirm asks for it if it is empty.
+- New order: 1 Event Card, 2 Shift details, 3 Staff. Shift details now opens with the profession picker, so you choose the professions first, then set the times, pay and terms on each Shift card. Each one appears straight away in the burgundy booking bar under Shift details.
+- Staff: tap a card in the booking bar to drop down the staff for that shift. Only people with that profession on their profile are shown (Mixologist shows only mixologists). People you have booked before are highlighted in gold, marked "Your team" and shown first, so the separate Your team box is gone. All matching and sorting runs on the page; nothing new is needed on the backend.
+- Under the Confirm button: three plan boxes coloured Bronze, Silver and Gold. Bronze is pay per fulfilled Shift card and is the one in use. Silver (monthly) and Gold (yearly) are locked for now; both give unlimited Shift cards. Amounts are in the UI only.
+- Review your order is now two invoices. The Event invoice covers the event, the timings, each Shift card, who is paid what, and the terms between the hirer and the staff. The FF invoice covers FireFlair's connection charge only, with a short note that pay for the shifts goes directly to the staff.
+
 ## v16.32 — 2026-10-27 — Fix: Event Card saves as you type, Confirm always opens
 Artifact version 1793100094-d70a · file `fireflair-v16.32.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
