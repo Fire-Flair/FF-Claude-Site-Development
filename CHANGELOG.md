@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v16.26 — 2026-10-27 — Profession box, mini cards, less text
+Artifact version 1793070670-7f71 · file `fireflair-v16.26.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Staff step (FF Staff): the "Who do you need?" panel is now a "Profession" dropdown box, sitting with "Your team" and "Search for staff". Same grouped professions as the FF Team profile.
+- "FireFlair recommends" is removed from FF Staff for now (it stays on FF Party).
+- Chosen professions show as small 5:7 mini profile cards in a row instead of long rows. Each card has its number, the profession, the time, and the chosen people's faces. Cards are drop targets for dragging staff and can be removed.
+- Shift details cards are numbered to match the mini cards.
+- Instruction and helper text removed from the booking screen ("Four steps, in any order…", staff hints, "Tap to open", the service-card intro line) so the screen explains itself.
+
 ## v16.25 — 2026-10-26 — FF Party books the real Service Cards
 Artifact version 1793049777-6afb · file `fireflair-v16.25.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
