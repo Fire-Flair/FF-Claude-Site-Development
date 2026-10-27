@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v16.48 — 2026-10-27 — Host Card, social links on all three profiles
+Artifact version 1793128965-036a · file `fireflair-v16.48.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- FF Party profile: the step is still "Your FF Party Card", but the card itself is now labelled "Host Card" (the Company Card plate on the FF Party site says "Host Card" too).
+- Host Card: five social icons (WhatsApp, LinkedIn, Instagram, Facebook, TikTok) sit centred along the bottom of the card. They are dim until a link is added, then light up.
+- FF Party profile: new "Social links" drop-down (collapsed by default) to add those links. Each row is named, so nobody has to guess the icon.
+- FF Team: "Social links" is now a drop-down section on the profile, not on the Profile Card. Visitors to someone's profile see their links with the site names; the section only shows when they have added some.
+- Company profile (FF Staff): the social links rows now show the site name above each box (WhatsApp, LinkedIn, Instagram, Facebook, TikTok) instead of just an icon and "yourname". The same named editor is shared by the Company Card, the Host Card and the FF Team profile.
+
 ## v16.47 — 2026-10-27 — No Later button, confirm folds back to the coin, role box opens itself, Shift gap fixed, coins start reliably
 Artifact version 1793128866-170f · file `fireflair-v16.47.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
