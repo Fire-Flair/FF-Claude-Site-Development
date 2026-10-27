@@ -1,5 +1,16 @@
 # FireFlair prototype — changelog
 
+## v16.47 — 2026-10-27 — No Later button, confirm folds back to the coin, role box opens itself, Shift gap fixed, coins start reliably
+Artifact version 1793128866-170f · file `fireflair-v16.47.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Company Card prompt on the FF Staff booking page: the "Later" button is gone, so it can't be dismissed and lost. The prompt simply disappears once the person has saved a Company Card.
+- Review and confirm: with the review open, tapping the Confirm bar folds it back into the coin.
+- Coins: the 3D coin and the home-page coin dividers no longer wait for every last page resource to finish loading. They start once the page is usable (DOM ready, then idle), with a 2.5 second fallback, so a slow or stuck resource can't stop them. Reduced motion no longer blocks the drag-spin, because the person is driving it. Data-saving, 2G and low-memory devices still keep the coins flat.
+- Shift details: the role box opens by itself on a card that has no role yet, so the roles are ready to tap.
+- Role categories: Chefs now sit between Services and Back of House (applies wherever the profession categories are used, including FF Team profiles).
+- Shift cards: fixed the big gap that opened under the Shift card when there were several cards. The strip is now exactly as tall as the card you are on, so shorter cards no longer leave empty space before the booking box.
+- Your next step (FF coin): each step now shows once; the highlighted next step is no longer repeated in the list below it.
+
 ## v16.46 — 2026-10-27 — 3D coins (confirm and Community circle), role plus icons, staff capped at 10 with search card
 Artifact version 1793128432-a744 · file `fireflair-v16.46.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
