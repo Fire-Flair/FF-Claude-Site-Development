@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v16.32 — 2026-10-27 — Fix: Event Card saves as you type, Confirm always opens
+Artifact version 1793100094-d70a · file `fireflair-v16.32.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Bug fix: the Event Card only saved when its bar was tapped, so a date and location typed in, followed by a move straight on to Staff, were lost and Confirm said to add them. The open Event Card now saves as you type.
+- Bug fix: the Confirm coin now always opens Review your order. Confirm booking is never a dead button: if the date, location or staff are still missing, it says so and opens the Event Card or Staff.
+
 ## v16.31 — 2026-10-27 — Shift details back as step 3
 Artifact version 1793098987-6edd · file `fireflair-v16.31.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
