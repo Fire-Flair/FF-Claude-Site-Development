@@ -1,5 +1,17 @@
 # FireFlair prototype — changelog
 
+## v16.43 — 2026-10-27 — What is FireFlair?, Discover cards per site in home-page order, FF Party What we offer
+Artifact version 1793124771-d242 · file `fireflair-v16.43.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Discover FireFlair, by site. Each home page now follows the order of its cards, with What is FireFlair? straight after Discover. The Platforms is always the last card.
+  - FF Staff: Company Profiles (seen by everyone you book, and on FF Party so people can book your services), Book Staff, Service Cards (new copy below), Cocktail Menu, Shift cards, Community, Build Your Team, Reviews & Reputation, The Platforms. The home page sections are reordered to match.
+  - Service Cards copy: create them to show every potential customer what you offer, and get full, complete bookings for your approval instead of generic enquiries. Every Service Card comes in Bronze (best value), Silver (the middle ground) and Gold (best quality), so each customer gets an accurate quote for the level they pick. Customers can add cocktails to their package.
+  - FF Team: Profiles, Services, Cocktail Menu (new: your signature cocktails belong to you, live on your profile, travel to every venue, and businesses and customers can hire you for them), Get Discovered, Build Your Team, Reviews & Reputation, Career Support, Community, Events, The Platforms. "Your CV, brought into the 21st century" moves up to follow What is FireFlair?.
+  - FF Party: Service Cards (What we offer), Cocktail Menu, Bartenders & Staff, Companies, Reviews, Your Profile, Favourite Staff, Plan Your Event, The Platforms. Cocktail Menu copy: choose classics or each bartender's or provider's signature cocktails; cocktails and quantities go into your package for an accurate quote; a bar company brings the stock, and individual bartenders come with a shopping list.
+- Core Values is now "What is FireFlair?", answered with "The card-based event connection platform." Underneath: "Our dream is to make it easy to build real, lasting connections from every event you attend." The circle is bigger, the dotted ring is gone, and a vignette fades out towards the edge so the outer circles stand out. The words around the circle still differ by site.
+- FF Party: a new "What we offer" section straight after What is FireFlair?, for content and SEO. It has the Service Cards, a Plan your event button, six services (mobile bar hire, cocktail bartenders, mixologists and signature cocktails, cocktail masterclasses, full event service, event staff), a "Perfect for" list of 16 occasions (hen parties, stag dos, weddings, birthdays, house parties and more), and a descriptive paragraph. The old "Coming to FF Party" section is gone. The platforms section is added at the end.
+- FF Party booking: Service Cards now come first (1 Service Cards, 2 Event Card, 3 Staff).
+
 ## v16.42 — 2026-10-27 — 5:7 Discover pop-ups; Discover and Core Values on every home page
 Artifact version 1793123499-a581 · file `fireflair-v16.42.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
