@@ -1,5 +1,10 @@
 # FireFlair prototype — changelog
 
+## v16.59 — 2026-10-27 — Matching ampersand on Review & Confirm
+Artifact version 1793144725-27be · file `fireflair-v16.59.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Review & Confirm coin: the "&" now uses the same font, weight, size, colour and shadow as "Review" and "Confirm" (it was an italic, so it looked like a different font).
+
 ## v16.58 — 2026-10-27 — Review & Confirm coin: new face and back
 Artifact version 1793144539-5bcc · file `fireflair-v16.58.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
