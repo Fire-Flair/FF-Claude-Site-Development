@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v16.49 — 2026-10-27 — Ridged coin edge, full-size FF coin on the back of the circle
+Artifact version 1793129119-6125 · file `fireflair-v16.49.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Both big spinning coins (Review and confirm, and the What is FireFlair? circle) now have a milled, ridged edge: fine dark and gold lines run across the rim, like the reeding on a real coin, and show as you spin it. The lines scale with the size of the coin.
+- What is FireFlair? circle: the back of the coin is now the full-size FF coin logo filling the whole face, instead of a small logo on a dark disc.
+
 ## v16.48 — 2026-10-27 — Host Card, social links on all three profiles
 Artifact version 1793128965-036a · file `fireflair-v16.48.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
