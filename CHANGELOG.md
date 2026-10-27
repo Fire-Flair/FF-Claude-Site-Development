@@ -1,5 +1,25 @@
 # FireFlair prototype — changelog
 
+## v16.40 — 2026-10-27 — Phone-or-email join, Service Card and cocktail builders, aligned booking arrows, Tom fix
+Artifact version 1793115244-2d73 · file `fireflair-v16.40.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Tom in everyone's basket: the prototype saves one shared state for every viewer (the artifact's database, document fireflair/state), and "selection" (the basket) was part of it. Someone added Tom once, so he showed for everyone, on every site. The basket is no longer saved, and the stored basket has been cleared. The same shared save had the Company Card set to Forest green, so the card looked green for everyone; it's been reset to Onyx (black) in the middle layout. Bookings, events and profile edits are still shared between viewers; for the real site this needs to be per user.
+- Join FF Staff / FF Party: no company name or username at the top (the name comes from the Company Card / FF Party Card). Phone number first, then "or", then email, then Continue. Either is enough. Phone gets a WhatsApp code, email gets an email code (any six digits in the preview). A recognised phone number logs in.
+- Create a booking uses exactly the same box at the top. Once joined or signed in, it collapses to one line with the name and the phone/email.
+- Company profile: the "Coming with FF Party" box is removed (profile and public page).
+- Services tab, now working:
+  - Services: "Create a Service Card" builds a custom Service Card in the same frame as FireFlair's own, inside the drop-down, with a live preview. Fields: name, one line, includes, ideal for, duration and an amount the business types in. Colours: Bronze, Silver, Gold, Platinum, Black, White. Tap a saved card to edit or delete it.
+  - Cocktail menu: "Add a cocktail" builds a Signature Cocktail card the same way: name, one line, ingredients, method, glass and garnish.
+  - Saved on the company profile as svcCards and menu.
+- Booking box: 136px tall, so the role cards and the selected outline fit without overlapping. The + tile is the same size as the role cards, with the same-size + icon.
+- The booking bar, Shift cards and the staff bubble are now the same width (the section column, 440px at most), so the arrows line up exactly. Checked at 400px and 1280px: the role card's centre, the Shift card's arrow and the staff bubble's arrow land on the same x.
+- Staff (step 3), open: no "3 Staff" bar, just the bubble box, full column width, with "Staff for <role>" and a small close button. Staff cards are slightly smaller inside it, so more show at once.
+- Shift cards: Confirm, Duplicate and the bin are gone (they sat between the card and its arrow). Remove a role with the X on the booking bar. A new role's Shift card always starts as a copy of the previous one (start, finish, rate, pay) until changed. Hours fill in from start and finish.
+- FF AI inside the Event Card is taller, so the whole prompt shows, with the microphone inside the box at the bottom right.
+- The FF AI search box in Staff had its microphone sitting on top of the FF AI label; fixed.
+- Review: "Review T&Cs" and "Edit T&Cs" side by side. The FF invoice's box reads "T&Cs".
+- "How availability works", with an added line: if we're unable to fill your shift, you'll get FF credits for future bookings.
+
 ## v16.39 — 2026-10-27 — Linked Shift card carousel and staff bubble; FF Party personal profile
 Artifact version 1793114021-12c0 · file `fireflair-v16.39.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
