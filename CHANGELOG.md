@@ -1,5 +1,17 @@
 # FireFlair prototype — changelog
 
+## v16.46 — 2026-10-27 — 3D coins (confirm and Community circle), role plus icons, staff capped at 10 with search card
+Artifact version 1793128432-a744 · file `fireflair-v16.46.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- FF Staff booking: the FF AI box is one line shorter. The Shift details hint now reads "Timing, pay and terms." and the Staff hint reads "Choose your team."
+- "Your booking" (the mini Event Card) is back inside the booking box as its first item, so it scrolls with the role cards. The arrow bubbles still point at the selected role card.
+- Terms and conditions, point 5, is now "Conduct and dress code" (the text mentions the dress code too). Changed in both places the default terms are defined.
+- Review and confirm coin: rebuilt as a shared 3D coin component (Spin3D11). It is a flat still disc until ready; then it gets a stack of gold discs for a thick rim (the same idea as the home-page coin dividers) and a back face. The back face wears exactly the same rim as the front, and the FF logo on it is centred (measured at 0px off in both directions).
+- The 3D coin only switches on once the page has loaded and the coin is within 600px of the screen. It stays flat and still on data-saving or 2G connections, low-memory devices (2GB or less) and with reduced motion. Nothing runs while idle: it only moves while you drag or swipe it, and a tap still presses the button.
+- What is FireFlair? circle uses the same component: swipe or drag it and the whole circle turns as a thick gold-rimmed coin, with the full FF logo on its back in the same gold border.
+- Shift card role picker: every role you can pick now has a "+" to its left; the categories above are plain tabs with an underline, so it reads clearly which row is which. The category tabs scroll sideways on their own without moving the whole card.
+- Staff box: shows up to 10 staff cards, with a final dashed "+" card that jumps to the search. The box has more padding so the cards sit fully inside it.
+
 ## v16.45 — 2026-10-27 — Gold-ringed What is FireFlair? wheel; FF Team home follows Discover order, Community first
 Artifact version 1793127474-31a2 · file `fireflair-v16.45.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
