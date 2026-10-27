@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v16.61 — 2026-10-28 — The card family, flip-open Discover pop-ups, clearer core text
+Artifact version 1793145477-f2f0 · file `fireflair-v16.61.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- New "The card family" section on the FF Team home, between What is FireFlair? and Put yourself on the map. A dark board shows six stacks, each a fan of three cards with real imagery: Profile Cards, Company Cards, Service Cards, Cocktail Cards (the real Old Fashioned, French Martini and Piña Colada cards), Event Cards and Review Cards. Each stack has a one-line caption. The stacks fan out slightly on hover. Shift cards are covered by Service Cards, since the site now uses that name for them.
+- The cards are built from lightweight markup (no extra images beyond those already in the page), sized with container units so they scale at any width. It is two columns on a phone and three on desktop.
+- What is FireFlair? text: the "card-based event connection platform" line and the "Our dream is…" paragraph are larger, darker and heavier so they read clearly on the cream background.
+- Discover FireFlair pop-ups now flip open (about half a second, a turn of the card) so the pop-up reads as the back of the card; it is switched off for people who prefer reduced motion.
+
 ## v16.60 — 2026-10-27 — Community coin: front rim matched to the back, slightly larger
 Artifact version 1793145162-5d76 · file `fireflair-v16.60.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
