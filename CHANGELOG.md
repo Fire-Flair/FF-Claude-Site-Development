@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v16.42 — 2026-10-27 — 5:7 Discover pop-ups; Discover and Core Values on every home page
+Artifact version 1793123499-a581 · file `fireflair-v16.42.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Discover FireFlair pop-ups are now 5:7 cards: the category photo at the top, the text, then the buttons at the foot. The FF coin is top right next to the close button. Content is unchanged for now.
+- Discover FireFlair and Core Values now open every home page, straight after the hero, each written for its site:
+  - FF Staff: Company Profiles, Book Staff, Shift cards, Community, Build Your Team, Reviews & Reputation, Services, The Platforms. Core Values: "The right people for every event", around event staffing, company profiles, shift cards, the professional network, training and hospitality services.
+  - FF Party: Your Profile (favourite cocktails and drinks, house rules, and what your staff should know before they come to your venue, home or chosen venue), Plan Your Event, Service Cards, Bartenders & Staff, Cocktails, Favourite Staff, Companies, Reviews. Core Values: "Every party starts with people".
+- Every pop-up button goes to an existing place: the profile page, Create a booking, the Network, or a section of that home page. All 16 were checked.
+
 ## v16.41 — 2026-10-27 — Phone-only WhatsApp continue, mini cards on the steps, Your booking box
 Artifact version 1793122419-6232 · file `fireflair-v16.41.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
