@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v16.51 — 2026-10-27 — Larger FF coin on the back of the What is FireFlair? circle
+Artifact version 1793129739-e1bc · file `fireflair-v16.51.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- What is FireFlair? circle: the back of the spinning coin now uses the new larger FF coin (the "gold bright" file from the supplied logo assets), filling the whole face. It was cropped to a clean circle and resized to 1120px (about 200KB) so it stays sharp on high-density screens. It is only loaded when the coin is ready to spin, so slow devices never fetch it.
+- The other logo files stay in assets/ff-coin/ for later. The Review and confirm coin is unchanged.
+
 ## v16.50 — 2026-10-27 — Gold-on-gold coin edge; smaller logo back on the circle; FF coin logo files kept
 Artifact version 1793129604-4e06 · file `fireflair-v16.50.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
