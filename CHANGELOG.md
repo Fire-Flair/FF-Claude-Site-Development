@@ -1,5 +1,10 @@
 # FireFlair prototype — changelog
 
+## v16.52 — 2026-10-27 — One-circle profile photo button
+Artifact version 1793129803-a7d2 · file `fireflair-v16.52.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- FF Team profile card, photo button: now one circle. With no photo yet, the circle itself carries a gold camera icon in the middle; the extra gold camera circle and the black "+" badge are gone. Once a photo is added, the photo shows with a single small camera button to change it.
+
 ## v16.51 — 2026-10-27 — Larger FF coin on the back of the What is FireFlair? circle
 Artifact version 1793129739-e1bc · file `fireflair-v16.51.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
