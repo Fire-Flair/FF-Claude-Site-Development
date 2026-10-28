@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v16.67 — 2026-10-28 — Can FireFlair help you? bubbles, Discover picture fix
+Artifact version 1793189473-0664 · file `fireflair-v16.67.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- The guide section on every home page is now titled "Can FireFlair help you?". Each question sits in a speech bubble (dark red with a small tail) above its answers.
+- FF Team, question 2 now has a third answer: "I'm full time, but could pick up a shift now and then", which points to the Profile Card and availability.
+- FF Business, question 3 is now "Are you looking to get more bookings in 2027?" with the answers: Yes, I want more bookings; I need more staff, not more bookings; Both.
+- Discover FireFlair pictures: the picture area was sized by a flexible-height rule that Chrome handles but Safari and iPad can collapse to zero height, hiding the picture while the text stays. The card now has a fixed-ratio picture area (and the pop-up picture a fixed height), so it no longer depends on that. If pictures are still blank on a device, tell us the device and browser. On the real site, give image boxes a fixed aspect ratio rather than relying on flex sizing.
+
 ## v16.66 — 2026-10-28 — Guide questions on every home page
 Artifact version 1793188317-26e8 · file `fireflair-v16.66.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
