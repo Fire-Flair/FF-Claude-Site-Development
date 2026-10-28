@@ -1,5 +1,17 @@
 # FireFlair prototype — changelog
 
+## v16.64 — 2026-10-28 — FF Party booking journey, hire cues and Network
+Artifact version 1793187017-5cc8 · file `fireflair-v16.64.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- FF Party home no longer holds the Event Card. Every "Plan your event" button now opens the Bookings page, where the booking is made. FF Staff home already worked this way.
+- Bookings page (FF Staff and FF Party): the phone number and FF AI sit side by side on desktop (stacked on phones), so they read as an easy first step to skip. Under them is a large "how it works" heading: four steps on FF Staff, three on FF Party.
+- FF Party now has its own booking journey. Step 1, Your event: event name, type, date, start time, location, Private or Corporate, and the guest numbers as three buttons at the bottom (Up to 30, 31 to 100, 100+). Step 2, Your service: the FireFlair Service Cards that suit that party size, plus a Custom Service Card. Step 3, Your team: people signed up to the chosen card, or companies and their teams. Then the same Review & Confirm coin as FF Staff.
+- Guest buttons drive everything below them. Up to 30: Bartending, Mixology, Masterclass and Staff Service, book people directly. 31 to 100: Bartending, Mixology, Full Service and Staff Service, people or companies. 100+: Mixology, Full Service and Staff Service, companies only. Changing the guest numbers removes any chosen card that no longer fits.
+- Corporate events always book through a company (public liability insurance), at every size. The page says why when people are hidden. The event stores `band` (s, m, l) and `audience` (private, corporate) as new fields for the real site.
+- FF Party Network is now clearly a place to hire: headline "Hire bartenders and bar companies", a numbers strip, category and area chips with counts, then Bar companies first as photo listings (Available for hire badge, rating and review count, areas, team faces, FireFlair choice badge), modelled on how Poptop lists suppliers.
+- Every person card on FF Party shows a green "For hire" badge top left. Tapping a card shows an Available for hire line with the FireFlair Service Cards they have signed up to and their custom cards. Their full profile has a "Hire" section with the Service Cards shown in full and a button that starts an event with them.
+- Sample data: who has "signed up" to each card is worked out from profession, and custom cards from skills. The real site needs a proper sign-up per person, per card.
+
 ## v16.63 — 2026-10-28 — Simple FF Team bookings and profile card
 Artifact version 1793147604-b6b8 · file `fireflair-v16.63.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
