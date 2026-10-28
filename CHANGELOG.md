@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v16.66 — 2026-10-28 — Guide questions on every home page
+Artifact version 1793188317-26e8 · file `fireflair-v16.66.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- New "Not sure where to start?" section on every home page, always third: under Discover FireFlair and What is FireFlair?, above The card family. If it works well it can move up under Discover.
+- Three questions per site, each with two or three tappable answers. Choosing an answer shows a short reply and one button that takes the person to the right place (create a Profile Card, plan an event, see what we offer, explore the network, or visit another FireFlair site). Tap the same answer again to close it.
+- FF Team asks: Do you work in hospitality? Do you work events, or would you like to? What would help you most right now?
+- FF Business asks: Do you hire hospitality staff for your business? Do you have an event coming up? How do you like to book?
+- FF Party asks: Are you planning an event? Are you looking for a bar at your event? Are you looking to inquire or book?
+- The questions and answers are plain data in one component (`GuideQuestions11`), so wording is easy to change. The real site could log which answers people choose to learn what visitors want.
+
 ## v16.65 — 2026-10-28 — FF Business, 2027 labels, home order, Team tab
 Artifact version 1793188044-f930 · file `fireflair-v16.65.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
