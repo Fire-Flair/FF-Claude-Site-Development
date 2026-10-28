@@ -1,5 +1,16 @@
 # FireFlair prototype — changelog
 
+## v16.65 — 2026-10-28 — FF Business, 2027 labels, home order, Team tab
+Artifact version 1793188044-f930 · file `fireflair-v16.65.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Renamed FF Staff to FF Business everywhere (page text, site menu, header label, posters, FF AI titles) and ffstaff.uk to ffbusiness.uk, to try how it feels before the domain is bought. Internal keys (`role: "staff"`, route and CSS names) are unchanged, so this is a text-only rename that is easy to reverse.
+- Discover FireFlair images: some cards in the sideways row stayed blank because the pictures were set to lazy-load. Lazy loading is now off for every picture in the prototype (they are already inside the page). On the real site, load the first screen of images eagerly.
+- Header top left on FF Team now reads FIREFLAIR TEAM, including on first load. "Welcome" is no longer used there.
+- Home page order. Every site now starts Discover FireFlair, What is FireFlair?, The card family. FF Team: then the map, Services, Career Support, Build your team, Reviews, the platforms, Featured professionals (moved much lower), then XP. FF Business and FF Party: Featured people moved lower too, and the card family was added.
+- Build your team (FF Team home) now shows Profile Card, then Your team (everyone in your network), then live event. Teams as groups exist only on Company Cards.
+- On a profile, the Teams tab is now "Team" and shows everyone that person has added to their network. For your own profile that is your connections. For other people the prototype shows sample network members; the real site should use the person's actual connections.
+- "Coming soon" now says "Coming 2027" everywhere (sentences say "coming in 2027"). All XP wording is 2027 and XP appears only on FF Team. If any item should say 2026 instead, change that one label.
+
 ## v16.64 — 2026-10-28 — FF Party booking journey, hire cues and Network
 Artifact version 1793187017-5cc8 · file `fireflair-v16.64.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
