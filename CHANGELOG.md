@@ -1,5 +1,20 @@
 # FireFlair prototype — changelog
 
+## v16.69 — 2026-10-28 — Discover hub on every site, scrolling tiles, main call to action
+Artifact version 1793207681-92d3 · file `fireflair-v16.69.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Discover FireFlair on phones: the four category tiles keep their full size (about two and a half on screen) and scroll sideways, instead of shrinking to fit. Opening a tile slides the row so that tile is in view, and the panel's arrow follows it as the row scrolls. On desktop the four tiles still sit in one row.
+- Removed the slim category bar that stayed at the top while scrolling through a panel. To change category, people scroll back up to the tiles (or use Next and Close at the bottom of the panel).
+- FF Business and FF Party now use the same four-category Discover as FF Team, with Community first on every site, and all of their home content sits inside the four panels:
+  - FF Business. Community: What is FireFlair?, Book a team, Reviews, Featured staff. Services: Service Cards. Profiles: Company Card, The card family. Events: Hire the modern way, The FireFlair platforms.
+  - FF Party. Community: What is FireFlair?, Featured bartenders, Reviews. Services: What we offer, Cocktails. Profiles: Bar companies, The card family. Events: The FireFlair platforms.
+- New main call-to-action section on every home, between Discover FireFlair and Can FireFlair help you?:
+  - FF Team: "Get seen. Get booked." Four steps (create your Profile Card, share it, get booked on WhatsApp, grow) with a Profile Card to WhatsApp request to Accepted flow, and Create your Profile Card / Go to Bookings buttons.
+  - FF Business: "Four steps. All on WhatsApp." (booking staff), with Create your Event Card / Go to Bookings.
+  - FF Party: "Your party bar, sorted." Its steps now match the new booking journey: your event, your service, your team, we confirm on WhatsApp. Button: Plan your event.
+- Each home page now reads: hero, Discover FireFlair (four panels), main call to action, Can FireFlair help you?, Beta feedback (FF Team and FF Business), Join.
+- Guide answers and other links into sections open the right panel first (for example, "See what we offer" on FF Party opens Services). The category lists are `DX_TEAM`, `DX_BIZ` and `DX_PARTY`, one line per section.
+
 ## v16.68 — 2026-10-28 — Discover hub: four category panels (FF Team)
 Artifact version 1793198279-0300 · file `fireflair-v16.68.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
