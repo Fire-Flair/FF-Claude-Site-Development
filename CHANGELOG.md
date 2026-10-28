@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v16.62 — 2026-10-28 — Community coin centre: text only
+Artifact version 1793145750-b6e9 · file `fireflair-v16.62.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- Community coin centre: the FF logo is removed, so the centre is text only. It reads COMMUNITY with "Connecting people through events." on two lines underneath.
+- The centre text scales with the coin, so it stays inside the disc at phone and desktop widths.
+
 ## v16.61 — 2026-10-28 — The card family, flip-open Discover pop-ups, clearer core text
 Artifact version 1793145477-f2f0 · file `fireflair-v16.61.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
