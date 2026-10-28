@@ -1,5 +1,17 @@
 # FireFlair prototype — changelog
 
+## v16.68 — 2026-10-28 — Discover hub: four category panels (FF Team)
+Artifact version 1793198279-0300 · file `fireflair-v16.68.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- FF Team home: Discover FireFlair is now four category tiles (Community, Services, Profiles, Events), four across on phone and desktop. This is the first pass at the UI; content placement will be revised.
+- Tapping a tile opens an almost full-screen panel underneath it. The panel is an ivory bubble whose arrow points back up at the open tile, the same idea as the arrow bubbles on the FF Business booking screen. The open tile lifts and gets a gold ring, and the others dim. Tapping it again, the X, or "Close" at the bottom closes it. Panels are closed by default.
+- Each panel starts with a category banner (picture, title, a one-line description, and chips that jump to each section inside), then the sections with coin dividers between them, then a "Next" button to the next category and a Close button.
+- While a panel is open and the tiles have scrolled off screen, a slim bar with the four categories and a close button stays at the top, so people can switch category or close from anywhere.
+- Every other home section now lives in one of the panels. Community: What is FireFlair?, the map, Build your team, XP levels. Services: Service Cards and Signature Cocktails, Training, Rewards. Profiles: The card family, Your CV, Reviews, Featured professionals. Events: Dream jobs, The FireFlair platforms. Outside the panels: hero, Discover, Can FireFlair help you?, Beta feedback, Join.
+- Links that point into a section (guide answers, toasts, old anchors like Career Support) open the right panel first, then scroll to the section.
+- FF Business and FF Party keep their current Discover row until the FF Team version is agreed.
+- Technical: `DiscoverHub11` with a `DX_TEAM` list (category → sections), so moving a section between categories is one line. Coins added inside a panel now spin like the others.
+
 ## v16.67 — 2026-10-28 — Can FireFlair help you? bubbles, Discover picture fix
 Artifact version 1793189473-0664 · file `fireflair-v16.67.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
