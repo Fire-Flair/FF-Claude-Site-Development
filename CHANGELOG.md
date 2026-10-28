@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v16.63 — 2026-10-28 — Simple FF Team bookings and profile card
+Artifact version 1793147604-b6b8 · file `fireflair-v16.63.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
+
+- FF Team Bookings rebuilt as one simple screen: a short line on what it is, then Waiting for your reply, Upcoming, previous bookings (tucked behind one link), Availability, and a compact "Get booked for FF Party" sign-up.
+- Requests arrive on WhatsApp and show here too. The page says so plainly. Developers: this is the place to link the WhatsApp request flow to the Bookings page.
+- Bookings are compact rows (date, event, role, time, venue), not large cards. Removed: FF AI bar, full-size Service Card carousel, Busy dates, Shift requests.
+- Sample bookings and requests now show only for the SAM42 demo profile. Logged out, or any other profile, sees a clean empty state.
+- FF Party Service Cards are now three short sign-up rows (name, one line, Register), matching the register-interest approach on ffteam.uk.
+- Profile card: removed the "Pick your professions" panel from the card (the profession search and selector stay in the Professions section). Removed "Add sample pictures (prototype only)" from Media.
+
 ## v16.62 — 2026-10-28 — Community coin centre: text only
 Artifact version 1793145750-b6e9 · file `fireflair-v16.62.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
