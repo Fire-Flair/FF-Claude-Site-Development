@@ -1,5 +1,19 @@
 # FireFlair prototype — changelog
 
+## v17.3.14 — 2026-10-29 — Two-sided cards, Party favourites, invoice
+Artifact version 1793305890-d2cc · file `fireflair-v17.3.14.html`
+
+- Signature Cocktail, Service Card and FireFlair Stories are now made on two cards shown side by side, front and back, with no flip button (stacked front over back on phones). The front is what the customer sees; the back is the detail.
+- Every card has the same base as the Profile Card: the coin, FF, and the owner's FF Tag address. Saved cards show their own address (tag, type, card name) as a read-only line so each can have its own searchable URL. URL structure to be settled in the site-wide SEO audit.
+- Signature Cocktail: plate reads "Signature Cocktail". Front has the photo, name, a line or two on the taste, and a glass picker with three icons (Tall, Short, Martini). Back is the recipe plus Keywords for search. Method and garnish are removed everywhere.
+- Recipe back: 1 cocktail and 20 cocktails are the same screen; 20 shows the same rows with quantities multiplied and what to buy on each row.
+- Service Card: distance travelled is gone; Areas covered and Keywords do that job. Added We bring (equipment) and Extras, alongside event types, available days, guest numbers, staff and set-up time (modelled on Poptop listings: event types, service category, availability, areas, photos).
+- FireFlair Stories: title field reads "Name your story" and the intro "Introduce your story". Places can be tagged by searching a bar or a city, or typed freely; a Google Maps place will replace the sample list later.
+- FF Business gets Signature Cocktails, Service Cards and Stories. FF Team keeps all three. FF Party has no card creation.
+- FF Party: Favourite cocktails is a cocktail section shown as cards in the Overview, chosen from the FireFlair classics and signature cocktails. Interests also show as cards. The tab "Parties" is now "Events", and "My kind of party" reads "My kind of event". Party users can add photos in the profile builder, shown with the same gallery as other profiles.
+- FF Business invoice: Review T&Cs and Edit T&Cs are now separate; Review is read only, Edit is the editable sheet. The FF invoice has the same Review T&Cs box, opening FireFlair's terms in the same numbered layout, not editable. Billed to is filled in from a name or company already entered, and stays editable.
+- The phone number box on Bookings now uses the FF AI tint so it reads apart from the three journey boxes.
+
 ## v17.3.13 — 2026-10-29 — Stories, booking cards, Live bar
 Artifact version 1793304852-28a0 · file `fireflair-v17.3.13.html`
 
