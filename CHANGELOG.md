@@ -1,7 +1,7 @@
 # FireFlair prototype — changelog
 
-## 17.3.8 — 2026-10-29 — v17.3.8 Why FireFlair, URLs, Home tap
-Artifact version 1793294052-c0cb · file `fireflair-17.3.8.html`
+## v17.3.8 — 2026-10-29 — v17.3.8 Why FireFlair, URLs, Home tap
+Artifact version 1793294052-c0cb · file `fireflair-v17.3.8.html`
 
 - Home page order on all three sites is now: hero, Discover FireFlair, Why FireFlair, Our dream, "Can FireFlair help you?" questions, FF blog, then the closing sections. The "How it works" section is replaced by Why FireFlair.
 - Why FireFlair: an animated campfire (SVG, four logs, layered flames and sparks, CSS-only animation, respects reduced motion), a short "fire brings people together" text, and a Fire + Flair name breakdown. Below it is "The FireFlair philosophy": a row of real Profile Cards (faces first) with a button to create a profile or meet the people.
