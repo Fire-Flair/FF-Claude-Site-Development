@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.3.12 — 2026-10-29 — v17.3.12 Public-view profile, booking explainer, push-down
+Artifact version 1793302588-5bdb · file `fireflair-v17.3.12.html`
+
+- Completed profile (the DEV button view) is now the public page, exactly as anyone sees it from the network. FF Team: the hero with the pictures and overlapping Profile Card, then the Overview, Services, Team and Reviews tabs, with "Your cards" underneath. FF Business: the company page with its tabs. FF Party: the Host Card, then tabs for Overview, Parties, Favourites and Reviews, with "Your cards" underneath. "Edit profile" is a button at the top right of the page; the DEV button moved to the top left. Q&A is not on the finished page any more, because the public page does not show it.
+- Home page order on all three sites: hero, Discover FireFlair, How a booking works, "Can FireFlair help you?", FF blog, Our philosophy with Built on trust, then the closing sections.
+- How a booking works: four gold cards joined by arrows, left to right on desktop and top to bottom on phones, with one button. FF Party and FF Business: Event Card, Service Card, Profile Cards, Confirmed on WhatsApp. FF Team: Profile Card, Booking request, Your answer, Review Card.
+- Built on trust now sits in a light gold box that contrasts with the dark fire box above it, headed "Our promise / Built on trust". The coin still turns slowly and can be dragged.
+- The campfire is now an animated image (animated WebP, 640 px, 12 frames a second, about 1.8 MB), because video did not play on iPad (Safari-based browsers do not play video that is embedded in the page). It plays everywhere without scripting. The still frame shows first and is kept for Reduce Motion. On the real site either use this animated WebP as an image, or the MP4 as a normal file with `autoplay muted loop playsinline`. Both are in `media/` (`fire-anim.webp`, `fire.mp4`, `fire-poster.webp`).
+- Discover pillars now open and close by growing and shrinking: the panel's height animates, so everything below it (the booking explainer and the coin divider) is pushed down, and pulled back up on close. Switching between pillars animates from one height to the other. Users who ask for reduced motion get no animation.
+
 ## v17.3.11 — 2026-10-29 — v17.3.11 Fire | film | Flair box
 Artifact version 1793301859-ba11 · file `fireflair-v17.3.11.html`
 
