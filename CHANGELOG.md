@@ -1,5 +1,19 @@
 # FireFlair prototype — changelog
 
+## v17.3.13 — 2026-10-29 — Stories, booking cards, Live bar
+Artifact version 1793304852-28a0 · file `fireflair-v17.3.13.html`
+
+- Our philosophy closing line now reads: "FireFlair exists to bring people together: to enhance the community experience of any event."
+- The FF blog is now "FireFlair Stories": a large gold display title with a small kicker and a flame rule (no box), and every story card has a gold border. Categories label updated.
+- "Can FireFlair help you?" has a centred heading with a short gold underline, and the lede is centred to match.
+- How a booking works: each step now has a miniature of the real card (Profile Card, Shift Card, WhatsApp answer, Review Card on Team; Event Card, Service Card, Profile Cards, WhatsApp confirmation on Business and Party). On phones each step is a row with text on one side and the card picture on the other, alternating, joined by arrows; on desktop four columns with arrows.
+- Ported from frontend v1.01: Live Action Bar (desktop header row and above the phone nav). Edit when viewing your own profile; Cancel and Save while editing; Save while building. Each site's profile status shows in the bar.
+- Ported from v1.01: Save is one button and also publishes. The "Save & Publish" card is now "Save", Publish is gone, and once live a "Live · view" link shows after the saved time. Re-saving no longer awards publish points twice.
+- Ported from v1.01: Share opens WhatsApp with the profile link straight from the tap (Team and Company); the in-page Edit profile button is removed because Edit lives on the bar.
+- Ported from v1.01: language flags show up to five on every card; no italic type anywhere.
+- Already in the prototype from earlier rounds and confirmed: password minimum of five, Create your own question card first in Q&A, one Media section.
+- Not ported: v1.01 home layout (replaced by the v17 home), card icon limits (already identical).
+
 ## v17.3.12 — 2026-10-29 — v17.3.12 Public-view profile, booking explainer, push-down
 Artifact version 1793302588-5bdb · file `fireflair-v17.3.12.html`
 
