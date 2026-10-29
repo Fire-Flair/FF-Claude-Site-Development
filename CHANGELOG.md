@@ -1,5 +1,18 @@
 # FireFlair prototype — changelog
 
+## v17.3.7 — 2026-10-29 — v17.3.7 completed profile, card studio
+Artifact version 1793285890-c0de · file `fireflair-v17.3.7.html`
+
+- TEMPORARY review button "DEV · complete profile" (top right of the Profile / Your Business / Your Party tab) switches to the completed profile without signing in, and "DEV · back to builder" returns. Remove before launch; in the real build the completed profile shows once a profile has been created.
+- Completed profile: looks like the public view. FF Team: Profile Card, Edit profile, the public sections, then Q&A, Your cards, Network, Reviews & References. FF Business: the public Company page (Company Card, media, Overview / Q&A / Team / Reviews) with Edit profile, then Your cards. FF Party: Host Card, Edit profile, Your preferences, Your cards, then Your parties (bookings, favourites, reviews). All sections are collapsed by default.
+- Edit profile opens the existing profile building screen, with a "Done" bar to return.
+- If the profile is empty the completed view uses demo content so it can be reviewed (FF Team shows Priya Raman's directory profile; FF Party shows a demo host; FF Business shows The Loft Lounge). Example cards are added the first time the review button is pressed.
+- Card studio (new file v11/studio17.jsx): one generic two-sided card builder. Type straight onto the card, turn it over with the gold button, Save, Edit or Delete. Saved per user as myCocktails, myServices, myPosts.
+- Cocktail Card: front = photo, name, tasting note, glass, method, garnish. Back = recipe with a "1 cocktail / 20 cocktails" switch. For 20 it becomes a shopping list grouped by spirits, liqueurs, wine, mixers, syrups, bitters, fresh and other, with bottle suggestions (for example 1 L of vodka = 1 × 1 L or 2 × 70 cl; wedges become whole fruit; leaves become bunches) and an ice estimate. The shopping group is guessed from the ingredient name and can be changed.
+- Service Card: front = level (Bronze, Silver, Gold, Platinum, Staff), name, tagline, includes, ideal for, duration. Back = logistics and search: based in, how far they travel, areas covered, available days, guest numbers, staff, set-up time, what the client provides, event types and search words. No pricing fields.
+- Blog post: front = cover photo, kind (Story, How-to, Travel, Question, News, Recipe), date, title (a question or a story), first line, author, places. Back = the post itself typed on the card (about 1,000 words, no counter), tagged places and @ / # tags.
+- Order: Cocktail Cards, Service Cards, Blog posts. FF Party has Cocktail Cards and Blog posts only.
+
 ## v17.3.6 — 2026-10-29 — v17.3.6 merged tab, Next goes to top
 Artifact version 1793282676-c801 · file `fireflair-v17.3.6.html`
 
