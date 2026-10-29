@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.10 — 2026-10-29 — v17.3.10 Campfire film
+Artifact version 1793301538-8eef · file `fireflair-v17.3.10.html`
+
+- The campfire in Our philosophy is now the supplied film (the ChatGPT campfire), replacing the drawn fire. It is a looping, silent video on a black background, blended into the dark panel with a screen blend, so it needs no transparency. Edges fade out with a soft mask.
+- Prepared for the web from the 1536 x 1024 original: cropped to the fire, 720 x 670 (sharp on retina at the 340 to 400 px it is shown), 5.25 seconds, with the loop seam cross-faded so it repeats without a jump. Files: `fire.webm` (about 230 KB), `fire.mp4` (about 240 KB) and the still `fire-poster.webp` (about 50 KB). They are in `media/` in this repo. The prototype references them by plain file name next to the page.
+- Loading: the still shows first. The film is only fetched when the section is within about 600 px of the screen, so it never competes with the top of the home page. WebM is offered first, MP4 as the fallback (iPhone and iPad use the MP4). Autoplay is muted and inline.
+- If the film cannot load, or the visitor has Reduce Motion on, the still stays as the fire.
+- On the real site use `<video autoplay muted loop playsinline preload="none">` with the same two sources and the still as the poster. Serve the files with long cache headers.
+
 ## v17.3.9 — 2026-10-29 — v17.3.9 Our philosophy, spinning dream coin
 Artifact version 1793299972-158f · file `fireflair-v17.3.9.html`
 
