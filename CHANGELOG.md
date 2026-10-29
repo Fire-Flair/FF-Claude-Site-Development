@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.6 — 2026-10-29 — v17.3.6 merged tab, Next goes to top
+Artifact version 1793282676-c801 · file `fireflair-v17.3.6.html`
+
+- Pillar tab and box are one connected piece again: a single gold outline (drawn as one path from the real positions of the open card and its box) with the small gap under the open card and curved inner corners, and a short rounded dark lobe settling into the box. The strip and box stay plain siblings with the same width and left edge, so the join works the same at every screen size, and the card sizes stay identical (the open card keeps a transparent border so it is the same size as the others).
+- The open card sits flush on the box (no lift); the other cards are raised slightly and dimmed.
+- "Next" button (for example "Next: Your profile") now jumps to the top of Discover FireFlair, so the new pillar is read from the top. Clicking a card itself does not move the page. The jump is instant, so a long previous panel cannot interfere.
+- Selecting a card still scrolls only the strip, using the card's real position.
+
 ## v17.3.5 — 2026-10-29 — v17.3.5 stable pillar strip and panel
 Artifact version 1793281241-6cde · file `fireflair-v17.3.5.html`
 
