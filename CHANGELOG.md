@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.3.5 — 2026-10-29 — v17.3.5 stable pillar strip and panel
+Artifact version 1793281241-6cde · file `fireflair-v17.3.5.html`
+
+- Discover pillars simplified for stability. The measured SVG outline, the gradient lobe, the negative margins on the mobile strip and the per-tile margin and border overrides are all removed.
+- The card strip and the content panel are now plain siblings in one container, so they share the same width and left edge at every screen size. The panel sits in the same place whichever pillar is open.
+- All four cards keep the same size, ratio and corner radius. The selected card gets a gold outline, full opacity and a 4px lift; the others are dimmed. On mobile the strip scrolls sideways inside itself.
+- Selecting a card scrolls only the strip (using the card's real position in it) and no longer moves the page. No horizontal page overflow.
+- The panel has its own continuous gold outline and a small gold label naming the open pillar as the link to the selected card.
+- Tested on all three sites, all four pillars, at 320, 390, 820 and 1280 wide.
+
 ## v17.3.4 — 2026-10-29 — v17.3.4 single outline, combined cards
 Artifact version 1793279262-cf32 · file `fireflair-v17.3.4.html`
 
