@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.1 — 2026-10-29 — v17.1: Discover tabs and panel combined, FF Party order
+Artifact version 1793266863-fd02 · file `fireflair-v17.1.html`
+
+- Discover FireFlair: the four tiles are now tabs of one section. The tile icons (top left) are removed. The open panel is cut into the page under the tabs (recessed, with the arrow still pointing at the open tab) and slides down to reveal. The old banner with the repeated picture and title is gone.
+- Each panel now opens with a heading and two short paragraphs, then the three journeys, then the sections. The copy is a first pass for FF Team, FF Business and FF Party (`h` and `p` on each category in `DX_TEAM`, `DX_BIZ` and `DX_PARTY` in `home11.jsx`).
+- FF Party order is now Community, Events, Services, Your Party. Subheadings are questions: Why FireFlair?, What are you celebrating?, What do we offer?, How do you like it? Community is about trust only. Events holds the occasions and the three-step plan. Services holds the Service Cards, cocktails, bar companies and the booking card journey. Your Party holds preferences, favourites and booking again.
+- The "Plan your party in three steps" (FF Party) and "Book your staff in four steps" (FF Business) boxes are removed from the booking screens. They now sit in the Events panel on each home, restyled in ivory and gold instead of red (`HowSteps17`).
+
 ## v17 — 2026-10-29 — v17: pillar journeys, booking card journey, Journal
 Artifact version 1793264827-1aef · file `fireflair-v17.html`
 
