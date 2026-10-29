@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.1 — 2026-10-29 — v17.3.1 tab join, pillar layout
+Artifact version 1793277873-bc6c · file `fireflair-v17.3.1.html`
+
+- Discover FireFlair heading is larger and centred so it stands out between the sections.
+- Pillar names: "Our community", "Your packages", "Our events", "Your profile" (FF Party keeps "Your Party" for its profile pillar).
+- Pillar tab and its box now share one gold outline: the open tile flows into the box through a black join, with curved inner corners where the outline meets the tile. At the first or last tile the outline runs straight down the edge.
+- Default layout for every pillar on every site: heading, three paragraphs, three call-to-action boxes, then three numbered points that explain those three boxes. All 36 explanations are new text, kept with each call to action in the code.
+
 ## v17.3 — 2026-10-29 — v17.3 People, packages, our events
 Artifact version 1793274674-6a37 · file `fireflair-v17.3.html`
 
