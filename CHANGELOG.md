@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3 — 2026-10-29 — v17.3 People, packages, our events
+Artifact version 1793274674-6a37 · file `fireflair-v17.3.html`
+
+- Discover pillars on all three sites: the Profiles tile is now always the last one on the right (FF Team and FF Business moved it from third to fourth; FF Party already had Your Party last).
+- Pillar tile names: "Services" is now "Your packages" and "Events" is now "Our events" (so growing your skills can sit inside our events).
+- The Network tab is now called People: bottom bar and top navigation, and the screen heading on FF Team and FF Business.
+- FF Party's People screen heading is still "Hire bartenders and bar companies"; to be decided.
+
 ## v17.2 — 2026-10-29 — v17.2 blog, tabs, Party booking
 Artifact version 1793274263-89bc · file `fireflair-v17.2.html`
 
