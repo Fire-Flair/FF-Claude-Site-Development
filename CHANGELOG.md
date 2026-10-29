@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.9 — 2026-10-29 — v17.3.9 Our philosophy, spinning dream coin
+Artifact version 1793299972-158f · file `fireflair-v17.3.9.html`
+
+- "Why FireFlair?" is renamed "Our philosophy" on all three sites. It is one section now: the fire and the story (people gather around a fire, strangers become friends, warm, bright and hard to leave), the Fire + Flair name, then Flair as personality with the Profile Cards underneath. The separate "The FireFlair philosophy" label is gone.
+- Flair wording now says the company encourages its team to be who they are, and for intimate gatherings you want hospitality staff with character. Wording differs per site and is expected to change.
+- The fire is still the placeholder SVG drawing. It is a single component (`Campfire17`) and is to be replaced by the supplied animation (a looping video or animated image). On the real site, load it as a file, not inline.
+- Our dream coin: same build as the other two coins (thick gold edge, drag to turn, a flick carries on), now turning by itself at a low speed, about one turn in 40 seconds. A flick spins it faster and it eases back to the slow turn. It only runs while on screen, and it keeps turning with Reduce Motion on, like the divider coins.
+
 ## v17.3.8 — 2026-10-29 — v17.3.8 Why FireFlair, URLs, Home tap
 Artifact version 1793294052-c0cb · file `fireflair-v17.3.8.html`
 
