@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.3 — 2026-10-29 — v17.3.3 tab merge, Team packages and events
+Artifact version 1793278909-62bb · file `fireflair-v17.3.3.html`
+
+- Pillar tab and box join: the curved corners now overlap the tile's gold border and the box's gold border so they are one continuous outline, the small gap triangle is filled with the box colour, and the black under the open tile fades into the box with a gradient instead of a hard line. Works at the first and last tile too. Applies to all three sites.
+- FF Team, Your packages: now the booking side: Service Cards, how a booking works (the card journey) and a new "How terms and conditions work" section written in plain words. Call-to-action boxes: Offer a service, Follow a booking, Know the terms.
+- FF Team, Our events: now holds everything about learning (training, rewards), a new "Growth events" list of hospitality industry events (Athens Bar Show 2 to 5 Nov 2026; BCB London 10 and 11 May 2027; Bar Convent Berlin 4 and 5 Oct 2027, dates from the organisers), the platforms and dream jobs. Call-to-action boxes: Learn and earn, Go to a bar show, Grow with FireFlair.
+- Event list is static for now; developers can drive it from a managed list later.
+
 ## v17.3.2 — 2026-10-29 — v17.3.2 Business and Party pillars
 Artifact version 1793278417-b4e6 · file `fireflair-v17.3.2.html`
 
