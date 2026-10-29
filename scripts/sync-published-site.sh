@@ -44,6 +44,8 @@ latest="$(ls fireflair-v*.html 2>/dev/null | sed -E 's/^fireflair-v([0-9]+)(\.([
 [ -n "$latest" ] || fail "no fireflair-v*.html in the repo"
 read -r major minor latest_file <<<"$latest"
 next="v${major}.$((minor + 1))"
+# A whole-number release (Alex says so): put the version, e.g. v17, in .next-version before publishing. The file is removed after the sync.
+if [ -s .next-version ]; then next="$(tr -d ' \n' < .next-version)"; fi
 dest="fireflair-${next}.html"
 
 # Save a clean copy: drop the viewer's own wrapper if the file carries one.
@@ -75,7 +77,7 @@ today="$(date +%Y-%m-%d)"
   [ -f CHANGELOG.md ] && tail -n +3 CHANGELOG.md
 } > CHANGELOG.new
 { echo "# FireFlair prototype — changelog"; echo; cat CHANGELOG.new; } > CHANGELOG.md && rm -f CHANGELOG.new
-rm -f .pending-notes.md
+rm -f .pending-notes.md .next-version
 
 [ "${DRY_RUN:-0}" = "1" ] && { echo "DRY_RUN: would commit ${dest}"; exit 0; }
 
