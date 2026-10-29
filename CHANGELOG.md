@@ -1,5 +1,21 @@
 # FireFlair prototype — changelog
 
+## v17 — 2026-10-29 — v17: pillar journeys, booking card journey, Journal
+Artifact version 1793264827-1aef · file `fireflair-v17.html`
+
+Whole-number release: v17. Layout and display first; copy is a first pass and gets rewritten (marketing keyword list comes in v17.1).
+
+- Discover panels now open with three journeys per pillar, one button each, on all three sites. The old chip row is gone. Pillar order is the same everywhere and matches the bottom icons: Community, Services, Profiles, Events. Buttons either scroll to a section in the panel or go to the right tab (Profile, Network, Bookings, Event Card). The lists are the `jn` arrays inside `DX_TEAM`, `DX_BIZ` and `DX_PARTY` in `home11.jsx`.
+- FF Party Community now carries Trust ("Verified by the community": reviewed by hosts, verified levels, vouched for by the community). The pillar order did not change.
+- Card family replaced by "Follow a booking": the cards in the order a booking happens, with arrows and numbers and no explanatory text. It sits in Services on all three sites. FF Party: Event, Service, Profile, Confirmation (WhatsApp), Review. FF Business: Company, Event, Profile, Confirmation, Review. FF Team: Profile, Service, Confirmation, Event, Review. Component: `CardJourney11`.
+- The card family section is removed from the Profiles panels.
+- Teams: FF Team keeps "Build your team. Work with friends." (people you add, shown on your profile, no team card). FF Business keeps company teams on the Company Card. FF Party hosts have no team: wording changed to "Your staff", and hosts keep Favourites.
+- FF Party profile is now "Your Party": tab and page title read Your Party (FF Business: Your Business). Tabs are Preferences, Favourites, Bookings, Reviews. New preference boxes (usual area, how I like my staff, drinks and dietary notes, anything my staff should know) are meant to apply to every booking and be shared with the people hired. Bookings lists finished events with Book again, which copies the event details into a new Event Card.
+- New Journal section on every home, after "Can FireFlair help you?": scrollable picture cards with category filter. Tap a card for a pop-up with the intro, then "Read the article" opens the full article page. Same articles on each site in a different order; FF Business leads with business advice and "behind FireFlair" pieces. Categories: How-to guides, FireFlair news. No demo profiles and no invented featured-staff stories; a Featured staff category is added when there are real ones. Data is `JR17` and `JR17_ORDER` in `home11.jsx`.
+- SEO note for the real build: each article needs its own indexable URL (the pop-up is only a preview layer). Public profile pages on ffparty.uk should be the main SEO source: job title and area from the profile become the page heading and URL (for example /bartenders/london). Headings on the site should use real job titles.
+- FF Party Events panel gets "Every kind of party" (occasions). The Network tab and "Explore the network" wording are unchanged. FF VIP line unchanged.
+- Not changed: the three booking screens stay different on purpose. Button wording per card is to be settled in v17.1.
+
 ## v16.69 — 2026-10-28 — Discover hub on every site, scrolling tiles, main call to action
 Artifact version 1793207681-92d3 · file `fireflair-v16.69.html` · review copy (https://claude.ai/artifact/HLrHKveVSQ1gge9xbaA6VB)
 
