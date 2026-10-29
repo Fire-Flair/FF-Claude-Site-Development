@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.2 — 2026-10-29 — v17.3.2 Business and Party pillars
+Artifact version 1793278417-b4e6 · file `fireflair-v17.3.2.html`
+
+- Discover FireFlair heading is left-aligned and smaller, with a gold line underneath tying it to the four pillars.
+- FF Business pillars: Our community (what we are building together, the hospitality community), Your events (enhance your events with the best staff, made easy), Our events (training, improvement and growth), Your business (build your company profile to advertise to staff and new customers). The old Events and Services panels swapped places and names; Our events has new text.
+- FF Party pillars: Your community (why throw a party, why events are amazing, rewritten), Our packages (what we offer), Your booking (how booking works), Your Party (preferences, favourites, book your best nights again).
+- FF Team pillars unchanged from 17.3.1.
+- Default pillar layout on every site: heading, three paragraphs, three call-to-action boxes, a spinning FF coin, then three larger visual boxes (photo, number, title, explanation) explaining the three call-to-action boxes. These replace the small numbered points from 17.3.1.
+
 ## v17.3.1 — 2026-10-29 — v17.3.1 tab join, pillar layout
 Artifact version 1793277873-bc6c · file `fireflair-v17.3.1.html`
 
