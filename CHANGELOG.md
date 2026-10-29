@@ -1,5 +1,18 @@
 # FireFlair prototype — changelog
 
+## v17.2 — 2026-10-29 — v17.2 blog, tabs, Party booking
+Artifact version 1793274263-89bc · file `fireflair-v17.2.html`
+
+- Journal is now "FF blog". Every post has a date and read time. Clicking a post opens the pop-up as the article itself (no second page). Author line shows FireFlair for now; a real author card is a later backend feature.
+- Pop-ups that open in the centre now use the card-flip animation by default.
+- Every Discover panel (all four pillars, all three sites) now has three paragraphs.
+- Pillar tabs and their box are one connected piece: no arrow, no gap, the open tile flows into the recessed box.
+- FF Party: Bookings tab is "Plan your event" and is only for creating new events. Coming up and Past bookings live in Your Party > Bookings (with Book again).
+- FF Party booking: guest-number sub-text removed; the "Your event" box is styled as an Event Card.
+- FF Party company page: "Book for your event" button; "Q&A" tab replaced by "Packages" (service cards, with Q&A listed beneath).
+- FF Party person profile: "Book this person" replaces the booking-bar button; custom service cards are listed under Services.
+- FF Business booking unchanged. Network tab name still to be decided.
+
 ## v17.1 — 2026-10-29 — v17.1: Discover tabs and panel combined, FF Party order
 Artifact version 1793266863-fd02 · file `fireflair-v17.1.html`
 
