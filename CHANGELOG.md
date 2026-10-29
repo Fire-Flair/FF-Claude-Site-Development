@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.3.11 — 2026-10-29 — v17.3.11 Fire | film | Flair box
+Artifact version 1793301859-ba11 · file `fireflair-v17.3.11.html`
+
+- Our philosophy is one dark box with the campfire film as its centrepiece. On desktop, Fire (the gathering) is on the left, the fire in the middle and Flair (the personality) on the right, with a closing line underneath. On phones they stack: Fire, then the fire, then Flair. The row of Profile Cards and its buttons are removed for now.
+- The fire film is higher quality than before: 960 px wide, slightly more contrast and colour, and a lighter edge fade so it no longer looks washed out. In the prototype the film and its still frame are embedded in the page so they show wherever it is opened. On the real site serve them as files: `media/fire.mp4` (about 580 KB) and `media/fire-poster.webp` (about 100 KB), with `<video autoplay muted loop playsinline preload="none">` and the still as the poster. Start loading when the section is near the screen. Keep the still only for visitors with Reduce Motion on. The earlier WebM version is dropped.
+- The coin section directly follows the philosophy box, with no divider between them. It is renamed "Built on trust" (it was "Our dream"); the dream sentence and the note on why a coin stands for trust stay beneath the coin. The coin still turns by itself slowly and can be dragged.
+
 ## v17.3.10 — 2026-10-29 — v17.3.10 Campfire film
 Artifact version 1793301538-8eef · file `fireflair-v17.3.10.html`
 
