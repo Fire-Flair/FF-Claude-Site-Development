@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.4 — 2026-10-29 — v17.3.4 single outline, combined cards
+Artifact version 1793279262-cf32 · file `fireflair-v17.3.4.html`
+
+- Pillar tab and box outline rebuilt. The old version drew the tab's border, the box's border and two corner pieces as separate layers that had to line up to the pixel; they never could. Now one SVG path draws the whole outline (tab sides, curved inner corners, box edges) from the real positions of the open tile and its box, so it is one continuous gold line. It recalculates on resize, on sideways scroll of the tiles and when the box height changes. At the first and last tile the outline runs straight down the edge.
+- The old gradient is replaced by a short rounded lobe of the tile's dark that settles into the top of the box.
+- Each pillar now has three cards, each with picture, number, title, explanation and button, replacing the separate row of numbered boxes with buttons and the separate row of picture boxes. A spinning coin sits after them.
+- FF Party hero tagline: "Plan your party. Choose your people."
+- FF Party, Our packages: call-to-action boxes are now "The right packages for you", "Choose your people" (opens People) and "Book a bar company". The cocktails section is removed from the panel for the launch package.
+
 ## v17.3.3 — 2026-10-29 — v17.3.3 tab merge, Team packages and events
 Artifact version 1793278909-62bb · file `fireflair-v17.3.3.html`
 
