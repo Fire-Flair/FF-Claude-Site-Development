@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## 17.3.8 — 2026-10-29 — v17.3.8 Why FireFlair, URLs, Home tap
+Artifact version 1793294052-c0cb · file `fireflair-17.3.8.html`
+
+- Home page order on all three sites is now: hero, Discover FireFlair, Why FireFlair, Our dream, "Can FireFlair help you?" questions, FF blog, then the closing sections. The "How it works" section is replaced by Why FireFlair.
+- Why FireFlair: an animated campfire (SVG, four logs, layered flames and sparks, CSS-only animation, respects reduced motion), a short "fire brings people together" text, and a Fire + Flair name breakdown. Below it is "The FireFlair philosophy": a row of real Profile Cards (faces first) with a button to create a profile or meet the people.
+- Our dream: a large FF coin turning slowly and continuously (CSS, about 38 s per turn), the dream sentence for the site, and a note on why a coin stands for trust. Wording differs per site (Team, Business, Party) and is expected to change.
+- "What is FireFlair?" (the ring) stays inside the Our community panel; its closing line now comes from the site's own text, so the dream sentence is not repeated.
+- Discover pillars now have URLs. Opening a pillar sets the address to `#/ff-team/community`, `#/ff-team/packages`, `#/ff-team/events`, `#/ff-team/profile` (Business: `ff-business/community`, `your-events`, `our-events`, `business`; Party: `ff-party/community`, `packages`, `booking`, `party`). Slugs come from the tile titles with the leading Our/Your dropped unless that would make two the same. The prototype uses the hash because it runs inside a frame. The real site should use real paths with the same slugs, and read the path on load to open the matching pillar. Back and forward move between pillars.
+- Tapping Home (bottom bar on phones, top bar on desktop) collapses any open Discover pillar, resets the address to the site root and scrolls to the top.
+
 ## v17.3.7 — 2026-10-29 — v17.3.7 completed profile, card studio
 Artifact version 1793285890-c0de · file `fireflair-v17.3.7.html`
 
