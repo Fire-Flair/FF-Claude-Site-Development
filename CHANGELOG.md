@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v17.3.15 — 2026-10-30 — VIP experience packages wording
+Artifact version 1793361432-b0fa · file `fireflair-v17.3.15.html`
+
+- FF VIP wording changed: it is now "VIP experience packages at venues across the UK" (was "for our most valued hosts/users"). Updated on the site selector, the home tile, the pitch line and the platforms list.
+- No other behaviour changed. FF VIP stays "Coming 2027"; it will be part of the larger venue update.
+
 ## v17.3.14 — 2026-10-29 — Two-sided cards, Party favourites, invoice
 Artifact version 1793305890-d2cc · file `fireflair-v17.3.14.html`
 
