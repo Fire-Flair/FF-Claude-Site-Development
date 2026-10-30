@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.24 — 2026-10-30 — FF Party Browse packages; open booking page
+Artifact version 1793382490-9cd4 · file `fireflair-v17.3.24.html`
+
+- FF Party: the People tab is now Browse. The page opens with "Browse packages": a guest count box (the count sets the size: up to 30, 31 to 100, 100+), then four package types: Bar (large, the main one), Entertainment, Services and Food.
+- Below that, packages for the chosen type and size: FireFlair's own first, then packages from FireFlair professionals. Then Featured people, Featured companies, and the FF AI search with the search bar as before.
+- "Book this" on a package starts the event with the guest size already entered, adds the package, and opens the booking page.
+- Service cards: the back now has a Category (Bar, Entertainment, Services, Food) and Guest numbers (Up to 30, 31 to 100, 100+) as the same pick buttons used for glassware. Guest numbers can be several sizes; none chosen means all sizes.
+- FF Party booking page: nothing is locked any more. Your event, Your service and Your staff all open and collapse, and staff can be chosen before a service (a Staff Service card is added for them).
+
 ## v17.3.23 — 2026-10-30 — Cocktail builder spirit row; tap card to edit
 Artifact version 1793380754-b717 · file `fireflair-v17.3.23.html`
 
