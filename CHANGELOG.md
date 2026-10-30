@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.19 — 2026-10-30 — Simpler cocktail card, generic service card, story photos, gold demo
+Artifact version 1793364559-8ba3 · file `fireflair-v17.3.19.html`
+
+- Cocktail card: the front is simple again (photo, name, taste line, glass). Cocktail or Mocktail, and the main spirit dropdown, are now at the top of the back, above the recipe. "Special glassware" is one type box under Tall, Short and Martini; typing in it selects it, and picking a glass clears it. No price on cocktails for now; a price calculator can come with the booking system.
+- Service card: the colour system is removed (no level colours, no "Gold · FF Team" label). It is a generic card for any service (DJ, photographer, chef, bartender): "What the client gets" takes long text. At the bottom: a Base package / Add-on selector, then the price in a square box with a fixed £ and an optional "per event" line. Availability stays off the card.
+- FireFlair Stories: the back can hold up to 10 photos under Places and Tagged. Back end: stories should be stored like an attribute card, using the existing card section data rules (title, description, up to 10 media, visibility, display order, extra data) rather than a new model, with places and tags in the extra data.
+- Demo profile ("DEV · complete profile" on FF Team) is now Alexander Gagnon, a Gold member, with the Gold card colour selected. Silver and Gold colours unlock by verification level: Gold members see both, Silver members see Silver, everyone else sees them locked. Placeholder data: the tag (ALEXG), photo, experience and skills come from the demo data until his real profile is supplied; the real data should be read from his live profile.
+
 ## v17.3.18 — 2026-10-30 — Build your empire, card studio and add-ons
 Artifact version 1793363609-33cf · file `fireflair-v17.3.18.html`
 
