@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.28 — 2026-10-30 — Remove FF AI wording; FF AI data entry on profile
+Artifact version 1793392306-1457 · file `fireflair-v17.3.28.html`
+
+- Removed every visible mention of FF AI. The FireFlair coin stays on each search and data-entry box, but the "FF AI" label beside it is gone. The boxes and their text entry work exactly as before.
+- Box headings and placeholders are now plain and specific to each page, for example "Search the network", "Search your bookings", "Search for your team", "Search your network" and "Describe your business". Messages, buttons and notes that named FF AI now say FireFlair or are reworded (for example "Help me write", "Read my CV").
+- The only place FF AI still appears is the profile page, where the step "FF AI & CV" is now "FF AI data entry" and the box beneath it carries the same name.
+- Implementation: done as a final text pass in the build, so any new screen that still says FF AI is caught too. The real site should remove the name at source.
+
 ## v17.3.27 — 2026-10-30 — Discover tabs, scaling community coin, FF over AI
 Artifact version 1793389253-5f2d · file `fireflair-v17.3.27.html`
 
