@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.3.27 — 2026-10-30 — Discover tabs, scaling community coin, FF over AI
+Artifact version 1793389253-5f2d · file `fireflair-v17.3.27.html`
+
+- FF AI mark: FF now sits above AI in every FF AI box, including the home page search (one box had been missed).
+- Discover FireFlair: replaced the overlap with browser-style tabs. Closed, the four pillar cards look as before. When one opens, the others shrink to tabs along the top (scrolling sideways on a phone) and the open pillar becomes one box with a picture header and all of its content inside. Tapping the open tab or Close collapses it back.
+- Community coin: now scales as a single object. The title, labels and icons shrink with it, and it sits centred inside the page margins on phones and small tablets.
+
 ## v17.3.26 — 2026-10-30 — Choose your team, terms on cards, notifications, Discover
 Artifact version 1793387823-be80 · file `fireflair-v17.3.26.html`
 
