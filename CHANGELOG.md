@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.3.20 — 2026-10-30 — Edit opens card editor; Build your packages
+Artifact version 1793366168-943f · file `fireflair-v17.3.20.html`
+
+- Edit on a finished profile (booking bar) now opens the card editor straight away: colour swatches, photo, names and tags. No "Edit card" step and no "Your Profile Card is shared" panel. Save applies the card (including the colour); Cancel leaves it unchanged.
+- "Build your empire" is now "Build your packages". The three sections (signature cocktails, service cards, stories) are open by default and each scrolls sideways like every FireFlair row.
+- The top "New …" button is replaced by a blank dashed card with a plus at the end of each row.
+- Profile tab "Services" is now "Packages": FireFlair packages, then the person's own service cards and signature cocktails, then Q&A (shown for everyone).
+- FireFlair default packages follow the profession on the profile: bartending gives Bartender Service; mixology or cocktail bartender gives Mixology and Masterclass; flair gives the new Flair Bartender package (a bartender plus a 5 or 15-minute Flair performance).
+- Flair Bartender is also bookable on FF Party and sits on the home package rows.
+
 ## v17.3.19 — 2026-10-30 — Simpler cocktail card, generic service card, story photos, gold demo
 Artifact version 1793364559-8ba3 · file `fireflair-v17.3.19.html`
 
