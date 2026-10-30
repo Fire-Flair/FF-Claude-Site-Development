@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.18 — 2026-10-30 — Build your empire, card studio and add-ons
+Artifact version 1793363609-33cf · file `fireflair-v17.3.18.html`
+
+- Profile "complete" screen (Team and Business/Party company): the "Your cards" title is now "Build your empire". Under it, above Signature Cocktails, a FF AI box (coming soon, inputs disabled) with three kinds: Cocktail menu (photo or pasted menu becomes many cocktail cards), Service packages (photo or description becomes many service cards) and Stories (paste a post or link, or describe a night). Back end: one bulk-extraction endpoint that takes an image or text plus a card type and returns an array of card drafts for review; the existing FF AI extraction is the model for it. The card data is the same generic record as a single card.
+- Cocktail card: top selector Cocktail or Mocktail; for a cocktail, a main spirit dropdown (Vodka, Gin, Rum, Tequila, Mezcal, Whisky, Bourbon, Brandy, Cognac, Liqueur, or Other with a typed name). Fourth glass option "Special glassware" (highlights like the others, with a typed name). The 1 / 20 toggle is now small, next to Recipe, and the recipe can be typed for either size on the same screen (typing 700 ml for 20 stores 35 ml for one); "bottle (70 cl)" is a quick unit in the 20 view. At most 10 ingredients. An optional add-on price sits on the front.
+- Service card: choose Base package or Add-on. A Base price or Add-on price (with a short "what it covers" line) is on the front. The availability row is removed from the back.
+- FF Party booking, step 2: the host's own base packages appear with the FireFlair service cards; a new Add-ons block lists signature cocktails (steps of 20) and add-on service cards (steps of 1), with a summary line of what was added. Selections are held in state.addons17 per event for now; they need to become part of the booking (lines) in the back end.
+- No prices are set in the demo data: the fields are blank and show "Price on request" until a host enters one.
+
 ## v17.3.17 — 2026-10-30 — 24-hour rule, gold founding cards, locked colours
 Artifact version 1793362632-0edd · file `fireflair-v17.3.17.html`
 
