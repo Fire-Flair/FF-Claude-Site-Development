@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.30 — 2026-10-30 — Discover cards keep size, box grows below
+Artifact version 1793393031-914d · file `fireflair-v17.3.30.html`
+
+- Home page Discover FireFlair: the four pillar cards now keep exactly their closed size when one is opened. Nothing resizes or moves.
+- The open pillar and its content box read as one joined shape. The box grows downward from the open card and holds all the text, with curved inner corners where the card meets the box.
+- The earlier gold SVG outline is no longer used (it lagged when the card row scrolled on mobile). The join is now plain CSS driven by the open card's position, so it can be built as a normal component on Render.
+- The Discover URL deep links (for example #/ff-team/community) are unchanged and still open the pillar directly.
+
 ## v17.3.29 — 2026-10-30 — Discover tabs keep pictures, larger
 Artifact version 1793392472-e78b · file `fireflair-v17.3.29.html`
 
