@@ -1,5 +1,18 @@
 # FireFlair prototype — changelog
 
+## v17.3.25 — 2026-10-30 — Fit text, swipe cards, Browse rebuild, package counts
+Artifact version 1793386024-91e1 · file `fireflair-v17.3.25.html`
+
+- Profile card: the name, main profession and username now shrink to fit instead of being cut off. Rows (experience, roles, skills, interests, locations) keep only the items that fit.
+- Profile card bottom is now the full-width dark bar with the coin, FIREFLAIR wordmark and address, the same as the edit view, so it no longer changes after Save.
+- Removed the "For hire" badge on profile cards, the "Available for hire" labels, and the gold fading bars beside the profession icons.
+- Service and cocktail cards never scroll inside. Cards grow to fit, fronts clamp long text, and the back holds the full detail. On the Packages tab they sit in a grid and swipe left or right (or use the turn button) to flip.
+- Build packages (profile and business page): tapping a service or cocktail card opens a large pop-up with the same swipe-to-flip card and an Edit button. Stories still tap straight into editing.
+- FF Party Browse: new intro, "What are you looking for?" with four equal buttons (Bar gold with a hint of burgundy, Services uses the camera icon), then three guest-number buttons in place of typing a number. Order is now featured companies, then packages (shown once a category is chosen, scrolls to them), then featured people, then the FF AI search.
+- FireFlair package cards are all the same size. The footer shows how many people (or companies) offer the package, and the button reads "Choose from N" bartenders, mixologists, flair bartenders or bar companies.
+- Flair Bartender is now "Flair Package". Full Service is now "Platinum Tasting Package": 1 hour, ideal for big events, with the new mixologist-plus-bar-company description.
+- Package counts now also read people's skills, so a Mixology or Flair skill counts as signed up.
+
 ## v17.3.24 — 2026-10-30 — FF Party Browse packages; open booking page
 Artifact version 1793382490-9cd4 · file `fireflair-v17.3.24.html`
 
