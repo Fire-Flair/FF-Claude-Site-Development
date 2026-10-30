@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.23 — 2026-10-30 — Cocktail builder spirit row; tap card to edit
+Artifact version 1793380754-b717 · file `fireflair-v17.3.23.html`
+
+- Cocktail card: "What it tastes like" is now two lines tall.
+- The glassware section (glass choices and the special glassware box) sits at the bottom of the card front.
+- The separate "Main spirit" selector is removed. The first ingredient is now "Spirit", always a dropdown (the ten spirits, plus Other which opens a box to type it). Mocktails keep a normal first ingredient.
+- Signature cocktail, service and story cards: tap the card to edit it. The Edit button is gone.
+
 ## v17.3.22 — 2026-10-30 — Logged-out start; colour preview; same edit flow
 Artifact version 1793368088-e17b · file `fireflair-v17.3.22.html`
 
