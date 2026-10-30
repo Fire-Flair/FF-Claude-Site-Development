@@ -1,5 +1,10 @@
 # FireFlair prototype — changelog
 
+## v17.3.29 — 2026-10-30 — Discover tabs keep pictures, larger
+Artifact version 1793392472-e78b · file `fireflair-v17.3.29.html`
+
+- Discover FireFlair: when a pillar is open, the other pillars stay as picture tabs with their original titles (and the short line on desktop) instead of plain text tabs. They are about twice the height of the previous text tabs, the open one is highlighted with its up chevron, and the picture header inside the box is removed since the tab now carries the picture.
+
 ## v17.3.28 — 2026-10-30 — Remove FF AI wording; FF AI data entry on profile
 Artifact version 1793392306-1457 · file `fireflair-v17.3.28.html`
 
