@@ -1,5 +1,18 @@
 # FireFlair prototype — changelog
 
+## v17.3.26 — 2026-10-30 — Choose your team, terms on cards, notifications, Discover
+Artifact version 1793387823-be80 · file `fireflair-v17.3.26.html`
+
+- FF Business: the main button is now "Choose your team" (home hero, how-it-works, Book Staff panel and the shortcut tiles).
+- FF AI mark is now smaller site-wide: FF stacked above AI, next to the coin.
+- Discover FireFlair: the content box now sits behind the foot of the pillar cards with a small overlap, the open card has a gold ring, and the old outline and crescent are removed. Each pillar already has its own address (for example #/ff-business/community) that opens the box already dropped; the real site should make these real, indexable pages that load with the box open.
+- Service cards: new "Define your terms and conditions" box under the card editor (collapsed by default). Five plain customer-facing terms (booking, payment, changes and cancellation, access and set-up, guests, safety and insurance). Edit them once for all service cards, or switch to "This card only". The terms show on the back of the card.
+- Cards are a little larger. Tapping your own card in Build packages opens the editor, as before.
+- Viewing a card (Packages tab): tap opens a pop-up with the fixed front above the back, scrollable. No flip or edit button; swipe-to-flip is gone.
+- Signature cocktail cards: new light cream background with wine accents. The front shows a small glass icon on the left and keywords (or the first ingredients if there are none) instead of the big glass picker.
+- Business page: the Q&A tab is now Packages, with the Q&A inside it.
+- The FF coin (bottom middle on mobile, top right on desktop) now opens Notifications on all sites, with a Your next steps button beneath for the XP and next steps view.
+
 ## v17.3.25 — 2026-10-30 — Fit text, swipe cards, Browse rebuild, package counts
 Artifact version 1793386024-91e1 · file `fireflair-v17.3.25.html`
 
