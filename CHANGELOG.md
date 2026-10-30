@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.16 — 2026-10-30 — Trust coin ridges, dream line, founding gold card
+Artifact version 1793362208-f24d · file `fireflair-v17.3.16.html`
+
+- "Built on trust" spinning coin: its 3D rim now has the same ridges (reeding) as the other spinning coins.
+- Our dream line shortened to "Our dream is an enjoyable, trustworthy booking experience for every event." (same on Team, Business and Party).
+- New paragraph under "Why a coin?": the founding team, their hospitality experience, and that founding members carry the gold card (the gold verification level).
+- New founding profile card (FoundingCard17): gold background with black text and chips, "Founding member" and "Gold verified". It shows Alexander Gagnon as a placeholder; the real details come from his live ffteam.uk profile, and the data should be read from the profile API, not hard-coded. Gold and black are the founding colours; this is the gold verification level.
+
 ## v17.3.15 — 2026-10-30 — VIP experience packages wording
 Artifact version 1793361432-b0fa · file `fireflair-v17.3.15.html`
 
