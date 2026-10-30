@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.21 — 2026-10-30 — Silver/gold shine and coins; profile edit flow
+Artifact version 1793367319-4d5c · file `fireflair-v17.3.21.html`
+
+- Silver and gold profile cards: richer metallic shine, and the card's frame and top-right coin now follow the colour (silver coin on a silver card, gold coin on a gold card).
+- FF Team Profile tab: once an account is logged in and live, it always shows the complete profile ("Your profile is live" with Edit). The old second view with the shared panel is gone.
+- "Your Profile Card is shared" now shows once, at the bottom, only when sign-up is completed (after Share on the Welcome step); it does not return on later visits.
+- Action bar: Edit opens the card editor (same as Edit card), Save applies it (same as Save card), Cancel discards. Edit state now lives in the store, so the bar and the page cannot disagree, including after leaving the tab and coming back.
+- The "DEV · complete profile" button moved from the Profile page to the Log in screen. It signs in as the demo founder profile (FF Team, Business and Party) so Save works as it would for a real account.
+
 ## v17.3.20 — 2026-10-30 — Edit opens card editor; Build your packages
 Artifact version 1793366168-943f · file `fireflair-v17.3.20.html`
 
