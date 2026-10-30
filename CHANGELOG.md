@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.22 — 2026-10-30 — Logged-out start; colour preview; same edit flow
+Artifact version 1793368088-e17b · file `fireflair-v17.3.22.html`
+
+- The prototype always opens as a new, logged-out visitor. Nothing is restored from an earlier visit (the saved-state restore is switched off in the prototype; the real site keeps real accounts).
+- The two demo profiles are no longer mixed: logging in with SAM42 no longer loads a demo profile. The only way to see a live, editable profile is the "DEV · complete profile" button on the Log in screen, which signs in as the founder demo.
+- Silver and Gold card colours stay locked but can be previewed: tapping one shows it on the card for three seconds, then the card returns to the previous colour. A preview is never saved. This works the same on FF Team Profile Cards and on FF Business Company Cards (Business locks follow the company's level, Team follows the profile's level).
+- The Company Card frame and coin follow a silver or gold colour, as on the Profile Card.
+- Edit, Save and Cancel in the action bar now work the same on FF Team, FF Business and FF Party: Edit opens the card editor with the colour options, Save keeps the changes, Cancel puts everything back. Editing state is held per site, so it does not leak between sites.
+
 ## v17.3.21 — 2026-10-30 — Silver/gold shine and coins; profile edit flow
 Artifact version 1793367319-4d5c · file `fireflair-v17.3.21.html`
 
