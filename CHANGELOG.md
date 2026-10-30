@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.17 — 2026-10-30 — 24-hour rule, gold founding cards, locked colours
+Artifact version 1793362632-0edd · file `fireflair-v17.3.17.html`
+
+- How a booking works, FF Party: step 4 now reads "Your chosen team have 24 hours to say yes." A new "24-hour rule" panel follows: the chosen team get the shift for 24 hours; if someone is unavailable or does not reply, the shift opens to every suitable person on the network; FireFlair then finds suitable, available people and presents them to the host. Back end: needs a 24-hour hold per request, then a widening to the wider network, then admin-assisted matching.
+- FF Business: a "Last-minute shifts" panel (Gold feature): shifts starting within 24 hours go to everyone on the network straight away. Proposed, not built as a flow: a Gold account flag and an immediate broadcast when a shift is under 24 hours away.
+- FF Team "How a booking works" is unchanged.
+- Profile colour selector: two new colours, Silver and Gold (added to THEMES, shown locked with a lock icon on the profile page and the company card). Gold is a gold background with black text; it is the gold verification level and is used for founding profiles. Unlocking should follow the verification level.
+- Built on trust: the founding members are now the real profile card (PlayerCard) in the gold colour, in a row that scrolls left and right. FOUNDERS17 is placeholder data (one entry, Alexander Gagnon, tag and photo are placeholders); the real cards should come from the founders' live profiles.
+
 ## v17.3.16 — 2026-10-30 — Trust coin ridges, dream line, founding gold card
 Artifact version 1793362208-f24d · file `fireflair-v17.3.16.html`
 
