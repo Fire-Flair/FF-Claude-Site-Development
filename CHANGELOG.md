@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.31 — 2026-10-31 — Hero photo fills box height on wide view
+Artifact version 1793437825-c9a6 · file `fireflair-v17.3.31.html`
+
+- Home hero, wide view (900px and up): the photo now fills the full height of the hero box. Before, it was centred in a shorter box with faded bands above and below. That was a leftover from an earlier design, not a functional need.
+- The top and bottom fade on the photo is removed in the wide view. The soft fade on the left edge, where the photo meets the text, stays.
+- The coin and its shadow stay anchored to the same spot on the photo. Their position is now worked out from the photo's actual scaled size (container units), so they stay on the table at any width.
+- Mobile hero is unchanged.
+
 ## v17.3.30 — 2026-10-30 — Discover cards keep size, box grows below
 Artifact version 1793393031-914d · file `fireflair-v17.3.30.html`
 
