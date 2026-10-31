@@ -1,5 +1,10 @@
 # FireFlair prototype — changelog
 
+## v17.3.42 — 2026-10-31 — Tertiary renamed Extra
+Artifact version 1793471361-990f · file `fireflair-v17.3.42.html`
+
+- **Third card lane renamed:** wherever cards are ranked Primary, Secondary and Tertiary (the profile card order screens, the lane headings, the guide text and the "moved to" message), the third lane now reads **Extra**. Behaviour is unchanged: Extra cards stay on the profile page and bronze finish. The stored value in the data is still `tertiary`, so no data needs migrating; only the words shown changed (`RANK_NAME`).
+
 ## v17.3.41 — 2026-10-31 — Classic or signature cocktails, FF Team terms cards
 Artifact version 1793469785-1a3a · file `fireflair-v17.3.41.html`
 
