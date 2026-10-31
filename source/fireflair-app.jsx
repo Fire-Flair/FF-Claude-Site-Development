@@ -9966,7 +9966,7 @@ function WelcomeSection({ me }) {
 const TIER_KEYS = ["primary", "secondary", "tertiary"];
 const RANK_ORDER = { primary: 0, secondary: 1, tertiary: 2 };
 const SECONDARY_MAX = 2;
-const RANK_NAME = { primary: "Primary", secondary: "Secondary", tertiary: "Tertiary" };
+const RANK_NAME = { primary: "Primary", secondary: "Secondary", tertiary: "Extra" };
 /* Sections that Edit Profile manages (Reviews and Q&A aren't cards you rank). */
 const EDIT_CATS = ["professions", "qualifications", "skills", "experience", "venues", "locations", "languages", "interests", "media"];
 
@@ -10052,7 +10052,7 @@ function p1EditReducer(s, a) {
     case "PE_MOVE": {
       const { list, bumped } = moveRecord(recsOf(s.profile, a.category), a.id, a.rank, a.index);
       const next = withRecords(s, a.category, list);
-      return bumped ? { ...next, toast: `${bumped.name} moved to Tertiary` } : next;
+      return bumped ? { ...next, toast: `${bumped.name} moved to Extra` } : next;
     }
     default: return null;
   }
@@ -10080,7 +10080,7 @@ function ProfileEditHead() {
       {saved && <span className="ff-pe-badge"><Pencil size={12} /> Editing</span>}
       <p>
         <b>Drag and drop cards to place them.</b> <span className="dot primary" /> Primary attributes always show on your Profile Card,
-        followed by <span className="dot secondary" /> secondary where possible. <span className="dot tertiary" /> Tertiary stay on your profile page.
+        followed by <span className="dot secondary" /> secondary where possible. <span className="dot tertiary" /> Extra stay on your profile page.
         Tap a card to edit, hide or delete it.
       </p>
     </div>
