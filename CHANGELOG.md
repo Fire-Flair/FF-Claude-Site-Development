@@ -1,5 +1,19 @@
 # FireFlair prototype — changelog
 
+## v17.4 — 2026-10-31 — Autofill and booking policy 2026.1
+Artifact version 1793484234-d7ee · file `fireflair-v17.4.html`
+
+- Booking policy 2026.1 added to the prototype. Specification for the backend is in the "Booking specification" tab of the developer document; the three FF Stories (FF Team, FF Business, FF Party) state the same rules.
+- Staff row: Autofill card is last, after Search. Choosing a person sends an exclusive 24-hour invitation (Accept & confirm, Unavailable, Discuss first). Unavailable or no reply starts Autofill.
+- Autofill: invites the nearest ten matching professionals (role, location preference, previous invitees and clashes excluded). Next ten at the decision point only. All Available candidates shown; booker picks one; confirmation checks position, offer, payment and clashes together.
+- Deadlines: 24 hours to reply, selection up to seven days per invitation, never after the shift starts. Exact times shown on both sides.
+- Booker screen: waiting status, all available candidates, Discuss-first questions with replies, Cancel request & refund, replacement status, contact handover after confirmation, team leader marker.
+- Professional screens: shared-invitation wording, Cancel shift on confirmed bookings (reopens that position, replacement matching, no new charge), accept revised terms, 30-day reminder flag.
+- Refunds are money back only: full refund when nothing is confirmed; part-filled cases go to admin.
+- Admin Bookings: booking rules (batch size, periods, selection days, distance), cases needing a decision, Autofill runs, refunds, terms changes with who/when, failed messages, history.
+- Prototype only: timers run in the browser, "Prototype controls" simulate replies and move the clock, nothing is sent over WhatsApp and no payment is taken.
+- Old 48-hour and credits wording replaced. Invoice itemises FireFlair's charge separately from professionals' pay.
+
 ## v17.3.42 — 2026-10-31 — Tertiary renamed Extra
 Artifact version 1793471361-990f · file `fireflair-v17.3.42.html`
 
