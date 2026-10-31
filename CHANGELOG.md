@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.35 — 2026-10-31 — Site tab names, flip cards, Party event card
+Artifact version 1793442953-0439 · file `fireflair-v17.3.35.html`
+
+- Navigation names by site (one helper, `tabLabel17`): FF Party is Home, Browse, Book, Party. FF Business is Home, Our people, Your bookings, Your business. FF Team is unchanged (Home, People, Bookings, Profile).
+- Training, Dream jobs and FF rewards cards (FF Team Bookings, and FF Business "Train your staff" / "Reward your staff"): tapping a card turns it over. The back drops the image and shows the title, the description and the "I'm interested" button. The front keeps the same image and look, and its "I'm interested" button still works without turning the card. Tap the back to turn it over again. Same component on both sites (`FlipChoice17`); the descriptions come from the existing course, job and reward lists.
+- FF Party booking page: the Event Card is now the same Event Card as FF Business, using the same `EventCard11` component and the same section wrapper, closed button first and opening to the card. The Party-only private or corporate choice and the guest-number buttons are removed, so Service Cards are no longer filtered by guest numbers and the "must book a company" rule from those choices no longer applies for now. The shared card keeps its own optional Guests field, because FF Business is untouched.
+- FF Business booking page: not changed.
+
 ## v17.3.34 — 2026-10-31 — Profile creation fixes, scrolling party cards
 Artifact version 1793442253-c894 · file `fireflair-v17.3.34.html`
 
