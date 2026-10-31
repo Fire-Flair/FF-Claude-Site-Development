@@ -1,5 +1,22 @@
 # FireFlair prototype — changelog
 
+## v17.3.40 — 2026-10-31 — FF Admin guests, invites, bookings, analytics
+Artifact version 1793468183-b8d3 · file `fireflair-v17.3.40.html`
+
+- **FF Admin, people:** new **Guests** section for FF Party accounts (customers), alongside People (FF Team) and Companies (FF Business). All three have visibility (Live / Hidden) and verification (Base, Bronze, Silver, Gold).
+- **FF Admin, people detail:** opening a person now lists their answers and sign-ups, plus questions asked on their profile.
+- **FF Admin, Invitations (new):** invite someone to join FF Team, FF Business or FF Party by name and mobile or email. Each invite shows Waiting or Joined, can be resent, and is logged. Core sends the WhatsApp or email invite (`POST /api/admin/invitations`, listed in `ADMIN_ADAPTER`).
+- **FF Admin, Bookings (replaces Events and bookings):** every booking request by event and role, showing who it's assigned to, its status, when it was sent and how fast the person replied (first reply in the engagement history minus `sentAt`). Totals at the top: requests, waiting, confirmed, average reply time. Filters: Waiting, Confirmed, Declined, Expired.
+- **Manual override on bookings:** set any status, add 24 hours to the reply window, or reassign the request to someone else (which sends them a fresh request). Every change is written to the request's own history (`by: "admin"`) and the admin log. Nothing is deleted. Core route: `PATCH /api/admin/engagements/:id`.
+- **Q&A view fields:** Q&A now has two views: **Every answer** (a flat table: account, question, Core key, answer) and **By question** (each question with its Core key, answer count and a breakdown of answers). Core route for the live view: `GET /api/admin/answers`.
+- **Analytics framework (new):**
+  - A cookie banner (Essential only / Accept all). Nothing non-essential is tracked until the visitor accepts.
+  - With consent the page records screens viewed and time on each, clicks (button or link label only, never what anyone types), what was shown on each screen (giving "seen but not clicked"), and funnel steps (sign in, profile live, event created, booking request).
+  - FF Admin **Analytics** shows screens by views and time, clicks, seen-not-clicked, the funnel and the raw events, with CSV copy.
+  - `ANALYTICS_ADAPTER.send()` is the single hook for the live platform (recommended: PostHog EU cloud, or GA4). IP address, location, referrer and campaign tags are recorded by Core server-side after consent (`POST /api/analytics/events`). All documented above `ANALYTICS_ADAPTER` in the source.
+  - In this preview the events stay on the viewer's own device.
+- FF Admin menu order: Overview, People, Companies, Guests, Invitations, Bookings, Q&A and sign-ups, Analytics, Reviews, Packages and cards, Sites, Admins, Activity, Database.
+
 ## v17.3.39 — 2026-10-31 — Code review: fixes, private saving, lighter page
 Artifact version 1793455343-7967 · file `fireflair-v17.3.39.html`
 
