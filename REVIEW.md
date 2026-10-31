@@ -11,7 +11,7 @@ It covers how well the two line up, what was fixed in this release, and what the
 
 | What | Where |
 | --- | --- |
-| The page to open and run | `fireflair-v17.3.39.html` (the highest number is always the latest) |
+| The page to open and run | the highest-numbered `fireflair-v*.html` (v17.3.40 at the time of the last update) |
 | The readable app source, with every comment | `source/fireflair-app.jsx`, the exact code in the latest page before it was compiled. Images are shortened to markers; they are complete in the page. |
 | What changed in each version | `CHANGELOG.md` |
 | This review | `REVIEW.md` |
@@ -89,7 +89,8 @@ Everything below is prototype-only state. Each item needs a model and routes:
 | FF Team Bookings | `profile.serviceInterest` (party card sign-ups), `profile.unavail17` (dates not available) |
 | Training, Dream jobs, FF rewards, FF VIP interest | `trainingInterest`, `jobsInterest`, `rewardsInterest`, `vipInterest` |
 | FF Party favourites and preferences | `favs`, `favCocktails`, preferred quality on the event (`quality`) |
-| FF Admin | `admin17` (hidden items, verification overrides, settings, admins, activity log). Routes are listed in `ADMIN_ADAPTER` |
+| FF Admin | `admin17` (hidden items for people, companies and guests, verification overrides, settings, admins, invitations, activity log). Booking overrides change `engagements` and `shifts` and add a history entry `{ by: "admin" }`. Routes are listed in `ADMIN_ADAPTER` |
+| Site analytics | Kept on the visitor's device in the prototype (`ff_analytics17`), only after cookie consent. Live: an analytics platform through `ANALYTICS_ADAPTER.send()`, plus `POST /api/analytics/events` on Core for IP address, location, referrer and campaign. See the comment above `ANALYTICS_ADAPTER` |
 | Credits and payments | `credits` (`PAYMENT_ADAPTER`, not connected) |
 
 ## 3. Fixed in this release
