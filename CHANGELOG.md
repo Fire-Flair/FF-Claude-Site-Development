@@ -1,5 +1,20 @@
 # FireFlair prototype — changelog
 
+## v17.3.33 — 2026-10-31 — Bookings in 3 sections, FF events, personal terms
+Artifact version 1793440707-ff5c · file `fireflair-v17.3.33.html`
+
+- Home, "Built on trust": the founding team line is now just "Founding members offer support across all FireFlair events." The gold-card explanation is removed.
+- FF Team Bookings is rebuilt in three sections:
+  1. Upcoming bookings (confirmed bookings), with a small History button for past bookings.
+  2. FireFlair Party Cards: a Yes/No box "Are you available for FF Business bookings?", then small 5x7 package tiles (Bartending, Mixology, Masterclass, Flair) each showing what the member is paid and a Sign up button, then a "Create your own package" tile that opens the profile's Service Cards builder, then Availability.
+  3. A collapsed dropdown "Training, dream jobs and FF rewards", with Training, Dream jobs and FF rewards each as its own collapsed dropdown. Each keeps its register-interest flow, so members are told when a date is available.
+- Pay shown on each package tile is the package's booking price less the FF booking fee, shown as a single number with no explanation. It is calculated in `payOf17` (PAY_CUT17), so developers can swap it for the real figure from the package record. The Platinum Tasting Package is not offered to individuals, so it is not shown.
+- Availability: this month and next month. Every day starts as available; members untick days they cannot work. Stored as `profile.unavail17` (list of ISO dates). The Yes/No answer is stored as `profile.bizContact17`.
+- Availability note: it is about priority; members are always asked before a shift and we never assume.
+- "FF XP Rewards" is now "FF rewards", and the XP wording is removed from that section. Going to Training, Dream jobs or FF rewards from the home page opens the right dropdown (`ff-opendrop` event); the inner section ids are now `ff-training-sect`, `ff-jobs-sect`, `ff-rewards-sect` so the dropdown boxes keep the original ids.
+- FF Business Bookings: a new "FF events" dropdown at the bottom with two collapsed dropdowns, "Train your employees" and "Reward your employees". Same course and reward cards, with a Register interest button.
+- FF Team profile: a "Terms and conditions" dropdown at the bottom of the profile, in the same format as the other boxes. It holds a "Personal terms and conditions" card with five editable points, filled in by default: Payment, Tax and self-employment, Emergency contact and safety, Uniform and arrival, Food and dietary needs. Note under them: "These will be shown when a business hires you." Stored as `myTerms17`. The card is built so more terms cards can be added later.
+
 ## v17.3.32 — 2026-10-31 — Philosophy line: brings people together through events
 Artifact version 1793438636-af40 · file `fireflair-v17.3.32.html`
 
