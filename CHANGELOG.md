@@ -1,5 +1,17 @@
 # FireFlair prototype — changelog
 
+## v17.3.38 — 2026-10-31 — Fast start-up: precompiled, coin loading screen
+Artifact version 1793450356-0d9d · file `fireflair-v17.3.38.html`
+
+- Start-up fix: the prototype no longer runs Babel in the browser.
+  - Before, every visit downloaded babel-standalone and translated about 6 MB of JSX before anything appeared. That is why the "FireFlair — People. Events. Experiences. Loading FireFlair…" text screen stayed up for several seconds, worse on iPad and phones and worse as the page grew.
+  - The build now compiles the JSX once (Bun's transpiler, classic `React.createElement`) and ships plain JavaScript in an ordinary `<script>`. The Babel script tag is gone.
+  - In a local test the app is on screen in about half a second.
+  - Nothing in the app code changed. All the recent test runs pass on the compiled page.
+- The start-up screen (`#boot-fallback`) is now just the gold FireFlair coin with a gentle pulse, on the cream background. The pulse is off for people who ask for reduced motion. The words (title and description) stay in the page for search engines and screen readers but are no longer shown. The "Loading FireFlair…" line is removed.
+- For Griffy: the live site already builds with Vite, so this was a prototype-only problem. The same rule applies there: never compile JSX in the browser.
+- Build note: `v101/build.mjs` does both steps at the end of the build. `harness.mjs` (test only) now accepts the precompiled page.
+
 ## v17.3.37 — 2026-10-31 — Party quality row, package cards, DJ packages
 Artifact version 1793445424-1f49 · file `fireflair-v17.3.37.html`
 
