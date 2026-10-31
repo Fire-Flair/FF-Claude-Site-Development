@@ -1,5 +1,23 @@
 # FireFlair prototype — changelog
 
+## v17.3.39 — 2026-10-31 — Code review: fixes, private saving, lighter page
+Artifact version 1793455343-7967 · file `fireflair-v17.3.39.html`
+
+- Code review release. Read `REVIEW.md` for the full write-up: how the prototype lines up with Griffy's frontend (`dev`, 23 Oct) and backend (`dev`, 29 Oct), what is still prototype-only, and recommendations for the live build.
+- New: `source/fireflair-app.jsx` is the readable, fully commented source of exactly what is published. The `.html` is compiled since v17.3.38 and has no comments, so read the source file. Older notes that name internal build files (`v11/admin17.jsx` and others) refer to code that is in this file under the same function names.
+- Bug fix: since v17.3.36 the FF Team profile crashed (blank page) after signing in. FF Admin's filter chips had the same name as the profile's chip editor (`Chips17`), and the later one replaced the earlier. Renamed to `AdmChips17`. The build now stops if two top-level functions share a name.
+- Privacy fix: saved data is now private to each signed-in viewer (`data/users/<id>/fireflair`). Before, everyone shared one record (`fireflair/state`), so viewers loaded and overwrote each other's profiles and phone numbers. Previously saved prototype data does not carry over; the dev login rebuilds a full profile. The page now declares the `user` capability for this. FF Admin's "Load saved copy" reads the viewer's own record.
+- Unused code removed: 164 functions and constants that nothing reaches are left out of the page and the source, mostly superseded `_old` and `_v16` versions and earlier home pages. They are listed at the top of the source file.
+- Lighter page (6.7 MB, down from 8.3 MB): the coin artwork is resized to 640 px, the campfire animation to 512 px with the same frames and timing, and the campfire still to 680 px.
+- Alignment with Core:
+  - FF Admin's verification choices now read Base, Bronze, Silver, Gold, matching `users.verification_level`. The prototype's internal "standard" is Core's "base".
+  - New `CORE_QUESTION_KEYS` maps the prototype's Question Card ids to Core's `question_key` values. All ten questions' wording and options match `scripts/seedQuestions.js` exactly.
+  - FF Admin's CSV export includes the Core key.
+- README updated (FF Business naming, the source file, the review). Repo instructions updated to commit the source with every publish.
+- Checks:
+  - The prototype's test runs pass.
+  - A sweep of every site, tab, Discover pillar, FF Admin section, the notifications sheet and a company page at phone and desktop widths showed no page errors.
+
 ## v17.3.38 — 2026-10-31 — Fast start-up: precompiled, coin loading screen
 Artifact version 1793450356-0d9d · file `fireflair-v17.3.38.html`
 
