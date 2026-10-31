@@ -1,5 +1,10 @@
 # FireFlair prototype — changelog
 
+## v17.3.32 — 2026-10-31 — Philosophy line: brings people together through events
+Artifact version 1793438636-af40 · file `fireflair-v17.3.32.html`
+
+- Home page, "Our philosophy" closing line: now reads "FireFlair brings people together through events." The old wording ("exists to bring people together: to enhance the community experience of any event") is removed as unnecessary.
+
 ## v17.3.31 — 2026-10-31 — Hero photo fills box height on wide view
 Artifact version 1793437825-c9a6 · file `fireflair-v17.3.31.html`
 
