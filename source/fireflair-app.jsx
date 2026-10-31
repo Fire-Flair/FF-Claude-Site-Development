@@ -23305,6 +23305,19 @@ function HowSteps17({ kind = "party" }) {
 
 /* ---- The Journal: how-to guides, FireFlair news (and, in time, featured staff) ---- */
 const JR17 = {
+  sidehustle: { date: "31 Oct 2026", by: "FireFlair News", cat: "FireFlair News", img: "dream_international_events", title: "Side hustle tax-free allowance to rise to £3,000: what it means for you", min: 3,
+    intro: "From April 2027 you can earn up to £3,000 a year from self-employed work before reporting it. Here is what changes for FF Team professionals.",
+    body: [
+      ["What has been announced", "From 6 April 2027, the tax-free trading allowance rises from £1,000 to £3,000 a year. The level at which you must report trading income to HMRC rises to the same £3,000. The change was announced in the Budget on 28 October 2026 and will be legislated in the Finance Bill 2026-27. HMRC estimates that up to 1.4 million people could benefit, with around 400,000 paying about £380 less tax on average."],
+      ["What the Prime Minister said", "Andy Burnham, Prime Minister, shared the change on LinkedIn on 31 October 2026 and described it for people with a side hustle. His closing line was: \"Your side hustle should be exactly that - yours.\" The examples he gave were selling on Vinted, dog walking and tutoring. The same rules apply to bartending, waiting, hosting, DJing and any other freelance work done as a self-employed person."],
+      ["What it means for FF Team professionals", "Many people on FireFlair work shifts alongside another job, or take bookings on the side. If you are self-employed, the money you earn from freelance bookings counts as trading income. Until April 2027 the allowance is £1,000. From 6 April 2027 you can earn up to £3,000 in a tax year from all your self-employed work combined and, under the new rules, not have to report it to HMRC."],
+      ["How the allowance works", "The allowance is measured on your total income from self-employed work, before costs. It covers everything you do on your own account, not each job separately. If you earn more than the allowance you can either deduct the allowance from your income or deduct your actual expenses, but not both. You pick whichever leaves you with the smaller taxable amount. Income over the allowance is still taxable."],
+      ["What it does not cover", "The allowance does not apply to pay from an employer, which is taxed through PAYE. It does not apply to income from a partnership, or from a company that you or someone connected to you owns or controls. If you are unsure whether a booking is self-employed work or employment, ask HMRC or an accountant."],
+      ["Until April 2027 nothing has changed", "The current £1,000 limit still applies to this tax year. If your self-employed income from bookings goes above it, you normally need to tell HMRC, and the usual deadline is 5 October after the end of the tax year."],
+      ["Keep your records", "Anyone using the allowance still needs to keep records of what they earn. Your Bookings page on FF Team lists every shift with its booking reference, which makes it easier to add up a year's work. FireFlair does not take tax from your pay: you are paid directly by the person who booked you."],
+      ["A note on advice", "This is general information, not tax advice. Your own position depends on your circumstances, including other income and how you are paid, so check with HMRC or an accountant before you rely on it."],
+      ["Sources", "Budget announcement and HMRC policy paper of 28 October 2026, as reported by BM Magazine. Andy Burnham's post on LinkedIn, 31 October 2026. ByteStart's guide to the trading allowance."],
+    ] },
   workteam: { date: "31 Oct 2026", by: "FireFlair", cat: "How-to guides", img: "dream_after_dark", title: "How to receive and accept work on FF Team", min: 4,
     intro: "What a booking request looks like, how to reply, and what happens once you are confirmed.",
     body: [
@@ -23409,7 +23422,7 @@ const JR17 = {
     ] },
 };
 const JR17_ORDER = {
-  team: ["workteam", "profile", "shifts", "xp", "sites", "cards"],
+  team: ["sidehustle", "workteam", "profile", "shifts", "xp", "sites", "cards"],
   staff: ["bookstaff", "launch", "cards", "sites", "howmany", "shifts", "cocktails"],
   party: ["securestaff", "wedding", "howmany", "cocktails", "xp", "sites"],
 };
@@ -23641,7 +23654,6 @@ const DX_TEAM = [
       { id: "ff-cards", label: "Follow a booking", r: () => <CardJourney11 kind="team" /> },
       { id: "ff-coming", label: "Service Cards", r: () => <HomeComingSoon /> },
       { id: "ff-terms", label: "Terms and conditions", r: () => <Terms17 /> },
-      { id: "ff-journal", label: "Stories", r: () => <Journal17 kind="team" /> },
     ],
     jn: [
       { ic: "Sparkles", t: "Offer a service", d: "Service Cards and signature cocktails.", b: "See Service Cards", go: "#ff-coming", x: "A Service Card describes one thing you offer, from classic cocktail service to flair. Hosts and businesses choose the card, then choose you." },
