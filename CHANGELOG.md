@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.44 — 2026-10-31 — FireFlair News: side hustle allowance
+Artifact version 1793484969-c227 · file `fireflair-v17.3.44.html`
+
+- New FireFlair News story on the FF Team Stories row: the rise in the self-employed trading allowance announced in the Budget, what it covers, what it does not, and what it means for professionals who take bookings alongside other work.
+- Story category is "FireFlair News", so it gets its own filter chip. It shows first on FF Team.
+- General information with a "check with HMRC or an accountant" note and a sources line. The one quotation is attributed and short.
+- No other changes.
+
 ## v17.3.43 — 2026-10-31 — Autofill and booking policy 2026.1
 Artifact version 1793484234-d7ee · file `fireflair-v17.3.43.html`
 
