@@ -1,5 +1,63 @@
 # FireFlair prototype — changelog
 
+## v17.3.36 — 2026-10-31 — FF Admin: manage sites, people, content, data
+Artifact version 1793444898-ed47 · file `fireflair-v17.3.36.html`
+
+- New: FF Admin. Open it from the top-left site menu, below FF VIP. The menu row and the admin header carry the pink "DEV · admin preview" box: it is a development entry only. On the live site it must be shown only to signed-in admins (see the backend list below). All code is in `v11/admin17.jsx`.
+- Rule: admins never delete. They hide and show, set verification, and switch sites and features on or off. Every change goes into an append-only activity log (who, what, which record, when). Admins themselves are deactivated, never removed.
+- Sections:
+  - **Overview:** counts for every collection, site status, hidden counts and recent activity.
+  - **Sites:** FF Team, FF Business, FF Party live or offline, with FF VIP locked until 2027. Feature switches for Bookings, FF XP, Leaderboards and the desktop Add button (the existing `PHASE1` flags, now controlled from admin and applied on every render by `applyAdmin17`).
+  - **People:** search and filter, hide or show, set verification (Standard, Bronze, Silver, Gold), expand for details, open the profile.
+  - **Companies:** hide or show, set verification, open the company page.
+  - **Packages and cards:** FireFlair packages (hiding one removes it from FF Party booking, Browse and the FF Team sign-up tiles) plus members' service cards, signature cocktails and stories.
+  - **Events and bookings:** events (hide takes them out of booking lists), booking requests and their state, party leads.
+  - **Q&A and sign-ups:** one table of everything people have answered or registered for:
+    - Question Cards (including the freelance question), feedback and suggested questions.
+    - Questions asked on profiles (hideable).
+    - Training, Dream jobs, FF rewards and FF VIP interest.
+    - Party card sign-ups and availability.
+    - Personal terms and service card terms.
+    - Party leads.
+
+    Searchable, filterable by area, and can be copied as CSV.
+  - **Reviews:** every review and reference, hideable.
+  - **Admins:**
+    - Add an admin by FF Tag with a role, change roles, deactivate or reactivate.
+    - Gold package members (people and companies at Gold verification) are listed as automatic admins.
+    - A permission table shows what each role can do.
+  - **Activity:** the full admin log.
+  - **Database:** a read-only view of every collection in the live store, the reference data (companies, packages, questions, training, jobs, rewards), and a "Load saved copy" button that reads the page's saved database document.
+- Roles:
+  - **Owner:** everything.
+  - **Admin:** everything except managing admins.
+  - **Gold package:** hide or show and set verification only. Gold package admins do not see Q&A, the database or the activity log, because those hold other members' personal answers.
+  - A "view as" switch in the admin header previews each role (dev only).
+- Hiding takes effect on the sites. Hidden people drop out of:
+  - `useDirectory`;
+  - the network and invitations (`myNetwork`);
+  - rankings;
+  - home examples;
+  - SEO people;
+  - signature cocktail lists.
+
+  Hidden companies drop out of `companyList`. Hidden packages are removed from `PARTY_SERVICES` in place. Hidden cards, reviews, asked questions and events are filtered where they are shown. Verification set by an admin replaces the tier wherever people and companies are read.
+- Saved with the rest of the page state: `admin17`, and now also `myTerms17` and `svcTerms17` (added to `PERSIST_KEYS`).
+- Prototype limit: FF Admin reads this preview's own store plus the demo directory. The page still saves one shared `fireflair/state` document, so it is not a true multi-account view. On the live site every list comes from FireFlair Core across all accounts.
+- What Core needs (written out in `ADMIN_ADAPTER` at the top of `admin17.jsx`). Every route needs an admin role check, and none deletes:
+  - `GET /api/admin/me`;
+  - `GET /api/admin/stats`;
+  - `GET /api/admin/:collection` with search, status and paging;
+  - `PATCH …/:id/visibility` with `hidden: true|false`;
+  - `PATCH …/:id/verification`;
+  - `GET/PATCH /api/admin/settings` (sites and feature flags);
+  - `GET/POST/PATCH /api/admin/admins` (no delete);
+  - `GET /api/admin/log` (append-only);
+  - CSV export.
+
+  In MongoDB this is a `hidden` flag (plus who and when) on each record rather than deletes, a `settings` document, an `admins` collection with roles, and an `adminLog` collection. Public read routes, including `GET /api/user/card/public/:ffTag`, lists and search, must leave hidden records out.
+- Opening any tab, site or profile closes FF Admin.
+
 ## v17.3.35 — 2026-10-31 — Site tab names, flip cards, Party event card
 Artifact version 1793442953-0439 · file `fireflair-v17.3.35.html`
 
