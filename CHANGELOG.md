@@ -1,7 +1,7 @@
 # FireFlair prototype — changelog
 
-## v17.4 — 2026-10-31 — Autofill and booking policy 2026.1
-Artifact version 1793484234-d7ee · file `fireflair-v17.4.html`
+## v17.3.43 — 2026-10-31 — Autofill and booking policy 2026.1
+Artifact version 1793484234-d7ee · file `fireflair-v17.3.43.html`
 
 - Booking policy 2026.1 added to the prototype. Specification for the backend is in the "Booking specification" tab of the developer document; the three FF Stories (FF Team, FF Business, FF Party) state the same rules.
 - Staff row: Autofill card is last, after Search. Choosing a person sends an exclusive 24-hour invitation (Accept & confirm, Unavailable, Discuss first). Unavailable or no reply starts Autofill.
