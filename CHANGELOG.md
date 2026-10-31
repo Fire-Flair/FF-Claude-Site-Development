@@ -1,5 +1,32 @@
 # FireFlair prototype — changelog
 
+## v17.3.37 — 2026-10-31 — Party quality row, package cards, DJ packages
+Artifact version 1793445424-1f49 · file `fireflair-v17.3.37.html`
+
+- FF Party Browse, new "Preferred quality" row under "How many guests?": three metallic buttons with a slow shine:
+  - Bronze, "Great price";
+  - Silver, "Best value";
+  - Gold, "Best quality".
+
+  The choice is kept in `br17.q`. Packages of that tier move to the front and get a gold outline. It is saved on the event as `quality` when a package is added, so custom quotes can use it. The shine animation is turned off for people who ask for reduced motion.
+- FireFlair package cards are now exactly the size of the featured company cards (one shared size for both, `.ff-br17-co`). Each card shows:
+  - the tier;
+  - an icon for the category;
+  - the price badge;
+  - the title and a two-line tagline;
+  - what's included, who it's ideal for and how long it runs;
+  - who delivers it;
+  - "See the package".
+- Tapping a package opens a pop-up (`PkgSheet17`) with:
+  - the full details and feature list;
+  - step 1 "Your event", which is the same Event Card component as FF Business and FF Party booking;
+  - step 2 "Who you would like" (people who offer that package, or the named provider);
+  - step 3 "Add to my event".
+
+  Adding creates or updates the event, adds the package as a role with any chosen people, and opens Book on that event to review and confirm.
+- Entertainment now has three DJ packages (`DJ_PKGS17`): Starter Party (Bronze), Signature Set (Silver) and Unforgettable Night (Gold). This is prototype content taken from the Storm DJs public packages, with the taglines rewritten and the provider shown as "Storm DJs". Permission is needed from Storm DJs before this goes live. The packages can be hidden from FF Admin like any other package.
+- For discussion (not built): area and town pages for search engines. Every place a location is entered (work locations, company areas, venues, event locations) would feed one list of areas. Each area gets its own page, for example ffparty.uk/hemel-hempstead, which shows the same package cards, companies and people filtered to that area. The package card and pop-up are written to take a list of packages, so the same components can render an area page.
+
 ## v17.3.36 — 2026-10-31 — FF Admin: manage sites, people, content, data
 Artifact version 1793444898-ed47 · file `fireflair-v17.3.36.html`
 
