@@ -19,6 +19,10 @@ Whenever the FireFlair site artifact is published, its code goes to this repo
 - If the hook didn't run (for example, this repo wasn't the working directory),
   do the same by hand: save the published file as the next version, update
   `CHANGELOG.md`, commit, push.
+- The published page is compiled (no comments). With every publish, also copy
+  the build's readable app source to `source/fireflair-app.jsx` and commit it
+  with the version, so developers always have the commented code that matches
+  the latest page.
 
 ## Versions
 
