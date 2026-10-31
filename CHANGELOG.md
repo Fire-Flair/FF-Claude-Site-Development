@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.3.41 — 2026-10-31 — Classic or signature cocktails, FF Team terms cards
+Artifact version 1793469785-1a3a · file `fireflair-v17.3.41.html`
+
+- **Cocktail creator (FF Team and FF Business):** you can now add either a **Classic** or a **Signature** cocktail. The add row has one tile for each. In the editor the recipe side has a Classic / Signature switch, so the type can be changed later. The card plate, the pop-up and the profile list say which it is. The section is now called **Cocktails** (was Signature Cocktails). The type is stored on the cocktail as `style: "classic" | "signature"`; cocktails saved before this are treated as signature.
+- **FF Team terms and conditions now work like FF Business:** on both the profile creation page and the completed profile, Terms and conditions shows a row of selectable cards. Tapping a card opens a pop-up with its five points to read, edit and save. There are two sets, because different terms apply to different things: **Personal T&Cs** (shown when a business hires you) and **Service card T&Cs** (shown when a client books one of your service cards). The five default points for each are unchanged. Stored as `myTerms17` and `svcTerms17`.
+- **No cookie banner.** Tracking is on for every visitor from the moment they land, and the banner is removed. The terms and conditions and a privacy policy will cover it, to be written before launch (`ANALYTICS_ADAPTER` comment in the source lists what to say; take legal advice on tracking linked to named people and on session replay).
+- **More tracking collected:** each visit now records where the visitor came from (referrer and campaign tags), device and browser, language, time zone and screen size. Each screen records time spent and how far down the page they scrolled. Form fields record when they were started and when left empty (the label only, never what was typed). Existing tracking (screens, clicks, what was seen but not clicked, sign-in and booking steps) is unchanged.
+- **FF Admin, Analytics:** new tabs **Fields skipped** and **Visitors**, a **Scrolled** column on Screens, and a Clear button for this device's events. Cocktails in Packages and cards now count classic and signature together.
+- Core adds IP address and location server-side (`POST /api/analytics/events`), as listed in the source.
+
 ## v17.3.40 — 2026-10-31 — FF Admin guests, invites, bookings, analytics
 Artifact version 1793468183-b8d3 · file `fireflair-v17.3.40.html`
 
