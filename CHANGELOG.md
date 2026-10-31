@@ -1,5 +1,23 @@
 # FireFlair prototype — changelog
 
+## v17.3.34 — 2026-10-31 — Profile creation fixes, scrolling party cards
+Artifact version 1793442253-c894 · file `fireflair-v17.3.34.html`
+
+- Profile creation page, empty Profile Card: the camera icon is now centred in the photo circle (the glyph itself was off-centre), and a plus button sits on the circle so it is clear you can tap to add a photo.
+- Media section: the layout bug is fixed. A grid rule meant for another component was leaking onto it and putting the text beside the Add button. It now reads like the live FF Team page: text above the Add button, note below. Media is now a dropdown that starts open.
+- About Me is also a dropdown that starts open. Media, About Me and Professions are the three sections open by default; every other section on the creation page (including Network, and sections that already had cards) starts closed.
+- Terms and conditions: now a row on the profile creation page between Reviews and References and Q&A, closed by default, same five editable points as before (state `myTerms17`). It is also still on the finished profile page.
+- Work locations: the guide text is much shorter, the postcode helper line is one short sentence, and the button reads "Find my areas". The section starts closed.
+- FF Team Bookings, party cards:
+  - Section renamed "FireFlair Party Service Cards". The packages now sit in the standard horizontal scroller instead of stacking.
+  - Staffing Service is added as a card (alongside Bartending, Mixology, Masterclass and Flair). Platinum Tasting stays off the sign-up list.
+  - Each card shows "You earn £N+" from a single lookup table (`PAY17`) and a minimum duration from `TIME17`, so the real values can replace them. Masterclass and Flair read "From 2 hours" and Staffing reads "From 1 hour".
+  - The question is "Are you available for freelance work?" and it is the same question as the Q&A and home page one (`g_freelance`, answers Yes, No, Sometimes), so answering it in one place answers it everywhere.
+  - Yes/No and Sign up now work before signing in. Selections are stored on the profile (`answers.g_freelance`, `serviceInterest`) and carry through when the person signs in or creates the profile.
+  - Availability (this month and next) is now behind a closed dropdown.
+- FireFlair Events: the outer dropdown is gone. "FireFlair Events" is a plain heading with Training, Dream jobs and FF rewards as three closed dropdowns. Going to any of them from the home page still opens the right one.
+- FF Business Bookings: the same "FireFlair Events" heading, with two closed dropdowns, "Train your staff" and "Reward your staff".
+
 ## v17.3.33 — 2026-10-31 — Bookings in 3 sections, FF events, personal terms
 Artifact version 1793440707-ff5c · file `fireflair-v17.3.33.html`
 
