@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.58 — 2026-11-01 — v17.3.58 spin fix, long-press cards
+Artifact version 1793569389-159e · file `fireflair-v17.3.58.html`
+
+- Fixed the lines across the Review & Confirm spin button (the greyed-out state was semi-transparent, which showed the coin's stacked edges). The button now always looks the same.
+- Build your booking: with no package selected, the button does nothing and a short note sits to its right: "Please choose your package first".
+- Auto match card is now the same size as the profile cards.
+- Press and hold (about half a second) on any card on FF Party pops it up: people open the card view, packages and BYOB open the package details, cocktails and mocktails open the cocktail card, companies open their page. A hold does not select the card. Component: LongPress17 (auto17.jsx); cards carry data-pr17, data-pk17, data-ck17 and data-co17 attributes.
+
 ## v17.3.57 — 2026-11-01 — v17.3.57 confirm spin, confirm page, host page
 Artifact version 1793568422-e90d · file `fireflair-v17.3.57.html`
 
