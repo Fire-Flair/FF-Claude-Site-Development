@@ -19096,7 +19096,7 @@ function PartyBuilder17({ onOpen }) {
                 {yn}
                 {row(teamList, "FireFlair packages")}
                 {row(pro, "From FireFlair professionals")}
-                {opt === "extras" && (
+                {opt === "extras" && !p2 && (
                   <div className="ff-br17-row"><h3 className="ff-br17-h3">Extras</h3>
                     <div className="ff-br17-xts">{EXTRAS17.map(x => { const on = bk.ex.includes(x.id); return (
                       <button key={x.id} type="button" className={on ? "on" : ""} aria-pressed={on} onClick={() => toggleX(x.id)}>
@@ -19158,7 +19158,7 @@ function PartyBrowse17() {
   useLiveAction17({
     status: items.length ? `Your basket · ${items.length}` : "",
     chips: items.map(i => ({ key: i.key, label: i.label, onRemove: () => dispatch({ type: "V11_SET", patch: { bk17: i.rm() } }) })),
-    actions: items.length ? [{ key: "go", label: "Continue", icon: <S17I.ArrowRight size={14} />, onClick: cont, primary: true }] : [],
+    actions: bk.pk.length ? [{ key: "go", label: "Continue", icon: <S17I.ArrowRight size={14} />, onClick: cont, primary: true }] : [],
   }, [JSON.stringify(bk), band, qual, state.activeEventId, state.events.length, state.shifts.length]);
   return (
     <div className="ff-pn ff-br17">
