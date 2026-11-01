@@ -1,5 +1,18 @@
 # FireFlair prototype — changelog
 
+## v17.3.53 — 2026-11-01 — FF Party round 2
+Artifact version 1793558451-7570 · file `fireflair-v17.3.53.html`
+
+- Words are never split across lines on pillar tiles (homepage and booking page): a long word now shrinks the text instead; several words may wrap onto two lines. Sizing runs on load, resize and content change.
+- FF Party homepage: "Your community" now reads "Party staffing made easy" (panel rewritten around why people avoid hiring staff); "Your booking" reads "Secure your booking" / "Secure your party today". Copy no longer bar-specific (search placeholder, packages lede, occasions heading, steps).
+- How a booking works (FF Party): order is now Service Card, Profile Cards, Create your Event Card, Confirmation ("Confirmed within 24 hours"). The written 24-hour rule box is removed here; the explanation lives in the "Why book FireFlair?" story.
+- Mixology Service renamed Cocktail Bar Service (cocktail bartender instead of mixologist).
+- FF Party profile: tabs are Events, Favourites, Preferences, Reviews. Events shows Event Cards (Book again on past ones) and an Invitations block marked coming soon. Reviews shows a blank Event Card and a "Review someone" picker for anyone on the platform. Favourite cocktails and favourite drinks hidden from the host card and preferences for now.
+- FF Party login is phone number and password only. Join FF Party flow is unchanged and still needs a design.
+- Plan your party: Choose your drinks now sits above Build your booking. Adding cocktails shows the basket bar; items appear as small cards; Continue is a round coin-style arrow button (disabled until a service is in the basket). BYOB is a card in Standard drinks that adds the Bartending Service.
+- UI audit: squircle panels and drinks box, gap between cards and borders, package cards no longer bleed over borders, Cocktails / Mocktails / Standard drinks are tabs, mocktail cards use a warm blush instead of green.
+- Story "Why book FireFlair? What is FF Party?" rewritten around three features (build your own cocktail menu, instant booking confirmation, clear pricing) with the 24-hour explanation; the three "why" stories now sit under How-to guides.
+
 ## v17.3.52 — 2026-11-01 — FF Party browse update
 Artifact version 1793556220-f8be · file `fireflair-v17.3.52.html`
 
