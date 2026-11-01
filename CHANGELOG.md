@@ -1,5 +1,18 @@
 # FireFlair prototype — changelog
 
+## v17.3.48 — 2026-11-01 — Package builder browse
+Artifact version 1793535993-c0a7 · file `fireflair-v17.3.48.html`
+
+- FF Party browse is now two parts: "Build your booking" (the package builder) and "Browse the network" (search, Featured companies, Featured people, all dropdowns, closed by default). Same layout in Phase 2 and Phase 3.
+- Build your booking: the four category boxes (Bar, Entertainment, Services, Food) use the homepage pillar-box look. Tapping one opens its panel directly below; the page no longer scrolls on its own. Bar is open by default.
+- Under Bar, three options replace "How many guests?": Just the team (up to 30), The team plus extras (31 to 100), The full bar service (100+). Each shows its recommended guest range and a short explanation. The choice sets the event's guest band.
+- Just the team and Team plus extras ask "Are you looking for cocktails?" (Yes left). No shows Bartending and Staff service; Yes shows all the FireFlair bar packages that fit plus Staff service, and the Choose your cocktails dropdown. Team plus extras also has selectable Extras (stock, glassware, ice, bar equipment, extra bartender).
+- The full bar service shows Preferred quality (Bronze: Best value, Silver: Best balance, Gold: Best quality) with an explanation that FireFlair finds the right company and compares quotes, then the full-service package.
+- Entertainment, Services and Food stay clickable. Phase 2 shows "coming soon"; Phase 3 shows their packages.
+- Basket: packages, extras and classic cocktails are added to a basket (state `bk17`: pk, ex, ck) that stays when options change. It appears on the existing Live Action Bar as removable chips with a Continue button. The package sheet no longer collects event details; it only adds to the basket.
+- Continue creates (or reuses) the active event, adds a service line for each package, and puts cocktails (20 each) and extras (1 each) into the event's add-ons, then opens Plan your event. The add-ons box there now lists basket cocktails and extras in both phases; a host's own custom cocktail and service add-ons remain Phase 3.
+- The Live Action Bar supports an optional `chips` list.
+
 ## v17.3.47 — 2026-11-01 — Dropdowns, UK classics, URL bars
 Artifact version 1793534192-d0a0 · file `fireflair-v17.3.47.html`
 
