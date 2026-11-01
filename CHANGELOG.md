@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.46 — 2026-11-01 — Cocktail browser, launch note
+Artifact version 1793533631-f3b8 · file `fireflair-v17.3.46.html`
+
+- FF Party browse: in Phase 2 a short note says FireFlair is launching with bar packages and other professions will be added later.
+- New "Choose your cocktails" row between the FireFlair packages and Featured people: 20 classic cocktail cards in a horizontal scroller (Old Fashioned, Negroni, Margarita, Espresso Martini, Mojito and more). Tapping a card opens the full front and recipe back.
+- Cocktail data lives in `CLASSICS17` (same card shape as a cocktail card, so the full 52-classic menu at a later `ffparty/menu` page can reuse it). No photos yet; cards use the glass icon placeholder.
+- Shown in both Phase 2 and Phase 3. Browsing only for now: no selection is saved to the booking.
+
 ## v17.3.45 — 2026-11-01 — Phase 2 / Phase 3 switch
 Artifact version 1793532093-0371 · file `fireflair-v17.3.45.html`
 
