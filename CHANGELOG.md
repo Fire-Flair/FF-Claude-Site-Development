@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.55 — 2026-11-01 — Drinks, package, people sections
+Artifact version 1793562036-fcbf · file `fireflair-v17.3.55.html`
+
+- Plan your party, Bar section is now three dropdowns, each with a large title and open by default: Choose your drinks, Choose your package, Choose your people. No box inside a box: the drinks scroll left to right across the full width of the panel.
+- Cocktails / Mocktails / Standard drinks are sorting buttons with a search box beside them (searches names and ingredients).
+- The three guest-number buttons are removed. Each package card and sheet now says who it is best for (for example "Best for up to 100 guests"), taken from the guest sizes each package already supports. The full bar service is now in Choose your package, and its quality choice (Best value / Best balance / Best quality) is in its details sheet.
+- Choose your people shows "Please choose your package first, or browse below" until a package is in the basket, then lists the people signed up for each chosen package.
+- Not built yet, to decide next: Staff Service as an add-on as well as a package (see add-on design questions).
+
 ## v17.3.54 — 2026-11-01 — Heroes, pillars, invitations
 Artifact version 1793560521-19f5 · file `fireflair-v17.3.54.html`
 
