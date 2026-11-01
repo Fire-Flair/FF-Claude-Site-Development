@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.3.45 — 2026-11-01 — Phase 2 / Phase 3 switch
+Artifact version 1793532093-0371 · file `fireflair-v17.3.45.html`
+
+- New Prototype phase switch (Phase 2 / Phase 3) at the bottom of the site menu, under FF Admin. One artifact, one codebase; the choice is kept with the prototype state. Default is Phase 3.
+- Phase 2 on FF Party: bar packages only. The category row is hidden, only FireFlair's own bar packages are listed, and the custom Service Card tile, other professionals' packages and add-ons are hidden from the booking page.
+- Phase 2 on FF Team: the Service Card creator and Service Cards on the profile Packages tab are hidden. Cocktails and Stories stay.
+- Phase 3 is unchanged and is the full prototype.
+- Booking rules (policy 2026.1) are the same in both phases for now.
+- Phase 2 is the scope the developer specification must match exactly; the backend for Phase 3 features is not needed until Phase 3.
+
 ## v17.3.44 — 2026-10-31 — FireFlair News: side hustle allowance
 Artifact version 1793484969-c227 · file `fireflair-v17.3.44.html`
 
