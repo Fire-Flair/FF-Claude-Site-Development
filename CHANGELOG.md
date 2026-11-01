@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.3.59 — 2026-11-01 — v17.3.59 confirm journey, tips box, notifications tabs
+Artifact version 1793570026-321b · file `fireflair-v17.3.59.html`
+
+- Confirm your booking: Services, People and Event Card are collapsible boxes again (all open). The whole journey is visible before anything is selected: a blank Invoice and event guide, the phone number, the FireFlair invoice (same component as FF Business), and the confirm spin button with Apple Pay, Google Pay and Card around it.
+- A gold divider with a bobbing down arrow and a "Review your order" heading separates the booking boxes from the review section.
+- Confirm booking checks what is missing (package, people or Auto match, date and location, phone) and says so; otherwise it sends the booking directly (the separate payment step is gone for FF Party).
+- Tips and requests: the charitable discount is now a tick box (the invoice shows "Charitable discount requested: Yes"); "Requests" is now "Special requests". The box joins the invoice with a dotted line, matching borders and no gradient.
+- Removed the bell from the booking page headers. The FF coin pop-up now has two tabs, Notifications and Next steps, instead of a "Your next steps" button.
+- EventGuide on FF Party now renders as the services invoice even with no services (blank invoice).
+
 ## v17.3.58 — 2026-11-01 — v17.3.58 spin fix, long-press cards
 Artifact version 1793569389-159e · file `fireflair-v17.3.58.html`
 
