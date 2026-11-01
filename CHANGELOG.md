@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.50 — 2026-11-01 — Mocktails, tips box, recipe invoice
+Artifact version 1793545424-0c26 · file `fireflair-v17.3.50.html`
+
+- FF Party browse: the Extras tiles are removed. "The team plus extras" now says extras such as stock and glassware are requested when booking. Add-ons stay a Phase 3 feature.
+- Cocktail section: a Cocktails / Mocktails switch, a note recommending 3 to 5 different drinks, and 10 classic mocktails (green cards). The basket holds at most 10 different drinks (not displayed; the Add button reads "Basket full").
+- Servings are set on the booking screen, in steps of 20, up to 1,000 of each drink. Cocktails are a menu with no price. The box on the booking screen is headed "Cocktails" in Phase 2 and "Add-ons" in Phase 3.
+- New "Tips and requests" box on the booking review, between the event invoice and the payment step: a tip, a charitable discount request and a free-text request. The request shows on the Event Card; tip and discount update the event invoice total. FireFlair's own charge is unchanged.
+- Event invoice: a separate "Your cocktails" section with each recipe, the amount for one serving and the total for the chosen servings. The preview invoice notes that the full and final invoice follows when the selected professional confirms.
+
 ## v17.3.49 — 2026-11-01 — Extras Phase 3 only
 Artifact version 1793537974-4b30 · file `fireflair-v17.3.49.html`
 
