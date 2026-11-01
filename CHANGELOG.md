@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.3.49 — 2026-11-01 — Extras Phase 3 only
+Artifact version 1793537974-4b30 · file `fireflair-v17.3.49.html`
+
+- FF Party browse: the Extras group (stock, glassware and so on) under "The team plus extras" now shows in Phase 3 only. In Phase 2 the add-on feature is tested with classic cocktails alone.
+- The Continue button on the action bar appears only when the basket holds at least one package, because add-ons attach to a package (a booking cannot be only cocktails or extras).
+- New tab "Booking back end: cards and add-ons" in the developer document: how FireFlair packages, custom service cards, cocktail cards and add-ons map onto the FF Business booking engine, the three tables to build once, the engine rule changes, the Phase 2 versus Phase 3 split, indicative hours and the decisions to lock before building.
+
 ## v17.3.48 — 2026-11-01 — Package builder browse
 Artifact version 1793535993-c0a7 · file `fireflair-v17.3.48.html`
 
