@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.3.47 — 2026-11-01 — Dropdowns, UK classics, URL bars
+Artifact version 1793534192-d0a0 · file `fireflair-v17.3.47.html`
+
+- FF Party browse: Featured companies, Featured people and the new Choose your cocktails section are now dropdowns with the same heading style (icon, title, count, line, chevron). All closed by default.
+- Classic cocktails reordered by UK popularity (Bacardi Cocktail Trends 2025 top ten first, then other best-loved classics). "Pornstar Martini" is named Passion Fruit Martini. 20 cards; data in `CLASSICS17`, each with a generated drink illustration (`drinkImg17`, an SVG data image) as a stand-in until real photos exist.
+- Tapping a classic cocktail opens the card with two buttons: Add to basket and Add to favourites (toggle). Stored in `ckBasket17` / `ckFav17` only; not yet connected to the booking basket or the saved favourites list.
+- Cocktail keyword tags are gold on these cards.
+- Card footer bar is now just the FireFlair logo on the left and the URL on the right (the "FF" text is removed on all cards). Site-owned classics show `ffparty.uk/menu/classics`.
+- Company cards in browse get the same bar, with the company's address (for example `ffparty.uk/theloftlounge`, built from the company name).
+
 ## v17.3.46 — 2026-11-01 — Cocktail browser, launch note
 Artifact version 1793533631-f3b8 · file `fireflair-v17.3.46.html`
 
