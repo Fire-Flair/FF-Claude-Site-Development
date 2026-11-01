@@ -1,5 +1,17 @@
 # FireFlair prototype — changelog
 
+## v17.3.57 — 2026-11-01 — v17.3.57 confirm spin, confirm page, host page
+Artifact version 1793568422-e90d · file `fireflair-v17.3.57.html`
+
+- New reusable "confirm spin button" (the spinning FF coin from the booking pages): used for Review & Confirm on Build your booking, Confirm booking on the confirm page, Pay & send, and Save on the host card. Component: ConfirmSpin17.
+- Review & Confirm is now the spin button at the bottom of Build your booking. Add-ons start collapsed.
+- Choose your people: tapping a person selects them (gold shimmer and border, added to the basket) instead of opening a pop-up; a small info button opens the profile. Order is favourites first, then nearest to the event area. An Auto match card sits at the end of each row (creates the shift with the auto route).
+- Browse the network still opens the profile pop-up as before.
+- The old Plan your event booking screen is now "Confirm your booking" (ConfirmBooking17): no phone entry at the top, no FF AI. Order: 1 Services and 2 People as medium cards in the bookings-bar style (removable), 3 Event Card open by default, the invoice shown automatically, phone number asked just before confirming, then the confirm spin button, then payment, then sent.
+- After the booking is sent, a collapsed "Create your host card" drop-down appears (host card plus Save).
+- Host page (HostPage17): public-page style top (photos with the Host Card beside them, stock photos for the prototype), no phone entry, no Save and share, called "Host card". Tabs reordered: Preferences, Events, Favourites, Reviews. All Preferences drop-downs open. Auto-saves; the spin Save button at the bottom confirms.
+- Chosen people and add-ons are stored on the event (bk17.pp, xa17) and the add-ons are listed on the invoice.
+
 ## v17.3.56 — 2026-11-01 — v17.3.56 tap-to-select, slim basket, add-ons
 Artifact version 1793563624-578a · file `fireflair-v17.3.56.html`
 
