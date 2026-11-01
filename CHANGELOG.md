@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.51 — 2026-11-01 — Nine new FF Stories
+Artifact version 1793547008-73af · file `fireflair-v17.3.51.html`
+
+- Added 9 new FF Stories (3 per site) to the Journal, placed at the top/end of each site's list.
+- "Why FireFlair is different" story for FF Team, FF Business and FF Party, with no other companies named. Party: requests sent straight away, 24-hour reply window, money-back promise. Business: no bidding, no percentage of the job, one-time booking fee, repeat bookings. Team: fully freelance, WhatsApp, free profile site, B2B and B2C, fee model vs agency example, training.
+- Two how-to stories per site on cocktail menus, signature cocktails (Phase 3 add-ons) and Service/Shift Cards.
+- Claims are written as aims or the policy as built (replacement sourced, refund if unfulfilled), not absolutes.
+- Stories live in JR17 and JR17_ORDER in the app source.
+
 ## v17.3.50 — 2026-11-01 — Mocktails, tips box, recipe invoice
 Artifact version 1793545424-0c26 · file `fireflair-v17.3.50.html`
 
