@@ -1,5 +1,16 @@
 # FireFlair prototype — changelog
 
+## v17.3.54 — 2026-11-01 — Heroes, pillars, invitations
+Artifact version 1793560521-19f5 · file `fireflair-v17.3.54.html`
+
+- Hero text is now "Welcome to FireFlair" on FF Team, FF Business and FF Party; only the taglines differ. FF Business hero buttons are "Hire staff" and "Advertise for free".
+- FF Team question "Do you work events?": order is now "Yes, I work events", "I'm full time, but could pick up a shift now and then", then "I run a hospitality business", which links to FF Business.
+- Plan your party: new shared PillarBox17 component uses the same markup, classes and outline as the homepage pillars, so the tiles and panel connect identically. All tiles stay lit while one is open. Bar is open by default and "Choose your drinks" is the first thing inside it, above the bar options and packages.
+- Booking page invoice: Tips and requests now sits directly under the event invoice, attached to it, and above the FireFlair invoice. It shows on the preview only.
+- On FF Party the booking page recommends a Host Card instead of a Company Card.
+- FF Party profile: Favourite drinks are back on the Host Card and in Preferences. Events only list once signed in (signed out shows a blank Event Card). Invitations now work: pick or write an event, choose a theme (Gold gala, Midnight, Garden, Blush), preview the invitation card, save, edit, remove and share on WhatsApp.
+- Homepage pillar code still has its own copy of the outline logic; PillarBox17 is the reusable version if you want to unify them.
+
 ## v17.3.53 — 2026-11-01 — FF Party round 2
 Artifact version 1793558451-7570 · file `fireflair-v17.3.53.html`
 
