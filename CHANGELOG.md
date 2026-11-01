@@ -1,5 +1,17 @@
 # FireFlair prototype — changelog
 
+## v17.3.56 — 2026-11-01 — v17.3.56 tap-to-select, slim basket, add-ons
+Artifact version 1793563624-578a · file `fireflair-v17.3.56.html`
+
+- Build your booking heading now matches Browse the network (large, gold underline).
+- Basket bar is much shorter: "Your basket" on the left, item cards centred, round coin arrow button bottom right, no counter.
+- Tapping any package, cocktail, mocktail, drink option or add-on now selects it instead of opening a pop-up: gold shimmer plus solid gold border, and it goes straight into the basket. Tap again to remove. A small info button on each card still opens the details.
+- Choosing a package (e.g. Flair Package) immediately lists its bartenders under Choose your people.
+- Standard drinks: BYOB plus a new Bar company supplier card; no prices shown on either. Supplier shows bar companies under Choose your people.
+- Shopping-list line ("We provide a shopping list for all of your selected cocktails") on Bartending, Cocktail Bar Service and Flair packages (not Masterclass or BYOB).
+- New Add-ons section under Choose your people: Staff service, Stock delivery, Ice delivery, Glassware delivery. Selected add-ons go to the basket and are listed on the event invoice.
+- New Review & confirm button below Add-ons; runs the same continue step as the basket arrow.
+
 ## v17.3.55 — 2026-11-01 — Drinks, package, people sections
 Artifact version 1793562036-fcbf · file `fireflair-v17.3.55.html`
 
