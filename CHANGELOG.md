@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.3.60 — 2026-11-01 — v17.3.60 FF Business look on confirm page, team steps
+Artifact version 1793571142-cc6e · file `fireflair-v17.3.60.html`
+
+- FF Team homepage, How a booking works: step 1 is now "Profile Card and personal web page" (links to the free personal website); step 2 Booking request says "Receive all the details via WhatsApp. Instantly." and shows a Shift Card; step 3 is "Confirm via WhatsApp: say yes in a tap, and your shift is confirmed". Note: the build rewrites "Shift Card" to "Service Card" globally, so the mini card label is written as "{"Shift"} Card" to survive that.
+- FF Party Confirm your booking now matches the FF Business booking page: numbered gradient step bars (1 Services, 2 People, 3 Event Card, 4 Review your order) joined by arrow bubbles, all collapsible and open.
+- Review your order is now a gradient step holding two gold-icon drop-downs (Invoice and event guide, FireFlair invoice) with the phone number between them.
+- Payment options are a "Pay with" panel of three gold tiles (Apple Pay, Google Pay, Card) above the confirm spin button.
+- A gold "Host info" drop-down sits below the confirm button (Host Card plus Save), closed by default, before and after the booking is sent.
+- FF Business: the "We recommend you create a Company Card" prompt is now a drop-down (closed) and only appears after the booking is confirmed, in the sent view.
+
 ## v17.3.59 — 2026-11-01 — v17.3.59 confirm journey, tips box, notifications tabs
 Artifact version 1793570026-321b · file `fireflair-v17.3.59.html`
 
