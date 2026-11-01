@@ -1,5 +1,16 @@
 # FireFlair prototype — changelog
 
+## v17.3.52 — 2026-11-01 — FF Party browse update
+Artifact version 1793556220-f8be · file `fireflair-v17.3.52.html`
+
+- FF Party: the homepage "Plan your event" button now opens the "Let's plan your party" browse screen.
+- Four pillar tiles are all lit by default; the chosen one gets an extra gold border. Pillar labels never split a word: the font size shrinks to fit (rule applies to the homepage pillars too).
+- Bar options are now compact (no description text) and all FireFlair packages show straight away; the "Are you looking for cocktails?" question is removed. Quality choices read Best value / Best balance / Best quality and use the bronze, silver and gold colours only (the words Bronze, Silver, Gold no longer appear on cards).
+- Package details open from every service card; packages can now be added to the basket or to favourites.
+- New "Choose your drinks" section, always open, above Browse the network: Cocktails, Mocktails and Standard drinks. Standard drinks holds one BYOB card (we provide the bartender, you provide the drinks; our best value package).
+- Cocktail order now starts Margarita, Mojito, Passion Fruit Martini, Espresso Martini, Cosmopolitan; Gin & Tonic is last, Tom Collins moved up.
+- "Browse the network" heading is larger with a gold underline. Featured companies and Featured people start open and use the same dropdown button as the rest of the list. Search bar now sits below Featured people.
+
 ## v17.3.51 — 2026-11-01 — Nine new FF Stories
 Artifact version 1793547008-73af · file `fireflair-v17.3.51.html`
 
