@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.3.61 — 2026-11-02 — Business bookings tiles, invoice phone
+Artifact version 1793611872-84be · file `fireflair-v17.3.61.html`
+
+- FF Business: Hire staff and Advertise for free buttons now sit side by side in the hero; the last-minute shifts note stays hidden on the home page.
+- FF Business booking review: the rectangle Confirm button is now the round Confirm spin coin, labelled just "Confirm". How availability works is unchanged.
+- Business packages: Gold no longer shows a placeholder amount; it reads "For our most valuable users".
+- Train your staff and Reward your staff cards now carry short descriptions. "Barfly cocktail equipment" is now "Branded cocktail equipment"; the Christmas party reward is now "FF staff parties".
+- Your bookings: empty until someone is signed in; bookings are square tiles (date, title, location, time, roles and people chosen, status). Tapping a tile opens a pop-up with all event details. History is a small button that adds past events to the same list.
+- FF invoice "Billed to": name or company box, then phone number, then email (optional). Filled automatically from details entered elsewhere or the signed-in account. The phone entry at the top of the booking phase is removed.
+
 ## v17.3.60 — 2026-11-01 — v17.3.60 FF Business look on confirm page, team steps
 Artifact version 1793571142-cc6e · file `fireflair-v17.3.60.html`
 
