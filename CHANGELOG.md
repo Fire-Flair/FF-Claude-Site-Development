@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.3.65 — 2026-11-03 — Signature cards match classic cards
+Artifact version 1793712696-1adc · file `fireflair-v17.3.65.html`
+
+- Cocktail card photos now sit directly on the card's own background colour (no blurred backdrop); the image is multiplied onto the card and its side edges feather out, so there is no visible box.
+- Signature cocktail cards now match the classic cocktail cards: same 300 px size, same layout and the same gold keyword chips.
+- Source (`source/fireflair-app.jsx`) updated to match.
+
 ## v17.3.64 — 2026-11-03 — Cocktail cards, pillar photos, Vooshka Cocktail Bar
 Artifact version 1793711463-1c8e · file `fireflair-v17.3.64.html`
 
