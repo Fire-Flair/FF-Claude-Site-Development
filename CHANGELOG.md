@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.3.63 — 2026-11-03 — Vooshka photos embedded and cocktail photos
+Artifact version 1793710371-8c8d · file `fireflair-v17.3.63.html`
+
+- Vooshka now uses the real photos, embedded in the page (no hotlinking): wordmark logo, 17 branded gallery photos, the branded Private Celebrations photo, all 42 bar styles and the 16 signature cocktails.
+- Unbranded gallery photos are deliberately not used on the Vooshka page.
+- Vooshka's company card now uses the wide wordmark (contained, centre layout) instead of a cropped square logo.
+- Occasions without a photo show as text-only cards; the cocktail fold is now "Signature cocktails" (16).
+- Main-page cocktail library: 15 existing classics now use the real Vooshka cocktail photos, and 14 new classics were added with standard recipes (Lychee Martini, Strawberry Daiquiri, Mai Tai, French 75, French Martini, three spritzes, two margaritas, four fruit mojitos). Five classics keep their generated illustrations.
+- Source (`source/fireflair-app.jsx`) updated to match.
+
 ## v17.3.62 — 2026-11-03 — Vooshka as default FF Business company
 Artifact version 1793705179-5b2a · file `fireflair-v17.3.62.html`
 
