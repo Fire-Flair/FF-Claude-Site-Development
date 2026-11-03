@@ -1,5 +1,16 @@
 # FireFlair prototype — changelog
 
+## v17.3.64 — 2026-11-03 — Cocktail cards, pillar photos, Vooshka Cocktail Bar
+Artifact version 1793711463-1c8e · file `fireflair-v17.3.64.html`
+
+- Company name is now "Vooshka Cocktail Bar" everywhere (card, profile, FF Party listings); the wordmark logo is unchanged.
+- FF Business profile, "Build your packages": the Cocktails section is now titled "Signature cocktails" and lists all 16 Vooshka signatures as cards with their photos; Service Cards show the four Vooshka occasions. These use their own lists (`coCocktails17`, `coServices17`), so the FF Team demo keeps its own cocktails. Recipes on the signature cards are draft placeholders built from the drink names, for Vooshka to confirm.
+- All cards on the Vooshka page now show the company address (ffparty.uk/vooshka/...) instead of "yourbusiness".
+- Cocktail card redesign (`CocktailFront17`): the photo is at least 52% of the card height and shows the whole glass (contained over a blurred copy of itself, no cropping); name, description and keywords/glass sit at the bottom; the name is always one line and shrinks to fit (`FitTtl17`).
+- Four classic cocktail photos had a stray strip along the bottom edge (Negroni, Moscow Mule, Mai Tai, Aperol Spritz); it is trimmed.
+- Stock pillar images on the Discover FireFlair cards (FF Team, FF Business, FF Party, except "Your profile") and the "Bar packages" tile on FF Party now use unbranded Vooshka event photos (new `PX17` block, added to `window.FF_IMG`).
+- Source (`source/fireflair-app.jsx`) updated to match.
+
 ## v17.3.63 — 2026-11-03 — Vooshka photos embedded and cocktail photos
 Artifact version 1793710371-8c8d · file `fireflair-v17.3.63.html`
 
