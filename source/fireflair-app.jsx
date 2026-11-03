@@ -15738,7 +15738,6 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   const [asking, setAsking] = useState(false);
   const [reviewing, setReviewing] = useState(false);
   const [tab, setTab] = useState("overview");
-  const [allPics, setAllPics] = useState(false);
   if (!co) return null;
   const isStaff = state.role === "staff";
   const team = (co.team || []).map(id => all.find(p => p.id === id)).filter(Boolean);
@@ -15767,12 +15766,8 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   };
   return (
     <div className="ff-copub">
+      <PublicHero media={(co.mediaList || []).map(m => ({ id: m.id, src: m.src, name: m.alt || "" }))} card={<CompanyCardFace c={co} />} below={<>
       {!done && <button type="button" className="ff-pback ff-copub-back" onClick={back}><I11.ChevronLeft size={20} /> <span>Back</span></button>}
-      <div className="ff-copub-hero">
-        {co.mediaList && co.mediaList[0] && <img className="bg" src={co.mediaList[0].src} referrerPolicy="no-referrer" alt="" />}
-        <span className="shade" aria-hidden="true" />
-        <div className="card"><CompanyCardFace c={co} /></div>
-      </div>
       {done ? null : (
       <div className="ff-copub-acts">
         {isStaff && team.length > 0 && (isParty
@@ -15784,8 +15779,7 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
         </div>
       </div>
       )}
-
-      {co.mediaList && co.mediaList.length > 0 && <section className="ff-copub-sec"><CompanyMedia list={co.mediaList.length > 12 && !allPics ? co.mediaList.slice(0, 12) : co.mediaList} />{co.mediaList.length > 12 && <button type="button" className="ff-vk-more" aria-expanded={allPics} onClick={() => setAllPics(!allPics)}>{allPics ? "Show fewer photos" : `All photos (${co.mediaList.length})`}</button>}</section>}
+      </>} />
 
       <div className="ff-ptabs-wrap">
         <ProfileTabs tabs={tabs} active={tab} onChange={setTab} />

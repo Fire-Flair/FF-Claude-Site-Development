@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.66 — 2026-11-03 — Company page uses profile photo hero
+Artifact version 1793713143-5f63 · file `fireflair-v17.3.66.html`
+
+- Company public page now uses the same photo hero as team profile pages (`PublicHero`): the Company Card sits over the photos, which swipe as a carousel on mobile and show as a mosaic on wide screens.
+- Back button and the Ask / Review / Book actions sit under the card, inside the hero, as on profiles.
+- Removed the company page's own dark hero banner and separate photo grid (and the "All photos" toggle); every company photo is now in the hero carousel.
+- `CompanyMedia` is unchanged and still used on the edit page.
+- Source: `source/fireflair-app.jsx` updated to match.
+
 ## v17.3.65 — 2026-11-03 — Signature cards match classic cards
 Artifact version 1793712696-1adc · file `fireflair-v17.3.65.html`
 
