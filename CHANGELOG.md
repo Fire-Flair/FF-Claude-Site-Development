@@ -1,5 +1,16 @@
 # FireFlair prototype — changelog
 
+## v17.4 — 2026-11-03 — Vooshka as default FF Business company
+Artifact version 1793705179-5b2a · file `fireflair-v17.4.html`
+
+- Vooshka (luxury mobile cocktail bar, vooshkabars.co.uk, shared with permission of the owner) is now the default company on FF Business and the first company on FF Party.
+- Data lives in a new `VK17` block just before `COMPANY_PAGES`: logo, 94 site photos, 42 bar styles, 45 cocktails with photos, occasions, why Vooshka, the 4-step process, 4 client testimonials, Yes/No Q&A, contact and areas. Images are hotlinked from vooshkabars.co.uk (not embedded); the real site should host its own copies.
+- `co_vooshka` added to `COMPANIES` and `COMPANY_PAGES`, so it appears in FF Party Featured companies, the Network companies list and the FF Business Company Card.
+- The FF Business Company Card example (`StaffCompanyCard`) now shows Vooshka.
+- `vooshkaEditable17()` fills the company profile form (name, what they do, areas, socials, theme, logo, media, contact and area records, Service Cards, cocktail menu, Q&A, reviews) when the demo company is first edited.
+- Company profile: new collapsed sections (experience, why, occasions, process, bar styles, cocktail menu) and an "All photos" toggle; client testimonials show no star rating because the source site gives none.
+- `CompanyMedia` loads photos lazily after the first eight and hides any that fail to load.
+
 ## v17.3.61 — 2026-11-02 — Business bookings tiles, invoice phone
 Artifact version 1793611872-84be · file `fireflair-v17.3.61.html`
 
