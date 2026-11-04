@@ -23076,7 +23076,7 @@ const DISCOVER = [
     body: ["Bartenders, waiters, chefs, hosts and the businesses that book them, all in one network. Connect with the people you work with, see who they know, and share the opportunities that come from every event.",
       "Your network grows each time you work with someone, invite someone or get invited."],
     cta: ["Explore the network", "network"], cta2: ["Build your team", "#ff-teams"] },
-  { k: "profiles", t: "Profiles", s: "Showcase who you are.", img: "face_you",
+  { k: "profiles", t: "Profiles", s: "Showcase who you are.", img: "face_vooshka",
     h: "Your Professional Profile", lead: "Your FireFlair Profile Card is your professional identity within the hospitality community.",
     body: ["Showcase your experience, qualifications, skills and interests in one place, making it easier for people to discover you and understand what you offer.",
       "Build your profile, demonstrate your expertise and grow your professional network. Your profile can help connect you with relevant services, opportunities and people."],
@@ -24485,7 +24485,7 @@ const DX_TEAM = [
       { ic: "CalendarDays", t: "Go to a bar show", d: "Athens, London and Berlin.", b: "See growth events", go: "#ff-barshows", x: "Industry events are where the trade learns and meets. We list the big ones across Europe so you can plan which to attend." },
       { ic: "Rocket", t: "Grow with FireFlair", d: "Where events are booked.", b: "See the platforms", go: "#ff-how", x: "The platforms are the places where events get booked. See where FireFlair fits, and how the network grows with every member." },
     ] },
-  { k: "profiles", t: "Your profile", s: "Show who you are", img: "face_you", icon: DX_I.Contact,
+  { k: "profiles", t: "Your profile", s: "Show who you are", img: "face_vooshka", icon: DX_I.Contact,
     h: "Your craft, on one card.",
     p: ["Your Profile Card is your professional identity: your photo, skills, experience and CV in one place, shared with a single link.", "Collect reviews after every event and let your reputation do the talking when a business is choosing who to book.", "One card, one link, your whole career. Send it on WhatsApp, pin it to your socials and let people see exactly why you are the one to book."],
     parts: [
