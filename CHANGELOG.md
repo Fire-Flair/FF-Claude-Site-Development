@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.4 — 2026-11-04 — Your profile tile uses Vooshka bartender
+Artifact version 1793812601-9563 · file `fireflair-v17.4.html`
+
+- The "Your profile" tile in Discover FireFlair, and its opened panel, no longer use the blonde stock photo. They now use a photo of a Vooshka bartender (single person, black and white), cropped square so the face stays in view on the tile and in the opened panel.
+- The photo is added to the image set as `face_vooshka` and the two Profiles entries in the Discover list now point to it. The photo file is also saved in the repo as `assets/vooshka/profile-photo.webp`.
+- Not changed: the FireFlair Stories cards and the FF Party demo host still use the original photo.
+
 ## v17.3.68 — 2026-11-04 — Blue and green map, flat coins
 Artifact version 1793809093-9723 · file `fireflair-v17.3.68.html`
 
