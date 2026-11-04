@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.4 — 2026-11-04 — Titled FireFlair Phase 2
+Artifact version 1793788342-e6c8 · file `fireflair-v17.4.html`
+
+- The prototype is now titled "FireFlair Phase 2" (page title and share title), replacing "FireFlair — People. Events. Experiences.", so this build is easy to tell apart from the earlier versions. No screens or behaviour changed; it is v17.3.66 with the new title.
+- Review of the prototype: FF Team, FF Business and FF Party load with no script errors, and there is no sideways scrolling at phone or desktop width.
+- Known small point for the developers: when signed out on FF Party, the browser tab title reads "FF Business · Home". It only affects the tab title. In production the title should follow the site being viewed.
+
 ## v17.3.66 — 2026-11-03 — Company page uses profile photo hero
 Artifact version 1793713143-5f63 · file `fireflair-v17.3.66.html`
 
