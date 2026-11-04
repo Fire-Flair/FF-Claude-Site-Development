@@ -23273,7 +23273,6 @@ function Home101() {
   );
 }
 /* generated: the campfire as an animated image (plays everywhere, including iPad and iPhone) and its still frame, inlined */
-const FIRE17_ANIM = "data:image/webp;base64,…(1655 KB)";
 const FIRE17_STILL = "data:image/webp;base64,…(59 KB)";
 
 /* ==== v1.1 homes: FF Business and FF Party ======================================
@@ -24767,22 +24766,13 @@ function TeamHow11() {
 }
 
 /* ---- v17.3.8: Why FireFlair (the fire, the philosophy, the Flair cards) and Our dream (the slow coin) ---- */
-/* The campfire: a short looping film on black, blended into the dark panel. The still frame shows first; the film starts
-   when the section is near the screen, and people who ask for less motion keep the still. */
+/* The campfire: a still photo on black, blended into the dark panel. (It was a looping film before; it never played on
+   iPad, so it is a still now.) */
 function Campfire17() {
-  const box = useRef(null);
-  const [near, setNear] = useState(false);
-  const calm = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  useEffect(() => {
-    const el = box.current; if (!el || calm) return;
-    if (typeof IntersectionObserver === "undefined") { setNear(true); return; }
-    const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { setNear(true); io.disconnect(); } }, { rootMargin: "600px 0px" });
-    io.observe(el); return () => io.disconnect();
-  }, []);
   return (
-    <div className="ff-fire17 on" ref={box} role="img" aria-label="A campfire burning on a stack of logs">
+    <div className="ff-fire17 on" role="img" aria-label="A campfire burning on a stack of logs">
       <span className="glow" aria-hidden="true" />
-      <img className="still" src={near && !calm ? FIRE17_ANIM : FIRE17_STILL} alt="" width="640" height="596" decoding="async" draggable={false} />
+      <img className="still" src={FIRE17_STILL} alt="" width="640" height="596" decoding="async" draggable={false} />
     </div>
   );
 }

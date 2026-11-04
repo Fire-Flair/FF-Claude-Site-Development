@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.3.71 — 2026-11-04 — Campfire is now a still image
+Artifact version 1793819701-7251 · file `fireflair-v17.3.71.html`
+
+- The campfire in "Our philosophy" is now a still photo on all three sites. The looping film never played on iPad, so it is gone, and the page is about 1.6 MB lighter.
+- Fix: the previous version (v17.3.70) shipped with the campfire images cut short by a build slip, so the fire did not load. The full still image is restored here.
+- In the source, Campfire17 now just shows FIRE17_STILL; FIRE17_ANIM and the scroll and reduced-motion logic are removed.
+
 ## v17.3.70 — 2026-11-04 — Phase 2 content: no XP, dark cocktail cards
 Artifact version 1793813963-4fcb · file `fireflair-v17.3.70.html`
 
