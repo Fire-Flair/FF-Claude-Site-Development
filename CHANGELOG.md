@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.4 — 2026-11-04 — Blue and green map, flat coins
+Artifact version 1793809093-9723 · file `fireflair-v17.4.html`
+
+- The map (the "Where FireFlair is" section on the People screens) now uses a land and water look: blue water, green land, with the UK, Ireland and neighbouring countries in slightly different greens. The Thames and rivers are blue, the M25 stays a dashed wine-red line, and city names have a light outline so they read on the green.
+- Map markers are still coins, now a simplified flat version: a round gold disc (bronze, silver or grey for those tiers) with the FF mark. The London cluster, the individual markers and the legend all use it. The full coin artwork is unchanged everywhere else.
+- Code: `MapCoin` (new, next to `FFMap`) is the flat coin; the colours are set in `FFMap` and in the `.ff-map-uk` and `.ff-lcity` styles. A developer can swap the palette in one place.
+- Not changed: FF Party's People screen has no map in the prototype, so only FF Team and FF Business show it.
+
 ## v17.3.67 — 2026-11-04 — Titled FireFlair Phase 2
 Artifact version 1793788342-e6c8 · file `fireflair-v17.3.67.html`
 
