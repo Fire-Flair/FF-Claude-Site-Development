@@ -1,7 +1,7 @@
 # FireFlair prototype — changelog
 
-## v17.4 — 2026-11-04 — Titled FireFlair Phase 2
-Artifact version 1793788342-e6c8 · file `fireflair-v17.4.html`
+## v17.3.67 — 2026-11-04 — Titled FireFlair Phase 2
+Artifact version 1793788342-e6c8 · file `fireflair-v17.3.67.html`
 
 - The prototype is now titled "FireFlair Phase 2" (page title and share title), replacing "FireFlair — People. Events. Experiences.", so this build is easy to tell apart from the earlier versions. No screens or behaviour changed; it is v17.3.66 with the new title.
 - Review of the prototype: FF Team, FF Business and FF Party load with no script errors, and there is no sideways scrolling at phone or desktop width.
