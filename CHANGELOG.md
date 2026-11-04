@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.70 — 2026-11-04 — Phase 2 content: no XP, dark cocktail cards
+Artifact version 1793813963-4fcb · file `fireflair-v17.3.70.html`
+
+- Content update for what Phase 2 launches with: XP, levels, rewards and training copy removed from the Discover tiles on FF Team, FF Business and FF Party, the reviews panel, the trust section, the home stories and the "Next steps" sheet (now just the steps). The XP sections on the Team and Party homes are gone.
+- Every cocktail card now uses the dark Team card look from Your Packages: black face, gold rim, wine banner at the top, FF coin top right. Applies to Classic and Signature cocktail cards on FF Party (Choose your drinks, the cocktails page, favourites, company profiles) and the recipe sheet. The info button moved below the coin so nothing covers it.
+- Added ckAdapt17 and ckGlass17 in the source: they map any cocktail record (classic, mocktail, signature) onto the card face, so all cocktail cards share one design.
+- FF Party "Your community" tile now shows a bar-only photo (no people), added as assets/vooshka/party-community-bar.webp.
+- Still in place on purpose: "Coming 2027" badges, Service Cards and Signature Cocktails sections, the Growth events tile, profession "Level n of 5" diamonds, and the admin-set Base/Bronze/Silver/Gold verification badges.
+
 ## v17.3.69 — 2026-11-04 — Your profile tile uses Vooshka bartender
 Artifact version 1793812601-9563 · file `fireflair-v17.3.69.html`
 
