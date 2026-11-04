@@ -1,7 +1,7 @@
 # FireFlair prototype — changelog
 
-## v17.4 — 2026-11-04 — Blue and green map, flat coins
-Artifact version 1793809093-9723 · file `fireflair-v17.4.html`
+## v17.3.68 — 2026-11-04 — Blue and green map, flat coins
+Artifact version 1793809093-9723 · file `fireflair-v17.3.68.html`
 
 - The map (the "Where FireFlair is" section on the People screens) now uses a land and water look: blue water, green land, with the UK, Ireland and neighbouring countries in slightly different greens. The Thames and rivers are blue, the M25 stays a dashed wine-red line, and city names have a light outline so they read on the green.
 - Map markers are still coins, now a simplified flat version: a round gold disc (bronze, silver or grey for those tiers) with the FF mark. The London cluster, the individual markers and the legend all use it. The full coin artwork is unchanged everywhere else.
