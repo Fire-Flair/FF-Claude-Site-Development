@@ -6663,6 +6663,7 @@ function NetworkScreen({ guest = false }) {
         <p className="ff-body ff-muted" style={{ margin: "0 0 4px" }}>Published Profile Cards, by profession. Tap a card to open the full profile.</p>
       </>)}
       <GroupedPeople query={q} onPick={view} />
+      <V101.BusinessSupport19 />
       {!guest && <InviteSheet open={inviting} onClose={() => setInviting(false)} />}
       <ReviewSheet open={!!reviewing} person={reviewing} onClose={() => setReviewing(null)} />
     </div>
@@ -6902,10 +6903,10 @@ function TeamBookings({ guest = false }) {
           {pkgs.map(sv => <div key={sv.id} className="ff-tp17-cell"><PkgTile17 sv={sv} on={svcInterest.includes(sv.id)} onClick={() => toggleService(sv)} /></div>)}
           <div className="ff-tp17-cell"><button type="button" className="ff-tp17 own" onClick={ownPackage}><span className="pl"><Plus size={22} /></span><b className="tt">Create your own package</b></button></div>
         </HScroll>
-        <div className="ff-bk-avwrap"><Drop17 id="ff-bk-avail" icon={S17I.CalendarDays} title="Availability"><AvailMonths17 /></Drop17></div>
       </section>
 
       <TeamExtras17 />
+      <V101.BusinessSupport19 />
 
       <BookingSheet engagement={open} onClose={() => setOpen(null)} />
     </div>
@@ -8744,16 +8745,16 @@ function CocktailsPage() {
    examples are square, to set them apart from FireFlair's own. */
 const PARTY_SERVICES = [
   { id: "svc_bartending", tone: "bronze", level: "Bronze", title: "Bartending Service", tagline: "Professional bartenders for your party or event.", from: "£200",
-    includes: "Bartender, bar set-up and full drinks service", ideal: "House parties, birthdays and private events", time: "From 3 hours" },
+    includes: "Basic equipment, professional, able to work solo", ideal: "House parties, birthdays and private events", time: "3 hours" },
   { id: "svc_mixology", tone: "silver", level: "Silver", title: "Cocktail Bar Service", tagline: "Signature cocktails built around your event.", from: "£250",
-    includes: "Cocktail bartender, bespoke cocktail menu and garnishes", ideal: "Weddings, launches and celebrations", time: "From 4 hours" },
+    includes: "Write and follow a cocktail menu, with your own cocktail kit", ideal: "Weddings, launches and celebrations", time: "From 4 hours" },
   { id: "svc_masterclass", tone: "gold", level: "Gold", title: "Masterclass Service", tagline: "A hands-on cocktail masterclass for your group.", from: "£300",
     includes: "Host mixologist, all equipment, three to four cocktails each", ideal: "Hen and stag parties, team socials", time: "1½ to 2 hours" },
   { id: "svc_flair", tone: "gold", level: "Flair", title: "Flair Package", tagline: "An amazing bartender, plus a Flair performance.", from: "£250",
-    includes: "A skilled bartender and a 5 or 15-minute Flair performance", ideal: "Launches, weddings and parties that want a show", time: "From 3 hours" },
+    includes: "Do some flair", ideal: "Launches, weddings and parties that want a show", time: "From 3 hours" },
 ];
 const STAFFING_SERVICE = { id: "svc_staffing", tone: "white", level: "Staffing", site: "FF Business", domain: "FFBusiness.uk", title: "Staffing Service", tagline: "The right team for any event.", from: "£100",
-  includes: "Bartenders, waiters, hosts and event staff", ideal: "Corporate events, venues and festivals", time: "Any shift length" };
+  includes: "Able to work solo and communicate with clients", ideal: "Corporate events, venues and festivals", time: "Any shift length" };
 
 function ServicePoster({ svc, price }) {
   return (
@@ -19621,7 +19622,7 @@ function Drop17({ id, title, icon, kids = [], children }) {
 
 /* What an FF Team member earns per package, and the shortest booking. */
 const PAY17 = { svc_bartending: 100, svc_mixology: 150, svc_masterclass: 200, svc_flair: 200, svc_staffing: 50 };
-const TIME17 = { svc_bartending: "From 3 hours", svc_mixology: "From 4 hours", svc_masterclass: "From 2 hours", svc_flair: "From 2 hours", svc_staffing: "From 1 hour" };
+const TIME17 = { svc_bartending: "3 hours", svc_mixology: "From 4 hours", svc_masterclass: "From 2 hours", svc_flair: "From 2 hours", svc_staffing: "From 1 hour" };
 
 function PkgTile17({ sv, on, onClick }) {
   const pay = PAY17[sv.id];
@@ -22403,16 +22404,42 @@ function NextModule({ id, icon: Icon, title, children, cards }) {
 /** v1.01: What's next for FireFlair - two modules to swipe through, Service
  *  Cards and Signature Cocktails. (FF Business, FF Party and FF VIP are in the
  *  platforms section above.) */
+/* ---- v17.3.76: home service cards, small, and about what it takes to get the job ---- */
+const HOME_JOBS = [
+  { id: "bartending", tone: "bronze", level: "Bronze", title: "Bartending Service", meta: "£100 · 3 hours", reqs: ["Basic equipment", "Be professional", "Able to work solo"] },
+  { id: "mixology", tone: "silver", level: "Silver", title: "Mixology Service", reqs: ["Write a cocktail menu", "Follow a cocktail menu", "Your own cocktail kit"] },
+  { id: "flair", tone: "gold", level: "Flair", title: "Flair Package", reqs: ["Do some flair"] },
+  { id: "staff", tone: "white", level: "Staff", title: "Staff Service", reqs: ["Able to work solo", "Communicate with clients"] },
+];
+const JOBS_CSS = `
+.ff .ff-job{--c:#F3EBDD;height:100%;display:flex;flex-direction:column;gap:8px;text-align:left;padding:16px 16px 18px;border-radius:22px;corner-shape:squircle;border:1.5px solid var(--c);background:linear-gradient(170deg,#1B1613,#0B0908);color:#F3EBDD;word-break:keep-all;overflow-wrap:normal;hyphens:none;}
+.ff .ff-job.bronze{--c:#D49A62;} .ff .ff-job.silver{--c:#D6DAE0;} .ff .ff-job.gold{--c:#D9B552;}
+.ff .ff-job .lv{align-self:flex-start;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--c);white-space:nowrap;}
+.ff .ff-job h3{margin:0;font-size:19px;line-height:1.2;font-weight:700;color:#fff;text-wrap:balance;}
+.ff .ff-job .mt{margin:0;font-size:14px;font-weight:600;color:var(--c);white-space:nowrap;}
+.ff .ff-job ul{list-style:none;margin:4px 0 0;padding:0;display:grid;gap:7px;}
+.ff .ff-job li{display:flex;gap:9px;align-items:flex-start;font-size:14.5px;line-height:1.35;}
+.ff .ff-job li::before{content:"";flex:none;width:7px;height:7px;margin-top:6px;border-radius:50%;background:var(--c);}
+`;
+function HomeJobCard({ j }) {
+  return (
+    <article className={`ff-job ${j.tone}`}>
+      <span className="lv">{j.level}</span>
+      <h3>{j.title}</h3>
+      {j.meta && <p className="mt">{j.meta}</p>}
+      <ul>{j.reqs.map(r => <li key={r}>{r}</li>)}</ul>
+    </article>
+  );
+}
 function HomeComingSoon() {
     return (<section className="ff-sect ff-nx" id="ff-coming" aria-labelledby="ff-nx-h">
+      <style>{JOBS_CSS}</style>
       <h2 id="ff-nx-h" className="ff-h1">Services</h2>
-      <p className="ff-nx-lede">Service Cards are hospitality services, from a cocktail bar to a full event team, that people will book for their events on FF Party. Coming 2027.</p>
+      <p className="ff-nx-lede">Service Cards are the services you offer on FF Party, and what it takes to get the job. Coming 2027.</p>
 
-      <NextModule id="ff-nx-svc" icon={Sparkles} title="Service Cards" cards={[
-            // Every card in the row the same size: each one fills the row's height.
-            ...PARTY_SERVICES.map((sv) => (<div key={sv.id} className="ff-nx-cell" style={{ width: CARD_W.poster }}><ServicePoster svc={sv}/></div>)),
-            <div key="create" className="ff-nx-cell" style={{ width: CARD_W.poster }}><CreateServiceCard /></div>,
-        ]}>
+      <NextModule id="ff-nx-svc" icon={Sparkles} title="Service Cards" cards={
+            HOME_JOBS.map((j) => (<div key={j.id} className="ff-nx-cell" style={{ width: 232 }}><HomeJobCard j={j}/></div>))
+        }>
       </NextModule>
 
       <NextModule id="ff-nx-ck" icon={Martini} title="Signature Cocktails" cards={[
@@ -23422,10 +23449,9 @@ function Home101() {
     <HowBooking17 key="how" kind="team" />,
     <GuideQuestions11 key="guide" kind="team" />,
     <Journal17 key="journal" kind="team" />,
-    <React.Fragment key="why"><WhyFlair17 kind="team" /><OurDream17 kind="team" /></React.Fragment>,
+    <BusinessSupport19 key="business" />,
     <HomeBeta key="beta" />,
     <HomeJoin key="join" />,
-    <BusinessSupport19 key="business" />,
   ];
   return (
     <div className="ff-home" ref={root}>
@@ -24013,6 +24039,22 @@ function CfConfirm17() {
     <CfPlate11>Confirmation</CfPlate11>
   </div>);
 }
+/* ---- v17.3.76: Follow a booking, larger, with a short explanation and a clear sideways scroll ---- */
+const CJ_CSS = `
+.ff .ff-cj .ff-cj-ex{margin:8px auto 18px;max-width:34em;font-size:16px;line-height:1.5;text-wrap:balance;word-break:keep-all;overflow-wrap:normal;hyphens:none;}
+.ff .ff-cj-wrap{position:relative;}
+.ff .ff-cj-wrap::after{content:"";position:absolute;top:1.5px;right:1.5px;bottom:1.5px;width:56px;border-radius:0 26px 26px 0;corner-shape:squircle;pointer-events:none;background:linear-gradient(90deg,rgba(11,9,8,0),rgba(11,9,8,.94));transition:opacity .25s;}
+.ff .ff-cj-wrap.end::after{opacity:0;}
+.ff .ff-cj .ff-cj-board{padding:32px 16px 28px;scroll-snap-type:x proximity;corner-shape:squircle;}
+.ff .ff-cj .ff-cj-row{width:max-content;margin:0 auto;justify-content:flex-start;gap:18px;padding:0 6px;}
+.ff .ff-cj .ff-cj-row .stp{scroll-snap-align:center;gap:12px;}
+.ff .ff-cj .ff-cj-row .stp > .n{width:34px;height:34px;font-size:16px;}
+.ff .ff-cj .ff-cj-row .arr{margin-top:46px;}
+.ff .ff-cj .ff-cj-card{width:min(236px,68vw);}
+.ff .ff-cj-dots{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:14px;}
+.ff .ff-cj-dots i{display:block;width:8px;height:8px;border-radius:99px;background:currentColor;opacity:.28;transition:width .2s,opacity .2s;}
+.ff .ff-cj-dots i.on{width:24px;opacity:1;background:#D9B552;}
+`;
 function CardJourney11({ kind = "party" }) {
   const SV = (typeof PARTY_SERVICES !== "undefined" && PARTY_SERVICES) || [];
   const sv = SV[1] || { title: "Mobile bar", tagline: "Bartender and bar, fully set up" };
@@ -24020,7 +24062,7 @@ function CardJourney11({ kind = "party" }) {
     profile: <CfProfile11 photo={CfImg11("face_you")} name="Sophie Hart" role="Cocktail Bartender" tier="gold" />,
     company: <CfCompany11 banner={CfImg11("dream_after_dark")} name="The Loft Lounge" kind="Cocktail bar & private events" area="North London" />,
     service: <CfService11 tone="silver" tier="Silver" title={sv.title} line={sv.tagline} />,
-    event: <CfEvent11 photo={CfImg11("dream_music_festivals")} title="Summer Festival Bar" when="Sat 12 Jun" where="Victoria Park" />,
+    event: <CfEvent11 photo={CfImg11("dream_sports_events")} title="Summer Festival Bar" when="Sat 12 Jun" where="Victoria Park" />,
     confirm: <CfConfirm17 />,
     review: <CfReview11 text="Ran the bar at our launch night without a single hiccup." from="Ava" to="Sophie" />,
   };
@@ -24029,19 +24071,33 @@ function CardJourney11({ kind = "party" }) {
     staff: ["company", "event", "profile", "confirm", "review"],
     team: ["profile", "service", "confirm", "event", "review"],
   }[kind] || ["event", "service", "profile", "confirm", "review"];
+  const board = useRef(null);
+  const [at, setAt] = useState(0);
+  const onScroll = () => {
+    const el = board.current;
+    if (!el) return;
+    const max = el.scrollWidth - el.clientWidth;
+    setAt(max > 4 ? Math.round((el.scrollLeft / max) * (order.length - 1)) : order.length - 1);
+  };
+  useEffect(() => { onScroll(); window.addEventListener("resize", onScroll); return () => window.removeEventListener("resize", onScroll); }, []);
   return (
     <section className="ff-sect ff-cj" id="ff-cards" aria-labelledby="ff-cj-h">
+      <style>{CJ_CSS}</style>
       <h2 id="ff-cj-h" className="ff-h1">Follow a booking</h2>
-      <div className="ff-cj-board">
-        <ol className="ff-cj-row">
-          {order.map((k, i) => (
-            <React.Fragment key={k}>
-              {i > 0 && <li className="arr" aria-hidden="true"><V17I.ArrowRight size={22} strokeWidth={2} /></li>}
-              <li className="stp"><span className="n">{i + 1}</span><div className="ff-cj-card" aria-hidden="true">{F[k]}</div></li>
-            </React.Fragment>
-          ))}
-        </ol>
+      <p className="ff-cj-ex">Every booking moves through the same five cards, from the first request to the five-star review.</p>
+      <div className={`ff-cj-wrap${at >= order.length - 1 ? " end" : ""}`}>
+        <div className="ff-cj-board" ref={board} onScroll={onScroll}>
+          <ol className="ff-cj-row">
+            {order.map((k, i) => (
+              <React.Fragment key={k}>
+                {i > 0 && <li className="arr" aria-hidden="true"><V17I.ArrowRight size={22} strokeWidth={2} /></li>}
+                <li className="stp"><span className="n">{i + 1}</span><div className="ff-cj-card" aria-hidden="true">{F[k]}</div></li>
+              </React.Fragment>
+            ))}
+          </ol>
+        </div>
       </div>
+      <div className="ff-cj-dots" aria-hidden="true">{order.map((k, i) => <i key={k} className={i === at ? "on" : ""} />)}</div>
     </section>
   );
 }
@@ -24527,19 +24583,19 @@ function GuideQuestions11({ kind = "team" }) {
 const DX_I = { Users: lucideIcon("Users"), Sparkles: lucideIcon("Sparkles"), Contact: lucideIcon("Contact"), PartyPopper: lucideIcon("PartyPopper"),
   ChevronDown: lucideIcon("ChevronDown"), ChevronUp: lucideIcon("ChevronUp"), ArrowRight: lucideIcon("ArrowRight"), X: lucideIcon("X") };
 const DX_TEAM = [
-  { k: "community", t: "Our community", s: "The people you work with", img: "px_team_com", icon: DX_I.Users,
+  { k: "community", t: "Our community", s: "The people you work with", img: "dream_music_festivals", icon: DX_I.Users,
     h: "Meet the people behind great events.",
     p: ["Hospitality is better with people you know. FireFlair brings bartenders, mixologists and event staff together in one community, so you can find the people you work with and be found by the ones you have not met yet.", "Add friends to your team and see who works near you on the map, so the community can see who you work with and trust.", "Every connection counts. The more people you add, the stronger your team becomes, and the more doors open when someone needs a great bartender at short notice."],
     parts: [
-      { id: "ff-core", label: "What is FireFlair?", r: () => <CoreValues /> },
-      { id: "ff-map", label: "The map", r: () => <HomeMapSection /> },
       { id: "ff-teams", label: "Your team", r: () => <HomeTeam11 /> },
+      { id: "ff-map", label: "Put yourself on the map", r: () => <HomeMapSection /> },
     ],
     jn: [
       { ic: "MapPin", t: "Find your people", d: "See who works where, on the map.", b: "See the map", go: "#ff-map" , x: "The map shows hospitality professionals by area, so you can see who works near you and who is worth meeting." },
       { ic: "UserPlus", t: "Build your team", d: "Add the people you work with, like friends.", b: "Build your team", go: "#ff-teams" , x: "Everyone you add to your network is on your team. It shows on your profile, so the people who book you can see who you work with." },
+      { ic: "Users", t: "Work with friends", d: "Invite your friends and work together.", b: "Work with friends", go: "#ff-teams", x: "Invite your friends to join FireFlair and add them to your team. Working with people you know makes every event easier." },
     ] },
-  { k: "services", t: "Your packages", s: "Services, bookings and terms", img: "px_team_pk", icon: DX_I.Sparkles,
+  { k: "services", t: "Your packages", s: "Services, bookings and terms", img: "training_mixology", icon: DX_I.Sparkles,
     h: "Your services, your bookings, your terms.",
     p: ["Your packages are what you offer: the services you are best at, from classic cocktail service to flair, set out as Service Cards that hosts and businesses can book.","Every booking follows the same clear process, from the first request on WhatsApp to the confirmation and the review, so you always know what happens next.","Terms and conditions are written in plain words and agreed before you say yes, so you and the person booking you both know exactly what to expect."],
     parts: [
@@ -24552,7 +24608,7 @@ const DX_TEAM = [
       { ic: "Layers", t: "Follow a booking", d: "The cards, in the order a booking happens.", b: "Follow a booking", go: "#ff-cards", x: "A booking moves through four cards: the Profile Card, the Event Card, the Service Card and the Review Card. Following them shows you how every request is handled." },
       { ic: "ShieldCheck", t: "Know the terms", d: "Clear terms, agreed up front.", b: "See how terms work", go: "#ff-terms", x: "Terms are short, plain and shown before you accept, so everyone agrees to the same thing and nobody is surprised on the night." },
     ] },
-  { k: "events", t: "Our events", s: "Grow and meet the trade", img: "px_team_ev", icon: DX_I.PartyPopper,
+  { k: "events", t: "Our events", s: "Grow and meet the trade", img: "dream_international_events", icon: DX_I.PartyPopper,
     h: "Learn, grow and meet the industry.",
     p: ["Our events is where hospitality keeps getting better: the industry's own events, and the places the trade gathers.","It is also where we grow together. The platform grows with every profile and every booking, and we list the industry's own growth events so you know where the trade gathers.","From the Athens Bar Show to BCB Berlin and BCB London, the biggest bar events in Europe are all in one place."],
     parts: [
@@ -25239,7 +25295,7 @@ PARTY_SERVICES.splice(3, 0, { id: "svc_flair", tone: "gold", level: "Flair", tit
     includes: "A skilled bartender and a 5 or 15-minute Flair performance", ideal: "Launches, weddings and parties that want a show", time: "3 hours", price: "£250" });
 Object.assign(PARTY_SERVICES.find(s => s.id === "svc_full"), { title: "Platinum Tasting Package", tagline: "Choose your mixologist to build a custom menu for your big event, then choose your bar company to bring your menu to life on your big special day.",
     includes: "A custom cocktail menu from your mixologist, delivered by your bar company", ideal: "Big events", time: "1 hour", price: "£100" });
-return { Home101, useEdgeBounce, StaffHome11, PartyHome11, PARTY_SERVICES, PosterCard, ServicePoster };
+return { Home101, useEdgeBounce, StaffHome11, PartyHome11, PARTY_SERVICES, PosterCard, ServicePoster, BusinessSupport19 };
 })();
 
 function TeamHomeV17() { return <V101.Home101 />; }
