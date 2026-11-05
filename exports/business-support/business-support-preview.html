@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FireFlair Business &amp; Support Module</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel:wght@400;500;600;700&display=swap">
+<style>
+body { margin:0; background:#F4EFE4; font-family:'Inter', ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+.ff-demo { max-width:760px; margin:0 auto; padding:24px 16px 40px; }
+/* ---- module styles (same as business-support.css) ---- */
+   Uses the site's existing tokens: --display (Cinzel) and --gold-dk. Both have fallbacks below. */
+.ff { --display: var(--font-display, 'Cinzel', 'Optima', 'Palatino Linotype', Georgia, serif); --gold-dk: #7E611D; }
+/* v17.3.72: Business & Support module at the bottom of the FF Team home */
+.ff .ff-biz19 { padding-top:20px; }
+.ff .ff-biz19-box { position:relative; text-align:center; border-radius:26px; corner-shape:squircle; padding:22px 16px; border:1.5px solid #B08D2A;
+  background:radial-gradient(120% 80% at 50% 0%, #FFFDF4 0%, #F6EBCB 55%, #EBD9A3 100%); box-shadow:0 22px 40px -26px rgba(60,40,6,.55), inset 0 0 0 4px rgba(255,251,238,.9), inset 0 0 0 5px rgba(176,141,42,.5); }
+.ff .ff-biz19-box .eb { display:inline-block; font-size:11px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; color:#7A5E14; }
+.ff .ff-biz19-h { margin:4px 0 6px; font-family:var(--display); font-size:clamp(28px,7.4vw,40px); line-height:1.05; color:#16130F; text-wrap:balance; }
+.ff .ff-biz19-lead { max-width:520px; margin:8px auto 0; font-size:14px; line-height:1.5; color:#5A4A1C; text-wrap:balance; }
+.ff .ff-biz19-grid { display:grid; grid-template-columns:minmax(0,1fr); gap:12px; margin-top:16px; text-align:left; }
+@media (min-width:640px) { .ff .ff-biz19-grid { grid-template-columns:minmax(0,1fr) minmax(0,1fr); } }
+.ff .ff-biz19-pane { min-width:0; padding:14px 14px 8px; border:1.5px solid rgba(176,141,42,.65); border-radius:22px; corner-shape:squircle; background:rgba(255,255,255,.55); }
+.ff .ff-biz19-pane h3 { margin:0 0 4px; font-size:11px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; color:#7A5E14; }
+.ff .ff-biz19-row { display:flex; flex-direction:column; gap:2px; padding:9px 0; border-top:1px solid rgba(176,141,42,.35); margin:0; }
+.ff .ff-biz19-row:first-of-type { border-top:0; }
+.ff .ff-biz19-row dt { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#7A5E14; }
+.ff .ff-biz19-row dd { margin:0; font-size:15px; line-height:1.4; color:#2E2209; overflow-wrap:normal; word-break:normal; hyphens:none; }
+.ff .ff-biz19-nb { white-space:nowrap; }
+.ff .ff-biz19-link { display:flex; align-items:center; gap:12px; min-width:0; margin:0 0 10px; padding:10px 12px; border:1.5px solid rgba(176,141,42,.65); border-radius:18px; corner-shape:squircle; background:#fff; color:#2E2209; text-decoration:none; }
+.ff .ff-biz19-link:focus-visible { outline:2px solid var(--gold-dk); outline-offset:3px; }
+.ff .ff-biz19-ic { flex:none; display:grid; place-items:center; width:38px; height:38px; border-radius:14px; corner-shape:squircle; background:linear-gradient(180deg,#F3E2AE,#D9B95A); color:#3A2A0C; }
+.ff .ff-biz19-tx { display:flex; flex-direction:column; gap:1px; min-width:0; }
+.ff .ff-biz19-tx small { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#7A5E14; }
+.ff .ff-biz19-tx b { font-size:clamp(14px,4.4vw,17px); font-weight:700; white-space:nowrap; }
+</style>
+</head>
+<body>
+<div class="ff ff-demo">
+<section class="ff-sect ff-biz19" id="ff-business" aria-labelledby="ff-biz19-h">
+  <div class="ff-biz19-box">
+    <span class="eb">FireFlair Ltd</span>
+    <h2 id="ff-biz19-h" class="ff-biz19-h">Business &amp; Support</h2>
+    <p class="ff-biz19-lead">FFTeam.uk is operated by FIREFLAIR LTD.</p>
+    <div class="ff-biz19-grid">
+      <div class="ff-biz19-pane">
+        <h3>Business</h3>
+        <dl style="margin:0">
+          <div class="ff-biz19-row"><dt>Registered in</dt><dd>England and Wales</dd></div>
+          <div class="ff-biz19-row"><dt>Company number</dt><dd>17240998</dd></div>
+          <div class="ff-biz19-row"><dt>Registered office</dt><dd>71&ndash;75 Shelton Street, Covent Garden, London, <span class="ff-biz19-nb">WC2H 9JQ</span></dd></div>
+        </dl>
+      </div>
+      <div class="ff-biz19-pane">
+        <h3>Customer support</h3>
+        <a class="ff-biz19-link" href="mailto:mrg@ffvip.uk">
+          <span class="ff-biz19-ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+          <span class="ff-biz19-tx"><small>Email</small><b>mrg@ffvip.uk</b></span>
+        </a>
+        <a class="ff-biz19-link" href="tel:+442045020424">
+          <span class="ff-biz19-ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+          <span class="ff-biz19-tx"><small>Phone</small><b>+44 20 4502 0424</b></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+</body>
+</html>

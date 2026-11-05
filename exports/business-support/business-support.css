@@ -1,0 +1,27 @@
+/* FireFlair — Business & Support module (v17.3.72)
+   Styles for the module at the bottom of the FF Team home page.
+   Drop-in: every selector sits under .ff, the same root class the site already uses.
+   Uses the site's existing tokens: --display (Cinzel) and --gold-dk. Both have fallbacks below. */
+.ff { --display: var(--font-display, 'Cinzel', 'Optima', 'Palatino Linotype', Georgia, serif); --gold-dk: #7E611D; }
+/* v17.3.72: Business & Support module at the bottom of the FF Team home */
+.ff .ff-biz19 { padding-top:20px; }
+.ff .ff-biz19-box { position:relative; text-align:center; border-radius:26px; corner-shape:squircle; padding:22px 16px; border:1.5px solid #B08D2A;
+  background:radial-gradient(120% 80% at 50% 0%, #FFFDF4 0%, #F6EBCB 55%, #EBD9A3 100%); box-shadow:0 22px 40px -26px rgba(60,40,6,.55), inset 0 0 0 4px rgba(255,251,238,.9), inset 0 0 0 5px rgba(176,141,42,.5); }
+.ff .ff-biz19-box .eb { display:inline-block; font-size:11px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; color:#7A5E14; }
+.ff .ff-biz19-h { margin:4px 0 6px; font-family:var(--display); font-size:clamp(28px,7.4vw,40px); line-height:1.05; color:#16130F; text-wrap:balance; }
+.ff .ff-biz19-lead { max-width:520px; margin:8px auto 0; font-size:14px; line-height:1.5; color:#5A4A1C; text-wrap:balance; }
+.ff .ff-biz19-grid { display:grid; grid-template-columns:minmax(0,1fr); gap:12px; margin-top:16px; text-align:left; }
+@media (min-width:640px) { .ff .ff-biz19-grid { grid-template-columns:minmax(0,1fr) minmax(0,1fr); } }
+.ff .ff-biz19-pane { min-width:0; padding:14px 14px 8px; border:1.5px solid rgba(176,141,42,.65); border-radius:22px; corner-shape:squircle; background:rgba(255,255,255,.55); }
+.ff .ff-biz19-pane h3 { margin:0 0 4px; font-size:11px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; color:#7A5E14; }
+.ff .ff-biz19-row { display:flex; flex-direction:column; gap:2px; padding:9px 0; border-top:1px solid rgba(176,141,42,.35); margin:0; }
+.ff .ff-biz19-row:first-of-type { border-top:0; }
+.ff .ff-biz19-row dt { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#7A5E14; }
+.ff .ff-biz19-row dd { margin:0; font-size:15px; line-height:1.4; color:#2E2209; overflow-wrap:normal; word-break:normal; hyphens:none; }
+.ff .ff-biz19-nb { white-space:nowrap; }
+.ff .ff-biz19-link { display:flex; align-items:center; gap:12px; min-width:0; margin:0 0 10px; padding:10px 12px; border:1.5px solid rgba(176,141,42,.65); border-radius:18px; corner-shape:squircle; background:#fff; color:#2E2209; text-decoration:none; }
+.ff .ff-biz19-link:focus-visible { outline:2px solid var(--gold-dk); outline-offset:3px; }
+.ff .ff-biz19-ic { flex:none; display:grid; place-items:center; width:38px; height:38px; border-radius:14px; corner-shape:squircle; background:linear-gradient(180deg,#F3E2AE,#D9B95A); color:#3A2A0C; }
+.ff .ff-biz19-tx { display:flex; flex-direction:column; gap:1px; min-width:0; }
+.ff .ff-biz19-tx small { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#7A5E14; }
+.ff .ff-biz19-tx b { font-size:clamp(14px,4.4vw,17px); font-weight:700; white-space:nowrap; }

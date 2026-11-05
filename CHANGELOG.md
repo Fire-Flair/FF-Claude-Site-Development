@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.72 — 2026-11-05 — Business & Support module on the FF Team home
+Artifact version 1793886209-a990 · file `fireflair-v17.3.72.html`
+
+- New "Business & Support" module at the very bottom of the FF Team home page, after the join section, in the same gold-framed style as "Built on trust" (squircle corners, words never split across lines).
+- Business side: FFTeam.uk is operated by FIREFLAIR LTD; registered in England and Wales; company number 17240998; registered office 71-75 Shelton Street, Covent Garden, London, WC2H 9JQ.
+- Customer support side: email mrg@ffvip.uk and phone +44 20 4502 0424 (tel:+442045020424), as tappable tiles. Stacks to one column on phones, two columns from 640px.
+- For the live site: ready-to-drop files are in exports/business-support/ (BusinessSupport.jsx, business-support.css, plain-HTML snippet, and a stand-alone preview page). Source for the prototype is BusinessSupport19 in source/fireflair-app.jsx.
+
 ## v17.3.71 — 2026-11-04 — Campfire is now a still image
 Artifact version 1793819701-7251 · file `fireflair-v17.3.71.html`
 
