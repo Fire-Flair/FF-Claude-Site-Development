@@ -7536,7 +7536,142 @@ function EventPage() {
 /* Buy FireFlair credits. HONEST STATUS: no payment provider is connected in
    this prototype — the adapter adds test credits and says so. In Core this
    runs through the payment-provider adapter; FireFlair never touches it. */
-const PAYMENT_ADAPTER = { available: false, provider: "Stripe · Apple Pay · American Express" };
+const PAYMENT_ADAPTER = {
+  available: false,
+  provider: "Stripe · Apple Pay · American Express",
+  /* Prototype stand-in for Stripe. FireFlair Core replaces this with a Stripe PaymentIntent
+     confirmed through the Stripe Payment Element. Resolves { ok, id } or { ok:false, error }.
+     Test card 4000 0000 0000 0002 is declined; anything else passes. Nothing is charged. */
+  confirmPayment({ method, amount, reference, card }) {
+    return new Promise((resolve) => setTimeout(() => {
+      if (card === "4000000000000002") resolve({ ok: false, error: "Your card was declined." });
+      else resolve({ ok: true, id: "pi_test_" + Math.random().toString(36).slice(2, 10), method, amount, reference });
+    }, method === "card" ? 1400 : 900));
+  },
+};
+
+/* ---------------------------------------------------------------------------
+   STRIPE PAY WINDOW (v17.4) — the pop-up that opens from "Confirm" / "Pay and
+   send on WhatsApp". HONEST STATUS: no payment provider is connected in this
+   prototype, so nothing is charged. PAYMENT_ADAPTER.confirmPayment below is
+   what FireFlair Core replaces with a Stripe PaymentIntent and the Stripe
+   Payment Element (Apple Pay and Google Pay included). The booking requests
+   are sent only after confirmPayment resolves ok, exactly as the live flow
+   must do (event stays a draft until paid).
+   Test behaviour: card 4000 0000 0000 0002 is declined; any other card passes.
+   --------------------------------------------------------------------------- */
+const STRIPE17_CSS = `
+.ff-stp-scrim{position:fixed;inset:0;z-index:2000;background:rgba(10,8,4,.62);display:flex;align-items:center;justify-content:center;padding:14px;}
+.ff-stp{width:min(440px,100%);max-height:calc(100vh - 28px);overflow:auto;background:#fff;color:#1A1F36;border-radius:26px;corner-shape:squircle;box-shadow:0 24px 70px rgba(0,0,0,.45);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;word-break:keep-all;overflow-wrap:normal;hyphens:none;}
+.ff-stp *{box-sizing:border-box;word-break:keep-all;overflow-wrap:normal;hyphens:none;}
+.ff-stp-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 20px 4px;}
+.ff-stp-brand{font-size:13px;font-weight:600;color:#6B7280;letter-spacing:.02em;white-space:nowrap;}
+.ff-stp-amt{font-size:32px;font-weight:700;letter-spacing:-.01em;white-space:nowrap;line-height:1.15;margin-top:2px;}
+.ff-stp-x{flex:0 0 auto;width:34px;height:34px;border-radius:12px;corner-shape:squircle;border:0;background:#F3F4F6;color:#4B5563;display:grid;place-items:center;cursor:pointer;}
+.ff-stp-x:disabled{opacity:.4;cursor:default;}
+.ff-stp-body{padding:14px 20px 20px;display:grid;gap:14px;}
+.ff-stp-ex{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.ff-stp-ex button{height:46px;border-radius:14px;corner-shape:squircle;border:1px solid #111827;background:#111827;color:#fff;font:600 15px/1 inherit;font-family:inherit;cursor:pointer;white-space:nowrap;}
+.ff-stp-ex button.g{background:#fff;color:#111827;}
+.ff-stp-ex button:disabled{opacity:.5;cursor:default;}
+.ff-stp-or{display:flex;align-items:center;gap:10px;color:#6B7280;font-size:12.5px;white-space:nowrap;}
+.ff-stp-or::before,.ff-stp-or::after{content:"";flex:1;height:1px;background:#E5E7EB;}
+.ff-stp-f{display:grid;gap:6px;min-width:0;}
+.ff-stp-f label{font-size:13px;font-weight:500;color:#374151;white-space:nowrap;}
+.ff-stp-f input{width:100%;height:44px;border-radius:12px;corner-shape:squircle;border:1px solid #D1D5DB;background:#fff;padding:0 12px;font:16px/1 inherit;font-family:inherit;color:#111827;outline:none;}
+.ff-stp-f input:focus{border-color:#635BFF;box-shadow:0 0 0 3px rgba(99,91,255,.22);}
+.ff-stp-f input:disabled{background:#F9FAFB;}
+.ff-stp-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.ff-stp-err{margin:0;color:#B42318;background:#FEF3F2;border-radius:12px;corner-shape:squircle;padding:10px 12px;font-size:13.5px;}
+.ff-stp-pay{height:50px;border-radius:14px;corner-shape:squircle;border:0;background:#635BFF;color:#fff;font:600 16px/1 inherit;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;}
+.ff-stp-pay:disabled{background:#C7C4FF;cursor:default;}
+.ff-stp-pay.ok{background:#12B76A;}
+.ff-stp-spin{width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;animation:ffstpspin .8s linear infinite;}
+@keyframes ffstpspin{to{transform:rotate(360deg);}}
+.ff-stp-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#6B7280;font-size:12px;white-space:nowrap;}
+.ff-stp-foot b{font-weight:700;letter-spacing:-.01em;color:#4B5563;}
+.ff-stp-test{background:#FEF0C7;color:#93370D;border-radius:8px;corner-shape:squircle;padding:2px 8px;font-weight:600;font-size:11px;}
+@media (prefers-reduced-motion:reduce){.ff-stp-spin{animation:none;}}
+`;
+const stripeGroup17 = (v) => v.replace(/\D/g, "").slice(0, 16).replace(/(.{4})/g, "$1 ").trim();
+const stripeExp17 = (v) => { const d = v.replace(/\D/g, "").slice(0, 4); return d.length > 2 ? d.slice(0, 2) + " / " + d.slice(2) : d; };
+
+function StripePay17({ total, reference, onPaid, onClose }) {
+  const [num, setNum] = useState("");
+  const [exp, setExp] = useState("");
+  const [cvc, setCvc] = useState("");
+  const [nm, setNm] = useState("");
+  const [phase, setPhase] = useState("form"); // form | busy | done
+  const [err, setErr] = useState("");
+  const first = useRef(null);
+  const digits = num.replace(/\D/g, "");
+  const ed = exp.replace(/\D/g, "");
+  const mm = Number(ed.slice(0, 2)), yy = 2000 + Number(ed.slice(2, 4));
+  const now = new Date();
+  const expOk = ed.length === 4 && mm >= 1 && mm <= 12 && (yy > now.getFullYear() || (yy === now.getFullYear() && mm >= now.getMonth() + 1));
+  const valid = digits.length >= 13 && expOk && cvc.length >= 3 && nm.trim().length > 1;
+  const busy = phase === "busy";
+  useEffect(() => { if (first.current) first.current.focus(); }, []);
+  useEffect(() => {
+    const k = (e) => { if (e.key === "Escape" && phase !== "busy") onClose(); };
+    window.addEventListener("keydown", k);
+    return () => window.removeEventListener("keydown", k);
+  }, [phase, onClose]);
+  const run = (method) => {
+    setErr(""); setPhase("busy");
+    PAYMENT_ADAPTER.confirmPayment({ method, amount: total, reference, card: method === "card" ? digits : "" }).then((r) => {
+      if (!r.ok) { setPhase("form"); setErr(r.error || "The payment didn't go through."); return; }
+      setPhase("done");
+      setTimeout(() => onPaid(r), 700);
+    });
+  };
+  return ReactDOM.createPortal(
+    <div className="ff-stp-scrim" onMouseDown={(e) => { if (e.target === e.currentTarget && !busy && phase !== "done") onClose(); }}>
+      <style>{STRIPE17_CSS}</style>
+      <div className="ff-stp" role="dialog" aria-modal="true" aria-label="Pay with Stripe">
+        <div className="ff-stp-top">
+          <div><div className="ff-stp-brand">FireFlair</div><div className="ff-stp-amt">£{total}</div></div>
+          <button type="button" className="ff-stp-x" aria-label="Close" disabled={busy || phase === "done"} onClick={onClose}>
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+          </button>
+        </div>
+        <form className="ff-stp-body" onSubmit={(e) => { e.preventDefault(); if (valid && phase === "form") run("card"); }}>
+          <div className="ff-stp-ex">
+            <button type="button" disabled={phase !== "form"} onClick={() => run("apple")}>Apple Pay</button>
+            <button type="button" className="g" disabled={phase !== "form"} onClick={() => run("google")}>Google Pay</button>
+          </div>
+          <div className="ff-stp-or">Or pay with card</div>
+          <div className="ff-stp-f">
+            <label htmlFor="ff-stp-num">Card number</label>
+            <input id="ff-stp-num" ref={first} inputMode="numeric" autoComplete="cc-number" placeholder="1234 1234 1234 1234" value={num} disabled={phase !== "form"} onChange={(e) => setNum(stripeGroup17(e.target.value))} />
+          </div>
+          <div className="ff-stp-2">
+            <div className="ff-stp-f">
+              <label htmlFor="ff-stp-exp">Expiry</label>
+              <input id="ff-stp-exp" inputMode="numeric" autoComplete="cc-exp" placeholder="MM / YY" value={exp} disabled={phase !== "form"} onChange={(e) => setExp(stripeExp17(e.target.value))} />
+            </div>
+            <div className="ff-stp-f">
+              <label htmlFor="ff-stp-cvc">CVC</label>
+              <input id="ff-stp-cvc" inputMode="numeric" autoComplete="cc-csc" placeholder="123" value={cvc} disabled={phase !== "form"} onChange={(e) => setCvc(e.target.value.replace(/\D/g, "").slice(0, 4))} />
+            </div>
+          </div>
+          <div className="ff-stp-f">
+            <label htmlFor="ff-stp-nm">Name on card</label>
+            <input id="ff-stp-nm" autoComplete="cc-name" value={nm} disabled={phase !== "form"} onChange={(e) => setNm(e.target.value)} />
+          </div>
+          {err && <p className="ff-stp-err" role="alert">{err}</p>}
+          <button type="submit" className={`ff-stp-pay${phase === "done" ? " ok" : ""}`} disabled={phase === "form" ? !valid : true}>
+            {phase === "busy" && <span className="ff-stp-spin" aria-hidden="true" />}
+            {phase === "busy" ? "Processing" : phase === "done" ? "Paid" : `Pay £${total}`}
+          </button>
+          <div className="ff-stp-foot"><span>Powered by <b>stripe</b></span><span className="ff-stp-test">Test mode</span></div>
+        </form>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
 
 function BuyCreditsSheet({ open, need, onClose }) {
   const { state, dispatch } = useStore();
@@ -17286,8 +17421,8 @@ function ConfirmPanel({ ev, shifts, missing, fix, onClose }) {
   const anySent = rows.some(r => r.es.length) || paid17(state, ev.id);
   const open = shifts.reduce((n, sh) => n + Math.max(0, qtyOf(sh) - state.engagements.filter(e => e.shiftId === sh.id && DONE.includes(e.state)).length), 0);
   const allDone = anySent && !nSend && open === 0;
-  const [pay, setPay] = useState("Apple Pay");
   const [stage, setStage] = useState("review");
+  const [stripe, setStripe] = useState(false);
   const toPay = () => {
     if (missing.length) { dispatch({ type: "TOAST", toast: missing[0].t }); missing[0].go(); return; }
     if (!nSend) return;
@@ -17296,6 +17431,10 @@ function ConfirmPanel({ ev, shifts, missing, fix, onClose }) {
   const send = () => {
     if (missing.length) { dispatch({ type: "TOAST", toast: missing[0].t }); missing[0].go(); return; }
     if (!nSend) return;
+    setStripe(true); /* Stripe pay window; the requests go out only once it reports paid */
+  };
+  const afterPay = () => {
+    setStripe(false);
     setStage("review");
     dispatch({ type: "BOOK_SEND", eventId: ev.id, questions: questions.map(q => q.id) });
     dispatch({ type: "TOAST", toast: `Booking confirmed. Availability requests sent to ${nSend} ${nSend === 1 ? "person" : "people"} on WhatsApp` });
@@ -17311,9 +17450,6 @@ function ConfirmPanel({ ev, shifts, missing, fix, onClose }) {
           <ConfirmSpin17 lines={["Confirm", "booking"]} disabled={!missing.length && !nSend} onClick={toPay} />
         </>) : (<>
         <ConfirmSpin17 lines={["Confirm"]} label="Confirm booking" disabled={!missing.length && !nSend} onClick={toPay} />
-        <div className="ff-payrow ff-payrow11" role="group" aria-label="Pay with">
-          {["Apple Pay", "Google Pay", "Card"].map(m => <button key={m} type="button" aria-pressed={pay === m} onClick={() => setPay(m)}>{m}</button>)}
-        </div>
         </>)}
       </>)}
       {!anySent && stage === "pay" && (<>
@@ -17324,13 +17460,10 @@ function ConfirmPanel({ ev, shifts, missing, fix, onClose }) {
             : <div className="ln"><span>Bronze · {shifts.length} Shift card{shifts.length === 1 ? "" : "s"} × £{BOOKING_FEE}</span><b>£{shifts.length * BOOKING_FEE}</b></div>}
           <div className="ln tot"><span>Total cost</span><b>£{fee17}</b></div>
           <p className="beta">{sv.party ? "Your staff's pay is separate and is agreed with them. " : ""}Refunded if the booking can't be fulfilled. Autofill is free.</p>
-          <div className="ff-payrow" role="group" aria-label="Pay with">
-            {["Apple Pay", "Google Pay", "Card"].map(m => <button key={m} type="button" aria-pressed={pay === m} onClick={() => setPay(m)}>{m}</button>)}
-          </div>
-          <p className="beta">Beta: no payment taken</p>
         </div>
         {sv.party ? <ConfirmSpin17 lines={["Pay", "&", "send"]} label="Pay and send on WhatsApp" onClick={send} />
           : <Btn variant="primary wide" onClick={send}><WhatsAppIcon size={15} /> Pay and send on WhatsApp</Btn>}
+        {stripe && <StripePay17 total={fee17} reference={ev.id} onClose={() => setStripe(false)} onPaid={afterPay} />}
         <div className="ff-bsec-acts"><button type="button" className="ff-linkbtn" onClick={() => setStage("review")}>Back to your order</button></div>
       </>)}
       {anySent && (<>
@@ -19805,7 +19938,7 @@ function ConfirmBooking17({ ev, setView, bkey }) {
   const dropXa = (id) => { const xs = state.xa17 || {}; dispatch({ type: "V11_SET", patch: { xa17: { ...xs, [evId]: (xs[evId] || []).filter(x => x !== id) } } }); };
   const dropPerson = (sh, pid) => dispatch({ type: "SHIFT_STAFF", id: sh.id, staffIds: staffOf(sh).filter(x => x !== pid) });
   const sent = info.sent || (ev && paid17(state, ev.id));
-  const [pay, setPay] = useState("Apple Pay");
+  const [stripe, setStripe] = useState(false);
   const [open, setOpen] = useState({ s: true, p: true, e: true, r: true, i: true, f: true });
   const tg = (k) => setOpen(o => ({ ...o, [k]: !o[k] }));
   const missing = [];
@@ -19816,6 +19949,10 @@ function ConfirmBooking17({ ev, setView, bkey }) {
   const nSend = new Set(shifts.flatMap(staffOf)).size + shifts.filter(sh => sh.route === "auto").length;
   const confirm = () => {
     if (missing.length) { dispatch({ type: "TOAST", toast: missing[0].t }); missing[0].go(); return; }
+    setStripe(true); /* Stripe pay window; the requests go out only once it reports paid */
+  };
+  const afterPay = () => {
+    setStripe(false);
     dispatch({ type: "BOOK_SEND", eventId: ev.id, questions: [] });
     dispatch({ type: "TOAST", toast: `Booking confirmed. Availability requests sent to ${nSend} ${nSend === 1 ? "person" : "people"} on WhatsApp` });
   };
@@ -19835,7 +19972,6 @@ function ConfirmBooking17({ ev, setView, bkey }) {
   const arrow = (j) => <div className={`ff-barrow j${j}`} aria-hidden="true"><S17I.ChevronDown size={20} strokeWidth={2.4} /></div>;
   const nSvc = shifts.length + ck.length + xa.length, nPeople = new Set(shifts.flatMap(staffOf)).size + shifts.filter(sh => sh.route === "auto").length;
   const payments = ["Apple Pay", "Google Pay", "Card"];
-  const tiles = [["Apple Pay", S17I.Smartphone], ["Google Pay", S17I.Wallet], ["Card", S17I.CreditCard]];
   return (
     <section className="ff-bbox ff-pb ff-cb17" aria-label="Confirm your booking">
       {box("s", 1, "ff-cb17-svc", "Services", nSvc ? `${nSvc} chosen` : "", <>
@@ -19863,10 +19999,9 @@ function ConfirmBooking17({ ev, setView, bkey }) {
       </>, "s4")}
       {!sent && <>
         {arrow(3)}
-        <div className="ff-cb17-cf" role="group" aria-label="Pay with">
-          <span className="lb">Pay with</span>
-          <div className="tl">{tiles.map(([t, Ic]) => <button key={t} type="button" aria-pressed={pay === t} onClick={() => setPay(t)}><span className="ic"><Ic size={18} strokeWidth={1.9} /></span><span className="tx">{t}</span></button>)}</div>
+        <div className="ff-cb17-cf">
           <ConfirmSpin17 lines={["Confirm", "booking"]} onClick={confirm} />
+          {stripe && <StripePay17 total={POLICY17.feeParty} reference={ev ? ev.id : "draft"} onClose={() => setStripe(false)} onPaid={afterPay} />}
         </div></>}
       <HostDrop17 />
     </section>);
