@@ -1,4 +1,4 @@
-# Business & Support module (v17.3.72)
+# Business & Support module (v17.3.73, compact)
 
 Sits last on the FF Team home page, after the join section. Gold-framed ivory box in the
 same style as "Built on trust"; squircle corners; no word splits (wraps between words only).
@@ -10,10 +10,10 @@ Files
 - business-support-preview.html: open in a browser to see the module on its own.
 
 Content
-- FFTeam.uk is operated by FIREFLAIR LTD. Registered in England and Wales.
-- Company number 17240998
-- Registered office: 71-75 Shelton Street, Covent Garden, London, WC2H 9JQ
-- Customer support: mrg@ffvip.uk, +44 20 4502 0424 (tel:+442045020424)
+- FFTeam.uk is operated by FIREFLAIR LTD. Company no. 17240998, incorporated 25 May 2026. Registered in England and Wales.
+- Office: 71-75 Shelton Street, Covent Garden, London, WC2H 9JQ
+- Customer support: MrG@FFVip.uk (mailto:mrg@ffvip.uk), +442045 020424 (tel:+442045020424)
+- Legal line: (c) 2026 FIREFLAIR LTD. All rights reserved. FireFlair (TM) is a trademark of FIREFLAIR LTD. (unregistered)
 
 Uses the site's existing `--display` (Cinzel) and `--gold-dk` tokens, with fallbacks defined in the CSS.
 Stacks to one column on phones; two columns from 640px.

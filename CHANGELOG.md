@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.73 — 2026-11-05 — Compact Business & Support module
+Artifact version 1793886478-f5dd · file `fireflair-v17.3.73.html`
+
+- Business & Support module made compact: about half the height it was (one slim box, small heading, no big tiles). Company details on the left, customer support on the right on wider screens; stacks on phones.
+- Email shown as MrG@FFVip.uk; phone shown as +442045 020424 with a single gap between the 5 and the 0 (link still dials +442045020424).
+- Added business details: company number with incorporation date (25 May 2026), registered in England and Wales, registered office.
+- Added a legal line: (c) 2026 FIREFLAIR LTD. All rights reserved. FireFlair(TM) is a trademark of FIREFLAIR LTD. The trademark is unregistered, so the unregistered TM symbol is used, not the registered symbol.
+- Drop-in files for the live site are updated in exports/business-support/ (BusinessSupport.jsx, business-support.css, plain-HTML snippet, preview page).
+
 ## v17.3.72 — 2026-11-05 — Business & Support module on the FF Team home
 Artifact version 1793886209-a990 · file `fireflair-v17.3.72.html`
 
