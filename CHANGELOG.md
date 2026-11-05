@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.75 — 2026-11-05 — Stripe pay window on confirm and pay
+Artifact version 1793904930-9c83 · file `fireflair-v17.3.75.html`
+
+- Confirm and pay now opens a Stripe pay window (pop-up) on both booking screens: the FF Business "Pay and send on WhatsApp" step and the FF Party "Confirm booking" button. Booking requests go out on WhatsApp only after the window reports paid; closing the window leaves the event as a draft.
+- The window has Apple Pay and Google Pay buttons, then card number, expiry, CVC and name on card, a Pay button with processing and paid states, an inline error for a declined card, and a "Test mode" badge. Escape or the close button dismisses it (disabled while processing).
+- The old "Pay with" method picker (Apple Pay, Google Pay, Card) and the "Beta: no payment taken" line are removed from both screens: the method is chosen inside the window.
+- For the developers: PAYMENT_ADAPTER.confirmPayment({ method, amount, reference, card }) is the single seam. Core replaces it with a Stripe PaymentIntent confirmed through the Stripe Payment Element (Apple Pay and Google Pay included), returning { ok, id } or { ok:false, error }. Nothing is charged in the prototype; test card 4000 0000 0000 0002 is declined, any other card passes. The component is StripePay17 in source/fireflair-app.jsx.
+- Styling follows the site rules: squircle corners, words never split across lines, no instruction text.
+
 ## v17.3.74 — 2026-11-05 — Business & Support: trademark line removed
 Artifact version 1793886647-a1d4 · file `fireflair-v17.3.74.html`
 
