@@ -1,4 +1,4 @@
-// FireFlair Business & Support module (v17.3.73, compact)
+// FireFlair Business & Support module (v17.3.74, compact)
 // React component for the bottom of the FF Team home page. Pair with business-support.css.
 // No dependencies beyond React: the two icons are inline SVG.
 import React from "react";
@@ -34,7 +34,7 @@ export default function BusinessSupport() {
             <a className="ff-biz19-link" href="tel:+442045020424"><PhoneIcon />+442045 020424</a>
           </div>
         </div>
-        <p className="ff-biz19-legal">© 2026 FIREFLAIR LTD. All rights reserved. <span className="ff-biz19-nb">FireFlair™</span> is a trademark of FIREFLAIR LTD.</p>
+        <p className="ff-biz19-legal">© 2026 FIREFLAIR LTD. All rights reserved.</p>
       </div>
     </section>
   );

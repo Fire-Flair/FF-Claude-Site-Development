@@ -1,9 +1,9 @@
-/* FireFlair Business & Support module (v17.3.73, compact)
+/* FireFlair Business & Support module (v17.3.74, compact)
    Styles for the module at the bottom of the FF Team home page.
    Drop-in: every selector sits under .ff, the same root class the site already uses.
    Uses the site's existing tokens --display (Cinzel) and --gold-dk, with fallbacks below. */
 .ff { --display: var(--font-display, 'Cinzel', 'Optima', 'Palatino Linotype', Georgia, serif); --gold-dk: #7E611D; }
-/* v17.3.73: Business & Support module (compact) */
+/* v17.3.74: Business & Support module (compact) */
 .ff .ff-biz19 { padding-top:16px; }
 .ff .ff-biz19-box { border-radius:20px; corner-shape:squircle; padding:12px 14px; border:1.5px solid #B08D2A; background:radial-gradient(120% 80% at 50% 0%, #FFFDF4 0%, #F6EBCB 55%, #EBD9A3 100%); box-shadow:0 14px 26px -22px rgba(60,40,6,.5), inset 0 0 0 3px rgba(255,251,238,.9), inset 0 0 0 4px rgba(176,141,42,.45); }
 .ff .ff-biz19-h { margin:0 0 6px; font-family:var(--display); font-size:17px; line-height:1.15; letter-spacing:.02em; color:#16130F; }

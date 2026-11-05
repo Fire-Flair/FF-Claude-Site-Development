@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v17.3.74 — 2026-11-05 — Business & Support: trademark line removed
+Artifact version 1793886647-a1d4 · file `fireflair-v17.3.74.html`
+
+- Removed the trademark line from the legal footer of the Business & Support module (the module is not tied to a registered or pending trademark). The legal line now reads: (c) 2026 FIREFLAIR LTD. All rights reserved.
+- Drop-in files in exports/business-support/ updated to match (BusinessSupport.jsx, plain-HTML snippet, preview page, README).
+
 ## v17.3.73 — 2026-11-05 — Compact Business & Support module
 Artifact version 1793886478-f5dd · file `fireflair-v17.3.73.html`
 
