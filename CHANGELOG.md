@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.3.79 — 2026-11-06 — v17.3.79 Bookings page
+Artifact version 1793924524-4bcf · file `fireflair-v17.3.79.html`
+
+- FF Team Bookings: the "Your bookings" panel is back as on ffteam.uk. With no bookings it shows the WhatsApp note and the three cards (Requests from companies, Booked shifts, Booking passes), replacing the "No bookings yet" box. Section heading renamed from "Upcoming bookings" to "Your bookings"; demo bookings still list as before.
+- FF Team Bookings: Training, Dream jobs and FireFlair rewards (renamed from FF XP Rewards) are back as three drop-downs, collapsed by default, under the Service Cards. They reuse the existing interest sections and their saved interest.
+- Code: `InterestSection` takes an `inner` prop (no heading or dark panel, for use inside a drop-down); new `InterestInner` and `BookingsSoon` components.
+
 ## v17.3.78 — 2026-11-06 — v17.3.78 events panel picture
 Artifact version 1793924235-0d7d · file `fireflair-v17.3.78.html`
 
