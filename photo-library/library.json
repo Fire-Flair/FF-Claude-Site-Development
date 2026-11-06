@@ -1229,18 +1229,6 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "t17_p26",
-     "where": "FF Team home: community pillar tile (rotating, 1 of 5)"
-    },
-    {
-     "key": "t17_p26, j17_p26",
-     "where": "FF Business home: community pillar (rotating, 1 of 5)"
-    },
-    {
-     "key": "t17_p26, j17_p26",
-     "where": "FF Party home: events pillar (rotating, 1 of 5)"
-    },
-    {
      "key": "training_brand_training",
      "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
     }
@@ -2120,20 +2108,7 @@
     0.97
    ],
    "near_duplicate_of": null,
-   "used_in": [
-    {
-     "key": "t17_p44",
-     "where": "FF Team home: events pillar tile (rotating, 1 of 5)"
-    },
-    {
-     "key": "t17_p44, j17_p44",
-     "where": "FF Business home: community pillar (rotating, 1 of 5)"
-    },
-    {
-     "key": "t17_p44, j17_p44",
-     "where": "FF Party home: events pillar (rotating, 1 of 5)"
-    }
-   ]
+   "used_in": []
   },
   {
    "id": "p45",

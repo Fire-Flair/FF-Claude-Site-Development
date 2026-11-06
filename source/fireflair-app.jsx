@@ -15683,7 +15683,7 @@ const PHOTOS17_FILES = {
  "t17_p35": "assets/photos/t17_p35.webp",
  "t17_vke01": "assets/photos/t17_vke01.webp",
  "t17_vke06": "assets/photos/t17_vke06.webp",
- "t17_p26": "assets/photos/t17_p26.webp",
+ "t17_aiIntl": "assets/photos/t17_aiIntl.webp",
  "t17_vke10": "assets/photos/t17_vke10.webp",
  "j17_p45": "assets/photos/j17_p45.webp",
  "j17_p13": "assets/photos/j17_p13.webp",
@@ -15696,7 +15696,7 @@ const PHOTOS17_FILES = {
  "j17_v01": "assets/photos/j17_v01.webp",
  "j17_p05": "assets/photos/j17_p05.webp",
  "j17_vkg02": "assets/photos/j17_vkg02.webp",
- "t17_p44": "assets/photos/t17_p44.webp",
+ "t17_aiMusic": "assets/photos/t17_aiMusic.webp",
  "t17_vkg11": "assets/photos/t17_vkg11.webp",
  "t17_vkg09": "assets/photos/t17_vkg09.webp",
  "t17_vke05": "assets/photos/t17_vke05.webp",
@@ -15713,10 +15713,10 @@ const PHOTOS17_FILES = {
  "j17_p04": "assets/photos/j17_p04.webp",
  "j17_p10": "assets/photos/j17_p10.webp",
  "t17_p45": "assets/photos/t17_p45.webp",
- "j17_p44": "assets/photos/j17_p44.webp",
+ "j17_aiIntl": "assets/photos/j17_aiIntl.webp",
  "j17_vke06": "assets/photos/j17_vke06.webp",
  "j17_p35": "assets/photos/j17_p35.webp",
- "j17_p26": "assets/photos/j17_p26.webp",
+ "j17_aiMusic": "assets/photos/j17_aiMusic.webp",
  "t17_p23": "assets/photos/t17_p23.webp",
  "t17_p46": "assets/photos/t17_p46.webp",
  "t17_p24": "assets/photos/t17_p24.webp",
@@ -15781,7 +15781,7 @@ const PHOTOS17_LIBRARY = {
  "t17_p35": "p35",
  "t17_vke01": "vke01",
  "t17_vke06": "vke06",
- "t17_p26": "p26",
+ "t17_aiIntl": "aiIntl",
  "t17_vke10": "vke10",
  "j17_p45": "p45",
  "j17_p13": "p13",
@@ -15794,7 +15794,7 @@ const PHOTOS17_LIBRARY = {
  "j17_v01": "v01",
  "j17_p05": "p05",
  "j17_vkg02": "vkg02",
- "t17_p44": "p44",
+ "t17_aiMusic": "aiMusic",
  "t17_vkg11": "vkg11",
  "t17_vkg09": "vkg09",
  "t17_vke05": "vke05",
@@ -15811,10 +15811,10 @@ const PHOTOS17_LIBRARY = {
  "j17_p04": "p04",
  "j17_p10": "p10",
  "t17_p45": "p45",
- "j17_p44": "p44",
+ "j17_aiIntl": "aiIntl",
  "j17_vke06": "vke06",
  "j17_p35": "p35",
- "j17_p26": "p26",
+ "j17_aiMusic": "aiMusic",
  "t17_p23": "p23",
  "t17_p46": "p46",
  "t17_p24": "p24",
@@ -15880,7 +15880,7 @@ const FOCUS17 = {
  "t17_p35": "50% 52%",
  "t17_vke01": "39% 14%",
  "t17_vke06": "59% 62%",
- "t17_p26": "45% 34%",
+ "t17_aiIntl": "50% 50%",
  "t17_vke10": "50% 60%",
  "j17_p45": "50% 6%",
  "j17_p13": "50% 1%",
@@ -15893,7 +15893,7 @@ const FOCUS17 = {
  "j17_v01": "50% 37%",
  "j17_p05": "50% 45%",
  "j17_vkg02": "50% 60%",
- "t17_p44": "52% 18%",
+ "t17_aiMusic": "50% 50%",
  "t17_vkg11": "50% 58%",
  "t17_vkg09": "50% 50%",
  "t17_vke05": "50% 65%",
@@ -15910,10 +15910,10 @@ const FOCUS17 = {
  "j17_p04": "45% 6%",
  "j17_p10": "20% 6%",
  "t17_p45": "31% 4%",
- "j17_p44": "50% 6%",
+ "j17_aiIntl": "50% 80%",
  "j17_vke06": "60% 6%",
  "j17_p35": "54% 42%",
- "j17_p26": "45% 6%",
+ "j17_aiMusic": "50% 80%",
  "t17_p23": "50% 0%",
  "t17_p46": "50% 34%",
  "t17_p24": "60% 27%",
@@ -16670,9 +16670,7 @@ function FFMap({ mode = "home" }) {
               </div>
             </>)}
         </div>
-      ) : (
-        <p className="ff-body ff-muted" style={{ textAlign: "center", fontSize: 12, margin: 0 }}>Areas only, never addresses.</p>
-      )}
+      ) : null}
     </div>
   );
 }
@@ -25038,7 +25036,7 @@ function GuideQuestions11({ kind = "team" }) {
 const DX_I = { Users: lucideIcon("Users"), Sparkles: lucideIcon("Sparkles"), Contact: lucideIcon("Contact"), PartyPopper: lucideIcon("PartyPopper"),
   ChevronDown: lucideIcon("ChevronDown"), ChevronUp: lucideIcon("ChevronUp"), ArrowRight: lucideIcon("ArrowRight"), X: lucideIcon("X") };
 const DX_TEAM = [
-  { k: "community", t: "Our community", s: "The people you work with", img: "t17_p35", pool: ["p35", "vke01", "vke06", "p26", "vke10"], cards: ["p45", "p13", "vkg15"], icon: DX_I.Users,
+  { k: "community", t: "Our community", s: "The people you work with", img: "t17_p35", pool: ["p35", "vke01", "vke06", "aiIntl", "vke10"], cards: ["p45", "p13", "vkg15"], icon: DX_I.Users,
     h: "Meet the people behind great events.",
     p: ["Hospitality is better with people you know. FireFlair brings bartenders, mixologists and event staff together in one community, so you can find the people you work with and be found by the ones you have not met yet.", "Add friends to your team and see who works near you on the map, so the community can see who you work with and trust.", "Every connection counts. The more people you add, the stronger your team becomes, and the more doors open when someone needs a great bartender at short notice."],
     parts: [
@@ -25063,7 +25061,7 @@ const DX_TEAM = [
       { ic: "Layers", t: "Follow a booking", d: "The cards, in the order a booking happens.", b: "Follow a booking", go: "#ff-cards", x: "A booking moves through four cards: the Profile Card, the Event Card, the Service Card and the Review Card. Following them shows you how every request is handled." },
       { ic: "ShieldCheck", t: "Know the terms", d: "Clear terms, agreed up front.", b: "See how terms work", go: "#ff-terms", x: "Terms are short, plain and shown before you accept, so everyone agrees to the same thing and nobody is surprised on the night." },
     ] },
-  { k: "events", t: "Our events", s: "Grow and meet the trade", img: "t17_p44", pool: ["p44", "vkg11", "vkg09", "vke05", "vke11"], cards: ["p23", "p32", "vkg05"], icon: DX_I.PartyPopper,
+  { k: "events", t: "Our events", s: "Grow and meet the trade", img: "t17_aiMusic", pool: ["aiMusic", "vkg11", "vkg09", "vke05", "vke11"], cards: ["p23", "p32", "vkg05"], icon: DX_I.PartyPopper,
     h: "Learn, grow and meet the industry.",
     p: ["Our events is where hospitality keeps getting better: the industry's own events, and the places the trade gathers.","It is also where we grow together. The platform grows with every profile and every booking, and we list the industry's own growth events so you know where the trade gathers.","From the Athens Bar Show to BCB Berlin and BCB London, the biggest bar events in Europe are all in one place."],
     parts: [
@@ -25089,7 +25087,7 @@ const DX_TEAM = [
     ] },
 ];
 const DX_BIZ = [
-  { k: "community", t: "Our community", s: "What we are building together", img: "t17_p44", pool: ["p44", "vke06", "p35", "p45", "p26"], icon: DX_I.Users,
+  { k: "community", t: "Our community", s: "What we are building together", img: "t17_aiIntl", pool: ["aiIntl", "vke06", "p35", "p45", "aiMusic"], icon: DX_I.Users,
     h: "Hospitality, brought together.",
     p: ["Hospitality is a community, and FireFlair brings it together: bartenders, waiters, event staff and the businesses that hire them, all in one place, all building the same thing.", "Everyone shares the same values: be reliable, be kind, and make every event a night worth remembering. Find the people who work that way and keep them close.", "Reputation travels with people on FireFlair, so you hire with confidence. Choose staff your colleagues already trust and build a bench you can call on all year."],
     parts: [
@@ -25167,7 +25165,7 @@ const DX_PARTY = [
       { ic: "Users", t: "Choose your people", d: "Bartenders and bar companies.", b: "Find your people", go: "network", x: "Browse bartenders and bar companies, read what other hosts said and choose the people who will be behind your bar." },
       { ic: "Store", t: "Book a bar company", d: "Companies with their own teams.", b: "Browse companies", go: "#ff-companies" , x: "Bar companies bring their own bar and team. Browse them, read their reviews and book for your event." },
     ] },
-  { k: "events", t: "Your booking", s: "Secure your booking", img: "t17_p32", pool: ["p32", "p44", "p24", "p26", "p46"], icon: DX_I.PartyPopper,
+  { k: "events", t: "Your booking", s: "Secure your booking", img: "t17_p32", pool: ["p32", "aiMusic", "p24", "aiIntl", "p46"], icon: DX_I.PartyPopper,
     h: "Secure your party today.",
     p: ["Hen parties, weddings, birthdays, house parties, brand launches: whatever the occasion, FireFlair helps you find the people and services that suit it.", "Tell us a little about your event and how many guests you expect. We show the services that fit, so you only see what is relevant.", "Great events start with a clear picture. Share a few details and the right services find you, with no long forms and no guesswork."],
     parts: [
