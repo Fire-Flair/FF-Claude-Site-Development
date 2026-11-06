@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v17.3.86 — 2026-11-06 — Coin game clears the bottom bar on mobile
+Artifact version 1793968326-15ad · file `fireflair-v17.3.86.html`
+
+- Mobile: the coin game at the end of the home page (and on FF Business and FF Party) was tucked under the bottom bar, so the bar and its centre FF button covered the bottom of the game and the 5, 10, 15 and 20 labels.
+- The game box now ends clear above the bar and has rounded corners all round. Two CSS values changed: the `.ff-join` bottom margin (-90px to -46px, and -122px to -78px) and the `.ff-join-box.ff-game` radius (30px 30px 0 0 to 30px, bottom border back on).
+
 ## v17.3.85 — 2026-11-06 — Stories chip fixed, glasses photo removed, Business & Support on Bookings
 Artifact version 1793967972-f082 · file `fireflair-v17.3.85.html`
 
