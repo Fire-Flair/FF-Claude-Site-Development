@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.80 — 2026-11-06 — v17.3.80 Bookings sections, real photos
+Artifact version 1793925640-9325 · file `fireflair-v17.3.80.html`
+
+- Bookings page: the Training, Dream jobs and FireFlair rewards drop-downs are now larger boxes, each with a photo, the title and a short description, opening to the same cards and register panel.
+- Bookings page: "FireFlair Party cards" is one boxed section holding the "Are you available for freelance work?" question and the packages.
+- Bookings page: the three drop-downs sit in their own "Grow with FireFlair" section, separate from the Party cards.
+- Bookings page: Business & Support removed (it stays on the home page).
+- Real photos replace AI images in 34 existing image slots across FF Team, FF Party and FF Business (panels, training, dream jobs, rewards, cocktails). Resized copies are in assets/photos/ with a README mapping each key to its use.
+
 ## v17.3.79 — 2026-11-06 — v17.3.79 Bookings page
 Artifact version 1793924524-4bcf · file `fireflair-v17.3.79.html`
 
