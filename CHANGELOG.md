@@ -1,5 +1,17 @@
 # FireFlair prototype — changelog
 
+## v17.3.89 — 2026-11-06 — Shift delivery, notifications, demo sign-ins
+Artifact version 1793988615-540d · file `fireflair-v17.3.89.html`
+
+- Shift delivery for the 1.1 release (phase 2/3 prototype only; v1.01 untouched): one Shift card per person, identical for both booking types. "Chosen for you" has a burgundy header; "Open shift" (Autofill) has a cream header with a burgundy outline. Cream, burgundy and black throughout.
+- Replies are Yes / No / Ask a question, matching the three-button limit on WhatsApp (360dialog). A collapsible preview on each card shows the WhatsApp wording.
+- Shift cards show in the FF Team Bookings tab and in the FF button notification centre (with a count badge). A booking can be fully processed on the site.
+- After confirming, "Can't make it?" is a small link: refer a team member, invite someone new, or hard cancel. A referral keeps reputation; a hard cancel returns the shift to Autofill and is logged against reputation.
+- Business side: under the event card, Autofill shows up to 10 available professionals as cards with a Choose button; selected bookings show the chosen person and their status.
+- Profile buttons per site: FF Business = favourites, network, team; FF Party = favourites, booking; FF Team = network, team. "Add to your event" removed from FF Business.
+- Demo sign-ins: FF Team = Alexander, FF Business = Vushka (Winter Gala selected, Private Dinner Autofill), FF Party = a complete host profile for Jennifer Aniston (name only, placeholder portrait).
+- Dev sign-in on the Team site now sets the FF Team role so the Bookings tab loads the demo shifts.
+
 ## v17.3.88 — 2026-11-06 — Profile fixes, one Staffing service, packages from sign-up
 Artifact version 1793971380-d46f · file `fireflair-v17.3.88.html`
 
