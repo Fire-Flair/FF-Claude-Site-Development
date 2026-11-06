@@ -1,5 +1,16 @@
 # FireFlair prototype — changelog
 
+## v17.3.76 — 2026-11-06 — v17.3.76 FF Team launch cut
+Artifact version 1793923413-01e4 · file `fireflair-v17.3.76.html`
+
+- FF Team home: Business & Support now sits above the beta feedback box. It is also at the bottom of the Network and Bookings pages (not on Profile). Shared component `BusinessSupport19`, exported from the v1.01 module as `V101.BusinessSupport19`.
+- FF Team home: "Our philosophy" and "Our promise" are hidden for FF Team (kept on FF Party and FF Business). "What is FireFlair?" (coin section) is removed from the FF Team community panel.
+- Community panel order is now: Your team ("Build your team. Work with friends."), then "Put yourself on the map" at the bottom. The 1, 2, 3 points are Find your people, Build your team, Work with friends.
+- Follow a booking: larger cards, a one-line explanation under the title, right-edge fade showing the next card, and progress dots. The row now scrolls from the left on mobile (it was centred and clipped).
+- Home service cards (FF Team): small, requirement-style cards for Bartending (3 hours), Mixology, Flair and Staff. The Tasting package is not listed here. New `HOME_JOBS` list and `HomeJobCard`.
+- Bookings page: service card descriptions now say what is needed to get the job. Availability section removed.
+- Images: community, packages and events panel pictures changed on FF Team, plus the Follow a booking event card. First shuffle; exact picks to follow.
+
 ## v17.3.75 — 2026-11-05 — Stripe pay window on confirm and pay
 Artifact version 1793904930-9c83 · file `fireflair-v17.3.75.html`
 
