@@ -22,6 +22,8 @@ Published page: https://claude.ai/artifact/HnsNKCoFwCsXBbppQJYtQQ
 - The photo of a bartender with glasses is removed from the page.
 - Business & Support is at the bottom of the Bookings page as well as on Home and People.
 
+- On phones the coin game at the end of Home now ends clear above the bottom bar.
+
 ## Map
 Map pins and the cluster use the standard FF logo (`FFEmblem`, through `MapCoin`). The cluster is hidden while the map has no pins.
 
