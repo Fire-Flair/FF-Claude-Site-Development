@@ -17,6 +17,11 @@ Published page: https://claude.ai/artifact/HnsNKCoFwCsXBbppQJYtQQ
 - All seeded demo data: the 18 default profiles (`DIRECTORY`), demo venues, companies, contacts, events, shifts, engagements, map businesses and map events are now empty lists (`[]`). The back end supplies the real lists.
 - The prototype footer on the home page and the "Prototype sign-in" note on the log-in sheet.
 
+## Also in this build
+- FF Stories filter shows one "FireFlair news" chip (it was spelled two ways).
+- The photo of a bartender with glasses is removed from the page.
+- Business & Support is at the bottom of the Bookings page as well as on Home and People.
+
 ## Map
 Map pins and the cluster use the standard FF logo (`FFEmblem`, through `MapCoin`). The cluster is hidden while the map has no pins.
 

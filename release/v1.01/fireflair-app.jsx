@@ -6926,7 +6926,6 @@ function TeamBookings({ guest = false }) {
         </HScroll>
       </section>
 
-      {/* Business & Support stays on the home page only; it is not repeated here. */}
       <section className="ff-bk-sec ff-bkgrow" id="ff-bk-grow">
         <h2 className="ff-bk-h">Grow with FireFlair</h2>
         <p className="ff-bk-sub">Training, dream jobs and rewards. Open one to see what is there and register your interest.</p>
@@ -6934,6 +6933,8 @@ function TeamBookings({ guest = false }) {
         <BkDrop17 id="ff-bk-jobs" title="Dream jobs" icon={E17I.Plane} photo="bk_jobs" desc="Tell us where you dream of working, from festivals to yachts, and we will keep you in mind when it comes up."><InterestSection kind="jobs" inner /></BkDrop17>
         <BkDrop17 id="ff-bk-rewards" title="FireFlair rewards" icon={E17I.Gift} photo="bk_rewards" desc="Perks for people who work with FireFlair: kit, tickets and experiences. Register your interest in the ones you want."><InterestSection kind="rewards" inner /></BkDrop17>
       </section>
+
+      <V101.BusinessSupport19 />
 
       <BookingSheet engagement={open} onClose={() => setOpen(null)} />
     </div>
@@ -15610,7 +15611,6 @@ const PHOTOS17_FILES = {
  "j17_p23": "assets/photos/j17_p23.webp",
  "j17_p32": "assets/photos/j17_p32.webp",
  "j17_vkg05": "assets/photos/j17_vkg05.webp",
- "t17_vke03": "assets/photos/t17_vke03.webp",
  "t17_vke04": "assets/photos/t17_vke04.webp",
  "t17_vke09": "assets/photos/t17_vke09.webp",
  "t17_p11": "assets/photos/t17_p11.webp",
@@ -15627,7 +15627,6 @@ const PHOTOS17_FILES = {
  "t17_p46": "assets/photos/t17_p46.webp",
  "t17_p24": "assets/photos/t17_p24.webp",
  "t17_p31": "assets/photos/t17_p31.webp",
- "j17_vke03": "assets/photos/j17_vke03.webp",
  "j17_p46": "assets/photos/j17_p46.webp",
  "j17_p24": "assets/photos/j17_p24.webp",
  "j17_p31": "assets/photos/j17_p31.webp",
@@ -15708,7 +15707,6 @@ const PHOTOS17_LIBRARY = {
  "j17_p23": "p23",
  "j17_p32": "p32",
  "j17_vkg05": "vkg05",
- "t17_vke03": "vke03",
  "t17_vke04": "vke04",
  "t17_vke09": "vke09",
  "t17_p11": "p11",
@@ -15725,7 +15723,6 @@ const PHOTOS17_LIBRARY = {
  "t17_p46": "p46",
  "t17_p24": "p24",
  "t17_p31": "p31",
- "j17_vke03": "vke03",
  "j17_p46": "p46",
  "j17_p24": "p24",
  "j17_p31": "p31",
@@ -15807,7 +15804,6 @@ const FOCUS17 = {
  "j17_p23": "58% 2%",
  "j17_p32": "45% 48%",
  "j17_vkg05": "50% 50%",
- "t17_vke03": "58% 6%",
  "t17_vke04": "70% 28%",
  "t17_vke09": "62% 34%",
  "t17_p11": "53% 24%",
@@ -15824,7 +15820,6 @@ const FOCUS17 = {
  "t17_p46": "50% 34%",
  "t17_p24": "60% 27%",
  "t17_p31": "50% 10%",
- "j17_vke03": "58% 6%",
  "j17_p46": "52% 13%",
  "j17_p24": "60% 6%",
  "j17_p31": "50% 6%",
@@ -24521,7 +24516,7 @@ function HowSteps17({ kind = "party" }) {
 
 /* ---- The Journal: how-to guides, FireFlair news (and, in time, featured staff) ---- */
 const JR17 = {
-  sidehustle: { date: "31 Oct 2026", by: "FireFlair News", cat: "FireFlair News", img: "jr_sidehustle", title: "Side hustle tax-free allowance to rise to £3,000: what it means for you", min: 3,
+  sidehustle: { date: "31 Oct 2026", by: "FireFlair News", cat: "FireFlair news", img: "jr_sidehustle", title: "Side hustle tax-free allowance to rise to £3,000: what it means for you", min: 3,
     intro: "From April 2027 you can earn up to £3,000 a year from self-employed work before reporting it. Here is what changes for FF Team professionals.",
     body: [
       ["What has been announced", "From 6 April 2027, the tax-free trading allowance rises from £1,000 to £3,000 a year. The level at which you must report trading income to HMRC rises to the same £3,000. The change was announced in the Budget on 28 October 2026 and will be legislated in the Finance Bill 2026-27. HMRC estimates that up to 1.4 million people could benefit, with around 400,000 paying about £380 less tax on average."],
@@ -24968,7 +24963,7 @@ const DX_TEAM = [
       { ic: "CalendarDays", t: "Go to a bar show", d: "Athens, London and Berlin.", b: "See growth events", go: "#ff-barshows", x: "Industry events are where the trade learns and meets. We list the big ones across Europe so you can plan which to attend." },
       { ic: "Rocket", t: "Grow with FireFlair", d: "Where events are booked.", b: "See the platforms", go: "#ff-how", x: "The platforms are the places where events get booked. See where FireFlair fits, and how the network grows with every member." },
     ] },
-  { k: "profiles", t: "Your profile", s: "Show who you are", img: "t17_vke03", pool: ["vke03", "vke04", "vke09", "p11", "vke07"], cards: ["p27", "p04", "p10"], icon: DX_I.Contact,
+  { k: "profiles", t: "Your profile", s: "Show who you are", img: "t17_vke04", pool: ["vke04", "vke09", "p11", "vke07"], cards: ["p27", "p04", "p10"], icon: DX_I.Contact,
     h: "Your craft, on one card.",
     p: ["Your Profile Card is your professional identity: your photo, skills, experience and CV in one place, shared with a single link.", "Collect reviews after every event and let your reputation do the talking when a business is choosing who to book.", "One card, one link, your whole career. Send it on WhatsApp, pin it to your socials and let people see exactly why you are the one to book."],
     parts: [
@@ -24997,7 +24992,7 @@ const DX_BIZ = [
       { ic: "UserPlus", t: "Book a whole team", d: "Companies with teams ready to hire together.", b: "Book a team", go: "#ff-teams" , x: "Companies on FireFlair bring teams that are ready to work together. Book the whole team in one go, rather than person by person." },
       { ic: "Star", t: "Trust the reviews", d: "What other businesses say.", b: "Read reviews", go: "#ff-relationships" , x: "Reviews come from other businesses that have hired the same people, so you can book with confidence." },
     ] },
-  { k: "events", t: "Your events", s: "Enhance your events with the best staff, made easy", img: "t17_vke03", pool: ["vke03", "p23", "p46", "p24", "p31"], icon: DX_I.PartyPopper,
+  { k: "events", t: "Your events", s: "Enhance your events with the best staff, made easy", img: "t17_vke04", pool: ["vke04", "p23", "p46", "p24", "p31"], icon: DX_I.PartyPopper,
     h: "From one shift to a festival.",
     p: ["Whether it is a single bar shift or a full festival, start with an Event Card: the date, the place and the roles you need.", "Choose your people, send the shifts and let everyone confirm on WhatsApp. No chasing, and no long email chains.", "Plan once, repeat with ease. Your Event Cards stay in Bookings, so the next festival, launch or private party starts from what already worked."],
     parts: [
