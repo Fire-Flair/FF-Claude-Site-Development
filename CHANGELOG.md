@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.3.85 — 2026-11-06 — Stories chip fixed, glasses photo removed, Business & Support on Bookings
+Artifact version 1793967972-f082 · file `fireflair-v17.3.85.html`
+
+- FF Stories: the "FireFlair News" category was spelled two ways ("FireFlair News" and "FireFlair news"), so the filter showed two chips. It is now one, "FireFlair news".
+- Removed one photo (a bartender with glasses, `vke03`) from the home page. The Your profile pillar rotates four photos and the Your events pillar on FF Business uses another bartender photo. The image data for it is gone from the page and the photo-map entries are removed from the source.
+- Business & Support now also sits at the bottom of the Bookings page, after Grow with FireFlair, as well as on the home and People pages.
+
 ## v17.3.84 — 2026-11-06 — v17.3.84 map caption removed, fewer photos of one bartender
 Artifact version 1793934471-25c0 · file `fireflair-v17.3.84.html`
 
