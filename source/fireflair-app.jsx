@@ -6872,12 +6872,7 @@ function BookingsSoon() {
           <b>Requests come to you on WhatsApp.</b> When companies and clients ask if you're free, each request is sent to you directly on WhatsApp and shows here. You reply in either place.
         </span>
       </div>
-      <p className="ff-soonpanel-lede">Your booked shifts will be shown here. Bookings open with FF Staff and FF Party.</p>
-      <div className="ff-soongrid">
-        <SoonCard icon={WaGlyph} title="Requests from companies" note="Businesses ask if you're free, on WhatsApp. You reply there or here." when="Coming with FF Staff" />
-        <SoonCard icon={Calendar} title="Booked shifts" note="Confirmed shifts with the venue, times and directions, in one place." when="Coming with FF Staff and FF Party" />
-        <SoonCard icon={Wallet} title="Booking passes" note="Each confirmed booking as a pass in Apple Wallet or Google Wallet." when="Coming soon" />
-      </div>
+      <p className="ff-soonpanel-lede">Your booked shifts will be shown here.</p>
     </div>
   );
 }
@@ -6985,8 +6980,8 @@ function TeamBookings({ guest = false }) {
       )}
 
       <section className="ff-bk-sec">
-        <div className="ff-bk-hrow"><h2 className="ff-bk-h">Your bookings {demo && upcoming.length > 0 && <i>{upcoming.length}</i>}</h2><button type="button" className="ff-bk-hist" aria-pressed={showPast} onClick={() => setShowPast(v => !v)}><Clock size={12} /> History</button></div>
-        {upcoming.length ? <div className="ff-sdrail11"><HScroll label="Your bookings">{upcoming.map(x => <ShiftDelivery11 key={x.e.id} e={x.e} shift={x.shift} event={x.event} />)}</HScroll></div>
+        <div className="ff-bk-hrow"><h2 className="ff-bk-h">Confirmed bookings {demo && upcoming.length > 0 && <i>{upcoming.length}</i>}</h2><button type="button" className="ff-bk-hist" aria-pressed={showPast} onClick={() => setShowPast(v => !v)}><Clock size={12} /> History</button></div>
+        {upcoming.length ? <div className="ff-sdrail11"><HScroll label="Confirmed bookings">{upcoming.map(x => <ShiftDelivery11 key={x.e.id} e={x.e} shift={x.shift} event={x.event} />)}</HScroll></div>
           : (
             <BookingsSoon />
           )}
@@ -20071,7 +20066,10 @@ const SD11_CSS = `
 .ff-bst11 li{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .ff-bst11 b{flex:none;padding:2px 10px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.04em;color:#fff}
 .ff-bst11 b.ok{background:#1F7A3D}.ff-bst11 b.warn{background:#C26A00}.ff-bst11 b.bad{background:#B3261E}
-.ff-brief11 .ask{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.ff-brief11 .hc{margin-top:18px;padding-top:14px;border-top:1px solid rgba(126,97,29,.3)}
+.ff-brief11 .hc h4{margin:0 0 10px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#7E611D}
+.ff-brief11 .hc .ff-hscroll{margin:0;padding:4px 0 10px;gap:14px}
+.ff-brief11 .hc .ff-hitem{width:min(300px,78vw)}
 .ff-av11{display:flex;flex-direction:column;gap:8px;width:210px;flex:none;background:#FBF8F1;color:#0B0B0C;border:1.5px solid #6B1226;border-radius:20px;corner-shape:squircle;padding:12px;text-align:center;align-items:center}
 .ff-av11 b{font-size:15px}.ff-av11 small{font-size:12px;opacity:.75}
 .ff-av11 button.pick{width:100%;min-height:40px;border-radius:999px;border:0;background:#6B1226;color:#FBF8F1;font-weight:700;cursor:pointer}
@@ -20126,6 +20124,7 @@ function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
       <EvRow icon={I11.Briefcase} k="Hired by">{hirer}</EvRow>
     </div>
   );
+  const askBox = ask && <div className="ask"><input aria-label="Your question" value={txt} onChange={(x) => setTxt(x.target.value.slice(0, 200))} placeholder="Your question" /><div className="btns" style={{ gridTemplateColumns: "1fr" }}><button type="button" className="yes" disabled={!txt.trim()} onClick={send}>Send question</button></div></div>;
   const thread = (e.thread || []).length > 0 && <div className="thread">{e.thread.map((m, i) => <p key={i}>{m.from === "pro" ? "You: " : `${hirer}: `}{m.text}</p>)}</div>;
   return (<>
     <article className={`ff-evc ff-sd11 ${kind}${mini ? " mini" : ""}`} aria-label={`Shift card: ${shift.role}`}>
@@ -20143,11 +20142,15 @@ function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
         {thread}
         {hv && <p className="ok">{engText(e) || "Not sent yet"}{conf ? ` · Ref ${e.ref || ref17(e)}` : ""}</p>}
         {act && pend && !ended && (<>
-          <div className="btns" role="group" aria-label="Your reply">
+          <div className="btns" role="group" aria-label="Your reply" style={{ gridTemplateColumns: "1fr 1fr" }}>
             <button type="button" className="yes" onClick={yes}>Yes</button>
             <button type="button" className="no" onClick={no}>No</button>
+          </div>
+          <div className="btns" style={{ gridTemplateColumns: "1fr 1fr" }}>
+            <button type="button" onClick={() => setAsk(!ask)} aria-expanded={ask}>Ask</button>
             <button type="button" onClick={() => setBrief(true)}>More information</button>
           </div>
+          {askBox}
         </>)}
         {act && pend && ended && <p className="mute">This shift has started.</p>}
         {act && avail && (<>
@@ -20156,7 +20159,7 @@ function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
             <button type="button" onClick={() => setAsk(!ask)} aria-expanded={ask}>Ask</button>
             <button type="button" onClick={() => setBrief(true)}>More information</button>
           </div>
-          {ask && <div className="ask"><input aria-label="Your question" value={txt} onChange={(x) => setTxt(x.target.value.slice(0, 200))} placeholder="Your question" /><div className="btns" style={{ gridTemplateColumns: "1fr" }}><button type="button" className="yes" disabled={!txt.trim()} onClick={send}>Send question</button></div></div>}
+          {askBox}
         </>)}
         {act && conf && (<>
           <p className="ok">Confirmed</p>
@@ -20164,7 +20167,7 @@ function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
             <button type="button" onClick={() => setAsk(!ask)} aria-expanded={ask}>Ask</button>
             <button type="button" onClick={() => setBrief(true)}>More information</button>
           </div>
-          {ask && <div className="ask"><input aria-label="Your question" value={txt} onChange={(x) => setTxt(x.target.value.slice(0, 200))} placeholder="Your question" /><div className="btns" style={{ gridTemplateColumns: "1fr" }}><button type="button" className="yes" disabled={!txt.trim()} onClick={send}>Send question</button></div></div>}
+          {askBox}
           {e.handover && !e.handover.done && <p className="mute">Handover offered to {handTo || "your referral"}. You stay booked until they confirm.</p>}
           {e.handover && !e.handover.done && handEng && handEng.state === "requested" && (
             <div className="proto">Prototype: <button type="button" onClick={() => dispatch({ type: "SHIFT_REFER_ACCEPT", id: handEng.id })}>{handTo || "They"} accept</button></div>)}
@@ -20210,23 +20213,34 @@ function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
   </>);
 }
 
-/* The Event brief, as a team member sees it. Send question is at the bottom. */
+/* Who the shift is for: a Company Card for a business, a Host Card for a person. */
+function hirerCard11(state, ev) {
+  const nm = (ev && ev.hirer) || "";
+  if (/vooshka/i.test(nm)) return { party: false, c: vooshkaEditable17() };
+  const co = companyList(state).find(x => x.name === nm);
+  if (co) { const { id, mine, tier, ...rest } = co; return { party: false, c: rest }; }
+  const mineCo = state.company || {};
+  if (nm && mineCo.name === nm) return { party: state.site === "party", c: mineCo };
+  if (!nm || nm === "The host" || (ev && ev.hirerKind === "host") || /private|party|wedding/i.test((ev && ev.kind) || ""))
+    return { party: true, c: { ...DEMO_HOST17, name: nm && nm !== "The host" ? nm : DEMO_HOST17.name, photo: (window.FF_IMG || {}).face_you || "" } };
+  return { party: false, c: { name: nm, kind: (ev && ev.kind) || "", slug: slugify(nm) } };
+}
+
+/* The Event brief, as a team member sees it. The hirer's Company Card or Host Card sits underneath. */
 function EventBrief11({ ev, shift, e, onClose }) {
-  const { dispatch } = useStore();
-  const [q, setQ] = useState("");
+  const { state } = useStore();
   if (!ev || !shift) return null;
-  const canAsk = ["requested", "discuss", "available", "confirmed"].includes(e.state);
-  const send = () => { if (!q.trim()) return; dispatch({ type: "AF_RESPOND", id: e.id, as: "discuss", text: q.trim() }); dispatch({ type: "TOAST", toast: "Question sent" }); setQ(""); onClose(); };
+  const h = hirerCard11(state, ev);
   return (
     <Sheet open onClose={onClose} title="Event brief">
       <div className="ff-brief11">
         <EventGuide ev={ev} shifts={[shift]} viewer="pro" stamp={e.state === "confirmed" ? "Confirmed" : "Brief"} />
-        {canAsk && (
-          <div className="ask">
-            <textarea className="ff-input" rows={3} value={q} maxLength={300} onChange={(x) => setQ(x.target.value)} aria-label="Your question" placeholder="Your question" />
-            <Btn variant="primary wide" disabled={!q.trim()} onClick={send}>Send question</Btn>
-          </div>
-        )}
+        <section className="hc" aria-label={h.party ? "Host Card" : "Company Card"}>
+          <h4>{h.party ? "Your host" : "Your client"}</h4>
+          <HScroll label={h.party ? "Host Card" : "Company Card"}>
+            <div className="hc-i">{h.party ? <PartyCard11 demo={h.c} /> : <CompanyCardFace c={h.c} />}</div>
+          </HScroll>
+        </section>
       </div>
     </Sheet>
   );
