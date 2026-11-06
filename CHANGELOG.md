@@ -1,5 +1,17 @@
 # FireFlair prototype — changelog
 
+## v17.3.90 — 2026-11-06 — Shift cards, bookings rail, confirm pop-up
+Artifact version 1794002408-6ba4 · file `fireflair-v17.3.90.html`
+
+- Shift card redesigned to match the other platform cards (ivory face, black plate, coin, rule, icon rows), in cream, burgundy and black. Selected bookings now read "{Name}, you've been selected"; Autofill reads "Open shift". The accompanying message is shown on the card and is specific to the person. The WhatsApp dropdown is removed.
+- Reply buttons are Yes, No and More information (replaces Ask).
+- Bookings (FF Business): confirmed bookings are Event Cards in a horizontal row. History sits on the right of the "Your bookings" heading. Tapping a booking opens its Event Card with the event name on top, then a horizontal swipe through each Shift card paired with the person's profile card.
+- Review and confirm: the Confirm button opens the payment pop-up over the invoice, which stays in place. The pop-up button reads "Pay and confirm". The old "Pay and send on WhatsApp" page is removed.
+- Choosing Autofill now counts as choosing staff (no "Choose your staff" warning; the invoice shows Autofill).
+- The phone number filled in automatically is now accepted.
+- Fixed the Autofill tile overlapping the Search tile in the staff row.
+- FF Business demo sign-in is Vooshka Cocktail Bar again (the full profile, spelling corrected); demo events renamed to match.
+
 ## v17.3.89 — 2026-11-06 — Shift delivery, notifications, demo sign-ins
 Artifact version 1793988615-540d · file `fireflair-v17.3.89.html`
 
