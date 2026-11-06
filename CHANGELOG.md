@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.82 — 2026-11-06 — v17.3.82 Vooshka mix, photo library
+Artifact version 1793929246-9f6e · file `fireflair-v17.3.82.html`
+
+- Photo library: all 105 Vooshka photos from the prototype are now in `photo-library/` (gallery vkg/vko, bar designs vkb, signature cocktails vks, classic cocktails vkc), plus the 13 photos the prototype used before 6 Nov (vke). With Alex's 47 photos and the video, the library holds 166 items, each in `library.json` with description, people, brands, face position and where it is used.
+- FF Team now mixes Alex's photos with the Vooshka event photos: the bar and people shots from the Vooshka gallery (prominent Vooshka branding avoided) and the strong event photos the prototype used earlier today (bartenders serving punch, the busy event bar, the bartenders pouring under stage lights, the black and white bartender in a cap). No Vooshka bar-design or cocktail photos on FF Team.
+- FF Team pillars: each pillar has five tile photos and its own card photos, so the tile and the cards never show the same photo. Code: `cards` on each FF Team pillar, `dxCard17`. FF Business and FF Party keep their shared five.
+- Bookings cards: more cards now show real photos (Introduction to Cocktails, WSET Spirits, Spirit brand training, Open Class, Open Bar, After Dark, Christmas party, Photoshoot).
+- FF Team still uses no photo twice anywhere on the site (62 photos), checked across all five rotation states; FF Business and FF Party have no repeats within each site.
+
 ## v17.3.81 — 2026-11-06 — v17.3.81 Photo library, rotating pillars
 Artifact version 1793928505-4b9a · file `fireflair-v17.3.81.html`
 
