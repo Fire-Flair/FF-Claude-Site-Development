@@ -1,7 +1,7 @@
 # FireFlair prototype — changelog
 
-## v17.4 — 2026-11-06 — v17.3.83 fewer photos of one bartender
-Artifact version 1793930816-2f25 · file `fireflair-v17.4.html`
+## v17.3.83 — 2026-11-06 — v17.3.83 fewer photos of one bartender
+Artifact version 1793930816-2f25 · file `fireflair-v17.3.83.html`
 
 - Home page (all three sites): far fewer photos of the same person (the bearded bartender). FF Team now shows him in one place only, the "How to build a bartender profile" story photo; every other photo of him is out of the pillar tiles, pillar cards, "Live event" photo and "Three FireFlair sites" story.
 - Replacements come from the library: Vooshka event and bartender shots (bartender in bow tie, bar team in the hall, patterned bar, floral entrance), the earlier-prototype drinks and bartender photos, and the three flutes for the "Three FireFlair sites" story. Each FF Team pillar still has five rotating tile photos plus its own card photos, with no photo repeated on FF Team.
