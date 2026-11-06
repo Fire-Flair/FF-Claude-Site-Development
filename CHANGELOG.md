@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v17.3.87 — 2026-11-06 — Invitations gated to phase 2 for v1.01
+Artifact version 1793970391-4521 · file `fireflair-v17.3.87.html`
+
+- Networking is part of the 1.1 update. The invitation feature on the People page (Invite button, Your network, Invited you banner, Invitations you've sent), Invite in the add menu and in the people groups, Add to team on a profile, and the Team tab on a profile now show only in phase 2 and 3 (`ph17(state) >= 2`). The prototype looks the same; v1.01 hides them.
+- Companies stay hidden until the next update.
+
 ## v17.3.86 — 2026-11-06 — Coin game clears the bottom bar on mobile
 Artifact version 1793968326-15ad · file `fireflair-v17.3.86.html`
 
