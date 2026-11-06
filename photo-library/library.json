@@ -1,0 +1,2374 @@
+{
+ "library": "FireFlair photo library",
+ "count": 48,
+ "photos": [
+  {
+   "id": "p01",
+   "title": "Rosemary and lime highballs",
+   "description": "A long row of highballs with lime wheels and rosemary sprigs on a bar top.",
+   "batch": 1,
+   "kind": "photo",
+   "original": "originals/p01-rosemary-lime-highballs.jpg",
+   "web": "web/p01-rosemary-lime-highballs.webp",
+   "thumb": "thumbs/p01-rosemary-lime-highballs.webp",
+   "web_size": [
+    1500,
+    2000
+   ],
+   "original_size": [
+    1512,
+    2016
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "cocktails",
+    "line-up",
+    "packages",
+    "service"
+   ],
+   "focus": [
+    0.55,
+    0.35
+   ],
+   "keep": [
+    0,
+    0.12,
+    1,
+    0.8
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p01, j17_p01",
+     "where": "FF Team home: packages / services pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p01, j17_p01",
+     "where": "FF Business home: packages / services pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p01, j17_p01",
+     "where": "FF Party home: packages / services pillar (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "p02",
+   "title": "Guests and bartender selfie",
+   "description": "Two smiling guests take a selfie with a bartender in waistcoat and tie behind them; purple bar lighting.",
+   "batch": 1,
+   "kind": "photo",
+   "original": "originals/p02-selfie-guests-bartender.jpg",
+   "web": "web/p02-selfie-guests-bartender.webp",
+   "thumb": "thumbs/p02-selfie-guests-bartender.webp",
+   "web_size": [
+    2000,
+    2000
+   ],
+   "original_size": [
+    2400,
+    2400
+   ],
+   "orientation": "square",
+   "people": 3,
+   "brands_visible": [],
+   "tags": [
+    "people",
+    "guests",
+    "night",
+    "party",
+    "selfie"
+   ],
+   "focus": [
+    0.55,
+    0.4
+   ],
+   "keep": [
+    0,
+    0.08,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "p03",
+   "title": "Whiskey sours being garnished",
+   "description": "A bartender garnishes two whiskey sours with cherries. Instagram story screenshot; the web copy has the app interface cropped off.",
+   "batch": 1,
+   "kind": "photo",
+   "original": "originals/p03-whiskey-sours-garnish.png",
+   "web": "web/p03-whiskey-sours-garnish.webp",
+   "thumb": "thumbs/p03-whiskey-sours-garnish.webp",
+   "web_size": [
+    750,
+    1121
+   ],
+   "original_size": [
+    750,
+    1334
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "cocktails",
+    "craft",
+    "garnish"
+   ],
+   "focus": [
+    0.35,
+    0.5
+   ],
+   "keep": [
+    0,
+    0.0,
+    1,
+    0.9
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "jr_menuteam",
+     "where": "Story: Learn the menu"
+    }
+   ],
+   "note": "Screenshot: the web copy is the photo only, with the app interface trimmed off."
+  },
+  {
+   "id": "p04",
+   "title": "Bartender with a blow torch",
+   "description": "A long-haired bartender in a floral shirt uses a blow torch behind a dark, warm bar.",
+   "batch": 1,
+   "kind": "photo",
+   "original": "originals/p04-torch-bartender-floral-shirt.jpg",
+   "web": "web/p04-torch-bartender-floral-shirt.webp",
+   "thumb": "thumbs/p04-torch-bartender-floral-shirt.webp",
+   "web_size": [
+    1500,
+    2000
+   ],
+   "original_size": [
+    1512,
+    2016
+   ],
+   "orientation": "portrait",
+   "people": 1,
+   "brands_visible": [],
+   "tags": [
+    "people",
+    "bartender",
+    "flair",
+    "craft",
+    "portrait"
+   ],
+   "focus": [
+    0.45,
+    0.22
+   ],
+   "keep": [
+    0.2,
+    0.1,
+    0.78,
+    0.55
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p04, j17_p04",
+     "where": "FF Team home: profile pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p04, j17_p04",
+     "where": "FF Business home: profile pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "dream_flair_jobs",
+     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
+    }
+   ]
+  },
+  {
+   "id": "p05",
+   "title": "Bartender tool roll (wide)",
+   "description": "A canvas tool roll laid open with copper and steel jiggers, strainers, shakers and bar spoons.",
+   "batch": 1,
+   "kind": "photo",
+   "original": "originals/p05-tool-roll-copper-steel.jpg",
+   "web": "web/p05-tool-roll-copper-steel.webp",
+   "thumb": "thumbs/p05-tool-roll-copper-steel.webp",
+   "web_size": [
+    2000,
+    986
+   ],
+   "original_size": [
+    2576,
+    1270
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "ROOT7"
+   ],
+   "tags": [
+    "kit",
+    "equipment",
+    "tools"
+   ],
+   "focus": [
+    0.5,
+    0.45
+   ],
+   "keep": [
+    0,
+    0.1,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p05, j17_p05",
+     "where": "FF Team home: packages / services pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p05, j17_p05",
+     "where": "FF Business home: profile pillar (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "p06",
+   "title": "Martini glasses and mixing glass",
+   "description": "Two chilled martini glasses and a cut-glass mixing glass full of ice on a wooden bar.",
+   "batch": 1,
+   "kind": "photo",
+   "original": "originals/p06-martini-glasses-mixing-glass.jpg",
+   "web": "web/p06-martini-glasses-mixing-glass.webp",
+   "thumb": "thumbs/p06-martini-glasses-mixing-glass.webp",
+   "web_size": [
+    1500,
+    2000
+   ],
+   "original_size": [
+    1512,
+    2016
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "glassware",
+    "cocktails",
+    "craft"
+   ],
+   "focus": [
+    0.5,
+    0.4
+   ],
+   "keep": [
+    0.05,
+    0.12,
+    1,
+    0.95
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p06, j17_p06",
+     "where": "FF Business home: packages / services pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "training_spirits_qualification",
+     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
+    },
+    {
+     "key": "jr_sidehustle",
+     "where": "Story: Side hustle tax-free allowance"
+    }
+   ]
+  },
+  {
+   "id": "p07",
+   "title": "Three flutes",
+   "description": "Three long flutes: a sparkling mint drink, an amber drink with orange, and a sparkling drink with berries.",
+   "batch": 1,
+   "kind": "photo",
+   "original": "originals/p07-three-flutes.jpg",
+   "web": "web/p07-three-flutes.webp",
+   "thumb": "thumbs/p07-three-flutes.webp",
+   "web_size": [
+    2000,
+    1500
+   ],
+   "original_size": [
+    2016,
+    1512
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "glassware",
+    "cocktails",
+    "wine",
+    "sparkling"
+   ],
+   "focus": [
+    0.45,
+    0.35
+   ],
+   "keep": [
+    0.02,
+    0.02,
+    0.95,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p07, j17_p07",
+     "where": "FF Party home: packages / services pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "training_wine_qualification",
+     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
+    },
+    {
+     "key": "in_tr_wset_wine",
+     "where": "Training card: WSET Wine"
+    }
+   ]
+  },
+  {
+   "id": "p08",
+   "title": "Frosted shot with grapefruit crisp",
+   "description": "A frosted shot glass with a dried grapefruit crisp on a wooden bar top.",
+   "batch": 1,
+   "kind": "photo",
+   "original": "originals/p08-frosted-shot-grapefruit-crisp.jpg",
+   "web": "web/p08-frosted-shot-grapefruit-crisp.webp",
+   "thumb": "thumbs/p08-frosted-shot-grapefruit-crisp.webp",
+   "web_size": [
+    2000,
+    1500
+   ],
+   "original_size": [
+    2016,
+    1512
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "cocktails",
+    "shots",
+    "garnish",
+    "craft"
+   ],
+   "focus": [
+    0.3,
+    0.5
+   ],
+   "keep": [
+    0,
+    0.12,
+    0.62,
+    0.95
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p08, j17_p08",
+     "where": "FF Party home: profile pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "in_tr_ff_masterclass",
+     "where": "Training card: FireFlair Masterclass"
+    }
+   ]
+  },
+  {
+   "id": "p09",
+   "title": "Flaming a cocktail (GIF)",
+   "description": "Short animated GIF: a bartender torches the top of a foamy cocktail. The web copy is the first frame.",
+   "batch": 1,
+   "kind": "animation",
+   "original": "originals/p09-flame-torch-gif.gif",
+   "web": "web/p09-flame-torch-gif.webp",
+   "thumb": "thumbs/p09-flame-torch-gif.webp",
+   "web_size": [
+    480,
+    640
+   ],
+   "original_size": [
+    480,
+    640
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "flair",
+    "flame",
+    "craft",
+    "animation"
+   ],
+   "focus": [
+    0.35,
+    0.6
+   ],
+   "keep": [
+    0,
+    0.25,
+    0.75,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "in_dj_flair",
+     "where": "Dream job: Flair jobs"
+    }
+   ]
+  },
+  {
+   "id": "p10",
+   "title": "Bartender flaming a coupe",
+   "description": "A young bartender aims a blow torch flame over a coupe cocktail in front of a back bar of bottles.",
+   "batch": 1,
+   "kind": "photo",
+   "original": "originals/p10-flame-torch-bartender-coupe.jpg",
+   "web": "web/p10-flame-torch-bartender-coupe.webp",
+   "thumb": "thumbs/p10-flame-torch-bartender-coupe.webp",
+   "web_size": [
+    2000,
+    1500
+   ],
+   "original_size": [
+    2016,
+    1512
+   ],
+   "orientation": "landscape",
+   "people": 1,
+   "brands_visible": [],
+   "tags": [
+    "people",
+    "bartender",
+    "flair",
+    "flame",
+    "craft"
+   ],
+   "focus": [
+    0.2,
+    0.3
+   ],
+   "keep": [
+    0,
+    0.12,
+    0.75,
+    0.95
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p10, j17_p10",
+     "where": "FF Team home: profile pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "training_ff_open_bar",
+     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
+    }
+   ]
+  },
+  {
+   "id": "p11",
+   "title": "Smiling bartender with a pink drink",
+   "description": "A smiling bartender in black leans on the bar behind a tall creamy pink cocktail.",
+   "batch": 1,
+   "kind": "photo",
+   "original": "originals/p11-smiling-bartender-pink-drink.jpg",
+   "web": "web/p11-smiling-bartender-pink-drink.webp",
+   "thumb": "thumbs/p11-smiling-bartender-pink-drink.webp",
+   "web_size": [
+    1500,
+    2000
+   ],
+   "original_size": [
+    1512,
+    2016
+   ],
+   "orientation": "portrait",
+   "people": 1,
+   "brands_visible": [],
+   "tags": [
+    "people",
+    "bartender",
+    "portrait",
+    "cocktails"
+   ],
+   "focus": [
+    0.53,
+    0.26
+   ],
+   "keep": [
+    0.05,
+    0.15,
+    0.95,
+    0.95
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p11, j17_p11",
+     "where": "FF Team home: profile pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p11, j17_p11",
+     "where": "FF Business home: profile pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p11, j17_p11",
+     "where": "FF Party home: community pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "face_vooshka",
+     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
+    }
+   ]
+  },
+  {
+   "id": "p12",
+   "title": "Guest photographing her cocktail",
+   "description": "A guest takes a photo of an orange cocktail with a basil garnish on a wooden table.",
+   "batch": 1,
+   "kind": "photo",
+   "original": "originals/p12-guest-photographing-cocktail.jpg",
+   "web": "web/p12-guest-photographing-cocktail.webp",
+   "thumb": "thumbs/p12-guest-photographing-cocktail.webp",
+   "web_size": [
+    1500,
+    2000
+   ],
+   "original_size": [
+    1512,
+    2016
+   ],
+   "orientation": "portrait",
+   "people": 1,
+   "brands_visible": [],
+   "tags": [
+    "people",
+    "guests",
+    "cocktails",
+    "photography"
+   ],
+   "focus": [
+    0.55,
+    0.25
+   ],
+   "keep": [
+    0.2,
+    0.05,
+    0.82,
+    0.78
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p12, j17_p12",
+     "where": "FF Party home: profile pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "reward_photoshoot",
+     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
+    },
+    {
+     "key": "in_rw_shoot",
+     "where": "Reward: Professional photoshoot"
+    }
+   ]
+  },
+  {
+   "id": "p13",
+   "title": "Guests photographing strawberry mojitos",
+   "description": "Two smiling guests photograph a row of strawberry mojitos on their table.",
+   "batch": 1,
+   "kind": "photo",
+   "original": "originals/p13-guests-photographing-mojitos.jpg",
+   "web": "web/p13-guests-photographing-mojitos.webp",
+   "thumb": "thumbs/p13-guests-photographing-mojitos.webp",
+   "web_size": [
+    2000,
+    1500
+   ],
+   "original_size": [
+    2016,
+    1512
+   ],
+   "orientation": "landscape",
+   "people": 2,
+   "brands_visible": [],
+   "tags": [
+    "people",
+    "guests",
+    "cocktails",
+    "reviews"
+   ],
+   "focus": [
+    0.5,
+    0.3
+   ],
+   "keep": [
+    0.03,
+    0.03,
+    0.95,
+    0.95
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "jr_cardsteam",
+     "where": "Story: Your Service Cards"
+    }
+   ]
+  },
+  {
+   "id": "p14",
+   "title": "Row of pink shots",
+   "description": "A diagonal row of pink shots lined up on a bar mat.",
+   "batch": 1,
+   "kind": "photo",
+   "original": "originals/p14-pink-shots-row.jpg",
+   "web": "web/p14-pink-shots-row.webp",
+   "thumb": "thumbs/p14-pink-shots-row.webp",
+   "web_size": [
+    1500,
+    2000
+   ],
+   "original_size": [
+    1512,
+    2016
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "shots",
+    "line-up",
+    "party"
+   ],
+   "focus": [
+    0.5,
+    0.35
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    0.85
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p14, j17_p14",
+     "where": "FF Party home: packages / services pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "jr_cards",
+     "where": "Story: Why everything on FireFlair is a card"
+    }
+   ]
+  },
+  {
+   "id": "p15",
+   "title": "Gin balloon",
+   "description": "A gin and tonic balloon glass with citrus wheels beside a gin bottle and rose petals.",
+   "batch": 1,
+   "kind": "photo",
+   "original": "originals/p15-gin-balloon.jpg",
+   "web": "web/p15-gin-balloon.webp",
+   "thumb": "thumbs/p15-gin-balloon.webp",
+   "web_size": [
+    1500,
+    2000
+   ],
+   "original_size": [
+    1512,
+    2016
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [
+    "Bombay Sapphire"
+   ],
+   "tags": [
+    "cocktails",
+    "gin",
+    "spirits"
+   ],
+   "focus": [
+    0.5,
+    0.35
+   ],
+   "keep": [
+    0.05,
+    0.12,
+    0.92,
+    0.78
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p15, j17_p15",
+     "where": "FF Party home: profile pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "reward_bar_shows",
+     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
+    },
+    {
+     "key": "in_tr_wset_spirits",
+     "where": "Training card: WSET Spirits"
+    }
+   ]
+  },
+  {
+   "id": "p16",
+   "title": "Layered shots",
+   "description": "Close-up of layered white and red shots, softly out of focus.",
+   "batch": 1,
+   "kind": "photo",
+   "original": "originals/p16-layered-shots.jpg",
+   "web": "web/p16-layered-shots.webp",
+   "thumb": "thumbs/p16-layered-shots.webp",
+   "web_size": [
+    1500,
+    2000
+   ],
+   "original_size": [
+    1512,
+    2016
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "shots",
+    "party",
+    "abstract"
+   ],
+   "focus": [
+    0.5,
+    0.6
+   ],
+   "keep": [
+    0,
+    0.1,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "in_rw_party",
+     "where": "Reward: FF January Christmas party"
+    }
+   ]
+  },
+  {
+   "id": "p17",
+   "title": "Three martinis with a red swirl",
+   "description": "Three foamy martinis with a red swirl on a bar mat.",
+   "batch": 1,
+   "kind": "photo",
+   "original": "originals/p17-trio-martinis-red-swirl.jpg",
+   "web": "web/p17-trio-martinis-red-swirl.webp",
+   "thumb": "thumbs/p17-trio-martinis-red-swirl.webp",
+   "web_size": [
+    1500,
+    2000
+   ],
+   "original_size": [
+    1512,
+    2016
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "cocktails",
+    "martini",
+    "line-up"
+   ],
+   "focus": [
+    0.45,
+    0.45
+   ],
+   "keep": [
+    0,
+    0.08,
+    1,
+    0.92
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "cocktail_1",
+     "where": "Signature Cocktails card 2 (also FF Party cocktail menu)"
+    }
+   ]
+  },
+  {
+   "id": "p18",
+   "title": "Martini with rose petals",
+   "description": "A single foamy martini with rose petals, lit warmly on a wooden table.",
+   "batch": 1,
+   "kind": "photo",
+   "original": "originals/p18-martini-rose-petals.jpg",
+   "web": "web/p18-martini-rose-petals.webp",
+   "thumb": "thumbs/p18-martini-rose-petals.webp",
+   "web_size": [
+    1500,
+    2000
+   ],
+   "original_size": [
+    1512,
+    2016
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "cocktails",
+    "martini",
+    "mixology"
+   ],
+   "focus": [
+    0.5,
+    0.3
+   ],
+   "keep": [
+    0.08,
+    0.06,
+    0.95,
+    0.98
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p18, j17_p18",
+     "where": "FF Party home: profile pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "training_mixology",
+     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
+    },
+    {
+     "key": "in_tr_mixology",
+     "where": "Training card: Mixology"
+    }
+   ]
+  },
+  {
+   "id": "p19",
+   "title": "Martini with mint and raspberries",
+   "description": "A martini beside fresh mint, raspberries and rose petals on a bar.",
+   "batch": 1,
+   "kind": "photo",
+   "original": "originals/p19-martini-mint-raspberries.jpg",
+   "web": "web/p19-martini-mint-raspberries.webp",
+   "thumb": "thumbs/p19-martini-mint-raspberries.webp",
+   "web_size": [
+    1500,
+    2000
+   ],
+   "original_size": [
+    1512,
+    2016
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "cocktails",
+    "martini",
+    "garnish",
+    "mixology"
+   ],
+   "focus": [
+    0.4,
+    0.6
+   ],
+   "keep": [
+    0,
+    0.35,
+    1,
+    0.98
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "cocktail_0",
+     "where": "Signature Cocktails card 1 (also FF Party cocktail menu)"
+    }
+   ]
+  },
+  {
+   "id": "p20",
+   "title": "Iced coffee cocktail",
+   "description": "A creamy iced coffee cocktail with a straw, close up.",
+   "batch": 1,
+   "kind": "photo",
+   "original": "originals/p20-iced-coffee-cocktail.jpg",
+   "web": "web/p20-iced-coffee-cocktail.webp",
+   "thumb": "thumbs/p20-iced-coffee-cocktail.webp",
+   "web_size": [
+    1500,
+    2000
+   ],
+   "original_size": [
+    1512,
+    2016
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "cocktails",
+    "coffee"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0.1,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p20, j17_p20",
+     "where": "FF Party home: profile pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "dream_food_festivals_markets",
+     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
+    },
+    {
+     "key": "in_dj_food_festivals",
+     "where": "Dream job: Food festivals and markets"
+    }
+   ]
+  },
+  {
+   "id": "p21",
+   "title": "Shaking cocktails at a garden party (1)",
+   "description": "A smiling bartender in a white shearling vest shakes a cocktail; a guest in a floral shirt and feather boa laughs beside her.",
+   "batch": 2,
+   "kind": "photo",
+   "original": "originals/p21-shaker-woman-feather-boa-1.png",
+   "web": "web/p21-shaker-woman-feather-boa-1.webp",
+   "thumb": "thumbs/p21-shaker-woman-feather-boa-1.webp",
+   "web_size": [
+    2000,
+    1313
+   ],
+   "original_size": [
+    2266,
+    1488
+   ],
+   "orientation": "landscape",
+   "people": 2,
+   "brands_visible": [],
+   "tags": [
+    "people",
+    "bartender",
+    "party",
+    "shaker",
+    "training"
+   ],
+   "focus": [
+    0.38,
+    0.3
+   ],
+   "keep": [
+    0.15,
+    0.15,
+    0.5,
+    0.8
+   ],
+   "near_duplicate_of": "p22",
+   "used_in": [
+    {
+     "key": "t17_p21, j17_p21",
+     "where": "FF Team home: community pillar (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "p22",
+   "title": "Shaking cocktails at a garden party (2)",
+   "description": "The same bartender shakes a cocktail high with a big smile; the guest in the feather boa is beside her.",
+   "batch": 2,
+   "kind": "photo",
+   "original": "originals/p22-shaker-woman-feather-boa-2.png",
+   "web": "web/p22-shaker-woman-feather-boa-2.webp",
+   "thumb": "thumbs/p22-shaker-woman-feather-boa-2.webp",
+   "web_size": [
+    2000,
+    1313
+   ],
+   "original_size": [
+    2266,
+    1488
+   ],
+   "orientation": "landscape",
+   "people": 2,
+   "brands_visible": [],
+   "tags": [
+    "people",
+    "bartender",
+    "party",
+    "shaker"
+   ],
+   "focus": [
+    0.42,
+    0.3
+   ],
+   "keep": [
+    0.15,
+    0.14,
+    0.55,
+    0.8
+   ],
+   "near_duplicate_of": "p21",
+   "used_in": [
+    {
+     "key": "teams",
+     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
+    }
+   ]
+  },
+  {
+   "id": "p23",
+   "title": "Bartender pouring at a garden bar",
+   "description": "A bartender in a shearling vest pours into a martini glass at an outdoor event bar with a chalkboard menu.",
+   "batch": 2,
+   "kind": "photo",
+   "original": "originals/p23-bartender-pouring-garden-bar.jpg",
+   "web": "web/p23-bartender-pouring-garden-bar.webp",
+   "thumb": "thumbs/p23-bartender-pouring-garden-bar.webp",
+   "web_size": [
+    1655,
+    1406
+   ],
+   "original_size": [
+    1655,
+    1406
+   ],
+   "orientation": "landscape",
+   "people": 1,
+   "brands_visible": [],
+   "tags": [
+    "people",
+    "bartender",
+    "service",
+    "events"
+   ],
+   "focus": [
+    0.58,
+    0.25
+   ],
+   "keep": [
+    0.2,
+    0.03,
+    0.88,
+    0.95
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p23, j17_p23",
+     "where": "FF Business home: events pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "training_cocktail_basics",
+     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
+    },
+    {
+     "key": "jr_workteam",
+     "where": "Story: How to receive and accept work on FF Team"
+    }
+   ]
+  },
+  {
+   "id": "p24",
+   "title": "Three women shaking cocktails",
+   "description": "Three laughing women shake cocktails together at a bright bar: a cocktail class.",
+   "batch": 2,
+   "kind": "photo",
+   "original": "originals/p24-three-women-shakers-class.jpg",
+   "web": "web/p24-three-women-shakers-class.webp",
+   "thumb": "thumbs/p24-three-women-shakers-class.webp",
+   "web_size": [
+    1266,
+    2000
+   ],
+   "original_size": [
+    1267,
+    2001
+   ],
+   "orientation": "portrait",
+   "people": 3,
+   "brands_visible": [],
+   "tags": [
+    "people",
+    "training",
+    "class",
+    "shaker"
+   ],
+   "focus": [
+    0.6,
+    0.24
+   ],
+   "keep": [
+    0.25,
+    0.14,
+    0.92,
+    0.35
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p24, j17_p24",
+     "where": "FF Business home: events pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p24, j17_p24",
+     "where": "FF Party home: events pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "training_ff_open_class",
+     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
+    },
+    {
+     "key": "bk_training",
+     "where": "Bookings: Training drop-down photo"
+    }
+   ]
+  },
+  {
+   "id": "p25",
+   "title": "Shaking a cocktail at a festival",
+   "description": "A woman shakes a copper shaker on the grass at a summer music festival.",
+   "batch": 2,
+   "kind": "photo",
+   "original": "originals/p25-festival-shaker.jpg",
+   "web": "web/p25-festival-shaker.webp",
+   "thumb": "thumbs/p25-festival-shaker.webp",
+   "web_size": [
+    1211,
+    2000
+   ],
+   "original_size": [
+    1221,
+    2017
+   ],
+   "orientation": "portrait",
+   "people": 1,
+   "brands_visible": [],
+   "tags": [
+    "people",
+    "festival",
+    "shaker",
+    "outdoor"
+   ],
+   "focus": [
+    0.45,
+    0.24
+   ],
+   "keep": [
+    0.15,
+    0.12,
+    0.82,
+    0.55
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "training_masterclass",
+     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
+    },
+    {
+     "key": "dream_music_festivals",
+     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
+    },
+    {
+     "key": "jr_whyteam",
+     "where": "Story: Why join FF Team"
+    }
+   ]
+  },
+  {
+   "id": "p26",
+   "title": "Two bartenders at a brand bar",
+   "description": "Two bartenders talk behind a bright brand bar with caricature boards and bottles.",
+   "batch": 2,
+   "kind": "photo",
+   "original": "originals/p26-brand-bar-two-bartenders.jpg",
+   "web": "web/p26-brand-bar-two-bartenders.webp",
+   "thumb": "thumbs/p26-brand-bar-two-bartenders.webp",
+   "web_size": [
+    1428,
+    2000
+   ],
+   "original_size": [
+    1462,
+    2048
+   ],
+   "orientation": "portrait",
+   "people": 2,
+   "brands_visible": [],
+   "tags": [
+    "people",
+    "bartender",
+    "brand",
+    "events"
+   ],
+   "focus": [
+    0.45,
+    0.33
+   ],
+   "keep": [
+    0.05,
+    0.22,
+    0.95,
+    0.75
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p26, j17_p26",
+     "where": "FF Team home: community pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p26, j17_p26",
+     "where": "FF Business home: community pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p26, j17_p26",
+     "where": "FF Party home: events pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "training_brand_training",
+     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
+    }
+   ]
+  },
+  {
+   "id": "p27",
+   "title": "Bartender in a suit, dark bar",
+   "description": "A smiling bartender in a suit and cap behind a dark cocktail bar with a coupe in front.",
+   "batch": 2,
+   "kind": "photo",
+   "original": "originals/p27-bartender-suit-dark-bar.jpg",
+   "web": "web/p27-bartender-suit-dark-bar.webp",
+   "thumb": "thumbs/p27-bartender-suit-dark-bar.webp",
+   "web_size": [
+    1126,
+    2000
+   ],
+   "original_size": [
+    1450,
+    2576
+   ],
+   "orientation": "portrait",
+   "people": 1,
+   "brands_visible": [],
+   "tags": [
+    "people",
+    "bartender",
+    "portrait",
+    "night"
+   ],
+   "focus": [
+    0.33,
+    0.27
+   ],
+   "keep": [
+    0.1,
+    0.18,
+    0.85,
+    0.75
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p27, j17_p27",
+     "where": "FF Team home: profile pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p27, j17_p27",
+     "where": "FF Business home: profile pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p27, j17_p27",
+     "where": "FF Party home: community pillar (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "p28",
+   "title": "Creamy cocktail on a saucer",
+   "description": "A creamy layered cocktail topped with dried raspberry and herbs, on a black saucer with a spoon.",
+   "batch": 2,
+   "kind": "photo",
+   "original": "originals/p28-creamy-cocktail-saucer.jpg",
+   "web": "web/p28-creamy-cocktail-saucer.webp",
+   "thumb": "thumbs/p28-creamy-cocktail-saucer.webp",
+   "web_size": [
+    1500,
+    2000
+   ],
+   "original_size": [
+    1512,
+    2016
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "cocktails",
+    "dessert",
+    "pina colada"
+   ],
+   "focus": [
+    0.5,
+    0.45
+   ],
+   "keep": [
+    0.2,
+    0.18,
+    0.85,
+    0.75
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "cocktail_2",
+     "where": "Signature Cocktails card 3 (also FF Party cocktail menu)"
+    }
+   ]
+  },
+  {
+   "id": "p29",
+   "title": "Waiter with a tray of cocktails",
+   "description": "A smiling waiter carries a wooden tray of cocktails out of a marquee at a country event.",
+   "batch": 2,
+   "kind": "photo",
+   "original": "originals/p29-waiter-cocktail-tray-marquee.jpg",
+   "web": "web/p29-waiter-cocktail-tray-marquee.webp",
+   "thumb": "thumbs/p29-waiter-cocktail-tray-marquee.webp",
+   "web_size": [
+    1500,
+    2000
+   ],
+   "original_size": [
+    1536,
+    2048
+   ],
+   "orientation": "portrait",
+   "people": 1,
+   "brands_visible": [],
+   "tags": [
+    "people",
+    "waiter",
+    "service",
+    "events",
+    "portrait"
+   ],
+   "focus": [
+    0.56,
+    0.4
+   ],
+   "keep": [
+    0.12,
+    0.28,
+    0.95,
+    0.98
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p29, j17_p29",
+     "where": "FF Team home: profile pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p29, j17_p29",
+     "where": "FF Business home: events pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p29, j17_p29",
+     "where": "FF Party home: community pillar (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "p30",
+   "title": "Strawberry sours lined up",
+   "description": "Rows of sours and highballs garnished with strawberries and mint, ready to serve.",
+   "batch": 2,
+   "kind": "photo",
+   "original": "originals/p30-strawberry-sours-row.jpg",
+   "web": "web/p30-strawberry-sours-row.webp",
+   "thumb": "thumbs/p30-strawberry-sours-row.webp",
+   "web_size": [
+    1500,
+    2000
+   ],
+   "original_size": [
+    1512,
+    2016
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "cocktails",
+    "line-up",
+    "service",
+    "packages"
+   ],
+   "focus": [
+    0.45,
+    0.5
+   ],
+   "keep": [
+    0,
+    0.25,
+    1,
+    0.95
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p30, j17_p30",
+     "where": "FF Team home: packages / services pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p30, j17_p30",
+     "where": "FF Business home: packages / services pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p30, j17_p30",
+     "where": "FF Party home: packages / services pillar (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "p31",
+   "title": "Bartender behind a row of sours",
+   "description": "A row of sours with edible flowers in sharp focus, a bartender working behind in soft focus.",
+   "batch": 2,
+   "kind": "photo",
+   "original": "originals/p31-bartender-blur-sours.jpg",
+   "web": "web/p31-bartender-blur-sours.webp",
+   "thumb": "thumbs/p31-bartender-blur-sours.webp",
+   "web_size": [
+    1500,
+    2000
+   ],
+   "original_size": [
+    1512,
+    2016
+   ],
+   "orientation": "portrait",
+   "people": 1,
+   "brands_visible": [],
+   "tags": [
+    "cocktails",
+    "bartender",
+    "service",
+    "class"
+   ],
+   "focus": [
+    0.5,
+    0.45
+   ],
+   "keep": [
+    0,
+    0.08,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p31, j17_p31",
+     "where": "FF Business home: events pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p31, j17_p31",
+     "where": "FF Party home: community pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "in_tr_ff_open_class",
+     "where": "Training card: FireFlair Open Class"
+    }
+   ]
+  },
+  {
+   "id": "p32",
+   "title": "Event bar under red lights",
+   "description": "A curved event bar under red lights with a cocktail menu stand, punch barrel and glassware.",
+   "batch": 2,
+   "kind": "photo",
+   "original": "originals/p32-event-bar-red-lights.jpg",
+   "web": "web/p32-event-bar-red-lights.webp",
+   "thumb": "thumbs/p32-event-bar-red-lights.webp",
+   "web_size": [
+    2000,
+    1500
+   ],
+   "original_size": [
+    2016,
+    1512
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "events",
+    "bar",
+    "night",
+    "menu"
+   ],
+   "focus": [
+    0.45,
+    0.45
+   ],
+   "keep": [
+    0,
+    0.1,
+    1,
+    0.9
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p32, j17_p32",
+     "where": "FF Party home: events pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "jr_shifts",
+     "where": "Story: How to get your first event shifts"
+    }
+   ]
+  },
+  {
+   "id": "p33",
+   "title": "Bartender pouring at a tequila stand",
+   "description": "A laughing bartender pours a bottle at a tequila brand stand. Instagram post screenshot; the web copy is the photo only.",
+   "batch": 2,
+   "kind": "photo",
+   "original": "originals/p33-flair-pour-altos.png",
+   "web": "web/p33-flair-pour-altos.webp",
+   "thumb": "thumbs/p33-flair-pour-altos.webp",
+   "web_size": [
+    1179,
+    1135
+   ],
+   "original_size": [
+    1179,
+    2556
+   ],
+   "orientation": "square",
+   "people": 1,
+   "brands_visible": [
+    "Altos"
+   ],
+   "tags": [
+    "people",
+    "bartender",
+    "flair",
+    "brand"
+   ],
+   "focus": [
+    0.48,
+    0.33
+   ],
+   "keep": [
+    0.05,
+    0.18,
+    0.95,
+    0.95
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "reward_ff_party",
+     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
+    },
+    {
+     "key": "jr_profile",
+     "where": "Story: How to build a bartender profile"
+    }
+   ],
+   "note": "Screenshot: the web copy is the photo only, with the app interface trimmed off."
+  },
+  {
+   "id": "p34",
+   "title": "Bartender serving strawberry cocktails",
+   "description": "A bearded bartender in an apron holds a bottle over a tray of strawberry cocktails (tilted angle).",
+   "batch": 2,
+   "kind": "photo",
+   "original": "originals/p34-bartender-strawberry-pour.jpg",
+   "web": "web/p34-bartender-strawberry-pour.webp",
+   "thumb": "thumbs/p34-bartender-strawberry-pour.webp",
+   "web_size": [
+    1179,
+    1224
+   ],
+   "original_size": [
+    1179,
+    1224
+   ],
+   "orientation": "square",
+   "people": 1,
+   "brands_visible": [],
+   "tags": [
+    "people",
+    "bartender",
+    "service"
+   ],
+   "focus": [
+    0.82,
+    0.36
+   ],
+   "keep": [
+    0.12,
+    0.12,
+    0.98,
+    0.62
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p34, j17_p34",
+     "where": "FF Team home: packages / services pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p34, j17_p34",
+     "where": "FF Business home: packages / services pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "px_bar",
+     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
+    }
+   ]
+  },
+  {
+   "id": "p35",
+   "title": "Two bartenders at a marquee bar",
+   "description": "Two smiling bartenders give a thumbs up behind a white marquee bar lined with cocktails.",
+   "batch": 2,
+   "kind": "photo",
+   "original": "originals/p35-two-bartenders-marquee-bar.jpg",
+   "web": "web/p35-two-bartenders-marquee-bar.webp",
+   "thumb": "thumbs/p35-two-bartenders-marquee-bar.webp",
+   "web_size": [
+    2000,
+    1500
+   ],
+   "original_size": [
+    2016,
+    1512
+   ],
+   "orientation": "landscape",
+   "people": 2,
+   "brands_visible": [],
+   "tags": [
+    "people",
+    "bartender",
+    "team",
+    "events"
+   ],
+   "focus": [
+    0.54,
+    0.52
+   ],
+   "keep": [
+    0.05,
+    0.42,
+    0.95,
+    0.92
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p35, j17_p35",
+     "where": "FF Team home: community pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p35, j17_p35",
+     "where": "FF Business home: community pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p35, j17_p35",
+     "where": "FF Party home: community pillar (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "p36",
+   "title": "Bartender tool roll (top down)",
+   "description": "A bartender tool roll from above with shakers, jiggers, strainers and a bottle opener.",
+   "batch": 2,
+   "kind": "photo",
+   "original": "originals/p36-tool-roll-root7.jpg",
+   "web": "web/p36-tool-roll-root7.webp",
+   "thumb": "thumbs/p36-tool-roll-root7.webp",
+   "web_size": [
+    2000,
+    1500
+   ],
+   "original_size": [
+    2016,
+    1512
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "ROOT7"
+   ],
+   "tags": [
+    "kit",
+    "equipment",
+    "tools"
+   ],
+   "focus": [
+    0.5,
+    0.45
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    0.95
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p36, j17_p36",
+     "where": "FF Business home: profile pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "reward_bar_kit",
+     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
+    },
+    {
+     "key": "bk_rewards",
+     "where": "Bookings: FireFlair rewards drop-down photo"
+    }
+   ]
+  },
+  {
+   "id": "p37",
+   "title": "Team at a glass atrium bar",
+   "description": "A team of bartenders and guests smile with mojitos at a long blue bar in a glass office atrium.",
+   "batch": 2,
+   "kind": "photo",
+   "original": "originals/p37-team-glass-atrium-bar.jpg",
+   "web": "web/p37-team-glass-atrium-bar.webp",
+   "thumb": "thumbs/p37-team-glass-atrium-bar.webp",
+   "web_size": [
+    1600,
+    1200
+   ],
+   "original_size": [
+    1600,
+    1200
+   ],
+   "orientation": "landscape",
+   "people": 7,
+   "brands_visible": [],
+   "tags": [
+    "people",
+    "team",
+    "community",
+    "corporate",
+    "events"
+   ],
+   "focus": [
+    0.6,
+    0.42
+   ],
+   "keep": [
+    0.08,
+    0.3,
+    1,
+    0.85
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p37, j17_p37",
+     "where": "FF Team home: community pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p37, j17_p37",
+     "where": "FF Business home: community pillar (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "v01",
+   "title": "Cocktail line-up (video)",
+   "description": "A 6-second video along a bar lined with strawberry highballs and sours, ending on bartenders at work. The still is the frame at 0.8 seconds.",
+   "batch": 2,
+   "kind": "video",
+   "original": "originals/v01-cocktail-line-up-video.mov",
+   "web": "web/v01-cocktail-line-up-video-still.webp",
+   "thumb": "thumbs/v01-cocktail-line-up-video.webp",
+   "web_size": [
+    1080,
+    1920
+   ],
+   "original_size": [
+    1080,
+    1920
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "video",
+    "cocktails",
+    "line-up",
+    "service"
+   ],
+   "focus": [
+    0.5,
+    0.33
+   ],
+   "keep": [
+    0,
+    0.22,
+    1,
+    0.55
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_v01, j17_v01",
+     "where": "FF Team home: packages / services pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_v01, j17_v01",
+     "where": "FF Business home: packages / services pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_v01, j17_v01",
+     "where": "FF Party home: packages / services pillar (rotating, 1 of 5)"
+    }
+   ],
+   "video_web": "web/v01-cocktail-line-up-video.mp4",
+   "duration_s": 5.7,
+   "note": "The web copy is an H.264 MP4 that plays in every browser; the still is the frame at 0.8 seconds."
+  },
+  {
+   "id": "p38",
+   "title": "Bar show selfie: drinks stand",
+   "description": "Selfie at a bar show stand with a drinks menu board and a bartender behind.",
+   "batch": 3,
+   "kind": "photo",
+   "original": "originals/p38-bar-show-born-in-bars.jpg",
+   "web": "web/p38-bar-show-born-in-bars.webp",
+   "thumb": "thumbs/p38-bar-show-born-in-bars.webp",
+   "web_size": [
+    1166,
+    874
+   ],
+   "original_size": [
+    1166,
+    874
+   ],
+   "orientation": "landscape",
+   "people": 3,
+   "brands_visible": [],
+   "tags": [
+    "people",
+    "bar show",
+    "events",
+    "industry",
+    "selfie"
+   ],
+   "focus": [
+    0.5,
+    0.45
+   ],
+   "keep": [
+    0,
+    0.12,
+    1,
+    0.95
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "jr_sites",
+     "where": "Story: Three FireFlair sites, one network"
+    }
+   ]
+  },
+  {
+   "id": "p39",
+   "title": "Bar show selfie: gin stand",
+   "description": "Selfie at a bright yellow gin stand with three bartenders mixing behind.",
+   "batch": 3,
+   "kind": "photo",
+   "original": "originals/p39-bar-show-malfy-gin.jpg",
+   "web": "web/p39-bar-show-malfy-gin.webp",
+   "thumb": "thumbs/p39-bar-show-malfy-gin.webp",
+   "web_size": [
+    1166,
+    874
+   ],
+   "original_size": [
+    1166,
+    874
+   ],
+   "orientation": "landscape",
+   "people": 5,
+   "brands_visible": [
+    "Malfy Gin"
+   ],
+   "tags": [
+    "people",
+    "bar show",
+    "events",
+    "industry",
+    "selfie"
+   ],
+   "focus": [
+    0.5,
+    0.35
+   ],
+   "keep": [
+    0,
+    0.06,
+    1,
+    0.8
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p39, j17_p39",
+     "where": "FF Team home: events pillar (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "p40",
+   "title": "Bar show selfie: tequila stand",
+   "description": "Selfie at a tequila stand with two bartenders posing behind the counter.",
+   "batch": 3,
+   "kind": "photo",
+   "original": "originals/p40-bar-show-cazcabel.jpg",
+   "web": "web/p40-bar-show-cazcabel.webp",
+   "thumb": "thumbs/p40-bar-show-cazcabel.webp",
+   "web_size": [
+    1166,
+    874
+   ],
+   "original_size": [
+    1166,
+    874
+   ],
+   "orientation": "landscape",
+   "people": 4,
+   "brands_visible": [
+    "Cazcabel"
+   ],
+   "tags": [
+    "people",
+    "bar show",
+    "events",
+    "industry",
+    "selfie"
+   ],
+   "focus": [
+    0.5,
+    0.48
+   ],
+   "keep": [
+    0,
+    0.27,
+    1,
+    0.92
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p40, j17_p40",
+     "where": "FF Team home: events pillar (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "p41",
+   "title": "Bar show selfie: mastiha stand",
+   "description": "Selfie at a mastiha spirit stand with a bartender in a hat behind.",
+   "batch": 3,
+   "kind": "photo",
+   "original": "originals/p41-bar-show-kleos.jpg",
+   "web": "web/p41-bar-show-kleos.webp",
+   "thumb": "thumbs/p41-bar-show-kleos.webp",
+   "web_size": [
+    1166,
+    874
+   ],
+   "original_size": [
+    1166,
+    874
+   ],
+   "orientation": "landscape",
+   "people": 4,
+   "brands_visible": [
+    "Kleos",
+    "Difford's Guide"
+   ],
+   "tags": [
+    "people",
+    "bar show",
+    "events",
+    "industry",
+    "selfie"
+   ],
+   "focus": [
+    0.5,
+    0.4
+   ],
+   "keep": [
+    0,
+    0.0,
+    1,
+    0.85
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p41, j17_p41",
+     "where": "FF Team home: events pillar (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "p42",
+   "title": "Night selfie with brand team",
+   "description": "Five friends smile for a night-time selfie under a truss stage; three wear branded jackets.",
+   "batch": 3,
+   "kind": "photo",
+   "original": "originals/p42-bar-show-night-selfie.jpg",
+   "web": "web/p42-bar-show-night-selfie.webp",
+   "thumb": "thumbs/p42-bar-show-night-selfie.webp",
+   "web_size": [
+    1166,
+    874
+   ],
+   "original_size": [
+    1166,
+    874
+   ],
+   "orientation": "landscape",
+   "people": 5,
+   "brands_visible": [
+    "Jägermeister"
+   ],
+   "tags": [
+    "people",
+    "bar show",
+    "friends",
+    "night",
+    "selfie"
+   ],
+   "focus": [
+    0.5,
+    0.25
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    0.8
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "tm_live",
+     "where": "FF Team, Your team: Live event"
+    }
+   ]
+  },
+  {
+   "id": "p43",
+   "title": "Bar show: cocktail passports",
+   "description": "A brand bartender and two visitors hold up cocktail passport books at a liqueur stand.",
+   "batch": 3,
+   "kind": "photo",
+   "original": "originals/p43-bar-show-luxardo-passports.jpg",
+   "web": "web/p43-bar-show-luxardo-passports.webp",
+   "thumb": "thumbs/p43-bar-show-luxardo-passports.webp",
+   "web_size": [
+    1168,
+    878
+   ],
+   "original_size": [
+    1168,
+    878
+   ],
+   "orientation": "landscape",
+   "people": 3,
+   "brands_visible": [
+    "Luxardo",
+    "Granikal"
+   ],
+   "tags": [
+    "people",
+    "bar show",
+    "brand",
+    "travel",
+    "selfie"
+   ],
+   "focus": [
+    0.6,
+    0.55
+   ],
+   "keep": [
+    0,
+    0.0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p43, j17_p43",
+     "where": "FF Team home: events pillar (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "p44",
+   "title": "Brand event team under a light arch",
+   "description": "An event team of eleven in branded aprons poses under a wooden arch of lights and plants.",
+   "batch": 3,
+   "kind": "photo",
+   "original": "originals/p44-brand-team-arch.jpg",
+   "web": "web/p44-brand-team-arch.webp",
+   "thumb": "thumbs/p44-brand-team-arch.webp",
+   "web_size": [
+    1008,
+    756
+   ],
+   "original_size": [
+    1008,
+    756
+   ],
+   "orientation": "landscape",
+   "people": 11,
+   "brands_visible": [
+    "Patrón"
+   ],
+   "tags": [
+    "people",
+    "team",
+    "events",
+    "brand activation"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0.25,
+    0.12,
+    0.73,
+    0.97
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p44, j17_p44",
+     "where": "FF Team home: events pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p44, j17_p44",
+     "where": "FF Business home: community pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p44, j17_p44",
+     "where": "FF Party home: events pillar (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "p45",
+   "title": "Hospitality team in a race grandstand",
+   "description": "A big hospitality team in white shirts cheers in a race-track grandstand, track below.",
+   "batch": 3,
+   "kind": "photo",
+   "original": "originals/p45-grandstand-hospitality-team.jpg",
+   "web": "web/p45-grandstand-hospitality-team.webp",
+   "thumb": "thumbs/p45-grandstand-hospitality-team.webp",
+   "web_size": [
+    1457,
+    1407
+   ],
+   "original_size": [
+    1457,
+    1407
+   ],
+   "orientation": "square",
+   "people": 30,
+   "brands_visible": [],
+   "tags": [
+    "people",
+    "team",
+    "motorsport",
+    "sports",
+    "events",
+    "community"
+   ],
+   "focus": [
+    0.5,
+    0.3
+   ],
+   "keep": [
+    0,
+    0.05,
+    1,
+    0.62
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_p45, j17_p45",
+     "where": "FF Business home: community pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "bk_jobs",
+     "where": "Bookings: Dream jobs drop-down photo"
+    }
+   ]
+  },
+  {
+   "id": "p46",
+   "title": "Beach club team at a race weekend (1)",
+   "description": "A uniformed beach club team stands under a beach club sign on a rooftop at a race weekend in France.",
+   "batch": 3,
+   "kind": "photo",
+   "original": "originals/p46-beach-club-team-race-weekend.jpg",
+   "web": "web/p46-beach-club-team-race-weekend.webp",
+   "thumb": "thumbs/p46-beach-club-team-race-weekend.webp",
+   "web_size": [
+    1600,
+    900
+   ],
+   "original_size": [
+    1600,
+    900
+   ],
+   "orientation": "landscape",
+   "people": 11,
+   "brands_visible": [
+    "Nikki Beach",
+    "F1"
+   ],
+   "tags": [
+    "people",
+    "team",
+    "motorsport",
+    "international",
+    "events"
+   ],
+   "focus": [
+    0.42,
+    0.55
+   ],
+   "keep": [
+    0.15,
+    0.2,
+    0.68,
+    1
+   ],
+   "near_duplicate_of": "p47",
+   "used_in": [
+    {
+     "key": "t17_p46, j17_p46",
+     "where": "FF Team home: community pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p46, j17_p46",
+     "where": "FF Business home: events pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_p46, j17_p46",
+     "where": "FF Party home: events pillar (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "p47",
+   "title": "Beach club team at a race weekend (2)",
+   "description": "A second take of the beach club team under the sign.",
+   "batch": 3,
+   "kind": "photo",
+   "original": "originals/p47-beach-club-team-race-weekend-2.jpg",
+   "web": "web/p47-beach-club-team-race-weekend-2.webp",
+   "thumb": "thumbs/p47-beach-club-team-race-weekend-2.webp",
+   "web_size": [
+    1600,
+    900
+   ],
+   "original_size": [
+    1600,
+    900
+   ],
+   "orientation": "landscape",
+   "people": 11,
+   "brands_visible": [
+    "Nikki Beach",
+    "F1"
+   ],
+   "tags": [
+    "people",
+    "team",
+    "motorsport",
+    "international",
+    "events"
+   ],
+   "focus": [
+    0.42,
+    0.55
+   ],
+   "keep": [
+    0.15,
+    0.2,
+    0.68,
+    1
+   ],
+   "near_duplicate_of": "p46",
+   "used_in": []
+  }
+ ]
+}
