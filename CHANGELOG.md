@@ -1,5 +1,10 @@
 # FireFlair prototype — changelog
 
+## v17.3.78 — 2026-11-06 — v17.3.78 events panel picture
+Artifact version 1793924235-0d7d · file `fireflair-v17.3.78.html`
+
+- Our events panel (FF Team home): new picture (the cocktail-making photo, `training_ff_open_bar`) in place of the previous one.
+
 ## v17.3.77 — 2026-11-06 — v17.3.77 profile page, professions type-in
 Artifact version 1793924175-a3eb · file `fireflair-v17.3.77.html`
 
