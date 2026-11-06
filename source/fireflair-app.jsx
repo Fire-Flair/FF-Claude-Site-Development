@@ -6980,13 +6980,13 @@ function TeamBookings({ guest = false }) {
       {demo && requests.length > 0 && (
         <section className="ff-bk-sec">
           <h2 className="ff-bk-h"><span className="ff-bk-wa"><WhatsAppIcon size={14} /></span> Invitations <i>{requests.length}</i></h2>
-          {requests.map(x => <ShiftDelivery11 key={x.e.id} e={x.e} shift={x.shift} event={x.event} />)}
+          <div className="ff-sdrail11"><HScroll label="Invitations">{requests.map(x => <ShiftDelivery11 key={x.e.id} e={x.e} shift={x.shift} event={x.event} />)}</HScroll></div>
         </section>
       )}
 
       <section className="ff-bk-sec">
         <div className="ff-bk-hrow"><h2 className="ff-bk-h">Your bookings {demo && upcoming.length > 0 && <i>{upcoming.length}</i>}</h2><button type="button" className="ff-bk-hist" aria-pressed={showPast} onClick={() => setShowPast(v => !v)}><Clock size={12} /> History</button></div>
-        {upcoming.length ? upcoming.map(x => <ShiftDelivery11 key={x.e.id} e={x.e} shift={x.shift} event={x.event} />)
+        {upcoming.length ? <div className="ff-sdrail11"><HScroll label="Your bookings">{upcoming.map(x => <ShiftDelivery11 key={x.e.id} e={x.e} shift={x.shift} event={x.event} />)}</HScroll></div>
           : (
             <BookingsSoon />
           )}
@@ -14873,8 +14873,8 @@ function EventCard11({ ev, edit, onPatch, people = [], foot, onClick, className 
         </EvRow>
       </div>
       {edit ? (
-        <label className="ff-evc-more"><span><I11.FileText size={13} /> Extra details</span>
-          <textarea rows={3} value={ev.details || ""} placeholder="Anything else the team should know" aria-label="Extra details"
+        <label className="ff-evc-more"><span><I11.FileText size={13} /> Event brief</span>
+          <textarea rows={3} value={ev.details || ""} placeholder="Anything else the team should know" aria-label="Event brief"
             onChange={(e) => p({ details: e.target.value })} /></label>
       ) : ev.details ? (
         <p className="ff-evc-more ro"><I11.FileText size={13} /><span>{ev.details}</span></p>
@@ -17675,7 +17675,9 @@ function FFTerms11({ open, onClose }) {
 /* ---- Confirm: review your order ------------------------------------------------------- */
 /* The invoice and event guide: one document with everything about the booking. */
 function GuideSec({ title, children }) { return <section className="gs"><h4>{title}</h4>{children}</section>; }
-function EventGuide({ ev, shifts, billTo, stamp }) {
+/* Pending, confirmed or unavailable, for each person on a Shift card. */
+const bst11 = (e) => !e ? null : DONE.includes(e.state) ? ["ok", "Confirmed"] : (!LIVE.includes(e.state) || e.filled) ? ["bad", "Unavailable"] : ["warn", "Pending"];
+function EventGuide({ ev, shifts, billTo, stamp, viewer }) {
   const { state } = useStore();
   const sv = svcWords(state);
   const all = useDirectory();
@@ -17697,9 +17699,11 @@ function EventGuide({ ev, shifts, billTo, stamp }) {
   shifts.forEach(sh => { const [a, b] = splitTime(sh.time || ""); if (a) times.push([a, `${sh.role}: arrive and start`]); if (b) times.push([b, `${sh.role}: finish`]); });
   times.sort((x, y) => x[0].localeCompare(y[0]));
   const who = (sh) => staffOf(sh).map(pid => { const p = findPerson(all, state, pid); const e = engFor(state, sh.id, pid); return { p, e }; }).filter(x => x.p);
+  const pro = viewer === "pro";
+  const whoAll = (sh) => [...new Set([...staffOf(sh), ...state.engagements.filter(x => x.shiftId === sh.id && x.staffId).map(x => x.staffId)])].map(pid => { const p = findPerson(all, state, pid); const e = engFor(state, sh.id, pid); return { p, e }; }).filter(x => x.p);
   return (<>
-    <div className="ff-inv guide" role="group" aria-label="Event invoice">
-      <div className="top"><div><b>{allSvc ? "Invoice and event guide" : "Event invoice"}</b><small>{no} · {today}</small></div><span className="stamp">{stamp}</span><span className="coin"><Coin size={30} tier="gold" /></span></div>
+    <div className="ff-inv guide" role="group" aria-label="Event brief">
+      <div className="top"><div><b>Event brief</b><small>{no} · {today}</small></div><span className="stamp">{stamp}</span><span className="coin"><Coin size={30} tier="gold" /></span></div>
 
       <GuideSec title="The event">
         <dl className="meta">
@@ -17710,7 +17714,7 @@ function EventGuide({ ev, shifts, billTo, stamp }) {
           <div><dt>Location</dt><dd>{ev.venue || "To confirm"}</dd></div>
           {ev.guests && <div><dt>Guests</dt><dd>{ev.guests}</dd></div>}
         </dl>
-        {ev.details && <div className="det"><span>Details</span><p>{ev.details}</p></div>}
+        {ev.details && <div className="det"><span>Event brief</span><p>{ev.details}</p></div>}
         {sv.party && rq17.ask && <div className="det"><span>Special requests</span><p>{rq17.ask}</p></div>}
       </GuideSec>
 
@@ -17735,9 +17739,9 @@ function EventGuide({ ev, shifts, billTo, stamp }) {
               <dl className="meta">
                 <div><dt>Time</dt><dd>{a || startOf(ev) || "To confirm"}{b ? ` to ${b}` : ""}{h ? ` (${hrsText(h)})` : ""}</dd></div>
                 {sh.dress && <div><dt>Uniform</dt><dd>{sh.dress}</dd></div>}
-                <div><dt>{sh.svcId ? "Price" : "Pay"}</dt><dd>{sh.svcId ? sh.svcPrice : (sh.total ? `£${sh.total}` : "Not set")}{!sh.svcId && sh.rate ? ` (£${sh.rate} an hour)` : ""}</dd></div>
+                <div><dt>{sh.svcId ? "Price" : "Pay"}</dt><dd>{sh.svcId ? sh.svcPrice : (sh.total ? `£${sh.total}` : (sh.pay || "Not set"))}{!sh.svcId && sh.rate ? ` (£${sh.rate} an hour)` : ""}</dd></div>
                 {sh.notes && <div><dt>Extra details</dt><dd>{sh.notes}</dd></div>}
-                <div><dt>Staff</dt><dd>{w.length ? w.map(x => `${x.p.name}${x.e ? ` (${engText(x.e)})` : ""}`).join(", ") : sh.route === "auto" ? "Autofill. We invite matching professionals and you choose" : "Not chosen yet"}{w.length > 1 ? ". The first to accept gets it." : ""}</dd></div>
+                {!pro && <div><dt>Staff</dt><dd>{whoAll(sh).length ? <ul className="ff-bst11">{whoAll(sh).map(x => { const b = bst11(x.e); return <li key={x.p.id}><span>{x.p.name}</span>{b && <b className={b[0]}>{b[1]}</b>}</li>; })}</ul> : sh.route === "auto" ? "Autofill. We invite matching professionals and you choose" : "Not chosen yet"}{w.length > 1 ? ". The first to accept gets it." : ""}</dd></div>}
               </dl>
             </div>
           );
@@ -17759,7 +17763,7 @@ function EventGuide({ ev, shifts, billTo, stamp }) {
           </table>
           <p className="fine">Prices are set by FireFlair. Payment terms are in the terms and conditions.</p>
         </GuideSec>
-      ) : (<>
+      ) : pro ? null : (<>
       <GuideSec title="Pay summary">
         <table>
           <thead><tr><th>{sv.party ? "Service Card" : "Shift"}</th><th>Staff</th><th>Hours</th><th>Agreed pay</th></tr></thead>
@@ -17785,28 +17789,28 @@ function EventGuide({ ev, shifts, billTo, stamp }) {
           <p className="fine">{cks17.reduce((n, x) => n + x.qty, 0)} servings across {cks17.length} {cks17.length === 1 ? "drink" : "drinks"}. Quantities are worked out from the number of servings you chose.</p>
         </GuideSec>)}
 
-      <GuideSec title={allSvc ? "Terms and conditions" : "Terms between you and your staff"}>
+      {!pro && <GuideSec title={allSvc ? "Terms and conditions" : "Terms between you and your staff"}>
         <ul className="plain">
           <li>Your terms and conditions ({termsOf(c).length} terms) go with every {sv.each}.</li>
           {(c.tcDocs || []).map(d => <li key={d.id}>Document: {d.name}</li>)}
           {questions.map(q => <li key={q.id}>Question: {q.text || q.title || q.label}</li>)}
           {docs.map((d, i) => <li key={i}>Document: {d.name || d.title || "Document"}</li>)}
         </ul>
-      </GuideSec>
+      </GuideSec>}
 
-      <GuideSec title="How it works">
+      {!viewer && <GuideSec title="How it works">
         <ul className="plain">
           <li>Each person gets their {sv.lc} as an availability request on WhatsApp.</li>
           <li>When {sv.goes} to more than one person, the first people to accept get the places.</li>
           <li>You're told when everything is confirmed.</li>
-          <li>This invoice and event guide is sent to you on WhatsApp and by email once your booking is confirmed.</li>
-          {sv.party && stamp === "Preview" && <li>This is a preview. As soon as your selected professional confirms, we deliver the full and final event invoice, confirming your event.</li>}
+          <li>This event brief is sent to you on WhatsApp and by email once your booking is confirmed.</li>
+          {sv.party && stamp === "Preview" && <li>This is a preview. As soon as your selected professional confirms, we deliver the full and final event brief, confirming your event.</li>}
         </ul>
-      </GuideSec>
+      </GuideSec>}
     </div>
-    {sv.party && stamp === "Preview" && <TipRequest17 ev={ev} attach />}
-    {!allSvc && <TermsBtns11 />}
-    {!allSvc && <FFInvoice11 shifts={shifts} no={no} today={today} contact={contact} />}
+    {!viewer && sv.party && stamp === "Preview" && <TipRequest17 ev={ev} attach />}
+    {!viewer && !allSvc && <TermsBtns11 />}
+    {!viewer && !allSvc && <FFInvoice11 shifts={shifts} no={no} today={today} contact={contact} />}
     </>
   );
 }
@@ -18463,42 +18467,6 @@ function PastBooking({ ev, close }) {
 }
 
 /* ---- Bookings ------------------------------------------------------------------------- */
-/* Tap a booking: its Event Card with the name on top, then swipe through each Shift card paired with the person on it. */
-function BookingDetail11({ e, onOpen, onAgain }) {
-  const { state, dispatch } = useStore();
-  const all = useDirectory();
-  const past = isPast(e.iso);
-  const pairs = [];
-  state.shifts.filter(x => x.eventId === e.id).forEach(sh => {
-    const es = state.engagements.filter(x => x.shiftId === sh.id && LIVE.includes(x.state));
-    const conf = es.filter(x => DONE.includes(x.state));
-    const list = conf.length ? conf : es;
-    if (list.length) list.forEach(x => pairs.push({ key: x.id, sh, eng: x }));
-    else if (staffOf(sh).length) staffOf(sh).forEach(pid => pairs.push({ key: sh.id + pid, sh, eng: { id: "", shiftId: sh.id, state: "draft", staffId: pid, auto: false } }));
-    else pairs.push({ key: sh.id, sh, eng: { id: "", shiftId: sh.id, state: "draft", staffId: "", auto: sh.route === "auto" } });
-  });
-  return (
-    <div className="ff-bkdet11">
-      <EventCard11 ev={e} />
-      {pairs.length > 0 && (
-        <HScroll label="Shift cards and the people on them">
-          {pairs.map(({ key, sh, eng }) => {
-            const p = eng.staffId ? findPerson(all, state, eng.staffId) : null;
-            return (
-              <div className="pair" key={key}>
-                <ShiftDelivery11 e={eng} shift={sh} event={e} viewer="hirer" />
-                {p ? <PlayerTile person={p} onClick={() => dispatch({ type: "VIEW", id: p.id })} />
-                  : <p className="wait">{eng.auto ? "Autofill will invite matching professionals" : "Nobody chosen yet"}</p>}
-              </div>
-            );
-          })}
-        </HScroll>
-      )}
-      <Btn variant="sm primary" onClick={() => onOpen(e)}><I11.ArrowRight size={13} /> {past ? "Open and review" : "Open booking"}</Btn>
-      {past && onAgain && <Btn variant="sm ghost" onClick={() => onAgain(e)}><I11.CalendarDays size={13} /> Book again</Btn>}
-    </div>
-  );
-}
 function BookingsList11({ onOpen, onAgain }) {
   const { state, dispatch } = useStore();
   const signedIn = !!(state.auth && state.auth.status === "signedIn");
@@ -18531,7 +18499,11 @@ function BookingsList11({ onOpen, onAgain }) {
           </HScroll>
         </div>
       ) : <div className="ff-bkempty"><I11.CalendarDays size={20} /><p>{signedIn ? "No bookings yet." : "Your bookings will appear here."}</p></div>}
-      {sel && <Sheet open onClose={() => setOpenId(null)} title={eventTitle(sel)}><BookingDetail11 e={sel} onOpen={open} onAgain={onAgain} /></Sheet>}
+      {sel && <Sheet open onClose={() => setOpenId(null)} title={eventTitle(sel)}>
+        <EventGuide ev={sel} shifts={state.shifts.filter(x => x.eventId === sel.id)} viewer="hirer" stamp={label(sel)} />
+        <Btn variant="sm primary" onClick={() => open(sel)}><I11.ArrowRight size={13} /> {isPast(sel.iso) ? "Open and review" : "Open booking"}</Btn>
+        {isPast(sel.iso) && onAgain && <Btn variant="sm ghost" onClick={() => onAgain(sel)}><I11.CalendarDays size={13} /> Book again</Btn>}
+      </Sheet>}
     </section>
   );
 }
@@ -20083,7 +20055,7 @@ const SD11_CSS = `
 .ff .ff-sd11.mini .ff-evc-name{font-size:20px}
 .ff .ff-sd11.empty .sbd{padding:6px 0 18px;text-align:center}
 .ff-bkdet11 .ff-evc{margin-bottom:12px}
-.ff-bkdet11 .ff-hscroll,.ff-bkq-rail .ff-hscroll{gap:14px;padding:4px 16px 10px;scroll-padding-left:16px}
+.ff-bkdet11 .ff-hscroll,.ff-bkq-rail .ff-hscroll,.ff-sdrail11 .ff-hscroll{gap:14px;padding:4px 16px 10px;scroll-padding-left:16px}
 .ff-bkdet11 .pair{display:flex;flex-direction:column;gap:10px;width:min(300px,78vw);flex:none;align-items:center}
 .ff-bkdet11 .pair .ff-sd11{width:100%;margin:0}
 .ff-bkdet11 .who{display:flex;flex-direction:column;align-items:center;gap:6px}
@@ -20091,6 +20063,15 @@ const SD11_CSS = `
 .ff-bkdet11 .wait{width:100%;padding:14px;border:1.5px dashed rgba(107,18,38,.5);border-radius:18px;corner-shape:squircle;text-align:center;font-size:13px;color:#6B1226}
 .ff-bk11-h .ff-bkq-hist{margin:0 0 0 auto;flex:none}
 .ff-bkq-rail .ff-hitem{width:min(300px,80vw)}
+.ff-bkq-rail .ff-evc{aspect-ratio:5 / 7;display:flex;flex-direction:column;height:100%}
+.ff-bkq-rail .ff-evc .ff-evc-foot,.ff-bkq-rail .ff-evc .ff-evc-end{margin-top:auto}
+.ff-sdrail11 .ff-hitem{width:min(320px,84vw)}
+.ff-sdrail11 .ff-evc.ff-sd11{margin:0;max-width:none}
+.ff-bst11{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px}
+.ff-bst11 li{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ff-bst11 b{flex:none;padding:2px 10px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.04em;color:#fff}
+.ff-bst11 b.ok{background:#1F7A3D}.ff-bst11 b.warn{background:#C26A00}.ff-bst11 b.bad{background:#B3261E}
+.ff-brief11 .ask{display:flex;flex-direction:column;gap:10px;margin-top:14px}
 .ff-av11{display:flex;flex-direction:column;gap:8px;width:210px;flex:none;background:#FBF8F1;color:#0B0B0C;border:1.5px solid #6B1226;border-radius:20px;corner-shape:squircle;padding:12px;text-align:center;align-items:center}
 .ff-av11 b{font-size:15px}.ff-av11 small{font-size:12px;opacity:.75}
 .ff-av11 button.pick{width:100%;min-height:40px;border-radius:999px;border:0;background:#6B1226;color:#FBF8F1;font-weight:700;cursor:pointer}
@@ -20115,7 +20096,7 @@ const pending11 = (state) => !(state.auth && state.auth.status === "signedIn" &&
 function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
   const { state, dispatch } = useStore();
   const all = useDirectory();
-  const [ask, setAsk] = useState(false), [txt, setTxt] = useState(""), [mode, setMode] = useState(null), [nm, setNm] = useState(""), [ph, setPh] = useState("");
+  const [brief, setBrief] = useState(false), [ask, setAsk] = useState(false), [txt, setTxt] = useState(""), [mode, setMode] = useState(null), [nm, setNm] = useState(""), [ph, setPh] = useState("");
   if (!shift) return null;
   const now = now17(state), st = startMs17(shift), ended = !!(st && st <= now);
   const pend = ["requested", "discuss"].includes(e.state), avail = e.state === "available", conf = e.state === "confirmed";
@@ -20140,13 +20121,13 @@ function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
     <div className="ff-evc-rows">
       <EvRow icon={I11.CalendarDays} k="When">{whenOf11(shift)}</EvRow>
       <EvRow icon={I11.MapPin} k="Where">{shift.venue || (event && event.venue) || "To be confirmed"}</EvRow>
-      <EvRow icon={I11.Banknote} k="Pay">{shift.pay || "Agreed with the host"}</EvRow>
+      <EvRow icon={I11.Banknote} k="Pay">{shift.pay || (shift.total ? `£${shift.total}` : "Agreed with the host")}</EvRow>
       <EvRow icon={I11.Shirt} k="Dress">{shift.dress || "To be confirmed"}</EvRow>
       <EvRow icon={I11.Briefcase} k="Hired by">{hirer}</EvRow>
     </div>
   );
   const thread = (e.thread || []).length > 0 && <div className="thread">{e.thread.map((m, i) => <p key={i}>{m.from === "pro" ? "You: " : `${hirer}: `}{m.text}</p>)}</div>;
-  return (
+  return (<>
     <article className={`ff-evc ff-sd11 ${kind}${mini ? " mini" : ""}`} aria-label={`Shift card: ${shift.role}`}>
       <span className="ff-evc-plate">Shift Card</span>
       <span className="ff-evc-coin"><Coin size={30} tier="gold" /></span>
@@ -20165,25 +20146,25 @@ function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
           <div className="btns" role="group" aria-label="Your reply">
             <button type="button" className="yes" onClick={yes}>Yes</button>
             <button type="button" className="no" onClick={no}>No</button>
-            <button type="button" onClick={() => setAsk(!ask)} aria-expanded={ask}>More information</button>
+            <button type="button" onClick={() => setBrief(true)}>More information</button>
           </div>
-          {ask && <div className="ask">
-            <div className="chips">{QUICK17.map(q => <button key={q} type="button" onClick={() => setTxt(q)}>{q}</button>)}</div>
-            <input aria-label="Your question" value={txt} onChange={(x) => setTxt(x.target.value.slice(0, 200))} placeholder="Your question" />
-            <div className="btns" style={{ gridTemplateColumns: "1fr" }}><button type="button" className="yes" disabled={!txt.trim()} onClick={send}>Send question</button></div>
-          </div>}
         </>)}
         {act && pend && ended && <p className="mute">This shift has started.</p>}
         {act && avail && (<>
           <p className="ok">You're available. {hirer} will choose by {dt17(e.selectBy)}.</p>
           <div className="btns" style={{ gridTemplateColumns: "1fr 1fr" }}>
-            <button type="button" onClick={() => go("withdraw")}>Withdraw</button>
-            <button type="button" onClick={() => setAsk(!ask)}>More information</button>
+            <button type="button" onClick={() => setAsk(!ask)} aria-expanded={ask}>Ask</button>
+            <button type="button" onClick={() => setBrief(true)}>More information</button>
           </div>
           {ask && <div className="ask"><input aria-label="Your question" value={txt} onChange={(x) => setTxt(x.target.value.slice(0, 200))} placeholder="Your question" /><div className="btns" style={{ gridTemplateColumns: "1fr" }}><button type="button" className="yes" disabled={!txt.trim()} onClick={send}>Send question</button></div></div>}
         </>)}
         {act && conf && (<>
           <p className="ok">Confirmed</p>
+          <div className="btns" style={{ gridTemplateColumns: "1fr 1fr" }}>
+            <button type="button" onClick={() => setAsk(!ask)} aria-expanded={ask}>Ask</button>
+            <button type="button" onClick={() => setBrief(true)}>More information</button>
+          </div>
+          {ask && <div className="ask"><input aria-label="Your question" value={txt} onChange={(x) => setTxt(x.target.value.slice(0, 200))} placeholder="Your question" /><div className="btns" style={{ gridTemplateColumns: "1fr" }}><button type="button" className="yes" disabled={!txt.trim()} onClick={send}>Send question</button></div></div>}
           {e.handover && !e.handover.done && <p className="mute">Handover offered to {handTo || "your referral"}. You stay booked until they confirm.</p>}
           {e.handover && !e.handover.done && handEng && handEng.state === "requested" && (
             <div className="proto">Prototype: <button type="button" onClick={() => dispatch({ type: "SHIFT_REFER_ACCEPT", id: handEng.id })}>{handTo || "They"} accept</button></div>)}
@@ -20225,6 +20206,29 @@ function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
         {act && ["completed", "signed_off", "paid"].includes(e.state) && <p className="mute">Worked.</p>}
       </div>
     </article>
+    {brief && <EventBrief11 ev={event} shift={shift} e={e} onClose={() => setBrief(false)} />}
+  </>);
+}
+
+/* The Event brief, as a team member sees it. Send question is at the bottom. */
+function EventBrief11({ ev, shift, e, onClose }) {
+  const { dispatch } = useStore();
+  const [q, setQ] = useState("");
+  if (!ev || !shift) return null;
+  const canAsk = ["requested", "discuss", "available", "confirmed"].includes(e.state);
+  const send = () => { if (!q.trim()) return; dispatch({ type: "AF_RESPOND", id: e.id, as: "discuss", text: q.trim() }); dispatch({ type: "TOAST", toast: "Question sent" }); setQ(""); onClose(); };
+  return (
+    <Sheet open onClose={onClose} title="Event brief">
+      <div className="ff-brief11">
+        <EventGuide ev={ev} shifts={[shift]} viewer="pro" stamp={e.state === "confirmed" ? "Confirmed" : "Brief"} />
+        {canAsk && (
+          <div className="ask">
+            <textarea className="ff-input" rows={3} value={q} maxLength={300} onChange={(x) => setQ(x.target.value)} aria-label="Your question" placeholder="Your question" />
+            <Btn variant="primary wide" disabled={!q.trim()} onClick={send}>Send question</Btn>
+          </div>
+        )}
+      </div>
+    </Sheet>
   );
 }
 
@@ -20274,6 +20278,43 @@ function AvailCard11({ e, who, disabledWhy, onChoose, onProfile }) {
   );
 }
 
+/* FF Team next steps: nothing about Event Cards, which belong to FF Business and FF Party. */
+function TeamSteps11({ onClose }) {
+  const { state, dispatch } = useStore();
+  const people = useDirectory();
+  const p = state.profile;
+  const live = !!p.live;
+  const cardReady = recsOf(p, "professions").some(r => !r.proposed);
+  const net = myNetwork(state, people).list.length;
+  const waiting = pending11(state).length;
+  const go = (tab, focus) => {
+    onClose();
+    if (state.role !== "team") dispatch({ type: "ROLE", role: "team" });
+    dispatch({ type: "TAB", tab, route: "home" });
+    if (focus) dispatch({ type: "FOCUS", focus: { target: focus } }); else window.scrollTo(0, 0);
+  };
+  const steps = [
+    ...(waiting ? [{ id: "shifts", label: `Reply to ${waiting} shift ${waiting === 1 ? "card" : "cards"}`, hint: "Yes, No or More information", done: false, onClick: () => go("bookings") }] : []),
+    { id: "build", label: "Build your profile", hint: "Your Profile Card, professions and experience", done: cardReady, onClick: () => go("profile", "card") },
+    { id: "share", label: "Share your Profile Card", hint: "Publish and send it on WhatsApp", done: live, onClick: () => go("profile", live ? "card" : "share") },
+    { id: "grow", label: "Grow your network", hint: `${net} connection${net === 1 ? "" : "s"} so far`, done: net >= VERIFICATION_LEVELS[1].connections, onClick: () => go("network") },
+  ];
+  return (
+    <div className="ff-xpsec">
+      {steps.map(t => (
+        <button key={t.id} type="button" className={`ff-task${t.done ? " done" : ""}`} onClick={t.onClick}>
+          <span className="dot">{t.done && <Check size={13} strokeWidth={2.6} />}</span>
+          <span style={{ flex: 1, minWidth: 0 }}>
+            <span className="ff-serif" style={{ fontSize: 15.5, display: "block", color: "#1D1B18", lineHeight: 1.2 }}>{t.label}</span>
+            <span className="ff-body ff-muted" style={{ fontSize: 11.5 }}>{t.hint}</span>
+          </span>
+          {t.done ? <Pill tone="ok">Done</Pill> : <ChevronRight size={16} color="var(--gold-dk)" style={{ flex: "none" }} />}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function NotifySheet17({ open, onClose }) {
   const { state, dispatch } = useStore();
   const all = useDirectory();
@@ -20297,7 +20338,7 @@ function NotifySheet17({ open, onClose }) {
           <button type="button" role="tab" aria-selected={tab === "s"} className={tab === "s" ? "on" : ""} onClick={() => setTab("s")}>Next steps</button>
         </div>
         {tab === "n" ? (<>
-          {reqs11.length > 0 && <div className="ff-sdlist11">{reqs11.map(e => { const sh = state.shifts.find(x => x.id === e.shiftId); return <ShiftDelivery11 key={e.id} mini e={e} shift={sh} event={sh && state.events.find(x => x.id === sh.eventId)} onDone={onClose} />; })}</div>}
+          {reqs11.length > 0 && <div className="ff-sdrail11"><HScroll label="Shift cards">{reqs11.map(e => { const sh = state.shifts.find(x => x.id === e.shiftId); return <ShiftDelivery11 key={e.id} mini e={e} shift={sh} event={sh && state.events.find(x => x.id === sh.eventId)} onDone={onClose} />; })}</HScroll></div>}
           {items.length === 0 && notes.length === 0 && reqs11.length === 0 ? <p className="none">You are all caught up.</p> : (<>
             {items.length > 0 && <ul>{items.map(i => (
               <li key={i.id}><button type="button" onClick={() => { onClose(); i.go(); window.scrollTo(0, 0); }}><b>{i.t}</b><small>{i.sub}</small><S17I.ArrowRight size={16} /></button></li>))}</ul>}
@@ -20305,7 +20346,7 @@ function NotifySheet17({ open, onClose }) {
               <li key={n.id}><i className={`dot ${n.tone || ""}`} /><span><b>{n.text}</b>{n.ev ? <small>{eventTitle(n.ev)} · {shortDay(n.ev.iso)}</small> : null}</span>
                 <time>{n.at ? new Date(n.at).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) : ""}</time></li>))}</ul>}
           </>)}
-        </>) : <StaffGuideSheet open bare onClose={onClose} />}
+        </>) : state.role === "team" ? <TeamSteps11 onClose={onClose} /> : <StaffGuideSheet open bare onClose={onClose} />}
       </div>
     </Sheet>
   );
@@ -21831,7 +21872,7 @@ function auto17Reduce(s, a) {
       }
       if (a.as === "unavailable") return PEND17.includes(e.state) ? { ...s, engagements: s.engagements.map(x => x.id === e.id ? mark17(x, "unavailable", now) : x) } : s;
       if (a.as === "discuss") {
-        if (over || !["requested", "discuss", "available"].includes(e.state)) return s;
+        if (over || !["requested", "discuss", "available", "confirmed"].includes(e.state)) return s;
         const th = [...(e.thread || []), { from: "pro", text: String(a.text || "").slice(0, 300), at: now }];
         let n = { ...s, engagements: s.engagements.map(x => x.id === e.id ? (x.state === "requested" ? mark17(x, "discuss", now, { thread: th }) : { ...x, thread: th }) : x) };
         n = note17(n, { to: "booker", eventId: sh.eventId, shiftId: sh.id, text: `A question about ${sh.role}: "${String(a.text || "").slice(0, 120)}". This doesn't confirm the shift.` });
