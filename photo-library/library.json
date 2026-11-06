@@ -1,6 +1,6 @@
 {
  "library": "FireFlair photo library",
- "count": 48,
+ "count": 166,
  "photos": [
   {
    "id": "p01",
@@ -41,8 +41,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "t17_p01, j17_p01",
-     "where": "FF Team home: packages / services pillar (rotating, 1 of 5)"
+     "key": "t17_p01",
+     "where": "FF Team home: packages / services pillar tile (rotating, 1 of 5)"
     },
     {
      "key": "t17_p01, j17_p01",
@@ -132,8 +132,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "jr_menuteam",
-     "where": "Story: Learn the menu"
+     "key": "jr_shifts",
+     "where": "Story: How to get your first event shifts"
     }
    ],
    "note": "Screenshot: the web copy is the photo only, with the app interface trimmed off."
@@ -178,8 +178,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "t17_p04, j17_p04",
-     "where": "FF Team home: profile pillar (rotating, 1 of 5)"
+     "key": "j17_p04",
+     "where": "FF Team home: profile pillar cards (rotating)"
     },
     {
      "key": "t17_p04, j17_p04",
@@ -231,8 +231,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "t17_p05, j17_p05",
-     "where": "FF Team home: packages / services pillar (rotating, 1 of 5)"
+     "key": "j17_p05",
+     "where": "FF Team home: packages / services pillar cards (rotating)"
     },
     {
      "key": "t17_p05, j17_p05",
@@ -428,12 +428,7 @@
     1
    ],
    "near_duplicate_of": null,
-   "used_in": [
-    {
-     "key": "in_dj_flair",
-     "where": "Dream job: Flair jobs"
-    }
-   ]
+   "used_in": []
   },
   {
    "id": "p10",
@@ -475,12 +470,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "t17_p10, j17_p10",
-     "where": "FF Team home: profile pillar (rotating, 1 of 5)"
-    },
-    {
-     "key": "training_ff_open_bar",
-     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
+     "key": "j17_p10",
+     "where": "FF Team home: profile pillar cards (rotating)"
     }
    ]
   },
@@ -523,8 +514,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "t17_p11, j17_p11",
-     "where": "FF Team home: profile pillar (rotating, 1 of 5)"
+     "key": "t17_p11",
+     "where": "FF Team home: profile pillar tile (rotating, 1 of 5)"
     },
     {
      "key": "t17_p11, j17_p11",
@@ -587,8 +578,8 @@
      "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
     },
     {
-     "key": "in_rw_shoot",
-     "where": "Reward: Professional photoshoot"
+     "key": "jr_cardsteam",
+     "where": "Story: Your Service Cards"
     }
    ]
   },
@@ -631,8 +622,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "jr_cardsteam",
-     "where": "Story: Your Service Cards"
+     "key": "j17_p13",
+     "where": "FF Team home: community pillar cards (rotating)"
     }
    ]
   },
@@ -731,8 +722,8 @@
      "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
     },
     {
-     "key": "in_tr_wset_spirits",
-     "where": "Training card: WSET Spirits"
+     "key": "jr_menuteam",
+     "where": "Story: Learn the menu"
     }
    ]
   },
@@ -774,8 +765,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "in_rw_party",
-     "where": "Reward: FF January Christmas party"
+     "key": "in_tr_ff_open_bar",
+     "where": "Training card: FireFlair Open Bar"
     }
    ]
   },
@@ -1007,8 +998,8 @@
    "near_duplicate_of": "p22",
    "used_in": [
     {
-     "key": "t17_p21, j17_p21",
-     "where": "FF Team home: community pillar (rotating, 1 of 5)"
+     "key": "j17_p21",
+     "where": "FF Team home: community pillar cards (rotating)"
     }
    ]
   },
@@ -1095,16 +1086,12 @@
    "near_duplicate_of": null,
    "used_in": [
     {
+     "key": "j17_p23",
+     "where": "FF Team home: events pillar cards (rotating)"
+    },
+    {
      "key": "t17_p23, j17_p23",
      "where": "FF Business home: events pillar (rotating, 1 of 5)"
-    },
-    {
-     "key": "training_cocktail_basics",
-     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
-    },
-    {
-     "key": "jr_workteam",
-     "where": "Story: How to receive and accept work on FF Team"
     }
    ]
   },
@@ -1155,10 +1142,6 @@
      "where": "FF Party home: events pillar (rotating, 1 of 5)"
     },
     {
-     "key": "training_ff_open_class",
-     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
-    },
-    {
      "key": "bk_training",
      "where": "Bookings: Training drop-down photo"
     }
@@ -1202,10 +1185,6 @@
    ],
    "near_duplicate_of": null,
    "used_in": [
-    {
-     "key": "training_masterclass",
-     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
-    },
     {
      "key": "dream_music_festivals",
      "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
@@ -1255,8 +1234,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "t17_p26, j17_p26",
-     "where": "FF Team home: community pillar (rotating, 1 of 5)"
+     "key": "t17_p26",
+     "where": "FF Team home: community pillar tile (rotating, 1 of 5)"
     },
     {
      "key": "t17_p26, j17_p26",
@@ -1311,8 +1290,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "t17_p27, j17_p27",
-     "where": "FF Team home: profile pillar (rotating, 1 of 5)"
+     "key": "j17_p27",
+     "where": "FF Team home: profile pillar cards (rotating)"
     },
     {
      "key": "t17_p27, j17_p27",
@@ -1407,8 +1386,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "t17_p29, j17_p29",
-     "where": "FF Team home: profile pillar (rotating, 1 of 5)"
+     "key": "t17_p29",
+     "where": "FF Team home: profile pillar tile (rotating, 1 of 5)"
     },
     {
      "key": "t17_p29, j17_p29",
@@ -1459,8 +1438,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "t17_p30, j17_p30",
-     "where": "FF Team home: packages / services pillar (rotating, 1 of 5)"
+     "key": "t17_p30",
+     "where": "FF Team home: packages / services pillar tile (rotating, 1 of 5)"
     },
     {
      "key": "t17_p30, j17_p30",
@@ -1519,8 +1498,8 @@
      "where": "FF Party home: community pillar (rotating, 1 of 5)"
     },
     {
-     "key": "in_tr_ff_open_class",
-     "where": "Training card: FireFlair Open Class"
+     "key": "jr_workteam",
+     "where": "Story: How to receive and accept work on FF Team"
     }
    ]
   },
@@ -1565,12 +1544,12 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "t17_p32, j17_p32",
-     "where": "FF Party home: events pillar (rotating, 1 of 5)"
+     "key": "j17_p32",
+     "where": "FF Team home: events pillar cards (rotating)"
     },
     {
-     "key": "jr_shifts",
-     "where": "Story: How to get your first event shifts"
+     "key": "t17_p32, j17_p32",
+     "where": "FF Party home: events pillar (rotating, 1 of 5)"
     }
    ]
   },
@@ -1663,8 +1642,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "t17_p34, j17_p34",
-     "where": "FF Team home: packages / services pillar (rotating, 1 of 5)"
+     "key": "j17_p34",
+     "where": "FF Team home: packages / services pillar cards (rotating)"
     },
     {
      "key": "t17_p34, j17_p34",
@@ -1715,8 +1694,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "t17_p35, j17_p35",
-     "where": "FF Team home: community pillar (rotating, 1 of 5)"
+     "key": "t17_p35",
+     "where": "FF Team home: community pillar tile (rotating, 1 of 5)"
     },
     {
      "key": "t17_p35, j17_p35",
@@ -1821,8 +1800,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "t17_p37, j17_p37",
-     "where": "FF Team home: community pillar (rotating, 1 of 5)"
+     "key": "t17_p37",
+     "where": "FF Team home: community pillar tile (rotating, 1 of 5)"
     },
     {
      "key": "t17_p37, j17_p37",
@@ -1869,8 +1848,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "t17_v01, j17_v01",
-     "where": "FF Team home: packages / services pillar (rotating, 1 of 5)"
+     "key": "j17_v01",
+     "where": "FF Team home: packages / services pillar cards (rotating)"
     },
     {
      "key": "t17_v01, j17_v01",
@@ -1972,8 +1951,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "t17_p39, j17_p39",
-     "where": "FF Team home: events pillar (rotating, 1 of 5)"
+     "key": "t17_p39",
+     "where": "FF Team home: events pillar tile (rotating, 1 of 5)"
     }
    ]
   },
@@ -2019,8 +1998,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "t17_p40, j17_p40",
-     "where": "FF Team home: events pillar (rotating, 1 of 5)"
+     "key": "t17_p40",
+     "where": "FF Team home: events pillar tile (rotating, 1 of 5)"
     }
    ]
   },
@@ -2067,8 +2046,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "t17_p41, j17_p41",
-     "where": "FF Team home: events pillar (rotating, 1 of 5)"
+     "key": "j17_p41",
+     "where": "FF Team home: events pillar cards (rotating)"
     }
    ]
   },
@@ -2162,8 +2141,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "t17_p43, j17_p43",
-     "where": "FF Team home: events pillar (rotating, 1 of 5)"
+     "key": "t17_p43",
+     "where": "FF Team home: events pillar tile (rotating, 1 of 5)"
     }
    ]
   },
@@ -2208,8 +2187,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "t17_p44, j17_p44",
-     "where": "FF Team home: events pillar (rotating, 1 of 5)"
+     "key": "t17_p44",
+     "where": "FF Team home: events pillar tile (rotating, 1 of 5)"
     },
     {
      "key": "t17_p44, j17_p44",
@@ -2262,12 +2241,12 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "t17_p45, j17_p45",
-     "where": "FF Business home: community pillar (rotating, 1 of 5)"
+     "key": "j17_p45",
+     "where": "FF Team home: community pillar cards (rotating)"
     },
     {
-     "key": "bk_jobs",
-     "where": "Bookings: Dream jobs drop-down photo"
+     "key": "t17_p45, j17_p45",
+     "where": "FF Business home: community pillar (rotating, 1 of 5)"
     }
    ]
   },
@@ -2315,15 +2294,15 @@
    "used_in": [
     {
      "key": "t17_p46, j17_p46",
-     "where": "FF Team home: community pillar (rotating, 1 of 5)"
-    },
-    {
-     "key": "t17_p46, j17_p46",
      "where": "FF Business home: events pillar (rotating, 1 of 5)"
     },
     {
      "key": "t17_p46, j17_p46",
      "where": "FF Party home: events pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "bk_jobs",
+     "where": "Bookings: Dream jobs drop-down photo"
     }
    ]
   },
@@ -2368,6 +2347,4696 @@
     1
    ],
    "near_duplicate_of": "p46",
+   "used_in": []
+  },
+  {
+   "id": "vko01",
+   "title": "Vooshka event bar with team",
+   "description": "A long branded Vooshka bar with four bartenders at work under purple lights.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vko01-vooshka-occasion-bar.webp",
+   "web": "web/vko01-vooshka-occasion-bar.webp",
+   "thumb": "thumbs/vko01-vooshka-occasion-bar.webp",
+   "web_size": [
+    720,
+    405
+   ],
+   "original_size": [
+    720,
+    405
+   ],
+   "orientation": "landscape",
+   "people": 4,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar",
+    "events",
+    "people",
+    "branded"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkg01",
+   "title": "Vooshka gallery: Behind every memorable occasion",
+   "description": "A bartender in a bow tie at a bar dressed with purple lights, flowers and a row of strawberry cocktails.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkg01-vooshka-gallery-01.webp",
+   "web": "web/vkg01-vooshka-gallery-01.webp",
+   "thumb": "thumbs/vkg01-vooshka-gallery-01.webp",
+   "web_size": [
+    540,
+    720
+   ],
+   "original_size": [
+    540,
+    720
+   ],
+   "orientation": "portrait",
+   "people": 1,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "bar",
+    "events",
+    "people"
+   ],
+   "focus": [
+    0.42,
+    0.42
+   ],
+   "keep": [
+    0.1,
+    0.33,
+    0.75,
+    0.95
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "in_rw_shoot",
+     "where": "Reward: Professional photoshoot"
+    }
+   ]
+  },
+  {
+   "id": "vkg02",
+   "title": "Vooshka gallery: A personalised focal point",
+   "description": "A round event bar with a monogram front and a tree centrepiece under purple light. Small Vooshka text under the monogram.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkg02-vooshka-gallery-02.webp",
+   "web": "web/vkg02-vooshka-gallery-02.webp",
+   "thumb": "thumbs/vkg02-vooshka-gallery-02.webp",
+   "web_size": [
+    720,
+    540
+   ],
+   "original_size": [
+    720,
+    540
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "bar",
+    "events"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0.1,
+    0.05,
+    0.9,
+    0.85
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "j17_vkg02",
+     "where": "FF Team home: packages / services pillar cards (rotating)"
+    }
+   ]
+  },
+  {
+   "id": "vkg03",
+   "title": "Vooshka gallery: Bespoke tropical styling",
+   "description": "Vooshka event bar photo: Bespoke tropical styling.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkg03-vooshka-gallery-03.webp",
+   "web": "web/vkg03-vooshka-gallery-03.webp",
+   "thumb": "thumbs/vkg03-vooshka-gallery-03.webp",
+   "web_size": [
+    720,
+    405
+   ],
+   "original_size": [
+    720,
+    405
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar",
+    "events",
+    "branded"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkg04",
+   "title": "Vooshka gallery: A statement in light",
+   "description": "Vooshka event bar photo: A statement in light.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkg04-vooshka-gallery-04.webp",
+   "web": "web/vkg04-vooshka-gallery-04.webp",
+   "thumb": "thumbs/vkg04-vooshka-gallery-04.webp",
+   "web_size": [
+    720,
+    406
+   ],
+   "original_size": [
+    720,
+    406
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar",
+    "events",
+    "branded"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkg05",
+   "title": "Vooshka gallery: Classic lines, distinctive details",
+   "description": "Vooshka event bar photo: Classic lines, distinctive details.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkg05-vooshka-gallery-05.webp",
+   "web": "web/vkg05-vooshka-gallery-05.webp",
+   "thumb": "thumbs/vkg05-vooshka-gallery-05.webp",
+   "web_size": [
+    720,
+    406
+   ],
+   "original_size": [
+    720,
+    406
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar",
+    "events",
+    "branded"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkg06",
+   "title": "Vooshka gallery: After-dark atmosphere",
+   "description": "Vooshka event bar photo: After-dark atmosphere.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkg06-vooshka-gallery-06.webp",
+   "web": "web/vkg06-vooshka-gallery-06.webp",
+   "thumb": "thumbs/vkg06-vooshka-gallery-06.webp",
+   "web_size": [
+    406,
+    720
+   ],
+   "original_size": [
+    406,
+    720
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "bar",
+    "events"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkg07",
+   "title": "Vooshka gallery: Warm hospitality, expertly delivered",
+   "description": "Vooshka event bar photo: Warm hospitality, expertly delivered.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkg07-vooshka-gallery-07.webp",
+   "web": "web/vkg07-vooshka-gallery-07.webp",
+   "thumb": "thumbs/vkg07-vooshka-gallery-07.webp",
+   "web_size": [
+    720,
+    406
+   ],
+   "original_size": [
+    720,
+    406
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar",
+    "events",
+    "branded"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkg08",
+   "title": "Vooshka gallery: An elegant centrepiece",
+   "description": "Vooshka event bar photo: An elegant centrepiece.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkg08-vooshka-gallery-08.webp",
+   "web": "web/vkg08-vooshka-gallery-08.webp",
+   "thumb": "thumbs/vkg08-vooshka-gallery-08.webp",
+   "web_size": [
+    540,
+    720
+   ],
+   "original_size": [
+    540,
+    720
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "bar",
+    "events"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkg09",
+   "title": "Vooshka gallery: A setting made for celebration",
+   "description": "Vooshka event bar photo: A setting made for celebration.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkg09-vooshka-gallery-09.webp",
+   "web": "web/vkg09-vooshka-gallery-09.webp",
+   "thumb": "thumbs/vkg09-vooshka-gallery-09.webp",
+   "web_size": [
+    548,
+    720
+   ],
+   "original_size": [
+    548,
+    720
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar",
+    "events",
+    "branded"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkg10",
+   "title": "Vooshka gallery: The details set the tone",
+   "description": "A black marble event bar with a monogram front and an easel cocktail menu, in a dark hall.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkg10-vooshka-gallery-10.webp",
+   "web": "web/vkg10-vooshka-gallery-10.webp",
+   "thumb": "thumbs/vkg10-vooshka-gallery-10.webp",
+   "web_size": [
+    406,
+    720
+   ],
+   "original_size": [
+    406,
+    720
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "bar",
+    "events"
+   ],
+   "focus": [
+    0.5,
+    0.65
+   ],
+   "keep": [
+    0,
+    0.4,
+    1,
+    0.95
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkg11",
+   "title": "Vooshka gallery: At the heart of the occasion",
+   "description": "A round event bar with a monogram front in a vaulted hall dressed for a wedding.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkg11-vooshka-gallery-11.webp",
+   "web": "web/vkg11-vooshka-gallery-11.webp",
+   "thumb": "thumbs/vkg11-vooshka-gallery-11.webp",
+   "web_size": [
+    406,
+    720
+   ],
+   "original_size": [
+    406,
+    720
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "bar",
+    "events"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0.1,
+    1,
+    0.8
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_vkg11",
+     "where": "FF Team home: events pillar tile (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "vkg12",
+   "title": "Vooshka gallery: Your bar, your way",
+   "description": "Vooshka event bar photo: Your bar, your way.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkg12-vooshka-gallery-12.webp",
+   "web": "web/vkg12-vooshka-gallery-12.webp",
+   "thumb": "thumbs/vkg12-vooshka-gallery-12.webp",
+   "web_size": [
+    405,
+    720
+   ],
+   "original_size": [
+    405,
+    720
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "bar",
+    "events"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkg13",
+   "title": "Vooshka gallery: A distinctive focal point",
+   "description": "Vooshka event bar photo: A distinctive focal point.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkg13-vooshka-gallery-13.webp",
+   "web": "web/vkg13-vooshka-gallery-13.webp",
+   "thumb": "thumbs/vkg13-vooshka-gallery-13.webp",
+   "web_size": [
+    720,
+    540
+   ],
+   "original_size": [
+    720,
+    540
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar",
+    "events",
+    "branded"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkg14",
+   "title": "Vooshka gallery: A look entirely your own",
+   "description": "A long event bar wrapped in a bright patterned print with a personalised sign.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkg14-vooshka-gallery-14.webp",
+   "web": "web/vkg14-vooshka-gallery-14.webp",
+   "thumb": "thumbs/vkg14-vooshka-gallery-14.webp",
+   "web_size": [
+    540,
+    720
+   ],
+   "original_size": [
+    540,
+    720
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "bar",
+    "events"
+   ],
+   "focus": [
+    0.4,
+    0.45
+   ],
+   "keep": [
+    0,
+    0.25,
+    1,
+    0.8
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_vkg14",
+     "where": "FF Team home: packages / services pillar tile (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "vkg15",
+   "title": "Vooshka gallery: A little theatre, expertly delivered",
+   "description": "Vooshka event bar photo: A little theatre, expertly delivered.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkg15-vooshka-gallery-15.webp",
+   "web": "web/vkg15-vooshka-gallery-15.webp",
+   "thumb": "thumbs/vkg15-vooshka-gallery-15.webp",
+   "web_size": [
+    405,
+    720
+   ],
+   "original_size": [
+    405,
+    720
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar",
+    "events",
+    "branded"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkg16",
+   "title": "Vooshka gallery: Expert service, from cocktails to draught beer",
+   "description": "A bartender pulls a draught beer at an event bar with beer taps.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkg16-vooshka-gallery-16.webp",
+   "web": "web/vkg16-vooshka-gallery-16.webp",
+   "thumb": "thumbs/vkg16-vooshka-gallery-16.webp",
+   "web_size": [
+    405,
+    720
+   ],
+   "original_size": [
+    405,
+    720
+   ],
+   "orientation": "portrait",
+   "people": 1,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "bar",
+    "events",
+    "people"
+   ],
+   "focus": [
+    0.77,
+    0.57
+   ],
+   "keep": [
+    0.1,
+    0.48,
+    0.95,
+    0.98
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "in_tr_brand_training",
+     "where": "Training card: Spirit brand training"
+    }
+   ]
+  },
+  {
+   "id": "vkg17",
+   "title": "Vooshka gallery: Expert hands, memorable occasions",
+   "description": "A bartender in a bow tie works the bar at an evening event with warm lights and greenery.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkg17-vooshka-gallery-17.webp",
+   "web": "web/vkg17-vooshka-gallery-17.webp",
+   "thumb": "thumbs/vkg17-vooshka-gallery-17.webp",
+   "web_size": [
+    405,
+    720
+   ],
+   "original_size": [
+    405,
+    720
+   ],
+   "orientation": "portrait",
+   "people": 1,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "bar",
+    "events",
+    "people"
+   ],
+   "focus": [
+    0.6,
+    0.49
+   ],
+   "keep": [
+    0.05,
+    0.42,
+    1,
+    0.95
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "in_tr_intro_cocktails",
+     "where": "Training card: Introduction to Cocktails"
+    }
+   ]
+  },
+  {
+   "id": "vkb01",
+   "title": "Vooshka bar design: Bar 04",
+   "description": "A Vooshka mobile bar design (Bar 04).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb01-vooshka-bar-design-01.webp",
+   "web": "web/vkb01-vooshka-bar-design-01.webp",
+   "thumb": "thumbs/vkb01-vooshka-bar-design-01.webp",
+   "web_size": [
+    444,
+    315
+   ],
+   "original_size": [
+    444,
+    315
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb02",
+   "title": "Vooshka bar design: Bar 01",
+   "description": "A Vooshka mobile bar design (Bar 01).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb02-vooshka-bar-design-02.webp",
+   "web": "web/vkb02-vooshka-bar-design-02.webp",
+   "thumb": "thumbs/vkb02-vooshka-bar-design-02.webp",
+   "web_size": [
+    520,
+    303
+   ],
+   "original_size": [
+    520,
+    303
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb03",
+   "title": "Vooshka bar design: Bar 02",
+   "description": "A Vooshka mobile bar design (Bar 02).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb03-vooshka-bar-design-03.webp",
+   "web": "web/vkb03-vooshka-bar-design-03.webp",
+   "thumb": "thumbs/vkb03-vooshka-bar-design-03.webp",
+   "web_size": [
+    520,
+    284
+   ],
+   "original_size": [
+    520,
+    284
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb04",
+   "title": "Vooshka bar design: Bar 08",
+   "description": "A Vooshka mobile bar design (Bar 08).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb04-vooshka-bar-design-04.webp",
+   "web": "web/vkb04-vooshka-bar-design-04.webp",
+   "thumb": "thumbs/vkb04-vooshka-bar-design-04.webp",
+   "web_size": [
+    520,
+    289
+   ],
+   "original_size": [
+    520,
+    289
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb05",
+   "title": "Vooshka bar design: Bar 17",
+   "description": "A Vooshka mobile bar design (Bar 17).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb05-vooshka-bar-design-05.webp",
+   "web": "web/vkb05-vooshka-bar-design-05.webp",
+   "thumb": "thumbs/vkb05-vooshka-bar-design-05.webp",
+   "web_size": [
+    488,
+    362
+   ],
+   "original_size": [
+    488,
+    362
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb06",
+   "title": "Vooshka bar design: Bar 31",
+   "description": "A Vooshka mobile bar design (Bar 31).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb06-vooshka-bar-design-06.webp",
+   "web": "web/vkb06-vooshka-bar-design-06.webp",
+   "thumb": "thumbs/vkb06-vooshka-bar-design-06.webp",
+   "web_size": [
+    437,
+    360
+   ],
+   "original_size": [
+    437,
+    360
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb07",
+   "title": "Vooshka bar design: Bar 07",
+   "description": "A Vooshka mobile bar design (Bar 07).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb07-vooshka-bar-design-07.webp",
+   "web": "web/vkb07-vooshka-bar-design-07.webp",
+   "thumb": "thumbs/vkb07-vooshka-bar-design-07.webp",
+   "web_size": [
+    520,
+    263
+   ],
+   "original_size": [
+    520,
+    263
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb08",
+   "title": "Vooshka bar design: Bar 13",
+   "description": "A Vooshka mobile bar design (Bar 13).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb08-vooshka-bar-design-08.webp",
+   "web": "web/vkb08-vooshka-bar-design-08.webp",
+   "thumb": "thumbs/vkb08-vooshka-bar-design-08.webp",
+   "web_size": [
+    520,
+    262
+   ],
+   "original_size": [
+    520,
+    262
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb09",
+   "title": "Vooshka bar design: Bar 06",
+   "description": "A Vooshka mobile bar design (Bar 06).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb09-vooshka-bar-design-09.webp",
+   "web": "web/vkb09-vooshka-bar-design-09.webp",
+   "thumb": "thumbs/vkb09-vooshka-bar-design-09.webp",
+   "web_size": [
+    491,
+    387
+   ],
+   "original_size": [
+    491,
+    387
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb10",
+   "title": "Vooshka bar design: Bar 33",
+   "description": "A Vooshka mobile bar design (Bar 33).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb10-vooshka-bar-design-10.webp",
+   "web": "web/vkb10-vooshka-bar-design-10.webp",
+   "thumb": "thumbs/vkb10-vooshka-bar-design-10.webp",
+   "web_size": [
+    491,
+    339
+   ],
+   "original_size": [
+    491,
+    339
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb11",
+   "title": "Vooshka bar design: Bar 03",
+   "description": "A Vooshka mobile bar design (Bar 03).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb11-vooshka-bar-design-11.webp",
+   "web": "web/vkb11-vooshka-bar-design-11.webp",
+   "thumb": "thumbs/vkb11-vooshka-bar-design-11.webp",
+   "web_size": [
+    520,
+    341
+   ],
+   "original_size": [
+    520,
+    341
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb12",
+   "title": "Vooshka bar design: Bar 11",
+   "description": "A Vooshka mobile bar design (Bar 11).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb12-vooshka-bar-design-12.webp",
+   "web": "web/vkb12-vooshka-bar-design-12.webp",
+   "thumb": "thumbs/vkb12-vooshka-bar-design-12.webp",
+   "web_size": [
+    520,
+    304
+   ],
+   "original_size": [
+    520,
+    304
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb13",
+   "title": "Vooshka bar design: Bar 34",
+   "description": "A Vooshka mobile bar design (Bar 34).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb13-vooshka-bar-design-13.webp",
+   "web": "web/vkb13-vooshka-bar-design-13.webp",
+   "thumb": "thumbs/vkb13-vooshka-bar-design-13.webp",
+   "web_size": [
+    520,
+    323
+   ],
+   "original_size": [
+    520,
+    323
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb14",
+   "title": "Vooshka bar design: Bar 09",
+   "description": "A Vooshka mobile bar design (Bar 09).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb14-vooshka-bar-design-14.webp",
+   "web": "web/vkb14-vooshka-bar-design-14.webp",
+   "thumb": "thumbs/vkb14-vooshka-bar-design-14.webp",
+   "web_size": [
+    520,
+    364
+   ],
+   "original_size": [
+    520,
+    364
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb15",
+   "title": "Vooshka bar design: Bar 10",
+   "description": "A Vooshka mobile bar design (Bar 10).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb15-vooshka-bar-design-15.webp",
+   "web": "web/vkb15-vooshka-bar-design-15.webp",
+   "thumb": "thumbs/vkb15-vooshka-bar-design-15.webp",
+   "web_size": [
+    520,
+    192
+   ],
+   "original_size": [
+    520,
+    192
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb16",
+   "title": "Vooshka bar design: Bar 05",
+   "description": "A Vooshka mobile bar design (Bar 05).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb16-vooshka-bar-design-16.webp",
+   "web": "web/vkb16-vooshka-bar-design-16.webp",
+   "thumb": "thumbs/vkb16-vooshka-bar-design-16.webp",
+   "web_size": [
+    520,
+    235
+   ],
+   "original_size": [
+    520,
+    235
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb17",
+   "title": "Vooshka bar design: Bar 32",
+   "description": "A Vooshka mobile bar design (Bar 32).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb17-vooshka-bar-design-17.webp",
+   "web": "web/vkb17-vooshka-bar-design-17.webp",
+   "thumb": "thumbs/vkb17-vooshka-bar-design-17.webp",
+   "web_size": [
+    520,
+    307
+   ],
+   "original_size": [
+    520,
+    307
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb18",
+   "title": "Vooshka bar design: Bar 14",
+   "description": "A Vooshka mobile bar design (Bar 14).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb18-vooshka-bar-design-18.webp",
+   "web": "web/vkb18-vooshka-bar-design-18.webp",
+   "thumb": "thumbs/vkb18-vooshka-bar-design-18.webp",
+   "web_size": [
+    520,
+    246
+   ],
+   "original_size": [
+    520,
+    246
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb19",
+   "title": "Vooshka bar design: Bar 23",
+   "description": "A Vooshka mobile bar design (Bar 23).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb19-vooshka-bar-design-19.webp",
+   "web": "web/vkb19-vooshka-bar-design-19.webp",
+   "thumb": "thumbs/vkb19-vooshka-bar-design-19.webp",
+   "web_size": [
+    520,
+    232
+   ],
+   "original_size": [
+    520,
+    232
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb20",
+   "title": "Vooshka bar design: Bar 16",
+   "description": "A Vooshka mobile bar design (Bar 16).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb20-vooshka-bar-design-20.webp",
+   "web": "web/vkb20-vooshka-bar-design-20.webp",
+   "thumb": "thumbs/vkb20-vooshka-bar-design-20.webp",
+   "web_size": [
+    520,
+    187
+   ],
+   "original_size": [
+    520,
+    187
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb21",
+   "title": "Vooshka bar design: Bar 22",
+   "description": "A Vooshka mobile bar design (Bar 22).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb21-vooshka-bar-design-21.webp",
+   "web": "web/vkb21-vooshka-bar-design-21.webp",
+   "thumb": "thumbs/vkb21-vooshka-bar-design-21.webp",
+   "web_size": [
+    520,
+    188
+   ],
+   "original_size": [
+    520,
+    188
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb22",
+   "title": "Vooshka bar design: Bar 35",
+   "description": "A Vooshka mobile bar design (Bar 35).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb22-vooshka-bar-design-22.webp",
+   "web": "web/vkb22-vooshka-bar-design-22.webp",
+   "thumb": "thumbs/vkb22-vooshka-bar-design-22.webp",
+   "web_size": [
+    520,
+    239
+   ],
+   "original_size": [
+    520,
+    239
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb23",
+   "title": "Vooshka bar design: Bar 29",
+   "description": "A Vooshka mobile bar design (Bar 29).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb23-vooshka-bar-design-23.webp",
+   "web": "web/vkb23-vooshka-bar-design-23.webp",
+   "thumb": "thumbs/vkb23-vooshka-bar-design-23.webp",
+   "web_size": [
+    520,
+    209
+   ],
+   "original_size": [
+    520,
+    209
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb24",
+   "title": "Vooshka bar design: Bar 12",
+   "description": "A Vooshka mobile bar design (Bar 12).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb24-vooshka-bar-design-24.webp",
+   "web": "web/vkb24-vooshka-bar-design-24.webp",
+   "thumb": "thumbs/vkb24-vooshka-bar-design-24.webp",
+   "web_size": [
+    520,
+    238
+   ],
+   "original_size": [
+    520,
+    238
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb25",
+   "title": "Vooshka bar design: Bar 21",
+   "description": "A Vooshka mobile bar design (Bar 21).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb25-vooshka-bar-design-25.webp",
+   "web": "web/vkb25-vooshka-bar-design-25.webp",
+   "thumb": "thumbs/vkb25-vooshka-bar-design-25.webp",
+   "web_size": [
+    520,
+    307
+   ],
+   "original_size": [
+    520,
+    307
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb26",
+   "title": "Vooshka bar design: Bar 38",
+   "description": "A Vooshka mobile bar design (Bar 38).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb26-vooshka-bar-design-26.webp",
+   "web": "web/vkb26-vooshka-bar-design-26.webp",
+   "thumb": "thumbs/vkb26-vooshka-bar-design-26.webp",
+   "web_size": [
+    520,
+    292
+   ],
+   "original_size": [
+    520,
+    292
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb27",
+   "title": "Vooshka bar design: Bar 20",
+   "description": "A Vooshka mobile bar design (Bar 20).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb27-vooshka-bar-design-27.webp",
+   "web": "web/vkb27-vooshka-bar-design-27.webp",
+   "thumb": "thumbs/vkb27-vooshka-bar-design-27.webp",
+   "web_size": [
+    520,
+    240
+   ],
+   "original_size": [
+    520,
+    240
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb28",
+   "title": "Vooshka bar design: Bar 41",
+   "description": "A Vooshka mobile bar design (Bar 41).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb28-vooshka-bar-design-28.webp",
+   "web": "web/vkb28-vooshka-bar-design-28.webp",
+   "thumb": "thumbs/vkb28-vooshka-bar-design-28.webp",
+   "web_size": [
+    520,
+    293
+   ],
+   "original_size": [
+    520,
+    293
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb29",
+   "title": "Vooshka bar design: Bar 15",
+   "description": "A Vooshka mobile bar design (Bar 15).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb29-vooshka-bar-design-29.webp",
+   "web": "web/vkb29-vooshka-bar-design-29.webp",
+   "thumb": "thumbs/vkb29-vooshka-bar-design-29.webp",
+   "web_size": [
+    520,
+    326
+   ],
+   "original_size": [
+    520,
+    326
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb30",
+   "title": "Vooshka bar design: Bar 37",
+   "description": "A Vooshka mobile bar design (Bar 37).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb30-vooshka-bar-design-30.webp",
+   "web": "web/vkb30-vooshka-bar-design-30.webp",
+   "thumb": "thumbs/vkb30-vooshka-bar-design-30.webp",
+   "web_size": [
+    520,
+    320
+   ],
+   "original_size": [
+    520,
+    320
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb31",
+   "title": "Vooshka bar design: Bar 26",
+   "description": "A Vooshka mobile bar design (Bar 26).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb31-vooshka-bar-design-31.webp",
+   "web": "web/vkb31-vooshka-bar-design-31.webp",
+   "thumb": "thumbs/vkb31-vooshka-bar-design-31.webp",
+   "web_size": [
+    520,
+    204
+   ],
+   "original_size": [
+    520,
+    204
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb32",
+   "title": "Vooshka bar design: Bar 36",
+   "description": "A Vooshka mobile bar design (Bar 36).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb32-vooshka-bar-design-32.webp",
+   "web": "web/vkb32-vooshka-bar-design-32.webp",
+   "thumb": "thumbs/vkb32-vooshka-bar-design-32.webp",
+   "web_size": [
+    520,
+    250
+   ],
+   "original_size": [
+    520,
+    250
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb33",
+   "title": "Vooshka bar design: Bar 18",
+   "description": "A Vooshka mobile bar design (Bar 18).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb33-vooshka-bar-design-33.webp",
+   "web": "web/vkb33-vooshka-bar-design-33.webp",
+   "thumb": "thumbs/vkb33-vooshka-bar-design-33.webp",
+   "web_size": [
+    520,
+    264
+   ],
+   "original_size": [
+    520,
+    264
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb34",
+   "title": "Vooshka bar design: Bar 39",
+   "description": "A Vooshka mobile bar design (Bar 39).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb34-vooshka-bar-design-34.webp",
+   "web": "web/vkb34-vooshka-bar-design-34.webp",
+   "thumb": "thumbs/vkb34-vooshka-bar-design-34.webp",
+   "web_size": [
+    520,
+    292
+   ],
+   "original_size": [
+    520,
+    292
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb35",
+   "title": "Vooshka bar design: Bar 24",
+   "description": "A Vooshka mobile bar design (Bar 24).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb35-vooshka-bar-design-35.webp",
+   "web": "web/vkb35-vooshka-bar-design-35.webp",
+   "thumb": "thumbs/vkb35-vooshka-bar-design-35.webp",
+   "web_size": [
+    520,
+    308
+   ],
+   "original_size": [
+    520,
+    308
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb36",
+   "title": "Vooshka bar design: Bar 19",
+   "description": "A Vooshka mobile bar design (Bar 19).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb36-vooshka-bar-design-36.webp",
+   "web": "web/vkb36-vooshka-bar-design-36.webp",
+   "thumb": "thumbs/vkb36-vooshka-bar-design-36.webp",
+   "web_size": [
+    520,
+    144
+   ],
+   "original_size": [
+    520,
+    144
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb37",
+   "title": "Vooshka bar design: Bar 25",
+   "description": "A Vooshka mobile bar design (Bar 25).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb37-vooshka-bar-design-37.webp",
+   "web": "web/vkb37-vooshka-bar-design-37.webp",
+   "thumb": "thumbs/vkb37-vooshka-bar-design-37.webp",
+   "web_size": [
+    520,
+    150
+   ],
+   "original_size": [
+    520,
+    150
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb38",
+   "title": "Vooshka bar design: Bar 30",
+   "description": "A Vooshka mobile bar design (Bar 30).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb38-vooshka-bar-design-38.webp",
+   "web": "web/vkb38-vooshka-bar-design-38.webp",
+   "thumb": "thumbs/vkb38-vooshka-bar-design-38.webp",
+   "web_size": [
+    520,
+    224
+   ],
+   "original_size": [
+    520,
+    224
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb39",
+   "title": "Vooshka bar design: Bar 40",
+   "description": "A Vooshka mobile bar design (Bar 40).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb39-vooshka-bar-design-39.webp",
+   "web": "web/vkb39-vooshka-bar-design-39.webp",
+   "thumb": "thumbs/vkb39-vooshka-bar-design-39.webp",
+   "web_size": [
+    520,
+    231
+   ],
+   "original_size": [
+    520,
+    231
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb40",
+   "title": "Vooshka bar design: Bar 27",
+   "description": "A Vooshka mobile bar design (Bar 27).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb40-vooshka-bar-design-40.webp",
+   "web": "web/vkb40-vooshka-bar-design-40.webp",
+   "thumb": "thumbs/vkb40-vooshka-bar-design-40.webp",
+   "web_size": [
+    520,
+    216
+   ],
+   "original_size": [
+    520,
+    216
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb41",
+   "title": "Vooshka bar design: Bar 28",
+   "description": "A Vooshka mobile bar design (Bar 28).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb41-vooshka-bar-design-41.webp",
+   "web": "web/vkb41-vooshka-bar-design-41.webp",
+   "thumb": "thumbs/vkb41-vooshka-bar-design-41.webp",
+   "web_size": [
+    520,
+    128
+   ],
+   "original_size": [
+    520,
+    128
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkb42",
+   "title": "Vooshka bar design: Bar 42",
+   "description": "A Vooshka mobile bar design (Bar 42).",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkb42-vooshka-bar-design-42.webp",
+   "web": "web/vkb42-vooshka-bar-design-42.webp",
+   "thumb": "thumbs/vkb42-vooshka-bar-design-42.webp",
+   "web_size": [
+    520,
+    271
+   ],
+   "original_size": [
+    520,
+    271
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "bar design",
+    "product"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vks01",
+   "title": "Vooshka signature cocktail: Popcorn Whisky",
+   "description": "Vooshka signature cocktail: Popcorn Whisky.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vks01-vooshka-signature-01.webp",
+   "web": "web/vks01-vooshka-signature-01.webp",
+   "thumb": "thumbs/vks01-vooshka-signature-01.webp",
+   "web_size": [
+    420,
+    420
+   ],
+   "original_size": [
+    420,
+    420
+   ],
+   "orientation": "square",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "signature"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vks02",
+   "title": "Vooshka signature cocktail: Marmalade Gin",
+   "description": "Vooshka signature cocktail: Marmalade Gin.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vks02-vooshka-signature-02.webp",
+   "web": "web/vks02-vooshka-signature-02.webp",
+   "thumb": "thumbs/vks02-vooshka-signature-02.webp",
+   "web_size": [
+    256,
+    236
+   ],
+   "original_size": [
+    256,
+    236
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "signature"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vks03",
+   "title": "Vooshka signature cocktail: Limoncello Martini",
+   "description": "Vooshka signature cocktail: Limoncello Martini.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vks03-vooshka-signature-03.webp",
+   "web": "web/vks03-vooshka-signature-03.webp",
+   "thumb": "thumbs/vks03-vooshka-signature-03.webp",
+   "web_size": [
+    256,
+    240
+   ],
+   "original_size": [
+    256,
+    240
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "signature"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vks04",
+   "title": "Vooshka signature cocktail: Maple Old Fashioned",
+   "description": "Vooshka signature cocktail: Maple Old Fashioned.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vks04-vooshka-signature-04.webp",
+   "web": "web/vks04-vooshka-signature-04.webp",
+   "thumb": "thumbs/vks04-vooshka-signature-04.webp",
+   "web_size": [
+    256,
+    240
+   ],
+   "original_size": [
+    256,
+    240
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "signature"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vks05",
+   "title": "Vooshka signature cocktail: Maple Manhattan",
+   "description": "Vooshka signature cocktail: Maple Manhattan.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vks05-vooshka-signature-05.webp",
+   "web": "web/vks05-vooshka-signature-05.webp",
+   "thumb": "thumbs/vks05-vooshka-signature-05.webp",
+   "web_size": [
+    256,
+    240
+   ],
+   "original_size": [
+    256,
+    240
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "signature"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vks06",
+   "title": "Vooshka signature cocktail: Maple Espresso Martini",
+   "description": "Vooshka signature cocktail: Maple Espresso Martini.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vks06-vooshka-signature-06.webp",
+   "web": "web/vks06-vooshka-signature-06.webp",
+   "thumb": "thumbs/vks06-vooshka-signature-06.webp",
+   "web_size": [
+    256,
+    240
+   ],
+   "original_size": [
+    256,
+    240
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "signature"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vks07",
+   "title": "Vooshka signature cocktail: Raspberry & Lychee Mojito",
+   "description": "Vooshka signature cocktail: Raspberry & Lychee Mojito.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vks07-vooshka-signature-07.webp",
+   "web": "web/vks07-vooshka-signature-07.webp",
+   "thumb": "thumbs/vks07-vooshka-signature-07.webp",
+   "web_size": [
+    256,
+    262
+   ],
+   "original_size": [
+    256,
+    262
+   ],
+   "orientation": "square",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "signature"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vks08",
+   "title": "Vooshka signature cocktail: Ginger & Passionfruit Mojito",
+   "description": "Vooshka signature cocktail: Ginger & Passionfruit Mojito.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vks08-vooshka-signature-08.webp",
+   "web": "web/vks08-vooshka-signature-08.webp",
+   "thumb": "thumbs/vks08-vooshka-signature-08.webp",
+   "web_size": [
+    256,
+    262
+   ],
+   "original_size": [
+    256,
+    262
+   ],
+   "orientation": "square",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "signature"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vks09",
+   "title": "Vooshka signature cocktail: Strawberry & Ting Mojito",
+   "description": "Vooshka signature cocktail: Strawberry & Ting Mojito.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vks09-vooshka-signature-09.webp",
+   "web": "web/vks09-vooshka-signature-09.webp",
+   "thumb": "thumbs/vks09-vooshka-signature-09.webp",
+   "web_size": [
+    256,
+    262
+   ],
+   "original_size": [
+    256,
+    262
+   ],
+   "orientation": "square",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "signature"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vks10",
+   "title": "Vooshka signature cocktail: Limoncello & Lychee Mojito",
+   "description": "Vooshka signature cocktail: Limoncello & Lychee Mojito.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vks10-vooshka-signature-10.webp",
+   "web": "web/vks10-vooshka-signature-10.webp",
+   "thumb": "thumbs/vks10-vooshka-signature-10.webp",
+   "web_size": [
+    256,
+    262
+   ],
+   "original_size": [
+    256,
+    262
+   ],
+   "orientation": "square",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "signature"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vks11",
+   "title": "Vooshka signature cocktail: Spicy Strawberry Margarita",
+   "description": "Vooshka signature cocktail: Spicy Strawberry Margarita.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vks11-vooshka-signature-11.webp",
+   "web": "web/vks11-vooshka-signature-11.webp",
+   "thumb": "thumbs/vks11-vooshka-signature-11.webp",
+   "web_size": [
+    256,
+    308
+   ],
+   "original_size": [
+    256,
+    308
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "signature"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vks12",
+   "title": "Vooshka signature cocktail: Mango Colada",
+   "description": "Vooshka signature cocktail: Mango Colada.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vks12-vooshka-signature-12.webp",
+   "web": "web/vks12-vooshka-signature-12.webp",
+   "thumb": "thumbs/vks12-vooshka-signature-12.webp",
+   "web_size": [
+    376,
+    420
+   ],
+   "original_size": [
+    376,
+    420
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "signature"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vks13",
+   "title": "Vooshka signature cocktail: Penicillin",
+   "description": "Vooshka signature cocktail: Penicillin.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vks13-vooshka-signature-13.webp",
+   "web": "web/vks13-vooshka-signature-13.webp",
+   "thumb": "thumbs/vks13-vooshka-signature-13.webp",
+   "web_size": [
+    420,
+    420
+   ],
+   "original_size": [
+    420,
+    420
+   ],
+   "orientation": "square",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "signature"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vks14",
+   "title": "Vooshka signature cocktail: Passionfruit & Lychee Sour",
+   "description": "Vooshka signature cocktail: Passionfruit & Lychee Sour.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vks14-vooshka-signature-14.webp",
+   "web": "web/vks14-vooshka-signature-14.webp",
+   "thumb": "thumbs/vks14-vooshka-signature-14.webp",
+   "web_size": [
+    420,
+    420
+   ],
+   "original_size": [
+    420,
+    420
+   ],
+   "orientation": "square",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "signature"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vks15",
+   "title": "Vooshka signature cocktail: Guava & Ginger Mule",
+   "description": "Vooshka signature cocktail: Guava & Ginger Mule.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vks15-vooshka-signature-15.webp",
+   "web": "web/vks15-vooshka-signature-15.webp",
+   "thumb": "thumbs/vks15-vooshka-signature-15.webp",
+   "web_size": [
+    419,
+    420
+   ],
+   "original_size": [
+    419,
+    420
+   ],
+   "orientation": "square",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "signature"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vks16",
+   "title": "Vooshka signature cocktail: Raspberry & Rose Martini",
+   "description": "Vooshka signature cocktail: Raspberry & Rose Martini.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vks16-vooshka-signature-16.webp",
+   "web": "web/vks16-vooshka-signature-16.webp",
+   "thumb": "thumbs/vks16-vooshka-signature-16.webp",
+   "web_size": [
+    420,
+    420
+   ],
+   "original_size": [
+    420,
+    420
+   ],
+   "orientation": "square",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "signature"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc01",
+   "title": "Classic cocktail: Margarita",
+   "description": "Classic cocktail photo: Margarita.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc01-vooshka-classic-01.webp",
+   "web": "web/vkc01-vooshka-classic-01.webp",
+   "thumb": "thumbs/vkc01-vooshka-classic-01.webp",
+   "web_size": [
+    256,
+    308
+   ],
+   "original_size": [
+    256,
+    308
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc02",
+   "title": "Classic cocktail: Mojito",
+   "description": "Classic cocktail photo: Mojito.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc02-vooshka-classic-02.webp",
+   "web": "web/vkc02-vooshka-classic-02.webp",
+   "thumb": "thumbs/vkc02-vooshka-classic-02.webp",
+   "web_size": [
+    256,
+    308
+   ],
+   "original_size": [
+    256,
+    308
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc03",
+   "title": "Classic cocktail: Passion Fruit Martini",
+   "description": "Classic cocktail photo: Passion Fruit Martini.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc03-vooshka-classic-03.webp",
+   "web": "web/vkc03-vooshka-classic-03.webp",
+   "thumb": "thumbs/vkc03-vooshka-classic-03.webp",
+   "web_size": [
+    256,
+    248
+   ],
+   "original_size": [
+    256,
+    248
+   ],
+   "orientation": "square",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc04",
+   "title": "Classic cocktail: Espresso Martini",
+   "description": "Classic cocktail photo: Espresso Martini.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc04-vooshka-classic-04.webp",
+   "web": "web/vkc04-vooshka-classic-04.webp",
+   "thumb": "thumbs/vkc04-vooshka-classic-04.webp",
+   "web_size": [
+    256,
+    242
+   ],
+   "original_size": [
+    256,
+    242
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc05",
+   "title": "Classic cocktail: Cosmopolitan",
+   "description": "Classic cocktail photo: Cosmopolitan.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc05-vooshka-classic-05.webp",
+   "web": "web/vkc05-vooshka-classic-05.webp",
+   "thumb": "thumbs/vkc05-vooshka-classic-05.webp",
+   "web_size": [
+    256,
+    248
+   ],
+   "original_size": [
+    256,
+    248
+   ],
+   "orientation": "square",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc06",
+   "title": "Classic cocktail: Piña Colada",
+   "description": "Classic cocktail photo: Piña Colada.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc06-vooshka-classic-06.webp",
+   "web": "web/vkc06-vooshka-classic-06.webp",
+   "thumb": "thumbs/vkc06-vooshka-classic-06.webp",
+   "web_size": [
+    376,
+    420
+   ],
+   "original_size": [
+    376,
+    420
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc07",
+   "title": "Classic cocktail: Aperol Spritz",
+   "description": "Classic cocktail photo: Aperol Spritz.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc07-vooshka-classic-07.webp",
+   "web": "web/vkc07-vooshka-classic-07.webp",
+   "thumb": "thumbs/vkc07-vooshka-classic-07.webp",
+   "web_size": [
+    420,
+    398
+   ],
+   "original_size": [
+    420,
+    398
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc08",
+   "title": "Classic cocktail: Old Fashioned",
+   "description": "Classic cocktail photo: Old Fashioned.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc08-vooshka-classic-08.webp",
+   "web": "web/vkc08-vooshka-classic-08.webp",
+   "thumb": "thumbs/vkc08-vooshka-classic-08.webp",
+   "web_size": [
+    256,
+    242
+   ],
+   "original_size": [
+    256,
+    242
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc09",
+   "title": "Classic cocktail: Negroni",
+   "description": "Classic cocktail photo: Negroni.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc09-vooshka-classic-09.webp",
+   "web": "web/vkc09-vooshka-classic-09.webp",
+   "thumb": "thumbs/vkc09-vooshka-classic-09.webp",
+   "web_size": [
+    420,
+    399
+   ],
+   "original_size": [
+    420,
+    399
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc10",
+   "title": "Classic cocktail: Moscow Mule",
+   "description": "Classic cocktail photo: Moscow Mule.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc10-vooshka-classic-10.webp",
+   "web": "web/vkc10-vooshka-classic-10.webp",
+   "thumb": "thumbs/vkc10-vooshka-classic-10.webp",
+   "web_size": [
+    420,
+    399
+   ],
+   "original_size": [
+    420,
+    399
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc11",
+   "title": "Classic cocktail: Tom Collins",
+   "description": "Classic cocktail photo: Tom Collins.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc11-vooshka-classic-11.webp",
+   "web": "web/vkc11-vooshka-classic-11.webp",
+   "thumb": "thumbs/vkc11-vooshka-classic-11.webp",
+   "web_size": [
+    256,
+    242
+   ],
+   "original_size": [
+    256,
+    242
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc12",
+   "title": "Classic cocktail: Whisky Sour",
+   "description": "Classic cocktail photo: Whisky Sour.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc12-vooshka-classic-12.webp",
+   "web": "web/vkc12-vooshka-classic-12.webp",
+   "thumb": "thumbs/vkc12-vooshka-classic-12.webp",
+   "web_size": [
+    256,
+    242
+   ],
+   "original_size": [
+    256,
+    242
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc13",
+   "title": "Classic cocktail: Bramble",
+   "description": "Classic cocktail photo: Bramble.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc13-vooshka-classic-13.webp",
+   "web": "web/vkc13-vooshka-classic-13.webp",
+   "thumb": "thumbs/vkc13-vooshka-classic-13.webp",
+   "web_size": [
+    256,
+    248
+   ],
+   "original_size": [
+    256,
+    248
+   ],
+   "orientation": "square",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc14",
+   "title": "Classic cocktail: Manhattan",
+   "description": "Classic cocktail photo: Manhattan.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc14-vooshka-classic-14.webp",
+   "web": "web/vkc14-vooshka-classic-14.webp",
+   "thumb": "thumbs/vkc14-vooshka-classic-14.webp",
+   "web_size": [
+    256,
+    236
+   ],
+   "original_size": [
+    256,
+    236
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc15",
+   "title": "Classic cocktail: Paloma",
+   "description": "Classic cocktail photo: Paloma.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc15-vooshka-classic-15.webp",
+   "web": "web/vkc15-vooshka-classic-15.webp",
+   "thumb": "thumbs/vkc15-vooshka-classic-15.webp",
+   "web_size": [
+    420,
+    420
+   ],
+   "original_size": [
+    420,
+    420
+   ],
+   "orientation": "square",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc16",
+   "title": "Classic cocktail: Lychee Martini",
+   "description": "Classic cocktail photo: Lychee Martini.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc16-vooshka-classic-16.webp",
+   "web": "web/vkc16-vooshka-classic-16.webp",
+   "thumb": "thumbs/vkc16-vooshka-classic-16.webp",
+   "web_size": [
+    256,
+    248
+   ],
+   "original_size": [
+    256,
+    248
+   ],
+   "orientation": "square",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc17",
+   "title": "Classic cocktail: Strawberry Daiquiri",
+   "description": "Classic cocktail photo: Strawberry Daiquiri.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc17-vooshka-classic-17.webp",
+   "web": "web/vkc17-vooshka-classic-17.webp",
+   "thumb": "thumbs/vkc17-vooshka-classic-17.webp",
+   "web_size": [
+    256,
+    236
+   ],
+   "original_size": [
+    256,
+    236
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc18",
+   "title": "Classic cocktail: Mai Tai",
+   "description": "Classic cocktail photo: Mai Tai.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc18-vooshka-classic-18.webp",
+   "web": "web/vkc18-vooshka-classic-18.webp",
+   "thumb": "thumbs/vkc18-vooshka-classic-18.webp",
+   "web_size": [
+    420,
+    398
+   ],
+   "original_size": [
+    420,
+    398
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc19",
+   "title": "Classic cocktail: French 75",
+   "description": "Classic cocktail photo: French 75.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc19-vooshka-classic-19.webp",
+   "web": "web/vkc19-vooshka-classic-19.webp",
+   "thumb": "thumbs/vkc19-vooshka-classic-19.webp",
+   "web_size": [
+    419,
+    420
+   ],
+   "original_size": [
+    419,
+    420
+   ],
+   "orientation": "square",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc20",
+   "title": "Classic cocktail: French Martini",
+   "description": "Classic cocktail photo: French Martini.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc20-vooshka-classic-20.webp",
+   "web": "web/vkc20-vooshka-classic-20.webp",
+   "thumb": "thumbs/vkc20-vooshka-classic-20.webp",
+   "web_size": [
+    420,
+    420
+   ],
+   "original_size": [
+    420,
+    420
+   ],
+   "orientation": "square",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc21",
+   "title": "Classic cocktail: Limoncello Spritz",
+   "description": "Classic cocktail photo: Limoncello Spritz.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc21-vooshka-classic-21.webp",
+   "web": "web/vkc21-vooshka-classic-21.webp",
+   "thumb": "thumbs/vkc21-vooshka-classic-21.webp",
+   "web_size": [
+    420,
+    420
+   ],
+   "original_size": [
+    420,
+    420
+   ],
+   "orientation": "square",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc22",
+   "title": "Classic cocktail: Sarti Rosé Spritz",
+   "description": "Classic cocktail photo: Sarti Rosé Spritz.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc22-vooshka-classic-22.webp",
+   "web": "web/vkc22-vooshka-classic-22.webp",
+   "thumb": "thumbs/vkc22-vooshka-classic-22.webp",
+   "web_size": [
+    420,
+    420
+   ],
+   "original_size": [
+    420,
+    420
+   ],
+   "orientation": "square",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc23",
+   "title": "Classic cocktail: Elderflower Spritz",
+   "description": "Classic cocktail photo: Elderflower Spritz.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc23-vooshka-classic-23.webp",
+   "web": "web/vkc23-vooshka-classic-23.webp",
+   "thumb": "thumbs/vkc23-vooshka-classic-23.webp",
+   "web_size": [
+    420,
+    420
+   ],
+   "original_size": [
+    420,
+    420
+   ],
+   "orientation": "square",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc24",
+   "title": "Classic cocktail: Spicy Margarita",
+   "description": "Classic cocktail photo: Spicy Margarita.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc24-vooshka-classic-24.webp",
+   "web": "web/vkc24-vooshka-classic-24.webp",
+   "thumb": "thumbs/vkc24-vooshka-classic-24.webp",
+   "web_size": [
+    256,
+    308
+   ],
+   "original_size": [
+    256,
+    308
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc25",
+   "title": "Classic cocktail: Guava Margarita",
+   "description": "Classic cocktail photo: Guava Margarita.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc25-vooshka-classic-25.webp",
+   "web": "web/vkc25-vooshka-classic-25.webp",
+   "thumb": "thumbs/vkc25-vooshka-classic-25.webp",
+   "web_size": [
+    420,
+    420
+   ],
+   "original_size": [
+    420,
+    420
+   ],
+   "orientation": "square",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc26",
+   "title": "Classic cocktail: Strawberry Mojito",
+   "description": "Classic cocktail photo: Strawberry Mojito.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc26-vooshka-classic-26.webp",
+   "web": "web/vkc26-vooshka-classic-26.webp",
+   "thumb": "thumbs/vkc26-vooshka-classic-26.webp",
+   "web_size": [
+    420,
+    395
+   ],
+   "original_size": [
+    420,
+    395
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc27",
+   "title": "Classic cocktail: Pineapple Mojito",
+   "description": "Classic cocktail photo: Pineapple Mojito.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc27-vooshka-classic-27.webp",
+   "web": "web/vkc27-vooshka-classic-27.webp",
+   "thumb": "thumbs/vkc27-vooshka-classic-27.webp",
+   "web_size": [
+    420,
+    395
+   ],
+   "original_size": [
+    420,
+    395
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc28",
+   "title": "Classic cocktail: Mango Mojito",
+   "description": "Classic cocktail photo: Mango Mojito.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc28-vooshka-classic-28.webp",
+   "web": "web/vkc28-vooshka-classic-28.webp",
+   "thumb": "thumbs/vkc28-vooshka-classic-28.webp",
+   "web_size": [
+    420,
+    395
+   ],
+   "original_size": [
+    420,
+    395
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vkc29",
+   "title": "Classic cocktail: Peach Mojito",
+   "description": "Classic cocktail photo: Peach Mojito.",
+   "batch": "vooshka",
+   "kind": "photo",
+   "original": "originals/vkc29-vooshka-classic-29.webp",
+   "web": "web/vkc29-vooshka-classic-29.webp",
+   "thumb": "thumbs/vkc29-vooshka-classic-29.webp",
+   "web_size": [
+    420,
+    395
+   ],
+   "original_size": [
+    420,
+    395
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "cocktails",
+    "classic"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vke01",
+   "title": "Bartenders serving at an event",
+   "description": "Two bartenders in bow ties pour and garnish rows of red punch at a bright event bar.",
+   "batch": "earlier",
+   "kind": "photo",
+   "original": "originals/vke01-bartenders-serving-punch.webp",
+   "web": "web/vke01-bartenders-serving-punch.webp",
+   "thumb": "thumbs/vke01-bartenders-serving-punch.webp",
+   "web_size": [
+    420,
+    560
+   ],
+   "original_size": [
+    420,
+    560
+   ],
+   "orientation": "portrait",
+   "people": 2,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "events",
+    "earlier prototype",
+    "people"
+   ],
+   "focus": [
+    0.4,
+    0.25
+   ],
+   "keep": [
+    0.05,
+    0.1,
+    0.97,
+    0.9
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_vke01",
+     "where": "FF Team home: community pillar tile (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "vke02",
+   "title": "Martini tray under pink light",
+   "description": "A tray of martinis glowing under pink event lighting.",
+   "batch": "earlier",
+   "kind": "photo",
+   "original": "originals/vke02-martini-tray-pink-light.webp",
+   "web": "web/vke02-martini-tray-pink-light.webp",
+   "thumb": "thumbs/vke02-martini-tray-pink-light.webp",
+   "web_size": [
+    315,
+    560
+   ],
+   "original_size": [
+    315,
+    560
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "events",
+    "earlier prototype"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_vke02",
+     "where": "FF Team home: packages / services pillar tile (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "vke03",
+   "title": "Bartender pouring under stage lights",
+   "description": "A bartender with glasses pours juice into a row of glasses under blue stage lights.",
+   "batch": "earlier",
+   "kind": "photo",
+   "original": "originals/vke03-bartender-pouring-blue-light.webp",
+   "web": "web/vke03-bartender-pouring-blue-light.webp",
+   "thumb": "thumbs/vke03-bartender-pouring-blue-light.webp",
+   "web_size": [
+    315,
+    560
+   ],
+   "original_size": [
+    315,
+    560
+   ],
+   "orientation": "portrait",
+   "people": 1,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "events",
+    "earlier prototype",
+    "people"
+   ],
+   "focus": [
+    0.58,
+    0.3
+   ],
+   "keep": [
+    0.05,
+    0.17,
+    0.95,
+    0.9
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_vke03",
+     "where": "FF Team home: profile pillar tile (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "vke04",
+   "title": "Bartender straining a cocktail",
+   "description": "A bartender in a bow tie strains a cocktail into a coupe at a long event bar.",
+   "batch": "earlier",
+   "kind": "photo",
+   "original": "originals/vke04-bartender-straining-cocktail.webp",
+   "web": "web/vke04-bartender-straining-cocktail.webp",
+   "thumb": "thumbs/vke04-bartender-straining-cocktail.webp",
+   "web_size": [
+    420,
+    560
+   ],
+   "original_size": [
+    420,
+    560
+   ],
+   "orientation": "portrait",
+   "people": 1,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "events",
+    "earlier prototype",
+    "people"
+   ],
+   "focus": [
+    0.7,
+    0.28
+   ],
+   "keep": [
+    0.05,
+    0.17,
+    0.95,
+    0.9
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_vke04",
+     "where": "FF Team home: profile pillar tile (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "vke05",
+   "title": "Mojitos under purple light",
+   "description": "A row of mojitos with mint along a bar under purple party lights.",
+   "batch": "earlier",
+   "kind": "photo",
+   "original": "originals/vke05-mojito-row-purple.webp",
+   "web": "web/vke05-mojito-row-purple.webp",
+   "thumb": "thumbs/vke05-mojito-row-purple.webp",
+   "web_size": [
+    315,
+    560
+   ],
+   "original_size": [
+    315,
+    560
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "events",
+    "earlier prototype"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "in_tr_ff_open_class",
+     "where": "Training card: FireFlair Open Class"
+    }
+   ]
+  },
+  {
+   "id": "vke06",
+   "title": "A busy event bar",
+   "description": "Guests crowd a long event bar while a bartender serves, in a bright hall.",
+   "batch": "earlier",
+   "kind": "photo",
+   "original": "originals/vke06-busy-event-bar-crowd.webp",
+   "web": "web/vke06-busy-event-bar-crowd.webp",
+   "thumb": "thumbs/vke06-busy-event-bar-crowd.webp",
+   "web_size": [
+    420,
+    560
+   ],
+   "original_size": [
+    420,
+    560
+   ],
+   "orientation": "portrait",
+   "people": 6,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "events",
+    "earlier prototype",
+    "people"
+   ],
+   "focus": [
+    0.6,
+    0.62
+   ],
+   "keep": [
+    0,
+    0.4,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_vke06",
+     "where": "FF Team home: community pillar tile (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "vke07",
+   "title": "Bartender pouring (black and white)",
+   "description": "A bartender in a bow tie pours into martini glasses, in black and white.",
+   "batch": "earlier",
+   "kind": "photo",
+   "original": "originals/vke07-bartender-pouring-black-white.webp",
+   "web": "web/vke07-bartender-pouring-black-white.webp",
+   "thumb": "thumbs/vke07-bartender-pouring-black-white.webp",
+   "web_size": [
+    315,
+    560
+   ],
+   "original_size": [
+    315,
+    560
+   ],
+   "orientation": "portrait",
+   "people": 1,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "events",
+    "earlier prototype",
+    "people"
+   ],
+   "focus": [
+    0.55,
+    0.44
+   ],
+   "keep": [
+    0,
+    0.33,
+    1,
+    0.98
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "in_tr_wset_spirits",
+     "where": "Training card: WSET Spirits"
+    }
+   ]
+  },
+  {
+   "id": "vke08",
+   "title": "Monogram bar with tree (tile crop)",
+   "description": "The round monogram bar with the tree centrepiece; the same bar as vkg02 and vkg08.",
+   "batch": "earlier",
+   "kind": "photo",
+   "original": "originals/vke08-monogram-bar-tree.webp",
+   "web": "web/vke08-monogram-bar-tree.webp",
+   "thumb": "thumbs/vke08-monogram-bar-tree.webp",
+   "web_size": [
+    420,
+    560
+   ],
+   "original_size": [
+    420,
+    560
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "events",
+    "earlier prototype"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "vke09",
+   "title": "Bartender in a cap (black and white)",
+   "description": "A bartender in a flat cap and bow tie pours into rows of coupes, in black and white.",
+   "batch": "earlier",
+   "kind": "photo",
+   "original": "originals/vke09-bartender-cap-black-white.webp",
+   "web": "web/vke09-bartender-cap-black-white.webp",
+   "thumb": "thumbs/vke09-bartender-cap-black-white.webp",
+   "web_size": [
+    420,
+    560
+   ],
+   "original_size": [
+    420,
+    560
+   ],
+   "orientation": "portrait",
+   "people": 1,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "events",
+    "earlier prototype",
+    "people"
+   ],
+   "focus": [
+    0.62,
+    0.34
+   ],
+   "keep": [
+    0.05,
+    0.25,
+    0.95,
+    0.95
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_vke09",
+     "where": "FF Team home: profile pillar tile (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "vke10",
+   "title": "Party cocktails with cherries",
+   "description": "Cocktails with dried orange and cherries at a party, guests out of focus behind.",
+   "batch": "earlier",
+   "kind": "photo",
+   "original": "originals/vke10-party-cocktails-cherries.webp",
+   "web": "web/vke10-party-cocktails-cherries.webp",
+   "thumb": "thumbs/vke10-party-cocktails-cherries.webp",
+   "web_size": [
+    420,
+    560
+   ],
+   "original_size": [
+    420,
+    560
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "events",
+    "earlier prototype"
+   ],
+   "focus": [
+    0.5,
+    0.6
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "in_rw_party",
+     "where": "Reward: FF January Christmas party"
+    }
+   ]
+  },
+  {
+   "id": "vke11",
+   "title": "Pink cocktail line-up",
+   "description": "A long line of pink cocktails with cherries under purple party lights.",
+   "batch": "earlier",
+   "kind": "photo",
+   "original": "originals/vke11-pink-cocktail-line-up.webp",
+   "web": "web/vke11-pink-cocktail-line-up.webp",
+   "thumb": "thumbs/vke11-pink-cocktail-line-up.webp",
+   "web_size": [
+    315,
+    560
+   ],
+   "original_size": [
+    315,
+    560
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "events",
+    "earlier prototype"
+   ],
+   "focus": [
+    0.5,
+    0.6
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "in_dj_after_dark",
+     "where": "Dream job: After Dark"
+    }
+   ]
+  },
+  {
+   "id": "vke12",
+   "title": "Rows of coupes with cherries",
+   "description": "Rows of foamy coupe cocktails with cherries at an event bar.",
+   "batch": "earlier",
+   "kind": "photo",
+   "original": "originals/vke12-coupe-rows-cherries.webp",
+   "web": "web/vke12-coupe-rows-cherries.webp",
+   "thumb": "thumbs/vke12-coupe-rows-cherries.webp",
+   "web_size": [
+    315,
+    560
+   ],
+   "original_size": [
+    315,
+    560
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "vooshka",
+    "events",
+    "earlier prototype"
+   ],
+   "focus": [
+    0.5,
+    0.6
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "t17_vke12",
+     "where": "FF Team home: packages / services pillar tile (rotating, 1 of 5)"
+    }
+   ]
+  },
+  {
+   "id": "vke13",
+   "title": "Bartender in a Vooshka apron",
+   "description": "A bartender in a branded Vooshka apron behind the bar, in black and white (also vkg15).",
+   "batch": "earlier",
+   "kind": "photo",
+   "original": "originals/vke13-bartender-vooshka-apron.webp",
+   "web": "web/vke13-bartender-vooshka-apron.webp",
+   "thumb": "thumbs/vke13-bartender-vooshka-apron.webp",
+   "web_size": [
+    405,
+    405
+   ],
+   "original_size": [
+    405,
+    405
+   ],
+   "orientation": "square",
+   "people": 1,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "vooshka",
+    "events",
+    "earlier prototype",
+    "people"
+   ],
+   "focus": [
+    0.55,
+    0.45
+   ],
+   "keep": [
+    0,
+    0.25,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
    "used_in": []
   }
  ]
