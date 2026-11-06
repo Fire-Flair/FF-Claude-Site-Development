@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.84 — 2026-11-06 — v17.3.84 map caption removed, fewer photos of one bartender
+Artifact version 1793934471-25c0 · file `fireflair-v17.3.84.html`
+
+- Network map caption "Areas only, never addresses." removed.
+- Home page: fewer photos of the same person (one story photo left). FF Team Community and Events pillar tiles use two original AI images (festival stage, seaside palace at dusk) in place of two bar photos; FF Business and FF Party pools adjusted the same way.
+- No photo repeats on any site (checked across five visits per site).
+- Photo library unchanged: every photo is still in photo-library/ (library.json "used_in" refreshed).
+
 ## v17.3.83 — 2026-11-06 — v17.3.83 fewer photos of one bartender
 Artifact version 1793930816-2f25 · file `fireflair-v17.3.83.html`
 
