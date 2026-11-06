@@ -2453,7 +2453,9 @@ const DEMO_EVENTS = [
   { id: "evt_launch", title: "Brand Launch — Hackney", iso: "2026-10-11", date: "11 October 2026", venue: "Hackney Depot", guests: "180", team: "5", notes: "Press arrive at 18:00." },
   { id: "evt_wedding", title: "Rowntree Wedding", iso: "2026-11-15", date: "15 November 2026", venue: "Charlotte House", guests: "120", team: "3", notes: "Reception drinks then dinner service." },
   { id: "evt_xmas", title: "Loft Christmas Party", kind: "Christmas party", iso: "2026-12-12", date: "12 December 2026", start: "19:00", time: "19:00", venue: "The Loft Lounge, Enfield", guests: "90", team: "3", notes: "" },
-  { id: "evt_nye", title: "New Year's Eve Gala", kind: "Private party", iso: "2026-12-31", date: "31 December 2026", start: "20:00", time: "20:00", venue: "Mayfair Rooms", guests: "200", team: "4", notes: "" },
+  { id: "evt_nye", title: "New Year's Eve Gala", kind: "Private party", iso: "2026-12-31", date: "31 December 2026", start: "20:00", time: "20:00", venue: "Mayfair Rooms", guests: "200", team: "4", notes: "" },,
+  { id: "evt_vgala", title: "Vushka Winter Gala", hirer: "Vushka", kind: "Corporate event", iso: "2026-12-05", date: "5 December 2026", start: "18:00", time: "18:00", venue: "The Loft Lounge, Enfield", guests: "140", team: "1", notes: "Black tie. Champagne reception, then the signature menu." },
+  { id: "evt_vdin", title: "Vushka Private Dinner", hirer: "Vushka", kind: "Private party", iso: "2026-12-19", date: "19 December 2026", start: "19:00", time: "19:00", venue: "Charlotte House, London", guests: "60", team: "1", notes: "Welcome cocktails, then a pairing menu." }
 ];
 
 /* One Service Card = one person. Date and venue come from the Event Card;
@@ -2473,7 +2475,9 @@ const DEMO_SHIFTS = [
   { id: "shf_x2", eventId: "evt_xmas", staffId: "stf_fre", iso: "2026-12-12", date: "12 December", time: "18:30 — 00:00", role: "Cocktail Bartender", venue: "The Loft Lounge, Enfield", skills: [], pay: "", dress: "Black shirt, festive tie", notes: "Mulled cocktails on arrival, then the full menu.", tcs: "company" },
   { id: "shf_x3", eventId: "evt_xmas", staffId: "", iso: "2026-12-12", date: "12 December", time: "18:00 — 23:30", role: "Barback", venue: "The Loft Lounge, Enfield", skills: [], pay: "", dress: "All black", notes: "Glass collection and ice runs.", tcs: "company" },
   { id: "shf_n1", eventId: "evt_nye", staffId: "stf_pri", iso: "2026-12-31", date: "31 December", time: "19:30 — 01:30", role: "MC & Event Host", venue: "Mayfair Rooms", skills: [], pay: "", dress: "Black tie", notes: "Countdown at midnight.", tcs: "company" },
-  { id: "shf_n2", eventId: "evt_nye", staffId: "stf_tom", iso: "2026-12-31", date: "31 December", time: "20:00 — 02:00", role: "DJ", venue: "Mayfair Rooms", skills: [], pay: "", dress: "Black tie", notes: "", tcs: "company" },
+  { id: "shf_n2", eventId: "evt_nye", staffId: "stf_tom", iso: "2026-12-31", date: "31 December", time: "20:00 — 02:00", role: "DJ", venue: "Mayfair Rooms", skills: [], pay: "", dress: "Black tie", notes: "", tcs: "company" },,
+  { id: "shf_v1", eventId: "evt_vgala", staffId: "me", staffIds: ["me"], qty: 1, iso: "2026-12-05", date: "5 December", time: "18:00 — 00:00", role: "Cocktail Bartender", venue: "The Loft Lounge, Enfield", skills: ["Champagne", "Signature cocktails"], pay: "£22 an hour", dress: "Black tie", notes: "Reception for 140, then the signature menu. Bar is set up for you.", tcs: "company" },
+  { id: "shf_v2", eventId: "evt_vdin", staffId: "", staffIds: [], qty: 1, route: "auto", iso: "2026-12-19", date: "19 December", time: "19:00 — 23:30", role: "Cocktail Bartender", venue: "Charlotte House, London", skills: ["Cocktail mixology"], pay: "£20 an hour", dress: "All black", notes: "Welcome cocktails for 60, then a pairing menu.", tcs: "company" }
 ];
 
 const DEMO_ENGAGEMENTS = [
@@ -2489,7 +2493,18 @@ const DEMO_ENGAGEMENTS = [
   { id: "eng_7", shiftId: "shf_6", staffId: "me", state: "requested", exclusive: true },
   { id: "eng_8", shiftId: "shf_6b", staffId: "stf_ava", state: "confirmed" },
   { id: "eng_9", shiftId: "shf_7", staffId: "stf_nia", state: "confirmed" },
-  { id: "eng_10", shiftId: "shf_9", staffId: "me", state: "requested", auto: true, batch: 1, batchSize: 10 },
+  { id: "eng_10", shiftId: "shf_9", staffId: "me", state: "requested", auto: true, batch: 1, batchSize: 10 },,
+  { id: "eng_v1", shiftId: "shf_v1", staffId: "me", state: "requested", exclusive: true },
+  { id: "eng_v2", shiftId: "shf_v2", staffId: "me", state: "requested", auto: true, batch: 1, batchSize: 10 },
+  { id: "eng_v3", shiftId: "shf_v2", staffId: "stf_sam", state: "available", auto: true, batch: 1, batchSize: 10 },
+  { id: "eng_v4", shiftId: "shf_v2", staffId: "stf_don", state: "available", auto: true, batch: 1, batchSize: 10 },
+  { id: "eng_v5", shiftId: "shf_v2", staffId: "stf_ava", state: "available", auto: true, batch: 1, batchSize: 10 },
+  { id: "eng_v6", shiftId: "shf_v2", staffId: "stf_fre", state: "available", auto: true, batch: 1, batchSize: 10 },
+  { id: "eng_v7", shiftId: "shf_v2", staffId: "stf_leo", state: "requested", auto: true, batch: 1, batchSize: 10 },
+  { id: "eng_v8", shiftId: "shf_v2", staffId: "stf_zar", state: "requested", auto: true, batch: 1, batchSize: 10 },
+  { id: "eng_v9", shiftId: "shf_v2", staffId: "stf_jam", state: "unavailable", auto: true, batch: 1, batchSize: 10 },
+  { id: "eng_v10", shiftId: "shf_v2", staffId: "stf_osc", state: "requested", auto: true, batch: 1, batchSize: 10 },
+  { id: "eng_v11", shiftId: "shf_v2", staffId: "stf_mia", state: "requested", auto: true, batch: 1, batchSize: 10 }
 ].map(e => ({ ...e, sentAt: Date.now() - 6 * 36e5, expiresAt: Date.now() + RESPONSE_MS - 6 * 36e5, ...(e.auto ? { selectBy: Date.now() + 7 * 864e5 - 6 * 36e5, thread: [] } : { thread: [] }), history: [{ state: e.state, at: Date.now() }] }));
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -2661,7 +2676,7 @@ const initialState = {
   },
   directory: DIRECTORY,
   selection: [],
-  events: DEMO_EVENTS, shifts: DEMO_SHIFTS, engagements: DEMO_ENGAGEMENTS, af17: { shf_9: { id: "af_demo", shiftId: "shf_9", eventId: "evt_wedding", status: "matching", replacement: false, needBatch: false, exhausted: false, startedAt: Date.now() - 6 * 36e5, batches: [{ n: 1, at: Date.now() - 6 * 36e5, size: 10, respondBy: Date.now() + 18 * 36e5, selectBy: Date.now() + 7 * 864e5 - 6 * 36e5 }] } },
+  events: DEMO_EVENTS, shifts: DEMO_SHIFTS, engagements: DEMO_ENGAGEMENTS, af17: { shf_v2: { id: "af_v2", shiftId: "shf_v2", eventId: "evt_vdin", status: "matching", replacement: false, needBatch: false, exhausted: false, startedAt: Date.now() - 6 * 3600000, batches: [{ n: 1, at: Date.now() - 6 * 3600000, size: 10, respondBy: Date.now() + 18 * 3600000, selectBy: Date.now() + 7 * 86400000 - 6 * 3600000 }] }, shf_9: { id: "af_demo", shiftId: "shf_9", eventId: "evt_wedding", status: "matching", replacement: false, needBatch: false, exhausted: false, startedAt: Date.now() - 6 * 36e5, batches: [{ n: 1, at: Date.now() - 6 * 36e5, size: 10, respondBy: Date.now() + 18 * 36e5, selectBy: Date.now() + 7 * 864e5 - 6 * 36e5 }] } },
   /* FireFlair credits — bought before availability is sent, used only when a
      Service Card is confirmed. balance never includes money for anyone's pay. */
   credits: { balance: 0, log: [] },
@@ -6921,12 +6936,12 @@ function TeamBookings({ guest = false }) {
   const [showPast, setShowPast] = useState(false);
   const signedIn = state.auth.status === "signedIn";
   /* Only the demo profile (SAM42) carries sample bookings. Everyone else starts clean. */
-  const demo = !guest && signedIn && state.auth.tag === "SAM42";
+  const demo = !guest && signedIn && ["SAM42", "ALEXG"].includes(state.auth.tag);
   const all = !demo ? [] : state.engagements.filter(e => e.staffId === "me")
     .map(e => { const shift = state.shifts.find(s2 => s2.id === e.shiftId); return { e, shift, event: shift && state.events.find(v => v.id === shift.eventId) }; })
     .filter(x => x.shift).map(x => ({ ...x, iso: x.shift.iso }));
   const byIso = (a, b) => String(a.iso).localeCompare(String(b.iso));
-  const requests = all.filter(x => ["requested", "discuss", "available"].includes(x.e.state)).sort(byIso);
+  const requests = all.filter(x => ["requested", "discuss", "available"].includes(x.e.state)).filter(x => { const t = startMs17(x.shift); return !(t && t <= now17(state)); }).sort(byIso);
   const upcoming = all.filter(x => ["confirmed"].includes(x.e.state)).sort(byIso);
   const previous = all.filter(x => PAST_STATES.includes(x.e.state)).sort((a, b) => byIso(b, a));
   const goProfile = () => { dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); };
@@ -6965,18 +6980,13 @@ function TeamBookings({ guest = false }) {
       {demo && requests.length > 0 && (
         <section className="ff-bk-sec">
           <h2 className="ff-bk-h"><span className="ff-bk-wa"><WhatsAppIcon size={14} /></span> Invitations <i>{requests.length}</i></h2>
-          {requests.map(x => (
-            <div key={x.e.id} className="ff-bk-req">
-              <Row x={x} onClick={() => setOpen(x.e)} tag={x.e.state === "requested" && x.e.expiresAt ? <span className="ff-bk-left"><Timer size={10} /> {timeLeft(x.e.expiresAt)}</span> : null} />
-              <ProOffer17 e={x.e} shift={x.shift} />
-            </div>
-          ))}
+          {requests.map(x => <ShiftDelivery11 key={x.e.id} e={x.e} shift={x.shift} event={x.event} />)}
         </section>
       )}
 
       <section className="ff-bk-sec">
         <div className="ff-bk-hrow"><h2 className="ff-bk-h">Your bookings {demo && upcoming.length > 0 && <i>{upcoming.length}</i>}</h2><button type="button" className="ff-bk-hist" aria-pressed={showPast} onClick={() => setShowPast(v => !v)}><Clock size={12} /> History</button></div>
-        {upcoming.length ? upcoming.map(x => <div key={x.e.id} className="ff-bk-req"><Row x={x} onClick={() => setOpen(x.e)} tag={<span className="ff-bk-ok">Booked</span>} /><ProOffer17 e={x.e} shift={x.shift} /></div>)
+        {upcoming.length ? upcoming.map(x => <ShiftDelivery11 key={x.e.id} e={x.e} shift={x.shift} event={x.event} />)
           : (
             <BookingsSoon />
           )}
@@ -9363,6 +9373,14 @@ function LoginSheet({ open, onClose }) {
         ["team", "biz", "party"].forEach(k => seedDemo17(state, dispatch, k));
         dispatch({ type: "V11_SET", patch: { devDone: { team: true, biz: true, party: true } } });
         dispatch({ type: "AUTH_SIGNED_IN", tag: "ALEXG", method: "dev" });
+        if (!state.role) dispatch({ type: "ROLE", role: "team" });
+        if (state.role === "staff") {
+          const party = state.site === "party";
+          dispatch({ type: "COMPANY_SAVE", company: party
+            ? { name: "Jennifer Aniston", kind: "Host", location: "London", description: "Hosts private dinners, birthdays and garden parties across London.", saved: true, cardSavedAt: Date.now(), finishedAt: Date.now(), joinedAt: Date.now() }
+            : { name: "Vushka", kind: "Events and hospitality", location: "London", description: "Vushka runs brand events, galas and private dinners across London.", saved: true, finishedAt: Date.now(), joinedAt: Date.now() } });
+          dispatch({ type: "COMPANY_SIGNED_IN", slug: party ? "jenniferaniston" : "vushka" });
+        }
         dispatch({ type: "TOAST", toast: "Complete profile loaded" });
         onClose();
       }}>DEV · complete profile</button>
@@ -9379,6 +9397,7 @@ function Shell({ children }) {
   const [loginOpen, setLoginOpen] = useState(false);
   const [fbOpen, setFbOpen] = useState(false);
   const [notifyOpen, setNotifyOpen] = useState(false);
+  const pend11 = pending11(state);
   useEffect(() => { const h = () => setFbOpen(true); window.addEventListener("ff-feedback", h); return () => window.removeEventListener("ff-feedback", h); }, []);
   const [acctOpen, setAcctOpen] = useState(false);
   useEffect(() => { const h = () => setLoginOpen(true); window.addEventListener("ff-login", h); return () => window.removeEventListener("ff-login", h); }, []);
@@ -9510,7 +9529,7 @@ function Shell({ children }) {
             {NAV.filter(n => n.key !== "__ff").map(n => (
               <button key={n.key} className={state.tab === n.key ? "on" : ""} aria-current={state.tab === n.key ? "page" : undefined} onClick={() => goTab(n.key)}>{tabLabel17(n.key, state, n.label)}</button>
             ))}
-            <button key="__ff" type="button" className="ff-topcoin ff-navcoin" onClick={() => setNotifyOpen(true)} aria-label="Notifications"><Coin size={30} tier="gold" /></button>
+            <button key="__ff" type="button" className="ff-topcoin ff-navcoin" style={{ position: "relative" }} onClick={() => setNotifyOpen(true)} aria-label="Notifications"><Coin size={30} tier="gold" />{pend11.length > 0 && <i className="ff-nbadge11">{pend11.length}</i>}</button>
           </nav>
           <div className="ff-topbar-right">
             {PHASE1.desktopAdd && state.role && (
@@ -9565,8 +9584,8 @@ function Shell({ children }) {
         <div className="ff-bottomnav-in">
           {NAV.map(n => n.key === "__ff" ? (
             <div key="ff" className="ff-navcentre">
-              <button className="ff-coinbtn" onClick={() => setNotifyOpen(true)} aria-label="Notifications">
-                <Coin size={56} tier={isTeam ? xpProgress(state.profile.xp).currentTier : "gold"} />
+              <button className="ff-coinbtn" style={{ position: "relative" }} onClick={() => setNotifyOpen(true)} aria-label="Notifications">
+                <Coin size={56} tier={isTeam ? xpProgress(state.profile.xp).currentTier : "gold"} />{pend11.length > 0 && <i className="ff-nbadge11">{pend11.length}</i>}
               </button>
             </div>
           ) : (
@@ -16855,8 +16874,18 @@ function ReviewPicker17({ onPick, onClose }) {
         {!list.length && <li className="none">Nobody matches yet.</li>}</ul>
     </Sheet>);
 }
+function devHostLogin11(state, dispatch, onClose) {
+  ["team", "biz", "party"].forEach((k) => seedDemo17(state, dispatch, k));
+  dispatch({ type: "V11_SET", patch: { devDone: { team: true, biz: true, party: true } } });
+  dispatch({ type: "SESSION", patch: { tag: "HOSTJENN", phone: "+44 7700 900777", verified: true } });
+  dispatch({ type: "AUTH_SIGNED_IN", tag: "HOSTJENN", method: "dev" });
+  dispatch({ type: "COMPANY_SAVE", company: { name: "Jennifer Aniston", kind: "Host", location: "London", photo: avatarFor("Jennifer Aniston"), profession: "Host and event planner", interests: "Dinner parties, live music, travel", drinks: "Espresso Martini, Champagne", socials: { whatsapp: "+44 7700 900777", instagram: "@jenniferhosts", linkedin: "jennifer-hosts" }, description: "Hosts private dinners, birthdays and garden parties across London.", saved: true, cardSavedAt: Date.now(), finishedAt: Date.now(), joinedAt: Date.now() } });
+  dispatch({ type: "COMPANY_SIGNED_IN", slug: "jenniferaniston" });
+  dispatch({ type: "TOAST", toast: "Complete host profile loaded" });
+  onClose();
+}
 function PartyLoginSheet17({ onClose }) {
-  const { dispatch } = useStore();
+  const { state, dispatch } = useStore();
   const [phone, setPhone] = useState("");
   const [pw, setPw] = useState("");
   const [busy, setBusy] = useState(false);
@@ -16878,6 +16907,7 @@ function PartyLoginSheet17({ onClose }) {
       <Field label="Password"><input className="ff-input" type="password" autoComplete="current-password" value={pw} onChange={(e) => setPw(e.target.value)} onKeyDown={(e) => e.key === "Enter" && ok && !busy && go()} /></Field>
       <Btn variant="primary wide" disabled={busy || !ok} onClick={go}>{busy ? <Loader2 size={14} className="ff-spin" /> : <ShieldCheck size={14} />} Log in</Btn>
       {err && <p className="ff-body" role="alert" style={{ color: "var(--bad)", fontSize: 12.5, margin: "12px 0 0" }}>{err}</p>}
+      <button type="button" className="ff-dev17 login" onClick={() => devHostLogin11(state, dispatch, onClose)}>DEV · complete host profile</button>
     </Sheet>);
 }
 function StaffProfile() {
@@ -17034,6 +17064,10 @@ function CardPeek() {
   const added = inBar || !!onShift;
   const av = ev && availabilityFor(state, p.id, ev.iso);
   const close = () => dispatch({ type: "PEEK", id: null });
+  const inNet = (state.connections || []).some(c => c.id === p.id), inTeam = (state.myTeam11 || []).includes(p.id);
+  const favT = () => { dispatch({ type: "FAV_TOGGLE", id: p.id }); dispatch({ type: "TOAST", toast: fav ? `${firstName(p.name)} removed from your favourites` : `${firstName(p.name)} added to your favourites` }); };
+  const netT = () => { if (inNet) { dispatch({ type: "TOAST", toast: `${firstName(p.name)} is already in your network` }); return; } dispatch({ type: "CONNECT", people: [{ id: p.id, name: p.name, note: p.profession || "", onFF: true, tag: p.tag }] }); dispatch({ type: "TOAST", toast: `${firstName(p.name)} added to your network` }); };
+  const teamT = () => { dispatch({ type: "TEAM11_TOGGLE", id: p.id }); dispatch({ type: "TOAST", toast: inTeam ? `${firstName(p.name)} removed from your team` : `${firstName(p.name)} added to your team` }); };
   const add = () => {
     const name = firstName(p.name);
     if (!inBar) dispatch({ type: "SELECT_ADD", id: p.id });
@@ -17062,11 +17096,17 @@ function CardPeek() {
         {ev && <p className="ff-peek-ev"><I11.CalendarDays size={13} /> {eventTitle(ev)}{eventTitle(ev).includes(shortDay(ev.iso)) ? "" : ` · ${shortDay(ev.iso)}`}
           {av && <span className={`ff-pill ${availTone(av.answer)}`}>{av.answer === "Yes" ? "Available" : av.answer === "No" ? "Not free" : "Maybe"}</span>}</p>}
         <div className="ff-peek-acts">
-          {added
-            ? <Btn variant="ghost wide" onClick={remove}><I11.Check size={14} /> {onShift ? `On ${onShift.role || sv.a}` : "In your event"} · Remove</Btn>
-            : <Btn variant="primary wide" onClick={add}><I11.Plus size={14} /> Add to your event</Btn>}
+          {sv.party ? (<>
+            {added
+              ? <Btn variant="ghost wide" onClick={remove}><I11.Check size={14} /> {onShift ? `On ${onShift.role || sv.a}` : "In your booking"} · Remove</Btn>
+              : <Btn variant="primary wide" onClick={add}><I11.Plus size={14} /> Add to booking</Btn>}
+            <Btn variant="wide ghost" onClick={favT}>{fav ? <><I11.Check size={14} /> In your favourites</> : <><I11.Heart size={14} /> Add to favourites</>}</Btn>
+          </>) : (<>
+            <Btn variant={inNet ? "ghost wide" : "primary wide"} onClick={netT}>{inNet ? <><I11.Check size={14} /> In your network</> : <><I11.Plus size={14} /> Add to network</>}</Btn>
+            <Btn variant={inTeam ? "ghost wide" : "wide"} onClick={teamT}>{inTeam ? <><I11.Check size={14} /> In your team</> : <><I11.Plus size={14} /> Add to team</>}</Btn>
+            <Btn variant="wide ghost" onClick={favT}>{fav ? <><I11.Check size={14} /> In your favourites</> : <><I11.Heart size={14} /> Add to favourites</>}</Btn>
+          </>)}
           <Btn variant="wide" onClick={() => { close(); dispatch({ type: "VIEW", id: p.id, direct: true }); window.scrollTo(0, 0); }}><I11.Eye size={14} /> View profile</Btn>
-          {sv.party && <Btn variant="wide ghost" onClick={() => { dispatch({ type: "FAV_TOGGLE", id: p.id }); dispatch({ type: "TOAST", toast: fav ? `${firstName(p.name)} removed from your favourites` : `${firstName(p.name)} added to your favourites` }); }}>{fav ? <><I11.Check size={14} /> In your favourites</> : <><I11.Heart size={14} /> Add to favourites</>}</Btn>}
         </div>
       </div>
     </div>
@@ -17144,7 +17184,7 @@ function flowInfo(state, ev) {
   const has1 = evComplete(ev), has2 = hasShifts && shifts.every(detailsOK), has3 = hasShifts && shifts.every(staffPlanned);
   return { shifts, has1, has2, has3, hasShifts, sent, doneN: [has1, has2, has3, sent].filter(Boolean).length };
 }
-const teamOf = (state, all) => [...new Set(state.engagements.filter(e => DONE.includes(e.state)).map(e => e.staffId))]
+const teamOf = (state, all) => [...new Set([...(state.myTeam11 || []), ...state.engagements.filter(e => DONE.includes(e.state)).map(e => e.staffId)])]
   .filter(id => id !== "me").map(id => all.find(p => p.id === id)).filter(p => p && !p.isCompany);
 const engText = (e) => e.filled ? "Shift filled" : e.state === "requested" ? "Waiting for reply" : ENG_LABEL[e.state];
 const areaOf = (ev) => String((ev && ev.venue) || "").split(",").slice(1).join(" ").trim() || String((ev && ev.venue) || "");
@@ -20017,6 +20057,225 @@ function PartyBrowse17() {
 }
 
 /* The FF coin is the notification centre on every site. Next steps (and XP, later) sit under the notifications. */
+/* ==== v1.1 Shift delivery ====================================================================
+   One Shift card for the person being booked, in two flavours that share the same layout:
+     selected   the business chose you (engagement.exclusive). Reply Yes, No or Ask a question.
+     autofill   one of up to 10 invited (engagement.auto). Yes means "available": the business then chooses.
+   Every action is the same record the WhatsApp buttons change (AF_RESPOND). WhatsApp allows at most three
+   buttons, so the card has three too: Yes, No, Ask a question. Confirmed bookings keep a quiet
+   "Can't make it?" link: refer someone, invite someone new, or a hard cancel (back to Autofill).
+   Cream background, burgundy and black only. PROTOTYPE: the WhatsApp text is shown, not sent. */
+const SD11_CSS = `
+.ff .ff-sd11{--bg:#F4EFE4;--bg2:#FBF8F1;--bur:#6B1226;--ink:#0B0B0C;background:var(--bg2);color:var(--ink);border:1.5px solid var(--bur);border-radius:22px;corner-shape:squircle;overflow:hidden;margin:0 0 14px;text-align:left}
+.ff .ff-sd11 .hd{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 16px;background:var(--bur);color:#FBF8F1;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+.ff .ff-sd11.auto .hd{background:var(--bg);color:var(--bur);border-bottom:1.5px solid var(--bur)}
+.ff .ff-sd11 .hd small{font-size:11px;letter-spacing:.04em;text-transform:none;font-weight:600;opacity:.9}
+.ff .ff-sd11 .bd{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px}
+.ff .ff-sd11 h3{margin:0;font-size:21px;line-height:1.15;color:var(--ink)}
+.ff .ff-sd11 .ev{margin:0;font-size:14px;color:var(--ink);opacity:.8}
+.ff .ff-sd11 dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0;font-size:14px}
+.ff .ff-sd11 dt{color:var(--bur);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding-top:2px}
+.ff .ff-sd11 dd{margin:0;color:var(--ink)}
+.ff .ff-sd11 .nt{margin:0;padding:9px 12px;background:var(--bg);border-radius:14px;corner-shape:squircle;font-size:13.5px}
+.ff .ff-sd11 .by{margin:0;font-size:12.5px;color:var(--bur);font-weight:600}
+.ff .ff-sd11 .btns{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.ff .ff-sd11 .btns button{min-height:44px;border-radius:999px;border:1.5px solid var(--bur);background:var(--bg2);color:var(--bur);font-weight:700;font-size:14px;cursor:pointer;padding:0 8px;white-space:nowrap}
+.ff .ff-sd11 .btns button.yes{background:var(--bur);color:#FBF8F1}
+.ff .ff-sd11 .btns button.no{background:var(--ink);border-color:var(--ink);color:#FBF8F1}
+.ff .ff-sd11 .ask{display:flex;flex-direction:column;gap:8px}
+.ff .ff-sd11 .ask .chips{display:flex;flex-wrap:wrap;gap:6px}
+.ff .ff-sd11 .ask .chips button{border:1px solid var(--bur);background:var(--bg);color:var(--bur);border-radius:999px;padding:5px 10px;font-size:12.5px;cursor:pointer}
+.ff .ff-sd11 .ask input,.ff .ff-sd11 .cm input{border:1.5px solid var(--ink);border-radius:14px;corner-shape:squircle;padding:10px 12px;font-size:14px;background:#fff;color:var(--ink);width:100%}
+.ff .ff-sd11 .thread p{margin:2px 0;font-size:13px}
+.ff .ff-sd11 .wa{font-size:12.5px;border-top:1px solid rgba(107,18,38,.25);padding-top:8px}
+.ff .ff-sd11 .wa summary{cursor:pointer;color:var(--bur);font-weight:600}
+.ff .ff-sd11 .wa .bub{margin:8px 0 0;padding:10px 12px;background:#E7F5D9;color:#0B0B0C;border-radius:14px 14px 14px 4px;font-size:13px;white-space:pre-line}
+.ff .ff-sd11 .wa .bub i{display:block;margin-top:8px;font-style:normal;font-size:12px;color:#0B0B0C;opacity:.75}
+.ff .ff-sd11 .ok{margin:0;font-weight:700;color:var(--bur)}
+.ff .ff-sd11 .mute{margin:0;font-size:13.5px;opacity:.75}
+.ff .ff-sd11 .quiet{align-self:flex-start;background:none;border:0;padding:2px 0;color:var(--ink);opacity:.6;font-size:12.5px;text-decoration:underline;cursor:pointer}
+.ff .ff-sd11 .cm{display:flex;flex-direction:column;gap:8px;border-top:1px solid rgba(107,18,38,.25);padding-top:10px}
+.ff .ff-sd11 .cm button.row{display:flex;align-items:center;gap:10px;text-align:left;border:1.5px solid var(--bur);background:var(--bg2);border-radius:16px;corner-shape:squircle;padding:10px 12px;font-size:14px;color:var(--ink);cursor:pointer;width:100%}
+.ff .ff-sd11 .cm button.row b{color:var(--bur)}
+.ff .ff-sd11 .cm button.hard{border-color:var(--ink)}
+.ff .ff-sd11 .proto{font-size:12px;opacity:.8}
+.ff .ff-sd11 .proto button{margin:4px 6px 0 0;border:1px dashed var(--bur);background:none;color:var(--bur);border-radius:999px;padding:4px 10px;cursor:pointer;font-size:12px}
+.ff .ff-sd11.mini .bd{gap:8px;padding:12px 14px}
+.ff .ff-sd11.mini h3{font-size:17px}
+.ff-av11{display:flex;flex-direction:column;gap:8px;width:210px;flex:none;background:#FBF8F1;color:#0B0B0C;border:1.5px solid #6B1226;border-radius:20px;corner-shape:squircle;padding:12px;text-align:center;align-items:center}
+.ff-av11 b{font-size:15px}.ff-av11 small{font-size:12px;opacity:.75}
+.ff-av11 button.pick{width:100%;min-height:40px;border-radius:999px;border:0;background:#6B1226;color:#FBF8F1;font-weight:700;cursor:pointer}
+.ff-av11 button.pick:disabled{opacity:.45;cursor:default}
+.ff-av11 button.prof{background:none;border:0;color:#6B1226;text-decoration:underline;font-size:12.5px;cursor:pointer}
+.ff-nbadge11{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#6B1226;color:#FBF8F1;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;border:1.5px solid #FBF8F1}
+.ff-ntf17 .ff-sdlist11{display:flex;flex-direction:column;gap:10px;margin:0 0 12px}
+`;
+
+if (typeof document !== "undefined" && !document.getElementById("ff-sd11-css")) { const st11 = document.createElement("style"); st11.id = "ff-sd11-css"; st11.textContent = SD11_CSS; document.head.appendChild(st11); }
+const hirerOf11 = (state, ev) => (ev && ev.hirer) || (state.company && (state.company.name || state.company.title)) || "The host";
+const whenOf11 = (sh) => `${shortDay(sh.iso) || sh.date || ""}${sh.time ? ` · ${sh.time}` : ""}`;
+/* The WhatsApp message that goes with a Shift card. Selected and Autofill read differently; the card is the same. */
+const waMsg11 = (state, e, sh, ev) => {
+  const h = hirerOf11(state, ev), when = whenOf11(sh), place = sh.venue || (ev && ev.venue) || "";
+  return e.auto
+    ? `${h} needs a ${sh.role} on ${when}${place ? ` at ${place}` : ""}.\nYou're one of ${e.batchSize || 10} people invited. If you're free, tap Yes and ${h} will choose from everyone available.`
+    : `${h} has chosen you as ${sh.role} on ${when}${place ? ` at ${place}` : ""}.\nThe shift is held for you until ${dt17(e.expiresAt)}. Tap Yes to confirm it.`;
+};
+const pending11 = (state) => !(state.auth && state.auth.status === "signedIn" && ["SAM42", "ALEXG"].includes(state.auth.tag) && state.role === "team") ? [] : (state.engagements || []).filter(e => e.staffId === "me" && ["requested", "discuss"].includes(e.state) && (e.auto || e.exclusive)).filter(e => { const sh = state.shifts.find(x => x.id === e.shiftId); const st = sh && startMs17(sh); return sh && !(st && st <= now17(state)) && !(e.expiresAt && e.expiresAt <= now17(state)); });
+
+function ShiftDelivery11({ e, shift, event, mini, onDone }) {
+  const { state, dispatch } = useStore();
+  const all = useDirectory();
+  const [ask, setAsk] = useState(false), [txt, setTxt] = useState(""), [mode, setMode] = useState(null), [nm, setNm] = useState(""), [ph, setPh] = useState("");
+  if (!shift) return null;
+  const now = now17(state), st = startMs17(shift), ended = !!(st && st <= now);
+  const pend = ["requested", "discuss"].includes(e.state), avail = e.state === "available", conf = e.state === "confirmed";
+  const hirer = hirerOf11(state, event);
+  const go = (as, text) => dispatch({ type: "AF_RESPOND", id: e.id, as, text });
+  const yes = () => { go(e.auto ? "available" : "accept"); dispatch({ type: "TOAST", toast: e.auto ? "Marked available. The host will choose" : "Confirmed. It's in your bookings" }); onDone && onDone(); };
+  const no = () => { go("unavailable"); dispatch({ type: "TOAST", toast: "Declined. The host has been told" }); onDone && onDone(); };
+  const send = () => { if (!txt.trim()) return; go("discuss", txt.trim()); setTxt(""); setAsk(false); };
+  const people = (state.connections || []).map(c => findPerson(all, state, c.id)).filter(p => p && !p.isCompany && p.id !== "me").slice(0, 8);
+  const handTo = e.handover && ((findPerson(all, state, (state.engagements.find(x => x.id === e.handover.to) || {}).staffId) || {}).name || e.handover.name);
+  const handEng = e.handover && state.engagements.find(x => x.id === e.handover.to);
+  const kind = e.auto ? "auto" : "sel";
+  const rows = (
+    <dl>
+      <dt>Role</dt><dd>{shift.role}{qtyOf(shift) > 1 ? ` · ${qtyOf(shift)} needed` : ""}</dd>
+      <dt>When</dt><dd>{whenOf11(shift)}</dd>
+      <dt>Where</dt><dd>{shift.venue || (event && event.venue) || "To be confirmed"}</dd>
+      <dt>Pay</dt><dd>{shift.pay || "Agreed with the host"}</dd>
+      <dt>Dress</dt><dd>{shift.dress || "To be confirmed"}</dd>
+      <dt>Hired by</dt><dd>{hirer}</dd>
+    </dl>
+  );
+  const thread = (e.thread || []).length > 0 && <div className="thread">{e.thread.map((m, i) => <p key={i}>{m.from === "pro" ? "You: " : `${hirer}: `}{m.text}</p>)}</div>;
+  return (
+    <article className={`ff-sd11 ${kind}${mini ? " mini" : ""}`} aria-label={`Shift card: ${shift.role}`}>
+      <div className="hd"><span>{e.auto ? "Open shift" : "Chosen for you"}</span><small>{pend ? (e.auto ? `Reply by ${dt17(e.expiresAt)}` : `Held until ${dt17(e.expiresAt)}`) : avail ? "Waiting for the host" : conf ? `Ref ${e.ref || ref17(e)}` : ""}</small></div>
+      <div className="bd">
+        <h3>{shift.role}</h3>
+        <p className="ev">{event ? eventTitle(event) : ""}</p>
+        {!mini && rows}
+        {mini && <p className="ev">{whenOf11(shift)}</p>}
+        {!mini && shift.notes ? <p className="nt">{shift.notes}</p> : null}
+        {!mini && <p className="by">{tcsLine(state, shift)}</p>}
+        {thread}
+        {pend && !ended && (<>
+          <div className="btns" role="group" aria-label="Your reply">
+            <button type="button" className="yes" onClick={yes}>Yes</button>
+            <button type="button" className="no" onClick={no}>No</button>
+            <button type="button" onClick={() => setAsk(!ask)} aria-expanded={ask}>Ask</button>
+          </div>
+          {ask && <div className="ask">
+            <div className="chips">{QUICK17.map(q => <button key={q} type="button" onClick={() => setTxt(q)}>{q}</button>)}</div>
+            <input aria-label="Your question" value={txt} onChange={(x) => setTxt(x.target.value.slice(0, 200))} placeholder="Your question" />
+            <div className="btns" style={{ gridTemplateColumns: "1fr" }}><button type="button" className="yes" disabled={!txt.trim()} onClick={send}>Send question</button></div>
+          </div>}
+          <details className="wa"><summary>How this reaches you on WhatsApp</summary>
+            <p className="bub">{waMsg11(state, e, shift, event)}<i>Yes · No · Ask a question</i></p></details>
+        </>)}
+        {pend && ended && <p className="mute">This shift has started.</p>}
+        {avail && (<>
+          <p className="ok">You're available. {hirer} will choose by {dt17(e.selectBy)}.</p>
+          <div className="btns" style={{ gridTemplateColumns: "1fr 1fr" }}>
+            <button type="button" onClick={() => go("withdraw")}>Withdraw</button>
+            <button type="button" onClick={() => setAsk(!ask)}>Ask</button>
+          </div>
+          {ask && <div className="ask"><input aria-label="Your question" value={txt} onChange={(x) => setTxt(x.target.value.slice(0, 200))} placeholder="Your question" /><div className="btns" style={{ gridTemplateColumns: "1fr" }}><button type="button" className="yes" disabled={!txt.trim()} onClick={send}>Send question</button></div></div>}
+        </>)}
+        {conf && (<>
+          <p className="ok">Confirmed</p>
+          {e.handover && !e.handover.done && <p className="mute">Handover offered to {handTo || "your referral"}. You stay booked until they confirm.</p>}
+          {e.handover && !e.handover.done && handEng && handEng.state === "requested" && (
+            <div className="proto">Prototype: <button type="button" onClick={() => dispatch({ type: "SHIFT_REFER_ACCEPT", id: handEng.id })}>{handTo || "They"} accept</button></div>)}
+          {!ended && !(e.handover && !e.handover.done) && mode === null && <button type="button" className="quiet" onClick={() => setMode("menu")}>Can't make it?</button>}
+          {mode === "menu" && (
+            <div className="cm">
+              <button type="button" className="row" onClick={() => setMode("refer")}><b>Refer a team member</b></button>
+              <button type="button" className="row" onClick={() => setMode("invite")}><b>Invite someone new</b></button>
+              <button type="button" className="row hard" onClick={() => setMode("cancel")}><b>Cancel the shift</b></button>
+              <button type="button" className="quiet" onClick={() => setMode(null)}>Back</button>
+            </div>)}
+          {mode === "refer" && (
+            <div className="cm">
+              {people.length === 0 && <p className="mute">No one in your network yet.</p>}
+              {people.map(p => <button key={p.id} type="button" className="row" onClick={() => { dispatch({ type: "SHIFT_REFER", id: e.id, personId: p.id }); dispatch({ type: "TOAST", toast: `${firstName(p.name)} has been asked to take your shift` }); setMode(null); }}><Portrait src={p.photo} name={p.name} size={28} /><span><b>{p.name}</b><br /><small>{p.profession}</small></span></button>)}
+              <button type="button" className="quiet" onClick={() => setMode("menu")}>Back</button>
+            </div>)}
+          {mode === "invite" && (
+            <div className="cm">
+              <input aria-label="Their name" value={nm} onChange={(x) => setNm(x.target.value)} placeholder="Their name" />
+              <input aria-label="Their mobile number" value={ph} onChange={(x) => setPh(x.target.value)} placeholder="Mobile number" inputMode="tel" />
+              <div className="btns" style={{ gridTemplateColumns: "1fr" }}><button type="button" className="yes" disabled={!nm.trim() || !ph.trim()} onClick={() => { dispatch({ type: "SHIFT_REFER", id: e.id, name: nm.trim(), phone: ph.trim() }); dispatch({ type: "TOAST", toast: `${nm.trim()} has been invited to take your shift` }); setMode(null); }}>Send invitation</button></div>
+              <button type="button" className="quiet" onClick={() => setMode("menu")}>Back</button>
+            </div>)}
+          {mode === "cancel" && (
+            <div className="cm">
+              <p className="mute">Cancelling returns this shift to Autofill and affects your reputation. Referring someone keeps it.</p>
+              <div className="btns" style={{ gridTemplateColumns: "1fr 1fr" }}>
+                <button type="button" className="no" onClick={() => { dispatch({ type: "SHIFT_HARD_CANCEL", id: e.id }); dispatch({ type: "TOAST", toast: "Shift cancelled. The host has been told" }); setMode(null); onDone && onDone(); }}>Cancel shift</button>
+                <button type="button" onClick={() => setMode(null)}>Keep it</button>
+              </div>
+            </div>)}
+        </>)}
+        {e.state === "unavailable" && <p className="mute">You said no.</p>}
+        {e.state === "withdrawn" && <p className="mute">You withdrew.</p>}
+        {e.state === "expired" && <p className="mute">This request has ended.</p>}
+        {e.state === "not_selected" && <p className="mute">{e.filled ? "This shift has been filled." : "You weren't chosen for this one."}</p>}
+        {e.state === "cancelled_pro" && <p className="mute">{e.handedOver ? "Handed over. Your reputation is kept." : "You cancelled this shift."}</p>}
+        {["completed", "signed_off", "paid"].includes(e.state) && <p className="mute">Worked.</p>}
+      </div>
+    </article>
+  );
+}
+
+/* Referral, hard cancel and handover. Returns the new state, or null for any other action. */
+function ship11Reduce(s, a) {
+  const now = now17(s);
+  if (a.type === "TEAM11_TOGGLE") { const t = s.myTeam11 || []; return { ...s, myTeam11: t.includes(a.id) ? t.filter(x => x !== a.id) : [...t, a.id] }; }
+  if (a.type === "SHIFT_HARD_CANCEL") {
+    const e = s.engagements.find(x => x.id === a.id); if (!e || e.state !== "confirmed") return null;
+    const n = auto17Reduce(s, { type: "PRO_CANCEL", id: a.id });
+    return { ...n, rep11: [...(n.rep11 || []), { at: now, kind: "hard_cancel", shiftId: e.shiftId, staffId: e.staffId }] };
+  }
+  if (a.type === "SHIFT_REFER") {
+    const e = s.engagements.find(x => x.id === a.id); if (!e || e.state !== "confirmed" || e.handover) return null;
+    const sh = s.shifts.find(x => x.id === e.shiftId); if (!sh) return null;
+    const nid = uid("eng"), who = a.personId || uid("inv");
+    const t = { id: nid, shiftId: e.shiftId, staffId: who, invitedName: a.name || "", invitedPhone: a.phone || "", state: "requested", exclusive: true, referredBy: e.staffId, thread: [], sentAt: now, expiresAt: now + 48 * 36e5, history: [{ state: "requested", at: now }] };
+    let n = { ...s, engagements: [...s.engagements.map(x => x.id === e.id ? { ...x, handover: { to: nid, name: a.name || "", at: now } } : x), t] };
+    n = note17(n, { to: "pro", staffId: who, eventId: sh.eventId, shiftId: sh.id, text: `You've been asked to take over ${sh.role} on ${whenOf11(sh)}. Tap Yes to confirm it.` });
+    n = note17(n, { to: "booker", eventId: sh.eventId, shiftId: sh.id, text: `${sh.role}: your professional has offered the shift to someone else. They stay booked until the new person confirms.` });
+    return audit17(n, "Professional", `Handover offered for ${ref17(e)} (${sh.role})`);
+  }
+  if (a.type === "SHIFT_REFER_ACCEPT") {
+    const t = s.engagements.find(x => x.id === a.id); const m = t && s.engagements.find(x => x.handover && x.handover.to === t.id); if (!m) return null;
+    const sh = s.shifts.find(x => x.id === t.shiftId);
+    let n = { ...s, engagements: s.engagements.map(x => x.id === m.id ? mark17(x, "cancelled_pro", now, { handedOver: true, repKept: true, handover: { ...x.handover, done: true } }) : x), shifts: s.shifts.map(x => x.id === sh.id ? { ...x, staffIds: staffOf(x).filter(p => p !== m.staffId), staffId: staffOf(x).filter(p => p !== m.staffId)[0] || "" } : x) };
+    n = confirm17(n, { ...t });
+    n = note17(n, { to: "booker", eventId: sh.eventId, shiftId: sh.id, text: `${sh.role}: the new person has confirmed. Your booking is unchanged.` });
+    return { ...n, rep11: [...(n.rep11 || []), { at: now, kind: "handover", shiftId: sh.id, staffId: m.staffId }] };
+  }
+  return null;
+}
+
+/* The host's view of someone who said they're available: a card, with Choose. */
+function AvailCard11({ e, who, disabledWhy, onChoose, onProfile }) {
+  const { state } = useStore();
+  const n = reviewRecordsFor(state, who.id || "").length;
+  return (
+    <div className="ff-av11">
+      <Portrait src={who.photo} name={who.name} size={56} tier={who.tier} />
+      <b>{who.name}</b>
+      <small>{who.profession || "Professional"}</small>
+      <small>{n} review{n === 1 ? "" : "s"}</small>
+      <button type="button" className="pick" disabled={!!disabledWhy} title={disabledWhy || ""} onClick={onChoose}>Choose {firstName(who.name)}</button>
+      <button type="button" className="prof" onClick={onProfile}>View profile</button>
+    </div>
+  );
+}
+
 function NotifySheet17({ open, onClose }) {
   const { state, dispatch } = useStore();
   const all = useDirectory();
@@ -20024,6 +20283,7 @@ function NotifySheet17({ open, onClose }) {
   useEffect(() => { if (open) dispatch({ type: "NOTES_SEEN" }); }, [open]);
   if (!open) return null;
   const notes = bookingNotes(state, all);
+  const reqs11 = pending11(state);
   const items = [];
   (state.events || []).forEach(ev => {
     const open_ = (state.shifts || []).filter(x => x.eventId === ev.id && !(x.staffIds && x.staffIds.length) && !x.staffId && x.route !== "auto").length;
@@ -20035,11 +20295,12 @@ function NotifySheet17({ open, onClose }) {
     <Sheet open onClose={onClose} title={tab === "n" ? "Notifications" : "Next steps"}>
       <div className="ff-ntf17">
         <div className="seg" role="tablist" aria-label="Notifications and next steps">
-          <button type="button" role="tab" aria-selected={tab === "n"} className={tab === "n" ? "on" : ""} onClick={() => setTab("n")}>Notifications{notes.length + items.length > 0 && <em>{notes.length + items.length}</em>}</button>
+          <button type="button" role="tab" aria-selected={tab === "n"} className={tab === "n" ? "on" : ""} onClick={() => setTab("n")}>Notifications{notes.length + items.length + reqs11.length > 0 && <em>{notes.length + items.length + reqs11.length}</em>}</button>
           <button type="button" role="tab" aria-selected={tab === "s"} className={tab === "s" ? "on" : ""} onClick={() => setTab("s")}>Next steps</button>
         </div>
         {tab === "n" ? (<>
-          {items.length === 0 && notes.length === 0 ? <p className="none">You are all caught up.</p> : (<>
+          {reqs11.length > 0 && <div className="ff-sdlist11">{reqs11.map(e => { const sh = state.shifts.find(x => x.id === e.shiftId); return <ShiftDelivery11 key={e.id} mini e={e} shift={sh} event={sh && state.events.find(x => x.id === sh.eventId)} onDone={onClose} />; })}</div>}
+          {items.length === 0 && notes.length === 0 && reqs11.length === 0 ? <p className="none">You are all caught up.</p> : (<>
             {items.length > 0 && <ul>{items.map(i => (
               <li key={i.id}><button type="button" onClick={() => { onClose(); i.go(); window.scrollTo(0, 0); }}><b>{i.t}</b><small>{i.sub}</small><S17I.ArrowRight size={16} /></button></li>))}</ul>}
             {notes.length > 0 && <ul className="ff-notes11">{notes.map(n => (
@@ -21529,6 +21790,7 @@ const end17 = (s, shiftId, status, reason) => {
 
 /* ---- The reducer. Called from v11BookReducer; returns null for anything else. ---- */
 function auto17Reduce(s, a) {
+  const r11 = ship11Reduce(s, a); if (r11) return r11;
   const now = now17(s);
   switch (a.type) {
     case "AF_ROUTE": {
@@ -21755,9 +22017,7 @@ function AutoPanel17({ sh, ev }) {
       {af && af.status === "matching" && af.exhausted && <p className="ln">Everyone who matches has been invited.</p>}
       {avail.length > 0 && (<>
         <h4 className="h">{avail.length} available. Choose one to confirm</h4>
-        <ul className="ff-replies">{avail.map(e => { const p = who(e.staffId), why = pickCheck17(state, e); return (
-          <li key={e.id}><Portrait src={p.photo} name={p.name} size={26} /><span><b>{p.name}</b><small>Confirm by {dt17(e.selectBy)}</small></span>
-            <button type="button" className="ff-acc" disabled={!!why} title={why} onClick={() => { dispatch({ type: "AF_PICK", id: e.id }); dispatch({ type: "TOAST", toast: `${firstName(p.name)} confirmed for ${sh.role}` }); }}>Confirm {firstName(p.name)}</button></li>); })}</ul>
+        <HScroll label="Available professionals">{avail.map(e => { const p = who(e.staffId), why = pickCheck17(state, e); return <AvailCard11 key={e.id} e={e} who={p} disabledWhy={why} onChoose={() => { dispatch({ type: "AF_PICK", id: e.id }); dispatch({ type: "TOAST", toast: `${firstName(p.name)} confirmed for ${sh.role}` }); }} onProfile={() => dispatch({ type: "PEEK", id: p.id })} />; })}</HScroll>
       </>)}
       {talk.length > 0 && (<>
         <h4 className="h">Questions before they commit</h4>
