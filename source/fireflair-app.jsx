@@ -6849,6 +6849,26 @@ function WhatsAppIcon({ size = 20 }) {
 }
 
 
+/* The "Your bookings" panel on FF Team Bookings, as on ffteam.uk: requests arrive on WhatsApp, with the three things that open with FF Staff and FF Party. */
+function BookingsSoon() {
+  return (
+    <div className="ff-soonpanel">
+      <div className="ff-wa" style={{ marginBottom: 12 }}>
+        <span className="ff-wa-ico"><WhatsAppIcon size={22} /></span>
+        <span className="ff-body" style={{ color: "#0B3D22", fontSize: 13.5 }}>
+          <b>Requests come to you on WhatsApp.</b> When companies and clients ask if you're free, each request is sent to you directly on WhatsApp and shows here. You reply in either place.
+        </span>
+      </div>
+      <p className="ff-soonpanel-lede">Your booked shifts will be shown here. Bookings open with FF Staff and FF Party.</p>
+      <div className="ff-soongrid">
+        <SoonCard icon={WaGlyph} title="Requests from companies" note="Businesses ask if you're free, on WhatsApp. You reply there or here." when="Coming with FF Staff" />
+        <SoonCard icon={Calendar} title="Booked shifts" note="Confirmed shifts with the venue, times and directions, in one place." when="Coming with FF Staff and FF Party" />
+        <SoonCard icon={Wallet} title="Booking passes" note="Each confirmed booking as a pass in Apple Wallet or Google Wallet." when="Coming soon" />
+      </div>
+    </div>
+  );
+}
+
 function TeamBookings({ guest = false }) {
   const { state, dispatch } = useStore();
   const [open, setOpen] = useState(null);
@@ -6909,14 +6929,10 @@ function TeamBookings({ guest = false }) {
       )}
 
       <section className="ff-bk-sec">
-        <div className="ff-bk-hrow"><h2 className="ff-bk-h">Upcoming bookings {demo && upcoming.length > 0 && <i>{upcoming.length}</i>}</h2><button type="button" className="ff-bk-hist" aria-pressed={showPast} onClick={() => setShowPast(v => !v)}><Clock size={12} /> History</button></div>
+        <div className="ff-bk-hrow"><h2 className="ff-bk-h">Your bookings {demo && upcoming.length > 0 && <i>{upcoming.length}</i>}</h2><button type="button" className="ff-bk-hist" aria-pressed={showPast} onClick={() => setShowPast(v => !v)}><Clock size={12} /> History</button></div>
         {upcoming.length ? upcoming.map(x => <div key={x.e.id} className="ff-bk-req"><Row x={x} onClick={() => setOpen(x.e)} tag={<span className="ff-bk-ok">Booked</span>} /><ProOffer17 e={x.e} shift={x.shift} /></div>)
           : (
-            <div className="ff-bk-empty">
-              <b>No bookings yet</b>
-              <span>{guest || !signedIn ? "Log in or build your Profile Card and companies can book you. Each request arrives on WhatsApp and shows here." : "When a company books you, it shows here."}</span>
-              {!signedIn && <Btn variant="primary" onClick={goProfile}><User size={14} /> Build my Profile Card</Btn>}
-            </div>
+            <BookingsSoon />
           )}
         {showPast && (previous.length ? previous.map(x => <Row key={x.e.id} x={x} onClick={() => setOpen(x.e)} tag={<span className="ff-bk-done">Worked</span>} />)
           : <p className="ff-bk-none">No past bookings yet.</p>)}
@@ -6937,7 +6953,9 @@ function TeamBookings({ guest = false }) {
         </HScroll>
       </section>
 
-      <TeamExtras17 />
+      <Drop17 id="ff-bk-training" title="Training" icon={E17I.GraduationCap}><InterestSection kind="training" inner /></Drop17>
+      <Drop17 id="ff-bk-jobs" title="Dream jobs" icon={E17I.Plane}><InterestSection kind="jobs" inner /></Drop17>
+      <Drop17 id="ff-bk-rewards" title="FireFlair rewards" icon={E17I.Gift}><InterestSection kind="rewards" inner /></Drop17>
       <V101.BusinessSupport19 />
 
       <BookingSheet engagement={open} onClose={() => setOpen(null)} />
@@ -12106,7 +12124,17 @@ const interestCfg = (kind) => {
     ok: "Interest registered — we'll tell you when FF Rewards open", follow: "We'll tell you when FF Rewards open.", noun: "rewards",
   };
 };
-function InterestSection({ kind }) {
+/* Inside a drop-down box on Bookings: the same interest section, without its own heading or dark panel. */
+function InterestInner({ id, lede, children }) {
+  return (
+    <div id={id}>
+      {lede && <p className="ff-body" style={{ margin: "0 0 14px", fontSize: 13.5 }}>{lede}</p>}
+      {children}
+    </div>
+  );
+}
+
+function InterestSection({ kind, inner }) {
   const c = interestCfg(kind);
   const { state, dispatch } = useStore();
   const who = signedInAs(state);
@@ -12144,8 +12172,9 @@ function InterestSection({ kind }) {
   const names = (ids) => ids.map(id => (c.list.find(x => x.id === id) || {}).title).filter(Boolean);
   const count = picked.length + own.length;
   const showBar = who && (!reg || editing);
+  const Wrap = inner ? InterestInner : Sect;
   return (
-    <Sect id={c.id} boxed={c.boxed} eyebrow={c.eyebrow} title={c.title} lede={c.lede}>
+    <Wrap id={c.id} boxed={c.boxed} eyebrow={c.eyebrow} title={c.title} lede={c.lede}>
       <div className="ff-courses ff-courses-img">
         {c.list.map(x => (
           <FlipChoice17 key={x.id} kind={x.kind} title={x.title} note={x.note} img={c.imgs[x.id]} on={picked.includes(x.id)} onClick={() => toggle(x.id)} />
@@ -12191,7 +12220,7 @@ function InterestSection({ kind }) {
           {err && <p className="ff-body" role="alert" style={{ margin: "8px 0 0", fontSize: 12.5, color: "var(--bad)" }}>{err}</p>}
         </>)}
       </div>
-    </Sect>
+    </Wrap>
   );
 }
 
