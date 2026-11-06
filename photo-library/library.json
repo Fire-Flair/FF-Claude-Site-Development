@@ -330,16 +330,12 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "t17_p07, j17_p07",
-     "where": "FF Party home: packages / services pillar (rotating, 1 of 5)"
-    },
-    {
      "key": "training_wine_qualification",
      "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
     },
     {
-     "key": "in_tr_wset_wine",
-     "where": "Training card: WSET Wine"
+     "key": "jr_sites",
+     "where": "Story: Three FireFlair sites, one network"
     }
    ]
   },
@@ -624,6 +620,10 @@
     {
      "key": "j17_p13",
      "where": "FF Team home: community pillar cards (rotating)"
+    },
+    {
+     "key": "t17_p13, j17_p13",
+     "where": "FF Business home: packages / services pillar (rotating, 1 of 5)"
     }
    ]
   },
@@ -996,12 +996,7 @@
     0.8
    ],
    "near_duplicate_of": "p22",
-   "used_in": [
-    {
-     "key": "j17_p21",
-     "where": "FF Team home: community pillar cards (rotating)"
-    }
-   ]
+   "used_in": []
   },
   {
    "id": "p22",
@@ -1384,20 +1379,7 @@
     0.98
    ],
    "near_duplicate_of": null,
-   "used_in": [
-    {
-     "key": "t17_p29",
-     "where": "FF Team home: profile pillar tile (rotating, 1 of 5)"
-    },
-    {
-     "key": "t17_p29, j17_p29",
-     "where": "FF Business home: events pillar (rotating, 1 of 5)"
-    },
-    {
-     "key": "t17_p29, j17_p29",
-     "where": "FF Party home: community pillar (rotating, 1 of 5)"
-    }
-   ]
+   "used_in": []
   },
   {
    "id": "p30",
@@ -1642,14 +1624,6 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "j17_p34",
-     "where": "FF Team home: packages / services pillar cards (rotating)"
-    },
-    {
-     "key": "t17_p34, j17_p34",
-     "where": "FF Business home: packages / services pillar (rotating, 1 of 5)"
-    },
-    {
      "key": "px_bar",
      "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
     }
@@ -1798,16 +1772,7 @@
     0.85
    ],
    "near_duplicate_of": null,
-   "used_in": [
-    {
-     "key": "t17_p37",
-     "where": "FF Team home: community pillar tile (rotating, 1 of 5)"
-    },
-    {
-     "key": "t17_p37, j17_p37",
-     "where": "FF Business home: community pillar (rotating, 1 of 5)"
-    }
-   ]
+   "used_in": []
   },
   {
    "id": "v01",
@@ -1902,12 +1867,7 @@
     0.95
    ],
    "near_duplicate_of": null,
-   "used_in": [
-    {
-     "key": "jr_sites",
-     "where": "Story: Three FireFlair sites, one network"
-    }
-   ]
+   "used_in": []
   },
   {
    "id": "p39",
@@ -1949,12 +1909,7 @@
     0.8
    ],
    "near_duplicate_of": null,
-   "used_in": [
-    {
-     "key": "t17_p39",
-     "where": "FF Team home: events pillar tile (rotating, 1 of 5)"
-    }
-   ]
+   "used_in": []
   },
   {
    "id": "p40",
@@ -1996,12 +1951,7 @@
     0.92
    ],
    "near_duplicate_of": null,
-   "used_in": [
-    {
-     "key": "t17_p40",
-     "where": "FF Team home: events pillar tile (rotating, 1 of 5)"
-    }
-   ]
+   "used_in": []
   },
   {
    "id": "p41",
@@ -2044,12 +1994,7 @@
     0.85
    ],
    "near_duplicate_of": null,
-   "used_in": [
-    {
-     "key": "j17_p41",
-     "where": "FF Team home: events pillar cards (rotating)"
-    }
-   ]
+   "used_in": []
   },
   {
    "id": "p42",
@@ -2091,12 +2036,7 @@
     0.8
    ],
    "near_duplicate_of": null,
-   "used_in": [
-    {
-     "key": "tm_live",
-     "where": "FF Team, Your team: Live event"
-    }
-   ]
+   "used_in": []
   },
   {
    "id": "p43",
@@ -2139,12 +2079,7 @@
     1
    ],
    "near_duplicate_of": null,
-   "used_in": [
-    {
-     "key": "t17_p43",
-     "where": "FF Team home: events pillar tile (rotating, 1 of 5)"
-    }
-   ]
+   "used_in": []
   },
   {
    "id": "p44",
@@ -2599,7 +2534,12 @@
     1
    ],
    "near_duplicate_of": null,
-   "used_in": []
+   "used_in": [
+    {
+     "key": "j17_vkg05",
+     "where": "FF Team home: events pillar cards (rotating)"
+    }
+   ]
   },
   {
    "id": "vkg06",
@@ -2678,7 +2618,12 @@
     1
    ],
    "near_duplicate_of": null,
-   "used_in": []
+   "used_in": [
+    {
+     "key": "tm_live",
+     "where": "FF Team, Your team: Live event"
+    }
+   ]
   },
   {
    "id": "vkg08",
@@ -2757,7 +2702,12 @@
     1
    ],
    "near_duplicate_of": null,
-   "used_in": []
+   "used_in": [
+    {
+     "key": "t17_vkg09",
+     "where": "FF Team home: events pillar tile (rotating, 1 of 5)"
+    }
+   ]
   },
   {
    "id": "vkg10",
@@ -3001,7 +2951,12 @@
     1
    ],
    "near_duplicate_of": null,
-   "used_in": []
+   "used_in": [
+    {
+     "key": "j17_vkg15",
+     "where": "FF Team home: community pillar cards (rotating)"
+    }
+   ]
   },
   {
    "id": "vkg16",
@@ -6565,6 +6520,10 @@
     {
      "key": "t17_vke02",
      "where": "FF Team home: packages / services pillar tile (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_vke02, j17_vke02",
+     "where": "FF Party home: packages / services pillar (rotating, 1 of 5)"
     }
    ]
   },
@@ -6609,6 +6568,10 @@
     {
      "key": "t17_vke03",
      "where": "FF Team home: profile pillar tile (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_vke03, j17_vke03",
+     "where": "FF Business home: events pillar (rotating, 1 of 5)"
     }
    ]
   },
@@ -6653,6 +6616,10 @@
     {
      "key": "t17_vke04",
      "where": "FF Team home: profile pillar tile (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_vke04, j17_vke04",
+     "where": "FF Party home: community pillar (rotating, 1 of 5)"
     }
    ]
   },
@@ -6694,8 +6661,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "in_tr_ff_open_class",
-     "where": "Training card: FireFlair Open Class"
+     "key": "t17_vke05",
+     "where": "FF Team home: events pillar tile (rotating, 1 of 5)"
     }
    ]
   },
@@ -6740,6 +6707,10 @@
     {
      "key": "t17_vke06",
      "where": "FF Team home: community pillar tile (rotating, 1 of 5)"
+    },
+    {
+     "key": "t17_vke06, j17_vke06",
+     "where": "FF Business home: community pillar (rotating, 1 of 5)"
     }
    ]
   },
@@ -6782,8 +6753,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "in_tr_wset_spirits",
-     "where": "Training card: WSET Spirits"
+     "key": "t17_vke07",
+     "where": "FF Team home: profile pillar tile (rotating, 1 of 5)"
     }
    ]
   },
@@ -6907,8 +6878,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "in_rw_party",
-     "where": "Reward: FF January Christmas party"
+     "key": "t17_vke10",
+     "where": "FF Team home: community pillar tile (rotating, 1 of 5)"
     }
    ]
   },
@@ -6950,8 +6921,8 @@
    "near_duplicate_of": null,
    "used_in": [
     {
-     "key": "in_dj_after_dark",
-     "where": "Dream job: After Dark"
+     "key": "t17_vke11",
+     "where": "FF Team home: events pillar tile (rotating, 1 of 5)"
     }
    ]
   },
