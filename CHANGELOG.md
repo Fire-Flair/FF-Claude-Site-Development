@@ -1,5 +1,17 @@
 # FireFlair prototype — changelog
 
+## v17.3.81 — 2026-11-06 — v17.3.81 Photo library, rotating pillars
+Artifact version 1793928505-4b9a · file `fireflair-v17.3.81.html`
+
+- Photo library: every photo supplied so far (47 photos and the cocktail video) is in `photo-library/`, with the originals, web copies, thumbnails, a contact sheet and `library.json` (ids p01 to p47 and v01, descriptions, people, visible brands, face positions and where each photo is used). The video has a browser-friendly MP4 and a still.
+- Home pillars rotate: each of the four pillars on every site has five photos. The tile shows one and the pillar's three cards show three others, so nothing repeats. Each visit starts one photo further on, and while no pillar is open the tiles crossfade to their next photo one at a time (no movement with reduced motion on). Code: `pool` on each pillar in DX_TEAM / DX_BIZ / DX_PARTY, `DxPh17`, `dxPick17`, `dxVisit17`.
+- FF Team uses no photo twice anywhere on the site (home pillars, cards, Your team, Signature Cocktails, Stories, Bookings). Checked across all five rotation states.
+- Our events now shows bar show and event-team photos; Your profile shows bartender portraits, so the two tiles no longer look alike. The journey cards no longer repeat the tile photos.
+- Every crop is made to the exact shape it is shown at, with heads kept in frame. `FOCUS17` tells the browser where faces are when a photo is shown at another shape (desktop tiles, the Next strip, story headers, Bookings photos on desktop).
+- Stories: each FF Team story has its own photo; "Why join FF Team" keeps the festival shaker photo, "Why everything on FireFlair is a card" now has its own.
+- Bookings: Training shows the three women with shakers, Dream jobs the race-weekend hospitality team, Rewards the tool roll. On desktop the photo sits beside the text. FF Team cards without a photo of their own show the original images, so no photo repeats.
+- `assets/photos/` holds every crop the page embeds, with a README mapping file to photo and place.
+
 ## v17.3.80 — 2026-11-06 — v17.3.80 Bookings sections, real photos
 Artifact version 1793925640-9325 · file `fireflair-v17.3.80.html`
 
