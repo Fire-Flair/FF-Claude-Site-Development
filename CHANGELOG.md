@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.92 — 2026-11-06 — Confirmed bookings, host and company card
+Artifact version 1794008503-2e22 · file `fireflair-v17.3.92.html`
+
+- FF Team Bookings: the empty "Your bookings" panel is now just the WhatsApp requests box and "Your booked shifts will be shown here". The three coming-soon boxes are removed.
+- The Team section heading is now "Confirmed bookings"; Invitations unchanged.
+- Shift cards: Ask now sits beside More information on every card state (invitation, available, confirmed), so a question can be asked before confirming. Yes and No form their own row above.
+- Event brief for a team member no longer has the question box. Underneath the brief it shows the hirer's card: a Company Card for a business or a Host Card for a person (new helper hirerCard11 picks which).
+
 ## v17.3.91 — 2026-11-06 — Event brief pop-up, Team rails
 Artifact version 1794005721-8d1d · file `fireflair-v17.3.91.html`
 
