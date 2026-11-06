@@ -4966,8 +4966,8 @@ function ProfileFFAI() {
   const run = (v) => { if (String(v || "").trim().length < 3 || ex.busy) return; ex.start({ text: v }); };
   return (
     <div id="ff-sec-ffai">
-      <FFAI hero multiline tint coinSize={40} title="FF AI data entry"
-        purpose="Tell me about you; I'll fill in your profile."
+      <FFAI hero multiline tint coinSize={40} title="FF AI"
+        purpose="Autofill your profile. Type here."
         placeholder="I'm a bartender in Central London…"
         query={text} onQuery={setText} onSubmit={run} submitLabel="Fill out my profile">
         <ExtractionStatus ex={ex} />
@@ -6330,6 +6330,38 @@ function FitList17({ items, accent }) {
   return <span ref={ref} className="ff-pc-fit">{items.map((v, i) => <span key={v + i} className="ff-pc-fi">{i > 0 && <b style={{ color: accent }}>•</b>}{v}</span>)}</span>;
 }
 
+/* v17.3.77: type a profession straight into the card (as on the live ffteam.uk site):
+   search the 35 known professions as you type, or add your own. */
+function ProfTypeIn({ profs, set, ink, rule }) {
+  const [q, setQ] = useState("");
+  const n = q.trim().toLowerCase();
+  const has = (x) => profs.some(p => String(p).toLowerCase() === String(x).toLowerCase());
+  const hits = n ? [
+    ...ALL_PROFESSIONS.filter(p => p.name.toLowerCase().startsWith(n)),
+    ...ALL_PROFESSIONS.filter(p => !p.name.toLowerCase().startsWith(n) && p.name.toLowerCase().includes(n)),
+  ].filter(p => !has(p.name)).slice(0, 5) : [];
+  const typed = q.trim().replace(/\s+/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+  const custom = n && !ALL_PROFESSIONS.some(p => p.name.toLowerCase() === n) && !has(typed) ? typed : null;
+  const add = (name) => { if (!has(name)) set("professions")([...profs, name]); setQ(""); };
+  return (
+    <div>
+      <input className="ff-cardin" type="text" value={q} autoComplete="off" spellCheck={false}
+        placeholder={profs.length ? "Add another profession" : "Search or type a profession"} aria-label="Search or type a profession"
+        onChange={(e) => setQ(e.target.value)}
+        onKeyDown={(e) => { if (e.key === "Enter" && n) { e.preventDefault(); add(hits[0] ? hits[0].name : typed); } }}
+        style={{ color: ink, borderBottomColor: rule, textAlign: "center", fontSize: 13.5 }} />
+      {n && (hits.length > 0 || custom) && (
+        <div role="list" aria-label="Matching professions" style={{ display: "flex", flexWrap: "wrap", gap: 5, justifyContent: "center", marginTop: 8 }}>
+          {hits.map(p => (
+            <button key={p.name} type="button" role="listitem" className="ff-tagchip" onClick={() => add(p.name)} style={{ color: ink, cursor: "pointer" }}>+ {p.name}</button>
+          ))}
+          {custom && <button type="button" role="listitem" className="ff-tagchip" onClick={() => add(custom)} style={{ color: ink, cursor: "pointer" }}>+ Add “{custom}”</button>}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "username", tier = "standard", level = 3, onPhoto }) {
   const t = THEMES[themeKey] || THEMES.onyx;
   const tr = TIERS[tier] || TIERS.standard;
@@ -6396,8 +6428,8 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
                 <button type="button" onClick={() => set("professions")(profs.filter((_, j) => j !== i))} aria-label={`Remove ${v}`} style={{ color: ink }}><X size={11} /></button>
               </span>
             ))}
-            {!profs.length && <span className="ff-body ff-muted" style={{ fontSize: 12.5 }}>Choose your professions below</span>}
           </div>
+          <ProfTypeIn profs={profs} set={set} ink={ink} rule={rule} />
         </div>
       </div>
 
@@ -9606,14 +9638,19 @@ function CVPanel() {
   );
   return (
     <div id="ff-sec-cv">
-      <div className="ff-cvask" style={{ padding: "14px 18px", marginTop: 14, display: "flex", gap: 14, alignItems: "center", flexWrap: "wrap" }}>
-        <span style={{ flex: 1, minWidth: 160 }}>
-          <span style={{ fontSize: 16, fontWeight: 700, display: "flex", alignItems: "center", gap: 8, color: "#4A0F1C" }}><Timer size={18} strokeWidth={2} aria-hidden="true" /> Create a complete profile in 1 minute</span>
-          <span className="ff-body" style={{ fontSize: 12.5, color: "#5A474B" }}>FireFlair puts it on your profile as cards — PDF, Word or a photo. You choose what stays.</span>
-          {status}
+      <div className="ff-cvask" style={{ padding: "16px 18px", marginTop: 14, display: "flex", gap: 14, flexDirection: "column" }}>
+        <span style={{ display: "flex", gap: 14, alignItems: "center" }}>
+          <span aria-hidden="true" style={{ flex: "none", width: 58, height: 58, borderRadius: 18, cornerShape: "squircle", display: "grid", placeItems: "center", background: "#4A0F1C", color: "#F6E7B4" }}><Timer size={34} strokeWidth={2} /></span>
+          <span style={{ flex: 1, minWidth: 0 }}>
+            <span style={{ fontSize: 17, fontWeight: 700, display: "block", color: "#4A0F1C", lineHeight: 1.25 }}>Create a complete profile in 1 minute</span>
+            <span className="ff-body" style={{ fontSize: 12.5, color: "#5A474B", display: "block", marginTop: 2 }}>FireFlair puts it on your profile as cards — PDF, Word or a photo. You choose what stays.</span>
+          </span>
         </span>
+        {status}
         {input}
-        <Btn variant="wine" disabled={(st && st.busy) || ex.busy} onClick={() => ref.current && ref.current.click()}><Upload size={14} /> Upload CV</Btn>
+        <span style={{ display: "flex", justifyContent: "flex-end" }}>
+          <Btn variant="wine" disabled={(st && st.busy) || ex.busy} onClick={() => ref.current && ref.current.click()}><Upload size={14} /> Upload CV</Btn>
+        </span>
       </div>
       {below}
     </div>
@@ -9990,13 +10027,13 @@ function ProfileBuilder() {
         <StepHead n={2} title="Profile Card" done={cardReady} />
         <div id="ff-sec-card"><CardBuilder /></div>
 
-        <StepHead n={3} title="FF AI data entry" done={hasCV(p)} />
+        <StepHead n={3} title="FF AI and CV upload" done={hasCV(p)} />
         <ProfileFFAI />
         <CVPanel />
-        <CreatorMedia />
-        <CreatorAboutMe />
 
         <StepHead n={4} title="Your profile" done={false} />
+        <CreatorMedia />
+        <CreatorAboutMe />
         <ProfileSections person={me} isMe />
       </div>
 
@@ -23450,7 +23487,6 @@ function Home101() {
     <GuideQuestions11 key="guide" kind="team" />,
     <Journal17 key="journal" kind="team" />,
     <BusinessSupport19 key="business" />,
-    <HomeBeta key="beta" />,
     <HomeJoin key="join" />,
   ];
   return (
@@ -24062,7 +24098,7 @@ function CardJourney11({ kind = "party" }) {
     profile: <CfProfile11 photo={CfImg11("face_you")} name="Sophie Hart" role="Cocktail Bartender" tier="gold" />,
     company: <CfCompany11 banner={CfImg11("dream_after_dark")} name="The Loft Lounge" kind="Cocktail bar & private events" area="North London" />,
     service: <CfService11 tone="silver" tier="Silver" title={sv.title} line={sv.tagline} />,
-    event: <CfEvent11 photo={CfImg11("dream_sports_events")} title="Summer Festival Bar" when="Sat 12 Jun" where="Victoria Park" />,
+    event: <CfEvent11 photo={CfImg11("dream_music_festivals")} title="Summer Festival Bar" when="Sat 12 Jun" where="Victoria Park" />,
     confirm: <CfConfirm17 />,
     review: <CfReview11 text="Ran the bar at our launch night without a single hiccup." from="Ava" to="Sophie" />,
   };
@@ -24583,7 +24619,7 @@ function GuideQuestions11({ kind = "team" }) {
 const DX_I = { Users: lucideIcon("Users"), Sparkles: lucideIcon("Sparkles"), Contact: lucideIcon("Contact"), PartyPopper: lucideIcon("PartyPopper"),
   ChevronDown: lucideIcon("ChevronDown"), ChevronUp: lucideIcon("ChevronUp"), ArrowRight: lucideIcon("ArrowRight"), X: lucideIcon("X") };
 const DX_TEAM = [
-  { k: "community", t: "Our community", s: "The people you work with", img: "dream_music_festivals", icon: DX_I.Users,
+  { k: "community", t: "Our community", s: "The people you work with", img: "px_team_com", icon: DX_I.Users,
     h: "Meet the people behind great events.",
     p: ["Hospitality is better with people you know. FireFlair brings bartenders, mixologists and event staff together in one community, so you can find the people you work with and be found by the ones you have not met yet.", "Add friends to your team and see who works near you on the map, so the community can see who you work with and trust.", "Every connection counts. The more people you add, the stronger your team becomes, and the more doors open when someone needs a great bartender at short notice."],
     parts: [
@@ -24595,7 +24631,7 @@ const DX_TEAM = [
       { ic: "UserPlus", t: "Build your team", d: "Add the people you work with, like friends.", b: "Build your team", go: "#ff-teams" , x: "Everyone you add to your network is on your team. It shows on your profile, so the people who book you can see who you work with." },
       { ic: "Users", t: "Work with friends", d: "Invite your friends and work together.", b: "Work with friends", go: "#ff-teams", x: "Invite your friends to join FireFlair and add them to your team. Working with people you know makes every event easier." },
     ] },
-  { k: "services", t: "Your packages", s: "Services, bookings and terms", img: "training_mixology", icon: DX_I.Sparkles,
+  { k: "services", t: "Your packages", s: "Services, bookings and terms", img: "px_team_pk", icon: DX_I.Sparkles,
     h: "Your services, your bookings, your terms.",
     p: ["Your packages are what you offer: the services you are best at, from classic cocktail service to flair, set out as Service Cards that hosts and businesses can book.","Every booking follows the same clear process, from the first request on WhatsApp to the confirmation and the review, so you always know what happens next.","Terms and conditions are written in plain words and agreed before you say yes, so you and the person booking you both know exactly what to expect."],
     parts: [
@@ -24608,7 +24644,7 @@ const DX_TEAM = [
       { ic: "Layers", t: "Follow a booking", d: "The cards, in the order a booking happens.", b: "Follow a booking", go: "#ff-cards", x: "A booking moves through four cards: the Profile Card, the Event Card, the Service Card and the Review Card. Following them shows you how every request is handled." },
       { ic: "ShieldCheck", t: "Know the terms", d: "Clear terms, agreed up front.", b: "See how terms work", go: "#ff-terms", x: "Terms are short, plain and shown before you accept, so everyone agrees to the same thing and nobody is surprised on the night." },
     ] },
-  { k: "events", t: "Our events", s: "Grow and meet the trade", img: "dream_international_events", icon: DX_I.PartyPopper,
+  { k: "events", t: "Our events", s: "Grow and meet the trade", img: "px_team_ev", icon: DX_I.PartyPopper,
     h: "Learn, grow and meet the industry.",
     p: ["Our events is where hospitality keeps getting better: the industry's own events, and the places the trade gathers.","It is also where we grow together. The platform grows with every profile and every booking, and we list the industry's own growth events so you know where the trade gathers.","From the Athens Bar Show to BCB Berlin and BCB London, the biggest bar events in Europe are all in one place."],
     parts: [
