@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.3.91 — 2026-11-06 — Event brief pop-up, Team rails
+Artifact version 1794005721-8d1d · file `fireflair-v17.3.91.html`
+
+- Event card on FF Bookings / FF Business: "Extra details" is now "Event brief".
+- Tapping an event card opens the Event brief as a pop-up (the full event invoice document) with a red Unavailable, orange Pending or green Confirmed marker beside each staff member. The rail cards keep their 5x7 shape.
+- FF Team: invitations and upcoming shifts scroll horizontally. Withdraw button removed.
+- "More information" always opens the Event brief (shift cards, notification centre, everywhere). Confirmed and available cards get an "Ask" button. Event briefs delivered to a team member end with a "Send question" button.
+- FF Team "Next steps" now shows team steps only (reply to shift cards, build your profile, share your Profile Card, grow your network) instead of the FF Business steps.
+- Shift card and brief pay fall back to the shift's agreed total when no rate is set.
+
 ## v17.3.90 — 2026-11-06 — Shift cards, bookings rail, confirm pop-up
 Artifact version 1794002408-6ba4 · file `fireflair-v17.3.90.html`
 
