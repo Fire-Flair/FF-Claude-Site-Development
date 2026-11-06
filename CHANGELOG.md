@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.3.77 — 2026-11-06 — v17.3.77 profile page, professions type-in
+Artifact version 1793924175-a3eb · file `fireflair-v17.3.77.html`
+
+- FF Team home: the "We're in beta, please give us feedback" box is removed from the home page (HomeBeta is no longer in the home sections).
+- Profile Card: the Professions row now has a search-or-type box straight in the card, as on the live ffteam.uk (placeholder "Search or type a profession", then "Add another profession"). It suggests from the known professions and lets people add their own. The old "Choose your professions below" line is gone. New `ProfTypeIn` component.
+- Profile page: section 3 is now "FF AI and CV upload" (FF AI box and CV upload). Media and About Me moved into section 4 ("Your profile"), above the professions.
+- FF AI box wording: "Autofill your profile. Type here." (box title now "FF AI").
+- CV upload box: the stopwatch icon is much larger, in its own badge; the box is laid out as icon and text on top, with the Upload CV button below.
+- Panel photos: Our community, Your packages and Our events go back to their original photos, and the Follow a booking event card goes back to its original photo (the first-shuffle pictures are removed).
+
 ## v17.3.76 — 2026-11-06 — v17.3.76 FF Team launch cut
 Artifact version 1793923413-01e4 · file `fireflair-v17.3.76.html`
 
