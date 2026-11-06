@@ -24644,7 +24644,7 @@ const DX_TEAM = [
       { ic: "Layers", t: "Follow a booking", d: "The cards, in the order a booking happens.", b: "Follow a booking", go: "#ff-cards", x: "A booking moves through four cards: the Profile Card, the Event Card, the Service Card and the Review Card. Following them shows you how every request is handled." },
       { ic: "ShieldCheck", t: "Know the terms", d: "Clear terms, agreed up front.", b: "See how terms work", go: "#ff-terms", x: "Terms are short, plain and shown before you accept, so everyone agrees to the same thing and nobody is surprised on the night." },
     ] },
-  { k: "events", t: "Our events", s: "Grow and meet the trade", img: "px_team_ev", icon: DX_I.PartyPopper,
+  { k: "events", t: "Our events", s: "Grow and meet the trade", img: "training_ff_open_bar", icon: DX_I.PartyPopper,
     h: "Learn, grow and meet the industry.",
     p: ["Our events is where hospitality keeps getting better: the industry's own events, and the places the trade gathers.","It is also where we grow together. The platform grows with every profile and every booking, and we list the industry's own growth events so you know where the trade gathers.","From the Athens Bar Show to BCB Berlin and BCB London, the biggest bar events in Europe are all in one place."],
     parts: [
