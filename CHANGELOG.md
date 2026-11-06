@@ -1,5 +1,17 @@
 # FireFlair prototype — changelog
 
+## v17.3.88 — 2026-11-06 — Profile fixes, one Staffing service, packages from sign-up
+Artifact version 1793971380-d46f · file `fireflair-v17.3.88.html`
+
+- Profile (edit view): removed the "All" button on Network and the "Ask" button on Reviews & References.
+- Fixed the clipped shadow edge under card scrolls (it looked like a broken line between Terms and conditions and Q&A).
+- Q&A: "Create your own question" is now always the last card on the right of the scroll.
+- Freelance availability is one shared question: the Bookings answer and the profile Q&A card use the same answer.
+- Staffing: one "Staffing Service" only (was "Staff Service" and "Staffing Service"). Wording: able to work solo and communicate with businesses and clients; covers business (B2B) and private client (B2C) work.
+- Packages: your profile Packages tab shows only the packages you signed up to on Bookings (no automatic ones from profession). Staffing now appears there after sign-up.
+- Complete-profile example no longer adds a default Espresso Martini or default service cards: cocktails and service packages start empty. Cocktail card creator stays display-only in 1.01.
+- v1.01: Team tab on the profile hidden (phase 2 with networking).
+
 ## v17.3.87 — 2026-11-06 — Invitations gated to phase 2 for v1.01
 Artifact version 1793970391-4521 · file `fireflair-v17.3.87.html`
 
