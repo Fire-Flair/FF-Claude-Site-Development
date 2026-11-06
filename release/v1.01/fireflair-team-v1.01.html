@@ -7272,12 +7272,12 @@ function PersonProfile() {
     onClick: () => setAdding(true)
   }, React.createElement(Clock, {
     size: 14
-  }), " Invitation sent") : React.createElement(Btn, {
+  }), " Invitation sent") : ph17(state) >= 2 ? React.createElement(Btn, {
     variant: "primary",
     onClick: () => setAdding(true)
   }, React.createElement(Plus, {
     size: 14
-  }), " Add to team"), React.createElement(Btn, {
+  }), " Add to team") : null, React.createElement(Btn, {
     onClick: () => setReviewing(true)
   }, React.createElement(Award, {
     size: 14
@@ -7948,7 +7948,7 @@ function GroupedPeople({ onPick, selectable, scope = "", query = "" }) {
       person: p,
       selected: selectable && state.selection.includes(p.id),
       onClick: () => onPick(p)
-    })), React.createElement("button", {
+    })), ph17(state) >= 2 && React.createElement("button", {
       className: "ff-card ff-portrait ff-addtile",
       style: { width: CARD_W.player },
       onClick: () => state.role === "team" ? window.dispatchEvent(new Event("ff-invite")) : dispatch({ type: "TOAST", toast: "Join FF Team to invite the people you work with." })
@@ -8031,7 +8031,7 @@ function NetworkScreen({ guest = false }) {
   }, React.createElement("h1", {
     className: "ff-h1",
     style: { flex: 1 }
-  }, "People"), !guest && React.createElement(Btn, {
+  }, "People"), !guest && ph17(state) >= 2 && React.createElement(Btn, {
     variant: "sm",
     onClick: () => setInviting(true)
   }, React.createElement(Send, {
@@ -8044,15 +8044,15 @@ function NetworkScreen({ guest = false }) {
   }), guest && !q && React.createElement("div", {
     className: "ff-pendingnote",
     style: { marginTop: 6 }
-  }, React.createElement("span", null, "Join FF Team to build your own network. Whoever invites you is added to it automatically."), React.createElement(Btn, {
+  }, React.createElement("span", null, ph17(state) >= 2 ? "Join FF Team to build your own network. Whoever invites you is added to it automatically." : "Join FF Team to create your own Profile Card."), React.createElement(Btn, {
     variant: "sm primary",
     onClick: join
   }, React.createElement(User, {
     size: 12
-  }), " Create your Profile Card")), !q && mine.inviter && React.createElement(InvitedByBanner, {
+  }), " Create your Profile Card")), !q && ph17(state) >= 2 && mine.inviter && React.createElement(InvitedByBanner, {
     person: mine.inviter,
     onReview: () => setReviewing(mine.inviter)
-  }), !q && !guest && React.createElement("section", {
+  }), !q && !guest && ph17(state) >= 2 && React.createElement("section", {
     style: { marginTop: 20 }
   }, React.createElement(SectionHead, {
     icon: React.createElement(Check, {
@@ -8089,7 +8089,7 @@ function NetworkScreen({ guest = false }) {
   }), React.createElement("span", {
     className: "ff-label",
     style: { display: "block", marginTop: 6 }
-  }, "Invite"))))), !q && !guest && React.createElement(SentInvitations, null), !q && React.createElement(TopStaff11, null), React.createElement(NetMap11, null), !q && React.createElement(CompaniesSection, {
+  }, "Invite"))))), !q && !guest && ph17(state) >= 2 && React.createElement(SentInvitations, null), !q && React.createElement(TopStaff11, null), React.createElement(NetMap11, null), !q && React.createElement(CompaniesSection, {
     note: "Hospitality businesses on FireFlair, and the teams they book."
   }), !q && React.createElement(React.Fragment, null, PHASE1.leaderboards && React.createElement(Rankings, null), React.createElement(Divider, null), React.createElement("h2", {
     className: "ff-h2",
@@ -11376,7 +11376,7 @@ function ActionSheet({ open, onClose }) {
   })), item(Plus, "Add information cards", "Professions, skills, interests, qualifications", go(() => {
     dispatch({ type: "TAB", tab: "profile", route: "home" });
     dispatch({ type: "FOCUS", focus: { target: "professions" } });
-  })), item(Users, "Invite people you work with", "They accept before anything connects", go(() => dispatch({ type: "TAB", tab: "network" }))), item(Share2, "Share my card", `${CARD_DOMAIN}/${state.session.tag || "username"}`, go(() => dispatch({ type: "TOAST", toast: "Link copied" })))) : React.createElement(React.Fragment, null, item(Calendar, "Create Event Card", "Date, venue, guests and team size", go(() => dispatch({ type: "TAB", tab: "home", route: "eventNew" }))), state.activeEventId && item(Clock, "Open your Event Card", "Service Cards, credits and responses", go(() => dispatch({ type: "TAB", tab: "home", route: "eventPage" }))), item(Search, "Find staff", "Fill your basket from any profile", go(() => dispatch({ type: "TAB", tab: "home", route: "staffHome" }))), item(Briefcase, state.company && state.company.name ? "Your company profile" : "Create your company profile", "Company Card, T&Cs, documents and hiring questions", go(() => dispatch({ type: "TAB", tab: "profile", route: "staffHome" })))));
+  })), ph17(state) >= 2 && item(Users, "Invite people you work with", "They accept before anything connects", go(() => dispatch({ type: "TAB", tab: "network" }))), item(Share2, "Share my card", `${CARD_DOMAIN}/${state.session.tag || "username"}`, go(() => dispatch({ type: "TOAST", toast: "Link copied" })))) : React.createElement(React.Fragment, null, item(Calendar, "Create Event Card", "Date, venue, guests and team size", go(() => dispatch({ type: "TAB", tab: "home", route: "eventNew" }))), state.activeEventId && item(Clock, "Open your Event Card", "Service Cards, credits and responses", go(() => dispatch({ type: "TAB", tab: "home", route: "eventPage" }))), item(Search, "Find staff", "Fill your basket from any profile", go(() => dispatch({ type: "TAB", tab: "home", route: "staffHome" }))), item(Briefcase, state.company && state.company.name ? "Your company profile" : "Create your company profile", "Company Card, T&Cs, documents and hiring questions", go(() => dispatch({ type: "TAB", tab: "profile", route: "staffHome" })))));
 }
 const NAV = [
   { key: "home", label: "Home", mark: "home" },
@@ -11795,7 +11795,17 @@ function LoginSheet({ open, onClose }) {
   }, err), React.createElement("p", {
     className: "ff-body ff-muted",
     style: { fontSize: 11, margin: "14px 0 0" }
-  }, "New to FireFlair? Create your FF Tag at the top of the Profile page."));
+  }, "New to FireFlair? Create your FF Tag at the top of the Profile page."), React.createElement("button", {
+    type: "button",
+    className: "ff-dev17 login",
+    onClick: () => {
+      ["team", "biz", "party"].forEach((k) => seedDemo17(state, dispatch, k));
+      dispatch({ type: "V11_SET", patch: { devDone: { team: true, biz: true, party: true } } });
+      dispatch({ type: "AUTH_SIGNED_IN", tag: "ALEXG", method: "dev" });
+      dispatch({ type: "TOAST", toast: "Complete profile loaded" });
+      onClose();
+    }
+  }, "DEV · complete profile"));
 }
 function Shell({ children }) {
   const { state, dispatch } = useStore();
@@ -28114,7 +28124,7 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   const pubQa = co.mine || co.qa ? coQa(co).filter((q) => q.group !== "feedback" && q.answer) : coQa({}).filter((q) => q.group !== "feedback").map((q, i) => ({ ...q, answer: (i + String(co.id).length) % 3 ? "Yes" : "No" }));
   const isParty = isStaff && hireSiteOf(state).party;
   const pkgs = isParty ? typeof PARTY_SERVICES !== "undefined" && PARTY_SERVICES || [] : [];
-  const tabs = [{ key: "overview", label: "Overview" }, { key: "qa", label: "Packages", count: isParty ? pkgs.length : pubQa.length }, { key: "team", label: "Team", count: team.length }, { key: "reviews", label: "Reviews", count: reviews.length }];
+  const tabs = [{ key: "overview", label: "Overview" }, { key: "qa", label: "Packages", count: isParty ? pkgs.length : pubQa.length }, ...(ph17(state) >= 2 ? [{ key: "team", label: "Team", count: team.length }] : []), { key: "reviews", label: "Reviews", count: reviews.length }];
   const cIcon = (k) => /mail/i.test(k) ? I11.Mail : /phone/i.test(k) ? I11.Phone : /web/i.test(k) ? I11.Globe : I11.MessageCircle;
   const addTeam = () => {
     const ids = team.map((p) => p.id).filter((id) => !state.selection.includes(id));
@@ -41375,7 +41385,7 @@ const V101 = (() => {
       lead: "FireFlair brings hospitality people together.",
       body: [
         "Bartenders, waiters, chefs, hosts and the businesses that book them, all in one network. Connect with the people you work with, see who they know, and share the opportunities that come from every event.",
-        "Your network grows each time you work with someone, invite someone or get invited."
+        "Your network grows each time you work with someone."
       ],
       cta: ["Explore the network", "network"],
       cta2: ["Build your team", "#ff-teams"]

@@ -13,9 +13,15 @@ Published page: https://claude.ai/artifact/HnsNKCoFwCsXBbppQJYtQQ
 - Phase 2/3 switch and FF Admin site toggles removed.
 
 ## Removed for the developers
-- The "DEV · complete profile" button on the log-in sheet and the "DEV · admin preview" tags.
+- The "DEV · admin preview" tags.
 - All seeded demo data: the 18 default profiles (`DIRECTORY`), demo venues, companies, contacts, events, shifts, engagements, map businesses and map events are now empty lists (`[]`). The back end supplies the real lists.
 - The prototype footer on the home page and the "Prototype sign-in" note on the log-in sheet.
+
+## Review only: delete before launch
+The log-in sheet still has a "DEV · complete profile" button (class `ff-dev17 login`). It signs in and fills a complete profile so the owner can check every screen. Developers: delete this button, and the demo helpers it uses (`seedDemo17`, `DEMO_*`).
+
+## Not in v1.01 (networking, 1.1 update)
+The invitation feature is hidden: Invite on the People page, Your network, the Invited you banner, Invitations you've sent, Invite in the add menu and people groups, Add to team on a profile, and the Team tab on a profile. It is gated on `ph17(state) >= 2`, so it still shows in the prototype's phase 2 and 3. Companies stay hidden until the next update.
 
 ## Also in this build
 - FF Stories filter shows one "FireFlair news" chip (it was spelled two ways).

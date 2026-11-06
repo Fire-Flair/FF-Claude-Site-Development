@@ -6139,9 +6139,9 @@ function PersonProfile() {
             <Btn variant="ghost" disabled><Check size={14} /> On your team</Btn>
           ) : pending ? (
             <Btn variant="ghost" onClick={() => setAdding(true)}><Clock size={14} /> Invitation sent</Btn>
-          ) : (
+          ) : ph17(state) >= 2 ? (
             <Btn variant="primary" onClick={() => setAdding(true)}><Plus size={14} /> Add to team</Btn>
-          )}
+          ) : null}
           <Btn onClick={() => setReviewing(true)}><Award size={14} /> Review</Btn>
         </div>
         {pending && (
@@ -6581,11 +6581,11 @@ function GroupedPeople({ onPick, selectable, scope = "", query = "" }) {
                   <PlayerTile key={p.id} person={p} selected={selectable && state.selection.includes(p.id)}
                     onClick={() => onPick(p)} />
                 ))}
-                <button className="ff-card ff-portrait ff-addtile" style={{ width: CARD_W.player }}
+                {ph17(state) >= 2 && <button className="ff-card ff-portrait ff-addtile" style={{ width: CARD_W.player }}
                   onClick={() => state.role === "team" ? window.dispatchEvent(new Event("ff-invite")) : dispatch({ type: "TOAST", toast: "Join FF Team to invite the people you work with." })}>
                   <span style={{ textAlign: "center" }}><Plus size={20} color="var(--gold-dk)" />
                     <span className="ff-label" style={{ display: "block", marginTop: 6 }}>Invite</span></span>
-                </button>
+                </button>}
               </HScroll>
             )}
           </section>
@@ -6651,7 +6651,7 @@ function NetworkScreen({ guest = false }) {
       <div className="ff-eyebrow">{guest ? "FireFlair" : "FF Team"}</div>
       <div style={{ display: "flex", alignItems: "flex-end", gap: 10, marginTop: 4 }}>
         <h1 className="ff-h1" style={{ flex: 1 }}>People</h1>
-        {!guest && <Btn variant="sm" onClick={() => setInviting(true)}><Send size={12} /> Invite</Btn>}
+        {!guest && ph17(state) >= 2 && <Btn variant="sm" onClick={() => setInviting(true)}><Send size={12} /> Invite</Btn>}
       </div>
 
       <FFAI query={q} onQuery={setQ} title="Search the network"
@@ -6659,14 +6659,14 @@ function NetworkScreen({ guest = false }) {
 
       {guest && !q && (
         <div className="ff-pendingnote" style={{ marginTop: 6 }}>
-          <span>Join FF Team to build your own network. Whoever invites you is added to it automatically.</span>
+          <span>{ph17(state) >= 2 ? "Join FF Team to build your own network. Whoever invites you is added to it automatically." : "Join FF Team to create your own Profile Card."}</span>
           <Btn variant="sm primary" onClick={join}><User size={12} /> Create your Profile Card</Btn>
         </div>
       )}
 
-      {!q && mine.inviter && <InvitedByBanner person={mine.inviter} onReview={() => setReviewing(mine.inviter)} />}
+      {!q && ph17(state) >= 2 && mine.inviter && <InvitedByBanner person={mine.inviter} onReview={() => setReviewing(mine.inviter)} />}
 
-      {!q && !guest && (
+      {!q && !guest && ph17(state) >= 2 && (
         <section style={{ marginTop: 20 }}>
           <SectionHead icon={<Check size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Your network" count={connected.length} />
           <HScroll label="Your network">
@@ -6683,7 +6683,7 @@ function NetworkScreen({ guest = false }) {
           </HScroll>
         </section>
       )}
-      {!q && !guest && <SentInvitations />}
+      {!q && !guest && ph17(state) >= 2 && <SentInvitations />}
 
       {!q && <TopStaff11 />}
       <NetMap11 />
@@ -9054,7 +9054,7 @@ function ActionSheet({ open, onClose }) {
         <>
           {item(FileText, "Send a CV", "We read it and propose your cards", go(() => { dispatch({ type: "TAB", tab: "profile", route: "home" }); dispatch({ type: "FOCUS", focus: { target: "cv" } }); }))}
           {item(Plus, "Add information cards", "Professions, skills, interests, qualifications", go(() => { dispatch({ type: "TAB", tab: "profile", route: "home" }); dispatch({ type: "FOCUS", focus: { target: "professions" } }); }))}
-          {item(Users, "Invite people you work with", "They accept before anything connects", go(() => dispatch({ type: "TAB", tab: "network" })))}
+          {ph17(state) >= 2 && item(Users, "Invite people you work with", "They accept before anything connects", go(() => dispatch({ type: "TAB", tab: "network" })))}
           {item(Share2, "Share my card", `${CARD_DOMAIN}/${state.session.tag || "username"}`, go(() => dispatch({ type: "TOAST", toast: "Link copied" })))}
         </>
       ) : (
@@ -16283,7 +16283,7 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   const pubQa = co.mine || co.qa ? coQa(co).filter(q => q.group !== "feedback" && q.answer) : coQa({}).filter(q => q.group !== "feedback").map((q, i) => ({ ...q, answer: (i + String(co.id).length) % 3 ? "Yes" : "No" }));
   const isParty = isStaff && hireSiteOf(state).party;
   const pkgs = isParty ? ((typeof PARTY_SERVICES !== "undefined" && PARTY_SERVICES) || []) : [];
-  const tabs = [{ key: "overview", label: "Overview" }, { key: "qa", label: "Packages", count: isParty ? pkgs.length : pubQa.length }, { key: "team", label: "Team", count: team.length }, { key: "reviews", label: "Reviews", count: reviews.length }];
+  const tabs = [{ key: "overview", label: "Overview" }, { key: "qa", label: "Packages", count: isParty ? pkgs.length : pubQa.length }, ...(ph17(state) >= 2 ? [{ key: "team", label: "Team", count: team.length }] : []), { key: "reviews", label: "Reviews", count: reviews.length }];
   const cIcon = (k) => /mail/i.test(k) ? I11.Mail : /phone/i.test(k) ? I11.Phone : /web/i.test(k) ? I11.Globe : I11.MessageCircle;
   const addTeam = () => {
     const ids = team.map(p => p.id).filter(id => !state.selection.includes(id));
