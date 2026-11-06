@@ -35,3 +35,8 @@ Map pins and the cluster use the standard FF logo (`FFEmblem`, through `MapCoin`
 
 ## Still in the code, not shown
 Unused demo helpers (for example `seedDemo17`, `DEMO_RECORDS`, `DEMO_HOST17`) are left for FF Business and FF Party, which are locked. The mock sign-in (`AUTH_ADAPTER`) accepts any FF Tag with a six-digit code until the real WhatsApp verification is connected.
+
+## Updated 6 Nov (profile)
+- Edit view: removed the All (Network) and Ask (Reviews & References) buttons; Create your own question is the last Q&A card.
+- One Staffing Service (business and client work). Packages on the profile show only what was signed up for on Bookings; cocktails and service packages start empty (cocktail creator display-only).
+- Freelance availability is one shared question (Bookings and profile Q&A). Team tab hidden in 1.01.

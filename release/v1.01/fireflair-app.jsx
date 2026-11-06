@@ -516,7 +516,7 @@ const CSS = `
 
 .ff-hscroll {
   display:flex; gap:10px; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x proximity;
-  -webkit-overflow-scrolling:touch; scrollbar-width:none; padding:2px 16px 6px; margin:0 -16px;
+  -webkit-overflow-scrolling:touch; scrollbar-width:none; padding:2px 16px 24px; margin:0 -16px -18px;
 }
 .ff-hscroll::-webkit-scrollbar { display:none; }
 .ff-hscroll.snapmand { scroll-snap-type:x mandatory; }
@@ -5758,7 +5758,6 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
         <SectionHead icon={<Users size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Network" count={network.length}
           action={
             <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              {isMe && <button className="ff-btn sm ghost" onClick={() => dispatch({ type: "TAB", tab: "network" })}>All</button>}
               <CategoryToggle sectionKey="profile_network" defaultOpen={netOpen} />
             </span>
           } />
@@ -5780,7 +5779,6 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
         <SectionHead icon={<CatIcon kind="reviews" size={15} color="var(--gold-dk)" />} title="Reviews & References" count={reviewList.length}
           action={
             <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              {isMe && <button className="ff-btn sm ghost" onClick={() => setAsking(true)}>Ask</button>}
               <CategoryToggle sectionKey="reviews" defaultOpen={revOpen} />
             </span>
           } />
@@ -8771,7 +8769,7 @@ const PARTY_SERVICES = [
     includes: "Do some flair", ideal: "Launches, weddings and parties that want a show", time: "From 3 hours" },
 ];
 const STAFFING_SERVICE = { id: "svc_staffing", tone: "white", level: "Staffing", site: "FF Business", domain: "FFBusiness.uk", title: "Staffing Service", tagline: "The right team for any event.", from: "£100",
-  includes: "Able to work solo and communicate with clients", ideal: "Corporate events, venues and festivals", time: "Any shift length" };
+  includes: "Able to work solo and communicate with businesses and clients", ideal: "Business events (B2B) and private clients (B2C), venues and festivals", time: "Any shift length" };
 
 function ServicePoster({ svc, price }) {
   return (
@@ -10583,8 +10581,8 @@ function QuestionCardsCollection() {
           <span><i style={{ background: QUESTION_DONE.bg, borderColor: "#39C27E" }} />Answered</span>
         </div>
         <HScroll label={side === "todo" ? "Question Cards to answer" : "Answered Question Cards"}>
-          {canAdd && <AddQuestionCard onClick={() => setAdding(true)} />}
           {list.length ? list.map(card) : <div className="ff-qa-slot">{side === "todo" ? "All answered — nice work." : "Answered questions move here."}</div>}
+          {canAdd && <AddQuestionCard onClick={() => setAdding(true)} />}
         </HScroll>
       </div>
       <NewQuestionSheet open={adding} onClose={() => setAdding(false)} onAdded={() => setSide("done")} />
@@ -11347,9 +11345,10 @@ function servicesOf(state, person) {
   /* FireFlair's own packages follow the profession: bartending, mixology (and cocktail bartender), flair. */
   const pt = [person.profession, person.group, ...((recordsForPerson(state, person).professions || []).filter(r => !r.hidden && !r.proposed).map(r => r.name))].join(" ");
   const bar = /bartend/i.test(pt), mix = /mixolog|cocktail/i.test(pt), flair = /flair/i.test(pt);
-  const ids = [...ids0, ...(bar ? ["svc_bartending"] : []), ...(mix ? ["svc_mixology", "svc_masterclass"] : []), ...(flair ? ["svc_flair"] : [])];
+  /* Your own profile lists only the packages you have signed up for on Bookings. Other people also get the ones their profession fits (sample data). */
+  const ids = person.id === "me" ? ids0 : [...ids0, ...(bar ? ["svc_bartending"] : []), ...(mix ? ["svc_mixology", "svc_masterclass"] : []), ...(flair ? ["svc_flair"] : [])];
   return [
-    ...PARTY_SERVICES.filter(s => ids.includes(s.id)).map(s => ({ id: s.id, kind: "std", svc: s })),
+    ...[...PARTY_SERVICES, ...(PARTY_SERVICES.some(s => s.id === "svc_staffing") ? [] : [STAFFING_SERVICE])].filter(s => ids.includes(s.id)).map(s => ({ id: s.id, kind: "std", svc: s })),
     ...OWN_SERVICE_EXAMPLES.filter(x => x.personId === person.id).map(x => ({ id: x.id, kind: "own", item: { ...x, person } })),
   ];
 }
@@ -11467,7 +11466,7 @@ function PublicProfileBody({ person }) {
   const tabs = [
     { key: "overview", label: "Overview" },
     { key: "services", label: "Packages", count: services.length + (person.id === "me" ? (state.myServices || []).filter(x => String(x.title).trim()).length + (state.myCocktails || []).filter(x => String(x.name).trim()).length : 0) },
-    { key: "teams", label: "Team", count: teams.length },
+    ...(ph17(state) >= 2 ? [{ key: "teams", label: "Team", count: teams.length }] : []),
     { key: "reviews", label: "Reviews", count: reviews.length },
   ];
   const openAttr = (it) => setOpenRec({ record: it.record, def: it.def, category: it.category });
@@ -19327,12 +19326,13 @@ function seedDemo17(state, dispatch, kind) {
     dispatch({ type: "PROFILE", patch: { name: "Alexander Gagnon", live: true, theme: "gold", tier: "gold", level: 5, hasCar: true, photo: avatarFor("Alexander Gagnon"), records: DEMO_RECORDS(), about: state.profile.about || "Bartender for fifteen years, building FireFlair." } });
     dispatch({ type: "SESSION", patch: { tag: "ALEXG", phone: "+44 7700 900412", verified: true } });
   }
-  if (!(state.myCocktails || []).length) patch.myCocktails = [{
+  /* No default cocktails or Service Cards: they stay empty until the person adds or signs up. */
+  if (false) patch.myCocktails = [{
     id: uid("ck"), kind: "cocktail", spirit: "Vodka", glassOther: "", price: "", name: "Espresso Martini", note: "Rich coffee, a little sweetness and a silky crema on top.", photo: "", glass: "martini", keywords: ["coffee", "vodka", "after dinner", "sweet"],
     ings: [{ id: uid("ing"), amt: "50", unit: "ml", name: "Vodka", buy: "" }, { id: uid("ing"), amt: "25", unit: "ml", name: "Coffee liqueur", buy: "" },
       { id: uid("ing"), amt: "25", unit: "ml", name: "Fresh espresso", buy: "" }, { id: uid("ing"), amt: "10", unit: "ml", name: "Sugar syrup", buy: "" }],
   }];
-  if (kind !== "party" && !(state.myServices || []).length) patch.myServices = [{
+  if (false) patch.myServices = [{
     ...NEW_SERVICE17(), tone: "silver", title: "Cocktail Bartender", tagline: "A signature cocktail menu, made in front of your guests.",
     includes: "Bartender, cocktail menu, bar tools and garnishes", ideal: "Birthdays, garden parties and launches", time: "4 hours",
     base: "North London", areas: ["London", "Hertfordshire", "Essex"], equipment: "Portable bar, glassware, ice, garnishes", extras: ["Extra bartender", "Cocktail masterclass"], events: ["Birthdays", "Weddings", "Launches"],
@@ -22119,8 +22119,8 @@ const PARTY_SERVICES = [
         includes: "Host mixologist, all equipment, three to four cocktails each", ideal: "Hen and stag parties, team socials", time: "2 hours", price: "£350" },
     { id: "svc_full", tone: "platinum", level: "Platinum", title: "Full Service", tagline: "Everything, taken care of.",
         includes: "Full bar set-up, bartenders, cocktails and drinks service - everything", ideal: "Weddings, big celebrations and premium events", time: "From 4 hours", price: "From £500" },
-    { id: "svc_staffing", tone: "white", level: "Staff", title: "Staff Service", tagline: "The right people for any event.",
-        includes: "Bartenders, waiters, hosts and event staff", ideal: "Private events, venues and festivals", time: "From 2 hours", price: "From £100" },
+    { id: "svc_staffing", tone: "white", level: "Staffing", title: "Staffing Service", tagline: "The right team for any event.",
+        includes: "Able to work solo and communicate with businesses and clients", ideal: "Business events (B2B) and private clients (B2C), venues and festivals", time: "From 2 hours", price: "From £100" },
 ];
 
 /* ---- ported from v1.01: components/bookings/PosterCard.tsx ---- */
@@ -22762,7 +22762,7 @@ const HOME_JOBS = [
   { id: "bartending", tone: "bronze", level: "Bronze", title: "Bartending Service", meta: "£100 · 3 hours", reqs: ["Basic equipment", "Be professional", "Able to work solo"] },
   { id: "mixology", tone: "silver", level: "Silver", title: "Mixology Service", reqs: ["Write a cocktail menu", "Follow a cocktail menu", "Your own cocktail kit"] },
   { id: "flair", tone: "gold", level: "Flair", title: "Flair Package", reqs: ["Do some flair"] },
-  { id: "staff", tone: "white", level: "Staff", title: "Staff Service", reqs: ["Able to work solo", "Communicate with clients"] },
+  { id: "staff", tone: "white", level: "Staffing", title: "Staffing Service", reqs: ["Able to work solo", "Communicate with businesses and clients"] },
 ];
 const JOBS_CSS = `
 .ff .ff-job{--c:#F3EBDD;height:100%;display:flex;flex-direction:column;gap:8px;text-align:left;padding:16px 16px 18px;border-radius:22px;corner-shape:squircle;border:1.5px solid var(--c);background:linear-gradient(170deg,#1B1613,#0B0908);color:#F3EBDD;word-break:keep-all;overflow-wrap:normal;hyphens:none;}

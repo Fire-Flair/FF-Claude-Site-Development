@@ -542,7 +542,7 @@ const CSS = `
 
 .ff-hscroll {
   display:flex; gap:10px; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x proximity;
-  -webkit-overflow-scrolling:touch; scrollbar-width:none; padding:2px 16px 6px; margin:0 -16px;
+  -webkit-overflow-scrolling:touch; scrollbar-width:none; padding:2px 16px 24px; margin:0 -16px -18px;
 }
 .ff-hscroll::-webkit-scrollbar { display:none; }
 .ff-hscroll.snapmand { scroll-snap-type:x mandatory; }
@@ -6822,10 +6822,7 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
     count: network.length,
     action: React.createElement("span", {
       style: { display: "flex", alignItems: "center", gap: 6 }
-    }, isMe && React.createElement("button", {
-      className: "ff-btn sm ghost",
-      onClick: () => dispatch({ type: "TAB", tab: "network" })
-    }, "All"), React.createElement(CategoryToggle, {
+    }, React.createElement(CategoryToggle, {
       sectionKey: "profile_network",
       defaultOpen: netOpen
     }))
@@ -6863,10 +6860,7 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
     count: reviewList.length,
     action: React.createElement("span", {
       style: { display: "flex", alignItems: "center", gap: 6 }
-    }, isMe && React.createElement("button", {
-      className: "ff-btn sm ghost",
-      onClick: () => setAsking(true)
-    }, "Ask"), React.createElement(CategoryToggle, {
+    }, React.createElement(CategoryToggle, {
       sectionKey: "reviews",
       defaultOpen: revOpen
     }))
@@ -11102,8 +11096,8 @@ const STAFFING_SERVICE = {
   title: "Staffing Service",
   tagline: "The right team for any event.",
   from: "£100",
-  includes: "Able to work solo and communicate with clients",
-  ideal: "Corporate events, venues and festivals",
+  includes: "Able to work solo and communicate with businesses and clients",
+  ideal: "Business events (B2B) and private clients (B2C), venues and festivals",
   time: "Any shift length"
 };
 function ServicePoster({ svc, price }) {
@@ -13516,11 +13510,11 @@ function QuestionCardsCollection() {
     style: { background: QUESTION_DONE.bg, borderColor: "#39C27E" }
   }), "Answered")), React.createElement(HScroll, {
     label: side === "todo" ? "Question Cards to answer" : "Answered Question Cards"
-  }, canAdd && React.createElement(AddQuestionCard, {
-    onClick: () => setAdding(true)
-  }), list.length ? list.map(card) : React.createElement("div", {
+  }, list.length ? list.map(card) : React.createElement("div", {
     className: "ff-qa-slot"
-  }, side === "todo" ? "All answered — nice work." : "Answered questions move here."))), React.createElement(NewQuestionSheet, {
+  }, side === "todo" ? "All answered — nice work." : "Answered questions move here."), canAdd && React.createElement(AddQuestionCard, {
+    onClick: () => setAdding(true)
+  }))), React.createElement(NewQuestionSheet, {
     open: adding,
     onClose: () => setAdding(false),
     onAdded: () => setSide("done")
@@ -14610,9 +14604,9 @@ function servicesOf(state, person) {
   const ids0 = person.id === "me" ? state.profile.serviceInterest || [] : person.serviceInterest || [];
   const pt = [person.profession, person.group, ...(recordsForPerson(state, person).professions || []).filter((r) => !r.hidden && !r.proposed).map((r) => r.name)].join(" ");
   const bar = /bartend/i.test(pt), mix = /mixolog|cocktail/i.test(pt), flair = /flair/i.test(pt);
-  const ids = [...ids0, ...bar ? ["svc_bartending"] : [], ...mix ? ["svc_mixology", "svc_masterclass"] : [], ...flair ? ["svc_flair"] : []];
+  const ids = person.id === "me" ? ids0 : [...ids0, ...bar ? ["svc_bartending"] : [], ...mix ? ["svc_mixology", "svc_masterclass"] : [], ...flair ? ["svc_flair"] : []];
   return [
-    ...PARTY_SERVICES.filter((s) => ids.includes(s.id)).map((s) => ({ id: s.id, kind: "std", svc: s })),
+    ...[...PARTY_SERVICES, ...PARTY_SERVICES.some((s) => s.id === "svc_staffing") ? [] : [STAFFING_SERVICE]].filter((s) => ids.includes(s.id)).map((s) => ({ id: s.id, kind: "std", svc: s })),
     ...OWN_SERVICE_EXAMPLES.filter((x) => x.personId === person.id).map((x) => ({ id: x.id, kind: "own", item: { ...x, person } }))
   ];
 }
@@ -14764,7 +14758,7 @@ function PublicProfileBody({ person }) {
   const tabs = [
     { key: "overview", label: "Overview" },
     { key: "services", label: "Packages", count: services.length + (person.id === "me" ? (state.myServices || []).filter((x) => String(x.title).trim()).length + (state.myCocktails || []).filter((x) => String(x.name).trim()).length : 0) },
-    { key: "teams", label: "Team", count: teams.length },
+    ...ph17(state) >= 2 ? [{ key: "teams", label: "Team", count: teams.length }] : [],
     { key: "reviews", label: "Reviews", count: reviews.length }
   ];
   const openAttr = (it) => setOpenRec({ record: it.record, def: it.def, category: it.category });
@@ -34325,7 +34319,7 @@ function seedDemo17(state, dispatch, kind) {
     dispatch({ type: "PROFILE", patch: { name: "Alexander Gagnon", live: true, theme: "gold", tier: "gold", level: 5, hasCar: true, photo: avatarFor("Alexander Gagnon"), records: DEMO_RECORDS(), about: state.profile.about || "Bartender for fifteen years, building FireFlair." } });
     dispatch({ type: "SESSION", patch: { tag: "ALEXG", phone: "+44 7700 900412", verified: true } });
   }
-  if (!(state.myCocktails || []).length)
+  if (false)
     patch.myCocktails = [{
       id: uid("ck"),
       kind: "cocktail",
@@ -34344,7 +34338,7 @@ function seedDemo17(state, dispatch, kind) {
         { id: uid("ing"), amt: "10", unit: "ml", name: "Sugar syrup", buy: "" }
       ]
     }];
-  if (kind !== "party" && !(state.myServices || []).length)
+  if (false)
     patch.myServices = [
       {
         ...NEW_SERVICE17(),
@@ -39384,11 +39378,11 @@ const V101 = (() => {
     {
       id: "svc_staffing",
       tone: "white",
-      level: "Staff",
-      title: "Staff Service",
-      tagline: "The right people for any event.",
-      includes: "Bartenders, waiters, hosts and event staff",
-      ideal: "Private events, venues and festivals",
+      level: "Staffing",
+      title: "Staffing Service",
+      tagline: "The right team for any event.",
+      includes: "Able to work solo and communicate with businesses and clients",
+      ideal: "Business events (B2B) and private clients (B2C), venues and festivals",
       time: "From 2 hours",
       price: "From £100"
     }
@@ -40568,7 +40562,7 @@ const V101 = (() => {
     { id: "bartending", tone: "bronze", level: "Bronze", title: "Bartending Service", meta: "\xA3100 \xB7 3 hours", reqs: ["Basic equipment", "Be professional", "Able to work solo"] },
     { id: "mixology", tone: "silver", level: "Silver", title: "Mixology Service", reqs: ["Write a cocktail menu", "Follow a cocktail menu", "Your own cocktail kit"] },
     { id: "flair", tone: "gold", level: "Flair", title: "Flair Package", reqs: ["Do some flair"] },
-    { id: "staff", tone: "white", level: "Staff", title: "Staff Service", reqs: ["Able to work solo", "Communicate with clients"] }
+    { id: "staff", tone: "white", level: "Staffing", title: "Staffing Service", reqs: ["Able to work solo", "Communicate with businesses and clients"] }
   ];
   const JOBS_CSS = `
   .ff .ff-job{--c:#F3EBDD;height:100%;display:flex;flex-direction:column;gap:8px;text-align:left;padding:16px 16px 18px;border-radius:22px;corner-shape:squircle;border:1.5px solid var(--c);background:linear-gradient(170deg,#1B1613,#0B0908);color:#F3EBDD;word-break:keep-all;overflow-wrap:normal;hyphens:none;}
