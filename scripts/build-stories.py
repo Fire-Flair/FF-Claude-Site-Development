@@ -42,6 +42,14 @@ def plain(s):
     return re.sub(r"\*+", "", s)
 
 
+def _images():
+    p = os.path.join(ROOT, "stories", "images.json")
+    return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else {}
+
+
+IMAGES = _images()
+
+
 def article(path):
     fm, body = parse(path)
     body = re.sub(r"^# .*\n", "", body.strip(), count=1).strip()
@@ -55,7 +63,8 @@ def article(path):
     return {
         "id": fm["id"], "slug": fm["slug"], "site": fm["site"], "title": fm["title"], "seo": fm.get("seo_title", ""),
         "date": nice_date(fm["published"]), "iso": fm["modified"], "reviewed": nice_date(fm["reviewed"]),
-        "by": fm.get("author", "FireFlair editorial team"), "cat": fm.get("category", "How-to guides"), "img": "",
+        "by": fm.get("author", "FireFlair editorial team"), "cat": fm.get("category", "How-to guides"),
+        "img": ("s18_" + fm["slug"]) if fm["slug"] in IMAGES else "", "alt": IMAGES.get(fm["slug"], {}).get("alt", ""),
         "min": max(2, math.ceil(words / 200)), "blurb": blurb, "intro": intro, "body": sections,
         "cta": cta.group(1).strip() if cta else "", "related": listval(fm.get("related", "[]")),
     }
@@ -70,8 +79,28 @@ def reader(arts):
     by_id = {a["id"]: a["slug"] for a in arts.values()}
     order = {k: [by_id.get(i, i) for i in v] for k, v in ORDER.items()}
     tpl = open(os.path.join(ROOT, "scripts", "stories-reader.js"), encoding="utf-8").read()
-    return (tpl.replace("__ST18_DATA__", json.dumps(arts, ensure_ascii=False, indent=1))
+    import base64
+    imgs = {}
+    for slug, m in IMAGES.items():
+        f = os.path.join(ROOT, "stories", "images", slug + ".webp")
+        if os.path.exists(f):
+            imgs["s18_" + slug] = {"src": "data:image/webp;base64," + base64.b64encode(open(f, "rb").read()).decode(), "pos": m["pos"]}
+    return (tpl.replace("__ST18_IMGS__", json.dumps(imgs))
+               .replace("__ST18_DATA__", json.dumps(arts, ensure_ascii=False, indent=1))
                .replace("__ST18_ORDER__", json.dumps(order, ensure_ascii=False)))
+
+
+def repatch(src, code):
+    """Replace the Stories block in a file that already has it (from the ST18_ROUTES line to the end of Journal17)."""
+    a = src.index("const ST18_ROUTES")
+    c = src.rfind("/* ==== Stories phase 2", 0, a)
+    start = (c if c != -1 and a - c < 1200 else src.rfind("\n", 0, a) + 1)
+    j = src.index("function Journal17(", a)
+    ends = [src.find(m, j) for m in ("/* ---- Hospitality industry events", "const GE17 = [")]
+    e = min(x for x in ends if x != -1)
+    e = src.rfind("\n", 0, e) + 1 if src[e - 1] != "\n" else e
+    indent = src[src.rfind("\n", 0, a) + 1:a]
+    return src[:start] + "\n".join((indent + l if l else l) for l in code.split("\n")) + "\n\n" + src[e:]
 
 
 def patch(src, code):
@@ -98,7 +127,8 @@ if __name__ == "__main__":
             os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
             text = open(src, encoding="utf-8").read()
             if "ST18_ROUTES" in text:
-                sys.exit(f"{src} already has the Stories patch; run on a pristine copy")
-            open(out, "w", encoding="utf-8").write(patch(text, code))
+                open(out, "w", encoding="utf-8").write(repatch(text, code))  # already patched: replace the block
+            else:
+                open(out, "w", encoding="utf-8").write(patch(text, code))
             print("wrote", out)
     print(len(arts), "articles")

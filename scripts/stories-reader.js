@@ -8,6 +8,7 @@
 const ST18_ROUTES = false;
 const ST18 = __ST18_DATA__;
 const ST18_ORDER = __ST18_ORDER__;
+const ST18_IMGS = __ST18_IMGS__;
 const ST18_IDS = {};
 Object.keys(ST18).forEach((s) => { JR17[s] = ST18[s]; ST18_IDS[ST18[s].id] = s; });
 Object.assign(JR17_ORDER, ST18_ORDER);
@@ -89,7 +90,8 @@ function Journal17({ kind = "team" }) {
   const ids = (JR17_ORDER[kind] || JR17_ORDER.team).filter((i) => JR17[i]);
   const cats = ["All", ...Array.from(new Set(ids.map((i) => JR17[i].cat)))];
   const shown = ids.filter((i) => cat === "All" || JR17[i].cat === cat);
-  const img = (k) => k ? (CfImg11(k) || (typeof IMGS !== "undefined" && IMGS[k]) || "") : "";
+  const img = (k) => k ? ((ST18_IMGS[k] && ST18_IMGS[k].src) || CfImg11(k) || (typeof IMGS !== "undefined" && IMGS[k]) || "") : "";
+  const fpos = (k) => (ST18_IMGS[k] ? { objectPosition: ST18_IMGS[k].pos } : fp17(k));
   const o = open ? JR17[open] : null;
 
   useEffect(() => {
@@ -152,12 +154,12 @@ function Journal17({ kind = "team" }) {
         key: id, className: "ff-jr17-card", href: "/stories/" + id,
         onClick: (e) => { if (e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey) { e.preventDefault(); openStory(id, e.currentTarget); } }
       },
-        React.createElement("span", { className: "ph" + (src ? "" : " txt") }, src ? React.createElement("img", { src, style: fp17(p.img), alt: "", draggable: false }) : React.createElement("span", null, p.cat)),
+        React.createElement("span", { className: "ph" + (src ? "" : " txt") }, src ? React.createElement("img", { src, style: fpos(p.img), alt: p.alt || "", loading: "lazy", draggable: false }) : React.createElement("span", null, p.cat)),
         React.createElement("span", { className: "tx" }, React.createElement("i", null, p.cat + " · " + p.date), React.createElement("b", null, p.title), React.createElement("small", null, p.blurb || p.intro)));
     })),
     React.createElement(Sheet, { open: !!o, onClose: closeStory, title: o ? o.cat : "", center: true },
       o && React.createElement("article", { className: "ff-jr17-pop ff-jr17-art" },
-        img(o.img) && React.createElement("img", { className: "hero", src: img(o.img), style: fp17(o.img), alt: "" }),
+        img(o.img) && React.createElement("img", { className: "hero", src: img(o.img), style: fpos(o.img), alt: o.alt || "" }),
         React.createElement("div", { className: "meta" }, React.createElement("time", null, o.date), React.createElement("span", null, o.min + " min read")),
         React.createElement("h3", null, o.title),
         React.createElement("div", { className: "by" }, React.createElement("span", { className: "coin" }, React.createElement(Coin, { size: 22, tier: "gold" })), React.createElement("span", null, "By ", React.createElement("b", null, o.by))),

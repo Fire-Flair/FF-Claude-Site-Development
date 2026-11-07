@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v17.3.100 — 2026-11-07 — Stories: photos
+
+- All 70 Stories now have a photo from the photo library, with descriptive alt text. Cards and the open article show it; no photo is used twice on the same site.
+- Crops are saved as stories/images/{slug}.webp and mapped in stories/images.json for the developers' real /stories pages.
+- The build script can now re-apply the Stories block to an already patched file.
+
 ## v17.3.99 — 2026-11-07 — Stories: coming-soon guides
 
 - 12 more guides added (70 Stories in total): local guides, music, photography, waiting staff, masterclass, training courses, Christmas staffing and signature cocktails. Each states plainly which service is available now and which is coming soon.

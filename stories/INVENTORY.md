@@ -72,3 +72,84 @@ Tested (headless, 390px): Team 18 cards, Staff 18 cards, Party 25 cards (22 plus
 - VAT is not mentioned while the business is below the threshold. Professionals are responsible for their own tax and legal obligations. A tax update will be made when VAT starts.
 - Comparison pages keep the "published by FireFlair" disclosure and checked dates; the word "facts" is avoided.
 - Still open: conditional candidates C01–C12 and community-question articles (need source material from Alex).
+
+## Story images (v17.3.100)
+
+Every article has one photo from `photo-library/` (cropped 8:5, `stories/images/{slug}.webp`, 640 px wide) with descriptive alt text, listed in `stories/images.json` (slug, library id, alt text, focus point). Rules applied: no photo is used twice on the same site (checked against the library's usage list, including the home-page pillars and older stories); no photo with a visible third-party brand; no Vooshka bar-design product shots; faces kept inside every crop. Photos may repeat across FF Team, FF Staff and FF Party.
+
+For the real site: use the `.webp` files as the article's lead image, keep the alt text, add `width` and `height`, add the absolute image URL to the Article structured data, and use `loading="lazy"` below the fold. People photos still need permission confirmed before launch (see photo-library/README.md).
+
+Gap: few unused people photos remain for FF Team and FF Staff, so many of their articles use drink or bar photos. New supplied photos of bartenders at work would improve them.
+
+| Article slug | Library photo | Alt text |
+|---|---|---|
+| add-to-event-alternatives-party-bar-hire | vkg10 | A black marble event bar with a monogram front and an easel cocktail menu, in a dark hall. |
+| add-to-event-and-bark-alternatives-bar-companies | vkg14 | A long event bar wrapped in a bright patterned print with a personalised sign. |
+| bar-staffing-agency-or-freelance-platform | p37 | A team of bartenders and guests smile with mojitos at a long blue bar in a glass office atrium. |
+| barback-bartender-or-bar-manager | p10 | A young bartender aims a blow torch flame over a coupe cocktail in front of a back bar of bottles. |
+| bartender-hire-vs-mobile-bar-hire | vkg02 | A round event bar with a monogram front and a tree centrepiece under purple light. Small Vooshka text under the monogram. |
+| bartender-mixologist-flair-bartender-difference | p10 | A young bartender aims a blow torch flame over a coupe cocktail in front of a back bar of bottles. |
+| book-bartender-and-dj-for-a-party | vks08 | Vooshka signature cocktail: Ginger & Passionfruit Mojito. |
+| cash-bar-or-open-bar-for-a-wedding | vkc19 | Classic cocktail photo: French 75. |
+| christmas-party-bar-staffing | vke11 | A long line of pink cocktails with cherries under purple party lights. |
+| cocktail-bartender-or-masterclass-hen-party | p13 | Two smiling guests photograph a row of strawberry mojitos on their table. |
+| cocktail-masterclass-at-home | vks13 | Vooshka signature cocktail: Penicillin. |
+| cocktail-party-ice-and-glassware | vke12 | Rows of foamy coupe cocktails with cherries at an event bar. |
+| cocktail-skills-for-event-bartending | p17 | Three foamy martinis with a red swirl on a bar mat. |
+| coople-alternatives-uk-bar-staff | vkg10 | A black marble event bar with a monogram front and an easel cocktail menu, in a dark hall. |
+| dj-or-live-musician-house-party | vkg06 | Vooshka event bar photo: After-dark atmosphere. |
+| dry-bar-hire-staffed-bar-full-bar-service | vkg12 | Vooshka event bar photo: Your bar, your way. |
+| ff-party-booking-deposits-and-refunds | vkc24 | Classic cocktail photo: Spicy Margarita. |
+| ff-party-vs-add-to-event | vke07 | A bartender in a bow tie pours into martini glasses, in black and white. |
+| ff-party-vs-poptop | vke09 | A bartender in a flat cap and bow tie pours into rows of coupes, in black and white. |
+| ff-party-vs-togather | vke03 | A bartender with glasses pours juice into a row of glasses under blue stage lights. |
+| ff-staff-booking-fees-refunds-replacements | vkc12 | Classic cocktail photo: Whisky Sour. |
+| ff-staff-vs-brigad-hospitality-staffing | vke04 | A bartender in a bow tie strains a cocktail into a coupe at a long event bar. |
+| ff-staff-vs-indeed-flex-bar-staffing | vke09 | A bartender in a flat cap and bow tie pours into rows of coupes, in black and white. |
+| ff-team-vs-brigad-for-bartenders | vkc09 | Classic cocktail photo: Negroni. |
+| ff-team-vs-indeed-flex-for-bartenders | vkc04 | Classic cocktail photo: Espresso Martini. |
+| first-event-bar-shift-checklist | vkg08 | Vooshka event bar photo: An elegant centrepiece. |
+| freelance-bartender-work-london | vkc27 | Classic cocktail photo: Pineapple Mojito. |
+| freelance-bartending-or-agency-bar-work | vkg12 | Vooshka event bar photo: Your bar, your way. |
+| freelance-bartending-trading-allowance | vkc20 | Classic cocktail photo: French Martini. |
+| hire-photographer-birthday-party | vkc05 | Classic cocktail photo: Cosmopolitan. |
+| hospitality-staffing-fees-explained | vkc10 | Classic cocktail photo: Moscow Mule. |
+| how-far-in-advance-to-book-a-bartender | vkc02 | Classic cocktail photo: Mojito. |
+| how-many-bartenders-do-i-need | vke06 | Guests crowd a long event bar while a bartender serves, in a bright hall. |
+| how-many-cocktails-for-a-party | vke11 | A long line of pink cocktails with cherries under purple party lights. |
+| how-many-waiters-for-a-private-party | p29 | A smiling waiter carries a wooden tray of cocktails out of a marquee at a country event. |
+| how-much-does-it-cost-to-hire-a-bartender | vkg11 | A round event bar with a monogram front in a vaulted hall dressed for a wedding. |
+| how-to-accept-bookings-on-ff-team | p37 | A team of bartenders and guests smile with mojitos at a long blue bar in a glass office atrium. |
+| how-to-book-a-bartender-on-ff-party | p23 | A bartender in a shearling vest pours into a martini glass at an outdoor event bar with a chalkboard menu. |
+| how-to-book-bar-staff-on-ff-staff | vke01 | Two bartenders in bow ties pour and garnish rows of red punch at a bright event bar. |
+| how-to-build-a-bartender-network | p38 | Selfie at a bar show stand with a drinks menu board and a bartender behind. |
+| how-to-build-a-bartender-profile | p29 | A smiling waiter carries a wooden tray of cocktails out of a marquee at a country event. |
+| how-to-choose-a-bartender-training-course | vkc11 | Classic cocktail photo: Tom Collins. |
+| how-to-compare-mobile-bar-companies | vkg14 | A long event bar wrapped in a bright patterned print with a personalised sign. |
+| how-to-find-freelance-bartending-work-uk | p21 | A smiling bartender in a white shearling vest shakes a cocktail; a guest in a floral shirt and feather boa laughs beside her. |
+| how-to-find-last-minute-bar-staff | vke02 | A tray of martinis glowing under pink event lighting. |
+| how-to-get-mobile-bar-bookings | vkg12 | Vooshka event bar photo: Your bar, your way. |
+| how-to-hire-a-bartender-for-a-house-party | p21 | A smiling bartender in a white shearling vest shakes a cocktail; a guest in a floral shirt and feather boa laughs beside her. |
+| how-to-hire-a-bartender-in-hertfordshire | vkc07 | Classic cocktail photo: Aperol Spritz. |
+| how-to-hire-a-cocktail-bartender-in-london | vkc14 | Classic cocktail photo: Manhattan. |
+| how-to-plan-a-cocktail-menu-for-a-party | vkc04 | Classic cocktail photo: Espresso Martini. |
+| how-to-plan-a-wedding-bar | vkg08 | Vooshka event bar photo: An elegant centrepiece. |
+| how-to-rebook-bartenders | p21 | A smiling bartender in a white shearling vest shakes a cocktail; a guest in a floral shirt and feather boa laughs beside her. |
+| how-to-set-freelance-bartender-rates | vkc08 | Classic cocktail photo: Old Fashioned. |
+| how-to-write-a-bartender-cv | vks02 | Vooshka signature cocktail: Marmalade Gin. |
+| how-to-write-a-mobile-bar-package | vkg08 | Vooshka event bar photo: An elegant centrepiece. |
+| indeed-flex-alternatives-for-bartenders | vkg06 | Vooshka event bar photo: After-dark atmosphere. |
+| indeed-flex-alternatives-for-hiring-bar-staff | vke07 | A bartender in a bow tie pours into martini glasses, in black and white. |
+| repeat-bookings-event-bar-business | vkg11 | A round event bar with a monogram front in a vaulted hall dressed for a wedding. |
+| repeat-bookings-freelance-bartender | vkc12 | Classic cocktail photo: Whisky Sour. |
+| signature-cocktail-services-on-ff-party | vks04 | Vooshka signature cocktail: Maple Old Fashioned. |
+| staffing-a-product-launch-or-drinks-reception | vkg02 | A round event bar with a monogram front and a tree centrepiece under purple light. Small Vooshka text under the monogram. |
+| supply-own-alcohol-hire-bartender | vkc08 | Classic cocktail photo: Old Fashioned. |
+| temporary-bar-staff-brief-template | vkg10 | A black marble event bar with a monogram front and an easel cocktail menu, in a dark hall. |
+| temporary-bar-staff-hertfordshire-guide | vke12 | Rows of foamy coupe cocktails with cherries at an event bar. |
+| temporary-bar-staff-hire-cost | vke10 | Cocktails with dried orange and cherries at a party, guests out of focus behind. |
+| weekend-bar-work-alongside-another-job | vkc07 | Classic cocktail photo: Aperol Spritz. |
+| what-is-ff-team | p19 | A martini beside fresh mint, raspberries and rose petals on a bar. |
+| what-to-check-before-accepting-a-bar-shift | vkc14 | Classic cocktail photo: Manhattan. |
+| what-to-do-when-an-event-bartender-cancels | vkg06 | Vooshka event bar photo: After-dark atmosphere. |
+| what-to-provide-when-hiring-a-bartender | vke05 | A row of mojitos with mint along a bar under purple party lights. |
