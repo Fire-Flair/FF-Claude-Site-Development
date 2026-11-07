@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v17.3.109
+
+- FF Party People page reordered: search at the top, then the four pillars under "Browse the network", then the map directly below the pillars (below the open pillar's list when one is open), then Featured companies and Featured people at the bottom.
+- The separate Bar companies, Entertainment, Photographers and Caterers rows are gone; those companies are listed inside their pillar. With no pillar open, only the people groups show below the map.
+- FF Team and FF Staff use the same order for the pillars and map; on FF Team the "Discover" heading was removed.
+
 ## v17.3.108
 
 - Build your booking (the Bar, Entertainment, Services and Food pillars, packages, people and add-ons) moved from the FF Party People page to the Confirm your booking screen, above the existing confirm section. Look and behaviour are unchanged. Choosing or removing a package there updates the Services box straight away, and "Plan your event" now opens this screen.

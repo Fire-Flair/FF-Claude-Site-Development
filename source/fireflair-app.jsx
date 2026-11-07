@@ -8578,13 +8578,11 @@ function NetworkScreen({ guest = false }) {
       {!q && !guest && ph17(state) >= 2 && <SentInvitations />}
 
       {!q && <TopStaff11 />}
-      <NetMap11 />
+      <NetBrowse17 query={q} onPick={view} after={<NetMap11 />} />
       {!q && (<>
         {PHASE1.leaderboards && <Rankings />}
         <Divider />
-        <h2 className="ff-h2" style={{ fontSize: 18, margin: "0 0 4px" }}>Discover</h2>
       </>)}
-      <NetBrowse17 query={q} onPick={view} />
       <V101.BusinessSupport19 />
       {!guest && <InviteSheet open={inviting} onClose={() => setInviting(false)} />}
       <ReviewSheet open={!!reviewing} person={reviewing} onClose={() => setReviewing(null)} />
@@ -18410,7 +18408,7 @@ function NetBrowse17(props) {
   const query = props.query || "";
   const st = useStore(), state = st.state, dispatch = st.dispatch;
   const open = state.netPillar17 || "";
-  if (query.trim()) return React.createElement(GroupedPeople, { query: query, onPick: props.onPick, scope: props.scope });
+  if (query.trim()) return React.createElement(React.Fragment, null, props.after || null, React.createElement(GroupedPeople, { query: query, onPick: props.onPick, scope: props.scope }));
   const all = browseCompanies17(state);
   const secs = NET_CO_TYPES17.filter(function (t) { return !open || PILLAR_OF_CAT17[t[0]] === open; })
     .map(function (t) { return [t, all.filter(function (c) { return (c.cat || "bar") === t[0]; })]; })
@@ -18422,7 +18420,8 @@ function NetBrowse17(props) {
   const items = BCATS17.map(function (c) { return { k: c.k, t: c.label, s: NET_PILLAR_TEXT17[c.k], img: (window.FF_IMG || {})[BIMG17[c.k]] }; });
   return React.createElement(React.Fragment, null,
     React.createElement(PillarBox17, { label: "Browse the network", open: open, items: items, onPick: function (k) { dispatch({ type: "V11_SET", patch: { netPillar17: k } }); } }, body),
-    !open && body);
+    props.after || null,
+    !open && React.createElement(GroupedPeople, { query: "", onPick: props.onPick, scope: props.scope, only: "" }));
 }
 
 /* A company's page, as anyone sees it. */
@@ -18540,8 +18539,7 @@ function StaffRosterStaff11() {
         purpose="Find people to hire — search by name, profession, skill or area. Tap a card to see their profile."
         placeholder="Name, profession, skill or area…" />
       {!q && !state.netBrief && <TopStaff11 />}
-      {!q && !state.netBrief && <NetMap11 />}
-      <NetBrowse17 query={q} onPick={(p) => dispatch({ type: "VIEW", id: p.id })} scope="staff_" />
+      <NetBrowse17 query={q} onPick={(p) => dispatch({ type: "VIEW", id: p.id })} scope="staff_" after={!q && !state.netBrief ? <NetMap11 /> : null} />
       {!q && regulars.length > 0 && (
         <section style={{ marginTop: 18 }}>
           <SectionHead icon={<I11.Check size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Your team" count={regulars.length} />
@@ -22203,25 +22201,19 @@ function PartyBrowse17() {
     chips: items.map(i => ({ key: i.key, label: i.label, thumb: i.thumb, icon: i.icon, onRemove: () => dispatch({ type: "V11_SET", patch: { bk17: i.rm() } }) })),
     actions: items.length ? [{ key: "go", label: bk.pk.length ? "Continue to your event" : "Add a service to continue", coin: true, disabled: !bk.pk.length, onClick: cont }] : [],
   }, [JSON.stringify(bk), band, qual, state.activeEventId, state.events.length, state.shifts.length]);
-  return (
-    <div className="ff-pn ff-br17">
-      <div className="ff-eyebrow">FF Party</div>
-      <h1 className="ff-h1" style={{ marginTop: 4, marginBottom: 10 }}>Let's plan your party</h1>
-      {p2 && <p className="ff-br17-launch" role="note"><b>FireFlair is launching with bar packages.</b> Every other profession on the platform will be added later.</p>}
-      <h2 className="ff-about-h ff-br17-q ff-br17-net">Browse the network</h2>
-      {pop && <PkgSheet17 svc={pop} qual={qual} onClose={() => setPop(null)} />}
-      {state.netBrief && <BookingBrief brief={state.netBrief} />}
-      <Fold17 id="ff-pn-companies" icon={<I11.Briefcase size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Featured companies" count={cos.length}>
-        <HScroll label="Featured companies">{cos.map(c => <div className="ff-br17-co" key={c.id}><CompanyListing11 co={c} /></div>)}</HScroll></Fold17>
-      <Fold17 id="ff-br17-people" icon={<I11.Star size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Featured people" count={feat.length}>
-        <HScroll label="Featured people">{feat.map(p => <PlayerTile key={p.id} person={p} onClick={() => { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); }} />)}</HScroll></Fold17>
-      {!q && !state.netBrief && <NetMap11 />}
-      <FFAI query={q} onQuery={setQ} title="Search for your team" context="FF Party"
-        purpose="Find the right people for your event: search by name, profession, skill or area."
-        placeholder="Name, profession, skill or area…" />
-      {!state.netBrief && <NetBrowse17 query={q} onPick={(p) => dispatch({ type: "VIEW", id: p.id })} scope="staff_" />}
-    </div>
-  );
+  return React.createElement("div", { className: "ff-pn ff-br17" },
+    React.createElement("div", { className: "ff-eyebrow" }, "FF Party"),
+    React.createElement("h1", { className: "ff-h1", style: { marginTop: 4, marginBottom: 10 } }, "Let's plan your party"),
+    p2 && React.createElement("p", { className: "ff-br17-launch", role: "note" }, React.createElement("b", null, "FireFlair is launching with bar packages."), " Every other profession on the platform will be added later."),
+    React.createElement(FFAI, { query: q, onQuery: setQ, title: "Search for your team", context: "FF Party", purpose: "Find the right people for your event: search by name, profession, skill or area.", placeholder: "Name, profession, skill or area\u2026" }),
+    React.createElement("h2", { className: "ff-about-h ff-br17-q ff-br17-net" }, "Browse the network"),
+    pop && React.createElement(PkgSheet17, { svc: pop, qual: qual, onClose: function () { setPop(null); } }),
+    state.netBrief && React.createElement(BookingBrief, { brief: state.netBrief }),
+    !state.netBrief && React.createElement(NetBrowse17, { query: q, onPick: function (p) { dispatch({ type: "VIEW", id: p.id }); }, scope: "staff_", after: !q ? React.createElement(NetMap11, null) : null }),
+    React.createElement(Fold17, { id: "ff-pn-companies", icon: React.createElement(I11.Briefcase, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title: "Featured companies", count: cos.length },
+      React.createElement(HScroll, { label: "Featured companies" }, cos.map(function (c) { return React.createElement("div", { className: "ff-br17-co", key: c.id }, React.createElement(CompanyListing11, { co: c })); }))),
+    React.createElement(Fold17, { id: "ff-br17-people", icon: React.createElement(I11.Star, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title: "Featured people", count: feat.length },
+      React.createElement(HScroll, { label: "Featured people" }, feat.map(function (p) { return React.createElement(PlayerTile, { key: p.id, person: p, onClick: function () { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); } }); }))));
 }
 
 /* The FF coin is the notification centre on every site. Next steps (and XP, later) sit under the notifications. */
