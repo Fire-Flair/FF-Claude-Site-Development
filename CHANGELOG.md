@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.96 — 2026-11-07 — Ten real bar companies, unclaimed
+Artifact version 1794063064-b86b · file `fireflair-v17.3.96.html`
+
+- Ten real UK event bar companies are now in the prototype as unclaimed Company Cards: Bar Brothers Events, Mix & Twist, Ministry of Cocktails, Barsmith Event Bars, The Bartender, Barworx, Event Bars Ltd, Quickbar, The Bar People, The Outside Bar Company. They sit beside Vooshka in the Companies row on the People tab.
+- The data lives in data/companies/seed-companies.json with a JSON schema and README, so the same records can be imported into the real site as drafts through the content API. The prototype loads this same data.
+- Unclaimed rules: card is marked Unclaimed, the page shows "Not yet claimed", services, events, scale and good-to-know facts, and there is no booking, Ask, Review, packages or reviews. They are kept out of every FF Party list until a claim is verified.
+- No logos or photos yet (monogram shown) until each company gives permission or supplies them. Summaries are written fresh from facts; sources and retrieval date are stored per record. No prices, personal contact details or individuals' names.
+- The three invented demo companies stay in the data (events refer to them) but are hidden from the Companies row.
+
 ## v17.3.95 — 2026-11-07 — Stories phase 2, complete (artifact version 1794062293-5b73)
 
 - 58 Stories now in the prototype: FF Party 22, FF Team 18, FF Staff 18. All Priority B articles written; legacy stories replaced where a new article covers them.
