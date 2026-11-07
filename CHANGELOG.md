@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.106
+
+- Browse under the map is now a double dropdown on FF Team, FF Staff and FF Party: People or Companies, then a type. People types are the existing professions. Company types are Bar, Entertainment, Photographers, Caterers and Services (no Front of House).
+- All 90 supplier companies are now browsable under Companies on all three sites (Bar companies, Entertainment, Photographers, Caterers); the Companies strip that sat under the map is replaced by this dropdown. Services is ready and empty until security and similar companies are added.
+- FF Party "Bar companies" carousels and booking flows are unchanged and still bar-only.
+- Storm DJs packages (Starter Party, Signature Set, Unforgettable Night) re-checked against Storm DJs' own packages page: inclusions updated to match, titles and levels kept. The deposit rule is applied in the existing price logic and is not stated in the UI.
+- The "Discover professionals" heading and helper line are now just "Discover".
+
 ## v17.3.105 — 2026-11-07 — DJs, photographers, caterers on map
 Artifact version 1794077372-02e8 · file `fireflair-v17.3.105.html`
 

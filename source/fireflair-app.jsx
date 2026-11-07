@@ -516,6 +516,8 @@ const CSS = `
 .ff .ff-pin .ff-codot.dj{background:#6B3FB5}
 .ff .ff-pin .ff-codot.photo{background:#2A6BB0}
 .ff .ff-pin .ff-codot.catering{background:#D2762B}
+.ff .ff-netbrowse17{display:flex;gap:10px;margin:18px 0 0}
+.ff .ff-netbrowse17 select{flex:1;min-width:0;border-radius:16px}
 .ff .ff-pin .ff-codot.on{width:20px;height:20px;box-shadow:0 0 10px rgba(201,162,39,.9)}
 .ff .ff-llbl{pointer-events:none;width:0;height:0;overflow:visible}
 .ff .ff-llbl span{position:absolute;transform:translate(-50%,-190%);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:rgba(234,215,156,.8);text-shadow:0 0 4px #000,0 0 6px #000;white-space:nowrap}
@@ -8445,11 +8447,12 @@ function InviteSheet({ open, onClose }) {
   );
 }
 
-function GroupedPeople({ onPick, selectable, scope = "", query = "" }) {
+function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "" }) {
   const { state, dispatch } = useStore();
   const everyone = useDirectory();
   const n = query.trim().toLowerCase();
-  const all = n ? everyone.filter(p => personSearchText(p).includes(n)) : everyone;
+  const all0 = n ? everyone.filter(p => personSearchText(p).includes(n)) : everyone;
+  const all = only ? all0.filter(p => p.group === only) : all0;
   if (n && !all.length) return <div style={{ marginTop: 18 }}><Empty icon={<Search size={26} />} title={`Nobody matches “${query}” yet. Try a different name, skill or area.`} /></div>;
   const order = CATEGORY_ORDER;
   const groups = all.reduce((m, p) => { (m[p.group] = m[p.group] || []).push(p); return m; }, {});
@@ -8576,14 +8579,12 @@ function NetworkScreen({ guest = false }) {
 
       {!q && <TopStaff11 />}
       <NetMap11 />
-      {!q && <CompaniesSection note="Hospitality businesses on FireFlair, and the teams they book." />}
       {!q && (<>
         {PHASE1.leaderboards && <Rankings />}
         <Divider />
-        <h2 className="ff-h2" style={{ fontSize: 18, margin: "0 0 4px" }}>Discover professionals</h2>
-        <p className="ff-body ff-muted" style={{ margin: "0 0 4px" }}>Published Profile Cards, by profession. Tap a card to open the full profile.</p>
+        <h2 className="ff-h2" style={{ fontSize: 18, margin: "0 0 4px" }}>Discover</h2>
       </>)}
-      <GroupedPeople query={q} onPick={view} />
+      <NetBrowse17 query={q} onPick={view} />
       <V101.BusinessSupport19 />
       {!guest && <InviteSheet open={inviting} onClose={() => setInviting(false)} />}
       <ReviewSheet open={!!reviewing} person={reviewing} onClose={() => setReviewing(null)} />
@@ -18375,9 +18376,9 @@ const companyList = (state) => adminCompanies17(state, [
   ...COMPANIES.map(x => companyById(state, x.id)).filter(Boolean),
 ]);
 
-function CompaniesSection({ title = "Companies", note }) {
+function CompaniesSection({ title = "Companies", note, list: listIn }) {
   const { state, dispatch } = useStore();
-  const list = companyList(state);
+  const list = listIn || companyList(state);
   return (
     <section className="ff-co11-sect" style={{ marginTop: 22 }}>
       <SectionHead icon={<I11.Briefcase size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={title} count={list.length} />
@@ -18394,6 +18395,39 @@ function CompaniesSection({ title = "Companies", note }) {
       </HScroll>
     </section>
   );
+}
+
+/* Browse under the map: a People / Companies dropdown and a type dropdown (v17.3.106). */
+const NET_PEOPLE_TYPES17 = ["Bar", "Front of House", "Management", "Entertainment", "Services", "Chefs", "Back of House"];
+const NET_CO_TYPES17 = [["bar", "Bar companies", "Bar"], ["dj", "Entertainment", "Entertainment"], ["photo", "Photographers", "Photographers"], ["catering", "Caterers", "Caterers"], ["svc", "Services", "Services"]];
+function browseCompanies17(state) {
+  const sup = REAL_SUPPLIERS17.map(function (c) { return companyById(state, "co_" + c.slug); }).filter(Boolean);
+  return companyList(state).concat(adminCompanies17(state, sup));
+}
+function NetBrowse17(props) {
+  const query = props.query || "";
+  const state = useStore().state;
+  const kindS = useState("people"), kind = kindS[0], setKind = kindS[1];
+  const typeS = useState("all"), type = typeS[0], setType = typeS[1];
+  if (query.trim()) return React.createElement(GroupedPeople, { query: query, onPick: props.onPick, scope: props.scope });
+  const people = kind === "people";
+  const opts = people
+    ? [["all", "All people"]].concat(NET_PEOPLE_TYPES17.map(function (t) { return [t, t]; }))
+    : [["all", "All companies"]].concat(NET_CO_TYPES17.map(function (t) { return [t[0], t[2]]; }));
+  const mk = function (v, l) { return React.createElement("option", { key: v, value: v }, l); };
+  const bar = React.createElement("div", { className: "ff-netbrowse17" },
+    React.createElement("select", { className: "ff-input", "aria-label": "Browse", value: kind, onChange: function (e) { setKind(e.target.value); setType("all"); } },
+      [["people", "People"], ["companies", "Companies"]].map(function (o) { return mk(o[0], o[1]); })),
+    React.createElement("select", { className: "ff-input", "aria-label": "Type", value: type, onChange: function (e) { setType(e.target.value); } },
+      opts.map(function (o) { return mk(o[0], o[1]); })));
+  if (people) return React.createElement(React.Fragment, null, bar, React.createElement(GroupedPeople, { query: "", onPick: props.onPick, scope: props.scope, only: type === "all" ? "" : type }));
+  const all = browseCompanies17(state);
+  const secs = NET_CO_TYPES17.filter(function (t) { return type === "all" || type === t[0]; })
+    .map(function (t) { return [t, all.filter(function (c) { return (c.cat || "bar") === t[0]; })]; })
+    .filter(function (x) { return type !== "all" || x[1].length; });
+  return React.createElement(React.Fragment, null, bar, secs.map(function (x) {
+    return React.createElement(CompaniesSection, { key: x[0][0], title: x[0][1], list: x[1] });
+  }));
 }
 
 /* A company's page, as anyone sees it. */
@@ -18512,8 +18546,7 @@ function StaffRosterStaff11() {
         placeholder="Name, profession, skill or area…" />
       {!q && !state.netBrief && <TopStaff11 />}
       {!q && !state.netBrief && <NetMap11 />}
-      <GroupedPeople query={q} onPick={(p) => dispatch({ type: "VIEW", id: p.id })} scope="staff_" />
-      {!q && !state.netBrief && <CompaniesSection note="Book a company's own team. Tap a card to see their page." />}
+      <NetBrowse17 query={q} onPick={(p) => dispatch({ type: "VIEW", id: p.id })} scope="staff_" />
       {!q && regulars.length > 0 && (
         <section style={{ marginTop: 18 }}>
           <SectionHead icon={<I11.Check size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Your team" count={regulars.length} />
@@ -21689,13 +21722,13 @@ const SAMPLE_PKGS17 = [
 const DJ_PKGS17 = [
   { id: "dj_starter", cat: "ent", tone: "bronze", level: "Bronze", by: "Storm DJs", role: "DJ", title: "Starter Party", tagline: "A clean, professional DJ set-up for smaller parties and simple evenings.",
     includes: "DJ, sound system and LED lighting", ideal: "Smaller parties and evening events", time: "Up to 4 hours", price: "£497", bands: ["s", "m"],
-    features: ["Professional DJ for up to 4 hours", "Sound system for up to 100 guests", "LED lighting", "DJ booth", "Public liability insurance"] },
+    features: ["4-hour professional DJ set", "Sound system for up to 100 guests", "Basic LED party lighting", "Compact DJ booth", "Local setup and delivery", "Public liability insurance"] },
   { id: "dj_signature", cat: "ent", tone: "silver", level: "Silver", by: "Storm DJs", role: "DJ", title: "Signature Set", tagline: "The all-round choice for weddings and parties that need more planning and polish.",
     includes: "DJ, sound, lighting and a planning call", ideal: "Weddings and private parties", time: "Up to 6 hours", price: "£997", bands: ["s", "m", "l"],
-    features: ["Professional DJ for up to 6 hours", "Sound system for up to 150 guests", "Enhanced lighting and uplighters", "Planning call and music brief", "Recording of the DJ mix", "Nationwide travel allowance"] },
+    features: ["6-hour set by a premium DJ with 50+ events behind them", "Sound system for up to 150 guests", "Enhanced lighting and uplighters", "Planning call and music brief", "Playlist match and no-show guarantees", "Recording of the DJ mix", "Nationwide setup and delivery"] },
   { id: "dj_night", cat: "ent", tone: "gold", level: "Gold", by: "Storm DJs", role: "DJ", title: "Unforgettable Night", tagline: "A full production for big moments, with live performers and a host.",
-    includes: "DJ, saxophonist, photo booth and an MC", ideal: "Big celebrations and weddings", time: "Up to 8 hours", price: "£2,497", bands: ["m", "l"],
-    features: ["Professional DJ for up to 8 hours", "Sound system for up to 300 guests", "Saxophonist", "Dancefloor, disco ball and smoke", "Photographer and photo booth", "Live MC or host", "Full set-up coordination"] },
+    includes: "DJ, saxophonist, photographer, photo booth and MC", ideal: "Big celebrations and weddings", time: "Up to 8 hours", price: "£2,497", bands: ["m", "l"],
+    features: ["Everything in the Signature Set", "2-hour live saxophonist", "Photo booth with prints", "Professional photographer", "Dancefloor hire", "Live MC or host", "Smoke, disco ball and advanced lighting", "Full event coordination and 24/7 support"] },
 ];
 /* Preferred quality on FF Party: helps match packages and custom quotes. */
 const QUALITY17 = [{ k: "bronze", label: "Best value" }, { k: "silver", label: "Best balance" }, { k: "gold", label: "Best quality" }];
@@ -22143,7 +22176,7 @@ function PartyBrowse17() {
       <FFAI query={q} onQuery={setQ} title="Search for your team" context="FF Party"
         purpose="Find the right people for your event: search by name, profession, skill or area."
         placeholder="Name, profession, skill or area…" />
-      {!state.netBrief && <GroupedPeople query={q} onPick={(p) => dispatch({ type: "VIEW", id: p.id })} scope="staff_" />}
+      {!state.netBrief && <NetBrowse17 query={q} onPick={(p) => dispatch({ type: "VIEW", id: p.id })} scope="staff_" />}
     </div>
   );
 }
