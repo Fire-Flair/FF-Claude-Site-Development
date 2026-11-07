@@ -1,0 +1,1386 @@
+{
+  "schemaVersion": 1,
+  "note": "30 real UK dj companies as unclaimed draft Company Cards. Same rules as seed-companies.json; see README.md.",
+  "category": "dj",
+  "companies": [
+    {
+      "slug": "manchester-djs",
+      "tag": "MANCH",
+      "name": "Manchester DJs",
+      "category": "dj",
+      "kind": "DJ, sound & lighting hire",
+      "base": "Manchester",
+      "areas": [
+        "Manchester",
+        "Lancashire",
+        "Cheshire"
+      ],
+      "summary": "A Manchester DJ hire company supplying DJs, sound and lighting for weddings, birthdays and other events, from small gatherings to large ones. It covers Greater Manchester, Lancashire and Cheshire.",
+      "services": [
+        "DJ hire",
+        "Sound hire",
+        "Lighting hire"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Birthdays",
+        "Corporate events"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/manchester-djs"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Manchester",
+          "lat": 53.4808,
+          "lng": -2.2426,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "beatmatch-events",
+      "tag": "BEATM",
+      "name": "Beatmatch Events",
+      "category": "dj",
+      "kind": "DJ & entertainment company",
+      "base": "Manchester",
+      "areas": [
+        "Manchester"
+      ],
+      "summary": "A Manchester DJ company with a team of hand-picked DJs. It works with some of the city's established venues and lists weddings among its favourite events.",
+      "services": [
+        "DJ hire"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/beatmatch-events"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Manchester",
+          "lat": 53.4808,
+          "lng": -2.2426,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "maximum-music-uk",
+      "tag": "MAXIM",
+      "name": "Maximum Music UK",
+      "category": "dj",
+      "kind": "Wedding DJ & entertainment",
+      "base": "Manchester",
+      "areas": [
+        "Manchester",
+        "Lancashire",
+        "Yorkshire",
+        "Cheshire",
+        "Shropshire"
+      ],
+      "summary": "A Manchester DJ and entertainment company that specialises in weddings. It offers a range of packages and will travel across Lancashire, North and West Yorkshire, Cheshire and Shropshire.",
+      "services": [
+        "Wedding DJ",
+        "Entertainment packages"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.com/uk/wedding-musicians-bands-djs/maximum-music-uk-manchester-greater-manchester-csog499zDY"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Manchester",
+          "lat": 53.4808,
+          "lng": -2.2426,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "northern-wedding-dj",
+      "tag": "NORTH",
+      "name": "Northern Wedding DJ",
+      "category": "dj",
+      "kind": "Wedding DJ",
+      "base": "Stretford",
+      "areas": [
+        "Greater Manchester"
+      ],
+      "summary": "A Manchester-area wedding DJ service that also plays other special occasions.",
+      "services": [
+        "Wedding DJ",
+        "Special occasion DJ"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app-proxy-dev-1.bridebook.com/uk/wedding-musicians-bands-djs/northern-wedding-dj-stretford-greater-manchester-csog4GG5WX"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Stretford",
+          "lat": 53.447,
+          "lng": -2.308,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "innov8-djs",
+      "tag": "INNOV",
+      "name": "Innov8 DJs",
+      "category": "dj",
+      "kind": "DJs & karaoke",
+      "base": "Leeds",
+      "areas": [
+        "Leeds",
+        "West Yorkshire"
+      ],
+      "summary": "A Leeds company providing professional DJs for events of every kind, with karaoke also available.",
+      "services": [
+        "DJ hire",
+        "Karaoke"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/weddings/djs/west-yorkshire/leeds"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Leeds",
+          "lat": 53.8008,
+          "lng": -1.5491,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "ultimate-wedding-dj",
+      "tag": "ULTIM",
+      "name": "Ultimate Wedding DJ",
+      "category": "dj",
+      "kind": "Wedding DJ & disco",
+      "base": "Middlesbrough",
+      "areas": [
+        "Teesside",
+        "County Durham",
+        "Newcastle",
+        "North East"
+      ],
+      "summary": "A North East wedding disco service, an offshoot of the established party DJ company Boogie Nights. It covers Middlesbrough, Darlington, Teesside, County Durham and Newcastle.",
+      "services": [
+        "Wedding DJ",
+        "Mobile disco"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [
+        "Offshoot of the party DJ company Boogie Nights"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/suppliers/ultimate-wedding-dj"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Middlesbrough",
+          "lat": 54.5742,
+          "lng": -1.235,
+          "approx": true
+        }
+      ]
+    },
+    {
+      "slug": "north-east-dj",
+      "tag": "NORTHE",
+      "name": "North East DJ",
+      "category": "dj",
+      "kind": "DJ company",
+      "base": "Newcastle",
+      "areas": [
+        "Newcastle",
+        "Tyne and Wear",
+        "North East"
+      ],
+      "summary": "A North East company of professional DJs with experience in the entertainment and music industry, supplying live DJs to venues, bars and events.",
+      "services": [
+        "DJ hire",
+        "Venue and bar DJs"
+      ],
+      "eventTypes": [
+        "Bars and venues",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.bark.com/en/gb/wedding-dj/tyne-and-wear/"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Newcastle",
+          "lat": 54.9783,
+          "lng": -1.6178,
+          "approx": true
+        }
+      ]
+    },
+    {
+      "slug": "fresh-entertainments",
+      "tag": "FRESH",
+      "name": "Fresh Entertainments",
+      "category": "dj",
+      "kind": "Wedding entertainment & DJs",
+      "base": "Glasgow",
+      "areas": [
+        "Glasgow",
+        "Ayrshire",
+        "Loch Lomond",
+        "Edinburgh",
+        "Scotland-wide"
+      ],
+      "summary": "A Glasgow wedding entertainment company offering DJ hire across Scotland. It lists Ayrshire, Loch Lomond, Stornoway and Edinburgh as areas it knows well.",
+      "services": [
+        "DJ hire",
+        "Wedding entertainment"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [
+        "Public liability insurance listed"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://encoremusicians.com/Fresh-Entertainments"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Glasgow",
+          "lat": 55.8642,
+          "lng": -4.2518,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "inferno-dj-event-hire",
+      "tag": "INFER",
+      "name": "Inferno DJ & Event Hire",
+      "category": "dj",
+      "kind": "DJs & event hire",
+      "base": "Rutherglen",
+      "areas": [
+        "Glasgow",
+        "Edinburgh",
+        "Fife",
+        "Dundee",
+        "Central Scotland"
+      ],
+      "summary": "A South Lanarkshire DJ and event hire company supplying DJs for weddings, birthdays, private parties and corporate events across Glasgow, Edinburgh, Fife, Dundee, Falkirk, Stirling and Ayrshire.",
+      "services": [
+        "DJ hire",
+        "Event hire"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Birthdays",
+        "Corporate events",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.com/uk/wedding-musicians-bands-djs/inferno-dj-event-hire-rutherglen-south-lanarkshire-csBXrjMl0X"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Rutherglen",
+          "lat": 55.83,
+          "lng": -4.212,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "atomik-discotheques",
+      "tag": "ATOMI",
+      "name": "Atomik Discotheques",
+      "category": "dj",
+      "kind": "Mobile disco & karaoke",
+      "base": "Dalkeith",
+      "areas": [
+        "Edinburgh",
+        "East Lothian",
+        "Midlothian"
+      ],
+      "summary": "A Midlothian mobile disco and karaoke supplier serving parties and events around Edinburgh, East Lothian and Midlothian, including wedding receptions, civil partnerships and family parties.",
+      "services": [
+        "Mobile disco",
+        "Karaoke",
+        "Mobile DJs"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Birthdays",
+        "Family parties"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.com/uk/wedding-musicians-bands-djs/atomik-discotheques-dalkeith-midlothian-bbmgbqZLXx"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Dalkeith",
+          "lat": 55.896,
+          "lng": -3.069,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "dj-edinburgh",
+      "tag": "DJEDI",
+      "name": "DJ Edinburgh",
+      "category": "dj",
+      "kind": "Wedding DJ & MC",
+      "base": "Edinburgh",
+      "areas": [
+        "Edinburgh",
+        "Scotland"
+      ],
+      "summary": "An Edinburgh wedding DJ and master of ceremonies offering evening entertainment, or an all-day service with sound hire, for private and corporate clients in Scottish venues.",
+      "services": [
+        "Wedding DJ",
+        "Master of ceremonies",
+        "Sound hire"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app.bridebook.com/uk/wedding-entertainment/dj-edinburgh-edinburgh-edinburgh-csqgOMrKD8"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Edinburgh",
+          "lat": 55.9533,
+          "lng": -3.1883,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "party-people-video-djs",
+      "tag": "PARTY",
+      "name": "Party People Video DJs",
+      "category": "dj",
+      "kind": "Video DJs",
+      "base": "Glasgow",
+      "areas": [
+        "West Scotland",
+        "Central Scotland"
+      ],
+      "summary": "A Glasgow mobile DJ company that specialises in video DJing across West and Central Scotland, for birthdays, weddings, corporate and charity events.",
+      "services": [
+        "Video DJing",
+        "Mobile DJ"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Birthdays",
+        "Corporate events",
+        "Charity events"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/listings/djs/central-scotland"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Glasgow",
+          "lat": 55.8642,
+          "lng": -4.2518,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "falkirk-discohire",
+      "tag": "FALKI",
+      "name": "Falkirk Discohire",
+      "category": "dj",
+      "kind": "Mobile entertainment, DJs & karaoke",
+      "base": "Falkirk",
+      "areas": [
+        "Falkirk",
+        "Edinburgh",
+        "Glasgow",
+        "Central Scotland"
+      ],
+      "summary": "A Falkirk mobile entertainment company providing DJs, discos and karaoke, based in central Scotland and covering Edinburgh, Glasgow and further afield.",
+      "services": [
+        "DJs",
+        "Discos",
+        "Karaoke"
+      ],
+      "eventTypes": [
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.mixcloud.com/thediscoguy/"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Falkirk",
+          "lat": 56.0019,
+          "lng": -3.7839,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "glasgow-mobile-disco",
+      "tag": "GLASG",
+      "name": "Glasgow Mobile Disco",
+      "category": "dj",
+      "kind": "Wedding DJ & mobile disco",
+      "base": "Glasgow",
+      "areas": [
+        "Glasgow",
+        "Scotland"
+      ],
+      "summary": "A Glasgow wedding DJ and mobile disco supplier that performs at Scottish wedding venues.",
+      "services": [
+        "Wedding DJ",
+        "Mobile disco"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/glasgow-mobile-disco"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Glasgow",
+          "lat": 55.8642,
+          "lng": -4.2518,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "reload-wedding-services",
+      "tag": "RELOA",
+      "name": "Reload Wedding Services",
+      "category": "dj",
+      "kind": "Mobile disco & DJs",
+      "base": "Bristol",
+      "areas": [
+        "Bristol",
+        "Bath",
+        "South West"
+      ],
+      "summary": "A Bristol mobile disco, DJ and AV company that began with weddings after working the bars and clubs of Bristol, Bath and Wales. It is a preferred supplier at several local venues for DJ and lighting.",
+      "services": [
+        "Mobile disco",
+        "DJs",
+        "Audio visual equipment"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Birthdays",
+        "Engagements"
+      ],
+      "scale": [],
+      "facts": [
+        "Preferred supplier at a number of venues around Bristol and Bath"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/reload-wedding-services"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Bristol",
+          "lat": 51.4545,
+          "lng": -2.5879,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "triangle-mobile-discos",
+      "tag": "TRIAN",
+      "name": "Triangle Mobile Discos",
+      "category": "dj",
+      "kind": "Mobile disco & DJ",
+      "base": "Bristol",
+      "areas": [
+        "Bristol",
+        "South West"
+      ],
+      "summary": "A full-time Bristol DJ business established in 1975, one of the longest-running mobile disco companies in the city and the South West.",
+      "services": [
+        "Mobile disco",
+        "DJ hire"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [
+        "Established in 1975"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.co.uk/search/wedding-musicians-bands-djs/wellington?page=4"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Bristol",
+          "lat": 51.4545,
+          "lng": -2.5879,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "enhanced-entertainment",
+      "tag": "ENHAN",
+      "name": "Enhanced Entertainment",
+      "category": "dj",
+      "kind": "Wedding DJs & mobile disco",
+      "base": "Weston-super-Mare",
+      "areas": [
+        "Somerset",
+        "South West"
+      ],
+      "summary": "A South West award-winning DJ company based in Weston-super-Mare, specialising in wedding DJs and mobile disco hire with extras to complete a package.",
+      "services": [
+        "Wedding DJs",
+        "Mobile disco hire"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [
+        "Award-winning"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.com/uk/wedding-musicians-bands-djs/enhanced-entertainment-weston-super-mare-somerset-csWXR33NAg"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Weston-super-Mare",
+          "lat": 51.346,
+          "lng": -2.977,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "funtasia-entertainment",
+      "tag": "FUNTA",
+      "name": "Funtasia Entertainment",
+      "category": "dj",
+      "kind": "Wedding entertainment company",
+      "base": "Westerleigh",
+      "areas": [
+        "Bristol",
+        "South West"
+      ],
+      "summary": "A full-time wedding entertainment company near Bristol with a team of ten, described as one of the largest suppliers of wedding entertainment in the South West.",
+      "services": [
+        "Wedding entertainment",
+        "DJs"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [
+        "Team of ten"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.com/search/wedding-entertainment/westerleigh"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Westerleigh",
+          "lat": 51.516,
+          "lng": -2.456,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "the-wedding-djs",
+      "tag": "WEDDI",
+      "name": "The Wedding DJs",
+      "category": "dj",
+      "kind": "Wedding disco company",
+      "base": "Barry",
+      "areas": [
+        "South Wales",
+        "Mid Wales",
+        "Gloucestershire",
+        "Cotswolds"
+      ],
+      "summary": "A full-time mobile disco company in Barry that specialises in wedding discos and DJs across South Wales, Mid Wales, Gloucestershire and the Cotswolds.",
+      "services": [
+        "Wedding DJs",
+        "Wedding discos"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [
+        "Full-time company"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.easyweddings.co.uk/WeddingMusic/Barry/TheWeddingDJs"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Barry",
+          "lat": 51.4,
+          "lng": -3.274,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "skaffta",
+      "tag": "SKAFF",
+      "name": "Skaffta",
+      "category": "dj",
+      "kind": "DJ service",
+      "base": "Cardiff",
+      "areas": [
+        "Cardiff",
+        "South Wales"
+      ],
+      "summary": "A Cardiff DJ service whose package includes sound, lighting and effects.",
+      "services": [
+        "DJ service",
+        "Sound",
+        "Lighting",
+        "Effects"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app-proxy-dev-1.bridebook.com/uk/search/wedding-musicians-bands-djs/south-west?page=3"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Cardiff",
+          "lat": 51.4816,
+          "lng": -3.1791,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "birmingham-crew-djs",
+      "tag": "BIRMI",
+      "name": "Birmingham Crew DJs & Events",
+      "category": "dj",
+      "kind": "DJs & events",
+      "base": "Birmingham",
+      "areas": [
+        "Birmingham",
+        "West Midlands"
+      ],
+      "summary": "A Birmingham DJ and events company listed among the city's mobile disco suppliers.",
+      "services": [
+        "DJ hire",
+        "Events"
+      ],
+      "eventTypes": [
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://findit.scotsman.com/search/willenhall/discos-and-djs-hire"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Birmingham",
+          "lat": 52.4862,
+          "lng": -1.8904,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "logic-discos",
+      "tag": "LOGIC",
+      "name": "Logic Discos",
+      "category": "dj",
+      "kind": "Mobile disco",
+      "base": "Wolverhampton",
+      "areas": [
+        "Wolverhampton",
+        "Telford",
+        "Midlands"
+      ],
+      "summary": "A premium-standard mobile disco service based near Wolverhampton and covering the whole of the Midlands.",
+      "services": [
+        "Mobile disco"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://findit.scotsman.com/search/willenhall/discos-and-djs-hire"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Wolverhampton",
+          "lat": 52.587,
+          "lng": -2.1288,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "mobile-disco-belfast",
+      "tag": "MOBIL",
+      "name": "Mobile Disco Belfast",
+      "category": "dj",
+      "kind": "Wedding & event DJ",
+      "base": "Belfast",
+      "areas": [
+        "Belfast",
+        "Northern Ireland"
+      ],
+      "summary": "A Belfast wedding and events DJ. Clients are invited to help shape the soundtrack, and the service covers weddings, birthdays, engagements, corporate events, hen parties, clubs and bars.",
+      "services": [
+        "Wedding DJ",
+        "Event DJ",
+        "Personalised DJ service"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Birthdays",
+        "Corporate events",
+        "Hen parties"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://addtoevent.co.uk/suppliers/mobile-disco-belfast"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Belfast",
+          "lat": 54.5973,
+          "lng": -5.9301,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "requedainious-entertainment",
+      "tag": "REQUE",
+      "name": "Requedainious Entertainment",
+      "category": "dj",
+      "kind": "Wedding, corporate & party DJs",
+      "base": "London",
+      "areas": [
+        "London"
+      ],
+      "summary": "A London DJ, sound and lighting company for weddings, corporate events and parties. It lists work at London landmarks and for large brands.",
+      "services": [
+        "DJs",
+        "Sound hire",
+        "Lighting hire"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://lastminutemusicians.com/members/requedainious.html"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "London",
+          "lat": 51.5074,
+          "lng": -0.1278,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "dcs-events",
+      "tag": "DCSEV",
+      "name": "DCS Events",
+      "category": "dj",
+      "kind": "Sound, light & DJ company",
+      "base": "London",
+      "areas": [
+        "London"
+      ],
+      "summary": "A London entertainment company providing sound, lighting and DJs, with wedding packages that include a DJ and sound and lighting crew where needed.",
+      "services": [
+        "DJs",
+        "Sound",
+        "Lighting"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Private events"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/dcs-events"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "London",
+          "lat": 51.5074,
+          "lng": -0.1278,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "santi-sounds-entertainment",
+      "tag": "SANTI",
+      "name": "Santi Sounds Entertainment",
+      "category": "dj",
+      "kind": "DJ, sound & lighting",
+      "base": "London",
+      "areas": [
+        "London",
+        "Hertfordshire",
+        "Essex",
+        "Surrey",
+        "South East"
+      ],
+      "summary": "A London DJ, sound and lighting provider with over fifteen years' experience, covering London and the home counties and travelling UK-wide for larger events.",
+      "services": [
+        "Wedding DJ",
+        "Sound and lighting hire",
+        "AV production"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Birthdays",
+        "Corporate events"
+      ],
+      "scale": [],
+      "facts": [
+        "15+ years' experience"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/suppliers/santi-sounds-entertainment"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "London",
+          "lat": 51.5074,
+          "lng": -0.1278,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "elite-sounds-and-events",
+      "tag": "ELITE",
+      "name": "Elite Sounds and Events",
+      "category": "dj",
+      "kind": "Mobile DJ services",
+      "base": "London",
+      "areas": [
+        "London",
+        "Kent"
+      ],
+      "summary": "A mobile DJ company serving London, Kent and nearby areas, supplying sound systems, lighting and DJs for weddings, corporate events and club nights.",
+      "services": [
+        "Mobile DJs",
+        "Sound systems",
+        "Lighting"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Club nights"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/suppliers/elite-sounds-and-events"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "London",
+          "lat": 51.5074,
+          "lng": -0.1278,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "max-marcus-events",
+      "tag": "MAXMA",
+      "name": "Max Marcus Events",
+      "category": "dj",
+      "kind": "DJ & events company",
+      "base": "London",
+      "areas": [
+        "London",
+        "South East"
+      ],
+      "summary": "A London DJ and events company specialising in weddings, corporate events and parties across London and the South East.",
+      "services": [
+        "DJs",
+        "Event services"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://addtoevent.co.uk/suppliers/max-marcus-events"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "London",
+          "lat": 51.5074,
+          "lng": -0.1278,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "eventsound",
+      "tag": "EVENT",
+      "name": "EventSound",
+      "category": "dj",
+      "kind": "DJs, sound & lights",
+      "base": "London",
+      "areas": [
+        "London",
+        "Home Counties"
+      ],
+      "summary": "A London company providing DJs, sound and lighting for weddings, corporate events, birthday parties and bar and bat mitzvahs across the capital and home counties.",
+      "services": [
+        "DJs",
+        "Sound",
+        "Lighting"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Birthdays",
+        "Bar and bat mitzvahs"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://addtoevent.co.uk/suppliers/eventsound"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "London",
+          "lat": 51.5074,
+          "lng": -0.1278,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "special-events-dj",
+      "tag": "SPECI",
+      "name": "Special Events DJ",
+      "category": "dj",
+      "kind": "DJ & sound hire",
+      "base": "Brighton",
+      "areas": [
+        "Brighton",
+        "East Sussex",
+        "Greater London"
+      ],
+      "summary": "A newer Brighton company offering DJ entertainment and sound equipment hire across Brighton, East Sussex and Greater London, for weddings, milestone birthdays and corporate events.",
+      "services": [
+        "DJ entertainment",
+        "Sound equipment hire",
+        "Lighting"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Birthdays",
+        "Corporate events"
+      ],
+      "scale": [],
+      "facts": [
+        "New company starting in Brighton"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/suppliers/special-events-dj"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Brighton",
+          "lat": 50.8225,
+          "lng": -0.1372,
+          "approx": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1407 @@
+{
+  "schemaVersion": 1,
+  "note": "30 real UK caterer companies as unclaimed draft Company Cards. Same rules as seed-companies.json; see README.md.",
+  "category": "catering",
+  "companies": [
+    {
+      "slug": "orde-food-company",
+      "tag": "ORDEF",
+      "name": "The Orde Food Company",
+      "category": "catering",
+      "kind": "Wedding & event catering",
+      "base": "Kelso",
+      "areas": [
+        "Scottish Borders",
+        "Scotland",
+        "Northern England"
+      ],
+      "summary": "An award-winning Scottish Borders catering company working across Scotland and northern England for weddings and events.",
+      "services": [
+        "Wedding catering",
+        "Event catering"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [
+        "Award-winning"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app.bridebook.com/uk/search/wedding-catering/scotland"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Kelso",
+          "lat": 55.599,
+          "lng": -2.433,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "appetite-direct",
+      "tag": "APPET",
+      "name": "Appetite Direct",
+      "category": "catering",
+      "kind": "Boutique catering & events",
+      "base": "Edinburgh",
+      "areas": [
+        "Edinburgh",
+        "Scotland"
+      ],
+      "summary": "A multi-award-winning boutique Edinburgh catering and events company focused on high-quality local, seasonal food.",
+      "services": [
+        "Wedding catering",
+        "Event catering"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [
+        "Multi-award winning"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app-proxy-dev-1.bridebook.com/uk/search/wedding-catering/glasgow"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Edinburgh",
+          "lat": 55.9533,
+          "lng": -3.1883,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "saffron-events-uk",
+      "tag": "SAFFR",
+      "name": "Saffron Events UK",
+      "category": "catering",
+      "kind": "Asian event management & catering",
+      "base": "Glasgow",
+      "areas": [
+        "Glasgow",
+        "Scotland",
+        "Northern England"
+      ],
+      "summary": "A long-established Glasgow Asian event management and catering company with several menus, serving events of all sizes across Scotland and northern England.",
+      "services": [
+        "Asian catering",
+        "Event management"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app.bridebook.com/search/wedding-catering/motherwell"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Glasgow",
+          "lat": 55.8642,
+          "lng": -4.2518,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "nosh-glasgow",
+      "tag": "NOSH",
+      "name": "Nosh",
+      "category": "catering",
+      "kind": "Event catering",
+      "base": "Glasgow",
+      "areas": [
+        "Glasgow",
+        "Scotland"
+      ],
+      "summary": "A creative Glasgow catering company with over fifteen years of events experience.",
+      "services": [
+        "Event catering",
+        "Wedding catering"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [
+        "Over 15 years' events experience"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.com/uk/wedding-catering/-nosh-glasgow-glasgow-city-cs5gPvVpO8"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Glasgow",
+          "lat": 55.8642,
+          "lng": -4.2518,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "ramside-event-catering",
+      "tag": "RAMSI",
+      "name": "Ramside Event Catering",
+      "category": "catering",
+      "kind": "Event & wedding catering",
+      "base": "Durham",
+      "areas": [
+        "Durham",
+        "Newcastle",
+        "Northumberland",
+        "Tyne and Wear",
+        "North Yorkshire"
+      ],
+      "summary": "Part of the family-run Ramside Estates Group, one of the largest privately owned event caterers in the North East, serving County Durham, Northumberland, Tyne and Wear and North Yorkshire.",
+      "services": [
+        "Wedding catering",
+        "Event catering"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [
+        "Part of Ramside Estates Group",
+        "Family-run for over 60 years"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://guidesforbrides.co.uk/wedding-caterers-and-catering-hire/tyne-and-wear/ramside-event-catering/154796"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Durham",
+          "lat": 54.7761,
+          "lng": -1.5733,
+          "approx": true
+        }
+      ]
+    },
+    {
+      "slug": "jacksons-catering",
+      "tag": "JACKS",
+      "name": "Jackson's Catering",
+      "category": "catering",
+      "kind": "External catering",
+      "base": "Newcastle",
+      "areas": [
+        "Newcastle",
+        "Northumberland",
+        "Teesside",
+        "North East"
+      ],
+      "summary": "An external catering company with premises in Newcastle, Northumberland, North Shields and Middlesbrough, working seven days a week across the North East with buffets, BBQs, hog roasts and more.",
+      "services": [
+        "Buffets",
+        "BBQs",
+        "Hog roasts",
+        "American catering",
+        "Fish and chip vans"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [
+        "Seven-day service across the North East"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/jacksons-catering"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Newcastle",
+          "lat": 54.9783,
+          "lng": -1.6178,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "merry-events-catering",
+      "tag": "MERRY",
+      "name": "Merry Events Catering",
+      "category": "catering",
+      "kind": "Wedding & event catering",
+      "base": "Whitley Bay",
+      "areas": [
+        "Whitley Bay",
+        "Newcastle",
+        "North East"
+      ],
+      "summary": "A husband-and-wife catering team in Whitley Bay with over thirty years' combined hospitality experience, offering wedding catering, private dining, parties and corporate catering across the North East.",
+      "services": [
+        "Wedding catering",
+        "Private dining",
+        "Corporate catering"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [
+        "30+ years' combined experience"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/suppliers/merry-events-catering"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Whitley Bay",
+          "lat": 55.045,
+          "lng": -1.449,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "baba-ganoush-york",
+      "tag": "BABAG",
+      "name": "Baba Ganoush",
+      "category": "catering",
+      "kind": "Wedding & event catering",
+      "base": "York",
+      "areas": [
+        "York",
+        "Leeds",
+        "Yorkshire"
+      ],
+      "summary": "A York catering company that serves weddings and events across Yorkshire and likes to try new ways of delivering food to the table.",
+      "services": [
+        "Wedding catering",
+        "Event catering"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/baba-ganoush-dining-by-matthew-hyde"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "York",
+          "lat": 53.9591,
+          "lng": -1.0815,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "happy-hogs-catering",
+      "tag": "HAPPY",
+      "name": "Happy Hogs Catering",
+      "category": "catering",
+      "kind": "Hog roast catering",
+      "base": "York",
+      "areas": [
+        "York",
+        "Yorkshire"
+      ],
+      "summary": "A York hog roast caterer serving weddings and events across Yorkshire.",
+      "services": [
+        "Hog roast catering"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app.bridebook.com/search/wedding-catering/yorkshire"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "York",
+          "lat": 53.9591,
+          "lng": -1.0815,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "dine-catering-leeds",
+      "tag": "DINEC",
+      "name": "Dine Catering",
+      "category": "catering",
+      "kind": "Wedding catering",
+      "base": "Leeds",
+      "areas": [
+        "Leeds",
+        "West Yorkshire"
+      ],
+      "summary": "A Leeds wedding caterer that builds each menu around the couple.",
+      "services": [
+        "Wedding catering"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app-proxy-dev-4.bridebook.com/uk/search/wedding-catering/yorkshire"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Leeds",
+          "lat": 53.8008,
+          "lng": -1.5491,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "wild-garlic-event-catering",
+      "tag": "WILDG",
+      "name": "Wild Garlic Event Catering",
+      "category": "catering",
+      "kind": "Outside catering",
+      "base": "Tattenhall",
+      "areas": [
+        "Cheshire",
+        "Greater Manchester",
+        "Liverpool",
+        "North Wales"
+      ],
+      "summary": "A family-run outside catering business in Cheshire, specialising in weddings and events across North Wales, Greater Manchester, Cheshire and Liverpool.",
+      "services": [
+        "Wedding catering",
+        "Event catering"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Events"
+      ],
+      "scale": [],
+      "facts": [
+        "Family-run",
+        "Public liability insurance listed"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.eventsense.co.uk/listing/wild-garlic-event-catering"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Tattenhall",
+          "lat": 53.1,
+          "lng": -2.78,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "impact-catering",
+      "tag": "IMPAC",
+      "name": "Impact Catering",
+      "category": "catering",
+      "kind": "Corporate & events catering",
+      "base": "Eccles",
+      "areas": [
+        "Manchester",
+        "North West"
+      ],
+      "summary": "A Manchester-based caterer specialising in creative corporate and events catering, with bespoke wedding packages.",
+      "services": [
+        "Corporate catering",
+        "Events catering",
+        "Wedding packages"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://addtoevent.co.uk/suppliers/impact-catering"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Eccles",
+          "lat": 53.485,
+          "lng": -2.335,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "lindleys-catering",
+      "tag": "LINDL",
+      "name": "Lindley's Catering",
+      "category": "catering",
+      "kind": "Wedding catering",
+      "base": "Leigh",
+      "areas": [
+        "Manchester",
+        "Warrington",
+        "Bolton",
+        "Liverpool",
+        "Lancashire"
+      ],
+      "summary": "A Leigh-based wedding caterer serving couples across Manchester, Warrington, Bolton, Liverpool and Lancashire.",
+      "services": [
+        "Wedding catering"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app.bridebook.com/uk/wedding-catering/lindley-s-catering-co-warrington-cheshire-bbo8arKoXy"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Leigh",
+          "lat": 53.497,
+          "lng": -2.519,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "the-fine-dining-company",
+      "tag": "FINED",
+      "name": "The Fine Dining Company",
+      "category": "catering",
+      "kind": "Exclusive event catering",
+      "base": "Chester",
+      "areas": [
+        "Chester",
+        "Cheshire",
+        "Manchester",
+        "Liverpool"
+      ],
+      "summary": "A Chester event catering company serving weddings and other occasions in Cheshire, Manchester and Liverpool.",
+      "services": [
+        "Wedding catering",
+        "Event catering"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app-proxy-dev-5.bridebook.com/uk/search/wedding-catering/frodsham"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Chester",
+          "lat": 53.193,
+          "lng": -2.892,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "dimblebee-catering-company",
+      "tag": "DIMBL",
+      "name": "Dimblebee Catering Company",
+      "category": "catering",
+      "kind": "Wedding caterers",
+      "base": "Leicester",
+      "areas": [
+        "Leicester",
+        "Midlands"
+      ],
+      "summary": "A Leicester wedding catering company serving Leicester and the Midlands.",
+      "services": [
+        "Wedding catering"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.com/uk/search/wedding-catering/lichfield?page=3"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Leicester",
+          "lat": 52.6369,
+          "lng": -1.1398,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "hog-and-ox-roast-company",
+      "tag": "HOGOX",
+      "name": "The Hog and Ox Roast Company",
+      "category": "catering",
+      "kind": "Hog & ox roast catering",
+      "base": "Saxelbye",
+      "areas": [
+        "Leicestershire",
+        "Midlands"
+      ],
+      "summary": "A Leicestershire meat-roasting caterer, part of Heart of England Catering Limited, offering rare-breed hog and lamb roasts for weddings, special events and corporate catering since 2006.",
+      "services": [
+        "Hog roasts",
+        "Lamb roasts",
+        "Wedding catering",
+        "Corporate catering"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Special events",
+        "Corporate events"
+      ],
+      "scale": [],
+      "facts": [
+        "Part of Heart of England Catering Limited",
+        "Catering since 2006"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.com/uk/wedding-catering/the-hog-and-ox-roast-company-saxelbye-leicestershire-cs4XDWPZ8o"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Saxelbye",
+          "lat": 52.77,
+          "lng": -0.9,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "roast-event",
+      "tag": "ROAST",
+      "name": "Roast Event",
+      "category": "catering",
+      "kind": "Hog roast catering",
+      "base": "Nottingham",
+      "areas": [
+        "Nottingham",
+        "East Midlands",
+        "London"
+      ],
+      "summary": "A Nottingham hog roast and barbecue company with more than twenty years of catering experience, covering the East Midlands and London.",
+      "services": [
+        "Hog roasts",
+        "Barbecues"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [
+        "Over 20 years' catering experience"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app.bridebook.com/uk/wedding-catering/roastevent-nottingham-nottinghamshire-bbaXq44478"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Nottingham",
+          "lat": 52.9548,
+          "lng": -1.1581,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "pig-roast-catering-company",
+      "tag": "PIGRO",
+      "name": "The Pig Roast Catering Company",
+      "category": "catering",
+      "kind": "Hog roast & BBQ wedding catering",
+      "base": "Albrighton",
+      "areas": [
+        "Shropshire",
+        "West Midlands"
+      ],
+      "summary": "A family-run Shropshire hog roast and BBQ wedding caterer using farm-assured local pigs.",
+      "services": [
+        "Hog roast catering",
+        "BBQ catering",
+        "Canapes"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Events"
+      ],
+      "scale": [],
+      "facts": [
+        "Family business"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.com/uk/wedding-catering/the-pig-roast-catering-company-albrighton-shropshire-bbqgO6P7QX"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Albrighton",
+          "lat": 52.633,
+          "lng": -2.265,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "gold-leaf-catering",
+      "tag": "GOLDL",
+      "name": "Gold Leaf Catering",
+      "category": "catering",
+      "kind": "Wedding catering",
+      "base": "Mattishall",
+      "areas": [
+        "Norfolk",
+        "East Anglia"
+      ],
+      "summary": "A family-run Norfolk caterer offering bespoke wedding menus created closely with each couple.",
+      "services": [
+        "Wedding catering"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [
+        "Family-run"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app.bridebook.com/uk/search/wedding-catering/east-of-england"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Mattishall",
+          "lat": 52.656,
+          "lng": 1.05,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "bouquet-garni-caterers",
+      "tag": "BOUQU",
+      "name": "Bouquet Garni Caterers",
+      "category": "catering",
+      "kind": "Wedding & event caterers",
+      "base": "Manningtree",
+      "areas": [
+        "Essex",
+        "Suffolk",
+        "East Anglia"
+      ],
+      "summary": "An Essex wedding and event catering company on the Essex-Suffolk border.",
+      "services": [
+        "Wedding catering",
+        "Event catering"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app.bridebook.com/uk/search/wedding-catering/bury-st-edmunds"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Manningtree",
+          "lat": 51.944,
+          "lng": 1.062,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "brat-bros-catering",
+      "tag": "BRATB",
+      "name": "Brat-Bros Catering",
+      "category": "catering",
+      "kind": "Street food catering",
+      "base": "London",
+      "areas": [
+        "Greater London"
+      ],
+      "summary": "A London modern street food caterer for all kinds of events.",
+      "services": [
+        "Street food catering"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.eventsense.co.uk/category/corporate-event-caterers"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "London",
+          "lat": 51.5074,
+          "lng": -0.1278,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "vamos-paella",
+      "tag": "VAMOS",
+      "name": "Vamos Paella",
+      "category": "catering",
+      "kind": "Paella & tapas catering",
+      "base": "Brighton",
+      "areas": [
+        "Brighton",
+        "Sussex"
+      ],
+      "summary": "A Brighton caterer cooking authentic Spanish paella and tapas for weddings, parties and corporate events.",
+      "services": [
+        "Paella catering",
+        "Tapas catering"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.freeindex.co.uk/categories/entertainment_and_lifestyle/weddings/wedding_catering"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Brighton",
+          "lat": 50.8225,
+          "lng": -0.1372,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "epicatering",
+      "tag": "EPICA",
+      "name": "EpiCatering",
+      "category": "catering",
+      "kind": "Event & wedding catering",
+      "base": "Lewes",
+      "areas": [
+        "East Sussex",
+        "Sussex"
+      ],
+      "summary": "An East Sussex catering company taking a modern, innovative approach to event and wedding food.",
+      "services": [
+        "Wedding catering",
+        "Event catering"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.eventsense.co.uk/browse/caterers/warwickshire/gaydon?page=2"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Lewes",
+          "lat": 50.874,
+          "lng": 0.009,
+          "approx": true
+        }
+      ]
+    },
+    {
+      "slug": "yum-street",
+      "tag": "YUMST",
+      "name": "Yum Street",
+      "category": "catering",
+      "kind": "Street food catering",
+      "base": "Southampton",
+      "areas": [
+        "Southampton",
+        "UK-wide"
+      ],
+      "summary": "An award-winning Southampton street food caterer that grew from local markets in 2010 into weddings, corporate events and major festivals across the UK.",
+      "services": [
+        "Street food catering",
+        "Festival catering"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Festivals"
+      ],
+      "scale": [],
+      "facts": [
+        "Trading since 2010",
+        "Award-winning"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/suppliers/yum-street-1"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Southampton",
+          "lat": 50.9097,
+          "lng": -1.4044,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "epic-caterers",
+      "tag": "EPICC",
+      "name": "EPIC Caterers",
+      "category": "catering",
+      "kind": "Wedding & event caterers",
+      "base": "Cardiff",
+      "areas": [
+        "Cardiff",
+        "Bristol",
+        "Cotswolds"
+      ],
+      "summary": "A multi-award-winning catering company based in Cardiff, with Bristol and the Cotswolds also named as bases.",
+      "services": [
+        "Wedding catering",
+        "Event catering"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [
+        "Multi-award winning"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app.bridebook.com/uk/search/wedding-catering/wales"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Cardiff",
+          "lat": 51.4816,
+          "lng": -3.1791,
+          "approx": false
+        },
+        {
+          "label": "Bristol",
+          "lat": 51.4545,
+          "lng": -2.5879,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "queen-and-whippet-catering",
+      "tag": "QUEEN",
+      "name": "Queen and Whippet Catering",
+      "category": "catering",
+      "kind": "Wedding, event & corporate catering",
+      "base": "Bristol",
+      "areas": [
+        "Bristol",
+        "London",
+        "South of England"
+      ],
+      "summary": "A Bristol company offering wedding, event and corporate catering and private dining, serving Bristol, London and the south of England.",
+      "services": [
+        "Wedding catering",
+        "Corporate catering",
+        "Private dining"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app.bridebook.com/uk/search/wedding-catering/south-west"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Bristol",
+          "lat": 51.4545,
+          "lng": -2.5879,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "m-welsh-catering-services",
+      "tag": "MWELS",
+      "name": "M Welsh Catering Services",
+      "category": "catering",
+      "kind": "Wedding & event catering",
+      "base": "Christow",
+      "areas": [
+        "Devon",
+        "South West"
+      ],
+      "summary": "A family-run Devon catering company voted best wedding caterer in the South West Wedding Awards in 2019 and 2020.",
+      "services": [
+        "Wedding catering",
+        "Event catering"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Events"
+      ],
+      "scale": [],
+      "facts": [
+        "Family-run",
+        "Best Wedding Caterer, South West Wedding Awards 2019 and 2020"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app-proxy-dev-1.bridebook.com/uk/search/wedding-catering/wellington"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Christow",
+          "lat": 50.66,
+          "lng": -3.67,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "napier-catering",
+      "tag": "NAPIE",
+      "name": "Napier Catering",
+      "category": "catering",
+      "kind": "Wedding catering",
+      "base": "Usk",
+      "areas": [
+        "Monmouthshire",
+        "South Wales"
+      ],
+      "summary": "A family-run wedding catering company in Usk, Monmouthshire.",
+      "services": [
+        "Wedding catering"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [
+        "Family-run"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app.bridebook.com/uk/search/wedding-catering/swansea"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Usk",
+          "lat": 51.703,
+          "lng": -2.903,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "ash-and-cole",
+      "tag": "ASHCO",
+      "name": "Ash & Cole",
+      "category": "catering",
+      "kind": "Catering & grazing tables",
+      "base": "Newtownabbey",
+      "areas": [
+        "Belfast",
+        "County Antrim",
+        "Northern Ireland"
+      ],
+      "summary": "A Northern Ireland caterer just outside Belfast off the M2, preparing platters, buffets and grazing tables for corporate events, weddings and special occasions.",
+      "services": [
+        "Platters",
+        "Buffets",
+        "Grazing tables"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events"
+      ],
+      "scale": [],
+      "facts": [
+        "20+ years' combined hospitality experience"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/ash-cole"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Newtownabbey",
+          "lat": 54.69,
+          "lng": -5.95,
+          "approx": true
+        }
+      ]
+    },
+    {
+      "slug": "olive-and-vine",
+      "tag": "OLIVE",
+      "name": "Olive & Vine Wedding & Event Catering",
+      "category": "catering",
+      "kind": "Wedding & event catering",
+      "base": "Armagh",
+      "areas": [
+        "Armagh",
+        "Northern Ireland"
+      ],
+      "summary": "An Armagh wedding and event catering company serving Northern Ireland.",
+      "services": [
+        "Wedding catering",
+        "Event catering"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Events"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.com/uk/search/wedding-catering/northern-ireland"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Armagh",
+          "lat": 54.3503,
+          "lng": -6.6528,
+          "approx": false
+        }
+      ]
+    }
+  ]
+}

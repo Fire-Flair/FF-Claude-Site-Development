@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.105 — 2026-11-07 — DJs, photographers, caterers on map
+Artifact version 1794077372-02e8 · file `fireflair-v17.3.105.html`
+
+- 90 new unclaimed draft Company Cards: 30 DJs, 30 photographers, 30 caterers, found by searching UK-wide on weddings and events. Data in `data/companies/seed-djs.json`, `seed-photographers.json`, `seed-caterers.json` (same schema as the bar companies, plus a `category` field).
+- Each category has its own map colour and legend count on FF Team, FF Staff and FF Party: bars burgundy, DJs purple, photographers blue, caterers orange. Tapping a pin opens the Company Card and page.
+- Suppliers live in a separate `REAL_SUPPLIERS17` list, not in `COMPANIES`, so the FF Party "Bar companies" lists are unchanged. `companyById` falls back to the supplier list.
+- No images yet (monogram fallback, `permission: to_confirm`). Six pins are approximate (`approx: true`) and need confirming with the company.
+- Coverage gaps to widen later: few photographers in the far north of Scotland, and no caterers in Cornwall or the Highlands.
+
 ## v17.3.104 — 2026-11-07 — Livelier FireFlair Introductions
 Artifact version 1794075783-5707 · file `fireflair-v17.3.104.html`
 

@@ -1,0 +1,1338 @@
+{
+  "schemaVersion": 1,
+  "note": "30 real UK photographer companies as unclaimed draft Company Cards. Same rules as seed-companies.json; see README.md.",
+  "category": "photo",
+  "companies": [
+    {
+      "slug": "pro-photo-events",
+      "tag": "PROPH",
+      "name": "Pro Photo Events",
+      "category": "photo",
+      "kind": "Wedding & event photography",
+      "base": "London",
+      "areas": [
+        "London",
+        "UK-wide",
+        "Europe"
+      ],
+      "summary": "A London photography business established in 2004, covering weddings, portraits and events across the UK and Europe, with a team supporting the lead photographer.",
+      "services": [
+        "Wedding photography",
+        "Portraits",
+        "Event photography",
+        "Photo booth"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Events"
+      ],
+      "scale": [],
+      "facts": [
+        "Established in 2004",
+        "Over 500 weddings photographed"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/suppliers/pro-photo-events"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "London",
+          "lat": 51.5074,
+          "lng": -0.1278,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "wedabelle",
+      "tag": "WEDAB",
+      "name": "Wedabelle",
+      "category": "photo",
+      "kind": "Wedding photography & film team",
+      "base": "London",
+      "areas": [
+        "London",
+        "UK-wide"
+      ],
+      "summary": "A London team of wedding photographers and videographers with different styles, so a couple can be matched to the look they prefer.",
+      "services": [
+        "Wedding photography",
+        "Wedding videography"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://wedabelle.pages.dev/meet-the-team"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "London",
+          "lat": 51.5074,
+          "lng": -0.1278,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "york-place-studios",
+      "tag": "YORKP",
+      "name": "York Place Studios",
+      "category": "photo",
+      "kind": "Photography & film studio",
+      "base": "London",
+      "areas": [
+        "London",
+        "UK-wide"
+      ],
+      "summary": "A family team of photographers and filmmakers with bases in London and across the UK, working worldwide and recognised in photography competitions.",
+      "services": [
+        "Wedding photography",
+        "Film"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Events"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.lovemydress.net/?p=802668"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "London",
+          "lat": 51.5074,
+          "lng": -0.1278,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "the-wedding-studio-london",
+      "tag": "WEDDIN",
+      "name": "The Wedding Studio",
+      "category": "photo",
+      "kind": "Wedding photography",
+      "base": "Richmond",
+      "areas": [
+        "London",
+        "Surrey"
+      ],
+      "summary": "A Richmond wedding photography studio run by a small team of three, covering London weddings.",
+      "services": [
+        "Wedding photography"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [
+        "Team of three"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app.bridebook.com/uk/wedding-photographers/the-wedding-studio-london-richmond-surrey-csK8Mp6r7Y"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Richmond",
+          "lat": 51.4613,
+          "lng": -0.3037,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "corporate-photography-london",
+      "tag": "CORPO",
+      "name": "Corporate Photography London",
+      "category": "photo",
+      "kind": "Corporate event photography & video",
+      "base": "London",
+      "areas": [
+        "London",
+        "Greater London"
+      ],
+      "summary": "A London team of photographers and videographers for corporate events, presentations, awards and conferences, working with small events or large company days.",
+      "services": [
+        "Corporate event photography",
+        "Event video",
+        "Video streaming"
+      ],
+      "eventTypes": [
+        "Corporate events",
+        "Conferences",
+        "Awards"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/corporate-photography-london"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "London",
+          "lat": 51.5074,
+          "lng": -0.1278,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "the-london-event-photography-company",
+      "tag": "LONDO",
+      "name": "The London Event Photography Company",
+      "category": "photo",
+      "kind": "Event photography",
+      "base": "London",
+      "areas": [
+        "London",
+        "UK-wide"
+      ],
+      "summary": "A London event photography team covering award ceremonies, dinners, exhibitions, networking and PR events and grand openings across the country.",
+      "services": [
+        "Event photography"
+      ],
+      "eventTypes": [
+        "Corporate events",
+        "Awards",
+        "Exhibitions"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://blog.giggster.com/event-photographers-london-uk"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "London",
+          "lat": 51.5074,
+          "lng": -0.1278,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "deja-vu-camera-crew",
+      "tag": "DEJAV",
+      "name": "Deja Vu Camera Crew",
+      "category": "photo",
+      "kind": "Wedding photography team",
+      "base": "Birmingham",
+      "areas": [
+        "Birmingham",
+        "West Midlands"
+      ],
+      "summary": "A Birmingham team of female wedding photographers who describe their work as traditional moments with a modern touch.",
+      "services": [
+        "Wedding photography"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.com/uk/search/wedding-photographers/gb?page=141"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Birmingham",
+          "lat": 52.4862,
+          "lng": -1.8904,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "lensi-photography",
+      "tag": "LENSI",
+      "name": "Lensi Photography",
+      "category": "photo",
+      "kind": "Event, portrait & wedding photography",
+      "base": "London",
+      "areas": [
+        "London",
+        "Birmingham"
+      ],
+      "summary": "A photography business based in London and Birmingham, covering personal parties, business events and conferences, portraits, red carpet and weddings.",
+      "services": [
+        "Event photography",
+        "Portraits",
+        "Red carpet",
+        "Wedding photography"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Conferences"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/suppliers/lensi-photography"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "London",
+          "lat": 51.5074,
+          "lng": -0.1278,
+          "approx": false
+        },
+        {
+          "label": "Birmingham",
+          "lat": 52.4862,
+          "lng": -1.8904,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "i-d-image-development",
+      "tag": "IDIMA",
+      "name": "I-d Image Development",
+      "category": "photo",
+      "kind": "Photographic studio",
+      "base": "St Neots",
+      "areas": [
+        "St Neots",
+        "Cambridgeshire"
+      ],
+      "summary": "A photographic studio in the centre of St Neots specialising in wedding and portrait photography, with a team of award-winning photographers.",
+      "services": [
+        "Wedding photography",
+        "Portrait photography"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [
+        "Studio in St Neots town centre"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.com/uk/search/wedding-photographers/uk?page=163"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "St Neots",
+          "lat": 52.229,
+          "lng": -0.266,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "big-day-productions",
+      "tag": "BIGDA",
+      "name": "Big Day Productions",
+      "category": "photo",
+      "kind": "Wedding photo & film team",
+      "base": "Henley-on-Thames",
+      "areas": [
+        "Oxfordshire",
+        "UK-wide"
+      ],
+      "summary": "A Henley-on-Thames team of wedding photographers and videographers working UK-wide, aiming for creative, timeless images without heavy posing.",
+      "services": [
+        "Wedding photography",
+        "Wedding film"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app.bridebook.com/uk/search/wedding-photographers/united-kingdom--gb?page=3"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Henley-on-Thames",
+          "lat": 51.536,
+          "lng": -0.902,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "creative-depiction-studio",
+      "tag": "CREAT",
+      "name": "Creative Depiction Studio",
+      "category": "photo",
+      "kind": "Photography & videography",
+      "base": "Gloucester",
+      "areas": [
+        "Gloucestershire",
+        "Cotswolds"
+      ],
+      "summary": "A Gloucester studio at the edge of the Cotswolds offering wedding photography and videography.",
+      "services": [
+        "Wedding photography",
+        "Videography"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app.bridebook.com/uk/search/wedding-photographers/gb?page=100"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Gloucester",
+          "lat": 51.8642,
+          "lng": -2.238,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "limelight-studio",
+      "tag": "LIMEL",
+      "name": "Limelight Studio",
+      "category": "photo",
+      "kind": "Wedding photography",
+      "base": "St Ives",
+      "areas": [
+        "Cornwall",
+        "South West"
+      ],
+      "summary": "A Cornish studio in St Ives where two photographers shoot together throughout each event to catch every moment.",
+      "services": [
+        "Wedding photography"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.co.uk/wedding-photo/limelight-studio-st-ives-st-ives-cornwall-bbNg0JER8d"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "St Ives",
+          "lat": 50.211,
+          "lng": -5.48,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "purple-lizard-photos",
+      "tag": "PURPL",
+      "name": "Purple Lizard Photos",
+      "category": "photo",
+      "kind": "Wedding photography studio",
+      "base": "Manchester",
+      "areas": [
+        "Manchester",
+        "Greater Manchester"
+      ],
+      "summary": "A Manchester wedding photography studio founded in 2013, with a team of five photographers and three editors working throughout the year.",
+      "services": [
+        "Wedding photography",
+        "Photo editing"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [
+        "Established in 2013",
+        "Team of seven"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app.bridebook.com/uk/wedding-photographers/purple-lizard-photos-manchester-greater-manchester-csBXdj3jvY"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Manchester",
+          "lat": 53.4808,
+          "lng": -2.2426,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "about-today-photography",
+      "tag": "ABOUT",
+      "name": "About Today Photography",
+      "category": "photo",
+      "kind": "Wedding photography",
+      "base": "Manchester",
+      "areas": [
+        "Manchester",
+        "Liverpool",
+        "Lancashire",
+        "Yorkshire"
+      ],
+      "summary": "A Manchester wedding photography team focused on natural, candid moments, travelling through the North West including Liverpool, Lancashire and Yorkshire.",
+      "services": [
+        "Wedding photography"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.com/uk/wedding-photographers/about-today-photography-manchester-greater-manchester-cs6qYNmpgV"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Manchester",
+          "lat": 53.4808,
+          "lng": -2.2426,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "pixies-in-the-cellar",
+      "tag": "PIXIE",
+      "name": "Pixies in the Cellar",
+      "category": "photo",
+      "kind": "Wedding photography",
+      "base": "Stalybridge",
+      "areas": [
+        "Greater Manchester"
+      ],
+      "summary": "A Stalybridge creative wedding photography team.",
+      "services": [
+        "Wedding photography"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app-proxy-dev-4.bridebook.com/uk/search/wedding-photographers/north-west"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Stalybridge",
+          "lat": 53.483,
+          "lng": -2.06,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "all-seasons-photographers",
+      "tag": "ALLSE",
+      "name": "All Seasons Photographers",
+      "category": "photo",
+      "kind": "Wedding photography",
+      "base": "Liverpool",
+      "areas": [
+        "Liverpool",
+        "Merseyside"
+      ],
+      "summary": "A Liverpool wedding photography business.",
+      "services": [
+        "Wedding photography"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app.bridebook.com/uk/search/wedding-photographers/north-west?page=7"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Liverpool",
+          "lat": 53.4084,
+          "lng": -2.9916,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "maytree-photography",
+      "tag": "MAYTR",
+      "name": "Maytree Photography",
+      "category": "photo",
+      "kind": "Wedding & event photography",
+      "base": "Sheffield",
+      "areas": [
+        "Sheffield",
+        "South Yorkshire"
+      ],
+      "summary": "A Sheffield photography business with many years of experience documenting weddings and events.",
+      "services": [
+        "Wedding photography",
+        "Event photography"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Events"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.com/uk/search/wedding-photographers/reino-unido?page=146"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Sheffield",
+          "lat": 53.3811,
+          "lng": -1.4701,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "studio8-events-photography",
+      "tag": "STUDI",
+      "name": "Studio8 Events Photography",
+      "category": "photo",
+      "kind": "Events photography",
+      "base": "Stockton-on-Tees",
+      "areas": [
+        "Teesside",
+        "County Durham",
+        "North East"
+      ],
+      "summary": "A Stockton-on-Tees events photography business covering weddings and other occasions in the North East.",
+      "services": [
+        "Event photography",
+        "Wedding photography"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Events"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app-proxy-dev-4.bridebook.com/uk/search/wedding-photographers/england?page=24"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Stockton-on-Tees",
+          "lat": 54.5704,
+          "lng": -1.318,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "pocket-square-photography",
+      "tag": "POCKE",
+      "name": "Pocket Square Photography",
+      "category": "photo",
+      "kind": "Wedding photography",
+      "base": "Glasgow",
+      "areas": [
+        "Glasgow",
+        "Scotland"
+      ],
+      "summary": "A Glasgow wedding photography business with over ten years' experience, focused on keeping the day stress-free.",
+      "services": [
+        "Wedding photography"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [
+        "Over ten years' experience"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.com/uk/search/wedding-photographers/hyndland"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Glasgow",
+          "lat": 55.8642,
+          "lng": -4.2518,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "weir-photography",
+      "tag": "WEIRP",
+      "name": "Weir Photography",
+      "category": "photo",
+      "kind": "Wedding, portrait & commercial photography",
+      "base": "Linlithgow",
+      "areas": [
+        "Linlithgow",
+        "Edinburgh",
+        "Scotland"
+      ],
+      "summary": "A Linlithgow husband-and-wife photography team offering modern wedding, portrait and commercial photography across Scotland, with over 900 weddings photographed since 2005.",
+      "services": [
+        "Wedding photography",
+        "Portraits",
+        "Commercial photography"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Events"
+      ],
+      "scale": [],
+      "facts": [
+        "Over 900 weddings since 2005"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app.bridebook.com/uk/search/wedding-photographers/scotland"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Linlithgow",
+          "lat": 55.976,
+          "lng": -3.602,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "imagina-studio-photography",
+      "tag": "IMAGI",
+      "name": "Imagina Studio Photography",
+      "category": "photo",
+      "kind": "Wedding photography",
+      "base": "Edinburgh",
+      "areas": [
+        "Edinburgh",
+        "Scotland"
+      ],
+      "summary": "An Edinburgh wedding photography team of two.",
+      "services": [
+        "Wedding photography"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.com/uk/search/wedding-photographers/scotland?page=6"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Edinburgh",
+          "lat": 55.9533,
+          "lng": -3.1883,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "glasgow-photographer",
+      "tag": "GLASGO",
+      "name": "Glasgow Photographer",
+      "category": "photo",
+      "kind": "Wedding photography partnership",
+      "base": "Glasgow",
+      "areas": [
+        "Glasgow",
+        "Scotland"
+      ],
+      "summary": "A Glasgow partnership of two photographers with over forty years of combined experience.",
+      "services": [
+        "Wedding photography"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [
+        "Over 40 years' combined experience"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app.bridebook.com/search/wedding-photographers/scotland"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Glasgow",
+          "lat": 55.8642,
+          "lng": -4.2518,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "canvas-and-peach-studios",
+      "tag": "CANVA",
+      "name": "Canvas and Peach Studios",
+      "category": "photo",
+      "kind": "Wedding, newborn & family photography",
+      "base": "Glasgow",
+      "areas": [
+        "Glasgow",
+        "Edinburgh",
+        "Scotland"
+      ],
+      "summary": "A Glasgow studio covering wedding, couple, newborn and family photography across Glasgow, Edinburgh and the rest of Scotland, with wedding albums on offer.",
+      "services": [
+        "Wedding photography",
+        "Couple photography",
+        "Albums",
+        "Newborn and family photography"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.com/uk/wedding-photographers/canvas-and-peach-studios-coatbridge-north-lanarkshire-csaXqRbD7g"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Glasgow",
+          "lat": 55.8642,
+          "lng": -4.2518,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "orange-lemur-photography-studio",
+      "tag": "ORANG",
+      "name": "Orange Lemur Photography Studio",
+      "category": "photo",
+      "kind": "Photography studio",
+      "base": "Edinburgh",
+      "areas": [
+        "Edinburgh",
+        "Scotland"
+      ],
+      "summary": "An Edinburgh photography studio shooting weddings.",
+      "services": [
+        "Wedding photography"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.com/uk/search/wedding-photographers/scotland?page=12"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Edinburgh",
+          "lat": 55.9533,
+          "lng": -3.1883,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "eminent-photography",
+      "tag": "EMINE",
+      "name": "Eminent Photography",
+      "category": "photo",
+      "kind": "Wedding photography",
+      "base": "Cardiff",
+      "areas": [
+        "Cardiff",
+        "South Wales"
+      ],
+      "summary": "A small Cardiff team of photographers blending fine-art and documentary styles for modern contemporary wedding photography.",
+      "services": [
+        "Wedding photography"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.com/uk/search/wedding-photographers/south-wales?page=4"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Cardiff",
+          "lat": 51.4816,
+          "lng": -3.1791,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "studio-cwtch",
+      "tag": "STUDIO",
+      "name": "Studio Cwtch",
+      "category": "photo",
+      "kind": "Photography studio",
+      "base": "Cardiff",
+      "areas": [
+        "Cardiff",
+        "South Wales"
+      ],
+      "summary": "A Cardiff photography studio working on weddings.",
+      "services": [
+        "Wedding photography"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.com/uk/search/wedding-photographers/south-wales?page=5"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Cardiff",
+          "lat": 51.4816,
+          "lng": -3.1791,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "wye-valley-studios",
+      "tag": "WYEVA",
+      "name": "Wye Valley Studios",
+      "category": "photo",
+      "kind": "Family photography business",
+      "base": "Caldicot",
+      "areas": [
+        "Monmouthshire",
+        "South Wales"
+      ],
+      "summary": "A family photography business in Caldicot that has operated since 1956, taking wedding bookings.",
+      "services": [
+        "Wedding photography"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [
+        "Operating since 1956"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.com/uk/search/wedding-photographers/south-wales?page=5"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Caldicot",
+          "lat": 51.592,
+          "lng": -2.749,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "safelight-weddings",
+      "tag": "SAFEL",
+      "name": "Safelight Weddings",
+      "category": "photo",
+      "kind": "Wedding photography",
+      "base": "Swansea",
+      "areas": [
+        "Swansea",
+        "South Wales"
+      ],
+      "summary": "A Swansea wedding photography business.",
+      "services": [
+        "Wedding photography"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://bridebook.com/uk/search/wedding-photographers/wales?page=6"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Swansea",
+          "lat": 51.6214,
+          "lng": -3.9436,
+          "approx": false
+        }
+      ]
+    },
+    {
+      "slug": "pure-photo-ni",
+      "tag": "PUREP",
+      "name": "Pure Photo N.I",
+      "category": "photo",
+      "kind": "Wedding photography",
+      "base": "Lisburn",
+      "areas": [
+        "Lisburn",
+        "Belfast",
+        "Northern Ireland"
+      ],
+      "summary": "A multi-award-winning husband-and-wife wedding photography team based in Lisburn, just outside Belfast.",
+      "services": [
+        "Wedding photography"
+      ],
+      "eventTypes": [
+        "Weddings"
+      ],
+      "scale": [],
+      "facts": [
+        "Multi-award winning"
+      ],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app.bridebook.com/uk/search/wedding-photographers/gb?page=100"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Lisburn",
+          "lat": 54.5162,
+          "lng": -6.058,
+          "approx": false
+        },
+        {
+          "label": "Belfast",
+          "lat": 54.5973,
+          "lng": -5.9301,
+          "approx": true
+        }
+      ]
+    },
+    {
+      "slug": "backyard-photography-company",
+      "tag": "BACKY",
+      "name": "The Backyard Photography Company",
+      "category": "photo",
+      "kind": "Photography",
+      "base": "Belfast",
+      "areas": [
+        "Belfast",
+        "Northern Ireland"
+      ],
+      "summary": "A Belfast photography company shooting weddings and events.",
+      "services": [
+        "Wedding photography"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Events"
+      ],
+      "scale": [],
+      "facts": [],
+      "social": {},
+      "images": {
+        "permission": "to_confirm",
+        "photos": []
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://app.bridebook.com/uk/search/wedding-photographers/gb?page=100"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "Belfast",
+          "lat": 54.5973,
+          "lng": -5.9301,
+          "approx": false
+        }
+      ]
+    }
+  ]
+}

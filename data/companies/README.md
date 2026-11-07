@@ -14,3 +14,7 @@ Rules for every record:
 Import behaviour for the developers: create each record as a draft with `status: unclaimed`, keep it hidden from public search and FF Party booking, and publish it only after a claim is verified (for example a code sent to a company email address or phone).
 
 Map locations: each record has `locations`, a list of area-level pins (`label`, `lat`, `lng`, `approx`). They are town centres, never addresses. `approx: true` means the base was not stated on the company's own site or listing and needs confirming with the company. The prototype shows one pin per location on the map on FF Team, FF Staff and FF Party (pins are nudged apart where several companies share a town). `images.permission` is `granted` for the first ten and `to_confirm` for the rest.
+
+## Event suppliers (v17.3.105)
+
+`seed-djs.json`, `seed-photographers.json` and `seed-caterers.json` hold 30 real UK companies each, as unclaimed draft Company Cards under the same rules and schema, with an extra `category` field (`dj`, `photo`, `catering`). They are loaded as `REAL_SUPPLIERS17`, kept out of `COMPANIES` so FF Party's "Bar companies" lists stay bars only. Map colours: bars burgundy, DJs purple, photographers blue, caterers orange. All `images.permission` values are `to_confirm` and none have images yet. Six pins are `approx: true`. Many source URLs are public listings because the company's own site was not found; confirm with each company before claim invitations.
