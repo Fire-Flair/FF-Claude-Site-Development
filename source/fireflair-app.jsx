@@ -16076,7 +16076,7 @@ function StaffRouter() {
    they left off. Demo directory/venues/services stay static — not persisted.
    ========================================================================== */
 
-const PERSIST_KEYS = ["feedback", "profileQuestions", "auth", "role", "route", "tab", "session", "profile", "connections", "invitations", "reviews", "reviewRequests", "events", "shifts", "engagements", "categoryVisibility", "credits", "company", "activeEventId", "site", "partyEvents", "trainingInterest", "jobsInterest", "cocktailMenu", "vipInterest", "teamInvites", "joinedPeople", "profileEdit", "staffNotify", "rewardsInterest", "workPostcode", "availabilityAsks", "notesSeenAt", "favs", "myCocktails", "myServices", "myPosts", "devDone", "admin17", "myTerms17", "svcTerms17"];
+const PERSIST_KEYS = ["feedback", "profileQuestions", "auth", "role", "route", "tab", "session", "profile", "connections", "invitations", "reviews", "reviewRequests", "events", "shifts", "engagements", "categoryVisibility", "credits", "company", "activeEventId", "site", "partyEvents", "trainingInterest", "jobsInterest", "cocktailMenu", "vipInterest", "teamInvites", "joinedPeople", "profileEdit", "staffNotify", "rewardsInterest", "workPostcode", "availabilityAsks", "notesSeenAt", "favs", "myCocktails", "myServices", "myPosts", "devDone", "admin17", "myTerms17", "svcTerms17", "fd"];
 
 function pickPersisted(state) {
   const out = {};
@@ -16178,6 +16178,7 @@ function ffSeoPersonPage(person) {
 }
 
 function ffSeoFor(state, people) {
+  if (state.fdArea) { const fdS = fdSeo(state, people); if (fdS) return fdS; }
   if (state.viewing) {
     const person = (people || []).find(p => p && p.id === state.viewing);
     if (person && ffSeoClean(person.name)) return ffSeoPersonPage(person);
@@ -16438,14 +16439,15 @@ function FireFlair() {
       const seo = ffSeoApply(ffSeoFor(state, ffSeoPeople(state)));
       if (seo && FF_SEO.onView) FF_SEO.onView(seo);
     } catch (e) { /* metadata must never break the app */ }
-  }, [state.role, state.tab, state.route, state.viewing, !!(state.profile && state.profile.live)]);
+  }, [state.role, state.tab, state.route, state.viewing, !!(state.profile && state.profile.live), state.fdArea && state.fdArea.path, state.fdArea && state.fdArea.site, state.fd, state.fdPreview]);
 
   return (
     <Store.Provider value={store}>
-      <style>{CSS + P1_CSS + V101_CSS + V11_CSS + VK17_CSS}</style>
+      <style>{CSS + P1_CSS + V101_CSS + V11_CSS + VK17_CSS + FD_CSS}</style>
       <div className="ff">
-        <Shell>{state.adminOpen17 ? <Admin17 /> : state.viewingCompany ? <CompanyPublic /> : state.viewing ? <PersonProfile /> : state.role === "team" ? <TeamRouter /> : state.role === "staff" ? <StaffRouter /> : <Landing />}</Shell>
+        <Shell>{state.adminOpen17 ? <Admin17 /> : state.fdArea ? <AreaPage11 /> : state.viewingCompany ? <CompanyPublic /> : state.viewing ? <PersonProfile /> : state.role === "team" ? <TeamRouter /> : state.role === "staff" ? <StaffRouter /> : <Landing />}</Shell>
         <CardPeek />
+        <FdRoute11 />
         <AutofillEngine17 />
         <FitWords17 />
         <LongPress17 />
@@ -18568,12 +18570,915 @@ function TopStaff11() {
     </section>
   );
 }
-function NetMap11() {
+/* ==========================================================================
+   FRONT DOORS (v17.3.110) — location pages for FF Party, FF Team and FF Staff.
+
+   One shared engine, three site intents. Developers: read docs/front-doors/ first.
+   What is REAL in this prototype: the 1,000-route manifest, the area-page template,
+   coverage matching and bounded parent fallback, the Explore by area disclosure,
+   the "Ask us to find people" lead form, the admin queue and the per-(site, location)
+   review / publish / index controls.
+   What is SIMULATED: persistence (state.fd, saved with the rest of the preview's data),
+   admin and customer notifications, the sitemap (previewed in FF Admin, not served), and
+   the provider coverage (fixtures below). No page is marked operational or approved
+   for search by default.
+
+   FD_ROWS is the compact route manifest built from data/front-doors/launch_pages.json:
+   [location id, name, kind, parent row (-1 = none), slug, lat, lng, country, ukScope].
+   Kinds: c country, n UK nation, a area/county/unitary, b London borough, p town or city,
+   h neighbourhood, r navigation hub, t continent. ukScope 1 = fallback stops at the nation.
+   In production children are fetched on demand from the location table; this prototype
+   ships the 1,000 prepared pages only, never the 47,990-record catalogue.
+   ========================================================================== */
+const FD_ROWS = [["country:GB","UK","c",-1,"uk",null,null,"GB",1],["gn:6269131","England","n",0,"england",52.1604,-0.7031,"GB",1],["gn:3333122","Barnsley","a",1,"barnsley",53.5333,-1.5,"GB",1],["gn:2651497","Darton","p",2,"darton",53.587,-1.5268,"GB",1],["gn:3333123","Bath and North East Somerset","a",1,"bath-and-north-east-somerset",51.3333,-2.5,"GB",1],["gn:2656173","Bath","p",4,"bath",51.3751,-2.3617,"GB",1],["gn:2645733","Keynsham","p",4,"keynsham",51.4139,-2.4978,"GB",1],["gn:7290534","Bedford","a",1,"bedford",52.1883,-0.4532,"GB",1],["gn:2645831","Kempston","p",7,"kempston",52.116,-0.5004,"GB",1],["gn:6947168","Kempston Hardwick","p",7,"kempston-hardwick",52.0896,-0.4991,"GB",1],["gn:3333125","Birmingham","a",1,"birmingham",52.4805,-1.8982,"GB",1],["gn:2657703","Acocks Green","h",10,"acocks-green",52.45,-1.8167,"GB",1],["gn:2656867","Aston","h",10,"aston",52.5,-1.8833,"GB",1],["gn:7302130","Bartley Green","p",10,"bartley-green",52.4353,-1.9971,"GB",1],["gn:2636486","Sutton Coldfield","p",10,"sutton-coldfield",52.5667,-1.8167,"GB",1],["gn:12076699","Washwood Heath","h",10,"washwood-heath",52.5005,-1.8266,"GB",1],["gn:3333126","Blackburn with Darwen","a",1,"blackburn-with-darwen",53.6667,-2.4667,"GB",1],["gn:2655524","Blackburn","p",16,"blackburn",53.75,-2.4833,"GB",1],["gn:2651495","Darwen","p",16,"darwen",53.698,-2.4649,"GB",1],["gn:3333127","Blackpool","a",1,"blackpool",53.8333,-3.0333,"GB",1],["gn:3333128","Bolton","a",1,"bolton",53.5833,-2.5,"GB",1],["gn:2649650","Farnworth","p",20,"farnworth",53.55,-2.4,"GB",1],["gn:2646542","Horwich","p",20,"horwich",53.6013,-2.5497,"GB",1],["gn:2634387","Westhoughton","p",20,"westhoughton",53.549,-2.5246,"GB",1],["gn:12165737","Bournemouth, Christchurch and Poole Council","a",1,"bournemouth-christchurch-and-poole-council",50.7315,-1.907,"GB",1],["gn:2655095","Bournemouth","p",24,"bournemouth",50.7205,-1.8795,"GB",1],["gn:2653075","Christchurch","p",24,"christchurch",50.7358,-1.7813,"GB",1],["gn:2640101","Poole","p",24,"poole",50.7143,-1.9846,"GB",1],["gn:3333130","Bracknell Forest","a",1,"bracknell-forest",51.4167,-0.75,"GB",1],["gn:2655009","Bracknell","p",28,"bracknell",51.4136,-0.7505,"GB",1],["gn:2651831","Crowthorne","p",28,"crowthorne",51.3703,-0.7922,"GB",1],["gn:2638580","Sandhurst","p",28,"sandhurst",51.3468,-0.7865,"GB",1],["gn:3333131","Bradford","a",1,"bradford",53.8333,-1.8333,"GB",1],["gn:2655642","Bingley","p",32,"bingley",53.8486,-1.8386,"GB",1],["gn:2645889","Keighley","p",32,"keighley",53.8679,-1.9066,"GB",1],["gn:2637958","Shipley","p",32,"shipley",53.8333,-1.7667,"GB",1],["gn:3333133","Brighton and Hove","a",1,"brighton-and-hove",50.8333,-0.1333,"GB",1],["gn:2654710","Brighton","p",36,"brighton",50.8284,-0.1395,"GB",1],["gn:2646504","Hove","p",36,"hove",50.8309,-0.1672,"GB",1],["gn:2639998","Portslade","p",36,"portslade",50.8429,-0.2161,"GB",1],["gn:2639069","Rottingdean","p",36,"rottingdean",50.8098,-0.0594,"GB",1],["gn:3333134","Bristol","a",1,"bristol",51.45,-2.6,"GB",1],["gn:2654408","Buckinghamshire","a",1,"buckinghamshire",51.75,-0.75,"GB",1],["gn:2657356","Amersham","p",42,"amersham",51.6667,-0.6167,"GB",1],["gn:6690592","Amersham on the Hill","p",42,"amersham-on-the-hill",51.6747,-0.6074,"GB",1],["gn:2656719","Aylesbury","p",42,"aylesbury",51.8167,-0.8146,"GB",1],["gn:2653393","Chalfont Saint Peter","p",42,"chalfont-saint-peter",51.6088,-0.5562,"GB",1],["gn:2653235","Chesham","p",42,"chesham",51.7,-0.6,"GB",1],["gn:6620444","Gerrards Cross","p",42,"gerrards-cross",51.5861,-0.5554,"GB",1],["gn:2646914","High Wycombe","p",42,"high-wycombe",51.6291,-0.7493,"GB",1],["gn:2643003","Marlow","p",42,"marlow",51.5693,-0.7742,"GB",1],["gn:3333136","Bury","a",1,"bury",53.5833,-2.3333,"GB",1],["gn:2639897","Prestwich","p",51,"prestwich",53.5333,-2.2833,"GB",1],["gn:6691227","Radcliffe","p",51,"radcliffe",53.5618,-2.3245,"GB",1],["gn:2639668","Ramsbottom","p",51,"ramsbottom",53.6479,-2.3168,"GB",1],["gn:2634103","Whitefield","p",51,"whitefield",53.55,-2.3,"GB",1],["gn:3333137","Calderdale","a",1,"calderdale",53.7,-2.0,"GB",1],["gn:2654715","Brighouse","p",56,"brighouse",53.7032,-1.7843,"GB",1],["gn:2647632","Halifax","p",56,"halifax",53.7167,-1.85,"GB",1],["gn:2653940","Cambridgeshire","a",1,"cambridgeshire",52.3333,0.0833,"GB",1],["gn:2653941","Cambridge","p",59,"cambridge",52.2,0.1167,"GB",1],["gn:2650023","Ely","p",59,"ely",52.3996,0.262,"GB",1],["gn:2646393","Huntingdon","p",59,"huntingdon",52.3305,-0.1865,"GB",1],["gn:2643071","March","p",59,"march",52.5513,0.0883,"GB",1],["gn:13353776","Primrose Place","p",59,"primrose-place",52.5606,-0.1089,"GB",1],["gn:2638717","Saint Neots","p",59,"saint-neots",52.2167,-0.2667,"GB",1],["gn:2633771","Wisbech","p",59,"wisbech",52.6662,0.1594,"GB",1],["gn:7290535","Central Bedfordshire","a",1,"central-bedfordshire",51.9975,-0.4215,"GB",1],["gn:2657337","Ampthill","p",67,"ampthill",52.0269,-0.4957,"GB",1],["gn:2650657","Dunstable","p",67,"dunstable",51.8857,-0.5229,"GB",1],["gn:2644652","Leighton Buzzard","p",67,"leighton-buzzard",51.9172,-0.658,"GB",1],["gn:7290536","Cheshire East","a",1,"cheshire-east",53.167,-2.3624,"GB",1],["gn:2652464","Congleton","p",71,"congleton",53.1631,-2.2125,"GB",1],["gn:2652002","Crewe","p",71,"crewe",53.0979,-2.4416,"GB",1],["gn:2643266","Macclesfield","p",71,"macclesfield",53.2602,-2.1256,"GB",1],["gn:2641892","Nantwich","p",71,"nantwich",53.0688,-2.5205,"GB",1],["gn:2638600","Sandbach","p",71,"sandbach",53.1452,-2.3625,"GB",1],["gn:2633883","Wilmslow","p",71,"wilmslow",53.328,-2.2315,"GB",1],["gn:7290537","Cheshire West and Chester","a",1,"cheshire-west-and-chester",53.1635,-2.7359,"GB",1],["gn:2653228","Chester","p",78,"chester",53.1905,-2.8919,"GB",1],["gn:2650096","Ellesmere Port Town","p",78,"ellesmere-port-town",53.2788,-2.9013,"GB",1],["gn:2641224","Northwich","p",78,"northwich",53.2588,-2.5202,"GB",1],["gn:2633810","Winsford","p",78,"winsford",53.1915,-2.524,"GB",1],["gn:2652355","Cornwall","a",1,"cornwall",50.4167,-4.75,"GB",1],["gn:2653945","Camborne","p",83,"camborne",50.2131,-5.2973,"GB",1],["gn:2649715","Falmouth","p",83,"falmouth",50.1544,-5.0711,"GB",1],["gn:2641589","Newquay","p",83,"newquay",50.4156,-5.0732,"GB",1],["gn:2640377","Penzance","p",83,"penzance",50.1186,-5.5371,"GB",1],["gn:2639524","Redruth","p",83,"redruth",50.2332,-5.2243,"GB",1],["gn:2638853","St Austell","p",83,"st-austell",50.3425,-4.7744,"GB",1],["gn:2635412","Truro","p",83,"truro",50.2653,-5.0544,"GB",1],["gn:2650629","County Durham","a",1,"county-durham",54.7768,-1.5757,"GB",1],["gn:2655583","Bishop Auckland","p",91,"bishop-auckland",54.6555,-1.6771,"GB",1],["gn:2653224","Chester-le-Street","p",91,"chester-le-street",54.8586,-1.5741,"GB",1],["gn:2652437","Consett","p",91,"consett",54.854,-1.8316,"GB",1],["gn:2650628","Durham","p",91,"durham",54.7768,-1.5757,"GB",1],["gn:2641555","Newton Aycliffe","p",91,"newton-aycliffe",54.6184,-1.5719,"GB",1],["gn:2640349","Peterlee","p",91,"peterlee",54.7603,-1.3365,"GB",1],["gn:2638302","Seaham","p",91,"seaham",54.839,-1.3458,"GB",1],["gn:2637235","Spennymoor","p",91,"spennymoor",54.6988,-1.6023,"GB",1],["gn:8224783","Stanley","p",91,"stanley",54.868,-1.6985,"GB",1],["gn:3333139","Coventry","a",1,"coventry",52.4167,-1.5,"GB",1],["gn:2651712","Cumbria","a",1,"cumbria",54.5833,-2.8333,"GB",1],["gn:2656241","Barrow in Furness","p",102,"barrow-in-furness",54.1109,-3.2276,"GB",1],["gn:2653775","Carlisle","p",102,"carlisle",54.8951,-2.9382,"GB",1],["gn:2645826","Kendal","p",102,"kendal",54.3268,-2.7476,"GB",1],["gn:2634096","Whitehaven","p",102,"whitehaven",54.549,-3.5841,"GB",1],["gn:2633553","Workington","p",102,"workington",54.6425,-3.5441,"GB",1],["gn:3333141","Darlington","a",1,"darlington",54.5333,-1.5333,"GB",1],["gn:3333142","Derby","a",1,"derby",52.9207,-1.4722,"GB",1],["gn:2651346","Derbyshire","a",1,"derbyshire",53.1667,-1.5833,"GB",1],["gn:2657508","Alfreton","p",110,"alfreton",53.0977,-1.3838,"GB",1],["gn:2655942","Belper","p",110,"belper",53.0233,-1.4812,"GB",1],["gn:2654141","Buxton","p",110,"buxton",53.2574,-1.9098,"GB",1],["gn:2653225","Chesterfield","p",110,"chesterfield",53.25,-1.4167,"GB",1],["gn:2650967","Dronfield","p",110,"dronfield",53.3022,-1.4751,"GB",1],["gn:2648405","Glossop","p",110,"glossop",53.4432,-1.949,"GB",1],["gn:2647227","Heanor","p",110,"heanor",53.0137,-1.3538,"GB",1],["gn:8299617","High Peak","p",110,"high-peak",53.368,-1.8454,"GB",1],["gn:2646274","Ilkeston","p",110,"ilkeston",52.9706,-1.3095,"GB",1],["gn:2643697","Long Eaton","p",110,"long-eaton",52.8986,-1.2714,"GB",1],["gn:2641612","New Mills","p",110,"new-mills",53.3659,-1.9999,"GB",1],["gn:2639325","Ripley","p",110,"ripley",53.0333,-1.4,"GB",1],["gn:2636995","Staveley","p",110,"staveley",53.2667,-1.35,"GB",1],["gn:2636465","Swadlincote","p",110,"swadlincote",52.774,-1.5574,"GB",1],["gn:2651292","Devon","a",1,"devon",50.75,-3.75,"GB",1],["gn:2656281","Barnstaple","p",125,"barnstaple",51.0802,-4.0581,"GB",1],["gn:2655707","Bideford","p",125,"bideford",51.0168,-4.2083,"GB",1],["gn:2649808","Exeter","p",125,"exeter",50.7236,-3.5275,"GB",1],["gn:2649800","Exmouth","p",125,"exmouth",50.6172,-3.4023,"GB",1],["gn:6691884","Heavitree","h",125,"heavitree",50.7204,-3.4965,"GB",1],["gn:2641557","Newton Abbot","p",125,"newton-abbot",50.5286,-3.6119,"GB",1],["gn:2635762","Tiverton","p",125,"tiverton",50.9024,-3.4923,"GB",1],["gn:2638918","District of Rutland","a",1,"district-of-rutland",52.6667,-0.6667,"GB",1],["gn:3333143","Doncaster","a",1,"doncaster",53.5,-1.0833,"GB",1],["gn:2657658","Adwick le Street","p",134,"adwick-le-street",53.5708,-1.1845,"GB",1],["gn:2655882","Bentley","p",134,"bentley",53.5333,-1.15,"GB",1],["gn:2635997","Thorne","p",134,"thorne",53.6112,-0.9631,"GB",1],["gn:2651079","Dorset","a",1,"dorset",50.75,-2.3333,"GB",1],["gn:6691927","Ferndown","p",138,"ferndown",50.8074,-1.8998,"GB",1],["gn:2634202","Weymouth","p",138,"weymouth",50.6145,-2.4599,"GB",1],["gn:3333144","Dudley","a",1,"dudley",52.5,-2.1167,"GB",1],["gn:2654724","Brierley Hill","p",141,"brierley-hill",52.4817,-2.1214,"GB",1],["gn:2647639","Halesowen","p",141,"halesowen",52.4486,-2.0494,"GB",1],["gn:2645420","Kingswinford","p",141,"kingswinford",52.4975,-2.1689,"GB",1],["gn:2636769","Stourbridge","p",141,"stourbridge",52.4561,-2.1432,"GB",1],["gn:2650345","East Riding of Yorkshire","a",1,"east-riding-of-yorkshire",53.9167,-0.5,"GB",1],["gn:2655785","Beverley","p",146,"beverley",53.8459,-0.4233,"GB",1],["gn:2654728","Bridlington","p",146,"bridlington",54.0831,-0.1919,"GB",1],["gn:2654532","Brough","p",146,"brough",53.7286,-0.5722,"GB",1],["gn:2648319","Goole","p",146,"goole",53.7032,-0.8773,"GB",1],["gn:2650328","East Sussex","a",1,"east-sussex",50.9167,0.3333,"GB",1],["gn:2655777","Bexhill-on-Sea","p",151,"bexhill-on-sea",50.8502,0.4709,"GB",1],["gn:2651852","Crowborough","p",151,"crowborough",51.061,0.1634,"GB",1],["gn:2650497","Eastbourne","p",151,"eastbourne",50.7687,0.2845,"GB",1],["gn:2647655","Hailsham","p",151,"hailsham",50.8622,0.2577,"GB",1],["gn:2647356","Hastings","p",151,"hastings",50.8557,0.5801,"GB",1],["gn:2644559","Lewes","p",151,"lewes",50.874,0.0088,"GB",1],["gn:8128721","Peacehaven","p",151,"peacehaven",50.7927,-0.0065,"GB",1],["gn:2638311","Seaford","p",151,"seaford",50.7714,0.1027,"GB",1],["gn:2635243","Uckfield","p",151,"uckfield",50.9695,0.0959,"GB",1],["gn:2649889","Essex","a",1,"essex",51.8333,0.5833,"GB",1],["gn:2656194","Basildon","p",161,"basildon",51.5684,0.4578,"GB",1],["gn:2655672","Billericay","p",161,"billericay",51.6287,0.4196,"GB",1],["gn:2654938","Braintree","p",161,"braintree",51.8782,0.5529,"GB",1],["gn:2654782","Brentwood","p",161,"brentwood",51.6213,0.3056,"GB",1],["gn:7911271","Canvey Island","p",161,"canvey-island",51.522,0.5809,"GB",1],["gn:2653266","Chelmsford","p",161,"chelmsford",51.7358,0.4696,"GB",1],["gn:2652974","Clacton-on-Sea","p",161,"clacton-on-sea",51.7897,1.156,"GB",1],["gn:2652618","Colchester","p",161,"colchester",51.8892,0.9042,"GB",1],["gn:2647679","Hadleigh","p",161,"hadleigh",51.5527,0.6098,"GB",1],["gn:2647461","Harlow","p",161,"harlow",51.7766,0.1116,"GB",1],["gn:2647383","Harwich","p",161,"harwich",51.9419,1.2844,"GB",1],["gn:2643160","Maldon","p",161,"maldon",51.7311,0.6746,"GB",1],["gn:2640246","Pitsea","p",161,"pitsea",51.5639,0.5086,"GB",1],["gn:2639583","Rayleigh","p",161,"rayleigh",51.5857,0.6046,"GB",1],["gn:2637476","South Benfleet","p",161,"south-benfleet",51.553,0.5596,"GB",1],["gn:2634843","Waltham Abbey","p",161,"waltham-abbey",51.687,-0.0042,"GB",1],["gn:2634826","Walton-on-the-Naze","p",161,"walton-on-the-naze",51.8482,1.2674,"GB",1],["gn:2633976","Wickford","p",161,"wickford",51.611,0.5233,"GB",1],["gn:2633749","Witham","p",161,"witham",51.8001,0.6404,"GB",1],["gn:2648772","Gateshead","a",1,"gateshead",54.9333,-1.6667,"GB",1],["gn:2649578","Felling","p",181,"felling",54.953,-1.5715,"GB",1],["gn:2648402","Gloucestershire","a",1,"gloucestershire",51.8333,-2.1667,"GB",1],["gn:2653261","Cheltenham","p",183,"cheltenham",51.9001,-2.0797,"GB",1],["gn:2652995","Cirencester","p",183,"cirencester",51.7193,-1.9714,"GB",1],["gn:2648404","Gloucester","p",183,"gloucester",51.8657,-2.2431,"GB",1],["gn:2636616","Stroud","p",183,"stroud",51.75,-2.2,"GB",1],["gn:2636071","Tewkesbury","p",183,"tewkesbury",51.9924,-2.1601,"GB",1],["gn:2648110","Greater London","a",1,"greater-london",51.5,-0.1667,"GB",1],["gn:3333120","Barking and Dagenham","b",189,"barking-and-dagenham",51.55,0.1167,"GB",1],["gn:2656333","Barking","p",190,"barking",51.5333,0.0833,"GB",1],["gn:6690870","Becontree","h",190,"becontree",51.5529,0.129,"GB",1],["gn:2651621","Dagenham","p",190,"dagenham",51.55,0.1667,"GB",1],["gn:3333121","Barnet","b",189,"barnet",51.6574,-0.2142,"GB",1],["gn:2656295","Barnet","p",194,"barnet",51.65,-0.2,"GB",1],["gn:12048142","East Barnet","h",194,"east-barnet",51.6467,-0.161,"GB",1],["gn:2649441","Finchley","p",194,"finchley",51.601,-0.1952,"GB",1],["gn:2649055","Friern Barnet","p",194,"friern-barnet",51.6133,-0.1585,"GB",1],["gn:7535506","Golders Green","p",194,"golders-green",51.5763,-0.2003,"GB",1],["gn:3333124","Bexley","b",189,"bexley",51.4167,0.1333,"GB",1],["gn:2655775","Bexley","p",200,"bexley",51.4416,0.1487,"GB",1],["gn:2634579","Welling","p",200,"welling",51.4625,0.1076,"GB",1],["gn:3333132","Brent","b",189,"brent",51.5555,-0.3028,"GB",1],["gn:2654789","Brent","h",203,"brent",51.5531,-0.3023,"GB",1],["gn:2651984","Cricklewood","p",203,"cricklewood",51.5567,-0.2155,"GB",1],["gn:2647468","Harlesden","p",203,"harlesden",51.5381,-0.2502,"GB",1],["gn:2634549","Wembley","p",203,"wembley",51.5524,-0.2969,"GB",1],["gn:2633907","Willesden","p",203,"willesden",51.5333,-0.2333,"GB",1],["gn:3333135","Bromley","b",189,"bromley",51.4147,0.0117,"GB",1],["gn:2656065","Beckenham","p",209,"beckenham",51.4088,-0.0253,"GB",1],["gn:3333138","Camden","b",189,"camden",51.5428,-0.1594,"GB",1],["gn:6690581","Belsize Park","p",211,"belsize-park",51.5477,-0.1723,"GB",1],["gn:2655333","Bloomsbury","h",211,"bloomsbury",51.5223,-0.1225,"GB",1],["gn:3345437","Camden Town","p",211,"camden-town",51.5406,-0.1433,"GB",1],["gn:6690583","Chalk Farm","p",211,"chalk-farm",51.5431,-0.1499,"GB",1],["gn:2652222","Covent Garden","h",211,"covent-garden",51.5142,-0.1247,"GB",1],["gn:13269392","Dartmouth Park","h",211,"dartmouth-park",51.5615,-0.1507,"GB",1],["gn:6690576","Euston","p",211,"euston",51.5268,-0.1333,"GB",1],["gn:6545172","Fitzrovia","h",211,"fitzrovia",51.5186,-0.1348,"GB",1],["gn:2647553","Hampstead","p",211,"hampstead",51.5574,-0.1821,"GB",1],["gn:2646958","Highgate","p",211,"highgate",51.5656,-0.159,"GB",1],["gn:2646781","Holborn","p",211,"holborn",51.5175,-0.1205,"GB",1],["gn:6690587","Kentish Town","p",211,"kentish-town",51.5517,-0.1412,"GB",1],["gn:6690572","Kilburn","h",211,"kilburn",51.553,-0.1916,"GB",1],["gn:6690589","King's Cross","p",211,"kings-cross",51.5307,-0.1231,"GB",1],["gn:13269393","Parliament Hill","h",211,"parliament-hill",51.5671,-0.1538,"GB",1],["gn:6690582","Primrose Hill","p",211,"primrose-hill",51.5393,-0.161,"GB",1],["gn:2638707","Saint Pancras","h",211,"saint-pancras",51.5333,-0.1333,"GB",1],["gn:8299557","South Hampstead","p",211,"south-hampstead",51.5433,-0.1839,"GB",1],["gn:6941041","Swiss Cottage","h",211,"swiss-cottage",51.5435,-0.1751,"GB",1],["gn:6615314","West Hampstead","h",211,"west-hampstead",51.549,-0.1914,"GB",1],["gn:2643744","City of London","b",189,"city-of-london",51.5133,-0.089,"GB",1],["gn:3333140","Croydon","b",189,"croydon",51.3766,-0.1057,"GB",1],["gn:2652249","Coulsdon","p",233,"coulsdon",51.32,-0.1409,"GB",1],["gn:2651817","Croydon","p",233,"croydon",51.3833,-0.1,"GB",1],["gn:2639842","Purley","p",233,"purley",51.3368,-0.112,"GB",1],["gn:6690862","South Croydon","p",233,"south-croydon",51.3622,-0.0942,"GB",1],["gn:3333145","Ealing","b",189,"ealing",51.5128,-0.3023,"GB",1],["gn:2657697","Acton","p",238,"acton",51.509,-0.2762,"GB",1],["gn:2647972","Greenford","p",238,"greenford",51.5287,-0.3551,"GB",1],["gn:2641290","Northolt","p",238,"northolt",51.5485,-0.3678,"GB",1],["gn:2637490","Southall","p",238,"southall",51.509,-0.3713,"GB",1],["gn:3333146","Enfield","b",189,"enfield",51.6487,-0.0974,"GB",1],["gn:2650209","Edmonton","p",243,"edmonton",51.6256,-0.058,"GB",1],["gn:2649997","Enfield Town","p",243,"enfield-town",51.6515,-0.085,"GB",1],["gn:6693771","Hadley Wood","p",243,"hadley-wood",51.6667,-0.1698,"GB",1],["gn:3333147","Greenwich","b",189,"greenwich",51.45,0.05,"GB",1],["gn:7302135","Abbey Wood","p",247,"abbey-wood",51.4869,0.1075,"GB",1],["gn:2650042","Eltham","p",247,"eltham",51.4506,0.0522,"GB",1],["gn:2647937","Greenwich","h",247,"greenwich",51.4778,-0.0118,"GB",1],["gn:11551039","Thamesmead","p",247,"thamesmead",51.5037,0.1198,"GB",1],["gn:3333148","Hackney","b",189,"hackney",51.5333,-0.0833,"GB",1],["gn:11669854","Stamford Hill","h",252,"stamford-hill",51.5687,-0.0733,"GB",1],["gn:3333149","Hammersmith and Fulham","b",189,"hammersmith-and-fulham",51.5,-0.25,"GB",1],["gn:2648997","Fulham","p",254,"fulham",51.4803,-0.1993,"GB",1],["gn:2638043","Shepherds Bush","p",254,"shepherds-bush",51.505,-0.2211,"GB",1],["gn:3333150","Haringey","b",189,"haringey",51.5879,-0.1063,"GB",1],["gn:6694222","Muswell Hill","p",257,"muswell-hill",51.5905,-0.1421,"GB",1],["gn:2635608","Tottenham","p",257,"tottenham",51.6037,-0.0679,"GB",1],["gn:2633653","Wood Green","p",257,"wood-green",51.6,-0.1167,"GB",1],["gn:3333151","Harrow","b",189,"harrow",51.5667,-0.3333,"GB",1],["gn:2647425","Harrow","p",261,"harrow",51.5784,-0.3321,"GB",1],["gn:2640275","Pinner","p",261,"pinner",51.5938,-0.3822,"GB",1],["gn:12048038","Wealdstone","h",261,"wealdstone",51.5998,-0.3371,"GB",1],["gn:3333153","Havering","b",189,"havering",51.55,0.2167,"GB",1],["gn:6690863","Hornchurch","h",265,"hornchurch",51.5568,0.2166,"GB",1],["gn:2639192","Romford","p",265,"romford",51.5752,0.1858,"GB",1],["gn:3333154","Hillingdon","b",189,"hillingdon",51.5,-0.45,"GB",1],["gn:2647261","Hayes","p",268,"hayes",51.5158,-0.4234,"GB",1],["gn:2638976","Ruislip","p",268,"ruislip",51.5734,-0.4234,"GB",1],["gn:2635042","Uxbridge","p",268,"uxbridge",51.5489,-0.4821,"GB",1],["gn:3333155","Hounslow","b",189,"hounslow",51.4677,-0.3647,"GB",1],["gn:2653121","Chiswick","h",272,"chiswick",51.4927,-0.258,"GB",1],["gn:2649571","Feltham","p",272,"feltham",51.4462,-0.4139,"GB",1],["gn:2647514","Hanworth","p",272,"hanworth",51.4333,-0.3833,"GB",1],["gn:2647027","Heston","p",272,"heston",51.4836,-0.3758,"GB",1],["gn:2646517","Hounslow","p",272,"hounslow",51.4684,-0.3609,"GB",1],["gn:2646004","Isleworth","p",272,"isleworth",51.4752,-0.3425,"GB",1],["gn:3333156","Islington","b",189,"islington",51.547,-0.1094,"GB",1],["gn:11777624","Archway","p",279,"archway",51.5673,-0.1341,"GB",1],["gn:2646976","Highbury","p",279,"highbury",51.55,-0.1,"GB",1],["gn:8315400","Holloway","h",279,"holloway",51.5524,-0.125,"GB",1],["gn:2646003","Islington","p",279,"islington",51.5362,-0.103,"GB",1],["gn:3333157","Kensington and Chelsea","b",189,"kensington-and-chelsea",51.503,-0.1931,"GB",1],["gn:2653265","Chelsea","h",284,"chelsea",51.4875,-0.1694,"GB",1],["gn:2641168","Notting Hill","h",284,"notting-hill",51.5115,-0.2059,"GB",1],["gn:3333160","Kingston upon Thames","b",189,"kingston-upon-thames",51.3667,-0.2833,"GB",1],["gn:2653229","Chessington","p",287,"chessington",51.3624,-0.3043,"GB",1],["gn:2646653","Hook","p",287,"hook",51.368,-0.3065,"GB",1],["gn:2641617","New Malden","h",287,"new-malden",51.4006,-0.2617,"GB",1],["gn:6690866","Surbiton","p",287,"surbiton",51.3915,-0.2983,"GB",1],["gn:3333163","Lambeth","b",189,"lambeth",51.4167,-0.1333,"GB",1],["gn:6690877","Brixton","h",292,"brixton",51.4659,-0.1065,"GB",1],["gn:2636675","Streatham","p",292,"streatham",51.429,-0.1318,"GB",1],["gn:3333166","Lewisham","b",189,"lewisham",51.4535,-0.018,"GB",1],["gn:6947041","Blackheath","p",295,"blackheath",51.4647,0.0079,"GB",1],["gn:11551040","Brockley","p",295,"brockley",51.4637,-0.0365,"GB",1],["gn:2653516","Catford","p",295,"catford",51.4449,-0.0204,"GB",1],["gn:3333171","Merton","b",189,"merton",51.4108,-0.1892,"GB",1],["gn:2642414","Mitcham","p",299,"mitcham",51.4032,-0.1683,"GB",1],["gn:2642233","Morden","p",299,"morden",51.3982,-0.1984,"GB",1],["gn:2633866","Wimbledon","h",299,"wimbledon",51.4221,-0.2081,"GB",1],["gn:2641639","Newham","b",189,"newham",51.5167,0.0333,"GB",1],["gn:11549407","Canning Town","p",303,"canning-town",51.5136,0.0195,"GB",1],["gn:2636714","Stratford","p",303,"stratford",51.5333,0.0,"GB",1],["gn:3333185","Redbridge","b",189,"redbridge",51.5667,0.0833,"GB",1],["gn:2646277","Ilford","p",306,"ilford",51.5577,0.0728,"GB",1],["gn:2633655","Woodford Green","p",306,"woodford-green",51.6094,0.0233,"GB",1],["gn:3333187","Richmond upon Thames","b",189,"richmond-upon-thames",51.4167,-0.3333,"GB",1],["gn:2656296","Barnes","p",309,"barnes",51.4735,-0.2484,"GB",1],["gn:2647550","Hampton","p",309,"hampton",51.4133,-0.367,"GB",1],["gn:2639389","Richmond","p",309,"richmond",51.4617,-0.3063,"GB",1],["gn:3333200","Southwark","b",189,"southwark",51.4672,-0.0606,"GB",1],["gn:8224580","Peckham","h",313,"peckham",51.474,-0.0697,"GB",1],["gn:3333206","Sutton","b",189,"sutton",51.3584,-0.1926,"GB",1],["gn:2653646","Carshalton","p",315,"carshalton",51.3683,-0.1676,"GB",1],["gn:2636503","Sutton","p",315,"sutton",51.35,-0.2,"GB",1],["gn:2634867","Wallington","p",315,"wallington",51.364,-0.1537,"GB",1],["gn:2635594","Tower Hamlets","b",189,"tower-hamlets",51.5167,-0.05,"GB",1],["gn:6690989","Bethnal Green","h",319,"bethnal-green",51.5272,-0.0611,"GB",1],["gn:2655438","Blackwall","h",319,"blackwall",51.5097,-0.0016,"GB",1],["gn:2655076","Bow","h",319,"bow",51.5261,-0.0167,"GB",1],["gn:6692280","Canary Wharf","h",319,"canary-wharf",51.5052,-0.0209,"GB",1],["gn:3333214","Waltham Forest","b",189,"waltham-forest",51.5667,-0.0333,"GB",1],["gn:2653148","Chingford","p",324,"chingford",51.6303,0.0005,"GB",1],["gn:6692921","Leytonstone","h",324,"leytonstone",51.5686,0.0077,"GB",1],["gn:2634838","Walthamstow","p",324,"walthamstow",51.5907,-0.0208,"GB",1],["gn:3333215","Wandsworth","b",189,"wandsworth",51.4572,-0.1909,"GB",1],["gn:6690602","Battersea","h",328,"battersea",51.4748,-0.1555,"GB",1],["gn:2639835","Putney","h",328,"putney",51.4607,-0.2181,"GB",1],["gn:3333218","Westminster","b",189,"westminster",51.5129,-0.159,"GB",1],["gn:6545243","Bayswater","h",331,"bayswater",51.5112,-0.1843,"GB",1],["gn:2634341","City of Westminster","p",331,"city-of-westminster",51.4975,-0.1357,"GB",1],["gn:6545249","Pimlico","h",331,"pimlico",51.489,-0.137,"GB",1],["gn:6545173","Soho","h",331,"soho",51.5144,-0.1353,"GB",1],["gn:2647601","Halton","a",1,"halton",53.3333,-2.75,"GB",1],["gn:2638960","Runcorn","p",336,"runcorn",53.3417,-2.7312,"GB",1],["gn:2633954","Widnes","p",336,"widnes",53.3618,-2.7341,"GB",1],["gn:2647554","Hampshire","a",1,"hampshire",51.0,-1.25,"GB",1],["gn:2657540","Aldershot","p",339,"aldershot",51.2483,-0.7639,"GB",1],["gn:2657408","Alton","p",339,"alton",51.1493,-0.9747,"GB",1],["gn:2657324","Andover","p",339,"andover",51.2114,-1.4939,"GB",1],["gn:2656192","Basingstoke","p",339,"basingstoke",51.2625,-1.0871,"GB",1],["gn:2655557","Bishopstoke","p",339,"bishopstoke",50.9664,-1.3283,"GB",1],["gn:6693242","Bordon","p",339,"bordon",51.1136,-0.8625,"GB",1],["gn:2650396","Eastleigh","p",339,"eastleigh",50.9667,-1.35,"GB",1],["gn:2650004","Emsworth","p",339,"emsworth",50.8478,-0.937,"GB",1],["gn:2649692","Fareham","p",339,"fareham",50.8516,-1.1793,"GB",1],["gn:2649672","Farnborough","p",339,"farnborough",51.2942,-0.7557,"GB",1],["gn:2649322","Fleet","p",339,"fleet",51.2833,-0.8333,"GB",1],["gn:2648272","Gosport","p",339,"gosport",50.7951,-1.129,"GB",1],["gn:2647317","Havant","p",339,"havant",50.8567,-0.9856,"GB",1],["gn:6620360","Hedge End","p",339,"hedge-end",50.9123,-1.3008,"GB",1],["gn:2646317","Hythe","p",339,"hythe",50.86,-1.4016,"GB",1],["gn:2641609","New Milton","p",339,"new-milton",50.756,-1.6658,"GB",1],["gn:2639189","Romsey","p",339,"romsey",50.9891,-1.4999,"GB",1],["gn:2635603","Totton","p",339,"totton",50.9188,-1.4904,"GB",1],["gn:2634686","Waterlooville","p",339,"waterlooville",50.8807,-1.0304,"GB",1],["gn:2633858","Winchester","p",339,"winchester",51.0651,-1.3187,"GB",1],["gn:6620293","Yateley","p",339,"yateley",51.343,-0.8298,"GB",1],["gn:3333152","Hartlepool","a",1,"hartlepool",54.6667,-1.25,"GB",1],["gn:2647071","Herefordshire","a",1,"herefordshire",52.0833,-2.75,"GB",1],["gn:2647074","Hereford","p",362,"hereford",52.0568,-2.7148,"GB",1],["gn:2647043","Hertfordshire","a",1,"hertfordshire",51.8333,-0.25,"GB",1],["gn:2655858","Berkhamsted","p",364,"berkhamsted",51.7604,-0.5653,"GB",1],["gn:2655562","Bishops Stortford","p",364,"bishops-stortford",51.8711,0.1587,"GB",1],["gn:2655186","Borehamwood","p",364,"borehamwood",51.6547,-0.2776,"GB",1],["gn:2654179","Bushey","p",364,"bushey",51.6432,-0.3605,"GB",1],["gn:2653232","Cheshunt","p",364,"cheshunt",51.7002,-0.0303,"GB",1],["gn:2647451","Harpenden","p",364,"harpenden",51.8168,-0.3571,"GB",1],["gn:2647349","Hatfield","p",364,"hatfield",51.7634,-0.2242,"GB",1],["gn:2647138","Hemel Hempstead","p",364,"hemel-hempstead",51.7537,-0.4497,"GB",1],["gn:2647044","Hertford","p",364,"hertford",51.7959,-0.0785,"GB",1],["gn:2646826","Hitchin","p",364,"hitchin",51.9492,-0.285,"GB",1],["gn:2646807","Hoddesdon","p",364,"hoddesdon",51.7615,-0.0114,"GB",1],["gn:8224216","Letchworth Garden City","p",364,"letchworth-garden-city",51.9794,-0.2266,"GB",1],["gn:6559327","North Watford","p",364,"north-watford",51.6807,-0.3945,"GB",1],["gn:2639970","Potters Bar","p",364,"potters-bar",51.6935,-0.1784,"GB",1],["gn:2639381","Rickmansworth","p",364,"rickmansworth",51.639,-0.4772,"GB",1],["gn:2638867","St Albans","p",364,"st-albans",51.75,-0.3333,"GB",1],["gn:2636940","Stevenage","p",364,"stevenage",51.9022,-0.2026,"GB",1],["gn:2634777","Ware","p",364,"ware",51.8106,-0.0288,"GB",1],["gn:2634677","Watford","p",364,"watford",51.6553,-0.396,"GB",1],["gn:2634552","Welwyn Garden City","p",364,"welwyn-garden-city",51.8017,-0.2069,"GB",1],["gn:2646007","Isle of Wight","a",1,"isle-of-wight",50.6667,-1.3333,"GB",1],["gn:2652204","Cowes","p",385,"cowes",50.7625,-1.2978,"GB",1],["gn:2641599","Newport","p",385,"newport",50.7015,-1.2912,"GB",1],["gn:2638911","Ryde","p",385,"ryde",50.73,-1.1621,"GB",1],["gn:2638568","Sandown","p",385,"sandown",50.6516,-1.161,"GB",1],["gn:2638384","Isles of Scilly","a",1,"isles-of-scilly",49.9212,-6.2943,"GB",1],["gn:3333158","Kent","a",1,"kent",51.1667,0.6667,"GB",1],["gn:2656955","Ashford","p",391,"ashford",51.1465,0.8738,"GB",1],["gn:2654635","Broadstairs","p",391,"broadstairs",51.3584,1.4419,"GB",1],["gn:2653877","Canterbury","p",391,"canterbury",51.279,1.0799,"GB",1],["gn:2651500","Dartford","p",391,"dartford",51.4466,0.2142,"GB",1],["gn:2651468","Deal","p",391,"deal",51.2232,1.4028,"GB",1],["gn:2651048","Dover","p",391,"dover",51.126,1.3126,"GB",1],["gn:2649622","Faversham","p",391,"faversham",51.3148,0.8886,"GB",1],["gn:2649258","Folkestone","p",391,"folkestone",51.0817,1.1673,"GB",1],["gn:2648187","Gravesend","p",391,"gravesend",51.4421,0.3711,"GB",1],["gn:2647057","Herne Bay","p",391,"herne-bay",51.373,1.1286,"GB",1],["gn:2643179","Maidstone","p",391,"maidstone",51.2667,0.5167,"GB",1],["gn:2643044","Margate","p",391,"margate",51.3813,1.3862,"GB",1],["gn:2639660","Ramsgate","p",391,"ramsgate",51.3357,1.418,"GB",1],["gn:2639022","Royal Tunbridge Wells","p",391,"royal-tunbridge-wells",51.1332,0.2626,"GB",1],["gn:2638703","Saint Peters","p",391,"saint-peters",51.3667,1.4167,"GB",1],["gn:2638187","Sevenoaks","p",391,"sevenoaks",51.2727,0.1888,"GB",1],["gn:2637802","Sittingbourne","p",391,"sittingbourne",51.3413,0.7328,"GB",1],["gn:2636439","Swanley","p",391,"swanley",51.3972,0.1732,"GB",1],["gn:2635703","Tonbridge","p",391,"tonbridge",51.1953,0.2736,"GB",1],["gn:2634021","Whitstable","p",391,"whitstable",51.3607,1.0257,"GB",1],["gn:3333159","Kingston upon Hull","a",1,"kingston-upon-hull",53.75,-0.3333,"GB",1],["gn:3333161","Kirklees","a",1,"kirklees",53.5833,-1.75,"GB",1],["gn:2656168","Batley","p",413,"batley",53.7029,-1.6337,"GB",1],["gn:2652890","Cleckheaton","p",413,"cleckheaton",53.724,-1.7129,"GB",1],["gn:2651286","Dewsbury","p",413,"dewsbury",53.6908,-1.6291,"GB",1],["gn:2647198","Heckmondwike","p",413,"heckmondwike",53.7065,-1.6775,"GB",1],["gn:2646458","Huddersfield","p",413,"huddersfield",53.649,-1.7842,"GB",1],["gn:2644207","Liversedge","p",413,"liversedge",53.7051,-1.6933,"GB",1],["gn:2642423","Mirfield","p",413,"mirfield",53.6734,-1.6964,"GB",1],["gn:3333162","Knowsley","a",1,"knowsley",53.4167,-2.8333,"GB",1],["gn:2647637","Halewood","p",421,"halewood",53.3596,-2.8315,"GB",1],["gn:2646329","Huyton","p",421,"huyton",53.4115,-2.8394,"GB",1],["gn:2645313","Kirkby","p",421,"kirkby",53.4814,-2.8921,"GB",1],["gn:2639928","Prescot","p",421,"prescot",53.4295,-2.8003,"GB",1],["gn:2644974","Lancashire","a",1,"lancashire",53.8333,-2.5,"GB",1],["gn:2657770","Accrington","p",426,"accrington",53.7538,-2.3586,"GB",1],["gn:2654264","Burnley","p",426,"burnley",53.8,-2.2333,"GB",1],["gn:2653086","Chorley","p",426,"chorley",53.65,-2.6167,"GB",1],["gn:2652544","Colne","p",426,"colne",53.8571,-2.1685,"GB",1],["gn:2649312","Fleetwood","p",426,"fleetwood",53.9253,-3.0109,"GB",1],["gn:2648970","Fylde","p",426,"fylde",53.8333,-2.9167,"GB",1],["gn:2644972","Lancaster","p",426,"lancaster",54.0465,-2.7999,"GB",1],["gn:2644547","Leyland","p",426,"leyland",53.6979,-2.6876,"GB",1],["gn:6693470","Lytham St Annes","p",426,"lytham-st-annes",53.7426,-2.997,"GB",1],["gn:2642214","Morecambe","p",426,"morecambe",54.0684,-2.8611,"GB",1],["gn:2641810","Nelson","p",426,"nelson",53.8333,-2.2,"GB",1],["gn:2640908","Ormskirk","p",426,"ormskirk",53.5669,-2.8818,"GB",1],["gn:2639958","Poulton-le-Fylde","p",426,"poulton-le-fylde",53.8333,-2.9833,"GB",1],["gn:2639912","Preston","p",426,"preston",53.7628,-2.7045,"GB",1],["gn:2639586","Rawtenstall","p",426,"rawtenstall",53.7008,-2.2844,"GB",1],["gn:8299614","Rossendale","p",426,"rossendale",53.6846,-2.2769,"GB",1],["gn:2637752","Skelmersdale","p",426,"skelmersdale",53.5502,-2.7735,"GB",1],["gn:8299615","Thornton-Cleveleys","p",426,"thornton-cleveleys",53.8739,-3.0224,"GB",1],["gn:3333164","Leeds","a",1,"leeds",53.7964,-1.5477,"GB",1],["gn:6695247","Chapel Allerton","p",445,"chapel-allerton",53.829,-1.5383,"GB",1],["gn:2647784","Guiseley","p",445,"guiseley",53.8756,-1.7123,"GB",1],["gn:2646558","Horsforth","p",445,"horsforth",53.8426,-1.6375,"GB",1],["gn:2643776","Lofthouse","p",445,"lofthouse",53.7295,-1.497,"GB",1],["gn:2642189","Morley","p",445,"morley",53.7401,-1.5988,"GB",1],["gn:2639866","Pudsey","p",445,"pudsey",53.7954,-1.6613,"GB",1],["gn:2633397","Yeadon","p",445,"yeadon",53.8644,-1.6874,"GB",1],["gn:3333165","Leicester","a",1,"leicester",52.6333,-1.1333,"GB",1],["gn:2646434","Humberstone","p",453,"humberstone",52.6474,-1.0865,"GB",1],["gn:2644667","Leicestershire","a",1,"leicestershire",52.6667,-1.0,"GB",1],["gn:2652698","Coalville","p",455,"coalville",52.7225,-1.3702,"GB",1],["gn:6693007","Earl Shilton","p",455,"earl-shilton",52.5768,-1.3154,"GB",1],["gn:2649830","Evington","p",455,"evington",52.6,-1.0667,"GB",1],["gn:2648448","Glen Parva","p",455,"glen-parva",52.5853,-1.1706,"GB",1],["gn:2646867","Hinckley","p",455,"hinckley",52.5389,-1.3761,"GB",1],["gn:2643567","Loughborough","p",455,"loughborough",52.7667,-1.2,"GB",1],["gn:2643027","Market Harborough","p",455,"market-harborough",52.4776,-0.9205,"GB",1],["gn:2642763","Melton Mowbray","p",455,"melton-mowbray",52.7659,-0.8869,"GB",1],["gn:2642096","Mountsorrel","p",455,"mountsorrel",52.7167,-1.15,"GB",1],["gn:2641134","Oadby","p",455,"oadby",52.6062,-1.0835,"GB",1],["gn:2633936","Wigston Magna","p",455,"wigston-magna",52.5813,-1.0925,"GB",1],["gn:2644486","Lincolnshire","a",1,"lincolnshire",53.1667,-0.26,"GB",1],["gn:2655138","Boston","p",467,"boston",52.9763,-0.0266,"GB",1],["gn:2648945","Gainsborough","p",467,"gainsborough",53.3833,-0.7667,"GB",1],["gn:2648208","Grantham","p",467,"grantham",52.9115,-0.6418,"GB",1],["gn:2644487","Lincoln","p",467,"lincoln",53.2268,-0.5379,"GB",1],["gn:2643553","Louth","p",467,"louth",53.3666,-0.0044,"GB",1],["gn:2637762","Skegness","p",467,"skegness",53.1436,0.3363,"GB",1],["gn:2637659","Sleaford","p",467,"sleaford",52.9983,-0.4094,"GB",1],["gn:2637265","Spalding","p",467,"spalding",52.7871,-0.1514,"GB",1],["gn:2637104","Stamford","p",467,"stamford",52.65,-0.4833,"GB",1],["gn:3333167","Liverpool","a",1,"liverpool",53.4167,-2.9167,"GB",1],["gn:2648827","Garston","p",477,"garston",53.3333,-2.9,"GB",1],["gn:11669845","Kirkdale","h",477,"kirkdale",53.4334,-2.9766,"GB",1],["gn:11669849","Norris Green","h",477,"norris-green",53.4451,-2.9207,"GB",1],["gn:2637241","Speke","p",477,"speke",53.3407,-2.841,"GB",1],["gn:3333168","Luton","a",1,"luton",51.8911,-0.4279,"GB",1],["gn:3333169","Manchester","a",1,"manchester",53.4167,-2.25,"GB",1],["gn:7281603","Manchester City Centre","h",483,"manchester-city-centre",53.481,-2.2456,"GB",1],["gn:3333170","Medway","a",1,"medway",51.4167,0.5,"GB",1],["gn:2653305","Chatham","p",485,"chatham",51.3789,0.5279,"GB",1],["gn:2648657","Gillingham","p",485,"gillingham",51.3891,0.5486,"GB",1],["gn:2639268","Rochester","p",485,"rochester",51.3876,0.5055,"GB",1],["gn:2636619","Strood","h",485,"strood",51.3932,0.4771,"GB",1],["gn:3333172","Middlesbrough","a",1,"middlesbrough",54.5333,-1.2,"GB",1],["gn:3333173","Milton Keynes","a",1,"milton-keynes",52.0833,-0.75,"GB",1],["gn:2655351","Bletchley","p",491,"bletchley",51.9933,-0.7347,"GB",1],["gn:3333174","Newcastle upon Tyne","a",1,"newcastle-upon-tyne",55.0,-1.6667,"GB",1],["gn:2648273","Gosforth","p",493,"gosforth",55.0,-1.6167,"GB",1],["gn:2641690","Newburn","p",493,"newburn",54.9876,-1.7442,"GB",1],["gn:2641455","Norfolk","a",1,"norfolk",52.6667,1.0,"GB",1],["gn:6620355","Bowthorpe","p",496,"bowthorpe",52.6388,1.2188,"GB",1],["gn:2650470","East Dereham","p",496,"east-dereham",52.6833,0.9333,"GB",1],["gn:2647984","Great Yarmouth","p",496,"great-yarmouth",52.6083,1.7305,"GB",1],["gn:2645456","King's Lynn","p",496,"kings-lynn",52.7517,0.3952,"GB",1],["gn:2641181","Norwich","p",496,"norwich",52.6278,1.2983,"GB",1],["gn:2636032","Thetford","p",496,"thetford",52.4167,0.75,"GB",1],["gn:3333175","North East Lincolnshire","a",1,"north-east-lincolnshire",53.5333,-0.0833,"GB",1],["gn:2652885","Cleethorpes","p",503,"cleethorpes",53.5605,-0.0323,"GB",1],["gn:2647878","Grimsby","p",503,"grimsby",53.5654,-0.0755,"GB",1],["gn:3333176","North Lincolnshire","a",1,"north-lincolnshire",53.5833,-0.5,"GB",1],["gn:2638324","Scunthorpe","p",506,"scunthorpe",53.5791,-0.6544,"GB",1],["gn:13192429","North Northamptonshire","a",1,"north-northamptonshire",52.4288,-0.6242,"GB",1],["gn:2652381","Corby","p",508,"corby",52.4964,-0.6894,"GB",1],["gn:2645753","Kettering","p",508,"kettering",52.3984,-0.7257,"GB",1],["gn:2638946","Rushden","p",508,"rushden",52.2893,-0.6018,"GB",1],["gn:2634578","Wellingborough","p",508,"wellingborough",52.3027,-0.6945,"GB",1],["gn:3333177","North Somerset","a",1,"north-somerset",51.3333,-2.8333,"GB",1],["gn:2652861","Clevedon","p",513,"clevedon",51.4423,-2.8579,"GB",1],["gn:2641913","Nailsea","p",513,"nailsea",51.4324,-2.7585,"GB",1],["gn:2640037","Portishead","p",513,"portishead",51.482,-2.7697,"GB",1],["gn:2634308","Weston-super-Mare","p",513,"weston-super-mare",51.346,-2.9766,"GB",1],["gn:2641238","North Tyneside","a",1,"north-tyneside",55.0333,-1.5,"GB",1],["gn:2641267","North Shields","p",518,"north-shields",55.0165,-1.4492,"GB",1],["gn:2635269","Tynemouth","p",518,"tynemouth",55.0179,-1.4256,"GB",1],["gn:2634864","Wallsend","p",518,"wallsend",54.9911,-1.534,"GB",1],["gn:2634032","Whitley Bay","p",518,"whitley-bay",55.0397,-1.4471,"GB",1],["gn:2641209","North Yorkshire","a",1,"north-yorkshire",54.1667,-1.5,"GB",1],["gn:2647428","Harrogate","p",523,"harrogate",53.9908,-1.5373,"GB",1],["gn:2638419","Scarborough","p",523,"scarborough",54.2797,-0.4044,"GB",1],["gn:2638235","Selby","p",523,"selby",53.7833,-1.0667,"GB",1],["gn:2641235","Northumberland","a",1,"northumberland",55.25,-2.0,"GB",1],["gn:2656946","Ashington","p",527,"ashington",55.1772,-1.5641,"GB",1],["gn:2656039","Bedlington","p",527,"bedlington",55.1306,-1.5932,"GB",1],["gn:2655315","Blyth","p",527,"blyth",55.1271,-1.5086,"GB",1],["gn:2652095","Cramlington","p",527,"cramlington",55.0865,-1.586,"GB",1],["gn:3333178","Nottingham","a",1,"nottingham",52.9667,-1.15,"GB",1],["gn:2641169","Nottinghamshire","a",1,"nottinghamshire",53.1667,-1.0,"GB",1],["gn:2657030","Arnold","p",533,"arnold",53.0,-1.1333,"GB",1],["gn:2650309","Eastwood","p",533,"eastwood",53.0,-1.3,"GB",1],["gn:2646460","Hucknall","p",533,"hucknall",53.0333,-1.2,"GB",1],["gn:2645309","Kirkby in Ashfield","p",533,"kirkby-in-ashfield",53.0998,-1.2438,"GB",1],["gn:2643097","Mansfield","p",533,"mansfield",53.1333,-1.2,"GB",1],["gn:2643096","Mansfield Woodhouse","p",533,"mansfield-woodhouse",53.1649,-1.1938,"GB",1],["gn:2641731","Newark on Trent","p",533,"newark-on-trent",53.0667,-0.8167,"GB",1],["gn:2650346","Retford","p",533,"retford",53.3221,-0.9432,"GB",1],["gn:2636484","Sutton in Ashfield","p",533,"sutton-in-ashfield",53.1254,-1.2613,"GB",1],["gn:2634493","West Bridgford","p",533,"west-bridgford",52.9298,-1.1254,"GB",1],["gn:2633551","Worksop","p",533,"worksop",53.3018,-1.124,"GB",1],["gn:3333179","Oldham","a",1,"oldham",53.55,-2.0833,"GB",1],["gn:11551009","Chadderton","p",545,"chadderton",53.5448,-2.1398,"GB",1],["gn:6691219","Failsworth","p",545,"failsworth",53.5048,-2.1657,"GB",1],["gn:2639015","Royton","p",545,"royton",53.5651,-2.1227,"GB",1],["gn:2638879","Saddleworth","p",545,"saddleworth",53.5485,-2.0046,"GB",1],["gn:2640726","Oxfordshire","a",1,"oxfordshire",51.8333,-1.25,"GB",1],["gn:2657780","Abingdon","p",550,"abingdon",51.6711,-1.2828,"GB",1],["gn:2656406","Banbury","p",550,"banbury",52.0632,-1.3422,"GB",1],["gn:2655729","Bicester","p",550,"bicester",51.9,-1.1536,"GB",1],["gn:2651269","Didcot","p",550,"didcot",51.6093,-1.2421,"GB",1],["gn:2640729","Oxford","p",550,"oxford",51.7522,-1.256,"GB",1],["gn:2633729","Witney","p",550,"witney",51.7836,-1.4854,"GB",1],["gn:3333180","Peterborough","a",1,"peterborough",52.5833,-0.25,"GB",1],["gn:3333181","Plymouth","a",1,"plymouth",50.3833,-4.1333,"GB",1],["gn:2640190","Plymstock","p",558,"plymstock",50.36,-4.0905,"GB",1],["gn:3333183","Portsmouth","a",1,"portsmouth",50.8,-1.0667,"GB",1],["gn:2637330","Southsea","h",560,"southsea",50.7835,-1.0907,"GB",1],["gn:3333184","Reading","a",1,"reading",51.45,-0.9667,"GB",1],["gn:3333186","Redcar and Cleveland","a",1,"redcar-and-cleveland",54.55,-1.0,"GB",1],["gn:2639563","Redcar","p",563,"redcar",54.6166,-1.06,"GB",1],["gn:3333188","Rochdale","a",1,"rochdale",53.5833,-2.1667,"GB",1],["gn:6691235","Heywood","h",565,"heywood",53.5924,-2.2194,"GB",1],["gn:2642593","Middleton","p",565,"middleton",53.55,-2.2,"GB",1],["gn:3333189","Rotherham","a",1,"rotherham",53.4167,-1.25,"GB",1],["gn:2651241","Dinnington","p",568,"dinnington",53.3667,-1.2,"GB",1],["gn:2643144","Maltby","p",568,"maltby",53.4167,-1.2,"GB",1],["gn:2639588","Rawmarsh","p",568,"rawmarsh",53.4606,-1.3444,"GB",1],["gn:3333190","Salford","a",1,"salford",53.5,-2.3333,"GB",1],["gn:2650278","Eccles","p",572,"eccles",53.4833,-2.3333,"GB",1],["gn:2646042","Irlam","p",572,"irlam",53.4425,-2.4232,"GB",1],["gn:2636373","Swinton","p",572,"swinton",53.5,-2.35,"GB",1],["gn:2634887","Walkden","p",572,"walkden",53.5167,-2.4,"GB",1],["gn:3333191","Sandwell","a",1,"sandwell",52.5,-2.0,"GB",1],["gn:2637607","Smethwick","p",577,"smethwick",52.4927,-1.9674,"GB",1],["gn:2635785","Tipton","p",577,"tipton",52.5296,-2.0677,"GB",1],["gn:2634617","Wednesbury","p",577,"wednesbury",52.5514,-2.0236,"GB",1],["gn:2634491","West Bromwich","p",577,"west-bromwich",52.5187,-1.9945,"GB",1],["gn:3333192","Sefton","a",1,"sefton",53.5,-3.0,"GB",1],["gn:2655198","Bootle","p",582,"bootle",53.4667,-3.0167,"GB",1],["gn:2649198","Formby","p",582,"formby",53.5584,-3.07,"GB",1],["gn:2644386","Litherland","p",582,"litherland",53.4699,-2.9981,"GB",1],["gn:2643198","Maghull","p",582,"maghull",53.5162,-2.9412,"GB",1],["gn:2637343","Southport","p",582,"southport",53.6458,-3.0101,"GB",1],["gn:3333193","Sheffield","a",1,"sheffield",53.4167,-1.5,"GB",1],["gn:11776857","Burngreave","p",588,"burngreave",53.393,-1.4579,"GB",1],["gn:2653353","Chapeltown","p",588,"chapeltown",53.4651,-1.4722,"GB",1],["gn:2648988","Fulwood","p",588,"fulwood",53.35,-1.55,"GB",1],["gn:2641783","Nether Edge","h",588,"nether-edge",53.3593,-1.4876,"GB",1],["gn:2638655","Shropshire","a",1,"shropshire",52.6667,-2.75,"GB",1],["gn:2643556","Loughton","p",593,"loughton",52.4333,-2.5667,"GB",1],["gn:2640861","Oswestry","p",593,"oswestry",52.862,-3.055,"GB",1],["gn:2637891","Shrewsbury","p",593,"shrewsbury",52.7101,-2.7521,"GB",1],["gn:3333194","Slough","a",1,"slough",51.5,-0.5667,"GB",1],["gn:3333195","Solihull","a",1,"solihull",52.4167,-1.75,"GB",1],["gn:8224782","Shirley","h",598,"shirley",52.4107,-1.8195,"GB",1],["gn:2637532","Somerset","a",1,"somerset",51.0833,-3.0,"GB",1],["gn:2654730","Bridgwater","p",600,"bridgwater",51.1284,-3.0036,"GB",1],["gn:2654269","Burnham-on-Sea","p",600,"burnham-on-sea",51.2386,-2.9978,"GB",1],["gn:2649024","Frome","p",600,"frome",51.2283,-2.3221,"GB",1],["gn:6947756","Mendip","h",600,"mendip",51.2372,-2.6266,"GB",1],["gn:2636177","Taunton","p",600,"taunton",51.0149,-3.1029,"GB",1],["gn:2633373","Yeovil","p",600,"yeovil",50.9416,-2.6321,"GB",1],["gn:3333198","South Gloucestershire","a",1,"south-gloucestershire",51.5,-2.4167,"GB",1],["gn:2645418","Kingswood","p",607,"kingswood",51.4528,-2.5083,"GB",1],["gn:2643116","Mangotsfield","p",607,"mangotsfield",51.4878,-2.504,"GB",1],["gn:2633406","Yate","p",607,"yate",51.5407,-2.4184,"GB",1],["gn:3333199","South Tyneside","a",1,"south-tyneside",54.95,-1.4167,"GB",1],["gn:2647209","Hebburn","p",611,"hebburn",54.973,-1.5155,"GB",1],["gn:2645972","Jarrow","p",611,"jarrow",54.9804,-1.4842,"GB",1],["gn:2637329","South Shields","p",611,"south-shields",54.9986,-1.4323,"GB",1],["gn:3333196","Southampton","a",1,"southampton",50.9167,-1.3833,"GB",1],["gn:3333197","Southend-on-Sea","a",1,"southend-on-sea",51.5333,0.7,"GB",1],["gn:3333201","St. Helens","a",1,"st-helens",53.4167,-2.75,"GB",1],["gn:2656918","Ashton in Makerfield","p",617,"ashton-in-makerfield",53.4833,-2.65,"GB",1],["gn:2647265","Haydock","p",617,"haydock",53.4672,-2.6817,"GB",1],["gn:2641546","Newton-le-Willows","p",617,"newton-le-willows",53.45,-2.6,"GB",1],["gn:2637141","Staffordshire","a",1,"staffordshire",52.8333,-2.0,"GB",1],["gn:2655708","Biddulph","p",621,"biddulph",53.1172,-2.1758,"GB",1],["gn:2654252","Burntwood","p",621,"burntwood",52.6808,-1.9276,"GB",1],["gn:2654200","Burton upon Trent","p",621,"burton-upon-trent",52.8073,-1.6426,"GB",1],["gn:2653883","Cannock","p",621,"cannock",52.6904,-2.0309,"GB",1],["gn:2647985","Great Wyrley","p",621,"great-wyrley",52.6628,-2.0111,"GB",1],["gn:2645721","Kidsgrove","p",621,"kidsgrove",53.0869,-2.2378,"GB",1],["gn:2644684","Leek","p",621,"leek",53.1043,-2.0221,"GB",1],["gn:2644531","Lichfield","p",621,"lichfield",52.6815,-1.8255,"GB",1],["gn:2641674","Newcastle under Lyme","p",621,"newcastle-under-lyme",53.0,-2.2333,"GB",1],["gn:2638977","Rugeley","p",621,"rugeley",52.7593,-1.9369,"GB",1],["gn:2637142","Stafford","p",621,"stafford",52.8052,-2.1164,"GB",1],["gn:2636276","Tamworth","p",621,"tamworth",52.634,-1.6959,"GB",1],["gn:3333202","Stockport","a",1,"stockport",53.4167,-2.1667,"GB",1],["gn:2654927","Bramhall","p",634,"bramhall",53.358,-2.1654,"GB",1],["gn:2653290","Cheadle Hulme","p",634,"cheadle-hulme",53.3761,-2.1897,"GB",1],["gn:2647246","Hazel Grove","p",634,"hazel-grove",53.3833,-2.1167,"GB",1],["gn:3333203","Stockton-on-Tees","a",1,"stockton-on-tees",54.55,-1.3333,"GB",1],["gn:2655664","Billingham","p",638,"billingham",54.5888,-1.2903,"GB",1],["gn:2636005","Thornaby-on-Tees","p",638,"thornaby-on-tees",54.5333,-1.3,"GB",1],["gn:2633415","Yarm","p",638,"yarm",54.5036,-1.3579,"GB",1],["gn:3333204","Stoke-on-Trent","a",1,"stoke-on-trent",53.0,-2.1667,"GB",1],["gn:2643620","Longton","p",642,"longton",52.9833,-2.1333,"GB",1],["gn:2636561","Suffolk","a",1,"suffolk",52.1667,1.0,"GB",1],["gn:2654186","Bury St Edmunds","p",644,"bury-st-edmunds",52.2463,0.7111,"GB",1],["gn:2649579","Felixstowe","p",644,"felixstowe",51.9637,1.3511,"GB",1],["gn:2647310","Haverhill","p",644,"haverhill",52.0823,0.4389,"GB",1],["gn:2646057","Ipswich","p",644,"ipswich",52.0592,1.1555,"GB",1],["gn:2643490","Lowestoft","p",644,"lowestoft",52.4752,1.7517,"GB",1],["gn:2641616","Newmarket","p",644,"newmarket",52.2447,0.4042,"GB",1],["gn:2636749","Stowmarket","p",644,"stowmarket",52.1889,0.9977,"GB",1],["gn:2636564","Sudbury","p",644,"sudbury",52.0389,0.7312,"GB",1],["gn:3333205","Sunderland","a",1,"sunderland",54.8833,-1.4167,"GB",1],["gn:2646525","Houghton-Le-Spring","p",653,"houghton-le-spring",54.8403,-1.4643,"GB",1],["gn:2634715","Washington","p",653,"washington",54.9,-1.5167,"GB",1],["gn:2636512","Surrey","a",1,"surrey",51.25,-0.3333,"GB",1],["gn:2656954","Ashford","p",656,"ashford",51.4317,-0.4576,"GB",1],["gn:2656379","Banstead","p",656,"banstead",51.3223,-0.2069,"GB",1],["gn:2653947","Camberley","p",656,"camberley",51.337,-0.7426,"GB",1],["gn:2653520","Caterham","p",656,"caterham",51.2823,-0.0789,"GB",1],["gn:2651095","Dorking","p",656,"dorking",51.2323,-0.3338,"GB",1],["gn:2650376","East Molesey","p",656,"east-molesey",51.3987,-0.3492,"GB",1],["gn:2650188","Egham","p",656,"egham",51.4316,-0.5524,"GB",1],["gn:2649957","Epsom","p",656,"epsom",51.3305,-0.2701,"GB",1],["gn:2649911","Esher","p",656,"esher",51.3697,-0.3669,"GB",1],["gn:6690867","Ewell","h",656,"ewell",51.3495,-0.2494,"GB",1],["gn:2649660","Farnham","p",656,"farnham",51.2144,-0.8005,"GB",1],["gn:2648372","Godalming","p",656,"godalming",51.1858,-0.6149,"GB",1],["gn:2647793","Guildford","p",656,"guildford",51.2354,-0.5743,"GB",1],["gn:2647365","Haslemere","p",656,"haslemere",51.0902,-0.7078,"GB",1],["gn:2646606","Horley","p",656,"horley",51.1742,-0.1592,"GB",1],["gn:2644726","Leatherhead","p",656,"leatherhead",51.2965,-0.3338,"GB",1],["gn:2639545","Redhill","p",656,"redhill",51.2405,-0.1704,"GB",1],["gn:2639506","Reigate","p",656,"reigate",51.2374,-0.2058,"GB",1],["gn:2637126","Staines","p",656,"staines",51.4309,-0.5061,"GB",1],["gn:2636534","Sunbury-on-Thames","p",656,"sunbury-on-thames",51.4042,-0.4182,"GB",1],["gn:2634825","Walton-on-Thames","p",656,"walton-on-thames",51.3868,-0.4132,"GB",1],["gn:2634340","West Molesey","p",656,"west-molesey",51.3999,-0.38,"GB",1],["gn:2634204","Weybridge","p",656,"weybridge",51.3718,-0.4597,"GB",1],["gn:2633709","Woking","p",656,"woking",51.319,-0.5589,"GB",1],["gn:3333207","Swindon","a",1,"swindon",51.5833,-1.75,"GB",1],["gn:3333208","Tameside","a",1,"tameside",53.5,-2.0833,"GB",1],["gn:2656915","Ashton-under-Lyne","p",682,"ashton-under-lyne",53.4888,-2.0989,"GB",1],["gn:2651357","Denton","p",682,"denton",53.4568,-2.1182,"GB",1],["gn:2650962","Droylsden","p",682,"droylsden",53.48,-2.1454,"GB",1],["gn:2650815","Dukinfield","p",682,"dukinfield",53.475,-2.0881,"GB",1],["gn:2646327","Hyde","p",682,"hyde",53.4513,-2.0794,"GB",1],["gn:2637106","Stalybridge","p",682,"stalybridge",53.4841,-2.0591,"GB",1],["gn:3333209","Telford and Wrekin","a",1,"telford-and-wrekin",52.75,-2.5,"GB",1],["gn:3345439","Telford","p",689,"telford",52.6766,-2.4493,"GB",1],["gn:2634573","Wellington","p",689,"wellington",52.7,-2.5167,"GB",1],["gn:2635885","Thurrock","a",1,"thurrock",51.5,0.4167,"GB",1],["gn:2648182","Grays","p",692,"grays",51.4757,0.3252,"GB",1],["gn:2637355","South Ockendon","p",692,"south-ockendon",51.508,0.2833,"GB",1],["gn:2637087","Stanford-le-Hope","p",692,"stanford-le-hope",51.5227,0.4342,"GB",1],["gn:3333210","Torbay","a",1,"torbay",50.4516,-3.5579,"GB",1],["gn:2640681","Paignton","p",696,"paignton",50.4357,-3.5679,"GB",1],["gn:2635650","Torquay","p",696,"torquay",50.462,-3.5252,"GB",1],["gn:3333211","Trafford","a",1,"trafford",53.4167,-2.3333,"GB",1],["gn:2657402","Altrincham","p",699,"altrincham",53.3875,-2.3485,"GB",1],["gn:6691246","Old Trafford","h",699,"old-trafford",53.4576,-2.2882,"GB",1],["gn:2638678","Sale","p",699,"sale",53.4252,-2.3244,"GB",1],["gn:2636663","Stretford","p",699,"stretford",53.45,-2.3167,"GB",1],["gn:2635062","Urmston","p",699,"urmston",53.4485,-2.3542,"GB",1],["gn:3333212","Wakefield","a",1,"wakefield",53.6808,-1.499,"GB",1],["gn:2653584","Castleford","p",705,"castleford",53.7259,-1.3626,"GB",1],["gn:2640869","Ossett","p",705,"ossett",53.6798,-1.5801,"GB",1],["gn:2640132","Pontefract","p",705,"pontefract",53.6911,-1.3127,"GB",1],["gn:2637435","South Elmsall","p",705,"south-elmsall",53.5971,-1.2803,"GB",1],["gn:3333213","Walsall","a",1,"walsall",52.5833,-2.0,"GB",1],["gn:2657528","Aldridge","p",710,"aldridge",52.6055,-1.9171,"GB",1],["gn:2655329","Bloxwich","p",710,"bloxwich",52.6181,-2.0043,"GB",1],["gn:2633912","Willenhall","p",710,"willenhall",52.5851,-2.0593,"GB",1],["gn:3333216","Warrington","a",1,"warrington",53.4167,-2.5833,"GB",1],["gn:2648026","Great Sankey","p",714,"great-sankey",53.3923,-2.6399,"GB",1],["gn:2634723","Warwickshire","a",1,"warwickshire",52.3333,-1.5833,"GB",1],["gn:2656031","Bedworth","p",716,"bedworth",52.4791,-1.4691,"GB",1],["gn:2645822","Kenilworth","p",716,"kenilworth",52.3496,-1.5828,"GB",1],["gn:2641157","Nuneaton","p",716,"nuneaton",52.5232,-1.4652,"GB",1],["gn:2644737","Royal Leamington Spa","p",716,"royal-leamington-spa",52.2852,-1.52,"GB",1],["gn:2638978","Rugby","p",716,"rugby",52.3709,-1.2642,"GB",1],["gn:2636713","Stratford-upon-Avon","p",716,"stratford-upon-avon",52.1917,-1.7073,"GB",1],["gn:2634725","Warwick","p",716,"warwick",52.2833,-1.5833,"GB",1],["gn:3333217","West Berkshire","a",1,"west-berkshire",51.4167,-1.25,"GB",1],["gn:2641689","Newbury","p",724,"newbury",51.4015,-1.3247,"GB",1],["gn:2636049","Thatcham","p",724,"thatcham",51.4037,-1.2605,"GB",1],["gn:13192427","West Northamptonshire","a",1,"west-northamptonshire",52.2232,-1.0338,"GB",1],["gn:2651485","Daventry","p",727,"daventry",52.2569,-1.1607,"GB",1],["gn:2641430","Northampton","p",727,"northampton",52.25,-0.8833,"GB",1],["gn:2634258","West Sussex","a",1,"west-sussex",51.0,-0.4167,"GB",1],["gn:2655262","Bognor Regis","p",730,"bognor-regis",50.7821,-0.6798,"GB",1],["gn:2654308","Burgess Hill","p",730,"burgess-hill",50.9584,-0.1329,"GB",1],["gn:2653192","Chichester","p",730,"chichester",50.8367,-0.78,"GB",1],["gn:2652053","Crawley","p",730,"crawley",51.113,-0.1831,"GB",1],["gn:2650435","East Grinstead","p",730,"east-grinstead",51.1238,-0.0061,"GB",1],["gn:2647248","Haywards Heath","p",730,"haywards-heath",50.9977,-0.1031,"GB",1],["gn:2646557","Horsham","p",730,"horsham",51.0631,-0.3276,"GB",1],["gn:2641319","Lancing","p",730,"lancing",50.8288,-0.3225,"GB",1],["gn:2644319","Littlehampton","p",730,"littlehampton",50.8114,-0.5408,"GB",1],["gn:2637916","Shoreham-by-Sea","p",730,"shoreham-by-sea",50.8341,-0.2743,"GB",1],["gn:2633521","Worthing","p",730,"worthing",50.818,-0.3754,"GB",1],["gn:3333219","Wigan","a",1,"wigan",53.5,-2.5833,"GB",1],["gn:2656847","Atherton","p",742,"atherton",53.5237,-2.4935,"GB",1],["gn:2648356","Golborne","p",742,"golborne",53.4769,-2.5965,"GB",1],["gn:2646862","Hindley","p",742,"hindley",53.5333,-2.5833,"GB",1],["gn:2644660","Leigh","p",742,"leigh",53.4964,-2.5197,"GB",1],["gn:2635281","Tyldesley","p",742,"tyldesley",53.5139,-2.4675,"GB",1],["gn:2633868","Wiltshire","a",1,"wiltshire",51.25,-1.9167,"GB",1],["gn:2653974","Calne","p",748,"calne",51.4388,-2.0057,"GB",1],["gn:2653144","Chippenham","p",748,"chippenham",51.46,-2.1247,"GB",1],["gn:2642786","Melksham","p",748,"melksham",51.3728,-2.14,"GB",1],["gn:2638664","Salisbury","p",748,"salisbury",51.0693,-1.7957,"GB",1],["gn:2635427","Trowbridge","p",748,"trowbridge",51.3189,-2.2086,"GB",1],["gn:2634755","Warminster","p",748,"warminster",51.2043,-2.1787,"GB",1],["gn:2633840","Windsor and Maidenhead","a",1,"windsor-and-maidenhead",51.4667,-0.6667,"GB",1],["gn:2656992","Ascot","p",755,"ascot",51.4108,-0.6748,"GB",1],["gn:2643186","Maidenhead","p",755,"maidenhead",51.5228,-0.7199,"GB",1],["gn:2633842","Windsor","p",755,"windsor",51.4833,-0.6,"GB",1],["gn:3333220","Wirral","a",1,"wirral",53.3333,-3.0833,"GB",1],["gn:2656070","Bebington","p",759,"bebington",53.35,-3.0167,"GB",1],["gn:2655613","Birkenhead","p",759,"birkenhead",53.3934,-3.0148,"GB",1],["gn:2647026","Heswall","p",759,"heswall",53.3273,-3.0965,"GB",1],["gn:2642204","Moreton","p",759,"moreton",53.4,-3.1167,"GB",1],["gn:2634873","Wallasey","p",759,"wallasey",53.4232,-3.065,"GB",1],["gn:3333221","Wokingham","a",1,"wokingham",51.4167,-0.9167,"GB",1],["gn:7290015","Lower Earley","p",765,"lower-earley",51.4271,-0.9198,"GB",1],["gn:3333222","Wolverhampton","a",1,"wolverhampton",52.5833,-2.1167,"GB",1],["gn:2634616","Wednesfield","p",767,"wednesfield",52.5963,-2.0851,"GB",1],["gn:2633560","Worcestershire","a",1,"worcestershire",52.1667,-2.1667,"GB",1],["gn:2654579","Bromsgrove","p",769,"bromsgrove",52.3357,-2.0598,"GB",1],["gn:2650983","Droitwich","p",769,"droitwich",52.2667,-2.15,"GB",1],["gn:2649833","Evesham","p",769,"evesham",52.0924,-1.9489,"GB",1],["gn:2648063","Great Malvern","p",769,"great-malvern",52.1116,-2.3251,"GB",1],["gn:2645724","Kidderminster","p",769,"kidderminster",52.3882,-2.25,"GB",1],["gn:2639557","Redditch","p",769,"redditch",52.3065,-1.9457,"GB",1],["gn:2636767","Stourport-on-Severn","p",769,"stourport-on-severn",52.3398,-2.2803,"GB",1],["gn:2633563","Worcester","p",769,"worcester",52.1893,-2.22,"GB",1],["gn:2633351","York","a",1,"york",53.964,-1.0914,"GB",1],["gn:2641364","Northern Ireland","n",0,"northern-ireland",54.5,-6.5,"GB",1],["gn:11353069","Antrim and Newtownabbey","a",779,"antrim-and-newtownabbey",54.7018,-6.1977,"GB",1],["gn:2657255","Antrim","p",780,"antrim",54.7175,-6.211,"GB",1],["gn:2641520","Newtownabbey","p",780,"newtownabbey",54.6598,-5.9086,"GB",1],["gn:11353074","Ards and North Down","a",779,"ards-and-north-down",54.5344,-5.6295,"GB",1],["gn:2656396","Bangor","p",783,"bangor",54.6608,-5.668,"GB",1],["gn:2641519","Newtownards","p",783,"newtownards",54.5924,-5.6909,"GB",1],["gn:11353076","Armagh City Banbridge and Craigavon","a",779,"armagh-city-banbridge-and-craigavon",54.3692,-6.4565,"GB",1],["gn:2657060","Armagh","p",786,"armagh",54.35,-6.6667,"GB",1],["gn:2656407","Banbridge","p",786,"banbridge",54.35,-6.2833,"GB",1],["gn:3345440","Craigavon","p",786,"craigavon",54.4471,-6.387,"GB",1],["gn:2640085","Portadown","p",786,"portadown",54.423,-6.4443,"GB",1],["gn:3333223","Belfast","a",779,"belfast",54.5833,-5.9167,"GB",1],["gn:2653558","Castlereagh","p",791,"castlereagh",54.5735,-5.8847,"GB",1],["gn:11353070","Causeway Coast and Glens","a",779,"causeway-coast-and-glens",55.0601,-6.5908,"GB",1],["gn:2652586","Coleraine","p",793,"coleraine",55.1333,-6.6667,"GB",1],["gn:11353073","Derry City and Strabane","a",779,"derry-city-and-strabane",54.8205,-7.3596,"GB",1],["gn:2643736","Derry","p",795,"derry",54.9981,-7.3093,"GB",1],["gn:2643734","Londonderry County Borough","h",795,"londonderry-county-borough",54.9972,-7.3092,"GB",1],["gn:11353071","Fermanagh and Omagh","a",779,"fermanagh-and-omagh",54.4426,-7.503,"GB",1],["gn:2649984","Enniskillen","p",798,"enniskillen",54.3462,-7.6413,"GB",1],["gn:2640967","Omagh","p",798,"omagh",54.6,-7.3,"GB",1],["gn:11353072","Lisburn and Castlereagh","a",779,"lisburn-and-castlereagh",54.5082,-6.0525,"GB",1],["gn:2644411","Lisburn","p",801,"lisburn",54.5234,-6.0353,"GB",1],["gn:11353078","Mid and East Antrim","a",779,"mid-and-east-antrim",54.8744,-6.1014,"GB",1],["gn:2656490","Ballymena","p",803,"ballymena",54.8636,-6.2763,"GB",1],["gn:2653680","Carrickfergus","p",803,"carrickfergus",54.7158,-5.8058,"GB",1],["gn:2644849","Larne","p",803,"larne",54.85,-5.8167,"GB",1],["gn:11353068","Mid Ulster","a",779,"mid-ulster",54.6219,-6.791,"GB",1],["gn:11353077","Newry Mourne and Down","a",779,"newry-mourne-and-down",54.2362,-6.0669,"GB",1],["gn:2641581","Newry","p",808,"newry",54.1784,-6.3374,"GB",1],["gn:2638360","Scotland","n",0,"scotland",56.0,-4.0,"GB",1],["gn:3333224","Aberdeen City","a",810,"aberdeen-city",57.1667,-2.1667,"GB",1],["gn:2657832","Aberdeen","p",811,"aberdeen",57.1437,-2.0981,"GB",1],["gn:2657830","Aberdeenshire","a",810,"aberdeenshire",57.1667,-2.6667,"GB",1],["gn:2640351","Peterhead","p",813,"peterhead",57.5052,-1.7844,"GB",1],["gn:2657306","Angus","a",810,"angus",56.6667,-2.9167,"GB",1],["gn:2657215","Arbroath","p",815,"arbroath",56.5632,-2.5874,"GB",1],["gn:6457407","Argyll and Bute","a",810,"argyll-and-bute",56.0369,-5.4368,"GB",1],["gn:2652975","Clackmannanshire","a",810,"clackmannanshire",56.1667,-3.75,"GB",1],["gn:2657471","Alloa","p",818,"alloa",56.1159,-3.79,"GB",1],["gn:2650797","Dumfries and Galloway","a",810,"dumfries-and-galloway",55.0833,-3.8333,"GB",1],["gn:2650798","Dumfries","p",820,"dumfries",55.0696,-3.6114,"GB",1],["gn:3333225","Dundee City","a",810,"dundee-city",56.4667,-2.9167,"GB",1],["gn:2650752","Dundee","p",822,"dundee",56.4691,-2.9749,"GB",1],["gn:3333226","East Ayrshire","a",810,"east-ayrshire",55.5,-4.25,"GB",1],["gn:2645605","Kilmarnock","p",824,"kilmarnock",55.6117,-4.4958,"GB",1],["gn:3333227","East Dunbartonshire","a",810,"east-dunbartonshire",55.9333,-4.2,"GB",1],["gn:2656086","Bearsden","p",826,"bearsden",55.9154,-4.3328,"GB",1],["gn:2655582","Bishopbriggs","p",826,"bishopbriggs",55.9067,-4.2187,"GB",1],["gn:2645261","Kirkintilloch","p",826,"kirkintilloch",55.9393,-4.1526,"GB",1],["gn:2650386","East Lothian","a",810,"east-lothian",55.9167,-2.75,"GB",1],["gn:2641942","Musselburgh","p",830,"musselburgh",55.9417,-3.0499,"GB",1],["gn:3333228","East Renfrewshire","a",810,"east-renfrewshire",55.75,-4.3333,"GB",1],["gn:2656258","Barrhead","p",832,"barrhead",55.7992,-4.3929,"GB",1],["gn:2641544","Newton Mearns","p",832,"newton-mearns",55.7733,-4.3334,"GB",1],["gn:3333229","Edinburgh","a",810,"edinburgh",55.9497,-3.1933,"GB",1],["gn:2634428","Eilean Siar","a",810,"eilean-siar",57.6667,-7.1667,"GB",1],["gn:8299620","Isle of Lewis","p",836,"isle-of-lewis",58.219,-6.388,"GB",1],["gn:3333230","Falkirk","a",810,"falkirk",56.0,-3.75,"GB",1],["gn:2649469","Fife","a",810,"fife",56.25,-3.1667,"GB",1],["gn:2650732","Dunfermline","p",839,"dunfermline",56.0716,-3.4589,"GB",1],["gn:2648438","Glenrothes","p",839,"glenrothes",56.1951,-3.1732,"GB",1],["gn:2645298","Kirkcaldy","p",839,"kirkcaldy",56.1168,-3.16,"GB",1],["gn:2638864","Saint Andrews","p",839,"saint-andrews",56.3387,-2.799,"GB",1],["gn:3333231","Glasgow City","a",810,"glasgow-city",55.8667,-4.25,"GB",1],["gn:2648579","Glasgow","p",844,"glasgow",55.8651,-4.2576,"GB",1],["gn:2646944","Highland","a",810,"highland",57.5,-5.0,"GB",1],["gn:2646088","Inverness","p",846,"inverness",57.4791,-4.224,"GB",1],["gn:2646127","Inverclyde","a",810,"inverclyde",55.9,-4.75,"GB",1],["gn:2647948","Greenock","p",848,"greenock",55.9484,-4.7612,"GB",1],["gn:2642559","Midlothian","a",810,"midlothian",55.8235,-3.0933,"GB",1],["gn:2655210","Bonnyrigg","p",850,"bonnyrigg",55.8733,-3.1051,"GB",1],["gn:2642240","Moray","a",810,"moray",57.4167,-3.25,"GB",1],["gn:2650122","Elgin","p",852,"elgin",57.6495,-3.3184,"GB",1],["gn:3333232","North Ayrshire","a",810,"north-ayrshire",55.6969,-4.7337,"GB",1],["gn:2646032","Irvine","p",854,"irvine",55.6194,-4.6551,"GB",1],["gn:3333233","North Lanarkshire","a",810,"north-lanarkshire",55.8667,-3.9167,"GB",1],["gn:2657613","Airdrie","p",856,"airdrie",55.866,-3.9802,"GB",1],["gn:2655952","Bellshill","p",856,"bellshill",55.8167,-4.0167,"GB",1],["gn:2652696","Coatbridge","p",856,"coatbridge",55.8622,-4.0247,"GB",1],["gn:2651715","Cumbernauld","p",856,"cumbernauld",55.9468,-3.9905,"GB",1],["gn:2642135","Motherwell","p",856,"motherwell",55.7892,-3.9919,"GB",1],["gn:2633765","Wishaw","p",856,"wishaw",55.7667,-3.9167,"GB",1],["gn:2640923","Orkney Islands","a",810,"orkney-islands",59.0,-3.0,"GB",1],["gn:3333234","Perth and Kinross","a",810,"perth-and-kinross",56.5,-3.75,"GB",1],["gn:2640358","Perth","p",864,"perth",56.3952,-3.4314,"GB",1],["gn:2639494","Renfrewshire","a",810,"renfrewshire",55.8333,-4.5,"GB",1],["gn:2640677","Paisley","p",866,"paisley",55.8317,-4.4325,"GB",1],["gn:2639495","Renfrew","p",866,"renfrew",55.872,-4.3925,"GB",1],["gn:2638010","Shetland Islands","a",810,"shetland-islands",60.3333,-1.3333,"GB",1],["gn:3333235","South Ayrshire","a",810,"south-ayrshire",55.25,-4.6667,"GB",1],["gn:2656708","Ayr","p",870,"ayr",55.4627,-4.6339,"GB",1],["gn:3333236","South Lanarkshire","a",810,"south-lanarkshire",55.5833,-3.8333,"GB",1],["gn:11592111","Blantyre","p",872,"blantyre",55.7963,-4.0949,"GB",1],["gn:2653935","Cambuslang","p",872,"cambuslang",55.8097,-4.161,"GB",1],["gn:2651558","Dalserf","p",872,"dalserf",55.7333,-3.9167,"GB",1],["gn:2650405","East Kilbride","p",872,"east-kilbride",55.7641,-4.1767,"GB",1],["gn:2647570","Hamilton","p",872,"hamilton",55.7667,-4.0333,"GB",1],["gn:2642814","Meikle Earnock","p",872,"meikle-earnock",55.75,-4.0333,"GB",1],["gn:2638926","Rutherglen","p",872,"rutherglen",55.8289,-4.2138,"GB",1],["gn:2636909","Stirling","a",810,"stirling",56.1153,-4.2339,"GB",1],["gn:2655192","The Scottish Borders","a",810,"the-scottish-borders",55.5833,-2.8333,"GB",1],["gn:3333237","West Dunbartonshire","a",810,"west-dunbartonshire",55.9667,-4.5333,"GB",1],["gn:2652730","Clydebank","p",882,"clydebank",55.9014,-4.4057,"GB",1],["gn:2650802","Dumbarton","p",882,"dumbarton",55.9443,-4.5706,"GB",1],["gn:11592272","Vale of Leven","p",882,"vale-of-leven",55.9713,-4.5793,"GB",1],["gn:2634354","West Lothian","a",810,"west-lothian",55.9167,-3.5,"GB",1],["gn:2656169","Bathgate","p",886,"bathgate",55.902,-3.644,"GB",1],["gn:2644204","Livingston","p",886,"livingston",55.9029,-3.5226,"GB",1],["gn:2634895","Wales","n",0,"wales",52.5,-3.5,"GB",1],["gn:2657311","Anglesey","a",889,"anglesey",53.25,-4.3333,"GB",1],["gn:3333238","Blaenau Gwent","a",889,"blaenau-gwent",51.75,-3.1667,"GB",1],["gn:2650285","Ebbw Vale","p",891,"ebbw-vale",51.7771,-3.2079,"GB",1],["gn:3333239","Bridgend county borough","a",889,"bridgend-county-borough",51.55,-3.5833,"GB",1],["gn:2654755","Bridgend","p",893,"bridgend",51.5058,-3.5772,"GB",1],["gn:2652622","Coity","p",893,"coity",51.522,-3.5553,"GB",1],["gn:2643218","Maesteg","p",893,"maesteg",51.6093,-3.6582,"GB",1],["gn:3333240","Caerphilly County Borough","a",889,"caerphilly-county-borough",51.6667,-3.1667,"GB",1],["gn:2654089","Caerphilly","p",897,"caerphilly",51.5745,-3.218,"GB",1],["gn:2648728","Gelligaer","p",897,"gelligaer",51.6644,-3.2561,"GB",1],["gn:2639317","Risca","p",897,"risca",51.608,-3.1008,"GB",1],["gn:3333241","Cardiff","a",889,"cardiff",51.5,-3.1667,"GB",1],["gn:2653753","Carmarthenshire","a",889,"carmarthenshire",51.8333,-4.1667,"GB",1],["gn:2657345","Ammanford","p",902,"ammanford",51.7928,-3.9883,"GB",1],["gn:2644100","Llanelli","p",902,"llanelli",51.682,-4.1619,"GB",1],["gn:3333248","City and County of Swansea","a",889,"city-and-county-of-swansea",51.5833,-4.0,"GB",1],["gn:2652734","Clydach","p",905,"clydach",51.6833,-3.9,"GB",1],["gn:2648290","Gorseinon","p",905,"gorseinon",51.6693,-4.0416,"GB",1],["gn:2636432","Swansea","p",905,"swansea",51.6208,-3.9432,"GB",1],["gn:3333242","Conwy","a",889,"conwy",53.0833,-3.75,"GB",1],["gn:2652513","Colwyn Bay","p",909,"colwyn-bay",53.2948,-3.7267,"GB",1],["gn:2653814","County of Ceredigion","a",889,"county-of-ceredigion",52.25,-4.0,"GB",1],["gn:2657782","Aberystwyth","p",911,"aberystwyth",52.4155,-4.0829,"GB",1],["gn:2649298","County of Flintshire","a",889,"county-of-flintshire",53.25,-3.1667,"GB",1],["gn:2654394","Buckley","p",913,"buckley",53.1667,-3.0833,"GB",1],["gn:8299616","Deeside","p",913,"deeside",53.2005,-3.0384,"GB",1],["gn:2649301","Flint","p",913,"flint",53.2449,-3.1323,"GB",1],["gn:2647303","Hawarden","p",913,"hawarden",53.1848,-3.0258,"GB",1],["gn:2651385","Denbighshire","a",889,"denbighshire",53.0833,-3.3333,"GB",1],["gn:2639926","Prestatyn","p",918,"prestatyn",53.3375,-3.4078,"GB",1],["gn:2639409","Rhyl","p",918,"rhyl",53.3193,-3.4923,"GB",1],["gn:2647716","Gwynedd","a",889,"gwynedd",52.8333,-3.9167,"GB",1],["gn:2656397","Bangor","p",921,"bangor",53.2275,-4.1294,"GB",1],["gn:3333243","Merthyr Tydfil County Borough","a",889,"merthyr-tydfil-county-borough",51.75,-3.3333,"GB",1],["gn:2642705","Merthyr Tydfil","p",923,"merthyr-tydfil",51.7479,-3.3778,"GB",1],["gn:3333244","Monmouthshire","a",889,"monmouthshire",51.75,-2.8333,"GB",1],["gn:3333245","Neath Port Talbot","a",889,"neath-port-talbot",51.6667,-3.75,"GB",1],["gn:2654668","Briton Ferry","p",926,"briton-ferry",51.6311,-3.819,"GB",1],["gn:2641843","Neath","p",926,"neath",51.6632,-3.8044,"GB",1],["gn:3333246","Newport","a",889,"newport",51.5833,-3.0,"GB",1],["gn:2640500","Pembrokeshire","a",889,"pembrokeshire",51.8333,-4.9167,"GB",1],["gn:3333247","Rhondda Cynon Taf","a",889,"rhondda-cynon-taf",51.6667,-3.5,"GB",1],["gn:2657835","Aberdare","p",931,"aberdare",51.7144,-3.4492,"GB",1],["gn:2640104","Pontypridd","p",931,"pontypridd",51.6021,-3.3421,"GB",1],["gn:2639447","Rhondda","p",931,"rhondda",51.659,-3.4489,"GB",1],["gn:3345283","Tonypandy","p",931,"tonypandy",51.622,-3.4554,"GB",1],["gn:2639944","Sir Powys","a",889,"sir-powys",52.3333,-3.4167,"GB",1],["gn:3333249","Torfaen County Borough","a",889,"torfaen-county-borough",51.7015,-3.0514,"GB",1],["gn:2651654","Cwmbran","p",937,"cwmbran",51.6545,-3.0228,"GB",1],["gn:2640106","Pontypool","p",937,"pontypool",51.7011,-3.0444,"GB",1],["gn:2635028","Vale of Glamorgan","a",889,"vale-of-glamorgan",51.4167,-3.4167,"GB",1],["gn:2656235","Barry","p",940,"barry",51.3998,-3.2838,"GB",1],["gn:2640496","Penarth","p",940,"penarth",51.4386,-3.1734,"GB",1],["gn:2633484","Wrexham","a",889,"wrexham",53.0,-3.0,"GB",1],["gn:2654450","Brymbo","p",943,"brymbo",53.0667,-3.0667,"GB",1],["gn:2639436","Rhosllannerchrugog","p",943,"rhosllannerchrugog",53.0097,-3.0581,"GB",1],["worldwide","Worldwide","r",-1,"worldwide",null,null,"",0],["continent:EU","Europe","t",946,"europe",null,null,"",0],["country:AX","Åland Islands","c",947,"aland-islands",null,null,"AX",0],["country:AL","Albania","c",947,"albania",null,null,"AL",0],["country:AD","Andorra","c",947,"andorra",null,null,"AD",0],["country:AT","Austria","c",947,"austria",null,null,"AT",0],["country:BY","Belarus","c",947,"belarus",null,null,"BY",0],["country:BE","Belgium","c",947,"belgium",null,null,"BE",0],["country:BA","Bosnia and Herzegovina","c",947,"bosnia-and-herzegovina",null,null,"BA",0],["country:BG","Bulgaria","c",947,"bulgaria",null,null,"BG",0],["country:HR","Croatia","c",947,"croatia",null,null,"HR",0],["country:CY","Cyprus","c",947,"cyprus",null,null,"CY",0],["country:CZ","Czechia","c",947,"czechia",null,null,"CZ",0],["country:DK","Denmark","c",947,"denmark",null,null,"DK",0],["country:EE","Estonia","c",947,"estonia",null,null,"EE",0],["country:FO","Faroe Islands","c",947,"faroe-islands",null,null,"FO",0],["country:FI","Finland","c",947,"finland",null,null,"FI",0],["country:FR","France","c",947,"france",null,null,"FR",0],["country:DE","Germany","c",947,"germany",null,null,"DE",0],["country:GI","Gibraltar","c",947,"gibraltar",null,null,"GI",0],["country:GR","Greece","c",947,"greece",null,null,"GR",0],["country:GG","Guernsey","c",947,"guernsey",null,null,"GG",0],["country:HU","Hungary","c",947,"hungary",null,null,"HU",0],["country:IS","Iceland","c",947,"iceland",null,null,"IS",0],["country:IE","Ireland","c",947,"ireland",null,null,"IE",0],["country:IM","Isle of Man","c",947,"isle-of-man",null,null,"IM",0],["country:IT","Italy","c",947,"italy",null,null,"IT",0],["country:JE","Jersey","c",947,"jersey",null,null,"JE",0],["country:XK","Kosovo","c",947,"kosovo",null,null,"XK",0],["country:LV","Latvia","c",947,"latvia",null,null,"LV",0],["country:LI","Liechtenstein","c",947,"liechtenstein",null,null,"LI",0],["country:LT","Lithuania","c",947,"lithuania",null,null,"LT",0],["country:LU","Luxembourg","c",947,"luxembourg",null,null,"LU",0],["country:MT","Malta","c",947,"malta",null,null,"MT",0],["country:MD","Moldova","c",947,"moldova",null,null,"MD",0],["country:MC","Monaco","c",947,"monaco",null,null,"MC",0],["country:ME","Montenegro","c",947,"montenegro",null,null,"ME",0],["country:NL","Netherlands","c",947,"netherlands",null,null,"NL",0],["country:MK","North Macedonia","c",947,"north-macedonia",null,null,"MK",0],["country:NO","Norway","c",947,"norway",null,null,"NO",0],["country:PL","Poland","c",947,"poland",null,null,"PL",0],["country:PT","Portugal","c",947,"portugal",null,null,"PT",0],["country:RO","Romania","c",947,"romania",null,null,"RO",0],["country:RU","Russia","c",947,"russia",null,null,"RU",0],["country:SM","San Marino","c",947,"san-marino",null,null,"SM",0],["country:RS","Serbia","c",947,"serbia",null,null,"RS",0],["country:SK","Slovakia","c",947,"slovakia",null,null,"SK",0],["country:SI","Slovenia","c",947,"slovenia",null,null,"SI",0],["country:ES","Spain","c",947,"spain",null,null,"ES",0],["country:SJ","Svalbard and Jan Mayen","c",947,"svalbard-and-jan-mayen",null,null,"SJ",0],["country:SE","Sweden","c",947,"sweden",null,null,"SE",0],["country:CH","Switzerland","c",947,"switzerland",null,null,"CH",0],["country:UA","Ukraine","c",947,"ukraine",null,null,"UA",0],["country:VA","Vatican City","c",947,"vatican-city",null,null,"VA",0]];
+const FD_KIND_LABEL = { c: "Country", n: "Nation", a: "Area", b: "Borough", p: "Town or city", h: "Neighbourhood", r: "Hub", t: "Continent" };
+const FD_NODES = (() => {
+  const nodes = FD_ROWS.map((r, i) => ({ i, id: r[0], name: r[1], k: r[2], pi: r[3], slug: r[4], lat: r[5], lng: r[6], cc: r[7], uk: r[8] === 1, kids: [] }));
+  nodes.forEach(n => { if (n.pi >= 0) nodes[n.pi].kids.push(n.i); });
+  const pathOf = (n) => n.path || (n.path = (n.pi >= 0 ? pathOf(nodes[n.pi]) : "/areas") + "/" + n.slug);
+  nodes.forEach(pathOf);
+  nodes.forEach(n => n.kids.sort((a, b) => nodes[a].name.localeCompare(nodes[b].name)));
+  return nodes;
+})();
+const FD_BY_ID = {}, FD_BY_PATH = {};
+FD_NODES.forEach(n => { FD_BY_ID[n.id] = n; FD_BY_PATH[n.path] = n; });
+const FD_DUP_NAMES = (() => { const c = {}; FD_NODES.forEach(n => { c[n.name] = (c[n.name] || 0) + 1; }); return c; })();
+/* Valid alternate routes, redirected once to the preferred page. The kit's page_routing_aliases.json
+   covers gazetteer records; these two are route-level aliases for duplicate-URL avoidance. */
+const FD_PATH_ALIASES = { "/areas": "/areas/uk", "/areas/uk/england/london": "/areas/uk/england/greater-london", "/areas/worldwide/europe/united-kingdom": "/areas/uk" };
+const FD_LONDON = "gn:2648110", FD_HERTS = "gn:2647043";
+const fdParent = (n) => (n && n.pi >= 0 ? FD_NODES[n.pi] : null);
+const fdAnc = (n) => { const out = []; let x = n, g = 0; while (x && g++ < 12) { out.push(x); x = fdParent(x); } return out; };
+const fdLabel = (n) => (FD_DUP_NAMES[n.name] > 1 && fdParent(n) ? `${n.name}, ${fdParent(n).name}` : n.name);
+const fdDesc = (n, acc) => { acc = acc || []; n.kids.forEach(i => { acc.push(FD_NODES[i]); fdDesc(FD_NODES[i], acc); }); return acc; };
+const fdUnder = (n, id) => fdAnc(n).some(a => a.id === id);
+
+const FD_SITES = {
+  party: { key: "party", slug: "ff-party", name: "FF Party", domain: "ffparty.uk", origin: "https://ffparty.uk" },
+  team:  { key: "team",  slug: "ff-team",  name: "FF Team",  domain: "ffteam.uk",  origin: "https://ffteam.uk" },
+  staff: { key: "staff", slug: "ff-staff", name: "FF Staff", domain: "ffstaff.uk", origin: "https://ffstaff.uk" },
+};
+const FD_SITE_BY_SLUG = { "ff-party": "party", "ff-team": "team", "ff-staff": "staff" };
+const fdSiteKey = (state) => state.role === "team" ? "team" : state.role === "staff" ? (state.site === "party" ? "party" : "staff") : "party";
+const fdHref = (siteKey, path) => "#/" + FD_SITES[siteKey].slug + path;
+const fdUrl = (siteKey, path) => FD_SITES[siteKey].origin + path;
+
+/* Roles come from the real profession taxonomy (see DIRECTORY / professionCategory). */
+const FD_ROLES = [
+  { id: "bartender", label: "Bartender", re: /bartend|mixolog|flair/i, cat: "bar" },
+  { id: "waiter", label: "Waiter or waitress", re: /waiter|waitress|silver service/i },
+  { id: "dj", label: "DJ", re: /\bdj\b|saxophon/i, cat: "dj" },
+  { id: "host", label: "Event host or MC", re: /\bhost\b|\bmc\b/i },
+  { id: "photo", label: "Photographer", re: /photo/i, cat: "photo" },
+  { id: "chef", label: "Chef or caterer", re: /chef|cater/i, cat: "cater" },
+];
+const FD_ROLE_LABEL = Object.fromEntries(FD_ROLES.map(r => [r.id, r.label]));
+
+/* ---- Provider coverage ------------------------------------------------------------------------------
+   Coverage is explicit and has two meanings, kept apart:
+     whole: the provider serves everywhere beneath this location (Greater London covers Camden).
+     sub:   the provider serves exactly these locations (Camden alone does not cover Fitzrovia).
+   FIXTURES: the prototype's sample people only have loose region labels ("North London"), so
+   FD_REGION and FD_PERSON_COV translate them into reviewed-looking coverage records. In production
+   this is the professional's own confirmed work-location selection, never inferred from an address,
+   CV or an AI suggestion. */
+const FD_REGION = {
+  "Central London": ["Westminster", "Camden", "City of London", "Islington", "Kensington and Chelsea", "Lambeth", "Southwark", "Tower Hamlets"],
+  "North London": ["Barnet", "Enfield", "Haringey", "Islington", "Camden"],
+  "East London": ["Hackney", "Tower Hamlets", "Newham", "Waltham Forest", "Redbridge"],
+  "West London": ["Ealing", "Hammersmith and Fulham", "Hounslow", "Hillingdon", "Brent", "Kensington and Chelsea"],
+  "South London": ["Lambeth", "Southwark", "Lewisham", "Greenwich", "Wandsworth", "Croydon"],
+};
+const FD_PERSON_COV = {
+  stf_sam: { whole: [FD_LONDON] },
+  stf_fre: { sub: [FD_HERTS] },
+  stf_zar: { sub: ["gn:2638867", "gn:2647138"] },
+};
+let FD_BOROUGH_IDS = null;
+const fdBoroughId = (name) => { if (!FD_BOROUGH_IDS) { FD_BOROUGH_IDS = {}; FD_BY_ID[FD_LONDON].kids.forEach(i => { FD_BOROUGH_IDS[FD_NODES[i].name] = FD_NODES[i].id; }); } return FD_BOROUGH_IDS[name]; };
+const fdPersonCover = (p) => {
+  const fx = FD_PERSON_COV[p.id] || {};
+  const sub = new Set(fx.sub || []);
+  (p.locations || []).forEach(l => (FD_REGION[l] || []).forEach(b => { const id = fdBoroughId(b); if (id) sub.add(id); }));
+  return { whole: fx.whole || [], sub: [...sub], fixture: true };
+};
+/* Companies: their base location(s) from the Company Card seed. A base in Greater London counts as
+   serving Greater London; elsewhere the nearest prepared town or area within 30 km is used. These are
+   the owner-unconfirmed bases of unclaimed cards (see data/companies/README.md). */
+const fdHav = (a, b, c, d) => { const p = Math.PI / 180, x = Math.sin((c - a) * p / 2) ** 2 + Math.cos(a * p) * Math.cos(c * p) * Math.sin((d - b) * p / 2) ** 2; return 12742 * Math.asin(Math.sqrt(x)); };
+const FD_CO_CACHE = {};
+const fdCompanyCover = (c) => {
+  if (FD_CO_CACHE[c.id]) return FD_CO_CACHE[c.id];
+  const whole = new Set();
+  (c.locations || []).forEach(l => {
+    if (l.lat >= 51.28 && l.lat <= 51.70 && l.lng >= -0.52 && l.lng <= 0.34) { whole.add(FD_LONDON); return; }
+    let best = null;
+    FD_NODES.forEach(n => { if (n.lat == null || (n.k !== "p" && n.k !== "a")) return; const d = fdHav(l.lat, l.lng, n.lat, n.lng); if (!best || d < best[0]) best = [d, n.id]; });
+    if (best && best[0] < 30) whole.add(best[1]);
+  });
+  return (FD_CO_CACHE[c.id] = { whole: [...whole], sub: [], fixture: true });
+};
+const fdCoverNames = (cov) => {
+  const w = (cov.whole || []).map(id => FD_BY_ID[id]).filter(Boolean).map(n => n.name + " (whole area)");
+  const s = (cov.sub || []).map(id => FD_BY_ID[id]).filter(Boolean).map(n => n.name);
+  const all = [...w, ...s];
+  return all.length > 3 ? all.slice(0, 3).join(", ") + " and " + (all.length - 3) + " more" : all.join(", ");
+};
+/* Does coverage include this exact location? whole = ancestor-or-self, sub = this very place. */
+const fdCovers = (cov, node) => (cov.whole || []).some(id => fdUnder(node, id)) || (cov.sub || []).includes(node.id);
+/* Does coverage touch anything beneath (or at) this location? Used for parent pages and fallback. */
+const fdServesWithin = (cov, node) => (cov.whole || []).concat(cov.sub || []).some(id => { const n = FD_BY_ID[id]; return n && fdUnder(n, node.id); });
+
+function fdProviders(state, people, roleId) {
+  const role = FD_ROLES.find(r => r.id === roleId);
+  const out = [];
+  (people || []).forEach(p => {
+    if (!p || !p.name || p.hidden || p.suspended || p.deleted) return;
+    if (role && !role.re.test((p.profession || "") + " " + (p.group || ""))) return;
+    out.push({ key: p.id, kind: "person", p, cov: fdPersonCover(p) });
+  });
+  companyList(state).forEach(c => {
+    if (!c || c.mine) return;
+    if (role && !(role.cat ? (c.cat || "bar") === role.cat : false) && !role.re.test((c.kind || "") + " " + (c.name || ""))) return;
+    const cov = fdCompanyCover(c);
+    if (cov.whole.length) out.push({ key: c.id, kind: "company", c, cov });
+  });
+  return out;
+}
+/* Exact coverage first. If nobody qualifies, climb the reviewed browsing tree, one bounded step at a
+   time, and stop at the UK nation (UK places) or the country (everywhere else). The first parent with
+   anyone is shown, labelled as a wider area. Never nearest-by-distance, never Europe-wide. */
+function fdResults(state, node, people, roleId) {
+  const provs = fdProviders(state, people, roleId);
+  const exact = provs.filter(x => fdCovers(x.cov, node));
+  const hasKids = node.kids.length > 0;
+  const within = hasKids ? provs.filter(x => !exact.includes(x) && fdServesWithin(x.cov, node)) : [];
+  let wider = [], scope = null;
+  if (!exact.length && !within.length) {
+    for (const a of fdAnc(node).slice(1)) {
+      if (a.k === "r" || a.k === "t" || a.k === "c" && node.uk) break;
+      const found = provs.filter(x => fdServesWithin(x.cov, a));
+      if (found.length) { wider = found; scope = a; break; }
+      if (a.k === "n" || a.k === "c") break;
+    }
+  }
+  const person = (l) => l.filter(x => x.kind === "person"), comp = (l) => l.filter(x => x.kind === "company");
+  return { exact, within, wider, scope, total: provs.length, exactPeople: person(exact), exactCos: comp(exact) };
+}
+
+/* ---- State: pages, markets, requests -------------------------------------------------------------- */
+const FD_DEFAULT_PUBLISHED = new Set(["country:GB", "gn:6269131", "gn:2638360", "gn:2634895", "gn:3333122", "worldwide", "continent:EU", "country:FR", FD_LONDON, FD_HERTS, "gn:3333125", "gn:2655858", "gn:2647138", "gn:2638867"]);
+const fdDefaultPub = (n) => FD_DEFAULT_PUBLISHED.has(n.id) || (n.k === "b" && fdUnder(n, FD_LONDON)) ? "published" : "prepared";
+const FD_MODES = [["inactive", "Inactive"], ["interest_only", "Interest only"], ["recruiting", "Recruiting"], ["operational", "Operational"]];
+const FD_STATUSES = [["new", "New"], ["triaged", "Triaged"], ["sourcing", "Sourcing"], ["options_found", "Options found"], ["contacted", "Contacted"], ["converted", "Converted"], ["closed", "Closed"], ["unable_to_fill", "Unable to fill"]];
+const FD_STATUS_LABEL = Object.fromEntries(FD_STATUSES);
+const fdOf = (state) => ({ pages: {}, markets: {}, sourcing: {}, requests: [], log: [], ...(state.fd || {}) });
+const fdSet = (state, dispatch, patch) => dispatch({ type: "V11_SET", patch: { fd: { ...fdOf(state), ...patch } } });
+const fdPageState = (fd, siteKey, n) => (fd.pages[siteKey + "|" + n.id]) || { pub: fdDefaultPub(n) };
+/* Market mode per country and site. UK defaults to recruiting (not operational); France is the
+   interest-only example. Hubs without a country inherit interest_only. Owners change these in FF Admin. */
+const fdMarket = (fd, siteKey, n) => {
+  const m = fd.markets[siteKey + "|" + (n.cc || "")];
+  if (m) return m;
+  if (n.cc === "GB" || n.id === "country:GB") return "recruiting";
+  if (n.cc === "FR") return "interest_only";
+  return n.cc ? "inactive" : "interest_only";
+};
+const fdSourcingOn = (fd, siteKey, mode) => siteKey !== "team" && (mode === "recruiting" || mode === "operational") && fd.sourcing[siteKey] !== false;
+
+/* ---- Copy: one template, three intents ---------------------------------------------------------------- */
+function fdCopy(siteKey, node, ctx) {
+  const X = fdLabel(node), mode = ctx.mode, src = ctx.sourcing, nExact = ctx.nExact;
+  const q = (question, answer) => ({ q: question, a: answer });
+  if (siteKey === "team" && mode !== "recruiting" && mode !== "operational") {
+    return {
+      title: `FF Team in ${X} — register interest`, h1: `FF Team in ${X}`,
+      desc: `FF Team isn't recruiting in ${X} yet. Register your interest and we'll tell you if that changes.`,
+      intro: [`FF Team isn't recruiting professionals in ${X} yet. If you work in bar or hospitality there, you can register your interest and we will contact you if that changes.`,
+        `This is not a job application, and nothing about it guarantees work, hours or income.`],
+      cta: "Register interest", ask: "Register interest", ctaKind: "ask",
+      faq: [q("Does registering interest guarantee work?", `No. It only tells us you'd like to hear if FF Team starts recruiting in ${X}.`),
+        q("Is this a job vacancy?", `No. There are no vacancies on this page.`)],
+    };
+  }
+  if (siteKey === "team") {
+    return {
+      title: `Freelance bar work in ${X} — join FF Team`, h1: `Freelance bar and hospitality work in ${X}`,
+      desc: `Create a free FF Team Profile Card and say you work in ${X}. Hosts and businesses request people through FireFlair for events.`,
+      intro: [
+        `FF Team is where bartenders and event professionals build a Profile Card and say where they work. Hosts and businesses then find people, or ask FireFlair to find them, for private events and shifts.`,
+        nExact ? `${nExact === 1 ? "One professional has" : nExact + " professionals have"} chosen ${X} as somewhere they work.` : `Nobody has chosen ${X} as a place they work yet.`,
+        `Joining the network is not applying for a job. There are no vacancies on this page, and a Profile Card does not guarantee work, hours or income.`],
+      cta: "Create your Profile Card", ask: null, ctaKind: "signup",
+      faq: [
+        q("Does joining FF Team guarantee work?", `No. A Profile Card lets people find you and lets you receive booking requests. FireFlair cannot promise bookings, hours or income in ${X} or anywhere else.`),
+        q("Is this a job vacancy?", `No. This page invites professionals to join the network. If FireFlair ever lists a genuine vacancy it will have its own page with its own details.`),
+        q(`How do I show that I work in ${X}?`, `When you create your Profile Card you choose the areas you work in. Only the areas you choose are treated as your coverage; FireFlair does not guess it from your address or your CV.`)],
+    };
+  }
+  if (siteKey === "staff") {
+    const ok = src;
+    return {
+      title: ok ? `Bar and hospitality staffing in ${X} — FF Staff` : `Hospitality staffing in ${X} — register interest | FF Staff`,
+      h1: ok ? `Bar and hospitality staffing in ${X}` : `Hospitality staffing in ${X}`,
+      desc: ok ? `Start a staffing request for ${X}. The FireFlair team looks for suitable bar and hospitality professionals and contacts you about the options.` : `FF Staff is not taking staffing requests for ${X} yet. Register your interest.`,
+      intro: [
+        ok ? `Venues and businesses can start a staffing request for bar and hospitality roles in ${X}. Tell us the date and the kind of professional you need and the FireFlair team will look for suitable people and contact you about the options.`
+           : `FireFlair is not taking staffing requests for ${X} yet. You can register your interest and we will get in touch if that changes.`,
+        nExact ? `${nExact === 1 ? "One professional lists" : nExact + " professionals list"} ${X} as somewhere they work. Availability for your shift is confirmed when you book.` : `No professional has listed ${X} as somewhere they work yet.`,
+        `Nothing is booked, reserved or charged when you send a request.`],
+      cta: ok ? "Start a staffing request" : "Register interest", ask: ok ? "Start a staffing request" : "Register interest", ctaKind: "ask",
+      faq: [
+        q(`Can we request staff in ${X} if nobody is listed?`, ok ? `Yes. Send a staffing request with your date and the roles you need. The team will look for suitable people and contact you. We cannot promise a result or a response time.` : `Not yet. You can register your interest and we will contact you if we start taking requests there.`),
+        q("Who sees our request?", `Only the FireFlair team. It is not published, and your contact details are never put in a web address.`),
+        q("How does booking work?", `When options are agreed, your request moves into the usual FireFlair shift booking, where the details, terms and payment are shown before anything is confirmed.`)],
+    };
+  }
+  const ok = src;
+  return {
+    title: ok ? (nExact ? `Hire a bartender for your party in ${X} | FF Party` : `Find a bartender for your party in ${X} | FF Party`) : `Bartender hire in ${X} — register interest | FF Party`,
+    h1: ok ? (nExact ? `Hire a bartender for your party in ${X}` : `Find a bartender for your party in ${X}`) : `Bartender hire in ${X}`,
+    desc: ok ? `Browse professionals who work in ${X}, or ask FireFlair to find people for your event. Nothing is confirmed until you agree a booking.` : `FireFlair is not taking event requests in ${X} yet. Register your interest.`,
+    intro: [
+      ok ? (nExact ? `These professionals have said they work in ${X}. Choose someone to view their profile, or ask FireFlair to find the right people for your date.`
+                   : `FireFlair has nobody listed as working in ${X} yet. Tell us the date and what you need and our team will look for suitable people and contact you about the options.`)
+         : `FireFlair is not taking event requests in ${X} yet. Register your interest and we will contact you if that changes.`,
+      `Availability for your date is confirmed when you book. Nothing is booked, reserved or charged when you send a request.`],
+    cta: nExact ? "See who works here" : (ok ? "Ask us to find people" : "Register interest"), ask: ok ? "Ask us to find people" : "Register interest", ctaKind: nExact ? "results" : "ask",
+    faq: [
+      q(`Can I request a bartender in ${X} if nobody is listed?`, ok ? `Yes. Use Ask us to find people with your date and what you need. The FireFlair team will look for suitable people and contact you about the options. We cannot promise a result or a response time, and nothing is booked or charged until you agree.` : `Not yet. You can register your interest and we will contact you if we start taking requests there.`),
+      q("Are the people shown free on my date?", `Not necessarily. Each person has said where they work. Availability for your date is confirmed when you book.`),
+      q("What if the people shown are from a wider area?", `They are labelled with the area they actually cover. Whether they can work at your event needs checking, and your request keeps ${X} as the event area.`),
+      ...(ctx.hasUnclaimed ? [q("What about bar companies shown as draft cards?", `Some companies are listed from public information and have not claimed their card yet. If you want one, FireFlair contacts the company and passes your enquiry on. Nothing is booked until they agree.`)] : []),
+      q("How does booking work?", `When options are agreed, you continue through the usual FireFlair booking steps. Details, terms and payment are shown before anything is confirmed.`)],
+  };
+}
+
+/* Head metadata for an area page: self-canonical per site, robots from the (site, location) state. */
+function fdSeo(state, people) {
+  const a = state.fdArea; if (!a) return null;
+  const siteKey = a.site || "party", site = FD_SITES[siteKey], node = FD_BY_PATH[a.path];
+  if (!node) return { page: "area-404", title: "Page not found — FireFlair", description: "This area page does not exist.", canonical: fdUrl(siteKey, "/areas/uk"), robots: "noindex, nofollow", type: "website", jsonLd: null };
+  const fd = fdOf(state), ps = fdPageState(fd, siteKey, node), mode = fdMarket(fd, siteKey, node);
+  const sourcing = fdSourcingOn(fd, siteKey, mode);
+  const res = fdResults(state, node, people || [], "");
+  const copy = fdCopy(siteKey, node, { mode, sourcing, nExact: res.exactPeople.length, hasUnclaimed: false });
+  const approved = ps.pub === "approved" && !FF_SEO.demoData;
+  const robots = ps.pub === "prepared" ? "noindex, nofollow" : approved ? "index, follow" : "noindex, follow";
+  const crumbs = fdAnc(node).reverse().filter(n => fdPageState(fd, siteKey, n).pub !== "prepared").map((n, i) => ({ "@type": "ListItem", position: i + 1, name: n.name, item: fdUrl(siteKey, n.path) }));
+  const ld = [{ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: crumbs }];
+  if (res.exactPeople.length && siteKey !== "staff") ld.push({ "@context": "https://schema.org", "@type": "CollectionPage", name: copy.h1, url: fdUrl(siteKey, node.path),
+    mainEntity: { "@type": "ItemList", itemListElement: res.exactPeople.slice(0, 12).map((x, i) => ({ "@type": "ListItem", position: i + 1, url: FF_SEO.profileOrigin + "/" + (x.p.tag || x.p.id) })) } });
+  if (sourcing) ld.push({ "@context": "https://schema.org", "@type": "Service", name: siteKey === "staff" ? `Hospitality staffing requests in ${fdLabel(node)}` : `Event staffing requests in ${fdLabel(node)}`, areaServed: { "@type": "Place", name: fdLabel(node) }, provider: { "@type": "Organization", name: "FireFlair" } });
+  /* No JobPosting markup anywhere: FF Team pages are profile sign-up pages, not vacancies. */
+  return { page: "area", title: ffSeoClip(copy.title, FF_SEO.title.max), description: ffSeoClip(copy.desc, FF_SEO.description.max), canonical: fdUrl(siteKey, node.path), robots, type: "website", jsonLd: ld };
+}
+
+/* ---- Navigation ---------------------------------------------------------------------------------------- */
+function fdNav(dispatch, siteKey, path) {
+  try { const u = fdHref(siteKey, path); if (window.location.hash !== u) window.history.pushState({ ff: "area" }, "", u); } catch (e) { /* ignore */ }
+  dispatch({ type: "V11_SET", patch: { fdArea: { site: siteKey, path } } });
+  try { window.scrollTo(0, 0); } catch (e) { /* ignore */ }
+}
+function fdClose(dispatch) {
+  try { window.history.pushState(null, "", window.location.pathname + window.location.search); } catch (e) { /* ignore */ }
+  dispatch({ type: "V11_SET", patch: { fdArea: null, fdPreview: false } });
+  try { window.scrollTo(0, 0); } catch (e) { /* ignore */ }
+}
+/* Keeps the address bar and the view in step: a direct #/ff-party/areas/... link opens the page, Back closes it. */
+function FdRoute11() {
+  const { state, dispatch } = useStore();
+  const ref = useRef(state); ref.current = state;
+  useEffect(() => {
+    const read = () => {
+      const m = /^#\/(ff-party|ff-team|ff-staff)(\/areas(?:\/[a-z0-9-]+)*)\/?$/i.exec(String(window.location.hash || ""));
+      return m ? { site: FD_SITE_BY_SLUG[m[1].toLowerCase()], path: m[2].toLowerCase() } : null;
+    };
+    const sync = () => {
+      const r = read(), cur = ref.current.fdArea;
+      if (r) { if (!cur || cur.path !== r.path || cur.site !== r.site) dispatch({ type: "V11_SET", patch: { fdArea: r } }); }
+      else if (cur) dispatch({ type: "V11_SET", patch: { fdArea: null, fdPreview: false } });
+    };
+    sync();
+    window.addEventListener("popstate", sync); window.addEventListener("hashchange", sync);
+    return () => { window.removeEventListener("popstate", sync); window.removeEventListener("hashchange", sync); };
+  }, []);
+  return null;
+}
+const fdChain = (n) => fdAnc(n).slice(1).filter(a => a.k !== "r").reverse().map(a => a.name).join(", ");
+function fdSearch(q) {
+  const s = String(q || "").trim().toLowerCase();
+  if (s.length < 2) return [];
+  const rank = { a: 1, b: 1, p: 2, h: 3, n: 0, c: 0 };
+  return FD_NODES.filter(n => n.k !== "r" && n.k !== "t" && n.name.toLowerCase().includes(s))
+    .sort((a, b) => (a.name.toLowerCase().startsWith(s) ? 0 : 1) - (b.name.toLowerCase().startsWith(s) ? 0 : 1) || (rank[a.k] - rank[b.k]) || a.name.localeCompare(b.name)).slice(0, 8);
+}
+const fdToday = () => { try { return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/London" }).format(new Date()); } catch (e) { return new Date().toISOString().slice(0, 10); } };
+
+/* ---- "Ask us to find people" ---------------------------------------------------------------------------- */
+function FdAsk11({ siteKey, node, kind, company, onDone }) {
+  const { state, dispatch } = useStore();
+  const fd = fdOf(state), site = FD_SITES[siteKey];
+  const mode = node ? fdMarket(fd, siteKey, node) : "recruiting";
+  const sourcing = fdSourcingOn(fd, siteKey, mode);
+  const leadKind = sourcing ? "sourcing_request" : "expansion_interest";
+  const team = siteKey === "team";
+  const [f, setF] = useState({ loc: node ? fdLabel(node) : "", locId: node ? node.id : "", date: "", tbd: false, roles: [], email: "", phone: "", wa: false, name: "", brief: "", hc: "", hp: "" });
+  const [err, setErr] = useState({});
+  const [done, setDone] = useState(null);
+  const [sug, setSug] = useState([]);
+  const busy = useRef(false);
+  const set = (k, v) => setF(x => ({ ...x, [k]: v }));
+  const venue = siteKey === "staff";
+  const toggleRole = (id) => set("roles", f.roles.includes(id) ? f.roles.filter(x => x !== id) : [...f.roles, id]);
+  const submit = (e) => {
+    e.preventDefault();
+    if (busy.current) return;
+    const er = {};
+    if (!f.loc.trim()) er.loc = "Tell us where the event is.";
+    if (!team && !f.tbd) { if (!f.date) er.date = "Choose the event date, or tick Date not decided."; else if (f.date < fdToday()) er.date = "That date has passed (UK time)."; }
+    if (!f.roles.length) er.roles = "Choose at least one kind of professional.";
+    const em = f.email.trim(), ph = f.phone.replace(/[^\d+]/g, "");
+    if (!em && !ph) er.contact = "Give us an email address or a telephone number.";
+    else if (em && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) er.contact = "That email address doesn't look right.";
+    else if (!em && ph.replace(/\D/g, "").length < 7) er.contact = "That telephone number looks too short.";
+    if (f.wa && !ph) er.contact = er.contact || "Add a telephone number to use WhatsApp.";
+    setErr(er);
+    if (Object.keys(er).length) return;
+    if (f.hp) { setDone({ ref: "FD-" + Math.random().toString(36).slice(2, 8).toUpperCase(), dupe: false }); return; }
+    busy.current = true;
+    const key = [siteKey, f.locId || f.loc.trim().toLowerCase(), [...f.roles].sort().join("+"), f.tbd ? "tbd" : f.date, em.toLowerCase(), ph].join("|");
+    const cur = fdOf(state);
+    const had = cur.requests.find(r => r.key === key);
+    if (had) { setDone({ ref: had.ref, dupe: true }); busy.current = false; return; }
+    const ref = "FD-" + Math.random().toString(36).slice(2, 8).toUpperCase();
+    const rec = {
+      id: uid("lsr"), ref, key, kind: leadKind, siteKey, locationId: f.locId || null, locationText: f.loc.trim(),
+      roles: f.roles, eventDate: team || f.tbd ? null : f.date, dateUndecided: !team && !!f.tbd, tz: "Europe/London",
+      contact: { name: f.name.trim(), email: em, phone: f.phone.trim(), whatsappOk: !!(f.wa && ph) },
+      headcount: f.hc.trim(), brief: f.brief.trim(), companyId: company ? company.id : null, companyName: company ? company.name : "",
+      createdAt: new Date().toISOString(), status: "new", assignee: "", adminNote: "",
+      sourcePath: node ? node.path : "", sourceSite: siteKey, notif: { admin: "simulated", ack: em ? "simulated email" : "simulated message", failed: false }, bookingId: null,
+    };
+    fdSet(state, dispatch, { requests: [rec, ...cur.requests], log: [{ at: rec.createdAt, by: "visitor", what: `${leadKind} ${ref}`, site: siteKey }, ...cur.log].slice(0, 200) });
+    setDone({ ref, dupe: false });
+    busy.current = false;
+  };
+  if (done) {
+    return (
+      <div className="ff-fd-done" role="status">
+        <b>{sourcing ? "Request received." : "Thanks, we've noted your interest."}</b>
+        <p>{done.dupe ? `We already have this request. ` : ""}Your reference is <b className="ref">{done.ref}</b>. {sourcing ? `Nothing is confirmed yet: no one has been booked or reserved, and you have not been charged. The FireFlair team will look for suitable people and contact you about the options${f.email || f.phone ? ` by ${f.email ? "email" : "telephone"}` : ""}.` : `FireFlair isn't taking requests here yet. We'll use your details only to tell you if that changes.`}</p>
+        <p className="ff-fd-dev"><span className="ff-dev17 tag">DEV</span> Saved to the preview's data as a local_service_request. Admin and acknowledgement notifications are simulated; see FF Admin → Areas and requests.</p>
+        {onDone && <Btn onClick={onDone}>Done</Btn>}
+      </div>
+    );
+  }
+  const tomorrow = fdToday();
   return (
+    <form className="ff-fd-form" onSubmit={submit} noValidate aria-label={sourcing ? "Ask us to find people" : "Register interest"}>
+      {company && <p className="ff-fd-co">You're asking about <b>{company.name}</b>. This company hasn't claimed its FireFlair card yet, so we'll contact them for you and pass your enquiry on.</p>}
+      <label className="ff-fd-f"><span>{team ? "Where do you work?" : venue ? "Where is the shift or venue?" : "Where is the event?"}</span>
+        <input value={f.loc} onChange={(e) => { set("loc", e.target.value); set("locId", ""); setSug(fdSearch(e.target.value)); }} autoComplete="off" aria-invalid={!!err.loc} />
+        {sug.length > 0 && !f.locId && <ul className="ff-fd-sug" role="listbox" aria-label="Matching places">{sug.map(n => <li key={n.id}><button type="button" onClick={() => { setF(x => ({ ...x, loc: fdLabel(n), locId: n.id })); setSug([]); }}>{n.name}<small>{FD_KIND_LABEL[n.k]}{fdChain(n) ? " · " + fdChain(n) : ""}</small></button></li>)}</ul>}
+        {!f.locId && f.loc.trim() && <em className="ff-fd-hint">We'll check this place with you if it isn't one we recognise.</em>}
+        {err.loc && <em className="ff-fd-err">{err.loc}</em>}</label>
+      {!team && <div className="ff-fd-two">
+        <label className="ff-fd-f"><span>Date</span><input type="date" value={f.date} min={tomorrow} disabled={f.tbd} onChange={(e) => set("date", e.target.value)} aria-invalid={!!err.date} />
+          {err.date && <em className="ff-fd-err">{err.date}</em>}</label>
+        <label className="ff-fd-chk"><input type="checkbox" checked={f.tbd} onChange={(e) => set("tbd", e.target.checked)} /> Date not decided</label>
+      </div>}
+      <fieldset className="ff-fd-f"><legend>{team ? "What do you do?" : "Who do you need?"}</legend>
+        <div className="ff-fd-chips">{FD_ROLES.map(r => <button type="button" key={r.id} className={f.roles.includes(r.id) ? "on" : ""} aria-pressed={f.roles.includes(r.id)} onClick={() => toggleRole(r.id)}>{r.label}</button>)}</div>
+        {err.roles && <em className="ff-fd-err">{err.roles}</em>}</fieldset>
+      <div className="ff-fd-two">
+        <label className="ff-fd-f"><span>Email</span><input type="email" value={f.email} onChange={(e) => set("email", e.target.value)} autoComplete="email" /></label>
+        <label className="ff-fd-f"><span>Telephone</span><input type="tel" value={f.phone} onChange={(e) => set("phone", e.target.value)} autoComplete="tel" /></label>
+      </div>
+      {err.contact && <em className="ff-fd-err">{err.contact}</em>}
+      <label className="ff-fd-chk"><input type="checkbox" checked={f.wa} onChange={(e) => set("wa", e.target.checked)} /> You may contact me on WhatsApp on this number</label>
+      <p className="ff-fd-note">We use your details only to reply about this request. {f.email || !f.phone ? "We'll answer by email." : "We'll answer by telephone."}</p>
+      <details className="ff-fd-opt"><summary>Add more detail (optional)</summary>
+        <label className="ff-fd-f"><span>Your name</span><input value={f.name} onChange={(e) => set("name", e.target.value)} autoComplete="name" /></label>
+        <label className="ff-fd-f"><span>How many people?</span><input value={f.hc} inputMode="numeric" onChange={(e) => set("hc", e.target.value.replace(/[^\d]/g, ""))} /></label>
+        <label className="ff-fd-f"><span>Anything else we should know?</span><textarea rows={3} value={f.brief} onChange={(e) => set("brief", e.target.value)} /></label>
+      </details>
+      <input className="ff-fd-hp" tabIndex={-1} autoComplete="off" aria-hidden="true" value={f.hp} onChange={(e) => set("hp", e.target.value)} />
+      <Btn type="submit" variant="gold">{sourcing ? "Ask us to find people" : "Register interest"}</Btn>
+      <p className="ff-fd-note">{sourcing ? `This sends a request to the FireFlair team. It doesn't book anyone, reserve anyone or take payment.` : `FireFlair isn't taking requests for this area yet, so this only registers your interest.`}</p>
+    </form>
+  );
+}
+
+/* ---- Explore by area (compact; sits above the map, separate from it) ------------------------------------ */
+function AreaExplorer11() {
+  const { state, dispatch } = useStore();
+  const siteKey = fdSiteKey(state), fd = fdOf(state);
+  const [open, setOpen] = useState(() => new Set());
+  const [more, setMore] = useState({});
+  const [q, setQ] = useState("");
+  const [ask, setAsk] = useState(null);
+  const roots = FD_NODES.filter(n => n.pi < 0);
+  const hits = fdSearch(q);
+  const go = (e, n) => { e.preventDefault(); fdNav(dispatch, siteKey, n.path); };
+  const toggle = (id) => setOpen(s => { const x = new Set(s); x.has(id) ? x.delete(id) : x.add(id); return x; });
+  const leaf = (n, label, sm) => {
+    const live = fdPageState(fd, siteKey, n).pub !== "prepared";
+    return <span className="ff-fd-nm">{live ? <a href={fdHref(siteKey, n.path)} onClick={(e) => go(e, n)}>{label || n.name}</a> : <span className="ff-fd-off">{label || n.name}</span>}
+      <small>{sm}</small>{!live && <button type="button" className="ff-fd-askmini" onClick={() => setAsk(n)}>Ask us to find people</button>}</span>;
+  };
+  const node = (n) => {
+    /* Places with a live page come first, then the rest alphabetically. */
+    const kids = n.kids.slice().sort((x, y) => (fdPageState(fd, siteKey, FD_NODES[x]).pub === "prepared" ? 1 : 0) - (fdPageState(fd, siteKey, FD_NODES[y]).pub === "prepared" ? 1 : 0)), isOpen = open.has(n.id), lim = more[n.id] ? kids.length : 24;
+    return (
+      <li key={n.id}>
+        <div className="ff-fd-row">
+          {kids.length ? <button type="button" className={"tg" + (isOpen ? " on" : "")} aria-expanded={isOpen} aria-label={`${isOpen ? "Hide" : "Show"} places in ${n.name}`} onClick={() => toggle(n.id)}><A17I.ChevronDown size={14} /></button> : <i className="sp" />}
+          {leaf(n, null, FD_KIND_LABEL[n.k] + (kids.length ? ` · ${kids.length}` : ""))}
+        </div>
+        {isOpen && kids.length > 0 && <ul>{kids.slice(0, lim).map(i => node(FD_NODES[i]))}
+          {kids.length > lim && <li><button type="button" className="ff-fd-more" onClick={() => setMore(m => ({ ...m, [n.id]: true }))}>Show all {kids.length} places in {n.name}</button></li>}</ul>}
+      </li>
+    );
+  };
+  return (
+    <section id="ff-fd-explore" style={{ marginTop: 22, scrollMarginTop: 70 }}>
+      <Fold17 id="ff-fd-explore-f" icon={<I11.MapPinned size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Explore by area" shut>
+        <p className="ff-fd-lead">{siteKey === "team" ? "See which places have an FF Team page and who works there." : siteKey === "staff" ? "Find staffing for a venue in a town, borough or neighbourhood." : "Find bartenders for a party in a town, borough or neighbourhood, or ask us to find people."}</p>
+        <label className="ff-fd-search"><A17I.Search size={14} /><span className="ff-fd-sr">Search for a place</span><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search for a town, borough or neighbourhood" /></label>
+        {q.trim().length >= 2 && <ul className="ff-fd-hits" aria-label="Matching places">{hits.length ? hits.map(n => <li key={n.id}>{leaf(n, fdLabel(n), FD_KIND_LABEL[n.k] + (fdChain(n) ? " · " + fdChain(n) : ""))}</li>) : <li className="none">No matching place in the prepared list. You can still tell us where your event is.<button type="button" className="ff-fd-askmini" onClick={() => setAsk({ free: q.trim() })}>Ask us to find people</button></li>}</ul>}
+        <ul className="ff-fd-tree" aria-label="Places">{roots.map(node)}</ul>
+        <p className="ff-fd-fine">Places with a link have a page. Others can still be requested.</p>
+      </Fold17>
+      {ask && <div className="ff-fd-sheet" role="dialog" aria-modal="true" aria-label="Ask us to find people">
+        <div className="in"><button type="button" className="x" aria-label="Close" onClick={() => setAsk(null)}><A17I.X size={18} /></button>
+          <h3>{siteKey === "staff" ? "Staffing request" : "Ask us to find people"}{ask.name ? ` — ${ask.name}` : ""}</h3>
+          <FdAsk11 siteKey={siteKey} node={ask.name ? ask : null} onDone={() => setAsk(null)} />
+        </div></div>}
+    </section>
+  );
+}
+
+/* ---- The area page --------------------------------------------------------------------------------------- */
+function FdResultTile11({ x, scope, onAsk }) {
+  const { state, dispatch } = useStore();
+  const cov = <p className="ff-fd-cov"><b>{scope ? "Covers: " : "Works in: "}</b>{fdCoverNames(x.cov) || "not stated"}</p>;
+  if (x.kind === "person") return <div className="ff-fd-res"><PlayerTile person={x.p} onClick={() => dispatch({ type: "VIEW", id: x.p.id })} />{cov}</div>;
+  const c = x.c;
+  return (
+    <div className="ff-fd-res">
+      <button type="button" className="ff-co11-tile" onClick={() => dispatch({ type: "VIEW_COMPANY", id: c.id })}><CompanyCardFace c={c} size="sm" /></button>
+      {c.unclaimed && <p className="ff-fd-unc">Draft card. FireFlair contacts the company and passes your enquiry on.{onAsk && <button type="button" className="ff-fd-askmini" onClick={() => onAsk(c)}>Ask FireFlair to contact them</button>}</p>}
+      {cov}
+    </div>
+  );
+}
+function AreaPage11() {
+  const { state, dispatch } = useStore();
+  const a = state.fdArea || {}, siteKey = a.site || "party", site = FD_SITES[siteKey];
+  const fd = fdOf(state);
+  const people = useDirectory();
+  const [role, setRole] = useState("");
+  const [showAll, setShowAll] = useState(false);
+  const [askCo, setAskCo] = useState(null);
+  const askRef = useRef(null);
+  const node = FD_BY_PATH[a.path];
+  /* A valid alternate route is redirected once. */
+  useEffect(() => {
+    const to = FD_PATH_ALIASES[a.path];
+    if (to) { try { window.history.replaceState({ ff: "area" }, "", fdHref(siteKey, to)); } catch (e) { /* ignore */ } dispatch({ type: "V11_SET", patch: { fdArea: { site: siteKey, path: to } } }); }
+  }, [a.path]);
+  useEffect(() => { setRole(""); setShowAll(false); setAskCo(null); }, [a.path, siteKey]);
+  const res = useMemo(() => node ? fdResults(state, node, people, role) : null, [state.directory, state.admin17, state.company, a.path, role, people.length]);
+  const back = <button type="button" className="ff-fd-back" onClick={() => fdClose(dispatch)}>← Back</button>;
+  if (FD_PATH_ALIASES[a.path]) return <div className="ff-fd-page"><p>Redirecting…</p></div>;
+  if (!node) {
+    return (
+      <main className="ff-fd-page" aria-labelledby="fd-h1">{back}
+        <h1 id="fd-h1" className="ff-h1">We can't find that place</h1>
+        <p>There's no {site.name} page at <code>{a.path}</code>. Real address checking returns a 404 for unknown places.</p>
+        <Btn onClick={() => fdNav(dispatch, siteKey, "/areas/uk")}>Explore the UK</Btn>
+      </main>);
+  }
+  const ps = fdPageState(fd, siteKey, node), mode = fdMarket(fd, siteKey, node), sourcing = fdSourcingOn(fd, siteKey, mode);
+  const anc = fdAnc(node).reverse();
+  const livePub = (n) => fdPageState(fd, siteKey, n).pub !== "prepared";
+  const crumb = anc.filter(n => n.k !== "r" || livePub(n));
+  if (ps.pub === "prepared" && !state.fdPreview) {
+    return (
+      <main className="ff-fd-page" aria-labelledby="fd-h1">{back}
+        <h1 id="fd-h1" className="ff-h1">{fdLabel(node)}</h1>
+        <p>{site.name} doesn't have a page for {fdLabel(node)} yet. {sourcing ? `You can still ask us to find people there.` : `You can register your interest.`}</p>
+        <div className="ff-fd-card"><FdAsk11 key={siteKey + node.id} siteKey={siteKey} node={node} /></div>
+        {fdParent(node) && livePub(fdParent(node)) && <p style={{ marginTop: 16 }}>Or look at <a href={fdHref(siteKey, fdParent(node).path)} onClick={(e) => { e.preventDefault(); fdNav(dispatch, siteKey, fdParent(node).path); }}>{fdLabel(fdParent(node))}</a>.</p>}
+      </main>);
+  }
+  const hasUnclaimed = res.exactCos.concat(res.wider.filter(x => x.kind === "company")).some(x => x.c.unclaimed);
+  const nExact = res.exactPeople.length;
+  const copy = fdCopy(siteKey, node, { mode, sourcing, nExact, hasUnclaimed });
+  const scrollAsk = () => { setAskCo(null); try { askRef.current && askRef.current.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) { /* ignore */ } };
+  const goAsk = (c) => { setAskCo(c); try { askRef.current && askRef.current.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) { /* ignore */ } };
+  const signup = () => { fdClose(dispatch); if (state.role === "team") dispatch({ type: "TAB", tab: "profile" }); else dispatch({ type: "ROLE", role: "team" }); };
+  const cta = () => { if (copy.ctaKind === "signup") signup(); else if (copy.ctaKind === "results") { const el = document.getElementById("ff-fd-results"); el && el.scrollIntoView({ behavior: "smooth", block: "start" }); } else scrollAsk(); };
+  const kidsLive = node.kids.map(i => FD_NODES[i]).filter(livePub);
+  const sibs = fdParent(node) ? fdParent(node).kids.map(i => FD_NODES[i]).filter(n => n.id !== node.id && livePub(n)) : [];
+  const CAP = 12;
+  const list = (l) => (showAll ? l : l.slice(0, CAP));
+  const hasAny = res.exact.length || res.within.length || res.wider.length;
+  const exactLabel = nExact || res.exactCos.length ? `${siteKey === "team" ? "Professionals who work in" : "Covering"} ${fdLabel(node)}` : "";
+  const lk = (n, t) => <a href={fdHref(siteKey, n.path)} onClick={(e) => { e.preventDefault(); fdNav(dispatch, siteKey, n.path); }}>{t || fdLabel(n)}</a>;
+  return (
+    <main className="ff-fd-page" aria-labelledby="fd-h1">
+      {back}
+      {ps.pub === "prepared" && <div className="ff-fd-banner" role="note">Admin preview. This page isn't public yet: it has no advertised route and is excluded from the sitemap.</div>}
+      <nav aria-label="Breadcrumb" className="ff-fd-crumb"><ol>{crumb.map((n, i) => <li key={n.id}>{i === crumb.length - 1 ? <span aria-current="page">{n.name}</span> : livePub(n) ? lk(n, n.name) : <span>{n.name}</span>}</li>)}</ol></nav>
+      <div className="ff-eyebrow">{site.name}</div>
+      <h1 id="fd-h1" className="ff-h1">{copy.h1}</h1>
+      {copy.intro.map((t, i) => <p key={i} className="ff-fd-intro">{t}</p>)}
+      <div className="ff-fd-cta"><Btn variant="gold" onClick={cta}>{copy.cta}</Btn>
+        {copy.ask && copy.ctaKind !== "ask" && <button type="button" className="ff-fd-link" onClick={scrollAsk}>{copy.ask}</button>}
+        {siteKey === "staff" && <button type="button" className="ff-fd-link" onClick={() => dispatch({ type: "ROLE", role: "staff", site: "staff" })}>Create a company profile</button>}</div>
+
+      <section id="ff-fd-results" aria-labelledby="fd-res-h" style={{ marginTop: 26, scrollMarginTop: 70 }}>
+        <div className="ff-fd-rhead"><h2 id="fd-res-h" className="ff-h2">{siteKey === "team" ? "Who works here" : "Professionals and companies"}</h2>
+          <div className="ff-fd-chips" role="group" aria-label="Filter by profession (doesn't change the web address)">
+            <button type="button" className={!role ? "on" : ""} aria-pressed={!role} onClick={() => setRole("")}>All</button>
+            {FD_ROLES.map(r => <button type="button" key={r.id} className={role === r.id ? "on" : ""} aria-pressed={role === r.id} onClick={() => setRole(role === r.id ? "" : r.id)}>{r.label}</button>)}</div></div>
+        {res.exact.length > 0 && <>
+          <h3 className="ff-fd-h3">{exactLabel}</h3>
+          <p className="ff-fd-sub">Each has said they work here. The event date still needs confirming.</p>
+          <HScroll label={exactLabel} snap>{list(res.exact).map(x => <FdResultTile11 key={x.key} x={x} onAsk={goAsk} />)}</HScroll></>}
+        {res.within.length > 0 && <>
+          <h3 className="ff-fd-h3">Serving places within {fdLabel(node)}</h3>
+          <p className="ff-fd-sub">This is an overview of people who work in parts of {fdLabel(node)}. Their cover is shown on each card; one place isn't the same as another.</p>
+          <HScroll label={`Serving places within ${fdLabel(node)}`} snap>{list(res.within).map(x => <FdResultTile11 key={x.key} x={x} scope onAsk={goAsk} />)}</HScroll></>}
+        {res.wider.length > 0 && <>
+          <div className="ff-fd-wider" role="note"><b>Explore professionals across {fdLabel(res.scope)}</b>
+            <p>Nobody lists {fdLabel(node)} as somewhere they work, so here are people who cover other places in {fdLabel(res.scope)}. This isn't a distance match. Whether they can work in {fdLabel(node)} needs checking{siteKey === "team" ? "" : ", and your request stays for " + fdLabel(node)}.</p></div>
+          <HScroll label={`Professionals across ${fdLabel(res.scope)}`} snap>{list(res.wider).slice(0, 8).map(x => <FdResultTile11 key={x.key} x={x} scope onAsk={goAsk} />)}</HScroll></>}
+        {(res.exact.length + res.within.length > CAP || res.wider.length > CAP) && !showAll && <button type="button" className="ff-fd-more" onClick={() => setShowAll(true)}>Show more</button>}
+        {!hasAny && <div className="ff-fd-empty">
+          <b>{role ? `No ${FD_ROLE_LABEL[role].toLowerCase()} lists ${fdLabel(node)} yet.` : `Nobody lists ${fdLabel(node)} yet.`}</b>
+          <p>{siteKey === "team" ? `You could be the first. Create a Profile Card and choose ${fdLabel(node)} as a place you work.` : sourcing ? `That doesn't stop you asking. Our team will look for suitable people.` : `Register your interest below.`}</p></div>}
+      </section>
+
+      {copy.ask && <section id="ff-fd-ask" ref={askRef} className="ff-fd-card" aria-labelledby="fd-ask-h" style={{ scrollMarginTop: 70 }}>
+        <h2 id="fd-ask-h" className="ff-h2">{sourcing ? (siteKey === "staff" ? `Need staff in ${fdLabel(node)}?` : `Need people for an event in ${fdLabel(node)}?`) : `Interested in ${fdLabel(node)}?`}</h2>
+        <p className="ff-fd-sub">{sourcing ? `Tell us the date and the kind of professional you need. Our team will look for suitable people and contact you about the options.` : siteKey === "team" ? `Tell us where you work and what you do and we'll contact you if FF Team starts recruiting here.` : `FireFlair isn't taking requests here yet. Tell us what you'd need and we'll contact you if that changes.`}</p>
+        <FdAsk11 key={siteKey + node.id + (askCo ? askCo.id : "")} siteKey={siteKey} node={node} company={askCo} />
+      </section>}
+      {siteKey === "team" && <section className="ff-fd-card" aria-labelledby="fd-t-h"><h2 id="fd-t-h" className="ff-h2">Joining the network, not applying for a job</h2>
+        <p className="ff-fd-sub">Your Profile Card says who you are and where you work. People who need a professional can then find you, or ask FireFlair to. There are no vacancies on this page.</p>
+        <Btn variant="gold" onClick={signup}>Create your Profile Card</Btn></section>}
+
+      <section aria-labelledby="fd-how-h" style={{ marginTop: 26 }}><h2 id="fd-how-h" className="ff-h2">Questions</h2>
+        {copy.faq.map(f => <details key={f.q} className="ff-fd-faq"><summary>{f.q}</summary><p>{f.a}</p></details>)}</section>
+
+      {(kidsLive.length > 0 || sibs.length > 0) && <nav aria-label="Other places" className="ff-fd-links">
+        {kidsLive.length > 0 && <><h2 className="ff-h2">Places in {fdLabel(node)}</h2><ul>{kidsLive.slice(0, 24).map(n => <li key={n.id}>{lk(n)}</li>)}</ul>{kidsLive.length > 24 && <p className="ff-fd-fine">and {kidsLive.length - 24} more</p>}</>}
+        {sibs.length > 0 && fdParent(node) && <><h2 className="ff-h2">Other places in {fdLabel(fdParent(node))}</h2><ul>{sibs.slice(0, 12).map(n => <li key={n.id}>{lk(n)}</li>)}</ul></>}
+      </nav>}
+      <p className="ff-fd-dev"><span className="ff-dev17 tag">DEV · {site.name}</span> {ps.pub === "approved" ? "Approved for search" : ps.pub === "published" ? "Published for use: noindex, not in the sitemap" : "Prepared: preview only"} · market {FD_MODES.find(m => m[0] === mode)[1]} · canonical {fdUrl(siteKey, node.path)}{FF_SEO.demoData ? " · demo data, so the prototype emits noindex regardless" : ""}</p>
+    </main>
+  );
+}
+
+/* ---- FF Admin: requests queue, page review / publish / index, markets, sitemap preview ------------------- */
+const FD_CHECKS = [
+  ["geo", "The geography is accurate for this place"],
+  ["cap", "FireFlair can actually serve or recruit here"],
+  ["task", "The page has a working action for this site's visitor"],
+  ["facts", "Every visible fact is reliable and supported"],
+  ["distinct", "It is useful separately from its parent and sibling pages"],
+];
+function fdEvidence(state, siteKey, n, people) {
+  const fd = fdOf(state), mode = fdMarket(fd, siteKey, n), res = fdResults(state, n, people, "");
+  const flags = [];
+  if (mode === "inactive") flags.push("Market is inactive: nothing should be published here.");
+  if (mode === "interest_only") flags.push("Interest-only market: keep out of search unless the interest page is genuinely useful.");
+  if (!res.exact.length && !res.within.length && !fdSourcingOn(fd, siteKey, mode) && siteKey !== "team") flags.push("No local providers and no sourcing service: nothing useful to do here.");
+  if (!res.exact.length && !res.within.length && n.kids.length === 0 && siteKey !== "team") flags.push("Only a request form, no local providers or child places. Check it adds something its parent doesn't.");
+  if (n.k === "h") flags.push("Neighbourhood boundaries are unreviewed (GeoNames points). Don't claim exact boundaries.");
+  return { mode, exact: res.exact.length, within: res.within.length, kids: n.kids.length, sourcing: fdSourcingOn(fd, siteKey, mode), flags };
+}
+function AdmAreas11({ state, dispatch, can }) {
+  const fd = fdOf(state), people = useDirectory();
+  const [tab, setTab] = useState("requests");
+  const by = "@" + (String(state.auth.tag || "DEV").toUpperCase());
+  const stamp = (what, site) => ({ at: new Date().toISOString(), by, what, site });
+  const upd = (id, patch) => fdSet(state, dispatch, { requests: fd.requests.map(r => r.id === id ? { ...r, ...patch } : r), log: [stamp(`request ${id} ${Object.keys(patch).join(", ")}`), ...fd.log].slice(0, 200) });
+  return (
+    <>
+      <div className="ff-adm-tools"><AdmChips17 value={tab} onChange={setTab} options={[["requests", "Requests", fd.requests.filter(r => r.status === "new").length], ["pages", "Pages"], ["markets", "Markets"], ["sitemap", "Sitemap"], ["about", "How it works"]]} /></div>
+      {tab === "requests" && <FdReqs11 fd={fd} upd={upd} dispatch={dispatch} state={state} />}
+      {tab === "pages" && <FdPages11 fd={fd} state={state} dispatch={dispatch} can={can} by={by} people={people} stamp={stamp} />}
+      {tab === "markets" && <FdMarkets11 fd={fd} state={state} dispatch={dispatch} can={can} />}
+      {tab === "sitemap" && <FdSitemap11 fd={fd} />}
+      {tab === "about" && <FdAbout11 fd={fd} />}
+    </>
+  );
+}
+function FdReqs11({ fd, upd, dispatch, state }) {
+  const [q, setQ] = useState(""), [st, setSt] = useState(""), [role, setRole] = useState(""), [site, setSite] = useState(""), [from, setFrom] = useState(""), [to, setTo] = useState("");
+  const [openId, setOpenId] = useState(null);
+  const rows = fd.requests.filter(r => (!st || r.status === st) && (!role || r.roles.includes(role)) && (!site || r.siteKey === site)
+    && (!q || (r.locationText + " " + r.ref + " " + (r.contact.name || "") + " " + (r.companyName || "")).toLowerCase().includes(q.toLowerCase()))
+    && (!from || (r.eventDate && r.eventDate >= from)) && (!to || (r.eventDate && r.eventDate <= to)));
+  return (
+    <>
+      <p className="ff-fd-note">Private to FireFlair admins. Requests are saved before anything else happens, retries don't make duplicates, and contact details never go in addresses or analytics.</p>
+      <div className="ff-adm-tools ff-fd-filters">
+        <Search17 value={q} onChange={setQ} placeholder="Place, reference, name or company" />
+        <select aria-label="Status" value={st} onChange={(e) => setSt(e.target.value)}><option value="">Any status</option>{FD_STATUSES.map(s => <option key={s[0]} value={s[0]}>{s[1]}</option>)}</select>
+        <select aria-label="Profession" value={role} onChange={(e) => setRole(e.target.value)}><option value="">Any profession</option>{FD_ROLES.map(r => <option key={r.id} value={r.id}>{r.label}</option>)}</select>
+        <select aria-label="Site" value={site} onChange={(e) => setSite(e.target.value)}><option value="">Any site</option>{Object.values(FD_SITES).map(s => <option key={s.key} value={s.key}>{s.name}</option>)}</select>
+        <label>Event from <input type="date" value={from} onChange={(e) => setFrom(e.target.value)} /></label>
+        <label>to <input type="date" value={to} onChange={(e) => setTo(e.target.value)} /></label>
+      </div>
+      {!fd.requests.length ? <Empty17>No requests yet. Send one from an area page (FF Party → Explore by area) and it will appear here.</Empty17> :
+        !rows.length ? <Empty17>No requests match those filters.</Empty17> :
+        <div className="ff-fd-tbl" role="table" aria-label="Local service requests">
+          <div className="tr th" role="row"><span>Ref</span><span>Place</span><span>Needs</span><span>Event date</span><span>Status</span></div>
+          {rows.map(r => (
+            <div key={r.id} className="tr-wrap">
+              <button type="button" className="tr" role="row" onClick={() => setOpenId(openId === r.id ? null : r.id)} aria-expanded={openId === r.id}>
+                <span><b>{r.ref}</b><small>{FD_SITES[r.siteKey].name} · {r.kind === "expansion_interest" ? "interest" : "sourcing"}</small></span>
+                <span>{r.locationText}{!r.locationId && <small>unresolved place</small>}</span>
+                <span>{r.roles.map(x => FD_ROLE_LABEL[x]).join(", ")}</span>
+                <span>{r.dateUndecided ? "Not decided" : r.eventDate}</span>
+                <span><em className={"ff-fd-st " + r.status}>{FD_STATUS_LABEL[r.status]}</em></span>
+              </button>
+              {openId === r.id && <div className="ff-fd-det">
+                <dl>
+                  <dt>Received</dt><dd>{new Date(r.createdAt).toLocaleString("en-GB")}</dd>
+                  <dt>Contact</dt><dd>{r.contact.name ? r.contact.name + " · " : ""}{r.contact.email || "no email"} · {r.contact.phone || "no phone"}{r.contact.whatsappOk ? " · WhatsApp OK" : ""}</dd>
+                  <dt>Place</dt><dd>{r.locationText}{r.locationId ? ` (${r.locationId})` : " (not matched to a known place)"}</dd>
+                  {r.companyName && <><dt>Asked about</dt><dd>{r.companyName} (unclaimed card): contact the company and pass the enquiry on.</dd></>}
+                  {r.headcount && <><dt>People</dt><dd>{r.headcount}</dd></>}
+                  {r.brief && <><dt>Notes</dt><dd>{r.brief}</dd></>}
+                  <dt>Source</dt><dd>{FD_SITES[r.siteKey].name} · {r.sourcePath || "no page"}</dd>
+                  <dt>Notifications</dt><dd>Admin: {r.notif.admin} · Acknowledgement: {r.notif.ack}{r.notif.failed ? " · FAILED, retry" : ""} <span className="ff-dev17 tag">DEV</span></dd>
+                </dl>
+                <div className="ff-fd-act">
+                  <label>Status <select value={r.status} onChange={(e) => upd(r.id, { status: e.target.value })}>{FD_STATUSES.map(s => <option key={s[0]} value={s[0]}>{s[1]}</option>)}</select></label>
+                  <label>Assigned to <input value={r.assignee} placeholder="@tag" onChange={(e) => upd(r.id, { assignee: e.target.value })} /></label>
+                  <label className="grow">Admin note <input value={r.adminNote} onChange={(e) => upd(r.id, { adminNote: e.target.value })} /></label>
+                </div>
+                <p className="ff-fd-fine">When options are agreed, create the event in the normal booking flow so required details, terms and payment are collected before invitations go out. This queue never books, reserves or charges. Linking a booking ID is backend work.</p>
+              </div>}
+            </div>))}
+        </div>}
+    </>
+  );
+}
+function FdPages11({ fd, state, dispatch, can, by, people, stamp }) {
+  const [site, setSite] = useState("party"), [q, setQ] = useState(""), [kind, setKind] = useState(""), [pub, setPub] = useState(""), [lim, setLim] = useState(40);
+  const [sel, setSel] = useState([]);
+  const [rev, setRev] = useState(false);
+  const [reason, setReason] = useState(""), [checks, setChecks] = useState({}), [skip, setSkip] = useState({});
+  const canEdit = can("sites");
+  const all = useMemo(() => FD_NODES.filter(n => n.k !== "r" || true), []);
+  const rows = all.filter(n => (!kind || n.k === kind) && (!pub || fdPageState(fd, site, n).pub === pub) && (!q || (n.name + " " + n.path).toLowerCase().includes(q.toLowerCase())));
+  const counts = { prepared: 0, published: 0, approved: 0 };
+  all.forEach(n => { counts[fdPageState(fd, site, n).pub]++; });
+  const toggle = (id) => setSel(s => s.includes(id) ? s.filter(x => x !== id) : [...s, id]);
+  const write = (ids, pubState, extra) => {
+    const pages = { ...fd.pages }, log = [...fd.log];
+    ids.forEach(id => { const n = FD_BY_ID[id]; pages[site + "|" + id] = { pub: pubState, by, at: new Date().toISOString(), ...extra }; log.unshift({ ...stamp(`${pubState} ${n.name}${extra && extra.reason ? ": " + extra.reason : ""}`, site) }); });
+    fdSet(state, dispatch, { pages, log: log.slice(0, 200) });
+    setSel([]); setRev(false); setReason(""); setChecks({}); setSkip({});
+  };
+  const eligible = (id) => fdMarket(fd, site, FD_BY_ID[id]) !== "inactive";
+  const publishUse = () => { const ids = sel.filter(eligible); if (!ids.length) { dispatch({ type: "TOAST", toast: "Those places are in an inactive market." }); return; } write(ids, "published", { reason: "Published for use" }); };
+  const approveIds = sel.filter(id => !skip[id]);
+  const okForm = reason.trim().length >= 10 && FD_CHECKS.every(c => checks[c[0]]) && approveIds.length > 0;
+  const approve = () => { const ids = approveIds.filter(id => ["recruiting", "operational"].includes(fdMarket(fd, site, FD_BY_ID[id]))); if (!ids.length) { dispatch({ type: "TOAST", toast: "Only recruiting or operational markets can be approved for search." }); return; }
+    write(ids, "approved", { reason: reason.trim(), checks: { ...checks }, exceptions: sel.filter(id => skip[id]) }); };
+  const pre = (id) => { dispatch({ type: "V11_SET", patch: { adminOpen17: false, fdPreview: true } }); fdNav(dispatch, site, FD_BY_ID[id].path); };
+  const showAdmin = !!canEdit;
+  return (
+    <>
+      <p className="ff-fd-note">Each row is one page on one site. Prepared pages have no public route. Published pages work but stay <b>noindex</b> and out of the sitemap. Only reviewed pages are approved for search, and only by choice: approval is our editorial decision, not a promise that Google will index or rank the page.</p>
+      <div className="ff-adm-tools"><AdmChips17 value={site} onChange={(v) => { setSite(v); setSel([]); }} options={Object.values(FD_SITES).map(s => [s.key, s.name])} />
+        <span className="ff-fd-count">{counts.prepared} prepared · {counts.published} published · {counts.approved} approved</span></div>
+      <div className="ff-adm-tools ff-fd-filters">
+        <Search17 value={q} onChange={(v) => { setQ(v); setLim(40); }} placeholder="Search places or routes" />
+        <select aria-label="Type" value={kind} onChange={(e) => setKind(e.target.value)}><option value="">Any type</option>{Object.entries(FD_KIND_LABEL).map(([k, l]) => <option key={k} value={k}>{l}</option>)}</select>
+        <select aria-label="State" value={pub} onChange={(e) => setPub(e.target.value)}><option value="">Any state</option><option value="prepared">Prepared</option><option value="published">Published for use</option><option value="approved">Approved for search</option></select>
+      </div>
+      {showAdmin && sel.length > 0 && <div className="ff-fd-batch" role="region" aria-label="Batch actions">
+        <b>{sel.length} selected</b>
+        <Btn onClick={publishUse}>Publish for use</Btn>
+        <Btn variant="gold" onClick={() => setRev(true)}>Review for search…</Btn>
+        <Btn onClick={() => write(sel, "prepared", { reason: "Returned to prepared" })}>Return to prepared</Btn>
+        <button type="button" className="ff-fd-link" onClick={() => setSel([])}>Clear</button></div>}
+      {rev && <div className="ff-fd-review" role="dialog" aria-label="Approve for search">
+        <h3>Approve {approveIds.length} page{approveIds.length === 1 ? "" : "s"} for search on {FD_SITES[site].name}</h3>
+        <p className="ff-fd-fine">Reviewer {by}. The date is recorded. Untick a page to leave it out of this batch.</p>
+        <ul className="ff-fd-ev">{sel.map(id => { const n = FD_BY_ID[id], e = fdEvidence(state, site, n, people); return <li key={id}>
+          <label><input type="checkbox" checked={!skip[id]} onChange={() => setSkip(s => ({ ...s, [id]: !s[id] }))} /> <b>{fdLabel(n)}</b> <small>{FD_KIND_LABEL[n.k]} · {FD_MODES.find(m => m[0] === e.mode)[1]} · {e.exact} covering · {e.within} within · {e.kids} child places · {e.sourcing ? "sourcing on" : "no sourcing"}</small></label>
+          {e.flags.map(f => <em key={f} className="ff-fd-flag">{f}</em>)}</li>; })}</ul>
+        <fieldset><legend>I confirm, for each page ticked above</legend>
+          {FD_CHECKS.map(c => <label key={c[0]} className="ff-fd-chk"><input type="checkbox" checked={!!checks[c[0]]} onChange={(e) => setChecks(x => ({ ...x, [c[0]]: e.target.checked }))} /> {c[1]}</label>)}</fieldset>
+        <label className="ff-fd-f"><span>Short reason (recorded)</span><textarea rows={2} value={reason} onChange={(e) => setReason(e.target.value)} placeholder="Why is this page useful in its own right?" /></label>
+        <div className="ff-fd-act"><Btn variant="gold" disabled={!okForm} onClick={approve}>Approve for search</Btn><Btn onClick={() => setRev(false)}>Cancel</Btn></div>
+        {FF_SEO.demoData && <p className="ff-fd-fine"><span className="ff-dev17 tag">DEV</span> The prototype still emits noindex while demo data is on. Approval is recorded for the real build.</p>}
+      </div>}
+      <div className="ff-fd-tbl pages" role="table" aria-label="Pages">
+        <div className="tr th" role="row"><span /><span>Place</span><span>Type</span><span>Market</span><span>State</span><span /></div>
+        {rows.slice(0, lim).map(n => { const ps = fdPageState(fd, site, n), md = fdMarket(fd, site, n); return (
+          <div className="tr" role="row" key={n.id}>
+            <span>{showAdmin ? <input type="checkbox" aria-label={`Select ${n.name}`} checked={sel.includes(n.id)} onChange={() => toggle(n.id)} /> : null}</span>
+            <span><b>{fdLabel(n)}</b><small>{n.path}</small></span>
+            <span>{FD_KIND_LABEL[n.k]}</span>
+            <span>{FD_MODES.find(m => m[0] === md)[1]}</span>
+            <span><em className={"ff-fd-st " + ps.pub}>{ps.pub === "prepared" ? "Prepared" : ps.pub === "published" ? "Published · noindex" : "Approved for search"}</em>{ps.by && <small>{ps.by} · {String(ps.at).slice(0, 10)}{ps.reason ? " · " + ps.reason : ""}</small>}</span>
+            <span><button type="button" className="ff-fd-link" onClick={() => pre(n.id)}>{ps.pub === "prepared" ? "Preview" : "View"}</button></span>
+          </div>); })}
+        {rows.length > lim && <button type="button" className="ff-fd-more" onClick={() => setLim(lim + 60)}>Show more ({rows.length - lim} left)</button>}
+        {!rows.length && <Empty17>No pages match.</Empty17>}
+      </div>
+      {fd.log.length > 0 && <details className="ff-fd-opt"><summary>Recent decisions ({fd.log.length})</summary><ul className="ff-fd-log">{fd.log.slice(0, 30).map((l, i) => <li key={i}><small>{String(l.at).slice(0, 16).replace("T", " ")}</small> {l.by} · {l.what}{l.site ? ` · ${FD_SITES[l.site] ? FD_SITES[l.site].name : l.site}` : ""}</li>)}</ul></details>}
+    </>
+  );
+}
+function FdMarkets11({ fd, state, dispatch, can }) {
+  const [q, setQ] = useState("");
+  const countries = FD_NODES.filter(n => n.k === "c" && n.cc).filter(n => !q || n.name.toLowerCase().includes(q.toLowerCase()));
+  const edit = can("sites");
+  const setM = (site, cc, v) => fdSet(state, dispatch, { markets: { ...fd.markets, [site + "|" + cc]: v } });
+  return (
+    <>
+      <p className="ff-fd-note">A market mode decides what a site may promise in a country. <b>Inactive</b>: nothing published. <b>Interest only</b>: a register-interest page. <b>Recruiting</b>: sign-up and sourcing requests are accepted. <b>Operational</b>: FireFlair fulfils there. Nothing is set to operational for you, and UK charges, currencies and terms are never reused abroad without approved configuration.</p>
+      <h3 className="ff-adm-h3">Accepting "Ask us to find people"</h3>
+      <div className="ff-fd-act">{["party", "staff"].map(s => <label key={s} className="ff-fd-chk"><input type="checkbox" disabled={!edit} checked={fd.sourcing[s] !== false} onChange={(e) => fdSet(state, dispatch, { sourcing: { ...fd.sourcing, [s]: e.target.checked } })} /> {FD_SITES[s].name}: the team is looking after sourcing requests</label>)}</div>
+      <p className="ff-fd-fine">Switch a site off if the team can't service requests. The page then offers "Register interest" instead of the sourcing promise.</p>
+      <Search17 value={q} onChange={setQ} placeholder="Search countries" />
+      <div className="ff-fd-tbl markets" role="table" aria-label="Market modes">
+        <div className="tr th" role="row"><span>Country or territory</span>{Object.values(FD_SITES).map(s => <span key={s.key}>{s.name}</span>)}</div>
+        {countries.slice(0, 40).map(n => <div className="tr" role="row" key={n.id}><span><b>{n.name}</b><small>{n.cc}</small></span>
+          {Object.values(FD_SITES).map(s => <span key={s.key}><select disabled={!edit} aria-label={`${n.name} on ${s.name}`} value={fdMarket(fd, s.key, n)} onChange={(e) => setM(s.key, n.cc, e.target.value)}>{FD_MODES.map(m => <option key={m[0]} value={m[0]}>{m[1]}</option>)}</select></span>)}</div>)}
+      </div>
+    </>
+  );
+}
+function FdSitemap11({ fd }) {
+  const [site, setSite] = useState("party");
+  const rows = FD_NODES.filter(n => fdPageState(fd, site, n).pub === "approved");
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` + rows.map(n => `  <url><loc>${fdUrl(site, n.path)}</loc><lastmod>${String(fdPageState(fd, site, n).at).slice(0, 10)}</lastmod></url>`).join("\n") + `\n</urlset>`;
+  return (
+    <>
+      <p className="ff-fd-note">What each site's area sitemap would contain: only pages approved for search, self-canonical, with the date they were last reviewed. Published and prepared pages are never listed. This is a preview; nothing is served.</p>
+      <div className="ff-adm-tools"><AdmChips17 value={site} onChange={setSite} options={Object.values(FD_SITES).map(s => [s.key, s.name, FD_NODES.filter(n => fdPageState(fd, s.key, n).pub === "approved").length])} /></div>
+      {rows.length ? <pre className="ff-fd-xml">{xml}</pre> : <Empty17>Nothing approved for {FD_SITES[site].name} yet, so its area sitemap is empty. That is intended until pages are reviewed.</Empty17>}
+      <p className="ff-fd-fine">Keep a published <b>noindex</b> page crawlable: don't block it in robots.txt, or crawlers can't read its noindex. Search crawlers (including OAI-SearchBot) and training crawlers are separate decisions in robots.txt.</p>
+    </>
+  );
+}
+function FdAbout11({ fd }) {
+  const L = [
+    ["What this is", "One location system shared by FF Party, FF Team and FF Staff. 1,000 prepared places can each have one page per site: up to 3,000 routes, each with its own intent, copy and canonical."],
+    ["Three states", "Prepared: admin preview only. Published for use: a working page, noindex, not in the sitemap. Approved for search: reviewed, indexable, self-canonical and in its site's sitemap. Each (site, place) pair moves on its own."],
+    ["Coverage", "Whole-area coverage (Greater London) includes places beneath it. A selected place (Camden) covers only that place. Parent fallback climbs the browsing tree, is labelled, and stops at the UK nation. Distance is never claimed."],
+    ["Requests", "Every request is saved first as a local_service_request with a reference. It books, reserves and charges nothing. Unclaimed company cards: FireFlair contacts the company and passes the enquiry on."],
+    ["Simulated here", "Persistence (saved with the preview data), notifications, the sitemap, and the provider coverage (fixtures built from the sample people's regions and company base locations)."],
+  ];
+  return <dl className="ff-fd-about">{L.map(([a, b]) => <React.Fragment key={a}><dt>{a}</dt><dd>{b}</dd></React.Fragment>)}<dt>Developer handover</dt><dd>See docs/front-doors/ in the repository.</dd></dl>;
+}
+
+const FD_CSS = `
+/* ==== Front Doors (v17.3.110) ==== */
+.ff .ff-fd-lead { font-size:13.5px; color:var(--ink-2, #5b554c); margin:0 0 10px; line-height:1.5; }
+.ff .ff-fd-search { display:flex; align-items:center; gap:8px; border:1px solid var(--rule); border-radius:12px; padding:0 12px; background:var(--paper, #fff); }
+.ff .ff-fd-search input { flex:1; border:0; outline:0; background:transparent; font:inherit; font-size:14px; padding:11px 0; min-width:0; }
+.ff .ff-fd-search:focus-within { border-color:var(--gold-dk); box-shadow:0 0 0 3px rgba(176,141,60,.18); }
+.ff .ff-fd-sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+.ff .ff-fd-tree, .ff .ff-fd-tree ul, .ff .ff-fd-hits { list-style:none; margin:0; padding:0; }
+.ff .ff-fd-tree { margin-top:10px; }
+.ff .ff-fd-tree ul { margin-left:14px; padding-left:8px; border-left:1px solid var(--rule); }
+.ff .ff-fd-row { display:flex; align-items:center; gap:6px; min-height:34px; flex-wrap:wrap; }
+.ff .ff-fd-row .tg, .ff .ff-fd-row .sp { width:26px; height:26px; flex:none; display:inline-flex; align-items:center; justify-content:center; }
+.ff .ff-fd-row .tg { border:1px solid var(--rule); border-radius:8px; background:transparent; cursor:pointer; color:var(--gold-dk); }
+.ff .ff-fd-row .tg svg { transition:transform .15s; transform:rotate(-90deg); }
+.ff .ff-fd-row .tg.on svg { transform:none; }
+.ff .ff-fd-row a, .ff .ff-fd-hits a { color:var(--ink); font-weight:600; text-decoration:underline; text-decoration-color:rgba(176,141,60,.55); text-underline-offset:3px; font-size:14px; }
+.ff .ff-fd-row small, .ff .ff-fd-hits small, .ff .ff-fd-tbl small { color:var(--ink-3, #8a8378); font-size:11.5px; margin-left:4px; }
+.ff .ff-fd-off { font-size:14px; color:var(--ink-3, #8a8378); }
+.ff .ff-fd-nm { display:inline-flex; flex-wrap:wrap; align-items:center; gap:2px 8px; min-width:0; }
+.ff .ff-fd-askmini { margin-left:0; border:1px solid var(--rule); background:transparent; border-radius:999px; padding:3px 10px; font:inherit; font-size:11.5px; color:var(--gold-dk); cursor:pointer; }
+.ff .ff-fd-askmini:hover { background:rgba(176,141,60,.1); }
+.ff .ff-fd-hits { margin-top:8px; border:1px solid var(--rule); border-radius:12px; overflow:hidden; }
+.ff .ff-fd-hits li { padding:9px 12px; border-bottom:1px solid var(--rule); }
+.ff .ff-fd-hits li:last-child { border-bottom:0; }
+.ff .ff-fd-hits li.none { font-size:13px; color:var(--ink-3, #8a8378); }
+.ff .ff-fd-more { background:transparent; border:0; color:var(--gold-dk); font:inherit; font-size:13px; text-decoration:underline; cursor:pointer; padding:8px 0; }
+.ff .ff-fd-fine { font-size:12px; color:var(--ink-3, #8a8378); margin:10px 0 0; line-height:1.5; }
+.ff .ff-fd-sheet { position:fixed; inset:0; z-index:1200; background:rgba(20,16,10,.55); display:flex; align-items:flex-end; justify-content:center; }
+.ff .ff-fd-sheet .in { position:relative; background:var(--paper, #fff); width:min(560px, 100%); max-height:92vh; overflow:auto; border-radius:20px 20px 0 0; padding:22px 18px 28px; }
+.ff .ff-fd-sheet h3 { margin:0 28px 12px 0; font-family:var(--display); font-size:19px; }
+.ff .ff-fd-sheet .x { position:absolute; top:12px; right:12px; border:0; background:transparent; cursor:pointer; }
+@media (min-width:700px) { .ff .ff-fd-sheet { align-items:center; } .ff .ff-fd-sheet .in { border-radius:20px; } }
+
+.ff .ff-fd-page { max-width:860px; margin:0 auto; padding:14px 16px 90px; }
+.ff .ff-fd-back { border:0; background:transparent; color:var(--gold-dk); font:inherit; font-size:13px; cursor:pointer; padding:4px 0 10px; }
+.ff .ff-fd-crumb ol { list-style:none; display:flex; flex-wrap:wrap; gap:4px 0; margin:0 0 12px; padding:0; font-size:12.5px; color:var(--ink-3, #8a8378); }
+.ff .ff-fd-crumb li + li::before { content:"/"; margin:0 7px; opacity:.6; }
+.ff .ff-fd-crumb a { color:var(--gold-dk); }
+.ff .ff-fd-banner { background:rgba(176,141,60,.14); border:1px dashed var(--gold-dk); border-radius:12px; padding:9px 12px; font-size:12.5px; margin-bottom:12px; }
+.ff .ff-fd-intro { font-size:15.5px; line-height:1.6; margin:10px 0; max-width:62ch; }
+.ff .ff-fd-cta { display:flex; align-items:center; flex-wrap:wrap; gap:8px 18px; margin:18px 0 6px; }
+.ff .ff-fd-link { background:transparent; border:0; color:var(--gold-dk); text-decoration:underline; text-underline-offset:3px; font:inherit; font-size:13.5px; cursor:pointer; padding:6px 0; }
+.ff .ff-fd-rhead { display:flex; flex-direction:column; gap:10px; margin-bottom:6px; }
+.ff .ff-fd-chips { display:flex; flex-wrap:wrap; gap:6px; }
+.ff .ff-fd-chips button { border:1px solid var(--rule); background:transparent; border-radius:999px; padding:6px 12px; font:inherit; font-size:12.5px; cursor:pointer; color:var(--ink); }
+.ff .ff-fd-chips button.on { background:var(--ink); color:var(--paper, #fff); border-color:var(--ink); }
+.ff .ff-fd-h3 { font-family:var(--display); font-size:17px; margin:18px 0 2px; }
+.ff .ff-fd-sub { font-size:13px; color:var(--ink-2, #5b554c); margin:0 0 10px; line-height:1.5; max-width:62ch; }
+.ff .ff-fd-res { width:max-content; max-width:220px; }
+.ff .ff-fd-cov { font-size:11.5px; line-height:1.4; margin:6px 2px 0; color:var(--ink-2, #5b554c); white-space:normal; }
+.ff .ff-fd-unc { font-size:11.5px; line-height:1.4; margin:6px 2px 0; color:var(--gold-dk); white-space:normal; }
+.ff .ff-fd-wider { border-left:3px solid var(--gold-dk); background:rgba(176,141,60,.09); padding:10px 12px; border-radius:0 12px 12px 0; margin:20px 0 10px; font-size:13px; line-height:1.5; }
+.ff .ff-fd-wider p { margin:4px 0 0; }
+.ff .ff-fd-empty { border:1px dashed var(--rule); border-radius:14px; padding:16px; margin-top:12px; font-size:14px; }
+.ff .ff-fd-empty p { margin:6px 0 0; color:var(--ink-2, #5b554c); }
+.ff .ff-fd-card { border:1px solid var(--rule); border-radius:18px; padding:18px 16px; margin-top:26px; background:var(--paper, #fff); }
+.ff .ff-fd-card .ff-h2 { margin:0 0 4px; }
+.ff .ff-fd-faq { border-bottom:1px solid var(--rule); padding:10px 0; }
+.ff .ff-fd-faq summary { cursor:pointer; font-weight:600; font-size:14.5px; }
+.ff .ff-fd-faq p { margin:8px 0 2px; font-size:14px; line-height:1.55; color:var(--ink-2, #5b554c); max-width:62ch; }
+.ff .ff-fd-links ul { list-style:none; display:flex; flex-wrap:wrap; gap:6px 16px; padding:0; margin:6px 0 16px; }
+.ff .ff-fd-links a { color:var(--gold-dk); font-size:14px; }
+.ff .ff-fd-links { margin-top:26px; }
+.ff .ff-fd-dev { font-size:11.5px; color:var(--ink-3, #8a8378); margin:24px 0 0; line-height:1.5; }
+
+.ff .ff-fd-form { display:flex; flex-direction:column; gap:12px; margin-top:10px; }
+.ff .ff-fd-f { display:flex; flex-direction:column; gap:5px; font-size:13px; border:0; padding:0; margin:0; position:relative; min-width:0; }
+.ff .ff-fd-f > span, .ff .ff-fd-f legend { font-weight:600; font-size:13px; padding:0; }
+.ff .ff-fd-f input, .ff .ff-fd-f textarea, .ff .ff-fd-act input, .ff .ff-fd-act select, .ff .ff-fd-filters select, .ff .ff-fd-filters input[type=date], .ff .ff-fd-tbl select { font:inherit; font-size:14px; border:1px solid var(--rule); border-radius:10px; padding:10px 12px; background:var(--paper, #fff); color:var(--ink); min-width:0; }
+.ff .ff-fd-f input:focus, .ff .ff-fd-f textarea:focus { outline:0; border-color:var(--gold-dk); box-shadow:0 0 0 3px rgba(176,141,60,.18); }
+.ff .ff-fd-two { display:grid; grid-template-columns:1fr 1fr; gap:10px; align-items:end; }
+@media (max-width:520px) { .ff .ff-fd-two { grid-template-columns:1fr; } }
+.ff .ff-fd-chk { display:flex; gap:8px; align-items:center; font-size:13px; }
+.ff .ff-fd-err { color:#a8321f; font-size:12.5px; font-style:normal; }
+.ff .ff-fd-hint { color:var(--ink-3, #8a8378); font-size:12px; font-style:normal; }
+.ff .ff-fd-note { font-size:12.5px; color:var(--ink-3, #8a8378); margin:0; line-height:1.5; }
+.ff .ff-fd-co { font-size:13px; background:rgba(176,141,60,.1); border-radius:10px; padding:9px 12px; margin:0; line-height:1.5; }
+.ff .ff-fd-hp { position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
+.ff .ff-fd-opt summary { cursor:pointer; font-size:13px; color:var(--gold-dk); }
+.ff .ff-fd-opt { display:flex; flex-direction:column; gap:10px; }
+.ff .ff-fd-sug { list-style:none; margin:0; padding:0; border:1px solid var(--rule); border-radius:10px; background:var(--paper, #fff); overflow:hidden; }
+.ff .ff-fd-sug button { width:100%; text-align:left; border:0; background:transparent; padding:9px 12px; font:inherit; font-size:14px; cursor:pointer; }
+.ff .ff-fd-sug button:hover { background:rgba(176,141,60,.1); }
+.ff .ff-fd-sug small { display:block; color:var(--ink-3, #8a8378); font-size:11.5px; }
+.ff .ff-fd-done { border:1px solid var(--gold-dk); border-radius:14px; padding:16px; background:rgba(176,141,60,.08); font-size:14px; line-height:1.55; }
+.ff .ff-fd-done p { margin:6px 0; }
+.ff .ff-fd-done .ref { font-family:var(--display); letter-spacing:.04em; }
+
+.ff .ff-fd-tbl { display:flex; flex-direction:column; border:1px solid var(--rule); border-radius:12px; overflow:hidden; margin-top:10px; }
+.ff .ff-fd-tbl .tr { display:grid; grid-template-columns:1.1fr 1.3fr 1.2fr .9fr 1fr; gap:10px; padding:10px 12px; border:0; border-bottom:1px solid var(--rule); background:transparent; text-align:left; font:inherit; font-size:13px; align-items:start; width:100%; color:var(--ink); }
+.ff .ff-fd-tbl .tr > span { min-width:0; overflow-wrap:anywhere; }
+.ff .ff-fd-tbl .tr small { display:block; margin:2px 0 0; }
+.ff .ff-fd-tbl .th { font-weight:700; font-size:11.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-3, #8a8378); background:rgba(0,0,0,.03); }
+.ff .ff-fd-tbl button.tr { cursor:pointer; }
+.ff .ff-fd-tbl.pages .tr { grid-template-columns:26px 1.8fr .8fr .8fr 1.4fr .6fr; }
+.ff .ff-fd-tbl.markets .tr { grid-template-columns:1.4fr 1fr 1fr 1fr; }
+@media (max-width:720px) { .ff .ff-fd-tbl .tr, .ff .ff-fd-tbl.pages .tr { grid-template-columns:1fr 1fr; } .ff .ff-fd-tbl.markets .tr { grid-template-columns:1fr; } .ff .ff-fd-tbl .th { display:none; } }
+.ff .ff-fd-st { font-style:normal; font-size:11.5px; font-weight:700; border-radius:999px; padding:2px 9px; background:rgba(0,0,0,.07); display:inline-block; }
+.ff .ff-fd-st.new, .ff .ff-fd-st.published { background:rgba(176,141,60,.2); }
+.ff .ff-fd-st.approved, .ff .ff-fd-st.converted { background:rgba(60,140,80,.2); }
+.ff .ff-fd-st.unable_to_fill, .ff .ff-fd-st.closed { background:rgba(0,0,0,.1); }
+.ff .ff-fd-det { padding:12px 14px 14px; border-bottom:1px solid var(--rule); background:rgba(0,0,0,.02); }
+.ff .ff-fd-det dl, .ff .ff-fd-about { display:grid; grid-template-columns:110px 1fr; gap:6px 12px; font-size:13px; margin:0 0 12px; }
+.ff .ff-fd-det dt, .ff .ff-fd-about dt { font-weight:700; color:var(--ink-3, #8a8378); }
+.ff .ff-fd-det dd, .ff .ff-fd-about dd { margin:0; line-height:1.5; }
+.ff .ff-fd-act { display:flex; flex-wrap:wrap; gap:10px; align-items:end; margin:8px 0; }
+.ff .ff-fd-act label { display:flex; flex-direction:column; gap:4px; font-size:12px; }
+.ff .ff-fd-act label.ff-fd-chk { flex-direction:row; }
+.ff .ff-fd-act .grow { flex:1; min-width:160px; }
+.ff .ff-fd-filters { flex-wrap:wrap; }
+.ff .ff-fd-filters label { font-size:12px; display:flex; align-items:center; gap:6px; }
+.ff .ff-fd-batch { display:flex; flex-wrap:wrap; gap:8px 12px; align-items:center; padding:10px 12px; background:rgba(176,141,60,.12); border-radius:12px; margin:10px 0; }
+.ff .ff-fd-review { border:1px solid var(--gold-dk); border-radius:14px; padding:14px; margin:10px 0; background:var(--paper, #fff); }
+.ff .ff-fd-review h3 { margin:0 0 4px; font-size:16px; }
+.ff .ff-fd-review fieldset { border:1px solid var(--rule); border-radius:10px; margin:10px 0; display:flex; flex-direction:column; gap:6px; }
+.ff .ff-fd-ev { list-style:none; margin:10px 0; padding:0; display:flex; flex-direction:column; gap:8px; max-height:240px; overflow:auto; }
+.ff .ff-fd-ev small { color:var(--ink-3, #8a8378); margin-left:6px; }
+.ff .ff-fd-flag { display:block; font-style:normal; font-size:12px; color:#8a5a00; margin:2px 0 0 24px; }
+.ff .ff-fd-count { font-size:12px; color:var(--ink-3, #8a8378); }
+.ff .ff-fd-xml { background:#16130e; color:#e8dfc9; border-radius:12px; padding:12px; font-size:11.5px; overflow:auto; max-height:320px; }
+.ff .ff-fd-log { list-style:none; padding:0; margin:8px 0 0; font-size:12.5px; display:flex; flex-direction:column; gap:4px; }
+`;
+
+function NetMap11() {
+  /* Explore by area sits just above the map and is a separate control: choosing a place never opens the map. */
+  return (
+    <>
+    <AreaExplorer11 />
     <section id="ff-netmap" style={{ marginTop: 22, scrollMarginTop: 70 }}>
       <SectionHead icon={<I11.MapPin size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Where FireFlair is" />
       <FFMap mode="network" />
     </section>
+    </>
   );
 }
 
@@ -23863,7 +24768,7 @@ function AdmDatabase17({ state }) {
 const ADM17_SECTIONS = [
   ["overview", "Overview", A17I.Dash], ["people", "People", A17I.Users], ["companies", "Companies", A17I.Brief], ["guests", "Guests", A17I.Party],
   ["invites", "Invitations", A17I.Send], ["bookings", "Bookings", A17I.Cal], ["qa", "Q&A and sign-ups", A17I.Msg], ["analytics", "Analytics", A17I.Chart],
-  ["reviews", "Reviews", A17I.Star], ["cards", "Packages and cards", A17I.Layers], ["sites", "Sites", A17I.Globe],
+  ["reviews", "Reviews", A17I.Star], ["cards", "Packages and cards", A17I.Layers], ["sites", "Sites", A17I.Globe], ["areas", "Areas and requests", A17I.Globe],
   ["admins", "Admins", A17I.Shield], ["log", "Activity", A17I.Hist], ["db", "Database", A17I.Db],
 ];
 function Admin17() {
@@ -23887,7 +24792,7 @@ function Admin17() {
       gold: [...people.filter(p => tierP(p) === "gold").map(p => ({ id: p.id, name: p.name, kind: "FF Team" })), ...companies.filter(c => tierC(c) === "gold").map(c => ({ id: c.id, name: c.name, kind: "FF Staff" }))],
     };
   }, [state]);
-  const counts = { people: d.people.length, companies: d.companies.length, guests: d.guests.length, invites: A.invites.length, bookings: d.engagements.length, cards: d.packages.length + d.cards.length, qa: d.qa.length, reviews: d.reviews.length, admins: d.admins.length, log: A.log.length };
+  const counts = { areas: fdOf(state).requests.filter(r => r.status === "new").length || null, people: d.people.length, companies: d.companies.length, guests: d.guests.length, invites: A.invites.length, bookings: d.engagements.length, cards: d.packages.length + d.cards.length, qa: d.qa.length, reviews: d.reviews.length, admins: d.admins.length, log: A.log.length };
   const NEEDS = { qa: "data", db: "data", log: "data", analytics: "data", invites: "hide", bookings: "data" };
   const secs = ADM17_SECTIONS.filter(([k]) => !NEEDS[k] || can(NEEDS[k]));
   const cur = secs.find(x => x[0] === sec) || secs[0];
@@ -23920,6 +24825,7 @@ function Admin17() {
           <h2 className="ff-adm-h2">{cur[1]}</h2>
           {sk === "overview" && <AdmOverview17 {...P} />}
           {sk === "sites" && <AdmSites17 {...P} />}
+          {sk === "areas" && <AdmAreas11 {...P} />}
           {sk === "people" && <AdmPeople17 {...P} />}
           {sk === "companies" && <AdmCompanies17 {...P} />}
           {sk === "cards" && <AdmCards17 {...P} />}

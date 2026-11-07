@@ -1,0 +1,32 @@
+{
+  "validated_on": "2026-11-07",
+  "checks": {
+    "unique_catalog_ids": true,
+    "exactly_1000_unique_candidate_locations": true,
+    "exactly_1000_unique_routes": true,
+    "all_candidates_require_review": true,
+    "full_source_tree_acyclic_and_connected": true,
+    "candidate_geographies_resolve": true,
+    "page_parents_resolve": true,
+    "child_links_reciprocate": true,
+    "four_uk_nations": true,
+    "32_london_boroughs_plus_city": true,
+    "20_camden_children": true,
+    "london_duplicate_route_avoided": true,
+    "berkhamsted_hemel_st_albans_distinct": true,
+    "british_country_code_with_uk_route": true,
+    "worldwide_and_europe_hubs": true,
+    "no_legacy_country_codes": true,
+    "point_coordinates_in_valid_ranges": true,
+    "original_source_checksums_preserved": true,
+    "offline_rebuild_identical_EUROPE_NAVIGATION.md": true,
+    "offline_rebuild_identical_countries_and_territories.json": true,
+    "offline_rebuild_identical_launch_locations.csv": true,
+    "offline_rebuild_identical_launch_pages.json": true,
+    "offline_rebuild_identical_locations.jsonl": true,
+    "offline_rebuild_identical_page_routing_aliases.json": true,
+    "offline_rebuild_identical_validation_report.json": true,
+    "offline_rebuild_requires_no_network_or_api_key": true
+  },
+  "scope": "Dataset structure and offline reproducibility only. No application, geography boundary, SEO approval or live backend validation is implied."
+}

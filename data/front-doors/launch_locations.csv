@@ -1,0 +1,1001 @@
+location_id,display_name,kind,parent_page_id,path,country_code,geo_review_status,publication_state,index_state
+country:GB,UK,country_or_territory,,/areas/uk,GB,needs_review,prepared,noindex
+gn:6269131,England,uk_nation,country:GB,/areas/uk/england,GB,needs_review,prepared,noindex
+gn:3333122,Barnsley,administrative_area,gn:6269131,/areas/uk/england/barnsley,GB,needs_review,prepared,noindex
+gn:2651497,Darton,populated_place,gn:3333122,/areas/uk/england/barnsley/darton,GB,needs_review,prepared,noindex
+gn:3333123,Bath and North East Somerset,administrative_area,gn:6269131,/areas/uk/england/bath-and-north-east-somerset,GB,needs_review,prepared,noindex
+gn:2656173,Bath,populated_place,gn:3333123,/areas/uk/england/bath-and-north-east-somerset/bath,GB,needs_review,prepared,noindex
+gn:2645733,Keynsham,populated_place,gn:3333123,/areas/uk/england/bath-and-north-east-somerset/keynsham,GB,needs_review,prepared,noindex
+gn:7290534,Bedford,administrative_area,gn:6269131,/areas/uk/england/bedford,GB,needs_review,prepared,noindex
+gn:2645831,Kempston,populated_place,gn:7290534,/areas/uk/england/bedford/kempston,GB,needs_review,prepared,noindex
+gn:6947168,Kempston Hardwick,populated_place,gn:7290534,/areas/uk/england/bedford/kempston-hardwick,GB,needs_review,prepared,noindex
+gn:3333125,Birmingham,administrative_area,gn:6269131,/areas/uk/england/birmingham,GB,needs_review,prepared,noindex
+gn:2657703,Acocks Green,neighbourhood,gn:3333125,/areas/uk/england/birmingham/acocks-green,GB,needs_review,prepared,noindex
+gn:2656867,Aston,neighbourhood,gn:3333125,/areas/uk/england/birmingham/aston,GB,needs_review,prepared,noindex
+gn:7302130,Bartley Green,populated_place,gn:3333125,/areas/uk/england/birmingham/bartley-green,GB,needs_review,prepared,noindex
+gn:2636486,Sutton Coldfield,populated_place,gn:3333125,/areas/uk/england/birmingham/sutton-coldfield,GB,needs_review,prepared,noindex
+gn:12076699,Washwood Heath,neighbourhood,gn:3333125,/areas/uk/england/birmingham/washwood-heath,GB,needs_review,prepared,noindex
+gn:3333126,Blackburn with Darwen,administrative_area,gn:6269131,/areas/uk/england/blackburn-with-darwen,GB,needs_review,prepared,noindex
+gn:2655524,Blackburn,populated_place,gn:3333126,/areas/uk/england/blackburn-with-darwen/blackburn,GB,needs_review,prepared,noindex
+gn:2651495,Darwen,populated_place,gn:3333126,/areas/uk/england/blackburn-with-darwen/darwen,GB,needs_review,prepared,noindex
+gn:3333127,Blackpool,administrative_area,gn:6269131,/areas/uk/england/blackpool,GB,needs_review,prepared,noindex
+gn:3333128,Bolton,administrative_area,gn:6269131,/areas/uk/england/bolton,GB,needs_review,prepared,noindex
+gn:2649650,Farnworth,populated_place,gn:3333128,/areas/uk/england/bolton/farnworth,GB,needs_review,prepared,noindex
+gn:2646542,Horwich,populated_place,gn:3333128,/areas/uk/england/bolton/horwich,GB,needs_review,prepared,noindex
+gn:2634387,Westhoughton,populated_place,gn:3333128,/areas/uk/england/bolton/westhoughton,GB,needs_review,prepared,noindex
+gn:12165737,"Bournemouth, Christchurch and Poole Council",administrative_area,gn:6269131,/areas/uk/england/bournemouth-christchurch-and-poole-council,GB,needs_review,prepared,noindex
+gn:2655095,Bournemouth,populated_place,gn:12165737,/areas/uk/england/bournemouth-christchurch-and-poole-council/bournemouth,GB,needs_review,prepared,noindex
+gn:2653075,Christchurch,populated_place,gn:12165737,/areas/uk/england/bournemouth-christchurch-and-poole-council/christchurch,GB,needs_review,prepared,noindex
+gn:2640101,Poole,populated_place,gn:12165737,/areas/uk/england/bournemouth-christchurch-and-poole-council/poole,GB,needs_review,prepared,noindex
+gn:3333130,Bracknell Forest,administrative_area,gn:6269131,/areas/uk/england/bracknell-forest,GB,needs_review,prepared,noindex
+gn:2655009,Bracknell,populated_place,gn:3333130,/areas/uk/england/bracknell-forest/bracknell,GB,needs_review,prepared,noindex
+gn:2651831,Crowthorne,populated_place,gn:3333130,/areas/uk/england/bracknell-forest/crowthorne,GB,needs_review,prepared,noindex
+gn:2638580,Sandhurst,populated_place,gn:3333130,/areas/uk/england/bracknell-forest/sandhurst,GB,needs_review,prepared,noindex
+gn:3333131,Bradford,administrative_area,gn:6269131,/areas/uk/england/bradford,GB,needs_review,prepared,noindex
+gn:2655642,Bingley,populated_place,gn:3333131,/areas/uk/england/bradford/bingley,GB,needs_review,prepared,noindex
+gn:2645889,Keighley,populated_place,gn:3333131,/areas/uk/england/bradford/keighley,GB,needs_review,prepared,noindex
+gn:2637958,Shipley,populated_place,gn:3333131,/areas/uk/england/bradford/shipley,GB,needs_review,prepared,noindex
+gn:3333133,Brighton and Hove,administrative_area,gn:6269131,/areas/uk/england/brighton-and-hove,GB,needs_review,prepared,noindex
+gn:2654710,Brighton,populated_place,gn:3333133,/areas/uk/england/brighton-and-hove/brighton,GB,needs_review,prepared,noindex
+gn:2646504,Hove,populated_place,gn:3333133,/areas/uk/england/brighton-and-hove/hove,GB,needs_review,prepared,noindex
+gn:2639998,Portslade,populated_place,gn:3333133,/areas/uk/england/brighton-and-hove/portslade,GB,needs_review,prepared,noindex
+gn:2639069,Rottingdean,populated_place,gn:3333133,/areas/uk/england/brighton-and-hove/rottingdean,GB,needs_review,prepared,noindex
+gn:3333134,Bristol,administrative_area,gn:6269131,/areas/uk/england/bristol,GB,needs_review,prepared,noindex
+gn:2654408,Buckinghamshire,administrative_area,gn:6269131,/areas/uk/england/buckinghamshire,GB,needs_review,prepared,noindex
+gn:2657356,Amersham,populated_place,gn:2654408,/areas/uk/england/buckinghamshire/amersham,GB,needs_review,prepared,noindex
+gn:6690592,Amersham on the Hill,populated_place,gn:2654408,/areas/uk/england/buckinghamshire/amersham-on-the-hill,GB,needs_review,prepared,noindex
+gn:2656719,Aylesbury,populated_place,gn:2654408,/areas/uk/england/buckinghamshire/aylesbury,GB,needs_review,prepared,noindex
+gn:2653393,Chalfont Saint Peter,populated_place,gn:2654408,/areas/uk/england/buckinghamshire/chalfont-saint-peter,GB,needs_review,prepared,noindex
+gn:2653235,Chesham,populated_place,gn:2654408,/areas/uk/england/buckinghamshire/chesham,GB,needs_review,prepared,noindex
+gn:6620444,Gerrards Cross,populated_place,gn:2654408,/areas/uk/england/buckinghamshire/gerrards-cross,GB,needs_review,prepared,noindex
+gn:2646914,High Wycombe,populated_place,gn:2654408,/areas/uk/england/buckinghamshire/high-wycombe,GB,needs_review,prepared,noindex
+gn:2643003,Marlow,populated_place,gn:2654408,/areas/uk/england/buckinghamshire/marlow,GB,needs_review,prepared,noindex
+gn:3333136,Bury,administrative_area,gn:6269131,/areas/uk/england/bury,GB,needs_review,prepared,noindex
+gn:2639897,Prestwich,populated_place,gn:3333136,/areas/uk/england/bury/prestwich,GB,needs_review,prepared,noindex
+gn:6691227,Radcliffe,populated_place,gn:3333136,/areas/uk/england/bury/radcliffe,GB,needs_review,prepared,noindex
+gn:2639668,Ramsbottom,populated_place,gn:3333136,/areas/uk/england/bury/ramsbottom,GB,needs_review,prepared,noindex
+gn:2634103,Whitefield,populated_place,gn:3333136,/areas/uk/england/bury/whitefield,GB,needs_review,prepared,noindex
+gn:3333137,Calderdale,administrative_area,gn:6269131,/areas/uk/england/calderdale,GB,needs_review,prepared,noindex
+gn:2654715,Brighouse,populated_place,gn:3333137,/areas/uk/england/calderdale/brighouse,GB,needs_review,prepared,noindex
+gn:2647632,Halifax,populated_place,gn:3333137,/areas/uk/england/calderdale/halifax,GB,needs_review,prepared,noindex
+gn:2653940,Cambridgeshire,administrative_area,gn:6269131,/areas/uk/england/cambridgeshire,GB,needs_review,prepared,noindex
+gn:2653941,Cambridge,populated_place,gn:2653940,/areas/uk/england/cambridgeshire/cambridge,GB,needs_review,prepared,noindex
+gn:2650023,Ely,populated_place,gn:2653940,/areas/uk/england/cambridgeshire/ely,GB,needs_review,prepared,noindex
+gn:2646393,Huntingdon,populated_place,gn:2653940,/areas/uk/england/cambridgeshire/huntingdon,GB,needs_review,prepared,noindex
+gn:2643071,March,populated_place,gn:2653940,/areas/uk/england/cambridgeshire/march,GB,needs_review,prepared,noindex
+gn:13353776,Primrose Place,populated_place,gn:2653940,/areas/uk/england/cambridgeshire/primrose-place,GB,needs_review,prepared,noindex
+gn:2638717,Saint Neots,populated_place,gn:2653940,/areas/uk/england/cambridgeshire/saint-neots,GB,needs_review,prepared,noindex
+gn:2633771,Wisbech,populated_place,gn:2653940,/areas/uk/england/cambridgeshire/wisbech,GB,needs_review,prepared,noindex
+gn:7290535,Central Bedfordshire,administrative_area,gn:6269131,/areas/uk/england/central-bedfordshire,GB,needs_review,prepared,noindex
+gn:2657337,Ampthill,populated_place,gn:7290535,/areas/uk/england/central-bedfordshire/ampthill,GB,needs_review,prepared,noindex
+gn:2650657,Dunstable,populated_place,gn:7290535,/areas/uk/england/central-bedfordshire/dunstable,GB,needs_review,prepared,noindex
+gn:2644652,Leighton Buzzard,populated_place,gn:7290535,/areas/uk/england/central-bedfordshire/leighton-buzzard,GB,needs_review,prepared,noindex
+gn:7290536,Cheshire East,administrative_area,gn:6269131,/areas/uk/england/cheshire-east,GB,needs_review,prepared,noindex
+gn:2652464,Congleton,populated_place,gn:7290536,/areas/uk/england/cheshire-east/congleton,GB,needs_review,prepared,noindex
+gn:2652002,Crewe,populated_place,gn:7290536,/areas/uk/england/cheshire-east/crewe,GB,needs_review,prepared,noindex
+gn:2643266,Macclesfield,populated_place,gn:7290536,/areas/uk/england/cheshire-east/macclesfield,GB,needs_review,prepared,noindex
+gn:2641892,Nantwich,populated_place,gn:7290536,/areas/uk/england/cheshire-east/nantwich,GB,needs_review,prepared,noindex
+gn:2638600,Sandbach,populated_place,gn:7290536,/areas/uk/england/cheshire-east/sandbach,GB,needs_review,prepared,noindex
+gn:2633883,Wilmslow,populated_place,gn:7290536,/areas/uk/england/cheshire-east/wilmslow,GB,needs_review,prepared,noindex
+gn:7290537,Cheshire West and Chester,administrative_area,gn:6269131,/areas/uk/england/cheshire-west-and-chester,GB,needs_review,prepared,noindex
+gn:2653228,Chester,populated_place,gn:7290537,/areas/uk/england/cheshire-west-and-chester/chester,GB,needs_review,prepared,noindex
+gn:2650096,Ellesmere Port Town,populated_place,gn:7290537,/areas/uk/england/cheshire-west-and-chester/ellesmere-port-town,GB,needs_review,prepared,noindex
+gn:2641224,Northwich,populated_place,gn:7290537,/areas/uk/england/cheshire-west-and-chester/northwich,GB,needs_review,prepared,noindex
+gn:2633810,Winsford,populated_place,gn:7290537,/areas/uk/england/cheshire-west-and-chester/winsford,GB,needs_review,prepared,noindex
+gn:2652355,Cornwall,administrative_area,gn:6269131,/areas/uk/england/cornwall,GB,needs_review,prepared,noindex
+gn:2653945,Camborne,populated_place,gn:2652355,/areas/uk/england/cornwall/camborne,GB,needs_review,prepared,noindex
+gn:2649715,Falmouth,populated_place,gn:2652355,/areas/uk/england/cornwall/falmouth,GB,needs_review,prepared,noindex
+gn:2641589,Newquay,populated_place,gn:2652355,/areas/uk/england/cornwall/newquay,GB,needs_review,prepared,noindex
+gn:2640377,Penzance,populated_place,gn:2652355,/areas/uk/england/cornwall/penzance,GB,needs_review,prepared,noindex
+gn:2639524,Redruth,populated_place,gn:2652355,/areas/uk/england/cornwall/redruth,GB,needs_review,prepared,noindex
+gn:2638853,St Austell,populated_place,gn:2652355,/areas/uk/england/cornwall/st-austell,GB,needs_review,prepared,noindex
+gn:2635412,Truro,populated_place,gn:2652355,/areas/uk/england/cornwall/truro,GB,needs_review,prepared,noindex
+gn:2650629,County Durham,administrative_area,gn:6269131,/areas/uk/england/county-durham,GB,needs_review,prepared,noindex
+gn:2655583,Bishop Auckland,populated_place,gn:2650629,/areas/uk/england/county-durham/bishop-auckland,GB,needs_review,prepared,noindex
+gn:2653224,Chester-le-Street,populated_place,gn:2650629,/areas/uk/england/county-durham/chester-le-street,GB,needs_review,prepared,noindex
+gn:2652437,Consett,populated_place,gn:2650629,/areas/uk/england/county-durham/consett,GB,needs_review,prepared,noindex
+gn:2650628,Durham,populated_place,gn:2650629,/areas/uk/england/county-durham/durham,GB,needs_review,prepared,noindex
+gn:2641555,Newton Aycliffe,populated_place,gn:2650629,/areas/uk/england/county-durham/newton-aycliffe,GB,needs_review,prepared,noindex
+gn:2640349,Peterlee,populated_place,gn:2650629,/areas/uk/england/county-durham/peterlee,GB,needs_review,prepared,noindex
+gn:2638302,Seaham,populated_place,gn:2650629,/areas/uk/england/county-durham/seaham,GB,needs_review,prepared,noindex
+gn:2637235,Spennymoor,populated_place,gn:2650629,/areas/uk/england/county-durham/spennymoor,GB,needs_review,prepared,noindex
+gn:8224783,Stanley,populated_place,gn:2650629,/areas/uk/england/county-durham/stanley,GB,needs_review,prepared,noindex
+gn:3333139,Coventry,administrative_area,gn:6269131,/areas/uk/england/coventry,GB,needs_review,prepared,noindex
+gn:2651712,Cumbria,administrative_area,gn:6269131,/areas/uk/england/cumbria,GB,needs_review,prepared,noindex
+gn:2656241,Barrow in Furness,populated_place,gn:2651712,/areas/uk/england/cumbria/barrow-in-furness,GB,needs_review,prepared,noindex
+gn:2653775,Carlisle,populated_place,gn:2651712,/areas/uk/england/cumbria/carlisle,GB,needs_review,prepared,noindex
+gn:2645826,Kendal,populated_place,gn:2651712,/areas/uk/england/cumbria/kendal,GB,needs_review,prepared,noindex
+gn:2634096,Whitehaven,populated_place,gn:2651712,/areas/uk/england/cumbria/whitehaven,GB,needs_review,prepared,noindex
+gn:2633553,Workington,populated_place,gn:2651712,/areas/uk/england/cumbria/workington,GB,needs_review,prepared,noindex
+gn:3333141,Darlington,administrative_area,gn:6269131,/areas/uk/england/darlington,GB,needs_review,prepared,noindex
+gn:3333142,Derby,administrative_area,gn:6269131,/areas/uk/england/derby,GB,needs_review,prepared,noindex
+gn:2651346,Derbyshire,administrative_area,gn:6269131,/areas/uk/england/derbyshire,GB,needs_review,prepared,noindex
+gn:2657508,Alfreton,populated_place,gn:2651346,/areas/uk/england/derbyshire/alfreton,GB,needs_review,prepared,noindex
+gn:2655942,Belper,populated_place,gn:2651346,/areas/uk/england/derbyshire/belper,GB,needs_review,prepared,noindex
+gn:2654141,Buxton,populated_place,gn:2651346,/areas/uk/england/derbyshire/buxton,GB,needs_review,prepared,noindex
+gn:2653225,Chesterfield,populated_place,gn:2651346,/areas/uk/england/derbyshire/chesterfield,GB,needs_review,prepared,noindex
+gn:2650967,Dronfield,populated_place,gn:2651346,/areas/uk/england/derbyshire/dronfield,GB,needs_review,prepared,noindex
+gn:2648405,Glossop,populated_place,gn:2651346,/areas/uk/england/derbyshire/glossop,GB,needs_review,prepared,noindex
+gn:2647227,Heanor,populated_place,gn:2651346,/areas/uk/england/derbyshire/heanor,GB,needs_review,prepared,noindex
+gn:8299617,High Peak,populated_place,gn:2651346,/areas/uk/england/derbyshire/high-peak,GB,needs_review,prepared,noindex
+gn:2646274,Ilkeston,populated_place,gn:2651346,/areas/uk/england/derbyshire/ilkeston,GB,needs_review,prepared,noindex
+gn:2643697,Long Eaton,populated_place,gn:2651346,/areas/uk/england/derbyshire/long-eaton,GB,needs_review,prepared,noindex
+gn:2641612,New Mills,populated_place,gn:2651346,/areas/uk/england/derbyshire/new-mills,GB,needs_review,prepared,noindex
+gn:2639325,Ripley,populated_place,gn:2651346,/areas/uk/england/derbyshire/ripley,GB,needs_review,prepared,noindex
+gn:2636995,Staveley,populated_place,gn:2651346,/areas/uk/england/derbyshire/staveley,GB,needs_review,prepared,noindex
+gn:2636465,Swadlincote,populated_place,gn:2651346,/areas/uk/england/derbyshire/swadlincote,GB,needs_review,prepared,noindex
+gn:2651292,Devon,administrative_area,gn:6269131,/areas/uk/england/devon,GB,needs_review,prepared,noindex
+gn:2656281,Barnstaple,populated_place,gn:2651292,/areas/uk/england/devon/barnstaple,GB,needs_review,prepared,noindex
+gn:2655707,Bideford,populated_place,gn:2651292,/areas/uk/england/devon/bideford,GB,needs_review,prepared,noindex
+gn:2649808,Exeter,populated_place,gn:2651292,/areas/uk/england/devon/exeter,GB,needs_review,prepared,noindex
+gn:2649800,Exmouth,populated_place,gn:2651292,/areas/uk/england/devon/exmouth,GB,needs_review,prepared,noindex
+gn:6691884,Heavitree,neighbourhood,gn:2651292,/areas/uk/england/devon/heavitree,GB,needs_review,prepared,noindex
+gn:2641557,Newton Abbot,populated_place,gn:2651292,/areas/uk/england/devon/newton-abbot,GB,needs_review,prepared,noindex
+gn:2635762,Tiverton,populated_place,gn:2651292,/areas/uk/england/devon/tiverton,GB,needs_review,prepared,noindex
+gn:2638918,District of Rutland,administrative_area,gn:6269131,/areas/uk/england/district-of-rutland,GB,needs_review,prepared,noindex
+gn:3333143,Doncaster,administrative_area,gn:6269131,/areas/uk/england/doncaster,GB,needs_review,prepared,noindex
+gn:2657658,Adwick le Street,populated_place,gn:3333143,/areas/uk/england/doncaster/adwick-le-street,GB,needs_review,prepared,noindex
+gn:2655882,Bentley,populated_place,gn:3333143,/areas/uk/england/doncaster/bentley,GB,needs_review,prepared,noindex
+gn:2635997,Thorne,populated_place,gn:3333143,/areas/uk/england/doncaster/thorne,GB,needs_review,prepared,noindex
+gn:2651079,Dorset,administrative_area,gn:6269131,/areas/uk/england/dorset,GB,needs_review,prepared,noindex
+gn:6691927,Ferndown,populated_place,gn:2651079,/areas/uk/england/dorset/ferndown,GB,needs_review,prepared,noindex
+gn:2634202,Weymouth,populated_place,gn:2651079,/areas/uk/england/dorset/weymouth,GB,needs_review,prepared,noindex
+gn:3333144,Dudley,administrative_area,gn:6269131,/areas/uk/england/dudley,GB,needs_review,prepared,noindex
+gn:2654724,Brierley Hill,populated_place,gn:3333144,/areas/uk/england/dudley/brierley-hill,GB,needs_review,prepared,noindex
+gn:2647639,Halesowen,populated_place,gn:3333144,/areas/uk/england/dudley/halesowen,GB,needs_review,prepared,noindex
+gn:2645420,Kingswinford,populated_place,gn:3333144,/areas/uk/england/dudley/kingswinford,GB,needs_review,prepared,noindex
+gn:2636769,Stourbridge,populated_place,gn:3333144,/areas/uk/england/dudley/stourbridge,GB,needs_review,prepared,noindex
+gn:2650345,East Riding of Yorkshire,administrative_area,gn:6269131,/areas/uk/england/east-riding-of-yorkshire,GB,needs_review,prepared,noindex
+gn:2655785,Beverley,populated_place,gn:2650345,/areas/uk/england/east-riding-of-yorkshire/beverley,GB,needs_review,prepared,noindex
+gn:2654728,Bridlington,populated_place,gn:2650345,/areas/uk/england/east-riding-of-yorkshire/bridlington,GB,needs_review,prepared,noindex
+gn:2654532,Brough,populated_place,gn:2650345,/areas/uk/england/east-riding-of-yorkshire/brough,GB,needs_review,prepared,noindex
+gn:2648319,Goole,populated_place,gn:2650345,/areas/uk/england/east-riding-of-yorkshire/goole,GB,needs_review,prepared,noindex
+gn:2650328,East Sussex,administrative_area,gn:6269131,/areas/uk/england/east-sussex,GB,needs_review,prepared,noindex
+gn:2655777,Bexhill-on-Sea,populated_place,gn:2650328,/areas/uk/england/east-sussex/bexhill-on-sea,GB,needs_review,prepared,noindex
+gn:2651852,Crowborough,populated_place,gn:2650328,/areas/uk/england/east-sussex/crowborough,GB,needs_review,prepared,noindex
+gn:2650497,Eastbourne,populated_place,gn:2650328,/areas/uk/england/east-sussex/eastbourne,GB,needs_review,prepared,noindex
+gn:2647655,Hailsham,populated_place,gn:2650328,/areas/uk/england/east-sussex/hailsham,GB,needs_review,prepared,noindex
+gn:2647356,Hastings,populated_place,gn:2650328,/areas/uk/england/east-sussex/hastings,GB,needs_review,prepared,noindex
+gn:2644559,Lewes,populated_place,gn:2650328,/areas/uk/england/east-sussex/lewes,GB,needs_review,prepared,noindex
+gn:8128721,Peacehaven,populated_place,gn:2650328,/areas/uk/england/east-sussex/peacehaven,GB,needs_review,prepared,noindex
+gn:2638311,Seaford,populated_place,gn:2650328,/areas/uk/england/east-sussex/seaford,GB,needs_review,prepared,noindex
+gn:2635243,Uckfield,populated_place,gn:2650328,/areas/uk/england/east-sussex/uckfield,GB,needs_review,prepared,noindex
+gn:2649889,Essex,administrative_area,gn:6269131,/areas/uk/england/essex,GB,needs_review,prepared,noindex
+gn:2656194,Basildon,populated_place,gn:2649889,/areas/uk/england/essex/basildon,GB,needs_review,prepared,noindex
+gn:2655672,Billericay,populated_place,gn:2649889,/areas/uk/england/essex/billericay,GB,needs_review,prepared,noindex
+gn:2654938,Braintree,populated_place,gn:2649889,/areas/uk/england/essex/braintree,GB,needs_review,prepared,noindex
+gn:2654782,Brentwood,populated_place,gn:2649889,/areas/uk/england/essex/brentwood,GB,needs_review,prepared,noindex
+gn:7911271,Canvey Island,populated_place,gn:2649889,/areas/uk/england/essex/canvey-island,GB,needs_review,prepared,noindex
+gn:2653266,Chelmsford,populated_place,gn:2649889,/areas/uk/england/essex/chelmsford,GB,needs_review,prepared,noindex
+gn:2652974,Clacton-on-Sea,populated_place,gn:2649889,/areas/uk/england/essex/clacton-on-sea,GB,needs_review,prepared,noindex
+gn:2652618,Colchester,populated_place,gn:2649889,/areas/uk/england/essex/colchester,GB,needs_review,prepared,noindex
+gn:2647679,Hadleigh,populated_place,gn:2649889,/areas/uk/england/essex/hadleigh,GB,needs_review,prepared,noindex
+gn:2647461,Harlow,populated_place,gn:2649889,/areas/uk/england/essex/harlow,GB,needs_review,prepared,noindex
+gn:2647383,Harwich,populated_place,gn:2649889,/areas/uk/england/essex/harwich,GB,needs_review,prepared,noindex
+gn:2643160,Maldon,populated_place,gn:2649889,/areas/uk/england/essex/maldon,GB,needs_review,prepared,noindex
+gn:2640246,Pitsea,populated_place,gn:2649889,/areas/uk/england/essex/pitsea,GB,needs_review,prepared,noindex
+gn:2639583,Rayleigh,populated_place,gn:2649889,/areas/uk/england/essex/rayleigh,GB,needs_review,prepared,noindex
+gn:2637476,South Benfleet,populated_place,gn:2649889,/areas/uk/england/essex/south-benfleet,GB,needs_review,prepared,noindex
+gn:2634843,Waltham Abbey,populated_place,gn:2649889,/areas/uk/england/essex/waltham-abbey,GB,needs_review,prepared,noindex
+gn:2634826,Walton-on-the-Naze,populated_place,gn:2649889,/areas/uk/england/essex/walton-on-the-naze,GB,needs_review,prepared,noindex
+gn:2633976,Wickford,populated_place,gn:2649889,/areas/uk/england/essex/wickford,GB,needs_review,prepared,noindex
+gn:2633749,Witham,populated_place,gn:2649889,/areas/uk/england/essex/witham,GB,needs_review,prepared,noindex
+gn:2648772,Gateshead,administrative_area,gn:6269131,/areas/uk/england/gateshead,GB,needs_review,prepared,noindex
+gn:2649578,Felling,populated_place,gn:2648772,/areas/uk/england/gateshead/felling,GB,needs_review,prepared,noindex
+gn:2648402,Gloucestershire,administrative_area,gn:6269131,/areas/uk/england/gloucestershire,GB,needs_review,prepared,noindex
+gn:2653261,Cheltenham,populated_place,gn:2648402,/areas/uk/england/gloucestershire/cheltenham,GB,needs_review,prepared,noindex
+gn:2652995,Cirencester,populated_place,gn:2648402,/areas/uk/england/gloucestershire/cirencester,GB,needs_review,prepared,noindex
+gn:2648404,Gloucester,populated_place,gn:2648402,/areas/uk/england/gloucestershire/gloucester,GB,needs_review,prepared,noindex
+gn:2636616,Stroud,populated_place,gn:2648402,/areas/uk/england/gloucestershire/stroud,GB,needs_review,prepared,noindex
+gn:2636071,Tewkesbury,populated_place,gn:2648402,/areas/uk/england/gloucestershire/tewkesbury,GB,needs_review,prepared,noindex
+gn:2648110,Greater London,administrative_area,gn:6269131,/areas/uk/england/greater-london,GB,needs_review,prepared,noindex
+gn:3333120,Barking and Dagenham,london_borough,gn:2648110,/areas/uk/england/greater-london/barking-and-dagenham,GB,needs_review,prepared,noindex
+gn:2656333,Barking,populated_place,gn:3333120,/areas/uk/england/greater-london/barking-and-dagenham/barking,GB,needs_review,prepared,noindex
+gn:6690870,Becontree,neighbourhood,gn:3333120,/areas/uk/england/greater-london/barking-and-dagenham/becontree,GB,needs_review,prepared,noindex
+gn:2651621,Dagenham,populated_place,gn:3333120,/areas/uk/england/greater-london/barking-and-dagenham/dagenham,GB,needs_review,prepared,noindex
+gn:3333121,Barnet,london_borough,gn:2648110,/areas/uk/england/greater-london/barnet,GB,needs_review,prepared,noindex
+gn:2656295,Barnet,populated_place,gn:3333121,/areas/uk/england/greater-london/barnet/barnet,GB,needs_review,prepared,noindex
+gn:12048142,East Barnet,neighbourhood,gn:3333121,/areas/uk/england/greater-london/barnet/east-barnet,GB,needs_review,prepared,noindex
+gn:2649441,Finchley,populated_place,gn:3333121,/areas/uk/england/greater-london/barnet/finchley,GB,needs_review,prepared,noindex
+gn:2649055,Friern Barnet,populated_place,gn:3333121,/areas/uk/england/greater-london/barnet/friern-barnet,GB,needs_review,prepared,noindex
+gn:7535506,Golders Green,populated_place,gn:3333121,/areas/uk/england/greater-london/barnet/golders-green,GB,needs_review,prepared,noindex
+gn:3333124,Bexley,london_borough,gn:2648110,/areas/uk/england/greater-london/bexley,GB,needs_review,prepared,noindex
+gn:2655775,Bexley,populated_place,gn:3333124,/areas/uk/england/greater-london/bexley/bexley,GB,needs_review,prepared,noindex
+gn:2634579,Welling,populated_place,gn:3333124,/areas/uk/england/greater-london/bexley/welling,GB,needs_review,prepared,noindex
+gn:3333132,Brent,london_borough,gn:2648110,/areas/uk/england/greater-london/brent,GB,needs_review,prepared,noindex
+gn:2654789,Brent,neighbourhood,gn:3333132,/areas/uk/england/greater-london/brent/brent,GB,needs_review,prepared,noindex
+gn:2651984,Cricklewood,populated_place,gn:3333132,/areas/uk/england/greater-london/brent/cricklewood,GB,needs_review,prepared,noindex
+gn:2647468,Harlesden,populated_place,gn:3333132,/areas/uk/england/greater-london/brent/harlesden,GB,needs_review,prepared,noindex
+gn:2634549,Wembley,populated_place,gn:3333132,/areas/uk/england/greater-london/brent/wembley,GB,needs_review,prepared,noindex
+gn:2633907,Willesden,populated_place,gn:3333132,/areas/uk/england/greater-london/brent/willesden,GB,needs_review,prepared,noindex
+gn:3333135,Bromley,london_borough,gn:2648110,/areas/uk/england/greater-london/bromley,GB,needs_review,prepared,noindex
+gn:2656065,Beckenham,populated_place,gn:3333135,/areas/uk/england/greater-london/bromley/beckenham,GB,needs_review,prepared,noindex
+gn:3333138,Camden,london_borough,gn:2648110,/areas/uk/england/greater-london/camden,GB,needs_review,prepared,noindex
+gn:6690581,Belsize Park,populated_place,gn:3333138,/areas/uk/england/greater-london/camden/belsize-park,GB,needs_review,prepared,noindex
+gn:2655333,Bloomsbury,neighbourhood,gn:3333138,/areas/uk/england/greater-london/camden/bloomsbury,GB,needs_review,prepared,noindex
+gn:3345437,Camden Town,populated_place,gn:3333138,/areas/uk/england/greater-london/camden/camden-town,GB,needs_review,prepared,noindex
+gn:6690583,Chalk Farm,populated_place,gn:3333138,/areas/uk/england/greater-london/camden/chalk-farm,GB,needs_review,prepared,noindex
+gn:2652222,Covent Garden,neighbourhood,gn:3333138,/areas/uk/england/greater-london/camden/covent-garden,GB,needs_review,prepared,noindex
+gn:13269392,Dartmouth Park,neighbourhood,gn:3333138,/areas/uk/england/greater-london/camden/dartmouth-park,GB,needs_review,prepared,noindex
+gn:6690576,Euston,populated_place,gn:3333138,/areas/uk/england/greater-london/camden/euston,GB,needs_review,prepared,noindex
+gn:6545172,Fitzrovia,neighbourhood,gn:3333138,/areas/uk/england/greater-london/camden/fitzrovia,GB,needs_review,prepared,noindex
+gn:2647553,Hampstead,populated_place,gn:3333138,/areas/uk/england/greater-london/camden/hampstead,GB,needs_review,prepared,noindex
+gn:2646958,Highgate,populated_place,gn:3333138,/areas/uk/england/greater-london/camden/highgate,GB,needs_review,prepared,noindex
+gn:2646781,Holborn,populated_place,gn:3333138,/areas/uk/england/greater-london/camden/holborn,GB,needs_review,prepared,noindex
+gn:6690587,Kentish Town,populated_place,gn:3333138,/areas/uk/england/greater-london/camden/kentish-town,GB,needs_review,prepared,noindex
+gn:6690572,Kilburn,neighbourhood,gn:3333138,/areas/uk/england/greater-london/camden/kilburn,GB,needs_review,prepared,noindex
+gn:6690589,King's Cross,populated_place,gn:3333138,/areas/uk/england/greater-london/camden/kings-cross,GB,needs_review,prepared,noindex
+gn:13269393,Parliament Hill,neighbourhood,gn:3333138,/areas/uk/england/greater-london/camden/parliament-hill,GB,needs_review,prepared,noindex
+gn:6690582,Primrose Hill,populated_place,gn:3333138,/areas/uk/england/greater-london/camden/primrose-hill,GB,needs_review,prepared,noindex
+gn:2638707,Saint Pancras,neighbourhood,gn:3333138,/areas/uk/england/greater-london/camden/saint-pancras,GB,needs_review,prepared,noindex
+gn:8299557,South Hampstead,populated_place,gn:3333138,/areas/uk/england/greater-london/camden/south-hampstead,GB,needs_review,prepared,noindex
+gn:6941041,Swiss Cottage,neighbourhood,gn:3333138,/areas/uk/england/greater-london/camden/swiss-cottage,GB,needs_review,prepared,noindex
+gn:6615314,West Hampstead,neighbourhood,gn:3333138,/areas/uk/england/greater-london/camden/west-hampstead,GB,needs_review,prepared,noindex
+gn:2643744,City of London,city_corporation,gn:2648110,/areas/uk/england/greater-london/city-of-london,GB,needs_review,prepared,noindex
+gn:3333140,Croydon,london_borough,gn:2648110,/areas/uk/england/greater-london/croydon,GB,needs_review,prepared,noindex
+gn:2652249,Coulsdon,populated_place,gn:3333140,/areas/uk/england/greater-london/croydon/coulsdon,GB,needs_review,prepared,noindex
+gn:2651817,Croydon,populated_place,gn:3333140,/areas/uk/england/greater-london/croydon/croydon,GB,needs_review,prepared,noindex
+gn:2639842,Purley,populated_place,gn:3333140,/areas/uk/england/greater-london/croydon/purley,GB,needs_review,prepared,noindex
+gn:6690862,South Croydon,populated_place,gn:3333140,/areas/uk/england/greater-london/croydon/south-croydon,GB,needs_review,prepared,noindex
+gn:3333145,Ealing,london_borough,gn:2648110,/areas/uk/england/greater-london/ealing,GB,needs_review,prepared,noindex
+gn:2657697,Acton,populated_place,gn:3333145,/areas/uk/england/greater-london/ealing/acton,GB,needs_review,prepared,noindex
+gn:2647972,Greenford,populated_place,gn:3333145,/areas/uk/england/greater-london/ealing/greenford,GB,needs_review,prepared,noindex
+gn:2641290,Northolt,populated_place,gn:3333145,/areas/uk/england/greater-london/ealing/northolt,GB,needs_review,prepared,noindex
+gn:2637490,Southall,populated_place,gn:3333145,/areas/uk/england/greater-london/ealing/southall,GB,needs_review,prepared,noindex
+gn:3333146,Enfield,london_borough,gn:2648110,/areas/uk/england/greater-london/enfield,GB,needs_review,prepared,noindex
+gn:2650209,Edmonton,populated_place,gn:3333146,/areas/uk/england/greater-london/enfield/edmonton,GB,needs_review,prepared,noindex
+gn:2649997,Enfield Town,populated_place,gn:3333146,/areas/uk/england/greater-london/enfield/enfield-town,GB,needs_review,prepared,noindex
+gn:6693771,Hadley Wood,populated_place,gn:3333146,/areas/uk/england/greater-london/enfield/hadley-wood,GB,needs_review,prepared,noindex
+gn:3333147,Greenwich,london_borough,gn:2648110,/areas/uk/england/greater-london/greenwich,GB,needs_review,prepared,noindex
+gn:7302135,Abbey Wood,populated_place,gn:3333147,/areas/uk/england/greater-london/greenwich/abbey-wood,GB,needs_review,prepared,noindex
+gn:2650042,Eltham,populated_place,gn:3333147,/areas/uk/england/greater-london/greenwich/eltham,GB,needs_review,prepared,noindex
+gn:2647937,Greenwich,neighbourhood,gn:3333147,/areas/uk/england/greater-london/greenwich/greenwich,GB,needs_review,prepared,noindex
+gn:11551039,Thamesmead,populated_place,gn:3333147,/areas/uk/england/greater-london/greenwich/thamesmead,GB,needs_review,prepared,noindex
+gn:3333148,Hackney,london_borough,gn:2648110,/areas/uk/england/greater-london/hackney,GB,needs_review,prepared,noindex
+gn:11669854,Stamford Hill,neighbourhood,gn:3333148,/areas/uk/england/greater-london/hackney/stamford-hill,GB,needs_review,prepared,noindex
+gn:3333149,Hammersmith and Fulham,london_borough,gn:2648110,/areas/uk/england/greater-london/hammersmith-and-fulham,GB,needs_review,prepared,noindex
+gn:2648997,Fulham,populated_place,gn:3333149,/areas/uk/england/greater-london/hammersmith-and-fulham/fulham,GB,needs_review,prepared,noindex
+gn:2638043,Shepherds Bush,populated_place,gn:3333149,/areas/uk/england/greater-london/hammersmith-and-fulham/shepherds-bush,GB,needs_review,prepared,noindex
+gn:3333150,Haringey,london_borough,gn:2648110,/areas/uk/england/greater-london/haringey,GB,needs_review,prepared,noindex
+gn:6694222,Muswell Hill,populated_place,gn:3333150,/areas/uk/england/greater-london/haringey/muswell-hill,GB,needs_review,prepared,noindex
+gn:2635608,Tottenham,populated_place,gn:3333150,/areas/uk/england/greater-london/haringey/tottenham,GB,needs_review,prepared,noindex
+gn:2633653,Wood Green,populated_place,gn:3333150,/areas/uk/england/greater-london/haringey/wood-green,GB,needs_review,prepared,noindex
+gn:3333151,Harrow,london_borough,gn:2648110,/areas/uk/england/greater-london/harrow,GB,needs_review,prepared,noindex
+gn:2647425,Harrow,populated_place,gn:3333151,/areas/uk/england/greater-london/harrow/harrow,GB,needs_review,prepared,noindex
+gn:2640275,Pinner,populated_place,gn:3333151,/areas/uk/england/greater-london/harrow/pinner,GB,needs_review,prepared,noindex
+gn:12048038,Wealdstone,neighbourhood,gn:3333151,/areas/uk/england/greater-london/harrow/wealdstone,GB,needs_review,prepared,noindex
+gn:3333153,Havering,london_borough,gn:2648110,/areas/uk/england/greater-london/havering,GB,needs_review,prepared,noindex
+gn:6690863,Hornchurch,neighbourhood,gn:3333153,/areas/uk/england/greater-london/havering/hornchurch,GB,needs_review,prepared,noindex
+gn:2639192,Romford,populated_place,gn:3333153,/areas/uk/england/greater-london/havering/romford,GB,needs_review,prepared,noindex
+gn:3333154,Hillingdon,london_borough,gn:2648110,/areas/uk/england/greater-london/hillingdon,GB,needs_review,prepared,noindex
+gn:2647261,Hayes,populated_place,gn:3333154,/areas/uk/england/greater-london/hillingdon/hayes,GB,needs_review,prepared,noindex
+gn:2638976,Ruislip,populated_place,gn:3333154,/areas/uk/england/greater-london/hillingdon/ruislip,GB,needs_review,prepared,noindex
+gn:2635042,Uxbridge,populated_place,gn:3333154,/areas/uk/england/greater-london/hillingdon/uxbridge,GB,needs_review,prepared,noindex
+gn:3333155,Hounslow,london_borough,gn:2648110,/areas/uk/england/greater-london/hounslow,GB,needs_review,prepared,noindex
+gn:2653121,Chiswick,neighbourhood,gn:3333155,/areas/uk/england/greater-london/hounslow/chiswick,GB,needs_review,prepared,noindex
+gn:2649571,Feltham,populated_place,gn:3333155,/areas/uk/england/greater-london/hounslow/feltham,GB,needs_review,prepared,noindex
+gn:2647514,Hanworth,populated_place,gn:3333155,/areas/uk/england/greater-london/hounslow/hanworth,GB,needs_review,prepared,noindex
+gn:2647027,Heston,populated_place,gn:3333155,/areas/uk/england/greater-london/hounslow/heston,GB,needs_review,prepared,noindex
+gn:2646517,Hounslow,populated_place,gn:3333155,/areas/uk/england/greater-london/hounslow/hounslow,GB,needs_review,prepared,noindex
+gn:2646004,Isleworth,populated_place,gn:3333155,/areas/uk/england/greater-london/hounslow/isleworth,GB,needs_review,prepared,noindex
+gn:3333156,Islington,london_borough,gn:2648110,/areas/uk/england/greater-london/islington,GB,needs_review,prepared,noindex
+gn:11777624,Archway,populated_place,gn:3333156,/areas/uk/england/greater-london/islington/archway,GB,needs_review,prepared,noindex
+gn:2646976,Highbury,populated_place,gn:3333156,/areas/uk/england/greater-london/islington/highbury,GB,needs_review,prepared,noindex
+gn:8315400,Holloway,neighbourhood,gn:3333156,/areas/uk/england/greater-london/islington/holloway,GB,needs_review,prepared,noindex
+gn:2646003,Islington,populated_place,gn:3333156,/areas/uk/england/greater-london/islington/islington,GB,needs_review,prepared,noindex
+gn:3333157,Kensington and Chelsea,london_borough,gn:2648110,/areas/uk/england/greater-london/kensington-and-chelsea,GB,needs_review,prepared,noindex
+gn:2653265,Chelsea,neighbourhood,gn:3333157,/areas/uk/england/greater-london/kensington-and-chelsea/chelsea,GB,needs_review,prepared,noindex
+gn:2641168,Notting Hill,neighbourhood,gn:3333157,/areas/uk/england/greater-london/kensington-and-chelsea/notting-hill,GB,needs_review,prepared,noindex
+gn:3333160,Kingston upon Thames,london_borough,gn:2648110,/areas/uk/england/greater-london/kingston-upon-thames,GB,needs_review,prepared,noindex
+gn:2653229,Chessington,populated_place,gn:3333160,/areas/uk/england/greater-london/kingston-upon-thames/chessington,GB,needs_review,prepared,noindex
+gn:2646653,Hook,populated_place,gn:3333160,/areas/uk/england/greater-london/kingston-upon-thames/hook,GB,needs_review,prepared,noindex
+gn:2641617,New Malden,neighbourhood,gn:3333160,/areas/uk/england/greater-london/kingston-upon-thames/new-malden,GB,needs_review,prepared,noindex
+gn:6690866,Surbiton,populated_place,gn:3333160,/areas/uk/england/greater-london/kingston-upon-thames/surbiton,GB,needs_review,prepared,noindex
+gn:3333163,Lambeth,london_borough,gn:2648110,/areas/uk/england/greater-london/lambeth,GB,needs_review,prepared,noindex
+gn:6690877,Brixton,neighbourhood,gn:3333163,/areas/uk/england/greater-london/lambeth/brixton,GB,needs_review,prepared,noindex
+gn:2636675,Streatham,populated_place,gn:3333163,/areas/uk/england/greater-london/lambeth/streatham,GB,needs_review,prepared,noindex
+gn:3333166,Lewisham,london_borough,gn:2648110,/areas/uk/england/greater-london/lewisham,GB,needs_review,prepared,noindex
+gn:6947041,Blackheath,populated_place,gn:3333166,/areas/uk/england/greater-london/lewisham/blackheath,GB,needs_review,prepared,noindex
+gn:11551040,Brockley,populated_place,gn:3333166,/areas/uk/england/greater-london/lewisham/brockley,GB,needs_review,prepared,noindex
+gn:2653516,Catford,populated_place,gn:3333166,/areas/uk/england/greater-london/lewisham/catford,GB,needs_review,prepared,noindex
+gn:3333171,Merton,london_borough,gn:2648110,/areas/uk/england/greater-london/merton,GB,needs_review,prepared,noindex
+gn:2642414,Mitcham,populated_place,gn:3333171,/areas/uk/england/greater-london/merton/mitcham,GB,needs_review,prepared,noindex
+gn:2642233,Morden,populated_place,gn:3333171,/areas/uk/england/greater-london/merton/morden,GB,needs_review,prepared,noindex
+gn:2633866,Wimbledon,neighbourhood,gn:3333171,/areas/uk/england/greater-london/merton/wimbledon,GB,needs_review,prepared,noindex
+gn:2641639,Newham,london_borough,gn:2648110,/areas/uk/england/greater-london/newham,GB,needs_review,prepared,noindex
+gn:11549407,Canning Town,populated_place,gn:2641639,/areas/uk/england/greater-london/newham/canning-town,GB,needs_review,prepared,noindex
+gn:2636714,Stratford,populated_place,gn:2641639,/areas/uk/england/greater-london/newham/stratford,GB,needs_review,prepared,noindex
+gn:3333185,Redbridge,london_borough,gn:2648110,/areas/uk/england/greater-london/redbridge,GB,needs_review,prepared,noindex
+gn:2646277,Ilford,populated_place,gn:3333185,/areas/uk/england/greater-london/redbridge/ilford,GB,needs_review,prepared,noindex
+gn:2633655,Woodford Green,populated_place,gn:3333185,/areas/uk/england/greater-london/redbridge/woodford-green,GB,needs_review,prepared,noindex
+gn:3333187,Richmond upon Thames,london_borough,gn:2648110,/areas/uk/england/greater-london/richmond-upon-thames,GB,needs_review,prepared,noindex
+gn:2656296,Barnes,populated_place,gn:3333187,/areas/uk/england/greater-london/richmond-upon-thames/barnes,GB,needs_review,prepared,noindex
+gn:2647550,Hampton,populated_place,gn:3333187,/areas/uk/england/greater-london/richmond-upon-thames/hampton,GB,needs_review,prepared,noindex
+gn:2639389,Richmond,populated_place,gn:3333187,/areas/uk/england/greater-london/richmond-upon-thames/richmond,GB,needs_review,prepared,noindex
+gn:3333200,Southwark,london_borough,gn:2648110,/areas/uk/england/greater-london/southwark,GB,needs_review,prepared,noindex
+gn:8224580,Peckham,neighbourhood,gn:3333200,/areas/uk/england/greater-london/southwark/peckham,GB,needs_review,prepared,noindex
+gn:3333206,Sutton,london_borough,gn:2648110,/areas/uk/england/greater-london/sutton,GB,needs_review,prepared,noindex
+gn:2653646,Carshalton,populated_place,gn:3333206,/areas/uk/england/greater-london/sutton/carshalton,GB,needs_review,prepared,noindex
+gn:2636503,Sutton,populated_place,gn:3333206,/areas/uk/england/greater-london/sutton/sutton,GB,needs_review,prepared,noindex
+gn:2634867,Wallington,populated_place,gn:3333206,/areas/uk/england/greater-london/sutton/wallington,GB,needs_review,prepared,noindex
+gn:2635594,Tower Hamlets,london_borough,gn:2648110,/areas/uk/england/greater-london/tower-hamlets,GB,needs_review,prepared,noindex
+gn:6690989,Bethnal Green,neighbourhood,gn:2635594,/areas/uk/england/greater-london/tower-hamlets/bethnal-green,GB,needs_review,prepared,noindex
+gn:2655438,Blackwall,neighbourhood,gn:2635594,/areas/uk/england/greater-london/tower-hamlets/blackwall,GB,needs_review,prepared,noindex
+gn:2655076,Bow,neighbourhood,gn:2635594,/areas/uk/england/greater-london/tower-hamlets/bow,GB,needs_review,prepared,noindex
+gn:6692280,Canary Wharf,neighbourhood,gn:2635594,/areas/uk/england/greater-london/tower-hamlets/canary-wharf,GB,needs_review,prepared,noindex
+gn:3333214,Waltham Forest,london_borough,gn:2648110,/areas/uk/england/greater-london/waltham-forest,GB,needs_review,prepared,noindex
+gn:2653148,Chingford,populated_place,gn:3333214,/areas/uk/england/greater-london/waltham-forest/chingford,GB,needs_review,prepared,noindex
+gn:6692921,Leytonstone,neighbourhood,gn:3333214,/areas/uk/england/greater-london/waltham-forest/leytonstone,GB,needs_review,prepared,noindex
+gn:2634838,Walthamstow,populated_place,gn:3333214,/areas/uk/england/greater-london/waltham-forest/walthamstow,GB,needs_review,prepared,noindex
+gn:3333215,Wandsworth,london_borough,gn:2648110,/areas/uk/england/greater-london/wandsworth,GB,needs_review,prepared,noindex
+gn:6690602,Battersea,neighbourhood,gn:3333215,/areas/uk/england/greater-london/wandsworth/battersea,GB,needs_review,prepared,noindex
+gn:2639835,Putney,neighbourhood,gn:3333215,/areas/uk/england/greater-london/wandsworth/putney,GB,needs_review,prepared,noindex
+gn:3333218,Westminster,london_borough,gn:2648110,/areas/uk/england/greater-london/westminster,GB,needs_review,prepared,noindex
+gn:6545243,Bayswater,neighbourhood,gn:3333218,/areas/uk/england/greater-london/westminster/bayswater,GB,needs_review,prepared,noindex
+gn:2634341,City of Westminster,populated_place,gn:3333218,/areas/uk/england/greater-london/westminster/city-of-westminster,GB,needs_review,prepared,noindex
+gn:6545249,Pimlico,neighbourhood,gn:3333218,/areas/uk/england/greater-london/westminster/pimlico,GB,needs_review,prepared,noindex
+gn:6545173,Soho,neighbourhood,gn:3333218,/areas/uk/england/greater-london/westminster/soho,GB,needs_review,prepared,noindex
+gn:2647601,Halton,administrative_area,gn:6269131,/areas/uk/england/halton,GB,needs_review,prepared,noindex
+gn:2638960,Runcorn,populated_place,gn:2647601,/areas/uk/england/halton/runcorn,GB,needs_review,prepared,noindex
+gn:2633954,Widnes,populated_place,gn:2647601,/areas/uk/england/halton/widnes,GB,needs_review,prepared,noindex
+gn:2647554,Hampshire,administrative_area,gn:6269131,/areas/uk/england/hampshire,GB,needs_review,prepared,noindex
+gn:2657540,Aldershot,populated_place,gn:2647554,/areas/uk/england/hampshire/aldershot,GB,needs_review,prepared,noindex
+gn:2657408,Alton,populated_place,gn:2647554,/areas/uk/england/hampshire/alton,GB,needs_review,prepared,noindex
+gn:2657324,Andover,populated_place,gn:2647554,/areas/uk/england/hampshire/andover,GB,needs_review,prepared,noindex
+gn:2656192,Basingstoke,populated_place,gn:2647554,/areas/uk/england/hampshire/basingstoke,GB,needs_review,prepared,noindex
+gn:2655557,Bishopstoke,populated_place,gn:2647554,/areas/uk/england/hampshire/bishopstoke,GB,needs_review,prepared,noindex
+gn:6693242,Bordon,populated_place,gn:2647554,/areas/uk/england/hampshire/bordon,GB,needs_review,prepared,noindex
+gn:2650396,Eastleigh,populated_place,gn:2647554,/areas/uk/england/hampshire/eastleigh,GB,needs_review,prepared,noindex
+gn:2650004,Emsworth,populated_place,gn:2647554,/areas/uk/england/hampshire/emsworth,GB,needs_review,prepared,noindex
+gn:2649692,Fareham,populated_place,gn:2647554,/areas/uk/england/hampshire/fareham,GB,needs_review,prepared,noindex
+gn:2649672,Farnborough,populated_place,gn:2647554,/areas/uk/england/hampshire/farnborough,GB,needs_review,prepared,noindex
+gn:2649322,Fleet,populated_place,gn:2647554,/areas/uk/england/hampshire/fleet,GB,needs_review,prepared,noindex
+gn:2648272,Gosport,populated_place,gn:2647554,/areas/uk/england/hampshire/gosport,GB,needs_review,prepared,noindex
+gn:2647317,Havant,populated_place,gn:2647554,/areas/uk/england/hampshire/havant,GB,needs_review,prepared,noindex
+gn:6620360,Hedge End,populated_place,gn:2647554,/areas/uk/england/hampshire/hedge-end,GB,needs_review,prepared,noindex
+gn:2646317,Hythe,populated_place,gn:2647554,/areas/uk/england/hampshire/hythe,GB,needs_review,prepared,noindex
+gn:2641609,New Milton,populated_place,gn:2647554,/areas/uk/england/hampshire/new-milton,GB,needs_review,prepared,noindex
+gn:2639189,Romsey,populated_place,gn:2647554,/areas/uk/england/hampshire/romsey,GB,needs_review,prepared,noindex
+gn:2635603,Totton,populated_place,gn:2647554,/areas/uk/england/hampshire/totton,GB,needs_review,prepared,noindex
+gn:2634686,Waterlooville,populated_place,gn:2647554,/areas/uk/england/hampshire/waterlooville,GB,needs_review,prepared,noindex
+gn:2633858,Winchester,populated_place,gn:2647554,/areas/uk/england/hampshire/winchester,GB,needs_review,prepared,noindex
+gn:6620293,Yateley,populated_place,gn:2647554,/areas/uk/england/hampshire/yateley,GB,needs_review,prepared,noindex
+gn:3333152,Hartlepool,administrative_area,gn:6269131,/areas/uk/england/hartlepool,GB,needs_review,prepared,noindex
+gn:2647071,Herefordshire,administrative_area,gn:6269131,/areas/uk/england/herefordshire,GB,needs_review,prepared,noindex
+gn:2647074,Hereford,populated_place,gn:2647071,/areas/uk/england/herefordshire/hereford,GB,needs_review,prepared,noindex
+gn:2647043,Hertfordshire,administrative_area,gn:6269131,/areas/uk/england/hertfordshire,GB,needs_review,prepared,noindex
+gn:2655858,Berkhamsted,populated_place,gn:2647043,/areas/uk/england/hertfordshire/berkhamsted,GB,needs_review,prepared,noindex
+gn:2655562,Bishops Stortford,populated_place,gn:2647043,/areas/uk/england/hertfordshire/bishops-stortford,GB,needs_review,prepared,noindex
+gn:2655186,Borehamwood,populated_place,gn:2647043,/areas/uk/england/hertfordshire/borehamwood,GB,needs_review,prepared,noindex
+gn:2654179,Bushey,populated_place,gn:2647043,/areas/uk/england/hertfordshire/bushey,GB,needs_review,prepared,noindex
+gn:2653232,Cheshunt,populated_place,gn:2647043,/areas/uk/england/hertfordshire/cheshunt,GB,needs_review,prepared,noindex
+gn:2647451,Harpenden,populated_place,gn:2647043,/areas/uk/england/hertfordshire/harpenden,GB,needs_review,prepared,noindex
+gn:2647349,Hatfield,populated_place,gn:2647043,/areas/uk/england/hertfordshire/hatfield,GB,needs_review,prepared,noindex
+gn:2647138,Hemel Hempstead,populated_place,gn:2647043,/areas/uk/england/hertfordshire/hemel-hempstead,GB,needs_review,prepared,noindex
+gn:2647044,Hertford,populated_place,gn:2647043,/areas/uk/england/hertfordshire/hertford,GB,needs_review,prepared,noindex
+gn:2646826,Hitchin,populated_place,gn:2647043,/areas/uk/england/hertfordshire/hitchin,GB,needs_review,prepared,noindex
+gn:2646807,Hoddesdon,populated_place,gn:2647043,/areas/uk/england/hertfordshire/hoddesdon,GB,needs_review,prepared,noindex
+gn:8224216,Letchworth Garden City,populated_place,gn:2647043,/areas/uk/england/hertfordshire/letchworth-garden-city,GB,needs_review,prepared,noindex
+gn:6559327,North Watford,populated_place,gn:2647043,/areas/uk/england/hertfordshire/north-watford,GB,needs_review,prepared,noindex
+gn:2639970,Potters Bar,populated_place,gn:2647043,/areas/uk/england/hertfordshire/potters-bar,GB,needs_review,prepared,noindex
+gn:2639381,Rickmansworth,populated_place,gn:2647043,/areas/uk/england/hertfordshire/rickmansworth,GB,needs_review,prepared,noindex
+gn:2638867,St Albans,populated_place,gn:2647043,/areas/uk/england/hertfordshire/st-albans,GB,needs_review,prepared,noindex
+gn:2636940,Stevenage,populated_place,gn:2647043,/areas/uk/england/hertfordshire/stevenage,GB,needs_review,prepared,noindex
+gn:2634777,Ware,populated_place,gn:2647043,/areas/uk/england/hertfordshire/ware,GB,needs_review,prepared,noindex
+gn:2634677,Watford,populated_place,gn:2647043,/areas/uk/england/hertfordshire/watford,GB,needs_review,prepared,noindex
+gn:2634552,Welwyn Garden City,populated_place,gn:2647043,/areas/uk/england/hertfordshire/welwyn-garden-city,GB,needs_review,prepared,noindex
+gn:2646007,Isle of Wight,administrative_area,gn:6269131,/areas/uk/england/isle-of-wight,GB,needs_review,prepared,noindex
+gn:2652204,Cowes,populated_place,gn:2646007,/areas/uk/england/isle-of-wight/cowes,GB,needs_review,prepared,noindex
+gn:2641599,Newport,populated_place,gn:2646007,/areas/uk/england/isle-of-wight/newport,GB,needs_review,prepared,noindex
+gn:2638911,Ryde,populated_place,gn:2646007,/areas/uk/england/isle-of-wight/ryde,GB,needs_review,prepared,noindex
+gn:2638568,Sandown,populated_place,gn:2646007,/areas/uk/england/isle-of-wight/sandown,GB,needs_review,prepared,noindex
+gn:2638384,Isles of Scilly,administrative_area,gn:6269131,/areas/uk/england/isles-of-scilly,GB,needs_review,prepared,noindex
+gn:3333158,Kent,administrative_area,gn:6269131,/areas/uk/england/kent,GB,needs_review,prepared,noindex
+gn:2656955,Ashford,populated_place,gn:3333158,/areas/uk/england/kent/ashford,GB,needs_review,prepared,noindex
+gn:2654635,Broadstairs,populated_place,gn:3333158,/areas/uk/england/kent/broadstairs,GB,needs_review,prepared,noindex
+gn:2653877,Canterbury,populated_place,gn:3333158,/areas/uk/england/kent/canterbury,GB,needs_review,prepared,noindex
+gn:2651500,Dartford,populated_place,gn:3333158,/areas/uk/england/kent/dartford,GB,needs_review,prepared,noindex
+gn:2651468,Deal,populated_place,gn:3333158,/areas/uk/england/kent/deal,GB,needs_review,prepared,noindex
+gn:2651048,Dover,populated_place,gn:3333158,/areas/uk/england/kent/dover,GB,needs_review,prepared,noindex
+gn:2649622,Faversham,populated_place,gn:3333158,/areas/uk/england/kent/faversham,GB,needs_review,prepared,noindex
+gn:2649258,Folkestone,populated_place,gn:3333158,/areas/uk/england/kent/folkestone,GB,needs_review,prepared,noindex
+gn:2648187,Gravesend,populated_place,gn:3333158,/areas/uk/england/kent/gravesend,GB,needs_review,prepared,noindex
+gn:2647057,Herne Bay,populated_place,gn:3333158,/areas/uk/england/kent/herne-bay,GB,needs_review,prepared,noindex
+gn:2643179,Maidstone,populated_place,gn:3333158,/areas/uk/england/kent/maidstone,GB,needs_review,prepared,noindex
+gn:2643044,Margate,populated_place,gn:3333158,/areas/uk/england/kent/margate,GB,needs_review,prepared,noindex
+gn:2639660,Ramsgate,populated_place,gn:3333158,/areas/uk/england/kent/ramsgate,GB,needs_review,prepared,noindex
+gn:2639022,Royal Tunbridge Wells,populated_place,gn:3333158,/areas/uk/england/kent/royal-tunbridge-wells,GB,needs_review,prepared,noindex
+gn:2638703,Saint Peters,populated_place,gn:3333158,/areas/uk/england/kent/saint-peters,GB,needs_review,prepared,noindex
+gn:2638187,Sevenoaks,populated_place,gn:3333158,/areas/uk/england/kent/sevenoaks,GB,needs_review,prepared,noindex
+gn:2637802,Sittingbourne,populated_place,gn:3333158,/areas/uk/england/kent/sittingbourne,GB,needs_review,prepared,noindex
+gn:2636439,Swanley,populated_place,gn:3333158,/areas/uk/england/kent/swanley,GB,needs_review,prepared,noindex
+gn:2635703,Tonbridge,populated_place,gn:3333158,/areas/uk/england/kent/tonbridge,GB,needs_review,prepared,noindex
+gn:2634021,Whitstable,populated_place,gn:3333158,/areas/uk/england/kent/whitstable,GB,needs_review,prepared,noindex
+gn:3333159,Kingston upon Hull,administrative_area,gn:6269131,/areas/uk/england/kingston-upon-hull,GB,needs_review,prepared,noindex
+gn:3333161,Kirklees,administrative_area,gn:6269131,/areas/uk/england/kirklees,GB,needs_review,prepared,noindex
+gn:2656168,Batley,populated_place,gn:3333161,/areas/uk/england/kirklees/batley,GB,needs_review,prepared,noindex
+gn:2652890,Cleckheaton,populated_place,gn:3333161,/areas/uk/england/kirklees/cleckheaton,GB,needs_review,prepared,noindex
+gn:2651286,Dewsbury,populated_place,gn:3333161,/areas/uk/england/kirklees/dewsbury,GB,needs_review,prepared,noindex
+gn:2647198,Heckmondwike,populated_place,gn:3333161,/areas/uk/england/kirklees/heckmondwike,GB,needs_review,prepared,noindex
+gn:2646458,Huddersfield,populated_place,gn:3333161,/areas/uk/england/kirklees/huddersfield,GB,needs_review,prepared,noindex
+gn:2644207,Liversedge,populated_place,gn:3333161,/areas/uk/england/kirklees/liversedge,GB,needs_review,prepared,noindex
+gn:2642423,Mirfield,populated_place,gn:3333161,/areas/uk/england/kirklees/mirfield,GB,needs_review,prepared,noindex
+gn:3333162,Knowsley,administrative_area,gn:6269131,/areas/uk/england/knowsley,GB,needs_review,prepared,noindex
+gn:2647637,Halewood,populated_place,gn:3333162,/areas/uk/england/knowsley/halewood,GB,needs_review,prepared,noindex
+gn:2646329,Huyton,populated_place,gn:3333162,/areas/uk/england/knowsley/huyton,GB,needs_review,prepared,noindex
+gn:2645313,Kirkby,populated_place,gn:3333162,/areas/uk/england/knowsley/kirkby,GB,needs_review,prepared,noindex
+gn:2639928,Prescot,populated_place,gn:3333162,/areas/uk/england/knowsley/prescot,GB,needs_review,prepared,noindex
+gn:2644974,Lancashire,administrative_area,gn:6269131,/areas/uk/england/lancashire,GB,needs_review,prepared,noindex
+gn:2657770,Accrington,populated_place,gn:2644974,/areas/uk/england/lancashire/accrington,GB,needs_review,prepared,noindex
+gn:2654264,Burnley,populated_place,gn:2644974,/areas/uk/england/lancashire/burnley,GB,needs_review,prepared,noindex
+gn:2653086,Chorley,populated_place,gn:2644974,/areas/uk/england/lancashire/chorley,GB,needs_review,prepared,noindex
+gn:2652544,Colne,populated_place,gn:2644974,/areas/uk/england/lancashire/colne,GB,needs_review,prepared,noindex
+gn:2649312,Fleetwood,populated_place,gn:2644974,/areas/uk/england/lancashire/fleetwood,GB,needs_review,prepared,noindex
+gn:2648970,Fylde,populated_place,gn:2644974,/areas/uk/england/lancashire/fylde,GB,needs_review,prepared,noindex
+gn:2644972,Lancaster,populated_place,gn:2644974,/areas/uk/england/lancashire/lancaster,GB,needs_review,prepared,noindex
+gn:2644547,Leyland,populated_place,gn:2644974,/areas/uk/england/lancashire/leyland,GB,needs_review,prepared,noindex
+gn:6693470,Lytham St Annes,populated_place,gn:2644974,/areas/uk/england/lancashire/lytham-st-annes,GB,needs_review,prepared,noindex
+gn:2642214,Morecambe,populated_place,gn:2644974,/areas/uk/england/lancashire/morecambe,GB,needs_review,prepared,noindex
+gn:2641810,Nelson,populated_place,gn:2644974,/areas/uk/england/lancashire/nelson,GB,needs_review,prepared,noindex
+gn:2640908,Ormskirk,populated_place,gn:2644974,/areas/uk/england/lancashire/ormskirk,GB,needs_review,prepared,noindex
+gn:2639958,Poulton-le-Fylde,populated_place,gn:2644974,/areas/uk/england/lancashire/poulton-le-fylde,GB,needs_review,prepared,noindex
+gn:2639912,Preston,populated_place,gn:2644974,/areas/uk/england/lancashire/preston,GB,needs_review,prepared,noindex
+gn:2639586,Rawtenstall,populated_place,gn:2644974,/areas/uk/england/lancashire/rawtenstall,GB,needs_review,prepared,noindex
+gn:8299614,Rossendale,populated_place,gn:2644974,/areas/uk/england/lancashire/rossendale,GB,needs_review,prepared,noindex
+gn:2637752,Skelmersdale,populated_place,gn:2644974,/areas/uk/england/lancashire/skelmersdale,GB,needs_review,prepared,noindex
+gn:8299615,Thornton-Cleveleys,populated_place,gn:2644974,/areas/uk/england/lancashire/thornton-cleveleys,GB,needs_review,prepared,noindex
+gn:3333164,Leeds,administrative_area,gn:6269131,/areas/uk/england/leeds,GB,needs_review,prepared,noindex
+gn:6695247,Chapel Allerton,populated_place,gn:3333164,/areas/uk/england/leeds/chapel-allerton,GB,needs_review,prepared,noindex
+gn:2647784,Guiseley,populated_place,gn:3333164,/areas/uk/england/leeds/guiseley,GB,needs_review,prepared,noindex
+gn:2646558,Horsforth,populated_place,gn:3333164,/areas/uk/england/leeds/horsforth,GB,needs_review,prepared,noindex
+gn:2643776,Lofthouse,populated_place,gn:3333164,/areas/uk/england/leeds/lofthouse,GB,needs_review,prepared,noindex
+gn:2642189,Morley,populated_place,gn:3333164,/areas/uk/england/leeds/morley,GB,needs_review,prepared,noindex
+gn:2639866,Pudsey,populated_place,gn:3333164,/areas/uk/england/leeds/pudsey,GB,needs_review,prepared,noindex
+gn:2633397,Yeadon,populated_place,gn:3333164,/areas/uk/england/leeds/yeadon,GB,needs_review,prepared,noindex
+gn:3333165,Leicester,administrative_area,gn:6269131,/areas/uk/england/leicester,GB,needs_review,prepared,noindex
+gn:2646434,Humberstone,populated_place,gn:3333165,/areas/uk/england/leicester/humberstone,GB,needs_review,prepared,noindex
+gn:2644667,Leicestershire,administrative_area,gn:6269131,/areas/uk/england/leicestershire,GB,needs_review,prepared,noindex
+gn:2652698,Coalville,populated_place,gn:2644667,/areas/uk/england/leicestershire/coalville,GB,needs_review,prepared,noindex
+gn:6693007,Earl Shilton,populated_place,gn:2644667,/areas/uk/england/leicestershire/earl-shilton,GB,needs_review,prepared,noindex
+gn:2649830,Evington,populated_place,gn:2644667,/areas/uk/england/leicestershire/evington,GB,needs_review,prepared,noindex
+gn:2648448,Glen Parva,populated_place,gn:2644667,/areas/uk/england/leicestershire/glen-parva,GB,needs_review,prepared,noindex
+gn:2646867,Hinckley,populated_place,gn:2644667,/areas/uk/england/leicestershire/hinckley,GB,needs_review,prepared,noindex
+gn:2643567,Loughborough,populated_place,gn:2644667,/areas/uk/england/leicestershire/loughborough,GB,needs_review,prepared,noindex
+gn:2643027,Market Harborough,populated_place,gn:2644667,/areas/uk/england/leicestershire/market-harborough,GB,needs_review,prepared,noindex
+gn:2642763,Melton Mowbray,populated_place,gn:2644667,/areas/uk/england/leicestershire/melton-mowbray,GB,needs_review,prepared,noindex
+gn:2642096,Mountsorrel,populated_place,gn:2644667,/areas/uk/england/leicestershire/mountsorrel,GB,needs_review,prepared,noindex
+gn:2641134,Oadby,populated_place,gn:2644667,/areas/uk/england/leicestershire/oadby,GB,needs_review,prepared,noindex
+gn:2633936,Wigston Magna,populated_place,gn:2644667,/areas/uk/england/leicestershire/wigston-magna,GB,needs_review,prepared,noindex
+gn:2644486,Lincolnshire,administrative_area,gn:6269131,/areas/uk/england/lincolnshire,GB,needs_review,prepared,noindex
+gn:2655138,Boston,populated_place,gn:2644486,/areas/uk/england/lincolnshire/boston,GB,needs_review,prepared,noindex
+gn:2648945,Gainsborough,populated_place,gn:2644486,/areas/uk/england/lincolnshire/gainsborough,GB,needs_review,prepared,noindex
+gn:2648208,Grantham,populated_place,gn:2644486,/areas/uk/england/lincolnshire/grantham,GB,needs_review,prepared,noindex
+gn:2644487,Lincoln,populated_place,gn:2644486,/areas/uk/england/lincolnshire/lincoln,GB,needs_review,prepared,noindex
+gn:2643553,Louth,populated_place,gn:2644486,/areas/uk/england/lincolnshire/louth,GB,needs_review,prepared,noindex
+gn:2637762,Skegness,populated_place,gn:2644486,/areas/uk/england/lincolnshire/skegness,GB,needs_review,prepared,noindex
+gn:2637659,Sleaford,populated_place,gn:2644486,/areas/uk/england/lincolnshire/sleaford,GB,needs_review,prepared,noindex
+gn:2637265,Spalding,populated_place,gn:2644486,/areas/uk/england/lincolnshire/spalding,GB,needs_review,prepared,noindex
+gn:2637104,Stamford,populated_place,gn:2644486,/areas/uk/england/lincolnshire/stamford,GB,needs_review,prepared,noindex
+gn:3333167,Liverpool,administrative_area,gn:6269131,/areas/uk/england/liverpool,GB,needs_review,prepared,noindex
+gn:2648827,Garston,populated_place,gn:3333167,/areas/uk/england/liverpool/garston,GB,needs_review,prepared,noindex
+gn:11669845,Kirkdale,neighbourhood,gn:3333167,/areas/uk/england/liverpool/kirkdale,GB,needs_review,prepared,noindex
+gn:11669849,Norris Green,neighbourhood,gn:3333167,/areas/uk/england/liverpool/norris-green,GB,needs_review,prepared,noindex
+gn:2637241,Speke,populated_place,gn:3333167,/areas/uk/england/liverpool/speke,GB,needs_review,prepared,noindex
+gn:3333168,Luton,administrative_area,gn:6269131,/areas/uk/england/luton,GB,needs_review,prepared,noindex
+gn:3333169,Manchester,administrative_area,gn:6269131,/areas/uk/england/manchester,GB,needs_review,prepared,noindex
+gn:7281603,Manchester City Centre,neighbourhood,gn:3333169,/areas/uk/england/manchester/manchester-city-centre,GB,needs_review,prepared,noindex
+gn:3333170,Medway,administrative_area,gn:6269131,/areas/uk/england/medway,GB,needs_review,prepared,noindex
+gn:2653305,Chatham,populated_place,gn:3333170,/areas/uk/england/medway/chatham,GB,needs_review,prepared,noindex
+gn:2648657,Gillingham,populated_place,gn:3333170,/areas/uk/england/medway/gillingham,GB,needs_review,prepared,noindex
+gn:2639268,Rochester,populated_place,gn:3333170,/areas/uk/england/medway/rochester,GB,needs_review,prepared,noindex
+gn:2636619,Strood,neighbourhood,gn:3333170,/areas/uk/england/medway/strood,GB,needs_review,prepared,noindex
+gn:3333172,Middlesbrough,administrative_area,gn:6269131,/areas/uk/england/middlesbrough,GB,needs_review,prepared,noindex
+gn:3333173,Milton Keynes,administrative_area,gn:6269131,/areas/uk/england/milton-keynes,GB,needs_review,prepared,noindex
+gn:2655351,Bletchley,populated_place,gn:3333173,/areas/uk/england/milton-keynes/bletchley,GB,needs_review,prepared,noindex
+gn:3333174,Newcastle upon Tyne,administrative_area,gn:6269131,/areas/uk/england/newcastle-upon-tyne,GB,needs_review,prepared,noindex
+gn:2648273,Gosforth,populated_place,gn:3333174,/areas/uk/england/newcastle-upon-tyne/gosforth,GB,needs_review,prepared,noindex
+gn:2641690,Newburn,populated_place,gn:3333174,/areas/uk/england/newcastle-upon-tyne/newburn,GB,needs_review,prepared,noindex
+gn:2641455,Norfolk,administrative_area,gn:6269131,/areas/uk/england/norfolk,GB,needs_review,prepared,noindex
+gn:6620355,Bowthorpe,populated_place,gn:2641455,/areas/uk/england/norfolk/bowthorpe,GB,needs_review,prepared,noindex
+gn:2650470,East Dereham,populated_place,gn:2641455,/areas/uk/england/norfolk/east-dereham,GB,needs_review,prepared,noindex
+gn:2647984,Great Yarmouth,populated_place,gn:2641455,/areas/uk/england/norfolk/great-yarmouth,GB,needs_review,prepared,noindex
+gn:2645456,King's Lynn,populated_place,gn:2641455,/areas/uk/england/norfolk/kings-lynn,GB,needs_review,prepared,noindex
+gn:2641181,Norwich,populated_place,gn:2641455,/areas/uk/england/norfolk/norwich,GB,needs_review,prepared,noindex
+gn:2636032,Thetford,populated_place,gn:2641455,/areas/uk/england/norfolk/thetford,GB,needs_review,prepared,noindex
+gn:3333175,North East Lincolnshire,administrative_area,gn:6269131,/areas/uk/england/north-east-lincolnshire,GB,needs_review,prepared,noindex
+gn:2652885,Cleethorpes,populated_place,gn:3333175,/areas/uk/england/north-east-lincolnshire/cleethorpes,GB,needs_review,prepared,noindex
+gn:2647878,Grimsby,populated_place,gn:3333175,/areas/uk/england/north-east-lincolnshire/grimsby,GB,needs_review,prepared,noindex
+gn:3333176,North Lincolnshire,administrative_area,gn:6269131,/areas/uk/england/north-lincolnshire,GB,needs_review,prepared,noindex
+gn:2638324,Scunthorpe,populated_place,gn:3333176,/areas/uk/england/north-lincolnshire/scunthorpe,GB,needs_review,prepared,noindex
+gn:13192429,North Northamptonshire,administrative_area,gn:6269131,/areas/uk/england/north-northamptonshire,GB,needs_review,prepared,noindex
+gn:2652381,Corby,populated_place,gn:13192429,/areas/uk/england/north-northamptonshire/corby,GB,needs_review,prepared,noindex
+gn:2645753,Kettering,populated_place,gn:13192429,/areas/uk/england/north-northamptonshire/kettering,GB,needs_review,prepared,noindex
+gn:2638946,Rushden,populated_place,gn:13192429,/areas/uk/england/north-northamptonshire/rushden,GB,needs_review,prepared,noindex
+gn:2634578,Wellingborough,populated_place,gn:13192429,/areas/uk/england/north-northamptonshire/wellingborough,GB,needs_review,prepared,noindex
+gn:3333177,North Somerset,administrative_area,gn:6269131,/areas/uk/england/north-somerset,GB,needs_review,prepared,noindex
+gn:2652861,Clevedon,populated_place,gn:3333177,/areas/uk/england/north-somerset/clevedon,GB,needs_review,prepared,noindex
+gn:2641913,Nailsea,populated_place,gn:3333177,/areas/uk/england/north-somerset/nailsea,GB,needs_review,prepared,noindex
+gn:2640037,Portishead,populated_place,gn:3333177,/areas/uk/england/north-somerset/portishead,GB,needs_review,prepared,noindex
+gn:2634308,Weston-super-Mare,populated_place,gn:3333177,/areas/uk/england/north-somerset/weston-super-mare,GB,needs_review,prepared,noindex
+gn:2641238,North Tyneside,administrative_area,gn:6269131,/areas/uk/england/north-tyneside,GB,needs_review,prepared,noindex
+gn:2641267,North Shields,populated_place,gn:2641238,/areas/uk/england/north-tyneside/north-shields,GB,needs_review,prepared,noindex
+gn:2635269,Tynemouth,populated_place,gn:2641238,/areas/uk/england/north-tyneside/tynemouth,GB,needs_review,prepared,noindex
+gn:2634864,Wallsend,populated_place,gn:2641238,/areas/uk/england/north-tyneside/wallsend,GB,needs_review,prepared,noindex
+gn:2634032,Whitley Bay,populated_place,gn:2641238,/areas/uk/england/north-tyneside/whitley-bay,GB,needs_review,prepared,noindex
+gn:2641209,North Yorkshire,administrative_area,gn:6269131,/areas/uk/england/north-yorkshire,GB,needs_review,prepared,noindex
+gn:2647428,Harrogate,populated_place,gn:2641209,/areas/uk/england/north-yorkshire/harrogate,GB,needs_review,prepared,noindex
+gn:2638419,Scarborough,populated_place,gn:2641209,/areas/uk/england/north-yorkshire/scarborough,GB,needs_review,prepared,noindex
+gn:2638235,Selby,populated_place,gn:2641209,/areas/uk/england/north-yorkshire/selby,GB,needs_review,prepared,noindex
+gn:2641235,Northumberland,administrative_area,gn:6269131,/areas/uk/england/northumberland,GB,needs_review,prepared,noindex
+gn:2656946,Ashington,populated_place,gn:2641235,/areas/uk/england/northumberland/ashington,GB,needs_review,prepared,noindex
+gn:2656039,Bedlington,populated_place,gn:2641235,/areas/uk/england/northumberland/bedlington,GB,needs_review,prepared,noindex
+gn:2655315,Blyth,populated_place,gn:2641235,/areas/uk/england/northumberland/blyth,GB,needs_review,prepared,noindex
+gn:2652095,Cramlington,populated_place,gn:2641235,/areas/uk/england/northumberland/cramlington,GB,needs_review,prepared,noindex
+gn:3333178,Nottingham,administrative_area,gn:6269131,/areas/uk/england/nottingham,GB,needs_review,prepared,noindex
+gn:2641169,Nottinghamshire,administrative_area,gn:6269131,/areas/uk/england/nottinghamshire,GB,needs_review,prepared,noindex
+gn:2657030,Arnold,populated_place,gn:2641169,/areas/uk/england/nottinghamshire/arnold,GB,needs_review,prepared,noindex
+gn:2650309,Eastwood,populated_place,gn:2641169,/areas/uk/england/nottinghamshire/eastwood,GB,needs_review,prepared,noindex
+gn:2646460,Hucknall,populated_place,gn:2641169,/areas/uk/england/nottinghamshire/hucknall,GB,needs_review,prepared,noindex
+gn:2645309,Kirkby in Ashfield,populated_place,gn:2641169,/areas/uk/england/nottinghamshire/kirkby-in-ashfield,GB,needs_review,prepared,noindex
+gn:2643097,Mansfield,populated_place,gn:2641169,/areas/uk/england/nottinghamshire/mansfield,GB,needs_review,prepared,noindex
+gn:2643096,Mansfield Woodhouse,populated_place,gn:2641169,/areas/uk/england/nottinghamshire/mansfield-woodhouse,GB,needs_review,prepared,noindex
+gn:2641731,Newark on Trent,populated_place,gn:2641169,/areas/uk/england/nottinghamshire/newark-on-trent,GB,needs_review,prepared,noindex
+gn:2650346,Retford,populated_place,gn:2641169,/areas/uk/england/nottinghamshire/retford,GB,needs_review,prepared,noindex
+gn:2636484,Sutton in Ashfield,populated_place,gn:2641169,/areas/uk/england/nottinghamshire/sutton-in-ashfield,GB,needs_review,prepared,noindex
+gn:2634493,West Bridgford,populated_place,gn:2641169,/areas/uk/england/nottinghamshire/west-bridgford,GB,needs_review,prepared,noindex
+gn:2633551,Worksop,populated_place,gn:2641169,/areas/uk/england/nottinghamshire/worksop,GB,needs_review,prepared,noindex
+gn:3333179,Oldham,administrative_area,gn:6269131,/areas/uk/england/oldham,GB,needs_review,prepared,noindex
+gn:11551009,Chadderton,populated_place,gn:3333179,/areas/uk/england/oldham/chadderton,GB,needs_review,prepared,noindex
+gn:6691219,Failsworth,populated_place,gn:3333179,/areas/uk/england/oldham/failsworth,GB,needs_review,prepared,noindex
+gn:2639015,Royton,populated_place,gn:3333179,/areas/uk/england/oldham/royton,GB,needs_review,prepared,noindex
+gn:2638879,Saddleworth,populated_place,gn:3333179,/areas/uk/england/oldham/saddleworth,GB,needs_review,prepared,noindex
+gn:2640726,Oxfordshire,administrative_area,gn:6269131,/areas/uk/england/oxfordshire,GB,needs_review,prepared,noindex
+gn:2657780,Abingdon,populated_place,gn:2640726,/areas/uk/england/oxfordshire/abingdon,GB,needs_review,prepared,noindex
+gn:2656406,Banbury,populated_place,gn:2640726,/areas/uk/england/oxfordshire/banbury,GB,needs_review,prepared,noindex
+gn:2655729,Bicester,populated_place,gn:2640726,/areas/uk/england/oxfordshire/bicester,GB,needs_review,prepared,noindex
+gn:2651269,Didcot,populated_place,gn:2640726,/areas/uk/england/oxfordshire/didcot,GB,needs_review,prepared,noindex
+gn:2640729,Oxford,populated_place,gn:2640726,/areas/uk/england/oxfordshire/oxford,GB,needs_review,prepared,noindex
+gn:2633729,Witney,populated_place,gn:2640726,/areas/uk/england/oxfordshire/witney,GB,needs_review,prepared,noindex
+gn:3333180,Peterborough,administrative_area,gn:6269131,/areas/uk/england/peterborough,GB,needs_review,prepared,noindex
+gn:3333181,Plymouth,administrative_area,gn:6269131,/areas/uk/england/plymouth,GB,needs_review,prepared,noindex
+gn:2640190,Plymstock,populated_place,gn:3333181,/areas/uk/england/plymouth/plymstock,GB,needs_review,prepared,noindex
+gn:3333183,Portsmouth,administrative_area,gn:6269131,/areas/uk/england/portsmouth,GB,needs_review,prepared,noindex
+gn:2637330,Southsea,neighbourhood,gn:3333183,/areas/uk/england/portsmouth/southsea,GB,needs_review,prepared,noindex
+gn:3333184,Reading,administrative_area,gn:6269131,/areas/uk/england/reading,GB,needs_review,prepared,noindex
+gn:3333186,Redcar and Cleveland,administrative_area,gn:6269131,/areas/uk/england/redcar-and-cleveland,GB,needs_review,prepared,noindex
+gn:2639563,Redcar,populated_place,gn:3333186,/areas/uk/england/redcar-and-cleveland/redcar,GB,needs_review,prepared,noindex
+gn:3333188,Rochdale,administrative_area,gn:6269131,/areas/uk/england/rochdale,GB,needs_review,prepared,noindex
+gn:6691235,Heywood,neighbourhood,gn:3333188,/areas/uk/england/rochdale/heywood,GB,needs_review,prepared,noindex
+gn:2642593,Middleton,populated_place,gn:3333188,/areas/uk/england/rochdale/middleton,GB,needs_review,prepared,noindex
+gn:3333189,Rotherham,administrative_area,gn:6269131,/areas/uk/england/rotherham,GB,needs_review,prepared,noindex
+gn:2651241,Dinnington,populated_place,gn:3333189,/areas/uk/england/rotherham/dinnington,GB,needs_review,prepared,noindex
+gn:2643144,Maltby,populated_place,gn:3333189,/areas/uk/england/rotherham/maltby,GB,needs_review,prepared,noindex
+gn:2639588,Rawmarsh,populated_place,gn:3333189,/areas/uk/england/rotherham/rawmarsh,GB,needs_review,prepared,noindex
+gn:3333190,Salford,administrative_area,gn:6269131,/areas/uk/england/salford,GB,needs_review,prepared,noindex
+gn:2650278,Eccles,populated_place,gn:3333190,/areas/uk/england/salford/eccles,GB,needs_review,prepared,noindex
+gn:2646042,Irlam,populated_place,gn:3333190,/areas/uk/england/salford/irlam,GB,needs_review,prepared,noindex
+gn:2636373,Swinton,populated_place,gn:3333190,/areas/uk/england/salford/swinton,GB,needs_review,prepared,noindex
+gn:2634887,Walkden,populated_place,gn:3333190,/areas/uk/england/salford/walkden,GB,needs_review,prepared,noindex
+gn:3333191,Sandwell,administrative_area,gn:6269131,/areas/uk/england/sandwell,GB,needs_review,prepared,noindex
+gn:2637607,Smethwick,populated_place,gn:3333191,/areas/uk/england/sandwell/smethwick,GB,needs_review,prepared,noindex
+gn:2635785,Tipton,populated_place,gn:3333191,/areas/uk/england/sandwell/tipton,GB,needs_review,prepared,noindex
+gn:2634617,Wednesbury,populated_place,gn:3333191,/areas/uk/england/sandwell/wednesbury,GB,needs_review,prepared,noindex
+gn:2634491,West Bromwich,populated_place,gn:3333191,/areas/uk/england/sandwell/west-bromwich,GB,needs_review,prepared,noindex
+gn:3333192,Sefton,administrative_area,gn:6269131,/areas/uk/england/sefton,GB,needs_review,prepared,noindex
+gn:2655198,Bootle,populated_place,gn:3333192,/areas/uk/england/sefton/bootle,GB,needs_review,prepared,noindex
+gn:2649198,Formby,populated_place,gn:3333192,/areas/uk/england/sefton/formby,GB,needs_review,prepared,noindex
+gn:2644386,Litherland,populated_place,gn:3333192,/areas/uk/england/sefton/litherland,GB,needs_review,prepared,noindex
+gn:2643198,Maghull,populated_place,gn:3333192,/areas/uk/england/sefton/maghull,GB,needs_review,prepared,noindex
+gn:2637343,Southport,populated_place,gn:3333192,/areas/uk/england/sefton/southport,GB,needs_review,prepared,noindex
+gn:3333193,Sheffield,administrative_area,gn:6269131,/areas/uk/england/sheffield,GB,needs_review,prepared,noindex
+gn:11776857,Burngreave,populated_place,gn:3333193,/areas/uk/england/sheffield/burngreave,GB,needs_review,prepared,noindex
+gn:2653353,Chapeltown,populated_place,gn:3333193,/areas/uk/england/sheffield/chapeltown,GB,needs_review,prepared,noindex
+gn:2648988,Fulwood,populated_place,gn:3333193,/areas/uk/england/sheffield/fulwood,GB,needs_review,prepared,noindex
+gn:2641783,Nether Edge,neighbourhood,gn:3333193,/areas/uk/england/sheffield/nether-edge,GB,needs_review,prepared,noindex
+gn:2638655,Shropshire,administrative_area,gn:6269131,/areas/uk/england/shropshire,GB,needs_review,prepared,noindex
+gn:2643556,Loughton,populated_place,gn:2638655,/areas/uk/england/shropshire/loughton,GB,needs_review,prepared,noindex
+gn:2640861,Oswestry,populated_place,gn:2638655,/areas/uk/england/shropshire/oswestry,GB,needs_review,prepared,noindex
+gn:2637891,Shrewsbury,populated_place,gn:2638655,/areas/uk/england/shropshire/shrewsbury,GB,needs_review,prepared,noindex
+gn:3333194,Slough,administrative_area,gn:6269131,/areas/uk/england/slough,GB,needs_review,prepared,noindex
+gn:3333195,Solihull,administrative_area,gn:6269131,/areas/uk/england/solihull,GB,needs_review,prepared,noindex
+gn:8224782,Shirley,neighbourhood,gn:3333195,/areas/uk/england/solihull/shirley,GB,needs_review,prepared,noindex
+gn:2637532,Somerset,administrative_area,gn:6269131,/areas/uk/england/somerset,GB,needs_review,prepared,noindex
+gn:2654730,Bridgwater,populated_place,gn:2637532,/areas/uk/england/somerset/bridgwater,GB,needs_review,prepared,noindex
+gn:2654269,Burnham-on-Sea,populated_place,gn:2637532,/areas/uk/england/somerset/burnham-on-sea,GB,needs_review,prepared,noindex
+gn:2649024,Frome,populated_place,gn:2637532,/areas/uk/england/somerset/frome,GB,needs_review,prepared,noindex
+gn:6947756,Mendip,neighbourhood,gn:2637532,/areas/uk/england/somerset/mendip,GB,needs_review,prepared,noindex
+gn:2636177,Taunton,populated_place,gn:2637532,/areas/uk/england/somerset/taunton,GB,needs_review,prepared,noindex
+gn:2633373,Yeovil,populated_place,gn:2637532,/areas/uk/england/somerset/yeovil,GB,needs_review,prepared,noindex
+gn:3333198,South Gloucestershire,administrative_area,gn:6269131,/areas/uk/england/south-gloucestershire,GB,needs_review,prepared,noindex
+gn:2645418,Kingswood,populated_place,gn:3333198,/areas/uk/england/south-gloucestershire/kingswood,GB,needs_review,prepared,noindex
+gn:2643116,Mangotsfield,populated_place,gn:3333198,/areas/uk/england/south-gloucestershire/mangotsfield,GB,needs_review,prepared,noindex
+gn:2633406,Yate,populated_place,gn:3333198,/areas/uk/england/south-gloucestershire/yate,GB,needs_review,prepared,noindex
+gn:3333199,South Tyneside,administrative_area,gn:6269131,/areas/uk/england/south-tyneside,GB,needs_review,prepared,noindex
+gn:2647209,Hebburn,populated_place,gn:3333199,/areas/uk/england/south-tyneside/hebburn,GB,needs_review,prepared,noindex
+gn:2645972,Jarrow,populated_place,gn:3333199,/areas/uk/england/south-tyneside/jarrow,GB,needs_review,prepared,noindex
+gn:2637329,South Shields,populated_place,gn:3333199,/areas/uk/england/south-tyneside/south-shields,GB,needs_review,prepared,noindex
+gn:3333196,Southampton,administrative_area,gn:6269131,/areas/uk/england/southampton,GB,needs_review,prepared,noindex
+gn:3333197,Southend-on-Sea,administrative_area,gn:6269131,/areas/uk/england/southend-on-sea,GB,needs_review,prepared,noindex
+gn:3333201,St. Helens,administrative_area,gn:6269131,/areas/uk/england/st-helens,GB,needs_review,prepared,noindex
+gn:2656918,Ashton in Makerfield,populated_place,gn:3333201,/areas/uk/england/st-helens/ashton-in-makerfield,GB,needs_review,prepared,noindex
+gn:2647265,Haydock,populated_place,gn:3333201,/areas/uk/england/st-helens/haydock,GB,needs_review,prepared,noindex
+gn:2641546,Newton-le-Willows,populated_place,gn:3333201,/areas/uk/england/st-helens/newton-le-willows,GB,needs_review,prepared,noindex
+gn:2637141,Staffordshire,administrative_area,gn:6269131,/areas/uk/england/staffordshire,GB,needs_review,prepared,noindex
+gn:2655708,Biddulph,populated_place,gn:2637141,/areas/uk/england/staffordshire/biddulph,GB,needs_review,prepared,noindex
+gn:2654252,Burntwood,populated_place,gn:2637141,/areas/uk/england/staffordshire/burntwood,GB,needs_review,prepared,noindex
+gn:2654200,Burton upon Trent,populated_place,gn:2637141,/areas/uk/england/staffordshire/burton-upon-trent,GB,needs_review,prepared,noindex
+gn:2653883,Cannock,populated_place,gn:2637141,/areas/uk/england/staffordshire/cannock,GB,needs_review,prepared,noindex
+gn:2647985,Great Wyrley,populated_place,gn:2637141,/areas/uk/england/staffordshire/great-wyrley,GB,needs_review,prepared,noindex
+gn:2645721,Kidsgrove,populated_place,gn:2637141,/areas/uk/england/staffordshire/kidsgrove,GB,needs_review,prepared,noindex
+gn:2644684,Leek,populated_place,gn:2637141,/areas/uk/england/staffordshire/leek,GB,needs_review,prepared,noindex
+gn:2644531,Lichfield,populated_place,gn:2637141,/areas/uk/england/staffordshire/lichfield,GB,needs_review,prepared,noindex
+gn:2641674,Newcastle under Lyme,populated_place,gn:2637141,/areas/uk/england/staffordshire/newcastle-under-lyme,GB,needs_review,prepared,noindex
+gn:2638977,Rugeley,populated_place,gn:2637141,/areas/uk/england/staffordshire/rugeley,GB,needs_review,prepared,noindex
+gn:2637142,Stafford,populated_place,gn:2637141,/areas/uk/england/staffordshire/stafford,GB,needs_review,prepared,noindex
+gn:2636276,Tamworth,populated_place,gn:2637141,/areas/uk/england/staffordshire/tamworth,GB,needs_review,prepared,noindex
+gn:3333202,Stockport,administrative_area,gn:6269131,/areas/uk/england/stockport,GB,needs_review,prepared,noindex
+gn:2654927,Bramhall,populated_place,gn:3333202,/areas/uk/england/stockport/bramhall,GB,needs_review,prepared,noindex
+gn:2653290,Cheadle Hulme,populated_place,gn:3333202,/areas/uk/england/stockport/cheadle-hulme,GB,needs_review,prepared,noindex
+gn:2647246,Hazel Grove,populated_place,gn:3333202,/areas/uk/england/stockport/hazel-grove,GB,needs_review,prepared,noindex
+gn:3333203,Stockton-on-Tees,administrative_area,gn:6269131,/areas/uk/england/stockton-on-tees,GB,needs_review,prepared,noindex
+gn:2655664,Billingham,populated_place,gn:3333203,/areas/uk/england/stockton-on-tees/billingham,GB,needs_review,prepared,noindex
+gn:2636005,Thornaby-on-Tees,populated_place,gn:3333203,/areas/uk/england/stockton-on-tees/thornaby-on-tees,GB,needs_review,prepared,noindex
+gn:2633415,Yarm,populated_place,gn:3333203,/areas/uk/england/stockton-on-tees/yarm,GB,needs_review,prepared,noindex
+gn:3333204,Stoke-on-Trent,administrative_area,gn:6269131,/areas/uk/england/stoke-on-trent,GB,needs_review,prepared,noindex
+gn:2643620,Longton,populated_place,gn:3333204,/areas/uk/england/stoke-on-trent/longton,GB,needs_review,prepared,noindex
+gn:2636561,Suffolk,administrative_area,gn:6269131,/areas/uk/england/suffolk,GB,needs_review,prepared,noindex
+gn:2654186,Bury St Edmunds,populated_place,gn:2636561,/areas/uk/england/suffolk/bury-st-edmunds,GB,needs_review,prepared,noindex
+gn:2649579,Felixstowe,populated_place,gn:2636561,/areas/uk/england/suffolk/felixstowe,GB,needs_review,prepared,noindex
+gn:2647310,Haverhill,populated_place,gn:2636561,/areas/uk/england/suffolk/haverhill,GB,needs_review,prepared,noindex
+gn:2646057,Ipswich,populated_place,gn:2636561,/areas/uk/england/suffolk/ipswich,GB,needs_review,prepared,noindex
+gn:2643490,Lowestoft,populated_place,gn:2636561,/areas/uk/england/suffolk/lowestoft,GB,needs_review,prepared,noindex
+gn:2641616,Newmarket,populated_place,gn:2636561,/areas/uk/england/suffolk/newmarket,GB,needs_review,prepared,noindex
+gn:2636749,Stowmarket,populated_place,gn:2636561,/areas/uk/england/suffolk/stowmarket,GB,needs_review,prepared,noindex
+gn:2636564,Sudbury,populated_place,gn:2636561,/areas/uk/england/suffolk/sudbury,GB,needs_review,prepared,noindex
+gn:3333205,Sunderland,administrative_area,gn:6269131,/areas/uk/england/sunderland,GB,needs_review,prepared,noindex
+gn:2646525,Houghton-Le-Spring,populated_place,gn:3333205,/areas/uk/england/sunderland/houghton-le-spring,GB,needs_review,prepared,noindex
+gn:2634715,Washington,populated_place,gn:3333205,/areas/uk/england/sunderland/washington,GB,needs_review,prepared,noindex
+gn:2636512,Surrey,administrative_area,gn:6269131,/areas/uk/england/surrey,GB,needs_review,prepared,noindex
+gn:2656954,Ashford,populated_place,gn:2636512,/areas/uk/england/surrey/ashford,GB,needs_review,prepared,noindex
+gn:2656379,Banstead,populated_place,gn:2636512,/areas/uk/england/surrey/banstead,GB,needs_review,prepared,noindex
+gn:2653947,Camberley,populated_place,gn:2636512,/areas/uk/england/surrey/camberley,GB,needs_review,prepared,noindex
+gn:2653520,Caterham,populated_place,gn:2636512,/areas/uk/england/surrey/caterham,GB,needs_review,prepared,noindex
+gn:2651095,Dorking,populated_place,gn:2636512,/areas/uk/england/surrey/dorking,GB,needs_review,prepared,noindex
+gn:2650376,East Molesey,populated_place,gn:2636512,/areas/uk/england/surrey/east-molesey,GB,needs_review,prepared,noindex
+gn:2650188,Egham,populated_place,gn:2636512,/areas/uk/england/surrey/egham,GB,needs_review,prepared,noindex
+gn:2649957,Epsom,populated_place,gn:2636512,/areas/uk/england/surrey/epsom,GB,needs_review,prepared,noindex
+gn:2649911,Esher,populated_place,gn:2636512,/areas/uk/england/surrey/esher,GB,needs_review,prepared,noindex
+gn:6690867,Ewell,neighbourhood,gn:2636512,/areas/uk/england/surrey/ewell,GB,needs_review,prepared,noindex
+gn:2649660,Farnham,populated_place,gn:2636512,/areas/uk/england/surrey/farnham,GB,needs_review,prepared,noindex
+gn:2648372,Godalming,populated_place,gn:2636512,/areas/uk/england/surrey/godalming,GB,needs_review,prepared,noindex
+gn:2647793,Guildford,populated_place,gn:2636512,/areas/uk/england/surrey/guildford,GB,needs_review,prepared,noindex
+gn:2647365,Haslemere,populated_place,gn:2636512,/areas/uk/england/surrey/haslemere,GB,needs_review,prepared,noindex
+gn:2646606,Horley,populated_place,gn:2636512,/areas/uk/england/surrey/horley,GB,needs_review,prepared,noindex
+gn:2644726,Leatherhead,populated_place,gn:2636512,/areas/uk/england/surrey/leatherhead,GB,needs_review,prepared,noindex
+gn:2639545,Redhill,populated_place,gn:2636512,/areas/uk/england/surrey/redhill,GB,needs_review,prepared,noindex
+gn:2639506,Reigate,populated_place,gn:2636512,/areas/uk/england/surrey/reigate,GB,needs_review,prepared,noindex
+gn:2637126,Staines,populated_place,gn:2636512,/areas/uk/england/surrey/staines,GB,needs_review,prepared,noindex
+gn:2636534,Sunbury-on-Thames,populated_place,gn:2636512,/areas/uk/england/surrey/sunbury-on-thames,GB,needs_review,prepared,noindex
+gn:2634825,Walton-on-Thames,populated_place,gn:2636512,/areas/uk/england/surrey/walton-on-thames,GB,needs_review,prepared,noindex
+gn:2634340,West Molesey,populated_place,gn:2636512,/areas/uk/england/surrey/west-molesey,GB,needs_review,prepared,noindex
+gn:2634204,Weybridge,populated_place,gn:2636512,/areas/uk/england/surrey/weybridge,GB,needs_review,prepared,noindex
+gn:2633709,Woking,populated_place,gn:2636512,/areas/uk/england/surrey/woking,GB,needs_review,prepared,noindex
+gn:3333207,Swindon,administrative_area,gn:6269131,/areas/uk/england/swindon,GB,needs_review,prepared,noindex
+gn:3333208,Tameside,administrative_area,gn:6269131,/areas/uk/england/tameside,GB,needs_review,prepared,noindex
+gn:2656915,Ashton-under-Lyne,populated_place,gn:3333208,/areas/uk/england/tameside/ashton-under-lyne,GB,needs_review,prepared,noindex
+gn:2651357,Denton,populated_place,gn:3333208,/areas/uk/england/tameside/denton,GB,needs_review,prepared,noindex
+gn:2650962,Droylsden,populated_place,gn:3333208,/areas/uk/england/tameside/droylsden,GB,needs_review,prepared,noindex
+gn:2650815,Dukinfield,populated_place,gn:3333208,/areas/uk/england/tameside/dukinfield,GB,needs_review,prepared,noindex
+gn:2646327,Hyde,populated_place,gn:3333208,/areas/uk/england/tameside/hyde,GB,needs_review,prepared,noindex
+gn:2637106,Stalybridge,populated_place,gn:3333208,/areas/uk/england/tameside/stalybridge,GB,needs_review,prepared,noindex
+gn:3333209,Telford and Wrekin,administrative_area,gn:6269131,/areas/uk/england/telford-and-wrekin,GB,needs_review,prepared,noindex
+gn:3345439,Telford,populated_place,gn:3333209,/areas/uk/england/telford-and-wrekin/telford,GB,needs_review,prepared,noindex
+gn:2634573,Wellington,populated_place,gn:3333209,/areas/uk/england/telford-and-wrekin/wellington,GB,needs_review,prepared,noindex
+gn:2635885,Thurrock,administrative_area,gn:6269131,/areas/uk/england/thurrock,GB,needs_review,prepared,noindex
+gn:2648182,Grays,populated_place,gn:2635885,/areas/uk/england/thurrock/grays,GB,needs_review,prepared,noindex
+gn:2637355,South Ockendon,populated_place,gn:2635885,/areas/uk/england/thurrock/south-ockendon,GB,needs_review,prepared,noindex
+gn:2637087,Stanford-le-Hope,populated_place,gn:2635885,/areas/uk/england/thurrock/stanford-le-hope,GB,needs_review,prepared,noindex
+gn:3333210,Torbay,administrative_area,gn:6269131,/areas/uk/england/torbay,GB,needs_review,prepared,noindex
+gn:2640681,Paignton,populated_place,gn:3333210,/areas/uk/england/torbay/paignton,GB,needs_review,prepared,noindex
+gn:2635650,Torquay,populated_place,gn:3333210,/areas/uk/england/torbay/torquay,GB,needs_review,prepared,noindex
+gn:3333211,Trafford,administrative_area,gn:6269131,/areas/uk/england/trafford,GB,needs_review,prepared,noindex
+gn:2657402,Altrincham,populated_place,gn:3333211,/areas/uk/england/trafford/altrincham,GB,needs_review,prepared,noindex
+gn:6691246,Old Trafford,neighbourhood,gn:3333211,/areas/uk/england/trafford/old-trafford,GB,needs_review,prepared,noindex
+gn:2638678,Sale,populated_place,gn:3333211,/areas/uk/england/trafford/sale,GB,needs_review,prepared,noindex
+gn:2636663,Stretford,populated_place,gn:3333211,/areas/uk/england/trafford/stretford,GB,needs_review,prepared,noindex
+gn:2635062,Urmston,populated_place,gn:3333211,/areas/uk/england/trafford/urmston,GB,needs_review,prepared,noindex
+gn:3333212,Wakefield,administrative_area,gn:6269131,/areas/uk/england/wakefield,GB,needs_review,prepared,noindex
+gn:2653584,Castleford,populated_place,gn:3333212,/areas/uk/england/wakefield/castleford,GB,needs_review,prepared,noindex
+gn:2640869,Ossett,populated_place,gn:3333212,/areas/uk/england/wakefield/ossett,GB,needs_review,prepared,noindex
+gn:2640132,Pontefract,populated_place,gn:3333212,/areas/uk/england/wakefield/pontefract,GB,needs_review,prepared,noindex
+gn:2637435,South Elmsall,populated_place,gn:3333212,/areas/uk/england/wakefield/south-elmsall,GB,needs_review,prepared,noindex
+gn:3333213,Walsall,administrative_area,gn:6269131,/areas/uk/england/walsall,GB,needs_review,prepared,noindex
+gn:2657528,Aldridge,populated_place,gn:3333213,/areas/uk/england/walsall/aldridge,GB,needs_review,prepared,noindex
+gn:2655329,Bloxwich,populated_place,gn:3333213,/areas/uk/england/walsall/bloxwich,GB,needs_review,prepared,noindex
+gn:2633912,Willenhall,populated_place,gn:3333213,/areas/uk/england/walsall/willenhall,GB,needs_review,prepared,noindex
+gn:3333216,Warrington,administrative_area,gn:6269131,/areas/uk/england/warrington,GB,needs_review,prepared,noindex
+gn:2648026,Great Sankey,populated_place,gn:3333216,/areas/uk/england/warrington/great-sankey,GB,needs_review,prepared,noindex
+gn:2634723,Warwickshire,administrative_area,gn:6269131,/areas/uk/england/warwickshire,GB,needs_review,prepared,noindex
+gn:2656031,Bedworth,populated_place,gn:2634723,/areas/uk/england/warwickshire/bedworth,GB,needs_review,prepared,noindex
+gn:2645822,Kenilworth,populated_place,gn:2634723,/areas/uk/england/warwickshire/kenilworth,GB,needs_review,prepared,noindex
+gn:2641157,Nuneaton,populated_place,gn:2634723,/areas/uk/england/warwickshire/nuneaton,GB,needs_review,prepared,noindex
+gn:2644737,Royal Leamington Spa,populated_place,gn:2634723,/areas/uk/england/warwickshire/royal-leamington-spa,GB,needs_review,prepared,noindex
+gn:2638978,Rugby,populated_place,gn:2634723,/areas/uk/england/warwickshire/rugby,GB,needs_review,prepared,noindex
+gn:2636713,Stratford-upon-Avon,populated_place,gn:2634723,/areas/uk/england/warwickshire/stratford-upon-avon,GB,needs_review,prepared,noindex
+gn:2634725,Warwick,populated_place,gn:2634723,/areas/uk/england/warwickshire/warwick,GB,needs_review,prepared,noindex
+gn:3333217,West Berkshire,administrative_area,gn:6269131,/areas/uk/england/west-berkshire,GB,needs_review,prepared,noindex
+gn:2641689,Newbury,populated_place,gn:3333217,/areas/uk/england/west-berkshire/newbury,GB,needs_review,prepared,noindex
+gn:2636049,Thatcham,populated_place,gn:3333217,/areas/uk/england/west-berkshire/thatcham,GB,needs_review,prepared,noindex
+gn:13192427,West Northamptonshire,administrative_area,gn:6269131,/areas/uk/england/west-northamptonshire,GB,needs_review,prepared,noindex
+gn:2651485,Daventry,populated_place,gn:13192427,/areas/uk/england/west-northamptonshire/daventry,GB,needs_review,prepared,noindex
+gn:2641430,Northampton,populated_place,gn:13192427,/areas/uk/england/west-northamptonshire/northampton,GB,needs_review,prepared,noindex
+gn:2634258,West Sussex,administrative_area,gn:6269131,/areas/uk/england/west-sussex,GB,needs_review,prepared,noindex
+gn:2655262,Bognor Regis,populated_place,gn:2634258,/areas/uk/england/west-sussex/bognor-regis,GB,needs_review,prepared,noindex
+gn:2654308,Burgess Hill,populated_place,gn:2634258,/areas/uk/england/west-sussex/burgess-hill,GB,needs_review,prepared,noindex
+gn:2653192,Chichester,populated_place,gn:2634258,/areas/uk/england/west-sussex/chichester,GB,needs_review,prepared,noindex
+gn:2652053,Crawley,populated_place,gn:2634258,/areas/uk/england/west-sussex/crawley,GB,needs_review,prepared,noindex
+gn:2650435,East Grinstead,populated_place,gn:2634258,/areas/uk/england/west-sussex/east-grinstead,GB,needs_review,prepared,noindex
+gn:2647248,Haywards Heath,populated_place,gn:2634258,/areas/uk/england/west-sussex/haywards-heath,GB,needs_review,prepared,noindex
+gn:2646557,Horsham,populated_place,gn:2634258,/areas/uk/england/west-sussex/horsham,GB,needs_review,prepared,noindex
+gn:2641319,Lancing,populated_place,gn:2634258,/areas/uk/england/west-sussex/lancing,GB,needs_review,prepared,noindex
+gn:2644319,Littlehampton,populated_place,gn:2634258,/areas/uk/england/west-sussex/littlehampton,GB,needs_review,prepared,noindex
+gn:2637916,Shoreham-by-Sea,populated_place,gn:2634258,/areas/uk/england/west-sussex/shoreham-by-sea,GB,needs_review,prepared,noindex
+gn:2633521,Worthing,populated_place,gn:2634258,/areas/uk/england/west-sussex/worthing,GB,needs_review,prepared,noindex
+gn:3333219,Wigan,administrative_area,gn:6269131,/areas/uk/england/wigan,GB,needs_review,prepared,noindex
+gn:2656847,Atherton,populated_place,gn:3333219,/areas/uk/england/wigan/atherton,GB,needs_review,prepared,noindex
+gn:2648356,Golborne,populated_place,gn:3333219,/areas/uk/england/wigan/golborne,GB,needs_review,prepared,noindex
+gn:2646862,Hindley,populated_place,gn:3333219,/areas/uk/england/wigan/hindley,GB,needs_review,prepared,noindex
+gn:2644660,Leigh,populated_place,gn:3333219,/areas/uk/england/wigan/leigh,GB,needs_review,prepared,noindex
+gn:2635281,Tyldesley,populated_place,gn:3333219,/areas/uk/england/wigan/tyldesley,GB,needs_review,prepared,noindex
+gn:2633868,Wiltshire,administrative_area,gn:6269131,/areas/uk/england/wiltshire,GB,needs_review,prepared,noindex
+gn:2653974,Calne,populated_place,gn:2633868,/areas/uk/england/wiltshire/calne,GB,needs_review,prepared,noindex
+gn:2653144,Chippenham,populated_place,gn:2633868,/areas/uk/england/wiltshire/chippenham,GB,needs_review,prepared,noindex
+gn:2642786,Melksham,populated_place,gn:2633868,/areas/uk/england/wiltshire/melksham,GB,needs_review,prepared,noindex
+gn:2638664,Salisbury,populated_place,gn:2633868,/areas/uk/england/wiltshire/salisbury,GB,needs_review,prepared,noindex
+gn:2635427,Trowbridge,populated_place,gn:2633868,/areas/uk/england/wiltshire/trowbridge,GB,needs_review,prepared,noindex
+gn:2634755,Warminster,populated_place,gn:2633868,/areas/uk/england/wiltshire/warminster,GB,needs_review,prepared,noindex
+gn:2633840,Windsor and Maidenhead,administrative_area,gn:6269131,/areas/uk/england/windsor-and-maidenhead,GB,needs_review,prepared,noindex
+gn:2656992,Ascot,populated_place,gn:2633840,/areas/uk/england/windsor-and-maidenhead/ascot,GB,needs_review,prepared,noindex
+gn:2643186,Maidenhead,populated_place,gn:2633840,/areas/uk/england/windsor-and-maidenhead/maidenhead,GB,needs_review,prepared,noindex
+gn:2633842,Windsor,populated_place,gn:2633840,/areas/uk/england/windsor-and-maidenhead/windsor,GB,needs_review,prepared,noindex
+gn:3333220,Wirral,administrative_area,gn:6269131,/areas/uk/england/wirral,GB,needs_review,prepared,noindex
+gn:2656070,Bebington,populated_place,gn:3333220,/areas/uk/england/wirral/bebington,GB,needs_review,prepared,noindex
+gn:2655613,Birkenhead,populated_place,gn:3333220,/areas/uk/england/wirral/birkenhead,GB,needs_review,prepared,noindex
+gn:2647026,Heswall,populated_place,gn:3333220,/areas/uk/england/wirral/heswall,GB,needs_review,prepared,noindex
+gn:2642204,Moreton,populated_place,gn:3333220,/areas/uk/england/wirral/moreton,GB,needs_review,prepared,noindex
+gn:2634873,Wallasey,populated_place,gn:3333220,/areas/uk/england/wirral/wallasey,GB,needs_review,prepared,noindex
+gn:3333221,Wokingham,administrative_area,gn:6269131,/areas/uk/england/wokingham,GB,needs_review,prepared,noindex
+gn:7290015,Lower Earley,populated_place,gn:3333221,/areas/uk/england/wokingham/lower-earley,GB,needs_review,prepared,noindex
+gn:3333222,Wolverhampton,administrative_area,gn:6269131,/areas/uk/england/wolverhampton,GB,needs_review,prepared,noindex
+gn:2634616,Wednesfield,populated_place,gn:3333222,/areas/uk/england/wolverhampton/wednesfield,GB,needs_review,prepared,noindex
+gn:2633560,Worcestershire,administrative_area,gn:6269131,/areas/uk/england/worcestershire,GB,needs_review,prepared,noindex
+gn:2654579,Bromsgrove,populated_place,gn:2633560,/areas/uk/england/worcestershire/bromsgrove,GB,needs_review,prepared,noindex
+gn:2650983,Droitwich,populated_place,gn:2633560,/areas/uk/england/worcestershire/droitwich,GB,needs_review,prepared,noindex
+gn:2649833,Evesham,populated_place,gn:2633560,/areas/uk/england/worcestershire/evesham,GB,needs_review,prepared,noindex
+gn:2648063,Great Malvern,populated_place,gn:2633560,/areas/uk/england/worcestershire/great-malvern,GB,needs_review,prepared,noindex
+gn:2645724,Kidderminster,populated_place,gn:2633560,/areas/uk/england/worcestershire/kidderminster,GB,needs_review,prepared,noindex
+gn:2639557,Redditch,populated_place,gn:2633560,/areas/uk/england/worcestershire/redditch,GB,needs_review,prepared,noindex
+gn:2636767,Stourport-on-Severn,populated_place,gn:2633560,/areas/uk/england/worcestershire/stourport-on-severn,GB,needs_review,prepared,noindex
+gn:2633563,Worcester,populated_place,gn:2633560,/areas/uk/england/worcestershire/worcester,GB,needs_review,prepared,noindex
+gn:2633351,York,administrative_area,gn:6269131,/areas/uk/england/york,GB,needs_review,prepared,noindex
+gn:2641364,Northern Ireland,uk_nation,country:GB,/areas/uk/northern-ireland,GB,needs_review,prepared,noindex
+gn:11353069,Antrim and Newtownabbey,administrative_area,gn:2641364,/areas/uk/northern-ireland/antrim-and-newtownabbey,GB,needs_review,prepared,noindex
+gn:2657255,Antrim,populated_place,gn:11353069,/areas/uk/northern-ireland/antrim-and-newtownabbey/antrim,GB,needs_review,prepared,noindex
+gn:2641520,Newtownabbey,populated_place,gn:11353069,/areas/uk/northern-ireland/antrim-and-newtownabbey/newtownabbey,GB,needs_review,prepared,noindex
+gn:11353074,Ards and North Down,administrative_area,gn:2641364,/areas/uk/northern-ireland/ards-and-north-down,GB,needs_review,prepared,noindex
+gn:2656396,Bangor,populated_place,gn:11353074,/areas/uk/northern-ireland/ards-and-north-down/bangor,GB,needs_review,prepared,noindex
+gn:2641519,Newtownards,populated_place,gn:11353074,/areas/uk/northern-ireland/ards-and-north-down/newtownards,GB,needs_review,prepared,noindex
+gn:11353076,Armagh City Banbridge and Craigavon,administrative_area,gn:2641364,/areas/uk/northern-ireland/armagh-city-banbridge-and-craigavon,GB,needs_review,prepared,noindex
+gn:2657060,Armagh,populated_place,gn:11353076,/areas/uk/northern-ireland/armagh-city-banbridge-and-craigavon/armagh,GB,needs_review,prepared,noindex
+gn:2656407,Banbridge,populated_place,gn:11353076,/areas/uk/northern-ireland/armagh-city-banbridge-and-craigavon/banbridge,GB,needs_review,prepared,noindex
+gn:3345440,Craigavon,populated_place,gn:11353076,/areas/uk/northern-ireland/armagh-city-banbridge-and-craigavon/craigavon,GB,needs_review,prepared,noindex
+gn:2640085,Portadown,populated_place,gn:11353076,/areas/uk/northern-ireland/armagh-city-banbridge-and-craigavon/portadown,GB,needs_review,prepared,noindex
+gn:3333223,Belfast,administrative_area,gn:2641364,/areas/uk/northern-ireland/belfast,GB,needs_review,prepared,noindex
+gn:2653558,Castlereagh,populated_place,gn:3333223,/areas/uk/northern-ireland/belfast/castlereagh,GB,needs_review,prepared,noindex
+gn:11353070,Causeway Coast and Glens,administrative_area,gn:2641364,/areas/uk/northern-ireland/causeway-coast-and-glens,GB,needs_review,prepared,noindex
+gn:2652586,Coleraine,populated_place,gn:11353070,/areas/uk/northern-ireland/causeway-coast-and-glens/coleraine,GB,needs_review,prepared,noindex
+gn:11353073,Derry City and Strabane,administrative_area,gn:2641364,/areas/uk/northern-ireland/derry-city-and-strabane,GB,needs_review,prepared,noindex
+gn:2643736,Derry,populated_place,gn:11353073,/areas/uk/northern-ireland/derry-city-and-strabane/derry,GB,needs_review,prepared,noindex
+gn:2643734,Londonderry County Borough,neighbourhood,gn:11353073,/areas/uk/northern-ireland/derry-city-and-strabane/londonderry-county-borough,GB,needs_review,prepared,noindex
+gn:11353071,Fermanagh and Omagh,administrative_area,gn:2641364,/areas/uk/northern-ireland/fermanagh-and-omagh,GB,needs_review,prepared,noindex
+gn:2649984,Enniskillen,populated_place,gn:11353071,/areas/uk/northern-ireland/fermanagh-and-omagh/enniskillen,GB,needs_review,prepared,noindex
+gn:2640967,Omagh,populated_place,gn:11353071,/areas/uk/northern-ireland/fermanagh-and-omagh/omagh,GB,needs_review,prepared,noindex
+gn:11353072,Lisburn and Castlereagh,administrative_area,gn:2641364,/areas/uk/northern-ireland/lisburn-and-castlereagh,GB,needs_review,prepared,noindex
+gn:2644411,Lisburn,populated_place,gn:11353072,/areas/uk/northern-ireland/lisburn-and-castlereagh/lisburn,GB,needs_review,prepared,noindex
+gn:11353078,Mid and East Antrim,administrative_area,gn:2641364,/areas/uk/northern-ireland/mid-and-east-antrim,GB,needs_review,prepared,noindex
+gn:2656490,Ballymena,populated_place,gn:11353078,/areas/uk/northern-ireland/mid-and-east-antrim/ballymena,GB,needs_review,prepared,noindex
+gn:2653680,Carrickfergus,populated_place,gn:11353078,/areas/uk/northern-ireland/mid-and-east-antrim/carrickfergus,GB,needs_review,prepared,noindex
+gn:2644849,Larne,populated_place,gn:11353078,/areas/uk/northern-ireland/mid-and-east-antrim/larne,GB,needs_review,prepared,noindex
+gn:11353068,Mid Ulster,administrative_area,gn:2641364,/areas/uk/northern-ireland/mid-ulster,GB,needs_review,prepared,noindex
+gn:11353077,Newry Mourne and Down,administrative_area,gn:2641364,/areas/uk/northern-ireland/newry-mourne-and-down,GB,needs_review,prepared,noindex
+gn:2641581,Newry,populated_place,gn:11353077,/areas/uk/northern-ireland/newry-mourne-and-down/newry,GB,needs_review,prepared,noindex
+gn:2638360,Scotland,uk_nation,country:GB,/areas/uk/scotland,GB,needs_review,prepared,noindex
+gn:3333224,Aberdeen City,administrative_area,gn:2638360,/areas/uk/scotland/aberdeen-city,GB,needs_review,prepared,noindex
+gn:2657832,Aberdeen,populated_place,gn:3333224,/areas/uk/scotland/aberdeen-city/aberdeen,GB,needs_review,prepared,noindex
+gn:2657830,Aberdeenshire,administrative_area,gn:2638360,/areas/uk/scotland/aberdeenshire,GB,needs_review,prepared,noindex
+gn:2640351,Peterhead,populated_place,gn:2657830,/areas/uk/scotland/aberdeenshire/peterhead,GB,needs_review,prepared,noindex
+gn:2657306,Angus,administrative_area,gn:2638360,/areas/uk/scotland/angus,GB,needs_review,prepared,noindex
+gn:2657215,Arbroath,populated_place,gn:2657306,/areas/uk/scotland/angus/arbroath,GB,needs_review,prepared,noindex
+gn:6457407,Argyll and Bute,administrative_area,gn:2638360,/areas/uk/scotland/argyll-and-bute,GB,needs_review,prepared,noindex
+gn:2652975,Clackmannanshire,administrative_area,gn:2638360,/areas/uk/scotland/clackmannanshire,GB,needs_review,prepared,noindex
+gn:2657471,Alloa,populated_place,gn:2652975,/areas/uk/scotland/clackmannanshire/alloa,GB,needs_review,prepared,noindex
+gn:2650797,Dumfries and Galloway,administrative_area,gn:2638360,/areas/uk/scotland/dumfries-and-galloway,GB,needs_review,prepared,noindex
+gn:2650798,Dumfries,populated_place,gn:2650797,/areas/uk/scotland/dumfries-and-galloway/dumfries,GB,needs_review,prepared,noindex
+gn:3333225,Dundee City,administrative_area,gn:2638360,/areas/uk/scotland/dundee-city,GB,needs_review,prepared,noindex
+gn:2650752,Dundee,populated_place,gn:3333225,/areas/uk/scotland/dundee-city/dundee,GB,needs_review,prepared,noindex
+gn:3333226,East Ayrshire,administrative_area,gn:2638360,/areas/uk/scotland/east-ayrshire,GB,needs_review,prepared,noindex
+gn:2645605,Kilmarnock,populated_place,gn:3333226,/areas/uk/scotland/east-ayrshire/kilmarnock,GB,needs_review,prepared,noindex
+gn:3333227,East Dunbartonshire,administrative_area,gn:2638360,/areas/uk/scotland/east-dunbartonshire,GB,needs_review,prepared,noindex
+gn:2656086,Bearsden,populated_place,gn:3333227,/areas/uk/scotland/east-dunbartonshire/bearsden,GB,needs_review,prepared,noindex
+gn:2655582,Bishopbriggs,populated_place,gn:3333227,/areas/uk/scotland/east-dunbartonshire/bishopbriggs,GB,needs_review,prepared,noindex
+gn:2645261,Kirkintilloch,populated_place,gn:3333227,/areas/uk/scotland/east-dunbartonshire/kirkintilloch,GB,needs_review,prepared,noindex
+gn:2650386,East Lothian,administrative_area,gn:2638360,/areas/uk/scotland/east-lothian,GB,needs_review,prepared,noindex
+gn:2641942,Musselburgh,populated_place,gn:2650386,/areas/uk/scotland/east-lothian/musselburgh,GB,needs_review,prepared,noindex
+gn:3333228,East Renfrewshire,administrative_area,gn:2638360,/areas/uk/scotland/east-renfrewshire,GB,needs_review,prepared,noindex
+gn:2656258,Barrhead,populated_place,gn:3333228,/areas/uk/scotland/east-renfrewshire/barrhead,GB,needs_review,prepared,noindex
+gn:2641544,Newton Mearns,populated_place,gn:3333228,/areas/uk/scotland/east-renfrewshire/newton-mearns,GB,needs_review,prepared,noindex
+gn:3333229,Edinburgh,administrative_area,gn:2638360,/areas/uk/scotland/edinburgh,GB,needs_review,prepared,noindex
+gn:2634428,Eilean Siar,administrative_area,gn:2638360,/areas/uk/scotland/eilean-siar,GB,needs_review,prepared,noindex
+gn:8299620,Isle of Lewis,populated_place,gn:2634428,/areas/uk/scotland/eilean-siar/isle-of-lewis,GB,needs_review,prepared,noindex
+gn:3333230,Falkirk,administrative_area,gn:2638360,/areas/uk/scotland/falkirk,GB,needs_review,prepared,noindex
+gn:2649469,Fife,administrative_area,gn:2638360,/areas/uk/scotland/fife,GB,needs_review,prepared,noindex
+gn:2650732,Dunfermline,populated_place,gn:2649469,/areas/uk/scotland/fife/dunfermline,GB,needs_review,prepared,noindex
+gn:2648438,Glenrothes,populated_place,gn:2649469,/areas/uk/scotland/fife/glenrothes,GB,needs_review,prepared,noindex
+gn:2645298,Kirkcaldy,populated_place,gn:2649469,/areas/uk/scotland/fife/kirkcaldy,GB,needs_review,prepared,noindex
+gn:2638864,Saint Andrews,populated_place,gn:2649469,/areas/uk/scotland/fife/saint-andrews,GB,needs_review,prepared,noindex
+gn:3333231,Glasgow City,administrative_area,gn:2638360,/areas/uk/scotland/glasgow-city,GB,needs_review,prepared,noindex
+gn:2648579,Glasgow,populated_place,gn:3333231,/areas/uk/scotland/glasgow-city/glasgow,GB,needs_review,prepared,noindex
+gn:2646944,Highland,administrative_area,gn:2638360,/areas/uk/scotland/highland,GB,needs_review,prepared,noindex
+gn:2646088,Inverness,populated_place,gn:2646944,/areas/uk/scotland/highland/inverness,GB,needs_review,prepared,noindex
+gn:2646127,Inverclyde,administrative_area,gn:2638360,/areas/uk/scotland/inverclyde,GB,needs_review,prepared,noindex
+gn:2647948,Greenock,populated_place,gn:2646127,/areas/uk/scotland/inverclyde/greenock,GB,needs_review,prepared,noindex
+gn:2642559,Midlothian,administrative_area,gn:2638360,/areas/uk/scotland/midlothian,GB,needs_review,prepared,noindex
+gn:2655210,Bonnyrigg,populated_place,gn:2642559,/areas/uk/scotland/midlothian/bonnyrigg,GB,needs_review,prepared,noindex
+gn:2642240,Moray,administrative_area,gn:2638360,/areas/uk/scotland/moray,GB,needs_review,prepared,noindex
+gn:2650122,Elgin,populated_place,gn:2642240,/areas/uk/scotland/moray/elgin,GB,needs_review,prepared,noindex
+gn:3333232,North Ayrshire,administrative_area,gn:2638360,/areas/uk/scotland/north-ayrshire,GB,needs_review,prepared,noindex
+gn:2646032,Irvine,populated_place,gn:3333232,/areas/uk/scotland/north-ayrshire/irvine,GB,needs_review,prepared,noindex
+gn:3333233,North Lanarkshire,administrative_area,gn:2638360,/areas/uk/scotland/north-lanarkshire,GB,needs_review,prepared,noindex
+gn:2657613,Airdrie,populated_place,gn:3333233,/areas/uk/scotland/north-lanarkshire/airdrie,GB,needs_review,prepared,noindex
+gn:2655952,Bellshill,populated_place,gn:3333233,/areas/uk/scotland/north-lanarkshire/bellshill,GB,needs_review,prepared,noindex
+gn:2652696,Coatbridge,populated_place,gn:3333233,/areas/uk/scotland/north-lanarkshire/coatbridge,GB,needs_review,prepared,noindex
+gn:2651715,Cumbernauld,populated_place,gn:3333233,/areas/uk/scotland/north-lanarkshire/cumbernauld,GB,needs_review,prepared,noindex
+gn:2642135,Motherwell,populated_place,gn:3333233,/areas/uk/scotland/north-lanarkshire/motherwell,GB,needs_review,prepared,noindex
+gn:2633765,Wishaw,populated_place,gn:3333233,/areas/uk/scotland/north-lanarkshire/wishaw,GB,needs_review,prepared,noindex
+gn:2640923,Orkney Islands,administrative_area,gn:2638360,/areas/uk/scotland/orkney-islands,GB,needs_review,prepared,noindex
+gn:3333234,Perth and Kinross,administrative_area,gn:2638360,/areas/uk/scotland/perth-and-kinross,GB,needs_review,prepared,noindex
+gn:2640358,Perth,populated_place,gn:3333234,/areas/uk/scotland/perth-and-kinross/perth,GB,needs_review,prepared,noindex
+gn:2639494,Renfrewshire,administrative_area,gn:2638360,/areas/uk/scotland/renfrewshire,GB,needs_review,prepared,noindex
+gn:2640677,Paisley,populated_place,gn:2639494,/areas/uk/scotland/renfrewshire/paisley,GB,needs_review,prepared,noindex
+gn:2639495,Renfrew,populated_place,gn:2639494,/areas/uk/scotland/renfrewshire/renfrew,GB,needs_review,prepared,noindex
+gn:2638010,Shetland Islands,administrative_area,gn:2638360,/areas/uk/scotland/shetland-islands,GB,needs_review,prepared,noindex
+gn:3333235,South Ayrshire,administrative_area,gn:2638360,/areas/uk/scotland/south-ayrshire,GB,needs_review,prepared,noindex
+gn:2656708,Ayr,populated_place,gn:3333235,/areas/uk/scotland/south-ayrshire/ayr,GB,needs_review,prepared,noindex
+gn:3333236,South Lanarkshire,administrative_area,gn:2638360,/areas/uk/scotland/south-lanarkshire,GB,needs_review,prepared,noindex
+gn:11592111,Blantyre,populated_place,gn:3333236,/areas/uk/scotland/south-lanarkshire/blantyre,GB,needs_review,prepared,noindex
+gn:2653935,Cambuslang,populated_place,gn:3333236,/areas/uk/scotland/south-lanarkshire/cambuslang,GB,needs_review,prepared,noindex
+gn:2651558,Dalserf,populated_place,gn:3333236,/areas/uk/scotland/south-lanarkshire/dalserf,GB,needs_review,prepared,noindex
+gn:2650405,East Kilbride,populated_place,gn:3333236,/areas/uk/scotland/south-lanarkshire/east-kilbride,GB,needs_review,prepared,noindex
+gn:2647570,Hamilton,populated_place,gn:3333236,/areas/uk/scotland/south-lanarkshire/hamilton,GB,needs_review,prepared,noindex
+gn:2642814,Meikle Earnock,populated_place,gn:3333236,/areas/uk/scotland/south-lanarkshire/meikle-earnock,GB,needs_review,prepared,noindex
+gn:2638926,Rutherglen,populated_place,gn:3333236,/areas/uk/scotland/south-lanarkshire/rutherglen,GB,needs_review,prepared,noindex
+gn:2636909,Stirling,administrative_area,gn:2638360,/areas/uk/scotland/stirling,GB,needs_review,prepared,noindex
+gn:2655192,The Scottish Borders,administrative_area,gn:2638360,/areas/uk/scotland/the-scottish-borders,GB,needs_review,prepared,noindex
+gn:3333237,West Dunbartonshire,administrative_area,gn:2638360,/areas/uk/scotland/west-dunbartonshire,GB,needs_review,prepared,noindex
+gn:2652730,Clydebank,populated_place,gn:3333237,/areas/uk/scotland/west-dunbartonshire/clydebank,GB,needs_review,prepared,noindex
+gn:2650802,Dumbarton,populated_place,gn:3333237,/areas/uk/scotland/west-dunbartonshire/dumbarton,GB,needs_review,prepared,noindex
+gn:11592272,Vale of Leven,populated_place,gn:3333237,/areas/uk/scotland/west-dunbartonshire/vale-of-leven,GB,needs_review,prepared,noindex
+gn:2634354,West Lothian,administrative_area,gn:2638360,/areas/uk/scotland/west-lothian,GB,needs_review,prepared,noindex
+gn:2656169,Bathgate,populated_place,gn:2634354,/areas/uk/scotland/west-lothian/bathgate,GB,needs_review,prepared,noindex
+gn:2644204,Livingston,populated_place,gn:2634354,/areas/uk/scotland/west-lothian/livingston,GB,needs_review,prepared,noindex
+gn:2634895,Wales,uk_nation,country:GB,/areas/uk/wales,GB,needs_review,prepared,noindex
+gn:2657311,Anglesey,administrative_area,gn:2634895,/areas/uk/wales/anglesey,GB,needs_review,prepared,noindex
+gn:3333238,Blaenau Gwent,administrative_area,gn:2634895,/areas/uk/wales/blaenau-gwent,GB,needs_review,prepared,noindex
+gn:2650285,Ebbw Vale,populated_place,gn:3333238,/areas/uk/wales/blaenau-gwent/ebbw-vale,GB,needs_review,prepared,noindex
+gn:3333239,Bridgend county borough,administrative_area,gn:2634895,/areas/uk/wales/bridgend-county-borough,GB,needs_review,prepared,noindex
+gn:2654755,Bridgend,populated_place,gn:3333239,/areas/uk/wales/bridgend-county-borough/bridgend,GB,needs_review,prepared,noindex
+gn:2652622,Coity,populated_place,gn:3333239,/areas/uk/wales/bridgend-county-borough/coity,GB,needs_review,prepared,noindex
+gn:2643218,Maesteg,populated_place,gn:3333239,/areas/uk/wales/bridgend-county-borough/maesteg,GB,needs_review,prepared,noindex
+gn:3333240,Caerphilly County Borough,administrative_area,gn:2634895,/areas/uk/wales/caerphilly-county-borough,GB,needs_review,prepared,noindex
+gn:2654089,Caerphilly,populated_place,gn:3333240,/areas/uk/wales/caerphilly-county-borough/caerphilly,GB,needs_review,prepared,noindex
+gn:2648728,Gelligaer,populated_place,gn:3333240,/areas/uk/wales/caerphilly-county-borough/gelligaer,GB,needs_review,prepared,noindex
+gn:2639317,Risca,populated_place,gn:3333240,/areas/uk/wales/caerphilly-county-borough/risca,GB,needs_review,prepared,noindex
+gn:3333241,Cardiff,administrative_area,gn:2634895,/areas/uk/wales/cardiff,GB,needs_review,prepared,noindex
+gn:2653753,Carmarthenshire,administrative_area,gn:2634895,/areas/uk/wales/carmarthenshire,GB,needs_review,prepared,noindex
+gn:2657345,Ammanford,populated_place,gn:2653753,/areas/uk/wales/carmarthenshire/ammanford,GB,needs_review,prepared,noindex
+gn:2644100,Llanelli,populated_place,gn:2653753,/areas/uk/wales/carmarthenshire/llanelli,GB,needs_review,prepared,noindex
+gn:3333248,City and County of Swansea,administrative_area,gn:2634895,/areas/uk/wales/city-and-county-of-swansea,GB,needs_review,prepared,noindex
+gn:2652734,Clydach,populated_place,gn:3333248,/areas/uk/wales/city-and-county-of-swansea/clydach,GB,needs_review,prepared,noindex
+gn:2648290,Gorseinon,populated_place,gn:3333248,/areas/uk/wales/city-and-county-of-swansea/gorseinon,GB,needs_review,prepared,noindex
+gn:2636432,Swansea,populated_place,gn:3333248,/areas/uk/wales/city-and-county-of-swansea/swansea,GB,needs_review,prepared,noindex
+gn:3333242,Conwy,administrative_area,gn:2634895,/areas/uk/wales/conwy,GB,needs_review,prepared,noindex
+gn:2652513,Colwyn Bay,populated_place,gn:3333242,/areas/uk/wales/conwy/colwyn-bay,GB,needs_review,prepared,noindex
+gn:2653814,County of Ceredigion,administrative_area,gn:2634895,/areas/uk/wales/county-of-ceredigion,GB,needs_review,prepared,noindex
+gn:2657782,Aberystwyth,populated_place,gn:2653814,/areas/uk/wales/county-of-ceredigion/aberystwyth,GB,needs_review,prepared,noindex
+gn:2649298,County of Flintshire,administrative_area,gn:2634895,/areas/uk/wales/county-of-flintshire,GB,needs_review,prepared,noindex
+gn:2654394,Buckley,populated_place,gn:2649298,/areas/uk/wales/county-of-flintshire/buckley,GB,needs_review,prepared,noindex
+gn:8299616,Deeside,populated_place,gn:2649298,/areas/uk/wales/county-of-flintshire/deeside,GB,needs_review,prepared,noindex
+gn:2649301,Flint,populated_place,gn:2649298,/areas/uk/wales/county-of-flintshire/flint,GB,needs_review,prepared,noindex
+gn:2647303,Hawarden,populated_place,gn:2649298,/areas/uk/wales/county-of-flintshire/hawarden,GB,needs_review,prepared,noindex
+gn:2651385,Denbighshire,administrative_area,gn:2634895,/areas/uk/wales/denbighshire,GB,needs_review,prepared,noindex
+gn:2639926,Prestatyn,populated_place,gn:2651385,/areas/uk/wales/denbighshire/prestatyn,GB,needs_review,prepared,noindex
+gn:2639409,Rhyl,populated_place,gn:2651385,/areas/uk/wales/denbighshire/rhyl,GB,needs_review,prepared,noindex
+gn:2647716,Gwynedd,administrative_area,gn:2634895,/areas/uk/wales/gwynedd,GB,needs_review,prepared,noindex
+gn:2656397,Bangor,populated_place,gn:2647716,/areas/uk/wales/gwynedd/bangor,GB,needs_review,prepared,noindex
+gn:3333243,Merthyr Tydfil County Borough,administrative_area,gn:2634895,/areas/uk/wales/merthyr-tydfil-county-borough,GB,needs_review,prepared,noindex
+gn:2642705,Merthyr Tydfil,populated_place,gn:3333243,/areas/uk/wales/merthyr-tydfil-county-borough/merthyr-tydfil,GB,needs_review,prepared,noindex
+gn:3333244,Monmouthshire,administrative_area,gn:2634895,/areas/uk/wales/monmouthshire,GB,needs_review,prepared,noindex
+gn:3333245,Neath Port Talbot,administrative_area,gn:2634895,/areas/uk/wales/neath-port-talbot,GB,needs_review,prepared,noindex
+gn:2654668,Briton Ferry,populated_place,gn:3333245,/areas/uk/wales/neath-port-talbot/briton-ferry,GB,needs_review,prepared,noindex
+gn:2641843,Neath,populated_place,gn:3333245,/areas/uk/wales/neath-port-talbot/neath,GB,needs_review,prepared,noindex
+gn:3333246,Newport,administrative_area,gn:2634895,/areas/uk/wales/newport,GB,needs_review,prepared,noindex
+gn:2640500,Pembrokeshire,administrative_area,gn:2634895,/areas/uk/wales/pembrokeshire,GB,needs_review,prepared,noindex
+gn:3333247,Rhondda Cynon Taf,administrative_area,gn:2634895,/areas/uk/wales/rhondda-cynon-taf,GB,needs_review,prepared,noindex
+gn:2657835,Aberdare,populated_place,gn:3333247,/areas/uk/wales/rhondda-cynon-taf/aberdare,GB,needs_review,prepared,noindex
+gn:2640104,Pontypridd,populated_place,gn:3333247,/areas/uk/wales/rhondda-cynon-taf/pontypridd,GB,needs_review,prepared,noindex
+gn:2639447,Rhondda,populated_place,gn:3333247,/areas/uk/wales/rhondda-cynon-taf/rhondda,GB,needs_review,prepared,noindex
+gn:3345283,Tonypandy,populated_place,gn:3333247,/areas/uk/wales/rhondda-cynon-taf/tonypandy,GB,needs_review,prepared,noindex
+gn:2639944,Sir Powys,administrative_area,gn:2634895,/areas/uk/wales/sir-powys,GB,needs_review,prepared,noindex
+gn:3333249,Torfaen County Borough,administrative_area,gn:2634895,/areas/uk/wales/torfaen-county-borough,GB,needs_review,prepared,noindex
+gn:2651654,Cwmbran,populated_place,gn:3333249,/areas/uk/wales/torfaen-county-borough/cwmbran,GB,needs_review,prepared,noindex
+gn:2640106,Pontypool,populated_place,gn:3333249,/areas/uk/wales/torfaen-county-borough/pontypool,GB,needs_review,prepared,noindex
+gn:2635028,Vale of Glamorgan,administrative_area,gn:2634895,/areas/uk/wales/vale-of-glamorgan,GB,needs_review,prepared,noindex
+gn:2656235,Barry,populated_place,gn:2635028,/areas/uk/wales/vale-of-glamorgan/barry,GB,needs_review,prepared,noindex
+gn:2640496,Penarth,populated_place,gn:2635028,/areas/uk/wales/vale-of-glamorgan/penarth,GB,needs_review,prepared,noindex
+gn:2633484,Wrexham,administrative_area,gn:2634895,/areas/uk/wales/wrexham,GB,needs_review,prepared,noindex
+gn:2654450,Brymbo,populated_place,gn:2633484,/areas/uk/wales/wrexham/brymbo,GB,needs_review,prepared,noindex
+gn:2639436,Rhosllannerchrugog,populated_place,gn:2633484,/areas/uk/wales/wrexham/rhosllannerchrugog,GB,needs_review,prepared,noindex
+worldwide,Worldwide,navigation_root,,/areas/worldwide,,needs_review,prepared,noindex
+continent:EU,Europe,continent,worldwide,/areas/worldwide/europe,,needs_review,prepared,noindex
+country:AX,Åland Islands,country_or_territory,continent:EU,/areas/worldwide/europe/aland-islands,AX,needs_review,prepared,noindex
+country:AL,Albania,country_or_territory,continent:EU,/areas/worldwide/europe/albania,AL,needs_review,prepared,noindex
+country:AD,Andorra,country_or_territory,continent:EU,/areas/worldwide/europe/andorra,AD,needs_review,prepared,noindex
+country:AT,Austria,country_or_territory,continent:EU,/areas/worldwide/europe/austria,AT,needs_review,prepared,noindex
+country:BY,Belarus,country_or_territory,continent:EU,/areas/worldwide/europe/belarus,BY,needs_review,prepared,noindex
+country:BE,Belgium,country_or_territory,continent:EU,/areas/worldwide/europe/belgium,BE,needs_review,prepared,noindex
+country:BA,Bosnia and Herzegovina,country_or_territory,continent:EU,/areas/worldwide/europe/bosnia-and-herzegovina,BA,needs_review,prepared,noindex
+country:BG,Bulgaria,country_or_territory,continent:EU,/areas/worldwide/europe/bulgaria,BG,needs_review,prepared,noindex
+country:HR,Croatia,country_or_territory,continent:EU,/areas/worldwide/europe/croatia,HR,needs_review,prepared,noindex
+country:CY,Cyprus,country_or_territory,continent:EU,/areas/worldwide/europe/cyprus,CY,needs_review,prepared,noindex
+country:CZ,Czechia,country_or_territory,continent:EU,/areas/worldwide/europe/czechia,CZ,needs_review,prepared,noindex
+country:DK,Denmark,country_or_territory,continent:EU,/areas/worldwide/europe/denmark,DK,needs_review,prepared,noindex
+country:EE,Estonia,country_or_territory,continent:EU,/areas/worldwide/europe/estonia,EE,needs_review,prepared,noindex
+country:FO,Faroe Islands,country_or_territory,continent:EU,/areas/worldwide/europe/faroe-islands,FO,needs_review,prepared,noindex
+country:FI,Finland,country_or_territory,continent:EU,/areas/worldwide/europe/finland,FI,needs_review,prepared,noindex
+country:FR,France,country_or_territory,continent:EU,/areas/worldwide/europe/france,FR,needs_review,prepared,noindex
+country:DE,Germany,country_or_territory,continent:EU,/areas/worldwide/europe/germany,DE,needs_review,prepared,noindex
+country:GI,Gibraltar,country_or_territory,continent:EU,/areas/worldwide/europe/gibraltar,GI,needs_review,prepared,noindex
+country:GR,Greece,country_or_territory,continent:EU,/areas/worldwide/europe/greece,GR,needs_review,prepared,noindex
+country:GG,Guernsey,country_or_territory,continent:EU,/areas/worldwide/europe/guernsey,GG,needs_review,prepared,noindex
+country:HU,Hungary,country_or_territory,continent:EU,/areas/worldwide/europe/hungary,HU,needs_review,prepared,noindex
+country:IS,Iceland,country_or_territory,continent:EU,/areas/worldwide/europe/iceland,IS,needs_review,prepared,noindex
+country:IE,Ireland,country_or_territory,continent:EU,/areas/worldwide/europe/ireland,IE,needs_review,prepared,noindex
+country:IM,Isle of Man,country_or_territory,continent:EU,/areas/worldwide/europe/isle-of-man,IM,needs_review,prepared,noindex
+country:IT,Italy,country_or_territory,continent:EU,/areas/worldwide/europe/italy,IT,needs_review,prepared,noindex
+country:JE,Jersey,country_or_territory,continent:EU,/areas/worldwide/europe/jersey,JE,needs_review,prepared,noindex
+country:XK,Kosovo,country_or_territory,continent:EU,/areas/worldwide/europe/kosovo,XK,needs_review,prepared,noindex
+country:LV,Latvia,country_or_territory,continent:EU,/areas/worldwide/europe/latvia,LV,needs_review,prepared,noindex
+country:LI,Liechtenstein,country_or_territory,continent:EU,/areas/worldwide/europe/liechtenstein,LI,needs_review,prepared,noindex
+country:LT,Lithuania,country_or_territory,continent:EU,/areas/worldwide/europe/lithuania,LT,needs_review,prepared,noindex
+country:LU,Luxembourg,country_or_territory,continent:EU,/areas/worldwide/europe/luxembourg,LU,needs_review,prepared,noindex
+country:MT,Malta,country_or_territory,continent:EU,/areas/worldwide/europe/malta,MT,needs_review,prepared,noindex
+country:MD,Moldova,country_or_territory,continent:EU,/areas/worldwide/europe/moldova,MD,needs_review,prepared,noindex
+country:MC,Monaco,country_or_territory,continent:EU,/areas/worldwide/europe/monaco,MC,needs_review,prepared,noindex
+country:ME,Montenegro,country_or_territory,continent:EU,/areas/worldwide/europe/montenegro,ME,needs_review,prepared,noindex
+country:NL,Netherlands,country_or_territory,continent:EU,/areas/worldwide/europe/netherlands,NL,needs_review,prepared,noindex
+country:MK,North Macedonia,country_or_territory,continent:EU,/areas/worldwide/europe/north-macedonia,MK,needs_review,prepared,noindex
+country:NO,Norway,country_or_territory,continent:EU,/areas/worldwide/europe/norway,NO,needs_review,prepared,noindex
+country:PL,Poland,country_or_territory,continent:EU,/areas/worldwide/europe/poland,PL,needs_review,prepared,noindex
+country:PT,Portugal,country_or_territory,continent:EU,/areas/worldwide/europe/portugal,PT,needs_review,prepared,noindex
+country:RO,Romania,country_or_territory,continent:EU,/areas/worldwide/europe/romania,RO,needs_review,prepared,noindex
+country:RU,Russia,country_or_territory,continent:EU,/areas/worldwide/europe/russia,RU,needs_review,prepared,noindex
+country:SM,San Marino,country_or_territory,continent:EU,/areas/worldwide/europe/san-marino,SM,needs_review,prepared,noindex
+country:RS,Serbia,country_or_territory,continent:EU,/areas/worldwide/europe/serbia,RS,needs_review,prepared,noindex
+country:SK,Slovakia,country_or_territory,continent:EU,/areas/worldwide/europe/slovakia,SK,needs_review,prepared,noindex
+country:SI,Slovenia,country_or_territory,continent:EU,/areas/worldwide/europe/slovenia,SI,needs_review,prepared,noindex
+country:ES,Spain,country_or_territory,continent:EU,/areas/worldwide/europe/spain,ES,needs_review,prepared,noindex
+country:SJ,Svalbard and Jan Mayen,country_or_territory,continent:EU,/areas/worldwide/europe/svalbard-and-jan-mayen,SJ,needs_review,prepared,noindex
+country:SE,Sweden,country_or_territory,continent:EU,/areas/worldwide/europe/sweden,SE,needs_review,prepared,noindex
+country:CH,Switzerland,country_or_territory,continent:EU,/areas/worldwide/europe/switzerland,CH,needs_review,prepared,noindex
+country:UA,Ukraine,country_or_territory,continent:EU,/areas/worldwide/europe/ukraine,UA,needs_review,prepared,noindex
+country:VA,Vatican City,country_or_territory,continent:EU,/areas/worldwide/europe/vatican-city,VA,needs_review,prepared,noindex

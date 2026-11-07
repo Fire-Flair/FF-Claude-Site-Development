@@ -1,0 +1,37 @@
+{
+  "retrieved_on": "2026-11-07",
+  "raw_GB_records": 109182,
+  "populated_place_source_records": 43681,
+  "location_records_including_hubs": 47990,
+  "countries_and_territories": 250,
+  "europe_navigation_entries_excluding_UK": 52,
+  "launch_location_pages": 1000,
+  "potential_site_routes": 3000,
+  "london_boroughs": 32,
+  "city_of_london_records": 1,
+  "curated_camden_places": 20,
+  "nation_page_counts": {
+    "ENG": 778,
+    "NIR": 31,
+    "SCT": 79,
+    "WLS": 57
+  },
+  "structural_checks": {
+    "unique_ids": true,
+    "all_source_parents_resolve": true,
+    "all_page_parents_resolve": true,
+    "unique_paths": true,
+    "acyclic_page_tree": true,
+    "default_noindex": true
+  },
+  "source_sha256": {
+    "countryInfo.txt": "79f8f59ea01cbb40438bf1856dd6c2ff201f03f8fc72d0530b2646aaf603ef04",
+    "GB.zip": "729cc29540d283e8151d7a2e3de64dca2607e8f52cb1ebbbd92baa0738de4d50"
+  },
+  "limitations": [
+    "Gazetteer records can contain duplicates and historical administrative associations.",
+    "Population is source data used only for seed ordering, not current search demand.",
+    "No polygons are supplied. Neighbourhood containment and coverage need review.",
+    "Launch records are prepared candidates; none is approved for automatic search indexing."
+  ]
+}

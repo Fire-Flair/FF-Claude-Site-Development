@@ -1,5 +1,16 @@
 # FireFlair prototype — changelog
 
+## v17.3.110 — 2026-11-07 — v17.3.110 Front Doors area pages
+Artifact version 1794090723-b49b · file `fireflair-v17.3.110.html`
+
+- Front Doors: location pages for all three sites from one shared engine. 1,000 prepared places (UK nations, counties, London hub with 32 boroughs and the City, Camden neighbourhoods, towns, Europe) can each have one page per site. Routes: `#/ff-party|ff-team|ff-staff/areas/uk/...` in the prototype, `/areas/...` in the real build.
+- Explore by area: a compact section on the People page of FF Team, FF Staff and FF Party, above the map and separate from it. Nested disclosure plus place-name search; places with a page are links, others offer "Ask us to find people".
+- Area pages have three intents (Party: find or ask us to find a bartender; Team: join the network, explicitly not a job application; Staff: staffing request), with breadcrumbs, FAQ, child and sibling links, self-canonical URL and robots by state. No JobPosting markup.
+- Coverage: whole-area vs selected-place coverage kept apart. Empty local results fall back one parent at a time, labelled "Explore professionals across <area>", stopping at the UK nation. Unclaimed company cards appear in results for testing; a visitor asks FireFlair to contact the company and pass the enquiry on.
+- "Ask us to find people": validated form, saved first with a reference, duplicate-safe, honest "received, not confirmed" result; "Register interest" where a market is not taking requests.
+- FF Admin → Areas and requests: request queue (place, date, profession, status), per-(site, place) prepared / published / approved states with batch review, reviewer, date, reason and five checks, market modes, sitemap preview.
+- Developer handover in docs/front-doors/ (behaviour, data model, backend work remaining); kit data in data/front-doors/. Persistence, notifications, sitemap and provider coverage are simulated here; nothing is operational or approved for search by default.
+
 ## v17.3.109
 
 - FF Party People page reordered: search at the top, then the four pillars under "Browse the network", then the map directly below the pillars (below the open pillar's list when one is open), then Featured companies and Featured people at the bottom.
