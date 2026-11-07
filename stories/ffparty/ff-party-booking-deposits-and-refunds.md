@@ -15,7 +15,7 @@ reviewed: 2026-11-07
 cta: {label: Plan your party, destination: FF Party event planner}
 related: [P01, P02, P21]
 sources: []
-conditions: [approved customer-facing wording and VAT presentation, post-confirmation cancellation wording, first-year launch pricing terms]
+conditions: [approved VAT presentation; Alex to confirm the reading of the 30-day rule: credit (not cash refund) at 30+ days after confirmation, no refund within 30 days once staff are confirmed, refund before confirmation]
 ---
 
 # How FF Party booking deposits and refunds work
@@ -43,9 +43,14 @@ The charge is for the event, not for each person. An Event Card with several pos
 - **Partly staffed.** If some positions are filled and others are not, FireFlair reviews the event individually under the policy. There is no published formula that splits the charge by position.
 - **Your bartender cancels.** The position is reopened and a replacement is sought through the agreed process, with no second replacement-matching charge. A replacement depends on availability.
 
-## What about cancelling after you are confirmed?
+## What about cancelling or changing the date after you are confirmed?
 
-Follow the current booking terms. The professional's cancellation pay is a separate matter from FireFlair's charge. This page will state the rule once the final terms are published.
+Not sure of your date? You can still book, and change it later.
+
+- **30 days or more before the event:** if you cancel or move the event, your booking charge can be used towards your next event.
+- **Within 30 days of the event, once your staff are confirmed:** the charge is not refunded. This protects the professionals who have kept the date free for you.
+
+The professional's cancellation pay is a separate matter from FireFlair's charge. These rules apply to FF Party events, so read them alongside the current booking terms.
 
 ## Where is the record?
 

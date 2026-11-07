@@ -3,7 +3,7 @@ id: P10
 site: ffparty.uk
 title: How to plan a cocktail menu for a party
 slug: how-to-plan-a-cocktail-menu-for-a-party
-status: draft-needs-workflow-check
+status: published-draft
 seo_title: How to plan a cocktail menu for a party
 meta_description: How to choose a balanced party cocktail menu: variety, difficulty, alcohol-free choices and who supplies the ingredients.
 category: Drinks
@@ -21,7 +21,7 @@ conditions: [state whether the FF Party basket records preferences, quantities, 
 
 # How to plan a cocktail menu for a party
 
-Pick a short list that covers the main tastes, keeps the bartender's work manageable and includes good alcohol-free choices. For most parties, four to six drinks is plenty. More choice slows service for everyone.
+Pick a short list that covers the main tastes, keeps the bartender's work manageable and includes good alcohol-free choices. Three to five different drinks is the sweet spot. More choice slows service for everyone.
 
 ## A balanced list
 
@@ -41,7 +41,15 @@ Decide with your supplier whether they bring the ingredients, you do, or the cos
 
 ## Using the FF Party menu
 
-You can choose drinks in the event planner and share your choices with the bartender you invite. [To be confirmed before publication: whether this records preferences only, quantities, ingredients, or a paid order.] Ask the bartender to confirm what they can make before the event.
+The FF Party cocktail menu opens with the UK's best-loved classics, and you tap a card to see the recipe. A switch shows mocktails, which work the same way.
+
+- **Add favourites.** Save the drinks you love, and they are remembered for next time.
+- **Say how many servings.** Quantities are set in servings, in steps of 20, and your bartender can talk the numbers through with you.
+- **Recipes on your invoice.** The invoice lists each cocktail with its full recipe scaled to your servings, so your professionals see what you expect.
+- **Tips and requests.** Add anything special on the request box. It appears on your Event Card and invoice.
+- **Rebook the same drinks.** Your choices stay with you, so booking another party can start from the same cocktails.
+
+Ask the bartender to confirm what they can make before the event.
 
 ## Next
 

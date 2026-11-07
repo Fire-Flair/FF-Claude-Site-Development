@@ -1,5 +1,16 @@
 # FireFlair prototype — changelog
 
+## v17.3.94 — 2026-11-07 — Stories phase 2
+Artifact version 1794060681-c057 · file `fireflair-v17.3.94.html`
+
+- New articles (full text, in the `stories/` folder as markdown with metadata): FF Party P01 to P06, P10, P17, P23; FF Team T01 to T05, T13; FF Staff B01, B02, B03, B07, B18. Run `scripts/build-stories.py` to rebuild the data in the page from the markdown.
+- The Stories cards are now real links (`/stories/{slug}`). A normal click opens the article in the pop-up reader over the current screen, so a booking in progress is untouched. Closing returns to where the visitor was and puts focus back on the card.
+- The reader now shows tables, lists, links, a last-reviewed date, a call to action that goes to the real flow (create profile, or plan an event), and a Keep reading list. It also adds Article structured data and the page title while an article is open.
+- Older stories that were merged into the new ones are no longer listed. Their data is still in `JR17`. See `stories/INVENTORY.md` for the migration map.
+- A direct visit to `/stories/{slug}` opens the article. The address bar is only changed when `ST18_ROUTES` is set to true. Real routes still need server rendering or prerendering, a Stories index page and a sitemap; this is prototype only.
+- The business site name used is FF Staff. The domain is still to be bought.
+- Open items are listed in `stories/INVENTORY.md`.
+
 ## v17.3.93 — 2026-11-07 — FF Business renamed FF Staff
 Artifact version 1794048455-20d5 · file `fireflair-v17.3.93.html`
 

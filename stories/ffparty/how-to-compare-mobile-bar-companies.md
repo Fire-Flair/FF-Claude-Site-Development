@@ -3,7 +3,7 @@ id: P04
 site: ffparty.uk
 title: How to compare mobile bar companies
 slug: how-to-compare-mobile-bar-companies
-status: draft-needs-network-scope
+status: published-draft
 seo_title: How to compare mobile bar companies: a worksheet
 meta_description: A comparison worksheet for hosts: service, team, menu, supplies, travel, total cost and how a booking is confirmed.
 category: Choosing a service
@@ -15,7 +15,7 @@ reviewed: 2026-11-07
 cta: {label: Plan your party, destination: FF Party service selection}
 related: [P17, P03, P02, P13]
 sources: [S18, S19, S20, S21, S22, S23, S25, S26, S27, S28, S29]
-conditions: [confirm whether complete bar companies can be compared and booked through the current release before publishing the FF Party scope paragraph]
+conditions: [supplier-network wording deliberately avoids promising a live network; revisit once real supplier coverage exists]
 ---
 
 # How to compare mobile bar companies
@@ -45,6 +45,8 @@ Real photographs of the company's own events, reviews you can trace to a platfor
 
 ## Where FF Party fits
 
-FF Party lets you describe the event, choose the people you want to invite, and see the professional's pay and FireFlair's booking charge separately. [Scope statement to be confirmed: which service types and supplier companies can be compared and booked in the current release.]
+FF Party lets you describe the event, choose the people you want to invite, and see the professional's pay and FireFlair's booking charge separately.
+
+You do not have to search the whole market yourself. FF Party is a young network, and it does not claim to list every bar company. If you need a mobile bar or a full package, tell us what you want. The FireFlair team works in events, and we contact bartenders and bar companies that look suited to your brief and pass on who is available. What you can compare depends on who replies for your date and area, and we do not promise a set number of options.
 
 For other routes, see [Add to Event alternatives for party bar hire](/stories/add-to-event-alternatives-party-bar-hire).
