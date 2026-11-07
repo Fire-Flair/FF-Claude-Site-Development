@@ -2381,11 +2381,562 @@ const VENUES = [
   { id: "ven_north", name: "Northbank Studio", kind: "Production space", area: "North London", tag: "NRTHS", tier: "standard" },
 ];
 
+/* Real UK event bar companies, built as unclaimed draft Company Cards from public information.
+   The same data lives in data/companies/seed-companies.json, ready to import into the real site
+   as drafts. Unclaimed: not offered for booking and kept off FF Party until the company claims it. */
+const REAL_COMPANIES11 = [
+  {
+    "slug": "bar-brothers-events",
+    "tag": "BARBR",
+    "name": "Bar Brothers Events",
+    "legalName": "Celebrify Limited",
+    "companyNumber": "15546685",
+    "kind": "Mobile bars & event catering",
+    "base": "London",
+    "areas": [
+      "London",
+      "Home Counties",
+      "UK-wide"
+    ],
+    "summary": "A London bar hire and event catering company. It supplies mobile bars with bartenders, glassware and ice for weddings, corporate events and private parties, and also offers dry hire and food.",
+    "services": [
+      "Mobile bar hire",
+      "Dry hire",
+      "Bartenders and mixologists",
+      "Flair bartenders",
+      "Waiting staff",
+      "Glassware and ice",
+      "Custom cocktail menus",
+      "Cocktail masterclasses",
+      "Event catering",
+      "Food trucks"
+    ],
+    "eventTypes": [
+      "Weddings",
+      "Corporate events",
+      "Christmas parties",
+      "Private parties",
+      "Conferences",
+      "Film sets"
+    ],
+    "scale": [
+      "Travels across the UK from London"
+    ],
+    "facts": [
+      "Trading name of Celebrify Limited"
+    ],
+    "website": "https://barbrothersevents.co.uk",
+    "social": {
+      "instagram": "@barbrothersevents",
+      "facebook": "BarBrothersEvents",
+      "linkedin": "bar-brothers-events-ltd-763a051a4",
+      "tiktok": "@barbrothersevents"
+    },
+    "images": {
+      "logo": null,
+      "photos": [],
+      "permission": "pending"
+    },
+    "status": "unclaimed",
+    "source": {
+      "urls": [
+        "https://barbrothersevents.co.uk/"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "verifiedBy": null
+  },
+  {
+    "slug": "mix-and-twist",
+    "tag": "MIXTW",
+    "name": "Mix & Twist",
+    "legalName": null,
+    "companyNumber": null,
+    "kind": "Bar hire for large events",
+    "base": "Leeds and London",
+    "areas": [
+      "Leeds",
+      "London",
+      "UK-wide"
+    ],
+    "summary": "A specialist bar hire company working with freelance mixologists. It runs large corporate events, private parties and weddings, and provides the bars, bartenders, glassware and an event manager on the day.",
+    "services": [
+      "Customisable mobile bars",
+      "Themed bars",
+      "Bartenders and mixologists",
+      "Glassware",
+      "Bespoke drinks menus",
+      "Event management",
+      "Brand drinks development",
+      "Team-building cocktail classes"
+    ],
+    "eventTypes": [
+      "Large corporate events",
+      "Private parties",
+      "Weddings",
+      "Team building"
+    ],
+    "scale": [
+      "Founded 2014",
+      "Large events from 150 guests",
+      "Case example: 500-guest event with five bars"
+    ],
+    "facts": [
+      "Good Business Charter accredited",
+      "Public and employer's liability insurance held"
+    ],
+    "website": "https://www.mixandtwist.co.uk",
+    "social": {
+      "instagram": "@mixandtwistuk",
+      "facebook": "mixandtwistuk",
+      "linkedin": "mixandtwistuk"
+    },
+    "images": {
+      "logo": null,
+      "photos": [],
+      "permission": "pending"
+    },
+    "status": "unclaimed",
+    "source": {
+      "urls": [
+        "https://www.mixandtwist.co.uk/corporate-services/large-events"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "verifiedBy": null
+  },
+  {
+    "slug": "ministry-of-cocktails",
+    "tag": "MINCK",
+    "name": "Ministry of Cocktails",
+    "legalName": "Ministry of Cocktails LTD",
+    "companyNumber": "14770394",
+    "kind": "Mobile cocktail bars & full bar service",
+    "base": "UK",
+    "areas": [
+      "UK-wide"
+    ],
+    "summary": "A mobile bar company offering fully managed bar services. Cocktail, mocktail, coffee and juice bars for weddings, corporate events, exhibitions and festivals, with modular bars built in its own workshop.",
+    "services": [
+      "Cocktail bars",
+      "Mocktail bars",
+      "Full service bars",
+      "Mobile coffee bars",
+      "Juice and smoothie bars",
+      "Mixology masterclasses",
+      "Bartenders and mixologists",
+      "Custom modular bar design",
+      "Glassware"
+    ],
+    "eventTypes": [
+      "Weddings",
+      "Corporate events",
+      "Exhibitions",
+      "Festivals",
+      "Private parties",
+      "Celebrity and VIP events"
+    ],
+    "scale": [],
+    "facts": [
+      "Fully licensed and insured",
+      "Zero-plastic approach"
+    ],
+    "website": "https://ministryofcocktails.co.uk",
+    "social": {
+      "instagram": "@ministry_of_cocktails",
+      "facebook": "ministryofcocktails1",
+      "linkedin": "ministry-of-cocktails"
+    },
+    "images": {
+      "logo": null,
+      "photos": [],
+      "permission": "pending"
+    },
+    "status": "unclaimed",
+    "source": {
+      "urls": [
+        "https://ministryofcocktails.co.uk/"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "verifiedBy": null
+  },
+  {
+    "slug": "barsmith-event-bars",
+    "tag": "BARSM",
+    "name": "Barsmith Event Bars",
+    "legalName": null,
+    "companyNumber": null,
+    "kind": "Event bars & bartender hire",
+    "base": "Marylebone, London",
+    "areas": [
+      "London",
+      "UK-wide"
+    ],
+    "summary": "A London event bar company, part of Marylebone Leisure Group. It supplies bespoke bars, bartenders, mixologists and waiting staff, with infusions made in its own laboratory.",
+    "services": [
+      "Bespoke bars",
+      "Bartenders and mixologists",
+      "Waiting staff",
+      "Hosts and entertainment",
+      "Ice, refrigeration and glassware",
+      "Mixology masterclasses",
+      "Handmade infused spirits and cocktails"
+    ],
+    "eventTypes": [
+      "Corporate functions",
+      "Weddings",
+      "Private parties",
+      "Festivals",
+      "Dinner parties"
+    ],
+    "scale": [
+      "Events from 50 to around 500 guests"
+    ],
+    "facts": [
+      "Part of Marylebone Leisure Group",
+      "Bar of the Year Award 2016 and 2018"
+    ],
+    "website": "https://barsmitheventbars.com",
+    "social": {
+      "instagram": "@barsmitheventbars",
+      "facebook": "barsmitheventbars"
+    },
+    "images": {
+      "logo": null,
+      "photos": [],
+      "permission": "pending"
+    },
+    "status": "unclaimed",
+    "source": {
+      "urls": [
+        "https://barsmitheventbars.com/"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "verifiedBy": null
+  },
+  {
+    "slug": "the-bartender",
+    "tag": "THEBA",
+    "name": "The Bartender",
+    "legalName": null,
+    "companyNumber": null,
+    "kind": "Event bartenders & mobile bars",
+    "base": "Bristol",
+    "areas": [
+      "Bristol",
+      "South West",
+      "UK-wide"
+    ],
+    "summary": "A Bristol drinks and bartending company with over fifteen years of event experience. It provides mobile and branded bars, mixologists, glassware and uniforms for corporate receptions, launches and team events.",
+    "services": [
+      "Mobile bar units",
+      "Branded bars",
+      "Exhibition cocktail bars",
+      "Frozen cocktails",
+      "Bespoke cocktail menus",
+      "Mixologists and bar staff",
+      "Glassware and uniforms",
+      "Cocktail workshops",
+      "Product launch support"
+    ],
+    "eventTypes": [
+      "Corporate receptions",
+      "Exhibitions",
+      "Product launches",
+      "Awards dinners",
+      "Christmas parties",
+      "Team building",
+      "Weddings",
+      "Private parties"
+    ],
+    "scale": [
+      "Over fifteen years in events"
+    ],
+    "facts": [],
+    "website": "https://thebartender.co.uk",
+    "social": {},
+    "images": {
+      "logo": null,
+      "photos": [],
+      "permission": "pending"
+    },
+    "status": "unclaimed",
+    "source": {
+      "urls": [
+        "https://thebartender.co.uk/corporate-events/"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "verifiedBy": null
+  },
+  {
+    "slug": "barworx",
+    "tag": "BARWX",
+    "name": "Barworx",
+    "legalName": null,
+    "companyNumber": null,
+    "kind": "Festival bars & bar equipment hire",
+    "base": "Milton Keynes",
+    "areas": [
+      "Milton Keynes",
+      "London",
+      "UK-wide"
+    ],
+    "summary": "A festival bar and bar equipment hire specialist for beer festivals and large-scale festivals. It supplies counters, cask ale cooling, keg hire and craft beer walls, with delivery, installation and collection.",
+    "services": [
+      "Festival bars",
+      "Mobile craft beer bars",
+      "Bar equipment hire",
+      "Keg hire",
+      "Craft beer walls",
+      "Cask ale racking and cooling",
+      "Delivery, installation and servicing"
+    ],
+    "eventTypes": [
+      "Beer festivals",
+      "Large-scale festivals",
+      "Weddings",
+      "Venue and promoter events",
+      "Oktoberfest bierkellers"
+    ],
+    "scale": [
+      "Bar counters up to 400 metres",
+      "Cask cooling for over 300 nine-gallon casks"
+    ],
+    "facts": [
+      "Listing details only; own website not confirmed"
+    ],
+    "website": null,
+    "social": {},
+    "images": {
+      "logo": null,
+      "photos": [],
+      "permission": "pending"
+    },
+    "status": "unclaimed",
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/suppliers/barworx"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "verifiedBy": null
+  },
+  {
+    "slug": "event-bars-ltd",
+    "tag": "EVTBR",
+    "name": "Event Bars Ltd",
+    "legalName": null,
+    "companyNumber": null,
+    "kind": "Bar management for festivals & events",
+    "base": "Bristol",
+    "areas": [
+      "Bristol",
+      "UK",
+      "Europe"
+    ],
+    "summary": "A bar management and delivery company for festivals and brand events. It provides mobile bars across craft beer, whisky, wine and gin, and has worked with festivals of over 200,000 people.",
+    "services": [
+      "Mobile bars",
+      "Mobile craft beer bars",
+      "Mobile whisky bars",
+      "Mobile wine bars",
+      "Mobile gin bars",
+      "Bespoke bar management"
+    ],
+    "eventTypes": [
+      "Festivals",
+      "Food festivals",
+      "Brand experiences",
+      "Boutique events",
+      "Private parties"
+    ],
+    "scale": [
+      "Festivals of over 200,000 people"
+    ],
+    "facts": [
+      "Listing details only; own website not confirmed"
+    ],
+    "website": null,
+    "social": {},
+    "images": {
+      "logo": null,
+      "photos": [],
+      "permission": "pending"
+    },
+    "status": "unclaimed",
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/suppliers/event-bars-ltd"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "verifiedBy": null
+  },
+  {
+    "slug": "quickbar",
+    "tag": "QUICK",
+    "name": "Quickbar",
+    "legalName": "Quickbar Ltd",
+    "companyNumber": null,
+    "kind": "Event bar operator",
+    "base": "Gloucestershire",
+    "areas": [
+      "UK-wide"
+    ],
+    "summary": "An event bar operator managing bars and outdoor events across the UK, from festivals and concerts to stadium and sporting fixtures, with bar staff and brand activations.",
+    "services": [
+      "Cocktail bars",
+      "Mobile bars",
+      "Festival bars",
+      "Outdoor bars",
+      "Themed bars",
+      "Bar staff",
+      "Brand activation and sponsorship"
+    ],
+    "eventTypes": [
+      "Festivals",
+      "Sporting events",
+      "Concerts",
+      "One-day events"
+    ],
+    "scale": [
+      "Stadium and major venue events"
+    ],
+    "facts": [
+      "Listing details only; own website not confirmed"
+    ],
+    "website": null,
+    "social": {},
+    "images": {
+      "logo": null,
+      "photos": [],
+      "permission": "pending"
+    },
+    "status": "unclaimed",
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/suppliers/quickbar-ltd"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "verifiedBy": null
+  },
+  {
+    "slug": "the-bar-people",
+    "tag": "BARPE",
+    "name": "The Bar People",
+    "legalName": null,
+    "companyNumber": null,
+    "kind": "Mobile bars for large corporate events",
+    "base": "",
+    "areas": [
+      "London",
+      "Essex",
+      "Hertfordshire"
+    ],
+    "summary": "A mobile bar company with over ten years in operation, working from private house parties to large-scale corporate events. It provides customised bars, bar staff, glassware, refrigeration and equipment.",
+    "services": [
+      "Customised bars",
+      "Cocktail bars",
+      "Bar staff",
+      "Glassware and tableware",
+      "Refrigeration and ice storage",
+      "Beverages and bar equipment"
+    ],
+    "eventTypes": [
+      "Private parties",
+      "Large corporate events"
+    ],
+    "scale": [
+      "Over ten years in operation"
+    ],
+    "facts": [
+      "Listing details only; own website not confirmed"
+    ],
+    "website": null,
+    "social": {},
+    "images": {
+      "logo": null,
+      "photos": [],
+      "permission": "pending"
+    },
+    "status": "unclaimed",
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/suppliers/the-bar-people"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "verifiedBy": null
+  },
+  {
+    "slug": "the-outside-bar-company",
+    "tag": "OUTSB",
+    "name": "The Outside Bar Company",
+    "legalName": null,
+    "companyNumber": null,
+    "kind": "Independent mobile bar company",
+    "base": "Cambridgeshire",
+    "areas": [
+      "Cambridgeshire",
+      "UK"
+    ],
+    "summary": "An independent mobile bar company with over 25 years in the licensed trade. It supplies mobile and cocktail bars with experienced bar staff, glassware, ice, drinks and insurance.",
+    "services": [
+      "Mobile bars",
+      "Cocktail bars",
+      "Bar staff",
+      "Glassware",
+      "Ice and drinks",
+      "Insurance"
+    ],
+    "eventTypes": [
+      "Weddings",
+      "Festivals",
+      "Corporate events",
+      "Christmas parties",
+      "Birthdays",
+      "Private parties"
+    ],
+    "scale": [
+      "Over 25 years in the licensed trade"
+    ],
+    "facts": [
+      "Listing details only; own website not confirmed"
+    ],
+    "website": null,
+    "social": {},
+    "images": {
+      "logo": null,
+      "photos": [],
+      "permission": "pending"
+    },
+    "status": "unclaimed",
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/suppliers/the-outside-bar-company"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "verifiedBy": null
+  }
+];
+const realBase11 = (c) => ({ id: "co_" + c.slug, name: c.name, kind: c.kind, area: c.areas[0] || "", tag: c.tag, tier: "standard", unclaimed: true });
+const realPage11 = (c) => ["co_" + c.slug, {
+  name: c.name, kind: c.kind, areas: c.areas.join(" · "), slug: c.slug, socials: c.social || {}, theme: "onyx", layout: "classic", tier: "standard", unclaimed: true,
+  description: c.summary, media: [], team: [], venues: [], reviews: [],
+  contact: c.website ? [["Website", c.website.replace(/^https?:\/\/(www\.)?/, "")]] : [],
+  seed: { services: c.services || [], eventTypes: c.eventTypes || [], scale: c.scale || [], facts: c.facts || [], base: c.base || "" },
+}];
 const COMPANIES = [
   { id: "co_vooshka", name: "Vooshka Cocktail Bar", kind: "Luxury mobile cocktail bar", area: "Nationwide", tag: "VOOSH", tier: "gold" },
-  { id: "co_loft", name: "The Loft Lounge", kind: "Cocktail bar · Private events", area: "Enfield", tag: "LOFTL", tier: "gold", staffCount: 14 },
-  { id: "co_saff", name: "Saffron Catering", kind: "Catering · Weddings", area: "West London", tag: "SAFFR", tier: "silver", staffCount: 22 },
-  { id: "co_nrth", name: "Northbank Events", kind: "Event agency · Production", area: "South London", tag: "NRTHB", tier: "bronze", staffCount: 9 },
+  { id: "co_loft", name: "The Loft Lounge", kind: "Cocktail bar · Private events", area: "Enfield", tag: "LOFTL", tier: "gold", staffCount: 14, demo: true },
+  { id: "co_saff", name: "Saffron Catering", kind: "Catering · Weddings", area: "West London", tag: "SAFFR", tier: "silver", staffCount: 22, demo: true },
+  { id: "co_nrth", name: "Northbank Events", kind: "Event agency · Production", area: "South London", tag: "NRTHB", tier: "bronze", staffCount: 9, demo: true },
+  ...REAL_COMPANIES11.map(realBase11),
 ];
 
 
@@ -15303,7 +15854,7 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party }) {
   );
   return (
     <CardFrame tier={(co.theme === "silver" || co.theme === "gold") ? co.theme : (co.tier || "gold")} theme={t} premium ratio="8 / 5" className={`ff-cocard ff-cc11 l-${layout} ${size}`} style={{ ...vars, maxWidth: 460, margin: size ? 0 : "0 auto" }}>
-      <span className="ff-pc-plate ff-cc11-plate">{party ? "Host Card" : "Company Card"}</span>
+      <span className="ff-pc-plate ff-cc11-plate">{party ? "Host Card" : co.unclaimed ? "Unclaimed" : "Company Card"}</span>
       <span className="ff-cc11-coin"><Coin size={size ? 24 : 30} tier={co.theme === "silver" ? "silver" : "gold"} /></span>
       <div className="ff-cc11-body">
         {logo}
@@ -16242,6 +16793,7 @@ const COMPANY_PAGES = {
     contact: [["Email", "hello@northbankevents.co.uk"], ["Website", "northbankevents.co.uk"]],
     venues: ["Hackney Depot", "Northbank Studio"], reviews: [["stf_tom", 4, "Big shows, well run. Load-in details could come earlier."]],
   },
+  ...Object.fromEntries(REAL_COMPANIES11.map(realPage11)),
 };
 function companyById(state, id) {
   if (id === "mine") { const c = state.company || {}; return { ...c, id: "mine", mine: true, mediaList: (c.media || []), areas: c.areas !== undefined ? c.areas : (c.location || "") }; }
@@ -16257,7 +16809,7 @@ const companyList = (state) => adminCompanies17(state, [
 
 function CompaniesSection({ title = "Companies", note }) {
   const { state, dispatch } = useStore();
-  const list = companyList(state);
+  const list = companyList(state).filter(c => !c.demo);
   return (
     <section className="ff-co11-sect" style={{ marginTop: 22 }}>
       <SectionHead icon={<I11.Briefcase size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={title} count={list.length} />
@@ -16267,7 +16819,7 @@ function CompaniesSection({ title = "Companies", note }) {
           <button key={co.id} type="button" className="ff-co11-tile" onClick={() => { dispatch({ type: "VIEW_COMPANY", id: co.id }); window.scrollTo(0, 0); }}
             aria-label={`${co.name || "Your company"}: open their page`}>
             <CompanyCardFace c={co} size="sm" />
-            {co.team && <span className="ff-co11-team">{co.team.slice(0, 4).map(id => { const p = (state.directory || []).find(x => x.id === id); return p ? <Portrait key={id} src={p.photo} name={p.name} size={24} tier={p.tier} /> : null; })}<small>{co.team.length} on the team</small></span>}
+            {co.team && co.team.length > 0 && <span className="ff-co11-team">{co.team.slice(0, 4).map(id => { const p = (state.directory || []).find(x => x.id === id); return p ? <Portrait key={id} src={p.photo} name={p.name} size={24} tier={p.tier} /> : null; })}<small>{co.team.length} on the team</small></span>}
             {co.mine && <span className="ff-co11-team"><small>Your Company Card</small></span>}
           </button>
         ))}
@@ -16314,7 +16866,7 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
     <div className="ff-copub">
       <PublicHero media={(co.mediaList || []).map(m => ({ id: m.id, src: m.src, name: m.alt || "" }))} card={<CompanyCardFace c={co} />} below={<>
       {!done && <button type="button" className="ff-pback ff-copub-back" onClick={back}><I11.ChevronLeft size={20} /> <span>Back</span></button>}
-      {done ? null : (
+      {co.unclaimed ? <p className="ff-copub-unc"><I11.Briefcase size={14} /> Not yet claimed</p> : done ? null : (
       <div className="ff-copub-acts">
         {isStaff && team.length > 0 && (isParty
           ? <Btn variant="primary wide" onClick={bookForEvent}><I11.PartyPopper size={14} /> Book for your event</Btn>
@@ -16328,7 +16880,7 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
       </>} />
 
       <div className="ff-ptabs-wrap">
-        <ProfileTabs tabs={tabs} active={tab} onChange={setTab} />
+        {!co.unclaimed && <ProfileTabs tabs={tabs} active={tab} onChange={setTab} />}
         <div role="tabpanel" id="ff-tabpanel" aria-labelledby={`ff-tab-${tab}`} className="ff-tabpanel" tabIndex={0}>
           {tab === "overview" && (<>
             {co.description && <section className="ff-copub-sec"><SectionHead icon={<I11.Briefcase size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="About" />
@@ -16337,6 +16889,9 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
               <ul className="ff-copub-contact">{contact.map(([k, v]) => { const Ic = cIcon(k); return <li key={k + v}><span className="ic"><Ic size={15} /></span><span><small>{k}</small><b>{v}</b></span></li>; })}</ul></section>}
             {(areas.length > 0 || venues.length > 0) && <section className="ff-copub-sec"><SectionHead icon={<I11.MapPinned size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Areas covered" />
               <div className="ff-copub-chips">{areas.map(a => <span key={a}><I11.MapPin size={12} /> {a}</span>)}{venues.map(v => <span key={v} className="ven"><I11.Star size={12} /> {v}</span>)}</div></section>}
+            {co.seed && [["Services", co.seed.services], ["Events", co.seed.eventTypes], ["Scale", co.seed.scale], ["Good to know", co.seed.facts]].filter(([, v]) => v && v.length > 0).map(([h, v]) => (
+              <section key={h} className="ff-copub-sec"><SectionHead icon={<I11.Star size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={h} />
+                <div className="ff-copub-chips">{v.map(x => <span key={x}>{x}</span>)}</div></section>))}
             {co.extras && <VkExtras17 x={co.extras} />}
           </>)}
           {tab === "qa" && isParty && <section className="ff-copub-sec">
@@ -19861,7 +20416,7 @@ function PartyBuilder17({ onOpen, onGo }) {
   const setBr = (p) => dispatch({ type: "V11_SET", patch: { br17: { ...br, ...p } } });
   const bk = bkOf17(state);
   const pkgs = pkgsOf17(state);
-  const cos = companyList(state).filter(c => !c.mine);
+  const cos = companyList(state).filter(c => !c.mine && !c.unclaimed);
   const countOf = (svc) => svc.by ? 0 : svc.id === "svc_full" || svc.id === "svc_supplier" ? cos.length : all.filter(p => signedUp11(p, svc.id)).length;
   const row = (items, title) => items.length > 0 && (
     <div className="ff-br17-row">{title && <h3 className="ff-br17-h3">{title}</h3>}
@@ -19940,7 +20495,7 @@ function PartyBrowse17() {
   const p2 = ph17(state) === 2;
   const qual = br.q || "";
   const [pop, setPop] = useState(null);
-  const cos = companyList(state).filter(c => !c.mine);
+  const cos = companyList(state).filter(c => !c.mine && !c.unclaimed);
   const feat = TOP_STAFF11.map(id => all.find(p => p.id === id)).filter(Boolean);
   const bk = bkOf17(state);
   const pkgs = pkgsOf17(state);
@@ -20067,6 +20622,7 @@ const SD11_CSS = `
 .ff-bst11 b{flex:none;padding:2px 10px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.04em;color:#fff}
 .ff-bst11 b.ok{background:#1F7A3D}.ff-bst11 b.warn{background:#C26A00}.ff-bst11 b.bad{background:#B3261E}
 .ff-brief11 .hc{margin-top:18px;padding-top:14px;border-top:1px solid rgba(126,97,29,.3)}
+.ff-copub-unc{display:flex;align-items:center;justify-content:center;gap:7px;margin:12px auto 0;padding:9px 16px;width:max-content;max-width:100%;border:1px solid rgba(126,97,29,.45);border-radius:18px;background:rgba(217,190,104,.16);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#7E611D}
 .ff-brief11 .hc h4{margin:0 0 10px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#7E611D}
 .ff-brief11 .hc .ff-hscroll{margin:0;padding:4px 0 10px;gap:14px}
 .ff-brief11 .hc .ff-hitem{width:min(300px,78vw)}
@@ -28435,7 +28991,7 @@ function PartyHow() {
 
 function PartyCompanies() {
   const { state, dispatch } = useStore();
-  const list = companyList(state).filter(c => !c.mine);
+  const list = companyList(state).filter(c => !c.mine && !c.unclaimed);
   return (
     <section className="ff-sect ff-pco11" id="ff-companies" aria-labelledby="ff-pco11-h">
       <h2 id="ff-pco11-h" className="ff-h1">Book a bar company</h2>

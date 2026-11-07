@@ -1,0 +1,544 @@
+{
+  "schemaVersion": 1,
+  "note": "Draft Company Card seeds built from public information. Every record is unclaimed: not offered for booking, no logo or photos until the company supplies them. No prices, personal contact details or individuals' names.",
+  "companies": [
+    {
+      "slug": "bar-brothers-events",
+      "tag": "BARBR",
+      "name": "Bar Brothers Events",
+      "legalName": "Celebrify Limited",
+      "companyNumber": "15546685",
+      "kind": "Mobile bars & event catering",
+      "base": "London",
+      "areas": [
+        "London",
+        "Home Counties",
+        "UK-wide"
+      ],
+      "summary": "A London bar hire and event catering company. It supplies mobile bars with bartenders, glassware and ice for weddings, corporate events and private parties, and also offers dry hire and food.",
+      "services": [
+        "Mobile bar hire",
+        "Dry hire",
+        "Bartenders and mixologists",
+        "Flair bartenders",
+        "Waiting staff",
+        "Glassware and ice",
+        "Custom cocktail menus",
+        "Cocktail masterclasses",
+        "Event catering",
+        "Food trucks"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Christmas parties",
+        "Private parties",
+        "Conferences",
+        "Film sets"
+      ],
+      "scale": [
+        "Travels across the UK from London"
+      ],
+      "facts": [
+        "Trading name of Celebrify Limited"
+      ],
+      "website": "https://barbrothersevents.co.uk",
+      "social": {
+        "instagram": "@barbrothersevents",
+        "facebook": "BarBrothersEvents",
+        "linkedin": "bar-brothers-events-ltd-763a051a4",
+        "tiktok": "@barbrothersevents"
+      },
+      "images": {
+        "logo": null,
+        "photos": [],
+        "permission": "pending"
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://barbrothersevents.co.uk/"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null
+    },
+    {
+      "slug": "mix-and-twist",
+      "tag": "MIXTW",
+      "name": "Mix & Twist",
+      "legalName": null,
+      "companyNumber": null,
+      "kind": "Bar hire for large events",
+      "base": "Leeds and London",
+      "areas": [
+        "Leeds",
+        "London",
+        "UK-wide"
+      ],
+      "summary": "A specialist bar hire company working with freelance mixologists. It runs large corporate events, private parties and weddings, and provides the bars, bartenders, glassware and an event manager on the day.",
+      "services": [
+        "Customisable mobile bars",
+        "Themed bars",
+        "Bartenders and mixologists",
+        "Glassware",
+        "Bespoke drinks menus",
+        "Event management",
+        "Brand drinks development",
+        "Team-building cocktail classes"
+      ],
+      "eventTypes": [
+        "Large corporate events",
+        "Private parties",
+        "Weddings",
+        "Team building"
+      ],
+      "scale": [
+        "Founded 2014",
+        "Large events from 150 guests",
+        "Case example: 500-guest event with five bars"
+      ],
+      "facts": [
+        "Good Business Charter accredited",
+        "Public and employer's liability insurance held"
+      ],
+      "website": "https://www.mixandtwist.co.uk",
+      "social": {
+        "instagram": "@mixandtwistuk",
+        "facebook": "mixandtwistuk",
+        "linkedin": "mixandtwistuk"
+      },
+      "images": {
+        "logo": null,
+        "photos": [],
+        "permission": "pending"
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.mixandtwist.co.uk/corporate-services/large-events"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null
+    },
+    {
+      "slug": "ministry-of-cocktails",
+      "tag": "MINCK",
+      "name": "Ministry of Cocktails",
+      "legalName": "Ministry of Cocktails LTD",
+      "companyNumber": "14770394",
+      "kind": "Mobile cocktail bars & full bar service",
+      "base": "UK",
+      "areas": [
+        "UK-wide"
+      ],
+      "summary": "A mobile bar company offering fully managed bar services. Cocktail, mocktail, coffee and juice bars for weddings, corporate events, exhibitions and festivals, with modular bars built in its own workshop.",
+      "services": [
+        "Cocktail bars",
+        "Mocktail bars",
+        "Full service bars",
+        "Mobile coffee bars",
+        "Juice and smoothie bars",
+        "Mixology masterclasses",
+        "Bartenders and mixologists",
+        "Custom modular bar design",
+        "Glassware"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Corporate events",
+        "Exhibitions",
+        "Festivals",
+        "Private parties",
+        "Celebrity and VIP events"
+      ],
+      "scale": [],
+      "facts": [
+        "Fully licensed and insured",
+        "Zero-plastic approach"
+      ],
+      "website": "https://ministryofcocktails.co.uk",
+      "social": {
+        "instagram": "@ministry_of_cocktails",
+        "facebook": "ministryofcocktails1",
+        "linkedin": "ministry-of-cocktails"
+      },
+      "images": {
+        "logo": null,
+        "photos": [],
+        "permission": "pending"
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://ministryofcocktails.co.uk/"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null
+    },
+    {
+      "slug": "barsmith-event-bars",
+      "tag": "BARSM",
+      "name": "Barsmith Event Bars",
+      "legalName": null,
+      "companyNumber": null,
+      "kind": "Event bars & bartender hire",
+      "base": "Marylebone, London",
+      "areas": [
+        "London",
+        "UK-wide"
+      ],
+      "summary": "A London event bar company, part of Marylebone Leisure Group. It supplies bespoke bars, bartenders, mixologists and waiting staff, with infusions made in its own laboratory.",
+      "services": [
+        "Bespoke bars",
+        "Bartenders and mixologists",
+        "Waiting staff",
+        "Hosts and entertainment",
+        "Ice, refrigeration and glassware",
+        "Mixology masterclasses",
+        "Handmade infused spirits and cocktails"
+      ],
+      "eventTypes": [
+        "Corporate functions",
+        "Weddings",
+        "Private parties",
+        "Festivals",
+        "Dinner parties"
+      ],
+      "scale": [
+        "Events from 50 to around 500 guests"
+      ],
+      "facts": [
+        "Part of Marylebone Leisure Group",
+        "Bar of the Year Award 2016 and 2018"
+      ],
+      "website": "https://barsmitheventbars.com",
+      "social": {
+        "instagram": "@barsmitheventbars",
+        "facebook": "barsmitheventbars"
+      },
+      "images": {
+        "logo": null,
+        "photos": [],
+        "permission": "pending"
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://barsmitheventbars.com/"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null
+    },
+    {
+      "slug": "the-bartender",
+      "tag": "THEBA",
+      "name": "The Bartender",
+      "legalName": null,
+      "companyNumber": null,
+      "kind": "Event bartenders & mobile bars",
+      "base": "Bristol",
+      "areas": [
+        "Bristol",
+        "South West",
+        "UK-wide"
+      ],
+      "summary": "A Bristol drinks and bartending company with over fifteen years of event experience. It provides mobile and branded bars, mixologists, glassware and uniforms for corporate receptions, launches and team events.",
+      "services": [
+        "Mobile bar units",
+        "Branded bars",
+        "Exhibition cocktail bars",
+        "Frozen cocktails",
+        "Bespoke cocktail menus",
+        "Mixologists and bar staff",
+        "Glassware and uniforms",
+        "Cocktail workshops",
+        "Product launch support"
+      ],
+      "eventTypes": [
+        "Corporate receptions",
+        "Exhibitions",
+        "Product launches",
+        "Awards dinners",
+        "Christmas parties",
+        "Team building",
+        "Weddings",
+        "Private parties"
+      ],
+      "scale": [
+        "Over fifteen years in events"
+      ],
+      "facts": [],
+      "website": "https://thebartender.co.uk",
+      "social": {},
+      "images": {
+        "logo": null,
+        "photos": [],
+        "permission": "pending"
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://thebartender.co.uk/corporate-events/"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null
+    },
+    {
+      "slug": "barworx",
+      "tag": "BARWX",
+      "name": "Barworx",
+      "legalName": null,
+      "companyNumber": null,
+      "kind": "Festival bars & bar equipment hire",
+      "base": "Milton Keynes",
+      "areas": [
+        "Milton Keynes",
+        "London",
+        "UK-wide"
+      ],
+      "summary": "A festival bar and bar equipment hire specialist for beer festivals and large-scale festivals. It supplies counters, cask ale cooling, keg hire and craft beer walls, with delivery, installation and collection.",
+      "services": [
+        "Festival bars",
+        "Mobile craft beer bars",
+        "Bar equipment hire",
+        "Keg hire",
+        "Craft beer walls",
+        "Cask ale racking and cooling",
+        "Delivery, installation and servicing"
+      ],
+      "eventTypes": [
+        "Beer festivals",
+        "Large-scale festivals",
+        "Weddings",
+        "Venue and promoter events",
+        "Oktoberfest bierkellers"
+      ],
+      "scale": [
+        "Bar counters up to 400 metres",
+        "Cask cooling for over 300 nine-gallon casks"
+      ],
+      "facts": [
+        "Listing details only; own website not confirmed"
+      ],
+      "website": null,
+      "social": {},
+      "images": {
+        "logo": null,
+        "photos": [],
+        "permission": "pending"
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/suppliers/barworx"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null
+    },
+    {
+      "slug": "event-bars-ltd",
+      "tag": "EVTBR",
+      "name": "Event Bars Ltd",
+      "legalName": null,
+      "companyNumber": null,
+      "kind": "Bar management for festivals & events",
+      "base": "Bristol",
+      "areas": [
+        "Bristol",
+        "UK",
+        "Europe"
+      ],
+      "summary": "A bar management and delivery company for festivals and brand events. It provides mobile bars across craft beer, whisky, wine and gin, and has worked with festivals of over 200,000 people.",
+      "services": [
+        "Mobile bars",
+        "Mobile craft beer bars",
+        "Mobile whisky bars",
+        "Mobile wine bars",
+        "Mobile gin bars",
+        "Bespoke bar management"
+      ],
+      "eventTypes": [
+        "Festivals",
+        "Food festivals",
+        "Brand experiences",
+        "Boutique events",
+        "Private parties"
+      ],
+      "scale": [
+        "Festivals of over 200,000 people"
+      ],
+      "facts": [
+        "Listing details only; own website not confirmed"
+      ],
+      "website": null,
+      "social": {},
+      "images": {
+        "logo": null,
+        "photos": [],
+        "permission": "pending"
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/suppliers/event-bars-ltd"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null
+    },
+    {
+      "slug": "quickbar",
+      "tag": "QUICK",
+      "name": "Quickbar",
+      "legalName": "Quickbar Ltd",
+      "companyNumber": null,
+      "kind": "Event bar operator",
+      "base": "Gloucestershire",
+      "areas": [
+        "UK-wide"
+      ],
+      "summary": "An event bar operator managing bars and outdoor events across the UK, from festivals and concerts to stadium and sporting fixtures, with bar staff and brand activations.",
+      "services": [
+        "Cocktail bars",
+        "Mobile bars",
+        "Festival bars",
+        "Outdoor bars",
+        "Themed bars",
+        "Bar staff",
+        "Brand activation and sponsorship"
+      ],
+      "eventTypes": [
+        "Festivals",
+        "Sporting events",
+        "Concerts",
+        "One-day events"
+      ],
+      "scale": [
+        "Stadium and major venue events"
+      ],
+      "facts": [
+        "Listing details only; own website not confirmed"
+      ],
+      "website": null,
+      "social": {},
+      "images": {
+        "logo": null,
+        "photos": [],
+        "permission": "pending"
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/suppliers/quickbar-ltd"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null
+    },
+    {
+      "slug": "the-bar-people",
+      "tag": "BARPE",
+      "name": "The Bar People",
+      "legalName": null,
+      "companyNumber": null,
+      "kind": "Mobile bars for large corporate events",
+      "base": "",
+      "areas": [
+        "London",
+        "Essex",
+        "Hertfordshire"
+      ],
+      "summary": "A mobile bar company with over ten years in operation, working from private house parties to large-scale corporate events. It provides customised bars, bar staff, glassware, refrigeration and equipment.",
+      "services": [
+        "Customised bars",
+        "Cocktail bars",
+        "Bar staff",
+        "Glassware and tableware",
+        "Refrigeration and ice storage",
+        "Beverages and bar equipment"
+      ],
+      "eventTypes": [
+        "Private parties",
+        "Large corporate events"
+      ],
+      "scale": [
+        "Over ten years in operation"
+      ],
+      "facts": [
+        "Listing details only; own website not confirmed"
+      ],
+      "website": null,
+      "social": {},
+      "images": {
+        "logo": null,
+        "photos": [],
+        "permission": "pending"
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/suppliers/the-bar-people"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null
+    },
+    {
+      "slug": "the-outside-bar-company",
+      "tag": "OUTSB",
+      "name": "The Outside Bar Company",
+      "legalName": null,
+      "companyNumber": null,
+      "kind": "Independent mobile bar company",
+      "base": "Cambridgeshire",
+      "areas": [
+        "Cambridgeshire",
+        "UK"
+      ],
+      "summary": "An independent mobile bar company with over 25 years in the licensed trade. It supplies mobile and cocktail bars with experienced bar staff, glassware, ice, drinks and insurance.",
+      "services": [
+        "Mobile bars",
+        "Cocktail bars",
+        "Bar staff",
+        "Glassware",
+        "Ice and drinks",
+        "Insurance"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Festivals",
+        "Corporate events",
+        "Christmas parties",
+        "Birthdays",
+        "Private parties"
+      ],
+      "scale": [
+        "Over 25 years in the licensed trade"
+      ],
+      "facts": [
+        "Listing details only; own website not confirmed"
+      ],
+      "website": null,
+      "social": {},
+      "images": {
+        "logo": null,
+        "photos": [],
+        "permission": "pending"
+      },
+      "status": "unclaimed",
+      "source": {
+        "urls": [
+          "https://www.addtoevent.co.uk/suppliers/the-outside-bar-company"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null
+    }
+  ]
+}
