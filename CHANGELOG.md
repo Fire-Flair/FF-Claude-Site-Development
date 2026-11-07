@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.102 — 2026-11-07 — Bar companies on the map, more logos
+Artifact version 1794069278-58a7 · file `fireflair-v17.3.102.html`
+
+- All 30 real bar companies are now pinned on the map on FF Team, FF Staff and FF Party (People / Our people tab, and the Browse the network screen on FF Party). Each pin is a maroon dot at the company's town (area only, never an address); tapping one opens its Company Card, then its page. London companies group under the London coin and appear when you zoom in.
+- The map legend shows "Bar companies (30)" beside Profile Cards.
+- Map locations live in the seed file (`locations`: label, lat, lng, approx). Where the base is not stated, `approx` is true and needs confirming with the company.
+- Logos and photos added for twelve more companies (Firecrawl and TinyFish), and official websites added. Favicons, cookie icons and client logos were left out. Images are still hotlinked with a monogram fallback; developers should fetch and host copies.
+- Merged onto the latest live version (Stories work from the other session).
+
 ## v17.3.100 — 2026-11-07 — Stories: photos
 
 - All 70 Stories now have a photo from the photo library, with descriptive alt text. Cards and the open article show it; no photo is used twice on the same site.
