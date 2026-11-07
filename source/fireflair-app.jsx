@@ -510,6 +510,10 @@ const CSS = `
 .ff .ff-lpin{pointer-events:auto;width:0;height:0}
 .ff .ff-lpin>div{position:absolute;left:0;top:0;width:0;height:0}
 .ff .ff-lpin>div>.ff-pin{left:0;top:0}
+.ff .ff-map-uk-in.far .ff-lpin.ff-lco{display:block}
+.ff .ff-map-uk-in.far .ff-lpin.ff-lco.ldn{display:none}
+.ff .ff-pin .ff-codot{display:block;width:16px;height:16px;border-radius:50%;background:#6E1F2F;border:2px solid #EAD79C;box-shadow:0 1px 3px rgba(0,0,0,.5)}
+.ff .ff-pin .ff-codot.on{width:20px;height:20px;box-shadow:0 0 10px rgba(201,162,39,.9)}
 .ff .ff-llbl{pointer-events:none;width:0;height:0;overflow:visible}
 .ff .ff-llbl span{position:absolute;transform:translate(-50%,-190%);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:rgba(234,215,156,.8);text-shadow:0 0 4px #000,0 0 6px #000;white-space:nowrap}
 
@@ -2451,7 +2455,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": false
+      }
+    ]
   },
   {
     "slug": "mix-and-twist",
@@ -2512,7 +2524,21 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Leeds",
+        "lat": 53.8008,
+        "lng": -1.5491,
+        "approx": false
+      },
+      {
+        "label": "London",
+        "lat": 51.532,
+        "lng": -0.1,
+        "approx": false
+      }
+    ]
   },
   {
     "slug": "ministry-of-cocktails",
@@ -2573,7 +2599,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "London",
+        "lat": 51.495,
+        "lng": -0.15,
+        "approx": true
+      }
+    ]
   },
   {
     "slug": "barsmith-event-bars",
@@ -2635,7 +2669,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Marylebone, London",
+        "lat": 51.5205,
+        "lng": -0.1547,
+        "approx": false
+      }
+    ]
   },
   {
     "slug": "the-bartender",
@@ -2697,7 +2739,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Bristol",
+        "lat": 51.4545,
+        "lng": -2.5879,
+        "approx": false
+      }
+    ]
   },
   {
     "slug": "barworx",
@@ -2757,7 +2807,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Milton Keynes",
+        "lat": 52.0406,
+        "lng": -0.7594,
+        "approx": false
+      }
+    ]
   },
   {
     "slug": "event-bars-ltd",
@@ -2814,7 +2872,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Bristol",
+        "lat": 51.47,
+        "lng": -2.62,
+        "approx": false
+      }
+    ]
   },
   {
     "slug": "quickbar",
@@ -2870,7 +2936,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Gloucester",
+        "lat": 51.8642,
+        "lng": -2.238,
+        "approx": false
+      }
+    ]
   },
   {
     "slug": "the-bar-people",
@@ -2924,7 +2998,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "London",
+        "lat": 51.54,
+        "lng": -0.05,
+        "approx": true
+      }
+    ]
   },
   {
     "slug": "the-outside-bar-company",
@@ -2982,7 +3064,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Cambridge",
+        "lat": 52.2053,
+        "lng": 0.1218,
+        "approx": false
+      }
+    ]
   },
   {
     "slug": "no7-hire-bar",
@@ -3014,12 +3104,14 @@ const REAL_COMPANIES11 = [
     "facts": [
       "Listing details only; own website not confirmed"
     ],
-    "website": null,
+    "website": "https://no7hirebar.co.uk",
     "social": {},
     "images": {
-      "logo": null,
+      "logo": "https://no7hirebar.co.uk/wp-content/uploads/2026/04/Cocktail-White.png.webp",
       "photos": [],
-      "permission": "pending"
+      "permission": "to_confirm",
+      "logoBg": "dark",
+      "logoWide": false
     },
     "status": "unclaimed",
     "source": {
@@ -3028,7 +3120,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Harrow",
+        "lat": 51.5806,
+        "lng": -0.342,
+        "approx": false
+      }
+    ]
   },
   {
     "slug": "the-m-bar",
@@ -3061,12 +3161,14 @@ const REAL_COMPANIES11 = [
     "facts": [
       "Listing details only; own website not confirmed"
     ],
-    "website": null,
+    "website": "https://www.the-mbar.co.uk",
     "social": {},
     "images": {
-      "logo": null,
+      "logo": "https://www.the-mbar.co.uk/wp-content/uploads/mbar400px.jpg",
       "photos": [],
-      "permission": "pending"
+      "permission": "to_confirm",
+      "logoBg": "dark",
+      "logoWide": false
     },
     "status": "unclaimed",
     "source": {
@@ -3075,7 +3177,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Kingston upon Thames",
+        "lat": 51.4123,
+        "lng": -0.3007,
+        "approx": false
+      }
+    ]
   },
   {
     "slug": "adapt-events",
@@ -3110,12 +3220,18 @@ const REAL_COMPANIES11 = [
     "facts": [
       "Listing details only; own website not confirmed"
     ],
-    "website": null,
+    "website": "https://www.adaptevents.com",
     "social": {},
     "images": {
-      "logo": null,
-      "photos": [],
-      "permission": "pending"
+      "logo": "https://images.squarespace-cdn.com/content/v1/5a2139db8fd4d2bb97bfa4b3/1519653838781-UAM474EUU6LE40PAD2BG/logo-grey-RGB.png",
+      "photos": [
+        "https://images.squarespace-cdn.com/content/v1/5a2139db8fd4d2bb97bfa4b3/ca704aa1-49f0-4ce4-b9c6-8217e62c1eb6/DSCF0647.JPG",
+        "https://images.squarespace-cdn.com/content/v1/5a2139db8fd4d2bb97bfa4b3/1754655276838-9WF3Z3U1HV8U8LYEZXMZ/Secret+cinema+.jpg",
+        "https://images.squarespace-cdn.com/content/v1/5a2139db8fd4d2bb97bfa4b3/49da90fd-75e6-4a25-8a81-ef4d288bbc83/chelsea+flower+show+Lucy.jpg"
+      ],
+      "permission": "to_confirm",
+      "logoBg": "light",
+      "logoWide": false
     },
     "status": "unclaimed",
     "source": {
@@ -3124,7 +3240,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "London",
+        "lat": 51.5246,
+        "lng": -0.1024,
+        "approx": false
+      }
+    ]
   },
   {
     "slug": "purple-fizz",
@@ -3133,7 +3257,7 @@ const REAL_COMPANIES11 = [
     "legalName": "Purple Fizz Limited",
     "companyNumber": null,
     "kind": "Cocktail bar hire & mixologists",
-    "base": "London",
+    "base": "Sidcup",
     "areas": [
       "London",
       "Surrey",
@@ -3155,12 +3279,16 @@ const REAL_COMPANIES11 = [
     "facts": [
       "Listing details only; own website not confirmed"
     ],
-    "website": null,
+    "website": "https://www.purplefizz.co.uk",
     "social": {},
     "images": {
-      "logo": null,
-      "photos": [],
-      "permission": "pending"
+      "logo": "https://www.purplefizz.co.uk/wp-content/uploads/2020/01/Purple-Fizz-logo-hdpi.png",
+      "photos": [
+        "https://www.purplefizz.co.uk/wp-content/uploads/2020/01/Purple-fizz-making-cocktail.jpg"
+      ],
+      "permission": "to_confirm",
+      "logoBg": "light",
+      "logoWide": false
     },
     "status": "unclaimed",
     "source": {
@@ -3169,7 +3297,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Sidcup",
+        "lat": 51.4262,
+        "lng": 0.1043,
+        "approx": false
+      }
+    ]
   },
   {
     "slug": "the-cocktail-house",
@@ -3200,12 +3336,17 @@ const REAL_COMPANIES11 = [
     "facts": [
       "Listing details only; own website not confirmed"
     ],
-    "website": null,
+    "website": "https://www.the-cocktailhouse.com",
     "social": {},
     "images": {
-      "logo": null,
-      "photos": [],
-      "permission": "pending"
+      "logo": "https://images.squarespace-cdn.com/content/v1/5a0dd9c2d55b416f9d6016b5/10c2cea4-5b94-4b5e-94c0-a401f8f095a8/The+Cocktail+House.png",
+      "photos": [
+        "https://images.squarespace-cdn.com/content/v1/5a0dd9c2d55b416f9d6016b5/a7a83b48-223a-4292-836d-e56b07a5d91b/Cocktail+Shaker.jpg",
+        "https://images.squarespace-cdn.com/content/v1/5a0dd9c2d55b416f9d6016b5/1711987763666-QV34H7EBF6P0VHOFNBXQ/Mirror+Bar+5.png"
+      ],
+      "permission": "to_confirm",
+      "logoBg": "dark",
+      "logoWide": false
     },
     "status": "unclaimed",
     "source": {
@@ -3214,7 +3355,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "London",
+        "lat": 51.5,
+        "lng": -0.08,
+        "approx": true
+      }
+    ]
   },
   {
     "slug": "blue-blazer-events",
@@ -3223,7 +3372,7 @@ const REAL_COMPANIES11 = [
     "legalName": null,
     "companyNumber": null,
     "kind": "Flair bartending & mobile bar",
-    "base": "Essex",
+    "base": "Billericay, Essex",
     "areas": [
       "Essex"
     ],
@@ -3258,7 +3407,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Billericay",
+        "lat": 51.6277,
+        "lng": 0.4181,
+        "approx": false
+      }
+    ]
   },
   {
     "slug": "bar-match",
@@ -3289,12 +3446,17 @@ const REAL_COMPANIES11 = [
     "facts": [
       "Listing details only; own website not confirmed"
     ],
-    "website": null,
+    "website": "https://barmatch.co.uk",
     "social": {},
     "images": {
       "logo": null,
-      "photos": [],
-      "permission": "pending"
+      "photos": [
+        "https://barmatch.co.uk/wp-content/uploads/2026/05/private-event-2-750-750.jpg",
+        "https://barmatch.co.uk/wp-content/uploads/2026/06/mobile-bar-hire-1-750-750.jpg",
+        "https://barmatch.co.uk/wp-content/uploads/2026/07/expert-mixologists.webp",
+        "https://barmatch.co.uk/wp-content/uploads/2026/07/the-art-of-mixologist-made-with-love.webp"
+      ],
+      "permission": "to_confirm"
     },
     "status": "unclaimed",
     "source": {
@@ -3303,7 +3465,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "London",
+        "lat": 51.51,
+        "lng": -0.16,
+        "approx": false
+      }
+    ]
   },
   {
     "slug": "dum-event-bar-hire",
@@ -3312,7 +3482,7 @@ const REAL_COMPANIES11 = [
     "legalName": null,
     "companyNumber": null,
     "kind": "LED mobile bars & cocktails",
-    "base": "London",
+    "base": "Dalston, London",
     "areas": [
       "London"
     ],
@@ -3335,12 +3505,17 @@ const REAL_COMPANIES11 = [
     "facts": [
       "Listing details only; own website not confirmed"
     ],
-    "website": null,
+    "website": "https://dumeventbar.co.uk",
     "social": {},
     "images": {
       "logo": null,
-      "photos": [],
-      "permission": "pending"
+      "photos": [
+        "https://dumeventbar.co.uk/wp-content/uploads/2024/06/1.jpeg",
+        "https://dumeventbar.co.uk/wp-content/uploads/2024/06/2.jpeg",
+        "https://dumeventbar.co.uk/wp-content/uploads/2024/06/3.jpeg",
+        "https://dumeventbar.co.uk/wp-content/uploads/2024/06/4.jpeg"
+      ],
+      "permission": "to_confirm"
     },
     "status": "unclaimed",
     "source": {
@@ -3349,7 +3524,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Dalston, London",
+        "lat": 51.546,
+        "lng": -0.075,
+        "approx": false
+      }
+    ]
   },
   {
     "slug": "the-mobile-bar",
@@ -3396,7 +3579,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Chester",
+        "lat": 53.193,
+        "lng": -2.892,
+        "approx": false
+      }
+    ]
   },
   {
     "slug": "the-pop-up-bars",
@@ -3446,7 +3637,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Bedford",
+        "lat": 52.1356,
+        "lng": -0.4685,
+        "approx": false
+      }
+    ]
   },
   {
     "slug": "raise-the-bar",
@@ -3455,7 +3654,7 @@ const REAL_COMPANIES11 = [
     "legalName": null,
     "companyNumber": null,
     "kind": "Mobile bars for festivals & outdoor events",
-    "base": "South Lanarkshire",
+    "base": "Glasgow",
     "areas": [
       "Scotland",
       "England",
@@ -3484,12 +3683,19 @@ const REAL_COMPANIES11 = [
     "facts": [
       "Listing details only; own website not confirmed"
     ],
-    "website": null,
+    "website": "https://raisethebarglasgow.com",
     "social": {},
     "images": {
-      "logo": null,
-      "photos": [],
-      "permission": "pending"
+      "logo": "https://raisethebarglasgow.com/logo.png",
+      "photos": [
+        "https://raisethebarglasgow.com/_next/image?url=https%3A%2F%2F6istx3ephgqw5ngz.public.blob.vercel-storage.com%2Fcocktails%2F1769265189036.jpg&w=1920&q=75",
+        "https://raisethebarglasgow.com/_next/image?url=https%3A%2F%2F6istx3ephgqw5ngz.public.blob.vercel-storage.com%2Fcocktails%2F1783870927210.jpg&w=1920&q=75",
+        "https://raisethebarglasgow.com/_next/image?url=https%3A%2F%2F6istx3ephgqw5ngz.public.blob.vercel-storage.com%2Fcocktails%2F1776281026122.jpg&w=1920&q=75",
+        "https://raisethebarglasgow.com/_next/image?url=https%3A%2F%2F6istx3ephgqw5ngz.public.blob.vercel-storage.com%2Fcocktails%2F1783871506162.jpg&w=1920&q=75"
+      ],
+      "permission": "to_confirm",
+      "logoBg": "light",
+      "logoWide": false
     },
     "status": "unclaimed",
     "source": {
@@ -3498,7 +3704,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Glasgow",
+        "lat": 55.8642,
+        "lng": -4.2518,
+        "approx": false
+      }
+    ]
   },
   {
     "slug": "bars-and-beyond",
@@ -3534,12 +3748,18 @@ const REAL_COMPANIES11 = [
     "facts": [
       "Listing details only; own website not confirmed"
     ],
-    "website": null,
+    "website": "https://www.barsandbeyond.co.uk",
     "social": {},
     "images": {
-      "logo": null,
-      "photos": [],
-      "permission": "pending"
+      "logo": "https://images.squarespace-cdn.com/content/v1/66f16e608b59d740e6887d21/bde2dc4c-1e10-4041-a198-6848bdae0476/Bars_And_Beyond_Transparent.png?format=1500w",
+      "photos": [
+        "https://images.squarespace-cdn.com/content/v1/66f16e608b59d740e6887d21/a8a3d8a9-c254-46a7-8ee4-efabbd6cfdae/Bar+Hire+Services.png",
+        "https://images.squarespace-cdn.com/content/v1/66f16e608b59d740e6887d21/9cf1b108-b8c2-4317-bb7d-94d578ef667f/Image+2+Wedding.png",
+        "https://images.squarespace-cdn.com/content/v1/66f16e608b59d740e6887d21/f99ef105-5906-4c3f-9fe5-fc70867f6319/Image+1+Corporate.png"
+      ],
+      "permission": "to_confirm",
+      "logoBg": "dark",
+      "logoWide": false
     },
     "status": "unclaimed",
     "source": {
@@ -3548,7 +3768,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Cheshire",
+        "lat": 53.23,
+        "lng": -2.55,
+        "approx": true
+      }
+    ]
   },
   {
     "slug": "surrey-bar-hire",
@@ -3585,12 +3813,17 @@ const REAL_COMPANIES11 = [
     "facts": [
       "Listing details only; own website not confirmed"
     ],
-    "website": null,
+    "website": "https://www.surreybarhire.co.uk",
     "social": {},
     "images": {
-      "logo": null,
-      "photos": [],
-      "permission": "pending"
+      "logo": "https://static.wixstatic.com/media/ed6558_683bdeead4a1c3db9b6a630366365405.png",
+      "photos": [
+        "https://static.wixstatic.com/media/ed6558_0793ff88c66ef5819631ad0344a3ff9f.jpg",
+        "https://static.wixstatic.com/media/ed6558_e98e3745eb174d26b50f6fd3e396c91d~mv2.jpg"
+      ],
+      "permission": "to_confirm",
+      "logoBg": "light",
+      "logoWide": true
     },
     "status": "unclaimed",
     "source": {
@@ -3599,7 +3832,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Guildford",
+        "lat": 51.2362,
+        "lng": -0.5704,
+        "approx": true
+      }
+    ]
   },
   {
     "slug": "red-mobile-bars",
@@ -3643,7 +3884,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Maidstone",
+        "lat": 51.272,
+        "lng": 0.529,
+        "approx": true
+      }
+    ]
   },
   {
     "slug": "the-village-bar-company",
@@ -3675,12 +3924,18 @@ const REAL_COMPANIES11 = [
     "facts": [
       "Listing details only; own website not confirmed"
     ],
-    "website": null,
+    "website": "https://thevillagebarcompany.co.uk",
     "social": {},
     "images": {
-      "logo": null,
-      "photos": [],
-      "permission": "pending"
+      "logo": "https://thevillagebarcompany.co.uk/wp-content/uploads/2021/06/The-Village-Bar-Company-Logo-01.svg",
+      "photos": [
+        "https://thevillagebarcompany.co.uk/wp-content/uploads/2021/06/1-scaled.jpeg",
+        "https://thevillagebarcompany.co.uk/wp-content/uploads/2021/06/2-scaled.jpg",
+        "https://thevillagebarcompany.co.uk/wp-content/uploads/2021/06/3-scaled.jpg"
+      ],
+      "permission": "to_confirm",
+      "logoBg": "light",
+      "logoWide": false
     },
     "status": "unclaimed",
     "source": {
@@ -3689,7 +3944,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Kent",
+        "lat": 51.22,
+        "lng": 0.62,
+        "approx": true
+      }
+    ]
   },
   {
     "slug": "the-tipsy-bartender-company",
@@ -3738,7 +4001,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Canterbury",
+        "lat": 51.2802,
+        "lng": 1.0789,
+        "approx": true
+      }
+    ]
   },
   {
     "slug": "nottinghamshire-mobile-bar",
@@ -3781,7 +4052,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Nottingham",
+        "lat": 52.9548,
+        "lng": -1.1581,
+        "approx": false
+      }
+    ]
   },
   {
     "slug": "beyond-bar-hire",
@@ -3827,7 +4106,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Colchester",
+        "lat": 51.8959,
+        "lng": 0.8919,
+        "approx": false
+      }
+    ]
   },
   {
     "slug": "zipbar-hire",
@@ -3875,7 +4162,15 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "London",
+        "lat": 51.48,
+        "lng": -0.19,
+        "approx": true
+      }
+    ]
   },
   {
     "slug": "southern-bar-services",
@@ -3884,7 +4179,7 @@ const REAL_COMPANIES11 = [
     "legalName": null,
     "companyNumber": null,
     "kind": "Mobile bars across the South",
-    "base": "",
+    "base": "Basingstoke, Hampshire",
     "areas": [
       "Hampshire",
       "Berkshire",
@@ -3906,12 +4201,14 @@ const REAL_COMPANIES11 = [
     "facts": [
       "Listing details only; own website not confirmed"
     ],
-    "website": null,
+    "website": "https://southernbarservices.co.uk",
     "social": {},
     "images": {
-      "logo": null,
+      "logo": "https://southernbarservices.co.uk/wp-content/uploads/2025/06/WD10983-K-Southern-Bar-Services-Logo-1.svg",
       "photos": [],
-      "permission": "pending"
+      "permission": "to_confirm",
+      "logoBg": "light",
+      "logoWide": false
     },
     "status": "unclaimed",
     "source": {
@@ -3920,10 +4217,18 @@ const REAL_COMPANIES11 = [
       ],
       "retrievedAt": "2026-11-07"
     },
-    "verifiedBy": null
+    "verifiedBy": null,
+    "locations": [
+      {
+        "label": "Basingstoke",
+        "lat": 51.2665,
+        "lng": -1.0924,
+        "approx": false
+      }
+    ]
   }
 ];
-const realBase11 = (c) => ({ id: "co_" + c.slug, name: c.name, kind: c.kind, area: c.areas[0] || "", tag: c.tag, tier: "standard", unclaimed: true });
+const realBase11 = (c) => ({ id: "co_" + c.slug, name: c.name, kind: c.kind, area: c.areas[0] || "", tag: c.tag, tier: "standard", unclaimed: true, locations: c.locations || [] });
 const realPage11 = (c) => ["co_" + c.slug, {
   name: c.name, kind: c.kind, areas: c.areas.join(" · "), slug: c.slug, socials: c.social || {}, theme: "onyx", layout: "classic", tier: "standard", unclaimed: true,
   description: c.summary, team: [], venues: [], reviews: [],
@@ -9590,6 +9895,7 @@ const MAP_EVENTS = [
 const MAP_LAYER = {
   person: { label: "Profile Cards" },
   business: { label: "Hospitality businesses" },
+  company: { label: "Bar company" },
   venue: { label: "Venues", color: "#C6C8CC" },
   event: { label: "Events", color: "#2F8A7E" },
 };
@@ -18019,8 +18325,21 @@ function MapCoin({ size = 24, tier = "standard", style }) {
   );
 }
 
+const inLondon11 = (ll) => ll[0] >= LONDON_BOUNDS11[0][0] && ll[0] <= LONDON_BOUNDS11[1][0] && ll[1] >= LONDON_BOUNDS11[0][1] && ll[1] <= LONDON_BOUNDS11[1][1];
+/* Bar companies on the map: one area-level pin per base (town centre, never an address). Same pins on FF Team, FF Staff and FF Party. */
+const COMPANY_PINS11 = (() => {
+  const seen = {}, out = [];
+  REAL_COMPANIES11.forEach(c => (c.locations || []).forEach((l, i) => {
+    const k = l.lat.toFixed(2) + "," + l.lng.toFixed(2), n = (seen[k] = (seen[k] || 0) + 1) - 1;
+    const a = n * 2.4, r = n ? 0.012 + 0.006 * Math.floor(n / 6) : 0;
+    const ll = [l.lat + r * Math.sin(a), l.lng + r * 1.6 * Math.cos(a)];
+    out.push({ id: "co_" + c.slug + "_" + i, coId: "co_" + c.slug, kind: "company", name: c.name, profession: c.kind, area: l.label, ll, ldn: inLondon11(ll) });
+  }));
+  return out;
+})();
+
 function FFMap({ mode = "home" }) {
-  const { dispatch } = useStore();
+  const { state, dispatch } = useStore();
   const directory = useDirectory();
   const [sel, setSel] = useState(null);
   const home = mode === "home";
@@ -18034,12 +18353,13 @@ function FFMap({ mode = "home" }) {
       : people;
     const seen = {};
     const RING = [[0, 0], [7, -6], [-7, 5], [8, 7], [-8, -6], [0, 9], [0, -9], [11, 0], [-11, 0], [10, -9], [-10, 9]];
-    return all.map(p => {
+    const cos = mode === "phase1" ? [] : COMPANY_PINS11.map(p => ({ ...p, x: (p.ll[1] + 0.4045) / 0.00525, y: (51.654 - p.ll[0]) / 0.002957 + 9 }));
+    return [...all.map(p => {
       const [bx, by] = MAP_AREAS[p.area];
       const n = (seen[p.area] = (seen[p.area] || 0) + 1) - 1;
       const ring = RING[n % RING.length];
       return { ...p, x: Math.max(4, Math.min(96, bx + ring[0])), y: Math.max(5, Math.min(95, by + ring[1])) };
-    });
+    }), ...cos];
   }, [home, mode, directory.length]);
 
   const boxRef = useRef(null), mapRef = useRef(null);
@@ -18090,8 +18410,8 @@ function FFMap({ mode = "home" }) {
       });
       const h = {};
       pins.forEach(p => {
-        const m = L.marker(toLL(p.x, p.y), { interactive: false, keyboard: false, zIndexOffset: p.kind === "person" ? 100 : 0,
-          icon: L.divIcon({ className: "ff-lpin", html: "<div></div>", iconSize: [0, 0] }) }).addTo(map);
+        const m = L.marker(p.ll || toLL(p.x, p.y), { interactive: false, keyboard: false, zIndexOffset: p.kind === "person" ? 100 : p.kind === "company" ? 300 : 0,
+          icon: L.divIcon({ className: "ff-lpin" + (p.kind === "company" ? " ff-lco" + (p.ldn ? " ldn" : "") : ""), html: "<div></div>", iconSize: [0, 0] }) }).addTo(map);
         h[p.kind + p.id] = m.getElement().firstChild;
       });
       const cl = L.marker(LDN11, { interactive: false, keyboard: false, zIndexOffset: 500,
@@ -18122,7 +18442,9 @@ function FFMap({ mode = "home" }) {
     return (
       <button key={p.kind + p.id} className="ff-pin" style={{ ...pos, zIndex: on ? 3 : 1 }}
         onClick={() => setSel(p)} aria-label={`${MAP_LAYER[p.kind].label}: ${p.name}`}>
-        {p.kind === "event" ? (
+        {p.kind === "company" ? (
+          <span className={"ff-codot" + (on ? " on" : "")} />
+        ) : p.kind === "event" ? (
           <span style={{ display: "block", width: on ? 18 : 14, height: on ? 18 : 14, transform: "rotate(45deg)", background: MAP_LAYER.event.color, border: "1.5px solid #EAD79C", boxShadow: on ? "0 0 10px rgba(47,138,126,.9)" : "none" }} />
         ) : p.kind === "venue" ? (
           <span style={{ display: "block", width: on ? 17 : 13, height: on ? 17 : 13, borderRadius: 2, background: MAP_LAYER.venue.color, border: "1.5px solid #141416", boxShadow: on ? "0 0 10px rgba(198,200,204,.9)" : "none" }} />
@@ -18136,6 +18458,8 @@ function FFMap({ mode = "home" }) {
     );
   };
   const nPeople = pins.filter(p => p.kind === "person").length;
+  const nCo = new Set(pins.filter(p => p.kind === "company").map(p => p.coId)).size;
+  const nLdn = pins.filter(p => p.kind !== "company" || p.ldn).length;
 
   return (
     <div>
@@ -18147,10 +18471,10 @@ function FFMap({ mode = "home" }) {
             return host ? ReactDOM.createPortal(renderPin(p, { left: 0, top: 0 }), host, p.kind + p.id) : null;
           })}
           {hosts && hosts.__clus && ReactDOM.createPortal(
-            <button type="button" className="ff-clus" onClick={flyLondon} aria-label={`London: ${pins.length} on the map`}>
+            <button type="button" className="ff-clus" onClick={flyLondon} aria-label={`London: ${nLdn} on the map`}>
               <span className="ring" aria-hidden="true" />
               <MapCoin size={44} tier="gold" />
-              <b>{pins.length}</b>
+              <b>{nLdn}</b>
             </button>, hosts.__clus, "clus")}
           <div className="ff-map-seg" role="group" aria-label="Map view">
             <button type="button" className="globe" aria-pressed={view === "world"} onClick={flyWorld} aria-label="World" title="World"><I11.Globe size={15} /></button>
@@ -18169,12 +18493,15 @@ function FFMap({ mode = "home" }) {
           {Object.entries(MAP_AREAS).map(([a, [x, y]]) => (
             <span key={a} style={{ position: "absolute", left: `${x}%`, top: `${y}%`, transform: "translate(-50%,-260%)", fontSize: 8, letterSpacing: ".16em", textTransform: "uppercase", color: "rgba(234,215,156,.45)", whiteSpace: "nowrap", pointerEvents: "none" }}>{a}</span>
           ))}
-          {pins.map(p => renderPin(p, { left: `${p.x}%`, top: `${p.y}%` }))}
+          {pins.filter(p => p.kind !== "company" || (p.ldn && p.x > 2 && p.x < 98 && p.y > 2 && p.y < 98)).map(p => renderPin(p, { left: `${p.x}%`, top: `${p.y}%` }))}
         </div>
       )}
 
       <div style={{ display: "flex", gap: 14, alignItems: "center", justifyContent: "center", margin: "10px 0 14px", flexWrap: "wrap" }}>
         <span className="ff-body ff-muted" style={{ fontSize: 11, display: "flex", gap: 6, alignItems: "center" }}><MapCoin size={14} tier="gold" /> Profile Cards{nPeople ? ` (${nPeople})` : ""}</span>
+        {nCo > 0 && <span className="ff-body ff-muted" style={{ fontSize: 11, display: "flex", gap: 6, alignItems: "center" }}>
+          <span className="ff-codot" style={{ width: 12, height: 12, borderRadius: "50%", background: "#6E1F2F", border: "1.5px solid #EAD79C", display: "block" }} /> Bar companies ({nCo})
+        </span>}
         {(home || mode === "phase1") && <>
           {home && <span className="ff-body ff-muted" style={{ fontSize: 11, display: "flex", gap: 6, alignItems: "center" }}>
             <span style={{ width: 14, height: 14, borderRadius: "50%", border: "1px solid rgba(140,21,38,.9)", background: "rgba(92,18,32,.5)", display: "block" }} /> Hospitality businesses
@@ -18190,7 +18517,11 @@ function FFMap({ mode = "home" }) {
 
       {sel ? (
         <div>
-          {sel.kind === "business" ? <OrgCard org={{ ...sel, kind: sel.profession }} kindLabel="Company" width="100%" />
+          {sel.kind === "company" ? (() => { const co = companyList(state).find(x => x.id === sel.coId); return co ? (
+            <button type="button" className="ff-co11-tile" style={{ display: "block", margin: "0 auto", maxWidth: 360, width: "100%" }} onClick={() => { dispatch({ type: "VIEW_COMPANY", id: co.id }); window.scrollTo(0, 0); }} aria-label={`${co.name}: open their page`}>
+              <CompanyCardFace c={co} size="sm" />
+            </button>) : null; })()
+            : sel.kind === "business" ? <OrgCard org={{ ...sel, kind: sel.profession }} kindLabel="Company" width="100%" />
             : sel.kind === "venue" ? <VenueCard venue={sel} width="100%" />
             : sel.kind === "event" ? (
               <div className="ff-tile dark" style={{ width: "100%", minHeight: 0, gap: 6 }}>
@@ -21523,6 +21854,7 @@ function PartyBrowse17() {
         <HScroll label="Featured companies">{cos.map(c => <div className="ff-br17-co" key={c.id}><CompanyListing11 co={c} /></div>)}</HScroll></Fold17>
       <Fold17 id="ff-br17-people" icon={<I11.Star size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Featured people" count={feat.length}>
         <HScroll label="Featured people">{feat.map(p => <PlayerTile key={p.id} person={p} onClick={() => { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); }} />)}</HScroll></Fold17>
+      {!q && !state.netBrief && <NetMap11 />}
       <FFAI query={q} onQuery={setQ} title="Search for your team" context="FF Party"
         purpose="Find the right people for your event: search by name, profession, skill or area."
         placeholder="Name, profession, skill or area…" />

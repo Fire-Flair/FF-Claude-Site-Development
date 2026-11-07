@@ -158,6 +158,31 @@
         "null"
       ],
       "description": "Who checked the draft before it was shown"
+    },
+    "locations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "label",
+          "lat",
+          "lng"
+        ],
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "lat": {
+            "type": "number"
+          },
+          "lng": {
+            "type": "number"
+          },
+          "approx": {
+            "type": "boolean"
+          }
+        }
+      }
     }
   }
 }

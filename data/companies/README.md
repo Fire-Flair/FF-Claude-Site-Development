@@ -12,3 +12,5 @@ Rules for every record:
 - **Registered details** (`legalName`, `companyNumber`) come from the company's own site and are for matching against Companies House when verifying a claim.
 
 Import behaviour for the developers: create each record as a draft with `status: unclaimed`, keep it hidden from public search and FF Party booking, and publish it only after a claim is verified (for example a code sent to a company email address or phone).
+
+Map locations: each record has `locations`, a list of area-level pins (`label`, `lat`, `lng`, `approx`). They are town centres, never addresses. `approx: true` means the base was not stated on the company's own site or listing and needs confirming with the company. The prototype shows one pin per location on the map on FF Team, FF Staff and FF Party (pins are nudged apart where several companies share a town). `images.permission` is `granted` for the first ten and `to_confirm` for the rest.
