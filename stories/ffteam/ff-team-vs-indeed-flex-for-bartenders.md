@@ -21,7 +21,7 @@ note: Published by FireFlair, which runs FF Team. Indeed Flex facts come from it
 
 # FF Team vs Indeed Flex for bartenders
 
-Indeed Flex offers temporary work across several sectors, including dedicated bartender roles. FF Team is being developed around bartenders' profiles, professional relationships and event bookings. The better fit depends on the work available near you, the payment arrangements you want, and how you prefer to present and build your professional reputation.
+Indeed Flex offers temporary work across several sectors, including dedicated bartender roles. FF Team is built around bartenders' profiles, professional relationships and event bookings. The better fit depends on the work available near you, the payment arrangements you want, and how you prefer to present and build your professional reputation.
 
 This page is published by FireFlair, which runs FF Team.
 
@@ -33,10 +33,10 @@ This page is published by FireFlair, which runs FF Team.
 | **Work found through** | Shifts posted by businesses, matching and returning-worker pools described on its employer pages | Invitations to you by name, or Autofill batches matched on role and distance |
 | **Your public profile** | Not established from the pages checked | A shareable Profile Card with roles, work areas, reviews and connections |
 | **Joining** | Onboarding and verification; check the current eligibility | Free profile |
-| **Fees to you** | Check its current terms. Its key information document describes the agency-worker payment relationship | No percentage deducted from agreed professional pay. The booking charge is paid by the person booking |
-| **Payment** | Includes a benefit called Instant Pay, subject to its terms | Professional pay is separate from the FireFlair charge and is arranged with the booker |
+| **Fees to you** | Check its current terms. Its key information document describes the agency-worker payment relationship | No percentage deducted from agreed professional pay. The booking fee is paid by the person booking |
+| **Payment** | Includes a benefit called Instant Pay, subject to its terms | The pay for each booking type is listed up front. A bartending shift of 3 hours pays £100, a cocktail shift from 4 hours £150 and a flair shift from 2 hours £200. You talk directly with the client |
 | **Commitment** | Flexible schedules | You accept or decline each invitation |
-| **Maturity** | Established, large | New. FireFlair does not promise a number of shifts |
+| **Background** | Established, large | Built by bartenders and events professionals, with bookings from private hosts and businesses. FireFlair does not promise a number of shifts |
 
 ## Who each may suit
 

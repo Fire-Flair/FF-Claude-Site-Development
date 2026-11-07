@@ -37,7 +37,7 @@ Services that advertise bar or hospitality work in the UK, that you can join as 
 | **Stint** | Recurring short shifts in hospitality. Current help material describes a commitment of at least three months | You want regular, repeating shifts rather than one-offs |
 | **Specialist bar agencies** | Dedicated bar divisions covering barbacks, bartenders, flair and managers, for example Off to Work and Wilde Toast | You want event bar work with a bar-focused team |
 | **Event and festival staffing** | For example hap Solutions and Flair, covering festivals, stadiums and large events | You want large-event work. Check location and current vacancies |
-| **FF Team** | A bartender-first profile, shareable by link, with invitations from event hosts and businesses | You want to show your craft, build repeat relationships and see the brief before you commit. It is new and does not promise shifts |
+| **FF Team** | A bartender-first profile, shareable by link, with invitations from event hosts and businesses | You want to show your craft, build repeat relationships and see the brief and the pay before you commit. It does not promise a number of shifts |
 
 Coople closed its UK operations from 1 January 2026.
 

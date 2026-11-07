@@ -21,7 +21,7 @@ conditions: [domain ffstaff.uk to be confirmed once purchased]
 
 # How to book bar staff on FF Staff
 
-You create an event, add a shift for each role, pay FireFlair's booking charge, then invite people by name or let Autofill find them. Someone is booked only when they accept and confirm, or when you choose a professional who has said they are available.
+You create an event, add a shift for each role, then invite people by name or let Autofill find them. FireFlair's booking connection fee of £10 applies to each Shift Card that is filled. Someone is booked only when they accept and confirm, or when you choose a professional who has said they are available.
 
 ## How the pieces fit
 
@@ -34,7 +34,7 @@ An Event Card holds your event. Each role you need is a Shift Card, and a Shift 
 1. Create the Event Card with the date, place and timings.
 2. Add a Shift Card for bartenders and ask for three positions. Add a second Shift Card for the barback, which has a different role and pay.
 3. Add duties, hours, pay, dress code and requirements.
-4. Pay the booking charge for the two Shift Cards. It is taken before invitations go out. The pay for each professional is separate and agreed with them.
+4. The booking connection fee is £10 for each Shift Card that is filled, so the two cards here would carry £20 in total. The pay for each professional is separate and agreed with them.
 5. Choose people from the staff row, or choose Autofill.
 
 ## Choose a person, or Autofill

@@ -4,45 +4,49 @@ site: ffstaff.uk
 title: How FF Staff booking fees, refunds and replacements work
 slug: ff-staff-booking-fees-refunds-replacements
 status: published-draft
-seo_title: FF Staff booking fees, refunds and replacements explained
-meta_description: What the FF Staff booking charge covers, how several positions on one Shift Card are treated, and what happens with partial staffing and cancellations.
+seo_title: FF Staff booking fee, refunds and replacements explained
+meta_description: What the FF Staff £10 booking connection fee covers, how several positions on one Shift Card are treated, and what happens with cancellations and replacements.
 category: Booking terms
 primary_intent: FF Staff fees refunds
 author: FireFlair editorial team
 published: 2026-11-07
-modified: 2026-11-07
+modified: 2026-11-08
 reviewed: 2026-11-07
 cta: {label: Create a staffing request, destination: FF Staff staffing request}
 related: [B01, B02, B07, B12]
 sources: []
-conditions: [approved VAT presentation; business-side partial-staffing wording]
+conditions: [approved VAT presentation; confirm when the fee is taken (the prototype currently takes it before invitations); partly filled card wording]
 ---
 
 # How FF Staff booking fees, refunds and replacements work
 
-FF Staff charges £10 for each Shift Card, paid before invitations are sent. It is not £10 per person and not £10 per hour. The professional's pay is separate. Unfilled Shift Cards are refunded under the policy, and partly filled cards are reviewed. This is first-year launch pricing, which FireFlair says will stay fixed for loyal users. Check the current booking terms for the exact conditions.
+FF Staff has one fee for businesses: a £10 booking connection fee for each Shift Card that is filled. It is not £10 per person and not £10 per hour, so a one-hour shift and a ten-hour shift carry the same fee. The professional's pay is separate and agreed with them. Check the current booking terms for the exact conditions.
 
-## What is charged
+## What you pay
 
-| Item | Charge |
+| Item | Amount |
 |---|---|
-| FireFlair booking charge | £10 per Shift Card |
+| FireFlair booking connection fee | £10 for each filled Shift Card |
 | Professional's pay | Agreed with each professional and shown separately |
-| Autofill | No extra charge |
+| Autofill | No extra fee |
 
-A Shift Card with several positions carries one charge. Separate Shift Cards for different roles carry a charge each.
+A Shift Card with several positions carries one fee. Separate Shift Cards for different roles carry a fee each.
 
-## Refunds
+## If a Shift Card is not filled
 
-- **Before you confirm anyone:** use Cancel request & refund.
-- **Nobody found, or the time to choose ran out:** the charge for that Shift Card is refunded.
-- **Several cards:** each is treated separately. You keep the charge for the cards filled and are refunded for those that are not.
-- **Part-filled card:** a Shift Card asking for several people where only some are found is reviewed individually. There is no published per-person formula.
-- **After you and the professional have both confirmed:** if you cancel, the booking charge is not refunded. Pay or cancellation payments owed to the professional are agreed between you and them.
+The fee is for a filled card, so a card that nobody fills is not charged. Before you confirm anyone you can choose Cancel request, and if the time to choose runs out without a confirmation, nothing is owed for that card.
+
+## Several cards and part-filled cards
+
+Each Shift Card is treated separately. You pay for the cards that are filled and not for those that are not. A card that asks for several people where only some are found is reviewed individually. There is no published per-person formula.
+
+## After you and the professional have both confirmed
+
+If you cancel after both of you have confirmed, the booking connection fee is not refunded. Any pay or cancellation payment owed to the professional is agreed between you and them.
 
 ## Replacements
 
-If a confirmed professional cancels, the position is reopened and a replacement is sought through the agreed process, with no further replacement-matching charge. A replacement depends on availability. If a replacement cannot be found, the charge for the unfilled position is handled under the policy.
+If a confirmed professional cancels, the position is reopened and a replacement is sought through the agreed process, with no further replacement-matching fee. A replacement depends on availability.
 
 ## The record
 

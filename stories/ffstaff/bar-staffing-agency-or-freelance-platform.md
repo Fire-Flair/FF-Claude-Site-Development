@@ -30,7 +30,7 @@ A managed agency usually supplies and manages the staff for you. A freelance pla
 | **Who selects** | The agency, to your brief | You, from profiles, or the platform matches |
 | **Support** | Often a named account contact and cover | Varies by platform |
 | **Payroll and pay** | Often handled by the agency | Varies; some platforms handle payment, others leave it to you |
-| **Cost shape** | May be an hourly client rate | May be a percentage fee, or a fixed charge per booking |
+| **Cost shape** | May be an hourly client rate | May be a percentage fee, or a fixed fee per booking |
 | **Responsibility** | Depends on the arrangement | Depends on the arrangement |
 
 Employment status and liability depend on the actual working arrangement, not on what a contract calls it. Check current Acas and government guidance, or take advice, before you rely on any one model.
@@ -51,6 +51,6 @@ Examples include general hospitality agencies and bar specialists such as Off to
 
 ## How FF Staff works
 
-You build the brief, pay a fixed booking charge for each Shift Card, and invite the people you want. See [how to book bar staff on FF Staff](/stories/how-to-book-bar-staff-on-ff-staff). FF Staff is young and does not promise coverage in every area or on every date.
+You build the brief, invite the people you want, and pay a fixed booking connection fee for each Shift Card that is filled. See [how to book bar staff on FF Staff](/stories/how-to-book-bar-staff-on-ff-staff). FF Staff is young and does not promise coverage in every area or on every date.
 
 Related: [How to find last-minute bar staff](/stories/how-to-find-last-minute-bar-staff) · [Barback, bartender or bar manager](/stories/barback-bartender-or-bar-manager)

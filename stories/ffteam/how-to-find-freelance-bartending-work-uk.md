@@ -43,7 +43,9 @@ Coople closed its UK operations from 1 January 2026, so if you used it before, s
 
 ## Where FF Team fits
 
-FF Team starts with bartenders. You build a Profile Card that shows your craft, experience, work areas and the people you work with, and you can share it by link. Event hosts and businesses invite you to shifts, and you see the details before you commit. A free profile has no percentage taken from your agreed pay, and the booking charge is paid by the person booking.
+FF Team starts with bartenders. You build a Profile Card that shows your craft, experience, work areas and the people you work with, and you can share it by link. Event hosts and businesses invite you to shifts, and you see the details before you commit. A free profile has no percentage taken from your agreed pay, and the booking fee is paid by the person booking, not by you.
+
+The pay for each type of booking is listed up front. In the prototype, a bartending shift of 3 hours pays £100, a cocktail (mixology) shift from 4 hours pays £150, and a flair performance from 2 hours pays £200. If you sign up, you can talk directly with the client before the event.
 
 FF Team does not promise a number of shifts. Work depends on demand in your area.
 

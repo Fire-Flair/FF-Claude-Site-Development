@@ -49,3 +49,17 @@ Remaining Priority A: T01-T05, T13 (FF Team); B01, B02, B03, B07, B18 (FF Staff)
 - Real /stories/{slug} routes need hosting or prerendering work; the prototype is a single compiled page.
 - The compiled page cannot be rebuilt from source/fireflair-app.jsx in this environment (the source has image markers, and the build step is not in the repo), so the template and reader changes are specified, not yet shipped.
 - Pushing to GitHub is currently refused for this session (Claude GitHub app not installed for the organisation).
+
+## Batch 2 (v17.3.95): Priority B complete
+
+Totals: FF Party 22 files (P01–P21 with P22 and P24 merged into P07, plus P23), FF Team 18 (T01–T18), FF Staff 18 (B01–B18). 58 articles in the prototype.
+
+Replaced legacy stories: `sidehustle` → T18 (trading allowance, verified against the GOV.UK policy paper of 28 October 2026), `menuteam` → T17, team `sites`/`whyteam` → T16, `launch` → B10, `cardsbiz` → B16. Party legacy `wedding`, `cardsparty`, `sites` remain after the new articles until reviewed.
+
+Wording rules applied: FF Party has the refundable deposit only (never "charge"), no booking connection fee, no hourly example, no "new/young" wording. FF Staff alone carries the booking connection fee per filled Shift Card and the hourly example (B02, B13). FF Team lists the prototype pay figures and direct contact with the client.
+
+Open for Alex: ratio bands (P05) and drinks-per-guest figure (P10) need an experienced bartender's review; 30-day rule reading (credit toward the next event at 30+ days, no refund within 30 days once staff are confirmed, refund before confirmation); B18 fee timing against the prototype flow (it currently takes the fee before invitations); VAT presentation; recheck competitor and supplier facts on the publication day; T18 relies on legislation not yet enacted, so recheck before launch.
+
+Deferred: C01–C12 conditional candidates. Community-question articles (up to six) not yet written.
+
+Tested (headless, 390px): Team 18 cards, Staff 18 cards, Party 25 cards (22 plus 3 legacy); article opens, related link, Esc, CTA closes the reader and starts the right flow. No page errors.

@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.95 — 2026-11-07 — Stories phase 2, complete (artifact version 1794062293-5b73)
+
+- 58 Stories now in the prototype: FF Party 22, FF Team 18, FF Staff 18. All Priority B articles written; legacy stories replaced where a new article covers them.
+- Wording corrected per site: FF Party refers to a refundable deposit only; the booking connection fee and hourly comparison appear only on FF Staff; FF Team uses the pay listed in the prototype and direct contact with the client. No "new/young" claims.
+- Homepage Stories rows stay swipe + pop-up only.
+- Tested in a headless browser on Team, Staff and Party: cards, reader, related links, Esc, call to action. No page errors.
+- Developers: build /stories/{slug} pages (server-rendered or prerendered), a /stories index per site, sitemap, canonicals and a redirect map; set ST18_ROUTES=true in the reader once routes exist. FF Staff is the only business-site name; its domain is still to be bought. Article front matter is in stories/*/*.md. Open items are in stories/INVENTORY.md.
+
 ## v17.3.94 — 2026-11-07 — Stories phase 2
 Artifact version 1794060681-c057 · file `fireflair-v17.3.94.html`
 

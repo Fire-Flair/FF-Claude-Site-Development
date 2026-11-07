@@ -3,57 +3,46 @@ id: P23
 site: ffparty.uk
 title: How FF Party booking deposits and refunds work
 slug: ff-party-booking-deposits-and-refunds
-status: draft
-seo_title: FF Party booking charge and refunds explained
-meta_description: What the FF Party booking charge pays for, what is separate from it, and when it is refunded: unfilled events, partly staffed events and replacements.
+status: published-draft
+seo_title: FF Party booking deposit and refunds explained
+meta_description: What the FF Party £50 deposit is, when it is fully refunded, and how you can change your event date up to 30 days before.
 category: Booking terms
 primary_intent: FF Party deposit refund
 author: FireFlair editorial team
 published: 2026-11-07
-modified: 2026-11-07
+modified: 2026-11-08
 reviewed: 2026-11-07
 cta: {label: Plan your party, destination: FF Party event planner}
 related: [P01, P02, P21]
 sources: []
-conditions: [approved VAT presentation; Alex to confirm the reading of the 30-day rule: credit (not cash refund) at 30+ days after confirmation, no refund within 30 days once staff are confirmed, refund before confirmation]
+conditions: [approved VAT presentation; Alex to confirm the 30-day rule wording; partly staffed events decided individually]
 ---
 
 # How FF Party booking deposits and refunds work
 
-FF Party uses one £50 FireFlair booking charge for each Event Card, separate from the professional's pay. A request cancelled before anyone is confirmed qualifies for the applicable refund. Partly staffed events are reviewed individually. Check the current booking terms for the exact conditions that apply to your request.
+To book on FF Party you pay a £50 deposit for your event. If we cannot find the staff for your event, the deposit is refunded in full. If your plans change, you can move your event date up to 30 days before it takes place, and your deposit goes with it.
 
-The £50 is FireFlair's first-year launch price, and FireFlair has said it will stay fixed for loyal users.
+## What the deposit is
 
-## Which money is which?
+The £50 deposit secures your booking request and starts the search for your people. It is one deposit for the whole event, however many bartenders or other professionals you ask for. It is separate from the professionals' pay, which you see on its own line, and from the cost of drinks, equipment and travel.
 
-| Money | Who it is for | Covered by this guide? |
-|---|---|---|
-| FireFlair booking charge, £50 per Event Card | FireFlair, for running the booking | Yes |
-| Professional's pay | The bartender or other professional, shown separately | No |
-| Drinks, ingredients, equipment, travel | Depends on the service you choose | No |
+## When it is refunded
 
-Example, for illustration only and not a quotation: a bartender's pay of £100 plus the £50 FireFlair charge gives £150. Real pay depends on the shift, and many events need more than one position.
+- **We cannot get the staff for your event.** The deposit is refunded in full.
+- **You cancel before anyone is confirmed.** Use "Cancel request & refund".
+- **Only part of your event is staffed.** We look at it with you and decide individually.
+- **Your bartender cancels.** We reopen the position and look for a replacement, with no second matching fee. Replacements depend on availability.
 
-The charge is for the event, not for each person. An Event Card with several positions still carries one £50 charge.
+## Not sure of the date?
 
-## When is the charge refunded?
+You can book now and change the date later, as long as it is at least 30 days before the event. Your deposit stays with your booking.
 
-- **Nothing secured.** If no professional is confirmed for the event, the applicable full refund applies.
-- **Cancelled before confirmation.** Use "Cancel request & refund" before anyone is confirmed.
-- **Partly staffed.** If some positions are filled and others are not, FireFlair reviews the event individually under the policy. There is no published formula that splits the charge by position.
-- **Your bartender cancels.** The position is reopened and a replacement is sought through the agreed process, with no second replacement-matching charge. A replacement depends on availability.
+## Once your team is confirmed
 
-## What about cancelling or changing the date after you are confirmed?
-
-Not sure of your date? You can still book, and change it later.
-
-- **30 days or more before the event:** if you cancel or move the event, your booking charge can be used towards your next event.
-- **Within 30 days of the event, once your staff are confirmed:** the charge is not refunded. This protects the professionals who have kept the date free for you.
-
-The professional's cancellation pay is a separate matter from FireFlair's charge. These rules apply to FF Party events, so read them alongside the current booking terms.
+When your staff are confirmed, they hold your date. If you cancel within 30 days of the event after that, the deposit is not refunded, which protects the professionals who have kept the date free for you. If you need to cancel earlier, your deposit can be used towards your next event.
 
 ## Where is the record?
 
 Your booking page on the website is the official record. WhatsApp and email carry notifications.
 
-Related: [How to book a bartender on FF Party](/stories/how-to-book-a-bartender-on-ff-party) · [How much does it cost to hire a bartender?](/stories/how-much-does-it-cost-to-hire-a-bartender)
+Related: [How to book a bartender on FF Party](/stories/how-to-book-a-bartender-on-ff-party) · [How far in advance should I book a bartender?](/stories/how-far-in-advance-to-book-a-bartender)

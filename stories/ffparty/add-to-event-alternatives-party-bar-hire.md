@@ -32,7 +32,7 @@ This page is published by FireFlair, which runs FF Party. Facts about other serv
 | **Togather** | Matches an event brief with suppliers, with quotes, messaging and payment support. | You want a brief-led, curated route. |
 | **Bark** | A broad services marketplace. Professionals pay credits to contact leads, and customers compare profiles and reviews. | You want a broad marketplace for many kinds of service. |
 | **Direct bar companies** | Examples include Mix & Twist, Cocktailhire, Hire A Barman and Cocktail Barmen, who publish their own packages. | You know what you want and prefer a single specialist operator. |
-| **FF Party** | You describe the event, choose professionals to invite, and see the professional's pay and FireFlair's booking charge separately. For a mobile bar or full package, the FireFlair team approaches suitable bartenders and bar companies for your brief and passes on who is available. | You want to pick the person, see the terms before committing, and have someone in events do the first round of enquiries. FF Party is young and does not list every company, so the options depend on who replies for your date. |
+| **FF Party** | You describe the event, choose the people you want, and pay a £50 deposit that is fully refunded if we cannot find the staff. For a mobile bar or full package, the FireFlair team, with global events industry experience, contacts bartenders and bar companies for your brief and brings you the options. | You want a complete booking that is confirmed with you, and want experienced people to do the first round of enquiries. Options depend on who is free for your date and area. |
 
 ## How to choose
 
