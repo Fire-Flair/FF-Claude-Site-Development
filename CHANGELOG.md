@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.103 — 2026-11-07 — FireFlair Introductions on profiles
+Artifact version 1794073326-419c · file `fireflair-v17.3.103.html`
+
+- New "FireFlair Introductions" section (H2) at the bottom of every profile's Overview, under Skills and Attributes. It is written automatically when the owner publishes, from the public profile details only, using the same AI connection About Me uses, with a plain fallback sentence if that fails.
+- Owners can edit the wording on their own profile, regenerate it into the editor, and save. Manual edits are kept on later publishes. Republishing unchanged details makes no new AI call; an older publish never overwrites a newer one.
+- Profiles now canonicalise to their own site (ffteam.uk) instead of ffparty.uk, in the page canonical and the ProfilePage data. The page title and description come from the same validated details.
+- Profiles have one visible H1: "Name — Profession in Area" (the card's name is no longer an H1).
+- Prototype only: nothing is stored on a server. The developer notes in docs/FIREFLAIR-INTRODUCTIONS.md list what the real site needs (server generation, server-rendered HTML, sitemap, OAI-SearchBot access, optional geocoder suggestions).
+
 ## v17.3.102 — 2026-11-07 — Bar companies on the map, more logos
 Artifact version 1794069278-58a7 · file `fireflair-v17.3.102.html`
 
