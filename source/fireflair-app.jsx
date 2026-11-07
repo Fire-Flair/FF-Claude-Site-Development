@@ -8452,7 +8452,7 @@ function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "" }
   const everyone = useDirectory();
   const n = query.trim().toLowerCase();
   const all0 = n ? everyone.filter(p => personSearchText(p).includes(n)) : everyone;
-  const all = only ? all0.filter(p => p.group === only) : all0;
+  const all = only && only.length ? all0.filter(p => [].concat(only).includes(p.group)) : all0;
   if (n && !all.length) return <div style={{ marginTop: 18 }}><Empty icon={<Search size={26} />} title={`Nobody matches “${query}” yet. Try a different name, skill or area.`} /></div>;
   const order = CATEGORY_ORDER;
   const groups = all.reduce((m, p) => { (m[p.group] = m[p.group] || []).push(p); return m; }, {});
@@ -18397,37 +18397,32 @@ function CompaniesSection({ title = "Companies", note, list: listIn }) {
   );
 }
 
-/* Browse under the map: a People / Companies dropdown and a type dropdown (v17.3.106). */
-const NET_PEOPLE_TYPES17 = ["Bar", "Front of House", "Management", "Entertainment", "Services", "Chefs", "Back of House"];
-const NET_CO_TYPES17 = [["bar", "Bar companies", "Bar"], ["dj", "Entertainment", "Entertainment"], ["photo", "Photographers", "Photographers"], ["catering", "Caterers", "Caterers"], ["svc", "Services", "Services"]];
+/* Browse under the map: the four pillars sort the people and companies, and the map follows. */
+const NET_CO_TYPES17 = [["bar", "Bar companies"], ["dj", "Entertainment"], ["photo", "Photographers"], ["catering", "Caterers"], ["svc", "Services"]];
+const PILLAR_OF_GROUP17 = { "Bar": "bar", "Front of House": "bar", "Management": "bar", "Back of House": "bar", "Entertainment": "ent", "Services": "svc", "Chefs": "food" };
+const PILLAR_OF_CAT17 = { bar: "bar", dj: "ent", photo: "svc", svc: "svc", catering: "food" };
+const NET_PILLAR_TEXT17 = { bar: "Bartenders and bar companies", ent: "DJs and performers", svc: "Photo and more", food: "Chefs and caterers" };
 function browseCompanies17(state) {
   const sup = REAL_SUPPLIERS17.map(function (c) { return companyById(state, "co_" + c.slug); }).filter(Boolean);
   return companyList(state).concat(adminCompanies17(state, sup));
 }
 function NetBrowse17(props) {
   const query = props.query || "";
-  const state = useStore().state;
-  const kindS = useState("people"), kind = kindS[0], setKind = kindS[1];
-  const typeS = useState("all"), type = typeS[0], setType = typeS[1];
+  const st = useStore(), state = st.state, dispatch = st.dispatch;
+  const open = state.netPillar17 || "";
   if (query.trim()) return React.createElement(GroupedPeople, { query: query, onPick: props.onPick, scope: props.scope });
-  const people = kind === "people";
-  const opts = people
-    ? [["all", "All people"]].concat(NET_PEOPLE_TYPES17.map(function (t) { return [t, t]; }))
-    : [["all", "All companies"]].concat(NET_CO_TYPES17.map(function (t) { return [t[0], t[2]]; }));
-  const mk = function (v, l) { return React.createElement("option", { key: v, value: v }, l); };
-  const bar = React.createElement("div", { className: "ff-netbrowse17" },
-    React.createElement("select", { className: "ff-input", "aria-label": "Browse", value: kind, onChange: function (e) { setKind(e.target.value); setType("all"); } },
-      [["people", "People"], ["companies", "Companies"]].map(function (o) { return mk(o[0], o[1]); })),
-    React.createElement("select", { className: "ff-input", "aria-label": "Type", value: type, onChange: function (e) { setType(e.target.value); } },
-      opts.map(function (o) { return mk(o[0], o[1]); })));
-  if (people) return React.createElement(React.Fragment, null, bar, React.createElement(GroupedPeople, { query: "", onPick: props.onPick, scope: props.scope, only: type === "all" ? "" : type }));
   const all = browseCompanies17(state);
-  const secs = NET_CO_TYPES17.filter(function (t) { return type === "all" || type === t[0]; })
+  const secs = NET_CO_TYPES17.filter(function (t) { return !open || PILLAR_OF_CAT17[t[0]] === open; })
     .map(function (t) { return [t, all.filter(function (c) { return (c.cat || "bar") === t[0]; })]; })
-    .filter(function (x) { return type !== "all" || x[1].length; });
-  return React.createElement(React.Fragment, null, bar, secs.map(function (x) {
-    return React.createElement(CompaniesSection, { key: x[0][0], title: x[0][1], list: x[1] });
-  }));
+    .filter(function (x) { return x[1].length; });
+  const groups = open ? Object.keys(PILLAR_OF_GROUP17).filter(function (g) { return PILLAR_OF_GROUP17[g] === open; }) : "";
+  const body = React.createElement(React.Fragment, null,
+    secs.map(function (x) { return React.createElement(CompaniesSection, { key: x[0][0], title: x[0][1], list: x[1] }); }),
+    React.createElement(GroupedPeople, { query: "", onPick: props.onPick, scope: props.scope, only: groups }));
+  const items = BCATS17.map(function (c) { return { k: c.k, t: c.label, s: NET_PILLAR_TEXT17[c.k], img: (window.FF_IMG || {})[BIMG17[c.k]] }; });
+  return React.createElement(React.Fragment, null,
+    React.createElement(PillarBox17, { label: "Browse the network", open: open, items: items, onPick: function (k) { dispatch({ type: "V11_SET", patch: { netPillar17: k } }); } }, body),
+    !open && body);
 }
 
 /* A company's page, as anyone sees it. */
@@ -18664,7 +18659,7 @@ function FFMap({ mode = "home" }) {
   const [sel, setSel] = useState(null);
   const home = mode === "home";
 
-  const pins = useMemo(() => {
+  const pins0 = useMemo(() => {
     const people = directory.map(p => ({ ...p, kind: "person", area: (p.locations || []).find(l => MAP_AREAS[l]) })).filter(p => p.area);
     const p1 = mode === "phase1";
     const all = home || p1
@@ -18681,6 +18676,11 @@ function FFMap({ mode = "home" }) {
       return { ...p, x: Math.max(4, Math.min(96, bx + ring[0])), y: Math.max(5, Math.min(95, by + ring[1])) };
     }), ...cos];
   }, [home, mode, directory.length]);
+  const netPillar = mode === "network" ? (state.netPillar17 || "") : "";
+  const pins = useMemo(() => {
+    if (!netPillar) return pins0;
+    return pins0.filter((p) => p.kind === "company" ? PILLAR_OF_CAT17[p.cat || "bar"] === netPillar : p.kind === "person" ? PILLAR_OF_GROUP17[p.group] === netPillar : false);
+  }, [pins0, netPillar]);
 
   const boxRef = useRef(null), mapRef = useRef(null);
   const [fallback, setFallback] = useState(() => !window.L || !ukGeo11());
@@ -20682,6 +20682,48 @@ function BookingsList11({ onOpen, onAgain }) {
   );
 }
 
+function BuildBooking17() {
+  const st = useStore(), state = st.state, dispatch = st.dispatch;
+  const all = useDirectory();
+  const br = state.br17 || {}, qual = br.q || "", band = br.band || "";
+  const bk = bkOf17(state), pkgs = pkgsOf17(state);
+  const popS = useState(null), pop = popS[0], setPop = popS[1];
+  const cont = () => {
+    const label = (PARTY_BANDS11.find(b => b.k === band) || {}).guests || "";
+    let ev = state.events.find(e => e.id === state.activeEventId);
+    let evId = ev && ev.id;
+    if (!evId) {
+      evId = uid("evt");
+      dispatch({ type: "EVENT_ADD", event: { id: evId, ...eventData11({ ...eventDraft11(null), band, aud: "", guests: label }), band, audience: "", site: "party", phone: state.bookPhone || "", email: state.bookEmail || "", questionIds: [] } });
+      dispatch({ type: "ACTIVE_EVENT", id: evId });
+    } else if (band && !ev.band) dispatch({ type: "EVENT_PATCH", id: evId, patch: { band, guests: label } });
+    if (qual) dispatch({ type: "EVENT_PATCH", id: evId, patch: { quality: qual } });
+    bk.pk.forEach(id => {
+      const svc = pkgs.find(y => y.id === id); if (!svc) return;
+      const who = all.filter(p => (bk.pp || []).includes(p.id) && signedUp11(p, svc.id === "svc_full" ? "svc_bartending" : svc.id)).map(p => p.id), auto = (bk.pp || []).includes("auto:" + svc.id);
+      const had = state.shifts.find(x => x.eventId === evId && x.svcId === svc.id);
+      if (had) { if (who.length) dispatch({ type: "SHIFT_STAFF", id: had.id, staffIds: [...new Set([...(had.staffIds || []), ...who])] }); return; }
+      dispatch({ type: "SHIFT_ADD", shift: { id: uid("shf"), eventId: evId, staffIds: who, staffId: who[0] || "", skills: [], ...(auto ? { route: "auto" } : {}), qty: 1, dress: "", notes: "", tcs: "company", rate: "", total: "", hoursM: "", pay: svc.price,
+        role: svc.title, matchRole: svc.role || SVC_ROLE[svc.id] || svc.title, svcId: svc.id, svcPrice: svc.price, svcTime: svc.time, svcLevel: svc.level, provider: svc.by || "",
+        time: svcTimeFor(svc, (ev && ev.start) || ""), date: (ev && ev.date) || "", iso: (ev && ev.iso) || "", venue: (ev && ev.venue) || "" } });
+    });
+    const ao = state.addons17 || {}, sel = { ...(ao[evId] || {}) };
+    bk.ck.forEach(id => { if (!sel[id]) sel[id] = 20; });
+    dispatch({ type: "V11_SET", patch: { addons17: { ...ao, [evId]: sel }, xa17: { ...(state.xa17 || {}), [evId]: bk.ex }, bkView: { eventId: evId } } });
+    
+  };
+  const prev = useRef([]);
+  useEffect(function () {
+    const gone = prev.current.filter(function (id) { return !bk.pk.includes(id); });
+    prev.current = bk.pk.slice();
+    const cur = state.events.find(function (e) { return e.id === state.activeEventId; });
+    if (cur) gone.forEach(function (id) { state.shifts.filter(function (x) { return x.eventId === cur.id && x.svcId === id; }).forEach(function (x) { dispatch({ type: "SHIFT_DELETE", id: x.id }); }); });
+    if (bk.pk.length) cont();
+  }, [JSON.stringify([bk.pk, bk.pp, bk.ck, bk.ex])]);
+  const go = function () { cont(); setTimeout(function () { var el = document.querySelector(".ff-cb17"); if (el) el.scrollIntoView({ behavior: "smooth" }); }, 200); };
+  return React.createElement("div", { className: "ff-pn ff-br17" }, React.createElement(PartyBuilder17, { onOpen: setPop, onGo: go }),
+    pop && React.createElement(PkgSheet17, { svc: pop, qual: qual, onClose: function () { setPop(null); } }));
+}
 function StaffBookings() {
   const { state, dispatch } = useStore();
   const all = useDirectory();
@@ -20698,7 +20740,7 @@ function StaffBookings() {
 
       {picked && isPast(picked.iso)
         ? <PastBooking key={picked.id} ev={picked} close={() => setView({})} />
-        : site.party ? <ConfirmBooking17 key={bk} bkey={bk} ev={picked} setView={setView} /> : <BookingBox key={bk} bkey={bk} ev={picked} setView={setView} />}
+        : site.party ? <><BuildBooking17 /><ConfirmBooking17 key={bk} bkey={bk} ev={picked} setView={setView} /></> : <BookingBox key={bk} bkey={bk} ev={picked} setView={setView} />}
 
       {!site.party && <BookingsList11 onOpen={(e) => setView({ eventId: e.id })} />}
       {!site.party && <FFEvents17 />}
@@ -22165,9 +22207,7 @@ function PartyBrowse17() {
     <div className="ff-pn ff-br17">
       <div className="ff-eyebrow">FF Party</div>
       <h1 className="ff-h1" style={{ marginTop: 4, marginBottom: 10 }}>Let's plan your party</h1>
-      <p className="ff-br17-intro">Browse ready-made packages, explore bar companies, or search for the individual people you would love at your event.</p>
       {p2 && <p className="ff-br17-launch" role="note"><b>FireFlair is launching with bar packages.</b> Every other profession on the platform will be added later.</p>}
-      <PartyBuilder17 onOpen={setPop} onGo={cont} />
       <h2 className="ff-about-h ff-br17-q ff-br17-net">Browse the network</h2>
       {pop && <PkgSheet17 svc={pop} qual={qual} onClose={() => setPop(null)} />}
       {state.netBrief && <BookingBrief brief={state.netBrief} />}
@@ -26428,7 +26468,7 @@ function useHireNav() {
   return {
     site,
     toEvent: () => {
-      if (site.party) { tab("network"); return; }
+      if (site.party) { dispatch({ type: "V11_SET", patch: { bkView: { mode: "new" } } }); tab("bookings"); return; }
       dispatch({ type: "V11_SET", patch: { bkView: { mode: "new", open: "event" } } }); tab("bookings");
     },
     toBookings: (view) => { dispatch({ type: "V11_SET", patch: { bkView: view || { tab: "events" } } }); tab("bookings"); },

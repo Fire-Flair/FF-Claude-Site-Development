@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.3.108
+
+- Build your booking (the Bar, Entertainment, Services and Food pillars, packages, people and add-ons) moved from the FF Party People page to the Confirm your booking screen, above the existing confirm section. Look and behaviour are unchanged. Choosing or removing a package there updates the Services box straight away, and "Plan your event" now opens this screen.
+- Browse the network now uses the same four pillars as a sorter on FF Team, FF Staff and FF Party. Opening a pillar shows only the companies and people of that type: Bar (bar companies, Bar, Front of House, Management, Back of House), Entertainment (DJs, Entertainment), Services (photographers, security and similar, Services), Food (caterers, Chefs). With none open, everything is listed.
+- The map follows the open pillar: only that pillar's people and company pins show, and the legend counts update. Closing the pillar restores all pins.
+- This replaces the People / Companies dropdown from v17.3.106. The intro line on the FF Party People page was removed.
+
 ## v17.3.107
 
 - Storm DJs is now the primary DJ company: a Company Card at the head of the DJs, on the map and in Companies > Entertainment on all three sites, with photos from their own website (used with the owner's agreement). Also added to data/companies/seed-djs.json.
