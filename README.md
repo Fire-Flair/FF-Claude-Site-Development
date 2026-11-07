@@ -1,6 +1,6 @@
 # FF Claude Site Development
 
-Prototype code for FireFlair (FF Team, FF Business, FF Party, FF VIP and FF Admin),
+Prototype code for FireFlair (FF Team, FF Staff, FF Party, FF VIP and FF Admin),
 built as a Claude artifact. Each `fireflair-v*.html` file is one version of the whole prototype as
 a single page: open it in a browser to run it. The highest number is the latest.
 

@@ -57,7 +57,7 @@ New in the backend since the 16 Oct audit:
    - **Keys:** the prototype uses short ids (`g_freelance`) and Core uses `question_key` (`generic_freelance_availability`). The map is `CORE_QUESTION_KEYS` in the source, and FF Admin's CSV export now includes the Core key.
    - **Wording and options:** they match the seed (`scripts/seedQuestions.js`) exactly.
    - **Categories:** Core has `generic | feedback | profession`. The prototype also uses:
-     - `hiring`: FF Business questions to staff;
+     - `hiring`: FF Staff questions to staff;
      - `asked`: questions visitors ask on a profile;
      - `ai`: suggested questions.
 
@@ -68,7 +68,7 @@ New in the backend since the 16 Oct audit:
    - **What the prototype also records:** worked before, would work again and how they worked together, which could become tags or fields.
    - **What's missing:** routes for create, accept and list.
 5. **Hiding by admins vs hiding by the owner.** Core has `visibility: public | private | hidden` and `is_hidden` on section data and media. Those are the owner's own choices. Admin moderation needs its own flag, for example `admin_hidden: { by, at, reason }`, so an admin hiding something never overwrites, or gets overwritten by, the owner's setting.
-6. **Roles.** Core `ROLE` is `ff_team | ff_staff | ff_party`. The product now says FF Business (ffbusiness.uk). Either rename the value or map `ff_staff` to FF Business everywhere it's shown.
+6. **Roles.** Core `ROLE` is `ff_team | ff_staff | ff_party`. The product says FF Staff (ffstaff.uk), so the role value and the name now match.
 7. **Admins.**
    - **Core today:** `AdminUser` is a separate email-and-password account.
    - **The plan:** admins are FireFlair members, by FF Tag, with roles (Owner, Admin, Gold package), and Gold package members get admin tools automatically. That fits a role on `users` (for example `admin_role`) better than separate admin accounts.
@@ -82,8 +82,8 @@ Everything below is prototype-only state. Each item needs a model and routes:
 | --- | --- |
 | Invitations, connections, team invites | `invitations`, `connections`, `teamInvites` (`NETWORK_ADAPTER` lists the routes) |
 | Questions asked on profiles | `profileQuestions` |
-| FF Business company profiles | `company` (+ demo `COMPANIES`) |
-| Events, shifts and booking requests (FF Business and FF Party) | `events`, `shifts`, `engagements`, `activeEventId` |
+| FF Staff company profiles | `company` (+ demo `COMPANIES`) |
+| Events, shifts and booking requests (FF Staff and FF Party) | `events`, `shifts`, `engagements`, `activeEventId` |
 | Service cards, signature cocktails, stories | `myServices`, `myCocktails`, `myPosts` |
 | Terms | `svcTerms17` (service cards), `myTerms17` (personal terms shown when hired) |
 | FF Team Bookings | `profile.serviceInterest` (party card sign-ups), `profile.unavail17` (dates not available) |
@@ -120,12 +120,12 @@ Checked with the prototype's test runs and a sweep of every site, tab, Discover 
 
 ## 4. Recommendations for the live build
 
-1. **Compile, split and lazy-load.** Never compile JSX in the browser (the live site already builds with Vite). Split by site and route: FF Team, FF Business, FF Party and FF Admin load separately. The prototype is one page only because an artifact has one URL.
+1. **Compile, split and lazy-load.** Never compile JSX in the browser (the live site already builds with Vite). Split by site and route: FF Team, FF Staff, FF Party and FF Admin load separately. The prototype is one page only because an artifact has one URL.
 2. **Images from storage, not inside the page.** About 4 MB of the prototype is embedded pictures. On the live site, serve them from S3 or a CDN at the sizes they're shown, with `srcset`, and load below-the-fold images lazily.
 3. **Icons and the map.**
    - **Icons:** the prototype loads the whole Lucide library for 114 icons. `lucide-react` with per-icon imports ships only what's used.
    - **Map:** Leaflet loads on every visit in the prototype. On the live site, load it only on screens with a map.
-4. **One source of truth for names.** The prototype renames "FF Staff" to "FF Business" and removes "FF AI" by text replacement at build time. Do these as real renames in the live code. Text replacement can change data and identifiers it wasn't meant to.
+4. **One source of truth for names.** The prototype removes "FF AI" by text replacement at build time (the FF Staff name was reverted to FF Staff). Do these as real renames in the live code. Text replacement can change data and identifiers it wasn't meant to.
 5. **State.** The prototype keeps one global store with 41 saved keys. On the live site each of those becomes an API resource (the table in §2.3), loaded where it's used.
 6. **Moderation is hide, never delete.** FF Admin is built on that rule:
    - every hide or show is logged;
@@ -144,4 +144,4 @@ Checked with the prototype's test runs and a sweep of every site, tab, Discover 
 - **v17.3.36 to v17.3.38** point to internal build files (`v11/admin17.jsx`, `v101/build.mjs`, `harness.mjs`). Those are not in this repo; the code is in `source/fireflair-app.jsx` (§1).
 - **v17.3.36:** FF Admin's verification choice "Standard" is "Base" in Core, and FF Admin now says Base (§2.2.1).
 - **v17.3.33:** the pay figure on FF Team package tiles was later replaced, in v17.3.34, by a fixed lookup (`PAY17`). `PAY_CUT17` no longer exists.
-- **README:** it now says FF Business (not FF Staff) and explains the source file and the compiled page.
+- **README:** it says FF Staff and explains the source file and the compiled page.
