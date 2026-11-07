@@ -1,5 +1,10 @@
 # FireFlair prototype — changelog
 
+## v17.3.99 — 2026-11-07 — Stories: coming-soon guides
+
+- 12 more guides added (70 Stories in total): local guides, music, photography, waiting staff, masterclass, training courses, Christmas staffing and signature cocktails. Each states plainly which service is available now and which is coming soon.
+- Built on top of v17.3.98 (30 real bar companies); only the Stories data changed.
+
 ## v17.3.98 — 2026-11-07 — 30 real bar companies, logos
 Artifact version 1794064226-f709 · file `fireflair-v17.3.98.html`
 

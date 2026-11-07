@@ -12,9 +12,9 @@ import argparse, json, math, os, re, glob, datetime, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 ORDER = {  # slugs (new articles first, then older stories that have no replacement yet)
-    "party": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08", "P09", "P10", "P11", "P12", "P13", "P14", "P15", "P16", "P17", "P18", "P19", "P20", "P21", "P23", "wedding", "cardsparty", "sites"],
-    "team": ["T01", "T02", "T03", "T04", "T05", "T06", "T07", "T08", "T09", "T10", "T11", "T12", "T13", "T14", "T15", "T16", "T17", "T18"],
-    "staff": ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B09", "B10", "B11", "B12", "B13", "B14", "B15", "B16", "B17", "B18"],
+    "party": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08", "P09", "P10", "P11", "P12", "P13", "P14", "P15", "P16", "P17", "P18", "P19", "P20", "P21", "P23", "C01", "C02", "C05", "C06", "C07", "C08", "C09", "wedding", "cardsparty", "sites"],
+    "team": ["T01", "T02", "T03", "T04", "T05", "T06", "T07", "T08", "T09", "T10", "T11", "T12", "T13", "T14", "T15", "T16", "T17", "T18", "C03", "C10"],
+    "staff": ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B09", "B10", "B11", "B12", "B13", "B14", "B15", "B16", "B17", "B18", "C04", "C11", "C12"],
 }
 
 

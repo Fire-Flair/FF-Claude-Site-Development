@@ -26796,6 +26796,41 @@ const ST18 = {
    "T02"
   ]
  },
+ "book-bartender-and-dj-for-a-party": {
+  "id": "C08",
+  "slug": "book-bartender-and-dj-for-a-party",
+  "site": "ffparty.uk",
+  "title": "How to book a bartender and DJ for the same party",
+  "seo": "How to book a bartender and DJ for the same party",
+  "date": "8 Nov 2026",
+  "iso": "2026-11-08",
+  "reviewed": "8 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Planning your party",
+  "img": "",
+  "min": 2,
+  "blurb": "This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.",
+  "intro": "*This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.*\n\n\nTreat them as one evening plan. Agree a timeline that suits both, check space and power, and tell each supplier about the other.",
+  "body": [
+   [
+    "Coordinate",
+    "- **Timeline:** when each arrives, sets up and finishes\n- **Space:** bar and DJ positions that keep queues away from the dance floor\n- **Power:** enough sockets, and who brings extension leads\n- **Volume:** a level that lets guests talk at the bar\n- **Contact:** one person on the day who both can reach"
+   ],
+   [
+    "Booking",
+    "Book the bar first if your guest numbers drive the rest. See [how to book on FF Party](/stories/how-to-book-a-bartender-on-ff-party)."
+   ],
+   [
+    "FF Party",
+    "Booking a bartender and a DJ together in one booking is coming soon. Today FF Party covers the bar."
+   ]
+  ],
+  "cta": "Plan your party",
+  "related": [
+   "P01",
+   "P07"
+  ]
+ },
  "cash-bar-or-open-bar-for-a-wedding": {
   "id": "P14",
   "slug": "cash-bar-or-open-bar-for-a-wedding",
@@ -26874,6 +26909,41 @@ const ST18 = {
    "P16"
   ]
  },
+ "cocktail-masterclass-at-home": {
+  "id": "C09",
+  "slug": "cocktail-masterclass-at-home",
+  "site": "ffparty.uk",
+  "title": "How to book a cocktail masterclass at home",
+  "seo": "How to book a cocktail masterclass at home",
+  "date": "8 Nov 2026",
+  "iso": "2026-11-08",
+  "reviewed": "8 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Planning your party",
+  "img": "",
+  "min": 2,
+  "blurb": "This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.",
+  "intro": "*This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.*\n\n\nA masterclass is hands-on: your group learns to make drinks with an expert. Agree the group size, duration, what is supplied and what you need to provide.",
+  "body": [
+   [
+    "Agree",
+    "- **Group size and the number of drinks each person makes**\n- **Duration**\n- **Equipment:** who brings shakers, tools and glassware\n- **Ingredients and alcohol:** what is included\n- **Space:** tables and water nearby\n- **Alcohol-free options** for those who prefer them"
+   ],
+   [
+    "Hen parties and groups",
+    "See [cocktail bartender or masterclass for a hen party](/stories/cocktail-bartender-or-masterclass-hen-party)."
+   ],
+   [
+    "FF Party",
+    "Cocktail masterclasses appear in the FF Party offer. Check what is available for your date and group when you plan your event."
+   ]
+  ],
+  "cta": "Plan your party",
+  "related": [
+   "P09",
+   "P10"
+  ]
+ },
  "cocktail-party-ice-and-glassware": {
   "id": "P12",
   "slug": "cocktail-party-ice-and-glassware",
@@ -26913,6 +26983,45 @@ const ST18 = {
    "P06",
    "P13",
    "P15"
+  ]
+ },
+ "dj-or-live-musician-house-party": {
+  "id": "C05",
+  "slug": "dj-or-live-musician-house-party",
+  "site": "ffparty.uk",
+  "title": "DJ or live musician for a house party?",
+  "seo": "DJ or live musician for a house party?",
+  "date": "8 Nov 2026",
+  "iso": "2026-11-08",
+  "reviewed": "8 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Planning your party",
+  "img": "",
+  "min": 2,
+  "blurb": "This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.",
+  "intro": "*This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.*\n\n\nA DJ suits dancing and a long night; live musicians suit atmosphere and a more listening-led evening. Space, noise limits and equipment usually decide it.",
+  "body": [
+   [
+    "Compare",
+    "| | DJ | Live musicians |\n|---|---|---|\n| **Space** | One small setup | A band needs room |\n| **Noise** | Adjustable | Often louder to start |\n| **Range** | Any genre, all night | Fixed repertoire |\n| **Mood** | Dancing | Atmosphere |\n| **Power and kit** | Speakers and power | Amps, instruments, power |"
+   ],
+   [
+    "Check",
+    "- Your venue's noise rules and finish time\n- Power points and where the act will stand\n- How long you need music, and for which part of the evening"
+   ],
+   [
+    "Drinks",
+    "Whichever you choose, plan your bar around it. See [how to hire a bartender for a house party](/stories/how-to-hire-a-bartender-for-a-house-party)."
+   ],
+   [
+    "FF Party",
+    "FF Party currently focuses on bars and bartenders. Booking music through FF Party is coming soon."
+   ]
+  ],
+  "cta": "Plan your party",
+  "related": [
+   "P07",
+   "P06"
   ]
  },
  "dry-bar-hire-staffed-bar-full-bar-service": {
@@ -27095,6 +27204,41 @@ const ST18 = {
    "P19"
   ]
  },
+ "hire-photographer-birthday-party": {
+  "id": "C06",
+  "slug": "hire-photographer-birthday-party",
+  "site": "ffparty.uk",
+  "title": "How to hire a photographer for a birthday party",
+  "seo": "How to hire a photographer for a birthday party",
+  "date": "8 Nov 2026",
+  "iso": "2026-11-08",
+  "reviewed": "8 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Planning your party",
+  "img": "",
+  "min": 2,
+  "blurb": "This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.",
+  "intro": "*This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.*\n\n\nAgree what you want covered, how long, and when you will get the pictures. Ask to see a portfolio from a similar event.",
+  "body": [
+   [
+    "Agree",
+    "- **Coverage:** arrivals, speeches, the cake, group photos, candid shots\n- **Hours:** the photographer's start and end time\n- **Delivery:** how many edited photos and when\n- **Usage:** whether the photographer may share images, and whether you may print them\n- **Guests:** let guests know a photographer will be there"
+   ],
+   [
+    "Practical",
+    "Brief them on the schedule and tell your bartender and other suppliers they will be around. Allow time for a group shot before guests disperse."
+   ],
+   [
+    "FF Party",
+    "FF Party currently focuses on bars and bartenders. Booking a photographer through FF Party is coming soon."
+   ]
+  ],
+  "cta": "Plan your party",
+  "related": [
+   "P07",
+   "P06"
+  ]
+ },
  "how-far-in-advance-to-book-a-bartender": {
   "id": "P21",
   "slug": "how-far-in-advance-to-book-a-bartender",
@@ -27213,6 +27357,45 @@ const ST18 = {
    "P12",
    "P05",
    "P15"
+  ]
+ },
+ "how-many-waiters-for-a-private-party": {
+  "id": "C07",
+  "slug": "how-many-waiters-for-a-private-party",
+  "site": "ffparty.uk",
+  "title": "How many waiters do I need for a private party?",
+  "seo": "How many waiters do I need for a private party?",
+  "date": "8 Nov 2026",
+  "iso": "2026-11-08",
+  "reviewed": "8 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Planning your party",
+  "img": "",
+  "min": 2,
+  "blurb": "This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.",
+  "intro": "*This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.*\n\n\nThe number of waiters depends on your style of service. A seated meal needs more staff per guest than canapés and drinks. Treat any figure as a starting point and ask your supplier.",
+  "body": [
+   [
+    "Think about",
+    "- **Service style:** seated, buffet, canapés or drinks only\n- **Guest numbers**\n- **Length and number of courses**\n- **Venue layout:** distance from the kitchen, stairs, number of rooms"
+   ],
+   [
+    "Typical approach",
+    "Seated, multi-course service needs more staff for each guest than a buffet. Ask a catering or staffing supplier how many they recommend for your plan, since they know their own service."
+   ],
+   [
+    "Bar staff",
+    "For bar staff numbers, see [how many bartenders do I need](/stories/how-many-bartenders-do-i-need)."
+   ],
+   [
+    "FF Party",
+    "Event staff appear in the FF Party offer. Check what is available for your date when you plan your event."
+   ]
+  ],
+  "cta": "Plan your party",
+  "related": [
+   "P05",
+   "P07"
   ]
  },
  "how-much-does-it-cost-to-hire-a-bartender": {
@@ -27399,6 +27582,94 @@ const ST18 = {
    "P06",
    "P10",
    "P23"
+  ]
+ },
+ "how-to-hire-a-bartender-in-hertfordshire": {
+  "id": "C01",
+  "slug": "how-to-hire-a-bartender-in-hertfordshire",
+  "site": "ffparty.uk",
+  "title": "How to hire a bartender in Hertfordshire",
+  "seo": "How to hire a bartender in Hertfordshire",
+  "date": "8 Nov 2026",
+  "iso": "2026-11-08",
+  "reviewed": "8 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Local guides",
+  "img": "",
+  "min": 2,
+  "blurb": "This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.",
+  "intro": "*This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.*\n\n\nHiring a bartender in Hertfordshire follows the same steps as anywhere in England, with a few local points worth checking: your venue's rules, travel time for your supplier and how early popular dates fill.",
+  "body": [
+   [
+    "Check your venue first",
+    "Village halls, barns, hotels and private gardens each have different rules about outside bar staff, alcohol and finishing times. Ask the venue before you book anyone."
+   ],
+   [
+    "Travel and timing",
+    "Mobile bar companies often set an area they cover, and may add a travel charge beyond it. Ask where they travel from and how long they need to set up. Allow for traffic on the M25, A1(M) and M1 if your supplier is coming from outside the county."
+   ],
+   [
+    "Book early for popular dates",
+    "Summer weekends, December and wedding season fill first. See [how far in advance to book](/stories/how-far-in-advance-to-book-a-bartender)."
+   ],
+   [
+    "Questions to ask any supplier",
+    "- Do you cover my postcode, and is travel included?\n- What do you bring, and what must I provide? See [what to provide](/stories/what-to-provide-when-hiring-a-bartender).\n- How many bartenders do I need for my guest numbers? See [how many bartenders](/stories/how-many-bartenders-do-i-need)."
+   ],
+   [
+    "On FF Party",
+    "Tell us your date, place and guest numbers and the FireFlair team, who have worked in the events industry around the world, contact relevant bar companies and bartenders and bring back options. See [how to book on FF Party](/stories/how-to-book-a-bartender-on-ff-party)."
+   ]
+  ],
+  "cta": "Plan your party",
+  "related": [
+   "P01",
+   "P05",
+   "P21"
+  ]
+ },
+ "how-to-hire-a-cocktail-bartender-in-london": {
+  "id": "C02",
+  "slug": "how-to-hire-a-cocktail-bartender-in-london",
+  "site": "ffparty.uk",
+  "title": "How to hire a cocktail bartender in London",
+  "seo": "How to hire a cocktail bartender in London",
+  "date": "8 Nov 2026",
+  "iso": "2026-11-08",
+  "reviewed": "8 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Local guides",
+  "img": "",
+  "min": 2,
+  "blurb": "This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.",
+  "intro": "*This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.*\n\n\nIn London the hard part is often logistics, not finding a bartender. Access, parking, lifts and venue rules can decide whether a cocktail service runs smoothly.",
+  "body": [
+   [
+    "Logistics to settle early",
+    "- **Access.** Can equipment, ice and stock be brought in easily? A fourth-floor flat with no lift changes what a bartender can bring.\n- **Parking and loading.** Ask your supplier whether they need a bay or a permit near the venue.\n- **Space.** A cocktail bar needs a clear surface, water nearby and room to work.\n- **Timing.** Venue curfews and neighbours affect setup and finish times."
+   ],
+   [
+    "Equipment and ice",
+    "Cocktails use a lot of ice and glassware. See [ice and glassware for a cocktail party](/stories/cocktail-party-ice-and-glassware)."
+   ],
+   [
+    "Choosing the menu",
+    "A short menu is faster and more consistent. See [planning a cocktail menu](/stories/how-to-plan-a-cocktail-menu-for-a-party)."
+   ],
+   [
+    "Cocktail bartender or mobile bar?",
+    "Know the difference before you ask for quotes: [bartender hire or mobile bar hire](/stories/bartender-hire-vs-mobile-bar-hire)."
+   ],
+   [
+    "On FF Party",
+    "The FireFlair team contacts relevant bar companies and bartenders for your event and brings back options. Availability depends on your date and place."
+   ]
+  ],
+  "cta": "Plan your party",
+  "related": [
+   "P01",
+   "P10",
+   "P12"
   ]
  },
  "how-to-plan-a-cocktail-menu-for-a-party": {
@@ -27692,6 +27963,46 @@ const ST18 = {
    "B09",
    "B08",
    "B01"
+  ]
+ },
+ "christmas-party-bar-staffing": {
+  "id": "C11",
+  "slug": "christmas-party-bar-staffing",
+  "site": "ffstaff.uk",
+  "title": "How to staff a Christmas party bar",
+  "seo": "How to staff a Christmas party bar",
+  "date": "8 Nov 2026",
+  "iso": "2026-11-08",
+  "reviewed": "8 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Planning the shift",
+  "img": "",
+  "min": 2,
+  "blurb": "This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.",
+  "intro": "*This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.*\n\n\nDecember fills early, so book your bar staff as soon as your date is fixed, and plan for a heavier first hour than usual.",
+  "body": [
+   [
+    "Plan",
+    "- **Date:** the most popular nights go first\n- **Numbers:** guests, and how many arrive at once\n- **Menu:** a short list of drinks, with something warm if you like\n- **Roles:** bartenders, a barback and a lead. See [barback, bartender or bar manager](/stories/barback-bartender-or-bar-manager)\n- **Late finish:** agree end time and travel home"
+   ],
+   [
+    "Brief",
+    "Use [the brief template](/stories/temporary-bar-staff-brief-template)."
+   ],
+   [
+    "Corporate parties",
+    "See [staffing a launch or drinks reception](/stories/staffing-a-product-launch-or-drinks-reception)."
+   ],
+   [
+    "Book",
+    "Create a Shift Card. See [how to book bar staff on FF Staff](/stories/how-to-book-bar-staff-on-ff-staff)."
+   ]
+  ],
+  "cta": "Create a staffing request",
+  "related": [
+   "B09",
+   "B10",
+   "B07"
   ]
  },
  "ff-staff-booking-fees-refunds-replacements": {
@@ -28139,6 +28450,37 @@ const ST18 = {
    "B08"
   ]
  },
+ "signature-cocktail-services-on-ff-party": {
+  "id": "C12",
+  "slug": "signature-cocktail-services-on-ff-party",
+  "site": "ffstaff.uk",
+  "title": "How to sell a signature cocktail service through FF Party",
+  "seo": "How to sell a signature cocktail service through FF Party",
+  "date": "8 Nov 2026",
+  "iso": "2026-11-08",
+  "reviewed": "8 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Growing your bar business",
+  "img": "",
+  "min": 2,
+  "blurb": "This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.",
+  "intro": "*This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.*\n\n\nA signature cocktail service works best when it is specific: a named menu, clear quantities and a recipe you can repeat.",
+  "body": [
+   [
+    "Prepare now",
+    "- Choose a small set of signature drinks\n- Write recipes you can scale\n- Work out what you need for a given guest number\n- Decide what is included and what is not. See [writing a package](/stories/how-to-write-a-mobile-bar-package)"
+   ],
+   [
+    "Coming soon",
+    "Custom add-on services for FF Party, including signature cocktails, are being planned. Details of how they will work will be added here when they are released."
+   ]
+  ],
+  "cta": "Create a staffing request",
+  "related": [
+   "B16",
+   "B14"
+  ]
+ },
  "staffing-a-product-launch-or-drinks-reception": {
   "id": "B10",
   "slug": "staffing-a-product-launch-or-drinks-reception",
@@ -28215,6 +28557,50 @@ const ST18 = {
    "B10",
    "B01",
    "B08"
+  ]
+ },
+ "temporary-bar-staff-hertfordshire-guide": {
+  "id": "C04",
+  "slug": "temporary-bar-staff-hertfordshire-guide",
+  "site": "ffstaff.uk",
+  "title": "How to hire temporary bar staff in Hertfordshire",
+  "seo": "How to hire temporary bar staff in Hertfordshire",
+  "date": "8 Nov 2026",
+  "iso": "2026-11-08",
+  "reviewed": "8 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Local guides",
+  "img": "",
+  "min": 2,
+  "blurb": "This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.",
+  "intro": "*This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.*\n\n\nHiring temporary bar staff in Hertfordshire comes down to a clear brief, enough notice and the right mix of roles.",
+  "body": [
+   [
+    "Write the brief",
+    "Date, times, venue, number of guests, roles and menu. Use [the brief template](/stories/temporary-bar-staff-brief-template)."
+   ],
+   [
+    "Roles",
+    "Decide whether you need bartenders, barbacks or someone to lead. See [barback, bartender or bar manager](/stories/barback-bartender-or-bar-manager)."
+   ],
+   [
+    "Notice",
+    "More notice gives you more choice. For urgent requests, see [last-minute bar staff](/stories/how-to-find-last-minute-bar-staff)."
+   ],
+   [
+    "Travel",
+    "Staff may travel in from outside the county. Say where the venue is and whether there is parking, so professionals can decide."
+   ],
+   [
+    "Booking on FF Staff",
+    "Create a Shift Card for the role, and invite professionals. See [how to book bar staff on FF Staff](/stories/how-to-book-bar-staff-on-ff-staff) and [how the booking fee works](/stories/ff-staff-booking-fees-refunds-replacements)."
+   ]
+  ],
+  "cta": "Create a staffing request",
+  "related": [
+   "B01",
+   "B09",
+   "B07"
   ]
  },
  "temporary-bar-staff-hire-cost": {
@@ -28489,6 +28875,46 @@ const ST18 = {
    "T14"
   ]
  },
+ "freelance-bartender-work-london": {
+  "id": "C03",
+  "slug": "freelance-bartender-work-london",
+  "site": "ffteam.uk",
+  "title": "How to find freelance bartender work in London",
+  "seo": "How to find freelance bartender work in London",
+  "date": "8 Nov 2026",
+  "iso": "2026-11-08",
+  "reviewed": "8 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Local guides",
+  "img": "",
+  "min": 2,
+  "blurb": "This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.",
+  "intro": "*This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.*\n\n\nLondon has a large events and hospitality scene, so there are many routes to freelance bar work. The routes are the same as elsewhere in the UK; the difference is volume and competition.",
+  "body": [
+   [
+    "Routes to work",
+    "| Route | Notes |\n|---|---|\n| **Agencies and bar companies** | Many events companies hire freelancers for private and corporate events |\n| **Platforms** | Compare fees, commitment and payment handling: see [Indeed Flex alternatives](/stories/indeed-flex-alternatives-for-bartenders) |\n| **Venues** | Regular shifts and cover work |\n| **Your own network** | Other bartenders recommend people they trust |\n| **FF Team** | A free Profile Card people can find and invite |"
+   ],
+   [
+    "Stand out",
+    "- A complete profile with real experience. See [building a bartender profile](/stories/how-to-build-a-bartender-profile).\n- Reliability. See [your first event shift](/stories/first-event-bar-shift-checklist).\n- Clear rates. See [setting your rates](/stories/how-to-set-freelance-bartender-rates)."
+   ],
+   [
+    "Travel",
+    "London shifts can finish late. Plan your journey home before you accept. See [what to check before accepting a shift](/stories/what-to-check-before-accepting-a-bar-shift)."
+   ],
+   [
+    "Tax",
+    "See [the trading allowance](/stories/freelance-bartending-trading-allowance)."
+   ]
+  ],
+  "cta": "Create your profile",
+  "related": [
+   "T01",
+   "T02",
+   "T07"
+  ]
+ },
  "freelance-bartending-or-agency-bar-work": {
   "id": "T08",
   "slug": "freelance-bartending-or-agency-bar-work",
@@ -28696,6 +29122,41 @@ const ST18 = {
    "T01",
    "T11",
    "T14"
+  ]
+ },
+ "how-to-choose-a-bartender-training-course": {
+  "id": "C10",
+  "slug": "how-to-choose-a-bartender-training-course",
+  "site": "ffteam.uk",
+  "title": "Bartender training courses in the UK and how to choose one",
+  "seo": "Bartender training courses in the UK and how to choose one",
+  "date": "8 Nov 2026",
+  "iso": "2026-11-08",
+  "reviewed": "8 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Skills",
+  "img": "",
+  "min": 2,
+  "blurb": "This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.",
+  "intro": "*This guide covers what to plan and ask now. The FireFlair service described as coming soon is not yet available, and this page will be updated when it is.*\n\n\nChoose a course that gives you plenty of practice on a real bar, teaches the skills employers ask for and is honest about what it leads to. A certificate alone does not get you work.",
+  "body": [
+   [
+    "Questions to ask",
+    "- How many hours are hands-on?\n- What will I be able to make and serve at the end?\n- Is any qualification recognised, and by whom?\n- Do I get help finding work, and how many past students are working?\n- What is the full cost, including any kit?"
+   ],
+   [
+    "Practise elsewhere too",
+    "See [cocktail skills for event bartending](/stories/cocktail-skills-for-event-bartending)."
+   ],
+   [
+    "FireFlair's role",
+    "FireFlair does not currently offer a live training course. Career Support, with training and standards in one place, is coming soon. Whatever you choose, compare more than one provider."
+   ]
+  ],
+  "cta": "Create your profile",
+  "related": [
+   "T17",
+   "T10"
   ]
  },
  "how-to-find-freelance-bartending-work-uk": {
@@ -29001,7 +29462,7 @@ const ST18 = {
   ]
  }
 };
-const ST18_ORDER = {"party": ["how-to-book-a-bartender-on-ff-party", "how-much-does-it-cost-to-hire-a-bartender", "bartender-hire-vs-mobile-bar-hire", "how-to-compare-mobile-bar-companies", "how-many-bartenders-do-i-need", "what-to-provide-when-hiring-a-bartender", "how-to-hire-a-bartender-for-a-house-party", "how-to-plan-a-wedding-bar", "cocktail-bartender-or-masterclass-hen-party", "how-to-plan-a-cocktail-menu-for-a-party", "how-many-cocktails-for-a-party", "cocktail-party-ice-and-glassware", "dry-bar-hire-staffed-bar-full-bar-service", "cash-bar-or-open-bar-for-a-wedding", "supply-own-alcohol-hire-bartender", "bartender-mixologist-flair-bartender-difference", "add-to-event-alternatives-party-bar-hire", "ff-party-vs-add-to-event", "ff-party-vs-poptop", "ff-party-vs-togather", "how-far-in-advance-to-book-a-bartender", "ff-party-booking-deposits-and-refunds", "wedding", "cardsparty", "sites"], "team": ["how-to-find-freelance-bartending-work-uk", "how-to-build-a-bartender-profile", "how-to-accept-bookings-on-ff-team", "indeed-flex-alternatives-for-bartenders", "ff-team-vs-indeed-flex-for-bartenders", "ff-team-vs-brigad-for-bartenders", "coople-alternatives-uk-bar-staff", "freelance-bartending-or-agency-bar-work", "how-to-set-freelance-bartender-rates", "first-event-bar-shift-checklist", "how-to-write-a-bartender-cv", "weekend-bar-work-alongside-another-job", "what-to-check-before-accepting-a-bar-shift", "repeat-bookings-freelance-bartender", "how-to-build-a-bartender-network", "what-is-ff-team", "cocktail-skills-for-event-bartending", "freelance-bartending-trading-allowance"], "staff": ["how-to-book-bar-staff-on-ff-staff", "temporary-bar-staff-hire-cost", "bar-staffing-agency-or-freelance-platform", "indeed-flex-alternatives-for-hiring-bar-staff", "ff-staff-vs-indeed-flex-bar-staffing", "ff-staff-vs-brigad-hospitality-staffing", "how-to-find-last-minute-bar-staff", "how-to-rebook-bartenders", "temporary-bar-staff-brief-template", "staffing-a-product-launch-or-drinks-reception", "barback-bartender-or-bar-manager", "what-to-do-when-an-event-bartender-cancels", "hospitality-staffing-fees-explained", "how-to-get-mobile-bar-bookings", "add-to-event-and-bark-alternatives-bar-companies", "how-to-write-a-mobile-bar-package", "repeat-bookings-event-bar-business", "ff-staff-booking-fees-refunds-replacements"]};
+const ST18_ORDER = {"party": ["how-to-book-a-bartender-on-ff-party", "how-much-does-it-cost-to-hire-a-bartender", "bartender-hire-vs-mobile-bar-hire", "how-to-compare-mobile-bar-companies", "how-many-bartenders-do-i-need", "what-to-provide-when-hiring-a-bartender", "how-to-hire-a-bartender-for-a-house-party", "how-to-plan-a-wedding-bar", "cocktail-bartender-or-masterclass-hen-party", "how-to-plan-a-cocktail-menu-for-a-party", "how-many-cocktails-for-a-party", "cocktail-party-ice-and-glassware", "dry-bar-hire-staffed-bar-full-bar-service", "cash-bar-or-open-bar-for-a-wedding", "supply-own-alcohol-hire-bartender", "bartender-mixologist-flair-bartender-difference", "add-to-event-alternatives-party-bar-hire", "ff-party-vs-add-to-event", "ff-party-vs-poptop", "ff-party-vs-togather", "how-far-in-advance-to-book-a-bartender", "ff-party-booking-deposits-and-refunds", "how-to-hire-a-bartender-in-hertfordshire", "how-to-hire-a-cocktail-bartender-in-london", "dj-or-live-musician-house-party", "hire-photographer-birthday-party", "how-many-waiters-for-a-private-party", "book-bartender-and-dj-for-a-party", "cocktail-masterclass-at-home", "wedding", "cardsparty", "sites"], "team": ["how-to-find-freelance-bartending-work-uk", "how-to-build-a-bartender-profile", "how-to-accept-bookings-on-ff-team", "indeed-flex-alternatives-for-bartenders", "ff-team-vs-indeed-flex-for-bartenders", "ff-team-vs-brigad-for-bartenders", "coople-alternatives-uk-bar-staff", "freelance-bartending-or-agency-bar-work", "how-to-set-freelance-bartender-rates", "first-event-bar-shift-checklist", "how-to-write-a-bartender-cv", "weekend-bar-work-alongside-another-job", "what-to-check-before-accepting-a-bar-shift", "repeat-bookings-freelance-bartender", "how-to-build-a-bartender-network", "what-is-ff-team", "cocktail-skills-for-event-bartending", "freelance-bartending-trading-allowance", "freelance-bartender-work-london", "how-to-choose-a-bartender-training-course"], "staff": ["how-to-book-bar-staff-on-ff-staff", "temporary-bar-staff-hire-cost", "bar-staffing-agency-or-freelance-platform", "indeed-flex-alternatives-for-hiring-bar-staff", "ff-staff-vs-indeed-flex-bar-staffing", "ff-staff-vs-brigad-hospitality-staffing", "how-to-find-last-minute-bar-staff", "how-to-rebook-bartenders", "temporary-bar-staff-brief-template", "staffing-a-product-launch-or-drinks-reception", "barback-bartender-or-bar-manager", "what-to-do-when-an-event-bartender-cancels", "hospitality-staffing-fees-explained", "how-to-get-mobile-bar-bookings", "add-to-event-and-bark-alternatives-bar-companies", "how-to-write-a-mobile-bar-package", "repeat-bookings-event-bar-business", "ff-staff-booking-fees-refunds-replacements", "temporary-bar-staff-hertfordshire-guide", "christmas-party-bar-staffing", "signature-cocktail-services-on-ff-party"]};
 const ST18_IDS = {};
 Object.keys(ST18).forEach((s) => { JR17[s] = ST18[s]; ST18_IDS[ST18[s].id] = s; });
 Object.assign(JR17_ORDER, ST18_ORDER);
