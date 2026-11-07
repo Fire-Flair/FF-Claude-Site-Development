@@ -15,7 +15,6 @@ reviewed: 2026-11-07
 cta: {label: Create a staffing request, destination: FF Staff staffing request}
 related: [B13, B01, B18]
 sources: [S04, S05, S07]
-conditions: [approved VAT presentation for the booking connection fee]
 ---
 
 # How much does it cost to hire temporary bar staff?
@@ -27,7 +26,7 @@ The total is the professional's pay for the hours worked, plus any booking fee o
 - **Pay** for the shift, including setup and clear-down if you agree them.
 - **Hours**, because pay and many fees grow with time.
 - **Booking fee or agency charge**, and how it is calculated.
-- **VAT, employer costs or payroll**, depending on the arrangement.
+- **Employer costs or payroll**, depending on the arrangement.
 - **Travel, uniform or equipment**, if not included.
 
 ## How providers charge
@@ -38,13 +37,13 @@ FF Staff charges a fixed £10 booking connection fee for each Shift Card that is
 
 ## Examples (fictional, to show the arithmetic)
 
-| Booking | Pay | FF Staff fee | Total before VAT |
+| Booking | Pay | FF Staff fee | Total |
 |---|---|---|---|
 | One bartender, 6 hours at £20 an hour, one Shift Card | £120 | £10 | £130 |
 | One bartender, 10 hours at £20 an hour, one Shift Card | £200 | £10 | £210 |
 | Three bartenders on one Shift Card, 5 hours each at £20 an hour | £300 | £10 | £310 |
 | Three bartenders and one barback on two Shift Cards (barback at £15 an hour for 5 hours) | £375 | £20 | £395 |
 
-For comparison, the same three bartenders for 5 hours billed at £40 an hour each would be £600 before any other cost. Check each provider's current terms, because rates, VAT and minimums vary.
+For comparison, the same three bartenders for 5 hours billed at £40 an hour each would be £600 before any other cost. Check each provider's current terms, because rates and minimums vary.
 
 See also: [Hospitality staffing fees and booking charges explained](/stories/hospitality-staffing-fees-explained) and [how fees, refunds and replacements work on FF Staff](/stories/ff-staff-booking-fees-refunds-replacements).

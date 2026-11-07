@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.3.97 — 2026-11-07 — Stories: confirmed booking rules
+
+- FF Staff articles: the booking connection fee is taken before the Shift Card is sent and refunded if the card cannot be filled.
+- FF Party deposit article: no credits; cancelling at least 30 days before is refunded; changing the date up to 30 days before is the feature.
+- Drinks guidance: three cocktails and two alcohol-free drinks as a starting point, client's choice; up to ten cocktails handled in an event booking.
+- VAT wording removed from FireFlair's own fee text.
+- Comparison pages say "details" rather than "facts"; the FireFlair disclosure stays.
 ## v17.3.96 — 2026-11-07 — Ten real bar companies, unclaimed
 Artifact version 1794063064-b86b · file `fireflair-v17.3.96.html`
 

@@ -29,7 +29,7 @@ Estimate servings by thinking about how long the bar is open, how many guests wi
 1. **Guests who will want a cocktail.** Not everyone will, particularly if there is wine, beer or soft drinks.
 2. **Hours of service.** Most guests have a first drink quickly, then pace themselves.
 3. **Alcohol-free servings.** Include mocktails as real servings: some guests will not drink alcohol.
-4. **Spread across drinks.** Divide the servings across three to five drinks on your menu.
+4. **Spread across drinks.** Divide the servings across your menu. Three cocktails and two alcohol-free drinks is a good starting point, and the choice is yours.
 
 ## Worked example (illustrative)
 

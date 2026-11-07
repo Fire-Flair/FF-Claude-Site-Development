@@ -16,7 +16,7 @@ checked: 2026-11-07
 cta: {label: Create your profile, destination: FF Team profile creation}
 related: [T04, T08, T09]
 sources: [S01, S02, S03]
-note: Published by FireFlair, which runs FF Team. Indeed Flex facts come from its public pages, checked 7 November 2026.
+note: Published by FireFlair, which runs FF Team. Details about Indeed Flex come from its public pages, checked 7 November 2026.
 ---
 
 # FF Team vs Indeed Flex for bartenders

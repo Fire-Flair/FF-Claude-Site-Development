@@ -35,7 +35,7 @@ For a house party, tell your bartender about the space, the access and the guest
 1. **Access.** Where do they park and how do they carry things in?
 2. **Setup time.** Bartenders usually arrive before guests so the bar is ready.
 3. **Supplies.** Who brings alcohol, ingredients, ice and glassware? See [what to provide](/stories/what-to-provide-when-hiring-a-bartender).
-4. **Menu.** Three to five drinks, including alcohol-free options. See [planning a cocktail menu](/stories/how-to-plan-a-cocktail-menu-for-a-party).
+4. **Menu.** Three cocktails and two alcohol-free drinks is a good starting point, and it is your choice. See [planning a cocktail menu](/stories/how-to-plan-a-cocktail-menu-for-a-party).
 5. **Finish.** When service stops and who clears glasses.
 
 ## Garden parties

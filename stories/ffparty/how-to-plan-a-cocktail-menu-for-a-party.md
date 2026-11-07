@@ -21,7 +21,7 @@ conditions: [state whether the FF Party basket records preferences, quantities, 
 
 # How to plan a cocktail menu for a party
 
-Pick a short list that covers the main tastes, keeps the bartender's work manageable and includes good alcohol-free choices. Three to five different drinks is the sweet spot. More choice slows service for everyone.
+Pick a short list that covers the main tastes, keeps the bartender's work manageable and includes good alcohol-free choices. Three cocktails and two alcohol-free drinks is a good starting point, but the menu is up to you. Your FF Party booking handles up to ten cocktails, with recipes provided, and a larger menu is usually a job for a bar company. More choice slows service for everyone.
 
 ## A balanced list
 

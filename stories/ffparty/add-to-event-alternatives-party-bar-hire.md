@@ -16,12 +16,12 @@ checked: 2026-11-07
 cta: {label: Plan your party, destination: FF Party service selection}
 related: [P04, P18, P19, P20]
 sources: [S18, S19, S20, S21, S22, S23, S24, S25, S26, S28, S29]
-note: Published by FireFlair. Facts about other services come from their public pages as checked on 7 November 2026; recheck before publication.
+note: Published by FireFlair. Details about other services come from their public pages as checked on 7 November 2026; recheck before publication.
 ---
 
 # Add to Event alternatives for party bar hire
 
-This page is published by FireFlair, which runs FF Party. Facts about other services come from their own public pages, checked on 7 November 2026. Each route below can suit a different host, and what a page does not mention is not evidence that a service lacks it.
+This page is published by FireFlair, which runs FF Party. Details about other services come from their own public pages, checked on 7 November 2026. Each route below can suit a different host, and what a page does not mention is not evidence that a service lacks it.
 
 ## The main routes
 

@@ -16,7 +16,7 @@ checked: 2026-11-07
 cta: {label: Create a staffing request, destination: FF Staff staffing request}
 related: [B01, B02, B07, B09, B11]
 sources: [S01, S04, S07, S11, S12, S13, S14, S16, S17, S38]
-note: Published by FireFlair, which runs FF Staff. Facts about other services come from their public pages, checked 7 November 2026.
+note: Published by FireFlair, which runs FF Staff. Details about other services come from their public pages, checked 7 November 2026.
 ---
 
 # Bar staffing agency or freelance bartender platform

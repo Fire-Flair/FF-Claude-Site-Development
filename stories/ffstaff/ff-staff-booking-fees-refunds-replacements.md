@@ -15,12 +15,12 @@ reviewed: 2026-11-07
 cta: {label: Create a staffing request, destination: FF Staff staffing request}
 related: [B01, B02, B07, B12]
 sources: []
-conditions: [approved VAT presentation; confirm when the fee is taken (the prototype currently takes it before invitations); partly filled card wording]
+conditions: [partly filled card wording]
 ---
 
 # How FF Staff booking fees, refunds and replacements work
 
-FF Staff has one fee for businesses: a £10 booking connection fee for each Shift Card that is filled. It is not £10 per person and not £10 per hour, so a one-hour shift and a ten-hour shift carry the same fee. The professional's pay is separate and agreed with them. Check the current booking terms for the exact conditions.
+FF Staff has one fee for businesses: a £10 booking connection fee for each Shift Card that is filled. It is taken when you send the card and refunded if the card cannot be filled. It is not £10 per person and not £10 per hour, so a one-hour shift and a ten-hour shift carry the same fee. The professional's pay is separate and agreed with them. Check the current booking terms for the exact conditions.
 
 ## What you pay
 
@@ -34,11 +34,11 @@ A Shift Card with several positions carries one fee. Separate Shift Cards for di
 
 ## If a Shift Card is not filled
 
-The fee is for a filled card, so a card that nobody fills is not charged. Before you confirm anyone you can choose Cancel request, and if the time to choose runs out without a confirmation, nothing is owed for that card.
+The booking connection fee is taken before your Shift Card is sent out, so that the request goes to professionals. If the card cannot be filled, the fee is refunded. Before you confirm anyone you can also choose Cancel request, and the fee is refunded.
 
 ## Several cards and part-filled cards
 
-Each Shift Card is treated separately. You pay for the cards that are filled and not for those that are not. A card that asks for several people where only some are found is reviewed individually. There is no published per-person formula.
+Each Shift Card is treated separately. You keep the fee only for the cards that are filled. A card that asks for several people where only some are found is reviewed individually. There is no published per-person formula.
 
 ## After you and the professional have both confirmed
 

@@ -15,7 +15,7 @@ reviewed: 2026-11-07
 cta: {label: Plan your party, destination: FF Party event planner}
 related: [P01, P02, P21]
 sources: []
-conditions: [approved VAT presentation; Alex to confirm the 30-day rule wording; partly staffed events decided individually]
+conditions: [partly staffed events decided individually]
 ---
 
 # How FF Party booking deposits and refunds work
@@ -30,6 +30,7 @@ The £50 deposit secures your booking request and starts the search for your peo
 
 - **We cannot get the staff for your event.** The deposit is refunded in full.
 - **You cancel before anyone is confirmed.** Use "Cancel request & refund".
+- **You cancel at least 30 days before your event.** The deposit is refunded.
 - **Only part of your event is staffed.** We look at it with you and decide individually.
 - **Your bartender cancels.** We reopen the position and look for a replacement, with no second matching fee. Replacements depend on availability.
 
@@ -39,7 +40,7 @@ You can book now and change the date later, as long as it is at least 30 days be
 
 ## Once your team is confirmed
 
-When your staff are confirmed, they hold your date. If you cancel within 30 days of the event after that, the deposit is not refunded, which protects the professionals who have kept the date free for you. If you need to cancel earlier, your deposit can be used towards your next event.
+When your staff are confirmed, they hold your date. If you cancel within 30 days of the event after that, the deposit is not refunded, which protects the professionals who have kept the date free for you. If you cancel earlier than that, at least 30 days before the event, your deposit is refunded.
 
 ## Where is the record?
 

@@ -63,3 +63,12 @@ Open for Alex: ratio bands (P05) and drinks-per-guest figure (P10) need an exper
 Deferred: C01–C12 conditional candidates. Community-question articles (up to six) not yet written.
 
 Tested (headless, 390px): Team 18 cards, Staff 18 cards, Party 25 cards (22 plus 3 legacy); article opens, related link, Esc, CTA closes the reader and starts the right flow. No page errors.
+
+## Decisions confirmed by Alex (v17.3.96)
+
+- FF Staff fee is taken before the Shift Card is sent and refunded if the card cannot be filled.
+- FF Party: no credits. Cancelling at least 30 days before the event is refunded; cancelling within 30 days once staff are confirmed is not. Changing the date up to 30 days before is the feature to promote.
+- Menu: three cocktails and two alcohol-free drinks as a starting point, client's choice; the event booking handles up to ten cocktails with recipes; larger menus suit a bar company.
+- VAT is not mentioned while the business is below the threshold. Professionals are responsible for their own tax and legal obligations. A tax update will be made when VAT starts.
+- Comparison pages keep the "published by FireFlair" disclosure and checked dates; the word "facts" is avoided.
+- Still open: conditional candidates C01–C12 and community-question articles (need source material from Alex).

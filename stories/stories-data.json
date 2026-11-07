@@ -12,8 +12,8 @@
   "cat": "Choosing a service",
   "img": "",
   "min": 2,
-  "blurb": "This page is published by FireFlair, which runs FF Party. Facts about other services come from their own public pages, checked on 7 November 2026. Each route below can suit a different...",
-  "intro": "This page is published by FireFlair, which runs FF Party. Facts about other services come from their own public pages, checked on 7 November 2026. Each route below can suit a different host, and what a page does not mention is not evidence that a service lacks it.",
+  "blurb": "This page is published by FireFlair, which runs FF Party. Details about other services come from their own public pages, checked on 7 November 2026. Each route below can suit a different...",
+  "intro": "This page is published by FireFlair, which runs FF Party. Details about other services come from their own public pages, checked on 7 November 2026. Each route below can suit a different host, and what a page does not mention is not evidence that a service lacks it.",
   "body": [
    [
     "The main routes",
@@ -293,7 +293,7 @@
    ],
    [
     "When it is refunded",
-    "- **We cannot get the staff for your event.** The deposit is refunded in full.\n- **You cancel before anyone is confirmed.** Use \"Cancel request & refund\".\n- **Only part of your event is staffed.** We look at it with you and decide individually.\n- **Your bartender cancels.** We reopen the position and look for a replacement, with no second matching fee. Replacements depend on availability."
+    "- **We cannot get the staff for your event.** The deposit is refunded in full.\n- **You cancel before anyone is confirmed.** Use \"Cancel request & refund\".\n- **You cancel at least 30 days before your event.** The deposit is refunded.\n- **Only part of your event is staffed.** We look at it with you and decide individually.\n- **Your bartender cancels.** We reopen the position and look for a replacement, with no second matching fee. Replacements depend on availability."
    ],
    [
     "Not sure of the date?",
@@ -301,7 +301,7 @@
    ],
    [
     "Once your team is confirmed",
-    "When your staff are confirmed, they hold your date. If you cancel within 30 days of the event after that, the deposit is not refunded, which protects the professionals who have kept the date free for you. If you need to cancel earlier, your deposit can be used towards your next event."
+    "When your staff are confirmed, they hold your date. If you cancel within 30 days of the event after that, the deposit is not refunded, which protects the professionals who have kept the date free for you. If you cancel earlier than that, at least 30 days before the event, your deposit is refunded."
    ],
    [
     "Where is the record?",
@@ -511,7 +511,7 @@
   "body": [
    [
     "The method",
-    "1. **Guests who will want a cocktail.** Not everyone will, particularly if there is wine, beer or soft drinks.\n2. **Hours of service.** Most guests have a first drink quickly, then pace themselves.\n3. **Alcohol-free servings.** Include mocktails as real servings: some guests will not drink alcohol.\n4. **Spread across drinks.** Divide the servings across three to five drinks on your menu."
+    "1. **Guests who will want a cocktail.** Not everyone will, particularly if there is wine, beer or soft drinks.\n2. **Hours of service.** Most guests have a first drink quickly, then pace themselves.\n3. **Alcohol-free servings.** Include mocktails as real servings: some guests will not drink alcohol.\n4. **Spread across drinks.** Divide the servings across your menu. Three cocktails and two alcohol-free drinks is a good starting point, and the choice is yours."
    ],
    [
     "Worked example (illustrative)",
@@ -696,7 +696,7 @@
    ],
    [
     "Questions to settle with your bartender",
-    "1. **Access.** Where do they park and how do they carry things in?\n2. **Setup time.** Bartenders usually arrive before guests so the bar is ready.\n3. **Supplies.** Who brings alcohol, ingredients, ice and glassware? See [what to provide](/stories/what-to-provide-when-hiring-a-bartender).\n4. **Menu.** Three to five drinks, including alcohol-free options. See [planning a cocktail menu](/stories/how-to-plan-a-cocktail-menu-for-a-party).\n5. **Finish.** When service stops and who clears glasses."
+    "1. **Access.** Where do they park and how do they carry things in?\n2. **Setup time.** Bartenders usually arrive before guests so the bar is ready.\n3. **Supplies.** Who brings alcohol, ingredients, ice and glassware? See [what to provide](/stories/what-to-provide-when-hiring-a-bartender).\n4. **Menu.** Three cocktails and two alcohol-free drinks is a good starting point, and it is your choice. See [planning a cocktail menu](/stories/how-to-plan-a-cocktail-menu-for-a-party).\n5. **Finish.** When service stops and who clears glasses."
    ],
    [
     "Garden parties",
@@ -733,8 +733,8 @@
   "cat": "Drinks",
   "img": "",
   "min": 2,
-  "blurb": "Pick a short list that covers the main tastes, keeps the bartender's work manageable and includes good alcohol-free choices. Three to five different drinks is the sweet spot. More choice...",
-  "intro": "Pick a short list that covers the main tastes, keeps the bartender's work manageable and includes good alcohol-free choices. Three to five different drinks is the sweet spot. More choice slows service for everyone.",
+  "blurb": "Pick a short list that covers the main tastes, keeps the bartender's work manageable and includes good alcohol-free choices. Three cocktails and two alcohol-free drinks is a good...",
+  "intro": "Pick a short list that covers the main tastes, keeps the bartender's work manageable and includes good alcohol-free choices. Three cocktails and two alcohol-free drinks is a good starting point, but the menu is up to you. Your FF Party booking handles up to ten cocktails, with recipes provided, and a larger menu is usually a job for a bar company. More choice slows service for everyone.",
   "body": [
    [
     "A balanced list",
@@ -1026,8 +1026,8 @@
   "cat": "Booking terms",
   "img": "",
   "min": 2,
-  "blurb": "FF Staff has one fee for businesses: a £10 booking connection fee for each Shift Card that is filled. It is not £10 per person and not £10 per hour, so a one-hour shift and a ten-hour...",
-  "intro": "FF Staff has one fee for businesses: a £10 booking connection fee for each Shift Card that is filled. It is not £10 per person and not £10 per hour, so a one-hour shift and a ten-hour shift carry the same fee. The professional's pay is separate and agreed with them. Check the current booking terms for the exact conditions.",
+  "blurb": "FF Staff has one fee for businesses: a £10 booking connection fee for each Shift Card that is filled. It is taken when you send the card and refunded if the card cannot be filled. It is...",
+  "intro": "FF Staff has one fee for businesses: a £10 booking connection fee for each Shift Card that is filled. It is taken when you send the card and refunded if the card cannot be filled. It is not £10 per person and not £10 per hour, so a one-hour shift and a ten-hour shift carry the same fee. The professional's pay is separate and agreed with them. Check the current booking terms for the exact conditions.",
   "body": [
    [
     "What you pay",
@@ -1035,11 +1035,11 @@
    ],
    [
     "If a Shift Card is not filled",
-    "The fee is for a filled card, so a card that nobody fills is not charged. Before you confirm anyone you can choose Cancel request, and if the time to choose runs out without a confirmation, nothing is owed for that card."
+    "The booking connection fee is taken before your Shift Card is sent out, so that the request goes to professionals. If the card cannot be filled, the fee is refunded. Before you confirm anyone you can also choose Cancel request, and the fee is refunded."
    ],
    [
     "Several cards and part-filled cards",
-    "Each Shift Card is treated separately. You pay for the cards that are filled and not for those that are not. A card that asks for several people where only some are found is reviewed individually. There is no published per-person formula."
+    "Each Shift Card is treated separately. You keep the fee only for the cards that are filled. A card that asks for several people where only some are found is reviewed individually. There is no published per-person formula."
    ],
    [
     "After you and the professional have both confirmed",
@@ -1554,7 +1554,7 @@
   "body": [
    [
     "The cost components",
-    "- **Pay** for the shift, including setup and clear-down if you agree them.\n- **Hours**, because pay and many fees grow with time.\n- **Booking fee or agency charge**, and how it is calculated.\n- **VAT, employer costs or payroll**, depending on the arrangement.\n- **Travel, uniform or equipment**, if not included."
+    "- **Pay** for the shift, including setup and clear-down if you agree them.\n- **Hours**, because pay and many fees grow with time.\n- **Booking fee or agency charge**, and how it is calculated.\n- **Employer costs or payroll**, depending on the arrangement.\n- **Travel, uniform or equipment**, if not included."
    ],
    [
     "How providers charge",
@@ -1562,7 +1562,7 @@
    ],
    [
     "Examples (fictional, to show the arithmetic)",
-    "| Booking | Pay | FF Staff fee | Total before VAT |\n|---|---|---|---|\n| One bartender, 6 hours at £20 an hour, one Shift Card | £120 | £10 | £130 |\n| One bartender, 10 hours at £20 an hour, one Shift Card | £200 | £10 | £210 |\n| Three bartenders on one Shift Card, 5 hours each at £20 an hour | £300 | £10 | £310 |\n| Three bartenders and one barback on two Shift Cards (barback at £15 an hour for 5 hours) | £375 | £20 | £395 |\n\nFor comparison, the same three bartenders for 5 hours billed at £40 an hour each would be £600 before any other cost. Check each provider's current terms, because rates, VAT and minimums vary.\n\nSee also: [Hospitality staffing fees and booking charges explained](/stories/hospitality-staffing-fees-explained) and [how fees, refunds and replacements work on FF Staff](/stories/ff-staff-booking-fees-refunds-replacements)."
+    "| Booking | Pay | FF Staff fee | Total |\n|---|---|---|---|\n| One bartender, 6 hours at £20 an hour, one Shift Card | £120 | £10 | £130 |\n| One bartender, 10 hours at £20 an hour, one Shift Card | £200 | £10 | £210 |\n| Three bartenders on one Shift Card, 5 hours each at £20 an hour | £300 | £10 | £310 |\n| Three bartenders and one barback on two Shift Cards (barback at £15 an hour for 5 hours) | £375 | £20 | £395 |\n\nFor comparison, the same three bartenders for 5 hours billed at £40 an hour each would be £600 before any other cost. Check each provider's current terms, because rates and minimums vary.\n\nSee also: [Hospitality staffing fees and booking charges explained](/stories/hospitality-staffing-fees-explained) and [how fees, refunds and replacements work on FF Staff](/stories/ff-staff-booking-fees-refunds-replacements)."
    ]
   ],
   "cta": "Create a staffing request",

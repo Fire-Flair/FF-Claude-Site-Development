@@ -16,7 +16,7 @@ checked: 2026-11-07
 cta: {label: Create your profile, destination: FF Team profile creation}
 related: [T05, T06, T01, T08]
 sources: [S01, S04, S07, S08, S10, S11, S12, S15, S16]
-note: Published by FireFlair, which runs FF Team. Facts about other services come from their public pages, checked 7 November 2026. Missing information on a page does not prove a service lacks a feature.
+note: Published by FireFlair, which runs FF Team. Details about other services come from their public pages, checked 7 November 2026. Missing information on a page does not prove a service lacks a feature.
 ---
 
 # Indeed Flex alternatives for bartenders in the UK
