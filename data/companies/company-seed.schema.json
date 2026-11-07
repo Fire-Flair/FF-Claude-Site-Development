@@ -3,38 +3,161 @@
   "title": "FireFlair Company Card seed",
   "description": "One draft Company Card built from public information. Imported as a DRAFT through the content API; never published or bookable until claimed.",
   "type": "object",
-  "required": ["slug", "name", "kind", "areas", "summary", "services", "status", "source"],
+  "required": [
+    "slug",
+    "name",
+    "kind",
+    "areas",
+    "summary",
+    "services",
+    "status",
+    "source"
+  ],
   "properties": {
-    "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
-    "tag": { "type": "string", "maxLength": 8 },
-    "name": { "type": "string", "maxLength": 60 },
-    "legalName": { "type": ["string", "null"] },
-    "companyNumber": { "type": ["string", "null"], "description": "Companies House number, public register only" },
-    "kind": { "type": "string", "maxLength": 70 },
-    "base": { "type": "string" },
-    "areas": { "type": "array", "items": { "type": "string" } },
-    "summary": { "type": "string", "description": "Written fresh from facts. Never copied from the company's site." },
-    "services": { "type": "array", "items": { "type": "string" } },
-    "eventTypes": { "type": "array", "items": { "type": "string" } },
-    "scale": { "type": "array", "items": { "type": "string" } },
-    "facts": { "type": "array", "items": { "type": "string" } },
-    "website": { "type": ["string", "null"], "format": "uri" },
-    "social": { "type": "object", "additionalProperties": { "type": "string" } },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "tag": {
+      "type": "string",
+      "maxLength": 8
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 60
+    },
+    "legalName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "companyNumber": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Companies House number, public register only"
+    },
+    "kind": {
+      "type": "string",
+      "maxLength": 70
+    },
+    "base": {
+      "type": "string"
+    },
+    "areas": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "summary": {
+      "type": "string",
+      "description": "Written fresh from facts. Never copied from the company's site."
+    },
+    "services": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "eventTypes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "scale": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "facts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "website": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uri"
+    },
+    "social": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
     "images": {
       "type": "object",
       "properties": {
-        "logo": { "type": ["string", "null"] },
-        "photos": { "type": "array", "items": { "type": "string" } },
-        "permission": { "enum": ["pending", "granted", "declined"] }
+        "logo": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "photos": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "permission": {
+          "enum": [
+            "pending",
+            "granted",
+            "declined"
+          ]
+        },
+        "logoBg": {
+          "enum": [
+            "dark",
+            "light"
+          ]
+        },
+        "logoWide": {
+          "type": "boolean"
+        }
       },
       "description": "Images are added only when permission is granted, or by the company on claiming."
     },
-    "status": { "enum": ["unclaimed", "claimed"] },
+    "status": {
+      "enum": [
+        "unclaimed",
+        "claimed"
+      ]
+    },
     "source": {
       "type": "object",
-      "required": ["urls", "retrievedAt"],
-      "properties": { "urls": { "type": "array", "items": { "type": "string" } }, "retrievedAt": { "type": "string", "format": "date" } }
+      "required": [
+        "urls",
+        "retrievedAt"
+      ],
+      "properties": {
+        "urls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "retrievedAt": {
+          "type": "string",
+          "format": "date"
+        }
+      }
     },
-    "verifiedBy": { "type": ["string", "null"], "description": "Who checked the draft before it was shown" }
+    "verifiedBy": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Who checked the draft before it was shown"
+    }
   }
 }

@@ -1,12 +1,12 @@
 # Company seeds
 
-`seed-companies.json` holds ten real UK event bar companies as draft Company Cards. The prototype loads this file as data, and the developers can import the same file into the real site through the content API.
+`seed-companies.json` holds 30 real UK event bar companies as draft Company Cards. The prototype loads this file as data, and the developers can import the same file into the real site through the content API.
 
 Rules for every record:
 
-- **Unclaimed.** Shown as "Not yet claimed". Not offered for booking, no packages, no reviews, no Ask or Review buttons until the company claims the profile and verifies it.
+- **Unclaimed.** The card carries no FireFlair logo or coin until the claim is verified; the page shows "Not yet claimed". Not offered for booking, no packages, no reviews, no Ask or Review buttons until the company claims the profile and verifies it.
 - **Facts only.** The summary is written fresh from facts on the company's own site or a public listing. Nothing is copied word for word.
-- **No images yet.** Logo and photos stay empty until the company grants permission or supplies them (`images.permission`). The card shows a monogram.
+- **Images.** `images.logo`, `logoBg` ("dark" or "light" backing), `logoWide`, and `photos` link to the company's own site, used with the owners' permission (`images.permission`). The prototype hotlinks them and falls back to a monogram if one fails to load. Developers should fetch and host copies; companies can replace or delete them once they claim. Records with no images yet show a monogram.
 - **No prices, no personal contact details, no individuals' names.** Business contact details are collected separately for outreach, not stored in the card.
 - **Source kept.** `source.urls` and `retrievedAt` record where each draft came from, so it can be re-checked.
 - **Registered details** (`legalName`, `companyNumber`) come from the company's own site and are for matching against Companies House when verifying a claim.
