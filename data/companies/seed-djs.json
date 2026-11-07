@@ -1,8 +1,75 @@
 {
   "schemaVersion": 1,
-  "note": "30 real UK dj companies as unclaimed draft Company Cards. Same rules as seed-companies.json; see README.md.",
+  "note": "Storm DJs (primary DJ partner) plus 30 real UK DJ companies as unclaimed draft Company Cards. Same rules as seed-companies.json; see README.md.",
   "category": "dj",
   "companies": [
+    {
+      "slug": "storm-djs",
+      "tag": "STORM",
+      "name": "Storm DJs",
+      "kind": "DJ agency",
+      "base": "London",
+      "areas": [
+        "London",
+        "UK-wide"
+      ],
+      "summary": "A London DJ agency, established in 2011, that matches DJs, saxophonists and live musicians to weddings, private parties, corporate events and venues across the UK and abroad. FireFlair's primary DJ partner: their Starter Party, Signature Set and Unforgettable Night packages are bookable on FF Party.",
+      "services": [
+        "Wedding DJs",
+        "Party DJs",
+        "Corporate DJs",
+        "Hotel and venue residencies",
+        "Live saxophonists and musicians",
+        "Sound, lighting and photo booth packages"
+      ],
+      "eventTypes": [
+        "Weddings",
+        "Private parties",
+        "Birthdays",
+        "Corporate events",
+        "Hotels and venues"
+      ],
+      "scale": [
+        "Small",
+        "Medium",
+        "Large"
+      ],
+      "facts": [
+        "Established 2011",
+        "203 published artists",
+        "UK-wide coverage",
+        "Over 3,200 past customers"
+      ],
+      "website": "https://storm-djs.com",
+      "social": {},
+      "images": {
+        "permission": "granted",
+        "photos": [
+          "https://storm-djs.com/media/123e8ddd-ec6e-422b-a318-87141d3c51f1",
+          "https://storm-djs.com/wp-content/uploads/2019/03/storm-djs-wedding-chris-taylor12.jpg",
+          "https://storm-djs.com/wp-content/uploads/2017/01/paul-dove-saxophonist-with-dj-storm.jpg",
+          "https://storm-djs.com/wp-content/uploads/2012/07/Storm09_Intro_012.jpg"
+        ]
+      },
+      "status": "partner",
+      "source": {
+        "urls": [
+          "https://storm-djs.com/about",
+          "https://storm-djs.com/best-dj-packages"
+        ],
+        "retrievedAt": "2026-11-07"
+      },
+      "verifiedBy": null,
+      "locations": [
+        {
+          "label": "London",
+          "lat": 51.5074,
+          "lng": -0.1278,
+          "approx": true
+        }
+      ],
+      "category": "dj"
+    },
     {
       "slug": "manchester-djs",
       "tag": "MANCH",

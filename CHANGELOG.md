@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.3.107
+
+- Storm DJs is now the primary DJ company: a Company Card at the head of the DJs, on the map and in Companies > Entertainment on all three sites, with photos from their own website (used with the owner's agreement). Also added to data/companies/seed-djs.json.
+- The three DJ packages (Starter Party, Signature Set, Unforgettable Night) are listed as Storm DJs packages, each with a Storm DJs photo on its card, linked to the company id co_storm-djs.
+- Only one DJ package can be in a booking: choosing another swaps it in, from both the card and the details sheet.
+- Photos are linked from storm-djs.com for now; the developers should copy them into the photo library and host them on FireFlair. Check crops so no heads are cut.
+
 ## v17.3.106
 
 - Browse under the map is now a double dropdown on FF Team, FF Staff and FF Party: People or Companies, then a type. People types are the existing professions. Company types are Bar, Entertainment, Photographers, Caterers and Services (no Front of House).
