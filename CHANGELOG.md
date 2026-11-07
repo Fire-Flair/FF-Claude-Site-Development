@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.3.98 — 2026-11-07 — 30 real bar companies, logos
+Artifact version 1794064226-f709 · file `fireflair-v17.3.98.html`
+
+- Prototype now has only real bar companies: the demo companies (Loft, Saffron, Northbank) are gone. Vooshka stays, plus 30 real UK event bar companies as unclaimed Company Cards (seed in data/companies/seed-companies.json).
+- Unclaimed cards show no FireFlair logo, coin or wordmark; they get them once claimed and verified. The "Not yet claimed" pill is removed.
+- Logos and photos from each company's own site (used with the owners' permission) appear on the cards and page hero. They are hotlinked in the prototype with a monogram fallback; developers should fetch and host copies.
+- 20 new companies added from event-hire listings (PopTop, Add to Event) and company sites; their images and details still need checking.
+- Venue, event and shift sample text still mentions "The Loft Lounge" and "Northbank Studio"; those are sample venues, not companies.
+- Merged onto v17.3.97 (Stories rules).
+
 ## v17.3.97 — 2026-11-07 — Stories: confirmed booking rules
 
 - FF Staff articles: the booking connection fee is taken before the Shift Card is sent and refunded if the card cannot be filled.
