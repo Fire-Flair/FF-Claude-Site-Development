@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.3.104 — 2026-11-07 — Livelier FireFlair Introductions
+Artifact version 1794075783-5707 · file `fireflair-v17.3.104.html`
+
+- FireFlair Introductions now read livelier: they open "Name is a talented <profession>, available for hire in <area>", use natural booking phrases for search, and weave in skills, languages and interests instead of listing fields. "Listed work areas" is gone.
+- The AI prompt (FI_PROMPT) was rewritten for an energetic agency-profile voice, with allowed warm descriptors, no superlatives or rank claims, a gentle booking line only when booking requests are live, and search-friendly SEO title and description.
+- The fallback sentence and the sample-people preview use the same wording. Validation is unchanged: only confirmed public facts, no invented places, prices or availability dates.
+
 ## v17.3.103 — 2026-11-07 — FireFlair Introductions on profiles
 Artifact version 1794073326-419c · file `fireflair-v17.3.103.html`
 
