@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.93 — 2026-11-07 — FF Business renamed FF Staff
+Artifact version 1794048455-20d5 · file `fireflair-v17.3.93.html`
+
+- FF Business is renamed back to FF Staff everywhere: site switcher, account menu, landing cards, headings, notices, help text, Staffing Service label and version tags.
+- Web address shown for the site is now ffstaff.uk (was ffbusiness.uk).
+- The internal page anchor id is now ff-staff to match. The role value was already staff.
+- README and REVIEW notes updated to say FF Staff.
+
 ## v17.3.92 — 2026-11-06 — Confirmed bookings, host and company card
 Artifact version 1794008503-2e22 · file `fireflair-v17.3.92.html`
 
