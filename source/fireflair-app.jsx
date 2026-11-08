@@ -4550,6 +4550,7 @@ const initialState = {
   /* Authentication — real app state, written only by AUTH_ADAPTER results.
      The nav reads auth.status and nothing else. */
   auth: { status: "signedOut", tag: null, method: null },
+  vipClaims: [],
   profile: {
     name: "", photo: null, theme: "ivory", tier: "standard", level: 3,
     hasCar: false, live: false, cardShade: "slate",
@@ -4827,7 +4828,7 @@ function reducer(s, a) {
           ? { ...e, state: "expired", history: [...e.history, { state: "expired", at: now }] } : e),
       };
     }
-    case "COMPANY_SAVE": return { ...s, company: { ...(s.company || {}), ...a.company } };
+    case "COMPANY_SAVE": return vipClaim20({ ...s, company: { ...(s.company || {}), ...a.company } }, a.company);
     /* A business signs in with its company name (its page address) and a
        verified phone number: the business equivalent of an FF Tag. */
     case "COMPANY_SIGNED_IN": return { ...s, auth: { status: "signedIn", tag: a.slug, method: "company" }, company: { ...(s.company || {}), verified: true } };
@@ -16101,7 +16102,7 @@ function StaffRouter() {
    they left off. Demo directory/venues/services stay static — not persisted.
    ========================================================================== */
 
-const PERSIST_KEYS = ["feedback", "profileQuestions", "auth", "role", "route", "tab", "session", "profile", "connections", "invitations", "reviews", "reviewRequests", "events", "shifts", "engagements", "categoryVisibility", "credits", "company", "activeEventId", "site", "partyEvents", "trainingInterest", "jobsInterest", "cocktailMenu", "vipInterest", "teamInvites", "joinedPeople", "profileEdit", "staffNotify", "rewardsInterest", "workPostcode", "availabilityAsks", "notesSeenAt", "favs", "myCocktails", "myServices", "myPosts", "devDone", "admin17", "myTerms17", "svcTerms17", "fd"];
+const PERSIST_KEYS = ["vipClaims", "feedback", "profileQuestions", "auth", "role", "route", "tab", "session", "profile", "connections", "invitations", "reviews", "reviewRequests", "events", "shifts", "engagements", "categoryVisibility", "credits", "company", "activeEventId", "site", "partyEvents", "trainingInterest", "jobsInterest", "cocktailMenu", "vipInterest", "teamInvites", "joinedPeople", "profileEdit", "staffNotify", "rewardsInterest", "workPostcode", "availabilityAsks", "notesSeenAt", "favs", "myCocktails", "myServices", "myPosts", "devDone", "admin17", "myTerms17", "svcTerms17", "fd"];
 
 function pickPersisted(state) {
   const out = {};
@@ -17231,7 +17232,7 @@ function SocialIcon11({ k, size = 15 }) {
   if (k === "facebook") return <svg {...a}><circle cx="12" cy="12" r="9" /><path d="M13.6 20.9V13.5h2.3l.4-2.7h-2.7V9.2c0-.8.4-1.4 1.5-1.4h1.3V5.5c-.5-.1-1.2-.2-2-.2-2.2 0-3.5 1.3-3.5 3.5v2h-2.2v2.7h2.2v7.4" /></svg>;
   return <svg {...a}><path d="M14 3.5v10.2a3.6 3.6 0 1 1-3.6-3.6M14 3.5c.3 2.4 1.9 4 4.4 4.3" /></svg>;
 }
-/* Social links, each row named so nobody has to guess the icon. Used on the Company Card, the Host Card and the FF Team profile. */
+/* Social links, each row named so nobody has to guess the icon. Used on the Company Card, the VIP Host Card and the FF Team profile. */
 function SocialEdit11({ value, onChange }) {
   const v = value || {};
   return (
@@ -17469,7 +17470,7 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party }) {
   );
   return (
     <CardFrame tier={(co.theme === "silver" || co.theme === "gold") ? co.theme : (co.tier || "gold")} theme={t} premium ratio="8 / 5" className={`ff-cocard ff-cc11 l-${layout} ${size}`} style={{ ...vars, maxWidth: 460, margin: size ? 0 : "0 auto" }}>
-      <span className="ff-pc-plate ff-cc11-plate">{co.unclaimed ? "Directory listing" : party ? "Host Card" : "Company Card"}</span>
+      <span className="ff-pc-plate ff-cc11-plate">{co.unclaimed ? "Directory listing" : party ? "VIP Host Card" : "Company Card"}</span>
       {!co.unclaimed && <span className="ff-cc11-coin"><Coin size={size ? 24 : 30} tier={co.theme === "silver" ? "silver" : "gold"} /></span>}
       <div className="ff-cc11-body">
         {logo}
@@ -19901,7 +19902,8 @@ function PartyCard11({ edit, demo }) {
   );
   return (
     <div className="ff-pcard11">
-      <span className="plate">Host Card</span>
+      <span className="plate">VIP Host Card</span>
+      {c.vip && c.vip.status === "founding" && <span className="fnd" style={{ position: "absolute", left: 10, bottom: 10, padding: "3px 10px", borderRadius: 12, background: "linear-gradient(135deg,#E6C877,#B8912F)", color: "#1A1408", fontSize: 10.5, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", zIndex: 2 }}>Founding VIP</span>}
       <span className="coin"><Coin size={28} tier="gold" /></span>
       <button type="button" className="ph" onClick={() => edit && ref.current && ref.current.click()} aria-label={c.photo ? "Change your photo" : "Add your photo"} disabled={!edit}>
         {c.photo ? <img src={c.photo} alt="" /> : <span className="add"><CameraPlusGlyph size={28} /><span>Add your photo</span></span>}
@@ -20150,19 +20152,19 @@ function StaffProfile() {
   );
 }
 
-/* The host page: the same top as a public FF Team page, with the Host Card beside the photos. It saves as you type. */
+/* The host page: the same top as a public FF Team page, with the VIP Host Card beside the photos. It saves as you type. */
 function HostPage17() {
   const { state, dispatch } = useStore();
   const c = state.company || {};
   const img = window.FF_IMG || {};
   const own = (c.media || []).map(m => ({ id: m.id, src: m.dataUrl || m.src, name: m.name || "" })).filter(m => m.src);
   const stock = ["dream_music_festivals", "training_ff_open_bar", "reward_photoshoot"].map(k => ({ id: "stock_" + k, src: img[k], name: "" })).filter(m => m.src);
-  const save = () => { dispatch({ type: "COMPANY_SAVE", company: { cardSavedAt: Date.now(), finishedAt: Date.now(), joinedAt: c.joinedAt || Date.now() } }); dispatch({ type: "TOAST", toast: "Host card saved" }); window.scrollTo({ top: 0, behavior: "smooth" }); };
+  const save = () => { dispatch({ type: "COMPANY_SAVE", company: { cardSavedAt: Date.now(), finishedAt: Date.now(), joinedAt: c.joinedAt || Date.now() } }); dispatch({ type: "TOAST", toast: "VIP Host Card saved" }); window.scrollTo({ top: 0, behavior: "smooth" }); };
   return (
     <div className="ff-host17">
-      <div className="ff-eyebrow">FF Party · Host card</div>
+      <div className="ff-eyebrow">FF Party · VIP Host Card</div>
       <PublicHero media={own.length ? own : stock} card={<PartyCard11 edit />} below={<PartySections11 />} />
-      <ConfirmSpin17 lines={["Save"]} label="Save host card" onClick={save} />
+      <ConfirmSpin17 lines={["Save"]} label="Save VIP Host Card" onClick={save} />
     </div>);
 }
 
@@ -20423,7 +20425,7 @@ function attachDrag(e, p, srcEl) {
   };
   const begin = () => {
     st.drag = true; DND.on = true; document.body.classList.add("ff-dragging");
-    const g = document.createElement("div"); g.className = "ff-ghost card";
+    const g = document.createElement("div"); g.className = "ff-gVIP Host Card";
     const card = srcEl && srcEl.firstElementChild ? srcEl.firstElementChild.firstElementChild || srcEl.firstElementChild : null;
     if (card) {
       const r = card.getBoundingClientRect(), k = 0.5;
@@ -21083,7 +21085,7 @@ function CardPrompt11() {
     <div className="ff-hc17 ff-cardprompt">
       <button type="button" className="h" aria-expanded={open} onClick={() => setOpen(v => !v)}>
         <span className="cn"><Coin size={34} tier="gold" /></span>
-        <span className="t"><b>{party ? "Create your Host Card" : "Create your Company Card"}</b><small>{party ? "We recommend you create a Host Card, so we can share your details with the people you're booking." : "We recommend you create a Company Card, so we can share your company's details with the people you're hiring."}</small></span>
+        <span className="t"><b>{party ? "Create your VIP Host Card" : "Create your Company Card"}</b><small>{party ? "We recommend you create a VIP Host Card, so we can share your details with the people you're booking." : "We recommend you create a Company Card, so we can share your company's details with the people you're hiring."}</small></span>
         <I11.ChevronDown size={18} className="cv" />
       </button>
       {open && <div className="b">{party ? <PartyCard11 edit /> : <EditableCompanyCard plain />}
@@ -22689,7 +22691,7 @@ function StaffEdit17({ kind }) {
   return (
     <div>
       <div className="ff-eyebrow">{site.name} · {party ? "Your Party" : "Your Business"}</div>
-      <h1 className="ff-h1" style={{ marginTop: 4, marginBottom: 14 }}>{party ? "Edit your Host Card" : "Edit your Company Card"}</h1>
+      <h1 className="ff-h1" style={{ marginTop: 4, marginBottom: 14 }}>{party ? "Edit your VIP Host Card" : "Edit your Company Card"}</h1>
       <div id="ff-co-card">{party ? <PartyCard11 edit /> : <EditableCompanyCard />}</div>
       {party ? <PartySections11 /> : <CompanySections />}
     </div>
@@ -23454,7 +23456,7 @@ function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
   </>);
 }
 
-/* Who the shift is for: a Company Card for a business, a Host Card for a person. */
+/* Who the shift is for: a Company Card for a business, a VIP Host Card for a person. */
 function hirerCard11(state, ev) {
   const nm = (ev && ev.hirer) || "";
   if (/vooshka/i.test(nm)) return { party: false, c: vooshkaEditable17() };
@@ -23467,7 +23469,7 @@ function hirerCard11(state, ev) {
   return { party: false, c: { name: nm, kind: (ev && ev.kind) || "", slug: slugify(nm) } };
 }
 
-/* The Event brief, as a team member sees it. The hirer's Company Card or Host Card sits underneath. */
+/* The Event brief, as a team member sees it. The hirer's Company Card or VIP Host Card sits underneath. */
 function EventBrief11({ ev, shift, e, onClose }) {
   const { state } = useStore();
   if (!ev || !shift) return null;
@@ -23476,9 +23478,9 @@ function EventBrief11({ ev, shift, e, onClose }) {
     <Sheet open onClose={onClose} title="Event brief">
       <div className="ff-brief11">
         <EventGuide ev={ev} shifts={[shift]} viewer="pro" stamp={e.state === "confirmed" ? "Confirmed" : "Brief"} />
-        <section className="hc" aria-label={h.party ? "Host Card" : "Company Card"}>
+        <section className="hc" aria-label={h.party ? "VIP Host Card" : "Company Card"}>
           <h4>{h.party ? "Your host" : "Your client"}</h4>
-          <HScroll label={h.party ? "Host Card" : "Company Card"}>
+          <HScroll label={h.party ? "VIP Host Card" : "Company Card"}>
             <div className="hc-i">{h.party ? <PartyCard11 demo={h.c} /> : <CompanyCardFace c={h.c} />}</div>
           </HScroll>
         </section>
@@ -23887,15 +23889,15 @@ function HostDrop17() {
   const { state, dispatch } = useStore();
   const c = state.company || {};
   const [open, setOpen] = useState(false);
-  const save = () => { dispatch({ type: "COMPANY_SAVE", company: { cardSavedAt: Date.now(), joinedAt: c.joinedAt || Date.now() } }); dispatch({ type: "TOAST", toast: "Host card saved" }); setOpen(false); };
+  const save = () => { dispatch({ type: "COMPANY_SAVE", company: { cardSavedAt: Date.now(), joinedAt: c.joinedAt || Date.now() } }); dispatch({ type: "TOAST", toast: "VIP Host Card saved" }); setOpen(false); };
   return (
     <div className="ff-hc17">
       <button type="button" className="h" aria-expanded={open} onClick={() => setOpen(v => !v)}>
         <span className="cn"><Coin size={34} tier="gold" /></span>
-        <span className="t"><b>Host info</b><small>We recommend you create a Host Card to share your details.</small></span>
+        <span className="t"><b>Host info</b><small>We recommend you create a VIP Host Card to share your details.</small></span>
         <S17I.ChevronDown size={18} className="cv" />
       </button>
-      {open && <div className="b"><PartyCard11 edit /><ConfirmSpin17 lines={["Save"]} label="Save host card" onClick={save} /></div>}
+      {open && <div className="b"><PartyCard11 edit /><ConfirmSpin17 lines={["Save"]} label="Save VIP Host Card" onClick={save} /></div>}
     </div>);
 }
 function CbCard17({ icon, thumb, title, onX, sent }) {
@@ -27448,12 +27450,7 @@ const COMP_RULES20 = [
   ["Eligibility", "Open to genuine hospitality professionals and people seriously committed to entering the hospitality industry who are willing and available to undertake suitable freelance hospitality work. Previous hospitality experience is not mandatory."],
 ];
 const COMP_TBC20 = ["Scoring calculation", "Tie-break procedure", "Prize values", "Winner verification", "Fulfilment conditions", "Promoter details"];
-function TeamCompetition20() {
-  const h = React.createElement;
-  const nav = useHomeNav();
-  const [rules, setRules] = useState(false);
-  const pics = ["reward_training_tickets", "reward_nfc_card", "reward_bar_kit", "reward_photoshoot"].map(img).filter(Boolean);
-  const css = ".ff-cp20{position:relative;margin:22px 0;border-radius:26px;overflow:hidden;color:#F4EBD6;background:linear-gradient(135deg,#0B0A09 0%,#1C0E12 55%,#4A1220 100%);border:1px solid rgba(201,162,75,.45);isolation:isolate}"
+const PROMO_CSS20 = ".ff-cp20{position:relative;margin:22px 0;border-radius:26px;overflow:hidden;color:#F4EBD6;background:linear-gradient(135deg,#0B0A09 0%,#1C0E12 55%,#4A1220 100%);border:1px solid rgba(201,162,75,.45);isolation:isolate}"
     + ".ff-cp20:before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(115deg,transparent 58%,rgba(201,162,75,.16) 58.2%,rgba(201,162,75,.16) 60%,transparent 60.2%)}"
     + ".ff-cp20-in{display:grid;grid-template-columns:1.25fr 1fr;gap:18px;align-items:center;padding:22px}"
     + ".ff-cp20-eye{display:flex;align-items:center;gap:10px;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#D9B968;font-weight:600}"
@@ -27466,7 +27463,14 @@ function TeamCompetition20() {
     + ".ff-cp20-url{margin-top:8px;font-size:12px;letter-spacing:.08em;color:#D9B968;text-align:center}"
     + "@media(max-width:640px){.ff-cp20-in{grid-template-columns:1fr;padding:18px}.ff-cp20-pics{grid-template-columns:repeat(4,1fr)}}"
     + ".ff-cp20r h3{margin:16px 0 4px;font-size:15px}.ff-cp20r p,.ff-cp20r li{font-size:14px;line-height:1.5;margin:0 0 6px}.ff-cp20r ul,.ff-cp20r ol{margin:0;padding-left:20px}"
-    + ".ff-cp20r .tbc{display:inline-block;margin:0 6px 6px 0;padding:4px 10px;border-radius:12px;border:1px dashed var(--gold-dk,#A5802F);font-size:12.5px}";
+    + ".ff-cp20r .tbc{display:inline-block;margin:0 6px 6px 0;padding:4px 10px;border-radius:12px;border:1px dashed var(--gold-dk,#A5802F);font-size:12.5px}"
+    + ".ff-vip20-ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px}.ff-vip20-ul li{padding:7px 10px;border-radius:14px;border:1px solid rgba(201,162,75,.4);font-size:12px;line-height:1.3;color:#F4EBD6}";
+function TeamCompetition20() {
+  const h = React.createElement;
+  const nav = useHomeNav();
+  const [rules, setRules] = useState(false);
+  const pics = ["reward_training_tickets", "reward_nfc_card", "reward_bar_kit", "reward_photoshoot"].map(img).filter(Boolean);
+  const css = PROMO_CSS20;
   const sec = (t, body) => h("div", { key: t }, h("h3", { className: "ff-label" }, t), body);
   return h("section", { className: "ff-sect", id: "ff-competition", "aria-labelledby": "ff-cp20-h" },
     h("style", null, css),
@@ -27500,6 +27504,66 @@ function TeamCompetition20() {
         h("p", { style: { marginTop: 8 } }, "Competition placements are separate from the Bronze, Silver and Gold XP levels."),
         sec("Fair participation", h("p", null, "Only genuine accounts and authentic professional connections qualify. Duplicate, fabricated or manipulated activity may be disqualified following reasonable review.")),
         sec("Final terms", h("div", null, h("p", null, "To be confirmed before the competition opens:"), COMP_TBC20.map((t) => h("span", { key: t, className: "tbc" }, t + ": to be confirmed")))))));
+}
+/* VIP Host Card (formerly VIP Host Card) — a free membership benefit, not a subscription or contract.
+   Founding VIP: the first FF_VIP_CONFIG.foundingLimit qualifying registrations. Everything an operator may change sits in FF_VIP_CONFIG.
+   A registration qualifies when a VIP Host Card is saved with a name by a signed-in account (or, failing that, a unique phone or email). One per account.
+   vipClaims is the prototype's record of qualifying registrations; the live version keeps it server-side and shows places left only from that real count. */
+const FF_VIP_CONFIG = {
+  foundingLimit: 1000,
+  showRemaining: false,
+  benefits: ["Free VIP Host Card", "Exclusive eligible FireFlair rates", "Access to special member offers", "Founding VIP status for the first 1,000 qualifying members"],
+  rates: [],
+  offers: [],
+};
+const vipClaim20 = (s, patch) => {
+  if (!patch || !patch.cardSavedAt) return s;
+  if (!(s.role === "staff" && s.site === "party")) return s;
+  const c = s.company || {};
+  if (c.vip) return s;
+  const norm = (v) => String(v || "").toLowerCase().replace(/[^a-z0-9@.+]/g, "");
+  const key = s.auth && s.auth.status === "signedIn" && s.auth.tag ? "tag:" + String(s.auth.tag).toLowerCase() : (norm(c.phone) ? "ph:" + norm(c.phone) : (norm(c.email) ? "em:" + norm(c.email) : ""));
+  if (!String(c.name || "").trim() || !key) return s;
+  const claims = s.vipClaims || [];
+  const had = claims.find((x) => x.key === key);
+  if (had) return { ...s, company: { ...c, vip: { status: had.status, n: had.n, at: had.at } } };
+  const n = claims.length + 1;
+  const status = n <= FF_VIP_CONFIG.foundingLimit ? "founding" : "standard";
+  const at = Date.now();
+  return { ...s, vipClaims: claims.concat([{ key, n, status, at }]), company: { ...c, vip: { status, n, at } } };
+};
+const vipFoundingCount20 = (state) => (state.vipClaims || []).filter((x) => x.status === "founding").length;
+function VipFounding20() {
+  const h = React.createElement;
+  const { state, dispatch } = useStore();
+  const [info, setInfo] = useState(false);
+  const cfg = FF_VIP_CONFIG;
+  const lim = cfg.foundingLimit.toLocaleString("en-GB");
+  const vip = (state.company || {}).vip;
+  const left = cfg.showRemaining ? Math.max(0, cfg.foundingLimit - vipFoundingCount20(state)) : null;
+  const go = () => { dispatch({ type: "TAB", tab: "profile" }); window.scrollTo(0, 0); };
+  const sec = (t, body) => h("div", { key: t }, h("h3", { className: "ff-label" }, t), body);
+  return h("section", { className: "ff-sect", id: "ff-vip", "aria-labelledby": "ff-vip-h" },
+    h("style", null, PROMO_CSS20),
+    h("div", { className: "ff-cp20" },
+      h("div", { className: "ff-cp20-in" },
+        h("div", null,
+          h("div", { className: "ff-cp20-eye" }, h(Coin, { size: 34, tier: "gold" }), h("span", null, "VIP Host Card")),
+          h("h2", { id: "ff-vip-h" }, "You’re invited to VIP."),
+          h("p", null, "Be one of our first " + lim + " VIP Hosts and enjoy exclusive FireFlair rates, special offers and member benefits."),
+          left !== null ? h("span", { className: "ff-cp20-date" }, left.toLocaleString("en-GB") + " founding places left") : null,
+          h("div", { className: "ff-cp20-btns" },
+            h(ShineButton, { onClick: go }, vip ? "Open your VIP Host Card" : "Create your VIP Host Card"),
+            h(Button, { onClick: () => setInfo(true) }, "VIP details"))),
+        h("div", null,
+          h("ul", { className: "ff-vip20-ul" }, cfg.benefits.map((b) => h("li", { key: b }, b))),
+          h("div", { className: "ff-cp20-url" }, "FFParty.uk")))),
+    h(Sheet, { open: info, onClose: () => setInfo(false), title: "VIP Host Card", center: true },
+      h("div", { className: "ff-cp20r" },
+        sec("What it is", h("p", null, "A free membership benefit. It is not a subscription or a contract, and there is nothing to cancel.")),
+        sec("Founding VIP", h("p", null, "The first " + lim + " qualifying VIP Host Card registrations receive Founding VIP status, saved against the account. One per account.")),
+        sec("Benefits", h("ul", null, cfg.benefits.map((b) => h("li", { key: b }, b)))),
+        sec("Final terms", h("div", null, h("p", null, "To be confirmed before launch:"), ["Eligible FireFlair rates", "Special member offers", "Qualifying registration definition", "Offer end date", "Promoter details"].map((t) => h("span", { key: t, className: "tbc" }, t + ": to be confirmed")))))));
 }
 function Home101() {
   const { state } = useStore();
@@ -28191,7 +28255,7 @@ function YourParty17() {
     { icon: V17I.SlidersHorizontal, t: "Your preferences", d: "Your kind of party, your drinks and what your staff should know. Applied to every booking." },
     { icon: V17I.Heart, t: "Your favourites", d: "The people you love working with, ready to add to your next booking." },
     { icon: V17I.History, t: "Your bookings", d: "Every party you have booked, ready to book again." },
-    { icon: V17I.Contact, t: "Shared with your staff", d: "The people you hire see your Host Card before the day." },
+    { icon: V17I.Contact, t: "Shared with your staff", d: "The people you hire see your VIP Host Card before the day." },
   ];
   return (
     <section className="ff-sect ff-yp17" id="ff-yourparty" aria-labelledby="ff-yp-h">
@@ -31964,7 +32028,7 @@ const DX_PARTY = [
   { k: "profiles", t: "Your Party", s: "Just the way you like it", img: "t17_p12", pool: ["p12", "p18", "p20", "p15", "p08"], icon: DX_I.Contact,
     h: "Your party, your way, every time.",
     p: ["Save your tastes once and every booking begins with them in place: your drinks, your style and your favourite people.",
-      "Keep your favourite bartenders, book your best nights again and share your Host Card with the people you hire.",
+      "Keep your favourite bartenders, book your best nights again and share your VIP Host Card with the people you hire.",
       "Your Party is your own space on FireFlair, so every future celebration starts exactly how you like it."],
     parts: [
       { id: "ff-yourparty", label: "Your Party", r: () => h18(YourParty17, null) },
@@ -32535,6 +32599,7 @@ function PartyHome11() {
         <Css18 /><HireHero kind="party" />
         {withCoins([
           <DiscoverHub11 key="discover" cats={DX_PARTY} kind="party" />,
+          <VipFounding20 key="vip" />,
           <GuideQuestions11 key="guide" kind="party" />,
           <Journal17 key="journal" kind="party" />,
           <FireFlairFold18 key="why" />,

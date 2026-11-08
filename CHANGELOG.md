@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.3.118 — 2026-11-08 — VIP Host Card and Founding VIP
+
+- Host Card is now **VIP Host Card** everywhere it appears (FF Party card, profile prompts, save buttons, toasts, edit page, company-card plate, shift and brief views, related copy). Host information and behaviour are unchanged.
+- New compact Founding VIP promotion on the FF Party homepage, directly under the four pillars (`VipFounding20`), styled like the FF Team Launch Competition module (shared `PROMO_CSS20`). Copy: "You're invited to VIP." with the first-1,000 line, the four benefits, "Create your VIP Host Card" (goes to the host's profile tab) and a "VIP details" pop-up. The pop-up states it is a free membership benefit, not a subscription or contract, and lists terms still to be confirmed (eligible rates, offers, qualifying definition, end date, promoter details). It does not claim lowest prices.
+- One card component: `PartyCard11` shows "VIP Host Card" for everyone and adds a gold "Founding VIP" seal when the account's `company.vip.status` is `founding`. No separate card system.
+- Membership management, prototype level: `FF_VIP_CONFIG` holds the founding limit (1,000), the benefit list and empty `rates` / `offers` lists to fill in, and `showRemaining` (off). `vipClaim20` runs when a host card is saved (`COMPANY_SAVE` with `cardSavedAt`, FF Party site only). It qualifies only a card with a name saved by a signed-in account, or failing that a unique phone or email; one claim per account key (a repeat save changes nothing); claims are numbered in order, so the first 1,000 get `founding` and later ones `standard`; the status is saved on the account (`company.vip`) and the claim list in `vipClaims` (persisted).
+- Remaining-places counter: not shown. Turning on `showRemaining` is only correct once `vipFoundingCount20` reads a real server-side count; the prototype count is local to one browser. No countdown exists.
+- Developer notes: the live version needs `vipClaims` server-side with a unique constraint on the account, an atomic claim so two sign-ups cannot take place 1,000, and the rate and offer configuration kept outside the page.
+- Not done in this release: the wider sales-conversion work (package recommendations, cocktail builder, Event Card journey, pricing presentation, expert guidance) is still to do as separate steps.
+
 ## v17.3.117 — 2026-11-08 — FF Team Launch Competition module
 
 - New promotional module on the FF Team homepage, between the Discover pillars and "How a booking works" (`TeamCompetition20`, in `Home101`). Title, dates (1–31 December 2026), one prize line, two buttons, a compact four-image prize collage from the existing FF Rewards photos, the FF coin and FFTeam.uk. Stacks on mobile.
