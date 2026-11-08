@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.111 — 2026-11-08 — symbol map, Network
+
+- Map: the FF cluster marker and the numbered circle are gone, and every pin is always shown as its own small symbol dot. Companies are round dots: a martini glass for bar companies, headphones for Entertainment, a camera for Services (photographers are listed under Services), and a knife and fork for Caterers. Professionals are a squircle with a bust. The legend says Professionals, Entertainment and Services.
+- Tab and page name is now Network on all three sites (was People). FF Party's page title is Network too.
+- Top Staff now sits under the map on FF Team and FF Staff.
+- FF Staff: the small label under the FireFlair wordmark in the top bar says Staff instead of Business.
+- Profile page: the journey line for steps 1 to 4 moved left so it runs through the step circles, in line with step 5. Same fix on FF Team and FF Staff.
+- A company profile that isn't signed in no longer shows seeded staff on its Team tab (it showed seven); the company's "Services" tab is renamed Packages.
+
 ## v17.3.110 — 2026-11-07 — v17.3.110 Front Doors area pages
 Artifact version 1794090723-b49b · file `fireflair-v17.3.110.html`
 
