@@ -1,12 +1,20 @@
 # FireFlair prototype — changelog
 
+## v17.3.116 — 2026-11-08 — What areas do you cover?
+
+- New tick-box area tree, "What areas do you cover?", in the FF Team profile's Work locations section and in the FF Staff company profile's Areas covered section (one shared component, `AreaTicks19`). Each level has a dropdown and a tick box: United Kingdom (saved as "UK-wide") and Worldwide, then nations, regions, boroughs and towns, or continents and countries. It uses the same location tree as Explore by area (`FD_NODES`).
+- Ticking a place covers everything beneath it. Its children show as ticked and cannot be changed; unticking the parent frees them. Ticking a parent removes any ticked children so the profile holds one record for the whole area.
+- Choices are saved as ordinary "locations" records (`REC_ADD` / `REC_DELETE`, with `owner: "company"` on the Staff company profile), so the map, the Profile Card and search read them as before.
+- Short note under the heading: default pricing includes travel, so consider this when choosing areas.
+- FF Party has no profile creator, so it has no tick list.
+
 ## v17.3.115 — 2026-11-08 — Bar services and the FireFlair Directory section
 
 - Network page (FF Team and FF Staff): a new "FireFlair Directory" section sits at the bottom of the page. It holds Explore by area (moved down from under the map) and every Directory listing, grouped by type. The sections above now list signed-up companies only.
 - New category under Services: "Bar services" (`cat: "svc"`, data-only `sub` of ice, glassware or events). 28 Directory listings added to `REAL_SUPPLIERS17`: ice delivery, glassware hire and delivery, and event management, with London-based and rest-of-UK companies in each. They appear on the map as FF Directory pins; the legend count is now 149. Seed file: `data/companies/seed-barservices.json`.
 - Glassware has 9 listings, not 10: one candidate had no base or coverage stated on its site, so it was left out.
 - Developer note: `NetDirectory19` renders the block at the end of `NetBrowse17`; `NetMap11` now renders the map only.
-- Still not done: the tick-box area list in the Team and Staff location sections.
+- The tick-box area list follows in v17.3.116.
 
 ## v17.3.114 — 2026-11-08 — Map layers
 

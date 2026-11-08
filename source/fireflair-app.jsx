@@ -7404,6 +7404,7 @@ function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd
           }} />
         )}
         {isMe && catKey === "locations" && owner !== "company" && <WorkLocationsBox items={items} onAdd={onAdd} />}
+        {isMe && catKey === "locations" && <AreaTicks19 items={items} owner={owner} />}
         <div style={{ height: isMe && (catKey === "professions" || catKey === "locations") && owner !== "company" ? 12 : 0 }} />
         {editing ? (
           <TierEditor catKey={catKey} def={def} rows={eRows} onOpen={(r) => onOpen(r)} tail={addTile} />
@@ -19034,6 +19035,51 @@ const FD_CSS19 = `
 .ff .ff-ax19-head h3 { margin:0; font-size:17px; }
 .ff .ff-ax19-open { font-size:13px; font-weight:700; color:var(--gold-dk); white-space:nowrap; }
 `;
+/* "What areas do you cover?" — the explorer's area tree with a tick box at every level (FF Team location section, FF Staff company coverage).
+   Ticking a place covers everything beneath it; a ticked parent replaces its ticked children. Saved as ordinary "locations" records. */
+const FD_TICK_NAME19 = (n) => (n.id === "country:GB" ? "UK-wide" : n.id === "worldwide" ? "Worldwide" : fdLabel(n));
+let FD_TICK_MAP19 = null;
+const fdTickNode19 = (name) => {
+  if (!FD_TICK_MAP19) { FD_TICK_MAP19 = {}; FD_NODES.forEach((n) => { const k = FD_TICK_NAME19(n).toLowerCase(); if (!FD_TICK_MAP19[k]) FD_TICK_MAP19[k] = n; }); FD_TICK_MAP19["united kingdom"] = FD_BY_ID["country:GB"]; }
+  return FD_TICK_MAP19[String(name || "").trim().toLowerCase()] || null;
+};
+const fdTickKids19 = (n) => {
+  if (n.id === "worldwide") return FD_WORLD_ORDER19.map((s) => FD_BY_PATH["/areas/worldwide/" + s]).filter(Boolean);
+  const kids = n.kids.map((i) => FD_NODES[i]);
+  return kids.slice().sort((a, b) => (b.id === FD_LONDON) - (a.id === FD_LONDON) || a.name.localeCompare(b.name));
+};
+function AreaTicks19(props) {
+  const h = React.createElement;
+  const dispatch = useStore().dispatch;
+  const items = props.items || [];
+  const owner = props.owner === "company" ? "company" : undefined;
+  const [openIds, setOpenIds] = useState({});
+  const ticked = {};
+  items.forEach((r) => { const n = fdTickNode19(r.name); if (n) ticked[n.id] = r; });
+  const implied = (n) => fdAnc(n).slice(1).some((a) => ticked[a.id]);
+  const toggle = (n) => {
+    if (ticked[n.id]) { dispatch({ type: "REC_DELETE", owner: owner, category: "locations", id: ticked[n.id].id }); return; }
+    fdDesc(n).forEach((d) => { if (ticked[d.id]) dispatch({ type: "REC_DELETE", owner: owner, category: "locations", id: ticked[d.id].id }); });
+    dispatch({ type: "REC_ADD", owner: owner, category: "locations", record: makeRecord("locations", FD_TICK_NAME19(n)) });
+  };
+  const row = (n, depth) => {
+    const kids = fdTickKids19(n), on = !!ticked[n.id], imp = implied(n), isOpen = !!openIds[n.id];
+    const label = FD_TICK_NAME19(n) === "UK-wide" ? "United Kingdom" : n.name;
+    return h("li", { key: n.id, className: "ff-tk19-li" },
+      h("div", { className: "ff-tk19-row", style: { paddingLeft: depth * 16 } },
+        kids.length ? h("button", { type: "button", className: "ff-tk19-x", "aria-expanded": isOpen, "aria-label": (isOpen ? "Collapse " : "Expand ") + label, onClick: () => setOpenIds({ ...openIds, [n.id]: !isOpen }) }, isOpen ? "▾" : "▸") : h("span", { className: "ff-tk19-x" }),
+        h("label", { className: "ff-tk19-lb" },
+          h("input", { type: "checkbox", checked: on || imp, disabled: imp, onChange: () => toggle(n) }),
+          h("span", null, label))),
+      isOpen && kids.length ? h("ul", { className: "ff-tk19-ul" }, kids.slice(0, 200).map((k) => row(k, depth + 1))) : null);
+  };
+  const roots = [FD_BY_ID["country:GB"], FD_BY_ID["worldwide"]].filter(Boolean);
+  return h("div", { className: "ff-frame ff-tk19", style: { padding: 14, marginTop: 14 } },
+    h("style", null, ".ff-tk19 h3{margin:0 0 4px;font-size:15px}.ff-tk19 p{margin:0 0 8px;font-size:12.5px}.ff-tk19-box{max-height:320px;overflow:auto;border-top:1px solid var(--line,#e5dcc8);padding-top:6px}.ff-tk19-ul,.ff-tk19-box{list-style:none;margin:0;padding-left:0}.ff-tk19-row{display:flex;align-items:center;gap:4px;min-height:36px}.ff-tk19-x{width:28px;height:28px;flex:none;border:0;background:none;color:var(--gold-dk);font-size:14px;cursor:pointer}.ff-tk19-lb{display:flex;align-items:center;gap:9px;flex:1;cursor:pointer;font-size:14px}.ff-tk19-lb input{width:20px;height:20px;accent-color:var(--gold-dk)}"),
+    h("h3", { className: "ff-label" }, "What areas do you cover?"),
+    h("p", { className: "ff-body ff-muted" }, "Default pricing includes travel. Consider this when you choose your areas."),
+    h("ul", { className: "ff-tk19-box", "aria-label": "Areas you cover" }, roots.map((n) => row(n, 0))));
+}
 function fdShown19(n, fd, siteKey) {
   if (!n) return [];
   if (n.id === "worldwide") return FD_WORLD_ORDER19.map((s) => FD_BY_PATH["/areas/worldwide/" + s]).filter(Boolean);
