@@ -102,11 +102,18 @@ The four pillars match the four main pages of the site, so the continuity stays.
 - FF Business is retired. FF Staff heroes have a single button. The FF Team hero button becomes "Build your network" once a signed-in member has a profile card. Heroes otherwise stay the same after sign-in.
 - Stories: quantity first, quality later. Existing stories and categories stay.
 
+## Partners and Directory
+
+- FireFlair Partners are companies that have signed up and can be booked through FireFlair.
+- The FireFlair Directory lists companies with their public contact details in one place. A listing is not an endorsement, not a partnership and not bookable through FireFlair. No "draft" or "unclaimed" wording is shown to the public.
+- A Directory listing carries no coin, no partner wording and no promise that FireFlair will contact the company. Companies can ask for a listing to be updated or removed. Legal review is needed before launch.
+
 ## Record keeping
 
 Documents produced under this strategy are stored in `docs/` in the repository. Showing them in the site's admin page is a developer decision, to be made once the cost of the work is known.
 
 ## Change log
 
+- 1.2 (8 November 2026): Partners and Directory wording; Explore by area structure.
 - 1.1 (8 November 2026): package and service card definition, booking wording, homepage decisions, pillar names, Stories quantity-first.
 - 1.0 (8 November 2026): ten rules approved with a merged "fewer words, one purpose" rule and a new "clarity at commitment" rule; company packages not renamed; no repeated deposit lines in marketing; the FireFlair Booking Guarantee adopted as a selling point; "ask for a no" technique dropped.

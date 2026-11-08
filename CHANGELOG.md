@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.3.113 — 2026-11-08 — Explore by area rebuilt, FireFlair Directory and Partners
+
+- Explore by area now sits directly under the map on the Network page of FF Team, FF Staff and FF Party (one shared component). It is a short path: UK or Worldwide, then a region (UK: England, Northern Ireland, Scotland, Wales; Worldwide: Europe, North America, South America, Asia, Middle East, Africa, Oceania), then places. Greater London is always first under England. Opens collapsed, with place search kept.
+- Third level shows only places that have a live page (cap of 10) and, for Europe, the top ten countries (France, Spain, Netherlands, Denmark, Germany, Italy, Portugal, Ireland, Belgium, Greece) plus an Eastern Europe drop-down. Choosing a place shows a horizontal slider of the people and partner companies listed there, with a link to that place's page.
+- Every place keeps its own page for search. Location manifest grew from 1,000 to 1,034 rows: six continents and their main countries were added (FD_ROWS, appended at the end). All continents, the top-ten European countries, the Eastern Europe list and the other continents' main countries are published by default (still noindex while demo data is on).
+- "Ask us to find people" is removed everywhere: no lead form on area pages, no mini buttons in the explorer, no "ask FireFlair to contact them". Area pages now send people to the Event Card (FF Party, FF Staff) or the Profile Card (FF Team). fdCopy was rewritten for all three sites without ask or register-interest wording. FdAsk11 and the admin request queue are left in the code but nothing sends to them any more; developers can remove them.
+- FireFlair Directory and FireFlair Partners: companies listed from public contact details are now the FireFlair Directory (no more "draft" or "unclaimed" wording). Companies that have signed up are FireFlair Partners. Area pages show Partners with the professionals and a separate Directory section; the card plate reads "Directory listing"; tiles are labelled Directory or Partner; the map legend leads with "FireFlair Directory". fdResults now returns Directory companies separately (`dir`). The area-page FAQ explains the difference and that listing is not an endorsement.
+- Developer note for legal review: a Directory listing must stay contact details only. No "we contact them for you", no booking through FireFlair, no partner coin or wording, a way for a company to ask for correction or removal, and a privacy notice covering the source of the details. Sole traders are personal data under UK GDPR.
+- Not done yet: the tick-box area list (UK ticks the whole UK) in the FF Team and FF Staff location sections.
+
 ## v17.3.112 — 2026-11-08 — Packages, pillars, Fire & Flair
 
 - FF Party homepage rebuilt under Content Strategy v1.1 (docs/content-strategy.md). Pillars are now Our Packages, Our Network, Your Booking and Your Party, all collapsed by default. The hero is untouched.
