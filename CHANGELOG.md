@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.120 — 2026-11-08 — Info boxes, larger VIP, album rename and duplicates
+
+- **Competition banner** (`TeamCompetition20`): the four photos are replaced by four information boxes (dates, who can enter, four winners, Network + Team). Each opens a pop-up with the detail. Join Competition and Competition Rules are unchanged.
+- **VIP promotion** (`VipFounding20`): larger (bigger heading, more room; full width with the boxes beneath on mobile, side by side on desktop). The four benefits are now boxes that open pop-ups with more detail. Benefit text lives in `FF_VIP_CONFIG.benefits` as `{ t, s, d }` (title, short line, detail paragraphs); nothing there states a price or a lowest-price claim.
+- **Photo album**: Rename on every tile (`admin17.names[id]`, new admin op `rename`; Enter saves, Escape cancels). Remove and Restore were already working through the admin hide switch; the Removed filter lists them.
+- **Duplicate search**: a Duplicates filter lists 25 groups found by exact file match and by image fingerprint across the library and the images inside the pages, plus the two crops the library already flags. Groups show side by side as "Match n"; "Remove extra copies" marks all but one per group (it prefers the library copy). `PHOTO_DUPS20` is a precomputed list; rerun the fingerprint check when photos are added. Many Stories images are the same photo reused by several stories.
+- `admin17` is now saved with the rest of the prototype's state, so removals, names and front-door edits survive a reload for a signed-in viewer. Before this they were lost on reload.
+- Developers: removing and renaming are marks in the admin store. The live build should apply them to the real library and delete the removed files.
+
 ## v17.3.119 — 2026-11-08 — Photo album and site-first admin
 
 - **Photo album** (`PhotoAlbum20`, `PhotoAlbumFold20`): a collapsed "Photo album" section directly below FF Stories on all three homepages, and a Photos tool in the admin. It shows every photo in `photo-library/` (183 small thumbnails, grouped as supplied: Alex's uploads, the Vooshka groups, classic cocktails, earlier site photos, coins and logos) plus every image already inside the pages (FF_IMG and the Stories images), about 355 in all. Each tile has Remove / Restore (the admin hide switch, kind `photos`); a Removed filter and "Copy removed list" give the developers the ids to delete from the real library. Removing is a mark only: it does not yet hide the image where the site uses it. In the live build the album should show to admins only (`PhotoAlbumFold20` is the one place to gate it).

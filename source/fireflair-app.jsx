@@ -16102,7 +16102,7 @@ function StaffRouter() {
    they left off. Demo directory/venues/services stay static — not persisted.
    ========================================================================== */
 
-const PERSIST_KEYS = ["vipClaims", "feedback", "profileQuestions", "auth", "role", "route", "tab", "session", "profile", "connections", "invitations", "reviews", "reviewRequests", "events", "shifts", "engagements", "categoryVisibility", "credits", "company", "activeEventId", "site", "partyEvents", "trainingInterest", "jobsInterest", "cocktailMenu", "vipInterest", "teamInvites", "joinedPeople", "profileEdit", "staffNotify", "rewardsInterest", "workPostcode", "availabilityAsks", "notesSeenAt", "favs", "myCocktails", "myServices", "myPosts", "devDone", "admin17", "myTerms17", "svcTerms17", "fd"];
+const PERSIST_KEYS = ["admin17", "vipClaims", "feedback", "profileQuestions", "auth", "role", "route", "tab", "session", "profile", "connections", "invitations", "reviews", "reviewRequests", "events", "shifts", "engagements", "categoryVisibility", "credits", "company", "activeEventId", "site", "partyEvents", "trainingInterest", "jobsInterest", "cocktailMenu", "vipInterest", "teamInvites", "joinedPeople", "profileEdit", "staffNotify", "rewardsInterest", "workPostcode", "availabilityAsks", "notesSeenAt", "favs", "myCocktails", "myServices", "myPosts", "devDone", "admin17", "myTerms17", "svcTerms17", "fd"];
 
 function pickPersisted(state) {
   const out = {};
@@ -24225,6 +24225,7 @@ function admin17Reduce(s, a) {
     case "admin_set":
       return { ...s, admin17: { ...A, admins: A.admins.map(x => x.tag === a.tag ? { ...x, ...a.patch } : x),
         log: entry(a.patch.active === false ? "Deactivated" : a.patch.active === true ? "Reactivated" : `Role set to ${(ADM17_ROLES[a.patch.role] || {}).label}`, "admins", a.tag, a.tag) } };
+    case "rename": return { ...s, admin17: { ...A, names: { ...(A.names || {}), [a.id]: a.name }, log: entry("Renamed a photo", "photos", a.id, a.name) } };
     case "copy": { const c = { ...(A.copy || {}) }; if (a.clear) delete c[a.key]; else c[a.key] = { ...(c[a.key] || {}), ...a.patch }; return { ...s, admin17: { ...A, copy: c, log: entry(a.clear ? "Reset front door content" : "Edited front door content", "doors", a.key, a.label) } }; }
     case "viewAs": return { ...s, admin17: { ...A, viewAs: a.value } };
     /* Invitations to join. Core sends them on WhatsApp (or email) with a sign-up link; the prototype records them. */
@@ -24906,29 +24907,49 @@ function photoSources20() {
   Object.keys(st).forEach((k) => add("st_" + k, k.replace(/^s18_/, "").replace(/-/g, " "), "Stories", st[k] && st[k].src));
   return out;
 }
+const PHOTO_DUPS20 = [["vkg08","vke08"],["vke13","img_face_vooshka"],["img_hero","img_hero_sm"],["st_s18_how-much-does-it-cost-to-hire-a-bartender","st_s18_repeat-bookings-event-bar-business"],["st_s18_bartender-hire-vs-mobile-bar-hire","st_s18_staffing-a-product-launch-or-drinks-reception"],["st_s18_how-to-compare-mobile-bar-companies","st_s18_add-to-event-and-bark-alternatives-bar-companies"],["st_s18_how-to-hire-a-bartender-for-a-house-party","st_s18_how-to-rebook-bartenders","st_s18_how-to-find-freelance-bartending-work-uk"],["st_s18_how-to-plan-a-wedding-bar","st_s18_how-to-write-a-mobile-bar-package","st_s18_first-event-bar-shift-checklist"],["st_s18_how-to-plan-a-cocktail-menu-for-a-party","st_s18_ff-team-vs-indeed-flex-for-bartenders"],["st_s18_how-many-cocktails-for-a-party","st_s18_christmas-party-bar-staffing"],["st_s18_cocktail-party-ice-and-glassware","st_s18_temporary-bar-staff-hertfordshire-guide"],["st_s18_dry-bar-hire-staffed-bar-full-bar-service","st_s18_how-to-get-mobile-bar-bookings","st_s18_freelance-bartending-or-agency-bar-work"],["st_s18_supply-own-alcohol-hire-bartender","st_s18_signature-cocktail-services-on-ff-party","st_s18_how-to-set-freelance-bartender-rates"],["st_s18_bartender-mixologist-flair-bartender-difference","st_s18_barback-bartender-or-bar-manager"],["st_s18_add-to-event-alternatives-party-bar-hire","st_s18_temporary-bar-staff-brief-template","st_s18_coople-alternatives-uk-bar-staff"],["st_s18_ff-party-vs-add-to-event","st_s18_indeed-flex-alternatives-for-hiring-bar-staff"],["st_s18_ff-party-vs-poptop","st_s18_ff-staff-vs-indeed-flex-bar-staffing"],["st_s18_how-to-hire-a-bartender-in-hertfordshire","st_s18_weekend-bar-work-alongside-another-job"],["st_s18_how-to-hire-a-cocktail-bartender-in-london","st_s18_what-to-check-before-accepting-a-bar-shift"],["st_s18_dj-or-live-musician-house-party","st_s18_what-to-do-when-an-event-bartender-cancels","st_s18_indeed-flex-alternatives-for-bartenders"],["st_s18_how-many-waiters-for-a-private-party","st_s18_how-to-build-a-bartender-profile"],["st_s18_bar-staffing-agency-or-freelance-platform","st_s18_how-to-accept-bookings-on-ff-team"],["st_s18_ff-staff-booking-fees-refunds-replacements","st_s18_repeat-bookings-freelance-bartender"],["p21","p22"],["p46","p47"]];
 function PhotoAlbum20(props) {
   const h = React.createElement;
   const { state, dispatch } = useStore();
   const all = useMemo(photoSources20, []);
   const [g, setG] = useState("All");
+  const [edit, setEdit] = useState(null), [draft, setDraft] = useState("");
+  const names = adm17(state).names || {};
+  const label = (p) => names[p.id] || p.title;
   const gone = (p) => hid17(state, "photos", p.id);
-  const groups = ["All"].concat(Array.from(new Set(all.map((p) => p.group))));
+  const byId = {}; all.forEach((p) => { byId[p.id] = p; });
+  const groups = PHOTO_DUPS20.map((x) => x.filter((i) => byId[i])).filter((x) => x.length > 1);
+  const dupIds = []; groups.forEach((x, gi) => x.forEach((i) => dupIds.push([i, gi])));
+  const gOf = {}; dupIds.forEach((d) => { gOf[d[0]] = d[1] + 1; });
+  const chips = ["All"].concat(Array.from(new Set(all.map((p) => p.group))));
   const nGone = all.filter(gone).length;
-  const shown = all.filter((p) => (g === "Removed" ? gone(p) : !gone(p) && (g === "All" || p.group === g)));
-  const act = (p) => dispatch({ type: "ADMIN17", op: gone(p) ? "show" : "hide", kind: "photos", id: p.id, label: p.title });
-  const copy = () => { try { navigator.clipboard.writeText(all.filter(gone).map((p) => p.id + "\t" + p.title).join("\n")); dispatch({ type: "TOAST", toast: "Removed list copied" }); } catch (e) { /* ignore */ } };
+  const shown = g === "Removed" ? all.filter(gone)
+    : g === "Duplicates" ? dupIds.map((d) => byId[d[0]])
+    : all.filter((p) => !gone(p) && (g === "All" || p.group === g));
+  const act = (p) => dispatch({ type: "ADMIN17", op: gone(p) ? "show" : "hide", kind: "photos", id: p.id, label: label(p) });
+  const save = (p) => { const v = draft.trim(); dispatch({ type: "ADMIN17", op: "rename", id: p.id, name: v === p.title ? "" : v }); setEdit(null); };
+  const copy = () => { try { navigator.clipboard.writeText(all.filter(gone).map((p) => p.id + "\t" + label(p)).join("\n")); dispatch({ type: "TOAST", toast: "Removed list copied" }); } catch (e) { /* ignore */ } };
+  const rank = (id) => (/^(img_|st_)/.test(id) ? 1 : 0);
+  const dedupe = () => { groups.forEach((x) => { const keep = x.slice().sort((a, b) => rank(a) - rank(b))[0]; x.forEach((i) => { if (i !== keep && !gone(byId[i])) dispatch({ type: "ADMIN17", op: "hide", kind: "photos", id: i, label: label(byId[i]) }); }); }); dispatch({ type: "TOAST", toast: "Extra copies removed" }); };
   const css = ".ff-pa20-chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 12px}.ff-pa20-chips button{padding:6px 12px;border-radius:14px;border:1px solid var(--gold-dk);background:transparent;font-size:12.5px;cursor:pointer}.ff-pa20-chips button.on{background:var(--gold-dk);color:#fff}"
-    + ".ff-pa20-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:10px}.ff-pa20-t{display:flex;flex-direction:column;gap:4px;font-size:11.5px}.ff-pa20-t img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:16px;background:#e9e1cf}.ff-pa20-t.gone img{opacity:.35}.ff-pa20-t span{line-height:1.25;overflow-wrap:anywhere}.ff-pa20-t button{padding:5px 8px;border-radius:12px;border:1px solid var(--gold-dk);background:transparent;font-size:11.5px;cursor:pointer}";
+    + ".ff-pa20-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:10px}.ff-pa20-t{display:flex;flex-direction:column;gap:4px;font-size:11.5px}.ff-pa20-t img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:16px;background:#e9e1cf}.ff-pa20-t.gone img{opacity:.35}.ff-pa20-t span{line-height:1.25;overflow-wrap:anywhere}.ff-pa20-t em{font-style:normal;color:var(--gold-dk);font-weight:600}.ff-pa20-t input{width:100%;padding:5px 8px;border-radius:12px;border:1px solid var(--gold-dk);font:inherit}.ff-pa20-row{display:flex;gap:4px}.ff-pa20-row button{flex:1;padding:5px 6px;border-radius:12px;border:1px solid var(--gold-dk);background:transparent;font-size:11.5px;cursor:pointer}";
   return h("div", { className: "ff-pa20" },
     h("style", null, css),
     h("div", { className: "ff-pa20-chips" },
-      groups.map((x) => h("button", { key: x, type: "button", className: g === x ? "on" : "", onClick: () => setG(x) }, x)),
+      chips.map((x) => h("button", { key: x, type: "button", className: g === x ? "on" : "", onClick: () => setG(x) }, x)),
+      groups.length ? h("button", { type: "button", className: g === "Duplicates" ? "on" : "", onClick: () => setG("Duplicates") }, "Duplicates (" + groups.length + ")") : null,
       nGone ? h("button", { type: "button", className: g === "Removed" ? "on" : "", onClick: () => setG("Removed") }, "Removed (" + nGone + ")") : null,
-      nGone ? h("button", { type: "button", onClick: copy }, "Copy removed list") : null),
+      nGone ? h("button", { type: "button", onClick: copy }, "Copy removed list") : null,
+      g === "Duplicates" ? h("button", { type: "button", onClick: dedupe }, "Remove extra copies") : null),
     h("div", { className: "ff-pa20-grid" }, shown.map((p) => h("div", { key: p.id, className: "ff-pa20-t" + (gone(p) ? " gone" : "") },
-      h("img", { src: p.src, alt: p.title, loading: "lazy", decoding: "async" }),
-      h("span", null, p.title),
-      h("button", { type: "button", onClick: () => act(p) }, gone(p) ? "Restore" : "Remove")))));
+      h("img", { src: p.src, alt: label(p), loading: "lazy", decoding: "async" }),
+      edit === p.id
+        ? h("input", { value: draft, autoFocus: true, "aria-label": "Photo name", onChange: (e) => setDraft(e.target.value), onKeyDown: (e) => { if (e.key === "Enter") save(p); if (e.key === "Escape") setEdit(null); } })
+        : h("span", null, label(p)),
+      g === "Duplicates" && gOf[p.id] ? h("em", null, "Match " + gOf[p.id]) : null,
+      h("div", { className: "ff-pa20-row" },
+        edit === p.id ? h("button", { type: "button", onClick: () => save(p) }, "Save") : h("button", { type: "button", onClick: () => { setEdit(p.id); setDraft(label(p)); } }, "Rename"),
+        h("button", { type: "button", onClick: () => act(p) }, gone(p) ? "Restore" : "Remove"))))));
 }
 function PhotoAlbumFold20() {
   return React.createElement(Fold17, { id: "album20", icon: A17I.Layers, title: "Photo album", shut: true }, React.createElement(PhotoAlbum20, null));
@@ -27562,12 +27583,20 @@ const PROMO_CSS20 = ".ff-cp20{position:relative;margin:22px 0;border-radius:26px
     + ".ff-cp20r h3{margin:16px 0 4px;font-size:15px}.ff-cp20r p,.ff-cp20r li{font-size:14px;line-height:1.5;margin:0 0 6px}.ff-cp20r ul,.ff-cp20r ol{margin:0;padding-left:20px}"
     + ".ff-cp20r .tbc{display:inline-block;margin:0 6px 6px 0;padding:4px 10px;border-radius:12px;border:1px dashed var(--gold-dk,#A5802F);font-size:12.5px}"
     + ".ff-vip20-ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px}.ff-vip20-ul li{padding:7px 10px;border-radius:14px;border:1px solid rgba(201,162,75,.4);font-size:12px;line-height:1.3;color:#F4EBD6}";
+const PROMO_BOX_CSS20 = ".ff-cp20 .ff-cp20-boxes{display:grid;grid-template-columns:1fr 1fr;gap:10px}.ff-cp20 .ff-cp20-box{display:flex;flex-direction:column;gap:3px;text-align:left;padding:14px 14px;border-radius:18px;border:1px solid rgba(201,162,75,.45);background:rgba(244,235,214,.05);color:#F4EBD6;cursor:pointer;font:inherit;min-height:84px}.ff-cp20 .ff-cp20-box b{font-size:15px;line-height:1.2;color:#F4EBD6}.ff-cp20 .ff-cp20-box span{font-size:12.5px;line-height:1.3;color:#D9B968}.ff-cp20 .ff-cp20-box:hover,.ff-cp20 .ff-cp20-box:focus-visible{background:rgba(201,162,75,.14);outline:none}.ff-cp20.big .ff-cp20-in{grid-template-columns:1fr;gap:20px;padding:30px 26px}.ff-cp20.big h2{font-size:clamp(30px,7vw,48px);line-height:1.05;margin:10px 0 10px}.ff-cp20.big p{font-size:16.5px}.ff-cp20.big .ff-cp20-eye{font-size:13px}.ff-cp20.big .ff-cp20-box{min-height:96px;padding:16px}.ff-cp20.big .ff-cp20-box b{font-size:16.5px}@media(min-width:900px){.ff-cp20.big .ff-cp20-in{grid-template-columns:1.1fr 1fr;padding:40px 36px;align-items:center}}";
 function TeamCompetition20() {
   const h = React.createElement;
   const nav = useHomeNav();
   const [rules, setRules] = useState(false);
-  const pics = ["reward_training_tickets", "reward_nfc_card", "reward_bar_kit", "reward_photoshoot"].map(img).filter(Boolean);
-  const css = PROMO_CSS20;
+  const [box, setBox] = useState(null);
+  const boxes = [
+    ["1–31 December", "Competition dates", [["Dates", "The competition runs from 1 to 31 December 2026."]]],
+    ["Open to hospitality", "Who can enter", [["Who can enter", "Open to genuine hospitality professionals and people seriously committed to entering the hospitality industry who are willing and available to undertake suitable freelance hospitality work."], ["Experience", "Previous hospitality experience is not mandatory."]]],
+    ["Four winners", "Gold, Silver, Bronze and Mystery", [["Winners", "Gold, Silver and Bronze go to the largest qualifying professional Network and Team. The Mystery Prize goes to a random eligible participant outside the top three."], ["Prizes", "Hospitality experiences, training, professional equipment, photography and more. Prize details are confirmed before the competition opens."], ["Placements", "Competition placements are separate from the Bronze, Silver and Gold XP levels."]]],
+    ["Network + Team", "How to compete", [["How to compete", "Create an FF Team profile. Share your Profile Card with hospitality contacts. Build genuine Network and Team connections."], ["Network and Team", "These are separate features. Team connections need mutual acceptance."], ["Fair play", "Only genuine accounts and authentic professional connections qualify."]]],
+  ];
+  const cur = box === null ? null : boxes[box];
+  const css = PROMO_CSS20 + PROMO_BOX_CSS20;
   const sec = (t, body) => h("div", { key: t }, h("h3", { className: "ff-label" }, t), body);
   return h("section", { className: "ff-sect", id: "ff-competition", "aria-labelledby": "ff-cp20-h" },
     h("style", null, css),
@@ -27582,8 +27611,10 @@ function TeamCompetition20() {
             h(ShineButton, { onClick: nav.goProfile }, "Join Competition"),
             h(Button, { onClick: () => setRules(true) }, "Competition Rules"))),
         h("div", null,
-          h("div", { className: "ff-cp20-pics", "aria-hidden": "true" }, pics.map((p) => h("span", { key: p, style: { backgroundImage: "url(" + p + ")" } }))),
+          h("div", { className: "ff-cp20-boxes" }, boxes.map((b, i) => h("button", { key: b[0], type: "button", className: "ff-cp20-box", onClick: () => setBox(i) }, h("b", null, b[0]), h("span", null, b[1])))),
           h("div", { className: "ff-cp20-url" }, "FFTeam.uk")))),
+    h(Sheet, { open: box !== null, onClose: () => setBox(null), title: cur ? cur[0] : "", center: true },
+      cur ? h("div", { className: "ff-cp20r" }, cur[2].map((r) => sec(r[0], h("p", null, r[1])))) : null),
     h(Sheet, { open: rules, onClose: () => setRules(false), title: "FF Team Launch Competition rules", center: true },
       h("div", { className: "ff-cp20r" },
         COMP_RULES20.map((r) => sec(r[0], h("p", null, r[1]))),
@@ -27609,10 +27640,16 @@ function TeamCompetition20() {
 const FF_VIP_CONFIG = {
   foundingLimit: 1000,
   showRemaining: false,
-  benefits: ["Free VIP Host Card", "Exclusive eligible FireFlair rates", "Access to special member offers", "Founding VIP status for the first 1,000 qualifying members"],
+  benefits: [],
   rates: [],
   offers: [],
 };
+FF_VIP_CONFIG.benefits = [
+  { t: "Free VIP Host Card", s: "No subscription", d: ["A free membership benefit.", "It is not a subscription or a contract, and there is nothing to cancel."] },
+  { t: "Exclusive rates", s: "On eligible bookings", d: ["Exclusive FireFlair rates for eligible bookings and packages.", "Eligible rates are confirmed before launch and shown here."] },
+  { t: "Special offers", s: "For members", d: ["Access to special member offers.", "Offers are shared with VIP Hosts as they are agreed."] },
+  { t: "Founding VIP", s: "First " + FF_VIP_CONFIG.foundingLimit.toLocaleString("en-GB") + " members", d: ["The first " + FF_VIP_CONFIG.foundingLimit.toLocaleString("en-GB") + " qualifying VIP Host Card registrations receive Founding VIP status.", "It shows on your VIP Host Card and is saved against your account. One per account."] },
+];
 const vipClaim20 = (s, patch) => {
   if (!patch || !patch.cardSavedAt) return s;
   if (!(s.role === "staff" && s.site === "party")) return s;
@@ -27634,18 +27671,20 @@ function VipFounding20() {
   const h = React.createElement;
   const { state, dispatch } = useStore();
   const [info, setInfo] = useState(false);
+  const [box, setBox] = useState(null);
   const cfg = FF_VIP_CONFIG;
   const lim = cfg.foundingLimit.toLocaleString("en-GB");
   const vip = (state.company || {}).vip;
   const left = cfg.showRemaining ? Math.max(0, cfg.foundingLimit - vipFoundingCount20(state)) : null;
   const go = () => { dispatch({ type: "TAB", tab: "profile" }); window.scrollTo(0, 0); };
   const sec = (t, body) => h("div", { key: t }, h("h3", { className: "ff-label" }, t), body);
+  const cur = box === null ? null : cfg.benefits[box];
   return h("section", { className: "ff-sect", id: "ff-vip", "aria-labelledby": "ff-vip-h" },
-    h("style", null, PROMO_CSS20),
-    h("div", { className: "ff-cp20" },
+    h("style", null, PROMO_CSS20 + PROMO_BOX_CSS20),
+    h("div", { className: "ff-cp20 big" },
       h("div", { className: "ff-cp20-in" },
         h("div", null,
-          h("div", { className: "ff-cp20-eye" }, h(Coin, { size: 34, tier: "gold" }), h("span", null, "VIP Host Card")),
+          h("div", { className: "ff-cp20-eye" }, h(Coin, { size: 40, tier: "gold" }), h("span", null, "VIP Host Card")),
           h("h2", { id: "ff-vip-h" }, "You’re invited to VIP."),
           h("p", null, "Be one of our first " + lim + " VIP Hosts and enjoy exclusive FireFlair rates, special offers and member benefits."),
           left !== null ? h("span", { className: "ff-cp20-date" }, left.toLocaleString("en-GB") + " founding places left") : null,
@@ -27653,13 +27692,15 @@ function VipFounding20() {
             h(ShineButton, { onClick: go }, vip ? "Open your VIP Host Card" : "Create your VIP Host Card"),
             h(Button, { onClick: () => setInfo(true) }, "VIP details"))),
         h("div", null,
-          h("ul", { className: "ff-vip20-ul" }, cfg.benefits.map((b) => h("li", { key: b }, b))),
+          h("div", { className: "ff-cp20-boxes" }, cfg.benefits.map((b, i) => h("button", { key: b.t, type: "button", className: "ff-cp20-box", onClick: () => setBox(i) }, h("b", null, b.t), h("span", null, b.s)))),
           h("div", { className: "ff-cp20-url" }, "FFParty.uk")))),
+    h(Sheet, { open: box !== null, onClose: () => setBox(null), title: cur ? cur.t : "", center: true },
+      cur ? h("div", { className: "ff-cp20r" }, cur.d.map((p, i) => h("p", { key: i }, p))) : null),
     h(Sheet, { open: info, onClose: () => setInfo(false), title: "VIP Host Card", center: true },
       h("div", { className: "ff-cp20r" },
         sec("What it is", h("p", null, "A free membership benefit. It is not a subscription or a contract, and there is nothing to cancel.")),
         sec("Founding VIP", h("p", null, "The first " + lim + " qualifying VIP Host Card registrations receive Founding VIP status, saved against the account. One per account.")),
-        sec("Benefits", h("ul", null, cfg.benefits.map((b) => h("li", { key: b }, b)))),
+        sec("Benefits", h("ul", null, cfg.benefits.map((b) => h("li", { key: b.t }, b.t + ": " + b.s)))),
         sec("Final terms", h("div", null, h("p", null, "To be confirmed before launch:"), ["Eligible FireFlair rates", "Special member offers", "Qualifying registration definition", "Offer end date", "Promoter details"].map((t) => h("span", { key: t, className: "tbc" }, t + ": to be confirmed")))))));
 }
 function Home101() {
