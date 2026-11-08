@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v17.3.114 — 2026-11-08 — Map layers
+
+- Network map (FF Team, FF Staff, FF Party): the legend is now four tick boxes — FF Partners, FF Professionals, FF Directory, FF Venues — all ticked by default, each with a count. Unticking a box removes that layer from the map. Venues now show on the Network map as well.
+- Partner pins: companies that have signed up and have a location appear as FF Partner pins; today every company pin is a Directory listing, so the Partners box has nothing to show until partners add locations.
+- Developer note: the layer filter is `mapLayer19(show)` in FFMap; `pinsAll` is the unfiltered list used for the counts. The old category legend is hidden on the Network map and still used on the home map.
+
 ## v17.3.113 — 2026-11-08 — Explore by area rebuilt, FireFlair Directory and Partners
 
 - Explore by area now sits directly under the map on the Network page of FF Team, FF Staff and FF Party (one shared component). It is a short path: UK or Worldwide, then a region (UK: England, Northern Ireland, Scotland, Wales; Worldwide: Europe, North America, South America, Asia, Middle East, Africa, Oceania), then places. Greater London is always first under England. Opens collapsed, with place search kept.

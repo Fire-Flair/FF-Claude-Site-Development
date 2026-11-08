@@ -19604,10 +19604,23 @@ const COMPANY_PINS11 = (() => {
   return out;
 })();
 
+const MAP_LAYERS19 = [["partners", "FF Partners"], ["pros", "FF Professionals"], ["dir", "FF Directory"], ["venues", "FF Venues"]];
+const mapLayer19 = (show) => (p) => p.kind === "person" ? show.pros : p.kind === "company" ? (p.partner ? show.partners : show.dir) : p.kind === "venue" ? show.venues : true;
+function MapLegend19({ pins, show, setShow }) {
+  const h = React.createElement;
+  const n = (f) => new Set(pins.filter(f).map((p) => p.coId || p.id)).size;
+  const count = { partners: n((p) => p.kind === "company" && p.partner), pros: n((p) => p.kind === "person"), dir: n((p) => p.kind === "company" && !p.partner), venues: n((p) => p.kind === "venue") };
+  const icon = { partners: h(Coin, { size: 17 }), pros: h(MapPerson17, { size: 18 }), dir: h(MapDot17, { cat: "bar", size: 18 }), venues: h("span", { style: { width: 11, height: 11, borderRadius: 3, background: MAP_LAYER.venue.color, border: "1px solid #141416", display: "block" } }) };
+  return h("div", { className: "ff-ml19", role: "group", "aria-label": "Map layers" },
+    h("style", null, ".ff .ff-ml19 { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:10px 0 14px; } .ff .ff-ml19 label { display:flex; align-items:center; gap:7px; font-size:12px; cursor:pointer; padding:6px 11px; border:1px solid var(--rule); border-radius:12px; corner-shape:squircle; background:#fff; color:var(--ink); } .ff .ff-ml19 input { accent-color:#7E611D; width:15px; height:15px; margin:0; }"),
+    MAP_LAYERS19.map(([k, label]) => h("label", { key: k }, h("input", { type: "checkbox", checked: !!show[k], onChange: () => setShow({ ...show, [k]: !show[k] }) }), icon[k], label + (count[k] ? " (" + count[k] + ")" : ""))));
+}
+
 function FFMap({ mode = "home" }) {
   const { state, dispatch } = useStore();
   const directory = useDirectory();
   const [sel, setSel] = useState(null);
+  const [show, setShow] = useState({ partners: true, pros: true, dir: true, venues: true });
   const home = mode === "home";
 
   const pins0 = useMemo(() => {
@@ -19616,22 +19629,24 @@ function FFMap({ mode = "home" }) {
     const all = home || p1
       ? [...people, ...(p1 ? [] : MAP_BUSINESSES.map(b => ({ ...b, kind: "business" }))),
          ...VENUES.map(v => ({ ...v, kind: "venue", venue: true })), ...(p1 ? [] : MAP_EVENTS.map(e => ({ ...e, kind: "event" })))]
-      : people;
+      : mode === "network" ? [...people, ...VENUES.map((v) => ({ ...v, kind: "venue", venue: true }))] : people;
     const seen = {};
     const RING = [[0, 0], [7, -6], [-7, 5], [8, 7], [-8, -6], [0, 9], [0, -9], [11, 0], [-11, 0], [10, -9], [-10, 9]];
     const cos = mode === "phase1" ? [] : COMPANY_PINS11.map(p => ({ ...p, x: (p.ll[1] + 0.4045) / 0.00525, y: (51.654 - p.ll[0]) / 0.002957 + 9 }));
+    const partnerPins = mode !== "network" ? [] : companyList(state).filter((c) => !c.unclaimed && !c.mine && (c.locations || []).length).flatMap((c) => c.locations.map((l, i) => { const ll = [l.lat, l.lng]; return { id: "pt_" + c.id + "_" + i, coId: c.id, kind: "company", partner: true, name: c.name, profession: c.kind, area: l.label, ll, ldn: inLondon11(ll), cat: c.cat || "bar", x: (ll[1] + 0.4045) / 0.00525, y: (51.654 - ll[0]) / 0.002957 + 9 }; }));
     return [...all.map(p => {
       const [bx, by] = MAP_AREAS[p.area];
       const n = (seen[p.area] = (seen[p.area] || 0) + 1) - 1;
       const ring = RING[n % RING.length];
       return { ...p, x: Math.max(4, Math.min(96, bx + ring[0])), y: Math.max(5, Math.min(95, by + ring[1])) };
-    }), ...cos];
-  }, [home, mode, directory.length]);
+    }), ...cos, ...partnerPins];
+  }, [home, mode, directory.length, state.company]);
   const netPillar = mode === "network" ? (state.netPillar17 || "") : "";
-  const pins = useMemo(() => {
+  const pinsAll = useMemo(() => {
     if (!netPillar) return pins0;
     return pins0.filter((p) => p.kind === "company" ? PILLAR_OF_CAT17[p.cat || "bar"] === netPillar : p.kind === "person" ? PILLAR_OF_GROUP17[p.group] === netPillar : false);
   }, [pins0, netPillar]);
+  const pins = useMemo(() => mode !== "network" ? pinsAll : pinsAll.filter(mapLayer19(show)), [pinsAll, show, mode]);
 
   const boxRef = useRef(null), mapRef = useRef(null);
   const [fallback, setFallback] = useState(() => !window.L || !ukGeo11());
@@ -19761,7 +19776,8 @@ function FFMap({ mode = "home" }) {
         </div>
       )}
 
-      <div style={{ display: "flex", gap: 14, alignItems: "center", justifyContent: "center", margin: "10px 0 14px", flexWrap: "wrap" }}>
+      {mode === "network" && <MapLegend19 pins={pinsAll} show={show} setShow={setShow} />}
+      <div style={{ display: mode === "network" ? "none" : "flex", gap: 14, alignItems: "center", justifyContent: "center", margin: "10px 0 14px", flexWrap: "wrap" }}>
         <span className="ff-body ff-muted" style={{ fontSize: 11, display: "flex", gap: 6, alignItems: "center" }}><MapPerson17 size={18} /> Professionals{nPeople ? ` (${nPeople})` : ""}</span>
         {companyLegend17(pins)}
         {(home || mode === "phase1") && <>
