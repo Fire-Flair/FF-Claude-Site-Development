@@ -10748,11 +10748,11 @@ function CocktailsPage() {
    businesses and freelancers, will create their own Service Cards; the two
    examples are square, to set them apart from FireFlair's own. */
 const PARTY_SERVICES = [
-  { id: "svc_bartending", tone: "bronze", level: "Bronze", title: "Bartending Service", tagline: "Professional bartenders for your party or event.", from: "£200",
+  { id: "svc_bartending", tone: "bronze", level: "Bronze", title: "Bartending Package", tagline: "Professional bartenders for your party or event.", from: "£200",
     includes: "Basic equipment, professional, able to work solo", ideal: "House parties, birthdays and private events", time: "3 hours" },
   { id: "svc_mixology", tone: "silver", level: "Silver", title: "Cocktail Bar Service", tagline: "Signature cocktails built around your event.", from: "£250",
     includes: "Write and follow a cocktail menu, with your own cocktail kit", ideal: "Weddings, launches and celebrations", time: "From 4 hours" },
-  { id: "svc_masterclass", tone: "gold", level: "Gold", title: "Masterclass Service", tagline: "A hands-on cocktail masterclass for your group.", from: "£300",
+  { id: "svc_masterclass", tone: "gold", level: "Gold", title: "Masterclass Package", tagline: "A hands-on cocktail masterclass for your group.", from: "£300",
     includes: "Host mixologist, all equipment, three to four cocktails each", ideal: "Hen and stag parties, team socials", time: "1½ to 2 hours" },
   { id: "svc_flair", tone: "gold", level: "Flair", title: "Flair Package", tagline: "An amazing bartender, plus a Flair performance.", from: "£250",
     includes: "Do some flair", ideal: "Launches, weddings and parties that want a show", time: "From 3 hours" },
@@ -10762,7 +10762,7 @@ const STAFFING_SERVICE = { id: "svc_staffing", tone: "white", level: "Staffing",
 
 function ServicePoster({ svc, price }) {
   return (
-    <PosterCard tone={svc.tone} ribbon="Service Card" eyebrow={[(/^(bronze|silver|gold)$/i.test(svc.level) ? "" : svc.level), svc.site || "FF Party"].filter(Boolean).join(" · ")} title={svc.title} tagline={svc.tagline}
+    <PosterCard tone={svc.tone} ribbon={(svc.kind === "package" || svc.id !== "svc_staffing" ? "Package Card" : "Service Card")} eyebrow={[(/^(bronze|silver|gold)$/i.test(svc.level) ? "" : svc.level), svc.site || "FF Party"].filter(Boolean).join(" · ")} title={svc.title} tagline={svc.tagline}
       rows={[
         { icon: <Sparkles size={17} />, label: "Includes", value: svc.includes },
         { icon: <Users size={17} />, label: "Ideal for", value: svc.ideal },
@@ -16200,6 +16200,7 @@ function ffSeoPersonPage(person) {
 }
 
 function ffSeoFor(state, people) {
+  if (state.pkgPage) { const pkS = V101.pkgSeo18(state); if (pkS) return pkS; }
   if (state.fdArea) { const fdS = fdSeo(state, people); if (fdS) return fdS; }
   if (state.viewing) {
     const person = (people || []).find(p => p && p.id === state.viewing);
@@ -16461,15 +16462,15 @@ function FireFlair() {
       const seo = ffSeoApply(ffSeoFor(state, ffSeoPeople(state)));
       if (seo && FF_SEO.onView) FF_SEO.onView(seo);
     } catch (e) { /* metadata must never break the app */ }
-  }, [state.role, state.tab, state.route, state.viewing, !!(state.profile && state.profile.live), state.fdArea && state.fdArea.path, state.fdArea && state.fdArea.site, state.fd, state.fdPreview]);
+  }, [state.role, state.tab, state.route, state.viewing, !!(state.profile && state.profile.live), state.fdArea && state.fdArea.path, state.fdArea && state.fdArea.site, state.pkgPage && state.pkgPage.slug, state.fd, state.fdPreview]);
 
   return (
     <Store.Provider value={store}>
       <style>{CSS + P1_CSS + V101_CSS + V11_CSS + VK17_CSS + FD_CSS}</style>
       <div className="ff">
-        <Shell>{state.adminOpen17 ? <Admin17 /> : state.fdArea ? <AreaPage11 /> : state.viewingCompany ? <CompanyPublic /> : state.viewing ? <PersonProfile /> : state.role === "team" ? <TeamRouter /> : state.role === "staff" ? <StaffRouter /> : <Landing />}</Shell>
+        <Shell>{state.adminOpen17 ? <Admin17 /> : state.pkgPage ? <V101.PackagePage18 /> : state.fdArea ? <AreaPage11 /> : state.viewingCompany ? <CompanyPublic /> : state.viewing ? <PersonProfile /> : state.role === "team" ? <TeamRouter /> : state.role === "staff" ? <StaffRouter /> : <Landing />}</Shell>
         <CardPeek />
-        <FdRoute11 />
+        <FdRoute11 /><V101.PkgRoute18 />
         <AutofillEngine17 />
         <FitWords17 />
         <LongPress17 />
@@ -21190,7 +21191,7 @@ const svcTimeFor = (svc, start) => start ? [start, addHours(start, svcHours(svc)
 function ServicePosterBook11({ svc, sh, start, onBook, onRemove }) {
   return (
     <div className={`ff-svcp${sh ? " on" : ""}`}>
-      <V101.PosterCard tone={svc.tone} ribbon="Service Card" eyebrow={[lvl17(svc.level), "FF Party"].filter(Boolean).join(" · ")} title={svc.title} tagline={svc.tagline} price={svc.price}
+      <V101.PosterCard tone={svc.tone} ribbon={(svc.kind === "package" || svc.id !== "svc_staffing" ? "Package Card" : "Service Card")} eyebrow={[lvl17(svc.level), "FF Party"].filter(Boolean).join(" · ")} title={svc.title} tagline={svc.tagline} price={svc.price}
         rows={[
           { icon: <I11.Sparkles size={17} />, label: "Includes", value: svc.includes },
           { icon: <I11.Users size={17} />, label: "Ideal for", value: svc.ideal },
@@ -25659,11 +25660,11 @@ function verificationLevel(connections, server) {
  *  prices, the Platinum Full Service after Gold, and Staff Service. Titles
  *  are what interest is saved by, so keep them stable. */
 const PARTY_SERVICES = [
-    { id: "svc_bartending", tone: "bronze", level: "Bronze", title: "Bartending Service", tagline: "Professional bartenders for your party or event.",
+    { id: "svc_bartending", tone: "bronze", level: "Bronze", title: "Bartending Package", tagline: "Professional bartenders for your party or event.",
         includes: "Bartender, bar set-up and full drinks service", ideal: "House parties, birthdays and private events", time: "3 hours", price: "£150" },
-    { id: "svc_mixology", tone: "silver", level: "Silver", title: "Mixology Service", tagline: "Signature cocktails built around your event.",
+    { id: "svc_mixology", tone: "silver", level: "Silver", title: "Mixology Package", tagline: "Signature cocktails built around your event.",
         includes: "Mixologist, bespoke cocktail menu and garnishes", ideal: "Weddings, launches and celebrations", time: "3 hours", price: "£200" },
-    { id: "svc_masterclass", tone: "gold", level: "Gold", title: "Masterclass Service", tagline: "A hands-on cocktail masterclass for your group.",
+    { id: "svc_masterclass", tone: "gold", level: "Gold", title: "Masterclass Package", tagline: "A hands-on cocktail masterclass for your group.",
         includes: "Host mixologist, all equipment, three to four cocktails each", ideal: "Hen and stag parties, team socials", time: "2 hours", price: "£350" },
     { id: "svc_full", tone: "platinum", level: "Platinum", title: "Full Service", tagline: "Everything, taken care of.",
         includes: "Full bar set-up, bartenders, cocktails and drinks service - everything", ideal: "Weddings, big celebrations and premium events", time: "From 4 hours", price: "From £500" },
@@ -25727,7 +25728,7 @@ function PosterCard({ tone = "dark", ribbon, eyebrow, title, subtitle, tagline, 
 function ServicePoster({ svc }) {
     const { state } = useStore();
     const shown = state.role === "staff" || state.site === "party" ? svc.price : String(svc.price).replace(/£(\d+)/, (m, n) => "£" + Math.max(0, +n - 50));
-    return (<PosterCard tone={svc.tone} ribbon="Service Card" eyebrow={`${svc.level} · FF Party`} title={svc.title} tagline={svc.tagline} price={shown} rows={[
+    return (<PosterCard tone={svc.tone} ribbon={(svc.kind === "package" || svc.id !== "svc_staffing" ? "Package Card" : "Service Card")} eyebrow={`${svc.level} · FF Party`} title={svc.title} tagline={svc.tagline} price={shown} rows={[
             { icon: <Sparkles size={17}/>, label: "Includes", value: svc.includes },
             { icon: <Users size={17}/>, label: "Ideal for", value: svc.ideal },
             { icon: <Clock size={17}/>, label: "Duration", value: svc.time },
@@ -26307,8 +26308,8 @@ function NextModule({ id, icon: Icon, title, children, cards }) {
  *  platforms section above.) */
 /* ---- v17.3.76: home service cards, small, and about what it takes to get the job ---- */
 const HOME_JOBS = [
-  { id: "bartending", tone: "bronze", level: "Bronze", title: "Bartending Service", meta: "£100 · 3 hours", reqs: ["Basic equipment", "Be professional", "Able to work solo"] },
-  { id: "mixology", tone: "silver", level: "Silver", title: "Mixology Service", reqs: ["Write a cocktail menu", "Follow a cocktail menu", "Your own cocktail kit"] },
+  { id: "bartending", tone: "bronze", level: "Bronze", title: "Bartending Package", meta: "£100 · 3 hours", reqs: ["Basic equipment", "Be professional", "Able to work solo"] },
+  { id: "mixology", tone: "silver", level: "Silver", title: "Mixology Package", reqs: ["Write a cocktail menu", "Follow a cocktail menu", "Your own cocktail kit"] },
   { id: "flair", tone: "gold", level: "Flair", title: "Flair Package", reqs: ["Do some flair"] },
   { id: "staff", tone: "white", level: "Staffing", title: "Staffing Service", reqs: ["Able to work solo", "Communicate with businesses and clients"] },
 ];
@@ -27032,7 +27033,7 @@ function HomeHero101() {
         <h1 id="ff-hero17-h" className="ff-hero17-h ff-hero-h101">Welcome to FireFlair</h1>
         <p className="ff-hero-sub101">Get seen. Get booked.</p>
         <div className="ff-hero17-cta">
-          <ShineButton onClick={nav.goProfile}><User size={15} /> {mine ? "My Profile Card" : "Create your Profile Card"}</ShineButton>
+          {mine ? <ShineButton onClick={nav.goNetwork}><Users size={15} /> Build your network</ShineButton> : <ShineButton onClick={nav.goProfile}><User size={15} /> Create your Profile Card</ShineButton>}
         </div>
         <div className="ff-hero17-ai"><HomeSearch /></div>
       </div>
@@ -27427,8 +27428,7 @@ function HireHero({ kind }) {
       <div className="ff-hero18-in">
         <h1 id="ff-hero11-h" className="ff-hero17-h ff-hero-h101">{c.h}</h1>
         <p className="ff-hero-sub101">{c.sub}</p>
-        <div className={`ff-hero17-cta${kind === "staff" ? " two" : ""}`}><ShineButton onClick={nav.toEvent}><CalDays11 size={15} /> {c.cta}</ShineButton>
-          {kind === "staff" && <Button onClick={nav.toProfile}><Briefcase size={14} /> Advertise for free</Button>}</div>
+        <div className={"ff-hero17-cta"}><ShineButton onClick={nav.toEvent}><CalDays11 size={15} /> {c.cta}</ShineButton></div>
         <div className="ff-hero17-ai"><HireSearch placeholder={c.search} /></div>
       </div>
     </section>
@@ -27779,7 +27779,7 @@ function HireJoin({ kind }) {
   const game = useGameReady(box);
   const joined = !!(state.company && state.company.joinedAt);
   const c = kind === "party"
-    ? { h: "Plan your event", t: "Create your Event Card in a minute, and we'll take it from there.", b: "Plan your event", go: nav.toEvent, icon: Popper11 }
+    ? { h: "Now enjoy it.", t: "Your celebration, beautifully looked after.", b: "Plan your event", go: nav.toEvent, icon: Popper11 }
     : joined
       ? { h: "Your FF Staff", t: "Create an Event Card, choose your staff, then add their shift details.", b: "Choose your team", go: nav.toEvent, icon: CalDays11 }
       : { h: "Join FF Staff", t: "Your Company Card, so you can start booking.", b: "Join now", go: nav.toProfile, icon: Briefcase };
@@ -28393,7 +28393,7 @@ const ST18 = {
    ],
    [
     "On FF Party",
-    "The services reflect this: a Bartending Service, a Cocktail Bar Service, a Masterclass Service and a Flair Package. Each shows what it includes. For more help choosing, see [bartender hire vs mobile bar hire](/stories/bartender-hire-vs-mobile-bar-hire)."
+    "The services reflect this: a Bartending Package, a Cocktail Bar Service, a Masterclass Package and a Flair Package. Each shows what it includes. For more help choosing, see [bartender hire vs mobile bar hire](/stories/bartender-hire-vs-mobile-bar-hire)."
    ]
   ],
   "cta": "Plan your party",
@@ -28501,7 +28501,7 @@ const ST18 = {
    ],
    [
     "What is included",
-    "On FF Party a Masterclass Service includes a host mixologist, all equipment and three to four cocktails each. A Cocktail Bar Service writes and follows a cocktail menu for your event."
+    "On FF Party a Masterclass Package includes a host mixologist, all equipment and three to four cocktails each. A Cocktail Bar Service writes and follows a cocktail menu for your event."
    ],
    [
     "Questions to ask",
@@ -31539,7 +31539,7 @@ const DX_BIZ = [
     ] },
   { k: "events", t: "Your events", s: "Enhance your events with the best staff, made easy", img: "t17_vke04", pool: ["vke04", "p23", "p46", "p24", "p31"], icon: DX_I.PartyPopper,
     h: "From one shift to a festival.",
-    p: ["Whether it is a single bar shift or a full festival, start with an Event Card: the date, the place and the roles you need.", "Choose your people, send the shifts and let everyone confirm on WhatsApp. No chasing, and no long email chains.", "Plan once, repeat with ease. Your Event Cards stay in Bookings, so the next festival, launch or private party starts from what already worked."],
+    p: ["Whether it is a single bar shift or a full festival, start with an Event Card: the date, the place and the roles you need.", "Choose your people, send the shifts and let everyone confirm on WhatsApp. Everything stays in one place.", "Plan once, repeat with ease. Your Event Cards stay in Bookings, so the next festival, launch or private party starts from what already worked."],
     parts: [
       { id: "ff-steps", label: "Book in four steps", r: () => <HowSteps17 kind="staff" /> },
       { id: "ff-what", label: "Hire the modern way", r: () => <StaffWhatIs /> },
@@ -31548,7 +31548,7 @@ const DX_BIZ = [
     jn: [
       { ic: "CalendarDays", t: "Create an Event Card", d: "Your date, venue and the staff you need.", b: "Create your Event Card", go: "book" , x: "An Event Card holds your date, venue and the staff you need. Everything else in the booking grows from it." },
       { ic: "ListChecks", t: "Book in four steps", d: "From Event Card to confirmation.", b: "See the steps", go: "#ff-steps" , x: "Four steps take you from Event Card to confirmation: choose your people, send the request, and let everyone confirm on WhatsApp." },
-      { ic: "Rocket", t: "Hire the modern way", d: "From one bar shift to a festival.", b: "See how", go: "#ff-what" , x: "Whether it is one bar shift or a festival, you book the same way, with no long email chains and nothing to chase." },
+      { ic: "Rocket", t: "Hire the modern way", d: "From one bar shift to a festival.", b: "See how", go: "#ff-what" , x: "Whether it is one bar shift or a festival, you book the same way, with everything in one place." },
     ] },
   { k: "services", t: "Our events", s: "Every booking, start to finish", img: "t17_p06", pool: ["p06", "v01", "p30", "p01", "p13"], icon: DX_I.Sparkles,
     h: "Grow with every event.",
@@ -31573,60 +31573,245 @@ const DX_BIZ = [
       { ic: "Search", t: "Find your people", d: "Search the whole network.", b: "Explore the network", go: "network" , x: "People search the whole network by skill, area and level, so you find the right person for every event." },
     ] },
 ];
+/* ---- v17.3.112: FireFlair Packages (pop-ups from the site, front-door pages for search), Our Packages / Our Network / Your Booking / Your Party ---- */
+const h18 = React.createElement;
+const PKG18 = {
+  bartending: { id: "svc_bartending", head: "A bartender, a beautiful bar.", desc: "A professional bartender sets up your bar and serves your drinks, so you can enjoy your own celebration.", more: [] },
+  mixology: { id: "svc_mixology", head: "Cocktails made for you.", desc: "A mixologist creates a bespoke cocktail menu around your celebration, with the garnishes and a shopping list to match.", more: ["A shopping list for your menu"], pers: "Your menu is built around your celebration." },
+  masterclass: { id: "svc_masterclass", head: "Shake, stir and create.", desc: "Join the Open Bar Masterclass: a host mixologist guides your group while everyone shakes up the cocktails they want.", more: ["Create your own recipes"], pers: "Everyone shakes up the cocktails they want." },
+  flair: { id: "svc_flair", head: "A bartender with a show.", desc: "A skilled bartender, plus a Flair performance that gets everyone watching.", more: [] },
+  tasting: { id: "svc_full", head: "Taste it first.", desc: "Build your custom cocktail menu with your mixologist, then choose the bar company that brings it to life on the day.", more: [] },
+  staffing: { id: "svc_staffing", head: "The right team for your event.", desc: "Skilled hospitality professionals who work solo and look after you and your guests.", more: [] },
+};
+const PKG18_ORDER = ["bartending", "mixology", "masterclass", "flair", "tasting", "staffing"];
+function pkg18(slug) {
+  const m = PKG18[slug];
+  if (!m) return null;
+  const sv = PARTY_SERVICES.find((s) => s.id === m.id);
+  if (!sv) return null;
+  return Object.assign({ slug: slug, sv: sv }, m);
+}
+const CSS18 = `
+.ff .ff-pk18-hit{display:block;width:100%;padding:0;border:0;background:none;text-align:left;cursor:pointer;border-radius:22px}
+.ff .ff-pk18-hit:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.ff .ff-pk18{padding:4px 16px 18px;display:flex;flex-direction:column;gap:12px}
+.ff .ff-pk18-eb{margin:0;font-family:var(--display);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-dk)}
+.ff .ff-pk18-head{margin:0;font-family:var(--display);font-size:24px;line-height:1.2;letter-spacing:.04em}
+.ff .ff-pk18-d{margin:0;font-size:15px;line-height:1.55;color:#46413A}
+.ff .ff-pk18-rows{margin:0;display:grid;gap:8px}
+.ff .ff-pk18-rows>div{display:grid;grid-template-columns:96px 1fr;gap:10px;padding:10px 12px;border:1px solid rgba(126,97,29,.3);border-radius:16px;background:#FFFDF8}
+.ff .ff-pk18-rows dt{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-dk);padding-top:2px}
+.ff .ff-pk18-rows dd{margin:0;font-size:14px;line-height:1.45}
+.ff .ff-pk18-rows ul{margin:0;padding-left:16px}
+.ff .ff-pk18-steps{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.ff .ff-pk18-steps li{display:flex;align-items:center;gap:8px;font-size:13px;line-height:1.3;padding:8px 10px;border-radius:14px;background:rgba(201,162,39,.08)}
+.ff .ff-pk18-steps li span{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--gold-dk);color:#fff;font-size:11px;font-weight:700}
+.ff .ff-pk18-g{margin:0;padding:12px 14px;border-radius:16px;background:linear-gradient(170deg,#FFFCF5,#F4ECDB);border:1px solid rgba(154,115,34,.45);font-size:14px}
+.ff .ff-pk18-cta{display:flex;justify-content:center;padding-top:4px}
+.ff .ff-pk18-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:16px 0}
+.ff .ff-pk18-card{display:flex;flex-direction:column;gap:6px;padding:14px;border-radius:20px;border:1px solid rgba(126,97,29,.4);background:#FFFDF8;text-decoration:none;color:inherit}
+.ff .ff-pk18-card b{font-family:var(--display);letter-spacing:.04em}
+.ff .ff-pk18-card span{font-size:13.5px;line-height:1.45;color:#46413A}
+.ff .ff-pk18-card:hover{border-color:var(--gold-dk)}
+.ff .ff-g18{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:18px 16px;border-radius:24px;border:1px solid rgba(154,115,34,.45);background:linear-gradient(170deg,#FFFCF5,#F4ECDB)}
+.ff .ff-g18 h3{margin:0;font-family:var(--display);font-size:16px;letter-spacing:.06em}
+.ff .ff-g18 p{margin:0;font-size:14px}
+.ff .ff-fold18{border:1px solid rgba(126,97,29,.4);border-radius:24px;background:#FFFDF8;overflow:hidden}
+.ff .ff-fold18-b{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border:0;background:none;text-align:left;cursor:pointer;color:inherit}
+.ff .ff-fold18-b b{display:block;font-family:var(--display);font-size:18px;letter-spacing:.05em}
+.ff .ff-fold18-b small{display:block;margin-top:2px;font-size:12.5px;color:#6A6253}
+.ff .ff-fold18-b::after{content:"";flex:none;width:9px;height:9px;border-right:2px solid var(--gold-dk);border-bottom:2px solid var(--gold-dk);transform:rotate(45deg);transition:transform .18s ease}
+.ff .ff-fold18-b[aria-expanded="true"]::after{transform:rotate(-135deg)}
+.ff .ff-fold18-c{padding:0 18px 18px;display:flex;flex-direction:column;gap:10px}
+.ff .ff-fold18-c p{margin:0;font-size:14.5px;line-height:1.55;color:#46413A}
+.ff .ff-fold18-c h3{margin:6px 0 0;font-family:var(--display);font-size:15px;letter-spacing:.06em}
+.ff .ff-fire18{width:150px;margin:0 auto}
+`;
+function Css18() { return h18("style", null, CSS18); }
+function PkgBody18({ m, onPlan }) {
+  const sv = m.sv;
+  const inc = [sv.includes].concat(m.more || []);
+  return h18("div", { className: "ff-pk18" },
+    h18("p", { className: "ff-pk18-eb" }, "FireFlair Package"),
+    h18("p", { className: "ff-pk18-head" }, m.head),
+    h18("p", { className: "ff-pk18-d" }, m.desc),
+    h18("dl", { className: "ff-pk18-rows" },
+      h18("div", null, h18("dt", null, "Includes"), h18("dd", null, h18("ul", null, inc.map((x) => h18("li", { key: x }, x))))),
+      h18("div", null, h18("dt", null, "Perfect for"), h18("dd", null, sv.ideal)),
+      m.pers ? h18("div", null, h18("dt", null, "Your way"), h18("dd", null, m.pers)) : null,
+      h18("div", null, h18("dt", null, "Duration"), h18("dd", null, sv.time)),
+      h18("div", null, h18("dt", null, "Price"), h18("dd", null, sv.price))),
+    h18("ol", { className: "ff-pk18-steps" }, ["Choose your package", "Choose your people", "Choose your add-ons", "Your booking is secured"].map((t, i) => h18("li", { key: t }, h18("span", null, i + 1), t))),
+    h18("p", { className: "ff-pk18-g" }, h18("b", null, "The FireFlair Booking Guarantee. "), "Confirmed, or refunded in full."),
+    h18("div", { className: "ff-pk18-cta" }, h18(ShineButton, { onClick: onPlan }, "Plan your event")));
+}
+function PartyPackages18() {
+  const [open, setOpen] = useState(null);
+  const hire = useHireNav();
+  const list = PKG18_ORDER.map(pkg18).filter(Boolean);
+  const cur = open ? pkg18(open) : null;
+  return h18("section", { className: "ff-sect ff-pk18-sect", id: "ff-offer", "aria-labelledby": "ff-pk18-h" },
+    h18("h2", { id: "ff-pk18-h", className: "ff-h1" }, "FireFlair Packages"),
+    h18(HomeCarousel, { label: "FireFlair Packages" }, list.map((m) => h18("div", { key: m.slug, style: { width: CARD_W.poster, flex: "none" } },
+      h18("button", { type: "button", className: "ff-pk18-hit", onClick: () => setOpen(m.slug), "aria-label": m.sv.title },
+        h18(ServicePoster, { svc: Object.assign({}, m.sv, { kind: "package" }) }))))),
+    cur ? h18(Sheet, { open: true, onClose: () => setOpen(null), title: cur.sv.title, center: true },
+      h18(PkgBody18, { m: cur, onPlan: () => { setOpen(null); hire.toEvent(); } })) : null);
+}
+function Guarantee18() {
+  return h18("section", { className: "ff-sect ff-g18", id: "ff-guarantee" },
+    h18(Coin, { size: 64, tier: "gold" }),
+    h18("h3", null, "The FireFlair Booking Guarantee"),
+    h18("p", null, "Book with nothing to lose. Confirmed, or refunded in full."));
+}
+function Fold18({ id, title, sub, children }) {
+  const [open, setOpen] = useState(false);
+  return h18("section", { className: "ff-sect ff-fold18", id: id },
+    h18("button", { type: "button", className: "ff-fold18-b", "aria-expanded": open, onClick: () => setOpen(!open) },
+      h18("span", null, h18("b", null, title), sub ? h18("small", null, sub) : null)),
+    open ? h18("div", { className: "ff-fold18-c" }, children) : null);
+}
+function FireFlairFold18() {
+  return h18(Fold18, { id: "ff-why", title: "Fire & Flair", sub: "Why we are called FireFlair" },
+    h18("div", { className: "ff-fire18" }, h18(Campfire17, null)),
+    h18("p", null, "People have always gathered around a fire. It is where stories get told, where strangers turn into friends, and where an ordinary night becomes the one everyone remembers."),
+    h18("p", null, WHY17.party || WHY17.team),
+    h18("p", null, "FireFlair brings people together through events."),
+    h18("h3", null, "Our founding team"),
+    h18("p", null, "Founding members offer support across all FireFlair events."),
+    h18(FoundingRow17, null));
+}
+const PKG18_RE = /^#\/ff-party\/packages(?:\/([a-z0-9-]+))?\/?$/i;
+function PkgRoute18() {
+  const { state, dispatch } = useStore();
+  const ref = useRef(state); ref.current = state;
+  useEffect(() => {
+    const sync = () => {
+      const m = PKG18_RE.exec(String(window.location.hash || ""));
+      const cur = ref.current.pkgPage;
+      if (m) { const slug = (m[1] || "").toLowerCase(); if (!cur || cur.slug !== slug) dispatch({ type: "V11_SET", patch: { pkgPage: { slug: slug } } }); }
+      else if (cur) dispatch({ type: "V11_SET", patch: { pkgPage: null } });
+    };
+    sync();
+    window.addEventListener("popstate", sync); window.addEventListener("hashchange", sync);
+    return () => { window.removeEventListener("popstate", sync); window.removeEventListener("hashchange", sync); };
+  }, []);
+  return null;
+}
+function pkgNav18(dispatch, slug) {
+  try { const u = "#/ff-party/packages" + (slug ? "/" + slug : ""); if (window.location.hash !== u) window.history.pushState({ ff: "pkg" }, "", u); } catch (e) { /* ignore */ }
+  dispatch({ type: "V11_SET", patch: { pkgPage: { slug: slug || "" } } });
+  try { window.scrollTo(0, 0); } catch (e) { /* ignore */ }
+}
+function pkgClose18(dispatch) {
+  try { window.history.pushState(null, "", window.location.pathname + window.location.search); } catch (e) { /* ignore */ }
+  dispatch({ type: "V11_SET", patch: { pkgPage: null } });
+  try { window.scrollTo(0, 0); } catch (e) { /* ignore */ }
+}
+function pkgSeo18(state) {
+  const p = state.pkgPage;
+  if (!p) return null;
+  const m = p.slug ? pkg18(p.slug) : null;
+  if (p.slug && !m) return { page: "package-404", title: "Page not found — FireFlair", description: "This package page does not exist.", canonical: fdUrl("party", "/packages"), robots: "noindex, nofollow", type: "website", jsonLd: null };
+  const url = fdUrl("party", p.slug ? "/packages/" + p.slug : "/packages");
+  const indexable = !FF_SEO.demoData;
+  const name = m ? m.sv.title : "FireFlair Packages";
+  const title = ffSeoClip(m ? `${name} for your party | FF Party` : "FireFlair Packages for your party | FF Party", FF_SEO.title.max);
+  const description = ffSeoClip(m
+    ? `${m.head} ${m.desc} Book the ${name} with a professional on FF Party.`
+    : "FireFlair Packages bring professional bartenders and cocktails to your celebration. Choose a package, choose your people and secure your booking on FF Party.", FF_SEO.description.max);
+  const crumbs = [{ "@type": "ListItem", position: 1, name: "FF Party", item: fdUrl("party", "") + "/" }, { "@type": "ListItem", position: 2, name: "FireFlair Packages", item: fdUrl("party", "/packages") }];
+  if (m) crumbs.push({ "@type": "ListItem", position: 3, name: name, item: url });
+  const ld = [{ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: crumbs }];
+  if (m) ld.push({ "@context": "https://schema.org", "@type": "Service", name: name, description: m.desc, provider: { "@type": "Organization", name: "FireFlair" }, areaServed: "GB" });
+  return { page: "package", title: title, description: description, canonical: url, robots: indexable ? "index, follow" : "noindex, nofollow", type: "website", jsonLd: indexable ? ld : null };
+}
+function PackagePage18() {
+  const { state, dispatch } = useStore();
+  const goSite = useGoSite();
+  const slug = (state.pkgPage && state.pkgPage.slug) || "";
+  const m = slug ? pkg18(slug) : null;
+  const back = h18("button", { type: "button", className: "ff-fd-back", onClick: () => pkgClose18(dispatch) }, "← Back");
+  const plan = () => { pkgClose18(dispatch); goSite("party"); };
+  const link = (s, kids, cls) => h18("a", { href: "#/ff-party/packages" + (s ? "/" + s : ""), className: cls, onClick: (e) => { e.preventDefault(); pkgNav18(dispatch, s); } }, kids);
+  if (slug && !m) {
+    return h18("main", { className: "ff-fd-page", "aria-labelledby": "pk18-h1" }, h18(Css18, null), back,
+      h18("h1", { id: "pk18-h1", className: "ff-h1" }, "We can't find that package"),
+      h18("p", null, "Take a look at all of our packages."), link("", "FireFlair Packages", "ff-pk18-card"));
+  }
+  if (!m) {
+    return h18("main", { className: "ff-fd-page", "aria-labelledby": "pk18-h1" }, h18(Css18, null), back,
+      h18("h1", { id: "pk18-h1", className: "ff-h1" }, "FireFlair Packages"),
+      h18("p", { className: "ff-pk18-d" }, "Your celebration, beautifully looked after. Choose a package, choose your people and secure your booking."),
+      h18("div", { className: "ff-pk18-grid" }, PKG18_ORDER.map(pkg18).filter(Boolean).map((x) => link(x.slug, [h18("b", { key: "b" }, x.sv.title), h18("span", { key: "s" }, x.head), h18("span", { key: "d" }, x.desc)], "ff-pk18-card"))),
+      h18(Guarantee18, null),
+      h18("div", { className: "ff-pk18-cta", style: { marginTop: 16 } }, h18(ShineButton, { onClick: plan }, "Visit FF Party")));
+  }
+  return h18("main", { className: "ff-fd-page", "aria-labelledby": "pk18-h1" }, h18(Css18, null), back,
+    h18("nav", { "aria-label": "Breadcrumb", className: "ff-pk18-eb", style: { marginBottom: 6 } }, link("", "FireFlair Packages", ""), " / " + m.sv.title),
+    h18("h1", { id: "pk18-h1", className: "ff-h1" }, m.sv.title),
+    h18(PkgBody18, { m: m, onPlan: plan }));
+}
+
 const DX_PARTY = [
-  { k: "community", t: "Your community", s: "Party staffing made easy", img: "t17_p31", pool: ["p31", "vke04", "p11", "p35", "p27"], icon: DX_I.Users,
-    h: "Party staffing made easy.",
-    p: ["Most people never hire staff for their party, and the reason is simple: it takes time. It feels complex, and someone has to find the people and manage them. If it were easier, more people would do it.", "FireFlair makes it easy. Choose what you need, tell us about your event and we find the right people, so you can enjoy your own party instead of working it.", "Your community is the hosts and professionals who make events happen. Hosts leave reviews, professionals show who vouches for them, and you choose with confidence, whether it is a birthday in the garden or a wedding for a hundred."],
+  { k: "services", t: "Our Packages", s: "Your celebration, beautifully looked after", img: "t17_p30", pool: ["p30", "p01", "v01", "p14", "vke02"], icon: DX_I.Sparkles,
+    h: "Everything for a celebration to remember.",
+    p: ["Looking for wonderful people with great personalities, quickly and easily? FireFlair Packages are made for you.",
+      "Already have your drinks? The Mixology Package brings a bartender with the equipment, a cocktail menu and a shopping list.",
+      "Planning a hen party or birthday to remember? The Masterclass Package is the Open Bar Masterclass: shake, stir and create your own recipes."],
     parts: [
-      { id: "ff-core", label: "What is FireFlair?", r: () => <CoreValues kind="party" /> },
-      { id: "ff-trust", label: "Verified by the community", r: () => <TrustSection17 /> },
-      { id: "ff-team", label: "Featured people", r: () => <HireFeatured title="Featured people" ids={["dir_sam", "stf_don", "stf_fre", "dir_kofi", "dir_maya", "dir_theo"]} note="Tap a card to see their profile, reviews and cocktails." /> },
-      { id: "ff-relationships", label: "Reviews", r: () => <HireReviews kind="party" /> },
+      { id: "ff-offer", label: "FireFlair Packages", r: () => h18(PartyPackages18, null) },
+      { id: "ff-guarantee", label: "The FireFlair Booking Guarantee", r: () => h18(Guarantee18, null) },
     ],
     jn: [
-      { ic: "ShieldCheck", t: "Staffing made easy", d: "Less time, less to manage.", b: "See how", go: "#ff-trust" , x: "Finding and managing people is the part that puts hosts off. FireFlair does the finding, so the night can be about your guests." },
-      { ic: "Users", t: "Make it amazing", d: "Hand-picked professionals for your party.", b: "Meet them", go: "#ff-team" , x: "Hand-picked professionals and a plan that runs itself mean you enjoy the night as a guest at your own party." },
-      { ic: "Star", t: "Read real reviews", d: "From hosts who have booked them.", b: "Read reviews", go: "#ff-relationships" , x: "Reviews are written by hosts who have booked the same people, so you can read what a night with them was really like." },
+      { ic: "Sparkles", t: "Find your package", d: "From a classic bartender to a hands-on masterclass.", b: "See the packages", go: "#ff-offer", x: "Each FireFlair Package brings the people, the shopping list and the equipment. Choose the one that suits your celebration." },
+      { ic: "ShieldCheck", t: "The FireFlair Booking Guarantee", d: "Confirmed, or refunded in full.", b: "See the guarantee", go: "#ff-guarantee", x: "Book with nothing to lose. Your booking is confirmed, or you are refunded in full." },
+      { ic: "Users", t: "Your people, your way", d: "Choose a professional you love.", b: "Meet them", go: "network", x: "Browse bartenders and choose the person you would love behind your bar." },
     ] },
-  { k: "services", t: "Our packages", s: "What we offer", img: "t17_p30", pool: ["p30", "p01", "v01", "p14", "vke02"], icon: DX_I.Sparkles,
-    h: "What we offer.",
-    p: ["Pick a Service Card, from a skilled professional for the night to a hosted masterclass for your guests.", "Choose your people: a professional you like, or a company that brings the team.", "Whatever you choose, your Service Card sets out what is included and who delivers it. You see the plan in full before you confirm, and WhatsApp keeps everything together."],
+  { k: "community", t: "Our Network", s: "The people behind your celebration", img: "t17_p31", pool: ["p31", "vke04", "p11", "p35", "p27"], icon: DX_I.Users,
+    h: "Meet the people who make it happen.",
+    p: ["Looking for a bartender whose style suits your celebration? Browse professionals with real reviews from hosts.",
+      "Want a name you can trust? Look for the Verified by FireFlair badges and the people who vouch for each professional.",
+      "Prefer a company that brings the bar? Browse bar companies and their teams."],
     parts: [
-      { id: "ff-offer", label: "What we offer", r: () => <PartyOffer /> },
-      { id: "ff-companies", label: "Bar companies", r: () => <PartyCompanies /> },
-      { id: "ff-cards", label: "Follow a booking", r: () => <CardJourney11 kind="party" /> },
+      { id: "ff-trust", label: "Verified by the community", r: () => h18(TrustSection17, null) },
+      { id: "ff-team", label: "Featured people", r: () => h18(HireFeatured, { title: "Featured people", ids: ["dir_sam", "stf_don", "stf_fre", "dir_kofi", "dir_maya", "dir_theo"] }) },
+      { id: "ff-relationships", label: "Reviews", r: () => h18(HireReviews, { kind: "party" }) },
+      { id: "ff-companies", label: "Bar companies", r: () => h18(PartyCompanies, null) },
     ],
     jn: [
-      { ic: "Sparkles", t: "The right packages for you", d: "A Service Card for every kind of party.", b: "See our packages", go: "#ff-offer" , x: "A Service Card sets out what is included and who delivers it. Pick one that suits your party and your guest numbers." },
-      { ic: "Users", t: "Choose your people", d: "Bartenders and bar companies.", b: "Find your people", go: "network", x: "Browse bartenders and bar companies, read what other hosts said and choose the people who will be behind your bar." },
-      { ic: "Store", t: "Book a bar company", d: "Companies with their own teams.", b: "Browse companies", go: "#ff-companies" , x: "Bar companies bring their own bar and team. Browse them, read their reviews and book for your event." },
+      { ic: "Users", t: "Meet your bartenders", d: "Hosts have booked them and said so.", b: "Meet them", go: "#ff-team", x: "Featured professionals, with their reviews and the people who vouch for them." },
+      { ic: "Star", t: "Read real reviews", d: "From hosts who have booked them.", b: "Read reviews", go: "#ff-relationships", x: "Reviews are written by hosts who have booked the same people, so you can read what a night with them was really like." },
+      { ic: "Store", t: "Bar companies", d: "Companies with their own teams.", b: "Browse companies", go: "#ff-companies", x: "Bar companies bring their own bar and team. Browse them, read their reviews and book for your event." },
     ] },
-  { k: "events", t: "Your booking", s: "Secure your booking", img: "t17_p32", pool: ["p32", "aiMusic", "p24", "aiIntl", "p46"], icon: DX_I.PartyPopper,
-    h: "Secure your party today.",
-    p: ["Hen parties, weddings, birthdays, house parties, brand launches: whatever the occasion, FireFlair helps you find the people and services that suit it.", "Tell us a little about your event and how many guests you expect. We show the services that fit, so you only see what is relevant.", "Great events start with a clear picture. Share a few details and the right services find you, with no long forms and no guesswork."],
+  { k: "events", t: "Your Booking", s: "Secure your booking", img: "t17_p32", pool: ["p32", "aiMusic", "p24", "aiIntl", "p46"], icon: DX_I.PartyPopper,
+    h: "Book your celebration.",
+    p: ["Choose your package, choose your people, choose your add-ons, and your booking is secured.",
+      "Hen parties, birthdays, house parties, intimate weddings: whatever you are celebrating, the right packages appear after a few simple details.",
+      "Your first choice is asked first, so your favourite person gets the first chance to say yes."],
     parts: [
-      { id: "ff-occasions", label: "Every kind of party", r: () => <PartyOccasions17 /> },
-      { id: "ff-steps", label: "Plan in three steps", r: () => <HowSteps17 kind="party" /> },
-      { id: "ff-how", label: "The platforms", r: () => <HomePlatforms /> },
+      { id: "ff-how", label: "How booking works", r: () => h18(HowBooking17, { kind: "party" }) },
+      { id: "ff-occasions", label: "Every kind of party", r: () => h18(PartyOccasions17, null) },
     ],
     jn: [
-      { ic: "CalendarDays", t: "Plan your event", d: "Your date, your place, your guests.", b: "Plan your event", go: "book" , x: "Your Event Card holds your date, place and guests. FireFlair uses it to show only the services that suit your party." },
-      { ic: "PartyPopper", t: "Every kind of party", d: "Hen parties to weddings to launches.", b: "See occasions", go: "#ff-occasions" , x: "Hen parties, weddings, birthdays, brand launches: whatever the occasion, there is a service that suits it." },
-      { ic: "ListChecks", t: "Plan in three steps", d: "Service, people, event.", b: "See the steps", go: "#ff-steps" , x: "Three steps: choose the service, pick the people, then create your Event Card. You are confirmed within 24 hours." },
+      { ic: "CalendarDays", t: "Plan your event", d: "Your date, your place, your guests.", b: "Plan your event", go: "book", x: "Your Event Card holds your date, place and guests. FireFlair uses it to show the packages that suit your celebration." },
+      { ic: "PartyPopper", t: "Every kind of party", d: "From hen parties to intimate weddings.", b: "See occasions", go: "#ff-occasions", x: "Hen parties, birthdays, house parties, intimate weddings and more: there is a package that suits it." },
+      { ic: "ListChecks", t: "How booking works", d: "Four simple steps.", b: "See the steps", go: "#ff-how", x: "Choose your package, choose your people, choose your add-ons, and your booking is secured." },
     ] },
-  { k: "profiles", t: "Your Party", s: "How do you like it?", img: "t17_p12", pool: ["p12", "p18", "p20", "p15", "p08"], icon: DX_I.Contact,
-    h: "How do you like your parties?",
-    p: ["Save your preferences once and they travel with every booking: your kind of party, your drinks and anything your staff should know.", "Keep your favourite bartenders, book your best nights again and share your Host Card with the people you hire.", "Your Party is your own space on FireFlair. Every future booking starts with your tastes already in place, and the people you hire know how you like the night to go."],
+  { k: "profiles", t: "Your Party", s: "Just the way you like it", img: "t17_p12", pool: ["p12", "p18", "p20", "p15", "p08"], icon: DX_I.Contact,
+    h: "Your party, your way, every time.",
+    p: ["Save your tastes once and every booking begins with them in place: your drinks, your style and your favourite people.",
+      "Keep your favourite bartenders, book your best nights again and share your Host Card with the people you hire.",
+      "Your Party is your own space on FireFlair, so every future celebration starts exactly how you like it."],
     parts: [
-      { id: "ff-yourparty", label: "Your Party", r: () => <YourParty17 /> },
+      { id: "ff-yourparty", label: "Your Party", r: () => h18(YourParty17, null) },
     ],
     jn: [
-      { ic: "SlidersHorizontal", t: "Set your preferences", d: "Once, for every booking.", b: "Create your Party profile", go: "profile" , x: "Your preferences are saved once and travel with every booking: your kind of party, your drinks and anything your staff should know." },
-      { ic: "Heart", t: "Keep your favourites", d: "The people you want again.", b: "Find your favourites", go: "network" , x: "Favourites keep the bartenders you loved at the top of your list, ready for your next party." },
-      { ic: "History", t: "Book your best nights again", d: "Every party, ready to repeat.", b: "Open Bookings", go: "bookings" , x: "Past bookings stay in Your Party, so your best nights can be booked again in a few taps." },
+      { ic: "SlidersHorizontal", t: "Set your preferences", d: "Once, for every booking.", b: "Create your Party profile", go: "profile", x: "Your preferences are saved once and travel with every booking: your kind of party, your drinks and anything your staff should know." },
+      { ic: "Heart", t: "Keep your favourites", d: "The people you want again.", b: "Find your favourites", go: "network", x: "Favourites keep the bartenders you loved at the top of your list, ready for your next party." },
+      { ic: "History", t: "Book your best nights again", d: "Every party, ready to repeat.", b: "Open Bookings", go: "bookings", x: "Past bookings stay in Your Party, so your best nights can be booked again in a few taps." },
     ] },
 ];
-/* Old links into sections that now sit inside a panel. */
 const DX_ALIAS = { "ff-career": "ff-booktiles", "ff-training": "ff-booktiles", "ff-nx-svc-h": "ff-coming", "ff-nx-ck-h": "ff-coming", "ff-nx-svc": "ff-coming", "ff-nx-ck": "ff-coming" };
 
 function DiscoverHub11({ cats = DX_TEAM, kind = "team" }) {
@@ -32021,7 +32206,10 @@ const HBM17 = {
   staff: ["event", "service", "profiles", "chat"],
   party: ["service", "profiles", "event", "chat"],
 };
+HB17.party = [[Sparkles, "Choose your package", "The celebration you have in mind, ready to go."], [Users, "Choose your people", "Your first choice has 24 hours to say yes."], [Sparkles, "Choose your add-ons", "Extra staff and finishing touches."], [Check, "Your booking is secured", "We confirm your people and every detail within 7 days."]];
+HBM17.party = ["package", "profiles", "service", "chat"];
 function HBMini17({ k }) {
+if (k === "package") return React.createElement("div", { className: "mc sv" }, React.createElement("span", { className: "lab" }, "Package Card"), React.createElement("span", { className: "sp" }, React.createElement(Sparkles, { size: 22, strokeWidth: 1.5 })), React.createElement("span", { className: "ln w1" }), React.createElement("span", { className: "tiers" }, React.createElement("i", { className: "b" }), React.createElement("i", { className: "s" }), React.createElement("i", { className: "g" })));
   const stars = <span className="st" aria-hidden="true">{"★★★★★"}</span>;
   if (k === "profile") return (<div className="mc prof"><span className="lab">Profile Card</span><span className="av"><User size={26} strokeWidth={1.5} /></span><b className="nm" /><span className="chips"><i /><i /><i /></span></div>);
   if (k === "shift") return (<div className="mc shift"><span className="lab">{"Shift"} Card</span><span className="dt"><b>14</b><small>Nov</small></span><span className="ln w1" /><span className="ln w2" /><span className="btns"><i className="y">Yes</i><i className="no">No</i></span></div>);
@@ -32133,8 +32321,7 @@ const PARTY_OFFER = [
   ["Full event service", "Bar, cocktails and the whole team, taken care of from set-up to close."],
   ["Event staff", "Waiters, hosts, barbacks and front of house for any size of event."],
 ];
-const PARTY_OCCASIONS = ["Hen parties", "Stag dos", "Weddings", "Birthdays", "House parties", "Garden parties", "Engagement parties", "Anniversaries",
-  "Christmas parties", "New Year's Eve", "Baby showers", "Graduations", "Corporate events", "Brand launches", "Private dinners", "Summer parties"];
+const PARTY_OCCASIONS = ["Hen parties", "Stag dos", "Birthdays", "House parties", "Garden parties", "Engagement parties", "Anniversaries", "Baby showers", "Intimate weddings", "Christmas parties", "New Year's Eve", "Summer parties", "Private dinners"];
 function PartyOffer() {
   const nav = useHireNav();
   return (
@@ -32182,13 +32369,12 @@ function PartyHome11() {
   return (
     <div className="ff-home ff-home11 party" ref={root}>
       <div className="ff-home17">
-        <HireHero kind="party" />
+        <Css18 /><HireHero kind="party" />
         {withCoins([
           <DiscoverHub11 key="discover" cats={DX_PARTY} kind="party" />,
-          <HowBooking17 key="how" kind="party" />,
           <GuideQuestions11 key="guide" kind="party" />,
           <Journal17 key="journal" kind="party" />,
-          <React.Fragment key="why"><WhyFlair17 kind="party" /><OurDream17 kind="party" /></React.Fragment>,
+          <FireFlairFold18 key="why" />,
           <HireJoin key="join" kind="party" />,
         ])}
       </div>
@@ -32200,7 +32386,7 @@ PARTY_SERVICES.splice(3, 0, { id: "svc_flair", tone: "gold", level: "Flair", tit
     includes: "A skilled bartender and a 5 or 15-minute Flair performance", ideal: "Launches, weddings and parties that want a show", time: "3 hours", price: "£250" });
 Object.assign(PARTY_SERVICES.find(s => s.id === "svc_full"), { title: "Platinum Tasting Package", tagline: "Choose your mixologist to build a custom menu for your big event, then choose your bar company to bring your menu to life on your big special day.",
     includes: "A custom cocktail menu from your mixologist, delivered by your bar company", ideal: "Big events", time: "1 hour", price: "£100" });
-return { Home101, useEdgeBounce, StaffHome11, PartyHome11, PARTY_SERVICES, PosterCard, ServicePoster, BusinessSupport19 };
+return { Home101, PackagePage18, PkgRoute18, pkgSeo18, useEdgeBounce, StaffHome11, PartyHome11, PARTY_SERVICES, PosterCard, ServicePoster, BusinessSupport19 };
 })();
 
 function TeamHomeV17() { return <V101.Home101 />; }

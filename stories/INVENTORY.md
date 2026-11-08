@@ -153,3 +153,7 @@ Gap: few unused people photos remain for FF Team and FF Staff, so many of their 
 | what-to-check-before-accepting-a-bar-shift | vkc14 | Classic cocktail photo: Manhattan. |
 | what-to-do-when-an-event-bartender-cancels | vkg06 | Vooshka event bar photo: After-dark atmosphere. |
 | what-to-provide-when-hiring-a-bartender | vke05 | A row of mojitos with mint along a bar under purple party lights. |
+
+## Batch 2: FF Party inspirational stories (8 Nov 2026, drafts, not yet in the Stories build)
+Quantity first; quality refinement later. Each ends with a link to its FireFlair Package page or to booking.
+I01 the-art-of-hosting-an-unforgettable-house-party (Bartending), I02 making-birthdays-feel-extraordinary (Mixology), I03 create-a-cocktail-experience-at-home (Masterclass), I04 small-parties-with-big-personalities (Flair), I05 ideas-for-memorable-hen-parties (Masterclass), I06 setting-the-atmosphere-for-your-celebration (Packages). Image choices and the build step (scripts/build-stories.py) are still to do. All existing stories and categories stay as they are.

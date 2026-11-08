@@ -1,6 +1,6 @@
 # FireFlair Content Strategy
 
-Version 1.0, approved by Alex on 8 November 2026. Living document: the rules change as the marketing strategy develops. Update this file, bump the version, and note what changed.
+Version 1.1, approved by Alex on 8 November 2026. Living document: the rules change as the marketing strategy develops. Update this file, bump the version, and note what changed.
 
 Applies to FF Party (FFParty.uk), FF Staff (the business platform) and FF Team (FFTeam.uk): website copy, homepage content, profile and package descriptions, package pages, FF Stories, marketing campaigns and booking interfaces.
 
@@ -76,10 +76,37 @@ The three sites are written for three different people. The voice differs by sit
 
 The four pillars match the four main pages of the site, so the continuity stays. The first pillar leads with FireFlair Packages, with less emphasis on community. Each pillar opens with what the visitor is looking for, then presents the solution. Pillars present solutions, never problems.
 
+## Packages and service cards (site-wide definition)
+
+- **Package card:** a complete booking package (for example Bartending, Mixology, Masterclass, Flair, Tasting). The listed price includes the deposit. A package is easier to sell than a service because it feels complete.
+- **Service card:** an add-on designed to be attached to a package (for example extra staff, with rates depending on role). If a service card is booked on its own, the deposit is added to its price.
+- Packages and service cards work the same way in the back end. Companies and professionals list their offers in the same two kinds.
+- Staffing is offered both ways: as a straight Staffing Package and as a Staffing service card (listed twice, each with its own price).
+- Packages that include drinks come later. The current FireFlair Packages focus on people, shopping lists and equipment.
+- The Platinum Tasting Package (build a custom menu before the event) is offered through bar companies. Full-event bookings are a "find the perfect bar company for you" service, not an off-the-shelf package.
+
+## Booking wording
+
+- The booking steps are: choose your package, choose your people, choose your add-ons, and your booking is secured.
+- "Your booking is secured" is the confirmation wording. Marketing does not talk about paying or about a deposit.
+- How the process works (explained in the steps, not in headlines): the first choice has 24 hours to say yes, and the people and every detail are confirmed within 7 days. Exact rules live in the FireFlair Invoice and the FireFlair terms and conditions.
+- The FireFlair Booking Guarantee: "Confirmed, or refunded in full." It does not mention partly staffed events. The terms and invoice should cover that before the first sale.
+
+## Homepage decisions (FF Party)
+
+- The hero stays exactly as it is, including the search bar.
+- Pillars are two words: Our Packages, Our Network, Your Booking, Your Party. All collapsed by default.
+- Packages are not exposed on the homepage; they sit inside the Our Packages pillar, with the Booking Guarantee and the coin.
+- From the homepage, navigation opens pop-ups. Full pages exist only as front doors (for search), including every package page.
+- "Fire & Flair" replaces "Our philosophy": a collapsed section with the fire imagery, the name story and the founding team.
+- FF Business is retired. FF Staff heroes have a single button. The FF Team hero button becomes "Build your network" once a signed-in member has a profile card. Heroes otherwise stay the same after sign-in.
+- Stories: quantity first, quality later. Existing stories and categories stay.
+
 ## Record keeping
 
 Documents produced under this strategy are stored in `docs/` in the repository. Showing them in the site's admin page is a developer decision, to be made once the cost of the work is known.
 
 ## Change log
 
+- 1.1 (8 November 2026): package and service card definition, booking wording, homepage decisions, pillar names, Stories quantity-first.
 - 1.0 (8 November 2026): ten rules approved with a merged "fewer words, one purpose" rule and a new "clarity at commitment" rule; company packages not renamed; no repeated deposit lines in marketing; the FireFlair Booking Guarantee adopted as a selling point; "ask for a no" technique dropped.

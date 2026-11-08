@@ -1,5 +1,19 @@
 # FireFlair prototype — changelog
 
+## v17.3.112 — 2026-11-08 — Packages, pillars, Fire & Flair
+
+- FF Party homepage rebuilt under Content Strategy v1.1 (docs/content-strategy.md). Pillars are now Our Packages, Our Network, Your Booking and Your Party, all collapsed by default. The hero is untouched.
+- FireFlair Packages sit inside the Our Packages pillar, not exposed on the page. Tapping a package opens a pop-up with the package details. The Booking Guarantee ("Confirmed, or refunded in full.") and the coin sit in the same pillar.
+- Package pages for search (front doors): `#/ff-party/packages` and `#/ff-party/packages/<bartending|mixology|masterclass|flair|tasting|staffing>`. Each has its own title, description, canonical, breadcrumb and Service JSON-LD (noindex while FF_SEO.demoData is on, like the area pages). The homepage never links to these full pages; it only opens pop-ups. Real URLs in the build: /packages and /packages/<name>.
+- Package vs service definition (site-wide): a package card is a complete booking package and its listed price includes the deposit; a service card is an add-on, and when booked on its own the deposit is added. Back end treats both the same. Staffing exists both ways. Prototype change so far: package titles say Package (Bartending, Mixology, Masterclass) and package posters read "Package Card"; Staffing in add-on contexts reads "Service Card". Deposit-in-price logic is a build task and is not simulated in the prototype.
+- Booking steps are now: choose your package, choose your people, choose your add-ons, your booking is secured. 24 hours (first choice) and 7 days (full confirmation) appear only in the how-it-works steps. Removed "confirmed within 24 hours".
+- "Our philosophy" and "Built on trust" replaced by one collapsed section, "Fire & Flair", with the fire image, the name story and the founding team row. Closing call to action now reads "Now enjoy it."
+- Removed from the FF Party homepage: What is FireFlair? ring, "Follow a booking", "Plan in three steps", the service list and SEO paragraph (these move to front-door service pages), the three duplicate how-it-works blocks. Occasion chips trimmed to celebrations of roughly 0 to 30 guests.
+- FF Staff hero has a single button (Advertise for free removed). FF Team hero button becomes "Build your network" once a signed-in member has a profile card. Other heroes unchanged.
+- FF Staff copy: two negative lines rewritten (booking pillar and its card). FF Team copy needed no changes.
+- Stories: six inspirational FF Party drafts added in stories/ffparty (I01 to I06), each linked to a package page. They are not in the page yet; run scripts/build-stories.py once images are chosen. Existing stories and categories unchanged.
+- Developer note: the guarantee wording does not mention partly staffed events; the invoice and terms should cover it before the first sale.
+
 ## v17.3.111 — 2026-11-08 — symbol map, Network
 
 - Map: the FF cluster marker and the numbered circle are gone, and every pin is always shown as its own small symbol dot. Companies are round dots: a martini glass for bar companies, headphones for Entertainment, a camera for Services (photographers are listed under Services), and a knife and fork for Caterers. Professionals are a squircle with a bust. The legend says Professionals, Entertainment and Services.
