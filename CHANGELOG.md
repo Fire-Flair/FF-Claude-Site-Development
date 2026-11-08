@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.119 — 2026-11-08 — Photo album and site-first admin
+
+- **Photo album** (`PhotoAlbum20`, `PhotoAlbumFold20`): a collapsed "Photo album" section directly below FF Stories on all three homepages, and a Photos tool in the admin. It shows every photo in `photo-library/` (183 small thumbnails, grouped as supplied: Alex's uploads, the Vooshka groups, classic cocktails, earlier site photos, coins and logos) plus every image already inside the pages (FF_IMG and the Stories images), about 355 in all. Each tile has Remove / Restore (the admin hide switch, kind `photos`); a Removed filter and "Copy removed list" give the developers the ids to delete from the real library. Removing is a mark only: it does not yet hide the image where the site uses it. In the live build the album should show to admins only (`PhotoAlbumFold20` is the one place to gate it).
+- **Admin redesign** (`Admin17`): the three sites are the main buttons (FF Team, FF Staff, FF Party) plus "All sites". Each site lists its own tools and reuses the existing screens: Team has People, Front doors, Reviews, Q&A and sign-ups, Invitations, Photos. Staff has Companies, Bookings, Front doors, Packages and cards, Photos. Party has Guests, Bookings, Front doors, Packages and cards, Photos. All sites has Overview, Photos, Areas and requests, Sites, Analytics, Admins, Activity, Database. Booking rules are not editable here; bookings can be changed through the existing Bookings tool. The site and section choice is remembered (`adminSite20`).
+- **Front doors editor** (`AdmDoors20`): search any area page, edit its browser title, heading, description and introduction per site, save, reset to default or open the page. Saved as `admin17.copy["site:areaId"]` and applied in `fdCopy` (the original copy is now `fdCopyBase20`). Logged in Activity.
+- Developer note: the editor changes only the fields shown; everything else on area pages still comes from `fdCopyBase20`. In the live build the overrides belong in the database, keyed the same way.
+- Cost note: no new back end. Admin screens, hide switch, activity log and storage are the existing ones.
+
 ## v17.3.118 — 2026-11-08 — VIP Host Card and Founding VIP
 
 - Host Card is now **VIP Host Card** everywhere it appears (FF Party card, profile prompts, save buttons, toasts, edit page, company-card plate, shift and brief views, related copy). Host information and behaviour are unchanged.
