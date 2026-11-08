@@ -27441,6 +27441,66 @@ function BusinessSupport19() {
     </section>
   );
 }
+/* FF Team Launch Competition (working title) — a small promotional feature on the FF Team homepage, between the Discover pillars and How a booking works.
+   Join goes to the existing profile journey (useHomeNav.goProfile). The rules open in the shared Sheet. No scoring, leaderboard or sign-up form is built here. */
+const COMP_RULES20 = [
+  ["Competition dates", "1–31 December 2026."],
+  ["Eligibility", "Open to genuine hospitality professionals and people seriously committed to entering the hospitality industry who are willing and available to undertake suitable freelance hospitality work. Previous hospitality experience is not mandatory."],
+];
+const COMP_TBC20 = ["Scoring calculation", "Tie-break procedure", "Prize values", "Winner verification", "Fulfilment conditions", "Promoter details"];
+function TeamCompetition20() {
+  const h = React.createElement;
+  const nav = useHomeNav();
+  const [rules, setRules] = useState(false);
+  const pics = ["reward_training_tickets", "reward_nfc_card", "reward_bar_kit", "reward_photoshoot"].map(img).filter(Boolean);
+  const css = ".ff-cp20{position:relative;margin:22px 0;border-radius:26px;overflow:hidden;color:#F4EBD6;background:linear-gradient(135deg,#0B0A09 0%,#1C0E12 55%,#4A1220 100%);border:1px solid rgba(201,162,75,.45);isolation:isolate}"
+    + ".ff-cp20:before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(115deg,transparent 58%,rgba(201,162,75,.16) 58.2%,rgba(201,162,75,.16) 60%,transparent 60.2%)}"
+    + ".ff-cp20-in{display:grid;grid-template-columns:1.25fr 1fr;gap:18px;align-items:center;padding:22px}"
+    + ".ff-cp20-eye{display:flex;align-items:center;gap:10px;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#D9B968;font-weight:600}"
+    + ".ff-cp20 h2{margin:8px 0 6px;font-size:clamp(22px,4.6vw,32px);line-height:1.12;color:#F4EBD6}"
+    + ".ff-cp20 p{margin:0 0 6px;font-size:14.5px;line-height:1.45;color:rgba(244,235,214,.88)}"
+    + ".ff-cp20-date{display:inline-block;margin:4px 0 10px;padding:5px 12px;border-radius:14px;border:1px solid rgba(201,162,75,.6);color:#D9B968;font-weight:600;font-size:13px}"
+    + ".ff-cp20-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}"
+    + ".ff-cp20-pics{display:grid;grid-template-columns:1fr 1fr;gap:8px}"
+    + ".ff-cp20-pics span{display:block;aspect-ratio:1/1;border-radius:16px;background-size:cover;background-position:center;border:1px solid rgba(201,162,75,.35)}"
+    + ".ff-cp20-url{margin-top:8px;font-size:12px;letter-spacing:.08em;color:#D9B968;text-align:center}"
+    + "@media(max-width:640px){.ff-cp20-in{grid-template-columns:1fr;padding:18px}.ff-cp20-pics{grid-template-columns:repeat(4,1fr)}}"
+    + ".ff-cp20r h3{margin:16px 0 4px;font-size:15px}.ff-cp20r p,.ff-cp20r li{font-size:14px;line-height:1.5;margin:0 0 6px}.ff-cp20r ul,.ff-cp20r ol{margin:0;padding-left:20px}"
+    + ".ff-cp20r .tbc{display:inline-block;margin:0 6px 6px 0;padding:4px 10px;border-radius:12px;border:1px dashed var(--gold-dk,#A5802F);font-size:12.5px}";
+  const sec = (t, body) => h("div", { key: t }, h("h3", { className: "ff-label" }, t), body);
+  return h("section", { className: "ff-sect", id: "ff-competition", "aria-labelledby": "ff-cp20-h" },
+    h("style", null, css),
+    h("div", { className: "ff-cp20" },
+      h("div", { className: "ff-cp20-in" },
+        h("div", null,
+          h("div", { className: "ff-cp20-eye" }, h(Coin, { size: 34, tier: "gold" }), h("span", null, "FF Team Launch Competition")),
+          h("h2", { id: "ff-cp20-h" }, "Build your Network. Grow your Team. Win prizes."),
+          h("span", { className: "ff-cp20-date" }, "1–31 December 2026"),
+          h("p", null, "Prizes include hospitality experiences, training, professional equipment, photography and more."),
+          h("div", { className: "ff-cp20-btns" },
+            h(ShineButton, { onClick: nav.goProfile }, "Join Competition"),
+            h(Button, { onClick: () => setRules(true) }, "Competition Rules"))),
+        h("div", null,
+          h("div", { className: "ff-cp20-pics", "aria-hidden": "true" }, pics.map((p) => h("span", { key: p, style: { backgroundImage: "url(" + p + ")" } }))),
+          h("div", { className: "ff-cp20-url" }, "FFTeam.uk")))),
+    h(Sheet, { open: rules, onClose: () => setRules(false), title: "FF Team Launch Competition rules", center: true },
+      h("div", { className: "ff-cp20r" },
+        COMP_RULES20.map((r) => sec(r[0], h("p", null, r[1]))),
+        sec("How to participate", h("ol", null,
+          h("li", null, "Create an FF Team profile."),
+          h("li", null, "Share your Profile Card with hospitality contacts."),
+          h("li", null, "Build genuine Network and Team connections."),
+          h("li", null, "Compete for the largest qualifying professional Network and Team."))),
+        h("p", { style: { marginTop: 8 } }, "Network and Team are separate features. Team connections need mutual acceptance."),
+        sec("Prizes", h("ul", null,
+          h("li", null, h("b", null, "Gold: "), "premium hospitality experiences and professional rewards."),
+          h("li", null, h("b", null, "Silver: "), "career-enhancing training and rewards."),
+          h("li", null, h("b", null, "Bronze: "), "professional equipment and rewards."),
+          h("li", null, h("b", null, "Mystery Prize: "), "a random eligible participant outside the top three."))),
+        h("p", { style: { marginTop: 8 } }, "Competition placements are separate from the Bronze, Silver and Gold XP levels."),
+        sec("Fair participation", h("p", null, "Only genuine accounts and authentic professional connections qualify. Duplicate, fabricated or manipulated activity may be disqualified following reasonable review.")),
+        sec("Final terms", h("div", null, h("p", null, "To be confirmed before the competition opens:"), COMP_TBC20.map((t) => h("span", { key: t, className: "tbc" }, t + ": to be confirmed")))))));
+}
 function Home101() {
   const { state } = useStore();
   DIR = useDirectory();
@@ -27450,6 +27510,7 @@ function Home101() {
   /* v16.68: everything else on the home page lives inside one of the four Discover panels. */
   const sections = [
     <DiscoverHub11 key="discover" />,
+    <TeamCompetition20 key="competition" />,
     <HowBooking17 key="how" kind="team" />,
     <GuideQuestions11 key="guide" kind="team" />,
     <Journal17 key="journal" kind="team" />,

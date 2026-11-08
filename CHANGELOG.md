@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.117 — 2026-11-08 — FF Team Launch Competition module
+
+- New promotional module on the FF Team homepage, between the Discover pillars and "How a booking works" (`TeamCompetition20`, in `Home101`). Title, dates (1–31 December 2026), one prize line, two buttons, a compact four-image prize collage from the existing FF Rewards photos, the FF coin and FFTeam.uk. Stacks on mobile.
+- Join Competition uses the existing profile journey (`useHomeNav().goProfile`); no separate competition form. Competition Rules opens the shared `Sheet` pop-up (closes with Escape or the close button).
+- Rules pop-up: dates, eligibility, how to participate, prizes (Gold, Silver, Bronze, Mystery), a line separating placements from the Bronze/Silver/Gold XP levels, fair participation, and marked "to be confirmed" placeholders for scoring, tie-break, prize values, winner verification, fulfilment and promoter details.
+- Deliberately not built: points, XP, leaderboard, qualifying-connection tracking, any backend.
+- Copy decisions: the homepage prize line says "hospitality experiences" (the brief's suggested line said "international"; left out until travel prizes are approved). The American Express card reward is not shown. "< 2 mins" is not used because the profile time is not verified.
+- Open decisions and dependencies: final scoring, tie-break, prize list and values, winner verification, fulfilment terms, promoter details and legal wording; something to count qualifying Network and Team connections within 1–31 December and exclude duplicate or manipulated activity; whether a standings view is wanted; whether Join Competition should record entry.
+
 ## v17.3.116 — 2026-11-08 — What areas do you cover?
 
 - New tick-box area tree, "What areas do you cover?", in the FF Team profile's Work locations section and in the FF Staff company profile's Areas covered section (one shared component, `AreaTicks19`). Each level has a dropdown and a tick box: United Kingdom (saved as "UK-wide") and Worldwide, then nations, regions, boroughs and towns, or continents and countries. It uses the same location tree as Explore by area (`FD_NODES`).
