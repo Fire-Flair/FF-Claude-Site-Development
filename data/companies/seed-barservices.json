@@ -1,0 +1,1405 @@
+{
+ "schemaVersion": 1,
+ "note": "28 UK bar-services companies (ice delivery, glassware hire and delivery, event management) as Directory listings. Same rules as seed-companies.json; see README.md. `sub` is ice, glassware or events.",
+ "category": "svc",
+ "companies": [
+  {
+   "slug": "nice-ice-london",
+   "tag": "NICEI",
+   "name": "Nice Ice London",
+   "kind": "Ice delivery",
+   "sub": "ice",
+   "base": "London",
+   "areas": [
+    "London"
+   ],
+   "summary": "A London ice supplier producing ice at its own factory in Tottenham and delivering across the capital for bars, restaurants and events, with next-day delivery.",
+   "services": [
+    "Ice delivery",
+    "Bagged ice"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [
+    "Own ice factory in Tottenham",
+    "Next-day London delivery"
+   ],
+   "website": "https://nice-ice.co",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://nice-ice.co"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "Tottenham",
+     "lat": 51.588,
+     "lng": -0.06,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "icebox-ice",
+   "tag": "ICEBO",
+   "name": "Icebox",
+   "kind": "Ice delivery",
+   "sub": "ice",
+   "base": "London",
+   "areas": [
+    "London",
+    "UK-wide",
+    "Europe"
+   ],
+   "summary": "A London ice company, trading since 1993, supplying ice cubes, ice sculptures and ice bars for events across the UK and Europe.",
+   "services": [
+    "Ice cubes",
+    "Ice sculptures",
+    "Ice bars"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [
+    "Trading since 1993",
+    "UK and Europe"
+   ],
+   "website": "https://theicebox.com",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://theicebox.com"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "London",
+     "lat": 51.5074,
+     "lng": -0.1278,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "all-about-ice",
+   "tag": "ALLAB",
+   "name": "All About Ice Europe",
+   "kind": "Ice delivery",
+   "sub": "ice",
+   "base": "London",
+   "areas": [
+    "London",
+    "UK-wide",
+    "Europe"
+   ],
+   "summary": "A London-based ice supplier providing cubed and crushed ice, ice sculptures and dry ice to events across the UK and Europe.",
+   "services": [
+    "Cubed and crushed ice",
+    "Ice sculptures",
+    "Dry ice"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [
+    "UK and Europe coverage"
+   ],
+   "website": "https://allaboutice.com",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://allaboutice.com"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "London",
+     "lat": 51.5074,
+     "lng": -0.1278,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "lunar-ice",
+   "tag": "LUNAR",
+   "name": "Lunar Ice",
+   "kind": "Ice delivery",
+   "sub": "ice",
+   "base": "Crawley",
+   "areas": [
+    "Surrey",
+    "Sussex",
+    "Kent",
+    "Hampshire"
+   ],
+   "summary": "An ice delivery company based near Gatwick, supplying bars, restaurants and events across Surrey, Sussex, Kent and Hampshire.",
+   "services": [
+    "Ice delivery"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [
+    "Based near Gatwick"
+   ],
+   "website": "https://lunarice.co.uk",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://lunarice.co.uk"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "Crawley",
+     "lat": 51.1092,
+     "lng": -0.1872,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "blackwoods-ice",
+   "tag": "BLACK",
+   "name": "Blackwood's Ice Delivery",
+   "kind": "Ice delivery",
+   "sub": "ice",
+   "base": "Henley-on-Thames",
+   "areas": [
+    "Buckinghamshire",
+    "Berkshire",
+    "Oxfordshire"
+   ],
+   "summary": "A family-run ice delivery company in Henley-on-Thames, operating since 1987 and serving Buckinghamshire, Berkshire and Oxfordshire.",
+   "services": [
+    "Ice delivery"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [
+    "Operating since 1987"
+   ],
+   "website": "https://blackwoodsice.co.uk",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://blackwoodsice.co.uk"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "Henley-on-Thames",
+     "lat": 51.536,
+     "lng": -0.902,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "ice-supplier-south-west",
+   "tag": "ICESS",
+   "name": "Ice Supplier South West & South Wales",
+   "kind": "Ice delivery",
+   "sub": "ice",
+   "base": "Bristol",
+   "areas": [
+    "Bristol",
+    "Bath",
+    "Cardiff",
+    "Newport",
+    "Cheltenham",
+    "Gloucester",
+    "Wiltshire",
+    "Somerset"
+   ],
+   "summary": "A Bristol ice supplier, established in 2011, delivering to Bristol, Bath, Cardiff, Newport, Cheltenham, Gloucester, Wiltshire and Somerset.",
+   "services": [
+    "Ice delivery"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [
+    "Established 2011"
+   ],
+   "website": "https://ice-supplier.co.uk",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://ice-supplier.co.uk"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "Bristol",
+     "lat": 51.4545,
+     "lng": -2.5879,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "the-ice-co",
+   "tag": "ICECO",
+   "name": "The Ice Co",
+   "kind": "Ice delivery",
+   "sub": "ice",
+   "base": "South Kirkby",
+   "areas": [
+    "Yorkshire",
+    "UK-wide"
+   ],
+   "summary": "A Yorkshire ice manufacturer producing ice cubes, crushed ice, flake ice and ice blocks for the drinks trade and events.",
+   "services": [
+    "Ice cubes",
+    "Crushed ice",
+    "Flake ice",
+    "Ice blocks"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [
+    "Based in Yorkshire"
+   ],
+   "website": "https://theiceco.co.uk",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://theiceco.co.uk"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "South Kirkby",
+     "lat": 53.59,
+     "lng": -1.32,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "the-ice-man-birmingham",
+   "tag": "ICEMA",
+   "name": "The Ice Man",
+   "kind": "Ice delivery",
+   "sub": "ice",
+   "base": "Birmingham",
+   "areas": [
+    "Birmingham",
+    "West Midlands"
+   ],
+   "summary": "A Birmingham ice company, trading since 1997, supplying ice sculptures, drinks luges, bagged cubed ice and crushed ice for events and venues.",
+   "services": [
+    "Ice sculptures",
+    "Drinks luges",
+    "Cubed and crushed ice"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [
+    "Trading since 1997"
+   ],
+   "website": "https://the-ice-man.co.uk",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://www.the-ice-man.co.uk"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "Birmingham",
+     "lat": 52.4862,
+     "lng": -1.8904,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "ice-247",
+   "tag": "ICE24",
+   "name": "Ice 24/7",
+   "kind": "Ice delivery",
+   "sub": "ice",
+   "base": "Glasgow",
+   "areas": [
+    "Glasgow",
+    "Scotland"
+   ],
+   "summary": "A Glasgow ice supplier delivering ice to bars, venues and events across Scotland.",
+   "services": [
+    "Ice delivery"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [
+    "Scotland coverage"
+   ],
+   "website": "https://ice247.co.uk",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://ice247.co.uk"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "Glasgow",
+     "lat": 55.8642,
+     "lng": -4.2518,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "ice2u",
+   "tag": "ICE2U",
+   "name": "ICE2U",
+   "kind": "Ice delivery",
+   "sub": "ice",
+   "base": "Liverpool",
+   "areas": [
+    "Liverpool",
+    "Manchester",
+    "Leeds"
+   ],
+   "summary": "An ice delivery company serving Liverpool, Manchester and Leeds.",
+   "services": [
+    "Ice delivery"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [],
+   "website": "https://ice2u.co.uk",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://ice2u.co.uk"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "Liverpool",
+     "lat": 53.4084,
+     "lng": -2.9916,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "yahire",
+   "tag": "YAHIR",
+   "name": "Yahire",
+   "kind": "Glassware hire & delivery",
+   "sub": "glassware",
+   "base": "London",
+   "areas": [
+    "London"
+   ],
+   "summary": "A London event hire company supplying glassware and other event equipment.",
+   "services": [
+    "Glassware hire",
+    "Event equipment hire"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [],
+   "website": "https://yahire.com",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://yahire.com"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "London",
+     "lat": 51.5074,
+     "lng": -0.1278,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "allens-hire",
+   "tag": "ALLEN",
+   "name": "Allens Hire",
+   "kind": "Glassware hire & delivery",
+   "sub": "glassware",
+   "base": "London",
+   "areas": [
+    "London",
+    "South of England"
+   ],
+   "summary": "A hire company supplying glassware and event equipment in London and the South.",
+   "services": [
+    "Glassware hire",
+    "Event equipment hire"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [],
+   "website": "https://allenshire.co.uk",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://allenshire.co.uk"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "London",
+     "lat": 51.5074,
+     "lng": -0.1278,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "murphys-event-hire",
+   "tag": "MURPH",
+   "name": "Murphys Event Hire",
+   "kind": "Glassware hire & delivery",
+   "sub": "glassware",
+   "base": "London",
+   "areas": [
+    "London"
+   ],
+   "summary": "A London event hire company supplying glassware and event equipment.",
+   "services": [
+    "Glassware hire",
+    "Event equipment hire"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [],
+   "website": "https://murphyseventhire.co.uk",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://murphyseventhire.co.uk"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "London",
+     "lat": 51.5074,
+     "lng": -0.1278,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "hire-catering-equipment",
+   "tag": "HIREC",
+   "name": "Hire Catering Equipment",
+   "kind": "Glassware hire & delivery",
+   "sub": "glassware",
+   "base": "London",
+   "areas": [
+    "London"
+   ],
+   "summary": "A London hire company supplying catering equipment and glassware for events.",
+   "services": [
+    "Catering equipment hire",
+    "Glassware hire"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [],
+   "website": "https://hirecatering.co.uk",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://hirecatering.co.uk"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "London",
+     "lat": 51.5074,
+     "lng": -0.1278,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "plato-catering-hire",
+   "tag": "PLATO",
+   "name": "Plato Catering Hire",
+   "kind": "Glassware hire & delivery",
+   "sub": "glassware",
+   "base": "Alcester",
+   "areas": [
+    "Birmingham",
+    "Warwickshire",
+    "West Midlands",
+    "Stratford-upon-Avon",
+    "Worcestershire",
+    "Gloucestershire",
+    "Cotswolds"
+   ],
+   "summary": "A Warwickshire catering equipment hire company, established in 1999, supplying glassware, cutlery, plates and kitchen equipment across the Midlands and the Cotswolds.",
+   "services": [
+    "Glassware hire",
+    "Cutlery and plate hire",
+    "Kitchen equipment hire"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [
+    "Established 1999"
+   ],
+   "website": "https://www.platohire.co.uk",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://www.platohire.co.uk"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "Alcester",
+     "lat": 52.215,
+     "lng": -1.871,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "expo-hire",
+   "tag": "EXPOH",
+   "name": "Expo Hire",
+   "kind": "Glassware hire & delivery",
+   "sub": "glassware",
+   "base": "England and Wales",
+   "areas": [
+    "England",
+    "Wales"
+   ],
+   "summary": "An event hire company with 11 depots across England and Wales, supplying furniture and catering equipment.",
+   "services": [
+    "Furniture hire",
+    "Catering equipment hire"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [
+    "11 depots",
+    "England and Wales"
+   ],
+   "website": "https://www.expohire.com",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://www.expohire.com"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "Birmingham",
+     "lat": 52.4862,
+     "lng": -1.8904,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "event-hire-uk",
+   "tag": "EVHUK",
+   "name": "Event Hire UK",
+   "kind": "Glassware hire & delivery",
+   "sub": "glassware",
+   "base": "UK-wide",
+   "areas": [
+    "UK-wide"
+   ],
+   "summary": "A nationwide event hire company supplying furniture, catering equipment and tableware, including glassware, for temporary events.",
+   "services": [
+    "Glassware hire",
+    "Furniture hire",
+    "Tableware hire"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [
+    "Established 2005",
+    "UK-wide"
+   ],
+   "website": "https://eventhireuk.com",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://eventhireuk.com"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "Birmingham",
+     "lat": 52.4862,
+     "lng": -1.8904,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "wharfeside-hire",
+   "tag": "WHARF",
+   "name": "Wharfeside Hire",
+   "kind": "Glassware hire & delivery",
+   "sub": "glassware",
+   "base": "Wetherby",
+   "areas": [
+    "Leeds",
+    "York",
+    "Harrogate",
+    "Yorkshire"
+   ],
+   "summary": "A Wetherby event hire company supplying glasses, bespoke bars, linen, furniture and catering equipment across Yorkshire.",
+   "services": [
+    "Glassware hire",
+    "Bespoke bar hire",
+    "Furniture hire",
+    "Catering equipment hire"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [
+    "Yorkshire coverage"
+   ],
+   "website": "https://wharfesidehire.co.uk",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://wharfesidehire.co.uk"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "Wetherby",
+     "lat": 53.9283,
+     "lng": -1.3844,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "bespoke-events-london",
+   "tag": "BESPO",
+   "name": "Bespoke Events London",
+   "kind": "Event management",
+   "sub": "events",
+   "base": "London",
+   "areas": [
+    "London"
+   ],
+   "summary": "A London event management company.",
+   "services": [
+    "Event management"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [],
+   "website": "https://bespoke-london.co.uk",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://bespoke-london.co.uk"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "London",
+     "lat": 51.5074,
+     "lng": -0.1278,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "aok-events",
+   "tag": "AOKEV",
+   "name": "AOK Events",
+   "kind": "Event management",
+   "sub": "events",
+   "base": "London",
+   "areas": [
+    "London"
+   ],
+   "summary": "A London event management company.",
+   "services": [
+    "Event management"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [],
+   "website": "https://aokevents.com",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://aokevents.com"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "London",
+     "lat": 51.5074,
+     "lng": -0.1278,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "mgn-events",
+   "tag": "MGNEV",
+   "name": "MGN Events",
+   "kind": "Event management",
+   "sub": "events",
+   "base": "London",
+   "areas": [
+    "London"
+   ],
+   "summary": "A London event management company.",
+   "services": [
+    "Event management"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [],
+   "website": "https://mgnevents.co.uk",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://mgnevents.co.uk"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "London",
+     "lat": 51.5074,
+     "lng": -0.1278,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "dynamite-events",
+   "tag": "DYNAM",
+   "name": "Dynamite Events",
+   "kind": "Event management",
+   "sub": "events",
+   "base": "London",
+   "areas": [
+    "London"
+   ],
+   "summary": "A London event management company.",
+   "services": [
+    "Event management"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [],
+   "website": "https://dynamiteevents.co.uk",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://dynamiteevents.co.uk"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "London",
+     "lat": 51.5074,
+     "lng": -0.1278,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "the-events-collective",
+   "tag": "EVCOL",
+   "name": "The Events Collective",
+   "kind": "Event management",
+   "sub": "events",
+   "base": "Glasgow",
+   "areas": [
+    "Glasgow",
+    "Edinburgh",
+    "London",
+    "UK-wide"
+   ],
+   "summary": "A multi-award-winning event management and production company, established in 2008, working across Edinburgh, Glasgow, London and the UK.",
+   "services": [
+    "Event management",
+    "AV production",
+    "Staffing",
+    "Venue finding",
+    "Conference services"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [
+    "Established 2008"
+   ],
+   "website": "https://eventscollective.global",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://eventscollective.global"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "Glasgow",
+     "lat": 55.8642,
+     "lng": -4.2518,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "eventologists",
+   "tag": "EVENT",
+   "name": "Eventologists",
+   "kind": "Event management",
+   "sub": "events",
+   "base": "Leicester",
+   "areas": [
+    "Leicester",
+    "East Midlands"
+   ],
+   "summary": "A Leicester event management company.",
+   "services": [
+    "Event management"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [],
+   "website": "https://eventologists.co.uk",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://eventologists.co.uk"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "Leicester",
+     "lat": 52.6369,
+     "lng": -1.1398,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "grapevine-event-management",
+   "tag": "GRAPE",
+   "name": "Grapevine Event Management",
+   "kind": "Event management",
+   "sub": "events",
+   "base": "Cardiff",
+   "areas": [
+    "Cardiff",
+    "Wales"
+   ],
+   "summary": "A Cardiff event management company.",
+   "services": [
+    "Event management"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [],
+   "website": "https://grapevineeventmanagement.co.uk",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://grapevineeventmanagement.co.uk"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "Cardiff",
+     "lat": 51.4816,
+     "lng": -3.1791,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "callow-event-management",
+   "tag": "CALLO",
+   "name": "Callow Event Management",
+   "kind": "Event management",
+   "sub": "events",
+   "base": "Belfast",
+   "areas": [
+    "Belfast",
+    "Northern Ireland"
+   ],
+   "summary": "A Belfast event management company.",
+   "services": [
+    "Event management"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [],
+   "website": "https://callowevents.co.uk",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://callowevents.co.uk"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "Belfast",
+     "lat": 54.5973,
+     "lng": -5.9301,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "connect-in-events",
+   "tag": "CONNE",
+   "name": "Connect In Events",
+   "kind": "Event management",
+   "sub": "events",
+   "base": "Manchester",
+   "areas": [
+    "Manchester",
+    "Wales"
+   ],
+   "summary": "An event management company working in Manchester and Wales.",
+   "services": [
+    "Event management"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [],
+   "website": "https://connectinevents.co.uk",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://connectinevents.co.uk"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "Manchester",
+     "lat": 53.4808,
+     "lng": -2.2426,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  },
+  {
+   "slug": "eventurous",
+   "tag": "EVENU",
+   "name": "Eventurous",
+   "kind": "Event management",
+   "sub": "events",
+   "base": "Tamworth",
+   "areas": [
+    "London",
+    "Birmingham",
+    "Manchester",
+    "Bristol",
+    "Leeds",
+    "Oxford",
+    "Leicester",
+    "Coventry",
+    "Nottingham"
+   ],
+   "summary": "A corporate events agency and team-building company, established in 1989, delivering live, virtual and hybrid events across major UK cities.",
+   "services": [
+    "Corporate events",
+    "Team building",
+    "Event production",
+    "Venue finding"
+   ],
+   "eventTypes": [
+    "Weddings",
+    "Private parties",
+    "Corporate events",
+    "Bars and venues"
+   ],
+   "scale": [],
+   "facts": [
+    "Established 1989"
+   ],
+   "website": "https://www.eventurous.co.uk",
+   "social": {},
+   "images": {
+    "permission": "to_confirm",
+    "photos": []
+   },
+   "status": "unclaimed",
+   "source": {
+    "urls": [
+     "https://www.eventurous.co.uk"
+    ],
+    "retrievedAt": "2026-11-08"
+   },
+   "verifiedBy": null,
+   "locations": [
+    {
+     "label": "Tamworth",
+     "lat": 52.634,
+     "lng": -1.695,
+     "approx": true
+    }
+   ],
+   "category": "svc"
+  }
+ ]
+}

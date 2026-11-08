@@ -18,3 +18,7 @@ Map locations: each record has `locations`, a list of area-level pins (`label`, 
 ## Event suppliers (v17.3.105)
 
 `seed-djs.json`, `seed-photographers.json` and `seed-caterers.json` hold 30 real UK companies each, as unclaimed draft Company Cards under the same rules and schema, with an extra `category` field (`dj`, `photo`, `catering`). They are loaded as `REAL_SUPPLIERS17`, kept out of `COMPANIES` so FF Party's "Bar companies" lists stay bars only. Map colours: bars burgundy, DJs purple, photographers blue, caterers orange. All `images.permission` values are `to_confirm` and none have images yet. Six pins are `approx: true`. Many source URLs are public listings because the company's own site was not found; confirm with each company before claim invitations.
+
+## Bar services (v17.3.115)
+
+`seed-barservices.json` holds 28 Directory listings under Services > Bar services: ice delivery (10), glassware hire and delivery (9) and event management (10 listed here, about 4 London-based and the rest across the UK). `category` is `svc`; `sub` is `ice`, `glassware` or `events`. Same rules as above: facts only, no prices, no personal names.

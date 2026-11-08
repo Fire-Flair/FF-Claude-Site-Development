@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.115 — 2026-11-08 — Bar services and the FireFlair Directory section
+
+- Network page (FF Team and FF Staff): a new "FireFlair Directory" section sits at the bottom of the page. It holds Explore by area (moved down from under the map) and every Directory listing, grouped by type. The sections above now list signed-up companies only.
+- New category under Services: "Bar services" (`cat: "svc"`, data-only `sub` of ice, glassware or events). 28 Directory listings added to `REAL_SUPPLIERS17`: ice delivery, glassware hire and delivery, and event management, with London-based and rest-of-UK companies in each. They appear on the map as FF Directory pins; the legend count is now 149. Seed file: `data/companies/seed-barservices.json`.
+- Glassware has 9 listings, not 10: one candidate had no base or coverage stated on its site, so it was left out.
+- Developer note: `NetDirectory19` renders the block at the end of `NetBrowse17`; `NetMap11` now renders the map only.
+- Still not done: the tick-box area list in the Team and Staff location sections.
+
 ## v17.3.114 — 2026-11-08 — Map layers
 
 - Network map (FF Team, FF Staff, FF Party): the legend is now four tick boxes — FF Partners, FF Professionals, FF Directory, FF Venues — all ticked by default, each with a count. Unticking a box removes that layer from the map. Venues now show on the Network map as well.
