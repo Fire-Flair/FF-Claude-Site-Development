@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.3.126 — 2026-11-09 — Confirm page: Event Card first, help
+Artifact version 1794236643-31a9 · file `fireflair-v17.3.126.html`
+
+- FF Party "Confirm your booking" page now leads with the Event Card (step 1), then Services (2), People (3) and Review your order (4). The packages explorer ("Explore our packages") no longer appears on this page; it stays on the Network page. The basket logic that turns chosen packages into shifts still runs (BuildBooking17 now renders nothing).
+- New collapsed "Get help with your event" box under the Event Card (EventHelp21). The customer adds a phone number or email and what they need, and the Event Card details are saved as a request of kind event_card_help with a reference (FD-XXXXXX). It appears in FF Admin, Areas and requests. Admin and acknowledgement messages are simulated; the live build needs the real notification.
+- FF Event Directory heading no longer shows a number beside it.
+
 ## v17.3.125 — 2026-11-09 — All area pages, explorer under map
 Artifact version 1794233786-1cda · file `fireflair-v17.3.125.html`
 

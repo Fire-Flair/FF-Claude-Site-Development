@@ -18449,7 +18449,7 @@ function NetDirectory19(props) {
     .map(function (t) { return [t, all.filter(function (c) { return (c.cat || "bar") === t[0]; })]; })
     .filter(function (x) { return x[1].length; });
   return h("section", { id: "ff-directory", style: { marginTop: 30, scrollMarginTop: 70 } },
-    h(BigHead20, { title: "FF Event Directory", count: all.length + top.length }),
+    h(BigHead20, { title: "FF Event Directory" }),
     top.length ? h(CompaniesSection, { title: "Top companies", list: top }) : null,
     secs.map(function (x) { return h(CompaniesSection, { key: "dir" + x[0][0], title: x[0][1], list: x[1], fold: "ff-dir-" + x[0][0] }); }));
 }
@@ -21779,8 +21779,9 @@ function BuildBooking17() {
     if (bk.pk.length) cont();
   }, [JSON.stringify([bk.pk, bk.pp, bk.ck, bk.ex])]);
   const go = function () { cont(); setTimeout(function () { var el = document.querySelector(".ff-cb17"); if (el) el.scrollIntoView({ behavior: "smooth" }); }, 200); };
-  return React.createElement("div", { className: "ff-pn ff-br17" }, React.createElement(PartyBuilder17, { onOpen: setPop, onGo: go }),
-    pop && React.createElement(PkgSheet17, { svc: pop, qual: qual, onClose: function () { setPop(null); } }));
+  /* v17.3.126: the Confirm page no longer shows the packages explorer (it lives on the Network page).
+     This component keeps the basket logic above, which turns chosen packages into shifts. */
+  return null;
 }
 function StaffBookings() {
   const { state, dispatch } = useStore();
@@ -23940,6 +23941,49 @@ function CbCard17({ icon, thumb, title, onX, sent }) {
       {onX && !sent && <button type="button" className="rm" aria-label={`Remove ${title}`} onClick={onX}><S17I.X size={11} strokeWidth={3} /></button>}
     </div>);
 }
+/* v17.3.126: "Get help with your event" on the Confirm page. Sends the Event Card to FireFlair as a request
+   (saved in FF Admin, Areas and requests) so the team can help plan it. Collapsed by default. */
+function EventHelp21({ d, ev }) {
+  const { state, dispatch } = useStore();
+  const [open, setOpen] = useState(false);
+  const [note, setNote] = useState("");
+  const first = String(contactOf11(state, ev) || "").split(" \u00B7 ")[0] || "";
+  const [contact, setContact] = useState(first);
+  const [err, setErr] = useState("");
+  const [done, setDone] = useState(null);
+  const send = (e) => {
+    e.preventDefault();
+    const c = contact.trim(), ph = c.replace(/[^\d+]/g, "");
+    if (!c || (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c) && ph.replace(/\D/g, "").length < 7)) { setErr("Add a phone number or email address."); return; }
+    setErr("");
+    const cur = fdOf(state), ref = "FD-" + Math.random().toString(36).slice(2, 8).toUpperCase();
+    const isMail = c.includes("@");
+    const bits = [d.title && "Event: " + d.title, d.kind && "Type: " + d.kind, d.guests && "Guests: " + d.guests, d.start && "Start: " + d.start, note.trim()].filter(Boolean);
+    const rec = {
+      id: uid("lsr"), ref, key: ref, kind: "event_card_help", siteKey: "party", locationId: null, locationText: (d.venue || "").trim() || "Not stated",
+      roles: [], eventDate: d.iso || null, dateUndecided: !d.iso, tz: "Europe/London",
+      contact: { name: "", email: isMail ? c : "", phone: isMail ? "" : c, whatsappOk: !isMail },
+      headcount: d.guests || "", brief: bits.join(" | "), companyId: null, companyName: "",
+      createdAt: new Date().toISOString(), status: "new", assignee: "", adminNote: "", eventId: ev ? ev.id : null,
+      sourcePath: "", sourceSite: "party", notif: { admin: "simulated", ack: "simulated message", failed: false }, bookingId: null,
+    };
+    fdSet(state, dispatch, { requests: [rec, ...cur.requests], log: [{ at: rec.createdAt, by: "visitor", what: "event_card_help " + ref, site: "party" }, ...cur.log].slice(0, 200) });
+    setDone(ref);
+  };
+  return (
+    <div className="ff-cb17-sub ff-eh21">
+      <button type="button" className="h" aria-expanded={open} onClick={() => setOpen(v => !v)}><span className="ic"><S17I.Sparkles size={16} strokeWidth={1.8} /></span><b>Get help with your event</b><S17I.ChevronDown size={18} className="cv" /></button>
+      {open && <div className="b">
+        {done ? <div role="status"><b>Sent. Reference {done}</b><p style={{ margin: "6px 0 0" }}>The FireFlair team will be in touch about your Event Card.</p></div> :
+          <form onSubmit={send} noValidate style={{ display: "grid", gap: 10 }}>
+            <label className="ff-ff wide"><span className="k">Phone or email</span><span className="in"><input value={contact} onChange={(e) => setContact(e.target.value)} aria-label="Phone or email" autoComplete="off" /></span></label>
+            <label className="ff-ff wide"><span className="k">What do you need help with?</span><span className="in"><textarea rows={3} value={note} onChange={(e) => setNote(e.target.value)} aria-label="What do you need help with?" style={{ width: "100%", font: "inherit", border: 0, background: "transparent", resize: "vertical" }} /></span></label>
+            {err && <p role="alert" style={{ margin: 0, color: "var(--burgundy, #8C1526)" }}>{err}</p>}
+            <Btn variant="primary wide" onClick={send}>Send my Event Card</Btn>
+          </form>}
+      </div>}
+    </div>);
+}
 function ConfirmBooking17({ ev, setView, bkey }) {
   const { state, dispatch } = useStore();
   const all = useDirectory();
@@ -24013,15 +24057,18 @@ function ConfirmBooking17({ ev, setView, bkey }) {
   const payments = ["Apple Pay", "Google Pay", "Card"];
   return (
     <section className="ff-bbox ff-pb ff-cb17" aria-label="Confirm your booking">
-      {box("s", 1, "ff-cb17-svc", "Services", nSvc ? `${nSvc} chosen` : "", <>
+      {box("e", 1, "ff-cb17-event", "Event Card", "", <div className="ff-evwrap"><EventCard11 ev={d} edit onPatch={(x) => set(x)} /></div>, "s3")}
+      <EventHelp21 d={d} ev={ev} />
+      {arrow(1)}
+      {box("s", 2, "ff-cb17-svc", "Services", nSvc ? `${nSvc} chosen` : "", <>
         <div className="ff-mbasket ff-cb17-bar"><div className="ff-mc-row" role="list" aria-label="Services">
           {shifts.map(sh => { const svc = pkgs.find(y => y.id === sh.svcId); const Ic = (svc && PKICON17[svc.cat]) || S17I.Sparkles; return <CbCard17 sent={sent} key={sh.id} icon={<Ic size={24} strokeWidth={1.5} />} title={sh.role} onX={() => drop(sh)} />; })}
           {ck.map(x => <CbCard17 sent={sent} key={x.id} thumb={x.photo} icon={<S17I.Martini size={24} strokeWidth={1.5} />} title={x.name} onX={() => dropCk(x.id)} />)}
           {xa.map(x => <CbCard17 sent={sent} key={x.id} icon={<x.Ic size={24} strokeWidth={1.5} />} title={x.title} onX={() => dropXa(x.id)} />)}
           {!sent && <button type="button" role="listitem" className="ff-mc add" onClick={goBack} aria-label="Add a package"><span className="faces"><span className="empty"><S17I.Plus size={18} strokeWidth={2.4} /></span></span><b>Add</b></button>}
         </div></div></>, "s1")}
-      {arrow(1)}
-      {box("p", 2, "ff-cb17-people", "People", nPeople ? `${nPeople} chosen` : "", <>
+      {arrow(2)}
+      {box("p", 3, "ff-cb17-people", "People", nPeople ? `${nPeople} chosen` : "", <>
         <div className="ff-mbasket ff-cb17-bar"><div className="ff-mc-row" role="list" aria-label="People">
           {shifts.flatMap(sh => [
             ...staffOf(sh).map(pid => { const p = findPerson(all, state, pid); return p && <CbCard17 sent={sent} key={sh.id + pid} thumb={p.photo} icon={<S17I.Users size={24} />} title={firstName(p.name)} onX={engFor(state, sh.id, pid) ? null : () => dropPerson(sh, pid)} />; }),
@@ -24029,8 +24076,6 @@ function ConfirmBooking17({ ev, setView, bkey }) {
           ]).filter(Boolean)}
           {!sent && <button type="button" role="listitem" className="ff-mc add" onClick={goBack} aria-label="Choose people"><span className="faces"><span className="empty"><S17I.Plus size={18} strokeWidth={2.4} /></span></span><b>Add</b></button>}
         </div></div></>, "s2")}
-      {arrow(2)}
-      {box("e", 3, "ff-cb17-event", "Event Card", "", <div className="ff-evwrap"><EventCard11 ev={d} edit onPatch={(x) => set(x)} /></div>, "s3")}
       {arrow(3)}
       {box("r", 4, "ff-cb17-review", "Review your order", "", sent && ev ? <ConfirmPanel ev={ev} shifts={shifts} missing={missing} onClose={() => {}} /> : <>
         {sub("i", S17I.FileText, "Invoice and event guide", <EventGuide ev={gev} shifts={shifts} stamp="Preview" />)}
