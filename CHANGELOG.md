@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.129 — 2026-11-09 — Site selector wording and order
+Artifact version 1794249906-d17e · file `fireflair-v17.3.129.html`
+
+- Site selector (account menu): FF Team now reads "For hospitality professionals" and FF Staff "For hospitality businesses".
+- The list is ordered with the current site first: FF Party → VIP, Team, Staff; FF Staff → Team, Party, VIP; FF VIP → Party, Staff, Team; FF Team → Staff, Party, VIP (the Team order is a placeholder to confirm).
+- The FF Admin entry in this menu is for the prototype only and will not be in the final version.
+- Readable source copied to `source/fireflair-app.jsx`.
+
 ## v17.3.128 — 2026-11-09 — FF VIP site and launch party sign-up
 Artifact version 1794249575-d001 · file `fireflair-v17.3.128.html`
 

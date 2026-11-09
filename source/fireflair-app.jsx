@@ -10005,9 +10005,9 @@ const FF_VIP_LOGO = "data:image/webp;base64,…(21 KB)";
 
 const FF_SITES = [
   { key: "team",  name: "FF Team",  domain: "ffteam.uk",  url: "https://ffteam.uk",  tier: "gold",
-    line: "For everyone in hospitality", pitch: "Freelancers and the people who work in and run businesses: build your Profile Card and get booked.", cta: "Create your card" },
+    line: "For hospitality professionals", pitch: "Freelancers and the people who work in and run businesses: build your Profile Card and get booked.", cta: "Create your card" },
   { key: "staff", name: "FF Staff", domain: "ffstaff.uk", url: "https://ffstaff.uk", tier: "silver",
-    line: "For hospitality businesses of all kinds", pitch: "Bars, restaurants, venues, caterers and event companies: hire staff for your events and keep the people you trust.", cta: "Hire staff" },
+    line: "For hospitality businesses", pitch: "Bars, restaurants, venues, caterers and event companies: hire staff for your events and keep the people you trust.", cta: "Hire staff" },
   { key: "party", name: "FF Party", domain: "ffparty.uk", url: "https://ffparty.uk", tier: "bronze",
     line: "Plan an event and book your team", pitch: "Planning a party? Find your team and create your Event Card in minutes.", cta: "Plan an event" },
   { key: "vip",   name: "FF VIP",   domain: "ffvip.uk",   url: "https://ffvip.uk",   tier: "standard", logo: FF_VIP_LOGO,
@@ -11431,7 +11431,7 @@ function Shell({ children }) {
                     </div>
                   )}
                   <div className="ff-acct-sect">FireFlair sites</div>
-                  {FF_SITES.filter(s => PHASE1.sitesShown.includes(s.key)).map(s => (
+                  {FF_SITES.filter(s => PHASE1.sitesShown.includes(s.key)).sort((a, b) => ({ party: ["party","vip","team","staff"], staff: ["staff","team","party","vip"], vip: ["vip","party","staff","team"], team: ["team","staff","party","vip"] }[currentSite] || ["team","staff","party","vip"]).indexOf(a.key) - ({ party: ["party","vip","team","staff"], staff: ["staff","team","party","vip"], vip: ["vip","party","staff","team"], team: ["team","staff","party","vip"] }[currentSite] || ["team","staff","party","vip"]).indexOf(b.key)).map(s => (
                     <button key={s.key} type="button" role="menuitem" className={`ff-site${s.locked ? " locked" : ""}`} data-href={s.url}
                       aria-current={currentSite === s.key ? "page" : undefined} aria-disabled={s.locked || undefined}
                       onClick={() => { setMenuOpen(false); goSite(s.key); }}>
