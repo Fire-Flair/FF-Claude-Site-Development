@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.3.124 — 2026-11-09 — Challenge boxes, 2-minute section
+Artifact version 1794232523-52ab · file `fireflair-v17.3.124.html`
+
+- FF Team homepage challenge card: the four boxes now carry a gold chevron, shadow and hover lift so they read as clickable (no pictures).
+- Box titles are now: "90 day challenge" (starting 1 December), "Who can enter", "Competition rewards", "Competition rules". The separate Challenge Rules button is gone; box 4 opens the rules sheet.
+- Who can enter: any hospitality professional, and anyone who wants to get into hospitality; experience not mandatory; sign-up from anywhere in the world.
+- Competition rules sheet: "To enter" list (create a profile, upload a profile picture, add your professions, register your interest, answer some questions) and "To win" list. Everyone who creates a profile during the challenge is entered automatically; the largest and best Team wins.
+- New "It takes 2 minutes to enter" section (TwoMinutes20) between the challenge card and the booking section: sign up, upload your CV (profile builds automatically), add pictures, send invites, you're in. Includes the global sign-up line: marketing is UK-only in 2027, worldwide marketing and bookings from 2028. Join Challenge button goes to the profile screen.
+- Team homepage booking section is retitled "How FireFlair is built for getting you bookings", followed by a "How bookings work" subheading. Staff and Party keep "How a booking works".
+
 ## v17.3.123 — 2026-11-09 — 90-day challenge, launch bar, Network headings
 Artifact version 1794231118-b589 · file `fireflair-v17.3.123.html`
 

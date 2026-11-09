@@ -27592,7 +27592,9 @@ function BusinessSupport19() {
    Join goes to the existing profile journey (useHomeNav.goProfile). The rules open in the shared Sheet. No scoring, leaderboard or sign-up form is built here. */
 const COMP_RULES20 = [
   ["Challenge dates", "The challenge runs for 90 days, from 1 December 2026 to 28 February 2027."],
-  ["Eligibility", "Open to genuine hospitality professionals and people seriously committed to entering the hospitality industry who are willing and available to undertake suitable freelance hospitality work. Previous hospitality experience is not mandatory."],
+  ["Eligibility", "Open to any hospitality professional, and anyone who wants to get into hospitality and is willing and available to undertake suitable freelance hospitality work. Previous hospitality experience is not mandatory. Hospitality professionals can sign up from anywhere in the world."],
+  ["Entry", "Everyone who creates a profile during the challenge is entered automatically."],
+  ["Winning", "At the end of the challenge, whoever has built the largest and best Team wins."],
 ];
 const COMP_TBC20 = ["Scoring calculation", "Tie-break procedure", "Prize values", "Winner verification", "Fulfilment conditions", "Promoter details"];
 const PROMO_CSS20 = ".ff-cp20{position:relative;margin:22px 0;border-radius:26px;overflow:hidden;color:#F4EBD6;background:linear-gradient(135deg,#0B0A09 0%,#1C0E12 55%,#4A1220 100%);border:1px solid rgba(201,162,75,.45);isolation:isolate}"
@@ -27637,23 +27639,40 @@ function LaunchBar20() {
     React.createElement("div", { className: "ff-lb20-n" }, n.toLocaleString("en-GB") + " professionals so far"),
     React.createElement("div", { className: "ff-lb20-s" }, stops.map((s, i) => React.createElement("div", { key: s[0], className: "ff-lb20-x p" + i }, React.createElement("b", null, s[0]), React.createElement("em", null, s[1]), React.createElement("span", null, s[2])))));
 }
-const LB20_CSS = ".ff-cd20{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;padding:2px 22px 12px}.ff-cd20-l{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#D9B968;font-weight:600}.ff-cd20-c{display:inline-flex;flex-direction:column;align-items:center;min-width:54px;padding:6px 10px;border-radius:14px;border:1px solid rgba(201,162,75,.5);background:rgba(244,235,214,.05)}.ff-cd20-c b{font-size:22px;line-height:1.1;color:#F4EBD6;font-variant-numeric:tabular-nums}.ff-cd20-c small{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#D9B968}"
+const LB20_CSS = ".ff-cp20 .ff-cp20-box{position:relative;padding-right:42px;box-shadow:0 2px 0 rgba(201,162,75,.28),0 8px 18px rgba(0,0,0,.25);transition:transform .15s ease,background .15s ease}.ff-cp20 .ff-cp20-box:hover{transform:translateY(-2px)}.ff-cp20 .ff-cp20-box:active{transform:translateY(0)}.ff-cp20 .ff-cp20-box:after{content:\"\\203A\";position:absolute;right:12px;top:50%;width:24px;height:24px;margin-top:-12px;border-radius:50%;border:1px solid rgba(201,162,75,.75);background:rgba(201,162,75,.14);color:#E7CB7A;font-size:18px;line-height:21px;text-align:center}.ff-cd20{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;padding:2px 22px 12px}.ff-cd20-l{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#D9B968;font-weight:600}.ff-cd20-c{display:inline-flex;flex-direction:column;align-items:center;min-width:54px;padding:6px 10px;border-radius:14px;border:1px solid rgba(201,162,75,.5);background:rgba(244,235,214,.05)}.ff-cd20-c b{font-size:22px;line-height:1.1;color:#F4EBD6;font-variant-numeric:tabular-nums}.ff-cd20-c small{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#D9B968}"
   + ".ff-lb20{padding:6px 22px 22px}.ff-lb20-t{position:relative;height:12px;border-radius:12px;background:rgba(244,235,214,.14);border:1px solid rgba(201,162,75,.45);margin:10px 8px 0}.ff-lb20-f{position:absolute;left:0;top:0;bottom:0;border-radius:12px;background:linear-gradient(90deg,#8C6A1F,#E7CB7A)}.ff-lb20-d{position:absolute;top:50%;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:#1C0E12;border:2px solid rgba(201,162,75,.7)}.ff-lb20-d.on{background:#E7CB7A;border-color:#F4EBD6}"
   + ".ff-lb20-n{margin-top:10px;text-align:center;font-size:12px;color:#D9B968;letter-spacing:.04em}.ff-lb20-s{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.ff-lb20-x{display:flex;flex-direction:column;gap:2px;font-size:12px;line-height:1.35;color:rgba(244,235,214,.88)}.ff-lb20-x b{font-size:14px;color:#F4EBD6}.ff-lb20-x em{font-style:normal;font-size:11px;color:#D9B968}.ff-lb20-x.p1{text-align:center;align-items:center}.ff-lb20-x.p2{text-align:right;align-items:flex-end}";
+/* "It takes 2 minutes to enter": sits under the challenge card on the FF Team homepage. */
+const TM20_CSS = ".ff-tm20{margin:22px 0;padding:22px;border-radius:26px;background:#FBF7EC;border:1px solid rgba(165,128,47,.45)}.ff-tm20-h{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:0 0 14px}.ff-tm20-big{display:inline-flex;align-items:baseline;gap:6px;padding:6px 16px 8px;border-radius:20px;background:#141416;color:#E7CB7A}.ff-tm20-big b{font-size:44px;line-height:1}.ff-tm20-big span{font-size:15px;letter-spacing:.08em;text-transform:uppercase}.ff-tm20 h2{margin:0;font-size:clamp(24px,6vw,32px);line-height:1.12}.ff-tm20 p{margin:0 0 10px;font-size:15px;line-height:1.5}.ff-tm20-s{list-style:none;margin:14px 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.ff-tm20-s li{display:flex;gap:10px;align-items:flex-start;padding:12px;border-radius:18px;border:1px solid rgba(165,128,47,.4);background:#fff}.ff-tm20-s .n{flex:none;width:26px;height:26px;border-radius:50%;background:#141416;color:#E7CB7A;display:grid;place-items:center;font-weight:700;font-size:13px}.ff-tm20-s b{display:block;font-size:14px}.ff-tm20-s small{display:block;font-size:12.5px;line-height:1.35;color:#555}.ff-tm20-w{margin-top:12px;padding:12px 14px;border-radius:18px;background:rgba(201,162,75,.14);font-size:14px;line-height:1.5}";
+function TwoMinutes20() {
+  const h = React.createElement;
+  const nav = useHomeNav();
+  const steps = [["Sign up", "Create your account."], ["Upload your CV", "Your profile builds itself automatically."], ["Add pictures", "Show who you are."], ["Send invites", "Invite the hospitality professionals you have worked with, would like to work with, or believe are great."], ["You are in", "Everyone who creates a profile during the challenge is entered automatically."]];
+  return h("section", { className: "ff-sect ff-tm20", id: "ff-two-minutes", "aria-labelledby": "ff-tm20-h" },
+    h("style", null, TM20_CSS),
+    h("div", { className: "ff-tm20-h" },
+      h("span", { className: "ff-tm20-big", "aria-hidden": "true" }, h("b", null, "2"), h("span", null, "minutes")),
+      h("h2", { id: "ff-tm20-h", className: "ff-h1" }, "It takes 2 minutes to enter")),
+    h("p", null, "Create your profile, then invite the hospitality professionals you want on your Team. At the end of the challenge, whoever has built the largest and best Team wins."),
+    h("ol", { className: "ff-tm20-s" }, steps.map((s, i) => h("li", { key: s[0] }, h("span", { className: "n" }, i + 1), h("span", null, h("b", null, s[0]), h("small", null, s[1]))))),
+    h("div", { className: "ff-tm20-w" }, "Hospitality professionals can sign up anywhere in the world. Marketing in 2027 takes place in the UK. From 2028, marketing and bookings go worldwide, so you can take bookings all around the world."),
+    h("div", { style: { marginTop: 14 } }, h(ShineButton, { onClick: nav.goProfile }, "Join Challenge")));
+}
 function TeamCompetition20() {
   const h = React.createElement;
   const nav = useHomeNav();
   const [rules, setRules] = useState(false);
   const [box, setBox] = useState(null);
   const boxes = [
-    ["90 days", "1 December to 28 February", [["Dates", "The challenge runs for 90 days, from 1 December 2026 to 28 February 2027."]]],
-    ["Open to hospitality", "Who can enter", [["Who can enter", "Open to genuine hospitality professionals and people seriously committed to entering the hospitality industry who are willing and available to undertake suitable freelance hospitality work."], ["Experience", "Previous hospitality experience is not mandatory."]]],
-    ["Four winners", "Gold, Silver, Bronze and Mystery", [["Winners", "Gold, Silver and Bronze go to the largest qualifying professional Network and Team. The Mystery Prize goes to a random eligible participant outside the top three."], ["Prizes", "Hospitality experiences, training, professional equipment, photography and more. Prize details are confirmed before the competition opens."], ["Placements", "Challenge placements are separate from the Bronze, Silver and Gold XP levels."]]],
-    ["Network + Team", "How to compete", [["How to compete", "Create an FF Team profile. Share your Profile Card with hospitality contacts. Build genuine Network and Team connections."], ["Network and Team", "These are separate features. Team connections need mutual acceptance."], ["Fair play", "Only genuine accounts and authentic professional connections qualify."]]],
+    ["90 day challenge", "Starting 1 December", [["Dates", "The challenge runs for 90 days, from 1 December 2026 to 28 February 2027."]]],
+    ["Who can enter", "Hospitality professionals, and anyone getting into hospitality", [["Who can enter", "Any hospitality professional, and anyone who wants to get into hospitality and is willing and available to undertake suitable freelance hospitality work."], ["Experience", "Previous hospitality experience is not mandatory."], ["Where", "Hospitality professionals can sign up from anywhere in the world."]]],
+    ["Competition rewards", "Gold, Silver, Bronze and Mystery", [["Winners", "Gold, Silver and Bronze go to the largest and best Teams. The Mystery Prize goes to a random eligible participant outside the top three."], ["Rewards", "Hospitality experiences, training, professional equipment, photography and more."]]],
+    ["Competition rules", "What you need to do", null],
   ];
   const cur = box === null ? null : boxes[box];
   const css = PROMO_CSS20 + PROMO_BOX_CSS20 + LB20_CSS;
   const sec = (t, body) => h("div", { key: t }, h("h3", { className: "ff-label" }, t), body);
+  const pick = (i) => { if (boxes[i][2]) setBox(i); else setRules(true); };
   return h("section", { className: "ff-sect", id: "ff-competition", "aria-labelledby": "ff-cp20-h" },
     h("style", null, css),
     h("div", { className: "ff-cp20" },
@@ -27661,34 +27680,38 @@ function TeamCompetition20() {
         h("div", null,
           h("div", { className: "ff-cp20-eye" }, h(Coin, { size: 34, tier: "gold" }), h("span", null, "FF Team Launch Challenge")),
           h("h2", { id: "ff-cp20-h" }, "Build your Network. Grow your Team. Win prizes."),
-          h("span", { className: "ff-cp20-date" }, "90 days from 1 December 2026"),
+          h("span", { className: "ff-cp20-date" }, "90 day challenge \u00B7 starting 1 December 2026"),
           h("p", null, "Prizes include hospitality experiences, training, professional equipment, photography and more."),
           h("div", { className: "ff-cp20-btns" },
-            h(ShineButton, { onClick: nav.goProfile }, "Join Challenge"),
-            h(Button, { onClick: () => setRules(true) }, "Challenge Rules"))),
+            h(ShineButton, { onClick: nav.goProfile }, "Join Challenge"))),
         h("div", null,
-          h("div", { className: "ff-cp20-boxes" }, boxes.map((b, i) => h("button", { key: b[0], type: "button", className: "ff-cp20-box", onClick: () => setBox(i) }, h("b", null, b[0]), h("span", null, b[1])))),
+          h("div", { className: "ff-cp20-boxes" }, boxes.map((b, i) => h("button", { key: b[0], type: "button", className: "ff-cp20-box", onClick: () => pick(i), "aria-haspopup": "dialog" }, h("b", null, b[0]), h("span", null, b[1])))),
           h("div", { className: "ff-cp20-url" }, "FFTeam.uk"))),
       h(Countdown20, null),
       h(LaunchBar20, null)),
     h(Sheet, { open: box !== null, onClose: () => setBox(null), title: cur ? cur[0] : "", center: true },
-      cur ? h("div", { className: "ff-cp20r" }, cur[2].map((r) => sec(r[0], h("p", null, r[1])))) : null),
-    h(Sheet, { open: rules, onClose: () => setRules(false), title: "FF Team Launch Challenge rules", center: true },
+      cur && cur[2] ? h("div", { className: "ff-cp20r" }, cur[2].map((r) => sec(r[0], h("p", null, r[1])))) : null),
+    h(Sheet, { open: rules, onClose: () => setRules(false), title: "Competition rules", center: true },
       h("div", { className: "ff-cp20r" },
-        COMP_RULES20.map((r) => sec(r[0], h("p", null, r[1]))),
-        sec("How to participate", h("ol", null,
-          h("li", null, "Create an FF Team profile."),
-          h("li", null, "Share your Profile Card with hospitality contacts."),
+        sec("To enter", h("ol", null,
+          h("li", null, "Create a profile."),
+          h("li", null, "Upload a profile picture."),
+          h("li", null, "Add your professions."),
+          h("li", null, "Register your interest."),
+          h("li", null, "Answer some questions."))),
+        sec("To win", h("ol", null,
+          h("li", null, "Invite hospitality professionals you have worked with, would like to work with, or believe are great."),
           h("li", null, "Build genuine Network and Team connections."),
-          h("li", null, "Compete for the largest qualifying professional Network and Team."))),
+          h("li", null, "Have the largest and best Team at the end of the challenge."))),
         h("p", { style: { marginTop: 8 } }, "Network and Team are separate features. Team connections need mutual acceptance."),
+        COMP_RULES20.map((r) => sec(r[0], h("p", null, r[1]))),
         sec("Prizes", h("ul", null,
           h("li", null, h("b", null, "Gold: "), "premium hospitality experiences and professional rewards."),
           h("li", null, h("b", null, "Silver: "), "career-enhancing training and rewards."),
           h("li", null, h("b", null, "Bronze: "), "professional equipment and rewards."),
           h("li", null, h("b", null, "Mystery Prize: "), "a random eligible participant outside the top three."))),
         h("p", { style: { marginTop: 8 } }, "Challenge placements are separate from the Bronze, Silver and Gold XP levels."),
-        sec("Fair participation", h("p", null, "Only genuine accounts and authentic professional connections qualify. Duplicate, fabricated or manipulated activity may be disqualified following reasonable review.")),
+        sec("Fair participation", h("p", null, "Only genuine accounts and authentic professional connections qualify. Duplicate, fabricated or manipulated activity may be disqualified following review.")),
         sec("Final terms", h("div", null, h("p", null, "To be confirmed before the challenge opens:"), COMP_TBC20.map((t) => h("span", { key: t, className: "tbc" }, t + ": to be confirmed")))))));
 }
 /* VIP Host Card (formerly VIP Host Card) — a free membership benefit, not a subscription or contract.
@@ -27771,6 +27794,7 @@ function Home101() {
   const sections = [
     <DiscoverHub11 key="discover" />,
     <TeamCompetition20 key="competition" />,
+    <TwoMinutes20 key="twomin" />,
     <HowBooking17 key="how" kind="team" />,
     <GuideQuestions11 key="guide" kind="team" />,
     <Journal17 key="journal" kind="team" />,
@@ -32653,7 +32677,8 @@ function HowBooking17({ kind = "team" }) {
   const pics = HBM17[kind] || HBM17.team;
   return (
     <section className="ff-sect ff-hb17" id="ff-how" aria-labelledby="ff-hb17-h">
-      <h2 id="ff-hb17-h" className="ff-h1">How a booking works</h2>
+      <h2 id="ff-hb17-h" className="ff-h1">{kind === "team" ? "How FireFlair is built for getting you bookings" : "How a booking works"}</h2>
+      {kind === "team" && <h3 className="ff-label" style={{ margin: "0 0 10px" }}>How bookings work</h3>}
       <ol className="ff-hb17-row">
         {list.map(([Ic, t, x], i) => (
           <React.Fragment key={t}>
