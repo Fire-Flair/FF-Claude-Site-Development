@@ -18446,6 +18446,22 @@ function NetDirectory19(props) {
     h(AreaExplorer11, null),
     secs.map(function (x) { return h(CompaniesSection, { key: "dir" + x[0][0], title: x[0][1], list: x[1] }); }));
 }
+/* Packages under the pillars: FireFlair packages (Bar only), then professional and company packages. */
+function NetPackages20({ pillar }) {
+  const st = useStore(), state = st.state;
+  const [pop, setPop] = useState(null);
+  const pkgs = pkgsOf17(state).filter(function (x) { return (x.cat || "bar") === pillar; });
+  const co = pkgs.filter(function (x) { return x.by || x.id === "svc_supplier"; });
+  const pro = pkgs.filter(function (x) { return !x.ff; });
+  const secs = pillar === "bar" ? [["Professional packages", pro], ["Company packages", co]] : [["Company packages", co], ["Professional packages", pro]];
+  return React.createElement(React.Fragment, null,
+    pillar === "bar" && window.PartyPackages18 ? React.createElement(window.PartyPackages18, null) : null,
+    secs.filter(function (x) { return x[1].length; }).map(function (x) {
+      return React.createElement("div", { className: "ff-br17-row", key: x[0] }, React.createElement("h3", { className: "ff-br17-h3" }, x[0]),
+        React.createElement(HScroll, { label: x[0] }, x[1].map(function (svc) { return React.createElement("div", { className: "ff-br17-co", key: svc.id }, React.createElement(PkgCard17, { svc: svc, n: 0, noun: "person", on: false, match: false, onToggle: function () { setPop(svc); }, onInfo: function () { setPop(svc); } })); })));
+    }),
+    pop ? React.createElement(PkgSheet17, { svc: pop, qual: "", onClose: function () { setPop(null); } }) : null);
+}
 function NetBrowse17(props) {
   const query = props.query || "";
   const st = useStore(), state = st.state, dispatch = st.dispatch;
@@ -18456,16 +18472,16 @@ function NetBrowse17(props) {
     .map(function (t) { return [t, all.filter(function (c) { return (c.cat || "bar") === t[0]; })]; })
     .filter(function (x) { return x[1].length; });
   const groups = open ? Object.keys(PILLAR_OF_GROUP17).filter(function (g) { return PILLAR_OF_GROUP17[g] === open; }) : "";
-  const body = React.createElement(React.Fragment, null,
-    open === "bar" && window.PartyPackages18 ? React.createElement(window.PartyPackages18, null) : null,
-    secs.map(function (x) { return React.createElement(CompaniesSection, { key: x[0][0], title: x[0][1], list: x[1] }); }),
-    React.createElement(GroupedPeople, { query: "", onPick: props.onPick, scope: props.scope, only: groups }));
   const items = BCATS17.map(function (c) { return { k: c.k, t: c.label, s: NET_PILLAR_TEXT17[c.k], img: (window.FF_IMG || {})[BIMG17[c.k]] }; });
   return React.createElement(React.Fragment, null,
-    React.createElement(PillarBox17, { label: "Browse the network", open: open, items: items, onPick: function (k) { dispatch({ type: "V11_SET", patch: { netPillar17: k } }); } }, body),
+    React.createElement("h2", { className: "ff-about-h ff-br17-q" }, "Explore our packages"),
+    React.createElement(PillarBox17, { label: "Explore our packages", open: open, items: items, onPick: function (k) { dispatch({ type: "V11_SET", patch: { netPillar17: k } }); } }, open ? React.createElement(NetPackages20, { pillar: open }) : null),
     props.after || null,
-    !open && React.createElement(GroupedPeople, { query: "", onPick: props.onPick, scope: props.scope, only: "" }),
-    React.createElement(NetDirectory19, null));
+    secs.length ? React.createElement("section", { id: "ff-companies", style: { marginTop: 30, scrollMarginTop: 70 } }, React.createElement(SectionHead, { icon: React.createElement(I11.Briefcase, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title: "Companies" }), secs.map(function (x) { return React.createElement(CompaniesSection, { key: x[0][0], title: x[0][1], list: x[1] }); })) : null,
+    React.createElement(NetDirectory19, null),
+    React.createElement("section", { id: "ff-our-pros", style: { marginTop: 30, scrollMarginTop: 70 } },
+      React.createElement(SectionHead, { icon: React.createElement(I11.Users, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title: "Our professionals" }),
+      React.createElement(GroupedPeople, { query: "", onPick: props.onPick, scope: props.scope, only: groups })));
 }
 
 /* A company's page, as anyone sees it. */
@@ -19589,7 +19605,7 @@ const FD_CSS = `
 `;
 
 function NetMap11() {
-  return React.createElement(React.Fragment, null, React.createElement("section", { id: "ff-netmap", style: { marginTop: 22, scrollMarginTop: 70 } }, React.createElement(SectionHead, { icon: React.createElement(I11.MapPin, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title: "Where FireFlair is" }), React.createElement(FFMap, { mode: "network" })));
+  return React.createElement(React.Fragment, null, React.createElement("section", { id: "ff-netmap", style: { marginTop: 22, scrollMarginTop: 70 } }, React.createElement(SectionHead, { icon: React.createElement(I11.MapPin, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title: "Browse the network" }), React.createElement(FFMap, { mode: "network" })));
 }
 
 /* ==========================================================================
@@ -19666,20 +19682,22 @@ const COMPANY_PINS11 = (() => {
   return out;
 })();
 
-const MAP_LAYERS19 = [["partners", "FF companies"], ["pros", "Professionals"], ["dir", "Directory"], ["venues", "Venues"]];
-const mapLayer19 = (show) => (p) => p.kind === "person" ? show.pros : p.kind === "company" ? (p.partner ? show.partners : show.dir) : p.kind === "venue" ? show.venues : true;
-function MapLegend19({ pins, show, setShow, onPick }) {
+const MAP_LAYERS19 = [["partners", "Companies"], ["pros", "Professionals"], ["dir", "Directory"], ["venues", "Venues"]];
+const catOf19 = (p) => p.kind === "person" ? (p.profession || p.group || "Other") : p.kind === "company" ? ((NET_CO_TYPES17.find((x) => x[0] === (p.cat || "bar")) || [])[1] || "Bar companies") : p.kind === "venue" ? (p.kind2 || p.vtype || p.venueKind || "Venue") : "";
+const layerOf19 = (p) => p.kind === "person" ? "pros" : p.kind === "company" ? (p.partner ? "partners" : "dir") : p.kind === "venue" ? "venues" : "";
+const mapLayer19 = (show, hide) => (p) => { const k = layerOf19(p); return !k ? true : show[k] && !(hide || {})[k + ":" + catOf19(p)]; };
+function MapLegend19({ pins, show, setShow, hide, setHide }) {
   const h = React.createElement;
   const [openK, setOpenK] = useState("");
-  const kindOf = { partners: (p) => p.kind === "company" && p.partner, pros: (p) => p.kind === "person", dir: (p) => p.kind === "company" && !p.partner, venues: (p) => p.kind === "venue" };
-  const members = (k) => { const seen = {}; return pins.filter(kindOf[k]).filter((p) => { const key = p.coId || p.id; if (seen[key]) return false; seen[key] = 1; return true; }).sort((a, b) => String(a.name).localeCompare(String(b.name))); };
+  const members = (k) => { const seen = {}; return pins.filter((p) => layerOf19(p) === k).filter((p) => { const key = p.coId || p.id; if (seen[key]) return false; seen[key] = 1; return true; }); };
+  const cats = (k) => { const m = {}; members(k).forEach((p) => { const c = catOf19(p); m[c] = (m[c] || 0) + 1; }); return Object.keys(m).sort().map((c) => [c, m[c]]); };
   const count = {}; MAP_LAYERS19.forEach(([k]) => { count[k] = members(k).length; });
   const icon = { partners: h(Coin, { size: 17 }), pros: h(MapPerson17, { size: 18 }), dir: h(MapDot17, { cat: "bar", size: 18 }), venues: h("span", { style: { width: 11, height: 11, borderRadius: 3, background: MAP_LAYER.venue.color, border: "1px solid #141416", display: "block" } }) };
   return h("div", { className: "ff-ml19", role: "group", "aria-label": "Map layers" },
-    h("style", null, ".ff .ff-ml19 { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:10px 0 14px; } .ff .ff-ml19 label { display:flex; align-items:center; gap:7px; font-size:12px; cursor:pointer; padding:6px 11px; border:1px solid var(--rule); border-radius:12px; corner-shape:squircle; background:#fff; color:var(--ink); } .ff .ff-ml19 input { accent-color:#7E611D; width:15px; height:15px; margin:0; } .ff .ff-ml19-row { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; width:100%; } .ff .ff-ml19-x { border:0; background:none; cursor:pointer; padding:0 0 0 4px; font-size:11px; color:inherit; } .ff .ff-ml19-list { width:100%; max-height:190px; overflow:auto; border:1px solid var(--rule, #d8d2c6); border-radius:16px; background:var(--card, #fff); padding:6px; display:flex; flex-direction:column; } .ff .ff-ml19-list button { text-align:left; border:0; background:none; cursor:pointer; padding:7px 10px; border-radius:10px; font-size:12px; color:inherit; } .ff .ff-ml19-list button:hover { background:rgba(0,0,0,.05); }"),
+    h("style", null, ".ff .ff-ml19 { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:10px 0 14px; } .ff .ff-ml19 label { display:flex; align-items:center; gap:7px; font-size:12px; cursor:pointer; padding:6px 11px; border:1px solid var(--rule); border-radius:12px; corner-shape:squircle; background:#fff; color:var(--ink); } .ff .ff-ml19 input { accent-color:#7E611D; width:15px; height:15px; margin:0; } .ff .ff-ml19-row { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; width:100%; } .ff .ff-ml19-x { border:0; background:none; cursor:pointer; padding:0 0 0 4px; font-size:11px; color:inherit; } .ff .ff-ml19-list { width:100%; max-height:190px; overflow:auto; border:1px solid var(--rule, #d8d2c6); border-radius:16px; background:var(--card, #fff); padding:6px; display:flex; flex-direction:column; } .ff .ff-ml19-list button { text-align:left; border:0; background:none; cursor:pointer; padding:7px 10px; border-radius:10px; font-size:12px; color:inherit; } .ff .ff-ml19-list button:hover { background:rgba(0,0,0,.05); } .ff .ff-ml19-row { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; width:100%; } .ff .ff-ml19-x { border:0; background:none; cursor:pointer; padding:0 0 0 4px; font-size:11px; color:inherit; } .ff .ff-ml19-list { width:100%; max-height:220px; overflow:auto; border:1px solid var(--rule, #d8d2c6); border-radius:16px; background:var(--card, #fff); padding:6px; display:flex; flex-direction:column; } .ff .ff-ml19-list label { display:flex; align-items:center; gap:8px; border:0; border-radius:10px; padding:7px 10px; font-size:12px; cursor:pointer; background:none; } .ff .ff-ml19-list label:hover { background:rgba(0,0,0,.05); } .ff .ff-ml19-list label span { margin-left:auto; opacity:.6; }"),
     h("div", { className: "ff-ml19-row" }, MAP_LAYERS19.map(([k, label]) => h("label", { key: k }, h("input", { type: "checkbox", checked: !!show[k], onChange: () => setShow({ ...show, [k]: !show[k] }) }), icon[k], label + (count[k] ? " (" + count[k] + ")" : ""),
-      count[k] ? h("button", { type: "button", className: "ff-ml19-x", "aria-expanded": openK === k, "aria-label": label + " list", onClick: (e) => { e.preventDefault(); e.stopPropagation(); setOpenK(openK === k ? "" : k); } }, openK === k ? "\u25B4" : "\u25BE") : null))),
-    openK ? h("div", { className: "ff-ml19-list" }, members(openK).map((p) => h("button", { key: p.coId || p.id, type: "button", onClick: () => onPick && onPick(p) }, p.name))) : null);
+      count[k] ? h("button", { type: "button", className: "ff-ml19-x", "aria-expanded": openK === k, "aria-label": label + " categories", onClick: (e) => { e.preventDefault(); e.stopPropagation(); setOpenK(openK === k ? "" : k); } }, openK === k ? "\u25B4" : "\u25BE") : null))),
+    openK ? h("div", { className: "ff-ml19-list" }, cats(openK).map(([c, n]) => h("label", { key: c }, h("input", { type: "checkbox", checked: !hide[openK + ":" + c], onChange: () => setHide({ ...hide, [openK + ":" + c]: !hide[openK + ":" + c] }) }), c, h("span", null, n)))) : null);
 }
 
 function FFMap({ mode = "home" }) {
@@ -19687,6 +19705,7 @@ function FFMap({ mode = "home" }) {
   const directory = useDirectory();
   const [sel, setSel] = useState(null);
   const [show, setShow] = useState({ partners: true, pros: true, dir: true, venues: true });
+  const [hideCat, setHideCat] = useState({});
   const home = mode === "home";
 
   const pins0 = useMemo(() => {
@@ -19694,8 +19713,8 @@ function FFMap({ mode = "home" }) {
     const p1 = mode === "phase1";
     const all = home || p1
       ? [...people, ...(p1 ? [] : MAP_BUSINESSES.map(b => ({ ...b, kind: "business" }))),
-         ...VENUES.map(v => ({ ...v, kind: "venue", venue: true })), ...(p1 ? [] : MAP_EVENTS.map(e => ({ ...e, kind: "event" })))]
-      : mode === "network" ? [...people, ...VENUES.map((v) => ({ ...v, kind: "venue", venue: true }))] : people;
+         ...VENUES.map(v => ({ ...v, vtype: v.kind, kind: "venue", venue: true })), ...(p1 ? [] : MAP_EVENTS.map(e => ({ ...e, kind: "event" })))]
+      : mode === "network" ? [...people, ...VENUES.map((v) => ({ ...v, vtype: v.kind, kind: "venue", venue: true }))] : people;
     const seen = {};
     const RING = [[0, 0], [7, -6], [-7, 5], [8, 7], [-8, -6], [0, 9], [0, -9], [11, 0], [-11, 0], [10, -9], [-10, 9]];
     const cos = mode === "phase1" ? [] : COMPANY_PINS11.map(p => ({ ...p, x: (p.ll[1] + 0.4045) / 0.00525, y: (51.654 - p.ll[0]) / 0.002957 + 9 }));
@@ -19712,7 +19731,7 @@ function FFMap({ mode = "home" }) {
     if (!netPillar) return pins0;
     return pins0.filter((p) => p.kind === "company" ? PILLAR_OF_CAT17[p.cat || "bar"] === netPillar : p.kind === "person" ? PILLAR_OF_GROUP17[p.group] === netPillar : false);
   }, [pins0, netPillar]);
-  const pins = useMemo(() => mode !== "network" ? pinsAll : pinsAll.filter(mapLayer19(show)), [pinsAll, show, mode]);
+  const pins = useMemo(() => mode !== "network" ? pinsAll : pinsAll.filter(mapLayer19(show, hideCat)), [pinsAll, show, hideCat, mode]);
 
   const boxRef = useRef(null), mapRef = useRef(null);
   const [fallback, setFallback] = useState(() => !window.L || !ukGeo11());
@@ -19842,7 +19861,7 @@ function FFMap({ mode = "home" }) {
         </div>
       )}
 
-      {mode === "network" && <MapLegend19 pins={pinsAll} show={show} setShow={setShow} onPick={setSel} />}
+      {mode === "network" && <MapLegend19 pins={pinsAll} show={show} setShow={setShow} hide={hideCat} setHide={setHideCat} />}
       <div style={{ display: mode === "network" ? "none" : "flex", gap: 14, alignItems: "center", justifyContent: "center", margin: "10px 0 14px", flexWrap: "wrap" }}>
         <span className="ff-body ff-muted" style={{ fontSize: 11, display: "flex", gap: 6, alignItems: "center" }}><MapPerson17 size={18} /> Professionals{nPeople ? ` (${nPeople})` : ""}</span>
         {companyLegend17(pins)}
@@ -23124,6 +23143,7 @@ function PartyBuilder17({ onOpen, onGo }) {
   const barAll = [...pkgs.filter(x => x.cat === "bar" && x.ff && x.id !== "svc_staffing" && !x.drinks), byId("svc_staffing")].filter(Boolean);
   const pro = !p2 ? pkgs.filter(x => x.cat === "bar" && !x.ff && !x.drinks && svcFits11(x, band)) : [];
   const catPk = cat && cat !== "bar" ? pkgs.filter(x => x.cat === cat) : [];
+  const coPk = pkgs.filter(x => x.cat === "bar" && (x.by || x.id === "svc_supplier"));
   const chosen = bk.pk.map(id => pkgs.find(x => x.id === id)).filter(Boolean);
   const peopleFor = (svc) => svc.by ? [] : all.filter(p => signedUp11(p, svc.id === "svc_full" ? "svc_bartending" : svc.id)).slice(0, 12);
   const view = (id) => { dispatch({ type: "VIEW", id }); window.scrollTo(0, 0); };
@@ -23131,7 +23151,8 @@ function PartyBuilder17({ onOpen, onGo }) {
     <CocktailBrowser17 onPkg={onOpen} />
     <Fold17 big id="ff-br17-pk" title="Choose your package" count={barAll.length}>
       {row(barAll, "")}
-      {row(pro, "From FireFlair professionals")}
+      {row(pro, "Professional packages")}
+      {row(coPk, "Company packages")}
     </Fold17>
     <Fold17 big id="ff-br17-pp" title="Choose your people">
       {chosen.length === 0 ? <p className="ff-br17-soon">Please choose your package first, or browse below.</p>
@@ -23169,14 +23190,14 @@ function PartyBuilder17({ onOpen, onGo }) {
     <p className="ff-br17-soon">{BCATS17.find(c => c.k === cat).label} is coming in 2027 to FireFlair.</p>
   ) : (<>
     <Fold17 big id="ff-br17-pk2" title="Choose your package">
-      {row(catPk.filter(x => x.ff), "")}
-      {row(catPk.filter(x => !x.ff), "From FireFlair professionals")}
+      {row(catPk.filter(x => x.ff), "Company packages")}
+      {row(catPk.filter(x => !x.ff), "Professional packages")}
       {catPk.length === 0 && <p className="ff-br17-soon">Nothing here yet.</p>}
     </Fold17>
   </>);
   return (
     <div className="ff-pb17">
-      <h2 className="ff-about-h ff-br17-q">Build your booking</h2>
+      <h2 className="ff-about-h ff-br17-q">Explore our packages</h2>
       <PillarBox17 label="What are you looking for?" open={cat} onPick={(k) => setBr({ cat: k })}
         items={BCATS17.map(c => ({ k: c.k, t: c.label, s: BTEXT17[c.k], img: (window.FF_IMG || {})[BIMG17[c.k]] }))}>{panelBody}</PillarBox17>
     </div>);
@@ -23235,7 +23256,6 @@ function PartyBrowse17() {
     React.createElement("h1", { className: "ff-h1", style: { marginTop: 4, marginBottom: 10 } }, "Network"),
     p2 && React.createElement("p", { className: "ff-br17-launch", role: "note" }, React.createElement("b", null, "FireFlair is launching with bar packages."), " Every other profession on the platform will be added later."),
     React.createElement(FFAI, { query: q, onQuery: setQ, title: "Search for your team", context: "FF Party", purpose: "Find the right people for your event: search by name, profession, skill or area.", placeholder: "Name, profession, skill or area\u2026" }),
-    React.createElement("h2", { className: "ff-about-h ff-br17-q ff-br17-net" }, "Browse the network"),
     pop && React.createElement(PkgSheet17, { svc: pop, qual: qual, onClose: function () { setPop(null); } }),
     state.netBrief && React.createElement(BookingBrief, { brief: state.netBrief }),
     !state.netBrief && React.createElement(NetBrowse17, { query: q, onPick: function (p) { dispatch({ type: "VIEW", id: p.id }); }, scope: "staff_", after: !q ? React.createElement(NetMap11, null) : null }),

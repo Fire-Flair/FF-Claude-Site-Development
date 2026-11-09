@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.3.122 — 2026-11-09 — Network: Explore our packages, category legend, headings
+Artifact version 1794229877-c3ff · file `fireflair-v17.3.122.html`
+
+- Network page (all three sites): the pillars now sit under the title "Explore our packages". Opening Bar shows FireFlair packages, then professional packages, then company packages. Entertainment, Services and Food show company packages, then professional packages, with no FireFlair packages. Package cards open the usual package pop-up.
+- The party booking builder uses the same headings and order ("Professional packages", "Company packages"); its title is now "Explore our packages".
+- The map heading "Where FireFlair is" is now "Browse the network", and the duplicate "Browse the network" title above the pillars on FF Party is removed.
+- Map legend: "FF companies" is now "Companies". Each legend dropdown now lists categories, not individual entries: company categories for Companies and Directory, roles for Professionals, venue types for Venues. Each category has a checkbox that shows or hides that category on the map, with its count.
+- Page order below the map: Companies (claimed), "FF Event Directory" (heading, with Explore by area), then a new "Our professionals" heading above the grouped people.
+- Developer note: venue pins keep their venue type (`vtype`) so the legend can group by it.
+
 ## v17.3.121 — 2026-11-09 — Network: FF Event Directory, legend dropdowns, Bar packages
 Artifact version 1794187011-ff56 · file `fireflair-v17.3.121.html`
 
