@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.125 — 2026-11-09 — All area pages, explorer under map
+Artifact version 1794233786-1cda · file `fireflair-v17.3.125.html`
+
+- Every place now has its own area page by default (previously only a prepared set did, so Northern Ireland showed "doesn't have a page yet"). Admin can still unpublish a page; the route and sitemap rules are unchanged.
+- "Explore by area" moved from inside the FF Event Directory to directly under the map and its legend, on all three sites.
+- "Greater London" is now simply "London" everywhere it is displayed (URL stays /areas/uk/england/greater-london; the short /london route redirects to it). Saved locations named "Greater London" still resolve.
+- Explorer is now four levels deep: UK or Worldwide, then nation or region, then London as a chip, then a "London areas" dropdown listing every borough. Picking a borough shows its people and links to its page.
+
 ## v17.3.124 — 2026-11-09 — Challenge boxes, 2-minute section
 Artifact version 1794232523-52ab · file `fireflair-v17.3.124.html`
 
