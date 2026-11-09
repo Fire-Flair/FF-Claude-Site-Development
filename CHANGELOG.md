@@ -1,5 +1,17 @@
 # FireFlair prototype — changelog
 
+## v17.3.123 — 2026-11-09 — 90-day challenge, launch bar, Network headings
+Artifact version 1794231118-b589 · file `fireflair-v17.3.123.html`
+
+- Challenge (FF Team homepage): the launch competition is now the FF Team Launch Challenge, 90 days from 1 December 2026 (ends 28 February 2027). Dates, buttons, rules sheet and titles are updated.
+- New countdown on the challenge card: "Starts in" days, hours and minutes before 1 December, then "Ends in" during the challenge, then "Challenge complete". Dates and thresholds sit in `FF_CHALLENGE20`.
+- New launch progress bar across the challenge card, driven by the number of professionals: FF Team launch on the left, FF Staff opens at 100 professionals (middle), FF Party at 1,000 (right). The bar is split evenly, so 0 to 100 fills the first half and 100 to 1,000 the second. Each site has a one-line description beneath it. The live build needs the real professional count in place of the prototype directory size.
+- Legend: venues now use a round building icon (same icon on the map pins) instead of the grey square.
+- Network page (all three sites): the page heading is "Our network" in black with a gold underline; the gold site name above it is removed. "Explore our packages", "Browse the network", "Our professionals" and "FF Event Directory" are large black headings with a gold underline (shared `BigHead20`).
+- Order is now: Explore our packages, Browse the network (map), Our professionals, FF Event Directory.
+- Top staff sits inside Our professionals, and Top companies (companies that have joined, previously listed as "Bar companies") sits inside FF Event Directory. The FF Party Featured companies and Featured people sections are removed as they duplicated these.
+- Every group is a dropdown, closed by default: the professional groups under Our professionals, and Bar companies, Entertainment, Event services (was "Services"), Caterers and Bar services under FF Event Directory. Explore by area stays a dropdown.
+
 ## v17.3.122 — 2026-11-09 — Network: Explore our packages, category legend, headings
 Artifact version 1794229877-c3ff · file `fireflair-v17.3.122.html`
 

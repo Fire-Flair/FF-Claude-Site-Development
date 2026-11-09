@@ -4274,7 +4274,7 @@ function MapPerson17(props) {
   const s = props.size || (props.on ? 28 : 22);
   return React.createElement("span", { className: "ff-mper" + (props.on ? " on" : ""), style: { width: s, height: s } }, React.createElement(MapGlyph17, { g: "person", size: Math.round(s * 0.66), color: "#EAD79C" }));
 }
-const COMPANY_CATS17 = [["bar", "Bar companies", "#6E1F2F"], ["dj", "Entertainment", "#6B3FB5"], ["photo", "Services", "#2A6BB0"], ["catering", "Caterers", "#D2762B"]];
+const COMPANY_CATS17 = [["bar", "Bar companies", "#6E1F2F"], ["dj", "Entertainment", "#6B3FB5"], ["photo", "Event services", "#2A6BB0"], ["catering", "Caterers", "#D2762B"]];
 function companyLegend17(pins) {
   const items = COMPANY_CATS17.map(([cat, label, col]) => {
     const n = new Set(pins.filter((p) => p.kind === "company" && (p.cat || "bar") === cat).map((p) => p.coId)).size;
@@ -8474,7 +8474,7 @@ function InviteSheet({ open, onClose }) {
   );
 }
 
-function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "" }) {
+function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "", shut = false }) {
   const { state, dispatch } = useStore();
   const everyone = useDirectory();
   const n = query.trim().toLowerCase();
@@ -8489,11 +8489,11 @@ function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "" }
     <>
       {keys.map(g => {
         const key = `${scope}${g}`;
-        const visible = state.categoryVisibility[key] === undefined ? state.role !== "staff" : state.categoryVisibility[key] !== false;
+        const visible = state.categoryVisibility[key] === undefined ? (!shut && state.role !== "staff") : state.categoryVisibility[key] !== false;
         return (
           <section key={g} style={{ marginTop: 20 }}>
             <SectionHead icon={<GroupIcon group={g} />} title={g} count={groups[g].length}
-              action={<CategoryToggle sectionKey={key} />} />
+              action={<CategoryToggle sectionKey={key} defaultOpen={!shut} />} />
             {visible && (
               <HScroll label={g} snap>
                 {groups[g].map(p => (
@@ -8567,9 +8567,8 @@ function NetworkScreen({ guest = false }) {
 
   return (
     <div>
-      <div className="ff-eyebrow">{guest ? "FireFlair" : "FF Team"}</div>
       <div style={{ display: "flex", alignItems: "flex-end", gap: 10, marginTop: 4 }}>
-        <h1 className="ff-h1" style={{ flex: 1 }}>Network</h1>
+        <div style={{ flex: 1 }}><BigHead20 tag="h1" title="Our network" /></div>
         {!guest && ph17(state) >= 2 && <Btn variant="sm" onClick={() => setInviting(true)}><Send size={12} /> Invite</Btn>}
       </div>
 
@@ -8604,7 +8603,7 @@ function NetworkScreen({ guest = false }) {
       )}
       {!q && !guest && ph17(state) >= 2 && <SentInvitations />}
 
-      <NetBrowse17 query={q} onPick={view} after={<><NetMap11 />{!q && <TopStaff11 />}</>} />
+      <NetBrowse17 query={q} onPick={view} after={<NetMap11 />} />
       {!q && (<>
         {PHASE1.leaderboards && <Rankings />}
         <Divider />
@@ -18403,12 +18402,18 @@ const companyList = (state) => adminCompanies17(state, [
   ...COMPANIES.map(x => companyById(state, x.id)).filter(Boolean),
 ]);
 
-function CompaniesSection({ title = "Companies", note, list: listIn }) {
+/* Large page headings: black type with a gold underline (Network page). */
+const BIG20_CSS = ".ff .ff-big20{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin:32px 0 14px;font-size:clamp(26px,7vw,34px);line-height:1.12;font-weight:700;color:#141416;letter-spacing:0}.ff .ff-big20 .t{display:inline-block;padding-bottom:7px;border-bottom:3px solid var(--gold,#C9A227)}.ff h1.ff-big20{margin-top:6px}";
+function BigHead20({ tag, title, count, id }) {
+  return React.createElement(React.Fragment, null, React.createElement("style", null, BIG20_CSS),
+    React.createElement(tag || "h2", { className: "ff-h1 ff-big20", id: id }, React.createElement("span", { className: "t" }, title), count !== undefined ? React.createElement("span", { className: "ff-pill" }, count) : null));
+}
+function CompaniesSection({ title = "Companies", note, list: listIn, fold }) {
   const { state, dispatch } = useStore();
   const list = listIn || companyList(state);
+  const Wrap = fold ? ({ children }) => <Fold17 shut id={fold} icon={<I11.Briefcase size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={title} count={list.length}>{children}</Fold17> : ({ children }) => <section className="ff-co11-sect" style={{ marginTop: 22 }}><SectionHead icon={<I11.Briefcase size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={title} count={list.length} />{children}</section>;
   return (
-    <section className="ff-co11-sect" style={{ marginTop: 22 }}>
-      <SectionHead icon={<I11.Briefcase size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={title} count={list.length} />
+    <Wrap>
       {note && <p className="ff-body" style={{ margin: "-2px 0 8px", fontSize: 13.5 }}>{note}</p>}
       <HScroll label={title}>
         {list.map(co => (
@@ -18420,12 +18425,12 @@ function CompaniesSection({ title = "Companies", note, list: listIn }) {
           </button>
         ))}
       </HScroll>
-    </section>
+    </Wrap>
   );
 }
 
 /* Browse under the map: the four pillars sort the people and companies, and the map follows. */
-const NET_CO_TYPES17 = [["bar", "Bar companies"], ["dj", "Entertainment"], ["photo", "Services"], ["catering", "Caterers"], ["svc", "Bar services"]];
+const NET_CO_TYPES17 = [["bar", "Bar companies"], ["dj", "Entertainment"], ["photo", "Event services"], ["catering", "Caterers"], ["svc", "Bar services"]];
 const PILLAR_OF_GROUP17 = { "Bar": "bar", "Front of House": "bar", "Management": "bar", "Back of House": "bar", "Entertainment": "ent", "Services": "svc", "Chefs": "food" };
 const PILLAR_OF_CAT17 = { bar: "bar", dj: "ent", photo: "svc", svc: "svc", catering: "food" };
 const NET_PILLAR_TEXT17 = { bar: "Bartenders and bar companies", ent: "DJs and performers", svc: "Photo and more", food: "Chefs and caterers" };
@@ -18437,14 +18442,17 @@ function NetDirectory19(props) {
   const h = React.createElement;
   const st = useStore(), state = st.state;
   const open = state.netPillar17 || "";
-  const all = browseCompanies17(state).filter(function (c) { return c.unclaimed; });
+  const every = browseCompanies17(state);
+  const all = every.filter(function (c) { return c.unclaimed; });
+  const top = every.filter(function (c) { return !c.unclaimed && (!open || PILLAR_OF_CAT17[c.cat || "bar"] === open); });
   const secs = NET_CO_TYPES17.filter(function (t) { return !open || PILLAR_OF_CAT17[t[0]] === open; })
     .map(function (t) { return [t, all.filter(function (c) { return (c.cat || "bar") === t[0]; })]; })
     .filter(function (x) { return x[1].length; });
   return h("section", { id: "ff-directory", style: { marginTop: 30, scrollMarginTop: 70 } },
-    h(SectionHead, { icon: h(I11.Briefcase, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title: "FF Event Directory", count: all.length }),
+    h(BigHead20, { title: "FF Event Directory", count: all.length + top.length }),
+    top.length ? h(CompaniesSection, { title: "Top companies", list: top }) : null,
     h(AreaExplorer11, null),
-    secs.map(function (x) { return h(CompaniesSection, { key: "dir" + x[0][0], title: x[0][1], list: x[1] }); }));
+    secs.map(function (x) { return h(CompaniesSection, { key: "dir" + x[0][0], title: x[0][1], list: x[1], fold: "ff-dir-" + x[0][0] }); }));
 }
 /* Packages under the pillars: FireFlair packages (Bar only), then professional and company packages. */
 function NetPackages20({ pillar }) {
@@ -18467,21 +18475,17 @@ function NetBrowse17(props) {
   const st = useStore(), state = st.state, dispatch = st.dispatch;
   const open = state.netPillar17 || "";
   if (query.trim()) return React.createElement(React.Fragment, null, props.after || null, React.createElement(GroupedPeople, { query: query, onPick: props.onPick, scope: props.scope }));
-  const all = browseCompanies17(state).filter(function (c) { return !c.unclaimed; });
-  const secs = NET_CO_TYPES17.filter(function (t) { return !open || PILLAR_OF_CAT17[t[0]] === open; })
-    .map(function (t) { return [t, all.filter(function (c) { return (c.cat || "bar") === t[0]; })]; })
-    .filter(function (x) { return x[1].length; });
   const groups = open ? Object.keys(PILLAR_OF_GROUP17).filter(function (g) { return PILLAR_OF_GROUP17[g] === open; }) : "";
   const items = BCATS17.map(function (c) { return { k: c.k, t: c.label, s: NET_PILLAR_TEXT17[c.k], img: (window.FF_IMG || {})[BIMG17[c.k]] }; });
   return React.createElement(React.Fragment, null,
-    React.createElement("h2", { className: "ff-about-h ff-br17-q" }, "Explore our packages"),
+    React.createElement(BigHead20, { title: "Explore our packages" }),
     React.createElement(PillarBox17, { label: "Explore our packages", open: open, items: items, onPick: function (k) { dispatch({ type: "V11_SET", patch: { netPillar17: k } }); } }, open ? React.createElement(NetPackages20, { pillar: open }) : null),
     props.after || null,
-    secs.length ? React.createElement("section", { id: "ff-companies", style: { marginTop: 30, scrollMarginTop: 70 } }, React.createElement(SectionHead, { icon: React.createElement(I11.Briefcase, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title: "Companies" }), secs.map(function (x) { return React.createElement(CompaniesSection, { key: x[0][0], title: x[0][1], list: x[1] }); })) : null,
-    React.createElement(NetDirectory19, null),
     React.createElement("section", { id: "ff-our-pros", style: { marginTop: 30, scrollMarginTop: 70 } },
-      React.createElement(SectionHead, { icon: React.createElement(I11.Users, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title: "Our professionals" }),
-      React.createElement(GroupedPeople, { query: "", onPick: props.onPick, scope: props.scope, only: groups })));
+      React.createElement(BigHead20, { title: "Our professionals" }),
+      React.createElement(TopStaff11, null),
+      React.createElement(GroupedPeople, { query: "", onPick: props.onPick, scope: props.scope, only: groups, shut: true })),
+    React.createElement(NetDirectory19, null));
 }
 
 /* A company's page, as anyone sees it. */
@@ -18591,14 +18595,13 @@ function StaffRosterStaff11() {
   const regulars = [...new Set(worked.map(e => e.staffId))].filter(id => id !== "me").map(id => all.find(p => p.id === id)).filter(Boolean);
   return (
     <div>
-      <div className="ff-eyebrow">{hireSiteOf(state).name}</div>
-      <h1 className="ff-h1" style={{ marginTop: 4, marginBottom: 6 }}>Network</h1>
+      <BigHead20 tag="h1" title="Our network" />
       <p className="ff-body ff-muted" style={{ marginBottom: 4 }}>Find the people to book, and the companies they work with.</p>
       {state.netBrief && <BookingBrief brief={state.netBrief} />}
       <FFAI query={q} onQuery={setQ} title="Search the network" context="FF Staff"
         purpose="Find people to hire — search by name, profession, skill or area. Tap a card to see their profile."
         placeholder="Name, profession, skill or area…" />
-      <NetBrowse17 query={q} onPick={(p) => dispatch({ type: "VIEW", id: p.id })} scope="staff_" after={!q && !state.netBrief ? <><NetMap11 /><TopStaff11 /></> : null} />
+      <NetBrowse17 query={q} onPick={(p) => dispatch({ type: "VIEW", id: p.id })} scope="staff_" after={!q && !state.netBrief ? <NetMap11 /> : null} />
       {!q && regulars.length > 0 && (
         <section style={{ marginTop: 18 }}>
           <SectionHead icon={<I11.Check size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Your team" count={regulars.length} />
@@ -19605,7 +19608,7 @@ const FD_CSS = `
 `;
 
 function NetMap11() {
-  return React.createElement(React.Fragment, null, React.createElement("section", { id: "ff-netmap", style: { marginTop: 22, scrollMarginTop: 70 } }, React.createElement(SectionHead, { icon: React.createElement(I11.MapPin, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title: "Browse the network" }), React.createElement(FFMap, { mode: "network" })));
+  return React.createElement(React.Fragment, null, React.createElement("section", { id: "ff-netmap", style: { marginTop: 22, scrollMarginTop: 70 } }, React.createElement(BigHead20, { title: "Browse the network" }), React.createElement(FFMap, { mode: "network" })));
 }
 
 /* ==========================================================================
@@ -19683,6 +19686,10 @@ const COMPANY_PINS11 = (() => {
 })();
 
 const MAP_LAYERS19 = [["partners", "Companies"], ["pros", "Professionals"], ["dir", "Directory"], ["venues", "Venues"]];
+function MapVenue20({ size = 22, on }) {
+  return React.createElement("span", { style: { width: size, height: size, borderRadius: "50%", background: MAP_LAYER.venue.color, border: "1.5px solid #141416", display: "inline-grid", placeItems: "center", flex: "none", boxShadow: on ? "0 0 10px rgba(198,200,204,.9)" : "none" } },
+    React.createElement(Building2, { size: Math.round(size * 0.58), color: "#141416", strokeWidth: 1.8 }));
+}
 const catOf19 = (p) => p.kind === "person" ? (p.profession || p.group || "Other") : p.kind === "company" ? ((NET_CO_TYPES17.find((x) => x[0] === (p.cat || "bar")) || [])[1] || "Bar companies") : p.kind === "venue" ? (p.kind2 || p.vtype || p.venueKind || "Venue") : "";
 const layerOf19 = (p) => p.kind === "person" ? "pros" : p.kind === "company" ? (p.partner ? "partners" : "dir") : p.kind === "venue" ? "venues" : "";
 const mapLayer19 = (show, hide) => (p) => { const k = layerOf19(p); return !k ? true : show[k] && !(hide || {})[k + ":" + catOf19(p)]; };
@@ -19692,7 +19699,7 @@ function MapLegend19({ pins, show, setShow, hide, setHide }) {
   const members = (k) => { const seen = {}; return pins.filter((p) => layerOf19(p) === k).filter((p) => { const key = p.coId || p.id; if (seen[key]) return false; seen[key] = 1; return true; }); };
   const cats = (k) => { const m = {}; members(k).forEach((p) => { const c = catOf19(p); m[c] = (m[c] || 0) + 1; }); return Object.keys(m).sort().map((c) => [c, m[c]]); };
   const count = {}; MAP_LAYERS19.forEach(([k]) => { count[k] = members(k).length; });
-  const icon = { partners: h(Coin, { size: 17 }), pros: h(MapPerson17, { size: 18 }), dir: h(MapDot17, { cat: "bar", size: 18 }), venues: h("span", { style: { width: 11, height: 11, borderRadius: 3, background: MAP_LAYER.venue.color, border: "1px solid #141416", display: "block" } }) };
+  const icon = { partners: h(Coin, { size: 17 }), pros: h(MapPerson17, { size: 18 }), dir: h(MapDot17, { cat: "bar", size: 18 }), venues: h(MapVenue20, { size: 18 }) };
   return h("div", { className: "ff-ml19", role: "group", "aria-label": "Map layers" },
     h("style", null, ".ff .ff-ml19 { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:10px 0 14px; } .ff .ff-ml19 label { display:flex; align-items:center; gap:7px; font-size:12px; cursor:pointer; padding:6px 11px; border:1px solid var(--rule); border-radius:12px; corner-shape:squircle; background:#fff; color:var(--ink); } .ff .ff-ml19 input { accent-color:#7E611D; width:15px; height:15px; margin:0; } .ff .ff-ml19-row { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; width:100%; } .ff .ff-ml19-x { border:0; background:none; cursor:pointer; padding:0 0 0 4px; font-size:11px; color:inherit; } .ff .ff-ml19-list { width:100%; max-height:190px; overflow:auto; border:1px solid var(--rule, #d8d2c6); border-radius:16px; background:var(--card, #fff); padding:6px; display:flex; flex-direction:column; } .ff .ff-ml19-list button { text-align:left; border:0; background:none; cursor:pointer; padding:7px 10px; border-radius:10px; font-size:12px; color:inherit; } .ff .ff-ml19-list button:hover { background:rgba(0,0,0,.05); } .ff .ff-ml19-row { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; width:100%; } .ff .ff-ml19-x { border:0; background:none; cursor:pointer; padding:0 0 0 4px; font-size:11px; color:inherit; } .ff .ff-ml19-list { width:100%; max-height:220px; overflow:auto; border:1px solid var(--rule, #d8d2c6); border-radius:16px; background:var(--card, #fff); padding:6px; display:flex; flex-direction:column; } .ff .ff-ml19-list label { display:flex; align-items:center; gap:8px; border:0; border-radius:10px; padding:7px 10px; font-size:12px; cursor:pointer; background:none; } .ff .ff-ml19-list label:hover { background:rgba(0,0,0,.05); } .ff .ff-ml19-list label span { margin-left:auto; opacity:.6; }"),
     h("div", { className: "ff-ml19-row" }, MAP_LAYERS19.map(([k, label]) => h("label", { key: k }, h("input", { type: "checkbox", checked: !!show[k], onChange: () => setShow({ ...show, [k]: !show[k] }) }), icon[k], label + (count[k] ? " (" + count[k] + ")" : ""),
@@ -19817,7 +19824,7 @@ function FFMap({ mode = "home" }) {
         ) : p.kind === "event" ? (
           <span style={{ display: "block", width: on ? 18 : 14, height: on ? 18 : 14, transform: "rotate(45deg)", background: MAP_LAYER.event.color, border: "1.5px solid #EAD79C", boxShadow: on ? "0 0 10px rgba(47,138,126,.9)" : "none" }} />
         ) : p.kind === "venue" ? (
-          <span style={{ display: "block", width: on ? 17 : 13, height: on ? 17 : 13, borderRadius: 2, background: MAP_LAYER.venue.color, border: "1.5px solid #141416", boxShadow: on ? "0 0 10px rgba(198,200,204,.9)" : "none" }} />
+          <MapVenue20 size={on ? 28 : 22} on={on} />
         ) : (<>
           {p.kind === "business" && <span style={{ position: "absolute", inset: -7, borderRadius: "50%", border: "1px solid rgba(140,21,38,.9)", background: "rgba(92,18,32,.5)" }} />}
           <span style={{ position: "relative", display: "block", filter: on ? "drop-shadow(0 0 8px rgba(201,162,39,.9))" : "none" }}>
@@ -23197,7 +23204,7 @@ function PartyBuilder17({ onOpen, onGo }) {
   </>);
   return (
     <div className="ff-pb17">
-      <h2 className="ff-about-h ff-br17-q">Explore our packages</h2>
+      <BigHead20 title="Explore our packages" />
       <PillarBox17 label="What are you looking for?" open={cat} onPick={(k) => setBr({ cat: k })}
         items={BCATS17.map(c => ({ k: c.k, t: c.label, s: BTEXT17[c.k], img: (window.FF_IMG || {})[BIMG17[c.k]] }))}>{panelBody}</PillarBox17>
     </div>);
@@ -23252,17 +23259,12 @@ function PartyBrowse17() {
     actions: items.length ? [{ key: "go", label: bk.pk.length ? "Continue to your event" : "Add a service to continue", coin: true, disabled: !bk.pk.length, onClick: cont }] : [],
   }, [JSON.stringify(bk), band, qual, state.activeEventId, state.events.length, state.shifts.length]);
   return React.createElement("div", { className: "ff-pn ff-br17" },
-    React.createElement("div", { className: "ff-eyebrow" }, "FF Party"),
-    React.createElement("h1", { className: "ff-h1", style: { marginTop: 4, marginBottom: 10 } }, "Network"),
+    React.createElement(BigHead20, { tag: "h1", title: "Our network" }),
     p2 && React.createElement("p", { className: "ff-br17-launch", role: "note" }, React.createElement("b", null, "FireFlair is launching with bar packages."), " Every other profession on the platform will be added later."),
     React.createElement(FFAI, { query: q, onQuery: setQ, title: "Search for your team", context: "FF Party", purpose: "Find the right people for your event: search by name, profession, skill or area.", placeholder: "Name, profession, skill or area\u2026" }),
     pop && React.createElement(PkgSheet17, { svc: pop, qual: qual, onClose: function () { setPop(null); } }),
     state.netBrief && React.createElement(BookingBrief, { brief: state.netBrief }),
-    !state.netBrief && React.createElement(NetBrowse17, { query: q, onPick: function (p) { dispatch({ type: "VIEW", id: p.id }); }, scope: "staff_", after: !q ? React.createElement(NetMap11, null) : null }),
-    React.createElement(Fold17, { id: "ff-pn-companies", icon: React.createElement(I11.Briefcase, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title: "Featured companies", count: cos.length },
-      React.createElement(HScroll, { label: "Featured companies" }, cos.map(function (c) { return React.createElement("div", { className: "ff-br17-co", key: c.id }, React.createElement(CompanyListing11, { co: c })); }))),
-    React.createElement(Fold17, { id: "ff-br17-people", icon: React.createElement(I11.Star, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title: "Featured people", count: feat.length },
-      React.createElement(HScroll, { label: "Featured people" }, feat.map(function (p) { return React.createElement(PlayerTile, { key: p.id, person: p, onClick: function () { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); } }); }))));
+    !state.netBrief && React.createElement(NetBrowse17, { query: q, onPick: function (p) { dispatch({ type: "VIEW", id: p.id }); }, scope: "staff_", after: !q ? React.createElement(NetMap11, null) : null }));
 }
 
 /* The FF coin is the notification centre on every site. Next steps (and XP, later) sit under the notifications. */
@@ -27589,7 +27591,7 @@ function BusinessSupport19() {
 /* FF Team Launch Competition (working title) — a small promotional feature on the FF Team homepage, between the Discover pillars and How a booking works.
    Join goes to the existing profile journey (useHomeNav.goProfile). The rules open in the shared Sheet. No scoring, leaderboard or sign-up form is built here. */
 const COMP_RULES20 = [
-  ["Competition dates", "1–31 December 2026."],
+  ["Challenge dates", "The challenge runs for 90 days, from 1 December 2026 to 28 February 2027."],
   ["Eligibility", "Open to genuine hospitality professionals and people seriously committed to entering the hospitality industry who are willing and available to undertake suitable freelance hospitality work. Previous hospitality experience is not mandatory."],
 ];
 const COMP_TBC20 = ["Scoring calculation", "Tie-break procedure", "Prize values", "Winner verification", "Fulfilment conditions", "Promoter details"];
@@ -27609,38 +27611,69 @@ const PROMO_CSS20 = ".ff-cp20{position:relative;margin:22px 0;border-radius:26px
     + ".ff-cp20r .tbc{display:inline-block;margin:0 6px 6px 0;padding:4px 10px;border-radius:12px;border:1px dashed var(--gold-dk,#A5802F);font-size:12.5px}"
     + ".ff-vip20-ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px}.ff-vip20-ul li{padding:7px 10px;border-radius:14px;border:1px solid rgba(201,162,75,.4);font-size:12px;line-height:1.3;color:#F4EBD6}";
 const PROMO_BOX_CSS20 = ".ff-cp20 .ff-cp20-boxes{display:grid;grid-template-columns:1fr 1fr;gap:10px}.ff-cp20 .ff-cp20-box{display:flex;flex-direction:column;gap:3px;text-align:left;padding:14px 14px;border-radius:18px;border:1px solid rgba(201,162,75,.45);background:rgba(244,235,214,.05);color:#F4EBD6;cursor:pointer;font:inherit;min-height:84px}.ff-cp20 .ff-cp20-box b{font-size:15px;line-height:1.2;color:#F4EBD6}.ff-cp20 .ff-cp20-box span{font-size:12.5px;line-height:1.3;color:#D9B968}.ff-cp20 .ff-cp20-box:hover,.ff-cp20 .ff-cp20-box:focus-visible{background:rgba(201,162,75,.14);outline:none}.ff-cp20.big .ff-cp20-in{grid-template-columns:1fr;gap:20px;padding:30px 26px}.ff-cp20.big h2{font-size:clamp(30px,7vw,48px);line-height:1.05;margin:10px 0 10px}.ff-cp20.big p{font-size:16.5px}.ff-cp20.big .ff-cp20-eye{font-size:13px}.ff-cp20.big .ff-cp20-box{min-height:96px;padding:16px}.ff-cp20.big .ff-cp20-box b{font-size:16.5px}@media(min-width:900px){.ff-cp20.big .ff-cp20-in{grid-template-columns:1.1fr 1fr;padding:40px 36px;align-items:center}}";
+/* The 90-day launch challenge: starts 1 December 2026. The bar follows the number of professionals; FF Staff opens at 100 and FF Party at 1,000. */
+const FF_CHALLENGE20 = { start: Date.UTC(2026, 11, 1), days: 90, staffAt: 100, partyAt: 1000 };
+function Countdown20() {
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => { const id = setInterval(() => setNow(Date.now()), 30000); return () => clearInterval(id); }, []);
+  const c = FF_CHALLENGE20, end = c.start + c.days * 864e5;
+  const before = now < c.start, done = now >= end;
+  const ms = Math.max(0, (before ? c.start : end) - now);
+  const d = Math.floor(ms / 864e5), hr = Math.floor(ms % 864e5 / 36e5), mn = Math.floor(ms % 36e5 / 6e4);
+  const cell = (n, l) => React.createElement("span", { className: "ff-cd20-c", key: l }, React.createElement("b", null, String(n).padStart(2, "0")), React.createElement("small", null, l));
+  return React.createElement("div", { className: "ff-cd20", role: "timer", "aria-label": before ? "Time until the challenge starts" : "Time left in the challenge" },
+    React.createElement("span", { className: "ff-cd20-l" }, done ? "Challenge complete" : before ? "Starts in" : "Ends in"),
+    done ? null : [cell(d, "days"), cell(hr, "hours"), cell(mn, "mins")]);
+}
+function LaunchBar20() {
+  const people = useDirectory();
+  const c = FF_CHALLENGE20, n = people.length;
+  const pct = n <= c.staffAt ? n / c.staffAt * 50 : 50 + (Math.min(n, c.partyAt) - c.staffAt) / (c.partyAt - c.staffAt) * 50;
+  const stops = [["FF Team", "Launch", "Professionals build their profile and network", 0], ["FF Staff", "At " + c.staffAt.toLocaleString("en-GB") + " professionals", "Allows companies to hire you", 50], ["FF Party", "At " + c.partyAt.toLocaleString("en-GB") + " professionals", "Direct to client bookings", 100]];
+  return React.createElement("div", { className: "ff-lb20" },
+    React.createElement("div", { className: "ff-lb20-t", role: "progressbar", "aria-valuemin": 0, "aria-valuemax": c.partyAt, "aria-valuenow": n, "aria-label": "Professionals joined" },
+      React.createElement("span", { className: "ff-lb20-f", style: { width: pct + "%" } }),
+      stops.map((s) => React.createElement("i", { key: s[0], className: "ff-lb20-d" + (pct >= s[3] ? " on" : ""), style: { left: s[3] + "%" } }))),
+    React.createElement("div", { className: "ff-lb20-n" }, n.toLocaleString("en-GB") + " professionals so far"),
+    React.createElement("div", { className: "ff-lb20-s" }, stops.map((s, i) => React.createElement("div", { key: s[0], className: "ff-lb20-x p" + i }, React.createElement("b", null, s[0]), React.createElement("em", null, s[1]), React.createElement("span", null, s[2])))));
+}
+const LB20_CSS = ".ff-cd20{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;padding:2px 22px 12px}.ff-cd20-l{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#D9B968;font-weight:600}.ff-cd20-c{display:inline-flex;flex-direction:column;align-items:center;min-width:54px;padding:6px 10px;border-radius:14px;border:1px solid rgba(201,162,75,.5);background:rgba(244,235,214,.05)}.ff-cd20-c b{font-size:22px;line-height:1.1;color:#F4EBD6;font-variant-numeric:tabular-nums}.ff-cd20-c small{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#D9B968}"
+  + ".ff-lb20{padding:6px 22px 22px}.ff-lb20-t{position:relative;height:12px;border-radius:12px;background:rgba(244,235,214,.14);border:1px solid rgba(201,162,75,.45);margin:10px 8px 0}.ff-lb20-f{position:absolute;left:0;top:0;bottom:0;border-radius:12px;background:linear-gradient(90deg,#8C6A1F,#E7CB7A)}.ff-lb20-d{position:absolute;top:50%;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:#1C0E12;border:2px solid rgba(201,162,75,.7)}.ff-lb20-d.on{background:#E7CB7A;border-color:#F4EBD6}"
+  + ".ff-lb20-n{margin-top:10px;text-align:center;font-size:12px;color:#D9B968;letter-spacing:.04em}.ff-lb20-s{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.ff-lb20-x{display:flex;flex-direction:column;gap:2px;font-size:12px;line-height:1.35;color:rgba(244,235,214,.88)}.ff-lb20-x b{font-size:14px;color:#F4EBD6}.ff-lb20-x em{font-style:normal;font-size:11px;color:#D9B968}.ff-lb20-x.p1{text-align:center;align-items:center}.ff-lb20-x.p2{text-align:right;align-items:flex-end}";
 function TeamCompetition20() {
   const h = React.createElement;
   const nav = useHomeNav();
   const [rules, setRules] = useState(false);
   const [box, setBox] = useState(null);
   const boxes = [
-    ["1–31 December", "Competition dates", [["Dates", "The competition runs from 1 to 31 December 2026."]]],
+    ["90 days", "1 December to 28 February", [["Dates", "The challenge runs for 90 days, from 1 December 2026 to 28 February 2027."]]],
     ["Open to hospitality", "Who can enter", [["Who can enter", "Open to genuine hospitality professionals and people seriously committed to entering the hospitality industry who are willing and available to undertake suitable freelance hospitality work."], ["Experience", "Previous hospitality experience is not mandatory."]]],
-    ["Four winners", "Gold, Silver, Bronze and Mystery", [["Winners", "Gold, Silver and Bronze go to the largest qualifying professional Network and Team. The Mystery Prize goes to a random eligible participant outside the top three."], ["Prizes", "Hospitality experiences, training, professional equipment, photography and more. Prize details are confirmed before the competition opens."], ["Placements", "Competition placements are separate from the Bronze, Silver and Gold XP levels."]]],
+    ["Four winners", "Gold, Silver, Bronze and Mystery", [["Winners", "Gold, Silver and Bronze go to the largest qualifying professional Network and Team. The Mystery Prize goes to a random eligible participant outside the top three."], ["Prizes", "Hospitality experiences, training, professional equipment, photography and more. Prize details are confirmed before the competition opens."], ["Placements", "Challenge placements are separate from the Bronze, Silver and Gold XP levels."]]],
     ["Network + Team", "How to compete", [["How to compete", "Create an FF Team profile. Share your Profile Card with hospitality contacts. Build genuine Network and Team connections."], ["Network and Team", "These are separate features. Team connections need mutual acceptance."], ["Fair play", "Only genuine accounts and authentic professional connections qualify."]]],
   ];
   const cur = box === null ? null : boxes[box];
-  const css = PROMO_CSS20 + PROMO_BOX_CSS20;
+  const css = PROMO_CSS20 + PROMO_BOX_CSS20 + LB20_CSS;
   const sec = (t, body) => h("div", { key: t }, h("h3", { className: "ff-label" }, t), body);
   return h("section", { className: "ff-sect", id: "ff-competition", "aria-labelledby": "ff-cp20-h" },
     h("style", null, css),
     h("div", { className: "ff-cp20" },
       h("div", { className: "ff-cp20-in" },
         h("div", null,
-          h("div", { className: "ff-cp20-eye" }, h(Coin, { size: 34, tier: "gold" }), h("span", null, "FF Team Launch Competition")),
+          h("div", { className: "ff-cp20-eye" }, h(Coin, { size: 34, tier: "gold" }), h("span", null, "FF Team Launch Challenge")),
           h("h2", { id: "ff-cp20-h" }, "Build your Network. Grow your Team. Win prizes."),
-          h("span", { className: "ff-cp20-date" }, "1–31 December 2026"),
+          h("span", { className: "ff-cp20-date" }, "90 days from 1 December 2026"),
           h("p", null, "Prizes include hospitality experiences, training, professional equipment, photography and more."),
           h("div", { className: "ff-cp20-btns" },
-            h(ShineButton, { onClick: nav.goProfile }, "Join Competition"),
-            h(Button, { onClick: () => setRules(true) }, "Competition Rules"))),
+            h(ShineButton, { onClick: nav.goProfile }, "Join Challenge"),
+            h(Button, { onClick: () => setRules(true) }, "Challenge Rules"))),
         h("div", null,
           h("div", { className: "ff-cp20-boxes" }, boxes.map((b, i) => h("button", { key: b[0], type: "button", className: "ff-cp20-box", onClick: () => setBox(i) }, h("b", null, b[0]), h("span", null, b[1])))),
-          h("div", { className: "ff-cp20-url" }, "FFTeam.uk")))),
+          h("div", { className: "ff-cp20-url" }, "FFTeam.uk"))),
+      h(Countdown20, null),
+      h(LaunchBar20, null)),
     h(Sheet, { open: box !== null, onClose: () => setBox(null), title: cur ? cur[0] : "", center: true },
       cur ? h("div", { className: "ff-cp20r" }, cur[2].map((r) => sec(r[0], h("p", null, r[1])))) : null),
-    h(Sheet, { open: rules, onClose: () => setRules(false), title: "FF Team Launch Competition rules", center: true },
+    h(Sheet, { open: rules, onClose: () => setRules(false), title: "FF Team Launch Challenge rules", center: true },
       h("div", { className: "ff-cp20r" },
         COMP_RULES20.map((r) => sec(r[0], h("p", null, r[1]))),
         sec("How to participate", h("ol", null,
@@ -27654,9 +27687,9 @@ function TeamCompetition20() {
           h("li", null, h("b", null, "Silver: "), "career-enhancing training and rewards."),
           h("li", null, h("b", null, "Bronze: "), "professional equipment and rewards."),
           h("li", null, h("b", null, "Mystery Prize: "), "a random eligible participant outside the top three."))),
-        h("p", { style: { marginTop: 8 } }, "Competition placements are separate from the Bronze, Silver and Gold XP levels."),
+        h("p", { style: { marginTop: 8 } }, "Challenge placements are separate from the Bronze, Silver and Gold XP levels."),
         sec("Fair participation", h("p", null, "Only genuine accounts and authentic professional connections qualify. Duplicate, fabricated or manipulated activity may be disqualified following reasonable review.")),
-        sec("Final terms", h("div", null, h("p", null, "To be confirmed before the competition opens:"), COMP_TBC20.map((t) => h("span", { key: t, className: "tbc" }, t + ": to be confirmed")))))));
+        sec("Final terms", h("div", null, h("p", null, "To be confirmed before the challenge opens:"), COMP_TBC20.map((t) => h("span", { key: t, className: "tbc" }, t + ": to be confirmed")))))));
 }
 /* VIP Host Card (formerly VIP Host Card) — a free membership benefit, not a subscription or contract.
    Founding VIP: the first FF_VIP_CONFIG.foundingLimit qualifying registrations. Everything an operator may change sits in FF_VIP_CONFIG.
