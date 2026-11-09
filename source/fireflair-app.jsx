@@ -69,9 +69,9 @@ const PHASE1 = {
   version: "16.16",
   status: "In development",
   /* The top-left selector, in this order. FF Team, FF Staff and FF Party
-     are open in this prototype; FF VIP is Coming 2027. */
+     are open in this prototype (FF VIP opens with its launch party in early 2027). */
   sitesShown: ["team", "staff", "party", "vip"],
-  sitesOpen: ["team", "staff", "party"],
+  sitesOpen: ["team", "staff", "party", "vip"],
   /* Profile sections in Phase 1, in this order. Qualifications above Skills;
      Venues straight after Experience; Work locations as its own section.
      Signature cocktails stay in BASE_CATEGORIES for a later release. */
@@ -10010,14 +10010,14 @@ const FF_SITES = [
     line: "For hospitality businesses of all kinds", pitch: "Bars, restaurants, venues, caterers and event companies: hire staff for your events and keep the people you trust.", cta: "Hire staff" },
   { key: "party", name: "FF Party", domain: "ffparty.uk", url: "https://ffparty.uk", tier: "bronze",
     line: "Plan an event and book your team", pitch: "Planning a party? Find your team and create your Event Card in minutes.", cta: "Plan an event" },
-  { key: "vip",   name: "FF VIP",   domain: "ffvip.uk",   url: "https://ffvip.uk",   tier: "standard", logo: FF_VIP_LOGO, locked: true,
-    line: "VIP experiences at venues across the UK", pitch: "VIP experience packages at venues across the UK. Coming 2027.", cta: "Coming 2027" },
+  { key: "vip",   name: "FF VIP",   domain: "ffvip.uk",   url: "https://ffvip.uk",   tier: "standard", logo: FF_VIP_LOGO,
+    line: "Your VIP card, luxury experiences and rewards", pitch: "Create your VIP card, book luxury experiences and VIP tables, and earn FF Rewards. Launch party in Shoreditch, early 2027.", cta: "Join the guest list" },
 ];
 
 function useGoSite() {
   const { state, dispatch } = useStore();
   return (key, opts = {}) => {
-    /* Sites not in PHASE1.sitesOpen (FF VIP) say so and go nowhere. */
+    /* Sites not in PHASE1.sitesOpen say so and go nowhere. */
     if (!p1SiteOpen(key)) { dispatch({ type: "TOAST", toast: `${p1SiteName(key)} is coming in 2027` }); return; }
     /* FF Staff and FF Party are both hirer sites: one account, two sites. */
     if (key === "staff" || key === "party") {
@@ -10031,8 +10031,12 @@ function useGoSite() {
       window.scrollTo(0, 0);
       return;
     }
-    /* FF VIP is locked until it has its own site. */
-    if (key === "vip") dispatch({ type: "TOAST", toast: "FF VIP is coming in 2027" });
+    /* FF VIP is its own site: role "vip", with its own four pages. */
+    if (key === "vip") {
+      if (state.role !== "vip") dispatch({ type: "ROLE", role: "vip" });
+      dispatch({ type: "TAB", tab: "home" });
+      window.scrollTo(0, 0);
+    }
   };
 }
 
@@ -11345,8 +11349,9 @@ function Shell({ children }) {
   const isTeam = state.role === "team";
   const isStaff = state.role === "staff";
   const isParty = isStaff && state.site === "party";
+  const isVip = state.role === "vip";
   const goSite = useGoSite();
-  const currentSite = isParty ? "party" : isStaff ? "staff" : isTeam ? "team" : null;
+  const currentSite = isVip ? "vip" : isParty ? "party" : isStaff ? "staff" : isTeam ? "team" : null;
   useEffect(() => {
     if (!menuOpen) return;
     const h = (e) => { if (e.key === "Escape") setMenuOpen(false); };
@@ -11406,7 +11411,7 @@ function Shell({ children }) {
               <span style={{ lineHeight: 1.1, textAlign: "left" }}>
                 <Wordmark size={13} />
                 <span style={{ display: "block", fontSize: 9, letterSpacing: ".2em", color: "rgba(234,215,156,.7)", textTransform: "uppercase" }}>
-                  {isParty ? "Party" : isStaff ? "Staff" : "Team"}
+                  {isVip ? "VIP" : isParty ? "Party" : isStaff ? "Staff" : "Team"}
                 </span>
               </span>
               <span aria-hidden="true" className="ff-acct-caret">
@@ -11419,9 +11424,9 @@ function Shell({ children }) {
                 <div className="ff-acct-menu" role="menu" aria-label="FireFlair sites">
                   {state.role && (
                     <div className="ff-acct-who">
-                      <div className="ff-acct-name">{isTeam ? (state.profile.name || state.session.tag || "Your profile") : ((state.company && state.company.name) || (isParty ? "FF Party" : "FF Staff"))}</div>
+                      <div className="ff-acct-name">{isVip ? (((state.vip21 || {}).card || {}).name || "FF VIP") : isTeam ? (state.profile.name || state.session.tag || "Your profile") : ((state.company && state.company.name) || (isParty ? "FF Party" : "FF Staff"))}</div>
                       <div className="ff-acct-sub">
-                        {isTeam ? "FF Team" : isParty ? "FF Party" : "FF Staff"}{isTeam ? (state.session.tag ? ` · ${state.session.tag}` : "") : (state.company && state.company.slug ? ` · ${CARD_DOMAIN}/${state.company.slug}` : "")}
+                        {isVip ? "FF VIP" : isTeam ? "FF Team" : isParty ? "FF Party" : "FF Staff"}{isVip ? (state.session.tag ? ` · ${state.session.tag}` : "") : isTeam ? (state.session.tag ? ` · ${state.session.tag}` : "") : (state.company && state.company.slug ? ` · ${CARD_DOMAIN}/${state.company.slug}` : "")}
                       </div>
                     </div>
                   )}
@@ -16101,6 +16106,677 @@ const P1_CSS = P12_CSS + `
 
 `;
 
+/* ==========================================================================
+   FF VIP (v17.3.128) — the fourth FireFlair site, at ffvip.uk.
+   Role "vip" in this prototype. State lives under state.vip21:
+     card      the member's VIP card (name, photo, drinks, diet, allergies, vibes, care, seat, savedAt)
+     guest     the launch party guest list entry ({ ref, at }); creating a VIP card joins the list
+     invites   invitations a host has made for their own events
+     bookings  VIP booking requests sent to venues (also saved to Front Doors requests for FF Admin)
+   Pages (the same four tabs as the other sites): Home, Experiences, Book, My card.
+   Copied from the other sites: the dark promo box (ff-cp20), the shine button, Sheet, collapsible
+   FAQ boxes, Front Doors requests. Nothing here takes a payment or sends a message: wallet
+   passes, invitations and the points system are shown, and built for real later.
+   ========================================================================== */
+const VIP21 = {
+  domain: "ffvip.uk",
+  party: { place: "Shoreditch, London", when: "Early 2027" },
+  slug: (state) => {
+    const c = (state.vip21 || {}).card || {};
+    const raw = (state.session && state.session.tag) || c.name || "";
+    return String(raw).toLowerCase().replace(/[^a-z0-9]+/g, "") || "you";
+  },
+};
+const VIP21_DRINKS = ["Champagne", "Prosecco", "Espresso Martini", "Old Fashioned", "Negroni", "Margarita", "Mezcal Paloma", "Gin Martini", "Vodka Martini", "Aperol Spritz", "French 75", "Moscow Mule", "Gin and tonic", "Whisky, neat", "Tequila, neat", "Red wine", "White wine", "Rosé", "Craft beer", "Alcohol-free cocktails"];
+const VIP21_DIET = ["Vegetarian", "Vegan", "Pescatarian", "Gluten free", "Dairy free", "Halal", "Kosher", "Nut allergy", "Shellfish allergy", "Egg allergy"];
+const VIP21_VIBES = ["Life of the party", "Relaxed and quiet", "Loves a toast", "Always on time", "Likes a surprise", "Prefers no fuss", "Here to celebrate", "Hosting guests"];
+const VIP21_SEATS = ["The best table in the house", "A booth", "At the bar", "Outside", "Somewhere private", "Wherever suits"];
+const VIP21_MENU = ["Espresso Martini", "Margarita", "Old Fashioned", "Negroni", "Aperol Spritz", "French 75", "Moscow Mule", "Champagne, by the glass"];
+const VIP21_OCCASIONS = ["Birthday", "Anniversary", "Celebration", "Corporate", "Group night out", "Just because"];
+const VIP21_EXP = [
+  { k: "spa", t: "Spas and wellness", s: "Thermal suites, treatments and slow days away", ic: "Flower2", d: "Day spas, hotel spas and wellness retreats for a pair, a group or a celebration." },
+  { k: "track", t: "Racetracks and driving", s: "Track days, passenger laps and hospitality suites", ic: "Car", d: "Circuits, driving experiences and trackside hospitality, with your group looked after all day." },
+  { k: "dine", t: "Fine dining", s: "Tasting menus and chef’s tables", ic: "UtensilsCrossed", d: "The restaurants worth booking early, with your preferences already at the table." },
+  { k: "roof", t: "Rooftops and cocktail bars", s: "The best tables, and the best bartenders", ic: "Martini", d: "Choose your drinks ahead and ask for the bartender you want behind the bar." },
+  { k: "priv", t: "Private dining and rooms", s: "Your own room, menu and host", ic: "Building2", d: "Private rooms and buyouts for dinners, launches and celebrations." },
+  { k: "tea", t: "Afternoon tea and brunch", s: "A long table and a good reason", ic: "Coffee", d: "Afternoon tea, bottomless brunch and long lunches for groups." },
+  { k: "water", t: "Yachts and river cruises", s: "Days and evenings on the water", ic: "Sailboat", d: "Charters and cruises with the bar and the team arranged for you." },
+  { k: "hotel", t: "Hotels and suites", s: "A room, a bar and a table in one booking", ic: "BedDouble", d: "Stay, dine and drink at the same address, with one card for all of it." },
+  { k: "wine", t: "Wine, whisky and tastings", s: "Cellars, distilleries and guided tastings", ic: "Wine", d: "Tastings led by the people who make it, for a few friends or a full group." },
+  { k: "show", t: "Shows, music and nights out", s: "Boxes, tables and after-parties", ic: "Music2", d: "The best seats and the best tables for a night out." },
+  { k: "estate", t: "Gardens and country estates", s: "Houses, grounds and long weekends", ic: "Trees", d: "Country houses and gardens for celebrations that need space." },
+  { k: "club", t: "Members’ clubs", s: "Doors that open when you are known", ic: "Crown", d: "Clubs and lounges, where being known on arrival is the whole point." },
+];
+const VIP21_STEPS = [
+  ["Create your VIP card", "Your favourite drinks, what you eat, how you like to be looked after."],
+  ["Host or be invited", "Hosts send invitations. Guests reply with their card."],
+  ["Book VIP", "Venues receive your card, not just a phone number."],
+  ["Arrive and be known", "Add your card to your wallet and show it at the door."],
+];
+const VIP21_FAQ = [
+  ["Who sees my VIP card?", "Only the venue you book, and only when you send a booking. You choose what is on your card, and you can change it at any time."],
+  ["Is it free?", "Creating a VIP card is free."],
+  ["What is the launch party?", "The FireFlair launch party, in Shoreditch in early 2027. It is by invitation. Guests create a VIP card to be on the guest list, so we know who is coming and what to have ready for them."],
+  ["Which venues can I book?", "FireFlair finds and shows the best experiences and hospitality, with a focus on luxury. Venues join through FF Staff, and the list grows as they do."],
+  ["What are FF Rewards?", "Reward points for bringing people to FireFlair. The more people you bring, the more you earn. The points system opens later, and what you share before then counts."],
+  ["Do I need FF Team or FF Party?", "No. FF VIP is for guests. If you work in hospitality, FF Team is where you build a profile and get booked."],
+];
+const VIP21_CSS = [
+  ".ff-v21{--vp:#D9DCE2;--vp2:#9EA3AD;--vk:#0B0B0D}",
+  ".ff-v21-hero{position:relative;margin:0 0 6px;border-radius:0 0 34px 34px;overflow:hidden;background:radial-gradient(120% 90% at 85% 0%,#3a3f4b 0%,#17181c 48%,#0B0B0D 100%);color:#F4F2EC;padding:38px 22px 30px;isolation:isolate}",
+  ".ff-v21-hero:before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(115deg,transparent 56%,rgba(217,220,226,.12) 56.2%,rgba(217,220,226,.12) 58%,transparent 58.2%)}",
+  ".ff-v21-hero-in{display:grid;gap:22px;max-width:1040px;margin:0 auto}",
+  ".ff-v21-eye{display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--vp);font-weight:600}",
+  ".ff-v21-eye img{width:46px;height:46px;border-radius:50%;object-fit:cover}",
+  ".ff-v21-hero h1{margin:6px 0 10px;font-size:clamp(34px,9vw,60px);line-height:1.02;font-weight:600;color:#fff}",
+  ".ff-v21-hero p{margin:0 0 8px;font-size:16.5px;line-height:1.5;color:rgba(244,242,236,.86);max-width:560px}",
+  ".ff-v21-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}",
+  ".ff-v21-hero-pic{position:relative;border-radius:30px;overflow:hidden;aspect-ratio:4/3;border:1px solid rgba(217,220,226,.4)}",
+  ".ff-v21-hero-pic img{width:100%;height:100%;object-fit:cover;display:block}",
+  "@media(min-width:900px){.ff-v21-hero{padding:56px 40px 46px}.ff-v21-hero-in{grid-template-columns:1.1fr 1fr;align-items:center;gap:40px}}",
+  ".ff-v21-sect{margin:26px 0}",
+  ".ff-v21-sect h2{margin:0 0 6px;font-size:clamp(24px,5.6vw,34px);line-height:1.1}",
+  ".ff-v21-lead{margin:0 0 14px;font-size:15.5px;line-height:1.5;max-width:640px}",
+  ".ff-v21 .ff-cp20{background:linear-gradient(135deg,#0B0B0D 0%,#1c1d22 55%,#3a3f4b 100%);border-color:rgba(217,220,226,.45)}",
+  ".ff-v21 .ff-cp20-eye,.ff-v21 .ff-cp20-date,.ff-v21 .ff-cp20-url,.ff-v21 .ff-cp20 .ff-cp20-box span{color:#D9DCE2}",
+  ".ff-v21 .ff-cp20-date,.ff-v21 .ff-cp20 .ff-cp20-box{border-color:rgba(217,220,226,.5)}",
+  ".ff-v21-guest{display:inline-flex;align-items:center;gap:8px;margin:6px 0 4px;padding:7px 14px;border-radius:16px;background:rgba(217,220,226,.14);border:1px solid rgba(217,220,226,.6);font-weight:600;font-size:13.5px;color:#fff}",
+  ".ff-v21-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}",
+  ".ff-v21-steps li{display:flex;gap:12px;padding:16px;border-radius:24px;border:1px solid rgba(165,128,47,.4);background:#FBF7EC;color:#141416}",
+  ".ff-v21-steps .n{flex:none;width:30px;height:30px;border-radius:50%;background:#141416;color:#E7CB7A;display:grid;place-items:center;font-weight:700;font-size:14px}",
+  ".ff-v21-steps b{display:block;font-size:15.5px;margin-bottom:2px}.ff-v21-steps small{display:block;font-size:13px;line-height:1.4;color:#4a463e}",
+  ".ff-v21-split{display:grid;gap:20px;align-items:center}",
+  "@media(min-width:900px){.ff-v21-split{grid-template-columns:1fr 1fr;gap:36px}}",
+  ".ff-vc21{position:relative;width:100%;max-width:440px;min-height:236px;gap:14px;border-radius:28px;padding:20px 22px;overflow:hidden;color:#F4F2EC;background:linear-gradient(135deg,#0B0B0D 0%,#25262c 52%,#4a4f5b 100%);border:1px solid rgba(217,220,226,.55);box-shadow:0 18px 40px rgba(0,0,0,.35);isolation:isolate;display:flex;flex-direction:column;justify-content:space-between}",
+  ".ff-vc21:before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(115deg,transparent 60%,rgba(217,220,226,.14) 60.2%,rgba(217,220,226,.14) 62.5%,transparent 62.7%)}",
+  ".ff-vc21-top{display:flex;align-items:center;justify-content:space-between;gap:10px}",
+  ".ff-vc21-top img.lg{width:44px;height:44px;border-radius:50%;object-fit:cover}",
+  ".ff-vc21-top span{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#D9DCE2;font-weight:600}",
+  ".ff-vc21-mid{display:flex;gap:14px;align-items:center;min-width:0}",
+  ".ff-vc21-ph{flex:none;width:68px;height:68px;border-radius:22px;background:#2f3138 center/cover;border:1px solid rgba(217,220,226,.5);display:grid;place-items:center;color:#D9DCE2}",
+  ".ff-vc21-nm{min-width:0}.ff-vc21-nm b{display:block;font-size:clamp(19px,5.4vw,25px);line-height:1.1;color:#fff;overflow-wrap:anywhere}.ff-vc21-nm small{display:block;margin-top:3px;font-size:12px;color:#D9DCE2;letter-spacing:.06em}",
+  ".ff-vc21-rows{display:grid;gap:6px;font-size:12.5px;line-height:1.35}.ff-vc21-rows div{display:flex;gap:8px;align-items:baseline}.ff-vc21-rows em{flex:none;font-style:normal;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#9EA3AD;min-width:56px}",
+  ".ff-vc21-bot{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}",
+  ".ff-vc21-qr{flex:none;width:46px;height:46px;border-radius:10px;background:#F4F2EC;padding:4px}",
+  ".ff-v21-cardwrap{display:flex;flex-direction:column;gap:14px;align-items:flex-start}",
+  ".ff-v21-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}.ff-v21-list li{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.4}.ff-v21-list li svg{flex:none;margin-top:2px;color:var(--gold-dk,#A5802F)}",
+  ".ff-v21-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}",
+  ".ff-v21 .ff-v21-tile{display:flex;flex-direction:column;gap:6px;text-align:left;padding:16px;border-radius:26px;border:1px solid rgba(165,128,47,.45);background:linear-gradient(160deg,#17181c,#25262c);color:#F4F2EC;cursor:pointer;font:inherit;min-height:132px;position:relative;overflow:hidden}",
+  ".ff-v21 .ff-v21-tile .ic{width:38px;height:38px;border-radius:14px;display:grid;place-items:center;background:rgba(217,220,226,.12);border:1px solid rgba(217,220,226,.4);color:#E9EBEF}",
+  ".ff-v21 .ff-v21-tile b{font-size:16px;line-height:1.2;color:#fff}.ff-v21 .ff-v21-tile span.s{font-size:12.5px;line-height:1.35;color:#C5C8CF}",
+  ".ff-v21-tile:hover,.ff-v21-tile:focus-visible{border-color:#E7CB7A;outline:none}",
+  ".ff-v21-dark{border-radius:26px;padding:22px;background:linear-gradient(135deg,#0B0B0D,#1c1d22 60%,#3a3f4b);color:#F4F2EC;border:1px solid rgba(217,220,226,.4)}",
+  ".ff-v21 .ff-v21-dark h2,.ff-v21 .ff-v21-dark h3{color:#fff}.ff-v21 .ff-v21-dark p{color:rgba(244,242,236,.88);font-size:15px;line-height:1.5;margin:0 0 8px}",
+  ".ff-v21-link{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0}.ff-v21-link code{padding:8px 14px;border-radius:16px;background:rgba(244,242,236,.1);border:1px solid rgba(217,220,226,.5);font-size:14px;color:#fff;overflow-wrap:anywhere}",
+  ".ff-v21-faq{display:grid;gap:8px}.ff-v21-faq details{border-radius:20px;border:1px solid rgba(165,128,47,.4);background:#FBF7EC;color:#141416;padding:0 16px}",
+  ".ff-v21-faq summary{cursor:pointer;list-style:none;padding:14px 0;font-weight:600;font-size:15px;display:flex;justify-content:space-between;gap:10px}.ff-v21-faq summary::-webkit-details-marker{display:none}",
+  ".ff-v21-faq summary:after{content:'+';font-size:20px;line-height:1;color:#A5802F}.ff-v21-faq details[open] summary:after{content:'\\2212'}",
+  ".ff-v21-faq p{margin:0 0 14px;font-size:14.5px;line-height:1.5;color:#3a372f}",
+  ".ff-v21-form{display:grid;gap:16px;padding:18px;border-radius:26px;background:#FBF7EC;border:1px solid rgba(165,128,47,.45);color:#141416}",
+  ".ff-v21-form h2,.ff-v21-form h3{margin:0}.ff-v21-form h3{font-size:16px}",
+  ".ff-v21-row{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}",
+  ".ff-v21-chips{display:flex;flex-wrap:wrap;gap:8px}.ff-v21-chip{padding:8px 14px;border-radius:18px;border:1px solid rgba(165,128,47,.55);background:#fff;color:#141416;font:inherit;font-size:13.5px;cursor:pointer}.ff-v21-chip[aria-pressed=true]{background:#141416;color:#E7CB7A;border-color:#141416}",
+  ".ff-v21-in{width:100%;padding:11px 14px;border-radius:16px;border:1px solid rgba(165,128,47,.55);background:#fff;font:inherit;font-size:15px;color:#141416}",
+  ".ff-v21-k{display:block;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b5a2b;font-weight:600;margin-bottom:6px}",
+  ".ff-v21-menu{display:grid;gap:8px}.ff-v21-menu div{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 14px;border-radius:18px;background:#fff;border:1px solid rgba(165,128,47,.35);font-size:14.5px}",
+  ".ff-v21-step{display:inline-flex;align-items:center;gap:10px}.ff-v21-step button{width:32px;height:32px;border-radius:50%;border:1px solid rgba(165,128,47,.7);background:#fff;font-size:18px;line-height:1;cursor:pointer;color:#141416}.ff-v21-step b{min-width:22px;text-align:center;font-variant-numeric:tabular-nums}",
+  ".ff-v21-sw{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:20px;background:#fff;border:1px solid rgba(165,128,47,.35);cursor:pointer;text-align:left;font:inherit;color:#141416;width:100%}",
+  ".ff-v21-sw b{display:block;font-size:14.5px}.ff-v21-sw small{display:block;font-size:12.5px;color:#4a463e}",
+  ".ff-v21-sw i{flex:none;width:44px;height:26px;border-radius:14px;background:#C9C4B6;position:relative;transition:background .15s}.ff-v21-sw i:after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .15s}",
+  ".ff-v21-sw[aria-pressed=true] i{background:#141416}.ff-v21-sw[aria-pressed=true] i:after{left:21px}",
+  ".ff-v21-done{padding:16px;border-radius:22px;background:#EFE7CF;border:1px solid rgba(165,128,47,.55);color:#141416}.ff-v21-done b{display:block;font-size:16px;margin-bottom:4px}",
+  ".ff-v21-inv{display:grid;gap:10px}.ff-v21-inv>div{padding:14px;border-radius:22px;background:#fff;border:1px solid rgba(165,128,47,.4);color:#141416}.ff-v21-inv b{display:block;font-size:15.5px}.ff-v21-inv small{display:block;color:#4a463e;font-size:13px;margin:2px 0 8px}",
+  ".ff-v21-wallet{display:grid;gap:10px;margin-top:10px}.ff-v21-wallet button{display:flex;align-items:center;gap:10px;justify-content:center;padding:13px 16px;border-radius:20px;border:0;background:#000;color:#fff;font:inherit;font-weight:600;cursor:pointer}",
+  ".ff-v21-ph2{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.ff-v21-ph2 .ff-v21-up{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:18px;border:1px solid rgba(165,128,47,.6);background:#fff;cursor:pointer;font-size:14px}",
+  ".ff-v21 .ff-btn{border-radius:18px}",
+  ".ff-v21-div{display:flex;align-items:center;gap:14px;margin:6px 0}.ff-v21-div i{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(165,128,47,.7),transparent)}",
+].join("");
+function VipShine21({ onClick, children }) {
+  return (
+    <button type="button" className="ff-btn ff-shine" onClick={onClick}>
+      <i className="sp s1" aria-hidden="true" /><i className="sp s2" aria-hidden="true" /><i className="sp s3" aria-hidden="true" />
+      <span className="lab">{children}</span>
+    </button>
+  );
+}
+function vipJoin21(list) {
+  return list.flatMap((s, i) => (i ? [<div key={"d" + i} className="ff-v21-div" aria-hidden="true"><i /><Coin size={26} tier="gold" /><i /></div>, s] : [s]));
+}
+const VIP21_PROMO_A = ".ff-cp20{position:relative;margin:22px 0;border-radius:26px;overflow:hidden;color:#F4EBD6;background:linear-gradient(135deg,#0B0A09 0%,#1C0E12 55%,#4A1220 100%);border:1px solid rgba(201,162,75,.45);isolation:isolate}"
+    + ".ff-cp20:before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(115deg,transparent 58%,rgba(201,162,75,.16) 58.2%,rgba(201,162,75,.16) 60%,transparent 60.2%)}"
+    + ".ff-cp20-in{display:grid;grid-template-columns:1.25fr 1fr;gap:18px;align-items:center;padding:22px}"
+    + ".ff-cp20-eye{display:flex;align-items:center;gap:10px;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#D9B968;font-weight:600}"
+    + ".ff-cp20 h2{margin:8px 0 6px;font-size:clamp(22px,4.6vw,32px);line-height:1.12;color:#F4EBD6}"
+    + ".ff-cp20 p{margin:0 0 6px;font-size:14.5px;line-height:1.45;color:rgba(244,235,214,.88)}"
+    + ".ff-cp20-date{display:inline-block;margin:4px 0 10px;padding:5px 12px;border-radius:14px;border:1px solid rgba(201,162,75,.6);color:#D9B968;font-weight:600;font-size:13px}"
+    + ".ff-cp20-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}"
+    + ".ff-cp20-pics{display:grid;grid-template-columns:1fr 1fr;gap:8px}"
+    + ".ff-cp20-pics span{display:block;aspect-ratio:1/1;border-radius:16px;background-size:cover;background-position:center;border:1px solid rgba(201,162,75,.35)}"
+    + ".ff-cp20-url{margin-top:8px;font-size:12px;letter-spacing:.08em;color:#D9B968;text-align:center}"
+    + "@media(max-width:640px){.ff-cp20-in{grid-template-columns:1fr;padding:18px}.ff-cp20-pics{grid-template-columns:repeat(4,1fr)}}"
+    + ".ff-cp20r h3{margin:16px 0 4px;font-size:15px}.ff-cp20r p,.ff-cp20r li{font-size:14px;line-height:1.5;margin:0 0 6px}.ff-cp20r ul,.ff-cp20r ol{margin:0;padding-left:20px}"
+    + ".ff-cp20r .tbc{display:inline-block;margin:0 6px 6px 0;padding:4px 10px;border-radius:12px;border:1px dashed var(--gold-dk,#A5802F);font-size:12.5px}"
+    + ".ff-vip20-ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px}.ff-vip20-ul li{padding:7px 10px;border-radius:14px;border:1px solid rgba(201,162,75,.4);font-size:12px;line-height:1.3;color:#F4EBD6}";
+const VIP21_PROMO_B = ".ff-cp20 .ff-cp20-boxes{display:grid;grid-template-columns:1fr 1fr;gap:10px}.ff-cp20 .ff-cp20-box{display:flex;flex-direction:column;gap:3px;text-align:left;padding:14px 14px;border-radius:18px;border:1px solid rgba(201,162,75,.45);background:rgba(244,235,214,.05);color:#F4EBD6;cursor:pointer;font:inherit;min-height:84px}.ff-cp20 .ff-cp20-box b{font-size:15px;line-height:1.2;color:#F4EBD6}.ff-cp20 .ff-cp20-box span{font-size:12.5px;line-height:1.3;color:#D9B968}.ff-cp20 .ff-cp20-box:hover,.ff-cp20 .ff-cp20-box:focus-visible{background:rgba(201,162,75,.14);outline:none}.ff-cp20.big .ff-cp20-in{grid-template-columns:1fr;gap:20px;padding:30px 26px}.ff-cp20.big h2{font-size:clamp(30px,7vw,48px);line-height:1.05;margin:10px 0 10px}.ff-cp20.big p{font-size:16.5px}.ff-cp20.big .ff-cp20-eye{font-size:13px}.ff-cp20.big .ff-cp20-box{min-height:96px;padding:16px}.ff-cp20.big .ff-cp20-box b{font-size:16.5px}@media(min-width:900px){.ff-cp20.big .ff-cp20-in{grid-template-columns:1.1fr 1fr;padding:40px 36px;align-items:center}}";
+const VIP21_IC = {};
+const vipIcon21 = (n) => VIP21_IC[n] || (VIP21_IC[n] = lucideIcon(n));
+const vipPatch21 = (dispatch, state, patch) => dispatch({ type: "V11_SET", patch: { vip21: { ...(state.vip21 || {}), ...patch } } });
+const vipImg21 = (k) => (window.FF_IMG && window.FF_IMG[k]) || "";
+const vipCardDone21 = (v) => !!(v && v.card && v.card.savedAt && String(v.card.name || "").trim());
+const vipRef21 = (p) => p + "-" + Math.random().toString(36).slice(2, 8).toUpperCase();
+function vipGo21(dispatch, tab, id) {
+  dispatch({ type: "TAB", tab });
+  window.scrollTo(0, 0);
+  if (id) setTimeout(() => { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }, 60);
+}
+function vipShare21(text) { window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank", "noopener"); }
+function vipCopy21(dispatch, text) {
+  try { navigator.clipboard.writeText(text).then(() => dispatch({ type: "TOAST", toast: "Link copied" }), () => dispatch({ type: "TOAST", toast: text })); }
+  catch (e) { dispatch({ type: "TOAST", toast: text }); }
+}
+/* A small deterministic QR-style block for the card; the real one carries the signed card address. */
+function VipQr21({ seed }) {
+  const s = String(seed || "ffvip");
+  let h = 7; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  const cells = [];
+  for (let y = 0; y < 9; y++) for (let x = 0; x < 9; x++) {
+    h = (h * 1103515245 + 12345) >>> 0;
+    const eye = (x < 3 && y < 3) || (x > 5 && y < 3) || (x < 3 && y > 5);
+    if (eye || (h >>> 16) & 1) cells.push(<rect key={x + "-" + y} x={x} y={y} width="1" height="1" />);
+  }
+  return <svg className="ff-vc21-qr" viewBox="0 0 9 9" fill="#0B0B0D" aria-hidden="true">{cells}</svg>;
+}
+function VipCard21({ card, tag, sample }) {
+  const c = card || {};
+  const Camera = vipIcon21("User");
+  const drinks = (c.drinks || []).slice(0, 4).join(" · ");
+  const diet = (c.diet || []).join(" · ");
+  return (
+    <div className="ff-vc21" role="img" aria-label={`VIP card for ${c.name || "you"}`}>
+      <div className="ff-vc21-top"><img className="lg" src={FF_VIP_LOGO} alt="" /><span>FF VIP{sample ? " · Example" : ""}</span></div>
+      <div className="ff-vc21-mid">
+        <span className="ff-vc21-ph" style={c.photo ? { backgroundImage: `url(${c.photo})` } : undefined}>{c.photo ? null : <Camera size={26} strokeWidth={1.5} />}</span>
+        <span className="ff-vc21-nm"><b>{c.name || "Your name"}</b><small>{tag ? "FF Tag " + tag : "ffvip.uk"}</small></span>
+      </div>
+      <div className="ff-vc21-rows">
+        <div><em>Drinks</em><span>{drinks || "Your favourites"}</span></div>
+        <div><em>Dietary</em><span>{diet || (c.allergies ? "" : "None shared")}{c.allergies ? (diet ? " · " : "") + c.allergies : ""}</span></div>
+        {(c.vibes || []).length > 0 && <div><em>Vibe</em><span>{(c.vibes || []).slice(0, 2).join(" · ")}</span></div>}
+      </div>
+      <div className="ff-vc21-bot"><span style={{ fontSize: 11, letterSpacing: ".18em", color: "#9EA3AD", textTransform: "uppercase" }}>{c.seat || "Known on arrival"}</span><VipQr21 seed={c.name + (tag || "")} /></div>
+    </div>
+  );
+}
+const VIP21_SAMPLE = { name: "Jamie Carter", drinks: ["Espresso Martini", "Champagne", "Mezcal Paloma"], diet: ["Vegetarian"], vibes: ["Loves a toast", "Always on time"], seat: "A booth" };
+function VipHero21() {
+  const { state, dispatch } = useStore();
+  const v = state.vip21 || {};
+  const joined = !!v.guest;
+  const pic = vipImg21("training_wine_qualification") || vipImg21("reward_bar_shows");
+  return (
+    <section className="ff-v21-hero" aria-labelledby="ff-v21-h" id="ff-v21-top">
+      <div className="ff-v21-hero-in">
+        <div>
+          <div className="ff-v21-eye"><img src={FF_VIP_LOGO} alt="" />FF VIP</div>
+          <h1 id="ff-v21-h">Be known the moment you arrive.</h1>
+          <p>Your VIP card tells every venue who you are, what you drink and how you like to be looked after. Book luxury experiences, group nights and the best tables, and earn FF Rewards for bringing people with you.</p>
+          <div className="ff-v21-btns">
+            <VipShine21 onClick={() => vipGo21(dispatch, "profile")}>{joined ? "Open your VIP card" : "Join the launch party guest list"}</VipShine21>
+            <Btn onClick={() => vipGo21(dispatch, "network")}>Browse experiences</Btn>
+          </div>
+        </div>
+        {pic ? <div className="ff-v21-hero-pic"><img src={pic} alt="" /></div> : null}
+      </div>
+    </section>
+  );
+}
+function VipLaunch21() {
+  const { state, dispatch } = useStore();
+  const v = state.vip21 || {};
+  const [box, setBox] = useState(null);
+  const L = VIP21.party;
+  const boxes = [
+    ["Why a VIP card?", "So we know you", ["Every guest creates a VIP card to join the guest list. It tells our team who you are and what you like, so your first drink is already decided and your table is already ready.", "It is the first night run on FF VIP, and your card is your invitation."]],
+    ["Who is invited?", "By invitation", ["Hospitality professionals, the people who work with them, and the guests who love a good night out. Bring someone: the more people you invite, the more FF Rewards you earn once points open."]],
+    ["What happens next?", "After you sign up", ["You are on the guest list as soon as your card is saved. Your card goes in your wallet, and your invitation and details arrive there and by message ahead of the night."]],
+    ["Where and when?", L.when + " · " + L.place, ["The FireFlair launch party takes place in Shoreditch, London, in early 2027. The date and the venue are announced to the guest list first."]],
+  ];
+  const cur = box === null ? null : boxes[box];
+  return (
+    <section className="ff-sect ff-v21-sect" id="ff-v21-launch" aria-labelledby="ff-v21-lh">
+      <style>{VIP21_PROMO_A + VIP21_PROMO_B}</style>
+      <div className="ff-cp20 big">
+        <div className="ff-cp20-in">
+          <div>
+            <div className="ff-cp20-eye"><Coin size={40} tier="gold" /><span>FF VIP launch party</span></div>
+            <h2 id="ff-v21-lh">Join the guest list.</h2>
+            <span className="ff-cp20-date">{L.when} {"·"} {L.place}</span>
+            <p>The FireFlair launch party is by invitation, and your VIP card is how you get one. Create your card, and you are on the list.</p>
+            {v.guest ? <div className="ff-v21-guest" role="status">You are on the guest list</div> : null}
+            <div className="ff-cp20-btns">
+              <VipShine21 onClick={() => vipGo21(dispatch, "profile")}>{v.guest ? "Open your VIP card" : vipCardDone21(v) ? "Join the guest list" : "Create your VIP card"}</VipShine21>
+            </div>
+          </div>
+          <div>
+            <div className="ff-cp20-boxes">{boxes.map((b, i) => <button key={b[0]} type="button" className="ff-cp20-box" onClick={() => setBox(i)} aria-haspopup="dialog"><b>{b[0]}</b><span>{b[1]}</span></button>)}</div>
+            <div className="ff-cp20-url">FFVIP.uk</div>
+          </div>
+        </div>
+      </div>
+      <Sheet open={box !== null} onClose={() => setBox(null)} title={cur ? cur[0] : ""} center>
+        {cur ? <div className="ff-cp20r">{cur[2].map((p, i) => <p key={i}>{p}</p>)}</div> : null}
+      </Sheet>
+    </section>
+  );
+}
+function VipHow21() {
+  return (
+    <section className="ff-sect ff-v21-sect" id="ff-v21-how" aria-labelledby="ff-v21-hh">
+      <h2 id="ff-v21-hh" className="ff-h1">How FF VIP works</h2>
+      <p className="ff-v21-lead">One card, carried everywhere you go out. Venues stop asking and start looking after you.</p>
+      <ol className="ff-v21-steps">{VIP21_STEPS.map((s, i) => <li key={s[0]}><span className="n">{i + 1}</span><span><b>{s[0]}</b><small>{s[1]}</small></span></li>)}</ol>
+    </section>
+  );
+}
+function VipCardSect21() {
+  const { state, dispatch } = useStore();
+  const v = state.vip21 || {};
+  const Check = vipIcon21("Check");
+  const done = vipCardDone21(v);
+  const pts = ["Your favourite drinks, so the first round is right.", "What you eat and what you cannot, so the kitchen knows before you sit down.", "Your personality, so the staff know whether you want a toast or a quiet table.", "Added to your wallet, and shown at the door."];
+  return (
+    <section className="ff-sect ff-v21-sect" id="ff-v21-card" aria-labelledby="ff-v21-ch">
+      <div className="ff-v21-split">
+        <div className="ff-v21-cardwrap"><VipCard21 card={done ? v.card : VIP21_SAMPLE} tag={done ? (state.session && state.session.tag) : ""} sample={!done} /></div>
+        <div>
+          <h2 id="ff-v21-ch" className="ff-h1">Your VIP card</h2>
+          <p className="ff-v21-lead">At whatever event you go to, the staff know who you are and what you like. That is the point of FF VIP.</p>
+          <ul className="ff-v21-list">{pts.map(p => <li key={p}><Check size={18} strokeWidth={2.4} /><span>{p}</span></li>)}</ul>
+          <div className="ff-v21-btns"><VipShine21 onClick={() => vipGo21(dispatch, "profile")}>{done ? "Edit your VIP card" : "Create your VIP card"}</VipShine21></div>
+        </div>
+      </div>
+    </section>
+  );
+}
+function VipBookSect21() {
+  const { dispatch } = useStore();
+  const Check = vipIcon21("Check");
+  const perks = ["Your VIP card sent to the venue, not just an email address and a phone number.", "Pre-order drinks for the whole group from the venue’s cocktail menu.", "Champagne on arrival.", "Ask for the best tables, or a private place.", "Choose your favourite staff: your waiter, or your personal bartender for the night."];
+  return (
+    <section className="ff-sect ff-v21-sect" id="ff-v21-vipbook" aria-labelledby="ff-v21-bh">
+      <div className="ff-v21-dark">
+        <h2 id="ff-v21-bh" className="ff-h1" style={{ margin: "0 0 6px" }}>What makes it a VIP booking</h2>
+        <p>Book a table and the venue usually gets a name, an email address and a phone number. Book through FF VIP and they get you.</p>
+        <ul className="ff-v21-list" style={{ margin: "12px 0" }}>{perks.map(p => <li key={p} style={{ color: "#F4F2EC" }}><Check size={18} strokeWidth={2.4} style={{ color: "#E7CB7A" }} /><span>{p}</span></li>)}</ul>
+        <p>Group bookings work the same way: one booking, the whole table’s preferences, and the drinks waiting.</p>
+        <div className="ff-v21-btns"><VipShine21 onClick={() => vipGo21(dispatch, "bookings")}>Plan a VIP booking</VipShine21></div>
+      </div>
+    </section>
+  );
+}
+function VipExpGrid21({ onPick }) {
+  return (
+    <div className="ff-v21-tiles">{VIP21_EXP.map(e => {
+      const Ic = vipIcon21(e.ic);
+      return <button key={e.k} type="button" className="ff-v21-tile" onClick={() => onPick(e)} aria-haspopup="dialog"><span className="ic"><Ic size={20} strokeWidth={1.7} /></span><b>{e.t}</b><span className="s">{e.s}</span></button>;
+    })}</div>
+  );
+}
+function VipExpSheet21({ e, onClose }) {
+  const { state, dispatch } = useStore();
+  return (
+    <Sheet open={!!e} onClose={onClose} title={e ? e.t : ""} center>
+      {e ? <div className="ff-cp20r"><p>{e.d}</p><p>FireFlair finds and shows the best of these, with a focus on luxury. Venues join through FF Staff.</p>
+        <div className="ff-v21-btns" style={{ marginTop: 12 }}><VipShine21 onClick={() => { vipPatch21(dispatch, state, { pick: e.k }); onClose(); vipGo21(dispatch, "bookings", "ff-v21-plan"); }}>Plan a VIP booking</VipShine21></div></div> : null}
+    </Sheet>
+  );
+}
+function VipExpSect21() {
+  const [e, setE] = useState(null);
+  return (
+    <section className="ff-sect ff-v21-sect" id="ff-v21-exp" aria-labelledby="ff-v21-eh">
+      <h2 id="ff-v21-eh" className="ff-h1">The best experiences and hospitality</h2>
+      <p className="ff-v21-lead">Luxury, chosen for you. Spas, racetracks, tables and rooms that are worth the trip, found and shown by FireFlair.</p>
+      <VipExpGrid21 onPick={setE} />
+      <VipExpSheet21 e={e} onClose={() => setE(null)} />
+    </section>
+  );
+}
+function VipHost21() {
+  const { dispatch } = useStore();
+  return (
+    <section className="ff-sect ff-v21-sect" id="ff-v21-host" aria-labelledby="ff-v21-oh">
+      <div className="ff-v21-split">
+        <div>
+          <h2 id="ff-v21-oh" className="ff-h1">Hosting? Send the invitations.</h2>
+          <p className="ff-v21-lead">Create an invitation for your event and send it on WhatsApp. Your guests reply by creating their own VIP card, so you know who is coming and what to have ready for them.</p>
+          <div className="ff-v21-btns"><VipShine21 onClick={() => vipGo21(dispatch, "bookings", "ff-v21-invite")}>Create an invitation</VipShine21></div>
+        </div>
+        <VipPartyLink21 />
+      </div>
+    </section>
+  );
+}
+function VipPartyLink21() {
+  return (
+    <div className="ff-v21-dark" style={{ maxWidth: 460 }}>
+      <h3 style={{ margin: "0 0 8px", fontSize: 18 }}>From invitation to the door</h3>
+      <ul className="ff-v21-list" style={{ color: "#F4F2EC" }}>
+        {["You invite", "They create a VIP card", "You see the guest list and what each guest likes", "Everyone arrives known"].map(t => <li key={t} style={{ color: "#F4F2EC" }}><span style={{ color: "#E7CB7A", fontWeight: 700 }}>{"•"}</span><span>{t}</span></li>)}
+      </ul>
+    </div>
+  );
+}
+function VipRewardsSect21() {
+  const { state, dispatch } = useStore();
+  const link = VIP21.domain + "/" + VIP21.slug(state);
+  const msg = "Create your VIP card on FireFlair: https://" + link;
+  return (
+    <section className="ff-sect ff-v21-sect" id="ff-v21-rewards" aria-labelledby="ff-v21-rh">
+      <div className="ff-v21-dark">
+        <div className="ff-cp20-eye" style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 12, letterSpacing: ".16em", textTransform: "uppercase", color: "#D9DCE2" }}><Coin size={34} tier="gold" /><span>FF Rewards</span></div>
+        <h2 id="ff-v21-rh" className="ff-h1" style={{ margin: "8px 0 6px" }}>Share FireFlair. Earn FF Rewards.</h2>
+        <p>Every person you bring to FireFlair earns you reward points. The more you share, the more you earn.</p>
+        <div className="ff-v21-link"><code>{link}</code>
+          <Btn onClick={() => vipCopy21(dispatch, "https://" + link)}>Copy link</Btn>
+          <Btn onClick={() => vipShare21(msg)}>Share on WhatsApp</Btn></div>
+        <p style={{ fontSize: 13.5, opacity: .85 }}>The points system opens later. Everyone you bring before then counts.</p>
+      </div>
+    </section>
+  );
+}
+function VipVenues21() {
+  const goSite = useGoSite();
+  return (
+    <section className="ff-sect ff-v21-sect" id="ff-v21-venues" aria-labelledby="ff-v21-vh">
+      <h2 id="ff-v21-vh" className="ff-h1">Run a venue or an experience?</h2>
+      <p className="ff-v21-lead">Venues join through FF Staff. Spas, racetracks, restaurants and every other kind of luxury experience can be found and booked by guests who arrive known.</p>
+      <div className="ff-v21-btns"><Btn onClick={() => goSite("staff")}>Join through FF Staff</Btn></div>
+    </section>
+  );
+}
+function VipFaq21() {
+  return (
+    <section className="ff-sect ff-v21-sect" id="ff-v21-faq" aria-labelledby="ff-v21-fh">
+      <h2 id="ff-v21-fh" className="ff-h1">Questions</h2>
+      <div className="ff-v21-faq">{VIP21_FAQ.map(q => <details key={q[0]}><summary>{q[0]}</summary><p>{q[1]}</p></details>)}</div>
+    </section>
+  );
+}
+function VipHome21() {
+  return (
+    <div className="ff-home ff-home11 ff-v21">
+      <style>{VIP21_CSS}</style>
+      <VipHero21 />
+      <div className="ff-home17">
+        {vipJoin21([
+          <VipLaunch21 key="launch" />,
+          <VipHow21 key="how" />,
+          <VipCardSect21 key="card" />,
+          <VipBookSect21 key="book" />,
+          <VipExpSect21 key="exp" />,
+          <VipHost21 key="host" />,
+          <VipRewardsSect21 key="rew" />,
+          <VipVenues21 key="ven" />,
+          <VipFaq21 key="faq" />,
+        ])}
+      </div>
+    </div>
+  );
+}
+function VipExperiences21() {
+  const { dispatch } = useStore();
+  const [e, setE] = useState(null);
+  return (
+    <div className="ff-home ff-home11 ff-v21">
+      <style>{VIP21_CSS}</style>
+      <div className="ff-home17">
+        <section className="ff-sect ff-v21-sect" aria-labelledby="ff-v21-xh">
+          <h1 id="ff-v21-xh" className="ff-h1" style={{ fontSize: "clamp(28px,7vw,42px)" }}>Experiences</h1>
+          <p className="ff-v21-lead">We find and show the best experiences and hospitality. Luxury, chosen for you, from a spa day to a private table.</p>
+          <VipExpGrid21 onPick={setE} />
+          <VipExpSheet21 e={e} onClose={() => setE(null)} />
+        </section>
+        <VipBookSect21 />
+        <VipVenues21 />
+      </div>
+    </div>
+  );
+}
+function VipPlan21() {
+  const { state, dispatch } = useStore();
+  const v = state.vip21 || {};
+  const done = vipCardDone21(v);
+  const [f, setF] = useState(() => ({ exp: v.pick || "", group: 4, date: "", area: "", occasion: "", drinks: {}, champagne: false, table: false, priv: false, waiter: "", bartender: "", note: "" }));
+  const [err, setErr] = useState("");
+  const [sent, setSent] = useState(null);
+  const set = (p) => setF(x => ({ ...x, ...p }));
+  const total = Object.values(f.drinks).reduce((a, b) => a + b, 0);
+  const bump = (d, n) => set({ drinks: { ...f.drinks, [d]: Math.max(0, (f.drinks[d] || 0) + n) } });
+  const submit = (e) => {
+    if (e) e.preventDefault();
+    if (!done) { setErr("Create your VIP card first, so the venue receives it."); return; }
+    if (!f.exp) { setErr("Choose the kind of experience."); return; }
+    setErr("");
+    const exp = VIP21_EXP.find(x => x.k === f.exp);
+    const ref = vipRef21("VIP");
+    const drinks = Object.entries(f.drinks).filter(x => x[1] > 0).map(x => x[1] + " x " + x[0]).join(", ");
+    const bits = [exp && "Experience: " + exp.t, "Group: " + f.group, f.occasion && "Occasion: " + f.occasion, drinks && "Drinks: " + drinks, f.champagne && "Champagne on arrival", f.table && "Best table", f.priv && "Private place", f.waiter && "Waiter: " + f.waiter, f.bartender && "Bartender: " + f.bartender, f.note.trim(), "VIP card: " + (v.card.name || "")].filter(Boolean);
+    const cur = fdOf(state);
+    const rec = {
+      id: uid("lsr"), ref, key: ref, kind: "vip_booking", siteKey: "vip", locationId: null, locationText: f.area.trim() || "Not stated",
+      roles: [], eventDate: f.date || null, dateUndecided: !f.date, tz: "Europe/London",
+      contact: { name: v.card.name || "", email: "", phone: "", whatsappOk: true },
+      headcount: String(f.group), brief: bits.join(" | "), companyId: null, companyName: "",
+      createdAt: new Date().toISOString(), status: "new", assignee: "", adminNote: "", eventId: null,
+      sourcePath: "", sourceSite: "vip", notif: { admin: "simulated", ack: "simulated message", failed: false }, bookingId: null,
+    };
+    fdSet(state, dispatch, { requests: [rec, ...cur.requests], log: [{ at: rec.createdAt, by: "visitor", what: "vip_booking " + ref, site: "vip" }, ...cur.log].slice(0, 200) });
+    vipPatch21(dispatch, state, { bookings: [{ ref, exp: exp ? exp.t : "", group: f.group, date: f.date, at: Date.now() }, ...(v.bookings || [])], pick: "" });
+    setSent(ref);
+  };
+  const sw = (key, t, s) => <button type="button" className="ff-v21-sw" aria-pressed={!!f[key]} onClick={() => set({ [key]: !f[key] })}><span><b>{t}</b><small>{s}</small></span><i aria-hidden="true" /></button>;
+  if (sent) return (
+    <div className="ff-v21-done" role="status"><b>VIP booking request sent. Reference {sent}</b>
+      <p style={{ margin: "4px 0 10px" }}>The venue receives your VIP card with the request. FireFlair will confirm it with you.</p>
+      <Btn onClick={() => { setSent(null); setF(x => ({ ...x, exp: "", drinks: {}, champagne: false, table: false, priv: false, waiter: "", bartender: "", note: "" })); }}>Plan another</Btn></div>
+  );
+  return (
+    <form className="ff-v21-form" id="ff-v21-plan" onSubmit={submit} noValidate>
+      <h2 className="ff-h1" style={{ fontSize: 24 }}>Plan a VIP booking</h2>
+      <div className="ff-v21-row">
+        <label><span className="ff-v21-k">Experience</span><select className="ff-v21-in" value={f.exp} onChange={(e) => set({ exp: e.target.value })} aria-label="Experience"><option value="">Choose one</option>{VIP21_EXP.map(x => <option key={x.k} value={x.k}>{x.t}</option>)}</select></label>
+        <label><span className="ff-v21-k">Occasion</span><select className="ff-v21-in" value={f.occasion} onChange={(e) => set({ occasion: e.target.value })} aria-label="Occasion"><option value="">Any</option>{VIP21_OCCASIONS.map(x => <option key={x} value={x}>{x}</option>)}</select></label>
+        <label><span className="ff-v21-k">Date</span><input className="ff-v21-in" type="date" value={f.date} onChange={(e) => set({ date: e.target.value })} aria-label="Date" /></label>
+        <label><span className="ff-v21-k">Area</span><input className="ff-v21-in" value={f.area} onChange={(e) => set({ area: e.target.value })} placeholder="London" aria-label="Area" /></label>
+      </div>
+      <div><span className="ff-v21-k">Group size</span><span className="ff-v21-step"><button type="button" aria-label="Fewer guests" onClick={() => set({ group: Math.max(1, f.group - 1) })}>{"−"}</button><b>{f.group}</b><button type="button" aria-label="More guests" onClick={() => set({ group: Math.min(500, f.group + 1) })}>+</button></span></div>
+      <div>
+        <h3>Pre-order drinks{total ? ` · ${total}` : ""}</h3>
+        <div className="ff-v21-menu" style={{ marginTop: 8 }}>{VIP21_MENU.map(d => <div key={d}><span>{d}</span><span className="ff-v21-step"><button type="button" aria-label={`Fewer ${d}`} onClick={() => bump(d, -1)}>{"−"}</button><b>{f.drinks[d] || 0}</b><button type="button" aria-label={`More ${d}`} onClick={() => bump(d, 1)}>+</button></span></div>)}</div>
+      </div>
+      <div style={{ display: "grid", gap: 8 }}>
+        {sw("champagne", "Champagne on arrival", "Poured as you sit down")}
+        {sw("table", "The best table", "Ask for the best table in the house")}
+        {sw("priv", "A private place", "A private room or a screened corner")}
+      </div>
+      <div className="ff-v21-row">
+        <label><span className="ff-v21-k">Your waiter</span><input className="ff-v21-in" value={f.waiter} onChange={(e) => set({ waiter: e.target.value })} placeholder="Name or FF Tag" aria-label="Your waiter" /></label>
+        <label><span className="ff-v21-k">Your personal bartender</span><input className="ff-v21-in" value={f.bartender} onChange={(e) => set({ bartender: e.target.value })} placeholder="Name or FF Tag" aria-label="Your personal bartender" /></label>
+      </div>
+      <label><span className="ff-v21-k">Anything else</span><textarea className="ff-v21-in" rows={3} value={f.note} onChange={(e) => set({ note: e.target.value })} aria-label="Anything else" /></label>
+      {done ? <div><span className="ff-v21-k">Sent to the venue</span><VipCard21 card={v.card} tag={state.session && state.session.tag} /></div> : null}
+      {err && <p role="alert" style={{ margin: 0, color: "var(--burgundy, #8C1526)" }}>{err}</p>}
+      <div className="ff-v21-btns" style={{ marginTop: 0 }}>
+        <VipShine21 onClick={submit}>Send VIP booking request</VipShine21>
+        {!done && <Btn onClick={() => vipGo21(dispatch, "profile")}>Create your VIP card</Btn>}
+      </div>
+    </form>
+  );
+}
+function VipInvite21() {
+  const { state, dispatch } = useStore();
+  const v = state.vip21 || {};
+  const [f, setF] = useState({ title: "", date: "", place: "", note: "" });
+  const [err, setErr] = useState("");
+  const set = (p) => setF(x => ({ ...x, ...p }));
+  const make = (e) => {
+    if (e) e.preventDefault();
+    if (!f.title.trim()) { setErr("Name your event."); return; }
+    setErr("");
+    const code = Math.random().toString(36).slice(2, 8).toUpperCase();
+    vipPatch21(dispatch, state, { invites: [{ id: uid("inv"), code, ...f, at: Date.now() }, ...(v.invites || [])] });
+    setF({ title: "", date: "", place: "", note: "" });
+    dispatch({ type: "TOAST", toast: "Invitation created" });
+  };
+  const msgFor = (i) => `You are invited to ${i.title}${i.date ? " on " + longDate(i.date) : ""}${i.place ? " at " + i.place : ""}. ${i.note ? i.note + " " : ""}Create your VIP card to reply: https://${VIP21.domain}/i/${i.code}`;
+  return (
+    <section className="ff-v21-form" id="ff-v21-invite" aria-labelledby="ff-v21-ih">
+      <h2 id="ff-v21-ih" className="ff-h1" style={{ fontSize: 24 }}>Hosting? Create an invitation</h2>
+      <form onSubmit={make} noValidate style={{ display: "grid", gap: 12 }}>
+        <div className="ff-v21-row">
+          <label><span className="ff-v21-k">Event</span><input className="ff-v21-in" value={f.title} onChange={(e) => set({ title: e.target.value })} placeholder="Sam’s 40th" aria-label="Event" /></label>
+          <label><span className="ff-v21-k">Date</span><input className="ff-v21-in" type="date" value={f.date} onChange={(e) => set({ date: e.target.value })} aria-label="Event date" /></label>
+          <label><span className="ff-v21-k">Place</span><input className="ff-v21-in" value={f.place} onChange={(e) => set({ place: e.target.value })} aria-label="Place" /></label>
+        </div>
+        <label><span className="ff-v21-k">Message</span><textarea className="ff-v21-in" rows={2} value={f.note} onChange={(e) => set({ note: e.target.value })} aria-label="Message" /></label>
+        {err && <p role="alert" style={{ margin: 0, color: "var(--burgundy, #8C1526)" }}>{err}</p>}
+        <div className="ff-v21-btns" style={{ marginTop: 0 }}><VipShine21 onClick={make}>Create invitation</VipShine21></div>
+      </form>
+      {(v.invites || []).length > 0 && <div className="ff-v21-inv">{v.invites.map(i => (
+        <div key={i.id}><b>{i.title}</b><small>{[i.date && longDate(i.date), i.place].filter(Boolean).join(" · ") || "No date yet"} {"·"} {VIP21.domain}/i/{i.code}</small>
+          <div className="ff-v21-btns" style={{ marginTop: 0 }}><Btn onClick={() => vipShare21(msgFor(i))}>Send on WhatsApp</Btn><Btn onClick={() => vipCopy21(dispatch, `https://${VIP21.domain}/i/${i.code}`)}>Copy link</Btn></div></div>))}</div>}
+    </section>
+  );
+}
+function VipBook21() {
+  return (
+    <div className="ff-home ff-home11 ff-v21">
+      <style>{VIP21_CSS}</style>
+      <div className="ff-home17">
+        <section className="ff-sect ff-v21-sect" aria-labelledby="ff-v21-bkh">
+          <h1 id="ff-v21-bkh" className="ff-h1" style={{ fontSize: "clamp(28px,7vw,42px)" }}>Book</h1>
+          <p className="ff-v21-lead">Single tables, group nights and private places, booked with your VIP card.</p>
+          <VipPlan21 />
+        </section>
+        <section className="ff-sect ff-v21-sect"><VipInvite21 /></section>
+      </div>
+    </div>
+  );
+}
+function VipChips21({ list, value, onChange, custom }) {
+  const [add, setAdd] = useState("");
+  const all = Array.from(new Set([...list, ...(value || [])]));
+  const toggle = (x) => onChange((value || []).includes(x) ? value.filter(y => y !== x) : [...(value || []), x]);
+  return (
+    <div>
+      <div className="ff-v21-chips">{all.map(x => <button key={x} type="button" className="ff-v21-chip" aria-pressed={(value || []).includes(x)} onClick={() => toggle(x)}>{x}</button>)}</div>
+      {custom && <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
+        <input className="ff-v21-in" value={add} onChange={(e) => setAdd(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); const t = add.trim(); if (t) { toggle(t); setAdd(""); } } }} placeholder={custom} aria-label={custom} />
+        <Btn onClick={() => { const t = add.trim(); if (t) { toggle(t); setAdd(""); } }}>Add</Btn>
+      </div>}
+    </div>
+  );
+}
+function VipWallet21({ open, onClose, card }) {
+  const { dispatch } = useStore();
+  return (
+    <Sheet open={open} onClose={onClose} title="Add to wallet" center>
+      <div style={{ display: "grid", gap: 12, justifyItems: "center" }}>
+        <VipCard21 card={card} />
+        <div className="ff-v21-wallet" style={{ width: "100%", maxWidth: 440 }}>
+          <button type="button" onClick={() => { onClose(); dispatch({ type: "TOAST", toast: "Apple Wallet passes arrive with the FF VIP launch" }); }}>Add to Apple Wallet</button>
+          <button type="button" onClick={() => { onClose(); dispatch({ type: "TOAST", toast: "Google Wallet passes arrive with the FF VIP launch" }); }}>Add to Google Wallet</button>
+        </div>
+      </div>
+    </Sheet>
+  );
+}
+function VipCardPage21() {
+  const { state, dispatch } = useStore();
+  const v = state.vip21 || {};
+  const tag = (state.session && state.session.tag) || "";
+  const [c, setC] = useState(() => ({ name: (v.card && v.card.name) || state.profile.name || "", photo: (v.card && v.card.photo) || "", drinks: [], diet: [], allergies: "", vibes: [], care: "", seat: "", ...(v.card || {}) }));
+  const [wallet, setWallet] = useState(false);
+  const [err, setErr] = useState("");
+  const fileRef = useRef(null);
+  const done = vipCardDone21(v);
+  const set = (p) => setC(x => ({ ...x, ...p }));
+  const onFile = async (e) => {
+    const file = e.target.files && e.target.files[0];
+    e.target.value = "";
+    if (!file) return;
+    if (file.size > MAX_MEDIA_BYTES) { setErr("That photo is too large."); return; }
+    try { set({ photo: await readFileAsDataUrl(file) }); setErr(""); } catch (x) { setErr(x.message || "That photo could not be read."); }
+  };
+  const save = (e) => {
+    if (e) e.preventDefault();
+    if (!c.name.trim()) { setErr("Add your name."); return; }
+    setErr("");
+    const first = !v.guest;
+    const guest = v.guest || { ref: vipRef21("VG"), at: Date.now() };
+    vipPatch21(dispatch, state, { card: { ...c, name: c.name.trim(), savedAt: Date.now() }, guest });
+    if (first) {
+      const cur = fdOf(state), ref = guest.ref;
+      const rec = {
+        id: uid("lsr"), ref, key: ref, kind: "vip_guest", siteKey: "vip", locationId: null, locationText: VIP21.party.place,
+        roles: [], eventDate: null, dateUndecided: true, tz: "Europe/London",
+        contact: { name: c.name.trim(), email: "", phone: "", whatsappOk: true },
+        headcount: "1", brief: "Launch party guest list | " + [c.drinks.slice(0, 3).join(", "), c.diet.join(", ")].filter(Boolean).join(" | "), companyId: null, companyName: "",
+        createdAt: new Date().toISOString(), status: "new", assignee: "", adminNote: "", eventId: null,
+        sourcePath: "", sourceSite: "vip", notif: { admin: "simulated", ack: "simulated message", failed: false }, bookingId: null,
+      };
+      fdSet(state, dispatch, { requests: [rec, ...cur.requests], log: [{ at: rec.createdAt, by: "visitor", what: "vip_guest " + ref, site: "vip" }, ...cur.log].slice(0, 200) });
+    }
+    dispatch({ type: "TOAST", toast: first ? "Card saved. You are on the guest list" : "Card saved" });
+  };
+  const share = () => vipShare21(`${c.name || "I"} on FF VIP: https://${VIP21.domain}/${VIP21.slug(state)}`);
+  return (
+    <div className="ff-home ff-home11 ff-v21">
+      <style>{VIP21_CSS}</style>
+      <div className="ff-home17">
+        <section className="ff-sect ff-v21-sect" aria-labelledby="ff-v21-mh">
+          <h1 id="ff-v21-mh" className="ff-h1" style={{ fontSize: "clamp(28px,7vw,42px)" }}>My VIP card</h1>
+          {v.guest ? <div className="ff-v21-guest" role="status" style={{ marginTop: 8, color: "inherit", background: "rgba(165,128,47,.14)", borderColor: "rgba(165,128,47,.6)" }}>On the launch party guest list {"·"} {VIP21.party.when}, {VIP21.party.place}</div> : null}
+          <div className="ff-v21-split" style={{ marginTop: 16 }}>
+            <div className="ff-v21-cardwrap">
+              <VipCard21 card={c} tag={tag} />
+              {done && <div className="ff-v21-btns" style={{ marginTop: 0 }}><VipShine21 onClick={() => setWallet(true)}>Add to wallet</VipShine21><Btn onClick={share}>Share my card</Btn></div>}
+            </div>
+            <form className="ff-v21-form" onSubmit={save} noValidate>
+              <label><span className="ff-v21-k">Name</span><input className="ff-v21-in" value={c.name} onChange={(e) => set({ name: e.target.value })} aria-label="Name" autoComplete="name" /></label>
+              <div className="ff-v21-ph2">
+                <input ref={fileRef} type="file" accept="image/*" onChange={onFile} style={{ display: "none" }} />
+                <button type="button" className="ff-v21-up" onClick={() => fileRef.current && fileRef.current.click()}>{c.photo ? "Change photo" : "Add a photo"}</button>
+                {c.photo && <Btn onClick={() => set({ photo: "" })}>Remove photo</Btn>}
+              </div>
+              <div><span className="ff-v21-k">Favourite drinks</span><VipChips21 list={VIP21_DRINKS} value={c.drinks} onChange={(x) => set({ drinks: x })} custom="Add your own" /></div>
+              <div><span className="ff-v21-k">Dietary needs</span><VipChips21 list={VIP21_DIET} value={c.diet} onChange={(x) => set({ diet: x })} /></div>
+              <label><span className="ff-v21-k">Allergies and anything else</span><input className="ff-v21-in" value={c.allergies} onChange={(e) => set({ allergies: e.target.value })} aria-label="Allergies and anything else" /></label>
+              <div><span className="ff-v21-k">Your personality</span><VipChips21 list={VIP21_VIBES} value={c.vibes} onChange={(x) => set({ vibes: x })} /></div>
+              <label><span className="ff-v21-k">Where you like to sit</span><select className="ff-v21-in" value={c.seat} onChange={(e) => set({ seat: e.target.value })} aria-label="Where you like to sit"><option value="">No preference</option>{VIP21_SEATS.map(s => <option key={s} value={s}>{s}</option>)}</select></label>
+              <label><span className="ff-v21-k">How you like to be looked after</span><textarea className="ff-v21-in" rows={3} value={c.care} onChange={(e) => set({ care: e.target.value })} aria-label="How you like to be looked after" /></label>
+              {err && <p role="alert" style={{ margin: 0, color: "var(--burgundy, #8C1526)" }}>{err}</p>}
+              <div className="ff-v21-btns" style={{ marginTop: 0 }}><VipShine21 onClick={save}>{v.guest ? "Save card" : "Save card and join the guest list"}</VipShine21></div>
+            </form>
+          </div>
+        </section>
+        <VipRewardsSect21 />
+      </div>
+      <VipWallet21 open={wallet} onClose={() => setWallet(false)} card={c} />
+    </div>
+  );
+}
+function VipRouter21() {
+  const { state } = useStore();
+  const { tab } = state;
+  if (state.viewing) return <PersonProfile />;
+  if (tab === "network") return <VipExperiences21 />;
+  if (tab === "bookings") return <VipBook21 />;
+  if (tab === "profile") return <VipCardPage21 />;
+  return <VipHome21 />;
+}
+
 function TeamRouter() {
   const { state } = useStore();
   const { tab } = state;
@@ -16137,7 +16813,7 @@ function StaffRouter() {
    they left off. Demo directory/venues/services stay static — not persisted.
    ========================================================================== */
 
-const PERSIST_KEYS = ["admin17", "vipClaims", "feedback", "profileQuestions", "auth", "role", "route", "tab", "session", "profile", "connections", "invitations", "reviews", "reviewRequests", "events", "shifts", "engagements", "categoryVisibility", "credits", "company", "activeEventId", "site", "partyEvents", "trainingInterest", "jobsInterest", "cocktailMenu", "vipInterest", "teamInvites", "joinedPeople", "profileEdit", "staffNotify", "rewardsInterest", "workPostcode", "availabilityAsks", "notesSeenAt", "favs", "myCocktails", "myServices", "myPosts", "devDone", "admin17", "myTerms17", "svcTerms17", "fd"];
+const PERSIST_KEYS = ["admin17", "vip21", "vipClaims", "feedback", "profileQuestions", "auth", "role", "route", "tab", "session", "profile", "connections", "invitations", "reviews", "reviewRequests", "events", "shifts", "engagements", "categoryVisibility", "credits", "company", "activeEventId", "site", "partyEvents", "trainingInterest", "jobsInterest", "cocktailMenu", "vipInterest", "teamInvites", "joinedPeople", "profileEdit", "staffNotify", "rewardsInterest", "workPostcode", "availabilityAsks", "notesSeenAt", "favs", "myCocktails", "myServices", "myPosts", "devDone", "admin17", "myTerms17", "svcTerms17", "fd"];
 
 function pickPersisted(state) {
   const out = {};
@@ -16507,7 +17183,7 @@ function FireFlair() {
     <Store.Provider value={store}>
       <style>{CSS + P1_CSS + V101_CSS + V11_CSS + VK17_CSS + FD_CSS}</style>
       <div className="ff">
-        <Shell>{state.adminOpen17 ? <Admin17 /> : state.pkgPage ? <V101.PackagePage18 /> : state.fdArea ? <AreaPage11 /> : state.viewingCompany ? <CompanyPublic /> : state.viewing ? <PersonProfile /> : state.role === "team" ? <TeamRouter /> : state.role === "staff" ? <StaffRouter /> : <Landing />}</Shell>
+        <Shell>{state.adminOpen17 ? <Admin17 /> : state.pkgPage ? <V101.PackagePage18 /> : state.fdArea ? <AreaPage11 /> : state.viewingCompany ? <CompanyPublic /> : state.viewing ? <PersonProfile /> : state.role === "team" ? <TeamRouter /> : state.role === "staff" ? <StaffRouter /> : state.role === "vip" ? <VipRouter21 /> : <Landing />}</Shell>
         <CardPeek />
         <FdRoute11 /><V101.PkgRoute18 />
         <AutofillEngine17 />
@@ -23843,6 +24519,7 @@ function TermsRow17() {
 /* Tab names, by site: FF Party is Home, Browse, Book, Party. FF Staff is Home, Our people, Your bookings, Your business. */
 const tabLabel17 = (key, state, dflt) => {
   const staff = state.role === "staff", party = staff && state.site === "party";
+  if (state.role === "vip") return ({ network: "Experiences", bookings: "Book", profile: "My card" })[key] || dflt;
   if (party) return ({ network: "Browse", bookings: "Book", profile: "Party" })[key] || dflt;
   if (staff) return ({ network: "Our people", bookings: "Your bookings", profile: "Your business" })[key] || dflt;
   return key === "profile" ? "Profile" : dflt;
@@ -24501,7 +25178,7 @@ function AdmOverview17({ d, go }) {
       </div>
       <h3 className="ff-adm-h3">Sites</h3>
       <div className="ff-adm-sitesum">
-        {FF_SITES.map(s => { const live = PHASE1.sitesOpen.includes(s.key); return <span key={s.key} className={live ? "on" : ""}><SiteMark site={s} size={22} /> {s.name}<em>{live ? "Live" : s.key === "vip" ? "Coming 2027" : "Offline"}</em></span>; })}
+        {FF_SITES.map(s => { const live = PHASE1.sitesOpen.includes(s.key); return <span key={s.key} className={live ? "on" : ""}><SiteMark site={s} size={22} /> {s.name}<em>{live ? "Live" : "Offline"}</em></span>; })}
       </div>
       <h3 className="ff-adm-h3">Hidden</h3>
       <div className="ff-adm-hidsum">
@@ -24530,9 +25207,9 @@ function AdmSites17({ d, act, can }) {
           return (
             <div key={s.key} className="ff-adm-row">
               <SiteMark site={s} size={34} />
-              <span className="mn"><b>{s.name}</b><small>{s.domain}{vip ? " · Coming 2027" : ""}</small></span>
+              <span className="mn"><b>{s.name}</b><small>{s.domain}</small></span>
               <span className={`ff-adm-pill${live ? " ok" : ""}`}>{live ? "Live" : "Offline"}</span>
-              <Sw17 on={live} disabled={!can("sites") || vip} label={`${s.name} live`} onChange={(v) => act({ op: "site", key: s.key, value: v, label: s.name })} />
+              <Sw17 on={live} disabled={!can("sites")} label={`${s.name} live`} onChange={(v) => act({ op: "site", key: s.key, value: v, label: s.name })} />
             </div>
           );
         })}
@@ -26324,8 +27001,8 @@ const PLATFORMS = [
         chips: PARTY_FEATURES,
     },
     {
-        n: 4, site: "vip", name: "FF VIP", status: "Coming 2027", tone: "soon",
-        who: "Customer loyalty and influencers.",
+        n: 4, site: "vip", name: "FF VIP", status: "Launching early 2027", tone: "soon",
+        who: "VIP cards, luxury experiences and rewards.",
     },
 ];
 /** Every FireFlair platform on the 2026 roadmap, numbered, each in the same
@@ -28205,7 +28882,7 @@ const BIZ_PLATFORMS = [
   { n: 3, site: "party", name: "FF Party", status: "Launching 2026", tone: "soon", who: "Bookings direct from clients.",
     text: "Phase 2: advertise your company on FF Party, and clients book you and your team.",
     chips: [{ icon: Sparkles, label: "Service Cards" }, { icon: Martini, label: "Signature cocktails" }, { icon: Briefcase, label: "Company page" }, { icon: Star, label: "Reviews" }] },
-  { n: 4, site: "vip", name: "FF VIP", status: "Coming 2027", tone: "soon", who: "VIP experience packages at venues across the UK." },
+  { n: 4, site: "vip", name: "FF VIP", status: "Launching early 2027", tone: "soon", who: "VIP cards, luxury experiences and rewards." },
 ];
 function StaffPlatforms() {
   return (

@@ -1,5 +1,17 @@
 # FireFlair prototype — changelog
 
+## v17.3.128 — 2026-11-09 — FF VIP site and launch party sign-up
+Artifact version 1794249575-d001 · file `fireflair-v17.3.128.html`
+
+- FF VIP is now a fourth site in the prototype (role "vip", state key `vip21`, persisted). It is listed as "Launching early 2027" and enabled in the admin site flags.
+- Homepage explains FF VIP: VIP cards, hosting and invitations, VIP and group bookings, luxury experiences, FF Rewards, venues joining through FF Staff, and a FAQ.
+- Launch party sign-up box (Shoreditch, early 2027, placeholders to confirm): guests create a VIP card to join the guest list.
+- VIP card editor: favourite drinks, dietary needs, allergies, personality, photo, share link, and Add to Apple/Google Wallet (simulated).
+- VIP booking form: pick an experience, occasion, date, group size, pre-order drinks, champagne on arrival, best table, private place, favourite waiter and bartender; sends the VIP card to the venue. Saved as Front Doors requests (`vip_booking`, `vip_guest`, siteKey "vip").
+- Invitations for hosts (ffvip.uk/i/CODE, WhatsApp send, copy link) and FF Rewards share link are simulated; the points system is intentionally not detailed.
+- FF Party's existing VIP Host Card is unchanged.
+- Readable source copied to `source/fireflair-app.jsx`.
+
 ## v17.3.127 — 2026-11-09 — Team bookings: FireFlair bookings, Build your career
 Artifact version 1794237567-5498 · file `fireflair-v17.3.127.html`
 
