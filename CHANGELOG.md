@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.121 — 2026-11-09 — Network: FF Event Directory, legend dropdowns, Bar packages
+Artifact version 1794187011-ff56 · file `fireflair-v17.3.121.html`
+
+- Network page: the directory heading is now "FF Event Directory" (also on area pages, the FAQ question and the header label).
+- Directory cards for unclaimed companies now read "Company card" instead of "Directory listing". Still no FF logo or coin; the URL stays on the card for SEO.
+- Map legend: labels are now "FF companies", "Professionals", "Directory" and "Venues" (the "FF Partners" wording is retired, "partners" is no longer used in the UI).
+- Each legend entry has a collapsed-by-default dropdown listing its members alphabetically; tapping a name opens that pin's card on the map. The checkbox still toggles the layer and the count still shows.
+- Network "Browse the network": opening Bar now lists the FireFlair Packages carousel above the bar companies (reuses the existing package cards and pop-up).
+
 ## v17.3.120 — 2026-11-08 — Info boxes, larger VIP, album rename and duplicates
 
 - **Competition banner** (`TeamCompetition20`): the four photos are replaced by four information boxes (dates, who can enter, four winners, Network + Team). Each opens a pop-up with the detail. Join Competition and Competition Rules are unchanged.

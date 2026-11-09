@@ -4283,7 +4283,7 @@ function companyLegend17(pins) {
       React.createElement(MapDot17, { cat: cat, size: 18 }), " " + label + " (" + n + ")");
   });
   if (!items.some(Boolean)) return items;
-  return [React.createElement("span", { key: "dir", className: "ff-body", style: { fontSize: 11, fontWeight: 700, display: "flex", alignItems: "center" } }, "FireFlair Directory")].concat(items);
+  return [React.createElement("span", { key: "dir", className: "ff-body", style: { fontSize: 11, fontWeight: 700, display: "flex", alignItems: "center" } }, "FF Event Directory")].concat(items);
 }
 const COMPANIES = [
   { id: "co_vooshka", name: "Vooshka Cocktail Bar", kind: "Luxury mobile cocktail bar", area: "Nationwide", tag: "VOOSH", tier: "gold" },
@@ -17470,7 +17470,7 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party }) {
   );
   return (
     <CardFrame tier={(co.theme === "silver" || co.theme === "gold") ? co.theme : (co.tier || "gold")} theme={t} premium ratio="8 / 5" className={`ff-cocard ff-cc11 l-${layout} ${size}`} style={{ ...vars, maxWidth: 460, margin: size ? 0 : "0 auto" }}>
-      <span className="ff-pc-plate ff-cc11-plate">{co.unclaimed ? "Directory listing" : party ? "VIP Host Card" : "Company Card"}</span>
+      <span className="ff-pc-plate ff-cc11-plate">{co.unclaimed ? "Company card" : party ? "VIP Host Card" : "Company Card"}</span>
       {!co.unclaimed && <span className="ff-cc11-coin"><Coin size={size ? 24 : 30} tier={co.theme === "silver" ? "silver" : "gold"} /></span>}
       <div className="ff-cc11-body">
         {logo}
@@ -18442,7 +18442,7 @@ function NetDirectory19(props) {
     .map(function (t) { return [t, all.filter(function (c) { return (c.cat || "bar") === t[0]; })]; })
     .filter(function (x) { return x[1].length; });
   return h("section", { id: "ff-directory", style: { marginTop: 30, scrollMarginTop: 70 } },
-    h(SectionHead, { icon: h(I11.Briefcase, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title: "FireFlair Directory", count: all.length }),
+    h(SectionHead, { icon: h(I11.Briefcase, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title: "FF Event Directory", count: all.length }),
     h(AreaExplorer11, null),
     secs.map(function (x) { return h(CompaniesSection, { key: "dir" + x[0][0], title: x[0][1], list: x[1] }); }));
 }
@@ -18457,6 +18457,7 @@ function NetBrowse17(props) {
     .filter(function (x) { return x[1].length; });
   const groups = open ? Object.keys(PILLAR_OF_GROUP17).filter(function (g) { return PILLAR_OF_GROUP17[g] === open; }) : "";
   const body = React.createElement(React.Fragment, null,
+    open === "bar" && window.PartyPackages18 ? React.createElement(window.PartyPackages18, null) : null,
     secs.map(function (x) { return React.createElement(CompaniesSection, { key: x[0][0], title: x[0][1], list: x[1] }); }),
     React.createElement(GroupedPeople, { query: "", onPick: props.onPick, scope: props.scope, only: groups }));
   const items = BCATS17.map(function (c) { return { k: c.k, t: c.label, s: NET_PILLAR_TEXT17[c.k], img: (window.FF_IMG || {})[BIMG17[c.k]] }; });
@@ -18839,7 +18840,7 @@ function fdCopyBase20(siteKey, node, ctx) {
       q(`Can I book a bartender in ${X}?`, `Yes. Start an Event Card with your date and place, choose your package, then choose your people and add-ons.`),
       q("Are the people shown free on my date?", `Not necessarily. Each person has said where they work. Availability for your date is confirmed when you book.`),
       q("What if the people shown are from a wider area?", `They are labelled with the area they actually cover. Whether they can work at your event is confirmed when you book.`),
-      ...(ctx.hasUnclaimed ? [q("What is the FireFlair Directory?", `The Directory lists bar and event companies with their public contact details, in one place. A listing is not an endorsement or a partnership, and Directory companies cannot be booked through FireFlair. FireFlair Partners are the companies that have joined and can be booked. A company can ask us to update or remove its listing.`)] : []),
+      ...(ctx.hasUnclaimed ? [q("What is the FF Event Directory?", `The Directory lists bar and event companies with their public contact details, in one place. A listing is not an endorsement or a partnership, and Directory companies cannot be booked through FireFlair. FF companies are the companies that have joined and can be booked. A company can ask us to update or remove its listing.`)] : []),
       q("How does booking work?", `Choose your package, choose your people and choose your add-ons. The details and terms are shown before anything is confirmed.`)],
   };
 }
@@ -19236,9 +19237,9 @@ function AreaPage11() {
       </section>
 
       {res.dir.length > 0 && <section id="ff-fd-dir" aria-labelledby="fd-dir-h" style={{ marginTop: 26, scrollMarginTop: 70 }}>
-        <h2 id="fd-dir-h" className="ff-h2">FireFlair Directory</h2>
-        <p className="ff-fd-sub">Companies listed from their public contact details. FireFlair Partners are the companies that have joined and can be booked through FireFlair.</p>
-        <HScroll label={`FireFlair Directory in ${fdLabel(node)}`} snap>{res.dir.slice(0, showAll ? 60 : 24).map(x => <FdResultTile11 key={x.key} x={x} />)}</HScroll>
+        <h2 id="fd-dir-h" className="ff-h2">FF Event Directory</h2>
+        <p className="ff-fd-sub">Companies listed from their public contact details. FF companies are the companies that have joined and can be booked through FireFlair.</p>
+        <HScroll label={`FF Event Directory in ${fdLabel(node)}`} snap>{res.dir.slice(0, showAll ? 60 : 24).map(x => <FdResultTile11 key={x.key} x={x} />)}</HScroll>
       </section>}
       {copy.ask && <section id="ff-fd-ask" ref={askRef} className="ff-fd-card" aria-labelledby="fd-ask-h" style={{ scrollMarginTop: 70 }}>
         <h2 id="fd-ask-h" className="ff-h2">{sourcing ? (siteKey === "staff" ? `Need staff in ${fdLabel(node)}?` : `Need people for an event in ${fdLabel(node)}?`) : `Interested in ${fdLabel(node)}?`}</h2>
@@ -19665,16 +19666,20 @@ const COMPANY_PINS11 = (() => {
   return out;
 })();
 
-const MAP_LAYERS19 = [["partners", "FF Partners"], ["pros", "FF Professionals"], ["dir", "FF Directory"], ["venues", "FF Venues"]];
+const MAP_LAYERS19 = [["partners", "FF companies"], ["pros", "Professionals"], ["dir", "Directory"], ["venues", "Venues"]];
 const mapLayer19 = (show) => (p) => p.kind === "person" ? show.pros : p.kind === "company" ? (p.partner ? show.partners : show.dir) : p.kind === "venue" ? show.venues : true;
-function MapLegend19({ pins, show, setShow }) {
+function MapLegend19({ pins, show, setShow, onPick }) {
   const h = React.createElement;
-  const n = (f) => new Set(pins.filter(f).map((p) => p.coId || p.id)).size;
-  const count = { partners: n((p) => p.kind === "company" && p.partner), pros: n((p) => p.kind === "person"), dir: n((p) => p.kind === "company" && !p.partner), venues: n((p) => p.kind === "venue") };
+  const [openK, setOpenK] = useState("");
+  const kindOf = { partners: (p) => p.kind === "company" && p.partner, pros: (p) => p.kind === "person", dir: (p) => p.kind === "company" && !p.partner, venues: (p) => p.kind === "venue" };
+  const members = (k) => { const seen = {}; return pins.filter(kindOf[k]).filter((p) => { const key = p.coId || p.id; if (seen[key]) return false; seen[key] = 1; return true; }).sort((a, b) => String(a.name).localeCompare(String(b.name))); };
+  const count = {}; MAP_LAYERS19.forEach(([k]) => { count[k] = members(k).length; });
   const icon = { partners: h(Coin, { size: 17 }), pros: h(MapPerson17, { size: 18 }), dir: h(MapDot17, { cat: "bar", size: 18 }), venues: h("span", { style: { width: 11, height: 11, borderRadius: 3, background: MAP_LAYER.venue.color, border: "1px solid #141416", display: "block" } }) };
   return h("div", { className: "ff-ml19", role: "group", "aria-label": "Map layers" },
-    h("style", null, ".ff .ff-ml19 { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:10px 0 14px; } .ff .ff-ml19 label { display:flex; align-items:center; gap:7px; font-size:12px; cursor:pointer; padding:6px 11px; border:1px solid var(--rule); border-radius:12px; corner-shape:squircle; background:#fff; color:var(--ink); } .ff .ff-ml19 input { accent-color:#7E611D; width:15px; height:15px; margin:0; }"),
-    MAP_LAYERS19.map(([k, label]) => h("label", { key: k }, h("input", { type: "checkbox", checked: !!show[k], onChange: () => setShow({ ...show, [k]: !show[k] }) }), icon[k], label + (count[k] ? " (" + count[k] + ")" : ""))));
+    h("style", null, ".ff .ff-ml19 { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:10px 0 14px; } .ff .ff-ml19 label { display:flex; align-items:center; gap:7px; font-size:12px; cursor:pointer; padding:6px 11px; border:1px solid var(--rule); border-radius:12px; corner-shape:squircle; background:#fff; color:var(--ink); } .ff .ff-ml19 input { accent-color:#7E611D; width:15px; height:15px; margin:0; } .ff .ff-ml19-row { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; width:100%; } .ff .ff-ml19-x { border:0; background:none; cursor:pointer; padding:0 0 0 4px; font-size:11px; color:inherit; } .ff .ff-ml19-list { width:100%; max-height:190px; overflow:auto; border:1px solid var(--rule, #d8d2c6); border-radius:16px; background:var(--card, #fff); padding:6px; display:flex; flex-direction:column; } .ff .ff-ml19-list button { text-align:left; border:0; background:none; cursor:pointer; padding:7px 10px; border-radius:10px; font-size:12px; color:inherit; } .ff .ff-ml19-list button:hover { background:rgba(0,0,0,.05); }"),
+    h("div", { className: "ff-ml19-row" }, MAP_LAYERS19.map(([k, label]) => h("label", { key: k }, h("input", { type: "checkbox", checked: !!show[k], onChange: () => setShow({ ...show, [k]: !show[k] }) }), icon[k], label + (count[k] ? " (" + count[k] + ")" : ""),
+      count[k] ? h("button", { type: "button", className: "ff-ml19-x", "aria-expanded": openK === k, "aria-label": label + " list", onClick: (e) => { e.preventDefault(); e.stopPropagation(); setOpenK(openK === k ? "" : k); } }, openK === k ? "\u25B4" : "\u25BE") : null))),
+    openK ? h("div", { className: "ff-ml19-list" }, members(openK).map((p) => h("button", { key: p.coId || p.id, type: "button", onClick: () => onPick && onPick(p) }, p.name))) : null);
 }
 
 function FFMap({ mode = "home" }) {
@@ -19837,7 +19842,7 @@ function FFMap({ mode = "home" }) {
         </div>
       )}
 
-      {mode === "network" && <MapLegend19 pins={pinsAll} show={show} setShow={setShow} />}
+      {mode === "network" && <MapLegend19 pins={pinsAll} show={show} setShow={setShow} onPick={setSel} />}
       <div style={{ display: mode === "network" ? "none" : "flex", gap: 14, alignItems: "center", justifyContent: "center", margin: "10px 0 14px", flexWrap: "wrap" }}>
         <span className="ff-body ff-muted" style={{ fontSize: 11, display: "flex", gap: 6, alignItems: "center" }}><MapPerson17 size={18} /> Professionals{nPeople ? ` (${nPeople})` : ""}</span>
         {companyLegend17(pins)}
@@ -32025,6 +32030,7 @@ function PartyPackages18() {
     cur ? h18(Sheet, { open: true, onClose: () => setOpen(null), title: cur.sv.title, center: true },
       h18(PkgBody18, { m: cur, onPlan: () => { setOpen(null); hire.toEvent(); } })) : null);
 }
+window.PartyPackages18 = PartyPackages18;
 function Guarantee18() {
   return h18("section", { className: "ff-sect ff-g18", id: "ff-guarantee" },
     h18(Coin, { size: 64, tier: "gold" }),
