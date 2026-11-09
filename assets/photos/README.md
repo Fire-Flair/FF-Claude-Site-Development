@@ -22,7 +22,7 @@ Each file is a crop of a photo from `photo-library/` (ids in `photo-library/libr
 - community: p44 (Brand event team under a light arch), p37 (Team at a glass atrium bar), p35 (Two bartenders at a marquee bar), p45 (Hospitality team in a race grandstand), p26 (Two bartenders at a brand bar)
 - events: p29 (Waiter with a tray of cocktails), p23 (Bartender pouring at a garden bar), p46 (Beach club team at a race weekend (1)), p24 (Three women shaking cocktails), p31 (Bartender behind a row of sours)
 - services: p06 (Martini glasses and mixing glass), v01 (Cocktail line-up (video)), p30 (Strawberry sours lined up), p01 (Rosemary and lime highballs), p34 (Bartender serving strawberry cocktails)
-- profiles: p27 (Bartender in a suit, dark bar), p36 (Bartender tool roll (top down)), p11 (Smiling bartender with a pink drink), p05 (Bartender tool roll (wide)), p04 (Bartender with a blow torch)
+- profiles: p27 (Bartender in a suit, dark bar), p11 (Smiling bartender with a pink drink), p05 (Bartender tool roll (wide)), p04 (Bartender with a blow torch)
 
 **FF Party**
 
@@ -50,7 +50,7 @@ Each file is a crop of a photo from `photo-library/` (ids in `photo-library/libr
 | `jr_cardsteam.webp` | p12 Guest photographing her cocktail | Story: Your Service Cards |
 | `bk_training.webp` | p24 Three women shaking cocktails | Bookings: Training drop-down photo |
 | `bk_jobs.webp` | p46 Beach club team at a race weekend (1) | Bookings: Dream jobs drop-down photo |
-| `bk_rewards.webp` | p36 Bartender tool roll (top down) | Bookings: FireFlair rewards drop-down photo |
+| `bk_rewards.webp` | p18 Martini with rose petals | Bookings: FireFlair rewards drop-down photo |
 | `in_tr_intro_cocktails.webp` | vkg17 Vooshka gallery: Expert hands, memorable occasions | Training card: Introduction to Cocktails |
 | `in_tr_mixology.webp` | p18 Martini with rose petals | Training card: Mixology |
 | `in_tr_wset_spirits.webp` | vke07 Bartender pouring (black and white) | Training card: WSET Spirits |

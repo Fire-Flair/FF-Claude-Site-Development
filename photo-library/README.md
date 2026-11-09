@@ -70,7 +70,6 @@ Every photo supplied for the FireFlair sites, in one place, so any image on the 
 | p33 | Bartender pouring at a tequila stand | photo, square | 1 | Altos | Shared image key (set in v17.3.80); Story |
 | p34 | Bartender serving strawberry cocktails | photo, square | 1 | - | FF Business home; FF Team home; Shared image key (set in v17.3.80) |
 | p35 | Two bartenders at a marquee bar | photo, landscape | 2 | - | FF Business home; FF Party home; FF Team home |
-| p36 | Bartender tool roll (top down) | photo, landscape | - | ROOT7 | Bookings; FF Business home; Shared image key (set in v17.3.80) |
 | p37 | Team at a glass atrium bar | photo, landscape | 7 | - | FF Business home; FF Team home |
 | v01 | Cocktail line-up (video) | video, portrait | - | - | FF Business home; FF Party home; FF Team home |
 | p38 | Bar show selfie: drinks stand | photo, landscape | 3 | - | Story |

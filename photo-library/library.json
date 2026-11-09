@@ -1,6 +1,6 @@
 {
  "library": "FireFlair photo library",
- "count": 166,
+ "count": 165,
  "photos": [
   {
    "id": "p01",
@@ -288,6 +288,10 @@
     {
      "key": "jr_sidehustle",
      "where": "Story: Side hustle tax-free allowance"
+    },
+    {
+     "key": "reward_bar_kit (FF_IMG)",
+     "where": "Kit reward card, FF Business and FF Party pages (replaced the tool roll in v17.3.127)"
     }
    ]
   },
@@ -861,6 +865,10 @@
     {
      "key": "in_tr_mixology",
      "where": "Training card: Mixology"
+    },
+    {
+     "key": "bk_rewards",
+     "where": "Bookings: FireFlair rewards drop-down photo (replaced the tool roll in v17.3.127)"
     }
    ]
   },
@@ -1666,59 +1674,6 @@
     {
      "key": "t17_p35, j17_p35",
      "where": "FF Party home: community pillar (rotating, 1 of 5)"
-    }
-   ]
-  },
-  {
-   "id": "p36",
-   "title": "Bartender tool roll (top down)",
-   "description": "A bartender tool roll from above with shakers, jiggers, strainers and a bottle opener.",
-   "batch": 2,
-   "kind": "photo",
-   "original": "originals/p36-tool-roll-root7.jpg",
-   "web": "web/p36-tool-roll-root7.webp",
-   "thumb": "thumbs/p36-tool-roll-root7.webp",
-   "web_size": [
-    2000,
-    1500
-   ],
-   "original_size": [
-    2016,
-    1512
-   ],
-   "orientation": "landscape",
-   "people": 0,
-   "brands_visible": [
-    "ROOT7"
-   ],
-   "tags": [
-    "kit",
-    "equipment",
-    "tools"
-   ],
-   "focus": [
-    0.5,
-    0.45
-   ],
-   "keep": [
-    0,
-    0,
-    1,
-    0.95
-   ],
-   "near_duplicate_of": null,
-   "used_in": [
-    {
-     "key": "t17_p36, j17_p36",
-     "where": "FF Business home: profile pillar (rotating, 1 of 5)"
-    },
-    {
-     "key": "reward_bar_kit",
-     "where": "Shared image key (set in v17.3.80): FF Business and FF Party pages and stories; FF Team cards use the originals instead"
-    },
-    {
-     "key": "bk_rewards",
-     "where": "Bookings: FireFlair rewards drop-down photo"
     }
    ]
   },

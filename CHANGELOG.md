@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.127 — 2026-11-09 — Team bookings: FireFlair bookings, Build your career
+Artifact version 1794237567-5498 · file `fireflair-v17.3.127.html`
+
+- FF Team Bookings page: "Confirmed bookings" heading is slightly larger. A new large heading "FireFlair bookings" holds two boxes, replacing "FireFlair Party cards".
+- FF Staff box: for each profession the member has selected, "Are you available for bookings as a ...?" with Yes or No, saved on the profile as staffAvail (keyed by profession name). A short line says businesses create shift cards and set their pay rates. A "Suggested pay rate" line shows under a profession when SUGGESTED_PAY21 has an entry for it; the table is empty until FireFlair supplies the rates, so nothing shows yet. Availability limits and minimum pay settings are deliberately not built.
+- FF Party packages box: the package tiles (same data and behaviour as before) with an introduction: FireFlair sets the pay rate for each package, the member deals directly with the client, FireFlair supports, packages are advertised at a set rate and signing up means agreeing to it.
+- "Grow with FireFlair" is now "Build your career" with the large heading style. Training, Dream jobs and FireFlair rewards are unchanged.
+- Photo library: the top-down bartender tool roll (p36) is removed everywhere. Deleted from photo-library (JSON, originals, web, thumbs) and assets/photos (t17_p36, j17_p36), taken out of the in-app photo library and the FF Business profile photo pool. The FireFlair rewards drop-down now uses p18 (martini with rose petals), and the shared Kit reward image now uses p06 (martini glasses and mixing glass). The contact sheet image in photo-library still shows the old photo until it is regenerated.
+
 ## v17.3.126 — 2026-11-09 — Confirm page: Event Card first, help
 Artifact version 1794236643-31a9 · file `fireflair-v17.3.126.html`
 
