@@ -1862,13 +1862,13 @@ function Coin({ size = 40, tier = "standard", flat = false, style }) {
 
 const WM_LIGHT = "linear-gradient(100deg,#FBF0CA,#E6CE84 26%,#B08D2A 52%,#EBD695 74%,#FCF2D2)";
 const WM_DARK = "linear-gradient(100deg,#9A7A24,#6F5514 30%,#B08D2A 52%,#7E611D 76%,#A5832B)";
-function Wordmark({ size = 15, tone = "#EAD79C" }) {
+function Wordmark({ size = 15, tone = "#EAD79C", text = "FIREFLAIR" }) {
   const onLight = tone !== "#EAD79C";
   const s = {
     fontFamily: "var(--display)", fontSize: size, letterSpacing: ".22em", whiteSpace: "nowrap",
     backgroundImage: onLight ? WM_DARK : WM_LIGHT, display: "inline-block",
   };
-  return (<span className="ff-metal" style={s}>FIREFLAIR</span>);
+  return (<span className="ff-metal" style={s}>{text}</span>);
 }
 
 /* ==========================================================================
@@ -11409,10 +11409,7 @@ function Shell({ children }) {
               onClick={() => setMenuOpen(o => !o)}>
               <Coin size={30} tier={isTeam ? state.profile.tier : "gold"} />
               <span style={{ lineHeight: 1.1, textAlign: "left" }}>
-                <Wordmark size={13} />
-                <span style={{ display: "block", fontSize: 9, letterSpacing: ".2em", color: "rgba(234,215,156,.7)", textTransform: "uppercase" }}>
-                  {isVip ? "VIP" : isParty ? "Party" : isStaff ? "Staff" : "Team"}
-                </span>
+                <Wordmark size={15} text={isVip ? "FF VIP" : isParty ? "FF PARTY" : isStaff ? "FF STAFF" : "FF TEAM"} />
               </span>
               <span aria-hidden="true" className="ff-acct-caret">
                 <svg width="14" height="9" viewBox="0 0 14 9" style={{ display: "block" }}><path d="M1 1.2h12L7 8.2z" fill="currentColor" /></svg>
@@ -16310,25 +16307,99 @@ function VipCard21({ card, tag, sample }) {
 const VIP21_SAMPLE = { name: "Jamie Carter", drinks: ["Espresso Martini", "Champagne", "Mezcal Paloma"], diet: ["Vegetarian"], vibes: ["Loves a toast", "Always on time"], seat: "A booth" };
 function VipHero21() {
   const { state, dispatch } = useStore();
-  const v = state.vip21 || {};
-  const joined = !!v.guest;
-  const pic = vipImg21("training_wine_qualification") || vipImg21("reward_bar_shows");
+  const joined = !!(state.vip21 || {}).guest;
+  const X = window.__ffVipX || {};
+  const Search = X.HireSearch;
+  const Contact = lucideIcon("Contact");
+  const IM = window.FF_IMG || {};
+  /* Same hero as FF Team, FF Staff and FF Party: photograph, coin, heading, one button, search. */
   return (
-    <section className="ff-v21-hero" aria-labelledby="ff-v21-h" id="ff-v21-top">
-      <div className="ff-v21-hero-in">
-        <div>
-          <div className="ff-v21-eye"><img src={FF_VIP_LOGO} alt="" />FF VIP</div>
-          <h1 id="ff-v21-h">Be known the moment you arrive.</h1>
-          <p>Your VIP card tells every venue who you are, what you drink and how you like to be looked after. Book luxury experiences, group nights and the best tables, and earn FF Rewards for bringing people with you.</p>
-          <div className="ff-v21-btns">
-            <VipShine21 onClick={() => vipGo21(dispatch, "profile")}>{joined ? "Open your VIP card" : "Join the launch party guest list"}</VipShine21>
-            <Btn onClick={() => vipGo21(dispatch, "network")}>Browse experiences</Btn>
-          </div>
-        </div>
-        {pic ? <div className="ff-v21-hero-pic"><img src={pic} alt="" /></div> : null}
+    <section className="ff-hero18 ff-hero11 vip" aria-labelledby="ff-v21-h" id="ff-hero">
+      <div className="ff-hero18-img">
+        {IM.hero ? <img className="ff-hero18-photo" src={IM.hero} srcSet={IM.hero_sm ? `${IM.hero_sm} 900w, ${IM.hero} 1800w` : undefined} sizes="(min-width:900px) 760px, 100vw" alt="" decoding="async" /> : null}
+        <div className="ff-hero18-fade" aria-hidden="true" />
+        <span className="ff-hero18-shadow" aria-hidden="true" />
+        <span className="ff-hero18-coin refl" aria-hidden="true"><Coin size={160} tier="gold" /></span>
+        <span className="ff-hero18-coin ff-hero17-coin"><Coin size={160} tier="gold" /></span>
+      </div>
+      <div className="ff-hero18-in">
+        <h1 id="ff-v21-h" className="ff-hero17-h ff-hero-h101">Welcome to FF VIP</h1>
+        <p className="ff-hero-sub101">Your card. Your night.</p>
+        <div className="ff-hero17-cta"><VipShine21 onClick={() => vipGo21(dispatch, "profile")}><Contact size={15} /> {joined ? "Open your VIP card" : "Join the guest list"}</VipShine21></div>
+        {Search ? <div className="ff-hero17-ai"><Search placeholder="Search luxury experiences…" /></div> : null}
       </div>
     </section>
   );
+}
+/* After the four pillars: what FF VIP is for. */
+function VipKnown21() {
+  const { state, dispatch } = useStore();
+  const v = state.vip21 || {};
+  const done = vipCardDone21(v);
+  return (
+    <section className="ff-sect ff-v21-sect" id="ff-v21-known" aria-labelledby="ff-v21-kh">
+      <div className="ff-v21-split">
+        <div className="ff-v21-cardwrap"><VipCard21 card={done ? v.card : VIP21_SAMPLE} tag={done ? (state.session && state.session.tag) : ""} sample={!done} /></div>
+        <div>
+          <h2 id="ff-v21-kh" className="ff-h1">Be known the moment you arrive.</h2>
+          <p className="ff-v21-lead">Your VIP card tells every venue who you are, what you drink and how you like to be looked after. Book luxury experiences, group nights and the best tables, and earn FF Rewards for bringing people with you.</p>
+          <div className="ff-v21-btns">
+            <VipShine21 onClick={() => vipGo21(dispatch, "profile")}>{v.guest ? "Open your VIP card" : "Create your VIP card"}</VipShine21>
+            <Btn onClick={() => vipGo21(dispatch, "network")}>Browse experiences</Btn>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+/* The four pillars on the home page, in the same Discover panel the other sites use. */
+function vipDx21() {
+  const mk = (C) => ({ id: "", r: () => React.createElement(C, null) });
+  const part = (id, label, C) => ({ id, label, r: () => React.createElement(C, null) });
+  const I = lucideIcon;
+  return [
+    { k: "card", t: "Your VIP card", s: "Known the moment you arrive", img: "t17_p12", pool: ["p12", "p18", "p20", "p15", "p08"], icon: I("Contact"),
+      h: "One card that tells every venue who you are.",
+      p: ["Your favourite drinks, what you eat and cannot eat, and how you like to be looked after, all on one card.",
+        "The staff know what you like before you sit down, so the first round is right and the table is ready.",
+        "Add it to your wallet and show it at the door."],
+      parts: [part("ff-v21-card", "Your VIP card", VipCardSect21)],
+      jn: [
+        { t: "Create your card", b: "Create your VIP card", go: "profile", x: "Choose your drinks, your dietary needs and your personality. It takes a couple of minutes." },
+        { t: "Add it to your wallet", b: "Open my card", go: "profile", x: "Keep your card in Apple Wallet or Google Wallet and show it when you arrive." },
+        { t: "Share it", b: "Share my card", go: "profile", x: "Send your card to the person booking your table, so everyone arrives known." },
+      ] },
+    { k: "experiences", t: "Our Experiences", s: "Luxury, found for you", img: "t17_p30", pool: ["p30", "p01", "v01", "p14", "vke02"], icon: I("Sparkles"),
+      h: "The best experiences and hospitality.",
+      p: ["Spas, racetracks, fine dining, rooftops and more, found and shown by FireFlair with a focus on luxury.",
+        "Venues join through FF Staff, so every experience you see is one we have chosen."],
+      parts: [part("ff-v21-exp", "Experiences", VipExpSect21), part("ff-v21-ven", "Venues", VipVenues21)],
+      jn: [
+        { t: "Browse experiences", b: "Browse", go: "network", x: "Twelve kinds of luxury experience, from spa days to track days." },
+        { t: "Plan a VIP booking", b: "Plan a booking", go: "book", x: "Choose an experience and tell us who is coming and how you would like the night to go." },
+        { t: "Run a venue?", b: "Join through FF Staff", go: "site:staff", x: "Venues and experience providers join FireFlair through FF Staff." },
+      ] },
+    { k: "booking", t: "Your Booking", s: "VIP and group bookings", img: "t17_p32", pool: ["p32", "aiMusic", "p24", "aiIntl", "p46"], icon: I("CalendarDays"),
+      h: "Book it the VIP way.",
+      p: ["Instead of an email and a phone number, the venue receives your VIP card with your drinks and dietary needs.",
+        "With partnered venues you can pre-order drinks for the group, ask for champagne on arrival, the best tables and private places, and choose your favourite waiter or personal bartender."],
+      parts: [part("ff-v21-book", "VIP bookings", VipBookSect21)],
+      jn: [
+        { t: "Plan a VIP booking", b: "Plan a booking", go: "book", x: "Pick your experience, your date and your group, then add your requests." },
+        { t: "Pre-order the drinks", b: "Start a booking", go: "book", x: "Choose from the venue's cocktail menu so the drinks are waiting." },
+        { t: "Choose your people", b: "Start a booking", go: "book", x: "Ask for the waiter or the bartender you like." },
+      ] },
+    { k: "rewards", t: "Invitations and Rewards", s: "Bring people with you", img: "t17_p31", pool: ["p31", "vke04", "p11", "p35", "p27"], icon: I("Users"),
+      h: "Host the night. Share FireFlair.",
+      p: ["Hosting? Create an invitation for your event and send it on WhatsApp. Guests reply by creating their own VIP card, so you see who is coming and what each guest likes.",
+        "Everyone you bring to FireFlair earns you FF Rewards. The points system opens later, and everyone you bring before then counts."],
+      parts: [part("ff-v21-host", "Invitations", VipHost21), part("ff-v21-rew", "FF Rewards", VipRewardsSect21)],
+      jn: [
+        { t: "Create an invitation", b: "Create one", go: "bookings", x: "Make an invitation for your event and send it to your guests on WhatsApp." },
+        { t: "Share your link", b: "Get my link", go: "profile", x: "Your own FF VIP link, ready to send." },
+        { t: "See the guest list", b: "Join the guest list", go: "profile", x: "Create your card to join the launch party guest list." },
+      ] },
+  ];
 }
 function VipLaunch21() {
   const { state, dispatch } = useStore();
@@ -16504,22 +16575,20 @@ function VipFaq21() {
   );
 }
 function VipHome21() {
+  const X = window.__ffVipX || {};
+  const Hub = X.DiscoverHub11;
   return (
     <div className="ff-home ff-home11 ff-v21">
       <style>{VIP21_CSS}</style>
-      <VipHero21 />
       <div className="ff-home17">
+        <VipHero21 />
         {vipJoin21([
+          Hub ? <Hub key="discover" cats={vipDx21()} kind="vip" /> : null,
           <VipLaunch21 key="launch" />,
+          <VipKnown21 key="known" />,
           <VipHow21 key="how" />,
-          <VipCardSect21 key="card" />,
-          <VipBookSect21 key="book" />,
-          <VipExpSect21 key="exp" />,
-          <VipHost21 key="host" />,
-          <VipRewardsSect21 key="rew" />,
-          <VipVenues21 key="ven" />,
           <VipFaq21 key="faq" />,
-        ])}
+        ].filter(Boolean))}
       </div>
     </div>
   );

@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.130 — 2026-11-09 — FF VIP home matches other sites; site names in header
+Artifact version 1794250152-f6a1 · file `fireflair-v17.3.130.html`
+
+- Top bar on every site now shows the site's own name in the FireFlair lettering as one name: FF TEAM, FF STAFF, FF PARTY, FF VIP (was "FireFlair" with the site underneath).
+- FF VIP home now follows the same layout as the other sites: hero (photo, coin, "Welcome to FF VIP", one button, search), then the four-pillar Discover panel (Your VIP card, Our Experiences, Your Booking, Invitations and Rewards), then the launch party sign-up box, then "Be known the moment you arrive", how it works and questions.
+- The pillar panels reuse the same Discover component as FF Team, Staff and Party, with the VIP card, experiences, venues, booking, invitation and FF Rewards sections inside.
+- Readable source copied to `source/fireflair-app.jsx`.
+
 ## v17.3.129 — 2026-11-09 — Site selector wording and order
 Artifact version 1794249906-d17e · file `fireflair-v17.3.129.html`
 
