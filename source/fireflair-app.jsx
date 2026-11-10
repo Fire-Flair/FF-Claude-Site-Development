@@ -34526,6 +34526,17 @@ const CSS18 = `
 .ff .ff-fold18-c{padding:0 18px 18px;display:flex;flex-direction:column;gap:10px}
 .ff .ff-fold18-c p{margin:0;font-size:14.5px;line-height:1.55;color:#46413A}
 .ff .ff-fold18-c h3{margin:6px 0 0;font-family:var(--display);font-size:15px;letter-spacing:.06em}
+.ff .ff-firefold18{border:1px solid rgba(126,97,29,.4);border-radius:24px;corner-shape:squircle;background:#FFFDF8;overflow:hidden;padding:0}
+.ff .ff-firefold18-b{width:100%;display:flex;align-items:center;gap:14px;padding:10px 18px 10px 10px;border:0;background:none;text-align:left;cursor:pointer;color:inherit;min-height:64px}
+.ff .ff-firefold18-b .th{flex:none;width:64px;height:64px;border-radius:16px;corner-shape:squircle;overflow:hidden;background:#000;display:block}
+.ff .ff-firefold18-b .th img{width:100%;height:100%;object-fit:cover;display:block}
+.ff .ff-firefold18-b .tx{flex:1;min-width:0}
+.ff .ff-firefold18-b b{display:block;font-family:var(--display);font-size:18px;letter-spacing:.05em}
+.ff .ff-firefold18-b small{display:block;margin-top:2px;font-size:13px;color:#6A6253}
+.ff .ff-firefold18-b::after{content:"";flex:none;width:9px;height:9px;border-right:2px solid var(--gold-dk);border-bottom:2px solid var(--gold-dk);transform:rotate(45deg);transition:transform .18s ease}
+.ff .ff-firefold18-b[aria-expanded="true"]::after{transform:rotate(-135deg)}
+.ff .ff-firefold18 #ff-why-panel{padding:0 12px 14px;display:flex;flex-direction:column;gap:16px}
+.ff .ff-firefold18 #ff-why-panel .ff-sect{margin-top:0;margin-bottom:0}
 .ff .ff-fire18{width:150px;margin:0 auto}
 `;
 function Css18() { return h18("style", null, CSS18); }
@@ -34574,14 +34585,13 @@ function Fold18({ id, title, sub, children }) {
     open ? h18("div", { className: "ff-fold18-c" }, children) : null);
 }
 function FireFlairFold18() {
-  return h18(Fold18, { id: "ff-why", title: "Fire & Flair", sub: "Why we are called FireFlair" },
-    h18("div", { className: "ff-fire18" }, h18(Campfire17, null)),
-    h18("p", null, "People have always gathered around a fire. It is where stories get told, where strangers turn into friends, and where an ordinary night becomes the one everyone remembers."),
-    h18("p", null, WHY17.party || WHY17.team),
-    h18("p", null, "FireFlair brings people together through events."),
-    h18("h3", null, "Our founding team"),
-    h18("p", null, "Founding members offer support across all FireFlair events."),
-    h18(FoundingRow17, null));
+  /* Collapsed: a compact card with a small fire picture. Open: the original Fire / Flair section and Our dream, unchanged. */
+  const [open, setOpen] = useState(false);
+  return h18("div", { className: "ff-sect ff-firefold18", id: "ff-why-fold" },
+    h18("button", { type: "button", className: "ff-firefold18-b", "aria-expanded": open, "aria-controls": "ff-why-panel", onClick: () => setOpen(!open) },
+      h18("span", { className: "th", "aria-hidden": "true" }, h18("img", { src: FIRE17_STILL, alt: "", width: 64, height: 60, decoding: "async", draggable: false })),
+      h18("span", { className: "tx" }, h18("b", null, "Fire & Flair"), h18("small", null, "Why we are called FireFlair?"))),
+    open ? h18("div", { id: "ff-why-panel" }, h18(WhyFlair17, { kind: "party" }), h18(OurDream17, { kind: "party" })) : null);
 }
 const PKG18_RE = /^#\/ff-party\/packages(?:\/([a-z0-9-]+))?\/?$/i;
 function PkgRoute18() {
@@ -35163,7 +35173,6 @@ function StaffHome11() {
           <HowBooking17 key="how" kind="staff" />,
           <GuideQuestions11 key="guide" kind="staff" />,
           <Journal17 key="journal" kind="staff" />,
-          <PhotoAlbumFold20 key="album" />,
           <React.Fragment key="why"><WhyFlair17 kind="staff" /><OurDream17 kind="staff" /></React.Fragment>,
           <HireBeta key="beta" name="FF Staff" />,
           <HireJoin key="join" kind="staff" />,
@@ -35279,7 +35288,6 @@ function PartyHome11() {
           <VipFounding20 key="vip" />,
           <GuideQuestions11 key="guide" kind="party" />,
           <Journal17 key="journal" kind="party" />,
-          <PhotoAlbumFold20 key="album" />,
           <FireFlairFold18 key="why" />,
           <HireJoin key="join" kind="party" />,
         ])}

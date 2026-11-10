@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v17.3.137 — 2026-11-10 — FF Party: Fire & Flair dropdown; photo album on FF Team only
+Artifact version 1794317611-a2f7 · file `fireflair-v17.3.137.html`
+
+- FF Party home: "Fire & Flair" is now a dropdown, collapsed by default. Collapsed it shows a small fire picture, the title and "Why we are called FireFlair?". Opened, it shows the original Fire / Flair panels and "Our dream" section unchanged.
+- Photo album removed from FF Party and FF Staff; it stays on FF Team only.
+
 ## v17.3.136 — 2026-11-10 — Stories footer, attribution and November batch
 Artifact version 1794317283-317b · file `fireflair-v17.3.136.html`
 
