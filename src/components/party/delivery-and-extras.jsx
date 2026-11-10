@@ -257,7 +257,6 @@ function TeamSteps11({ onClose }) {
   const live = !!p.live;
   const cardReady = recsOf(p, "professions").some(r => !r.proposed);
   const net = myNetwork(state, people).list.length;
-  const waiting = pending11(state).length;
   const go = (tab, focus) => {
     onClose();
     if (state.role !== "team") dispatch({ type: "ROLE", role: "team" });
@@ -265,7 +264,6 @@ function TeamSteps11({ onClose }) {
     if (focus) dispatch({ type: "FOCUS", focus: { target: focus } }); else window.scrollTo(0, 0);
   };
   const steps = [
-    ...(waiting ? [{ id: "shifts", label: `Reply to ${waiting} shift ${waiting === 1 ? "card" : "cards"}`, hint: "Yes, No or More information", done: false, onClick: () => go("bookings") }] : []),
     { id: "build", label: "Build your profile", hint: "Your Profile Card, professions and experience", done: cardReady, onClick: () => go("profile", "card") },
     { id: "share", label: "Share your Profile Card", hint: "Publish and send it on WhatsApp", done: live, onClick: () => go("profile", live ? "card" : "share") },
     { id: "grow", label: "Grow your network", hint: `${net} connection${net === 1 ? "" : "s"} so far`, done: net >= VERIFICATION_LEVELS[1].connections, onClick: () => go("network") },
@@ -288,38 +286,80 @@ function TeamSteps11({ onClose }) {
 
 
 
+/* Notifications (v17.4.3): only cards that are waiting for YOUR reply. A Shift Card you were sent, or an
+   Availability Card you were asked. Each is a dropdown, closed by default; opened, it shows the card itself
+   with its reply buttons. Answer it and it leaves the list (history lives in Bookings). Booking history,
+   "card sent", "signed off" and similar are NOT notifications. Next steps sit underneath. */
+function availWaiting17(state) {
+  if (!(state.auth && state.auth.status === "signedIn" && state.role === "team")) return [];
+  const answers = (state.profile && state.profile.answers) || {};
+  return availabilityAskedOfMe(state).filter(x => !isPast(x.iso) && !isAnswered(answers[`av_${x.iso}`]));
+}
+
+
+const notifyCount17 = (state) => pending11(state).length + availWaiting17(state).length;
+
+
+function NoteDrop17({ id, open, onToggle, icon, title, sub, children }) {
+  return (
+    <li className={`ff-nd17${open ? " open" : ""}`}>
+      <button type="button" className="hd" aria-expanded={open} aria-controls={`ff-nd-${id}`} onClick={onToggle}>
+        <span className="ic" aria-hidden="true">{icon}</span>
+        <span className="tx"><b>{title}</b><small>{sub}</small></span>
+        <I11.ChevronDown size={18} className="chev" aria-hidden="true" />
+      </button>
+      {open && <div className="bd" id={`ff-nd-${id}`}>{children}</div>}
+    </li>
+  );
+}
+
+
+function AvailNote17({ x }) {
+  const { dispatch } = useStore();
+  const save = (v) => { dispatch({ type: "ANSWER", qid: `av_${x.iso}`, value: v }); dispatch({ type: "TOAST", toast: `Saved · ${shortDay(x.iso)}: ${v}` }); };
+  return (
+    <article className="ff-evc ff-sd11 sel" aria-label={`Availability Card: ${longDay(x.iso)}`}>
+      <span className="ff-evc-plate">Availability Card</span>
+      <span className="ff-evc-coin"><Coin size={30} tier="gold" /></span>
+      <h3 className="ff-evc-name">{longDay(x.iso)}</h3>
+      <div className="ff-evc-rule" aria-hidden="true"><i /><span>◆</span><i /></div>
+      <div className="ff-evc-rows">
+        <EvRow icon={I11.Briefcase} k="Asked by">{x.byName}</EvRow>
+      </div>
+      <div className="sbd">
+        <div className="btns" role="group" aria-label="Are you available?" style={{ gridTemplateColumns: "1fr 1fr 1fr" }}>
+          <button type="button" className="yes" onClick={() => save("Yes")}>Yes</button>
+          <button type="button" className="no" onClick={() => save("No")}>No</button>
+          <button type="button" onClick={() => save("Maybe")}>Maybe</button>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+
 function NotifySheet17({ open, onClose }) {
   const { state, dispatch } = useStore();
-  const all = useDirectory();
-  const [tab, setTab] = useState("n");
-  useEffect(() => { if (open) dispatch({ type: "NOTES_SEEN" }); }, [open]);
+  const [at, setAt] = useState(null);
+  useEffect(() => { if (open) { dispatch({ type: "NOTES_SEEN" }); setAt(null); } }, [open]);
   if (!open) return null;
-  const notes = bookingNotes(state, all);
-  const reqs11 = pending11(state);
-  const items = [];
-  (state.events || []).forEach(ev => {
-    const open_ = (state.shifts || []).filter(x => x.eventId === ev.id && !(x.staffIds && x.staffIds.length) && !x.staffId && x.route !== "auto").length;
-    if (open_ > 0) items.push({ id: "ev" + ev.id, t: `${eventTitle(ev)}: ${open_} ${open_ === 1 ? "place" : "places"} still to fill`, sub: "Choose your team", go: () => { dispatch({ type: "ACTIVE_EVENT", id: ev.id }); dispatch({ type: "V11_SET", patch: { bkView: { eventId: ev.id } } }); dispatch({ type: "TAB", tab: "bookings" }); } });
-  });
-  (state.teamInvites || []).filter(i => i.status === "pending").forEach(i => items.push({ id: "in" + i.id, t: "A team invite is waiting for you", sub: "Open your bookings", go: () => dispatch({ type: "TAB", tab: "bookings" }) }));
-  const unread = notes.filter(n => n.at > (state.notesSeenAt || 0)).length;
+  const rows = [
+    ...pending11(state).map(e => {
+      const sh = state.shifts.find(x => x.id === e.shiftId), ev = sh && state.events.find(x => x.id === sh.eventId);
+      return sh ? { id: e.id, icon: <I11.Briefcase size={18} />, title: `${e.auto ? "Open shift" : "You've been selected"} · ${sh.role}`, sub: `${hirerOf11(state, ev)} · ${whenOf11(sh)}`, body: <ShiftDelivery11 e={e} shift={sh} event={ev} /> } : null;
+    }).filter(Boolean),
+    ...availWaiting17(state).map(x => ({ id: x.id, icon: <I11.CalendarCheck size={18} />, title: "Are you available?", sub: `${x.byName} · ${shortDay(x.iso)}`, body: <AvailNote17 x={x} /> })),
+  ];
   return (
-    <Sheet open onClose={onClose} title={tab === "n" ? "Notifications" : "Next steps"}>
+    <Sheet open onClose={onClose} title="Notifications">
       <div className="ff-ntf17">
-        <div className="seg" role="tablist" aria-label="Notifications and next steps">
-          <button type="button" role="tab" aria-selected={tab === "n"} className={tab === "n" ? "on" : ""} onClick={() => setTab("n")}>Notifications{notes.length + items.length + reqs11.length > 0 && <em>{notes.length + items.length + reqs11.length}</em>}</button>
-          <button type="button" role="tab" aria-selected={tab === "s"} className={tab === "s" ? "on" : ""} onClick={() => setTab("s")}>Next steps</button>
-        </div>
-        {tab === "n" ? (<>
-          {reqs11.length > 0 && <div className="ff-sdrail11"><HScroll label="Shift cards">{reqs11.map(e => { const sh = state.shifts.find(x => x.id === e.shiftId); return <ShiftDelivery11 key={e.id} mini e={e} shift={sh} event={sh && state.events.find(x => x.id === sh.eventId)} onDone={onClose} />; })}</HScroll></div>}
-          {items.length === 0 && notes.length === 0 && reqs11.length === 0 ? <p className="none">You are all caught up.</p> : (<>
-            {items.length > 0 && <ul>{items.map(i => (
-              <li key={i.id}><button type="button" onClick={() => { onClose(); i.go(); window.scrollTo(0, 0); }}><b>{i.t}</b><small>{i.sub}</small><S17I.ArrowRight size={16} /></button></li>))}</ul>}
-            {notes.length > 0 && <ul className="ff-notes11">{notes.map(n => (
-              <li key={n.id}><i className={`dot ${n.tone || ""}`} /><span><b>{n.text}</b>{n.ev ? <small>{eventTitle(n.ev)} · {shortDay(n.ev.iso)}</small> : null}</span>
-                <time>{n.at ? new Date(n.at).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) : ""}</time></li>))}</ul>}
-          </>)}
-        </>) : state.role === "team" ? <TeamSteps11 onClose={onClose} /> : <StaffGuideSheet open bare onClose={onClose} />}
+        {rows.length === 0 ? <p className="none">You are all caught up.</p> : (
+          <ul className="ff-ndlist17">{rows.map(r => (
+            <NoteDrop17 key={r.id} id={r.id} open={at === r.id} onToggle={() => setAt(at === r.id ? null : r.id)} icon={r.icon} title={r.title} sub={r.sub}>{r.body}</NoteDrop17>))}</ul>)}
+        <section className="ff-ntf-next17" aria-labelledby="ff-ntf-next-h">
+          <h3 id="ff-ntf-next-h">Next steps</h3>
+          {state.role === "team" ? <TeamSteps11 onClose={onClose} /> : <StaffGuideSheet open bare onClose={onClose} />}
+        </section>
       </div>
     </Sheet>
   );

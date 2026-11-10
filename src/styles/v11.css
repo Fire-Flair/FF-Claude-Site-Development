@@ -3160,14 +3160,26 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-tc17 .ff-c17-tabs button { color:#16130F; }
 
 /* v17.3.26 — notification centre */
-.ff .ff-ntf17 { display:grid; gap:12px; padding:2px 0 8px; }
 .ff .ff-ntf17 .none { margin:0; padding:18px 4px; text-align:center; color:#4A4134; font-weight:600; }
-.ff .ff-ntf17 ul { list-style:none; margin:0; padding:0; display:grid; gap:8px; }
-.ff .ff-ntf17 li button, .ff .ff-ntf17 .next { width:100%; display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:2px 10px; padding:12px 14px; border-radius:14px; border:1px solid rgba(126,97,29,.4); background:#fff; color:#16130F; text-align:left; cursor:pointer; }
-.ff .ff-ntf17 li button b { font-size:14.5px; grid-column:1; }
-.ff .ff-ntf17 li button small { grid-column:1; color:#7A5E14; font-weight:700; }
-.ff .ff-ntf17 li button svg { grid-column:2; grid-row:1 / span 2; }
-.ff .ff-ntf17 .next { grid-template-columns:auto minmax(0,1fr) auto; background:#16130F; color:#F4DC8E; border-color:var(--gold-mid,#B08D2A); font-weight:700; }
+.ff .ff-sheet:has(.ff-ntf17) { overflow-x:hidden; }
+.ff .ff-ntf17 { display:grid; gap:14px; min-width:0; max-width:100%; overflow-x:clip; padding:2px 0 8px; }
+.ff .ff-ntf17 > * { min-width:0; }
+.ff .ff-ndlist17 { list-style:none; margin:0; padding:0; display:grid; gap:10px; }
+.ff .ff-nd17 { min-width:0; border:1px solid rgba(126,97,29,.4); border-radius:18px; corner-shape:squircle; background:#fff; overflow:hidden; }
+.ff .ff-nd17.open { border-color:var(--gold-dk,#7E611D); box-shadow:0 8px 22px -14px rgba(40,30,8,.45); }
+.ff .ff-nd17 .hd { all:unset; box-sizing:border-box; width:100%; display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:12px; padding:12px 14px; min-height:56px; cursor:pointer; color:#16130F; }
+.ff .ff-nd17 .hd:focus-visible { outline:2px solid var(--gold,#B08D2A); outline-offset:-3px; border-radius:18px; }
+.ff .ff-nd17 .hd .ic { width:38px; height:38px; border-radius:12px; corner-shape:squircle; display:grid; place-items:center; background:#16130F; color:#F4DC8E; }
+.ff .ff-nd17 .hd .tx { min-width:0; display:grid; gap:2px; }
+.ff .ff-nd17 .hd b { font-size:15px; font-weight:700; line-height:1.25; overflow-wrap:normal; word-break:keep-all; }
+.ff .ff-nd17 .hd small { font-size:12.5px; color:#6A5516; font-weight:600; line-height:1.3; }
+.ff .ff-nd17 .hd .chev { color:var(--gold-dk,#7E611D); transition:transform .2s ease; }
+.ff .ff-nd17.open .hd .chev { transform:rotate(180deg); }
+.ff .ff-nd17 .bd { padding:6px 12px 14px; min-width:0; }
+.ff .ff-nd17 .bd .ff-evc.ff-sd11 { margin:0 auto; max-width:100%; }
+.ff .ff-ntf-next17 { min-width:0; }
+.ff .ff-ntf-next17 > h3 { margin:6px 2px 10px; font-family:var(--display); font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-dk,#7E611D); }
+@media (prefers-reduced-motion:reduce) { .ff .ff-nd17 .hd .chev { transition:none; } }
 
 /* v17.3.27 — the Community coin scales as one object: text, icons and labels shrink with it, and it stays centred */
 .ff .ff-sp3.core { width:min(100%,640px) !important; margin:0 auto !important; container-type:inline-size; }
@@ -3979,3 +3991,5 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-ccard17 .ff-ccard-add { left:auto; right:14px; top:56px; bottom:auto; z-index:5; }
 .ff .ff-deckgrid { grid-template-columns:repeat(auto-fill,minmax(268px,1fr)); justify-items:center; gap:16px; }
 
+
+.ff .ff-ntf-next17 .ff-task { border-radius:16px; corner-shape:squircle; }

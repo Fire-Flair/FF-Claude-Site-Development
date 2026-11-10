@@ -529,7 +529,7 @@ function Shell({ children }) {
             {NAV.filter(n => n.key !== "__ff").map(n => (
               <button key={n.key} className={state.tab === n.key ? "on" : ""} aria-current={state.tab === n.key ? "page" : undefined} onClick={() => goTab(n.key)}>{tabLabel17(n.key, state, n.label)}</button>
             ))}
-            <button key="__ff" type="button" className="ff-topcoin ff-navcoin" style={{ position: "relative" }} onClick={() => setNotifyOpen(true)} aria-label="Notifications"><Coin size={30} tier="gold" />{pend11.length > 0 && <i className="ff-nbadge11">{pend11.length}</i>}</button>
+            <button key="__ff" type="button" className="ff-topcoin ff-navcoin" style={{ position: "relative" }} onClick={() => setNotifyOpen(true)} aria-label="Notifications"><Coin size={30} tier="gold" />{notifyCount17(state) > 0 && <i className="ff-nbadge11">{notifyCount17(state)}</i>}</button>
           </nav>
           <div className="ff-topbar-right">
             {PHASE1.desktopAdd && state.role && (
@@ -585,7 +585,7 @@ function Shell({ children }) {
           {NAV.map(n => n.key === "__ff" ? (
             <div key="ff" className="ff-navcentre">
               <button className="ff-coinbtn" style={{ position: "relative" }} onClick={() => setNotifyOpen(true)} aria-label="Notifications">
-                <Coin size={56} tier={isTeam ? xpProgress(state.profile.xp).currentTier : "gold"} />{pend11.length > 0 && <i className="ff-nbadge11">{pend11.length}</i>}
+                <Coin size={56} tier={isTeam ? xpProgress(state.profile.xp).currentTier : "gold"} />{notifyCount17(state) > 0 && <i className="ff-nbadge11">{notifyCount17(state)}</i>}
               </button>
             </div>
           ) : (
