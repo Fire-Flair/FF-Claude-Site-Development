@@ -359,7 +359,7 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party }) {
       </div>
       <div className="ff-cc11-foot" style={{ background: t.dark ? "rgba(0,0,0,.45)" : "#141416" }}>
         {!co.unclaimed && <><Coin size={size ? 15 : 18} /><Wordmark size={size ? 9 : 11} /></>}
-        <span className="url">{CARD_DOMAIN}/{slug}</span>
+        {!co.unclaimed && <span className="url">{CARD_DOMAIN}/{slug}</span>}
       </div>
     </CardFrame>
   );
