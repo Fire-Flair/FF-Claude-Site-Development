@@ -333,13 +333,13 @@ const notifyCount17 = (state) => state.role === "team"
   : shiftQuestionsWaiting17(state).length;
 
 
-function TeamAskNote17({ x }) {
+function TeamAskNote17({ x, onAccepted }) {
   const { state, dispatch } = useStore();
   const all = useDirectory();
   const person = x.company ? null : all.find(p => p.id === x.fromId);
   const co = x.company ? companyById(state, x.fromId) : null;
   const first = x.company ? x.name : firstName(x.name);
-  const reply = (accept) => { dispatch({ type: "TEAM_ASK_REPLY", ask: x, accept }); dispatch({ type: "TOAST", toast: accept ? `You and ${first} are on each other's team` : "Invitation declined" }); };
+  const reply = (accept) => { dispatch({ type: "TEAM_ASK_REPLY", ask: x, accept }); dispatch({ type: "TOAST", toast: accept ? `You and ${first} are on each other's team` : "Invitation declined" }); if (accept && person && onAccepted) onAccepted(person); };
   return (
     <div className="ff-ndcard17">
       <div className="face">{co ? <CompanyCardFace c={co} size="sm" /> : person ? <PlayerCard person={person} format="portrait" themeKey={person.theme || "paper"} /> : null}</div>
@@ -353,23 +353,14 @@ function TeamAskNote17({ x }) {
 }
 
 
-function QuestionNote17({ q }) {
-  const { dispatch } = useStore();
-  const people = useDirectory();
-  const [txt, setTxt] = useState("");
-  const send = () => { if (!txt.trim()) return; dispatch({ type: "ANSWER", qid: q.id, value: txt.trim() }); dispatch({ type: "TOAST", toast: "Answer saved to your profile" }); };
+/* A question in a notification is the same Question Card as on the profile page, with the quick answer under it. */
+function QuestionNote17({ q, label, asker }) {
+  const { state, dispatch } = useStore();
+  const save = (v) => { dispatch({ type: "ANSWER", qid: q.id, value: v }); dispatch({ type: "TOAST", toast: "Answer saved" }); };
   return (
     <div className="ff-ndcard17">
-      <article className="ff-evc ff-sd11 sel" aria-label="Question Card">
-        <span className="ff-evc-plate">Question Card</span>
-        <span className="ff-evc-coin"><Coin size={30} tier="gold" /></span>
-        <h3 className="ff-evc-name q">{q.text}</h3>
-        <p className="sev">{askerName(q, people)}{q.askedAt ? ` · ${askedOn(q.askedAt)}` : ""}</p>
-        <div className="sbd">
-          <div className="ask"><textarea aria-label="Your answer" rows={3} value={txt} onChange={(e) => setTxt(e.target.value.slice(0, 400))} placeholder="Your answer" />
-            <div className="btns" style={{ gridTemplateColumns: "1fr" }}><button type="button" className="yes" disabled={!txt.trim()} onClick={send}>Send answer</button></div></div>
-        </div>
-      </article>
+      <div className="face"><QuestionCard q={q} answer={answerOf(state, q)} label={label} asker={asker} pending=" " /></div>
+      <QuickAnswer17 onSave={save} />
     </div>
   );
 }
@@ -391,8 +382,10 @@ function ShiftQuestionNote17({ e }) {
 
 
 function NoteDrop17({ id, open, onToggle, icon, title, sub, children }) {
+  const ref = useRef(null);
+  useEffect(() => { if (open && ref.current) ref.current.scrollIntoView({ block: "start", behavior: prefersReducedMotion() ? "auto" : "smooth" }); }, [open]);
   return (
-    <li className={`ff-nd17${open ? " open" : ""}`}>
+    <li ref={ref} className={`ff-nd17${open ? " open" : ""}`}>
       <button type="button" className="hd" aria-expanded={open} aria-controls={`ff-nd-${id}`} onClick={onToggle}>
         <span className="ic" aria-hidden="true">{icon}</span>
         <span className="tx"><b>{title}</b><small>{sub}</small></span>
@@ -404,33 +397,10 @@ function NoteDrop17({ id, open, onToggle, icon, title, sub, children }) {
 }
 
 
-function AvailNote17({ x }) {
-  const { dispatch } = useStore();
-  const save = (v) => { dispatch({ type: "ANSWER", qid: `av_${x.iso}`, value: v }); dispatch({ type: "TOAST", toast: `Saved · ${shortDay(x.iso)}: ${v}` }); };
-  return (
-    <article className="ff-evc ff-sd11 sel" aria-label={`Availability Card: ${longDay(x.iso)}`}>
-      <span className="ff-evc-plate">Availability Card</span>
-      <span className="ff-evc-coin"><Coin size={30} tier="gold" /></span>
-      <h3 className="ff-evc-name">{longDay(x.iso)}</h3>
-      <div className="ff-evc-rule" aria-hidden="true"><i /><span>◆</span><i /></div>
-      <div className="ff-evc-rows">
-        <EvRow icon={I11.Briefcase} k="Asked by">{x.byName}</EvRow>
-      </div>
-      <div className="sbd">
-        <div className="btns" role="group" aria-label="Are you available?" style={{ gridTemplateColumns: "1fr 1fr 1fr" }}>
-          <button type="button" className="yes" onClick={() => save("Yes")}>Yes</button>
-          <button type="button" className="no" onClick={() => save("No")}>No</button>
-          <button type="button" onClick={() => save("Maybe")}>Maybe</button>
-        </div>
-      </div>
-    </article>
-  );
-}
-
-
 function NotifySheet17({ open, onClose }) {
   const { state, dispatch } = useStore();
   const people = useDirectory();
+  const [review, setReview] = useState(null);
   const [at, setAt] = useState(null);
   useEffect(() => { if (open) { dispatch({ type: "NOTES_SEEN" }); setAt(null); } }, [open]);
   if (!open) return null;
@@ -440,9 +410,9 @@ function NotifySheet17({ open, onClose }) {
       const sh = state.shifts.find(x => x.id === e.shiftId), ev = sh && state.events.find(x => x.id === sh.eventId);
       return sh ? { id: e.id, icon: <I11.Briefcase size={18} />, title: `${e.auto ? "Open shift" : "You've been selected"} · ${sh.role}`, sub: `${hirerOf11(state, ev)} · ${whenOf11(sh)}`, body: <ShiftDelivery11 e={e} shift={sh} event={ev} /> } : null;
     }).filter(Boolean),
-    ...availWaiting17(state).map(x => ({ id: x.id, icon: <I11.CalendarCheck size={18} />, title: "Are you available?", sub: `${x.byName} · ${shortDay(x.iso)}`, body: <AvailNote17 x={x} /> })),
-    ...teamAsksWaiting17(state).map(x => ({ id: x.id, icon: <I11.Users size={18} />, title: "Team invitation", sub: x.name, body: <TeamAskNote17 x={x} /> })),
-    ...questionsWaiting17(state, people).map(q => ({ id: q.id, icon: <I11.MessageSquare size={18} />, title: "Question for you", sub: `${askerName(q, people)} · ${q.text}`, body: <QuestionNote17 q={q} /> })),
+    ...availWaiting17(state).map(x => ({ id: x.id, icon: <I11.CalendarCheck size={18} />, title: "Are you available?", sub: `${x.byName} · ${shortDay(x.iso)}`, body: <QuestionNote17 q={availQ(x.iso)} label="Availability" asker={`Asked by ${x.byName}`} /> })),
+    ...teamAsksWaiting17(state).map(x => ({ id: x.id, icon: <I11.Users size={18} />, title: "Team invitation", sub: x.name, body: <TeamAskNote17 x={x} onAccepted={setReview} /> })),
+    ...questionsWaiting17(state, people).map(q => ({ id: q.id, icon: <I11.MessageSquare size={18} />, title: "Question for you", sub: `${askerName(q, people)} · ${q.text}`, body: <QuestionNote17 q={q} asker={`Asked by ${askerName(q, people)}`} /> })),
   ] : shiftQuestionsWaiting17(state).map(e => {
     const sh = state.shifts.find(x => x.id === e.shiftId), who = findPerson(people, state, e.staffId) || {};
     return { id: e.id, icon: <I11.MessageSquare size={18} />, title: `Question from ${firstName(who.name || "") || "your team"}`, sub: `${sh.role} · ${lastQ(e)}`, body: <ShiftQuestionNote17 e={e} /> };
@@ -458,6 +428,7 @@ function NotifySheet17({ open, onClose }) {
           {state.role === "team" ? <TeamSteps11 onClose={onClose} /> : <StaffGuideSheet open bare onClose={onClose} />}
         </section>
       </div>
+      <ReviewSheet open={!!review} person={review} onClose={() => setReview(null)} />
     </Sheet>
   );
 }

@@ -4009,3 +4009,16 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-ndcard17 .ff-evc-name.q { font-size:clamp(17px,5vw,21px); line-height:1.25; overflow-wrap:normal; word-break:keep-all; }
 .ff .ff-nd17 .hd small { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
 .ff .ff-netco17 { flex:none; width:min(300px,78vw); align-self:flex-start; }
+
+/* v17.4.5 — quick answer: Yes, No, or type */
+.ff .ff-qa17 { display:grid; gap:8px; min-width:0; }
+.ff .ff-qa17 .yn { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.ff .ff-qa17 .yn button { min-height:48px; border-radius:999px; corner-shape:squircle; border:1.5px solid #6B1226; background:#6B1226; color:#FBF8F1; font-weight:800; font-size:15px; cursor:pointer; }
+.ff .ff-qa17 .yn button + button { background:#0B0B0C; border-color:#0B0B0C; }
+.ff .ff-qa17 .yn button.on { outline:3px solid var(--gold,#B08D2A); outline-offset:2px; }
+.ff .ff-qa17 .ty { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; }
+.ff .ff-qa17 .ty input { min-height:48px; border:1.5px solid #0B0B0C; border-radius:999px; corner-shape:squircle; padding:0 16px; font:inherit; font-size:16px; background:#fff; color:#0B0B0C; min-width:0; box-sizing:border-box; }
+.ff .ff-qa17 .ty button { width:48px; height:48px; border-radius:50%; border:0; background:var(--gold-dk,#7E611D); color:#fff; display:grid; place-items:center; cursor:pointer; }
+.ff .ff-qa17 .ty button:disabled { opacity:.4; cursor:default; }
+.ff .ff-qa17 button:focus-visible, .ff .ff-qa17 input:focus-visible { outline:2px solid var(--gold,#B08D2A); outline-offset:2px; }
+.ff .ff-nd17 { scroll-margin-top:72px; }

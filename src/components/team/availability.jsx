@@ -2,7 +2,7 @@
 const AVAIL_OPTIONS = ["Yes", "No", "Maybe"];
 
 
-const availQ = (iso) => ({ id: `av_${iso}`, iso, group: "availability", type: "choice", options: AVAIL_OPTIONS, xp: 0, public: false,
+const availQ = (iso) => ({ id: `av_${iso}`, iso, group: "availability", type: "text", options: AVAIL_OPTIONS, xp: 0, public: false,
   text: `Are you available on ${longDay(iso) || "this date"}?` });
 
 

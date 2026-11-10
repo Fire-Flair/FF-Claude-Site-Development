@@ -327,8 +327,8 @@ function ReviewSheet({ open, person, shiftId, onClose }) {
         <div style={{ display: "flex", gap: 6 }}>
           {Array.from({ length: REVIEW_MAX }).map((_, i) => (
             <button key={i} aria-label={`${i + 1} star${i ? "s" : ""}`} onClick={() => setRating(i + 1)}
-              style={{ padding: 4, color: i < rating ? "var(--gold)" : "#C9C3B4" }}>
-              <Award size={22} strokeWidth={i < rating ? 0 : 1.5} fill={i < rating ? "currentColor" : "none"} />
+              style={{ padding: 6, minWidth: 44, minHeight: 44, color: i < rating ? "var(--gold)" : "#C9C3B4" }}>
+              <Star size={30} strokeWidth={i < rating ? 0 : 1.5} fill={i < rating ? "currentColor" : "none"} />
             </button>
           ))}
         </div>
@@ -337,7 +337,7 @@ function ReviewSheet({ open, person, shiftId, onClose }) {
         <textarea className="ff-input" rows={4} value={text} onChange={(e) => setText(e.target.value)}
           placeholder="Reliable, great with guests, always on time…" />
       </Field>
-      <Btn variant="primary wide" disabled={!text.trim()} onClick={submit}><Award size={14} /> Post review</Btn>
+      <Btn variant="primary wide" onClick={submit}><Star size={14} /> Post review</Btn>
       <ProtoNote>Prototype: saved in this preview only. On the live site {person.name.split(" ")[0]} is notified and accepts before it shows on their profile.</ProtoNote>
     </Sheet>
   );

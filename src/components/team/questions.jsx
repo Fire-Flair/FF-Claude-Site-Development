@@ -117,6 +117,25 @@ function QuestionCard({ q, answer, onClick, label, pending, celebrate, asker }) 
 }
 
 
+/* Every open question is answered the same quick way: Yes, No, or type something. One tap or one line. */
+function QuickAnswer17({ value = "", onSave }) {
+  const [txt, setTxt] = useState(value === "Yes" || value === "No" ? "" : value);
+  const send = () => { if (txt.trim()) onSave(txt.trim()); };
+  return (
+    <div className="ff-qa17">
+      <div className="yn" role="group" aria-label="Your answer">
+        <button type="button" className={value === "Yes" ? "on" : ""} onClick={() => onSave("Yes")}>Yes</button>
+        <button type="button" className={value === "No" ? "on" : ""} onClick={() => onSave("No")}>No</button>
+      </div>
+      <div className="ty">
+        <input aria-label="Type your answer" value={txt} maxLength={400} onChange={(e) => setTxt(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") send(); }} placeholder="Type your answer" />
+        <button type="button" aria-label="Send answer" disabled={!txt.trim()} onClick={send}><Send size={16} /></button>
+      </div>
+    </div>
+  );
+}
+
+
 function QuestionSheet({ open, q, onClose, onSaved }) {
   const { state, dispatch } = useStore();
   const [val, setVal] = useState("");
@@ -185,19 +204,7 @@ function QuestionSheet({ open, q, onClose, onSaved }) {
     variant: "primary wide",
     disabled: !q.detail.optional && !detail.trim(),
     onClick: () => save(detail.trim() ? `${choice} — ${detail.trim()}` : choice)
-  }, isNew ? `Save${xpNote(q.xp)}` : "Save answer")), q.type === "text" && React.createElement(React.Fragment, null, React.createElement(Field, {
-    label: "Your answer"
-  }, React.createElement("textarea", {
-    className: "ff-input",
-    rows: 3,
-    value: val,
-    onChange: (e) => setVal(e.target.value),
-    placeholder: q.placeholder || ""
-  })), React.createElement(Btn, {
-    variant: "primary wide",
-    disabled: !val.trim(),
-    onClick: () => save(val.trim())
-  }, isNew ? `Save${xpNote(q.xp)}` : "Save answer")), React.createElement("p", {
+  }, isNew ? `Save${xpNote(q.xp)}` : "Save answer")), q.type === "text" && React.createElement(QuickAnswer17, { value: val, onSave: save }), React.createElement("p", {
     className: "ff-body ff-muted",
     style: { fontSize: 11.5, marginTop: 14, marginBottom: 0 }
   }, note), q.mine && React.createElement(DeleteMyQuestion, {
