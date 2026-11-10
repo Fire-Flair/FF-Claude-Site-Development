@@ -3661,47 +3661,26 @@ const REAL_COMPANIES11 = [
     "name": "Raise the Bar Mobile Bar Services",
     "legalName": null,
     "companyNumber": null,
-    "kind": "Mobile bars for festivals & outdoor events",
+    "kind": "Mobile cocktail bar",
     "base": "Glasgow",
-    "areas": [
-      "Scotland",
-      "England",
-      "Northern Ireland"
-    ],
-    "summary": "A mobile bar business run by people with over thirty years in bars and pubs, supplying cellar-style bars, bar staff and licence holders for festivals, Highland games and corporate events.",
-    "services": [
-      "Mobile bars",
-      "Mobile wine bars",
-      "Cocktail bars",
-      "Mobile gin bars",
-      "Bar staff",
-      "Mobile cellar and draught pumps"
-    ],
-    "eventTypes": [
-      "Weddings",
-      "Highland games",
-      "Music festivals",
-      "Outdoor events",
-      "Corporate events",
-      "Product launches"
-    ],
-    "scale": [
-      "Events and festivals of any size"
-    ],
-    "facts": [
-      "Listing details only; own website not confirmed"
-    ],
+    "areas": ["Glasgow", "Scotland"],
+    "summary": "A Glasgow mobile cocktail bar company supplying a mixologist, a fully stocked bar and a printed menu for weddings, parties and corporate events, plus cocktail masterclasses and whisky tastings across Scotland.",
+    "services": ["Mobile cocktail bars", "Individual serve cocktails", "Mini and party packs", "Mocktails", "Cocktail masterclasses", "Whisky tastings", "Branded bars"],
+    "eventTypes": ["Weddings", "Birthday parties", "Hen parties", "Corporate events", "Product launches", "Christmas parties", "Festivals"],
+    "scale": ["Events of all sizes"],
+    "facts": ["3 hours of service", "Team arrives 30 minutes early", "Travel within 30 miles of Glasgow included", "Public liability insurance"],
     "website": "https://raisethebarglasgow.com",
     "social": {},
     "images": {
-      "logo": "https://raisethebarglasgow.com/logo.png",
+      "logo": "https://raisethebarglasgow.com/icon.png",
       "photos": [
-        "https://raisethebarglasgow.com/_next/image?url=https%3A%2F%2F6istx3ephgqw5ngz.public.blob.vercel-storage.com%2Fcocktails%2F1769265189036.jpg&w=1920&q=75",
-        "https://raisethebarglasgow.com/_next/image?url=https%3A%2F%2F6istx3ephgqw5ngz.public.blob.vercel-storage.com%2Fcocktails%2F1783870927210.jpg&w=1920&q=75",
-        "https://raisethebarglasgow.com/_next/image?url=https%3A%2F%2F6istx3ephgqw5ngz.public.blob.vercel-storage.com%2Fcocktails%2F1776281026122.jpg&w=1920&q=75",
-        "https://raisethebarglasgow.com/_next/image?url=https%3A%2F%2F6istx3ephgqw5ngz.public.blob.vercel-storage.com%2Fcocktails%2F1783871506162.jpg&w=1920&q=75"
+        "https://6istx3ephgqw5ngz.public.blob.vercel-storage.com/cocktails/1769265189036.jpg",
+        "https://6istx3ephgqw5ngz.public.blob.vercel-storage.com/cocktails/1783870927210.jpg",
+        "https://6istx3ephgqw5ngz.public.blob.vercel-storage.com/cocktails/1776281026122.jpg",
+        "https://6istx3ephgqw5ngz.public.blob.vercel-storage.com/cocktails/1783871506162.jpg",
+        "https://6istx3ephgqw5ngz.public.blob.vercel-storage.com/cocktails/1783871617205.jpg"
       ],
-      "permission": "to_confirm",
+      "permission": "granted_by_owner",
       "logoBg": "light",
       "logoWide": false
     },
@@ -19342,8 +19321,20 @@ function VkGrid17({ items }) {
 }
 function VkExtras17({ x }) {
   const total = (x.cocktails || []).reduce((n, g) => n + g.items.length, 0);
-  return React.createElement(React.Fragment, null, x.experience && React.createElement(VkFold17, {
-    title: "The Vooshka experience"
+  return React.createElement(React.Fragment, null, x.pkgs && React.createElement(VkFold17, {
+    title: "Packages",
+    count: x.pkgs.length
+  }, x.pkgs.map(([t, pr, d]) => React.createElement("div", {
+    key: t,
+    className: "ff-vk-row"
+  }, React.createElement("b", null, t + " · " + pr), React.createElement("span", null, d)))), x.faq && React.createElement(VkFold17, {
+    title: "Questions and answers",
+    count: x.faq.length
+  }, x.faq.map(([t, d]) => React.createElement("div", {
+    key: t,
+    className: "ff-vk-row"
+  }, React.createElement("b", null, t), React.createElement("span", null, d)))), x.experience && React.createElement(VkFold17, {
+    title: "The " + (x.name || "Vooshka") + " experience"
   }, React.createElement("h4", {
     className: "ff-vk-h"
   }, x.experience[0]), x.experience.slice(1).map((p) => React.createElement("p", {
@@ -19354,7 +19345,7 @@ function VkExtras17({ x }) {
   }, x.offering.map((o) => React.createElement("span", {
     key: o
   }, o)))), x.why && React.createElement(VkFold17, {
-    title: "Why Vooshka",
+    title: "Why " + (x.name || "Vooshka"),
     count: x.why.length
   }, x.why.map(([t, d]) => React.createElement("div", {
     key: t,
@@ -19372,7 +19363,7 @@ function VkExtras17({ x }) {
     alt: o.t,
     loading: "lazy"
   }), React.createElement("figcaption", null, React.createElement("b", null, o.t), React.createElement("small", null, o.d)))))), x.steps && React.createElement(VkFold17, {
-    title: "The Vooshka process",
+    title: "The " + (x.name || "Vooshka") + " process",
     count: x.steps.length
   }, x.steps.map(([t, d], i) => React.createElement("div", {
     key: t,
@@ -19387,7 +19378,7 @@ function VkExtras17({ x }) {
   }, x.barsNote), React.createElement(VkGrid17, {
     items: x.bars
   })), total > 0 && React.createElement(VkFold17, {
-    title: "Signature cocktails",
+    title: x.cocktailsTitle || "Signature cocktails",
     count: total
   }, x.cocktails.map((g) => React.createElement("div", {
     key: g.cat,
@@ -19397,6 +19388,39 @@ function VkExtras17({ x }) {
   }, g.cat), React.createElement(VkGrid17, {
     items: g.items
   })))));
+}
+/* Raise the Bar Glasgow (v17.3.138): full profile built from their public website, with their permission. */
+const RTB_BLOB17 = "https://6istx3ephgqw5ngz.public.blob.vercel-storage.com/cocktails/";
+const RTB_MENU17 = [["Full Moon Party",10.5,133,250,"1769265189036.jpg"],["Dew Like Pina Coladas?",10.5,133,250,"1783870927210.jpg"],["Bubblegum Daiquri",12.5,140,260,"1776281026122.jpg"],["The Jaw Dropper",13.5,150,270,"1783871506162.jpg"],["Tonka Time",13.5,150,270,"1783871617205.jpg"],["Watermelon Sugar High",10.5,133,250,"1769455180629.jpeg"],["Aperol Spritz",10.5,133,250,"1786016560343.png"],["Apple & Pear Highball",10.5,133,250,"1786052080098.jpg"],["Bajan Rum Punch",12.5,140,260,"1769452832512.jpeg"],["Bellini",10.5,133,250,"1786016756179.png"],["Berry Caiprioska",10.5,133,250,"1769452897087.jpeg"],["Bob's Negroni",10.5,133,250,"1769083286124.jpg"],["Bramble",10.5,133,250,"1769452979949.jpeg"],["Candy Cane Martini",10.5,133,250,"1769453044437.jpeg"],["Cantaloupe & Peach Martini",13.5,160,270,"1783870779206.jpg"],["Cantarito Maldito",10.5,133,250,"1769271184977.jpeg"],["Catch Of The Day",13.5,150,270,"1783870834377.jpg"],["Champagne Supernova",12.5,140,260,"1769453192357.jpeg"],["Classic Champagne",12.5,140,260,"1769454651986.jpeg"],["Cosmopolitan",10.5,133,250,"1783870862752.jpg"],["Cotton Candy Cosmopolitan",12.5,140,260,"1769453283818.jpeg"],["Cotton Headed Ninny Muggins",12.5,140,260,"1769453384822.jpeg"],["Daiquri",10.5,133,250,"1783870904708.jpg"],["Dragon Blood",10.5,133,250,"1769453424378.jpeg"],["Egg Nog",0,133,250,"1769453475937.jpeg"],["Espresso Martini",10.5,133,250,"1769453545800.jpeg"],["French Martini",10.5,133,250,"1786017166400.png"],["French Pear Fizz",12.5,140,260,"1769453613230.jpeg"],["From The Ashes",10.5,133,250,"1769453655738.jpeg"],["Galentine's Wine",10.5,133,250,"1783870961032.jpg"],["Gold Digger",12.5,140,260,"1769453692231.jpeg"],["Grave Digger",12.5,140,260,"1769453722637.jpeg"],["Grinch Hopper",10.5,133,250,"1769453840465.jpeg"],["Hugo Spritz",10.5,133,250,"1786016592332.png"],["Hula Juice",12.5,140,260,"1769453882155.jpeg"],["In A Pickle",10.5,133,250,"1783870996066.jpg"],["Jamaican Passion",10.5,133,250,"1769453981009.jpeg"],["Jungle Bird",10.5,133,260,"1786053034570.jpg"],["Limoncello Spritz",10.5,133,250,"1786016036835.jpg"],["Little Kisses",12.5,140,260,"1786017487629.jpg"],["Lost In Fermentation",13.5,160,270,"1783871059467.jpg"],["Manhattan",10.5,133,250,"1783871109602.jpg"],["Margarita",10.5,133,250,"1786016862254.png"],["Martini",12.5,140,260,"1786052468490.png"],["Mojito",10.5,133,250,"1785952983441.jpg"],["Negroni",10.5,133,250,"1769454228211.jpeg"],["Nuclear Daiquiri",10.5,133,250,"1783871164720.jpg"],["Old Fashioned",10.5,133,250,"1783871191248.jpg"],["Pa Rum Pum Pum Plum",10.5,133,250,"1769454292210.jpeg"],["Paloma",10.5,133,250,"1786051185236.jpg"],["Paloma Picante",10.5,133,250,"1783871241004.jpg"],["Partridge In A Pear Tree",10.5,133,250,"1769454536920.jpeg"],["Peanut Butter & Jelly Milk Punch",13.5,160,270,"1783871277574.jpg"],["Pina Colada",10.5,133,250,"1783871313608.jpg"],["Pisco Sour",12.5,140,260,"1786051773251.png"],["Pomegranate & Rosemary Bellini",12.5,140,260,"1769454606211.jpeg"],["Pornstar Martini",10.5,133,250,"1786017113328.png"],["Pressed To Impress",13.5,150,260,"1783871346182.jpg"],["Pumpkin Pie",10.5,133,250,"1769454702848.jpeg"],["Reindeer Juice",10.5,133,250,"1769454739004.jpeg"],["Roasting On An Open Fire",10.5,133,250,"1769454780993.jpeg"],["Ruby Ruby Ruby Ruby",12.5,140,260,"1769454826206.jpeg"],["Salted Caramel White Russian",10.5,133,250,"1769454871623.jpeg"],["Sarti Spritz",10.5,133,250,"1786052883639.png"],["Sidecar",10.5,133,250,"1769454950236.jpeg"],["Singapore Sling",10.5,133,250,"1783871382188.jpg"],["Sleigh Bell Fizz",12.5,140,260,"1769454986632.jpeg"],["Sloe Berry Bubble",12.5,140,260,"1786017414328.jpg"],["Smokin' Berry",12.5,140,260,"1769455053098.jpeg"],["So-Fish-Ticated",10.5,133,250,"1769455104985.jpeg"],["Spicy Margarita",10.5,133,250,"1783871410679.jpg"],["Tangerine Dream",10.5,140,250,"1783871443205.jpg"],["The Green Light",12.5,160,250,"1783871472142.jpg"],["The Skeleton Sipper",10.5,133,250,"1769455143297.jpeg"],["Through The Grapevine",10.5,133,250,"1783871533833.jpg"],["Tom Collins",10.5,133,250,"1783871585211.jpg"],["Totally Tropical Punch",12.5,140,260,"1783871670946.jpg"],["What's Poppin'",12.5,140,260,"1769455216589.jpeg"],["Whisky Highball",10.5,133,250,"1786052166134.png"],["Whisky Sour",12.5,140,260,"1786051582631.png"],["Whisky Wonderland",10.5,133,250,"1769455249746.jpeg"],["White Russian",10.5,133,250,"1786017361808.jpg"],["Who Drank All The Pies",12.5,140,260,"1769455292038.jpeg"],["Zombie",12.5,140,260,"1769455319761.jpeg"]];
+const rtbMoney17 = (n) => "£" + (n % 1 ? n.toFixed(2) : String(n));
+function rtbPage17() {
+  const base = realPage11(REAL_COMPANIES11.find((c) => c.slug === "raise-the-bar"))[1];
+  return {
+    ...base,
+    contact: [["Website", "raisethebarglasgow.com"], ["Email", "info@raisethebarglasgow.com"], ["Phone", "07498 723388"]],
+    extras: {
+      name: "Raise the Bar",
+      cocktailsTitle: "Cocktail menu",
+      pkgs: [
+        ["Mobile Cocktail Bar", "From £400", "A fully staffed mobile cocktail bar: mixologist, bar, printed menu, spirits, mixers, garnishes, ice and glassware. 3 hours of service. Choose your cocktails as add-ons."],
+        ["Cocktail Masterclass", "Enquire for a quote", "A hands-on class led by professional mixologists, at your venue, for teams, hen parties and private groups. Alcohol-free options available."],
+        ["Whisky Tasting", "Enquire for a quote", "A guided Scotch whisky tasting led by kilted hosts, with distillery stories and a curated selection of drams."]
+      ],
+      experience: ["Fully staffed mobile cocktail bars for Glasgow and Scotland.", "Raise the Bar brings a professional mixologist, a fully stocked mobile bar and a printed menu of the cocktails you choose to weddings, parties, corporate events and festivals. Everything needed for the service is included, and travel within 30 miles of Glasgow is part of the price."],
+      offering: ["Mobile cocktail bar", "Individual serve cocktails", "Mini party packs", "Party packs", "Mocktails", "Masterclasses", "Whisky tastings", "Branded bars"],
+      faq: [
+        ["What is included?", "A professional mixologist, a fully stocked mobile bar, a bespoke printed cocktail menu, spirits, liqueurs, mixers, fresh ingredients, garnishes, ice and all glassware."],
+        ["Is there a minimum booking?", "Yes, £400 before any travel charge. Travel within 30 miles of Glasgow is included; beyond that a travel charge may apply and is quoted before you confirm."],
+        ["How long is the service?", "3 hours from your start time. The team arrives about 30 minutes before to set up. Longer service is quoted on request."],
+        ["How many cocktails can I choose?", "Up to 6 online. For a longer menu, or drinks that are not on the menu, ask for a bespoke menu."],
+        ["Can I order single serves?", "Yes, with a minimum of 5 of each cocktail, and the £400 minimum booking still applies."],
+        ["How do deposits work?", "A £50 deposit secures the request and the team confirm within 48 hours. The balance is invoiced and due within 14 days, and no later than 72 hours before the event. The deposit is non-refundable if you cancel, and refunded in full if they cannot attend."],
+        ["How big is the bar?", "About 1.6 m by 1 m, with working room needed behind it. The front can be branded for an extra fee."],
+        ["Are they insured?", "Yes, they hold public liability insurance and can share proof on request."]
+      ],
+      cocktails: [{ cat: "Single serve, mini party pack (14) and party pack (28)", items: RTB_MENU17.map(([n, i, m, p, f]) => ({ src: RTB_BLOB17 + f, name: n, size: [i && "Single " + rtbMoney17(i), m && "Mini " + rtbMoney17(m), p && "Party " + rtbMoney17(p)].filter(Boolean).join(" · ") })) }]
+    }
+  };
 }
 const COMPANY_PAGES = {
   co_vooshka: {
@@ -19420,6 +19444,7 @@ const COMPANY_PAGES = {
     extras: vkExtras17()
   },
   ...Object.fromEntries(REAL_COMPANIES11.map(realPage11)),
+  "co_raise-the-bar": rtbPage17(),
   ...Object.fromEntries(REAL_SUPPLIERS17.map(realPage11)),
 };
 function companyById(state, id) {
@@ -21984,7 +22009,7 @@ function EventGuide({ ev, shifts, billTo, stamp, viewer }) {
 
       {sv.party && ((state.xa17 || {})[ev.id] || []).length > 0 && (
         <GuideSec title="Add-ons">
-          <ul className="ff-xa17">{((state.xa17 || {})[ev.id] || []).map(id => { const a = ADDONS17.find(y => y.id === id); return a && <li key={id}><b>{a.title}</b> {a.tagline}</li>; })}</ul>
+          <ul className="ff-xa17">{((state.xa17 || {})[ev.id] || []).map(id => { const a = ALLAX17.find(y => y.id === id); return a && <li key={id}><b>{a.title}</b> {a.tagline}</li>; })}</ul>
         </GuideSec>
       )}
 
@@ -23872,7 +23897,7 @@ const REC17 = { s: "up to 30 guests", m: "31 to 100 guests", l: "100+ guests", "
 const recOf17 = (b) => REC17[(b || []).join(",")] || "parties of any size";
 const lvl17 = (l) => (/^(bronze|silver|gold)$/i.test(l || "") ? "" : (l || ""));
 function pkgsOf17(state) {
-  const ff = [...(V101.PARTY_SERVICES || []).map(sv => ({ ...sv, features: FEATS17[sv.id], cat: FFCAT17[sv.id] || "bar", bands: SVC_BANDS11[sv.id] || ALLB17, ff: true })),     ...DJ_PKGS17.filter(x => !hid17(state, "packages", x.id)).map(x => ({ ...x, ff: true }))];
+  const ff = [...(V101.PARTY_SERVICES || []).map(sv => ({ ...sv, features: FEATS17[sv.id], cat: FFCAT17[sv.id] || "bar", bands: SVC_BANDS11[sv.id] || ALLB17, ff: true })),     ...[...DJ_PKGS17, ...RTB_PKGS17].filter(x => !hid17(state, "packages", x.id)).map(x => ({ ...x, ff: true }))];
   const bt = ff.find(x => x.id === "svc_bartending");
   if (bt) ff.push({ ...bt, id: "svc_supplier", title: "Bar company supplier", tagline: "A bar company supplies the bar, the drinks and the team.", includes: "Bar, drinks and bartenders from one company",
     role: "Bartender", ideal: "Parties that want everything supplied", time: "From 4 hours", noPrice: true, drinks: true, shop: false,
@@ -24105,6 +24130,34 @@ const ADDONS17 = [
   { id: "ax_ice", title: "Ice delivery", tagline: "Ice delivered in time for the first drink.", Ic: S17I.Snowflake },
   { id: "ax_glass", title: "Glassware delivery", tagline: "Your choice of glassware, delivered and collected.", Ic: S17I.Wine },
 ];
+/* Raise the Bar packages and cocktail add-ons (v17.3.138): one add-on card per cocktail per size. */
+const RTB_SIZES17 = [["i", "Single serve", "minimum 5 of each"], ["m", "Mini party pack", "serves 14"], ["p", "Party pack", "serves 28"]];
+const RTB_PKGS17 = [
+  { id: "rtb_bar", cat: "bar", tone: "silver", level: "Mobile bar", by: "Raise the Bar", co: "co_raise-the-bar", img: RTB_BLOB17 + "1769265189036.jpg", role: "Bartender", drinks: true, title: "Mobile Cocktail Bar", tagline: "A fully staffed mobile cocktail bar with the cocktails you choose.",
+    includes: "Mixologist, mobile bar, menu, spirits, ice and glassware", ideal: "Weddings, parties and corporate events", time: "3 hours of service", price: "From £400", bands: ALLB17,
+    features: ["Professional mixologist", "Fully stocked mobile bar", "Printed cocktail menu of your choices", "Premium spirits, liqueurs, mixers and fresh ingredients", "Garnishes, ice and all glassware", "3 hours of service, team arrives 30 minutes early", "Travel within 30 miles of Glasgow included", "Public liability insurance", "Choose your cocktails from the add-ons below"] },
+  { id: "rtb_class", cat: "bar", tone: "gold", level: "Masterclass", by: "Raise the Bar", co: "co_raise-the-bar", img: RTB_BLOB17 + "1783870927210.jpg", role: "Bartender", drinks: true, noPrice: true, title: "Cocktail Masterclass", tagline: "Learn to shake, stir and garnish with professional mixologists.",
+    includes: "Mixologist, equipment, set-up and clean-up", ideal: "Team events, hen parties and private groups", time: "Arranged by enquiry", price: "", bands: ALLB17,
+    features: ["Hands-on cocktail making", "Interactive demonstrations", "Classic, signature and alcohol-free options", "Mixologist brings all equipment", "Set-up and clean-up handled", "Quoted for your group size and venue"] },
+  { id: "rtb_whisky", cat: "bar", tone: "bronze", level: "Tasting", by: "Raise the Bar", co: "co_raise-the-bar", img: RTB_BLOB17 + "1776281026122.jpg", role: "Bartender", drinks: true, noPrice: true, title: "Whisky Tasting", tagline: "A guided Scotch whisky tasting led by kilted hosts.",
+    includes: "Hosts, curated drams, tasting notes and stories", ideal: "Client entertainment and private groups", time: "Arranged by enquiry", price: "", bands: ALLB17,
+    features: ["Curated selection of drams", "Distillery history and storytelling", "Tasting notes included", "Beginner or advanced format", "Anywhere in Scotland", "Quoted for your group size and venue"] },
+];
+const RTB_ADDONS17 = RTB_MENU17.flatMap(([name, i, m, p], n) => [i, m, p].map((pr, k) => pr ? { id: "rtb_" + n + "_" + "imp"[k], title: name, sz: RTB_SIZES17[k][1], rtb: "imp"[k], tagline: RTB_SIZES17[k][1] + ", " + RTB_SIZES17[k][2], note: rtbMoney17(pr) + (k ? "" : " each"), Ic: S17I.Wine } : null).filter(Boolean));
+const ALLAX17 = [...ADDONS17, ...RTB_ADDONS17];
+function RtbAddons17() {
+  const { state } = useStore();
+  const B = useBk17();
+  const bk = bkOf17(state);
+  return React.createElement(Fold17, { big: true, shut: true, id: "ff-br17-rtb", title: "Raise the Bar cocktails", count: RTB_ADDONS17.length },
+    RTB_SIZES17.map(([k, label, note]) => React.createElement("div", { className: "ff-br17-row", key: k },
+      React.createElement("h3", { className: "ff-br17-h3" }, label + " · " + note),
+      React.createElement(HScroll, { label }, RTB_ADDONS17.filter((a) => a.rtb === k).map((a) => { const on = bk.ex.includes(a.id); return React.createElement("div", { className: "ff-br17-co", key: a.id },
+        React.createElement("button", { type: "button", className: "ff-ax17" + (on ? " sel" : ""), "aria-pressed": on, onClick: () => B.toggleEx(a.id) },
+          React.createElement("span", { className: "ic" }, React.createElement(a.Ic, { size: 26, strokeWidth: 1.5 })),
+          React.createElement("b", null, a.title), React.createElement("small", null, a.tagline), React.createElement("span", { className: "nt" }, a.note),
+          React.createElement("span", { className: "go" }, on ? React.createElement(React.Fragment, null, React.createElement(S17I.Check, { size: 13, strokeWidth: 2.6 }), " Selected") : "Select"))); })))));
+}
 const BIMG17 = { bar: "px_bar", ent: "dream_music_festivals", svc: "reward_photoshoot", food: "dream_food_festivals_markets" };
 const BTEXT17 = { bar: "Bar packages", ent: "Music and performers", svc: "Photo and more", food: "Catering" };
 
@@ -24266,7 +24319,7 @@ function PartyBrowse17() {
     ...bk.ck.map(id => { const x = ALLCK17.find(y => y.id === id); return x && { key: id, label: x.name, thumb: x.photo, rm: () => ({ ...bk, ck: bk.ck.filter(y => y !== id) }) }; }),
     ...bk.pp.map(id => { if (id.startsWith("auto:")) return { key: id, label: "Auto match", icon: <Coin size={30} tier="gold" />, rm: () => ({ ...bk, pp: bk.pp.filter(y => y !== id) }) };
       const x = all.find(y => y.id === id); return x && { key: id, label: firstName(x.name), thumb: x.photo, rm: () => ({ ...bk, pp: bk.pp.filter(y => y !== id) }) }; }),
-    ...bk.ex.map(id => { const x = ADDONS17.find(y => y.id === id); return x && { key: id, label: x.title, icon: <x.Ic size={20} strokeWidth={1.5} />, rm: () => ({ ...bk, ex: bk.ex.filter(y => y !== id) }) }; })].filter(Boolean);
+    ...bk.ex.map(id => { const x = ALLAX17.find(y => y.id === id); return x && { key: id, label: x.title + (x.sz ? " · " + x.sz : ""), icon: <x.Ic size={20} strokeWidth={1.5} />, rm: () => ({ ...bk, ex: bk.ex.filter(y => y !== id) }) }; })].filter(Boolean);
   const cont = () => {
     const label = (PARTY_BANDS11.find(b => b.k === band) || {}).guests || "";
     let ev = state.events.find(e => e.id === state.activeEventId);
@@ -24934,6 +24987,7 @@ function PkgSheet17({ svc, qual, onClose }) {
         </div>
         <p className="tg">{svc.tagline}</p>
         <ul className="fx">{feats.map(f => <li key={f}><S17I.Check size={14} strokeWidth={2.6} /> {f}</li>)}</ul>
+        {svc.id === "rtb_bar" && <RtbAddons17 />}
         <div className="mt">
           <span><S17I.Users size={13} /> Best for {recOf17(svc.bands)}</span>
           {svc.ideal && <span><S17I.Star size={13} /> {svc.ideal}</span>}
@@ -25047,7 +25101,7 @@ function ConfirmBooking17({ ev, setView, bkey }) {
   const pkgs = pkgsOf17(state);
   const evId = ev ? ev.id : "";
   const ck = Object.keys(((state.addons17 || {})[evId]) || {}).map(id => ALLCK17.find(y => y.id === id)).filter(Boolean);
-  const xa = (((state.xa17 || {})[evId]) || []).map(id => ADDONS17.find(y => y.id === id)).filter(Boolean);
+  const xa = (((state.xa17 || {})[evId]) || []).map(id => ALLAX17.find(y => y.id === id)).filter(Boolean);
   const goBack = () => { dispatch({ type: "TAB", tab: "network" }); window.scrollTo(0, 0); };
   const drop = (sh) => { dispatch({ type: "SHIFT_DELETE", id: sh.id }); const bk = bkOf17(state); dispatch({ type: "V11_SET", patch: { bk17: { ...bk, pk: bk.pk.filter(x => x !== sh.svcId) } } }); };
   const dropCk = (id) => { const ao = state.addons17 || {}, cur = { ...(ao[evId] || {}) }; delete cur[id]; dispatch({ type: "V11_SET", patch: { addons17: { ...ao, [evId]: cur } } }); };

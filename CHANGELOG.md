@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.3.138 — 2026-11-10 — Raise the Bar Glasgow: full profile from their website
+Artifact version 1794318940-4e5f · file `fireflair-v17.3.138.html`
+
+- Raise the Bar Glasgow now has a full company profile built from their own website, with their permission: updated About, services, events, contact details, a Packages section, a Questions and answers section and the full cocktail menu with all three sizes shown per drink. Still an unclaimed card until they sign in.
+- Three package cards: Mobile Cocktail Bar, Cocktail Masterclass and Whisky Tasting (the last two are by enquiry).
+- Every cocktail is an add-on card per size (single serve, mini party pack, party pack), shown inside the Mobile Cocktail Bar package pop-up and carried into the basket and invoice.
+- Data and crawl notes: `data/companies/raise-the-bar.json`.
+
 ## v17.3.137 — 2026-11-10 — FF Party: Fire & Flair dropdown; photo album on FF Team only
 Artifact version 1794317611-a2f7 · file `fireflair-v17.3.137.html`
 
