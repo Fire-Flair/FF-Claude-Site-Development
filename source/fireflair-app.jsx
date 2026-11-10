@@ -11424,7 +11424,10 @@ function Shell({ children }) {
               onClick={() => setMenuOpen(o => !o)}>
               <Coin size={30} tier={isTeam ? state.profile.tier : "gold"} />
               <span style={{ lineHeight: 1.1, textAlign: "left" }}>
-                <Wordmark size={17} spacing=".1em" text={isVip ? "FFVIP" : isParty ? "FFPARTY" : isStaff ? "FFSTAFF" : "FFTEAM"} />
+                <Wordmark size={13} />
+                <span style={{ display: "block", fontSize: 9, letterSpacing: ".2em", color: "rgba(234,215,156,.7)", textTransform: "uppercase" }}>
+                  {isVip ? "VIP" : isParty ? "Party" : isStaff ? "Staff" : "Team"}
+                </span>
               </span>
               <span aria-hidden="true" className="ff-acct-caret">
                 <svg width="14" height="9" viewBox="0 0 14 9" style={{ display: "block" }}><path d="M1 1.2h12L7 8.2z" fill="currentColor" /></svg>
@@ -28340,7 +28343,7 @@ function HomeHero101() {
         <span className="ff-hero18-coin ff-hero17-coin"><SiteHeroCoin site="team" /></span>
       </div>
       <div className="ff-hero18-in">
-        <h1 id="ff-hero17-h" className="ff-hero17-h ff-hero-h101">Welcome to FireFlair</h1>
+        <h1 id="ff-hero17-h" className="ff-hero17-h ff-hero-h101">Welcome to FF Team</h1>
         <p className="ff-hero-sub101">Get seen. Get booked.</p>
         <div className="ff-hero17-cta">
           {mine ? <ShineButton onClick={nav.goNetwork}><Users size={15} /> Build your network</ShineButton> : <ShineButton onClick={nav.goProfile}><User size={15} /> Create your Profile Card</ShineButton>}
@@ -28901,8 +28904,8 @@ function useHireNav() {
 }
 
 const HIRE = {
-  staff: { img: "training_ff_open_bar", h: "Welcome to FireFlair", sub: "Find staff. Book staff.", cta: "Hire staff", search: "Search staff, skills, locations…" },
-  party: { img: "teams", h: "Welcome to FireFlair", sub: "Plan your party. Choose your people.", cta: "Plan your event", search: "Search people, skills, areas…" },
+  staff: { img: "training_ff_open_bar", h: "Welcome to FF Staff", sub: "Find staff. Book staff.", cta: "Hire staff", search: "Search staff, skills, locations…" },
+  party: { img: "teams", h: "Welcome to FF Party", sub: "Plan your party. Choose your people.", cta: "Plan your event", search: "Search people, skills, areas…" },
 };
 
 function HireSearch({ placeholder }) {

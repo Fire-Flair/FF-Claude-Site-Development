@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v17.3.133 — 2026-11-10 — Welcome to site name; switcher back to two lines
+Artifact version 1794281474-d148 · file `fireflair-v17.3.133.html`
+
+- Hero heading on each site now names the site: "Welcome to FF Team", "Welcome to FF Staff", "Welcome to FF Party" (FF VIP already did). The signed-out FireFlair home keeps "Welcome to FireFlair".
+- Site switcher button (top left) is back to two lines: "FIREFLAIR" with the site name (Team, Staff, Party, VIP) underneath, as before v17.3.130.
+
 ## v17.3.132 — 2026-11-10 — Site coins: Team bronze, Staff silver, Party gold, VIP platinum
 Artifact version 1794281146-1a6f · file `fireflair-v17.3.132.html`
 
