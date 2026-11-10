@@ -330,9 +330,23 @@ function MediaMosaic({ items, onBad }) {
    them. Desktop: card on the left, pictures taking the rest. */
 function PublicHero({ media, card, below }) {
   const wide = useWide();
-  const [bad, setBad] = useState({});
-  const list = media.filter(m => !bad[m.src]);
-  const onBad = (src) => setBad(b => (b[src] ? b : { ...b, [src]: true }));
+  const [seen, setSeen] = useState({});
+  const key = media.map(m => m.src).join("|");
+  useEffect(() => {
+    let live = true;
+    media.forEach(m => {
+      if (!m.src || seen[m.src] !== undefined) return;
+      if (/^data:/.test(m.src)) { setSeen(v => ({ ...v, [m.src]: true })); return; }
+      const im = new Image();
+      im.onload = () => live && setSeen(v => ({ ...v, [m.src]: im.naturalWidth > 0 }));
+      im.onerror = () => live && setSeen(v => ({ ...v, [m.src]: false }));
+      im.src = m.src;
+    });
+    return () => { live = false; };
+  }, [key]);
+  /* A picture counts only once it has really loaded; a blocked or missing one leaves no slide, no dot and no black box. */
+  const list = media.filter(m => seen[m.src] === true);
+  const onBad = (src) => setSeen(v => (v[src] === false ? v : { ...v, [src]: false }));
   const has = list.length > 0;
   return (
     <div className={`ff-phero${has ? " has-media" : ""}${wide ? " wide" : ""}`}>
