@@ -1,0 +1,4 @@
+{
+ "_note": "Profile resolver registry for Stories footers. A featured person renders a card only if verified and a public profile exists. Nothing here may be invented.",
+ "alex-gagnon": {"name": "Alexander Gagnon", "role": "Founder, FireFlair", "verified": false, "public": false, "url": "", "note": "No public profile URL is confirmed on ffteam.uk; the in-app founding profile is demo data. Card stays unrendered until Alex supplies the reference."}
+}

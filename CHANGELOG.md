@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.136 — 2026-11-10 — Stories footer, attribution and November batch
+Artifact version 1794317283-317b · file `fireflair-v17.3.136.html`
+
+- Stories: shared footer on all three sites (three reader questions with two answers and "Something else", one CTA, people and sources). Answers are stored in the browser session only in the prototype and the page says so; production endpoint needed (see docs/stories-handoff-v17.3.136.md).
+- Stories: attribution roles (author, posted by, featured) added to the data model; featured people show a card only when a verified public profile exists.
+- Seven new articles: two on FF Team, two on FF Staff, three on FF Party. Three more are held as drafts pending evidence.
+- Older stories get no question block yet; backfill is open.
+- Built on v17.3.134 with the design-toolkit changes reapplied.
+
 ## v17.3.135 — 2026-11-10 — Design-toolkit review changes (all four sites)
 Artifact version 1794315705-4eb7 · file `fireflair-v17.3.135.html`
 

@@ -81,6 +81,93 @@ function ST18_blocks(text, onLink) {
   });
 }
 
+/* ---- Shared Stories footer (v17.3.136): reader Q&A, one primary CTA, people and sources ---------
+   PROTOTYPE PERSISTENCE: answers are held in window.__ffStoryFeedback for this browser session only.
+   Nothing is sent to a server. The footer says so. Set window.__ffStoryFeedbackFail = true to test retry. */
+const ST19_PROFILES = __ST19_PROFILES__;
+const ST19_CSS = [
+  ".ff .ff-st-qa{margin-top:18px;padding:14px;border:1px solid rgba(126,97,29,.3);border-radius:16px;corner-shape:squircle;background:#FFFDF8}",
+  ".ff .ff-st-qa h4{margin:0 0 4px}",
+  ".ff .ff-st-qa .note{font-size:12.5px;line-height:1.4;color:#6A6253;margin:0 0 10px}",
+  ".ff .ff-st-qa fieldset{border:0;margin:0 0 12px;padding:0;min-width:0}",
+  ".ff .ff-st-qa legend{font-size:15px;font-weight:700;color:#16130F;padding:0;margin-bottom:6px}",
+  ".ff .ff-st-qa label.opt{display:flex;align-items:center;gap:10px;min-height:44px;padding:6px 10px;border:1px solid rgba(126,97,29,.3);border-radius:12px;corner-shape:squircle;margin-bottom:6px;font-size:15px;color:#2E2820;cursor:pointer}",
+  ".ff .ff-st-qa label.opt:has(input:checked){border-color:#B08D2A;background:rgba(201,162,39,.12)}",
+  ".ff .ff-st-qa label.opt:has(input:focus-visible){outline:2px solid #7E611D;outline-offset:2px}",
+  ".ff .ff-st-qa input[type=radio]{width:20px;height:20px;accent-color:#7E611D;flex:none}",
+  ".ff .ff-st-qa textarea{width:100%;box-sizing:border-box;min-height:72px;margin-top:2px;padding:10px;border:1px solid rgba(126,97,29,.4);border-radius:12px;font:inherit;font-size:16px;color:#16130F;background:#fff}",
+  ".ff .ff-st-qa .tl{display:block;font-size:13px;color:#6A6253;margin:4px 0 2px}",
+  ".ff .ff-st-qa .sub{min-height:44px;padding:0 16px;border-radius:12px;corner-shape:squircle;border:1px solid #7E611D;background:transparent;color:#4D3C10;font:inherit;font-weight:700;cursor:pointer}",
+  ".ff .ff-st-qa .sub:focus-visible{outline:2px solid #7E611D;outline-offset:2px}",
+  ".ff .ff-st-qa .st{margin-top:8px;font-size:14px;color:#2E2820}",
+  ".ff .ff-st-qa .st.err{color:#8A2A1D}",
+  ".ff .ff-st-ppl{margin-top:16px;padding-top:12px;border-top:1px solid rgba(126,97,29,.25);font-size:14px;line-height:1.5;color:#3A342B}",
+  ".ff .ff-st-ppl b.h{display:block;margin-bottom:6px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#7E611D}",
+  ".ff .ff-st-ppl dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px}",
+  ".ff .ff-st-ppl dt{color:#6A6253}",
+  ".ff .ff-st-ppl dd{margin:0;font-weight:700;color:#16130F}"
+].join("\n");
+
+function ST19_person(key) {
+  const p = ST19_PROFILES[key];
+  return p && p.verified && p.public && p.url ? p : null;
+}
+
+function ST19_Footer({ o, children }) {
+  const [ans, setAns] = useState({});
+  const [txt, setTxt] = useState({});
+  const [state, setState] = useState("idle");
+  const sid = useRef("sf-" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8));
+  const qa = o.qa && o.qa.questions && o.qa.questions.length === 3 ? o.qa : null;
+  const answered = qa ? qa.questions.filter((q) => ans[q.id] !== undefined) : [];
+  const submit = () => {
+    if (!answered.length) return;
+    setState("sending");
+    setTimeout(() => {
+      if (window.__ffStoryFeedbackFail) { setState("error"); return; }
+      const rec = {
+        submissionId: sid.current, slug: o.slug, site: o.site, revision: o.qa.revision, ai: true, submittedAt: new Date().toISOString(),
+        answers: answered.map((q) => {
+          const a = ans[q.id], other = a === "other";
+          return { id: q.id, question: q.text, answer: other ? "Something else" : q.options[a], other: other && (txt[q.id] || "").trim() ? (txt[q.id] || "").trim().slice(0, 500) : undefined };
+        })
+      };
+      const list = (window.__ffStoryFeedback = window.__ffStoryFeedback || []);
+      const i = list.findIndex((r) => r.submissionId === rec.submissionId);
+      if (i >= 0) list[i] = rec; else list.push(rec);
+      setState("done");
+    }, 250);
+  };
+  const feat = (o.featured || []).map((k) => ({ k, p: ST19_person(k) })).filter((x) => x.p);
+  const named = o.by && o.by !== "FireFlair editorial team";
+  const src = o.sources || [];
+  return React.createElement(React.Fragment, null,
+    qa && React.createElement("section", { className: "ff-st-qa", "aria-labelledby": "ff-st-qa-h" },
+      React.createElement("h4", { id: "ff-st-qa-h" }, "Three quick questions"),
+      React.createElement("p", { className: "note" }, "Optional. Questions are written by AI and reviewed against this article. Answer any or all. Prototype only: answers stay in this browser session and are not sent anywhere."),
+      state === "done"
+        ? React.createElement("p", { className: "st", role: "status" }, "Thanks. " + answered.length + " of 3 answered (stored in this prototype session only).")
+        : React.createElement(React.Fragment, null,
+          qa.questions.map((q) => React.createElement("fieldset", { key: q.id },
+            React.createElement("legend", null, q.text),
+            q.options.concat(["Something else"]).map((label, i) => {
+              const val = i === 2 ? "other" : i, id = "ffqa-" + q.id + "-" + i;
+              return React.createElement("label", { key: i, className: "opt", htmlFor: id },
+                React.createElement("input", { type: "radio", id, name: "ffqa-" + q.id, checked: ans[q.id] === val, onChange: () => { setAns((a) => ({ ...a, [q.id]: val })); setState("idle"); } }), label);
+            }),
+            ans[q.id] === "other" && React.createElement("label", { className: "tl", htmlFor: "ffqa-" + q.id + "-t" }, "Tell us more (optional)"),
+            ans[q.id] === "other" && React.createElement("textarea", { id: "ffqa-" + q.id + "-t", maxLength: 500, value: txt[q.id] || "", onChange: (e) => setTxt((t) => ({ ...t, [q.id]: e.target.value })) }))),
+          React.createElement("button", { type: "button", className: "sub", disabled: !answered.length || state === "sending", onClick: submit }, state === "sending" ? "Sending..." : state === "error" ? "Try again" : "Send answers"),
+          React.createElement("div", { className: "st" + (state === "error" ? " err" : ""), role: "status", "aria-live": "polite" }, state === "error" ? "That did not send. Your answers are still here. Try again." : answered.length ? answered.length + " of 3 answered" : ""))),
+    children,
+    React.createElement("div", { className: "ff-st-ppl" }, React.createElement("b", { className: "h" }, "People and sources"),
+      React.createElement("dl", null,
+        React.createElement("dt", null, "Written by"), React.createElement("dd", null, o.by),
+        o.posted && o.posted !== o.by && React.createElement(React.Fragment, null, React.createElement("dt", null, "Posted by"), React.createElement("dd", null, o.posted)),
+        feat.length > 0 && React.createElement(React.Fragment, null, React.createElement("dt", null, "Featured"), React.createElement("dd", null, feat.map((x, i) => React.createElement("a", { key: x.k, className: "ff-st-link", href: x.p.url }, (i ? ", " : "") + x.p.name)))),
+        React.createElement("dt", null, "Sources"), React.createElement("dd", null, src.length ? src.join("; ") : "None listed"))));
+}
+
 function Journal17({ kind = "team" }) {
   const [open, setOpen] = useState(null);
   const [cat, setCat] = useState("All");
@@ -96,7 +183,7 @@ function Journal17({ kind = "team" }) {
 
   useEffect(() => {
     if (!document.getElementById("ff-st18-css")) {
-      const s = document.createElement("style"); s.id = "ff-st18-css"; s.textContent = ST18_CSS; document.head.appendChild(s);
+      const s = document.createElement("style"); s.id = "ff-st18-css"; s.textContent = ST18_CSS + "\n" + ST19_CSS; document.head.appendChild(s);
     }
     /* A direct visit to /stories/{slug} opens the article. */
     const m = /^\/stories\/([a-z0-9-]+)\/?$/.exec(window.location.pathname || "");
@@ -125,7 +212,7 @@ function Journal17({ kind = "team" }) {
     const ld = {
       "@context": "https://schema.org", "@type": "Article", headline: o.title, description: o.blurb,
       datePublished: o.iso, dateModified: o.iso,
-      author: { "@type": "Organization", name: "FireFlair editorial team" },
+      author: (o.by && o.by !== "FireFlair editorial team") ? Object.assign({ "@type": "Person", name: o.by }, ST19_person((o.featured || [])[0]) ? { url: ST19_person(o.featured[0]).url } : {}) : { "@type": "Organization", name: "FireFlair editorial team" },
       publisher: { "@type": "Organization", name: "FIREFLAIR LTD" },
       mainEntityOfPage: "https://" + o.site + "/stories/" + o.slug
     };
@@ -170,7 +257,8 @@ function Journal17({ kind = "team" }) {
         o.reviewed && React.createElement("div", { className: "ff-st-rev" }, "Last reviewed " + o.reviewed),
         React.createElement("div", { className: "lede" }, ST18_blocks(o.intro, openStory)),
         o.body.map(([h, t]) => React.createElement(React.Fragment, { key: h }, React.createElement("h4", null, h), ST18_blocks(t, openStory))),
-        o.cta && React.createElement("div", { className: "ff-st-cta" }, React.createElement(Button, { onClick: cta }, o.cta)),
+        React.createElement(ST19_Footer, { key: o.slug, o },
+          o.cta && React.createElement("div", { className: "ff-st-cta" }, React.createElement(Button, { onClick: cta }, o.cta))),
         more.length > 0 && React.createElement("div", { className: "ff-st-more" }, React.createElement("b", null, "Keep reading"),
           more.map((s) => React.createElement("a", { key: s, href: "/stories/" + s, onClick: (e) => { if (e.button === 0 && !e.metaKey && !e.ctrlKey) { e.preventDefault(); openStory(s); } } }, JR17[s].title))))));
 }

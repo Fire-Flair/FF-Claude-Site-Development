@@ -29,6 +29,10 @@
     "[FF Party vs Add to Event](/stories/ff-party-vs-add-to-event) · [FF Party vs Poptop](/stories/ff-party-vs-poptop) · [FF Party vs Togather](/stories/ff-party-vs-togather)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party service selection",
   "related": [
@@ -72,6 +76,10 @@
     "- Count the people: [How many bartenders do I need?](/stories/how-many-bartenders-do-i-need)\n- List the responsibilities: [What to provide when you hire a bartender](/stories/what-to-provide-when-hiring-a-bartender)\n- Compare costs: [How much does it cost to hire a bartender?](/stories/how-much-does-it-cost-to-hire-a-bartender)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party service selection",
   "related": [
@@ -112,6 +120,10 @@
     "The services reflect this: a Bartending Package, a Cocktail Bar Service, a Masterclass Package and a Flair Package. Each shows what it includes. For more help choosing, see [bartender hire vs mobile bar hire](/stories/bartender-hire-vs-mobile-bar-hire)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -151,6 +163,10 @@
     "Booking a bartender and a DJ together in one booking is coming soon. Today FF Party covers the bar."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -188,6 +204,10 @@
     "[How to plan a wedding bar](/stories/how-to-plan-a-wedding-bar) · [Can I supply my own alcohol?](/stories/supply-own-alcohol-hire-bartender)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -195,6 +215,90 @@
    "P15",
    "P05",
    "P21"
+  ]
+ },
+ "choose-a-signature-cocktail-for-your-party": {
+  "id": "P28",
+  "slug": "choose-a-signature-cocktail-for-your-party",
+  "site": "ffparty.uk",
+  "title": "A Signature Cocktail for the Whole Party",
+  "seo": "Choose a signature cocktail for your party",
+  "date": "10 Nov 2026",
+  "iso": "2026-11-10",
+  "reviewed": "10 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Planning your party",
+  "img": "s18_choose-a-signature-cocktail-for-your-party",
+  "alt": "A creamy layered cocktail topped with dried raspberry and herbs, on a black saucer with a spoon.",
+  "min": 2,
+  "blurb": "One well-chosen drink gives the party its theme. Here is how to choose it and brief your bartender.",
+  "intro": "Pick one drink that matches your occasion and that a bartender can make quickly in volume. That single choice becomes the party's signature, and it makes the rest of the planning easier.",
+  "body": [
+   [
+    "Start with the occasion",
+    "Think about what the party is celebrating, the season and the mood. A summer garden party calls for something fresh and long. An autumn dinner suits something warm and rounded. A drink that fits the moment feels intentional to guests."
+   ],
+   [
+    "Add a flavour your group already loves",
+    "If your guests enjoy citrus, berries, coffee or ginger, begin there. A familiar flavour in a new combination feels special without being unfamiliar."
+   ],
+   [
+    "Make it easy to serve",
+    "A signature drink works best when it can be prepared the same way many times. Tell the bartender how many guests you expect and when drinks begin, and they can advise on whether a recipe suits the pace of your evening. For quantities, see [how many cocktails to plan for your guests](/stories/how-many-cocktails-for-a-party)."
+   ],
+   [
+    "Offer an alcohol-free match",
+    "Many hosts like a matching alcohol-free version of the signature drink, so everyone shares in the theme. Another option is a separate alcohol-free drink with its own flavour. Choose the one that suits your guests."
+   ],
+   [
+    "A simple brief",
+    "This example is illustrative:\n\n| Brief item | Example |\n|---|---|\n| Occasion | A summer birthday in the garden |\n| Flavour | Citrus and mint |\n| Timing | Served as guests arrive, then through the first hour |\n| Servings | Guest numbers shared with the bartender in advance |\n| Alcohol-free | A matching version with the same garnish |"
+   ],
+   [
+    "A note on recipes",
+    "If you book a bar company, their signature recipes may belong to them. The company decides which recipes it makes available, so ask what is on offer. To build a menu around several drinks, read [how to plan a cocktail menu for a party](/stories/how-to-plan-a-cocktail-menu-for-a-party).\n\nBrowse FireFlair Packages to see which bar services match the drink you have chosen."
+   ]
+  ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": {
+   "revision": "r1",
+   "ai": true,
+   "questions": [
+    {
+     "id": "q1",
+     "text": "Have you chosen a signature drink yet?",
+     "options": [
+      "Yes",
+      "Not yet"
+     ]
+    },
+    {
+     "id": "q2",
+     "text": "What guides your choice most?",
+     "options": [
+      "The occasion or season",
+      "Flavours my guests like"
+     ]
+    },
+    {
+     "id": "q3",
+     "text": "Will you offer an alcohol-free match?",
+     "options": [
+      "Yes",
+      "Probably not"
+     ]
+    }
+   ]
+  },
+  "cta": "Explore FireFlair Packages",
+  "to": "FF Party packages",
+  "related": [
+   "P10",
+   "P11",
+   "P27",
+   "P12"
   ]
  },
  "cocktail-bartender-or-masterclass-hen-party": {
@@ -231,6 +335,10 @@
     "Tell us your date, place and group, and choose the service. See [how to book on FF Party](/stories/how-to-book-a-bartender-on-ff-party)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -270,6 +378,10 @@
     "Cocktail masterclasses appear in the FF Party offer. Check what is available for your date and group when you plan your event."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -311,6 +423,10 @@
     "1. How much ice will my menu need, and who is bringing it?\n2. How many glasses are included, and are they collected and washed?\n3. What happens to leftovers?"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -318,6 +434,86 @@
    "P06",
    "P13",
    "P15"
+  ]
+ },
+ "cocktail-party-timeline": {
+  "id": "P29",
+  "slug": "cocktail-party-timeline",
+  "site": "ffparty.uk",
+  "title": "What to Put in a Cocktail Party Timeline",
+  "seo": "What to put in a cocktail party timeline",
+  "date": "10 Nov 2026",
+  "iso": "2026-11-10",
+  "reviewed": "10 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Planning your party",
+  "img": "s18_cocktail-party-timeline",
+  "alt": "A creamy iced coffee cocktail with a straw, close up.",
+  "min": 2,
+  "blurb": "A sample timeline and a short checklist to agree with your bartender before the party.",
+  "intro": "A good timeline names six moments: access and setup, guest arrival, the first round, a toast or food, last orders and pack-down. Agree them with your bartender and the evening runs on a plan you both know.",
+  "body": [
+   [
+    "An example timeline",
+    "These times are an example. Adjust them for your own party.\n\n| Time | Moment | What happens |\n|---|---|---|\n| 17:00 | Access and setup | The bartender arrives, meets you and sets up the bar |\n| 18:30 | Guest arrival | Doors open and the bar is ready |\n| 18:45 | First round | Welcome drinks go out |\n| 20:00 | Toast or food | A toast, or dinner begins, with service paused or slowed |\n| 22:00 | Last orders | The bartender announces the final round |\n| 22:30 | Pack-down | The bar is cleared and the bartender finishes |"
+   ],
+   [
+    "Agree these with your bartender",
+    "- **Who meets them** and where they arrive.\n- **Where the bar goes**, including access to water, power and ice.\n- **When the final headcount or menu is due**, if that applies to your service.\n- **How the evening ends**, including the last-order moment."
+   ],
+   [
+    "Talk to the bartender directly",
+    "Alex Gagnon, founder of FireFlair, believes it works best when the bartender and the host communicate directly about the plan. A short conversation before the day answers most questions and means the bartender knows your party before they walk in."
+   ],
+   [
+    "Match the timeline to your format",
+    "If you chose a welcome-drinks start, a cocktail hour or a bar all evening, put that window at the top of the timeline. [Welcome drinks, a cocktail hour or a bar all evening](/stories/when-to-serve-cocktails-at-a-party) covers the choice. Then pick your signature drink with [a signature cocktail for the whole party](/stories/choose-a-signature-cocktail-for-your-party)."
+   ],
+   [
+    "A checklist to send",
+    "Copy this into a message to your bartender:\n\n1. Date, start and finish times.\n2. Address and where to arrive.\n3. Number of guests and how they arrive.\n4. Menu and any alcohol-free drinks.\n5. Who will meet you.\n\nBrowse FireFlair Packages to find the bar service that suits your plan. [How to book a bartender on FF Party](/stories/how-to-book-a-bartender-on-ff-party) shows the steps."
+   ]
+  ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": {
+   "revision": "r1",
+   "ai": true,
+   "questions": [
+    {
+     "id": "q1",
+     "text": "Do you have a timeline for your party yet?",
+     "options": [
+      "Yes",
+      "No, this helps"
+     ]
+    },
+    {
+     "id": "q2",
+     "text": "Which moment is hardest to plan?",
+     "options": [
+      "Setup and access",
+      "The toast or food pause"
+     ]
+    },
+    {
+     "id": "q3",
+     "text": "How will you share the plan with your bartender?",
+     "options": [
+      "Send a message",
+      "Talk it through directly"
+     ]
+    }
+   ]
+  },
+  "cta": "Explore FireFlair Packages",
+  "to": "FF Party packages",
+  "related": [
+   "P27",
+   "P28",
+   "P10",
+   "P01"
   ]
  },
  "dj-or-live-musician-house-party": {
@@ -354,6 +550,10 @@
     "FF Party currently focuses on bars and bartenders. Booking music through FF Party is coming soon."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -391,6 +591,10 @@
     "For 100 guests or more we usually recommend a bar company, which can provide the bar, stock, glassware and ice at your request. The FireFlair team can contact bar companies for you. See [how to compare mobile bar companies](/stories/how-to-compare-mobile-bar-companies)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -438,6 +642,10 @@
     "Your booking page on the website is the official record. WhatsApp and email carry notifications.\n\nRelated: [How to book a bartender on FF Party](/stories/how-to-book-a-bartender-on-ff-party) · [How far in advance should I book a bartender?](/stories/how-far-in-advance-to-book-a-bartender)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -472,6 +680,10 @@
     "**Add to Event** may suit you if you enjoy comparing many quotes yourself and want to see reviews and photos from many suppliers.\n\n**FF Party** may suit you if you want an experienced team to do the enquiring and to confirm your booking.\n\nSee also: [Add to Event alternatives for party bar hire](/stories/add-to-event-alternatives-party-bar-hire)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -507,6 +719,10 @@
     "**Poptop** may suit you if you want visible prices quickly.\n\n**FF Party** may suit you if you want a complete booking, with your drinks menu planned and an experienced team behind it.\n\nSee also: [Add to Event alternatives](/stories/add-to-event-alternatives-party-bar-hire)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -542,6 +758,10 @@
     "**Togather** may suit you if you are planning a wider event and want help across several services.\n\n**FF Party** may suit you if your focus is the bar and you want people with global events industry experience to arrange it.\n\nSee also: [How to compare mobile bar companies](/stories/how-to-compare-mobile-bar-companies)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -581,6 +801,10 @@
     "Grand View Research estimates that the global event management market was worth US$1.16 trillion in 2024 and projects it could reach US$2.09 trillion by 2033. That estimate spans conferences, weddings, social events, sport, and live entertainment. A private celebration is one part of that much wider market. Source: [Grand View Research, Event Management Market](https://www.grandviewresearch.com/industry-analysis/event-management-market-report).\n\nAt home, a bartender can keep drinks moving while the host catches up with friends. At a bigger celebration, DJs, caterers, planners, and venues can all play a part. Pick an occasion you'd love to celebrate and give the people you want there a date to put in the diary.\n\nRelated: [Planning a cocktail menu](/stories/how-to-plan-a-cocktail-menu-for-a-party) · [How to hire a bartender for a house party](/stories/how-to-hire-a-bartender-for-a-house-party)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Explore FireFlair Packages",
   "to": "FF Party packages",
   "related": [
@@ -620,6 +844,10 @@
     "FF Party currently focuses on bars and bartenders. Booking a photographer through FF Party is coming soon."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -661,6 +889,10 @@
     "Yes. You can book now and change the date up to 30 days before. See [how the deposit works](/stories/ff-party-booking-deposits-and-refunds)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -700,6 +932,10 @@
     "1. Choose the drinks you will offer. See [how to plan a cocktail menu](/stories/how-to-plan-a-cocktail-menu-for-a-party).\n2. Decide the busiest hour and how many guests will want a drink in it.\n3. Decide who helps with ice and glasses.\n4. Request the positions you need on your Event Card. Each position is invited and confirmed separately.\n\nFor a corporate event, see [staffing a product launch or drinks reception](https://ffstaff.uk/stories/staffing-a-product-launch-or-drinks-reception)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -744,6 +980,10 @@
     "[How to plan a cocktail menu](/stories/how-to-plan-a-cocktail-menu-for-a-party) · [Ice and glassware](/stories/cocktail-party-ice-and-glassware)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -787,6 +1027,10 @@
     "Event staff appear in the FF Party offer. Check what is available for your date when you plan your event."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -828,6 +1072,15 @@
     "On FF Party you describe your event once and see the price of the service you choose. A £50 deposit secures your request, and it is fully refunded if we cannot find the staff for your event. The professionals' pay is shown on its own line, so you can see what goes where.\n\nFor a bigger night with stock, glassware, ice and a bar, the FireFlair team can ask bar companies for you and bring you the options. See [how to compare mobile bar companies](/stories/how-to-compare-mobile-bar-companies) and [how the deposit works](/stories/ff-party-booking-deposits-and-refunds)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [
+   "Poptop listings",
+   "BarOpsCo price guide",
+   "The Sesh Bars",
+   "Mix & Twist 2026 guide"
+  ],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -887,6 +1140,10 @@
     "- Working out your numbers: [How many bartenders do I need?](/stories/how-many-bartenders-do-i-need)\n- Choosing a service type: [Bartender hire vs mobile bar hire](/stories/bartender-hire-vs-mobile-bar-hire)\n- Drinks: [How to plan a cocktail menu for a party](/stories/how-to-plan-a-cocktail-menu-for-a-party)\n\nProfessionals who want to be invited can [build a bartender profile on FF Team](https://ffteam.uk/stories/how-to-build-a-bartender-profile)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -931,6 +1188,10 @@
     "Comparing bar companies takes hours of enquiries. On FF Party you do not have to do it yourself. The FireFlair team has worked in the events industry around the world, and we know the bar companies and bartenders worth asking. Tell us your date, place, guests and the night you want, and we contact suitable bar companies on your behalf and bring you the options that can do it, with stock, glassware, ice and a bar provided if you want them.\n\nWhat comes back depends on who is free for your date and area, so we do not promise a set number of options. We confirm each booking with you, and your booking page is the record.\n\nFor other routes, see [Add to Event alternatives for party bar hire](/stories/add-to-event-alternatives-party-bar-hire)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party service selection",
   "related": [
@@ -978,6 +1239,10 @@
     "On FF Party you describe your event, choose your service and pay a £50 deposit, which is fully refunded if we cannot find the staff. See [how to book a bartender on FF Party](/stories/how-to-book-a-bartender-on-ff-party)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -1026,6 +1291,10 @@
     "Tell us your date, place and guest numbers and the FireFlair team, who have worked in the events industry around the world, contact relevant bar companies and bartenders and bring back options. See [how to book on FF Party](/stories/how-to-book-a-bartender-on-ff-party)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -1072,6 +1341,10 @@
     "The FireFlair team contacts relevant bar companies and bartenders for your event and brings back options. Availability depends on your date and place."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -1110,6 +1383,10 @@
     "A bartender can prepare and serve the drinks while you greet your guests. A masterclass gives the group a shared activity, with someone to guide each round. Choose the format that fits the evening, then put the drinks, food, and any toast on a simple timeline. When the first drinks are ready, make sure you're there to raise a glass too.\n\nRelated: [How to plan a cocktail menu for a party](/stories/how-to-plan-a-cocktail-menu-for-a-party) · [Ice and glassware for a cocktail party](/stories/cocktail-party-ice-and-glassware) · [Cocktail masterclass at home](/stories/cocktail-masterclass-at-home)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Explore FireFlair Packages",
   "to": "FF Party packages",
   "related": [
@@ -1157,6 +1434,10 @@
     "[How many cocktails should I plan for my guests?](/stories/how-many-cocktails-for-a-party)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Choose your cocktails",
   "to": "FF Party menu selection",
   "related": [
@@ -1208,6 +1489,10 @@
     "Tell us your date, venue and numbers. The FireFlair team has global events industry experience and can contact bar companies for you. Book early for popular dates: [how far in advance to book](/stories/how-far-in-advance-to-book-a-bartender)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -1252,6 +1537,10 @@
     "Buying your own can save effort in some cases and cost in others. A package that includes drinks is simpler, with one price and one supplier. See [bartender hire vs mobile bar hire](/stories/bartender-hire-vs-mobile-bar-hire)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -1291,6 +1580,10 @@
     "Before you commit, review the service, hours, inclusions, and total cost. Check what you need to pay, when the booking becomes confirmed, and how to contact the professional if the plan changes. A short written brief with the agreed details gives you both something to refer back to before the event.\n\nRelated: [How many bartenders do I need?](/stories/how-many-bartenders-do-i-need) · [How to book a bartender on FF Party](/stories/how-to-book-a-bartender-on-ff-party)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Explore FireFlair Packages",
   "to": "FF Party packages",
   "related": [
@@ -1330,6 +1623,10 @@
     "[How much does it cost to hire a bartender?](/stories/how-much-does-it-cost-to-hire-a-bartender) · [Bartender hire vs mobile bar hire](/stories/bartender-hire-vs-mobile-bar-hire)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Plan your party",
   "to": "FF Party event planner",
   "related": [
@@ -1337,6 +1634,90 @@
    "P02",
    "P12",
    "P15"
+  ]
+ },
+ "when-to-serve-cocktails-at-a-party": {
+  "id": "P27",
+  "slug": "when-to-serve-cocktails-at-a-party",
+  "site": "ffparty.uk",
+  "title": "Welcome Drinks, a Cocktail Hour or a Bar All Evening?",
+  "seo": "Welcome drinks, a cocktail hour or a bar all evening?",
+  "date": "10 Nov 2026",
+  "iso": "2026-11-10",
+  "reviewed": "10 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Planning your party",
+  "img": "s18_when-to-serve-cocktails-at-a-party",
+  "alt": "A single foamy martini with rose petals, lit warmly on a wooden table.",
+  "min": 3,
+  "blurb": "Pick the format that matches how your guests arrive and how long you want the bar to run.",
+  "intro": "Choose welcome drinks if you want a lively start, a cocktail hour if you want one special moment, and a bar all evening if cocktails are part of the whole party. Each works well. The right one depends on how your guests arrive and how long you want the bar open.",
+  "body": [
+   [
+    "The three formats",
+    "| Format | Suits | When the first round goes out | Menu length | Tell your bartender |\n|---|---|---|---|---|\n| Welcome drinks | Dinner or a seated meal to follow | As guests arrive | One or two signature drinks | Arrival window and when drinks finish |\n| Cocktail hour | A barbecue, birthday or celebration with a focus moment | At the start of the defined window | A short menu guests can choose from | The window and the main moment, such as a toast |\n| Bar all evening | Hosts who want cocktails throughout | When the first guests arrive | A fuller menu | Start, finish and any quiet points |"
+   ],
+   [
+    "Welcome drinks before dinner",
+    "Arrival drinks give guests something in hand while others come in. They work best when most people arrive close together. A signature welcome drink keeps service quick, so the bartender can greet people rather than answer long menu questions."
+   ],
+   [
+    "A defined cocktail window",
+    "A window suits a barbecue or a birthday, where food and conversation share the evening. In my own work with house parties, a lot of the events I look after are barbecues, and a set window helps the bartender plan prep and keep the quality high. Choose the start and the end, then make a short menu for guests to pick from."
+   ],
+   [
+    "A bar for the whole evening",
+    "If you want cocktails from arrival to the last song, tell the bartender the full time. A longer service suits a wider menu and a slower pace. Typical shifts in my examples run two to four hours, so a longer evening is worth planning early."
+   ],
+   [
+    "Plan around your guests",
+    "- Guests arriving around one time: a first-round welcome drink lands well.\n- Guests arriving across a longer window: a bar open for longer, or a window in the middle of the party.\n- A larger event: one mixologist can serve a particular group or time window.\n\nThese examples are flexible. Start with the one that fits, then adjust."
+   ],
+   [
+    "What to put in the brief",
+    "Share the start time, the finish, the guest numbers and how they will arrive, the menu, and who will meet the bartender. Read [how to hire a bartender for a house party](/stories/how-to-hire-a-bartender-for-a-house-party), [how many bartenders you need](/stories/how-many-bartenders-do-i-need) and [how to plan a cocktail menu for a party](/stories/how-to-plan-a-cocktail-menu-for-a-party), then browse FireFlair Packages to match your format."
+   ]
+  ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": {
+   "revision": "r1",
+   "ai": true,
+   "questions": [
+    {
+     "id": "q1",
+     "text": "Which format sounds closest to your party?",
+     "options": [
+      "Welcome drinks",
+      "A longer cocktail hour or evening bar"
+     ]
+    },
+    {
+     "id": "q2",
+     "text": "How will your guests arrive?",
+     "options": [
+      "Mostly together",
+      "Over a longer window"
+     ]
+    },
+    {
+     "id": "q3",
+     "text": "Is a bartender already part of your plan?",
+     "options": [
+      "Yes",
+      "Still deciding"
+     ]
+    }
+   ]
+  },
+  "cta": "Explore FireFlair Packages",
+  "to": "FF Party packages",
+  "related": [
+   "P01",
+   "P05",
+   "P10",
+   "P07"
   ]
  },
  "add-to-event-and-bark-alternatives-bar-companies": {
@@ -1369,6 +1750,10 @@
     "Keep your own website and referrals going alongside any marketplace. See [how to get more mobile bar bookings](/stories/how-to-get-mobile-bar-bookings)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create a staffing request",
   "to": "FF Staff staffing request",
   "related": [
@@ -1412,6 +1797,10 @@
     "You build the brief, invite the people you want, and pay a fixed booking connection fee for each Shift Card that is filled. See [how to book bar staff on FF Staff](/stories/how-to-book-bar-staff-on-ff-staff). FF Staff is young and does not promise coverage in every area or on every date.\n\nRelated: [How to find last-minute bar staff](/stories/how-to-find-last-minute-bar-staff) · [Barback, bartender or bar manager](/stories/barback-bartender-or-bar-manager)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create a staffing request",
   "to": "FF Staff staffing request",
   "related": [
@@ -1456,6 +1845,10 @@
     "Request each role on its own Shift Card where the pay or requirements differ. See [staffing a launch or drinks reception](/stories/staffing-a-product-launch-or-drinks-reception)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create a staffing request",
   "to": "FF Staff staffing request",
   "related": [
@@ -1463,6 +1856,82 @@
    "B09",
    "B08",
    "B01"
+  ]
+ },
+ "bartender-decisions-company-booking": {
+  "id": "B23",
+  "slug": "bartender-decisions-company-booking",
+  "site": "ffstaff.uk",
+  "title": "What Should a Bartender Be Able to Decide on a Company Booking?",
+  "seo": "What should a bartender decide on a company booking?",
+  "date": "10 Nov 2026",
+  "iso": "2026-11-10",
+  "reviewed": "10 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Running your team",
+  "img": "s18_bartender-decisions-company-booking",
+  "alt": "Close-up of layered white and red shots, softly out of focus.",
+  "min": 2,
+  "blurb": "Agree who can say yes on the night, and who needs to approve a change, before the booking starts.",
+  "intro": "A bartender can decide how service runs inside the agreed brief. Anything that changes the price, the hours or a signature recipe goes back to the company first. Agreeing that split before the booking keeps the night smooth.",
+  "body": [
+   [
+    "Three kinds of decision",
+    "- **Service on the night.** Timing of rounds, order of service and how the bar is set out, all within the agreed hours.\n- **Choices from an approved list.** A menu option the company has already said can be offered.\n- **Changes that need the company.** Price, hours, extra stock, glassware or bar hire, and anything that alters a signature recipe.\n\nA signature recipe belongs to the company that created it. The company decides what is shared with the bartender and with the host."
+   ],
+   [
+    "A worked scenario",
+    "This scenario is illustrative. A host books a bar company for an evening and knows the company's signature cocktail. On the day they ask about an ingredient swap, extra glassware and a later finish.\n\n| The host asks | Who decides | Where it is recorded |\n|---|---|---|\n| An ingredient swap in the signature cocktail | The company, since the recipe is theirs | The booking notes, once approved |\n| Extra glassware | The company, because it affects stock and cost | The booking notes and the updated quote |\n| A later finish | The company, because it changes hours | The booking notes and the updated hours |\n| Running the first round when guests arrive | The bartender, within the agreed hours | Nothing further needed |"
+   ],
+   [
+    "Let the host and bartender talk",
+    "Alex Gagnon, founder of FireFlair, takes the view that it works best when the bartender and the client communicate directly about the brief. The approvals above sit alongside that. The bartender answers questions about the evening, and the company keeps control of recipe, price and hours."
+   ],
+   [
+    "Write it into the brief",
+    "Name an approver in the brief, so the bartender knows who to contact when a request falls outside the agreement. Add a line for changes: who agreed them and what the final arrangement is. Most items from the [brief template](/stories/temporary-bar-staff-brief-template) go into the fields of a Shift Card, and anything extra goes into the notes.\n\nFor team planning, see [how to rebook bartenders and build a regular event team](/stories/how-to-rebook-bartenders) and [what to do when an event bartender cancels](/stories/what-to-do-when-an-event-bartender-cancels)."
+   ]
+  ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": {
+   "revision": "r1",
+   "ai": true,
+   "questions": [
+    {
+     "id": "q1",
+     "text": "Does your team have a written split of who decides what?",
+     "options": [
+      "Yes",
+      "Not yet"
+     ]
+    },
+    {
+     "id": "q2",
+     "text": "Which decision do you most often need to check with the company?",
+     "options": [
+      "Menu or recipe changes",
+      "Hours or extras"
+     ]
+    },
+    {
+     "id": "q3",
+     "text": "Would you name an approver in each brief?",
+     "options": [
+      "Yes",
+      "I would need to think about it"
+     ]
+    }
+   ]
+  },
+  "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
+  "related": [
+   "B09",
+   "B08",
+   "B12",
+   "C12"
   ]
  },
  "christmas-party-bar-staffing": {
@@ -1499,6 +1968,10 @@
     "Create a Shift Card. See [how to book bar staff on FF Staff](/stories/how-to-book-bar-staff-on-ff-staff)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create a staffing request",
   "to": "FF Staff staffing request",
   "related": [
@@ -1549,6 +2022,10 @@
     "The website is the official record. WhatsApp and email carry notifications.\n\nSee also: [How to book bar staff on FF Staff](/stories/how-to-book-bar-staff-on-ff-staff) · [How much does it cost to hire temporary bar staff?](/stories/temporary-bar-staff-hire-cost)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create a staffing request",
   "to": "FF Staff staffing request",
   "related": [
@@ -1592,6 +2069,10 @@
     "A managed service with insurance may suit a business that wants that bundle. A flat booking fee and direct agreement with the professional may suit a business that wants simple one-off bookings."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create a staffing request",
   "to": "FF Staff staffing request",
   "related": [
@@ -1631,6 +2112,10 @@
     "If you need bar or event staff and want to see the people you are inviting, choose who is confirmed, and know the booking fee up front whatever the length of the shift, FF Staff may suit you.\n\nRead [how booking fees work on FF Staff](/stories/ff-staff-booking-fees-refunds-replacements) before you compare costs."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create a staffing request",
   "to": "FF Staff staffing request",
   "related": [
@@ -1666,6 +2151,10 @@
     "A forecast is a modelled estimate, and a platform's attendance is recorded activity on that platform. Neither is a measure of demand for bar staff at a given venue or in a given postcode. Use them as context for planning, and use your own booking history for staffing numbers. To see how requests work on FF Staff, read [how to book bar staff on FF Staff](/stories/how-to-book-bar-staff-on-ff-staff).\n\nRelated: [Staffing a product launch or drinks reception](/stories/staffing-a-product-launch-or-drinks-reception) · [Temporary bar staff brief template](/stories/temporary-bar-staff-brief-template)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Explore FF Staff",
   "to": "FF Staff",
   "related": [
@@ -1705,6 +2194,10 @@
     "- **Fee:** what the service charges.\n- **Pay:** what the worker earns.\n- **Payroll and employment costs:** who handles tax, National Insurance and holiday pay depends on the arrangement.\n\nBrigad's business page describes a 10% mission fee, and limber's Classic page states a 10% fee with wages and employment costs additional. See [Brigad compared](/stories/ff-staff-vs-brigad-hospitality-staffing)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create a staffing request",
   "to": "FF Staff staffing request",
   "related": [
@@ -1752,6 +2245,10 @@
     "You receive the booking reference, shift details, profile link and contact details. The website is the official record, and WhatsApp and email carry notifications. See [fees, refunds and replacements](/stories/ff-staff-booking-fees-refunds-replacements) for what happens if something changes."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create a staffing request",
   "to": "FF Staff staffing request",
   "related": [
@@ -1796,6 +2293,10 @@
     "If nobody is confirmed, the unfilled Shift Card is refunded under the policy. See [fees, refunds and replacements](/stories/ff-staff-booking-fees-refunds-replacements). If someone cancels, see [what to do when an event bartender cancels](/stories/what-to-do-when-an-event-bartender-cancels)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create a staffing request",
   "to": "FF Staff staffing request",
   "related": [
@@ -1835,6 +2336,10 @@
     "Count enquiries, quotes and confirmed bookings from each source, so you know where your time pays off.\n\nSee [how to write a mobile bar package](/stories/how-to-write-a-mobile-bar-package)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create a staffing request",
   "to": "FF Staff staffing request",
   "related": [
@@ -1877,6 +2382,10 @@
     "Other services also offer favourite-worker lists, for example limber's favourite worker teams. Compare how each handles it.\n\nSee [how to write a brief for temporary bar staff](/stories/temporary-bar-staff-brief-template) and [what to do if a bartender cancels](/stories/what-to-do-when-an-event-bartender-cancels)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create a staffing request",
   "to": "FF Staff staffing request",
   "related": [
@@ -1916,6 +2425,10 @@
     "Service Cards on FireFlair work from templates. Treat custom services as a future option and describe only what the tools currently support.\n\nSee [how to get more bookings](/stories/how-to-get-mobile-bar-bookings)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create a staffing request",
   "to": "FF Staff staffing request",
   "related": [
@@ -1954,6 +2467,10 @@
     "- **Regular shifts all year:** a recurring-team service may fit.\n- **Large events:** a company with large-deployment experience may fit.\n- **One-off or occasional bar shifts:** a card-based request may fit.\n- **You want payroll handled for you:** compare who becomes the employer on each service.\n\nAsk each one the same questions: who pays the worker, what you pay in total, how replacements work and how you are told about changes.\n\nSee [FF Staff vs Indeed Flex](/stories/ff-staff-vs-indeed-flex-bar-staffing)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create a staffing request",
   "to": "FF Staff staffing request",
   "related": [
@@ -2001,6 +2518,10 @@
     "Companies and venues often need bar staff regularly. Ask whether they would like you on their list.\n\nThis page is about customers you have already served. For winning new ones, see [how to get more mobile bar bookings](/stories/how-to-get-mobile-bar-bookings)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create a staffing request",
   "to": "FF Staff staffing request",
   "related": [
@@ -2035,11 +2556,91 @@
     "Custom add-on services for FF Party, including signature cocktails, are being planned. Details of how they will work will be added here when they are released."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create a staffing request",
   "to": "FF Staff staffing request",
   "related": [
    "B16",
    "B14"
+  ]
+ },
+ "small-cocktail-event-profitability": {
+  "id": "B22",
+  "slug": "small-cocktail-event-profitability",
+  "site": "ffstaff.uk",
+  "title": "Can a Bar Company Make Money on a Two-Hour Cocktail Party?",
+  "seo": "Can a bar company make money on a two-hour cocktail party?",
+  "date": "10 Nov 2026",
+  "iso": "2026-11-10",
+  "reviewed": "10 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Running your business",
+  "img": "s18_small-cocktail-event-profitability",
+  "alt": "A diagonal row of pink shots lined up on a bar mat.",
+  "min": 3,
+  "blurb": "A short booking carries a long list of tasks. Here is a worksheet for counting them and deciding what to standardise.",
+  "intro": "Yes, when the quote covers the work around the two hours as well as the drinks. A short booking is rarely a short job, so the answer comes from counting everything that happens before service.",
+  "body": [
+   [
+    "Where the time goes",
+    "Alex Gagnon, founder of FireFlair, once ran a team of ten bartenders and found most of his own time went on messaging them. That is one practitioner's experience, and it points at a cost that is easy to leave out of a quote.\n\nBefore a bartender pours a drink, someone has usually:\n\n1. Qualified the enquiry and confirmed the date, place and guest numbers.\n2. Found the right person.\n3. Settled the menu with the host.\n4. Assigned stock and equipment.\n5. Confirmed travel and arrival.\n6. Sent the brief."
+   ],
+   [
+    "A worksheet to fill in",
+    "This worksheet is illustrative. It has no figures because every business counts differently. Fill each line in from your own records.\n\n| Line | What to include | Where the number comes from |\n|---|---|---|\n| Quote | What the host pays for the booking | Your agreed quote |\n| Direct costs | Staff time on the night, stock, ice, glassware, consumables, travel | Your supplier and staff records |\n| Contribution | Quote minus direct costs | The two lines above |\n| Admin time | Quoting, matching, menu, brief, follow-up | A simple time log for the next five bookings |\n| Value of admin time | Admin time at the rate you would pay for the work | Your own rate |\n| Result | Contribution minus value of admin time | The lines above |\n\nRun the worksheet on three recent small bookings. The pattern across them tells you more than any single job."
+   ],
+   [
+    "Standardise or quote bespoke?",
+    "| Element | Often suits a standard approach | Often needs a bespoke quote |\n|---|---|---|\n| Menu | A set menu with defined inclusions | A new menu built around the host's recipe |\n| Staffing | A fixed bartender-to-guest pattern | Unusual venue, access or hours |\n| Equipment | A standard kit list | Specialist equipment or bar hire |\n| Brief | One template for every booking | Details only this host has |\n\nStandardising a part of the job means fewer messages and quicker quotes. Keep bespoke quotes for the parts where the host wants something different."
+   ],
+   [
+    "Where FF Staff fits",
+    "A complete [brief](/stories/temporary-bar-staff-brief-template) does much of the coordination in one go: most of its items go into the fields of a Shift Card, so the person who accepts the shift sees what you need. For more on winning small bookings, read [how to get more bookings for your mobile bar business](/stories/how-to-get-mobile-bar-bookings) and [what VisitBritain's data shows about small business meetings](/stories/uk-small-business-meetings-data)."
+   ]
+  ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": {
+   "revision": "r1",
+   "ai": true,
+   "questions": [
+    {
+     "id": "q1",
+     "text": "Do you currently track the admin time on a small booking?",
+     "options": [
+      "Yes, I log it",
+      "No, not yet"
+     ]
+    },
+    {
+     "id": "q2",
+     "text": "Which part of a small booking would you standardise first?",
+     "options": [
+      "The menu",
+      "The brief"
+     ]
+    },
+    {
+     "id": "q3",
+     "text": "Would you run the worksheet on your own bookings?",
+     "options": [
+      "Yes, on recent ones",
+      "Not at the moment"
+     ]
+    }
+   ]
+  },
+  "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
+  "related": [
+   "B09",
+   "B14",
+   "B20",
+   "B08"
   ]
  },
  "staffing-a-product-launch-or-drinks-reception": {
@@ -2076,6 +2677,10 @@
     "Create a Shift Card for each role if you want different pay or requirements. Each filled card carries the £10 booking connection fee."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create a staffing request",
   "to": "FF Staff staffing request",
   "related": [
@@ -2115,6 +2720,10 @@
     "Most of these items go into the fields of a Shift Card. Put anything extra in the notes. The more complete the card, the more likely it is to be filled.\n\nSee [how to find last-minute bar staff](/stories/how-to-find-last-minute-bar-staff)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create a staffing request",
   "to": "FF Staff staffing request",
   "related": [
@@ -2162,6 +2771,10 @@
     "Create a Shift Card for the role, and invite professionals. See [how to book bar staff on FF Staff](/stories/how-to-book-bar-staff-on-ff-staff) and [how the booking fee works](/stories/ff-staff-booking-fees-refunds-replacements)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create a staffing request",
   "to": "FF Staff staffing request",
   "related": [
@@ -2200,6 +2813,10 @@
     "| Booking | Pay | FF Staff fee | Total |\n|---|---|---|---|\n| One bartender, 6 hours at £20 an hour, one Shift Card | £120 | £10 | £130 |\n| One bartender, 10 hours at £20 an hour, one Shift Card | £200 | £10 | £210 |\n| Three bartenders on one Shift Card, 5 hours each at £20 an hour | £300 | £10 | £310 |\n| Three bartenders and one barback on two Shift Cards (barback at £15 an hour for 5 hours) | £375 | £20 | £395 |\n\nFor comparison, the same three bartenders for 5 hours billed at £40 an hour each would be £600 before any other cost. Check each provider's current terms, because rates and minimums vary.\n\nSee also: [Hospitality staffing fees and booking charges explained](/stories/hospitality-staffing-fees-explained) and [how fees, refunds and replacements work on FF Staff](/stories/ff-staff-booking-fees-refunds-replacements)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create a staffing request",
   "to": "FF Staff staffing request",
   "related": [
@@ -2234,6 +2851,10 @@
     "These are inbound visits, so they say nothing about UK residents meeting in the UK. If you host or cater for small meetings and receptions, the figures are context for the size of the audience, not a forecast for your own bookings. When a client does ask for bar staff for a small reception, a clear brief helps: see the [temporary bar staff brief template](/stories/temporary-bar-staff-brief-template).\n\nRelated: [Staffing a product launch or drinks reception](/stories/staffing-a-product-launch-or-drinks-reception) · [How to book bar staff on FF Staff](/stories/how-to-book-bar-staff-on-ff-staff)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Explore FF Staff",
   "to": "FF Staff",
   "related": [
@@ -2281,6 +2902,10 @@
     "Brief clearly, invite early and keep a backup. See [the brief template](/stories/temporary-bar-staff-brief-template)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create a staffing request",
   "to": "FF Staff staffing request",
   "related": [
@@ -2316,6 +2941,10 @@
     "When a client's goal is meeting people, the drinks service is part of how the event feels. Ask what the client wants guests to do, how many will arrive at once, and how long the event runs, then plan staffing from that. See [staffing a product launch or drinks reception](/stories/staffing-a-product-launch-or-drinks-reception) and the [temporary bar staff brief template](/stories/temporary-bar-staff-brief-template).\n\nRelated: [How to book bar staff on FF Staff](/stories/how-to-book-bar-staff-on-ff-staff) · [How to find last-minute bar staff](/stories/how-to-find-last-minute-bar-staff)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Explore FF Staff",
   "to": "FF Staff",
   "related": [
@@ -2367,6 +2996,10 @@
     "FireFlair does not currently list a live training course. Choose any course from a provider you have checked."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create your profile",
   "to": "FF Team profile creation",
   "related": [
@@ -2405,6 +3038,10 @@
     "1. Check how and when you are paid.\n2. Check what is deducted from your pay.\n3. Ask whether you choose your shifts.\n\nDetails are in [Indeed Flex alternatives for bartenders](/stories/indeed-flex-alternatives-for-bartenders) and [how to find freelance bartending work](/stories/how-to-find-freelance-bartending-work-uk)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create your profile",
   "to": "FF Team profile creation",
   "related": [
@@ -2440,6 +3077,10 @@
     "**Brigad** may suit you if you want a managed set of services around each mission.\n\n**FF Team** may suit you if you want to keep your agreed pay, build a profile people can find, and deal directly with clients.\n\nSee also: [Indeed Flex alternatives for bartenders](/stories/indeed-flex-alternatives-for-bartenders)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create your profile",
   "to": "FF Team profile creation",
   "related": [
@@ -2475,6 +3116,10 @@
     "**Indeed Flex** may suit you if you want a wide choice of shifts, an established process and agency-handled pay.\n\n**FF Team** may suit you if you want your craft, reviews and connections visible on one profile, and want to build repeat bookings with the people who hire you.\n\nMany bartenders use both. Compare the terms before you accept any shift, and read [what to check before accepting a bar shift](/stories/what-to-check-before-accepting-a-bar-shift)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create your profile",
   "to": "FF Team profile creation",
   "related": [
@@ -2517,6 +3162,10 @@
     "Leave and read reviews on the website. They help you get booked again. See [how to get repeat bookings](/stories/repeat-bookings-freelance-bartender)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create your profile",
   "to": "FF Team profile creation",
   "related": [
@@ -2560,6 +3209,10 @@
     "See [the trading allowance](/stories/freelance-bartending-trading-allowance)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create your profile",
   "to": "FF Team profile creation",
   "related": [
@@ -2598,6 +3251,10 @@
     "On FF Team you accept bookings one by one, with the pay shown up front and direct contact with the client. See [how to accept bookings on FF Team](/stories/how-to-accept-bookings-on-ff-team) and [rates](/stories/how-to-set-freelance-bartender-rates). For tax, see [the trading allowance](/stories/freelance-bartending-trading-allowance)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create your profile",
   "to": "FF Team profile creation",
   "related": [
@@ -2649,6 +3306,10 @@
     "HMRC, \"Increasing the trading allowance\", policy paper published 28 October 2026. GOV.UK guidance on tax-free allowances on property and trading income. Check both before relying on this page."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create your profile",
   "to": "FF Team profile creation",
   "related": [
@@ -2699,6 +3360,10 @@
     "Leave and receive reviews on the website. They become part of your profile and help you get booked again.\n\nSee also: [What to check before accepting a bar shift](/stories/what-to-check-before-accepting-a-bar-shift)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create your profile",
   "to": "FF Team profile creation",
   "related": [
@@ -2741,6 +3406,10 @@
     "Know the difference between a bartender, a barback and a manager. See [barback, bartender or bar manager](https://ffstaff.uk/stories/barback-bartender-or-bar-manager)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create your profile",
   "to": "FF Team profile creation",
   "related": [
@@ -2779,6 +3448,10 @@
     "- Claiming experience you cannot back up.\n- Using a photo that hides your face or is cropped badly.\n- Listing every possible role. A focused profile is easier to book.\n\nYour public profile also works alongside a CV. See [how to write a bartender CV](/stories/how-to-write-a-bartender-cv).\n\n[Create your profile](https://ffteam.uk)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create your profile",
   "to": "FF Team profile creation",
   "related": [
@@ -2817,6 +3490,10 @@
     "FireFlair does not currently offer a live training course. Career Support, with training and standards in one place, is coming soon. Whatever you choose, compare more than one provider."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create your profile",
   "to": "FF Team profile creation",
   "related": [
@@ -2854,6 +3531,10 @@
     "FF Team starts with bartenders. You build a Profile Card that shows your craft, experience, work areas and the people you work with, and you can share it by link. Event hosts and businesses invite you to shifts, and you see the details before you commit. A free profile has no percentage taken from your agreed pay, and the booking fee is paid by the person booking, not by you.\n\nThe pay for each type of booking is listed up front. In the prototype, a bartending shift of 3 hours pays £100, a cocktail (mixology) shift from 4 hours pays £150, and a flair performance from 2 hours pays £200. If you sign up, you can talk directly with the client before the event.\n\nFF Team does not promise a number of shifts. Work depends on demand in your area.\n\n[Create your profile](https://ffteam.uk)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create your profile",
   "to": "FF Team profile creation",
   "related": [
@@ -2898,6 +3579,10 @@
     "[What to check before accepting a shift](/stories/what-to-check-before-accepting-a-bar-shift) · [The trading allowance](/stories/freelance-bartending-trading-allowance)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create your profile",
   "to": "FF Team profile creation",
   "related": [
@@ -2937,6 +3622,10 @@
     "Use a CV when you apply to a bar or company. Use a profile when you want to be found and booked. See [how to build a bartender profile](/stories/how-to-build-a-bartender-profile)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create your profile",
   "to": "FF Team profile creation",
   "related": [
@@ -2975,6 +3664,10 @@
     "1. Who pays me, when, and what is taken from my pay?\n2. How much commitment is required?\n3. Do I choose my shifts?\n4. Can I build a public profile or reputation?\n5. Am I treated as self-employed or as a worker, and does that match the reality of the work? See [freelance or agency work](/stories/freelance-bartending-or-agency-bar-work).\n\nFor a direct comparison, see [FF Team vs Indeed Flex for bartenders](/stories/ff-team-vs-indeed-flex-for-bartenders)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create your profile",
   "to": "FF Team profile creation",
   "related": [
@@ -2982,6 +3675,83 @@
    "T06",
    "T01",
    "T08"
+  ]
+ },
+ "last-minute-bartending-shifts": {
+  "id": "T22",
+  "slug": "last-minute-bartending-shifts",
+  "site": "ffteam.uk",
+  "title": "The Last-Minute Shifts That Changed My Bartending Career",
+  "seo": "The last-minute shifts that changed my bartending career",
+  "date": "10 Nov 2026",
+  "iso": "2026-11-10",
+  "reviewed": "10 Nov 2026",
+  "by": "Alex Gagnon",
+  "cat": "Finding work",
+  "img": "s18_last-minute-bartending-shifts",
+  "alt": "A long row of highball glasses with lime wheels and rosemary sprigs on a bar top.",
+  "min": 2,
+  "blurb": "A founder's story: agency calls in London, five-star hotels, and the opportunities that grew from saying yes.",
+  "intro": "The phone would ring, an agency would tell me where they needed me, and I would go. That simple routine shaped most of my early career.",
+  "body": [
+   [
+    "Five agencies in London",
+    "I spent a few years in London working for around five different agencies. Each one had its own clients, so the work kept changing. One week I might be behind a hotel bar; the next, at a party where everything about the night had been planned with care.\n\nSome of those calls sent me to five-star hotels and to the best parties I had worked. Saying yes to a short-notice booking meant meeting new teams, seeing how different venues ran their service and learning quickly. A bartender who can walk into a room, read it and settle in is a bartender people ask for again."
+   ],
+   [
+    "What the work paid for",
+    "The agency shifts gave me the means to travel. I used the money to visit some of the best cocktail bars around the world. I watched how they welcomed guests, built their menus and trained their teams. That time away taught me that hospitality can open far more doors than most people expect from a night behind a bar."
+   ],
+   [
+    "What I would keep",
+    "Looking back, three things made those short-notice shifts worth taking:\n\n- A clear picture of the job before I accepted it: place, hours and what was expected.\n- A team I could learn from on the night.\n- A way for the next person to find me, which is where I was short for years.\n\nThat last point matters most. Every job I did well stayed in the memory of the people who were there. Almost none of it was visible to anyone who had not been in the room."
+   ],
+   [
+    "Why I want FF Team to help",
+    "My focus today is on creating opportunities for other people. FF Team gives bartenders and other hospitality professionals a Profile Card that shows who they are, what they do well and who they work with, so good work can be found again.\n\nIf you are building your own freelance career, start with [a profile that gets booked](/stories/how-to-build-a-bartender-profile), then grow [your network of people you would work with again](/stories/how-to-build-a-bartender-network).\n\nRelated: [How to find freelance bartending work in the UK](/stories/how-to-find-freelance-bartending-work-uk)"
+   ]
+  ],
+  "posted": "FireFlair editorial team",
+  "featured": [
+   "alex-gagnon"
+  ],
+  "sources": [],
+  "qa": {
+   "revision": "r1",
+   "ai": true,
+   "questions": [
+    {
+     "id": "q1",
+     "text": "What would help you most right now in your bartending work?",
+     "options": [
+      "Finding more shifts",
+      "Making my past work easier to find"
+     ]
+    },
+    {
+     "id": "q2",
+     "text": "How do you usually take on a short-notice shift?",
+     "options": [
+      "Through an agency",
+      "Directly from people I know"
+     ]
+    },
+    {
+     "id": "q3",
+     "text": "Which part of this story is most useful to you?",
+     "options": [
+      "The agency experience",
+      "Building something for other bartenders"
+     ]
+    }
+   ]
+  },
+  "cta": "Create your FF Team profile",
+  "to": "FF Team profile",
+  "related": [
+   "T02",
+   "T15",
+   "T01"
   ]
  },
  "live-events-bartending-opportunities": {
@@ -3014,6 +3784,10 @@
     "Interest in a format is not a vacancy, and nothing here promises work. It does show where guests are looking. A clear [FF Team profile](/stories/how-to-build-a-bartender-profile) that shows the kinds of events you enjoy working gives hosts and event businesses something to find.\n\nRelated: [How to find freelance bartending work in the UK](/stories/how-to-find-freelance-bartending-work-uk) · [Cocktail skills for event bartending](/stories/cocktail-skills-for-event-bartending)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create your FF Team profile",
   "to": "FF Team profile",
   "related": [
@@ -3053,6 +3827,10 @@
     "A listing count is not a promise of bookings. If local events appeal to you, say so on your profile: the areas you cover, the kinds of party you enjoy, and what you bring. See [how to build a bartender profile](/stories/how-to-build-a-bartender-profile).\n\nRelated: [Freelance bartender work in London](/stories/freelance-bartender-work-london) · [How to find freelance bartending work in the UK](/stories/how-to-find-freelance-bartending-work-uk)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create your FF Team profile",
   "to": "FF Team profile",
   "related": [
@@ -3096,6 +3874,10 @@
     "The people you work with can invite you again by name. See [how to accept bookings](/stories/how-to-accept-bookings-on-ff-team)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create your profile",
   "to": "FF Team profile creation",
   "related": [
@@ -3131,6 +3913,10 @@
     "A tasting and a music night can put hospitality professionals at the centre of very different rooms. If you're curious about a format, look at how local organisers describe the experience and the people behind it. Then think about which of your skills fit: guiding a tasting, running a busy bar between songs, or both. See [cocktail skills for event bartending](/stories/cocktail-skills-for-event-bartending) for ideas on what to practise.\n\nRelated: [How to build a bartender profile](/stories/how-to-build-a-bartender-profile) · [What is FF Team?](/stories/what-is-ff-team)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Explore FF Team",
   "to": "FF Team home",
   "related": [
@@ -3174,6 +3960,10 @@
     "Self-employed income from shifts counts as trading income. See [the trading allowance](/stories/freelance-bartending-trading-allowance) for the current rules and what is changing in April 2027."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create your profile",
   "to": "FF Team profile creation",
   "related": [
@@ -3213,6 +4003,10 @@
     "[How to accept bookings](/stories/how-to-accept-bookings-on-ff-team) · [Build your profile](/stories/how-to-build-a-bartender-profile)"
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create your profile",
   "to": "FF Team profile creation",
   "related": [
@@ -3247,12 +4041,91 @@
     "**Brief A: house party.** Saturday 7pm to midnight, home in Hertford, 40 guests, five classic cocktails supplied by host, 30 minutes setup, bring your own tools. Pay for the whole shift, paid by the host. *Questions to ask: is setup paid, who supplies ice and glassware, how do I get home?*\n\n**Brief B: corporate drinks reception.** Thursday 6pm to 10pm, two bartenders and a barback, 120 guests, wine, beer and one signature drink, uniform provided, contact is the venue manager. Agency pays on the 15th of the following month. *Questions to ask: what is the rate, are breaks covered, what if the event ends early?*\n\nOn FF Team the card shows most of these. Use Discuss first for anything missing. See [how to accept bookings on FF Team](/stories/how-to-accept-bookings-on-ff-team)."
    ]
   ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": null,
   "cta": "Create your profile",
   "to": "FF Team profile creation",
   "related": [
    "T03",
    "T10",
    "T09"
+  ]
+ },
+ "who-would-you-call-for-a-bar-shift": {
+  "id": "T23",
+  "slug": "who-would-you-call-for-a-bar-shift",
+  "site": "ffteam.uk",
+  "title": "Who Would You Call to Work a Saturday Night With You?",
+  "seo": "Who would you call to work a Saturday night with you?",
+  "date": "10 Nov 2026",
+  "iso": "2026-11-10",
+  "reviewed": "10 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Finding work",
+  "img": "s18_who-would-you-call-for-a-bar-shift",
+  "alt": "Rows of sours and highballs garnished with strawberries and mint, ready to serve.",
+  "min": 2,
+  "blurb": "The people you would call for a busy Saturday are the ones who have seen you work. Here is how that shows up on FF Team.",
+  "intro": "You would call the people who have seen you work. When a bar needs a full crew for a busy Saturday, the first names that come up belong to colleagues someone has already stood beside.",
+  "body": [
+   [
+    "What a colleague can tell you",
+    "A person who worked a shift next to you can speak to things a CV cannot show:\n\n- How quickly someone prepared before service.\n- Their pace when the bar was three deep.\n- How they handed over at the end of the night.\n- How they worked with the rest of the team.\n\nThose are specific, checkable observations. They carry weight because they come from someone who was there."
+   ],
+   [
+    "Three different things",
+    "It helps to keep three ideas apart:\n\n- **A connection** means two people know each other. It does not show that you worked a particular event together.\n- **A recommendation** is a colleague saying what they saw you do, from real work.\n- **A check** is a separate step that confirms something factual, such as an identity or a qualification.\n\nOn FF Team, you can add people you have worked with to your profile, and the people who book you can see who you work alongside. Alex Gagnon, founder of FireFlair, has described community verification as one of the core ideas behind FF Team: the people who know your work are the best witnesses to it."
+   ],
+   [
+    "If you are new",
+    "Everyone starts with no relationships in the trade. The quickest way to build them:\n\n1. Work events with the same team when you can.\n2. After a shift, ask the person who led it what they noticed about your work.\n3. Add the people you worked with, and recommend them in return.\n\nA first recommendation can be as simple as a lead saying you arrived prepared and stayed calm under pressure."
+   ],
+   [
+    "Put it on your profile",
+    "Your Profile Card is the place where the people you worked with, the skills you are known for and the areas you cover come together. Share it with a colleague and they can see in one view who you are as a professional.\n\nFor more on building a trusted crew, read [how to build a bartender network and work with a team](/stories/how-to-build-a-bartender-network) and [how to get repeat bookings as a freelance bartender](/stories/repeat-bookings-freelance-bartender)."
+   ]
+  ],
+  "posted": "FireFlair editorial team",
+  "featured": [],
+  "sources": [],
+  "qa": {
+   "revision": "r1",
+   "ai": true,
+   "questions": [
+    {
+     "id": "q1",
+     "text": "Who would you call first for a busy night?",
+     "options": [
+      "Someone I have worked beside",
+      "Someone recommended to me"
+     ]
+    },
+    {
+     "id": "q2",
+     "text": "What would you most want a colleague to speak to?",
+     "options": [
+      "Prep and pace",
+      "Teamwork and handover"
+     ]
+    },
+    {
+     "id": "q3",
+     "text": "Where are you in building your trade relationships?",
+     "options": [
+      "Just starting out",
+      "Already have a regular crew"
+     ]
+    }
+   ]
+  },
+  "cta": "Create your FF Team profile",
+  "to": "FF Team profile",
+  "related": [
+   "T15",
+   "T02",
+   "T14"
   ]
  }
 }

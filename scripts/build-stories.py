@@ -12,9 +12,9 @@ import argparse, json, math, os, re, glob, datetime, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 ORDER = {  # slugs (new articles first, then older stories that have no replacement yet)
-    "party": ["P24", "P25", "P26", "P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08", "P09", "P10", "P11", "P12", "P13", "P14", "P15", "P16", "P17", "P18", "P19", "P20", "P21", "P23", "C01", "C02", "C05", "C06", "C07", "C08", "C09", "wedding", "cardsparty", "sites"],
-    "team": ["T19", "T20", "T21", "T01", "T02", "T03", "T04", "T05", "T06", "T07", "T08", "T09", "T10", "T11", "T12", "T13", "T14", "T15", "T16", "T17", "T18", "C03", "C10"],
-    "staff": ["B19", "B20", "B21", "B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B09", "B10", "B11", "B12", "B13", "B14", "B15", "B16", "B17", "B18", "C04", "C11", "C12"],
+    "party": ["P27", "P28", "P29", "P24", "P25", "P26", "P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08", "P09", "P10", "P11", "P12", "P13", "P14", "P15", "P16", "P17", "P18", "P19", "P20", "P21", "P23", "C01", "C02", "C05", "C06", "C07", "C08", "C09", "wedding", "cardsparty", "sites"],
+    "team": ["T22", "T23", "T19", "T20", "T21", "T01", "T02", "T03", "T04", "T05", "T06", "T07", "T08", "T09", "T10", "T11", "T12", "T13", "T14", "T15", "T16", "T17", "T18", "C03", "C10"],
+    "staff": ["B22", "B23", "B19", "B20", "B21", "B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B09", "B10", "B11", "B12", "B13", "B14", "B15", "B16", "B17", "B18", "C04", "C11", "C12"],
 }
 
 
@@ -50,7 +50,17 @@ def _images():
 IMAGES = _images()
 
 
+def _json(name):
+    p = os.path.join(ROOT, "stories", name)
+    return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else {}
+
+
+QA = _json("qa.json")  # reader Q&A sets (AI-generated, reviewed per article), keyed by slug
+PROFILES = _json("profiles.json")  # profile resolver registry for featured people
+
+
 def article(path):
+    # sources: internal reference codes (S01...) are never shown to readers; only named sources appear in the footer
     fm, body = parse(path)
     body = re.sub(r"^# .*\n", "", body.strip(), count=1).strip()
     parts = re.split(r"^## (.+)$", body, flags=re.M)
@@ -69,6 +79,8 @@ def article(path):
         "by": fm.get("author", "FireFlair editorial team"), "cat": fm.get("category", "How-to guides"),
         "img": ("s18_" + fm["slug"]) if fm["slug"] in IMAGES else "", "alt": IMAGES.get(fm["slug"], {}).get("alt", ""),
         "min": max(2, math.ceil(words / 200)), "blurb": blurb, "intro": intro, "body": sections,
+        "posted": fm.get("posted_by", "FireFlair editorial team"), "featured": listval(fm.get("featured", "[]")),
+        "sources": [x for x in listval(fm.get("sources", "[]")) if not re.fullmatch(r"S\d+", x)], "qa": QA.get(fm["slug"]),
         "cta": cta.group(1).strip() if cta else "", "to": dest.group(1).strip() if dest else "", "related": listval(fm.get("related", "[]")),
     }
 
@@ -78,7 +90,7 @@ HELD = {"I01", "I02", "I03", "I04", "I05", "I06"}
 
 
 def collect():
-    arts = [article(p) for p in sorted(glob.glob(os.path.join(ROOT, "stories", "*", "*.md")))]
+    arts = [article(p) for p in sorted(glob.glob(os.path.join(ROOT, "stories", "*", "*.md"))) if os.sep + "held" + os.sep not in p]
     return {a["slug"]: a for a in arts if a["id"] not in HELD}
 
 
@@ -94,6 +106,7 @@ def reader(arts):
             imgs["s18_" + slug] = {"src": "data:image/webp;base64," + base64.b64encode(open(f, "rb").read()).decode(), "pos": m["pos"]}
     return (tpl.replace("__ST18_IMGS__", json.dumps(imgs))
                .replace("__ST18_DATA__", json.dumps(arts, ensure_ascii=False, indent=1))
+               .replace("__ST19_PROFILES__", json.dumps({k: v for k, v in PROFILES.items() if not k.startswith("_")}, ensure_ascii=False))
                .replace("__ST18_ORDER__", json.dumps(order, ensure_ascii=False)))
 
 

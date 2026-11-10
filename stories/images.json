@@ -393,5 +393,40 @@
   "photo": "vkg05",
   "alt": "A round event bar with a black and gold geometric front and a monogram, set up in a function room.",
   "pos": "50% 50%"
+ },
+ "last-minute-bartending-shifts": {
+  "photo": "p01",
+  "alt": "A long row of highball glasses with lime wheels and rosemary sprigs on a bar top.",
+  "pos": "50% 50%"
+ },
+ "who-would-you-call-for-a-bar-shift": {
+  "photo": "p30",
+  "alt": "Rows of sours and highballs garnished with strawberries and mint, ready to serve.",
+  "pos": "50% 50%"
+ },
+ "small-cocktail-event-profitability": {
+  "photo": "p14",
+  "alt": "A diagonal row of pink shots lined up on a bar mat.",
+  "pos": "50% 50%"
+ },
+ "bartender-decisions-company-booking": {
+  "photo": "p16",
+  "alt": "Close-up of layered white and red shots, softly out of focus.",
+  "pos": "50% 50%"
+ },
+ "when-to-serve-cocktails-at-a-party": {
+  "photo": "p18",
+  "alt": "A single foamy martini with rose petals, lit warmly on a wooden table.",
+  "pos": "50% 50%"
+ },
+ "choose-a-signature-cocktail-for-your-party": {
+  "photo": "p28",
+  "alt": "A creamy layered cocktail topped with dried raspberry and herbs, on a black saucer with a spoon.",
+  "pos": "50% 50%"
+ },
+ "cocktail-party-timeline": {
+  "photo": "p20",
+  "alt": "A creamy iced coffee cocktail with a straw, close up.",
+  "pos": "50% 50%"
  }
 }

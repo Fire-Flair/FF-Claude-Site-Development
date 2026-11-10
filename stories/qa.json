@@ -1,0 +1,212 @@
+{
+ "last-minute-bartending-shifts": {
+  "revision": "r1",
+  "ai": true,
+  "questions": [
+   {
+    "id": "q1",
+    "text": "What would help you most right now in your bartending work?",
+    "options": [
+     "Finding more shifts",
+     "Making my past work easier to find"
+    ]
+   },
+   {
+    "id": "q2",
+    "text": "How do you usually take on a short-notice shift?",
+    "options": [
+     "Through an agency",
+     "Directly from people I know"
+    ]
+   },
+   {
+    "id": "q3",
+    "text": "Which part of this story is most useful to you?",
+    "options": [
+     "The agency experience",
+     "Building something for other bartenders"
+    ]
+   }
+  ]
+ },
+ "who-would-you-call-for-a-bar-shift": {
+  "revision": "r1",
+  "ai": true,
+  "questions": [
+   {
+    "id": "q1",
+    "text": "Who would you call first for a busy night?",
+    "options": [
+     "Someone I have worked beside",
+     "Someone recommended to me"
+    ]
+   },
+   {
+    "id": "q2",
+    "text": "What would you most want a colleague to speak to?",
+    "options": [
+     "Prep and pace",
+     "Teamwork and handover"
+    ]
+   },
+   {
+    "id": "q3",
+    "text": "Where are you in building your trade relationships?",
+    "options": [
+     "Just starting out",
+     "Already have a regular crew"
+    ]
+   }
+  ]
+ },
+ "small-cocktail-event-profitability": {
+  "revision": "r1",
+  "ai": true,
+  "questions": [
+   {
+    "id": "q1",
+    "text": "Do you currently track the admin time on a small booking?",
+    "options": [
+     "Yes, I log it",
+     "No, not yet"
+    ]
+   },
+   {
+    "id": "q2",
+    "text": "Which part of a small booking would you standardise first?",
+    "options": [
+     "The menu",
+     "The brief"
+    ]
+   },
+   {
+    "id": "q3",
+    "text": "Would you run the worksheet on your own bookings?",
+    "options": [
+     "Yes, on recent ones",
+     "Not at the moment"
+    ]
+   }
+  ]
+ },
+ "bartender-decisions-company-booking": {
+  "revision": "r1",
+  "ai": true,
+  "questions": [
+   {
+    "id": "q1",
+    "text": "Does your team have a written split of who decides what?",
+    "options": [
+     "Yes",
+     "Not yet"
+    ]
+   },
+   {
+    "id": "q2",
+    "text": "Which decision do you most often need to check with the company?",
+    "options": [
+     "Menu or recipe changes",
+     "Hours or extras"
+    ]
+   },
+   {
+    "id": "q3",
+    "text": "Would you name an approver in each brief?",
+    "options": [
+     "Yes",
+     "I would need to think about it"
+    ]
+   }
+  ]
+ },
+ "when-to-serve-cocktails-at-a-party": {
+  "revision": "r1",
+  "ai": true,
+  "questions": [
+   {
+    "id": "q1",
+    "text": "Which format sounds closest to your party?",
+    "options": [
+     "Welcome drinks",
+     "A longer cocktail hour or evening bar"
+    ]
+   },
+   {
+    "id": "q2",
+    "text": "How will your guests arrive?",
+    "options": [
+     "Mostly together",
+     "Over a longer window"
+    ]
+   },
+   {
+    "id": "q3",
+    "text": "Is a bartender already part of your plan?",
+    "options": [
+     "Yes",
+     "Still deciding"
+    ]
+   }
+  ]
+ },
+ "choose-a-signature-cocktail-for-your-party": {
+  "revision": "r1",
+  "ai": true,
+  "questions": [
+   {
+    "id": "q1",
+    "text": "Have you chosen a signature drink yet?",
+    "options": [
+     "Yes",
+     "Not yet"
+    ]
+   },
+   {
+    "id": "q2",
+    "text": "What guides your choice most?",
+    "options": [
+     "The occasion or season",
+     "Flavours my guests like"
+    ]
+   },
+   {
+    "id": "q3",
+    "text": "Will you offer an alcohol-free match?",
+    "options": [
+     "Yes",
+     "Probably not"
+    ]
+   }
+  ]
+ },
+ "cocktail-party-timeline": {
+  "revision": "r1",
+  "ai": true,
+  "questions": [
+   {
+    "id": "q1",
+    "text": "Do you have a timeline for your party yet?",
+    "options": [
+     "Yes",
+     "No, this helps"
+    ]
+   },
+   {
+    "id": "q2",
+    "text": "Which moment is hardest to plan?",
+    "options": [
+     "Setup and access",
+     "The toast or food pause"
+    ]
+   },
+   {
+    "id": "q3",
+    "text": "How will you share the plan with your bartender?",
+    "options": [
+     "Send a message",
+     "Talk it through directly"
+    ]
+   }
+  ]
+ }
+}

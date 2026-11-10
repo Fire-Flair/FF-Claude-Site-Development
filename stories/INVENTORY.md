@@ -163,3 +163,10 @@ Published directly, first in each site's list: P24–P26 (FF Party), T19–T21 (
 Later checks: Archrival/Vogue Business claim in P24 has no link yet; Eventbrite Social Study is linked to its 14 Jan 2026 press release (find the report PDF); confirm the Grand View, VisitBritain and Events Industry Council figures against the full reports; P24 relates to the held inspiration drafts (I01–I06) only through the build script's HELD list.
 Overlaps: P25 sits beside "Create a cocktail experience at home" (held draft) and "Cocktail masterclass at home"; P26 beside "What to provide when you hire a bartender".
 Public URLs /stories/{slug}, index links, canonical/OG tags, sitemap and crawler HTML still need the server (ST18_ROUTES stays false in the prototype).
+
+## November editorial batch + shared footer (v17.3.136, 10 Nov 2026)
+Shipped: T22 last-minute-bartending-shifts, T23 who-would-you-call-for-a-bar-shift (FF Team); B22 small-cocktail-event-profitability, B23 bartender-decisions-company-booking (FF Staff); P27 when-to-serve-cocktails-at-a-party, P28 choose-a-signature-cocktail-for-your-party, P29 cocktail-party-timeline (FF Party). Photos p01, p30, p14, p16, p18, p28, p20 (none show people or visible brands; none used on the target site's earlier Stories).
+Held (drafts in `stories/held/`, excluded from the build): T24 private-cocktail-booking-pay, T25 ff-team-launch-competition, T26 three-questions-behind-the-bar.
+New data files: `stories/qa.json` (three AI-written questions per article, revision r1), `stories/profiles.json` (featured-person resolver; nothing renders a profile card unless verified and public with a URL).
+New front matter: `posted_by`, `featured: [profile keys]`, `sources: [named sources]` (internal codes S01... are never shown).
+Legacy audit (79 stories): all bylined "FireFlair editorial team", none has a question set, none lists named sources except P02. Pages stay readable; the question block is omitted where no set exists. Backfill is NOT done: 79 sets need writing and reviewing against each article.
