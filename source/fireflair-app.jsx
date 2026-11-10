@@ -10004,15 +10004,32 @@ function scrollToSection(id) {
 const FF_VIP_LOGO = "data:image/webp;base64,…(21 KB)";
 
 const FF_SITES = [
-  { key: "team",  name: "FF Team",  domain: "ffteam.uk",  url: "https://ffteam.uk",  tier: "gold",
+  { key: "team",  name: "FF Team",  domain: "ffteam.uk",  url: "https://ffteam.uk",  tier: "bronze",
     line: "For hospitality professionals", pitch: "Freelancers and the people who work in and run businesses: build your Profile Card and get booked.", cta: "Create your card" },
   { key: "staff", name: "FF Staff", domain: "ffstaff.uk", url: "https://ffstaff.uk", tier: "silver",
     line: "For hospitality businesses", pitch: "Bars, restaurants, venues, caterers and event companies: hire staff for your events and keep the people you trust.", cta: "Hire staff" },
-  { key: "party", name: "FF Party", domain: "ffparty.uk", url: "https://ffparty.uk", tier: "bronze",
+  { key: "party", name: "FF Party", domain: "ffparty.uk", url: "https://ffparty.uk", tier: "gold",
     line: "Plan an event and book your team", pitch: "Planning a party? Find your team and create your Event Card in minutes.", cta: "Plan an event" },
   { key: "vip",   name: "FF VIP",   domain: "ffvip.uk",   url: "https://ffvip.uk",   tier: "standard", logo: FF_VIP_LOGO,
     line: "Your VIP card, luxury experiences and rewards", pitch: "Create your VIP card, book luxury experiences and VIP tables, and earn FF Rewards. Launch party in Shoreditch, early 2027.", cta: "Join the guest list" },
 ];
+
+/* Site brand (v17.3.132): ONE mapping from site key to its coin. The hero coin (1024 px)
+   and the site-switcher icon (256 px) both read it, so they always match. Files are in
+   assets/ff-coin/site/ (hero) and assets/ff-coin/site/icons/ (switcher).
+   Team = bronze, Staff = silver, Party = bright gold, VIP = platinum. Site branding only:
+   membership and reward badges keep their own tier logic (Coin / FFEmblem). */
+const FF_SITE_BRAND = {
+  team: { hero: "data:image/webp;base64,…(240 KB)", icon: "data:image/webp;base64,…(22 KB)" },
+  staff: { hero: "data:image/webp;base64,…(254 KB)", icon: "data:image/webp;base64,…(22 KB)" },
+  party: { hero: "data:image/webp;base64,…(213 KB)", icon: "data:image/webp;base64,…(20 KB)" },
+  vip: { hero: "data:image/webp;base64,…(269 KB)", icon: "data:image/webp;base64,…(23 KB)" },
+};
+function siteBrandKey(k) { return k === "biz" ? "staff" : (FF_SITE_BRAND[k] ? k : "team"); }
+function SiteHeroCoin({ site }) {
+  const b = FF_SITE_BRAND[siteBrandKey(site)];
+  return <img src={b.hero} alt="" width={160} height={160} decoding="async" draggable={false} style={{ objectFit: "contain" }} />;
+}
 
 function useGoSite() {
   const { state, dispatch } = useStore();
@@ -10860,9 +10877,7 @@ function OwnServiceCard({ item, onClick }) {
 function SiteMark({ site, size = 30 }) {
   return (
     <span className="ff-sitemark" style={{ width: size, height: size }}>
-      {site.logo
-        ? <img src={site.logo} width={size} height={size} alt="" draggable={false} />
-        : <Coin size={size} tier={site.tier} />}
+      <img src={FF_SITE_BRAND[siteBrandKey(site.key)].icon} width={size} height={size} alt="" draggable={false} />
       {site.locked && <span className="lock" aria-hidden="true"><Lock size={Math.max(8, Math.round(size * .26))} strokeWidth={2.2} /></span>}
     </span>
   );
@@ -16320,8 +16335,8 @@ function VipHero21() {
         {IM.hero ? <img className="ff-hero18-photo" src={IM.hero} srcSet={IM.hero_sm ? `${IM.hero_sm} 900w, ${IM.hero} 1800w` : undefined} sizes="(min-width:900px) 760px, 100vw" alt="" decoding="async" /> : null}
         <div className="ff-hero18-fade" aria-hidden="true" />
         <span className="ff-hero18-shadow" aria-hidden="true" />
-        <span className="ff-hero18-coin refl" aria-hidden="true"><Coin size={160} tier="gold" /></span>
-        <span className="ff-hero18-coin ff-hero17-coin"><Coin size={160} tier="gold" /></span>
+        <span className="ff-hero18-coin refl" aria-hidden="true"><SiteHeroCoin site="vip" /></span>
+        <span className="ff-hero18-coin ff-hero17-coin"><SiteHeroCoin site="vip" /></span>
       </div>
       <div className="ff-hero18-in">
         <h1 id="ff-v21-h" className="ff-hero17-h ff-hero-h101">Welcome to FF VIP</h1>
@@ -28321,8 +28336,8 @@ function HomeHero101() {
         {IMGS.hero ? <img className="ff-hero18-photo" src={IMGS.hero} srcSet={IMGS.hero_sm ? `${IMGS.hero_sm} 900w, ${IMGS.hero} 1800w` : undefined} sizes="(min-width:900px) 760px, 100vw" alt="" decoding="async" /> : <HomeScene kind="bar" />}
         <div className="ff-hero18-fade" aria-hidden="true" />
         <span className="ff-hero18-shadow" aria-hidden="true" />
-        <span className="ff-hero18-coin refl" aria-hidden="true"><Coin size={160} tier="gold" /></span>
-        <span className="ff-hero18-coin ff-hero17-coin"><Coin size={160} tier="gold" /></span>
+        <span className="ff-hero18-coin refl" aria-hidden="true"><SiteHeroCoin site="team" /></span>
+        <span className="ff-hero18-coin ff-hero17-coin"><SiteHeroCoin site="team" /></span>
       </div>
       <div className="ff-hero18-in">
         <h1 id="ff-hero17-h" className="ff-hero17-h ff-hero-h101">Welcome to FireFlair</h1>
@@ -28916,8 +28931,8 @@ function HireHero({ kind }) {
         {IMGS.hero ? <img className="ff-hero18-photo" src={IMGS.hero} srcSet={IMGS.hero_sm ? `${IMGS.hero_sm} 900w, ${IMGS.hero} 1800w` : undefined} sizes="(min-width:900px) 760px, 100vw" alt="" decoding="async" /> : <HomeScene kind="bar" />}
         <div className="ff-hero18-fade" aria-hidden="true" />
         <span className="ff-hero18-shadow" aria-hidden="true" />
-        <span className="ff-hero18-coin refl" aria-hidden="true"><Coin size={160} tier="gold" /></span>
-        <span className="ff-hero18-coin ff-hero17-coin"><Coin size={160} tier="gold" /></span>
+        <span className="ff-hero18-coin refl" aria-hidden="true"><SiteHeroCoin site={kind === "party" ? "party" : "staff"} /></span>
+        <span className="ff-hero18-coin ff-hero17-coin"><SiteHeroCoin site={kind === "party" ? "party" : "staff"} /></span>
       </div>
       <div className="ff-hero18-in">
         <h1 id="ff-hero11-h" className="ff-hero17-h ff-hero-h101">{c.h}</h1>

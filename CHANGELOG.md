@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.132 — 2026-11-10 — Site coins: Team bronze, Staff silver, Party gold, VIP platinum
+Artifact version 1794281146-1a6f · file `fireflair-v17.3.132.html`
+
+- Hero coins and the site-switcher icons now come from ONE mapping, `FF_SITE_BRAND` (key → hero, icon), using Alex's original FF monograms: Team = bronze, Staff = silver, Party = bright gold, VIP = platinum (with both diamond points).
+- Hero coin uses the 1024 px WebPs; switcher icon uses the matching 256 px WebPs. `SiteHeroCoin` renders the hero (Team home, Staff/Party hire hero, VIP hero); `SiteMark` renders the switcher icon. "biz" resolves to Staff.
+- Same slot, size, position, shadow and reflection as before; the coin is transparent so it sits on the existing clean photograph (no flattened image needed changing).
+- Site branding only: membership and reward badges, Coin and FFEmblem tier logic are unchanged. The small FF logo in the header and bottom nav is the general FireFlair mark and is unchanged.
+- Files added to `assets/ff-coin/site/` (hero) and `assets/ff-coin/site/icons/` (switcher). FF_SITES tiers for the fallback coin updated to match (Team bronze, Party gold).
+
 ## v17.3.131 — 2026-11-10 — FF VIP card, booking, experiences, map; header names
 Artifact version 1794272992-0042 · file `fireflair-v17.3.131.html`
 
