@@ -6,9 +6,9 @@ a single page: open it in a browser to run it. The highest number is the latest.
 
 What changed in each version is in `CHANGELOG.md` and in the commit notes.
 
-The page is compiled before it is published, so it has no comments. The readable
-source of the latest page, with every comment, is `source/fireflair-app.jsx`
-(images shortened to markers). Read that, not the `.html`. `REVIEW.md` is the
+From v17.4 the readable source is `src/` (see `docs/DEVELOPING.md`: folder layout, `npm run build`,
+`npm run check`). The single-file HTML is a build output (`build/`, not committed); the versioned
+`fireflair-v*.html` files up to v17.3.138 are history. `REVIEW.md` is the
 latest code review: how the prototype lines up with the live frontend and
 backend, what is still prototype-only, and what the live build should do.
 

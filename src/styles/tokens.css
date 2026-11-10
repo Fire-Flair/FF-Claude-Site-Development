@@ -1,0 +1,43 @@
+:root {
+  --color-ink: #0B0B0C;
+  --color-onyx: #141416;
+  --color-char: #1E1F22;
+  --color-cream: #F4EFE4;
+  --color-paper: #FBF8F1;
+
+  --color-gold: #C9A227;
+  --color-gold-lt: #E4C36A;
+  --color-gold-dk: #7E611D;
+  --color-gold-mid: #B08D2A;
+
+  --color-ox: #5C1220;
+  --color-ox-dk: #37070F;
+  --color-silver: #C6C8CC;
+  --color-bronze: #9A6634;
+
+  /* v1.01 colour system (Gilded Balance) */
+  --color-sand: #F3EAD5;
+  --color-ox-tint: #F7E9EC;
+  --color-soft: #FFFDF8;
+  --color-text: #1A1712;
+  --color-text-2: #4A443A;
+  --color-muted: #6A6253;
+  --color-muted-dark: #B9B2A6;
+  --color-line-strong: #968250;
+  --color-action: #D9B451;
+  --color-action-hi: #F8E9B4;
+  --color-on-action: #2A1E04;
+
+  --color-ok: #2F6B4F;
+  --color-warn: #7A4A20;
+  --color-bad: #B3261E;
+
+  --font-display: 'Cinzel', 'Optima', 'Palatino Linotype', Georgia, serif;
+  /* v1.01: the italic serif (Cormorant Garamond) is gone - it was hard to
+     read. "Serif" text now uses the same face as the body. */
+  --font-serif: 'Inter', ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  /* the original design's own breakpoint for switching from the mobile
+     bottom nav to the desktop header nav - not one of Tailwind's defaults */
+  }

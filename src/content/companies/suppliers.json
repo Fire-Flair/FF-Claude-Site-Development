@@ -1,0 +1,4857 @@
+[
+ {
+  "slug": "storm-djs",
+  "tag": "STORM",
+  "name": "Storm DJs",
+  "kind": "DJ agency",
+  "cat": "dj",
+  "base": "London",
+  "areas": [
+   "London",
+   "UK-wide"
+  ],
+  "summary": "A London DJ agency, established in 2011, that matches DJs, saxophonists and live musicians to weddings, private parties, corporate events and venues across the UK and abroad. FireFlair's primary DJ partner: their Starter Party, Signature Set and Unforgettable Night packages are bookable on FF Party.",
+  "services": [
+   "Wedding DJs",
+   "Party DJs",
+   "Corporate DJs",
+   "Hotel and venue residencies",
+   "Live saxophonists and musicians",
+   "Sound, lighting and photo booth packages"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Birthdays",
+   "Corporate events",
+   "Hotels and venues"
+  ],
+  "scale": [
+   "Small",
+   "Medium",
+   "Large"
+  ],
+  "facts": [
+   "Established 2011",
+   "203 published artists",
+   "UK-wide coverage",
+   "Over 3,200 past customers"
+  ],
+  "website": "https://storm-djs.com",
+  "social": {},
+  "images": {
+   "permission": "granted",
+   "photos": [
+    "https://storm-djs.com/media/123e8ddd-ec6e-422b-a318-87141d3c51f1",
+    "https://storm-djs.com/wp-content/uploads/2019/03/storm-djs-wedding-chris-taylor12.jpg",
+    "https://storm-djs.com/wp-content/uploads/2017/01/paul-dove-saxophonist-with-dj-storm.jpg",
+    "https://storm-djs.com/wp-content/uploads/2012/07/Storm09_Intro_012.jpg"
+   ]
+  },
+  "status": "partner",
+  "source": {
+   "urls": [
+    "https://storm-djs.com/about",
+    "https://storm-djs.com/best-dj-packages"
+   ],
+   "retrievedAt": "2026-11-07"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "manchester-djs",
+  "tag": "MANCH",
+  "name": "Manchester DJs",
+  "kind": "DJ, sound & lighting hire",
+  "base": "Manchester",
+  "areas": [
+   "Manchester",
+   "Lancashire",
+   "Cheshire"
+  ],
+  "summary": "A Manchester DJ hire company supplying DJs, sound and lighting for weddings, birthdays and other events, from small gatherings to large ones. It covers Greater Manchester, Lancashire and Cheshire.",
+  "services": [
+   "DJ hire",
+   "Sound hire",
+   "Lighting hire"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Birthdays",
+   "Corporate events"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Manchester",
+    "lat": 53.4808,
+    "lng": -2.2426,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "beatmatch-events",
+  "tag": "BEATM",
+  "name": "Beatmatch Events",
+  "kind": "DJ & entertainment company",
+  "base": "Manchester",
+  "areas": [
+   "Manchester"
+  ],
+  "summary": "A Manchester DJ company with a team of hand-picked DJs. It works with some of the city's established venues and lists weddings among its favourite events.",
+  "services": [
+   "DJ hire"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Manchester",
+    "lat": 53.4808,
+    "lng": -2.2426,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "maximum-music-uk",
+  "tag": "MAXIM",
+  "name": "Maximum Music UK",
+  "kind": "Wedding DJ & entertainment",
+  "base": "Manchester",
+  "areas": [
+   "Manchester",
+   "Lancashire",
+   "Yorkshire",
+   "Cheshire",
+   "Shropshire"
+  ],
+  "summary": "A Manchester DJ and entertainment company that specialises in weddings. It offers a range of packages and will travel across Lancashire, North and West Yorkshire, Cheshire and Shropshire.",
+  "services": [
+   "Wedding DJ",
+   "Entertainment packages"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Manchester",
+    "lat": 53.4808,
+    "lng": -2.2426,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "northern-wedding-dj",
+  "tag": "NORTH",
+  "name": "Northern Wedding DJ",
+  "kind": "Wedding DJ",
+  "base": "Stretford",
+  "areas": [
+   "Greater Manchester"
+  ],
+  "summary": "A Manchester-area wedding DJ service that also plays other special occasions.",
+  "services": [
+   "Wedding DJ",
+   "Special occasion DJ"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Stretford",
+    "lat": 53.447,
+    "lng": -2.308,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "innov8-djs",
+  "tag": "INNOV",
+  "name": "Innov8 DJs",
+  "kind": "DJs & karaoke",
+  "base": "Leeds",
+  "areas": [
+   "Leeds",
+   "West Yorkshire"
+  ],
+  "summary": "A Leeds company providing professional DJs for events of every kind, with karaoke also available.",
+  "services": [
+   "DJ hire",
+   "Karaoke"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Leeds",
+    "lat": 53.8008,
+    "lng": -1.5491,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "ultimate-wedding-dj",
+  "tag": "ULTIM",
+  "name": "Ultimate Wedding DJ",
+  "kind": "Wedding DJ & disco",
+  "base": "Middlesbrough",
+  "areas": [
+   "Teesside",
+   "County Durham",
+   "Newcastle",
+   "North East"
+  ],
+  "summary": "A North East wedding disco service, an offshoot of the established party DJ company Boogie Nights. It covers Middlesbrough, Darlington, Teesside, County Durham and Newcastle.",
+  "services": [
+   "Wedding DJ",
+   "Mobile disco"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [
+   "Offshoot of the party DJ company Boogie Nights"
+  ],
+  "locations": [
+   {
+    "label": "Middlesbrough",
+    "lat": 54.5742,
+    "lng": -1.235,
+    "approx": true
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "north-east-dj",
+  "tag": "NORTHE",
+  "name": "North East DJ",
+  "kind": "DJ company",
+  "base": "Newcastle",
+  "areas": [
+   "Newcastle",
+   "Tyne and Wear",
+   "North East"
+  ],
+  "summary": "A North East company of professional DJs with experience in the entertainment and music industry, supplying live DJs to venues, bars and events.",
+  "services": [
+   "DJ hire",
+   "Venue and bar DJs"
+  ],
+  "eventTypes": [
+   "Bars and venues",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Newcastle",
+    "lat": 54.9783,
+    "lng": -1.6178,
+    "approx": true
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "fresh-entertainments",
+  "tag": "FRESH",
+  "name": "Fresh Entertainments",
+  "kind": "Wedding entertainment & DJs",
+  "base": "Glasgow",
+  "areas": [
+   "Glasgow",
+   "Ayrshire",
+   "Loch Lomond",
+   "Edinburgh",
+   "Scotland-wide"
+  ],
+  "summary": "A Glasgow wedding entertainment company offering DJ hire across Scotland. It lists Ayrshire, Loch Lomond, Stornoway and Edinburgh as areas it knows well.",
+  "services": [
+   "DJ hire",
+   "Wedding entertainment"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [
+   "Public liability insurance listed"
+  ],
+  "locations": [
+   {
+    "label": "Glasgow",
+    "lat": 55.8642,
+    "lng": -4.2518,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "inferno-dj-event-hire",
+  "tag": "INFER",
+  "name": "Inferno DJ & Event Hire",
+  "kind": "DJs & event hire",
+  "base": "Rutherglen",
+  "areas": [
+   "Glasgow",
+   "Edinburgh",
+   "Fife",
+   "Dundee",
+   "Central Scotland"
+  ],
+  "summary": "A South Lanarkshire DJ and event hire company supplying DJs for weddings, birthdays, private parties and corporate events across Glasgow, Edinburgh, Fife, Dundee, Falkirk, Stirling and Ayrshire.",
+  "services": [
+   "DJ hire",
+   "Event hire"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Birthdays",
+   "Corporate events",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Rutherglen",
+    "lat": 55.83,
+    "lng": -4.212,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "atomik-discotheques",
+  "tag": "ATOMI",
+  "name": "Atomik Discotheques",
+  "kind": "Mobile disco & karaoke",
+  "base": "Dalkeith",
+  "areas": [
+   "Edinburgh",
+   "East Lothian",
+   "Midlothian"
+  ],
+  "summary": "A Midlothian mobile disco and karaoke supplier serving parties and events around Edinburgh, East Lothian and Midlothian, including wedding receptions, civil partnerships and family parties.",
+  "services": [
+   "Mobile disco",
+   "Karaoke",
+   "Mobile DJs"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Birthdays",
+   "Family parties"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Dalkeith",
+    "lat": 55.896,
+    "lng": -3.069,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "dj-edinburgh",
+  "tag": "DJEDI",
+  "name": "DJ Edinburgh",
+  "kind": "Wedding DJ & MC",
+  "base": "Edinburgh",
+  "areas": [
+   "Edinburgh",
+   "Scotland"
+  ],
+  "summary": "An Edinburgh wedding DJ and master of ceremonies offering evening entertainment, or an all-day service with sound hire, for private and corporate clients in Scottish venues.",
+  "services": [
+   "Wedding DJ",
+   "Master of ceremonies",
+   "Sound hire"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Edinburgh",
+    "lat": 55.9533,
+    "lng": -3.1883,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "party-people-video-djs",
+  "tag": "PARTY",
+  "name": "Party People Video DJs",
+  "kind": "Video DJs",
+  "base": "Glasgow",
+  "areas": [
+   "West Scotland",
+   "Central Scotland"
+  ],
+  "summary": "A Glasgow mobile DJ company that specialises in video DJing across West and Central Scotland, for birthdays, weddings, corporate and charity events.",
+  "services": [
+   "Video DJing",
+   "Mobile DJ"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Birthdays",
+   "Corporate events",
+   "Charity events"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Glasgow",
+    "lat": 55.8642,
+    "lng": -4.2518,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "falkirk-discohire",
+  "tag": "FALKI",
+  "name": "Falkirk Discohire",
+  "kind": "Mobile entertainment, DJs & karaoke",
+  "base": "Falkirk",
+  "areas": [
+   "Falkirk",
+   "Edinburgh",
+   "Glasgow",
+   "Central Scotland"
+  ],
+  "summary": "A Falkirk mobile entertainment company providing DJs, discos and karaoke, based in central Scotland and covering Edinburgh, Glasgow and further afield.",
+  "services": [
+   "DJs",
+   "Discos",
+   "Karaoke"
+  ],
+  "eventTypes": [
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Falkirk",
+    "lat": 56.0019,
+    "lng": -3.7839,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "glasgow-mobile-disco",
+  "tag": "GLASG",
+  "name": "Glasgow Mobile Disco",
+  "kind": "Wedding DJ & mobile disco",
+  "base": "Glasgow",
+  "areas": [
+   "Glasgow",
+   "Scotland"
+  ],
+  "summary": "A Glasgow wedding DJ and mobile disco supplier that performs at Scottish wedding venues.",
+  "services": [
+   "Wedding DJ",
+   "Mobile disco"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Glasgow",
+    "lat": 55.8642,
+    "lng": -4.2518,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "reload-wedding-services",
+  "tag": "RELOA",
+  "name": "Reload Wedding Services",
+  "kind": "Mobile disco & DJs",
+  "base": "Bristol",
+  "areas": [
+   "Bristol",
+   "Bath",
+   "South West"
+  ],
+  "summary": "A Bristol mobile disco, DJ and AV company that began with weddings after working the bars and clubs of Bristol, Bath and Wales. It is a preferred supplier at several local venues for DJ and lighting.",
+  "services": [
+   "Mobile disco",
+   "DJs",
+   "Audio visual equipment"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Birthdays",
+   "Engagements"
+  ],
+  "scale": [],
+  "facts": [
+   "Preferred supplier at a number of venues around Bristol and Bath"
+  ],
+  "locations": [
+   {
+    "label": "Bristol",
+    "lat": 51.4545,
+    "lng": -2.5879,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "triangle-mobile-discos",
+  "tag": "TRIAN",
+  "name": "Triangle Mobile Discos",
+  "kind": "Mobile disco & DJ",
+  "base": "Bristol",
+  "areas": [
+   "Bristol",
+   "South West"
+  ],
+  "summary": "A full-time Bristol DJ business established in 1975, one of the longest-running mobile disco companies in the city and the South West.",
+  "services": [
+   "Mobile disco",
+   "DJ hire"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [
+   "Established in 1975"
+  ],
+  "locations": [
+   {
+    "label": "Bristol",
+    "lat": 51.4545,
+    "lng": -2.5879,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "enhanced-entertainment",
+  "tag": "ENHAN",
+  "name": "Enhanced Entertainment",
+  "kind": "Wedding DJs & mobile disco",
+  "base": "Weston-super-Mare",
+  "areas": [
+   "Somerset",
+   "South West"
+  ],
+  "summary": "A South West award-winning DJ company based in Weston-super-Mare, specialising in wedding DJs and mobile disco hire with extras to complete a package.",
+  "services": [
+   "Wedding DJs",
+   "Mobile disco hire"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [
+   "Award-winning"
+  ],
+  "locations": [
+   {
+    "label": "Weston-super-Mare",
+    "lat": 51.346,
+    "lng": -2.977,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "funtasia-entertainment",
+  "tag": "FUNTA",
+  "name": "Funtasia Entertainment",
+  "kind": "Wedding entertainment company",
+  "base": "Westerleigh",
+  "areas": [
+   "Bristol",
+   "South West"
+  ],
+  "summary": "A full-time wedding entertainment company near Bristol with a team of ten, described as one of the largest suppliers of wedding entertainment in the South West.",
+  "services": [
+   "Wedding entertainment",
+   "DJs"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [
+   "Team of ten"
+  ],
+  "locations": [
+   {
+    "label": "Westerleigh",
+    "lat": 51.516,
+    "lng": -2.456,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "the-wedding-djs",
+  "tag": "WEDDI",
+  "name": "The Wedding DJs",
+  "kind": "Wedding disco company",
+  "base": "Barry",
+  "areas": [
+   "South Wales",
+   "Mid Wales",
+   "Gloucestershire",
+   "Cotswolds"
+  ],
+  "summary": "A full-time mobile disco company in Barry that specialises in wedding discos and DJs across South Wales, Mid Wales, Gloucestershire and the Cotswolds.",
+  "services": [
+   "Wedding DJs",
+   "Wedding discos"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [
+   "Full-time company"
+  ],
+  "locations": [
+   {
+    "label": "Barry",
+    "lat": 51.4,
+    "lng": -3.274,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "skaffta",
+  "tag": "SKAFF",
+  "name": "Skaffta",
+  "kind": "DJ service",
+  "base": "Cardiff",
+  "areas": [
+   "Cardiff",
+   "South Wales"
+  ],
+  "summary": "A Cardiff DJ service whose package includes sound, lighting and effects.",
+  "services": [
+   "DJ service",
+   "Sound",
+   "Lighting",
+   "Effects"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Cardiff",
+    "lat": 51.4816,
+    "lng": -3.1791,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "birmingham-crew-djs",
+  "tag": "BIRMI",
+  "name": "Birmingham Crew DJs & Events",
+  "kind": "DJs & events",
+  "base": "Birmingham",
+  "areas": [
+   "Birmingham",
+   "West Midlands"
+  ],
+  "summary": "A Birmingham DJ and events company listed among the city's mobile disco suppliers.",
+  "services": [
+   "DJ hire",
+   "Events"
+  ],
+  "eventTypes": [
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Birmingham",
+    "lat": 52.4862,
+    "lng": -1.8904,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "logic-discos",
+  "tag": "LOGIC",
+  "name": "Logic Discos",
+  "kind": "Mobile disco",
+  "base": "Wolverhampton",
+  "areas": [
+   "Wolverhampton",
+   "Telford",
+   "Midlands"
+  ],
+  "summary": "A premium-standard mobile disco service based near Wolverhampton and covering the whole of the Midlands.",
+  "services": [
+   "Mobile disco"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Wolverhampton",
+    "lat": 52.587,
+    "lng": -2.1288,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "mobile-disco-belfast",
+  "tag": "MOBIL",
+  "name": "Mobile Disco Belfast",
+  "kind": "Wedding & event DJ",
+  "base": "Belfast",
+  "areas": [
+   "Belfast",
+   "Northern Ireland"
+  ],
+  "summary": "A Belfast wedding and events DJ. Clients are invited to help shape the soundtrack, and the service covers weddings, birthdays, engagements, corporate events, hen parties, clubs and bars.",
+  "services": [
+   "Wedding DJ",
+   "Event DJ",
+   "Personalised DJ service"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Birthdays",
+   "Corporate events",
+   "Hen parties"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Belfast",
+    "lat": 54.5973,
+    "lng": -5.9301,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "requedainious-entertainment",
+  "tag": "REQUE",
+  "name": "Requedainious Entertainment",
+  "kind": "Wedding, corporate & party DJs",
+  "base": "London",
+  "areas": [
+   "London"
+  ],
+  "summary": "A London DJ, sound and lighting company for weddings, corporate events and parties. It lists work at London landmarks and for large brands.",
+  "services": [
+   "DJs",
+   "Sound hire",
+   "Lighting hire"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "dcs-events",
+  "tag": "DCSEV",
+  "name": "DCS Events",
+  "kind": "Sound, light & DJ company",
+  "base": "London",
+  "areas": [
+   "London"
+  ],
+  "summary": "A London entertainment company providing sound, lighting and DJs, with wedding packages that include a DJ and sound and lighting crew where needed.",
+  "services": [
+   "DJs",
+   "Sound",
+   "Lighting"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Private events"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "santi-sounds-entertainment",
+  "tag": "SANTI",
+  "name": "Santi Sounds Entertainment",
+  "kind": "DJ, sound & lighting",
+  "base": "London",
+  "areas": [
+   "London",
+   "Hertfordshire",
+   "Essex",
+   "Surrey",
+   "South East"
+  ],
+  "summary": "A London DJ, sound and lighting provider with over fifteen years' experience, covering London and the home counties and travelling UK-wide for larger events.",
+  "services": [
+   "Wedding DJ",
+   "Sound and lighting hire",
+   "AV production"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Birthdays",
+   "Corporate events"
+  ],
+  "scale": [],
+  "facts": [
+   "15+ years' experience"
+  ],
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "elite-sounds-and-events",
+  "tag": "ELITE",
+  "name": "Elite Sounds and Events",
+  "kind": "Mobile DJ services",
+  "base": "London",
+  "areas": [
+   "London",
+   "Kent"
+  ],
+  "summary": "A mobile DJ company serving London, Kent and nearby areas, supplying sound systems, lighting and DJs for weddings, corporate events and club nights.",
+  "services": [
+   "Mobile DJs",
+   "Sound systems",
+   "Lighting"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Club nights"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "max-marcus-events",
+  "tag": "MAXMA",
+  "name": "Max Marcus Events",
+  "kind": "DJ & events company",
+  "base": "London",
+  "areas": [
+   "London",
+   "South East"
+  ],
+  "summary": "A London DJ and events company specialising in weddings, corporate events and parties across London and the South East.",
+  "services": [
+   "DJs",
+   "Event services"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "eventsound",
+  "tag": "EVENT",
+  "name": "EventSound",
+  "kind": "DJs, sound & lights",
+  "base": "London",
+  "areas": [
+   "London",
+   "Home Counties"
+  ],
+  "summary": "A London company providing DJs, sound and lighting for weddings, corporate events, birthday parties and bar and bat mitzvahs across the capital and home counties.",
+  "services": [
+   "DJs",
+   "Sound",
+   "Lighting"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Birthdays",
+   "Bar and bat mitzvahs"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "special-events-dj",
+  "tag": "SPECI",
+  "name": "Special Events DJ",
+  "kind": "DJ & sound hire",
+  "base": "Brighton",
+  "areas": [
+   "Brighton",
+   "East Sussex",
+   "Greater London"
+  ],
+  "summary": "A newer Brighton company offering DJ entertainment and sound equipment hire across Brighton, East Sussex and Greater London, for weddings, milestone birthdays and corporate events.",
+  "services": [
+   "DJ entertainment",
+   "Sound equipment hire",
+   "Lighting"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Birthdays",
+   "Corporate events"
+  ],
+  "scale": [],
+  "facts": [
+   "New company starting in Brighton"
+  ],
+  "locations": [
+   {
+    "label": "Brighton",
+    "lat": 50.8225,
+    "lng": -0.1372,
+    "approx": false
+   }
+  ],
+  "cat": "dj",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "pro-photo-events",
+  "tag": "PROPH",
+  "name": "Pro Photo Events",
+  "kind": "Wedding & event photography",
+  "base": "London",
+  "areas": [
+   "London",
+   "UK-wide",
+   "Europe"
+  ],
+  "summary": "A London photography business established in 2004, covering weddings, portraits and events across the UK and Europe, with a team supporting the lead photographer.",
+  "services": [
+   "Wedding photography",
+   "Portraits",
+   "Event photography",
+   "Photo booth"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Events"
+  ],
+  "scale": [],
+  "facts": [
+   "Established in 2004",
+   "Over 500 weddings photographed"
+  ],
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "wedabelle",
+  "tag": "WEDAB",
+  "name": "Wedabelle",
+  "kind": "Wedding photography & film team",
+  "base": "London",
+  "areas": [
+   "London",
+   "UK-wide"
+  ],
+  "summary": "A London team of wedding photographers and videographers with different styles, so a couple can be matched to the look they prefer.",
+  "services": [
+   "Wedding photography",
+   "Wedding videography"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "york-place-studios",
+  "tag": "YORKP",
+  "name": "York Place Studios",
+  "kind": "Photography & film studio",
+  "base": "London",
+  "areas": [
+   "London",
+   "UK-wide"
+  ],
+  "summary": "A family team of photographers and filmmakers with bases in London and across the UK, working worldwide and recognised in photography competitions.",
+  "services": [
+   "Wedding photography",
+   "Film"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Events"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "the-wedding-studio-london",
+  "tag": "WEDDIN",
+  "name": "The Wedding Studio",
+  "kind": "Wedding photography",
+  "base": "Richmond",
+  "areas": [
+   "London",
+   "Surrey"
+  ],
+  "summary": "A Richmond wedding photography studio run by a small team of three, covering London weddings.",
+  "services": [
+   "Wedding photography"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [
+   "Team of three"
+  ],
+  "locations": [
+   {
+    "label": "Richmond",
+    "lat": 51.4613,
+    "lng": -0.3037,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "corporate-photography-london",
+  "tag": "CORPO",
+  "name": "Corporate Photography London",
+  "kind": "Corporate event photography & video",
+  "base": "London",
+  "areas": [
+   "London",
+   "Greater London"
+  ],
+  "summary": "A London team of photographers and videographers for corporate events, presentations, awards and conferences, working with small events or large company days.",
+  "services": [
+   "Corporate event photography",
+   "Event video",
+   "Video streaming"
+  ],
+  "eventTypes": [
+   "Corporate events",
+   "Conferences",
+   "Awards"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "the-london-event-photography-company",
+  "tag": "LONDO",
+  "name": "The London Event Photography Company",
+  "kind": "Event photography",
+  "base": "London",
+  "areas": [
+   "London",
+   "UK-wide"
+  ],
+  "summary": "A London event photography team covering award ceremonies, dinners, exhibitions, networking and PR events and grand openings across the country.",
+  "services": [
+   "Event photography"
+  ],
+  "eventTypes": [
+   "Corporate events",
+   "Awards",
+   "Exhibitions"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "deja-vu-camera-crew",
+  "tag": "DEJAV",
+  "name": "Deja Vu Camera Crew",
+  "kind": "Wedding photography team",
+  "base": "Birmingham",
+  "areas": [
+   "Birmingham",
+   "West Midlands"
+  ],
+  "summary": "A Birmingham team of female wedding photographers who describe their work as traditional moments with a modern touch.",
+  "services": [
+   "Wedding photography"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Birmingham",
+    "lat": 52.4862,
+    "lng": -1.8904,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "lensi-photography",
+  "tag": "LENSI",
+  "name": "Lensi Photography",
+  "kind": "Event, portrait & wedding photography",
+  "base": "London",
+  "areas": [
+   "London",
+   "Birmingham"
+  ],
+  "summary": "A photography business based in London and Birmingham, covering personal parties, business events and conferences, portraits, red carpet and weddings.",
+  "services": [
+   "Event photography",
+   "Portraits",
+   "Red carpet",
+   "Wedding photography"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Conferences"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": false
+   },
+   {
+    "label": "Birmingham",
+    "lat": 52.4862,
+    "lng": -1.8904,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "i-d-image-development",
+  "tag": "IDIMA",
+  "name": "I-d Image Development",
+  "kind": "Photographic studio",
+  "base": "St Neots",
+  "areas": [
+   "St Neots",
+   "Cambridgeshire"
+  ],
+  "summary": "A photographic studio in the centre of St Neots specialising in wedding and portrait photography, with a team of award-winning photographers.",
+  "services": [
+   "Wedding photography",
+   "Portrait photography"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [
+   "Studio in St Neots town centre"
+  ],
+  "locations": [
+   {
+    "label": "St Neots",
+    "lat": 52.229,
+    "lng": -0.266,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "big-day-productions",
+  "tag": "BIGDA",
+  "name": "Big Day Productions",
+  "kind": "Wedding photo & film team",
+  "base": "Henley-on-Thames",
+  "areas": [
+   "Oxfordshire",
+   "UK-wide"
+  ],
+  "summary": "A Henley-on-Thames team of wedding photographers and videographers working UK-wide, aiming for creative, timeless images without heavy posing.",
+  "services": [
+   "Wedding photography",
+   "Wedding film"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Henley-on-Thames",
+    "lat": 51.536,
+    "lng": -0.902,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "creative-depiction-studio",
+  "tag": "CREAT",
+  "name": "Creative Depiction Studio",
+  "kind": "Photography & videography",
+  "base": "Gloucester",
+  "areas": [
+   "Gloucestershire",
+   "Cotswolds"
+  ],
+  "summary": "A Gloucester studio at the edge of the Cotswolds offering wedding photography and videography.",
+  "services": [
+   "Wedding photography",
+   "Videography"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Gloucester",
+    "lat": 51.8642,
+    "lng": -2.238,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "limelight-studio",
+  "tag": "LIMEL",
+  "name": "Limelight Studio",
+  "kind": "Wedding photography",
+  "base": "St Ives",
+  "areas": [
+   "Cornwall",
+   "South West"
+  ],
+  "summary": "A Cornish studio in St Ives where two photographers shoot together throughout each event to catch every moment.",
+  "services": [
+   "Wedding photography"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "St Ives",
+    "lat": 50.211,
+    "lng": -5.48,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "purple-lizard-photos",
+  "tag": "PURPL",
+  "name": "Purple Lizard Photos",
+  "kind": "Wedding photography studio",
+  "base": "Manchester",
+  "areas": [
+   "Manchester",
+   "Greater Manchester"
+  ],
+  "summary": "A Manchester wedding photography studio founded in 2013, with a team of five photographers and three editors working throughout the year.",
+  "services": [
+   "Wedding photography",
+   "Photo editing"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [
+   "Established in 2013",
+   "Team of seven"
+  ],
+  "locations": [
+   {
+    "label": "Manchester",
+    "lat": 53.4808,
+    "lng": -2.2426,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "about-today-photography",
+  "tag": "ABOUT",
+  "name": "About Today Photography",
+  "kind": "Wedding photography",
+  "base": "Manchester",
+  "areas": [
+   "Manchester",
+   "Liverpool",
+   "Lancashire",
+   "Yorkshire"
+  ],
+  "summary": "A Manchester wedding photography team focused on natural, candid moments, travelling through the North West including Liverpool, Lancashire and Yorkshire.",
+  "services": [
+   "Wedding photography"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Manchester",
+    "lat": 53.4808,
+    "lng": -2.2426,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "pixies-in-the-cellar",
+  "tag": "PIXIE",
+  "name": "Pixies in the Cellar",
+  "kind": "Wedding photography",
+  "base": "Stalybridge",
+  "areas": [
+   "Greater Manchester"
+  ],
+  "summary": "A Stalybridge creative wedding photography team.",
+  "services": [
+   "Wedding photography"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Stalybridge",
+    "lat": 53.483,
+    "lng": -2.06,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "all-seasons-photographers",
+  "tag": "ALLSE",
+  "name": "All Seasons Photographers",
+  "kind": "Wedding photography",
+  "base": "Liverpool",
+  "areas": [
+   "Liverpool",
+   "Merseyside"
+  ],
+  "summary": "A Liverpool wedding photography business.",
+  "services": [
+   "Wedding photography"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Liverpool",
+    "lat": 53.4084,
+    "lng": -2.9916,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "maytree-photography",
+  "tag": "MAYTR",
+  "name": "Maytree Photography",
+  "kind": "Wedding & event photography",
+  "base": "Sheffield",
+  "areas": [
+   "Sheffield",
+   "South Yorkshire"
+  ],
+  "summary": "A Sheffield photography business with many years of experience documenting weddings and events.",
+  "services": [
+   "Wedding photography",
+   "Event photography"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Events"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Sheffield",
+    "lat": 53.3811,
+    "lng": -1.4701,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "studio8-events-photography",
+  "tag": "STUDI",
+  "name": "Studio8 Events Photography",
+  "kind": "Events photography",
+  "base": "Stockton-on-Tees",
+  "areas": [
+   "Teesside",
+   "County Durham",
+   "North East"
+  ],
+  "summary": "A Stockton-on-Tees events photography business covering weddings and other occasions in the North East.",
+  "services": [
+   "Event photography",
+   "Wedding photography"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Events"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Stockton-on-Tees",
+    "lat": 54.5704,
+    "lng": -1.318,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "pocket-square-photography",
+  "tag": "POCKE",
+  "name": "Pocket Square Photography",
+  "kind": "Wedding photography",
+  "base": "Glasgow",
+  "areas": [
+   "Glasgow",
+   "Scotland"
+  ],
+  "summary": "A Glasgow wedding photography business with over ten years' experience, focused on keeping the day stress-free.",
+  "services": [
+   "Wedding photography"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [
+   "Over ten years' experience"
+  ],
+  "locations": [
+   {
+    "label": "Glasgow",
+    "lat": 55.8642,
+    "lng": -4.2518,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "weir-photography",
+  "tag": "WEIRP",
+  "name": "Weir Photography",
+  "kind": "Wedding, portrait & commercial photography",
+  "base": "Linlithgow",
+  "areas": [
+   "Linlithgow",
+   "Edinburgh",
+   "Scotland"
+  ],
+  "summary": "A Linlithgow husband-and-wife photography team offering modern wedding, portrait and commercial photography across Scotland, with over 900 weddings photographed since 2005.",
+  "services": [
+   "Wedding photography",
+   "Portraits",
+   "Commercial photography"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Events"
+  ],
+  "scale": [],
+  "facts": [
+   "Over 900 weddings since 2005"
+  ],
+  "locations": [
+   {
+    "label": "Linlithgow",
+    "lat": 55.976,
+    "lng": -3.602,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "imagina-studio-photography",
+  "tag": "IMAGI",
+  "name": "Imagina Studio Photography",
+  "kind": "Wedding photography",
+  "base": "Edinburgh",
+  "areas": [
+   "Edinburgh",
+   "Scotland"
+  ],
+  "summary": "An Edinburgh wedding photography team of two.",
+  "services": [
+   "Wedding photography"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Edinburgh",
+    "lat": 55.9533,
+    "lng": -3.1883,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "glasgow-photographer",
+  "tag": "GLASGO",
+  "name": "Glasgow Photographer",
+  "kind": "Wedding photography partnership",
+  "base": "Glasgow",
+  "areas": [
+   "Glasgow",
+   "Scotland"
+  ],
+  "summary": "A Glasgow partnership of two photographers with over forty years of combined experience.",
+  "services": [
+   "Wedding photography"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [
+   "Over 40 years' combined experience"
+  ],
+  "locations": [
+   {
+    "label": "Glasgow",
+    "lat": 55.8642,
+    "lng": -4.2518,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "canvas-and-peach-studios",
+  "tag": "CANVA",
+  "name": "Canvas and Peach Studios",
+  "kind": "Wedding, newborn & family photography",
+  "base": "Glasgow",
+  "areas": [
+   "Glasgow",
+   "Edinburgh",
+   "Scotland"
+  ],
+  "summary": "A Glasgow studio covering wedding, couple, newborn and family photography across Glasgow, Edinburgh and the rest of Scotland, with wedding albums on offer.",
+  "services": [
+   "Wedding photography",
+   "Couple photography",
+   "Albums",
+   "Newborn and family photography"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Glasgow",
+    "lat": 55.8642,
+    "lng": -4.2518,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "orange-lemur-photography-studio",
+  "tag": "ORANG",
+  "name": "Orange Lemur Photography Studio",
+  "kind": "Photography studio",
+  "base": "Edinburgh",
+  "areas": [
+   "Edinburgh",
+   "Scotland"
+  ],
+  "summary": "An Edinburgh photography studio shooting weddings.",
+  "services": [
+   "Wedding photography"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Edinburgh",
+    "lat": 55.9533,
+    "lng": -3.1883,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "eminent-photography",
+  "tag": "EMINE",
+  "name": "Eminent Photography",
+  "kind": "Wedding photography",
+  "base": "Cardiff",
+  "areas": [
+   "Cardiff",
+   "South Wales"
+  ],
+  "summary": "A small Cardiff team of photographers blending fine-art and documentary styles for modern contemporary wedding photography.",
+  "services": [
+   "Wedding photography"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Cardiff",
+    "lat": 51.4816,
+    "lng": -3.1791,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "studio-cwtch",
+  "tag": "STUDIO",
+  "name": "Studio Cwtch",
+  "kind": "Photography studio",
+  "base": "Cardiff",
+  "areas": [
+   "Cardiff",
+   "South Wales"
+  ],
+  "summary": "A Cardiff photography studio working on weddings.",
+  "services": [
+   "Wedding photography"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Cardiff",
+    "lat": 51.4816,
+    "lng": -3.1791,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "wye-valley-studios",
+  "tag": "WYEVA",
+  "name": "Wye Valley Studios",
+  "kind": "Family photography business",
+  "base": "Caldicot",
+  "areas": [
+   "Monmouthshire",
+   "South Wales"
+  ],
+  "summary": "A family photography business in Caldicot that has operated since 1956, taking wedding bookings.",
+  "services": [
+   "Wedding photography"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [
+   "Operating since 1956"
+  ],
+  "locations": [
+   {
+    "label": "Caldicot",
+    "lat": 51.592,
+    "lng": -2.749,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "safelight-weddings",
+  "tag": "SAFEL",
+  "name": "Safelight Weddings",
+  "kind": "Wedding photography",
+  "base": "Swansea",
+  "areas": [
+   "Swansea",
+   "South Wales"
+  ],
+  "summary": "A Swansea wedding photography business.",
+  "services": [
+   "Wedding photography"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Swansea",
+    "lat": 51.6214,
+    "lng": -3.9436,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "pure-photo-ni",
+  "tag": "PUREP",
+  "name": "Pure Photo N.I",
+  "kind": "Wedding photography",
+  "base": "Lisburn",
+  "areas": [
+   "Lisburn",
+   "Belfast",
+   "Northern Ireland"
+  ],
+  "summary": "A multi-award-winning husband-and-wife wedding photography team based in Lisburn, just outside Belfast.",
+  "services": [
+   "Wedding photography"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [
+   "Multi-award winning"
+  ],
+  "locations": [
+   {
+    "label": "Lisburn",
+    "lat": 54.5162,
+    "lng": -6.058,
+    "approx": false
+   },
+   {
+    "label": "Belfast",
+    "lat": 54.5973,
+    "lng": -5.9301,
+    "approx": true
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "backyard-photography-company",
+  "tag": "BACKY",
+  "name": "The Backyard Photography Company",
+  "kind": "Photography",
+  "base": "Belfast",
+  "areas": [
+   "Belfast",
+   "Northern Ireland"
+  ],
+  "summary": "A Belfast photography company shooting weddings and events.",
+  "services": [
+   "Wedding photography"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Events"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Belfast",
+    "lat": 54.5973,
+    "lng": -5.9301,
+    "approx": false
+   }
+  ],
+  "cat": "photo",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "orde-food-company",
+  "tag": "ORDEF",
+  "name": "The Orde Food Company",
+  "kind": "Wedding & event catering",
+  "base": "Kelso",
+  "areas": [
+   "Scottish Borders",
+   "Scotland",
+   "Northern England"
+  ],
+  "summary": "An award-winning Scottish Borders catering company working across Scotland and northern England for weddings and events.",
+  "services": [
+   "Wedding catering",
+   "Event catering"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [
+   "Award-winning"
+  ],
+  "locations": [
+   {
+    "label": "Kelso",
+    "lat": 55.599,
+    "lng": -2.433,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "appetite-direct",
+  "tag": "APPET",
+  "name": "Appetite Direct",
+  "kind": "Boutique catering & events",
+  "base": "Edinburgh",
+  "areas": [
+   "Edinburgh",
+   "Scotland"
+  ],
+  "summary": "A multi-award-winning boutique Edinburgh catering and events company focused on high-quality local, seasonal food.",
+  "services": [
+   "Wedding catering",
+   "Event catering"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [
+   "Multi-award winning"
+  ],
+  "locations": [
+   {
+    "label": "Edinburgh",
+    "lat": 55.9533,
+    "lng": -3.1883,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "saffron-events-uk",
+  "tag": "SAFFR",
+  "name": "Saffron Events UK",
+  "kind": "Asian event management & catering",
+  "base": "Glasgow",
+  "areas": [
+   "Glasgow",
+   "Scotland",
+   "Northern England"
+  ],
+  "summary": "A long-established Glasgow Asian event management and catering company with several menus, serving events of all sizes across Scotland and northern England.",
+  "services": [
+   "Asian catering",
+   "Event management"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Glasgow",
+    "lat": 55.8642,
+    "lng": -4.2518,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "nosh-glasgow",
+  "tag": "NOSH",
+  "name": "Nosh",
+  "kind": "Event catering",
+  "base": "Glasgow",
+  "areas": [
+   "Glasgow",
+   "Scotland"
+  ],
+  "summary": "A creative Glasgow catering company with over fifteen years of events experience.",
+  "services": [
+   "Event catering",
+   "Wedding catering"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [
+   "Over 15 years' events experience"
+  ],
+  "locations": [
+   {
+    "label": "Glasgow",
+    "lat": 55.8642,
+    "lng": -4.2518,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "ramside-event-catering",
+  "tag": "RAMSI",
+  "name": "Ramside Event Catering",
+  "kind": "Event & wedding catering",
+  "base": "Durham",
+  "areas": [
+   "Durham",
+   "Newcastle",
+   "Northumberland",
+   "Tyne and Wear",
+   "North Yorkshire"
+  ],
+  "summary": "Part of the family-run Ramside Estates Group, one of the largest privately owned event caterers in the North East, serving County Durham, Northumberland, Tyne and Wear and North Yorkshire.",
+  "services": [
+   "Wedding catering",
+   "Event catering"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [
+   "Part of Ramside Estates Group",
+   "Family-run for over 60 years"
+  ],
+  "locations": [
+   {
+    "label": "Durham",
+    "lat": 54.7761,
+    "lng": -1.5733,
+    "approx": true
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "jacksons-catering",
+  "tag": "JACKS",
+  "name": "Jackson's Catering",
+  "kind": "External catering",
+  "base": "Newcastle",
+  "areas": [
+   "Newcastle",
+   "Northumberland",
+   "Teesside",
+   "North East"
+  ],
+  "summary": "An external catering company with premises in Newcastle, Northumberland, North Shields and Middlesbrough, working seven days a week across the North East with buffets, BBQs, hog roasts and more.",
+  "services": [
+   "Buffets",
+   "BBQs",
+   "Hog roasts",
+   "American catering",
+   "Fish and chip vans"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [
+   "Seven-day service across the North East"
+  ],
+  "locations": [
+   {
+    "label": "Newcastle",
+    "lat": 54.9783,
+    "lng": -1.6178,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "merry-events-catering",
+  "tag": "MERRY",
+  "name": "Merry Events Catering",
+  "kind": "Wedding & event catering",
+  "base": "Whitley Bay",
+  "areas": [
+   "Whitley Bay",
+   "Newcastle",
+   "North East"
+  ],
+  "summary": "A husband-and-wife catering team in Whitley Bay with over thirty years' combined hospitality experience, offering wedding catering, private dining, parties and corporate catering across the North East.",
+  "services": [
+   "Wedding catering",
+   "Private dining",
+   "Corporate catering"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [
+   "30+ years' combined experience"
+  ],
+  "locations": [
+   {
+    "label": "Whitley Bay",
+    "lat": 55.045,
+    "lng": -1.449,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "baba-ganoush-york",
+  "tag": "BABAG",
+  "name": "Baba Ganoush",
+  "kind": "Wedding & event catering",
+  "base": "York",
+  "areas": [
+   "York",
+   "Leeds",
+   "Yorkshire"
+  ],
+  "summary": "A York catering company that serves weddings and events across Yorkshire and likes to try new ways of delivering food to the table.",
+  "services": [
+   "Wedding catering",
+   "Event catering"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "York",
+    "lat": 53.9591,
+    "lng": -1.0815,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "happy-hogs-catering",
+  "tag": "HAPPY",
+  "name": "Happy Hogs Catering",
+  "kind": "Hog roast catering",
+  "base": "York",
+  "areas": [
+   "York",
+   "Yorkshire"
+  ],
+  "summary": "A York hog roast caterer serving weddings and events across Yorkshire.",
+  "services": [
+   "Hog roast catering"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "York",
+    "lat": 53.9591,
+    "lng": -1.0815,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "dine-catering-leeds",
+  "tag": "DINEC",
+  "name": "Dine Catering",
+  "kind": "Wedding catering",
+  "base": "Leeds",
+  "areas": [
+   "Leeds",
+   "West Yorkshire"
+  ],
+  "summary": "A Leeds wedding caterer that builds each menu around the couple.",
+  "services": [
+   "Wedding catering"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Leeds",
+    "lat": 53.8008,
+    "lng": -1.5491,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "wild-garlic-event-catering",
+  "tag": "WILDG",
+  "name": "Wild Garlic Event Catering",
+  "kind": "Outside catering",
+  "base": "Tattenhall",
+  "areas": [
+   "Cheshire",
+   "Greater Manchester",
+   "Liverpool",
+   "North Wales"
+  ],
+  "summary": "A family-run outside catering business in Cheshire, specialising in weddings and events across North Wales, Greater Manchester, Cheshire and Liverpool.",
+  "services": [
+   "Wedding catering",
+   "Event catering"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Events"
+  ],
+  "scale": [],
+  "facts": [
+   "Family-run",
+   "Public liability insurance listed"
+  ],
+  "locations": [
+   {
+    "label": "Tattenhall",
+    "lat": 53.1,
+    "lng": -2.78,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "impact-catering",
+  "tag": "IMPAC",
+  "name": "Impact Catering",
+  "kind": "Corporate & events catering",
+  "base": "Eccles",
+  "areas": [
+   "Manchester",
+   "North West"
+  ],
+  "summary": "A Manchester-based caterer specialising in creative corporate and events catering, with bespoke wedding packages.",
+  "services": [
+   "Corporate catering",
+   "Events catering",
+   "Wedding packages"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Eccles",
+    "lat": 53.485,
+    "lng": -2.335,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "lindleys-catering",
+  "tag": "LINDL",
+  "name": "Lindley's Catering",
+  "kind": "Wedding catering",
+  "base": "Leigh",
+  "areas": [
+   "Manchester",
+   "Warrington",
+   "Bolton",
+   "Liverpool",
+   "Lancashire"
+  ],
+  "summary": "A Leigh-based wedding caterer serving couples across Manchester, Warrington, Bolton, Liverpool and Lancashire.",
+  "services": [
+   "Wedding catering"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Leigh",
+    "lat": 53.497,
+    "lng": -2.519,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "the-fine-dining-company",
+  "tag": "FINED",
+  "name": "The Fine Dining Company",
+  "kind": "Exclusive event catering",
+  "base": "Chester",
+  "areas": [
+   "Chester",
+   "Cheshire",
+   "Manchester",
+   "Liverpool"
+  ],
+  "summary": "A Chester event catering company serving weddings and other occasions in Cheshire, Manchester and Liverpool.",
+  "services": [
+   "Wedding catering",
+   "Event catering"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Chester",
+    "lat": 53.193,
+    "lng": -2.892,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "dimblebee-catering-company",
+  "tag": "DIMBL",
+  "name": "Dimblebee Catering Company",
+  "kind": "Wedding caterers",
+  "base": "Leicester",
+  "areas": [
+   "Leicester",
+   "Midlands"
+  ],
+  "summary": "A Leicester wedding catering company serving Leicester and the Midlands.",
+  "services": [
+   "Wedding catering"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Leicester",
+    "lat": 52.6369,
+    "lng": -1.1398,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "hog-and-ox-roast-company",
+  "tag": "HOGOX",
+  "name": "The Hog and Ox Roast Company",
+  "kind": "Hog & ox roast catering",
+  "base": "Saxelbye",
+  "areas": [
+   "Leicestershire",
+   "Midlands"
+  ],
+  "summary": "A Leicestershire meat-roasting caterer, part of Heart of England Catering Limited, offering rare-breed hog and lamb roasts for weddings, special events and corporate catering since 2006.",
+  "services": [
+   "Hog roasts",
+   "Lamb roasts",
+   "Wedding catering",
+   "Corporate catering"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Special events",
+   "Corporate events"
+  ],
+  "scale": [],
+  "facts": [
+   "Part of Heart of England Catering Limited",
+   "Catering since 2006"
+  ],
+  "locations": [
+   {
+    "label": "Saxelbye",
+    "lat": 52.77,
+    "lng": -0.9,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "roast-event",
+  "tag": "ROAST",
+  "name": "Roast Event",
+  "kind": "Hog roast catering",
+  "base": "Nottingham",
+  "areas": [
+   "Nottingham",
+   "East Midlands",
+   "London"
+  ],
+  "summary": "A Nottingham hog roast and barbecue company with more than twenty years of catering experience, covering the East Midlands and London.",
+  "services": [
+   "Hog roasts",
+   "Barbecues"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [
+   "Over 20 years' catering experience"
+  ],
+  "locations": [
+   {
+    "label": "Nottingham",
+    "lat": 52.9548,
+    "lng": -1.1581,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "pig-roast-catering-company",
+  "tag": "PIGRO",
+  "name": "The Pig Roast Catering Company",
+  "kind": "Hog roast & BBQ wedding catering",
+  "base": "Albrighton",
+  "areas": [
+   "Shropshire",
+   "West Midlands"
+  ],
+  "summary": "A family-run Shropshire hog roast and BBQ wedding caterer using farm-assured local pigs.",
+  "services": [
+   "Hog roast catering",
+   "BBQ catering",
+   "Canapes"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Events"
+  ],
+  "scale": [],
+  "facts": [
+   "Family business"
+  ],
+  "locations": [
+   {
+    "label": "Albrighton",
+    "lat": 52.633,
+    "lng": -2.265,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "gold-leaf-catering",
+  "tag": "GOLDL",
+  "name": "Gold Leaf Catering",
+  "kind": "Wedding catering",
+  "base": "Mattishall",
+  "areas": [
+   "Norfolk",
+   "East Anglia"
+  ],
+  "summary": "A family-run Norfolk caterer offering bespoke wedding menus created closely with each couple.",
+  "services": [
+   "Wedding catering"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [
+   "Family-run"
+  ],
+  "locations": [
+   {
+    "label": "Mattishall",
+    "lat": 52.656,
+    "lng": 1.05,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "bouquet-garni-caterers",
+  "tag": "BOUQU",
+  "name": "Bouquet Garni Caterers",
+  "kind": "Wedding & event caterers",
+  "base": "Manningtree",
+  "areas": [
+   "Essex",
+   "Suffolk",
+   "East Anglia"
+  ],
+  "summary": "An Essex wedding and event catering company on the Essex-Suffolk border.",
+  "services": [
+   "Wedding catering",
+   "Event catering"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Manningtree",
+    "lat": 51.944,
+    "lng": 1.062,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "brat-bros-catering",
+  "tag": "BRATB",
+  "name": "Brat-Bros Catering",
+  "kind": "Street food catering",
+  "base": "London",
+  "areas": [
+   "Greater London"
+  ],
+  "summary": "A London modern street food caterer for all kinds of events.",
+  "services": [
+   "Street food catering"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "vamos-paella",
+  "tag": "VAMOS",
+  "name": "Vamos Paella",
+  "kind": "Paella & tapas catering",
+  "base": "Brighton",
+  "areas": [
+   "Brighton",
+   "Sussex"
+  ],
+  "summary": "A Brighton caterer cooking authentic Spanish paella and tapas for weddings, parties and corporate events.",
+  "services": [
+   "Paella catering",
+   "Tapas catering"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Brighton",
+    "lat": 50.8225,
+    "lng": -0.1372,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "epicatering",
+  "tag": "EPICA",
+  "name": "EpiCatering",
+  "kind": "Event & wedding catering",
+  "base": "Lewes",
+  "areas": [
+   "East Sussex",
+   "Sussex"
+  ],
+  "summary": "An East Sussex catering company taking a modern, innovative approach to event and wedding food.",
+  "services": [
+   "Wedding catering",
+   "Event catering"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Lewes",
+    "lat": 50.874,
+    "lng": 0.009,
+    "approx": true
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "yum-street",
+  "tag": "YUMST",
+  "name": "Yum Street",
+  "kind": "Street food catering",
+  "base": "Southampton",
+  "areas": [
+   "Southampton",
+   "UK-wide"
+  ],
+  "summary": "An award-winning Southampton street food caterer that grew from local markets in 2010 into weddings, corporate events and major festivals across the UK.",
+  "services": [
+   "Street food catering",
+   "Festival catering"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Festivals"
+  ],
+  "scale": [],
+  "facts": [
+   "Trading since 2010",
+   "Award-winning"
+  ],
+  "locations": [
+   {
+    "label": "Southampton",
+    "lat": 50.9097,
+    "lng": -1.4044,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "epic-caterers",
+  "tag": "EPICC",
+  "name": "EPIC Caterers",
+  "kind": "Wedding & event caterers",
+  "base": "Cardiff",
+  "areas": [
+   "Cardiff",
+   "Bristol",
+   "Cotswolds"
+  ],
+  "summary": "A multi-award-winning catering company based in Cardiff, with Bristol and the Cotswolds also named as bases.",
+  "services": [
+   "Wedding catering",
+   "Event catering"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [
+   "Multi-award winning"
+  ],
+  "locations": [
+   {
+    "label": "Cardiff",
+    "lat": 51.4816,
+    "lng": -3.1791,
+    "approx": false
+   },
+   {
+    "label": "Bristol",
+    "lat": 51.4545,
+    "lng": -2.5879,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "queen-and-whippet-catering",
+  "tag": "QUEEN",
+  "name": "Queen and Whippet Catering",
+  "kind": "Wedding, event & corporate catering",
+  "base": "Bristol",
+  "areas": [
+   "Bristol",
+   "London",
+   "South of England"
+  ],
+  "summary": "A Bristol company offering wedding, event and corporate catering and private dining, serving Bristol, London and the south of England.",
+  "services": [
+   "Wedding catering",
+   "Corporate catering",
+   "Private dining"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events",
+   "Private parties"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Bristol",
+    "lat": 51.4545,
+    "lng": -2.5879,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "m-welsh-catering-services",
+  "tag": "MWELS",
+  "name": "M Welsh Catering Services",
+  "kind": "Wedding & event catering",
+  "base": "Christow",
+  "areas": [
+   "Devon",
+   "South West"
+  ],
+  "summary": "A family-run Devon catering company voted best wedding caterer in the South West Wedding Awards in 2019 and 2020.",
+  "services": [
+   "Wedding catering",
+   "Event catering"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Events"
+  ],
+  "scale": [],
+  "facts": [
+   "Family-run",
+   "Best Wedding Caterer, South West Wedding Awards 2019 and 2020"
+  ],
+  "locations": [
+   {
+    "label": "Christow",
+    "lat": 50.66,
+    "lng": -3.67,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "napier-catering",
+  "tag": "NAPIE",
+  "name": "Napier Catering",
+  "kind": "Wedding catering",
+  "base": "Usk",
+  "areas": [
+   "Monmouthshire",
+   "South Wales"
+  ],
+  "summary": "A family-run wedding catering company in Usk, Monmouthshire.",
+  "services": [
+   "Wedding catering"
+  ],
+  "eventTypes": [
+   "Weddings"
+  ],
+  "scale": [],
+  "facts": [
+   "Family-run"
+  ],
+  "locations": [
+   {
+    "label": "Usk",
+    "lat": 51.703,
+    "lng": -2.903,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "ash-and-cole",
+  "tag": "ASHCO",
+  "name": "Ash & Cole",
+  "kind": "Catering & grazing tables",
+  "base": "Newtownabbey",
+  "areas": [
+   "Belfast",
+   "County Antrim",
+   "Northern Ireland"
+  ],
+  "summary": "A Northern Ireland caterer just outside Belfast off the M2, preparing platters, buffets and grazing tables for corporate events, weddings and special occasions.",
+  "services": [
+   "Platters",
+   "Buffets",
+   "Grazing tables"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Corporate events"
+  ],
+  "scale": [],
+  "facts": [
+   "20+ years' combined hospitality experience"
+  ],
+  "locations": [
+   {
+    "label": "Newtownabbey",
+    "lat": 54.69,
+    "lng": -5.95,
+    "approx": true
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "olive-and-vine",
+  "tag": "OLIVE",
+  "name": "Olive & Vine Wedding & Event Catering",
+  "kind": "Wedding & event catering",
+  "base": "Armagh",
+  "areas": [
+   "Armagh",
+   "Northern Ireland"
+  ],
+  "summary": "An Armagh wedding and event catering company serving Northern Ireland.",
+  "services": [
+   "Wedding catering",
+   "Event catering"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Events"
+  ],
+  "scale": [],
+  "facts": [],
+  "locations": [
+   {
+    "label": "Armagh",
+    "lat": 54.3503,
+    "lng": -6.6528,
+    "approx": false
+   }
+  ],
+  "cat": "catering",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  }
+ },
+ {
+  "slug": "nice-ice-london",
+  "tag": "NICEI",
+  "name": "Nice Ice London",
+  "kind": "Ice delivery",
+  "cat": "svc",
+  "sub": "ice",
+  "base": "London",
+  "areas": [
+   "London"
+  ],
+  "summary": "A London ice supplier producing ice at its own factory in Tottenham and delivering across the capital for bars, restaurants and events, with next-day delivery.",
+  "services": [
+   "Ice delivery",
+   "Bagged ice"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [
+   "Own ice factory in Tottenham",
+   "Next-day London delivery"
+  ],
+  "website": "https://nice-ice.co",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://nice-ice.co"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "Tottenham",
+    "lat": 51.588,
+    "lng": -0.06,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "icebox-ice",
+  "tag": "ICEBO",
+  "name": "Icebox",
+  "kind": "Ice delivery",
+  "cat": "svc",
+  "sub": "ice",
+  "base": "London",
+  "areas": [
+   "London",
+   "UK-wide",
+   "Europe"
+  ],
+  "summary": "A London ice company, trading since 1993, supplying ice cubes, ice sculptures and ice bars for events across the UK and Europe.",
+  "services": [
+   "Ice cubes",
+   "Ice sculptures",
+   "Ice bars"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [
+   "Trading since 1993",
+   "UK and Europe"
+  ],
+  "website": "https://theicebox.com",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://theicebox.com"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "all-about-ice",
+  "tag": "ALLAB",
+  "name": "All About Ice Europe",
+  "kind": "Ice delivery",
+  "cat": "svc",
+  "sub": "ice",
+  "base": "London",
+  "areas": [
+   "London",
+   "UK-wide",
+   "Europe"
+  ],
+  "summary": "A London-based ice supplier providing cubed and crushed ice, ice sculptures and dry ice to events across the UK and Europe.",
+  "services": [
+   "Cubed and crushed ice",
+   "Ice sculptures",
+   "Dry ice"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [
+   "UK and Europe coverage"
+  ],
+  "website": "https://allaboutice.com",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://allaboutice.com"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "lunar-ice",
+  "tag": "LUNAR",
+  "name": "Lunar Ice",
+  "kind": "Ice delivery",
+  "cat": "svc",
+  "sub": "ice",
+  "base": "Crawley",
+  "areas": [
+   "Surrey",
+   "Sussex",
+   "Kent",
+   "Hampshire"
+  ],
+  "summary": "An ice delivery company based near Gatwick, supplying bars, restaurants and events across Surrey, Sussex, Kent and Hampshire.",
+  "services": [
+   "Ice delivery"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [
+   "Based near Gatwick"
+  ],
+  "website": "https://lunarice.co.uk",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://lunarice.co.uk"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "Crawley",
+    "lat": 51.1092,
+    "lng": -0.1872,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "blackwoods-ice",
+  "tag": "BLACK",
+  "name": "Blackwood's Ice Delivery",
+  "kind": "Ice delivery",
+  "cat": "svc",
+  "sub": "ice",
+  "base": "Henley-on-Thames",
+  "areas": [
+   "Buckinghamshire",
+   "Berkshire",
+   "Oxfordshire"
+  ],
+  "summary": "A family-run ice delivery company in Henley-on-Thames, operating since 1987 and serving Buckinghamshire, Berkshire and Oxfordshire.",
+  "services": [
+   "Ice delivery"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [
+   "Operating since 1987"
+  ],
+  "website": "https://blackwoodsice.co.uk",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://blackwoodsice.co.uk"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "Henley-on-Thames",
+    "lat": 51.536,
+    "lng": -0.902,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "ice-supplier-south-west",
+  "tag": "ICESS",
+  "name": "Ice Supplier South West & South Wales",
+  "kind": "Ice delivery",
+  "cat": "svc",
+  "sub": "ice",
+  "base": "Bristol",
+  "areas": [
+   "Bristol",
+   "Bath",
+   "Cardiff",
+   "Newport",
+   "Cheltenham",
+   "Gloucester",
+   "Wiltshire",
+   "Somerset"
+  ],
+  "summary": "A Bristol ice supplier, established in 2011, delivering to Bristol, Bath, Cardiff, Newport, Cheltenham, Gloucester, Wiltshire and Somerset.",
+  "services": [
+   "Ice delivery"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [
+   "Established 2011"
+  ],
+  "website": "https://ice-supplier.co.uk",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://ice-supplier.co.uk"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "Bristol",
+    "lat": 51.4545,
+    "lng": -2.5879,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "the-ice-co",
+  "tag": "ICECO",
+  "name": "The Ice Co",
+  "kind": "Ice delivery",
+  "cat": "svc",
+  "sub": "ice",
+  "base": "South Kirkby",
+  "areas": [
+   "Yorkshire",
+   "UK-wide"
+  ],
+  "summary": "A Yorkshire ice manufacturer producing ice cubes, crushed ice, flake ice and ice blocks for the drinks trade and events.",
+  "services": [
+   "Ice cubes",
+   "Crushed ice",
+   "Flake ice",
+   "Ice blocks"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [
+   "Based in Yorkshire"
+  ],
+  "website": "https://theiceco.co.uk",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://theiceco.co.uk"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "South Kirkby",
+    "lat": 53.59,
+    "lng": -1.32,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "the-ice-man-birmingham",
+  "tag": "ICEMA",
+  "name": "The Ice Man",
+  "kind": "Ice delivery",
+  "cat": "svc",
+  "sub": "ice",
+  "base": "Birmingham",
+  "areas": [
+   "Birmingham",
+   "West Midlands"
+  ],
+  "summary": "A Birmingham ice company, trading since 1997, supplying ice sculptures, drinks luges, bagged cubed ice and crushed ice for events and venues.",
+  "services": [
+   "Ice sculptures",
+   "Drinks luges",
+   "Cubed and crushed ice"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [
+   "Trading since 1997"
+  ],
+  "website": "https://the-ice-man.co.uk",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://www.the-ice-man.co.uk"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "Birmingham",
+    "lat": 52.4862,
+    "lng": -1.8904,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "ice-247",
+  "tag": "ICE24",
+  "name": "Ice 24/7",
+  "kind": "Ice delivery",
+  "cat": "svc",
+  "sub": "ice",
+  "base": "Glasgow",
+  "areas": [
+   "Glasgow",
+   "Scotland"
+  ],
+  "summary": "A Glasgow ice supplier delivering ice to bars, venues and events across Scotland.",
+  "services": [
+   "Ice delivery"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [
+   "Scotland coverage"
+  ],
+  "website": "https://ice247.co.uk",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://ice247.co.uk"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "Glasgow",
+    "lat": 55.8642,
+    "lng": -4.2518,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "ice2u",
+  "tag": "ICE2U",
+  "name": "ICE2U",
+  "kind": "Ice delivery",
+  "cat": "svc",
+  "sub": "ice",
+  "base": "Liverpool",
+  "areas": [
+   "Liverpool",
+   "Manchester",
+   "Leeds"
+  ],
+  "summary": "An ice delivery company serving Liverpool, Manchester and Leeds.",
+  "services": [
+   "Ice delivery"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [],
+  "website": "https://ice2u.co.uk",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://ice2u.co.uk"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "Liverpool",
+    "lat": 53.4084,
+    "lng": -2.9916,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "yahire",
+  "tag": "YAHIR",
+  "name": "Yahire",
+  "kind": "Glassware hire & delivery",
+  "cat": "svc",
+  "sub": "glassware",
+  "base": "London",
+  "areas": [
+   "London"
+  ],
+  "summary": "A London event hire company supplying glassware and other event equipment.",
+  "services": [
+   "Glassware hire",
+   "Event equipment hire"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [],
+  "website": "https://yahire.com",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://yahire.com"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "allens-hire",
+  "tag": "ALLEN",
+  "name": "Allens Hire",
+  "kind": "Glassware hire & delivery",
+  "cat": "svc",
+  "sub": "glassware",
+  "base": "London",
+  "areas": [
+   "London",
+   "South of England"
+  ],
+  "summary": "A hire company supplying glassware and event equipment in London and the South.",
+  "services": [
+   "Glassware hire",
+   "Event equipment hire"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [],
+  "website": "https://allenshire.co.uk",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://allenshire.co.uk"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "murphys-event-hire",
+  "tag": "MURPH",
+  "name": "Murphys Event Hire",
+  "kind": "Glassware hire & delivery",
+  "cat": "svc",
+  "sub": "glassware",
+  "base": "London",
+  "areas": [
+   "London"
+  ],
+  "summary": "A London event hire company supplying glassware and event equipment.",
+  "services": [
+   "Glassware hire",
+   "Event equipment hire"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [],
+  "website": "https://murphyseventhire.co.uk",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://murphyseventhire.co.uk"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "hire-catering-equipment",
+  "tag": "HIREC",
+  "name": "Hire Catering Equipment",
+  "kind": "Glassware hire & delivery",
+  "cat": "svc",
+  "sub": "glassware",
+  "base": "London",
+  "areas": [
+   "London"
+  ],
+  "summary": "A London hire company supplying catering equipment and glassware for events.",
+  "services": [
+   "Catering equipment hire",
+   "Glassware hire"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [],
+  "website": "https://hirecatering.co.uk",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://hirecatering.co.uk"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "plato-catering-hire",
+  "tag": "PLATO",
+  "name": "Plato Catering Hire",
+  "kind": "Glassware hire & delivery",
+  "cat": "svc",
+  "sub": "glassware",
+  "base": "Alcester",
+  "areas": [
+   "Birmingham",
+   "Warwickshire",
+   "West Midlands",
+   "Stratford-upon-Avon",
+   "Worcestershire",
+   "Gloucestershire",
+   "Cotswolds"
+  ],
+  "summary": "A Warwickshire catering equipment hire company, established in 1999, supplying glassware, cutlery, plates and kitchen equipment across the Midlands and the Cotswolds.",
+  "services": [
+   "Glassware hire",
+   "Cutlery and plate hire",
+   "Kitchen equipment hire"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [
+   "Established 1999"
+  ],
+  "website": "https://www.platohire.co.uk",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://www.platohire.co.uk"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "Alcester",
+    "lat": 52.215,
+    "lng": -1.871,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "expo-hire",
+  "tag": "EXPOH",
+  "name": "Expo Hire",
+  "kind": "Glassware hire & delivery",
+  "cat": "svc",
+  "sub": "glassware",
+  "base": "England and Wales",
+  "areas": [
+   "England",
+   "Wales"
+  ],
+  "summary": "An event hire company with 11 depots across England and Wales, supplying furniture and catering equipment.",
+  "services": [
+   "Furniture hire",
+   "Catering equipment hire"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [
+   "11 depots",
+   "England and Wales"
+  ],
+  "website": "https://www.expohire.com",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://www.expohire.com"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "Birmingham",
+    "lat": 52.4862,
+    "lng": -1.8904,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "event-hire-uk",
+  "tag": "EVHUK",
+  "name": "Event Hire UK",
+  "kind": "Glassware hire & delivery",
+  "cat": "svc",
+  "sub": "glassware",
+  "base": "UK-wide",
+  "areas": [
+   "UK-wide"
+  ],
+  "summary": "A nationwide event hire company supplying furniture, catering equipment and tableware, including glassware, for temporary events.",
+  "services": [
+   "Glassware hire",
+   "Furniture hire",
+   "Tableware hire"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [
+   "Established 2005",
+   "UK-wide"
+  ],
+  "website": "https://eventhireuk.com",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://eventhireuk.com"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "Birmingham",
+    "lat": 52.4862,
+    "lng": -1.8904,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "wharfeside-hire",
+  "tag": "WHARF",
+  "name": "Wharfeside Hire",
+  "kind": "Glassware hire & delivery",
+  "cat": "svc",
+  "sub": "glassware",
+  "base": "Wetherby",
+  "areas": [
+   "Leeds",
+   "York",
+   "Harrogate",
+   "Yorkshire"
+  ],
+  "summary": "A Wetherby event hire company supplying glasses, bespoke bars, linen, furniture and catering equipment across Yorkshire.",
+  "services": [
+   "Glassware hire",
+   "Bespoke bar hire",
+   "Furniture hire",
+   "Catering equipment hire"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [
+   "Yorkshire coverage"
+  ],
+  "website": "https://wharfesidehire.co.uk",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://wharfesidehire.co.uk"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "Wetherby",
+    "lat": 53.9283,
+    "lng": -1.3844,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "bespoke-events-london",
+  "tag": "BESPO",
+  "name": "Bespoke Events London",
+  "kind": "Event management",
+  "cat": "svc",
+  "sub": "events",
+  "base": "London",
+  "areas": [
+   "London"
+  ],
+  "summary": "A London event management company.",
+  "services": [
+   "Event management"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [],
+  "website": "https://bespoke-london.co.uk",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://bespoke-london.co.uk"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "aok-events",
+  "tag": "AOKEV",
+  "name": "AOK Events",
+  "kind": "Event management",
+  "cat": "svc",
+  "sub": "events",
+  "base": "London",
+  "areas": [
+   "London"
+  ],
+  "summary": "A London event management company.",
+  "services": [
+   "Event management"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [],
+  "website": "https://aokevents.com",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://aokevents.com"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "mgn-events",
+  "tag": "MGNEV",
+  "name": "MGN Events",
+  "kind": "Event management",
+  "cat": "svc",
+  "sub": "events",
+  "base": "London",
+  "areas": [
+   "London"
+  ],
+  "summary": "A London event management company.",
+  "services": [
+   "Event management"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [],
+  "website": "https://mgnevents.co.uk",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://mgnevents.co.uk"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "dynamite-events",
+  "tag": "DYNAM",
+  "name": "Dynamite Events",
+  "kind": "Event management",
+  "cat": "svc",
+  "sub": "events",
+  "base": "London",
+  "areas": [
+   "London"
+  ],
+  "summary": "A London event management company.",
+  "services": [
+   "Event management"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [],
+  "website": "https://dynamiteevents.co.uk",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://dynamiteevents.co.uk"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "London",
+    "lat": 51.5074,
+    "lng": -0.1278,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "the-events-collective",
+  "tag": "EVCOL",
+  "name": "The Events Collective",
+  "kind": "Event management",
+  "cat": "svc",
+  "sub": "events",
+  "base": "Glasgow",
+  "areas": [
+   "Glasgow",
+   "Edinburgh",
+   "London",
+   "UK-wide"
+  ],
+  "summary": "A multi-award-winning event management and production company, established in 2008, working across Edinburgh, Glasgow, London and the UK.",
+  "services": [
+   "Event management",
+   "AV production",
+   "Staffing",
+   "Venue finding",
+   "Conference services"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [
+   "Established 2008"
+  ],
+  "website": "https://eventscollective.global",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://eventscollective.global"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "Glasgow",
+    "lat": 55.8642,
+    "lng": -4.2518,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "eventologists",
+  "tag": "EVENT",
+  "name": "Eventologists",
+  "kind": "Event management",
+  "cat": "svc",
+  "sub": "events",
+  "base": "Leicester",
+  "areas": [
+   "Leicester",
+   "East Midlands"
+  ],
+  "summary": "A Leicester event management company.",
+  "services": [
+   "Event management"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [],
+  "website": "https://eventologists.co.uk",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://eventologists.co.uk"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "Leicester",
+    "lat": 52.6369,
+    "lng": -1.1398,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "grapevine-event-management",
+  "tag": "GRAPE",
+  "name": "Grapevine Event Management",
+  "kind": "Event management",
+  "cat": "svc",
+  "sub": "events",
+  "base": "Cardiff",
+  "areas": [
+   "Cardiff",
+   "Wales"
+  ],
+  "summary": "A Cardiff event management company.",
+  "services": [
+   "Event management"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [],
+  "website": "https://grapevineeventmanagement.co.uk",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://grapevineeventmanagement.co.uk"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "Cardiff",
+    "lat": 51.4816,
+    "lng": -3.1791,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "callow-event-management",
+  "tag": "CALLO",
+  "name": "Callow Event Management",
+  "kind": "Event management",
+  "cat": "svc",
+  "sub": "events",
+  "base": "Belfast",
+  "areas": [
+   "Belfast",
+   "Northern Ireland"
+  ],
+  "summary": "A Belfast event management company.",
+  "services": [
+   "Event management"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [],
+  "website": "https://callowevents.co.uk",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://callowevents.co.uk"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "Belfast",
+    "lat": 54.5973,
+    "lng": -5.9301,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "connect-in-events",
+  "tag": "CONNE",
+  "name": "Connect In Events",
+  "kind": "Event management",
+  "cat": "svc",
+  "sub": "events",
+  "base": "Manchester",
+  "areas": [
+   "Manchester",
+   "Wales"
+  ],
+  "summary": "An event management company working in Manchester and Wales.",
+  "services": [
+   "Event management"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [],
+  "website": "https://connectinevents.co.uk",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://connectinevents.co.uk"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "Manchester",
+    "lat": 53.4808,
+    "lng": -2.2426,
+    "approx": true
+   }
+  ]
+ },
+ {
+  "slug": "eventurous",
+  "tag": "EVENU",
+  "name": "Eventurous",
+  "kind": "Event management",
+  "cat": "svc",
+  "sub": "events",
+  "base": "Tamworth",
+  "areas": [
+   "London",
+   "Birmingham",
+   "Manchester",
+   "Bristol",
+   "Leeds",
+   "Oxford",
+   "Leicester",
+   "Coventry",
+   "Nottingham"
+  ],
+  "summary": "A corporate events agency and team-building company, established in 1989, delivering live, virtual and hybrid events across major UK cities.",
+  "services": [
+   "Corporate events",
+   "Team building",
+   "Event production",
+   "Venue finding"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Private parties",
+   "Corporate events",
+   "Bars and venues"
+  ],
+  "scale": [],
+  "facts": [
+   "Established 1989"
+  ],
+  "website": "https://www.eventurous.co.uk",
+  "social": {},
+  "images": {
+   "permission": "to_confirm",
+   "photos": []
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://www.eventurous.co.uk"
+   ],
+   "retrievedAt": "2026-11-08"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "Tamworth",
+    "lat": 52.634,
+    "lng": -1.695,
+    "approx": true
+   }
+  ]
+ }
+]

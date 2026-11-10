@@ -1,0 +1,10 @@
+
+.ff .ff-ax19-row { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 0; }
+.ff .ff-ax19-chip, .ff .ff-ax19-sel { border:1px solid var(--rule); background:#fff; border-radius:14px; corner-shape:squircle; padding:8px 14px; font:inherit; font-size:13.5px; color:var(--ink); cursor:pointer; word-break:keep-all; overflow-wrap:normal; hyphens:none; }
+.ff .ff-ax19-chip:hover, .ff .ff-ax19-sel:hover { border-color:var(--gold-dk); }
+.ff .ff-ax19-chip.on, .ff .ff-ax19-sel.on { border-color:var(--gold-dk); background:rgba(176,141,60,.16); font-weight:700; }
+.ff .ff-ax19-chip:focus-visible, .ff .ff-ax19-sel:focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
+.ff .ff-ax19-top .ff-ax19-chip { font-weight:700; letter-spacing:.04em; }
+.ff .ff-ax19-head { display:flex; align-items:baseline; justify-content:space-between; gap:6px 12px; flex-wrap:wrap; margin:18px 0 8px; }
+.ff .ff-ax19-head h3 { margin:0; font-size:17px; }
+.ff .ff-ax19-open { font-size:13px; font-weight:700; color:var(--gold-dk); white-space:nowrap; }

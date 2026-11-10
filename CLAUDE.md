@@ -19,10 +19,10 @@ Whenever the FireFlair site artifact is published, its code goes to this repo
 - If the hook didn't run (for example, this repo wasn't the working directory),
   do the same by hand: save the published file as the next version, update
   `CHANGELOG.md`, commit, push.
-- The published page is compiled (no comments). With every publish, also copy
-  the build's readable app source to `source/fireflair-app.jsx` and commit it
-  with the version, so developers always have the commented code that matches
-  the latest page.
+- Since v17.4 the source of truth is `src/` (not `source/`, which is gone). Change code in `src/`, run `npm run check`
+  and `npm run build`, publish the built `build/fireflair-v17.4.html` (or the release from `npm run publish-build`),
+  and commit `src/` with the notes. The single HTML is a build output and is not committed on the v17.4 line.
+  See `docs/DEVELOPING.md`.
 
 ## Versions
 

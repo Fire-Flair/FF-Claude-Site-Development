@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Build the FireFlair Stories data from stories/*/*.md and patch it into the prototype.
+"""Build the FireFlair Stories data from stories/<site>/<slug>.md into src/content/stories/*.json.
 
 Usage:
-  scripts/build-stories.py --html fireflair-v17.3.93.html --out build/fireflair-stories.html [--jsx source/fireflair-app.jsx --jsx-out source/fireflair-app.jsx]
+  python3 scripts/build-stories.py            (or: npm run stories)
 
-The reader template is scripts/stories-reader.js. The patch replaces the old Journal17
-component and adds the new articles, so it must be run on a copy that still has the old one.
+Writes articles.json, order.json, profiles.json and images.json in src/content/stories/ plus stories/stories-data.json.
+The reader code is src/content/stories/stories-reader.jsx (static); it reads the data through CONTENT_ADAPTER
+(src/adapters/content-adapter.js). Story images stay in stories/images/*.webp and are packed by scripts/build.mjs.
 """
 import argparse, json, math, os, re, glob, datetime, sys
 
@@ -94,61 +95,29 @@ def collect():
     return {a["slug"]: a for a in arts if a["id"] not in HELD}
 
 
-def reader(arts):
+def write_src(arts):
     by_id = {a["id"]: a["slug"] for a in arts.values()}
     order = {k: [by_id.get(i, i) for i in v] for k, v in ORDER.items()}
-    tpl = open(os.path.join(ROOT, "scripts", "stories-reader.js"), encoding="utf-8").read()
-    import base64
     imgs = {}
     for slug, m in IMAGES.items():
-        f = os.path.join(ROOT, "stories", "images", slug + ".webp")
-        if os.path.exists(f):
-            imgs["s18_" + slug] = {"src": "data:image/webp;base64," + base64.b64encode(open(f, "rb").read()).decode(), "pos": m["pos"]}
-    return (tpl.replace("__ST18_IMGS__", json.dumps(imgs))
-               .replace("__ST18_DATA__", json.dumps(arts, ensure_ascii=False, indent=1))
-               .replace("__ST19_PROFILES__", json.dumps({k: v for k, v in PROFILES.items() if not k.startswith("_")}, ensure_ascii=False))
-               .replace("__ST18_ORDER__", json.dumps(order, ensure_ascii=False)))
-
-
-def repatch(src, code):
-    """Replace the Stories block in a file that already has it (from the ST18_ROUTES line to the end of Journal17)."""
-    a = src.index("const ST18_ROUTES")
-    c = src.rfind("/* ==== Stories phase 2", 0, a)
-    start = (c if c != -1 and a - c < 1200 else src.rfind("\n", 0, a) + 1)
-    j = src.index("function Journal17(", a)
-    ends = [src.find(m, j) for m in ("/* ---- Hospitality industry events", "const GE17 = [")]
-    e = min(x for x in ends if x != -1)
-    e = src.rfind("\n", 0, e) + 1 if src[e - 1] != "\n" else e
-    indent = src[src.rfind("\n", 0, a) + 1:a]
-    return src[:start] + "\n".join((indent + l if l else l) for l in code.split("\n")) + "\n\n" + src[e:]
-
-
-def patch(src, code):
-    s = src.index("function Journal17(")
-    # include the leading indentation of the function line
-    ls = src.rfind("\n", 0, s) + 1
-    ends = [src.find(m, s) for m in ("/* ---- Hospitality industry events", "const GE17 = [")]
-    e = min(x for x in ends if x != -1)
-    e = src.rfind("\n", 0, e) + 1 if src[e - 1] != "\n" else e
-    indent = src[ls:s]
-    return src[:ls] + "\n".join((indent + l if l else l) for l in code.split("\n")) + "\n\n" + src[e:]
+        if os.path.exists(os.path.join(ROOT, "stories", "images", slug + ".webp")):
+            imgs["s18_" + slug] = {"src": "ffasset:story/" + slug + ".webp", "pos": m["pos"]}
+    out = os.path.join(ROOT, "src", "content", "stories")
+    os.makedirs(out, exist_ok=True)
+    data = {"articles.json": arts, "order.json": order,
+            "profiles.json": {k: v for k, v in PROFILES.items() if not k.startswith("_")}, "images.json": imgs}
+    for name, obj in data.items():
+        with open(os.path.join(out, name), "w", encoding="utf-8") as f:
+            json.dump(obj, f, ensure_ascii=False, indent=1)
+            f.write("\n")
+        print("wrote", os.path.join("src/content/stories", name))
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--html"); ap.add_argument("--out")
-    ap.add_argument("--jsx"); ap.add_argument("--jsx-out")
-    a = ap.parse_args()
+    ap.add_argument("--src", default="src", help="kept for npm run stories; output is always src/content/stories")
+    ap.parse_args()
     arts = collect()
     json.dump(arts, open(os.path.join(ROOT, "stories", "stories-data.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-    code = reader(arts)
-    for src, out in ((a.html, a.out), (a.jsx, a.jsx_out)):
-        if src and out:
-            os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
-            text = open(src, encoding="utf-8").read()
-            if "ST18_ROUTES" in text:
-                open(out, "w", encoding="utf-8").write(repatch(text, code))  # already patched: replace the block
-            else:
-                open(out, "w", encoding="utf-8").write(patch(text, code))
-            print("wrote", out)
+    write_src(arts)
     print(len(arts), "articles")

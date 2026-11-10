@@ -1,0 +1,151 @@
+[
+ {
+  "k": "services",
+  "t": "Service Cards",
+  "s": "What we offer.",
+  "img": "training_masterclass",
+  "h": "What we offer",
+  "lead": "Bartending, mixology, cocktail masterclasses, full event service and event staff, ready to book.",
+  "body": [
+   "Each Service Card says what's included, who it's ideal for and how long it lasts. Choose Bronze, Silver or Gold for the level that suits you, and the start time comes from your Event Card."
+  ],
+  "cta": [
+   "See what we offer",
+   "#ff-offer"
+  ],
+  "cta2": [
+   "Plan your event",
+   "event"
+  ]
+ },
+ {
+  "k": "cocktails",
+  "t": "Cocktail Menu",
+  "s": "Choose your cocktails.",
+  "img": "cocktail_1",
+  "h": "Your Cocktail Menu",
+  "lead": "Choose the cocktails you want for your event.",
+  "body": [
+   "Pick from the classics or from each bartender's and provider's signature cocktails. Your cocktails and how many you'd like are added to your package, so your quote is accurate.",
+   "Hire a bar company and they bring the stock. Hire individual bartenders and we give you a shopping list for your menu."
+  ],
+  "cta": [
+   "Choose your cocktails",
+   "#ff-cocktails"
+  ]
+ },
+ {
+  "k": "staff",
+  "t": "Bartenders & Staff",
+  "s": "Hand-picked hospitality pros.",
+  "img": "training_mixology",
+  "h": "Bartenders & Staff",
+  "lead": "Book the people who make a party.",
+  "body": [
+   "See their Profile Cards, reviews and cocktails, then add them to your booking."
+  ],
+  "cta": [
+   "See featured bartenders",
+   "#ff-team"
+  ],
+  "cta2": [
+   "Explore the network",
+   "network"
+  ]
+ },
+ {
+  "k": "companies",
+  "t": "Companies",
+  "s": "Bars and caterers to book.",
+  "img": "dream_food_festivals_markets",
+  "h": "Companies",
+  "lead": "Book a company and their whole team.",
+  "body": [
+   "Mobile bars, caterers and event companies, with their own Service Cards and reviews."
+  ],
+  "cta": [
+   "See companies",
+   "#ff-companies"
+  ]
+ },
+ {
+  "k": "reviews",
+  "t": "Reviews",
+  "s": "See what hosts say.",
+  "img": "reward_photoshoot",
+  "h": "Reviews",
+  "lead": "Every booking is reviewed, both ways.",
+  "body": [
+   "Read what other hosts say before you book, and leave your own review after the party."
+  ],
+  "cta": [
+   "Read reviews",
+   "#ff-relationships"
+  ]
+ },
+ {
+  "k": "profile",
+  "t": "Your Profile",
+  "s": "Your parties, your way.",
+  "img": "reward_ff_party",
+  "h": "Your FF Party Profile",
+  "lead": "Tell your staff how you like your parties before they arrive.",
+  "body": [
+   "Add your favourite cocktails and drinks, your house rules, and anything you'd like your staff to know before they come to your venue, your home or your chosen venue.",
+   "Your FF Party Card is shared with the people you book, so they know who you are."
+  ],
+  "cta": [
+   "Create your FF Party Card",
+   "profile"
+  ]
+ },
+ {
+  "k": "favs",
+  "t": "Favourite Staff",
+  "s": "Keep the people you love.",
+  "img": "training_ff_open_bar",
+  "h": "Favourite Staff",
+  "lead": "Tap the heart on anyone's card to keep them close.",
+  "body": [
+   "Your favourites show first when you book, ready for the next party."
+  ],
+  "cta": [
+   "Explore the network",
+   "network"
+  ]
+ },
+ {
+  "k": "plan",
+  "t": "Plan Your Event",
+  "s": "Start with your Event Card.",
+  "img": "dream_music_festivals",
+  "h": "Plan Your Event",
+  "lead": "Your Event Card holds the date, time and place.",
+  "body": [
+   "Add it in a minute, choose your Service Cards and your staff, and we'll send everything to them on WhatsApp."
+  ],
+  "cta": [
+   "Plan your event",
+   "event"
+  ],
+  "cta2": [
+   "How it works",
+   "#ff-how-book"
+  ]
+ },
+ {
+  "k": "platforms",
+  "t": "The Platforms",
+  "s": "FF Team, FF Staff and FF Party.",
+  "img": "dream_international_events",
+  "h": "The FireFlair platforms",
+  "lead": "One login for all of FireFlair.",
+  "body": [
+   "FF Team is where hospitality professionals build their Profile Cards. FF Staff is where businesses book them. FF Party is where you plan your party."
+  ],
+  "cta": [
+   "See the platforms",
+   "#ff-how"
+  ]
+ }
+]

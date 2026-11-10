@@ -1,0 +1,90 @@
+[
+ {
+  "id": "dj_starter",
+  "cat": "ent",
+  "tone": "bronze",
+  "level": "Bronze",
+  "by": "Storm DJs",
+  "co": "co_storm-djs",
+  "img": "https://storm-djs.com/wp-content/uploads/2019/03/dj-raf-hale-0-storm-djs-london-agency-01.jpg",
+  "role": "DJ",
+  "title": "Starter Party",
+  "tagline": "A clean, professional DJ set-up for smaller parties and simple evenings.",
+  "includes": "DJ, sound system and LED lighting",
+  "ideal": "Smaller parties and evening events",
+  "time": "Up to 4 hours",
+  "price": "£497",
+  "bands": [
+   "s",
+   "m"
+  ],
+  "features": [
+   "4-hour professional DJ set",
+   "Sound system for up to 100 guests",
+   "Basic LED party lighting",
+   "Compact DJ booth",
+   "Local setup and delivery",
+   "Public liability insurance"
+  ]
+ },
+ {
+  "id": "dj_signature",
+  "cat": "ent",
+  "tone": "silver",
+  "level": "Silver",
+  "by": "Storm DJs",
+  "co": "co_storm-djs",
+  "img": "https://storm-djs.com/wp-content/uploads/2014/11/wedding-dj-hire-london-storm-djs.jpg",
+  "role": "DJ",
+  "title": "Signature Set",
+  "tagline": "The all-round choice for weddings and parties that need more planning and polish.",
+  "includes": "DJ, sound, lighting and a planning call",
+  "ideal": "Weddings and private parties",
+  "time": "Up to 6 hours",
+  "price": "£997",
+  "bands": [
+   "s",
+   "m",
+   "l"
+  ],
+  "features": [
+   "6-hour set by a premium DJ with 50+ events behind them",
+   "Sound system for up to 150 guests",
+   "Enhanced lighting and uplighters",
+   "Planning call and music brief",
+   "Playlist match and no-show guarantees",
+   "Recording of the DJ mix",
+   "Nationwide setup and delivery"
+  ]
+ },
+ {
+  "id": "dj_night",
+  "cat": "ent",
+  "tone": "gold",
+  "level": "Gold",
+  "by": "Storm DJs",
+  "co": "co_storm-djs",
+  "img": "https://storm-djs.com/wp-content/uploads/2022/01/Storm-DJs-DJ-Hire-Agency-Wedding-With-Saxophone.jpg",
+  "role": "DJ",
+  "title": "Unforgettable Night",
+  "tagline": "A full production for big moments, with live performers and a host.",
+  "includes": "DJ, saxophonist, photographer, photo booth and MC",
+  "ideal": "Big celebrations and weddings",
+  "time": "Up to 8 hours",
+  "price": "£2,497",
+  "bands": [
+   "m",
+   "l"
+  ],
+  "features": [
+   "Everything in the Signature Set",
+   "2-hour live saxophonist",
+   "Photo booth with prints",
+   "Professional photographer",
+   "Dancefloor hire",
+   "Live MC or host",
+   "Smoke, disco ball and advanced lighting",
+   "Full event coordination and 24/7 support"
+  ]
+ }
+]

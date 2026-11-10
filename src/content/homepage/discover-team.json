@@ -1,0 +1,175 @@
+[
+ {
+  "k": "community",
+  "t": "Community",
+  "s": "Connect with hospitality professionals.",
+  "img": "teams",
+  "h": "The FireFlair community",
+  "lead": "FireFlair brings hospitality people together.",
+  "body": [
+   "Bartenders, waiters, chefs, hosts and the businesses that book them, all in one network. Connect with the people you work with, see who they know, and share the opportunities that come from every event.",
+   "Your network grows each time you work with someone, invite someone or get invited."
+  ],
+  "cta": [
+   "Explore the network",
+   "network"
+  ],
+  "cta2": [
+   "Build your team",
+   "#ff-teams"
+  ]
+ },
+ {
+  "k": "profiles",
+  "t": "Profiles",
+  "s": "Showcase who you are.",
+  "img": "face_vooshka",
+  "h": "Your Professional Profile",
+  "lead": "Your FireFlair Profile Card is your professional identity within the hospitality community.",
+  "body": [
+   "Showcase your experience, qualifications, skills and interests in one place, making it easier for people to discover you and understand what you offer.",
+   "Build your profile, demonstrate your expertise and grow your professional network. Your profile can help connect you with relevant services, opportunities and people."
+  ],
+  "cta": [
+   "Create Your Profile Card",
+   "profile"
+  ]
+ },
+ {
+  "k": "services",
+  "t": "Services",
+  "s": "Discover what FireFlair offers.",
+  "img": "reward_ff_party",
+  "h": "Services",
+  "lead": "Book hospitality services for your events.",
+  "body": [
+   "Service Cards are ready-made services, from a cocktail bar to a full event team, that people will book on FF Party.",
+   "Professionals can also show their signature cocktails, so people can book them for what they do best."
+  ],
+  "cta": [
+   "See the Service Cards",
+   "#ff-nx-svc-h"
+  ]
+ },
+ {
+  "k": "cocktails",
+  "t": "Cocktail Menu",
+  "s": "Your signature cocktails.",
+  "img": "cocktail_0",
+  "h": "Your Signature Cocktails",
+  "lead": "Your signature cocktails don't belong to the bar where you serve them. They belong to you.",
+  "body": [
+   "Now they can live on your profile and travel to every venue you go to.",
+   "Businesses and customers can hire you for your signature cocktails."
+  ],
+  "cta": [
+   "See Signature Cocktails",
+   "#ff-nx-ck-h"
+  ]
+ },
+ {
+  "k": "events",
+  "t": "Events",
+  "s": "Bring people together.",
+  "img": "dream_music_festivals",
+  "h": "Events",
+  "lead": "Everything on FireFlair happens around events.",
+  "body": [
+   "Parties, weddings, brand launches, training sessions and professional gatherings: events are where hospitality people meet, work and get booked.",
+   "FF Staff books the team for an event, and FF Party lets anyone plan theirs."
+  ],
+  "cta": [
+   "See the FireFlair platforms",
+   "#ff-how"
+  ],
+  "cta2": [
+   "Training sessions",
+   "#ff-career"
+  ]
+ },
+ {
+  "k": "career",
+  "t": "Career Support",
+  "s": "Build your future in hospitality.",
+  "img": "training_masterclass",
+  "h": "Grow Your Career",
+  "lead": "FireFlair helps hospitality professionals develop their skills, explore new opportunities and progress in their careers.",
+  "body": [
+   "Discover training, explore Dream Jobs and participate in Rewards through one connected career-support experience."
+  ],
+  "cta": [
+   "Explore Career Support",
+   "#ff-career"
+  ]
+ },
+ {
+  "k": "team",
+  "t": "Build Your Team",
+  "s": "Find the right people.",
+  "img": "training_ff_open_bar",
+  "h": "Build Your Team",
+  "lead": "Keep the people you like working with close.",
+  "body": [
+   "Everyone you connect with and work alongside becomes part of your team, ready for the next event.",
+   "Businesses can find and book the right people for each shift on FF Staff."
+  ],
+  "cta": [
+   "Build your team",
+   "#ff-teams"
+  ],
+  "cta2": [
+   "Explore the network",
+   "network"
+  ]
+ },
+ {
+  "k": "discovered",
+  "t": "Get Discovered",
+  "s": "Put yourself on the map.",
+  "img": "dream_international_events",
+  "h": "Get Discovered",
+  "lead": "Be easy to find for the people who book.",
+  "body": [
+   "Your Profile Card appears on the FireFlair map by the areas you cover, never your address, and in search by your skills and professions.",
+   "The more complete your card, the easier you are to find."
+  ],
+  "cta": [
+   "See the map",
+   "#ff-map"
+  ],
+  "cta2": [
+   "Create Your Profile Card",
+   "profile"
+  ]
+ },
+ {
+  "k": "reviews",
+  "t": "Reviews & Reputation",
+  "s": "Build trust and credibility.",
+  "img": "reward_photoshoot",
+  "h": "Reviews & Reputation",
+  "lead": "Let your work speak for you.",
+  "body": [
+   "Collect reviews from the people and businesses you work with. Reviews sit on your profile and build the trust that gets you booked again."
+  ],
+  "cta": [
+   "Collecting reviews",
+   "#ff-relationships"
+  ]
+ },
+ {
+  "k": "platforms",
+  "t": "The Platforms",
+  "s": "FF Team, FF Staff and FF Party.",
+  "img": "dream_international_events",
+  "h": "The FireFlair platforms",
+  "lead": "One login for all of FireFlair.",
+  "body": [
+   "FF Team is where professionals build their Profile Cards. FF Staff is where businesses book them. FF Party is where anyone plans a party."
+  ],
+  "cta": [
+   "See the platforms",
+   "#ff-how"
+  ]
+ }
+]

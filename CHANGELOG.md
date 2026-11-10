@@ -1,5 +1,18 @@
 # FireFlair prototype — changelog
 
+## v17.4 — 2026-11-10 — Source reorganised into src/ with a small build (UI unchanged)
+Branch `v17.4`, built on v17.3.138. Build output: `fireflair-v17.4.html` (not committed; `npm run build`).
+
+- The single 35,000-line source file is now `src/`: 91 code files in folders for adapters, components (shared, team, staff, party, vip, admin, home), state, content, styles and utils, joined in order by `src/manifest.json`.
+- A small build step (esbuild only, no framework) turns `src/` into the same single-file HTML, byte-for-byte repeatable. `npm run check` verifies it.
+- Every adapter has its own file with a contract summary. `ADMIN_ADAPTER` is now a method-per-route contract for a future Admin API. New `CONTENT_ADAPTER` serves company profiles, supplier directory, homepage copy, package cards and Stories from JSON in `src/content/`.
+- CSS moved from JavaScript strings to 19 `.css` files, with the design tokens in `styles/tokens.css`. Images (576 files) moved out of the code into `src/assets/img/`, named by hash; big data lists moved to JSON.
+- Stories: `npm run stories` now writes JSON to `src/content/stories/`; the reader code is `src/content/stories/stories-reader.jsx`.
+- Publish build (`npm run publish-build`): hashed image names, manifest, audit, 5 MiB check on the release page; about 3.9 MiB page plus 453 image files.
+- Removed as unused: `PartyBuilder17` (never shown) and the empty `PX17` photo block. Raise the Bar add-ons, `RTB_*` and `ALLAX17` are kept.
+- Found while converting: `source/fireflair-app.jsx` had drifted from the page (different VIP code, photo block and image placeholders), so `src/` was built from the page that ships and keeps the source comments wherever the two matched. `source/` is removed.
+- Screenshots and page text of FF Team, FF Staff, FF Party, FF VIP, a Story, the Raise the Bar page and the cocktail add-ons match v17.3.138 with no console errors.
+
 ## v17.3.138 — 2026-11-10 — Raise the Bar Glasgow: full profile from their website
 Artifact version 1794318940-4e5f · file `fireflair-v17.3.138.html`
 

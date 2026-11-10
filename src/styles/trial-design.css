@@ -1,0 +1,17 @@
+
+/* ==== Design toolkit trial (branch trial/design-toolkit) ==== */
+/* Focus: one visible ring on light and dark; inputs that hide the native outline get one back. */
+.ff :where(button,[role="button"],a,summary,[tabindex]:not([tabindex="-1"]),input,select,textarea):focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; box-shadow: 0 0 0 4px var(--ink); }
+.ff input:focus-visible, .ff textarea:focus-visible, .ff select:focus-visible { outline: 2px solid var(--gold-dk) !important; outline-offset: 1px; }
+/* Typography: no italic serif anywhere. */
+.ff em, .ff cite, .ff address, .ff i:not([data-lucide]) { font-style: normal; }
+/* Touch targets: 44px minimum on touch screens (desktop sizing unchanged). */
+@media (pointer: coarse) {
+  .ff .ff-acct-btn, .ff .ff-authbtn, .ff .ff-ai-send, .ff .ff-topcoin, .ff .ff-btn, .ff .ff-ai-in, .ff .opts > button, .ff .ff-jr17-cats > button { min-height: 44px; }
+  .ff .ff-ai-send { min-width: 44px; }
+  .ff .ff-biz19-link { display: inline-flex; align-items: center; min-height: 44px; }
+  .ff .ff-secthead button { position: relative; }
+  .ff .ff-secthead button::after { content: ""; position: absolute; inset: -9px; }
+}
+/* Hero search: wide enough on desktop that the placeholder is not cut off. */
+@media (min-width: 900px) { .ff .ff-hero17-ai { width: max(100%, 420px); } }

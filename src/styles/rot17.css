@@ -1,0 +1,3 @@
+.ff .ff-dx-tile .ph.ff-rot17 img { opacity:0; transition:opacity 1.2s ease, transform .5s ease; }
+.ff .ff-dx-tile .ph.ff-rot17 img.on { opacity:1; }
+@media (prefers-reduced-motion: reduce) { .ff .ff-dx-tile .ph.ff-rot17 img { transition:none; } }

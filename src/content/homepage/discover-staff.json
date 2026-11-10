@@ -1,0 +1,160 @@
+[
+ {
+  "k": "company",
+  "t": "Company Profiles",
+  "s": "Seen by everyone you book, and on FF Party.",
+  "img": "training_ff_open_bar",
+  "h": "Your Company Profile",
+  "lead": "Your Company Profile does two things.",
+  "body": [
+   "It goes to everyone you book, so your staff know who they're working for.",
+   "And it goes on FF Party, so people can find your company and book your services."
+  ],
+  "cta": [
+   "Create your Company Card",
+   "profile"
+  ],
+  "cta2": [
+   "See the Company Card",
+   "#ff-company"
+  ]
+ },
+ {
+  "k": "book",
+  "t": "Book Staff",
+  "s": "Bartenders, waiters, chefs and more.",
+  "img": "teams",
+  "h": "Book Staff",
+  "lead": "Book the right people for every event, in a few taps.",
+  "body": [
+   "Start with your Event Card, add the roles you need, then choose who works each shift. Everyone gets their Shift card on WhatsApp and confirms there."
+  ],
+  "cta": [
+   "Choose your team",
+   "event"
+  ],
+  "cta2": [
+   "How booking works",
+   "#ff-how-book"
+  ]
+ },
+ {
+  "k": "services",
+  "t": "Service Cards",
+  "s": "Show customers what you offer.",
+  "img": "reward_ff_party",
+  "h": "Service Cards",
+  "lead": "Create Service Cards in minutes, to show every potential customer what your company can offer them.",
+  "body": [
+   "Instead of generic enquiries, you receive full, complete bookings for your approval.",
+   "Every Service Card comes in Bronze, Silver and Gold, so customers choose the level that suits them: Bronze for best value, Silver for the middle ground, and Gold for the best quality. You can give each customer an accurate quote for the level they pick.",
+   "Customers can also add cocktails to their package."
+  ],
+  "cta": [
+   "Create a Service Card",
+   "profile"
+  ],
+  "cta2": [
+   "See Service Cards",
+   "#ff-nx11-svc-h"
+  ]
+ },
+ {
+  "k": "cocktails",
+  "t": "Cocktail Menu",
+  "s": "Your signature cocktails.",
+  "img": "cocktail_0",
+  "h": "Your Cocktail Menu",
+  "lead": "List your company's cocktail menu and your signature cocktails.",
+  "body": [
+   "Customers can find you by searching for your cocktails, and when they book you, they can book you for your signature cocktails."
+  ],
+  "cta": [
+   "Build your cocktail menu",
+   "profile"
+  ],
+  "cta2": [
+   "See Signature Cocktails",
+   "#ff-nx11-ck-h"
+  ]
+ },
+ {
+  "k": "shifts",
+  "t": "Shift cards",
+  "s": "Times, pay and terms for each person.",
+  "img": "training_cocktail_basics",
+  "h": "Shift cards",
+  "lead": "One clear card for every person you book.",
+  "body": [
+   "Each Shift card holds the role, start and finish, pay and your T&Cs. Add a second role and it copies the first, so a full team takes moments."
+  ],
+  "cta": [
+   "What is FF Staff",
+   "#ff-what"
+  ]
+ },
+ {
+  "k": "network",
+  "t": "Community",
+  "s": "Find hospitality professionals.",
+  "img": "dream_after_dark",
+  "h": "The FireFlair community",
+  "lead": "Every professional on FF Staff has a Profile Card with their skills, experience and reviews.",
+  "body": [
+   "Search by name, profession, skill or area, and see who's closest to your event on the map."
+  ],
+  "cta": [
+   "See featured staff",
+   "#ff-team"
+  ],
+  "cta2": [
+   "Explore the network",
+   "network"
+  ]
+ },
+ {
+  "k": "team",
+  "t": "Build Your Team",
+  "s": "Rebook the people you trust.",
+  "img": "training_ff_open_class",
+  "h": "Build Your Team",
+  "lead": "Everyone you book and rate well becomes part of your team.",
+  "body": [
+   "Your team shows first when you choose staff, so the people you like working with are always a tap away."
+  ],
+  "cta": [
+   "Build your team",
+   "#ff-teams"
+  ]
+ },
+ {
+  "k": "reviews",
+  "t": "Reviews & Reputation",
+  "s": "Trust, both ways.",
+  "img": "reward_photoshoot",
+  "h": "Reviews & Reputation",
+  "lead": "Staff review you and you review them, after every booking.",
+  "body": [
+   "Good reviews help you book the best people again, and help them find more work."
+  ],
+  "cta": [
+   "About reviews",
+   "#ff-relationships"
+  ]
+ },
+ {
+  "k": "platforms",
+  "t": "The Platforms",
+  "s": "FF Team, FF Staff and FF Party.",
+  "img": "dream_international_events",
+  "h": "The FireFlair platforms",
+  "lead": "One login for all of FireFlair.",
+  "body": [
+   "FF Team is where professionals build their Profile Cards. FF Staff is where businesses book them. FF Party is where anyone plans a party."
+  ],
+  "cta": [
+   "See the platforms",
+   "#ff-how"
+  ]
+ }
+]
