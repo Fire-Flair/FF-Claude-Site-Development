@@ -1,5 +1,17 @@
 # FireFlair prototype — changelog
 
+## TRIAL (branch `trial/design-toolkit`, not on main) — Design-toolkit review changes
+File `fireflair-v17.3.135-trial.html` (built from v17.3.134); `source/fireflair-app.jsx` updated to match. Covers all four sites (FF Team, FF Staff, FF Party, FF VIP) because they share this one prototype. To drop it, delete the branch; `main` is untouched.
+
+- Typography: Cormorant Garamond is no longer loaded and `--serif` now resolves to Inter; every italic style (24) removed, so only Cinzel and Inter remain.
+- Colour tokens: 571 raw hex values inside colour, background, border, outline, fill, stroke and shadow declarations now use the existing tokens (`var(--gold,#C9A227)` form, with the literal as fallback). `--gold-lt` was left alone because it is defined with two different values. Hex values in inline JavaScript styles were deliberately not touched.
+- Focus: every focusable control gets a visible double ring; inputs that hid the native outline get it back.
+- Text size: 410 declarations under 12px raised (8–10.9px to 11px, 11–11.9px to 12px).
+- Touch targets: on touch screens, header, search, button, chip and link controls reach 44px; desktop sizing unchanged.
+- Hero: "FF Team / Staff / Party / VIP" no longer breaks across two lines in the "Welcome to" heading; on desktop the hero search is wide enough to show its whole placeholder.
+- Motion and input: two `transition: all` rules now list their properties; autofocus only on devices with a mouse (15 places); images decode asynchronously (65); `theme-color` meta added.
+- Not changed in this trial: page loads React, Lucide and Leaflet from public CDNs; embedded images make the file about 15 MB; most in-app state is not in the URL; some layout measurements are read in render code; the internal token name `--ox` abbreviates the colour that is always called burgundy.
+
 ## v17.3.134 — 2026-11-10 — Nine new FF Stories (Party, Team, Staff)
 Artifact version 1794311361-5f86 · file `fireflair-v17.3.134.html`
 
