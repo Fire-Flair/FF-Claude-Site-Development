@@ -89,7 +89,7 @@ const DEMO_ENGAGEMENTS = [
   { id: "eng_v9", shiftId: "shf_v2", staffId: "stf_jam", state: "unavailable", auto: true, batch: 1, batchSize: 10 },
   { id: "eng_v10", shiftId: "shf_v2", staffId: "stf_osc", state: "requested", auto: true, batch: 1, batchSize: 10 },
   { id: "eng_v11", shiftId: "shf_v2", staffId: "stf_mia", state: "requested", auto: true, batch: 1, batchSize: 10 }
-].map((e) => ({ ...e, sentAt: Date.now() - 6 * 3600000, expiresAt: Date.now() + RESPONSE_MS - 6 * 3600000, ...e.auto ? { selectBy: Date.now() + 7 * 86400000 - 6 * 3600000, thread: [] } : { thread: [] }, history: [{ state: e.state, at: Date.now() }] }));
+].map((e) => ({ ...e, sentAt: Date.now() - 6 * 3600000, expiresAt: Date.now() + RESPONSE_MS - 6 * 3600000, ...e.auto ? { selectBy: Date.now() + 7 * 86400000 - 6 * 3600000, thread: [] } : { thread: [] }, history: [{ state: e.state, at: Date.now() }] })).map((e) => e.id === "eng_x2" ? { ...e, state: "discuss", thread: [{ from: "pro", text: "Is parking available at the venue?", at: Date.now() - 2 * 3600000 }] } : e);
 
 
 

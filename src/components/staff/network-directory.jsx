@@ -148,6 +148,7 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
     <div className="ff-copub">
       <PublicHero media={(co.mediaList || []).map(m => ({ id: m.id, src: m.src, name: m.alt || "" }))} card={<CompanyCardFace c={co} />} below={<>
       {!done && <button type="button" className="ff-pback ff-copub-back" onClick={back}><I11.ChevronLeft size={20} /> <span>Back</span></button>}
+      {!done && !co.mine && !isParty && <div className="ff-copub-acts"><NetBtn17 id={co.id} name={co.name} wide /></div>}
       {co.unclaimed || done ? null : (
       <div className="ff-copub-acts">
         {isStaff && team.length > 0 && (isParty

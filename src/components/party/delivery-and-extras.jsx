@@ -72,7 +72,7 @@ function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
     </div>
   );
   const askBox = ask && <div className="ask"><input aria-label="Your question" value={txt} onChange={(x) => setTxt(x.target.value.slice(0, 200))} placeholder="Your question" /><div className="btns" style={{ gridTemplateColumns: "1fr" }}><button type="button" className="yes" disabled={!txt.trim()} onClick={send}>Send question</button></div></div>;
-  const thread = (e.thread || []).length > 0 && <div className="thread">{e.thread.map((m, i) => <p key={i}>{m.from === "pro" ? "You: " : `${hirer}: `}{m.text}</p>)}</div>;
+  const thread = (e.thread || []).length > 0 && <div className="thread">{e.thread.map((m, i) => <p key={i}>{m.from === "pro" ? (viewer === "hirer" ? `${firstName((findPerson(all, state, e.staffId) || {}).name || "") || "They"}: ` : "You: ") : (viewer === "hirer" ? "You: " : `${hirer}: `)}{m.text}</p>)}</div>;
   return (<>
     <article className={`ff-evc ff-sd11 ${kind}${mini ? " mini" : ""}`} aria-label={`Shift card: ${shift.role}`}>
       <span className="ff-evc-plate">Shift Card</span>
@@ -297,7 +297,97 @@ function availWaiting17(state) {
 }
 
 
-const notifyCount17 = (state) => pending11(state).length + availWaiting17(state).length;
+/* Team invitations sent TO you (sample: one person, one company). Core supplies these in production. */
+const TEAM_ASKS_DEMO17 = [
+  { id: "tia_ava", fromId: "stf_ava", name: "Ava Clarke", tag: "AVA03", note: "Worked with you before · would work with you again", at: Date.UTC(2026, 10, 8) },
+  { id: "tia_vooshka", fromId: "co_vooshka", name: "Vooshka Cocktail Bar", company: true, note: "Wants you on their company team", at: Date.UTC(2026, 10, 9) },
+];
+
+
+function teamAsksWaiting17(state) {
+  if (!(state.auth && state.auth.status === "signedIn" && state.role === "team")) return [];
+  const done = state.teamAsks17 || {};
+  return TEAM_ASKS_DEMO17.filter(x => !done[x.id] && !(state.connections || []).some(c => c.id === x.fromId) && !(x.company && (state.netAdds17 || []).includes(x.fromId)));
+}
+
+
+/* Questions people asked on your profile that you haven't answered (FF Team). */
+function questionsWaiting17(state, people) {
+  if (!(state.auth && state.auth.status === "signedIn" && state.role === "team")) return [];
+  return askedOfMe(state, people).filter(q => !isAnswered(answerOf(state, q)));
+}
+
+
+/* Booker side (FF Staff, FF Party): a question someone asked on a Shift Card you sent, not yet answered. */
+function shiftQuestionsWaiting17(state) {
+  if (!(state.auth && state.auth.status === "signedIn" && state.role === "staff")) return [];
+  return (state.engagements || []).filter(e => e.staffId !== "me" && ["requested", "discuss", "available", "confirmed"].includes(e.state)
+    && (e.thread || []).length > 0 && e.thread[e.thread.length - 1].from === "pro" && state.shifts.some(x => x.id === e.shiftId));
+}
+
+
+/* One list per site. FF Team: cards sent to you, team invitations, questions on your profile.
+   FF Staff and FF Party: questions from the people you asked to work. */
+const notifyCount17 = (state) => state.role === "team"
+  ? pending11(state).length + availWaiting17(state).length + teamAsksWaiting17(state).length + questionsWaiting17(state, state.directory || []).length
+  : shiftQuestionsWaiting17(state).length;
+
+
+function TeamAskNote17({ x }) {
+  const { state, dispatch } = useStore();
+  const all = useDirectory();
+  const person = x.company ? null : all.find(p => p.id === x.fromId);
+  const co = x.company ? companyById(state, x.fromId) : null;
+  const first = x.company ? x.name : firstName(x.name);
+  const reply = (accept) => { dispatch({ type: "TEAM_ASK_REPLY", ask: x, accept }); dispatch({ type: "TOAST", toast: accept ? `You and ${first} are on each other's team` : "Invitation declined" }); };
+  return (
+    <div className="ff-ndcard17">
+      <div className="face">{co ? <CompanyCardFace c={co} size="sm" /> : person ? <PlayerCard person={person} format="portrait" themeKey={person.theme || "paper"} /> : null}</div>
+      <p className="nt">{x.note}</p>
+      <div className="btns two">
+        <button type="button" className="yes" onClick={() => reply(true)}>Accept</button>
+        <button type="button" className="no" onClick={() => reply(false)}>Decline</button>
+      </div>
+    </div>
+  );
+}
+
+
+function QuestionNote17({ q }) {
+  const { dispatch } = useStore();
+  const people = useDirectory();
+  const [txt, setTxt] = useState("");
+  const send = () => { if (!txt.trim()) return; dispatch({ type: "ANSWER", qid: q.id, value: txt.trim() }); dispatch({ type: "TOAST", toast: "Answer saved to your profile" }); };
+  return (
+    <div className="ff-ndcard17">
+      <article className="ff-evc ff-sd11 sel" aria-label="Question Card">
+        <span className="ff-evc-plate">Question Card</span>
+        <span className="ff-evc-coin"><Coin size={30} tier="gold" /></span>
+        <h3 className="ff-evc-name q">{q.text}</h3>
+        <p className="sev">{askerName(q, people)}{q.askedAt ? ` · ${askedOn(q.askedAt)}` : ""}</p>
+        <div className="sbd">
+          <div className="ask"><textarea aria-label="Your answer" rows={3} value={txt} onChange={(e) => setTxt(e.target.value.slice(0, 400))} placeholder="Your answer" />
+            <div className="btns" style={{ gridTemplateColumns: "1fr" }}><button type="button" className="yes" disabled={!txt.trim()} onClick={send}>Send answer</button></div></div>
+        </div>
+      </article>
+    </div>
+  );
+}
+
+
+function ShiftQuestionNote17({ e }) {
+  const { state, dispatch } = useStore();
+  const [txt, setTxt] = useState("");
+  const sh = state.shifts.find(x => x.id === e.shiftId), ev = sh && state.events.find(x => x.id === sh.eventId);
+  const send = () => { if (!txt.trim()) return; dispatch({ type: "AF_REPLY", id: e.id, text: txt.trim() }); dispatch({ type: "TOAST", toast: "Reply sent" }); };
+  return (
+    <div className="ff-ndcard17">
+      <ShiftDelivery11 e={e} shift={sh} event={ev} viewer="hirer" />
+      <div className="reply"><textarea aria-label="Your reply" rows={2} value={txt} onChange={(x) => setTxt(x.target.value.slice(0, 300))} placeholder="Your reply" />
+        <button type="button" className="yes" disabled={!txt.trim()} onClick={send}>Send reply</button></div>
+    </div>
+  );
+}
 
 
 function NoteDrop17({ id, open, onToggle, icon, title, sub, children }) {
@@ -340,16 +430,23 @@ function AvailNote17({ x }) {
 
 function NotifySheet17({ open, onClose }) {
   const { state, dispatch } = useStore();
+  const people = useDirectory();
   const [at, setAt] = useState(null);
   useEffect(() => { if (open) { dispatch({ type: "NOTES_SEEN" }); setAt(null); } }, [open]);
   if (!open) return null;
-  const rows = [
+  const lastQ = (e) => e.thread[e.thread.length - 1].text;
+  const rows = state.role === "team" ? [
     ...pending11(state).map(e => {
       const sh = state.shifts.find(x => x.id === e.shiftId), ev = sh && state.events.find(x => x.id === sh.eventId);
       return sh ? { id: e.id, icon: <I11.Briefcase size={18} />, title: `${e.auto ? "Open shift" : "You've been selected"} · ${sh.role}`, sub: `${hirerOf11(state, ev)} · ${whenOf11(sh)}`, body: <ShiftDelivery11 e={e} shift={sh} event={ev} /> } : null;
     }).filter(Boolean),
     ...availWaiting17(state).map(x => ({ id: x.id, icon: <I11.CalendarCheck size={18} />, title: "Are you available?", sub: `${x.byName} · ${shortDay(x.iso)}`, body: <AvailNote17 x={x} /> })),
-  ];
+    ...teamAsksWaiting17(state).map(x => ({ id: x.id, icon: <I11.Users size={18} />, title: "Team invitation", sub: x.name, body: <TeamAskNote17 x={x} /> })),
+    ...questionsWaiting17(state, people).map(q => ({ id: q.id, icon: <I11.MessageSquare size={18} />, title: "Question for you", sub: `${askerName(q, people)} · ${q.text}`, body: <QuestionNote17 q={q} /> })),
+  ] : shiftQuestionsWaiting17(state).map(e => {
+    const sh = state.shifts.find(x => x.id === e.shiftId), who = findPerson(people, state, e.staffId) || {};
+    return { id: e.id, icon: <I11.MessageSquare size={18} />, title: `Question from ${firstName(who.name || "") || "your team"}`, sub: `${sh.role} · ${lastQ(e)}`, body: <ShiftQuestionNote17 e={e} /> };
+  });
   return (
     <Sheet open onClose={onClose} title="Notifications">
       <div className="ff-ntf17">

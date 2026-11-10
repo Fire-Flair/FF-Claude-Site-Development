@@ -3993,3 +3993,19 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 
 
 .ff .ff-ntf-next17 .ff-task { border-radius:16px; corner-shape:squircle; }
+
+/* v17.4.4 — cards inside a notification, and network tiles */
+.ff .ff-ndcard17 { display:grid; gap:10px; min-width:0; }
+.ff .ff-ndcard17 .face { display:grid; justify-items:center; min-width:0; }
+.ff .ff-ndcard17 .face > * { max-width:100%; }
+.ff .ff-ndcard17 .nt { margin:0; padding:10px 12px; background:#F4EFE4; border-radius:14px; corner-shape:squircle; font-size:13.5px; line-height:1.4; color:#16130F; }
+.ff .ff-ndcard17 .btns.two { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.ff .ff-ndcard17 .btns.two button, .ff .ff-ndcard17 .reply button { min-height:44px; border-radius:999px; corner-shape:squircle; border:1.5px solid #6B1226; background:#FBF8F1; color:#6B1226; font-weight:700; font-size:13.5px; cursor:pointer; }
+.ff .ff-ndcard17 button.yes { background:#6B1226; color:#FBF8F1; }
+.ff .ff-ndcard17 button.no { background:#0B0B0C; border-color:#0B0B0C; color:#FBF8F1; }
+.ff .ff-ndcard17 button:disabled { opacity:.45; cursor:default; }
+.ff .ff-ndcard17 textarea { border:1.5px solid #0B0B0C; border-radius:14px; corner-shape:squircle; padding:10px 12px; font:inherit; font-size:14px; background:#fff; color:#0B0B0C; width:100%; box-sizing:border-box; resize:vertical; }
+.ff .ff-ndcard17 .reply { display:grid; gap:8px; }
+.ff .ff-ndcard17 .ff-evc-name.q { font-size:clamp(17px,5vw,21px); line-height:1.25; overflow-wrap:normal; word-break:keep-all; }
+.ff .ff-nd17 .hd small { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.ff .ff-netco17 { flex:none; width:min(300px,78vw); align-self:flex-start; }

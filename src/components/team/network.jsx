@@ -170,16 +170,19 @@ function PersonProfile() {
   );
   const guestNote = guestOfMe ? <div className="ff-guestnote"><Eye size={16} /> This is your profile as a guest sees it.</div> : null;
   const actionsEl = other ? (<div className="ff-pub-acts">
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-          {hireSiteOf(state).party ? <FavBtn11 person={person} /> : connected ? (
-            <Btn variant="ghost" disabled><Check size={14} /> On your team</Btn>
-          ) : pending ? (
-            <Btn variant="ghost" onClick={() => setAdding(true)}><Clock size={14} /> Invitation sent</Btn>
-          ) : ph17(state) >= 2 ? (
-            <Btn variant="primary" onClick={() => setAdding(true)}><Plus size={14} /> Add to team</Btn>
-          ) : null}
-          <Btn onClick={() => setReviewing(true)}><Award size={14} /> Review</Btn>
-        </div>
+        {hireSiteOf(state).party ? <FavBtn11 person={person} wide /> : (<>
+          {state.role === "staff" && <div style={{ marginBottom: 8 }}><FavBtn11 person={person} wide /></div>}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+            <NetBtn17 id={person.id} name={first} />
+            {connected ? (
+              <Btn variant="ghost" disabled><Check size={14} /> On your team</Btn>
+            ) : pending ? (
+              <Btn variant="ghost" onClick={() => setAdding(true)}><Clock size={14} /> Invitation sent</Btn>
+            ) : (
+              <Btn variant="primary" onClick={() => setAdding(true)}><Plus size={14} /> Add to team</Btn>
+            )}
+          </div>
+        </>)}
         {pending && (
           <div className="ff-pendingnote">
             <span>Waiting for {first} to accept your team invitation on WhatsApp.</span>
@@ -206,6 +209,7 @@ function PersonProfile() {
             <Btn onClick={() => setAsking(true)}><MessageSquare size={14} /> Ask a question</Btn>
             <Btn onClick={() => setChecking(true)}><I11.CalendarCheck size={14} /> Availability</Btn>
           </div>
+          <Btn variant="wide" onClick={() => setReviewing(true)}><Award size={14} /> Review</Btn>
         </div>
       </div>) : null;
   const cardEl = <PlayerCard person={person} format="full" nameAs="div" themeKey={person.id === "me" ? state.profile.theme : (person.theme || "ivory")}  />;
@@ -294,6 +298,19 @@ function inviterOf(state, people) {
 
 
 /* My Network: the inviter first, then everyone I've connected with. */
+/* Add to network: one tap, no confirmation from the other side. Works for people and companies. */
+function NetBtn17({ id, name, wide }) {
+  const { state, dispatch } = useStore();
+  const on = (state.netAdds17 || []).includes(id) || (state.connections || []).some(c => c.id === id);
+  const team = (state.connections || []).some(c => c.id === id);
+  const go = () => {
+    if (state.auth.status !== "signedIn") { window.dispatchEvent(new CustomEvent("ff-login")); return; }
+    dispatch({ type: "NET_TOGGLE", id }); dispatch({ type: "TOAST", toast: on ? `${name} removed from your network` : `${name} added to your network` });
+  };
+  return <Btn variant={(on ? "ghost" : "primary") + (wide ? " wide" : "")} disabled={team} onClick={go}>{on ? <><Check size={14} /> In your network</> : <><UserPlus size={14} /> Add to network</>}</Btn>;
+}
+
+
 function myNetwork(state, people) {
   const inv = inviterOf(state, people);
   const rest = state.connections.map(c => people.find(p => p.id === c.id)).filter(Boolean).filter(p => !inv || p.id !== inv.id);
@@ -795,6 +812,9 @@ function NetworkScreen({ guest = false }) {
   const setQ = (v) => dispatch({ type: "NET_QUERY", q: v });
   const mine = guest ? { inviter: null, list: [] } : myNetwork(state, adminPeople17(state, state.directory));
   const connected = mine.list;
+  const adds = guest ? [] : (state.netAdds17 || []);
+  const netPeople = adds.map(id => state.directory.find(p => p.id === id)).filter(p => p && !connected.some(c => c.id === p.id));
+  const netCos = adds.filter(id => String(id).startsWith("co_")).map(id => companyById(state, id)).filter(Boolean);
   const view = (p) => { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); };
   const join = () => { dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); };
 
@@ -819,13 +839,25 @@ function NetworkScreen({ guest = false }) {
 
       {!q && !guest && ph17(state) >= 2 && (
         <section style={{ marginTop: 20 }}>
-          <SectionHead icon={<Check size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Your network" count={connected.length} />
+          <SectionHead icon={<Check size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Your network" count={connected.length + netPeople.length + netCos.length} />
           <HScroll label="Your network">
             {connected.map(p => (
               <div key={p.id} className="ff-nettile">
                 <NetworkTile person={p} invited={!!(mine.inviter && mine.inviter.id === p.id)} onClick={() => view(p)} />
+                <span className="ff-invited"><Check size={11} /> On your team</span>
                 <button type="button" className="ff-btn sm ghost" onClick={() => setReviewing(p)}><Award size={12} /> Review</button>
               </div>
+            ))}
+            {netPeople.map(p => (
+              <div key={p.id} className="ff-nettile">
+                <PlayerTile person={p} onClick={() => view(p)} />
+                <button type="button" className="ff-btn sm ghost" onClick={() => setReviewing(p)}><Award size={12} /> Review</button>
+              </div>
+            ))}
+            {netCos.map(c => (
+              <button key={c.id} type="button" className="ff-co11-tile ff-netco17" aria-label={`${c.name}: open their page`} onClick={() => { dispatch({ type: "VIEW_COMPANY", id: c.id }); window.scrollTo(0, 0); }}>
+                <CompanyCardFace c={c} size="sm" />
+              </button>
             ))}
             <button className="ff-card ff-portrait ff-addtile" style={{ width: CARD_W.player }} onClick={() => setInviting(true)}>
               <span style={{ textAlign: "center" }}><UserPlus size={20} color="var(--gold-dk)" />

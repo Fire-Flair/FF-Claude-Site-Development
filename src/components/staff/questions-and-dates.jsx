@@ -147,6 +147,15 @@ function v11Reducer(s, a) {
     case "COMPANY_MEDIA_ADD": { const c = s.company || {}; return { ...s, company: { ...c, media: [...(c.media || []), a.item] } }; }
     case "COMPANY_MEDIA_DELETE": { const c = s.company || {}; return { ...s, company: { ...c, media: (c.media || []).filter(m => m.id !== a.id) } }; }
     case "NOTES_SEEN": return { ...s, notesSeenAt: Date.now() };
+    /* v17.4.4 networking. Network = a one-way add of a person or a company (no confirmation). Team stays two-way (TEAM_INVITE). */
+    case "NET_TOGGLE": { const n = s.netAdds17 || []; return { ...s, netAdds17: n.includes(a.id) ? n.filter(x => x !== a.id) : [...n, a.id] }; }
+    /* A team invitation sent TO you: accept (you join each other's team) or decline. */
+    case "TEAM_ASK_REPLY": {
+      const done = { ...(s.teamAsks17 || {}), [a.ask.id]: a.accept ? "accepted" : "declined" };
+      if (!a.accept) return { ...s, teamAsks17: done };
+      if (a.ask.company) return { ...s, teamAsks17: done, netAdds17: (s.netAdds17 || []).includes(a.ask.fromId) ? s.netAdds17 : [...(s.netAdds17 || []), a.ask.fromId] };
+      return { ...s, teamAsks17: done, connections: s.connections.some(c => c.id === a.ask.fromId) ? s.connections : [...s.connections, { id: a.ask.fromId, name: a.ask.name, onFF: true, tag: a.ask.tag }] };
+    }
     /* On FF Staff, tapping someone's card enlarges it first (CardPeek):
        Add to your event, or View profile (which sends direct: true). */
     case "VIEW":
