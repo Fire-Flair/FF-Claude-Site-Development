@@ -1,7 +1,9 @@
 # FireFlair prototype — changelog
 
-## TRIAL (branch `trial/design-toolkit`, not on main) — Design-toolkit review changes
-File `fireflair-v17.3.135-trial.html` (built from v17.3.134); `source/fireflair-app.jsx` updated to match. Covers all four sites (FF Team, FF Staff, FF Party, FF VIP) because they share this one prototype. To drop it, delete the branch; `main` is untouched.
+## v17.3.135 — 2026-11-10 — Design-toolkit review changes (all four sites)
+Artifact version 1794315705-4eb7 · file `fireflair-v17.3.135.html`
+
+Approved after a trial on a separate branch. Covers FF Team, FF Staff, FF Party and FF VIP because they share this one prototype; `source/fireflair-app.jsx` matches the page.
 
 - Typography: Cormorant Garamond is no longer loaded and `--serif` now resolves to Inter; every italic style (24) removed, so only Cinzel and Inter remain.
 - Colour tokens: 571 raw hex values inside colour, background, border, outline, fill, stroke and shadow declarations now use the existing tokens (`var(--gold,#C9A227)` form, with the literal as fallback). `--gold-lt` was left alone because it is defined with two different values. Hex values in inline JavaScript styles were deliberately not touched.
