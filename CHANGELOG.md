@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.3.131 — 2026-11-10 — FF VIP card, booking, experiences, map; header names
+Artifact version 1794272992-0042 · file `fireflair-v17.3.131.html`
+
+- FF VIP card is now the same 5:7 card and creation page as the FF Party VIP Host Card: card beside a picture gallery, with sections below for favourite drinks, personality, interests, pictures, looking after you, and dietary needs last. Guests can add a card photo and up to six pictures; saving still joins the launch party guest list.
+- FF VIP booking now follows the other booking screens: three steps (Event Card, Experience, VIP requests) and the round Review & Confirm button. Saved Event Cards can be shared as invitations (same invitation builder as FF Party), so the separate invitation section is gone.
+- Experiences page: map of experiences and sample VIPs, experiences in sections with pictures and dropdowns, and a VIPs strip. Tapping a VIP opens their card and profile.
+- Top-bar site names are one word in the FireFlair lettering with no gap: FFTEAM, FFSTAFF, FFPARTY, FFVIP.
+- Sample VIPs, experience map pins and the invitation and booking requests are prototype data; bookings are still saved as Front Doors requests (`vip_booking`, `vip_guest`).
+- Readable source copied to `source/fireflair-app.jsx`.
+
 ## v17.3.130 — 2026-11-09 — FF VIP home matches other sites; site names in header
 Artifact version 1794250152-f6a1 · file `fireflair-v17.3.130.html`
 

@@ -1862,10 +1862,10 @@ function Coin({ size = 40, tier = "standard", flat = false, style }) {
 
 const WM_LIGHT = "linear-gradient(100deg,#FBF0CA,#E6CE84 26%,#B08D2A 52%,#EBD695 74%,#FCF2D2)";
 const WM_DARK = "linear-gradient(100deg,#9A7A24,#6F5514 30%,#B08D2A 52%,#7E611D 76%,#A5832B)";
-function Wordmark({ size = 15, tone = "#EAD79C", text = "FIREFLAIR" }) {
+function Wordmark({ size = 15, tone = "#EAD79C", text = "FIREFLAIR", spacing = ".22em" }) {
   const onLight = tone !== "#EAD79C";
   const s = {
-    fontFamily: "var(--display)", fontSize: size, letterSpacing: ".22em", whiteSpace: "nowrap",
+    fontFamily: "var(--display)", fontSize: size, letterSpacing: spacing, whiteSpace: "nowrap",
     backgroundImage: onLight ? WM_DARK : WM_LIGHT, display: "inline-block",
   };
   return (<span className="ff-metal" style={s}>{text}</span>);
@@ -8820,7 +8820,7 @@ function BkDrop17({ id, title, desc, icon: Icon, photo, children }) {
   return (
     <section className={`ff-bkd${open ? " open" : ""}`} id={id}>
       <button type="button" className="bkd-hd" aria-expanded={open} onClick={() => setOpen(o => !o)}>
-        {src ? <span className="bkd-ph"><img src={src} style={fp17(photo)} alt="" loading="lazy" /></span> : null}
+        {src ? <span className="bkd-ph"><img src={src} style={fp17(photo)} alt="" /></span> : null}
         <span className="bkd-tx">
           <span className="bkd-ic"><Icon size={16} /></span><b>{title}</b>
           <span className="bkd-ds">{desc}</span>
@@ -11409,7 +11409,7 @@ function Shell({ children }) {
               onClick={() => setMenuOpen(o => !o)}>
               <Coin size={30} tier={isTeam ? state.profile.tier : "gold"} />
               <span style={{ lineHeight: 1.1, textAlign: "left" }}>
-                <Wordmark size={15} text={isVip ? "FF VIP" : isParty ? "FF PARTY" : isStaff ? "FF STAFF" : "FF TEAM"} />
+                <Wordmark size={17} spacing=".1em" text={isVip ? "FFVIP" : isParty ? "FFPARTY" : isStaff ? "FFSTAFF" : "FFTEAM"} />
               </span>
               <span aria-hidden="true" className="ff-acct-caret">
                 <svg width="14" height="9" viewBox="0 0 14 9" style={{ display: "block" }}><path d="M1 1.2h12L7 8.2z" fill="currentColor" /></svg>
@@ -16131,22 +16131,22 @@ const VIP21_SEATS = ["The best table in the house", "A booth", "At the bar", "Ou
 const VIP21_MENU = ["Espresso Martini", "Margarita", "Old Fashioned", "Negroni", "Aperol Spritz", "French 75", "Moscow Mule", "Champagne, by the glass"];
 const VIP21_OCCASIONS = ["Birthday", "Anniversary", "Celebration", "Corporate", "Group night out", "Just because"];
 const VIP21_EXP = [
-  { k: "spa", t: "Spas and wellness", s: "Thermal suites, treatments and slow days away", ic: "Flower2", d: "Day spas, hotel spas and wellness retreats for a pair, a group or a celebration." },
-  { k: "track", t: "Racetracks and driving", s: "Track days, passenger laps and hospitality suites", ic: "Car", d: "Circuits, driving experiences and trackside hospitality, with your group looked after all day." },
-  { k: "dine", t: "Fine dining", s: "Tasting menus and chef’s tables", ic: "UtensilsCrossed", d: "The restaurants worth booking early, with your preferences already at the table." },
-  { k: "roof", t: "Rooftops and cocktail bars", s: "The best tables, and the best bartenders", ic: "Martini", d: "Choose your drinks ahead and ask for the bartender you want behind the bar." },
-  { k: "priv", t: "Private dining and rooms", s: "Your own room, menu and host", ic: "Building2", d: "Private rooms and buyouts for dinners, launches and celebrations." },
-  { k: "tea", t: "Afternoon tea and brunch", s: "A long table and a good reason", ic: "Coffee", d: "Afternoon tea, bottomless brunch and long lunches for groups." },
-  { k: "water", t: "Yachts and river cruises", s: "Days and evenings on the water", ic: "Sailboat", d: "Charters and cruises with the bar and the team arranged for you." },
-  { k: "hotel", t: "Hotels and suites", s: "A room, a bar and a table in one booking", ic: "BedDouble", d: "Stay, dine and drink at the same address, with one card for all of it." },
-  { k: "wine", t: "Wine, whisky and tastings", s: "Cellars, distilleries and guided tastings", ic: "Wine", d: "Tastings led by the people who make it, for a few friends or a full group." },
-  { k: "show", t: "Shows, music and nights out", s: "Boxes, tables and after-parties", ic: "Music2", d: "The best seats and the best tables for a night out." },
-  { k: "estate", t: "Gardens and country estates", s: "Houses, grounds and long weekends", ic: "Trees", d: "Country houses and gardens for celebrations that need space." },
-  { k: "club", t: "Members’ clubs", s: "Doors that open when you are known", ic: "Crown", d: "Clubs and lounges, where being known on arrival is the whole point." },
+  { k: "spa", t: "Spas and wellness", s: "Thermal suites, treatments and slow days away", img: "cocktail_0", area: "Surrey Hills", ll: [51.23, -0.33], d: "Day spas, hotel spas and wellness retreats for a pair, a group or a celebration.", f: "Good for pairs, hen weekends and birthdays." },
+  { k: "track", t: "Racetracks and driving", s: "Track days, passenger laps and hospitality suites", img: "dream_motorsport", area: "Northamptonshire", ll: [52.07, -1.02], d: "Circuits, driving experiences and trackside hospitality, with your group looked after all day.", f: "Good for groups, corporate days and big birthdays." },
+  { k: "dine", t: "Fine dining", s: "Tasting menus and chef\u2019s tables", img: "cocktail_2", area: "Mayfair", ll: [51.511, -0.147], d: "The restaurants worth booking early, with your preferences already at the table.", f: "Good for anniversaries, dinners and celebrations." },
+  { k: "roof", t: "Rooftops and cocktail bars", s: "The best tables, and the best bartenders", img: "dream_after_dark", area: "Shoreditch", ll: [51.526, -0.078], d: "Choose your drinks ahead and ask for the bartender you want behind the bar.", f: "Good for groups, first dates and nights out." },
+  { k: "priv", t: "Private dining and rooms", s: "Your own room, menu and host", img: "t17_vkg09", area: "Marylebone", ll: [51.52, -0.153], d: "Private rooms and buyouts for dinners, launches and celebrations.", f: "Good for launches, birthdays and corporate dinners." },
+  { k: "tea", t: "Afternoon tea and brunch", s: "A long table and a good reason", img: "cocktail_1", area: "Knightsbridge", ll: [51.502, -0.16], d: "Afternoon tea, bottomless brunch and long lunches for groups.", f: "Good for hen parties, baby showers and catch-ups." },
+  { k: "water", t: "Yachts and river cruises", s: "Days and evenings on the water", img: "dream_yacht_jobs", area: "Westminster Pier", ll: [51.501, -0.122], d: "Charters and cruises with the bar and the team arranged for you.", f: "Good for summer parties and milestone birthdays." },
+  { k: "hotel", t: "Hotels and suites", s: "A room, a bar and a table in one booking", img: "reward_training_tickets", area: "Covent Garden", ll: [51.512, -0.123], d: "Stay, dine and drink at the same address, with one card for all of it.", f: "Good for weekends away and special occasions." },
+  { k: "wine", t: "Wine, whisky and tastings", s: "Cellars, distilleries and guided tastings", img: "training_wine_qualification", area: "Kent", ll: [51.28, 0.52], d: "Tastings led by the people who make it, for a few friends or a full group.", f: "Good for friends, couples and corporate groups." },
+  { k: "show", t: "Shows, sport and nights out", s: "Boxes, tables and after-parties", img: "dream_sports_events", area: "West End", ll: [51.513, -0.131], d: "The best seats and the best tables for a night out.", f: "Good for groups and client entertaining." },
+  { k: "estate", t: "Gardens and country estates", s: "Houses, grounds and long weekends", img: "t17_vkg11", area: "Hertfordshire", ll: [51.78, -0.2], d: "Country houses and gardens for celebrations that need space.", f: "Good for weddings, big parties and long weekends." },
+  { k: "club", t: "Members\u2019 clubs", s: "Doors that open when you are known", img: "reward_amex_card", area: "St James\u2019s", ll: [51.507, -0.137], d: "Clubs and lounges, where being known on arrival is the whole point.", f: "Good for regulars, hosts and private evenings." },
 ];
 const VIP21_STEPS = [
   ["Create your VIP card", "Your favourite drinks, what you eat, how you like to be looked after."],
-  ["Host or be invited", "Hosts send invitations. Guests reply with their card."],
+  ["Host or be invited", "Hosts turn their Event Card into an invitation. Guests reply with their card."],
   ["Book VIP", "Venues receive your card, not just a phone number."],
   ["Arrive and be known", "Add your card to your wallet and show it at the door."],
 ];
@@ -16226,6 +16226,29 @@ const VIP21_CSS = [
   ".ff-v21-wallet{display:grid;gap:10px;margin-top:10px}.ff-v21-wallet button{display:flex;align-items:center;gap:10px;justify-content:center;padding:13px 16px;border-radius:20px;border:0;background:#000;color:#fff;font:inherit;font-weight:600;cursor:pointer}",
   ".ff-v21-ph2{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.ff-v21-ph2 .ff-v21-up{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:18px;border:1px solid rgba(165,128,47,.6);background:#fff;cursor:pointer;font-size:14px}",
   ".ff-v21 .ff-btn{border-radius:18px}",
+  ".ff-v21 .ff-v21-chips .ff-v21-chip{padding:8px 14px;border-radius:18px;border:1px solid rgba(165,128,47,.55);background:#fff;color:#141416;font:inherit;font-size:13.5px;cursor:pointer}.ff-v21 .ff-v21-chips .ff-v21-chip[aria-pressed=true]{background:#141416;color:#E7CB7A;border-color:#141416}",
+  ".ff-v21 .ff-vcard21 .r span:not(.ic){overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}.ff-v21 .ff-vcard21 .r .ph0{opacity:.5}",
+  ".ff-v21 .ff-vcard21 .vq{position:absolute;right:10px;top:44px;z-index:3;width:44px;height:44px;padding:4px;border-radius:8px;background:#fff;display:block}.ff-v21 .ff-vcard21 .vq svg{width:100%;height:100%;display:block}",
+  ".ff-v21 .ff-vcard21.mini{width:100%}.ff-v21 .ff-vcard21.mini .vq{display:none}",
+  ".ff-v21 .ff-v21-pc{flex:none;width:220px;padding:0;border:0;background:none;cursor:pointer;font:inherit;text-align:left}",
+  ".ff-v21 .ff-v21-xg{margin-top:14px}.ff-v21 .ff-v21-gh{margin:0 0 10px;font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dk,#8A6A1F)}",
+  ".ff-v21 .ff-v21-xl{display:grid;gap:12px;grid-template-columns:1fr}@media(min-width:760px){.ff-v21 .ff-v21-xl{grid-template-columns:1fr 1fr}}",
+  ".ff-v21 .ff-v21-xp{border-radius:26px;overflow:hidden;background:#fff;border:1px solid rgba(165,128,47,.45);box-shadow:0 10px 24px -18px rgba(30,20,5,.6)}",
+  ".ff-v21 .ff-v21-xp .h{display:flex;align-items:center;gap:14px;width:100%;padding:10px 14px 10px 10px;border:0;background:none;color:#141416;text-align:left;cursor:pointer;font:inherit}",
+  ".ff-v21 .ff-v21-xp .pic{flex:none;width:84px;height:84px;border-radius:20px;overflow:hidden;background:#17181c;display:block}.ff-v21 .ff-v21-xp .pic img{width:100%;height:100%;object-fit:cover;display:block}",
+  ".ff-v21 .ff-v21-xp .tx{flex:1;min-width:0;display:grid;gap:3px}.ff-v21 .ff-v21-xp .tx b{font-size:16px;line-height:1.2;color:#141416}.ff-v21 .ff-v21-xp .tx small{font-size:12.5px;line-height:1.35;color:#555}",
+  ".ff-v21 .ff-v21-xp .cv{flex:none;transition:transform .2s;color:#8A6A1F}.ff-v21 .ff-v21-xp.on .cv{transform:rotate(180deg)}",
+  ".ff-v21 .ff-v21-xp .b{padding:2px 16px 16px;color:#2a2a2e}.ff-v21 .ff-v21-xp .b p{margin:6px 0;font-size:14.5px;line-height:1.5}.ff-v21 .ff-v21-xp .b .f{font-size:13px;color:#6b5a2a}",
+  ".ff-v21 .ff-v21-xsel{flex:none;width:170px;display:grid;gap:4px;text-align:left;padding:0 0 12px;border-radius:22px;overflow:hidden;border:2px solid rgba(165,128,47,.4);background:#fff;color:#141416;cursor:pointer;font:inherit}",
+  ".ff-v21 .ff-v21-xsel[aria-pressed=true]{border-color:#B08D2A;box-shadow:0 0 0 3px rgba(231,203,122,.5)}",
+  ".ff-v21 .ff-v21-xsel .pic{display:block;height:104px;background:#17181c}.ff-v21 .ff-v21-xsel .pic img{width:100%;height:100%;object-fit:cover;display:block}",
+  ".ff-v21 .ff-v21-xsel b{padding:0 12px;font-size:14.5px;line-height:1.2}.ff-v21 .ff-v21-xsel small{padding:0 12px;font-size:12px;line-height:1.3;color:#555}",
+  ".ff-v21 .ff-v21-map{position:relative;border-radius:26px;overflow:hidden;border:1px solid rgba(165,128,47,.5);background:#C9DDB0}.ff-v21 .ff-v21-map .box{height:340px;width:100%}",
+  ".ff-v21 .ff-v21-map .zm{position:absolute;right:10px;top:10px;z-index:500;display:grid;gap:6px}.ff-v21 .ff-v21-map .zm button{width:38px;height:38px;border-radius:14px;border:1px solid rgba(165,128,47,.6);background:#fff;color:#141416;font-size:18px;cursor:pointer}",
+  ".ff-v21-pin span{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;font-weight:700;font-size:13px;border:2px solid #fff;box-shadow:0 3px 8px rgba(0,0,0,.4)}.ff-v21-pin .v{background:#17181c;color:#F4DC8E}.ff-v21-pin .x{background:linear-gradient(170deg,#F8E9B4,#D9B451);color:#16130F}",
+  ".ff-v21 .ff-v21-sel{display:flex;align-items:center;gap:12px;margin-top:12px;padding:10px;border-radius:22px;background:#fff;border:1px solid rgba(165,128,47,.45)}.ff-v21 .ff-v21-sel .pic{flex:none;width:56px;height:56px;border-radius:16px;overflow:hidden;background:#17181c}.ff-v21 .ff-v21-sel .pic img{width:100%;height:100%;object-fit:cover}.ff-v21 .ff-v21-sel .tx{flex:1;min-width:0;display:grid}.ff-v21 .ff-v21-sel small{color:#555}",
+  ".ff-v21 .ff-v21-media{display:flex;flex-wrap:wrap;gap:10px}.ff-v21 .ff-v21-media .m{position:relative;width:96px;height:96px;border-radius:18px;overflow:hidden}.ff-v21 .ff-v21-media .m img{width:100%;height:100%;object-fit:cover}.ff-v21 .ff-v21-media .m button{position:absolute;top:4px;right:4px;width:24px;height:24px;border-radius:50%;border:0;background:rgba(0,0,0,.65);color:#fff;display:grid;place-items:center;cursor:pointer}.ff-v21 .ff-v21-media .add{width:96px;height:96px;border-radius:18px;border:2px dashed rgba(165,128,47,.7);background:none;color:#8A6A1F;display:grid;place-items:center;cursor:pointer}",
+  ".ff-v21 .ff-v21-link{background:none;border:0;padding:0;color:#8A6A1F;font:inherit;font-weight:700;text-decoration:underline;cursor:pointer}",
   ".ff-v21-div{display:flex;align-items:center;gap:14px;margin:6px 0}.ff-v21-div i{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(165,128,47,.7),transparent)}",
 ].join("");
 function VipShine21({ onClick, children }) {
@@ -16283,28 +16306,6 @@ function VipQr21({ seed }) {
   }
   return <svg className="ff-vc21-qr" viewBox="0 0 9 9" fill="#0B0B0D" aria-hidden="true">{cells}</svg>;
 }
-function VipCard21({ card, tag, sample }) {
-  const c = card || {};
-  const Camera = vipIcon21("User");
-  const drinks = (c.drinks || []).slice(0, 4).join(" · ");
-  const diet = (c.diet || []).join(" · ");
-  return (
-    <div className="ff-vc21" role="img" aria-label={`VIP card for ${c.name || "you"}`}>
-      <div className="ff-vc21-top"><img className="lg" src={FF_VIP_LOGO} alt="" /><span>FF VIP{sample ? " · Example" : ""}</span></div>
-      <div className="ff-vc21-mid">
-        <span className="ff-vc21-ph" style={c.photo ? { backgroundImage: `url(${c.photo})` } : undefined}>{c.photo ? null : <Camera size={26} strokeWidth={1.5} />}</span>
-        <span className="ff-vc21-nm"><b>{c.name || "Your name"}</b><small>{tag ? "FF Tag " + tag : "ffvip.uk"}</small></span>
-      </div>
-      <div className="ff-vc21-rows">
-        <div><em>Drinks</em><span>{drinks || "Your favourites"}</span></div>
-        <div><em>Dietary</em><span>{diet || (c.allergies ? "" : "None shared")}{c.allergies ? (diet ? " · " : "") + c.allergies : ""}</span></div>
-        {(c.vibes || []).length > 0 && <div><em>Vibe</em><span>{(c.vibes || []).slice(0, 2).join(" · ")}</span></div>}
-      </div>
-      <div className="ff-vc21-bot"><span style={{ fontSize: 11, letterSpacing: ".18em", color: "#9EA3AD", textTransform: "uppercase" }}>{c.seat || "Known on arrival"}</span><VipQr21 seed={c.name + (tag || "")} /></div>
-    </div>
-  );
-}
-const VIP21_SAMPLE = { name: "Jamie Carter", drinks: ["Espresso Martini", "Champagne", "Mezcal Paloma"], diet: ["Vegetarian"], vibes: ["Loves a toast", "Always on time"], seat: "A booth" };
 function VipHero21() {
   const { state, dispatch } = useStore();
   const joined = !!(state.vip21 || {}).guest;
@@ -16376,7 +16377,7 @@ function vipDx21() {
       parts: [part("ff-v21-exp", "Experiences", VipExpSect21), part("ff-v21-ven", "Venues", VipVenues21)],
       jn: [
         { t: "Browse experiences", b: "Browse", go: "network", x: "Twelve kinds of luxury experience, from spa days to track days." },
-        { t: "Plan a VIP booking", b: "Plan a booking", go: "book", x: "Choose an experience and tell us who is coming and how you would like the night to go." },
+        { t: "Plan a VIP booking", b: "Plan a booking", go: "bookings", x: "Make your Event Card, choose an experience and add your VIP requests." },
         { t: "Run a venue?", b: "Join through FF Staff", go: "site:staff", x: "Venues and experience providers join FireFlair through FF Staff." },
       ] },
     { k: "booking", t: "Your Booking", s: "VIP and group bookings", img: "t17_p32", pool: ["p32", "aiMusic", "p24", "aiIntl", "p46"], icon: I("CalendarDays"),
@@ -16385,17 +16386,17 @@ function vipDx21() {
         "With partnered venues you can pre-order drinks for the group, ask for champagne on arrival, the best tables and private places, and choose your favourite waiter or personal bartender."],
       parts: [part("ff-v21-book", "VIP bookings", VipBookSect21)],
       jn: [
-        { t: "Plan a VIP booking", b: "Plan a booking", go: "book", x: "Pick your experience, your date and your group, then add your requests." },
-        { t: "Pre-order the drinks", b: "Start a booking", go: "book", x: "Choose from the venue's cocktail menu so the drinks are waiting." },
-        { t: "Choose your people", b: "Start a booking", go: "book", x: "Ask for the waiter or the bartender you like." },
+        { t: "Plan a VIP booking", b: "Plan a booking", go: "bookings", x: "Make your Event Card, choose an experience and add your VIP requests." },
+        { t: "Pre-order the drinks", b: "Start a booking", go: "bookings", x: "Choose from the venue's cocktail menu so the drinks are waiting." },
+        { t: "Choose your people", b: "Start a booking", go: "bookings", x: "Ask for the waiter or the bartender you like." },
       ] },
     { k: "rewards", t: "Invitations and Rewards", s: "Bring people with you", img: "t17_p31", pool: ["p31", "vke04", "p11", "p35", "p27"], icon: I("Users"),
       h: "Host the night. Share FireFlair.",
-      p: ["Hosting? Create an invitation for your event and send it on WhatsApp. Guests reply by creating their own VIP card, so you see who is coming and what each guest likes.",
+      p: ["Hosting? Make an Event Card, then turn it into an invitation and send it on WhatsApp. Guests reply by creating their own VIP card, so you see who is coming and what each guest likes.",
         "Everyone you bring to FireFlair earns you FF Rewards. The points system opens later, and everyone you bring before then counts."],
       parts: [part("ff-v21-host", "Invitations", VipHost21), part("ff-v21-rew", "FF Rewards", VipRewardsSect21)],
       jn: [
-        { t: "Create an invitation", b: "Create one", go: "bookings", x: "Make an invitation for your event and send it to your guests on WhatsApp." },
+        { t: "Share your event", b: "Create an Event Card", go: "bookings", x: "Make an Event Card, then turn it into an invitation and send it to your guests on WhatsApp." },
         { t: "Share your link", b: "Get my link", go: "profile", x: "Your own FF VIP link, ready to send." },
         { t: "See the guest list", b: "Join the guest list", go: "profile", x: "Create your card to join the launch party guest list." },
       ] },
@@ -16485,32 +16486,225 @@ function VipBookSect21() {
     </section>
   );
 }
-function VipExpGrid21({ onPick }) {
+/* Sample VIPs for the prototype: first names only, so guests can see who else is on FF VIP. The real directory comes from saved VIP cards. */
+const VIP21_INTERESTS = ["Live music", "Travel", "Fine dining", "Wine", "Art", "Football", "Motorsport", "Fashion", "Theatre", "Cooking", "Fitness", "Gardening"];
+const VIP21_PEOPLE = [
+  { id: "vp_amara", name: "Amara", photo: "jr_whyteam", area: "Hackney", ll: [51.545, -0.055], drinks: ["Espresso Martini", "Champagne"], interests: ["Live music", "Travel"], vibes: ["Life of the party"], diet: ["Vegetarian"], line: "Birthdays, rooftops and long lunches." },
+  { id: "vp_theo", name: "Theo", photo: "t17_vke07", area: "Chelsea", ll: [51.487, -0.168], drinks: ["Old Fashioned", "Negroni"], interests: ["Motorsport", "Wine"], vibes: ["Relaxed and quiet"], diet: [], line: "A good table and a better bartender." },
+  { id: "vp_priya", name: "Priya", photo: "reward_photoshoot", area: "Islington", ll: [51.536, -0.103], drinks: ["Margarita", "Prosecco"], interests: ["Theatre", "Cooking"], vibes: ["Loves a toast"], diet: ["Vegan"], line: "Group dinners are my thing." },
+  { id: "vp_marcus", name: "Marcus", photo: "jr_profile", area: "Brixton", ll: [51.462, -0.115], drinks: ["Rum Punch", "Champagne"], interests: ["Football", "Fashion"], vibes: ["Life of the party"], diet: [], line: "Always the first one there." },
+  { id: "vp_elena", name: "Elena", photo: "jr_cardsteam", area: "Notting Hill", ll: [51.509, -0.2], drinks: ["Gin and Tonic", "White Wine"], interests: ["Art", "Gardening"], vibes: ["Relaxed and quiet"], diet: ["Gluten free"], line: "Quiet corners and good wine." },
+  { id: "vp_sofia", name: "Sofia", photo: "t17_p23", area: "Greenwich", ll: [51.482, -0.004], drinks: ["Aperol Spritz", "Mezcal Paloma"], interests: ["Travel", "Fitness"], vibes: ["Always on time"], diet: ["Pescatarian"], line: "Spa days and sunset boats." },
+  { id: "vp_kit", name: "Kit", photo: "t17_vke09", area: "Richmond", ll: [51.461, -0.303], drinks: ["Whisky Sour", "Negroni"], interests: ["Fine dining", "Wine"], vibes: ["Loves a toast"], diet: [], line: "Tasting menus, no rush." },
+];
+const vipPerson21 = (id) => VIP21_PEOPLE.find(p => p.id === id);
+const vipPhoto21 = (p) => (p && (p.photo && String(p.photo).indexOf("data:") === 0 ? p.photo : vipImg21(p && p.photo))) || "";
+/* The VIP card: the same 5:7 card as the VIP Host Card, mostly their photo. */
+function VipCard21({ card, tag, sample, edit, set, mini }) {
+  const c = card || {};
+  const ref = useRef(null);
+  const Wine = vipIcon21("Wine"), Heart = vipIcon21("Heart"), Spark = vipIcon21("Sparkles"), Leaf = vipIcon21("Leaf");
+  const src = vipPhoto21(c);
+  const pick = (e) => { const f = e.target.files && e.target.files[0]; e.target.value = ""; if (!f || !set) return; if (f.size > MAX_MEDIA_BYTES) return; readFileAsDataUrl(f).then(u => set({ photo: u })).catch(() => {}); };
+  const list = (a) => (a || []).slice(0, 3).join(" · ");
+  const diet = [list(c.diet), c.allergies].filter(Boolean).join(" · ");
+  const row = (Icon, label, text) => <div className="r"><span className="ic"><Icon size={13} /></span><span className={text ? "" : "ph0"}>{text || label}</span></div>;
   return (
-    <div className="ff-v21-tiles">{VIP21_EXP.map(e => {
-      const Ic = vipIcon21(e.ic);
-      return <button key={e.k} type="button" className="ff-v21-tile" onClick={() => onPick(e)} aria-haspopup="dialog"><span className="ic"><Ic size={20} strokeWidth={1.7} /></span><b>{e.t}</b><span className="s">{e.s}</span></button>;
-    })}</div>
+    <div className={`ff-pcard11 ff-vcard21${mini ? " mini" : ""}`} role={edit ? undefined : "img"} aria-label={edit ? undefined : `VIP card for ${c.name || "you"}`}>
+      <span className="plate">VIP Card{sample ? " · Example" : ""}</span>
+      <span className="coin"><Coin size={28} tier="gold" /></span>
+      {React.createElement(edit ? "button" : "div", edit ? { type: "button", className: "ph", onClick: () => ref.current && ref.current.click(), "aria-label": src ? "Change your photo" : "Add your photo" } : { className: "ph", style: { cursor: "inherit" } },
+        src ? <img src={src} alt="" /> : <span className="add"><CameraPlusGlyph size={28} /><span>{edit ? "Add your photo" : "Your photo"}</span></span>,
+        edit ? <input ref={ref} type="file" accept="image/*" hidden onChange={pick} /> : null)}
+      <span className="vq" aria-hidden="true"><VipQr21 seed={(c.name || "") + (tag || "")} /></span>
+      <div className="body">
+        {edit ? <input className="ff-cardin nm" value={c.name || ""} placeholder="Your name" aria-label="Your name" maxLength={40} onChange={(e) => set && set({ name: e.target.value })} />
+          : <b className="nm">{c.name || "Your name"}</b>}
+        {row(Wine, "Favourite drinks", list(c.drinks))}
+        {row(Heart, "Interests", list(c.interests))}
+        {row(Spark, "Personality", list(c.vibes))}
+        {row(Leaf, "Dietary needs", diet)}
+      </div>
+    </div>
   );
 }
-function VipExpSheet21({ e, onClose }) {
+const VIP21_SAMPLE = { name: "Jamie", photo: "t17_p12", drinks: ["Espresso Martini", "Champagne", "Mezcal Paloma"], interests: ["Live music", "Travel"], diet: ["Vegetarian"], vibes: ["Loves a toast"], seat: "A booth" };
+/* Experiences: a picture, a dropdown, and a way to plan it. */
+function VipExpList21({ groups }) {
   const { state, dispatch } = useStore();
-  return (
-    <Sheet open={!!e} onClose={onClose} title={e ? e.t : ""} center>
-      {e ? <div className="ff-cp20r"><p>{e.d}</p><p>FireFlair finds and shows the best of these, with a focus on luxury. Venues join through FF Staff.</p>
-        <div className="ff-v21-btns" style={{ marginTop: 12 }}><VipShine21 onClick={() => { vipPatch21(dispatch, state, { pick: e.k }); onClose(); vipGo21(dispatch, "bookings", "ff-v21-plan"); }}>Plan a VIP booking</VipShine21></div></div> : null}
-    </Sheet>
-  );
+  const [open, setOpen] = useState({});
+  const Chev = vipIcon21("ChevronDown");
+  const plan = (e) => { vipPatch21(dispatch, state, { pick: e.k }); vipGo21(dispatch, "bookings"); };
+  const item = (e) => {
+    const on = !!open[e.k];
+    return (
+      <article key={e.k} className={`ff-v21-xp${on ? " on" : ""}`} id={"ff-v21-x-" + e.k}>
+        <button type="button" className="h" aria-expanded={on} onClick={() => setOpen(o => ({ ...o, [e.k]: !o[e.k] }))}>
+          <span className="pic">{vipImg21(e.img) ? <img src={vipImg21(e.img)} alt="" /> : null}</span>
+          <span className="tx"><b>{e.t}</b><small>{e.s}</small></span>
+          <Chev size={18} className="cv" />
+        </button>
+        {on ? <div className="b"><p>{e.d}</p><p className="f">{e.f}</p>
+          <div className="ff-v21-btns" style={{ marginTop: 10 }}><VipShine21 onClick={() => plan(e)}>Plan this</VipShine21></div></div> : null}
+      </article>
+    );
+  };
+  return <>{groups.map(g => (
+    <div key={g.t} className="ff-v21-xg">
+      {g.t ? <h3 className="ff-v21-gh">{g.t}</h3> : null}
+      <div className="ff-v21-xl">{g.list.map(item)}</div>
+    </div>))}</>;
 }
+const VIP21_GROUPS = () => [
+  { t: "Eat and drink", list: VIP21_EXP.filter(e => ["dine", "roof", "priv", "tea", "wine"].includes(e.k)) },
+  { t: "Relax and play", list: VIP21_EXP.filter(e => ["spa", "track", "water", "estate"].includes(e.k)) },
+  { t: "Stay and go out", list: VIP21_EXP.filter(e => ["hotel", "show", "club"].includes(e.k)) },
+];
 function VipExpSect21() {
-  const [e, setE] = useState(null);
   return (
     <section className="ff-sect ff-v21-sect" id="ff-v21-exp" aria-labelledby="ff-v21-eh">
       <h2 id="ff-v21-eh" className="ff-h1">The best experiences and hospitality</h2>
       <p className="ff-v21-lead">Luxury, chosen for you. Spas, racetracks, tables and rooms that are worth the trip, found and shown by FireFlair.</p>
-      <VipExpGrid21 onPick={setE} />
-      <VipExpSheet21 e={e} onClose={() => setE(null)} />
+      <VipExpList21 groups={VIP21_GROUPS()} />
     </section>
+  );
+}
+/* Other VIPs. */
+function VipPeople21() {
+  const { dispatch } = useStore();
+  return (
+    <section className="ff-sect ff-v21-sect" id="ff-v21-people" aria-labelledby="ff-v21-ph">
+      <h2 id="ff-v21-ph" className="ff-h1">VIPs</h2>
+      <p className="ff-v21-lead">The people on FF VIP, and what they like.</p>
+      <HScroll label="VIPs">{VIP21_PEOPLE.map(p => (
+        <button key={p.id} type="button" className="ff-v21-pc" aria-label={`Open ${p.name}'s VIP card`} onClick={() => { dispatch({ type: "V11_SET", patch: { vip21v: p.id } }); window.scrollTo(0, 0); }}>
+          <VipCard21 card={p} mini />
+        </button>))}</HScroll>
+    </section>
+  );
+}
+function VipProfile21() {
+  const { state, dispatch } = useStore();
+  const p = vipPerson21(state.vip21v);
+  if (!p) return null;
+  const back = () => { dispatch({ type: "V11_SET", patch: { vip21v: null } }); window.scrollTo(0, 0); };
+  const chips = (a) => <div className="ff-v21-chips">{(a || []).map(x => <span key={x} className="ff-v21-chip" aria-pressed="false">{x}</span>)}</div>;
+  const sec = (Icon, title, body) => body ? <section style={{ marginTop: 22 }}><SectionHead icon={<Icon size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={title} />{body}</section> : null;
+  const W = vipIcon21("Wine"), H = vipIcon21("Heart"), S = vipIcon21("Sparkles"), L = vipIcon21("Leaf");
+  return (
+    <div className="ff-home ff-home11 ff-v21">
+      <style>{VIP21_CSS}</style>
+      <div className="ff-host17">
+        <button type="button" className="ff-fd-back" onClick={back}>{"←"} Back</button>
+        <div className="ff-eyebrow">FF VIP · {p.area}</div>
+        <PublicHero media={[{ id: p.id, src: vipPhoto21(p), name: p.name }].filter(m => m.src)} card={<VipCard21 card={p} />} below={<>
+          <p className="ff-v21-lead" style={{ margin: "14px 0 0" }}>{p.line}</p>
+          {sec(W, "Favourite drinks", chips(p.drinks))}
+          {sec(S, "Personality", chips(p.vibes))}
+          {sec(H, "Interests", chips(p.interests))}
+          {sec(L, "Dietary needs", (p.diet || []).length ? chips(p.diet) : <p className="ff-body ff-muted" style={{ margin: 0 }}>Nothing shared.</p>)}
+        </>} />
+      </div>
+    </div>
+  );
+}
+/* The map: experiences and other VIPs, on the same UK map as the other sites. */
+function VipMap21() {
+  const { dispatch } = useStore();
+  const boxRef = useRef(null), mapRef = useRef(null), layerRef = useRef(null);
+  const [show, setShow] = useState({ vips: true, venues: true });
+  const [sel, setSel] = useState(null);
+  const [ready, setReady] = useState(false);
+  const fallback = !window.L || !ukGeo11();
+  const pins = useMemo(() => [
+    ...VIP21_EXP.map(e => ({ kind: "venue", id: e.k, name: e.t, area: e.area, ll: e.ll, e })),
+    ...VIP21_PEOPLE.map(p => ({ kind: "vip", id: p.id, name: p.name, area: p.area, ll: p.ll, p })),
+  ], []);
+  useEffect(() => {
+    if (fallback || !boxRef.current) return;
+    const L = window.L, G = ukGeo11();
+    let map;
+    try {
+      map = L.map(boxRef.current, { zoomControl: false, attributionControl: false, scrollWheelZoom: false, dragging: !L.Browser.mobile, zoomSnap: 0.25, zoomDelta: 1, minZoom: 5, maxZoom: 13, preferCanvas: true });
+      mapRef.current = map;
+      const cv = L.canvas({ padding: 0.4 });
+      const area = (sets, style) => sets && sets.length ? L.polygon(sets.map(p => p.map(decRing11)), { renderer: cv, interactive: false, ...style }) : null;
+      const line = (sets, style) => sets && sets.length ? L.polyline(sets.map(decRing11), { renderer: cv, interactive: false, ...style }) : null;
+      [
+        area(G.world, { color: "#6E9A5A", opacity: 0.55, weight: 0.7, fillColor: "#C9DDB0", fillOpacity: 1 }),
+        area(G.ie, { color: "#5E8C4A", opacity: 0.7, weight: 1, fillColor: "#B9D69B", fillOpacity: 1 }),
+        area(G.gb, { color: "#4E7F3C", opacity: 0.9, weight: 1.3, fillColor: "#9FCB7A", fillOpacity: 1 }),
+        area(G.lakes, { stroke: false, fillColor: "#8FC3E6", fillOpacity: 1 }),
+        line(G.rivers, { color: "#4F9AD3", opacity: 0.8, weight: 1 }),
+        area(G.ldnu, { color: "#3F6B33", opacity: 0.6, weight: 1.2, fillColor: "#86B862", fillOpacity: 0.7 }),
+      ].forEach(l => l && l.addTo(map));
+      const thSm = G.thames && G.thames.map(r => smooth11(decRing11(r), false, 2));
+      if (thSm) L.polyline(thSm, { renderer: cv, interactive: false, color: "#2F7FC1", opacity: 0.95, weight: 4, lineJoin: "round", lineCap: "round" }).addTo(map);
+      layerRef.current = L.layerGroup().addTo(map);
+      map.fitBounds(L.latLngBounds(pins.map(p => p.ll)), { padding: [22, 22] });
+      setReady(true);
+    } catch (e) { /* the list below still works without the map */ }
+    return () => { try { if (map) map.remove(); } catch (e) { /* closed */ } mapRef.current = null; layerRef.current = null; };
+  }, []);
+  useEffect(() => {
+    const L = window.L, g = layerRef.current;
+    if (!ready || !g) return;
+    g.clearLayers();
+    pins.filter(p => (p.kind === "vip" ? show.vips : show.venues)).forEach(p => {
+      const html = p.kind === "vip" ? `<span class="v">${String(p.name).charAt(0)}</span>` : `<span class="x">${"◆"}</span>`;
+      L.marker(p.ll, { keyboard: false, icon: L.divIcon({ className: "ff-v21-pin", html, iconSize: [30, 30], iconAnchor: [15, 15] }) })
+        .on("click", () => setSel(p)).addTo(g);
+    });
+  }, [ready, show]);
+  const zoom = (d) => { const m = mapRef.current; if (m) m.setZoom(m.getZoom() + d); };
+  const fit = () => { const m = mapRef.current; if (m) m.fitBounds(window.L.latLngBounds(pins.map(p => p.ll)), { padding: [22, 22] }); };
+  const tog = (k, label) => <button type="button" className="ff-v21-chip" aria-pressed={show[k]} onClick={() => setShow(s => ({ ...s, [k]: !s[k] }))}>{label}</button>;
+  return (
+    <section className="ff-sect ff-v21-sect" id="ff-v21-map" aria-labelledby="ff-v21-mph">
+      <h2 id="ff-v21-mph" className="ff-h1">On the map</h2>
+      <p className="ff-v21-lead">Experiences and VIPs near you.</p>
+      <div className="ff-v21-chips" style={{ marginBottom: 10 }}>{tog("venues", "Experiences")}{tog("vips", "VIPs")}</div>
+      {fallback ? null : (
+        <div className="ff-v21-map">
+          <div ref={boxRef} className="box" role="application" aria-label="Map of experiences and VIPs" />
+          <div className="zm"><button type="button" aria-label="Zoom in" onClick={() => zoom(1)}>+</button><button type="button" aria-label="Zoom out" onClick={() => zoom(-1)}>{"−"}</button><button type="button" aria-label="Show everything" onClick={fit}>{"◎"}</button></div>
+        </div>)}
+      {sel ? (
+        <div className="ff-v21-sel" role="status">
+          {sel.kind === "vip" ? (<>
+            <span className="pic">{vipPhoto21(sel.p) ? <img src={vipPhoto21(sel.p)} alt="" /> : null}</span>
+            <span className="tx"><b>{sel.p.name}</b><small>VIP · {sel.area}</small></span>
+            <Btn onClick={() => { dispatch({ type: "V11_SET", patch: { vip21v: sel.p.id } }); window.scrollTo(0, 0); }}>View card</Btn>
+          </>) : (<>
+            <span className="pic">{vipImg21(sel.e.img) ? <img src={vipImg21(sel.e.img)} alt="" /> : null}</span>
+            <span className="tx"><b>{sel.e.t}</b><small>Example · {sel.area}</small></span>
+            <Btn onClick={() => { const el = document.getElementById("ff-v21-x-" + sel.e.k); if (el) el.scrollIntoView({ behavior: "smooth", block: "center" }); }}>See it</Btn>
+          </>)}
+        </div>) : null}
+    </section>
+  );
+}
+function VipExperiences21() {
+  const { state } = useStore();
+  if (state.vip21v) return <VipProfile21 />;
+  return (
+    <div className="ff-home ff-home11 ff-v21">
+      <style>{VIP21_CSS}</style>
+      <div className="ff-home17">
+        <section className="ff-sect ff-v21-sect" aria-labelledby="ff-v21-xh">
+          <h1 id="ff-v21-xh" className="ff-h1" style={{ fontSize: "clamp(28px,7vw,42px)" }}>Experiences</h1>
+          <p className="ff-v21-lead">We find and show the best experiences and hospitality. Luxury, chosen for you, from a spa day to a private table.</p>
+        </section>
+        <VipMap21 />
+        {VIP21_GROUPS().map(g => (
+          <section key={g.t} className="ff-sect ff-v21-sect" aria-label={g.t}>
+            <h2 className="ff-h1">{g.t}</h2>
+            <VipExpList21 groups={[{ t: "", list: g.list }]} />
+          </section>))}
+        <VipPeople21 />
+        <VipVenues21 />
+      </div>
+    </div>
   );
 }
 function VipHost21() {
@@ -16519,14 +16713,279 @@ function VipHost21() {
     <section className="ff-sect ff-v21-sect" id="ff-v21-host" aria-labelledby="ff-v21-oh">
       <div className="ff-v21-split">
         <div>
-          <h2 id="ff-v21-oh" className="ff-h1">Hosting? Send the invitations.</h2>
-          <p className="ff-v21-lead">Create an invitation for your event and send it on WhatsApp. Your guests reply by creating their own VIP card, so you know who is coming and what to have ready for them.</p>
-          <div className="ff-v21-btns"><VipShine21 onClick={() => vipGo21(dispatch, "bookings", "ff-v21-invite")}>Create an invitation</VipShine21></div>
+          <h2 id="ff-v21-oh" className="ff-h1">Hosting? Share your event.</h2>
+          <p className="ff-v21-lead">Create an Event Card, then turn it into an invitation and send it on WhatsApp. Your guests reply by creating their own VIP card, so you know who is coming and what to have ready for them.</p>
+          <div className="ff-v21-btns"><VipShine21 onClick={() => vipGo21(dispatch, "bookings")}>Create an Event Card</VipShine21></div>
         </div>
         <VipPartyLink21 />
       </div>
     </section>
   );
+}
+/* The VIP booking: three things and a Confirm, the same as the other booking screens. */
+function VipBook21() {
+  const { state, dispatch } = useStore();
+  const v = state.vip21 || {};
+  const done = vipCardDone21(v);
+  const events = v.events || [];
+  const blank = () => ({ id: uid("evt"), title: "", kind: "", iso: "", start: "", venue: "", guests: "", details: "" });
+  const [ev, setEv] = useState(blank);
+  const [f, setF] = useState(() => ({ exp: v.pick || "", drinks: {}, champagne: false, table: false, priv: false, waiter: "", bartender: "" }));
+  const [op, setOp] = useState({});
+  const [sent, setSent] = useState(null);
+  const [invOpen, setInvOpen] = useState(null);
+  const setOpK = (k, val) => setOp(o => ({ ...o, [k]: val }));
+  const set = (p) => setF(x => ({ ...x, ...p }));
+  const Cal = vipIcon21("CalendarDays"), Spark = vipIcon21("Sparkles"), Crown = vipIcon21("Crown"), Check = vipIcon21("Check"), Send = vipIcon21("Send"), Pencil = vipIcon21("Pencil");
+  const exp = VIP21_EXP.find(x => x.k === f.exp);
+  const total = Object.values(f.drinks).reduce((a, b) => a + b, 0);
+  const bump = (d, n) => set({ drinks: { ...f.drinks, [d]: Math.max(0, (f.drinks[d] || 0) + n) } });
+  const evDone = !!(ev.iso && String(ev.venue || "").trim());
+  const reqBits = [f.champagne && "Champagne", f.table && "Best table", f.priv && "Private place", total ? total + " drinks" : "", f.waiter && "Waiter", f.bartender && "Bartender"].filter(Boolean);
+  const upsert = (data) => { const list = events.some(e => e.id === ev.id) ? events.map(e => e.id === ev.id ? { ...e, ...data } : e) : [{ id: ev.id, ...data }, ...events]; vipPatch21(dispatch, state, { events: list, pick: "" }); };
+  const saveEvent = () => {
+    if (!evDone) { dispatch({ type: "TOAST", toast: "Add the date and location" }); return false; }
+    const ci = cleanIso11(ev.iso);
+    if (ci.past) { setEv(d => ({ ...d, iso: ci.iso })); dispatch({ type: "TOAST", toast: "That date has already passed. Choose today or a later date" }); return false; }
+    upsert(eventData11({ ...ev, iso: ci.iso }));
+    dispatch({ type: "TOAST", toast: "Event Card saved" });
+    setOpK("event", false);
+    return true;
+  };
+  const confirm = () => {
+    if (!done) { dispatch({ type: "TOAST", toast: "Create your VIP card first, so the venue receives it" }); return; }
+    if (!evDone) { setOpK("event", true); focusSec("ff-bs-event"); dispatch({ type: "TOAST", toast: "Add the date and location" }); return; }
+    if (!f.exp) { setOpK("exp", true); focusSec("ff-bs-exp"); dispatch({ type: "TOAST", toast: "Choose the kind of experience" }); return; }
+    const ci = cleanIso11(ev.iso);
+    if (ci.past) { setOpK("event", true); dispatch({ type: "TOAST", toast: "That date has already passed. Choose today or a later date" }); return; }
+    const ref = vipRef21("VIP");
+    const drinks = Object.entries(f.drinks).filter(x => x[1] > 0).map(x => x[1] + " x " + x[0]).join(", ");
+    const bits = ["Experience: " + exp.t, ev.kind && "Occasion: " + ev.kind, ev.guests && "Group: " + ev.guests, drinks && "Drinks: " + drinks, f.champagne && "Champagne on arrival", f.table && "Best table", f.priv && "Private place", f.waiter && "Waiter: " + f.waiter, f.bartender && "Bartender: " + f.bartender, ev.details, "VIP card: " + (v.card.name || "")].filter(Boolean);
+    const cur = fdOf(state);
+    const rec = {
+      id: uid("lsr"), ref, key: ref, kind: "vip_booking", siteKey: "vip", locationId: null, locationText: ev.venue.trim() || "Not stated",
+      roles: [], eventDate: ci.iso || null, dateUndecided: !ci.iso, tz: "Europe/London",
+      contact: { name: v.card.name || "", email: "", phone: "", whatsappOk: true },
+      headcount: String(ev.guests || ""), brief: bits.join(" | "), companyId: null, companyName: "",
+      createdAt: new Date().toISOString(), status: "new", assignee: "", adminNote: "", eventId: ev.id,
+      sourcePath: "", sourceSite: "vip", notif: { admin: "simulated", ack: "simulated message", failed: false }, bookingId: null,
+    };
+    fdSet(state, dispatch, { requests: [rec, ...cur.requests], log: [{ at: rec.createdAt, by: "visitor", what: "vip_booking " + ref, site: "vip" }, ...cur.log].slice(0, 200) });
+    const data = { ...eventData11({ ...ev, iso: ci.iso }), exp: exp.t, ref };
+    const list = events.some(e => e.id === ev.id) ? events.map(e => e.id === ev.id ? { ...e, ...data } : e) : [{ id: ev.id, ...data }, ...events];
+    vipPatch21(dispatch, state, { events: list, pick: "", bookings: [{ ref, exp: exp.t, group: ev.guests, date: ci.iso, at: Date.now() }, ...(v.bookings || [])] });
+    setSent(ref); setOp({});
+    focusSec("ff-bs-confirm");
+  };
+  const reset = () => { setSent(null); setEv(blank()); setF({ exp: "", drinks: {}, champagne: false, table: false, priv: false, waiter: "", bartender: "" }); setOp({}); window.scrollTo(0, 0); };
+  const editEvent = (e) => { setEv({ id: e.id, title: e.title || "", kind: e.kind || "", iso: e.iso || "", start: e.start || "", venue: e.venue || "", guests: e.guests || "", details: e.details || "" }); setSent(null); setOpK("event", true); focusSec("ff-bs-event"); };
+  const openInvite = (e) => setInvOpen({ evId: e.id, title: eventTitle(e), date: e.iso ? longDay(e.iso) : (e.date || ""), venue: e.venue || "" });
+  const host = (v.card && v.card.name) || "";
+  const sw = (key, t, s) => <button type="button" className="ff-v21-sw" aria-pressed={!!f[key]} onClick={() => set({ [key]: !f[key] })}><span><b>{t}</b><small>{s}</small></span><i aria-hidden="true" /></button>;
+  const when = ev.iso ? new Date(ev.iso + "T12:00").toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" }) : "";
+  const secEvent = (
+    <div className="ff-bsec s1" id="ff-bs-event" key="event">
+      {op.event ? (<>
+        <SecHead n={1} title="Event Card" onToggle={() => setOpK("event", false)} />
+        <div className="ff-evwrap"><EventCard11 ev={ev} edit onPatch={(x) => setEv(d => ({ ...d, ...x }))} /></div>
+        <div className="ff-v21-btns" style={{ marginTop: 12, justifyContent: "center" }}><Btn variant="primary" onClick={saveEvent}><Check size={14} /> Save Event Card</Btn></div>
+      </>) : (
+        <BigBtn n={1} icon={Cal} title="Event Card" done={evDone}
+          hint={evDone ? [when, ev.start, ev.venue].filter(Boolean).join(" · ") : "Date, place and guests"}
+          onClick={() => { setOpK("event", true); focusSec("ff-bs-event"); }} />
+      )}
+    </div>
+  );
+  const secExp = (
+    <div className="ff-bsec s2" id="ff-bs-exp" key="exp">
+      {op.exp ? (<>
+        <SecHead n={2} title="Experience" onToggle={() => setOpK("exp", false)} />
+        <HScroll label="Experiences">{VIP21_EXP.map(e => (
+          <button key={e.k} type="button" className="ff-v21-xsel" aria-pressed={f.exp === e.k} onClick={() => { set({ exp: e.k }); setOpK("exp", false); }}>
+            <span className="pic">{vipImg21(e.img) ? <img src={vipImg21(e.img)} alt="" /> : null}</span><b>{e.t}</b><small>{e.s}</small>
+          </button>))}</HScroll>
+      </>) : (
+        <BigBtn n={2} icon={Spark} title="Experience" done={!!f.exp} hint={exp ? exp.t : "Choose what you would like to do"}
+          onClick={() => { setOpK("exp", true); focusSec("ff-bs-exp"); }} />
+      )}
+    </div>
+  );
+  const secReq = (
+    <div className="ff-bsec s3" id="ff-bs-req" key="req">
+      {op.req ? (<>
+        <SecHead n={3} title="VIP requests" onToggle={() => setOpK("req", false)} />
+        <div className="ff-v21-form" style={{ marginTop: 8 }}>
+          <div>
+            <h3>Pre-order drinks{total ? ` · ${total}` : ""}</h3>
+            <div className="ff-v21-menu" style={{ marginTop: 8 }}>{VIP21_MENU.map(d => <div key={d}><span>{d}</span><span className="ff-v21-step"><button type="button" aria-label={`Fewer ${d}`} onClick={() => bump(d, -1)}>{"−"}</button><b>{f.drinks[d] || 0}</b><button type="button" aria-label={`More ${d}`} onClick={() => bump(d, 1)}>+</button></span></div>)}</div>
+          </div>
+          <div style={{ display: "grid", gap: 8 }}>
+            {sw("champagne", "Champagne on arrival", "Poured as you sit down")}
+            {sw("table", "The best table", "Ask for the best table in the house")}
+            {sw("priv", "A private place", "A private room or a screened corner")}
+          </div>
+          <div className="ff-v21-row">
+            <label><span className="ff-v21-k">Your waiter</span><input className="ff-v21-in" value={f.waiter} onChange={(e) => set({ waiter: e.target.value })} placeholder="Name or FF Tag" aria-label="Your waiter" /></label>
+            <label><span className="ff-v21-k">Your personal bartender</span><input className="ff-v21-in" value={f.bartender} onChange={(e) => set({ bartender: e.target.value })} placeholder="Name or FF Tag" aria-label="Your personal bartender" /></label>
+          </div>
+        </div>
+      </>) : (
+        <BigBtn n={3} icon={Crown} title="VIP requests" done={reqBits.length > 0} hint={reqBits.length ? reqBits.join(" · ") : "Drinks, champagne, tables, your people"}
+          onClick={() => { setOpK("req", true); focusSec("ff-bs-req"); }} />
+      )}
+    </div>
+  );
+  const arrow = (i) => <div key={"j" + i} className={`ff-barrow j${i}`} aria-hidden="true">{React.createElement(vipIcon21("ChevronDown"), { size: 20, strokeWidth: 2.4 })}</div>;
+  return (
+    <div className="ff-home ff-home11 ff-v21">
+      <style>{VIP21_CSS}</style>
+      <div className="ff-home17">
+        <section className="ff-bbox" aria-label="Your VIP booking" style={{ marginTop: 14 }}>
+          <header className="ff-bbox-h"><div><span className="ff-ev11-eye">FF VIP</span><h2>{sent ? "Booking sent" : "Your VIP booking"}</h2></div></header>
+          {!done ? <div className="ff-v21-guest" role="status" style={{ margin: "0 0 12px", color: "inherit", background: "rgba(165,128,47,.14)", borderColor: "rgba(165,128,47,.6)" }}>Create your VIP card first, so the venue receives it. <button type="button" className="ff-v21-link" onClick={() => vipGo21(dispatch, "profile")}>Create your VIP card</button></div> : null}
+          {secEvent}{arrow(1)}{secExp}{arrow(2)}{secReq}{arrow(3)}
+          <div className="ff-bsec s4 coin" id="ff-bs-confirm">
+            {sent ? (
+              <div className="ff-v21-done" role="status"><b>VIP booking request sent. Reference {sent}</b>
+                <p style={{ margin: "4px 0 12px" }}>The venue receives your VIP card with the request. FireFlair will confirm it with you.</p>
+                <div style={{ maxWidth: 260, margin: "0 auto 14px" }}><VipCard21 card={v.card} tag={state.session && state.session.tag} /></div>
+                <div className="ff-v21-btns" style={{ justifyContent: "center" }}>
+                  <VipShine21 onClick={() => { const e = (v.events || []).find(x => x.id === ev.id); if (e) openInvite(e); }}>Share as an invitation</VipShine21>
+                  <Btn onClick={reset}>Plan another</Btn></div></div>
+            ) : <ConfirmSpin17 lines={["Review", "&", "Confirm"]} label="Review and confirm your VIP booking" onClick={confirm} />}
+          </div>
+        </section>
+        {events.length > 0 ? (
+          <section className="ff-sect ff-v21-sect" aria-labelledby="ff-v21-evh">
+            <h2 id="ff-v21-evh" className="ff-h1">Your events</h2>
+            <HScroll label="Your events">{events.map(e => (
+              <div key={e.id} className="ff-pev17-c" style={{ width: 300, flex: "none" }}>
+                <EventCard11 ev={e} />
+                <div className="ff-v21-btns" style={{ marginTop: 8, justifyContent: "center" }}>
+                  <button type="button" className="ff-pev17-again" onClick={() => openInvite(e)}><Send size={14} /> Share invitation</button>
+                  <button type="button" className="ff-pev17-again" onClick={() => editEvent(e)}><Pencil size={14} /> Edit</button>
+                </div>
+              </div>))}</HScroll>
+            {(state.inv17 || []).length > 0 ? <div style={{ marginTop: 16 }}><h3 className="ff-v21-gh">Invitations</h3>
+              <HScroll label="Invitations">{(state.inv17 || []).map(iv => (
+                <div key={iv.id} className="ff-inv17-it" style={{ width: 300, flex: "none" }}>
+                  <InviteCard17 iv={iv} host={host} />
+                  <div className="acts"><a className="ff-pev17-again" target="_blank" rel="noopener noreferrer" href={inviteShare17(iv, host)}><Send size={14} /> Share</a></div>
+                </div>))}</HScroll></div> : null}
+          </section>) : null}
+      </div>
+      {invOpen ? <InviteBuilder17 init={invOpen} events={events} host={host} onClose={() => setInvOpen(null)} /> : null}
+    </div>
+  );
+}
+function VipChips21({ list, value, onChange, custom }) {
+  const [add, setAdd] = useState("");
+  const all = Array.from(new Set([...list, ...(value || [])]));
+  const toggle = (x) => onChange((value || []).includes(x) ? value.filter(y => y !== x) : [...(value || []), x]);
+  return (
+    <div>
+      <div className="ff-v21-chips">{all.map(x => <button key={x} type="button" className="ff-v21-chip" aria-pressed={(value || []).includes(x)} onClick={() => toggle(x)}>{x}</button>)}</div>
+      {custom && <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
+        <input className="ff-v21-in" value={add} onChange={(e) => setAdd(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); const t = add.trim(); if (t) { toggle(t); setAdd(""); } } }} placeholder={custom} aria-label={custom} />
+        <Btn onClick={() => { const t = add.trim(); if (t) { toggle(t); setAdd(""); } }}>Add</Btn>
+      </div>}
+    </div>
+  );
+}
+/* Pictures on your card page: up to six. */
+function VipMedia21({ list, onChange }) {
+  const { dispatch } = useStore();
+  const ref = useRef(null);
+  const Plus = vipIcon21("Plus"), X = vipIcon21("X");
+  const add = async (e) => {
+    const files = Array.from(e.target.files || []); e.target.value = "";
+    const out = [...list];
+    for (const file of files) {
+      if (out.length >= 6) { dispatch({ type: "TOAST", toast: "Six pictures is the most" }); break; }
+      if (file.size > MAX_MEDIA_BYTES) { dispatch({ type: "TOAST", toast: "That picture is too large" }); continue; }
+      try { out.push({ id: uid("vm"), src: await readFileAsDataUrl(file) }); } catch (x) { dispatch({ type: "TOAST", toast: "That picture could not be read" }); }
+    }
+    onChange(out);
+  };
+  return (
+    <div className="ff-v21-media">
+      {list.map(m => <span key={m.id} className="m"><img src={m.src} alt="" /><button type="button" aria-label="Remove picture" onClick={() => onChange(list.filter(x => x.id !== m.id))}><X size={14} /></button></span>)}
+      {list.length < 6 ? <button type="button" className="add" onClick={() => ref.current && ref.current.click()} aria-label="Add pictures"><Plus size={22} /></button> : null}
+      <input ref={ref} type="file" accept="image/*" multiple hidden onChange={add} />
+    </div>
+  );
+}
+/* Your VIP card: the same page as the VIP Host Card, with your pictures beside the card. */
+function VipCardPage21() {
+  const { state, dispatch } = useStore();
+  const v = state.vip21 || {};
+  const tag = (state.session && state.session.tag) || "";
+  const [c, setC] = useState(() => ({ name: (v.card && v.card.name) || state.profile.name || "", photo: "", drinks: [], interests: [], diet: [], allergies: "", vibes: [], care: "", seat: "", media: [], ...(v.card || {}) }));
+  const [wallet, setWallet] = useState(false);
+  const done = vipCardDone21(v);
+  const set = (p) => setC(x => ({ ...x, ...p }));
+  const W = vipIcon21("Wine"), H = vipIcon21("Heart"), S = vipIcon21("Sparkles"), L = vipIcon21("Leaf"), Im = vipIcon21("Images"), U = vipIcon21("Armchair");
+  const stock = ["training_mixology", "reward_bar_kit", "jr_menuteam"].map(k => ({ id: "stock_" + k, src: vipImg21(k), name: "" })).filter(m => m.src);
+  const own = (c.media || []).filter(m => m.src);
+  const save = () => {
+    if (!String(c.name || "").trim()) { dispatch({ type: "TOAST", toast: "Add your name" }); window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+    const first = !v.guest;
+    const guest = v.guest || { ref: vipRef21("VG"), at: Date.now() };
+    vipPatch21(dispatch, state, { card: { ...c, name: c.name.trim(), savedAt: Date.now() }, guest });
+    if (first) {
+      const cur = fdOf(state), ref = guest.ref;
+      const rec = {
+        id: uid("lsr"), ref, key: ref, kind: "vip_guest", siteKey: "vip", locationId: null, locationText: VIP21.party.place,
+        roles: [], eventDate: null, dateUndecided: true, tz: "Europe/London",
+        contact: { name: c.name.trim(), email: "", phone: "", whatsappOk: true },
+        headcount: "1", brief: "Launch party guest list | " + [c.drinks.slice(0, 3).join(", "), c.diet.join(", ")].filter(Boolean).join(" | "), companyId: null, companyName: "",
+        createdAt: new Date().toISOString(), status: "new", assignee: "", adminNote: "", eventId: null,
+        sourcePath: "", sourceSite: "vip", notif: { admin: "simulated", ack: "simulated message", failed: false }, bookingId: null,
+      };
+      fdSet(state, dispatch, { requests: [rec, ...cur.requests], log: [{ at: rec.createdAt, by: "visitor", what: "vip_guest " + ref, site: "vip" }, ...cur.log].slice(0, 200) });
+    }
+    dispatch({ type: "TOAST", toast: first ? "Card saved. You are on the guest list" : "VIP card saved" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+  const share = () => vipShare21(`${c.name || "I"} on FF VIP: https://${VIP21.domain}/${VIP21.slug(state)}`);
+  const head = (Icon, title) => <SectionHead icon={<Icon size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={title} />;
+  return (
+    <div className="ff-home ff-home11 ff-v21">
+      <style>{VIP21_CSS}</style>
+      <div className="ff-host17">
+        <div className="ff-eyebrow">FF VIP · VIP Card</div>
+        {v.guest ? <div className="ff-v21-guest" role="status" style={{ margin: "8px 0", color: "inherit", background: "rgba(165,128,47,.14)", borderColor: "rgba(165,128,47,.6)" }}>On the launch party guest list {"·"} {VIP21.party.when}, {VIP21.party.place}</div> : null}
+        <PublicHero media={own.length ? own : stock} card={<VipCard21 card={c} tag={tag} edit set={set} />} below={<>
+          <section style={{ marginTop: 22 }}>{head(W, "Favourite drinks")}<VipChips21 list={VIP21_DRINKS} value={c.drinks} onChange={(x) => set({ drinks: x })} custom="Add your own" /></section>
+          <section style={{ marginTop: 22 }}>{head(S, "Your personality")}<VipChips21 list={VIP21_VIBES} value={c.vibes} onChange={(x) => set({ vibes: x })} /></section>
+          <section style={{ marginTop: 22 }}>{head(H, "Interests")}<VipChips21 list={VIP21_INTERESTS} value={c.interests} onChange={(x) => set({ interests: x })} custom="Add your own" /></section>
+          <section style={{ marginTop: 22 }}>{head(Im, "Pictures")}<VipMedia21 list={c.media || []} onChange={(media) => set({ media })} /></section>
+          <section style={{ marginTop: 22 }}>{head(U, "Looking after you")}
+            <div className="ff-v21-form">
+              <label><span className="ff-v21-k">Where you like to sit</span><select className="ff-v21-in" value={c.seat} onChange={(e) => set({ seat: e.target.value })} aria-label="Where you like to sit"><option value="">No preference</option>{VIP21_SEATS.map(s => <option key={s} value={s}>{s}</option>)}</select></label>
+              <label><span className="ff-v21-k">How you like to be looked after</span><textarea className="ff-v21-in" rows={3} value={c.care} onChange={(e) => set({ care: e.target.value })} aria-label="How you like to be looked after" /></label>
+            </div></section>
+          <section style={{ marginTop: 22 }}>{head(L, "Dietary needs")}
+            <VipChips21 list={VIP21_DIET} value={c.diet} onChange={(x) => set({ diet: x })} />
+            <label style={{ display: "block", marginTop: 12 }}><span className="ff-v21-k">Allergies and anything else</span><input className="ff-v21-in" value={c.allergies} onChange={(e) => set({ allergies: e.target.value })} aria-label="Allergies and anything else" /></label>
+          </section>
+          {done ? <div className="ff-v21-btns" style={{ marginTop: 22 }}><VipShine21 onClick={() => setWallet(true)}>Add to wallet</VipShine21><Btn onClick={share}>Share my card</Btn></div> : null}
+        </>} />
+        <ConfirmSpin17 lines={["Save"]} label={v.guest ? "Save VIP card" : "Save VIP card and join the guest list"} onClick={save} />
+        <VipRewardsSect21 />
+      </div>
+      <VipWallet21 open={wallet} onClose={() => setWallet(false)} card={c} />
+    </div>
+  );
+}
+function VipRouter21() {
+  const { state } = useStore();
+  const { tab } = state;
+  if (state.viewing) return <PersonProfile />;
+  if (tab === "network") return <VipExperiences21 />;
+  if (tab === "bookings") return <VipBook21 />;
+  if (tab === "profile") return <VipCardPage21 />;
+  return <VipHome21 />;
 }
 function VipPartyLink21() {
   return (
@@ -16593,160 +17052,6 @@ function VipHome21() {
     </div>
   );
 }
-function VipExperiences21() {
-  const { dispatch } = useStore();
-  const [e, setE] = useState(null);
-  return (
-    <div className="ff-home ff-home11 ff-v21">
-      <style>{VIP21_CSS}</style>
-      <div className="ff-home17">
-        <section className="ff-sect ff-v21-sect" aria-labelledby="ff-v21-xh">
-          <h1 id="ff-v21-xh" className="ff-h1" style={{ fontSize: "clamp(28px,7vw,42px)" }}>Experiences</h1>
-          <p className="ff-v21-lead">We find and show the best experiences and hospitality. Luxury, chosen for you, from a spa day to a private table.</p>
-          <VipExpGrid21 onPick={setE} />
-          <VipExpSheet21 e={e} onClose={() => setE(null)} />
-        </section>
-        <VipBookSect21 />
-        <VipVenues21 />
-      </div>
-    </div>
-  );
-}
-function VipPlan21() {
-  const { state, dispatch } = useStore();
-  const v = state.vip21 || {};
-  const done = vipCardDone21(v);
-  const [f, setF] = useState(() => ({ exp: v.pick || "", group: 4, date: "", area: "", occasion: "", drinks: {}, champagne: false, table: false, priv: false, waiter: "", bartender: "", note: "" }));
-  const [err, setErr] = useState("");
-  const [sent, setSent] = useState(null);
-  const set = (p) => setF(x => ({ ...x, ...p }));
-  const total = Object.values(f.drinks).reduce((a, b) => a + b, 0);
-  const bump = (d, n) => set({ drinks: { ...f.drinks, [d]: Math.max(0, (f.drinks[d] || 0) + n) } });
-  const submit = (e) => {
-    if (e) e.preventDefault();
-    if (!done) { setErr("Create your VIP card first, so the venue receives it."); return; }
-    if (!f.exp) { setErr("Choose the kind of experience."); return; }
-    setErr("");
-    const exp = VIP21_EXP.find(x => x.k === f.exp);
-    const ref = vipRef21("VIP");
-    const drinks = Object.entries(f.drinks).filter(x => x[1] > 0).map(x => x[1] + " x " + x[0]).join(", ");
-    const bits = [exp && "Experience: " + exp.t, "Group: " + f.group, f.occasion && "Occasion: " + f.occasion, drinks && "Drinks: " + drinks, f.champagne && "Champagne on arrival", f.table && "Best table", f.priv && "Private place", f.waiter && "Waiter: " + f.waiter, f.bartender && "Bartender: " + f.bartender, f.note.trim(), "VIP card: " + (v.card.name || "")].filter(Boolean);
-    const cur = fdOf(state);
-    const rec = {
-      id: uid("lsr"), ref, key: ref, kind: "vip_booking", siteKey: "vip", locationId: null, locationText: f.area.trim() || "Not stated",
-      roles: [], eventDate: f.date || null, dateUndecided: !f.date, tz: "Europe/London",
-      contact: { name: v.card.name || "", email: "", phone: "", whatsappOk: true },
-      headcount: String(f.group), brief: bits.join(" | "), companyId: null, companyName: "",
-      createdAt: new Date().toISOString(), status: "new", assignee: "", adminNote: "", eventId: null,
-      sourcePath: "", sourceSite: "vip", notif: { admin: "simulated", ack: "simulated message", failed: false }, bookingId: null,
-    };
-    fdSet(state, dispatch, { requests: [rec, ...cur.requests], log: [{ at: rec.createdAt, by: "visitor", what: "vip_booking " + ref, site: "vip" }, ...cur.log].slice(0, 200) });
-    vipPatch21(dispatch, state, { bookings: [{ ref, exp: exp ? exp.t : "", group: f.group, date: f.date, at: Date.now() }, ...(v.bookings || [])], pick: "" });
-    setSent(ref);
-  };
-  const sw = (key, t, s) => <button type="button" className="ff-v21-sw" aria-pressed={!!f[key]} onClick={() => set({ [key]: !f[key] })}><span><b>{t}</b><small>{s}</small></span><i aria-hidden="true" /></button>;
-  if (sent) return (
-    <div className="ff-v21-done" role="status"><b>VIP booking request sent. Reference {sent}</b>
-      <p style={{ margin: "4px 0 10px" }}>The venue receives your VIP card with the request. FireFlair will confirm it with you.</p>
-      <Btn onClick={() => { setSent(null); setF(x => ({ ...x, exp: "", drinks: {}, champagne: false, table: false, priv: false, waiter: "", bartender: "", note: "" })); }}>Plan another</Btn></div>
-  );
-  return (
-    <form className="ff-v21-form" id="ff-v21-plan" onSubmit={submit} noValidate>
-      <h2 className="ff-h1" style={{ fontSize: 24 }}>Plan a VIP booking</h2>
-      <div className="ff-v21-row">
-        <label><span className="ff-v21-k">Experience</span><select className="ff-v21-in" value={f.exp} onChange={(e) => set({ exp: e.target.value })} aria-label="Experience"><option value="">Choose one</option>{VIP21_EXP.map(x => <option key={x.k} value={x.k}>{x.t}</option>)}</select></label>
-        <label><span className="ff-v21-k">Occasion</span><select className="ff-v21-in" value={f.occasion} onChange={(e) => set({ occasion: e.target.value })} aria-label="Occasion"><option value="">Any</option>{VIP21_OCCASIONS.map(x => <option key={x} value={x}>{x}</option>)}</select></label>
-        <label><span className="ff-v21-k">Date</span><input className="ff-v21-in" type="date" value={f.date} onChange={(e) => set({ date: e.target.value })} aria-label="Date" /></label>
-        <label><span className="ff-v21-k">Area</span><input className="ff-v21-in" value={f.area} onChange={(e) => set({ area: e.target.value })} placeholder="London" aria-label="Area" /></label>
-      </div>
-      <div><span className="ff-v21-k">Group size</span><span className="ff-v21-step"><button type="button" aria-label="Fewer guests" onClick={() => set({ group: Math.max(1, f.group - 1) })}>{"−"}</button><b>{f.group}</b><button type="button" aria-label="More guests" onClick={() => set({ group: Math.min(500, f.group + 1) })}>+</button></span></div>
-      <div>
-        <h3>Pre-order drinks{total ? ` · ${total}` : ""}</h3>
-        <div className="ff-v21-menu" style={{ marginTop: 8 }}>{VIP21_MENU.map(d => <div key={d}><span>{d}</span><span className="ff-v21-step"><button type="button" aria-label={`Fewer ${d}`} onClick={() => bump(d, -1)}>{"−"}</button><b>{f.drinks[d] || 0}</b><button type="button" aria-label={`More ${d}`} onClick={() => bump(d, 1)}>+</button></span></div>)}</div>
-      </div>
-      <div style={{ display: "grid", gap: 8 }}>
-        {sw("champagne", "Champagne on arrival", "Poured as you sit down")}
-        {sw("table", "The best table", "Ask for the best table in the house")}
-        {sw("priv", "A private place", "A private room or a screened corner")}
-      </div>
-      <div className="ff-v21-row">
-        <label><span className="ff-v21-k">Your waiter</span><input className="ff-v21-in" value={f.waiter} onChange={(e) => set({ waiter: e.target.value })} placeholder="Name or FF Tag" aria-label="Your waiter" /></label>
-        <label><span className="ff-v21-k">Your personal bartender</span><input className="ff-v21-in" value={f.bartender} onChange={(e) => set({ bartender: e.target.value })} placeholder="Name or FF Tag" aria-label="Your personal bartender" /></label>
-      </div>
-      <label><span className="ff-v21-k">Anything else</span><textarea className="ff-v21-in" rows={3} value={f.note} onChange={(e) => set({ note: e.target.value })} aria-label="Anything else" /></label>
-      {done ? <div><span className="ff-v21-k">Sent to the venue</span><VipCard21 card={v.card} tag={state.session && state.session.tag} /></div> : null}
-      {err && <p role="alert" style={{ margin: 0, color: "var(--burgundy, #8C1526)" }}>{err}</p>}
-      <div className="ff-v21-btns" style={{ marginTop: 0 }}>
-        <VipShine21 onClick={submit}>Send VIP booking request</VipShine21>
-        {!done && <Btn onClick={() => vipGo21(dispatch, "profile")}>Create your VIP card</Btn>}
-      </div>
-    </form>
-  );
-}
-function VipInvite21() {
-  const { state, dispatch } = useStore();
-  const v = state.vip21 || {};
-  const [f, setF] = useState({ title: "", date: "", place: "", note: "" });
-  const [err, setErr] = useState("");
-  const set = (p) => setF(x => ({ ...x, ...p }));
-  const make = (e) => {
-    if (e) e.preventDefault();
-    if (!f.title.trim()) { setErr("Name your event."); return; }
-    setErr("");
-    const code = Math.random().toString(36).slice(2, 8).toUpperCase();
-    vipPatch21(dispatch, state, { invites: [{ id: uid("inv"), code, ...f, at: Date.now() }, ...(v.invites || [])] });
-    setF({ title: "", date: "", place: "", note: "" });
-    dispatch({ type: "TOAST", toast: "Invitation created" });
-  };
-  const msgFor = (i) => `You are invited to ${i.title}${i.date ? " on " + longDate(i.date) : ""}${i.place ? " at " + i.place : ""}. ${i.note ? i.note + " " : ""}Create your VIP card to reply: https://${VIP21.domain}/i/${i.code}`;
-  return (
-    <section className="ff-v21-form" id="ff-v21-invite" aria-labelledby="ff-v21-ih">
-      <h2 id="ff-v21-ih" className="ff-h1" style={{ fontSize: 24 }}>Hosting? Create an invitation</h2>
-      <form onSubmit={make} noValidate style={{ display: "grid", gap: 12 }}>
-        <div className="ff-v21-row">
-          <label><span className="ff-v21-k">Event</span><input className="ff-v21-in" value={f.title} onChange={(e) => set({ title: e.target.value })} placeholder="Sam’s 40th" aria-label="Event" /></label>
-          <label><span className="ff-v21-k">Date</span><input className="ff-v21-in" type="date" value={f.date} onChange={(e) => set({ date: e.target.value })} aria-label="Event date" /></label>
-          <label><span className="ff-v21-k">Place</span><input className="ff-v21-in" value={f.place} onChange={(e) => set({ place: e.target.value })} aria-label="Place" /></label>
-        </div>
-        <label><span className="ff-v21-k">Message</span><textarea className="ff-v21-in" rows={2} value={f.note} onChange={(e) => set({ note: e.target.value })} aria-label="Message" /></label>
-        {err && <p role="alert" style={{ margin: 0, color: "var(--burgundy, #8C1526)" }}>{err}</p>}
-        <div className="ff-v21-btns" style={{ marginTop: 0 }}><VipShine21 onClick={make}>Create invitation</VipShine21></div>
-      </form>
-      {(v.invites || []).length > 0 && <div className="ff-v21-inv">{v.invites.map(i => (
-        <div key={i.id}><b>{i.title}</b><small>{[i.date && longDate(i.date), i.place].filter(Boolean).join(" · ") || "No date yet"} {"·"} {VIP21.domain}/i/{i.code}</small>
-          <div className="ff-v21-btns" style={{ marginTop: 0 }}><Btn onClick={() => vipShare21(msgFor(i))}>Send on WhatsApp</Btn><Btn onClick={() => vipCopy21(dispatch, `https://${VIP21.domain}/i/${i.code}`)}>Copy link</Btn></div></div>))}</div>}
-    </section>
-  );
-}
-function VipBook21() {
-  return (
-    <div className="ff-home ff-home11 ff-v21">
-      <style>{VIP21_CSS}</style>
-      <div className="ff-home17">
-        <section className="ff-sect ff-v21-sect" aria-labelledby="ff-v21-bkh">
-          <h1 id="ff-v21-bkh" className="ff-h1" style={{ fontSize: "clamp(28px,7vw,42px)" }}>Book</h1>
-          <p className="ff-v21-lead">Single tables, group nights and private places, booked with your VIP card.</p>
-          <VipPlan21 />
-        </section>
-        <section className="ff-sect ff-v21-sect"><VipInvite21 /></section>
-      </div>
-    </div>
-  );
-}
-function VipChips21({ list, value, onChange, custom }) {
-  const [add, setAdd] = useState("");
-  const all = Array.from(new Set([...list, ...(value || [])]));
-  const toggle = (x) => onChange((value || []).includes(x) ? value.filter(y => y !== x) : [...(value || []), x]);
-  return (
-    <div>
-      <div className="ff-v21-chips">{all.map(x => <button key={x} type="button" className="ff-v21-chip" aria-pressed={(value || []).includes(x)} onClick={() => toggle(x)}>{x}</button>)}</div>
-      {custom && <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
-        <input className="ff-v21-in" value={add} onChange={(e) => setAdd(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); const t = add.trim(); if (t) { toggle(t); setAdd(""); } } }} placeholder={custom} aria-label={custom} />
-        <Btn onClick={() => { const t = add.trim(); if (t) { toggle(t); setAdd(""); } }}>Add</Btn>
-      </div>}
-    </div>
-  );
-}
 function VipWallet21({ open, onClose, card }) {
   const { dispatch } = useStore();
   return (
@@ -16761,91 +17066,6 @@ function VipWallet21({ open, onClose, card }) {
     </Sheet>
   );
 }
-function VipCardPage21() {
-  const { state, dispatch } = useStore();
-  const v = state.vip21 || {};
-  const tag = (state.session && state.session.tag) || "";
-  const [c, setC] = useState(() => ({ name: (v.card && v.card.name) || state.profile.name || "", photo: (v.card && v.card.photo) || "", drinks: [], diet: [], allergies: "", vibes: [], care: "", seat: "", ...(v.card || {}) }));
-  const [wallet, setWallet] = useState(false);
-  const [err, setErr] = useState("");
-  const fileRef = useRef(null);
-  const done = vipCardDone21(v);
-  const set = (p) => setC(x => ({ ...x, ...p }));
-  const onFile = async (e) => {
-    const file = e.target.files && e.target.files[0];
-    e.target.value = "";
-    if (!file) return;
-    if (file.size > MAX_MEDIA_BYTES) { setErr("That photo is too large."); return; }
-    try { set({ photo: await readFileAsDataUrl(file) }); setErr(""); } catch (x) { setErr(x.message || "That photo could not be read."); }
-  };
-  const save = (e) => {
-    if (e) e.preventDefault();
-    if (!c.name.trim()) { setErr("Add your name."); return; }
-    setErr("");
-    const first = !v.guest;
-    const guest = v.guest || { ref: vipRef21("VG"), at: Date.now() };
-    vipPatch21(dispatch, state, { card: { ...c, name: c.name.trim(), savedAt: Date.now() }, guest });
-    if (first) {
-      const cur = fdOf(state), ref = guest.ref;
-      const rec = {
-        id: uid("lsr"), ref, key: ref, kind: "vip_guest", siteKey: "vip", locationId: null, locationText: VIP21.party.place,
-        roles: [], eventDate: null, dateUndecided: true, tz: "Europe/London",
-        contact: { name: c.name.trim(), email: "", phone: "", whatsappOk: true },
-        headcount: "1", brief: "Launch party guest list | " + [c.drinks.slice(0, 3).join(", "), c.diet.join(", ")].filter(Boolean).join(" | "), companyId: null, companyName: "",
-        createdAt: new Date().toISOString(), status: "new", assignee: "", adminNote: "", eventId: null,
-        sourcePath: "", sourceSite: "vip", notif: { admin: "simulated", ack: "simulated message", failed: false }, bookingId: null,
-      };
-      fdSet(state, dispatch, { requests: [rec, ...cur.requests], log: [{ at: rec.createdAt, by: "visitor", what: "vip_guest " + ref, site: "vip" }, ...cur.log].slice(0, 200) });
-    }
-    dispatch({ type: "TOAST", toast: first ? "Card saved. You are on the guest list" : "Card saved" });
-  };
-  const share = () => vipShare21(`${c.name || "I"} on FF VIP: https://${VIP21.domain}/${VIP21.slug(state)}`);
-  return (
-    <div className="ff-home ff-home11 ff-v21">
-      <style>{VIP21_CSS}</style>
-      <div className="ff-home17">
-        <section className="ff-sect ff-v21-sect" aria-labelledby="ff-v21-mh">
-          <h1 id="ff-v21-mh" className="ff-h1" style={{ fontSize: "clamp(28px,7vw,42px)" }}>My VIP card</h1>
-          {v.guest ? <div className="ff-v21-guest" role="status" style={{ marginTop: 8, color: "inherit", background: "rgba(165,128,47,.14)", borderColor: "rgba(165,128,47,.6)" }}>On the launch party guest list {"·"} {VIP21.party.when}, {VIP21.party.place}</div> : null}
-          <div className="ff-v21-split" style={{ marginTop: 16 }}>
-            <div className="ff-v21-cardwrap">
-              <VipCard21 card={c} tag={tag} />
-              {done && <div className="ff-v21-btns" style={{ marginTop: 0 }}><VipShine21 onClick={() => setWallet(true)}>Add to wallet</VipShine21><Btn onClick={share}>Share my card</Btn></div>}
-            </div>
-            <form className="ff-v21-form" onSubmit={save} noValidate>
-              <label><span className="ff-v21-k">Name</span><input className="ff-v21-in" value={c.name} onChange={(e) => set({ name: e.target.value })} aria-label="Name" autoComplete="name" /></label>
-              <div className="ff-v21-ph2">
-                <input ref={fileRef} type="file" accept="image/*" onChange={onFile} style={{ display: "none" }} />
-                <button type="button" className="ff-v21-up" onClick={() => fileRef.current && fileRef.current.click()}>{c.photo ? "Change photo" : "Add a photo"}</button>
-                {c.photo && <Btn onClick={() => set({ photo: "" })}>Remove photo</Btn>}
-              </div>
-              <div><span className="ff-v21-k">Favourite drinks</span><VipChips21 list={VIP21_DRINKS} value={c.drinks} onChange={(x) => set({ drinks: x })} custom="Add your own" /></div>
-              <div><span className="ff-v21-k">Dietary needs</span><VipChips21 list={VIP21_DIET} value={c.diet} onChange={(x) => set({ diet: x })} /></div>
-              <label><span className="ff-v21-k">Allergies and anything else</span><input className="ff-v21-in" value={c.allergies} onChange={(e) => set({ allergies: e.target.value })} aria-label="Allergies and anything else" /></label>
-              <div><span className="ff-v21-k">Your personality</span><VipChips21 list={VIP21_VIBES} value={c.vibes} onChange={(x) => set({ vibes: x })} /></div>
-              <label><span className="ff-v21-k">Where you like to sit</span><select className="ff-v21-in" value={c.seat} onChange={(e) => set({ seat: e.target.value })} aria-label="Where you like to sit"><option value="">No preference</option>{VIP21_SEATS.map(s => <option key={s} value={s}>{s}</option>)}</select></label>
-              <label><span className="ff-v21-k">How you like to be looked after</span><textarea className="ff-v21-in" rows={3} value={c.care} onChange={(e) => set({ care: e.target.value })} aria-label="How you like to be looked after" /></label>
-              {err && <p role="alert" style={{ margin: 0, color: "var(--burgundy, #8C1526)" }}>{err}</p>}
-              <div className="ff-v21-btns" style={{ marginTop: 0 }}><VipShine21 onClick={save}>{v.guest ? "Save card" : "Save card and join the guest list"}</VipShine21></div>
-            </form>
-          </div>
-        </section>
-        <VipRewardsSect21 />
-      </div>
-      <VipWallet21 open={wallet} onClose={() => setWallet(false)} card={c} />
-    </div>
-  );
-}
-function VipRouter21() {
-  const { state } = useStore();
-  const { tab } = state;
-  if (state.viewing) return <PersonProfile />;
-  if (tab === "network") return <VipExperiences21 />;
-  if (tab === "bookings") return <VipBook21 />;
-  if (tab === "profile") return <VipCardPage21 />;
-  return <VipHome21 />;
-}
-
 function TeamRouter() {
   const { state } = useStore();
   const { tab } = state;
