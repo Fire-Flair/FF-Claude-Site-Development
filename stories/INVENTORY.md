@@ -157,3 +157,9 @@ Gap: few unused people photos remain for FF Team and FF Staff, so many of their 
 ## Batch 2: FF Party inspirational stories (8 Nov 2026, drafts, not yet in the Stories build)
 Quantity first; quality refinement later. Each ends with a link to its FireFlair Package page or to booking.
 I01 the-art-of-hosting-an-unforgettable-house-party (Bartending), I02 making-birthdays-feel-extraordinary (Mixology), I03 create-a-cocktail-experience-at-home (Masterclass), I04 small-parties-with-big-personalities (Flair), I05 ideas-for-memorable-hen-parties (Masterclass), I06 setting-the-atmosphere-for-your-celebration (Packages). Image choices and the build step (scripts/build-stories.py) are still to do. All existing stories and categories stay as they are.
+
+## Nine research Stories (v17.3.134, 10 Nov 2026)
+Published directly, first in each site's list: P24–P26 (FF Party), T19–T21 (FF Team), B19–B21 (FF Staff). Copy and excerpts as supplied; each research claim links to its original report. FF Staff display name and domain: "FF Staff", ffstaff.uk (as in FF_SITES).
+Later checks: Archrival/Vogue Business claim in P24 has no link yet; Eventbrite Social Study is linked to its 14 Jan 2026 press release (find the report PDF); confirm the Grand View, VisitBritain and Events Industry Council figures against the full reports; P24 relates to the held inspiration drafts (I01–I06) only through the build script's HELD list.
+Overlaps: P25 sits beside "Create a cocktail experience at home" (held draft) and "Cocktail masterclass at home"; P26 beside "What to provide when you hire a bartender".
+Public URLs /stories/{slug}, index links, canonical/OG tags, sitemap and crawler HTML still need the server (ST18_ROUTES stays false in the prototype).

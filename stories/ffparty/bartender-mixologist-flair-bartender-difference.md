@@ -40,4 +40,4 @@ A bartender serves drinks, a mixologist focuses on crafting cocktails, and a fla
 
 ## On FF Party
 
-The services reflect this: a Bartending Service, a Cocktail Bar Service, a Masterclass Service and a Flair Package. Each shows what it includes. For more help choosing, see [bartender hire vs mobile bar hire](/stories/bartender-hire-vs-mobile-bar-hire).
+The services reflect this: a Bartending Package, a Cocktail Bar Service, a Masterclass Package and a Flair Package. Each shows what it includes. For more help choosing, see [bartender hire vs mobile bar hire](/stories/bartender-hire-vs-mobile-bar-hire).

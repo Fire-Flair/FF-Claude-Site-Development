@@ -36,7 +36,7 @@ Choose a cocktail bartender if you want your group to relax and be served. Choos
 
 ## What is included
 
-On FF Party a Masterclass Service includes a host mixologist, all equipment and three to four cocktails each. A Cocktail Bar Service writes and follows a cocktail menu for your event.
+On FF Party a Masterclass Package includes a host mixologist, all equipment and three to four cocktails each. A Cocktail Bar Service writes and follows a cocktail menu for your event.
 
 ## Questions to ask
 

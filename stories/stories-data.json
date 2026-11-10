@@ -30,6 +30,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party service selection",
   "related": [
    "P04",
    "P18",
@@ -72,6 +73,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party service selection",
   "related": [
    "P06",
    "P02",
@@ -107,10 +109,11 @@
    ],
    [
     "On FF Party",
-    "The services reflect this: a Bartending Service, a Cocktail Bar Service, a Masterclass Service and a Flair Package. Each shows what it includes. For more help choosing, see [bartender hire vs mobile bar hire](/stories/bartender-hire-vs-mobile-bar-hire)."
+    "The services reflect this: a Bartending Package, a Cocktail Bar Service, a Masterclass Package and a Flair Package. Each shows what it includes. For more help choosing, see [bartender hire vs mobile bar hire](/stories/bartender-hire-vs-mobile-bar-hire)."
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P03",
    "P09",
@@ -149,6 +152,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P01",
    "P07"
@@ -185,6 +189,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P08",
    "P15",
@@ -215,7 +220,7 @@
    ],
    [
     "What is included",
-    "On FF Party a Masterclass Service includes a host mixologist, all equipment and three to four cocktails each. A Cocktail Bar Service writes and follows a cocktail menu for your event."
+    "On FF Party a Masterclass Package includes a host mixologist, all equipment and three to four cocktails each. A Cocktail Bar Service writes and follows a cocktail menu for your event."
    ],
    [
     "Questions to ask",
@@ -227,6 +232,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P03",
    "P10",
@@ -265,6 +271,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P09",
    "P10"
@@ -305,6 +312,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P11",
    "P06",
@@ -347,6 +355,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P07",
    "P06"
@@ -383,6 +392,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P03",
    "P06",
@@ -429,6 +439,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P01",
    "P02",
@@ -462,6 +473,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P17",
    "P04",
@@ -496,6 +508,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P17",
    "P04",
@@ -530,11 +543,51 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P17",
    "P04",
    "P18",
    "P19"
+  ]
+ },
+ "golden-age-of-parties": {
+  "id": "P24",
+  "slug": "golden-age-of-parties",
+  "site": "ffparty.uk",
+  "title": "Are We Entering the Golden Age of Parties?",
+  "seo": "Are we entering the golden age of parties?",
+  "date": "10 Nov 2026",
+  "iso": "2026-11-10",
+  "reviewed": "10 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Inspiration",
+  "img": "s18_golden-age-of-parties",
+  "alt": "Three tall flutes on a wooden bar top: a sparkling mint drink, an amber drink with orange, and a pink-topped drink.",
+  "min": 2,
+  "blurb": "What research on live experiences and smaller gatherings could mean for the way we celebrate with friends and family.",
+  "intro": "Think of the birthday dinner where everyone stays for one more drink, or the evening a friend learns to make their favourite cocktail. These are the kinds of moments you have to be there for. At FireFlair, we think the next wave of parties could start with more people making time for evenings like these. \"Golden age\" is our view, not a proven fact: the research below shows the appetite, and you can decide what it means for your next celebration.",
+  "body": [
+   [
+    "Why getting together matters",
+    "The World Health Organization estimates that about one in six people worldwide, or 15.8%, report feeling lonely. That gives some context for why social connection deserves attention. Source: [World Health Organization, Social connection](https://www.who.int/news-room/questions-and-answers/item/social-connection).\n\nIn July 2025, Eventbrite's research partner dcdx surveyed 4,051 people aged 18–35 in the US and UK. In the survey, 79% expected to attend more events in 2026, rising to 82% among UK respondents. A separate US study by Archrival found that 74% of Gen Z respondents put more value on in-person experiences than digital ones. Sources: [Eventbrite Social Study 2026, pp. 4 and 25](https://www.businesswire.com/news/home/20260114088488/en); Archrival research reported by Vogue Business."
+   ],
+   [
+    "What smaller gatherings can offer",
+    "Eventbrite reported that attendance at micro-events on its platform rose 23% in 2024. For a host, the appeal of a smaller gathering can be personal. There is room to choose a drink for the birthday guest, bring friends into the kitchen, and give everyone a chance to try their hand at making a cocktail. Source: [Eventbrite TRNDS 2025, p. 14](https://www.eventbrite.com/blog/wp-content/uploads/2025/01/Eventbrite-TRNDS-2025-UKI.pdf)."
+   ],
+   [
+    "The people who make it happen",
+    "Grand View Research estimates that the global event management market was worth US$1.16 trillion in 2024 and projects it could reach US$2.09 trillion by 2033. That estimate spans conferences, weddings, social events, sport, and live entertainment. A private celebration is one part of that much wider market. Source: [Grand View Research, Event Management Market](https://www.grandviewresearch.com/industry-analysis/event-management-market-report).\n\nAt home, a bartender can keep drinks moving while the host catches up with friends. At a bigger celebration, DJs, caterers, planners, and venues can all play a part. Pick an occasion you'd love to celebrate and give the people you want there a date to put in the diary.\n\nRelated: [Planning a cocktail menu](/stories/how-to-plan-a-cocktail-menu-for-a-party) · [How to hire a bartender for a house party](/stories/how-to-hire-a-bartender-for-a-house-party)"
+   ]
+  ],
+  "cta": "Explore FireFlair Packages",
+  "to": "FF Party packages",
+  "related": [
+   "P01",
+   "P10",
+   "P07",
+   "P05"
   ]
  },
  "hire-photographer-birthday-party": {
@@ -568,6 +621,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P07",
    "P06"
@@ -608,6 +662,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P01",
    "P23",
@@ -646,6 +701,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P10",
    "P11",
@@ -689,6 +745,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P10",
    "P12",
@@ -731,6 +788,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P05",
    "P07"
@@ -771,6 +829,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P03",
    "P06",
@@ -829,6 +888,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P23",
    "P02",
@@ -872,6 +932,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party service selection",
   "related": [
    "P17",
    "P03",
@@ -918,6 +979,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P01",
    "P05",
@@ -965,6 +1027,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P01",
    "P05",
@@ -1010,10 +1073,50 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P01",
    "P10",
    "P12"
+  ]
+ },
+ "how-to-host-a-cocktail-party-at-home": {
+  "id": "P25",
+  "slug": "how-to-host-a-cocktail-party-at-home",
+  "site": "ffparty.uk",
+  "title": "How to Host a Cocktail Party at Home",
+  "seo": "How to host a cocktail party at home",
+  "date": "10 Nov 2026",
+  "iso": "2026-11-10",
+  "reviewed": "10 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Planning your party",
+  "img": "s18_how-to-host-a-cocktail-party-at-home",
+  "alt": "Two chilled martini glasses beside a cut-glass mixing glass full of ice on a wooden table.",
+  "min": 2,
+  "blurb": "Plan the drinks, bar setup and timing for a cocktail party at home, with time to enjoy the evening with your guests.",
+  "intro": "To host a cocktail party at home, choose a short drinks menu, set up one place to serve it, and plan when you want the first round ready. Start with the moment you want everyone to share. For a birthday, that might be the first toast. For dinner with friends, it could be cocktails before you sit down. If you want the drinks to be the activity, make a cocktail masterclass part of the evening and give it a start time.",
+  "body": [
+   [
+    "Choose a short drinks menu",
+    "Pick two or three drinks that suit the occasion. You could offer something bright and citrusy, a favourite of the guest of honour, and an alcohol-free option with its own garnish. A short menu gives each drink a place in the evening and makes the shopping list easier to work out. Agree the menu and who's supplying the ingredients before you shop."
+   ],
+   [
+    "Give the bar a place of its own",
+    "Choose a counter or table guests can approach while leaving space for others to move past. Think about where glassware, ice, and spare stock will go, and where guests can help themselves to water. If you're bringing in a bartender, share a photo of the space and agree when they can arrive to set up. Tell them how many guests you expect and when most people are likely to arrive."
+   ],
+   [
+    "Make time for the party itself",
+    "A bartender can prepare and serve the drinks while you greet your guests. A masterclass gives the group a shared activity, with someone to guide each round. Choose the format that fits the evening, then put the drinks, food, and any toast on a simple timeline. When the first drinks are ready, make sure you're there to raise a glass too.\n\nRelated: [How to plan a cocktail menu for a party](/stories/how-to-plan-a-cocktail-menu-for-a-party) · [Ice and glassware for a cocktail party](/stories/cocktail-party-ice-and-glassware) · [Cocktail masterclass at home](/stories/cocktail-masterclass-at-home)"
+   ]
+  ],
+  "cta": "Explore FireFlair Packages",
+  "to": "FF Party packages",
+  "related": [
+   "P10",
+   "P12",
+   "C09",
+   "P07"
   ]
  },
  "how-to-plan-a-cocktail-menu-for-a-party": {
@@ -1055,6 +1158,7 @@
    ]
   ],
   "cta": "Choose your cocktails",
+  "to": "FF Party menu selection",
   "related": [
    "P11",
    "P12",
@@ -1105,6 +1209,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P05",
    "P14",
@@ -1148,11 +1253,51 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P06",
    "P08",
    "P11",
    "P14"
+  ]
+ },
+ "what-to-ask-before-booking-a-bartender": {
+  "id": "P26",
+  "slug": "what-to-ask-before-booking-a-bartender",
+  "site": "ffparty.uk",
+  "title": "What to Ask Before Booking a Bartender for a Private Party",
+  "seo": "What to ask before booking a bartender",
+  "date": "10 Nov 2026",
+  "iso": "2026-11-10",
+  "reviewed": "10 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Choosing a service",
+  "img": "s18_what-to-ask-before-booking-a-bartender",
+  "alt": "A smiling bartender in black leans on the bar behind a tall creamy pink cocktail with a mint and pineapple garnish.",
+  "min": 2,
+  "blurb": "The questions to ask about experience, drinks, equipment and service before booking a bartender for a private party.",
+  "intro": "Before booking a bartender, ask about experience with your kind of party, what the service includes, and how your booking is confirmed. A bartender at a birthday might serve a signature cocktail as guests arrive and keep the bar running through the evening. At a masterclass, the same professional might spend their time guiding guests through the drinks. Tell the person you're considering what you want your guests to experience. Their answers will help you choose someone who suits the occasion.",
+  "body": [
+   [
+    "Have you worked on a party like mine?",
+    "Share the occasion, guest numbers, location, and the hours you'd like drinks served. Look at examples of their work and any relevant reviews. Ask how they'd handle arrivals if most guests come at once, and what sort of menu they'd suggest for your space and timings."
+   ],
+   [
+    "What will each of us provide?",
+    "Ask who brings ingredients, ice, glassware, tools, and a bar setup. Check how much setup space they need and whether setup and clear-down are included in the agreed hours or price. If you already have a favourite drink in mind, check whether they can serve it and offer an alcohol-free option alongside it. For a full checklist, see [what to provide when you hire a bartender](/stories/what-to-provide-when-hiring-a-bartender)."
+   ],
+   [
+    "What will the booking cover?",
+    "Before you commit, review the service, hours, inclusions, and total cost. Check what you need to pay, when the booking becomes confirmed, and how to contact the professional if the plan changes. A short written brief with the agreed details gives you both something to refer back to before the event.\n\nRelated: [How many bartenders do I need?](/stories/how-many-bartenders-do-i-need) · [How to book a bartender on FF Party](/stories/how-to-book-a-bartender-on-ff-party)"
+   ]
+  ],
+  "cta": "Explore FireFlair Packages",
+  "to": "FF Party packages",
+  "related": [
+   "P06",
+   "P05",
+   "P07",
+   "P01"
   ]
  },
  "what-to-provide-when-hiring-a-bartender": {
@@ -1186,6 +1331,7 @@
    ]
   ],
   "cta": "Plan your party",
+  "to": "FF Party event planner",
   "related": [
    "P03",
    "P02",
@@ -1224,6 +1370,7 @@
    ]
   ],
   "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
   "related": [
    "B14",
    "B16",
@@ -1266,6 +1413,7 @@
    ]
   ],
   "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
   "related": [
    "B01",
    "B02",
@@ -1309,6 +1457,7 @@
    ]
   ],
   "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
   "related": [
    "B10",
    "B09",
@@ -1351,6 +1500,7 @@
    ]
   ],
   "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
   "related": [
    "B09",
    "B10",
@@ -1400,6 +1550,7 @@
    ]
   ],
   "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
   "related": [
    "B01",
    "B02",
@@ -1442,6 +1593,7 @@
    ]
   ],
   "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
   "related": [
    "B04",
    "B05",
@@ -1480,11 +1632,47 @@
    ]
   ],
   "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
   "related": [
    "B04",
    "B06",
    "B13",
    "B01"
+  ]
+ },
+ "golden-age-of-parties-event-businesses": {
+  "id": "B19",
+  "slug": "golden-age-of-parties-event-businesses",
+  "site": "ffstaff.uk",
+  "title": "What the Events Growth Forecast Measures",
+  "seo": "What the events growth forecast measures",
+  "date": "10 Nov 2026",
+  "iso": "2026-11-10",
+  "reviewed": "10 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Market and demand",
+  "img": "s18_golden-age-of-parties-event-businesses",
+  "alt": "A round event bar with a tropical-print front and a matching backdrop in a pale panelled room.",
+  "min": 2,
+  "blurb": "The scope of the global event management forecast and what Eventbrite recorded for micro-event attendance.",
+  "intro": "Grand View Research estimates the global event management market at US$1.16 trillion in 2024 and forecasts US$2.09 trillion by 2033. Its scope includes meetings and conferences, weddings, social events, sport, music, and entertainment. The forecast describes the combined market across those categories. Source: [Grand View Research, Event Management Market](https://www.grandviewresearch.com/industry-analysis/event-management-market-report).",
+  "body": [
+   [
+    "A separate measure of smaller events",
+    "Eventbrite's TRNDS 2025 report records a 23% rise in micro-event attendance on its platform in 2024. That figure counts attendance within a platform category. Grand View Research's figures describe market value in US dollars. Read together, they give event businesses two distinct reference points for scale and audience activity. Source: [Eventbrite TRNDS 2025, p. 14](https://www.eventbrite.com/blog/wp-content/uploads/2025/01/Eventbrite-TRNDS-2025-UKI.pdf)."
+   ],
+   [
+    "What not to read into them",
+    "A forecast is a modelled estimate, and a platform's attendance is recorded activity on that platform. Neither is a measure of demand for bar staff at a given venue or in a given postcode. Use them as context for planning, and use your own booking history for staffing numbers. To see how requests work on FF Staff, read [how to book bar staff on FF Staff](/stories/how-to-book-bar-staff-on-ff-staff).\n\nRelated: [Staffing a product launch or drinks reception](/stories/staffing-a-product-launch-or-drinks-reception) · [Temporary bar staff brief template](/stories/temporary-bar-staff-brief-template)"
+   ]
+  ],
+  "cta": "Explore FF Staff",
+  "to": "FF Staff",
+  "related": [
+   "B01",
+   "B10",
+   "B07",
+   "B09"
   ]
  },
  "hospitality-staffing-fees-explained": {
@@ -1518,6 +1706,7 @@
    ]
   ],
   "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
   "related": [
    "B02",
    "B05",
@@ -1564,6 +1753,7 @@
    ]
   ],
   "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
   "related": [
    "B02",
    "B18",
@@ -1607,6 +1797,7 @@
    ]
   ],
   "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
   "related": [
    "B01",
    "B09",
@@ -1645,6 +1836,7 @@
    ]
   ],
   "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
   "related": [
    "B15",
    "B16",
@@ -1686,6 +1878,7 @@
    ]
   ],
   "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
   "related": [
    "B01",
    "B09",
@@ -1724,6 +1917,7 @@
    ]
   ],
   "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
   "related": [
    "B14",
    "B15",
@@ -1761,6 +1955,7 @@
    ]
   ],
   "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
   "related": [
    "B05",
    "B06",
@@ -1807,6 +2002,7 @@
    ]
   ],
   "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
   "related": [
    "B14",
    "B16",
@@ -1840,6 +2036,7 @@
    ]
   ],
   "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
   "related": [
    "B16",
    "B14"
@@ -1880,6 +2077,7 @@
    ]
   ],
   "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
   "related": [
    "B11",
    "B09",
@@ -1918,6 +2116,7 @@
    ]
   ],
   "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
   "related": [
    "B07",
    "B10",
@@ -1964,6 +2163,7 @@
    ]
   ],
   "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
   "related": [
    "B01",
    "B09",
@@ -2001,10 +2201,46 @@
    ]
   ],
   "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
   "related": [
    "B13",
    "B01",
    "B18"
+  ]
+ },
+ "uk-small-business-meetings-data": {
+  "id": "B20",
+  "slug": "uk-small-business-meetings-data",
+  "site": "ffstaff.uk",
+  "title": "What VisitBritain's Data Shows About Small Business Meetings",
+  "seo": "VisitBritain data on small business meetings in the UK",
+  "date": "10 Nov 2026",
+  "iso": "2026-11-10",
+  "reviewed": "10 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Market and demand",
+  "img": "s18_uk-small-business-meetings-data",
+  "alt": "A long event bar with a Vooshka sign and bartenders at work in a purple-lit function room.",
+  "min": 2,
+  "blurb": "VisitBritain's figures on inbound visits for UK meetings of 10–20 people, with the scope of the data explained.",
+  "intro": "VisitBritain estimates that meetings of 10–20 people accounted for 772,000 inbound UK visits and £794 million in associated visitor spending in 2024. That is about 30% of the 2.56 million inbound business-event visits in its table. Source: [VisitBritain, Business Events Research](https://www.visitbritain.org/research-insights/business-events-research).",
+  "body": [
+   [
+    "What counts as a visit",
+    "VisitBritain's table measures trips to the UK and spending associated with those trips. A meeting with several international attendees can account for several visits. The spending figure covers visitor spending across the trip. For venues and caterers, the useful distinction is the scale of travel associated with this meeting size. Domestic meetings, venue bookings, and bar sales each need their own data. Source: [VisitBritain, Business Events Research](https://www.visitbritain.org/research-insights/business-events-research)."
+   ],
+   [
+    "Using it in your planning",
+    "These are inbound visits, so they say nothing about UK residents meeting in the UK. If you host or cater for small meetings and receptions, the figures are context for the size of the audience, not a forecast for your own bookings. When a client does ask for bar staff for a small reception, a clear brief helps: see the [temporary bar staff brief template](/stories/temporary-bar-staff-brief-template).\n\nRelated: [Staffing a product launch or drinks reception](/stories/staffing-a-product-launch-or-drinks-reception) · [How to book bar staff on FF Staff](/stories/how-to-book-bar-staff-on-ff-staff)"
+   ]
+  ],
+  "cta": "Explore FF Staff",
+  "to": "FF Staff",
+  "related": [
+   "B01",
+   "B10",
+   "B07",
+   "B09"
   ]
  },
  "what-to-do-when-an-event-bartender-cancels": {
@@ -2046,11 +2282,47 @@
    ]
   ],
   "cta": "Create a staffing request",
+  "to": "FF Staff staffing request",
   "related": [
    "B18",
    "B07",
    "B08",
    "B01"
+  ]
+ },
+ "why-businesses-invest-in-in-person-events": {
+  "id": "B21",
+  "slug": "why-businesses-invest-in-in-person-events",
+  "site": "ffstaff.uk",
+  "title": "Why Businesses Still Invest in In-Person Events",
+  "seo": "Why businesses still invest in in-person events",
+  "date": "10 Nov 2026",
+  "iso": "2026-11-10",
+  "reviewed": "10 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Market and demand",
+  "img": "s18_why-businesses-invest-in-in-person-events",
+  "alt": "A round event bar with a black and gold geometric front and a monogram, set up in a function room.",
+  "min": 2,
+  "blurb": "Oxford Economics and the Events Industry Council report on business-event spending and the value of face-to-face relationships.",
+  "intro": "The Events Industry Council and Oxford Economics estimate that business events generated US$1.3 trillion in direct spending worldwide in 2025. The study covers business events across more than 180 countries. Its direct-spending measure covers activity across the business-event economy, including expenditure beyond the event venue itself. Source: [Events Industry Council, 2026 Global Economic Significance of Business Events Study](https://eventscouncil.org/Leadership/Economic-Significance-Study).",
+  "body": [
+   [
+    "What respondents value about meeting in person",
+    "In the same study, 70% of survey respondents identified face-to-face relationship-building as the event outcome most difficult to replace. That finding describes respondents' views. It gives venues, caterers, and agencies a business objective to listen for in a client brief, alongside separate questions about format, spend, and supplier requirements. Source: [Events Industry Council, 2026 Global Economic Significance of Business Events Study](https://eventscouncil.org/Leadership/Economic-Significance-Study)."
+   ],
+   [
+    "Turning it into a better brief",
+    "When a client's goal is meeting people, the drinks service is part of how the event feels. Ask what the client wants guests to do, how many will arrive at once, and how long the event runs, then plan staffing from that. See [staffing a product launch or drinks reception](/stories/staffing-a-product-launch-or-drinks-reception) and the [temporary bar staff brief template](/stories/temporary-bar-staff-brief-template).\n\nRelated: [How to book bar staff on FF Staff](/stories/how-to-book-bar-staff-on-ff-staff) · [How to find last-minute bar staff](/stories/how-to-find-last-minute-bar-staff)"
+   ]
+  ],
+  "cta": "Explore FF Staff",
+  "to": "FF Staff",
+  "related": [
+   "B01",
+   "B10",
+   "B09",
+   "B07"
   ]
  },
  "cocktail-skills-for-event-bartending": {
@@ -2096,6 +2368,7 @@
    ]
   ],
   "cta": "Create your profile",
+  "to": "FF Team profile creation",
   "related": [
    "T10",
    "T13",
@@ -2133,6 +2406,7 @@
    ]
   ],
   "cta": "Create your profile",
+  "to": "FF Team profile creation",
   "related": [
    "T04",
    "T01",
@@ -2167,6 +2441,7 @@
    ]
   ],
   "cta": "Create your profile",
+  "to": "FF Team profile creation",
   "related": [
    "T04",
    "T05",
@@ -2201,6 +2476,7 @@
    ]
   ],
   "cta": "Create your profile",
+  "to": "FF Team profile creation",
   "related": [
    "T04",
    "T08",
@@ -2242,6 +2518,7 @@
    ]
   ],
   "cta": "Create your profile",
+  "to": "FF Team profile creation",
   "related": [
    "T13",
    "T03",
@@ -2284,6 +2561,7 @@
    ]
   ],
   "cta": "Create your profile",
+  "to": "FF Team profile creation",
   "related": [
    "T01",
    "T02",
@@ -2321,6 +2599,7 @@
    ]
   ],
   "cta": "Create your profile",
+  "to": "FF Team profile creation",
   "related": [
    "T01",
    "T09",
@@ -2371,6 +2650,7 @@
    ]
   ],
   "cta": "Create your profile",
+  "to": "FF Team profile creation",
   "related": [
    "T08",
    "T09",
@@ -2420,6 +2700,7 @@
    ]
   ],
   "cta": "Create your profile",
+  "to": "FF Team profile creation",
   "related": [
    "T13",
    "T02",
@@ -2461,6 +2742,7 @@
    ]
   ],
   "cta": "Create your profile",
+  "to": "FF Team profile creation",
   "related": [
    "T14",
    "T02",
@@ -2498,6 +2780,7 @@
    ]
   ],
   "cta": "Create your profile",
+  "to": "FF Team profile creation",
   "related": [
    "T01",
    "T11",
@@ -2535,6 +2818,7 @@
    ]
   ],
   "cta": "Create your profile",
+  "to": "FF Team profile creation",
   "related": [
    "T17",
    "T10"
@@ -2571,6 +2855,7 @@
    ]
   ],
   "cta": "Create your profile",
+  "to": "FF Team profile creation",
   "related": [
    "T02",
    "T04",
@@ -2614,6 +2899,7 @@
    ]
   ],
   "cta": "Create your profile",
+  "to": "FF Team profile creation",
   "related": [
    "T08",
    "T13",
@@ -2652,6 +2938,7 @@
    ]
   ],
   "cta": "Create your profile",
+  "to": "FF Team profile creation",
   "related": [
    "T02",
    "T01",
@@ -2689,11 +2976,90 @@
    ]
   ],
   "cta": "Create your profile",
+  "to": "FF Team profile creation",
   "related": [
    "T05",
    "T06",
    "T01",
    "T08"
+  ]
+ },
+ "live-events-bartending-opportunities": {
+  "id": "T19",
+  "slug": "live-events-bartending-opportunities",
+  "site": "ffteam.uk",
+  "title": "What Younger Guests Want From a Night Out",
+  "seo": "What younger guests want from a night out",
+  "date": "10 Nov 2026",
+  "iso": "2026-11-10",
+  "reviewed": "10 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Finding work",
+  "img": "s18_live-events-bartending-opportunities",
+  "alt": "A curved event bar under red lights with a cocktail menu stand, a barrel and rows of glasses, dressed with flowers.",
+  "min": 2,
+  "blurb": "What younger adults told Eventbrite about going out in 2026 and the kinds of experiences they want to find.",
+  "intro": "A pop-up, an after-hours museum night, and a hidden bar can all give someone a reason to head out. Eventbrite's 2026 Social Study puts numbers to that curiosity.",
+  "body": [
+   [
+    "The appetite for a night out",
+    "In July 2025, Eventbrite's research partner dcdx surveyed 4,051 people aged 18–35 across the US and UK. Of those surveyed, 79% expected to attend more events in 2026. The figure was 82% for UK respondents. These figures capture people's plans at the time of the survey. Source: [Eventbrite Social Study 2026, pp. 4 and 25](https://www.businesswire.com/news/home/20260114088488/en)."
+   ],
+   [
+    "What people wanted to find",
+    "Asked about hard-to-find events they would be interested in attending, 40% picked pop-up experiences or installations and 36% picked speakeasies or underground bars. These are preferences from the combined survey. For a bartender, they offer a glimpse of the settings in which guests want to spend an evening. Source: [Eventbrite Social Study 2026, p. 6](https://www.businesswire.com/news/home/20260114088488/en)."
+   ],
+   [
+    "What it could mean for your profile",
+    "Interest in a format is not a vacancy, and nothing here promises work. It does show where guests are looking. A clear [FF Team profile](/stories/how-to-build-a-bartender-profile) that shows the kinds of events you enjoy working gives hosts and event businesses something to find.\n\nRelated: [How to find freelance bartending work in the UK](/stories/how-to-find-freelance-bartending-work-uk) · [Cocktail skills for event bartending](/stories/cocktail-skills-for-event-bartending)"
+   ]
+  ],
+  "cta": "Create your FF Team profile",
+  "to": "FF Team profile",
+  "related": [
+   "T01",
+   "T02",
+   "T17",
+   "C03"
+  ]
+ },
+ "local-parties-live-events": {
+  "id": "T21",
+  "slug": "local-parties-live-events",
+  "site": "ffteam.uk",
+  "title": "Why Local Parties Matter to the Next Wave of Live Events",
+  "seo": "Why local parties matter to the next wave of live events",
+  "date": "10 Nov 2026",
+  "iso": "2026-11-10",
+  "reviewed": "10 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Finding work",
+  "img": "s18_local-parties-live-events",
+  "alt": "A smiling woman in a feather boa shakes a cocktail beside a bearded man at an outdoor bar table.",
+  "min": 2,
+  "blurb": "What Eventbrite found about local connection and outdoor party listings in the UK.",
+  "intro": "A neighbourhood get-together can have a character all its own. You're serving people who know the streets around them, and some of the faces across the room. Eventbrite's research offers two ways to look at that appetite for local events.",
+  "body": [
+   [
+    "People value the local connection",
+    "In Eventbrite's July 2025 survey, 88% of UK respondents aged 18–35 said it was important that an event helped them feel connected to their local community. This is a finding about what respondents value in an event. Source: [Eventbrite Social Study 2026, pp. 18 and 25](https://www.businesswire.com/news/home/20260114088488/en)."
+   ],
+   [
+    "Outdoor party listings grew on Eventbrite",
+    "The platform reported 25% more UK listings in its backyard and local outdoor parties category between August 2024 and July 2025 than in the previous 12 months. The comparison used keywords in listings. For bartenders drawn to community events, that category offers a starting point for exploring the gatherings taking place close to home. Source: [Eventbrite Social Study 2026, pp. 18 and 25](https://www.businesswire.com/news/home/20260114088488/en)."
+   ],
+   [
+    "Make it easy to be found locally",
+    "A listing count is not a promise of bookings. If local events appeal to you, say so on your profile: the areas you cover, the kinds of party you enjoy, and what you bring. See [how to build a bartender profile](/stories/how-to-build-a-bartender-profile).\n\nRelated: [Freelance bartender work in London](/stories/freelance-bartender-work-london) · [How to find freelance bartending work in the UK](/stories/how-to-find-freelance-bartending-work-uk)"
+   ]
+  ],
+  "cta": "Create your FF Team profile",
+  "to": "FF Team profile",
+  "related": [
+   "T01",
+   "T02",
+   "C03",
+   "T16"
   ]
  },
  "repeat-bookings-freelance-bartender": {
@@ -2731,11 +3097,47 @@
    ]
   ],
   "cta": "Create your profile",
+  "to": "FF Team profile creation",
   "related": [
    "T02",
    "T10",
    "T15",
    "T13"
+  ]
+ },
+ "uk-tastings-and-social-events": {
+  "id": "T20",
+  "slug": "uk-tastings-and-social-events",
+  "site": "ffteam.uk",
+  "title": "From Tastings to Music Bingo in the UK",
+  "seo": "From tastings to music bingo: UK social event formats",
+  "date": "10 Nov 2026",
+  "iso": "2026-11-10",
+  "reviewed": "10 Nov 2026",
+  "by": "FireFlair editorial team",
+  "cat": "Finding work",
+  "img": "s18_uk-tastings-and-social-events",
+  "alt": "A frosted shot glass with a dried grapefruit crisp on a wooden bar top.",
+  "min": 2,
+  "blurb": "Eventbrite's UK data on tastings and music bingo, and a look at the formats that get people together.",
+  "intro": "A tasting gives everyone something to talk about as soon as the first drink lands. Music bingo gets a room listening for the same song. The format changes the feel of the evening before the first guest arrives.",
+  "body": [
+   [
+    "Two formats in the data",
+    "Eventbrite reported 80% more UK caffeine-tasting events and 49% higher attendance for that category on its platform. UK music bingo attendance rose 52%. The platform compared August 2024 to July 2025 with the previous 12 months. The figures describe Eventbrite's listings and attendance in these categories. Source: [Eventbrite Social Study 2026, pp. 12 and 25](https://www.businesswire.com/news/home/20260114088488/en)."
+   ],
+   [
+    "Why formats matter to a bartender",
+    "A tasting and a music night can put hospitality professionals at the centre of very different rooms. If you're curious about a format, look at how local organisers describe the experience and the people behind it. Then think about which of your skills fit: guiding a tasting, running a busy bar between songs, or both. See [cocktail skills for event bartending](/stories/cocktail-skills-for-event-bartending) for ideas on what to practise.\n\nRelated: [How to build a bartender profile](/stories/how-to-build-a-bartender-profile) · [What is FF Team?](/stories/what-is-ff-team)"
+   ]
+  ],
+  "cta": "Explore FF Team",
+  "to": "FF Team home",
+  "related": [
+   "T01",
+   "T17",
+   "T02",
+   "T16"
   ]
  },
  "weekend-bar-work-alongside-another-job": {
@@ -2773,6 +3175,7 @@
    ]
   ],
   "cta": "Create your profile",
+  "to": "FF Team profile creation",
   "related": [
    "T01",
    "T18",
@@ -2811,6 +3214,7 @@
    ]
   ],
   "cta": "Create your profile",
+  "to": "FF Team profile creation",
   "related": [
    "T01",
    "T02",
@@ -2844,6 +3248,7 @@
    ]
   ],
   "cta": "Create your profile",
+  "to": "FF Team profile creation",
   "related": [
    "T03",
    "T10",

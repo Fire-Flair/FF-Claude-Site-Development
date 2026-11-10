@@ -12,9 +12,9 @@ import argparse, json, math, os, re, glob, datetime, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 ORDER = {  # slugs (new articles first, then older stories that have no replacement yet)
-    "party": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08", "P09", "P10", "P11", "P12", "P13", "P14", "P15", "P16", "P17", "P18", "P19", "P20", "P21", "P23", "C01", "C02", "C05", "C06", "C07", "C08", "C09", "wedding", "cardsparty", "sites"],
-    "team": ["T01", "T02", "T03", "T04", "T05", "T06", "T07", "T08", "T09", "T10", "T11", "T12", "T13", "T14", "T15", "T16", "T17", "T18", "C03", "C10"],
-    "staff": ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B09", "B10", "B11", "B12", "B13", "B14", "B15", "B16", "B17", "B18", "C04", "C11", "C12"],
+    "party": ["P24", "P25", "P26", "P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08", "P09", "P10", "P11", "P12", "P13", "P14", "P15", "P16", "P17", "P18", "P19", "P20", "P21", "P23", "C01", "C02", "C05", "C06", "C07", "C08", "C09", "wedding", "cardsparty", "sites"],
+    "team": ["T19", "T20", "T21", "T01", "T02", "T03", "T04", "T05", "T06", "T07", "T08", "T09", "T10", "T11", "T12", "T13", "T14", "T15", "T16", "T17", "T18", "C03", "C10"],
+    "staff": ["B19", "B20", "B21", "B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B09", "B10", "B11", "B12", "B13", "B14", "B15", "B16", "B17", "B18", "C04", "C11", "C12"],
 }
 
 
@@ -59,20 +59,27 @@ def article(path):
     words = len(body.split())
     first = plain(intro.split("\n\n")[0])
     blurb = first if len(first) <= 190 else first[:187].rsplit(" ", 1)[0] + "..."
+    if fm.get("excerpt"):
+        blurb = fm["excerpt"]  # a supplied card excerpt wins over the first paragraph
     cta = re.search(r"label:\s*([^,}]+)", fm.get("cta", ""))
+    dest = re.search(r"destination:\s*([^,}]+)", fm.get("cta", ""))
     return {
         "id": fm["id"], "slug": fm["slug"], "site": fm["site"], "title": fm["title"], "seo": fm.get("seo_title", ""),
         "date": nice_date(fm["published"]), "iso": fm["modified"], "reviewed": nice_date(fm["reviewed"]),
         "by": fm.get("author", "FireFlair editorial team"), "cat": fm.get("category", "How-to guides"),
         "img": ("s18_" + fm["slug"]) if fm["slug"] in IMAGES else "", "alt": IMAGES.get(fm["slug"], {}).get("alt", ""),
         "min": max(2, math.ceil(words / 200)), "blurb": blurb, "intro": intro, "body": sections,
-        "cta": cta.group(1).strip() if cta else "", "related": listval(fm.get("related", "[]")),
+        "cta": cta.group(1).strip() if cta else "", "to": dest.group(1).strip() if dest else "", "related": listval(fm.get("related", "[]")),
     }
+
+
+# Inspirational FF Party drafts: written but held back until photos are chosen (see CHANGELOG, v17.3.99).
+HELD = {"I01", "I02", "I03", "I04", "I05", "I06"}
 
 
 def collect():
     arts = [article(p) for p in sorted(glob.glob(os.path.join(ROOT, "stories", "*", "*.md")))]
-    return {a["slug"]: a for a in arts}
+    return {a["slug"]: a for a in arts if a["id"] not in HELD}
 
 
 def reader(arts):

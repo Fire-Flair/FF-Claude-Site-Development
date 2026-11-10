@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.3.134 — 2026-11-10 — Nine new FF Stories (Party, Team, Staff)
+Artifact version 1794311361-5f86 · file `fireflair-v17.3.134.html`
+
+- Nine new FF Stories published at the top of each site's Stories list: FF Party (golden age of parties; cocktail party at home; what to ask before booking a bartender), FF Team (what younger guests want from a night out; tastings to music bingo; local parties) and FF Staff (events growth forecast; VisitBritain small business meetings; why businesses invest in in-person events). Added through stories/*.md and scripts/build-stories.py, so the data, order, images and reader stay in one system.
+- New card excerpt field (`excerpt:`) is used for the Stories card and meta description; the build script reads the CTA destination (`to`) so each button goes to its flow: packages (Network page), staffing request (Bookings), FF Team profile or FF Team home.
+- Photos: one new library photo per article, none repeated on the same site; crops and alt text in stories/images.json.
+- The six held inspiration drafts stay out of the build (HELD list).
+- Still needed for the live site: server-delivered /stories/{slug} pages, canonical/sharing tags, sitemap and crawler HTML (see stories/INVENTORY.md).
+
 ## v17.3.133 — 2026-11-10 — Welcome to site name; switcher back to two lines
 Artifact version 1794281474-d148 · file `fireflair-v17.3.133.html`
 

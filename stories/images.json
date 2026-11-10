@@ -348,5 +348,50 @@
   "photo": "vkc11",
   "alt": "Classic cocktail photo: Tom Collins.",
   "pos": "50% 50%"
+ },
+ "golden-age-of-parties": {
+  "photo": "p07",
+  "alt": "Three tall flutes on a wooden bar top: a sparkling mint drink, an amber drink with orange, and a pink-topped drink.",
+  "pos": "50% 55%"
+ },
+ "how-to-host-a-cocktail-party-at-home": {
+  "photo": "p06",
+  "alt": "Two chilled martini glasses beside a cut-glass mixing glass full of ice on a wooden table.",
+  "pos": "50% 30%"
+ },
+ "what-to-ask-before-booking-a-bartender": {
+  "photo": "p11",
+  "alt": "A smiling bartender in black leans on the bar behind a tall creamy pink cocktail with a mint and pineapple garnish.",
+  "pos": "50% 35%"
+ },
+ "live-events-bartending-opportunities": {
+  "photo": "p32",
+  "alt": "A curved event bar under red lights with a cocktail menu stand, a barrel and rows of glasses, dressed with flowers.",
+  "pos": "50% 40%"
+ },
+ "uk-tastings-and-social-events": {
+  "photo": "p08",
+  "alt": "A frosted shot glass with a dried grapefruit crisp on a wooden bar top.",
+  "pos": "45% 50%"
+ },
+ "local-parties-live-events": {
+  "photo": "p22",
+  "alt": "A smiling woman in a feather boa shakes a cocktail beside a bearded man at an outdoor bar table.",
+  "pos": "50% 0%"
+ },
+ "golden-age-of-parties-event-businesses": {
+  "photo": "vkg03",
+  "alt": "A round event bar with a tropical-print front and a matching backdrop in a pale panelled room.",
+  "pos": "50% 50%"
+ },
+ "uk-small-business-meetings-data": {
+  "photo": "vkg04",
+  "alt": "A long event bar with a Vooshka sign and bartenders at work in a purple-lit function room.",
+  "pos": "50% 50%"
+ },
+ "why-businesses-invest-in-in-person-events": {
+  "photo": "vkg05",
+  "alt": "A round event bar with a black and gold geometric front and a monogram, set up in a function room.",
+  "pos": "50% 50%"
  }
 }

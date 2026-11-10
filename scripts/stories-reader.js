@@ -137,6 +137,10 @@ function Journal17({ kind = "team" }) {
 
   const cta = () => {
     setOpen(null);
+    const to = (o && o.to) || "";
+    /* Each button goes to the flow its label promises (v17.3.134). */
+    if (/packages/i.test(to)) { nav.toNetwork(); return; }
+    if (o && o.site === "ffteam.uk" && /FF Team home/i.test(to)) { dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "home" }); window.scrollTo(0, 0); return; }
     if (o && o.site === "ffteam.uk") { dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); }
     else nav.toEvent();
   };
