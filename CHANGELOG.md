@@ -7,6 +7,7 @@ Artifact version 1794318940-4e5f · file `fireflair-v17.3.138.html`
 - Three package cards: Mobile Cocktail Bar, Cocktail Masterclass and Whisky Tasting (the last two are by enquiry).
 - Every cocktail is an add-on card per size (single serve, mini party pack, party pack), shown inside the Mobile Cocktail Bar package pop-up and carried into the basket and invoice.
 - Data and crawl notes: `data/companies/raise-the-bar.json`.
+- Publish build (artifact version 1794321498-9368): the artifact page failed to open in the browser, so the live artifact is now published as a small page plus separate image files instead of one very large file. Same content as `fireflair-v17.3.138.html`; made with `scripts/split-images.py`. The page went from about 15.6 MB to about 4 MB, with 451 images loaded on demand.
 
 ## v17.3.137 — 2026-11-10 — FF Party: Fire & Flair dropdown; photo album on FF Team only
 Artifact version 1794317611-a2f7 · file `fireflair-v17.3.137.html`
