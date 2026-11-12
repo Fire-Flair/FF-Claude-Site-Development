@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.18 — 2026-11-12 — Package card buttons by site
+Artifact version 1794497924-b130.
+
+- FireFlair packages under the Bar pillar (Explore our network): the "Coming 2027" pill is replaced by a button that depends on the site.
+- FF Team: "Sign up" signs you up to the package, then opens Bookings where the package already shows Sign up.
+- FF Staff: "Create your own" opens the profile builder.
+- FF Party: "Book now" in champagne gold with the soft shine; it adds the package and opens the booking screen.
+- Tapping the card still opens the package details. The button on it is a real button (the card wrapper is no longer a button, so there is no nested button).
+
 ## v17.4.7.17 — 2026-11-12 — FF Team packages back to the earlier look
 Artifact version 1794497092-f0c6.
 

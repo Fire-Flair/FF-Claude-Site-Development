@@ -265,7 +265,7 @@
     }, footer));
   }
 
-  function ServicePoster({ svc }) {
+  function ServicePoster({ svc, cta }) {
     const { state } = useStore();
     const shown = state.role === "staff" || state.site === "party" ? svc.price : String(svc.price).replace(/£(\d+)/, (m, n) => "£" + Math.max(0, +n - 50));
     return React.createElement(PosterCard, {
@@ -288,7 +288,7 @@
       ],
       footer: React.createElement(React.Fragment, null, React.createElement("span", {
         className: "ff-poster-small m-0"
-      }, "FFParty.uk"), React.createElement(Pill, {
+      }, "FFParty.uk"), cta || React.createElement(Pill, {
         tone: "warn"
       }, React.createElement(Lock, {
         size: 10

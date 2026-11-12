@@ -44,3 +44,7 @@
 .ff .ff-firefold18 #ff-why-panel{padding:0 12px 14px;display:flex;flex-direction:column;gap:16px}
 .ff .ff-firefold18 #ff-why-panel .ff-sect{margin-top:0;margin-bottom:0}
 .ff .ff-fire18{width:150px;margin:0 auto}
+
+/* v17.4.7.18 package card button by site */
+.ff .ff-pk18-go{padding:9px 16px;font-size:13px;font-weight:800;white-space:nowrap;border-radius:14px;corner-shape:squircle}
+.ff .ff-pk18-hit .ff-poster-foot .ff-pk18-go:not(.gold){background:#3A0C16;color:#F3DE9C;border:1px solid #3A0C16}

@@ -228,12 +228,30 @@ function PkgBody18({ m, onPlan }) {
     h18("div", { className: "ff-pk18-cta" }, h18(ShineButton, { onClick: onPlan }, "Plan your event")));
 }
 
+/* v17.4.7.18 the package card button, by site: FF Team Sign up, FF Staff Create your own, FF Party Book now (gold, shiny). */
+function pk18Act(st, m, hire) {
+  const state = st.state, dispatch = st.dispatch, sv = m.sv;
+  if (state.role === "team") {
+    if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; }
+    const on = ((state.profile && state.profile.serviceInterest) || []).includes(sv.id);
+    if (!on) pkgSignup17(state, dispatch, sv);
+    dispatch({ type: "TAB", tab: "bookings" }); window.scrollTo(0, 0);
+    return;
+  }
+  if (state.role === "staff" && !(hireSiteOf(state) || {}).party) { dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); return; }
+  selectPkg17(state, dispatch, sv.id, false);
+  hire.toEvent();
+}
+
 function PartyPackages18() {
   const st18 = useStore();
   const [open, setOpen] = useState(null);
   const hire = useHireNav();
   const list = PKG18_ORDER.map(pkg18).filter(Boolean);
   const cur = open ? pkg18(open) : null;
+  const state = st18.state;
+  const party = state.role !== "team" && !(state.role === "staff" && !(hireSiteOf(state) || {}).party);
+  const label = state.role === "team" ? "Sign up" : party ? "Book now" : "Create your own";
   return h18(
     "section",
     { className: "ff-sect ff-pk18-sect", id: "ff-offer", "aria-labelledby": "ff-pk18-h" },
@@ -242,9 +260,9 @@ function PartyPackages18() {
       "div",
       { key: m.slug, style: { width: CARD_W.poster, flex: "none" } },
       h18(
-        "button",
-        { type: "button", className: "ff-pk18-hit", onClick: () => setOpen(m.slug), "aria-label": m.sv.title },
-        h18(ServicePoster, { svc: Object.assign({}, m.sv, { kind: "package" }) })
+        "div",
+        { className: "ff-pk18-hit", role: "group", "aria-label": m.sv.title, tabIndex: 0, onClick: () => setOpen(m.slug), onKeyDown: (e) => { if (e.target === e.currentTarget && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); setOpen(m.slug); } } },
+        h18(ServicePoster, { svc: Object.assign({}, m.sv, { kind: "package" }), cta: h18("button", { type: "button", className: "ff-btn ff-pk18-go" + (party ? " gold ff-shine" : ""), onClick: (e) => { e.stopPropagation(); pk18Act(st18, m, hire); } }, label) })
       )
     ))),
     cur ? h18(
