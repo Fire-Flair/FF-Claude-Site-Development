@@ -1,5 +1,10 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.7 — 2026-11-12 — Gold shine on the main calls to action
+Artifact version 1794492858-3885.
+
+- The animated gold shine is back on the main calls to action: the action on every package card (Book now, Sign up, Create your own) and the Create your Profile Card buttons (home scenes, FF Team network prompt, discover hub). Uses the existing gold button style (ffgoldshine); respects reduced-motion.
+
 ## v17.4.7.6 — 2026-11-12 — Package card redesign; Book now / Sign up / Create your own
 Artifact version 1794492517-9e6f.
 

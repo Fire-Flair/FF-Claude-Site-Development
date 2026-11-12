@@ -836,7 +836,7 @@ function NetworkScreen({ guest = false }) {
       {guest && !q && (
         <div className="ff-pendingnote" style={{ marginTop: 6 }}>
           <span>{ph17(state) >= 2 ? "Join FF Team to build your own network. Whoever invites you is added to it automatically." : "Join FF Team to create your own Profile Card."}</span>
-          <Btn variant="sm primary" onClick={join}><User size={12} /> Create your Profile Card</Btn>
+          <Btn variant="sm gold" onClick={join}><User size={12} /> Create your Profile Card</Btn>
         </div>
       )}
 

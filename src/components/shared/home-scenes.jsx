@@ -385,7 +385,7 @@ function HomeTeams() {
         </li>
       </ol>
       <div className="ff-teams17-cta">
-        <Btn variant="primary" onClick={goProfile}><User size={14} /> {mine ? "My Profile Card" : "Create your Profile Card"}</Btn>
+        <Btn variant={mine ? "primary" : "gold"} onClick={goProfile}><User size={14} /> {mine ? "My Profile Card" : "Create your Profile Card"}</Btn>
         <Btn onClick={goNetwork}><Users size={14} /> Explore the network</Btn>
       </div>
     </section>
@@ -510,7 +510,7 @@ function InterestSection({ kind, inner }) {
           <p className="ff-body" style={{ margin: "6px 0 12px" }}>Log in or create your Profile Card to register your interest.</p>
           <div className="ff-ireg-acts">
             <Btn variant="primary" onClick={login}><User size={14} /> Log in</Btn>
-            <Btn onClick={goProfile}>Create your Profile Card</Btn>
+            <Btn variant="gold" onClick={goProfile}>Create your Profile Card</Btn>
           </div>
         </>) : !showBar ? (<>
           <div className="ff-ireg-top"><Pill tone="ok"><Check size={11} strokeWidth={2.6} /> Registered</Pill></div>

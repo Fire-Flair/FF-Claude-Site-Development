@@ -564,6 +564,7 @@ const DX_ALIAS = { "ff-career": "ff-booktiles", "ff-training": "ff-booktiles", "
     }), " Accepted · in your FF Team bookings"))), React.createElement("div", {
       className: "ff-hw11-cta"
     }, React.createElement(Button, {
+      variant: "gold",
       onClick: nav.goProfile
     }, React.createElement(User, {
       size: 14
@@ -955,6 +956,7 @@ if (k === "package") return React.createElement("div", { className: "mc sv" }, R
     }, x)))))), React.createElement("div", {
       className: "ff-hb17-cta"
     }, kind === "team" ? React.createElement(Button, {
+      variant: "gold",
       onClick: home.goProfile
     }, React.createElement(User, {
       size: 14

@@ -4140,3 +4140,9 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-pk17.special .tx .go { background:#3A0C16; color:#EADBA6; }
 .ff .ff-br17-co > .ff-pk17w > .ff-lst { height:490px; min-height:0; }
 .ff .ff-pk17 .tx .go { display:flex; align-items:center; justify-content:center; gap:6px; text-align:center; }
+
+/* v17.4.7.7 the animated gold shine returns on the main calls to action: package card actions (Book now, Sign up, Create your own) */
+.ff .ff-pk17 .tx .go { position:relative; overflow:hidden; color:#2A1E04; border:1px solid #8A6A18; background:linear-gradient(172deg,#F8DE86 0%,#E0B13E 36%,#B98A22 62%,#EDCB66 100%); box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 8px 18px rgba(176,141,42,.4); text-shadow:0 1px 0 rgba(255,255,255,.35); }
+.ff .ff-pk17 .tx .go::after { content:""; position:absolute; top:0; bottom:0; left:-60%; width:40%; transform:skewX(-20deg); background:linear-gradient(90deg,transparent,rgba(255,255,255,.65),transparent); animation:ffgoldshine 3.6s ease-in-out infinite; pointer-events:none; }
+.ff .ff-pk17.special .tx .go { background:linear-gradient(172deg,#F8DE86 0%,#E0B13E 36%,#B98A22 62%,#EDCB66 100%); color:#2A1E04; }
+@media (prefers-reduced-motion:reduce) { .ff .ff-pk17 .tx .go::after { animation:none; } }
