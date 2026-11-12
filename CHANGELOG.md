@@ -1,7 +1,7 @@
 # FireFlair prototype — changelog
 
 ## v17.4.6.2 — 2026-11-12 — Site logos from the 3D coin pack (Phase 3 prototype)
-Artifact version 1794480941-9ab2.
+Artifact version 1794481618-7fd6 (the first publish, 1794480941-9ab2, left out the four new image files; fixed).
 - The top-left logo and the FireFlair sites dropdown now use the FF coin, one metal per site: FF Team bronze, FF Staff silver, FF Party gold, FF VIP platinum. The top-left coin follows the site you are on; the dropdown shows all four.
 - Flat front-on images were rendered from the supplied 3D models (`brand/FireFlair-3D-Social-Coins/`, kept as the source). Hero coins are unchanged.
 - Checked: `npm run check`, `npm run build`, headless Chrome screenshots of the top-left and dropdown on all four sites.
