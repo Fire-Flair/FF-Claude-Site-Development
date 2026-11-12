@@ -214,9 +214,9 @@ function HostDrop17() {
 }
 
 
-function CbCard17({ icon, thumb, title, onX, sent }) {
+function CbCard17({ icon, thumb, title, onX, sent, gold }) {
   return (
-    <div className="ff-mc has ff-cb17-c" role="listitem">
+    <div className={`ff-mc has ff-cb17-c${gold ? " tbf" : ""}`} role="listitem">
       <span className="faces"><span className="f ic">{thumb ? <img decoding="async" src={thumb} alt="" draggable={false} /> : icon}</span></span>
       <b>{title}</b>
       {onX && !sent && <button type="button" className="rm" aria-label={`Remove ${title}`} onClick={onX}><S17I.X size={11} strokeWidth={3} /></button>}
@@ -347,7 +347,7 @@ function ConfirmBooking17({ ev, setView, bkey }) {
       {arrow(1)}
       {box("s", 2, "ff-cb17-svc", "Services", nSvc ? `${nSvc} chosen` : "", <>
         <div className="ff-mbasket ff-cb17-bar"><div className="ff-mc-row" role="list" aria-label="Services">
-          {shifts.map(sh => { const svc = pkgs.find(y => y.id === sh.svcId); const Ic = (svc && PKICON17[svc.cat]) || S17I.Sparkles; return <CbCard17 sent={sent} key={sh.id} icon={<Ic size={24} strokeWidth={1.5} />} title={sh.role} onX={() => drop(sh)} />; })}
+          {shifts.map(sh => { const svc = pkgs.find(y => y.id === sh.svcId); const Ic = (svc && PKICON17[svc.cat]) || S17I.Sparkles; return <CbCard17 sent={sent} key={sh.id} icon={<Ic size={24} strokeWidth={1.5} />} title={sh.role} gold={!!sh.special} onX={() => drop(sh)} />; })}
           {ck.map(x => <CbCard17 sent={sent} key={x.id} thumb={x.photo} icon={<S17I.Martini size={24} strokeWidth={1.5} />} title={x.name} onX={() => dropCk(x.id)} />)}
           {xa.map(x => <CbCard17 sent={sent} key={x.id} icon={<x.Ic size={24} strokeWidth={1.5} />} title={x.title} onX={() => dropXa(x.id)} />)}
           {!sent && <button type="button" role="listitem" className="ff-mc add" onClick={goBack} aria-label="Add a package"><span className="faces"><span className="empty"><S17I.Plus size={18} strokeWidth={2.4} /></span></span><b>Add</b></button>}
@@ -357,7 +357,7 @@ function ConfirmBooking17({ ev, setView, bkey }) {
         <div className="ff-mbasket ff-cb17-bar"><div className="ff-mc-row" role="list" aria-label="People">
           {shifts.flatMap(sh => [
             ...staffOf(sh).map(pid => { const p = findPerson(all, state, pid); return p && <CbCard17 sent={sent} key={sh.id + pid} thumb={p.photo} icon={<S17I.Users size={24} />} title={firstName(p.name)} onX={engFor(state, sh.id, pid) ? null : () => dropPerson(sh, pid)} />; }),
-            sh.route === "auto" && <CbCard17 sent={sent} key={sh.id + "auto"} icon={<Coin size={34} tier="gold" />} title="Auto match" onX={() => dispatch({ type: "SHIFT_PATCH", id: sh.id, patch: { route: "" } })} />,
+            sh.route === "auto" && <CbCard17 sent={sent} key={sh.id + "auto"} icon={<Coin size={34} tier="gold" />} title={sh.special ? "To be found" : "Auto match"} gold={!!sh.special} onX={sh.special ? undefined : () => dispatch({ type: "SHIFT_PATCH", id: sh.id, patch: { route: "" } })} />,
           ]).filter(Boolean)}
           {!sent && <button type="button" role="listitem" className="ff-mc add" onClick={goBack} aria-label="Choose people"><span className="faces"><span className="empty"><S17I.Plus size={18} strokeWidth={2.4} /></span></span><b>Add</b></button>}
         </div></div></>, "s2")}

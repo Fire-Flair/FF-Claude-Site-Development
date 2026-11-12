@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.3 — 2026-11-12 — Special Request as a package card; packages selectable
+Artifact version 1794490967-fc18.
+
+- Special Request is now a package card: same size and layout as every package card, first card in the first row of Bar, Entertainment, Services and Food, in gold with the shine. It is selected like any package: tapping opens the request form, and sending it adds the Special Request to the booking and opens the booking screen.
+- Every package card in those panels is now selectable directly (tap to add, tap again to remove; the info button opens the details). Adding opens the booking screen with the package already in Services. "Plan your event" from the home packages and package pages now also selects the package first.
+- Booking screen: a Special Request shows as a mini gold service tile in Services and a gold "To be found" card in People (no remove button there; remove it from Services).
+- A Special Request carries no deposit until the customer has agreed the arrangement (partyDeposit17 ignores shifts flagged `special`).
+- Shifts created from a Special Request carry `special: true` and `route: "auto"`.
+
 ## v17.4.7.2 — 2026-11-12 — Share on every professional profile
 Artifact version 1794490729-a1ed.
 

@@ -74,20 +74,33 @@ function NetDirectory19(props) {
 
 /* Packages under the pillars: FireFlair packages (Bar only), then professional and company packages. */
 function NetPackages20({ pillar }) {
-  const st = useStore(), state = st.state;
+  const st = useStore(), state = st.state, dispatch = st.dispatch;
   const [pop, setPop] = useState(null);
-  const pkgs = pkgsOf17(state).filter(function (x) { return (x.cat || "bar") === pillar; });
+  const [req, setReq] = useState(null);
+  const all = pkgsOf17(state).filter(function (x) { return (x.cat || "bar") === pillar; });
+  const sr = all.filter(function (x) { return x.special; });
+  const pkgs = all.filter(function (x) { return !x.special; });
   const co = pkgs.filter(function (x) { return x.by || x.id === "svc_supplier"; });
   const pro = pkgs.filter(function (x) { return !x.ff; });
   const secs = pillar === "bar" ? [["Professional packages", pro], ["Company packages", co]] : [["Company packages", co], ["Professional packages", pro]];
+  const shown = secs.filter(function (x) { return x[1].length; });
+  /* The Special Request card leads the first row, the same size as every package card. */
+  if (shown.length) shown[0] = [shown[0][0], sr.concat(shown[0][1])]; else if (sr.length) shown.push(["FireFlair packages", sr]);
+  const picked = bkOf17(state).pk;
+  const pick = function (svc) {
+    if (svc.special) { if (picked.includes(svc.id)) { dispatch({ type: "V11_SET", patch: { bk17: { ...bkOf17(state), pk: picked.filter(function (x) { return x !== svc.id; }) } } }); return; } setReq(svc); return; }
+    if (picked.includes(svc.id)) { dispatch({ type: "V11_SET", patch: { bk17: { ...bkOf17(state), pk: picked.filter(function (x) { return x !== svc.id; }) } } }); return; }
+    selectPkg17(state, dispatch, svc.id, true);
+    dispatch({ type: "TOAST", toast: svc.title + " added to your booking" });
+  };
   return React.createElement(React.Fragment, null,
     pillar === "bar" && window.PartyPackages18 ? React.createElement(window.PartyPackages18, null) : null,
-    secs.filter(function (x) { return x[1].length; }).map(function (x) {
+    shown.map(function (x) {
       return React.createElement("div", { className: "ff-br17-row", key: x[0] }, React.createElement("h3", { className: "ff-br17-h3" }, x[0]),
-        React.createElement(HScroll, { label: x[0] }, x[1].map(function (svc) { return React.createElement("div", { className: "ff-br17-co", key: svc.id }, React.createElement(PkgCard17, { svc: svc, n: 0, noun: "person", on: false, match: false, onToggle: function () { setPop(svc); }, onInfo: function () { setPop(svc); } })); })));
+        React.createElement(HScroll, { label: x[0] }, x[1].map(function (svc) { return React.createElement("div", { className: "ff-br17-co", key: svc.id }, React.createElement(PkgCard17, { svc: svc, n: 0, noun: "person", on: picked.includes(svc.id), match: false, onToggle: function () { pick(svc); }, onInfo: function () { svc.special ? setReq(svc) : setPop(svc); } })); })));
     }),
-    React.createElement(SpecialRequestCard17, { cat: pillar }),
-    pop ? React.createElement(PkgSheet17, { svc: pop, qual: "", onClose: function () { setPop(null); } }) : null);
+    pop ? React.createElement(PkgSheet17, { svc: pop, qual: "", onClose: function () { setPop(null); } }) : null,
+    req ? React.createElement(SpecialRequestSheet17, { cat: req.cat, onClose: function () { setReq(null); }, onDone: function () { setReq(null); selectPkg17(state, dispatch, req.id, true); } }) : null);
 }
 
 

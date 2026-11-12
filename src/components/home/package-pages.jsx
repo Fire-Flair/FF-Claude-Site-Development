@@ -229,6 +229,7 @@ function PkgBody18({ m, onPlan }) {
 }
 
 function PartyPackages18() {
+  const st18 = useStore();
   const [open, setOpen] = useState(null);
   const hire = useHireNav();
   const list = PKG18_ORDER.map(pkg18).filter(Boolean);
@@ -250,6 +251,7 @@ function PartyPackages18() {
       Sheet,
       { open: true, onClose: () => setOpen(null), title: cur.sv.title, center: true },
       h18(PkgBody18, { m: cur, onPlan: () => {
+        selectPkg17(st18.state, st18.dispatch, cur.sv.id, false);
         setOpen(null);
         hire.toEvent();
       } })
@@ -341,7 +343,7 @@ function PackagePage18() {
   const slug = (state.pkgPage && state.pkgPage.slug) || "";
   const m = slug ? pkg18(slug) : null;
   const back = h18("button", { type: "button", className: "ff-fd-back", onClick: () => pkgClose18(dispatch) }, "← Back");
-  const plan = () => { pkgClose18(dispatch); goSite("party"); };
+  const plan = () => { if (m) selectPkg17(state, dispatch, m.sv.id, false); pkgClose18(dispatch); goSite("party"); };
   const link = (s, kids, cls) => h18("a", { href: "#/ff-party/packages" + (s ? "/" + s : ""), className: cls, onClick: (e) => { e.preventDefault(); pkgNav18(dispatch, s); } }, kids);
   if (slug && !m) {
     return h18("main", { className: "ff-fd-page", "aria-labelledby": "pk18-h1" }, h18(Css18, null), back,

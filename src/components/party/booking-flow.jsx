@@ -613,7 +613,7 @@ function Basket11({ ev, onEvent, shifts, bub, onSelect, onAdd, placeOn, onRemove
         {shifts.map((sh, i) => {
           const ids = staffOf(sh), on = cur && cur.id === sh.id, sentN = state.engagements.filter(e => e.shiftId === sh.id && LIVE.includes(e.state)).length;
           return (
-            <div key={sh.id} role="listitem" tabIndex={0} className={`ff-mc${on ? " on" : ""}${ids.length ? " has" : ""}`} data-dropshift={sh.id}
+            <div key={sh.id} role="listitem" tabIndex={0} className={`ff-mc${on ? " on" : ""}${ids.length ? " has" : ""}${sh.special && !ids.length ? " tbf" : ""}`} data-dropshift={sh.id}
               onClick={() => onSelect(sh)} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSelect(sh); } }}
               aria-pressed={!!on} aria-label={`${sh.role}, ${ids.length} chosen`}>
               <span className="n">{i + 1}</span>
@@ -621,7 +621,7 @@ function Basket11({ ev, onEvent, shifts, bub, onSelect, onAdd, placeOn, onRemove
               <span className="faces">{ids.length ? ids.slice(0, 3).map(pid => { const p = findPerson(all, state, pid); return p ? (
                 <span key={pid} className="f" title={p.name}><Portrait src={p.photo} name={p.name} size={ids.length > 1 ? 24 : 30} tier={p.tier} />
                   {!engFor(state, sh.id, pid) && <button type="button" data-nodrag aria-label={`Remove ${p.name}`} onClick={(e) => { e.stopPropagation(); onRemove(sh, pid); }}><I11.X size={9} strokeWidth={3} /></button>}</span>) : null; })
-                : <span className="empty" aria-hidden="true"><I11.Plus size={15} strokeWidth={2.4} /></span>}
+                : (sh.special ? <span className="tbf-t">To be found</span> : <span className="empty" aria-hidden="true"><I11.Plus size={15} strokeWidth={2.4} /></span>)}
                 {ids.length > 3 && <i>+{ids.length - 3}</i>}</span>
               <b>{sh.role || sv.T}</b>
             </div>
@@ -1383,7 +1383,7 @@ function BookingBox({ ev, setView, bkey }) {
   const addService = (svc) => {
     const evId = ensure();
     const st = startOf(ev);
-    dispatch({ type: "SHIFT_ADD", shift: newShift(evId, { role: svc.title, matchRole: SVC_ROLE[svc.id] || svc.title, svcId: svc.id, svcPrice: svc.price, svcTime: svc.time, svcLevel: svc.level, time: svcTimeFor(svc, st), pay: svc.price }) });
+    dispatch({ type: "SHIFT_ADD", shift: newShift(evId, { role: svc.title, matchRole: SVC_ROLE[svc.id] || svc.title, svcId: svc.id, svcPrice: svc.price || "", svcTime: svc.time, svcLevel: svc.level, time: svcTimeFor(svc, st), pay: svc.price }) });
     dispatch({ type: "TOAST", toast: st ? `${svc.title} booked. It starts at ${st}` : `${svc.title} booked. Add the start time on your Event Card` });
   };
   const removeService = (sh) => { dispatch({ type: "SHIFT_DELETE", id: sh.id }); dispatch({ type: "TOAST", toast: `${sh.role} removed` }); };
@@ -1737,8 +1737,8 @@ function BuildBooking17() {
       const who = all.filter(p => (bk.pp || []).includes(p.id) && signedUp11(p, svc.id === "svc_full" ? "svc_bartending" : svc.id)).map(p => p.id), auto = (bk.pp || []).includes("auto:" + svc.id);
       const had = state.shifts.find(x => x.eventId === evId && x.svcId === svc.id);
       if (had) { if (who.length) dispatch({ type: "SHIFT_STAFF", id: had.id, staffIds: [...new Set([...(had.staffIds || []), ...who])] }); return; }
-      dispatch({ type: "SHIFT_ADD", shift: { id: uid("shf"), eventId: evId, staffIds: who, staffId: who[0] || "", skills: [], ...(auto ? { route: "auto" } : {}), qty: 1, dress: "", notes: "", tcs: "company", rate: "", total: "", hoursM: "", pay: svc.price,
-        role: svc.title, matchRole: svc.role || SVC_ROLE[svc.id] || svc.title, svcId: svc.id, svcPrice: svc.price, svcTime: svc.time, svcLevel: svc.level, provider: svc.by || "",
+      dispatch({ type: "SHIFT_ADD", shift: { id: uid("shf"), eventId: evId, staffIds: who, staffId: who[0] || "", skills: [], ...(auto || svc.special ? { route: "auto" } : {}), ...(svc.special ? { special: true } : {}), qty: 1, dress: "", notes: "", tcs: "company", rate: "", total: "", hoursM: "", pay: svc.price || "",
+        role: svc.title, matchRole: svc.role || SVC_ROLE[svc.id] || svc.title, svcId: svc.id, svcPrice: svc.price || "", svcTime: svc.time, svcLevel: svc.level, provider: svc.by || "",
         time: svcTimeFor(svc, (ev && ev.start) || ""), date: (ev && ev.date) || "", iso: (ev && ev.iso) || "", venue: (ev && ev.venue) || "" } });
     });
     const ao = state.addons17 || {}, sel = { ...(ao[evId] || {}) };

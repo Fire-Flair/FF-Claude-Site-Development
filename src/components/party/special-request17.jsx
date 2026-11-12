@@ -6,27 +6,20 @@ function srWho17(state) {
   return { name: String(c.name || p.name || se.name || "").trim(), contact: String(p.email || se.email || au.email || c.email || "").trim() };
 }
 
-function SpecialRequestCard17({ cat }) {
-  const { state } = useStore();
-  const [open, setOpen] = useState(false);
-  const mine = sr17List(state).filter(function (r) { return r.cat === cat && sr17Open(r); });
-  return (
-    <>
-      <div className="ff-br17-row ff-sr17-row">
-        <button type="button" className="ff-sr17" onClick={function () { setOpen(true); }} aria-label="Special Request">
-          <span className="ff-sr17-k"><I11.Sparkles size={15} /> Special Request</span>
-          <span className="ff-sr17-t">Your event. Your way.</span>
-          <span className="ff-sr17-p">Tell us what you're looking for. FireFlair will help find the right professional or company for your event.</span>
-          <span className="ff-sr17-f">Free to request. A deposit is paid only once a suitable provider and arrangement have been agreed.</span>
-          <span className="ff-sr17-go">{mine.length ? "View your request" : "Submit special request"}</span>
-        </button>
-      </div>
-      {open ? <SpecialRequestSheet17 cat={cat} onClose={function () { setOpen(false); }} /> : null}
-    </>
-  );
+/* One Special Request package card per pillar. It sits in the package rows and is chosen like any other package. */
+const SR_PKGS17 = SR17_CATS.map(function (c) {
+  return { id: "sr_" + c[0], special: true, ff: true, cat: c[0], title: "Special Request", tagline: "Your event. Your way.", includes: "FireFlair finds the right professional or company",
+    ideal: "Something not listed here", time: "Arranged with you", noPrice: true, by: "FireFlair", tone: "special", role: c[1], bands: ALLB17 };
+});
+
+/* Choose a package for the booking: it joins the basket and the booking screen builds its Service card and People slot. */
+function selectPkg17(state, dispatch, id, go) {
+  const bk = bkOf17(state);
+  if (!bk.pk.includes(id)) dispatch({ type: "V11_SET", patch: { bk17: { ...bk, pk: pkFlip17(bk.pk, id) } } });
+  if (go) { dispatch({ type: "V11_SET", patch: { bkView: { mode: "new" } } }); dispatch({ type: "TAB", tab: "bookings" }); window.scrollTo(0, 0); }
 }
 
-function SpecialRequestSheet17({ cat, onClose }) {
+function SpecialRequestSheet17({ cat, onClose, onDone }) {
   const { state, dispatch } = useStore();
   const ev = state.events.find(function (e) { return e.id === state.activeEventId; }) || null;
   const who = srWho17(state);
@@ -47,8 +40,9 @@ function SpecialRequestSheet17({ cat, onClose }) {
     const draft = { cat: f.cat, kind: String(f.kind).trim(), what: String(f.what).trim(), iso: f.iso, flex: !!f.flex, where: String(f.where).trim(), guests: String(f.guests).trim(), name: String(f.name).trim(), contact: String(f.contact).trim(), budget: String(f.budget).trim(), eventId: ev ? ev.id : "" };
     const r = sr17Add(state, draft, Date.now());
     if (r.added) dispatch({ type: "V11_SET", patch: { specialReq17: r.list } });
-    setSent(r.added || r.dup);
-    dispatch({ type: "TOAST", toast: r.added ? "Special request sent to FireFlair" : "That request is already with FireFlair" });
+    dispatch({ type: "TOAST", toast: r.added ? "Special request added to your booking" : "That request is already with FireFlair" });
+    if (onDone) onDone();
+    else setSent(r.added || r.dup);
   };
   const agree = function (id) { const r = sr17Move(state, id, "deposit", "customer", "Customer agreed the arrangement", Date.now()); if (r.ok) dispatch({ type: "V11_SET", patch: { specialReq17: r.list } }); };
   const withdraw = function (id) { const r = sr17Move(state, id, "closed", "customer", "Withdrawn by customer", Date.now()); if (r.ok) dispatch({ type: "V11_SET", patch: { specialReq17: r.list } }); };

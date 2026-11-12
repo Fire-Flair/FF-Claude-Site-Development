@@ -4086,3 +4086,12 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-sr17-st.st-closed { background:#E7E2D8; color:#5A5448; }
 .ff .ff-sr17-act { display:flex; flex-wrap:wrap; gap:8px; }
 .ff .ff-sr17-hist { margin:0; padding-left:18px; font-size:12px; color:#5A5448; }
+.ff .ff-pk17.special { border-color:#8A6A18; background:linear-gradient(172deg,#F8DE86 0%,#E0B13E 36%,#B98A22 62%,#EDCB66 100%); color:#2A1E04; position:relative; }
+.ff .ff-pk17.special::after { content:""; position:absolute; top:0; bottom:0; left:-60%; width:40%; transform:skewX(-20deg); background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent); animation:ffgoldshine 3.6s ease-in-out infinite; pointer-events:none; }
+.ff .ff-pk17.special .ph { background:linear-gradient(140deg,#F3DE9C,#C9A23A 60%,#8A6A18); }
+.ff .ff-pk17.special .ph .ic, .ff .ff-pk17.special .ph .cn { color:#3A0C16; }
+.ff .ff-pk17.special .tx, .ff .ff-pk17.special .tx b, .ff .ff-pk17.special .tx small, .ff .ff-pk17.special .tx .ft, .ff .ff-pk17.special .tx .by { color:#2A1E04; }
+.ff .ff-pk17.special .go { color:#3A0C16; font-weight:800; }
+.ff .ff-mc.tbf { background:linear-gradient(172deg,#F8DE86 0%,#E0B13E 55%,#EDCB66 100%); border:1px solid #8A6A18; border-style:solid; }
+.ff .ff-mc.tbf b { color:#2A1E04; }
+.ff .ff-mc .tbf-t { font-size:12px; font-weight:800; color:#3A0C16; text-align:center; line-height:1.15; padding:0 6px; }

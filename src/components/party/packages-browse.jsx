@@ -55,7 +55,7 @@ function pkgsOf17(state) {
     role: "Bartender", ideal: "Parties that want everything supplied", time: "From 4 hours", noPrice: true, drinks: true, shop: false,
     features: ["A bar company looks after your whole bar", "Bar, drinks and bartenders supplied", "Set-up, service and tidy-down included", "Chosen from FireFlair bar companies"] });
   const mine = myContent17(state, "services").filter(x => x.type !== "addon" && String(x.title).trim() && !hid17(state, "cards", x.id)).map(x => ({ ...svcFrom17(x), cat: x.cat || "bar", bands: (x.bands && x.bands.length) ? x.bands : ALLB17, mine: true }));
-  return [...ff, ...mine, ...SAMPLE_PKGS17];
+  return [...ff, ...mine, ...SAMPLE_PKGS17, ...SR_PKGS17];
 }
 
 
@@ -464,8 +464,8 @@ function PartyBrowse17() {
       const who = all.filter(p => (bk.pp || []).includes(p.id) && signedUp11(p, svc.id === "svc_full" ? "svc_bartending" : svc.id)).map(p => p.id), auto = (bk.pp || []).includes("auto:" + svc.id);
       const had = state.shifts.find(x => x.eventId === evId && x.svcId === svc.id);
       if (had) { if (who.length) dispatch({ type: "SHIFT_STAFF", id: had.id, staffIds: [...new Set([...(had.staffIds || []), ...who])] }); return; }
-      dispatch({ type: "SHIFT_ADD", shift: { id: uid("shf"), eventId: evId, staffIds: who, staffId: who[0] || "", skills: [], ...(auto ? { route: "auto" } : {}), qty: 1, dress: "", notes: "", tcs: "company", rate: "", total: "", hoursM: "", pay: svc.price,
-        role: svc.title, matchRole: svc.role || SVC_ROLE[svc.id] || svc.title, svcId: svc.id, svcPrice: svc.price, svcTime: svc.time, svcLevel: svc.level, provider: svc.by || "",
+      dispatch({ type: "SHIFT_ADD", shift: { id: uid("shf"), eventId: evId, staffIds: who, staffId: who[0] || "", skills: [], ...(auto || svc.special ? { route: "auto" } : {}), ...(svc.special ? { special: true } : {}), qty: 1, dress: "", notes: "", tcs: "company", rate: "", total: "", hoursM: "", pay: svc.price || "",
+        role: svc.title, matchRole: svc.role || SVC_ROLE[svc.id] || svc.title, svcId: svc.id, svcPrice: svc.price || "", svcTime: svc.time, svcLevel: svc.level, provider: svc.by || "",
         time: svcTimeFor(svc, (ev && ev.start) || ""), date: (ev && ev.date) || "", iso: (ev && ev.iso) || "", venue: (ev && ev.venue) || "" } });
     });
     const ao = state.addons17 || {}, sel = { ...(ao[evId] || {}) };

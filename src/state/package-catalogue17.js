@@ -117,10 +117,12 @@ function pkgServices17(opts) {
 const PKG_MAX_BASE17 = 1;
 
 
-const partyBaseCount17 = (shifts) => Math.min(PKG_MAX_BASE17, Math.max(1, (shifts || []).filter(x => x && x.svcId && !x.addOn).length));
+const partyBaseCount17 = (shifts) => Math.min(PKG_MAX_BASE17, Math.max(1, (shifts || []).filter(x => x && x.svcId && !x.addOn && !x.special).length));
 
 
 function partyDeposit17(state, shifts) {
+  /* A Special Request carries no deposit until the customer has agreed the arrangement. */
+  if ((shifts || []).length && (shifts || []).every(x => x && x.special)) return 0;
   const per = (typeof rules17 === "function" ? rules17(state).feeParty : 50);
   return per * partyBaseCount17(shifts);
 }
