@@ -106,3 +106,7 @@
 .ff-sdrail11 .ff-hitem>.ff-sdw>.ff-evc.ff-sd11 .sbd{margin-top:auto}
 .ff .ff-pay17.one b{white-space:normal;font-size:13px;line-height:1.25}
 .ff-sdrail11 .ff-sd11.acts .nt{display:block;-webkit-line-clamp:unset;overflow:visible;font-size:13px}
+/* rails: cards of different height keep their four buttons level */
+.ff-sdrail11 .ff-hitem{display:flex;align-self:stretch}
+.ff-sdrail11 .ff-hitem>.ff-sdw{height:100%}
+.ff-sdrail11 .ff-hitem>.ff-sdw>.ff-evc.ff-sd11{flex:1}

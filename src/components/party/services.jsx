@@ -11,8 +11,21 @@ const STAFFING_SERVICE = { ...pkgServices17({ all: true }).find(x => x.id === "s
 
 
 
-function ServicePoster({ svc }) {
-  return <PkgCardSite17 svc={svc} />;
+function ServicePoster({ svc, price }) {
+  return (
+    <PosterCard tone={svc.tone} ribbon={(svc.kind === "package" || svc.id !== "svc_staffing" ? "Package Card" : "Service Card")} eyebrow={[(/^(bronze|silver|gold)$/i.test(svc.level) ? "" : svc.level), svc.site || "FF Party"].filter(Boolean).join(" · ")} title={svc.title} tagline={svc.tagline}
+      rows={[
+        { icon: <Sparkles size={17} />, label: "Includes", value: svc.includes },
+        { icon: <Users size={17} />, label: "Ideal for", value: svc.ideal },
+        { icon: <Clock size={17} />, label: "Duration", value: svc.time },
+      ]}
+      footer={<>
+        {price && svc.from
+          ? <span className="ff-poster-price"><small>From</small>{svc.from}</span>
+          : <span className="ff-poster-small" style={{ margin: 0 }}>{svc.domain || "FFParty.uk"}</span>}
+        <Pill tone="warn"><Lock size={10} /> Coming 2027</Pill>
+      </>} />
+  );
 }
 
 

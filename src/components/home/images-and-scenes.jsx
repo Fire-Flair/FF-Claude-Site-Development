@@ -266,7 +266,34 @@
   }
 
   function ServicePoster({ svc }) {
-    return React.createElement(PkgCardSite17, { svc });
+    const { state } = useStore();
+    const shown = state.role === "staff" || state.site === "party" ? svc.price : String(svc.price).replace(/£(\d+)/, (m, n) => "£" + Math.max(0, +n - 50));
+    return React.createElement(PosterCard, {
+      tone: svc.tone,
+      ribbon: (svc.kind === "package" || svc.id !== "svc_staffing" ? "Package Card" : "Service Card"),
+      eyebrow: `${svc.level} · FF Party`,
+      title: svc.title,
+      tagline: svc.tagline,
+      price: shown,
+      rows: [
+        { icon: React.createElement(Sparkles, {
+          size: 17
+        }), label: "Includes", value: svc.includes },
+        { icon: React.createElement(Users, {
+          size: 17
+        }), label: "Ideal for", value: svc.ideal },
+        { icon: React.createElement(Clock, {
+          size: 17
+        }), label: "Duration", value: svc.time }
+      ],
+      footer: React.createElement(React.Fragment, null, React.createElement("span", {
+        className: "ff-poster-small m-0"
+      }, "FFParty.uk"), React.createElement(Pill, {
+        tone: "warn"
+      }, React.createElement(Lock, {
+        size: 10
+      }), " Coming 2027"))
+    });
   }
 
   const sceneRnd = (seed, i) => {

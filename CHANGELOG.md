@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.17 — 2026-11-12 — FF Team packages back to the earlier look
+Artifact version 1794497092-f0c6.
+
+- FF Team: the FF Party packages on Bookings are back to the earlier tiles and poster cards.
+- FF Team: the FireFlair packages in Explore our network are back to the earlier package card (new `PkgCardOld17`). The redesigned card is now scoped with an `rd` class, so FF Staff and FF Party keep the new design.
+- Shift Card rails on desktop: action buttons line up across cards.
+- Full size sweep at mobile, iPad and desktop: no horizontal overflow and no console errors.
+
 ## v17.4.7.16 — 2026-11-12 — Review + Share row, Edit + Share, Your team sections
 Artifact version 1794496606-0ad7.
 

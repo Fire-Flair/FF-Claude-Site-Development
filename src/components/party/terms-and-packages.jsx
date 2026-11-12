@@ -137,13 +137,43 @@ function pkgCta17(state, on) {
 }
 
 
+/* v17.4.7.17 FF Team keeps the earlier package card (Explore our network): the legacy markup, no .rd redesign class. */
+function PkgCardOld17({ svc, n, noun, match, on, onToggle, onInfo }) {
+  const Ic = PKICON17[svc.cat] || S17I.Sparkles;
+  return (
+    <div className={`ff-pk17w${on ? " sel" : ""}`} data-pk17={svc.id} data-pk17-alt={svc.title === "BYOB" ? "byob" : ""}>
+      <button type="button" className={`ff-lst ff-pk17 ${svc.tone || ""}${match ? " match" : ""}`} onClick={onToggle} aria-pressed={!!on} aria-label={`${svc.title}: ${on ? "selected" : "select"}`}>
+        <span className="ph" style={svc.img ? { backgroundImage: `linear-gradient(rgba(10,8,8,.12),rgba(10,8,8,.55)), url(${svc.img})`, backgroundSize: "cover", backgroundPosition: "center 20%" } : undefined}>
+          <span className="pl">{lvl17(svc.level)}</span>
+          <span className="cn"><Coin size={30} tier="gold" /></span>
+          <span className="ic"><Ic size={34} strokeWidth={1.4} /></span>
+          {svc.price && !svc.noPrice && <span className="pr">{svc.price}</span>}
+        </span>
+        <span className="tx">
+          <b>{svc.title}</b>
+          <small className="tg">{svc.tagline}</small>
+          {svc.includes && <span className="ft"><S17I.Sparkles size={12} /> {svc.includes}</span>}
+          {svc.ideal && <span className="ft"><S17I.Star size={12} /> {svc.ideal}</span>}
+          {svc.time && <span className="ft"><S17I.Clock size={12} /> {svc.time}</span>}
+          {shop17(svc) && <span className="ft"><S17I.ShoppingBasket size={12} /> Shopping list for your cocktails</span>}
+          <span className="ft rec"><S17I.Users size={12} /> Best for {recOf17(svc.bands)}</span>
+          <span className="by">{svc.by ? svc.by : svc.mine ? "Your package" : n > 0 ? `${n} ${noun} to choose from` : "FF Party"}</span>
+          <span className="go">{on ? <><S17I.Check size={13} strokeWidth={2.6} /> Selected</> : <>Select</>}</span>
+        </span>
+      </button>
+      <button type="button" className="inf" aria-label={`${svc.title}: details`} onClick={onInfo}><S17I.Info size={16} strokeWidth={2} /></button>
+    </div>
+  );
+}
+
+
 function PkgCard17({ svc, n, noun, match, on, onToggle, onInfo }) {
   const { state } = useStore();
   const Ic = PKICON17[svc.cat] || S17I.Sparkles;
   const inc = bul17(svc.includes), ideal = bul17(svc.ideal);
   return (
-    <div className={`ff-pk17w${on ? " sel" : ""}`} data-pk17={svc.id} data-pk17-alt={svc.title === "BYOB" ? "byob" : ""}>
-      <button type="button" className={`ff-lst ff-pk17 ${svc.tone || ""}${match ? " match" : ""}`} onClick={onToggle} aria-pressed={!!on} aria-label={`${svc.title}: ${pkgCta17(state, on)}`}>
+    <div className={`ff-pk17w rd${on ? " sel" : ""}`} data-pk17={svc.id} data-pk17-alt={svc.title === "BYOB" ? "byob" : ""}>
+      <button type="button" className={`ff-lst ff-pk17 rd ${svc.tone || ""}${match ? " match" : ""}`} onClick={onToggle} aria-pressed={!!on} aria-label={`${svc.title}: ${pkgCta17(state, on)}`}>
         <span className="ph" style={svc.img ? { backgroundImage: `linear-gradient(rgba(10,8,8,.12),rgba(10,8,8,.55)), url(${svc.img})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}>
           <span className="pl">FF Party</span>
           <span className="cn"><Coin size={30} tier="gold" /></span>
