@@ -471,7 +471,7 @@ function Shell({ children }) {
             <button type="button" className="ff-acct-btn"
               aria-haspopup="menu" aria-expanded={menuOpen} aria-label="FireFlair sites and account"
               onClick={() => setMenuOpen(o => !o)}>
-              <Coin size={30} tier={isTeam ? state.profile.tier : "gold"} />
+              <img decoding="async" className="ff-acct-logo" src={FF_SITE_BRAND[isVip ? "vip" : isParty ? "party" : isStaff ? "staff" : "team"].icon} width={30} height={30} alt="" draggable={false} />
               <span style={{ lineHeight: 1.1, textAlign: "left" }}>
                 <Wordmark size={13} />
                 <span style={{ display: "block", fontSize: 9, letterSpacing: ".2em", color: "rgba(234,215,156,.7)", textTransform: "uppercase" }}>
