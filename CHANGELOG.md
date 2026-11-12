@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.13 — 2026-11-12 — Champagne gold buttons
+Artifact version 1794495196-d77e.
+
+- Champagne gold is now the gold for every gold button (hero Create your Profile Card, Join Challenge, Book now and the other gold buttons); picked from the in-chat preview (option C).
+- Button labels are bolder.
+- The sparkle dots on the shine buttons are removed; the soft light sweep runs every 4 seconds.
+
 ## v17.4.7.12 — 2026-11-12 — Company Card location, Areas covered tree, Northern Ireland with Ireland
 Artifact version 1794494184-d2f5.
 
