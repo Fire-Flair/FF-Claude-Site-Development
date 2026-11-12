@@ -148,12 +148,12 @@ function settle17(s, sh, reason) {
     const row = c === 0 ? { amount: rules17(s).feeBusiness, status: "issued", reason } : { amount: 0, status: "review", reason: "Part-filled Service Card. FireFlair decides the refund." };
     return audit17({ ...s, refunds17: [...R, { id: uid("rf"), eventId: ev.id, shiftId: sh.id, kind: "business", at: now, ...row }] }, "System", `${row.status === "issued" ? "Refunded" : "Held for review"}: ${sh.role}`);
   }
-  /* FF Party: one booking charge for the Event Card. Decide only when every Service Card has finished. */
+  /* FF Party: one booking deposit for the Event Card. Decide only when every Service Card has finished. */
   const shs = s.shifts.filter(x => x.eventId === ev.id);
   if (shs.some(x => (s.af17 || {})[x.id] && (s.af17[x.id].status === "matching")) || has(r => r.eventId === ev.id && r.kind === "party")) return s;
   const confirmed = shs.reduce((n, x) => n + got17(s, x), 0), unfilled = shs.some(x => open17(s, x) > 0);
   if (!unfilled) return s;
-  const row = confirmed === 0 ? { amount: rules17(s).feeParty, status: "issued", reason } : { amount: 0, status: "review", reason: "Part-staffed event. FireFlair decides case by case." };
+  const row = confirmed === 0 ? { amount: partyDeposit17(s, shs), status: "issued", reason } : { amount: 0, status: "review", reason: "Part-staffed event. FireFlair decides case by case." };
   return audit17({ ...s, refunds17: [...R, { id: uid("rf"), eventId: ev.id, shiftId: "", kind: "party", at: now, ...row }] }, "System", `${row.status === "issued" ? "Refunded" : "Held for review"}: ${eventTitle(ev)}`);
 }
 
@@ -260,7 +260,7 @@ function auto17Reduce(s, a) {
       const ids = staffOf(sh).filter(x => x !== e.staffId);
       let n = { ...s, engagements: s.engagements.map(x => x.id === e.id ? mark17(x, "cancelled_pro", now, { cancelledAt: now }) : x), shifts: s.shifts.map(x => x.id === sh.id ? { ...x, staffIds: ids, staffId: ids[0] || "" } : x) };
       n = note17(n, { to: "admin", eventId: sh.eventId, shiftId: sh.id, text: `A professional cancelled ${sh.role} (${ref17(e)}). Replacement matching has started.` });
-      n = note17(n, { to: "booker", eventId: sh.eventId, shiftId: sh.id, text: `Your ${sh.role} has cancelled. FireFlair is sourcing a replacement. There is no new booking charge, and you are refunded if we can't fulfil the booking.` });
+      n = note17(n, { to: "booker", eventId: sh.eventId, shiftId: sh.id, text: `Your ${sh.role} has cancelled. FireFlair is sourcing a replacement. There is no new ${isParty17(s) ? "deposit" : "booking charge"}, and you are refunded if we can't fulfil the booking.` });
       n = audit17(n, "Professional", `Cancelled ${ref17(e)} (${sh.role})`);
       const old = (n.af17 || {})[sh.id];
       return { ...n, af17: { ...(n.af17 || {}), [sh.id]: { id: uid("af"), shiftId: sh.id, eventId: sh.eventId, status: "matching", replacement: true, replacing: e.staffId, batches: old ? old.batches : [], needBatch: true, exhausted: false, startedAt: now } } };
@@ -408,7 +408,7 @@ function AutoPanel17({ sh, ev }) {
     className: "ln"
   }, React.createElement("b", null, "Held for ", firstName(who(exPend.staffId).name)), " until ", dt17(exPend.expiresAt), ". If they decline or don't reply, Autofill starts."), af && af.replacement && af.status === "matching" && React.createElement("p", {
     className: "ln warn"
-  }, React.createElement("b", null, "Replacement being sourced."), " Your professional cancelled. There is no new booking charge, and you are refunded if FireFlair can't fulfil the booking."), sh.route === "auto" && !af && React.createElement("p", {
+  }, React.createElement("b", null, "Replacement being sourced."), ` Your professional cancelled. There is no new ${svcWords(state).party ? "deposit" : "booking charge"}, and you are refunded if FireFlair can't fulfil the booking.`), sh.route === "auto" && !af && React.createElement("p", {
     className: "ln"
   }, "Autofill starts as soon as your booking is paid."), af && af.status === "matching" && last && React.createElement("p", {
     className: "ln"

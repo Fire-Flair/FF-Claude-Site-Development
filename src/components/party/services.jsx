@@ -4,20 +4,10 @@
    Staffing Service is FF Staff's, and stays white. FireFlair users, both
    businesses and freelancers, will create their own Service Cards; the two
    examples are square, to set them apart from FireFlair's own. */
-const PARTY_SERVICES = [
-  { id: "svc_bartending", tone: "bronze", level: "Bronze", title: "Bartending Package", tagline: "Professional bartenders for your party or event.", from: "£200",
-    includes: "Basic equipment, professional, able to work solo", ideal: "House parties, birthdays and private events", time: "3 hours" },
-  { id: "svc_mixology", tone: "silver", level: "Silver", title: "Cocktail Bar Service", tagline: "Signature cocktails built around your event.", from: "£250",
-    includes: "Write and follow a cocktail menu, with your own cocktail kit", ideal: "Weddings, launches and celebrations", time: "From 4 hours" },
-  { id: "svc_masterclass", tone: "gold", level: "Gold", title: "Masterclass Package", tagline: "A hands-on cocktail masterclass for your group.", from: "£300",
-    includes: "Host mixologist, all equipment, three to four cocktails each", ideal: "Hen and stag parties, team socials", time: "1½ to 2 hours" },
-  { id: "svc_flair", tone: "gold", level: "Flair", title: "Flair Package", tagline: "An amazing bartender, plus a Flair performance.", from: "£250",
-    includes: "Do some flair", ideal: "Launches, weddings and parties that want a show", time: "From 3 hours" },
-];
+const PARTY_SERVICES = pkgServices17({ baseOnly: true });
 
 
-const STAFFING_SERVICE = { id: "svc_staffing", tone: "white", level: "Staffing", site: "FF Staff", domain: "FFStaff.uk", title: "Staffing Service", tagline: "The right team for any event.", from: "£100",
-  includes: "Able to work solo and communicate with businesses and clients", ideal: "Business events (B2B) and private clients (B2C), venues and festivals", time: "Any shift length" };
+const STAFFING_SERVICE = { ...pkgServices17({ all: true }).find(x => x.id === "svc_staffing"), site: "FF Staff", domain: "FFStaff.uk" };
 
 
 

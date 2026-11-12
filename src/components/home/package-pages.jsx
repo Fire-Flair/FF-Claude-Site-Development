@@ -188,14 +188,12 @@
   /* ---- v17.3.112: FireFlair Packages (pop-ups from the site, front-door pages for search), Our Packages / Our Network / Your Booking / Your Party ---- */
 const h18 = React.createElement;
 
-const PKG18 = {
-  bartending: { id: "svc_bartending", head: "A bartender, a beautiful bar.", desc: "A professional bartender sets up your bar and serves your drinks, so you can enjoy your own celebration.", more: [] },
-  mixology: { id: "svc_mixology", head: "Cocktails made for you.", desc: "A mixologist creates a bespoke cocktail menu around your celebration, with the garnishes and a shopping list to match.", more: ["A shopping list for your menu"], pers: "Your menu is built around your celebration." },
-  masterclass: { id: "svc_masterclass", head: "Shake, stir and create.", desc: "Join the Open Bar Masterclass: a host mixologist guides your group while everyone shakes up the cocktails they want.", more: ["Create your own recipes"], pers: "Everyone shakes up the cocktails they want." },
-  flair: { id: "svc_flair", head: "A bartender with a show.", desc: "A skilled bartender, plus a Flair performance that gets everyone watching.", more: [] },
-  tasting: { id: "svc_full", head: "Taste it first.", desc: "Build your custom cocktail menu with your mixologist, then choose the bar company that brings it to life on the day.", more: [] },
-  staffing: { id: "svc_staffing", head: "The right team for your event.", desc: "Skilled hospitality professionals who work solo and look after you and your guests.", more: [] },
-};
+/* v17.4.7: headline, description and the extra lines come from the package catalogue (state/package-catalogue17.js). */
+const PKG18 = {};
+[["bartending", "svc_bartending"], ["mixology", "svc_mixology"], ["masterclass", "svc_masterclass"], ["flair", "svc_flair"], ["tasting", "svc_full"], ["staffing", "svc_staffing"]].forEach(([slug, id]) => {
+  const c = PKG_BY17[id];
+  PKG18[slug] = { id, head: c.headline, desc: c.description, more: c.points.slice(), cond: c.conditions };
+});
 
 const PKG18_ORDER = CONTENT_ADAPTER.packagePageOrder();
 
@@ -213,7 +211,7 @@ function Css18() { return h18("style", null, CSS18); }
 
 function PkgBody18({ m, onPlan }) {
   const sv = m.sv;
-  const inc = [sv.includes].concat(m.more || []);
+  const inc = m.more && m.more.length ? m.more : [sv.includes];
   return h18("div", { className: "ff-pk18" },
     h18("p", { className: "ff-pk18-eb" }, "FireFlair Package"),
     h18("p", { className: "ff-pk18-head" }, m.head),
@@ -223,6 +221,7 @@ function PkgBody18({ m, onPlan }) {
       h18("div", null, h18("dt", null, "Perfect for"), h18("dd", null, sv.ideal)),
       m.pers ? h18("div", null, h18("dt", null, "Your way"), h18("dd", null, m.pers)) : null,
       h18("div", null, h18("dt", null, "Duration"), h18("dd", null, sv.time)),
+      m.cond ? h18("div", null, h18("dt", null, "Good to know"), h18("dd", null, m.cond)) : null,
       h18("div", null, h18("dt", null, "Price"), h18("dd", null, sv.price))),
     h18("ol", { className: "ff-pk18-steps" }, ["Choose your package", "Choose your people", "Choose your add-ons", "Your booking is secured"].map((t, i) => h18("li", { key: t }, h18("span", null, i + 1), t))),
     h18("p", { className: "ff-pk18-g" }, h18("b", null, "The FireFlair Booking Guarantee. "), "Confirmed, or refunded in full."),

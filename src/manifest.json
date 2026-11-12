@@ -12,6 +12,7 @@
   "state/professions.js",
   "components/shared/primitives.jsx",
   "state/records.js",
+  "state/package-catalogue17.js",
   "utils/pay17.js",
   "utils/card-export17.js",
   "adapters/qa-adapter.js",

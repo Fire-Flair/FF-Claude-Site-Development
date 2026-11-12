@@ -8,11 +8,8 @@ const BCATS17 = [
 const FFCAT17 = { svc_staffing: "svc" };
 
 
-const FEATS17 = {
-  svc_bartending: ["A professional bartender for your party", "Bar set-up before guests arrive", "Full drinks service for the whole booking", "Glassware, garnishes and tidy-down included", "Chosen from FireFlair professionals who are free on your date"],
-  svc_mixology: ["A cocktail bartender who builds your cocktail menu with you", "Your chosen cocktails, made to the recipe", "Fresh garnishes and a bar set-up that looks the part", "Chosen from FireFlair professionals who are free on your date"],
-  svc_masterclass: ["A host mixologist for your group", "All the equipment and ingredients", "Three to four cocktails each, made by your guests", "A relaxed, hands-on session for hen and stag parties and team socials"],
-};
+/* v17.4.7: the three selling points come from the package catalogue. */
+const FEATS17 = PKG_CAT17.reduce((m, x) => { m[x.id] = x.points.slice(); return m; }, {});
 
 
 const ALLB17 = ["s", "m", "l"];

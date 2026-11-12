@@ -51,8 +51,8 @@ function v11BookReducer(s, a) {
       const sent = made.map(m => m.staffId);
       const ev = s.events.find(v => v.id === a.eventId);
       const party = isParty17(s);
-      const paid = (s.paid17 || {})[a.eventId] ? s.paid17 : { ...(s.paid17 || {}), [a.eventId]: { at: now, kind: party ? "party" : "business", amount: party ? R.feeParty : mine.length * R.feeBusiness, policy: POLICY17.version } };
-      const snap = (s.snap17 || {})[a.eventId] ? s.snap17 : { ...(s.snap17 || {}), [a.eventId]: { policy: POLICY17.version, at: now, kind: party ? "party" : "business", fee: party ? R.feeParty : R.feeBusiness, shifts: mine.map(x => ({ id: x.id, role: x.role, qty: qtyOf(x), pay: x.total || "", rate: x.rate || "", time: x.time || "", venue: (ev && ev.venue) || x.venue || "" })) } };
+      const paid = (s.paid17 || {})[a.eventId] ? s.paid17 : { ...(s.paid17 || {}), [a.eventId]: { at: now, kind: party ? "party" : "business", amount: party ? partyDeposit17(s, s.shifts.filter(x => x.eventId === a.eventId)) : mine.length * R.feeBusiness, policy: POLICY17.version } };
+      const snap = (s.snap17 || {})[a.eventId] ? s.snap17 : { ...(s.snap17 || {}), [a.eventId]: { policy: POLICY17.version, at: now, kind: party ? "party" : "business", fee: party ? partyDeposit17(s, s.shifts.filter(x => x.eventId === a.eventId)) : R.feeBusiness, shifts: mine.map(x => ({ id: x.id, role: x.role, qty: qtyOf(x), pay: x.total || "", rate: x.rate || "", time: x.time || "", venue: (ev && ev.venue) || x.venue || "" })) } };
       let n = { ...s, paid17: paid, snap17: snap, engagements: [...s.engagements, ...made], selection: s.selection.filter(x => !sent.includes(x)) };
       /* Payment first, then Autofill: Service Cards on the Autofill route start matching now. */
       mine.filter(x => x.route === "auto" && !(n.af17 || {})[x.id] && open17(n, x) > 0).forEach(sh => {
@@ -963,14 +963,14 @@ function FFInvoice11({ shifts, no, today, contact }) {
   const { state } = useStore();
   const party = svcWords(state).party;
   const n = shifts.length;
-  const total = party ? POLICY17.feeParty : n * BOOKING_FEE;
+  const total = party ? partyDeposit17(state, shifts) : n * BOOKING_FEE;
   return (
     <div className="ff-inv ffi" role="group" aria-label="FF invoice">
       <div className="top"><div><b>FF invoice</b><small>{no}-FF · {today}</small></div><span className="coin"><Coin size={30} tier="gold" /></span></div>
       <GuideSec title="Billed to"><div className="ff-bill17"><BillName11 /><BillPhone11 /><BillEmail11 /></div></GuideSec>
-      <GuideSec title={party ? "FireFlair booking charge" : "Bronze · pay per shift"}>
+      <GuideSec title={party ? "FF Party booking deposit" : "Bronze · pay per shift"}>
         <table>
-          <tbody><tr><td>{party ? "Event Card booking · 1 × £" + POLICY17.feeParty : `Fulfilled Shift cards · ${n} × £${BOOKING_FEE}`}</td><td>£{total}</td></tr></tbody>
+          <tbody><tr><td>{party ? "FF Party booking deposit · 1 × £" + total : `Fulfilled Shift cards · ${n} × £${BOOKING_FEE}`}</td><td>£{total}</td></tr></tbody>
           <tfoot><tr><td>Total cost</td><td>£{total}</td></tr></tfoot>
         </table>
         {party && <p className="fine">Your staff are paid separately, as set out in your Pay summary. This charge is not added to their pay.</p>}
@@ -1064,7 +1064,7 @@ function ConfirmPanel({ ev, shifts, missing, fix, onClose }) {
   const nSend0 = shifts.reduce((n, sh) => n + staffOf(sh).filter(pid => !live(sh, pid) && !(engFor(state, sh.id, pid) || {}).exclusive).length, 0);
   const nAuto = shifts.filter(sh => sh.route === "auto" && !(state.af17 || {})[sh.id]).length;
   const nSend = nSend0 + nAuto;
-  const fee17 = sv.party ? POLICY17.feeParty : shifts.length * BOOKING_FEE;
+  const fee17 = sv.party ? partyDeposit17(state, shifts) : shifts.length * BOOKING_FEE;
   const rows = shifts.map(sh => ({ sh, es: state.engagements.filter(e => e.shiftId === sh.id && !e.auto && (LIVE.includes(e.state) || e.filled)) }));
   const anySent = rows.some(r => r.es.length) || paid17(state, ev.id);
   const open = shifts.reduce((n, sh) => n + Math.max(0, qtyOf(sh) - state.engagements.filter(e => e.shiftId === sh.id && DONE.includes(e.state)).length), 0);
@@ -1280,7 +1280,7 @@ function BookingAI({ onFill, note, onClear }) {
 
 /* ---- FF Party: the FireFlair Service Cards (the ones listed on the FF Team home page), bookable. ----
    The set price and what's included can't be changed. The start time comes from the Event Card. */
-const SVC_ROLE = { svc_bartending: "Bartender", svc_mixology: "Cocktail Bartender", svc_masterclass: "Mixologist", svc_flair: "Bartender", svc_full: "Bartender", svc_staffing: "Event Staff" };
+const SVC_ROLE = PKG_CAT17.reduce((m, x) => { m[x.id] = x.id === "svc_flair" ? "Bartender" : x.id === "svc_full" ? "Bartender" : x.role; return m; }, {});
 
 
 const addHours = (hhmm, h) => { const [a, b] = String(hhmm).split(":").map(Number); const m = (a * 60 + b + Math.round(h * 60)) % 1440; return `${pad2(Math.floor(m / 60))}:${pad2(m % 60)}`; };

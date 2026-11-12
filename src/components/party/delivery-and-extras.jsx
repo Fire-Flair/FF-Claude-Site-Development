@@ -567,10 +567,10 @@ function Drop17({ id, title, icon, kids = [], children }) {
 
 
 /* What an FF Team member earns per package, and the shortest booking. */
-const PAY17 = { svc_bartending: 100, svc_mixology: 150, svc_masterclass: 200, svc_flair: 200, svc_staffing: 50 };
+const PAY17 = PKG_CAT17.filter(x => x.teamRegistration).reduce((m, x) => { m[x.id] = pkgPayPence17(x.id) / 100; return m; }, {});
 
 
-const TIME17 = { svc_bartending: "3 hours", svc_mixology: "From 4 hours", svc_masterclass: "From 2 hours", svc_flair: "From 2 hours", svc_staffing: "From 1 hour" };
+const TIME17 = PKG_CAT17.reduce((m, x) => { m[x.id] = x.durationLabel; return m; }, {});
 
 
 
@@ -582,7 +582,7 @@ function PkgTile17({ sv, on, onClick }) {
       <b className="tt">{sv.title}</b>
       <span className="in">{sv.includes}</span>
       <span className="tm"><S17I.Clock size={12} /> {TIME17[sv.id] || sv.time}</span>
-      <span className="pay">{pay != null && <><small>You earn</small><strong>£{pay}+</strong></>}</span>
+      <span className="pay">{pay != null && <><small>You earn</small><strong>{pkgPayLabel17(sv.id)}</strong></>}</span>
       <em className="go">{on ? <><S17I.Check size={13} strokeWidth={2.6} /> Signed up</> : "Sign up"}</em>
     </button>
   );

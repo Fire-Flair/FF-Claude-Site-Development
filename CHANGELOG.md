@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.4.7 — 2026-11-12 — One package catalogue; one deposit function (Phase 3 prototype, package system stage 1)
+Artifact version 1794489677-2398.
+Detail: `docs/handoff-v17.4.7.md`.
+
+- **One authoritative package catalogue** (`src/state/package-catalogue17.js`): stable id, name, price, included deposit, derived professional pay, duration, role, three selling points, description, conditions, booking method and registration type. FF Party reads the price; FF Team reads the pay; pay is derived and not typed in anywhere else. The two old `PARTY_SERVICES` lists, the FF Team pay and duration tables, the package page text and the selling-point lists all build from it. Stable ids unchanged (`svc_mixology` shows as Cocktail Package, `svc_full` as Platinum Tasting Package).
+- Base packages are listed in ascending price order everywhere; Platinum Tasting is first. Wording follows the approved sales language and no longer promises glassware, ingredients or a full bar.
+- **FF Party booking deposit:** one function, `partyDeposit17`, now feeds checkout, the FireFlair invoice, the paid and snapshot records and the refund row. A Staffing Add-on position never adds a deposit. Customer-facing "booking charge" wording on FF Party is now "booking deposit".
+- Checks run: `npm run check`, `npm run build`, headless Chrome (catalogue values on both lists, FF Team package cards, package pop-up pages, deposit function cases).
+- Not yet in this release: Staffing Add-on cards, per-professional requests and conditional tips, Gold Special Request Card, FF Staff Tastings & Consultations.
+
 ## v17.4.6.6 — 2026-11-12 — FF Team profile page: no Review button, shiny Add to team, availability sheet fits phones (Phase 3 prototype)
 Artifact version 1794487307-afc6.
 - Viewing another person on FF Team: the Review button is gone (the Add to team sheet already collects the review). FF Staff and FF Party keep it.

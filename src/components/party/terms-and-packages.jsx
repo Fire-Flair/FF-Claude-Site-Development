@@ -370,7 +370,7 @@ function ConfirmBooking17({ ev, setView, bkey }) {
         {arrow(3)}
         <div className="ff-cb17-cf">
           <ConfirmSpin17 lines={["Confirm", "booking"]} onClick={confirm} />
-          {stripe && <StripePay17 total={POLICY17.feeParty} reference={ev ? ev.id : "draft"} onClose={() => setStripe(false)} onPaid={afterPay} />}
+          {stripe && <StripePay17 total={partyDeposit17(state, shifts)} reference={ev ? ev.id : "draft"} onClose={() => setStripe(false)} onPaid={afterPay} />}
         </div></>}
       <HostDrop17 />
     </section>);

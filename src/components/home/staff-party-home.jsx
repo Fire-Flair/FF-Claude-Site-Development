@@ -254,25 +254,4 @@
     ])));
   }
 
-  PARTY_SERVICES.splice(3, 0, {
-    id: "svc_flair",
-    tone: "gold",
-    level: "Flair",
-    title: "Flair Package",
-    tagline: "An amazing bartender, plus a Flair performance.",
-    includes: "A skilled bartender and a 5 or 15-minute Flair performance",
-    ideal: "Launches, weddings and parties that want a show",
-    time: "3 hours",
-    price: "£250"
-  });
-
-  Object.assign(PARTY_SERVICES.find((s) => s.id === "svc_full"), {
-    title: "Platinum Tasting Package",
-    tagline: "Choose your mixologist to build a custom menu for your big event, then choose your bar company to bring your menu to life on your big special day.",
-    includes: "A custom cocktail menu from your mixologist, delivered by your bar company",
-    ideal: "Big events",
-    time: "1 hour",
-    price: "£100"
-  });
-
   window.__ffVipX = { DiscoverHub11, HireSearch };

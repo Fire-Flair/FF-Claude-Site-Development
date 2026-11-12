@@ -193,63 +193,8 @@
     return { ...cur, next };
   }
 
-  const PARTY_SERVICES = [
-    {
-      id: "svc_bartending",
-      tone: "bronze",
-      level: "Bronze",
-      title: "Bartending Package",
-      tagline: "Professional bartenders for your party or event.",
-      includes: "Bartender, bar set-up and full drinks service",
-      ideal: "House parties, birthdays and private events",
-      time: "3 hours",
-      price: "£150"
-    },
-    {
-      id: "svc_mixology",
-      tone: "silver",
-      level: "Silver",
-      title: "Mixology Package",
-      tagline: "Signature cocktails built around your event.",
-      includes: "Mixologist, bespoke cocktail menu and garnishes",
-      ideal: "Weddings, launches and celebrations",
-      time: "3 hours",
-      price: "£200"
-    },
-    {
-      id: "svc_masterclass",
-      tone: "gold",
-      level: "Gold",
-      title: "Masterclass Package",
-      tagline: "A hands-on cocktail masterclass for your group.",
-      includes: "Host mixologist, all equipment, three to four cocktails each",
-      ideal: "Hen and stag parties, team socials",
-      time: "2 hours",
-      price: "£350"
-    },
-    {
-      id: "svc_full",
-      tone: "platinum",
-      level: "Platinum",
-      title: "Full Service",
-      tagline: "Everything, taken care of.",
-      includes: "Full bar set-up, bartenders, cocktails and drinks service - everything",
-      ideal: "Weddings, big celebrations and premium events",
-      time: "From 4 hours",
-      price: "From £500"
-    },
-    {
-      id: "svc_staffing",
-      tone: "white",
-      level: "Staffing",
-      title: "Staffing Service",
-      tagline: "The right team for any event.",
-      includes: "Able to work solo and communicate with businesses and clients",
-      ideal: "Business events (B2B) and private clients (B2C), venues and festivals",
-      time: "From 2 hours",
-      price: "From £100"
-    }
-  ];
+  /* v17.4.7: built from the package catalogue (state/package-catalogue17.js), in price order. */
+  const PARTY_SERVICES = pkgServices17({ all: true });
 
   const POSTER_TONES = {
     dark: { cls: "dark", accent: "#D9B552" },
