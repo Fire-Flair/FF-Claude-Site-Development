@@ -4209,3 +4209,8 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
     conic-gradient(from var(--ffang),#0A0A0A 0%,#0A0A0A 46%,#9A7424 52%,#E9D07A 64%,#FFF6CF 75%,#E9D07A 85%,#9A7424 95%,#0A0A0A 100%) border-box !important;
 }
 .ff .ff-btn.ff-pcard svg { color:#000; stroke:#000; }
+
+/* v17.4.7.21 — one Submit under the preferred hourly rates and under the FF Party packages */
+.ff .ff-bk-submit { display:flex; justify-content:center; margin-top:14px; }
+.ff .ff-bk-submit .ff-btn { min-width:180px; }
+.ff .ff-bk-submit .ff-btn:disabled { opacity:.45; cursor:default; }

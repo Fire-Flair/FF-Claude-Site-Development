@@ -168,38 +168,14 @@ function BkDrop17({ id, title, desc, icon: Icon, photo, children }) {
    in profile.staffAvail, as before) and takes an optional preferred hourly rate: a typed Q&A answer
    rate.<profession id> in pence, visibility "ff-staff" (shown on the member's FF Staff profile only).
    Businesses set the actual shift rate on each Shift Card. */
-function ProfRateTile17({ name, cat, guest }) {
+function ProfRateTile17({ name, cat, value, onChange, err, busy }) {
   const { state, dispatch } = useStore();
   const account = qaAccount17(state);
-  const saved = account ? prefRateP17(state, account, name) : null;
-  const [v, setV] = useState(saved != null ? String(saved / 100) : "");
-  const [busy, setBusy] = useState(false);
-  const [err, setErr] = useState("");
-  useEffect(() => { setV(saved != null ? String(saved / 100) : ""); }, [saved, account]);
   const staffAvail = state.profile.staffAvail || {};
   const ans = staffAvail[name] || "";
   const q = `Are you available for bookings as ${/^[aeiou]/i.test(name) ? "an" : "a"} ${name.toLowerCase()}?`;
   const login = () => window.dispatchEvent(new Event("ff-login"));
   const setAvail = (o) => { if (!account) { login(); return; } dispatch({ type: "PROFILE", patch: { staffAvail: { ...staffAvail, [name]: o } } }); };
-  const save = async () => {
-    if (!account || busy) return;
-    const t = String(v).trim();
-    if (!t) {
-      if (saved == null) return;
-      setBusy(true); const r = await qaWithdraw17(dispatch, { account, questionId: qaRateQid17(name) }); setBusy(false);
-      if (r.ok) dispatch({ type: "TOAST", toast: `Preferred rate removed for ${name}` });
-      return;
-    }
-    const n = Number(t);
-    if (!isFinite(n) || n <= 0 || !/^\d+(\.\d{1,2})?$/.test(t)) { setErr("Enter an amount in pounds, like 18 or 18.50."); return; }
-    const pence = Math.round(n * 100);
-    if (pence === saved) return;
-    setBusy(true); setErr("");
-    const r = await qaSubmit17(dispatch, { questionId: qaRateQid17(name), account, typed: { kind: "rate_gbp_hour", pence, profession: name }, visibility: "ff-staff", source: "FF Team Bookings · FF Staff Shifts" });
-    setBusy(false);
-    if (!r.ok) { setErr(r.reason === "invalid-rate" ? "Enter an amount in pounds, like 18 or 18.50." : "That couldn't be saved."); return; }
-    dispatch({ type: "TOAST", toast: `Preferred rate saved for ${name}` });
-  };
   return (
     <div className="ff-tp17 grn prof" role="group" aria-label={name}>
       <span className="lv">{cat}</span>
@@ -210,14 +186,12 @@ function ProfRateTile17({ name, cat, guest }) {
       </span>
       <span className="pay">
         <small>Your preferred hourly rate</small>
-        {guest || !account ? <button type="button" className="go" onClick={login}>Log in</button> : (
-          <span className="rt">
-            <span aria-hidden="true">£</span>
-            <input type="text" inputMode="decimal" value={v} aria-label={`Your preferred hourly rate as ${name}, pounds per hour`} disabled={busy}
-              onChange={(e) => { setV(e.target.value.replace(/[^\d.]/g, "").slice(0, 7)); setErr(""); }}
-              onBlur={save} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); e.currentTarget.blur(); } }} />
-            <span>/hour</span>
-          </span>)}
+        <span className="rt">
+          <span aria-hidden="true">£</span>
+          <input type="text" inputMode="decimal" value={value} aria-label={`Your preferred hourly rate as ${name}, pounds per hour`} disabled={busy}
+            onChange={(e) => onChange(e.target.value.replace(/[^\d.]/g, "").slice(0, 7))} />
+          <span>/hour</span>
+        </span>
         {err ? <span className="er" role="alert">{err}</span> : <span className="vis">Shown to businesses on FF Staff only</span>}
       </span>
     </div>
@@ -231,6 +205,32 @@ function ProfRates17({ guest }) {
   const mine = recsOf(state.profile, "professions").filter(r => !r.proposed).map(r => r.name);
   const answered = [...Object.keys(state.profile.staffAvail || {}), ...ALL_PROFESSIONS.map(p => p.name).filter(n => account && prefRateP17(state, account, n) != null)];
   const yours = [...new Set([...mine, ...answered])];
+  const dispatch = useStore().dispatch;
+  const [drafts, setDrafts] = useState({});
+  const [errs, setErrs] = useState({});
+  const [busy, setBusy] = useState(false);
+  const savedStr = (n) => { const p = account ? prefRateP17(state, account, n) : null; return p != null ? String(p / 100) : ""; };
+  const valOf = (n) => drafts[n] !== undefined ? drafts[n] : savedStr(n);
+  const dirty = Object.keys(drafts).filter(n => String(drafts[n]).trim() !== savedStr(n));
+  const submit = async () => {
+    if (busy || !dirty.length) return;
+    if (!account) { window.dispatchEvent(new Event("ff-login")); return; }
+    const bad = {};
+    dirty.forEach(n => { const t = String(drafts[n]).trim(); if (t && (!isFinite(Number(t)) || Number(t) <= 0 || !/^\d+(\.\d{1,2})?$/.test(t))) bad[n] = "Enter an amount in pounds, like 18 or 18.50."; });
+    setErrs(bad);
+    if (Object.keys(bad).length) return;
+    setBusy(true);
+    let done = 0; const left = { ...drafts }; const fail = {};
+    for (const n of dirty) {
+      const t = String(drafts[n]).trim();
+      const r = t
+        ? await qaSubmit17(dispatch, { questionId: qaRateQid17(n), account, typed: { kind: "rate_gbp_hour", pence: Math.round(Number(t) * 100), profession: n }, visibility: "ff-staff", source: "FF Team Bookings · FF Staff Shifts" })
+        : await qaWithdraw17(dispatch, { questionId: qaRateQid17(n), account });
+      if (r.ok) { done++; delete left[n]; } else fail[n] = "That couldn't be saved.";
+    }
+    setBusy(false); setDrafts(left); setErrs(fail);
+    if (done) dispatch({ type: "TOAST", toast: done === 1 ? "Preferred rate saved" : "Preferred rates saved" });
+  };
   const [cat, setCat] = useState(() => (!guest && yours.length ? "Yours" : PROFESSION_CATEGORIES[0].key));
   const list = cat === "Yours" ? yours.map(n => ({ name: n, cat: professionCategory(n) || "Other" })) : ALL_PROFESSIONS.filter(p => p.cat === cat).map(p => ({ name: p.name, cat: p.cat }));
   const chips = [...(!guest && yours.length ? ["Yours"] : []), ...PROFESSION_CATEGORIES.map(c => c.key)];
@@ -240,8 +240,10 @@ function ProfRates17({ guest }) {
         {chips.map(k => <button key={k} type="button" className="ff-chip" aria-pressed={k === cat} onClick={() => setCat(k)}>{k === "Yours" ? "Your professions" : k}</button>)}
       </div>
       <HScroll label="FF Staff Shifts" snap>
-        {list.map(p => <div key={p.name} className="ff-tp17-cell"><ProfRateTile17 name={p.name} cat={p.cat} guest={guest} /></div>)}
+        {list.map(p => <div key={p.name} className="ff-tp17-cell"><ProfRateTile17 name={p.name} cat={p.cat} value={valOf(p.name)} busy={busy} err={errs[p.name]}
+          onChange={(v) => { setDrafts(d => ({ ...d, [p.name]: v })); setErrs(e => { const { [p.name]: _, ...rest } = e; return rest; }); }} /></div>)}
       </HScroll>
+      <div className="ff-bk-submit"><Btn variant="primary" disabled={!dirty.length || busy} onClick={submit}>Submit</Btn></div>
     </>
   );
 }
@@ -267,17 +269,22 @@ function TeamBookings({ guest = false }) {
     dispatch({ type: "TOAST", toast: st === "confirmed" ? `Confirmed: ${x.shift.role}, ${x.shift.date}. It's now in your bookings.` : "Declined. The company has been told." });
   };
   const svcInterest = state.profile.serviceInterest || [];
+  const [pkgSel, setPkgSel] = useState(svcInterest);
+  const svcKey = svcInterest.join("|");
+  useEffect(() => { setPkgSel(svcInterest); }, [svcKey]);
+  const pkgDirty = [...pkgSel].sort().join("|") !== [...svcInterest].sort().join("|");
   /* v17.4.6: package sign-ups are one Q&A answer (int.party_package, option ids = package ids). */
-  const toggleService = async (sv) => {
+  const toggleService = (sv) => setPkgSel(cur => cur.includes(sv.id) ? cur.filter(x => x !== sv.id) : [...cur, sv.id]);
+  const submitPackages = async () => {
     const account = qaAccount17(state);
     if (!account) { window.dispatchEvent(new Event("ff-login")); return; }
-    const on = svcInterest.includes(sv.id);
-    const next = on ? svcInterest.filter(x => x !== sv.id) : [...svcInterest, sv.id];
+    if (!pkgDirty) return;
+    const next = pkgSel;
     const mirror = { type: "PROFILE", patch: { serviceInterest: next } };
     const r = next.length
       ? await qaSubmit17(dispatch, { questionId: "int.party_package", account, optionIds: next, visibility: "private", source: "FF Team Bookings · FF Party packages" }, mirror)
       : await qaWithdraw17(dispatch, { questionId: "int.party_package", account }, mirror);
-    dispatch({ type: "TOAST", toast: r.ok ? (on ? `Withdrawn from ${sv.title}` : `Signed up for ${sv.title}`) : "That couldn't be saved. Try again." });
+    dispatch({ type: "TOAST", toast: r.ok ? "Packages saved" : "That couldn't be saved. Try again." });
   };
   const ownPackage = () => { dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); let n = 0; const go = () => { const el = document.getElementById("ff-cr17-service"); if (el) el.scrollIntoView({ behavior: "auto", block: "start" }); else if (++n < 20) setTimeout(go, 60); }; setTimeout(go, 120); };
   const pkgs = [...PARTY_SERVICES.filter(sv => sv.id !== "svc_full"), ...(hid17(state, "packages", "svc_staffing") ? [] : [STAFFING_SERVICE])];
@@ -319,19 +326,20 @@ function TeamBookings({ guest = false }) {
       <section className="ff-bk-sec ff-fb21" id="ff-bk-fireflair">
         <style>{BKD_CSS}</style>
         <BigHead20 title="FireFlair bookings" />
-        <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-staff">
-          <h3>FF Staff Shifts</h3>
-          <p>Businesses create shift cards and set their pay rates.</p>
-          <ProfRates17 guest={guest || !signedIn} />
-        </div>
-
         <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-party">
           <h3>FF Party packages</h3>
           <p>You are your own boss. FireFlair sets the pay rate for each package. You deal directly with the client, and FireFlair is here to support you. Packages are advertised at a set rate, and by signing up to one you agree to that rate. The rates are strong, so we expect strong work in return.</p>
           <HScroll label="FF Party packages" snap>
-            {pkgs.map(sv => <div key={sv.id} className="ff-tp17-cell"><PkgTile17 sv={sv} on={svcInterest.includes(sv.id)} onClick={() => toggleService(sv)} /></div>)}
+            {pkgs.map(sv => <div key={sv.id} className="ff-tp17-cell"><PkgTile17 sv={sv} on={pkgSel.includes(sv.id)} onClick={() => toggleService(sv)} /></div>)}
             <div className="ff-tp17-cell"><button type="button" className="ff-tp17 own" onClick={ownPackage}><span className="pl"><Plus size={22} /></span><b className="tt">Create your own package</b></button></div>
           </HScroll>
+          <div className="ff-bk-submit"><Btn variant="primary" disabled={!pkgDirty} onClick={submitPackages}>Submit</Btn></div>
+        </div>
+
+        <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-staff">
+          <h3>FF Staff Shifts</h3>
+          <p>Businesses create shift cards and set their pay rates.</p>
+          <ProfRates17 guest={guest || !signedIn} />
         </div>
       </section>
 

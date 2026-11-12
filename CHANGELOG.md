@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.21 — 2026-11-12 — Bookings: one Submit for rates and packages; signed-out notifications
+Artifact version 1794509873-5d42.
+
+- Notifications: when signed out, the panel says "Sign in to view your notifications." instead of "You are all caught up."
+- FF Team Bookings, FF Staff Shifts: the preferred hourly rate boxes no longer carry a Log in button. People can type a rate on as many cards as they like (across categories too), then one Submit at the bottom saves them all. Submit asks signed-out people to log in first.
+- FF Team Bookings: FF Party packages now sit above FF Staff Shifts. Choosing packages is a selection, applied by one Submit underneath (the same saved answer as before).
+- Masterclass Package is now 3 hours (label and duration), matching the other standard packages. Staffing and Tasting are unchanged.
+- Developers: the rate and package saves use the same Q&A answers as before, only batched (ProfRates17 and TeamBookings in `src/components/team/bookings.jsx`).
+
 ## v17.4.7.20 — 2026-11-12 — Create your Profile Card button: black and gold rim
 Artifact version 1794508808-0ff9.
 

@@ -49,7 +49,7 @@ const PKG_CAT17 = [
     capability: "Cocktail-service skills plus genuine flair performance ability.",
     booking: "choose", registration: "freelancer", teamRegistration: true, visible: true },
   { id: "svc_masterclass", order: 5, name: "Masterclass Package", short: "Masterclass", category: "bar", kind: "base", tone: "gold",
-    pricePence: 30000, startsFrom: false, durationLabel: "2 hours", durationMin: 120, role: "Mixologist", profession: "mixolog",
+    pricePence: 30000, startsFrom: false, durationLabel: "3 hours", durationMin: 180, role: "Mixologist", profession: "mixolog",
     headline: "Create something extraordinary.", tagline: "Learn from an expert mixologist and create your own cocktails.",
     points: ["Learn from an expert mixologist", "Create and personalise your own cocktails with guidance", "Enjoy bespoke and off-menu drinks, with a tailored shopping list"],
     description: "An expert mixologist teaches, demonstrates and guides you through creating and personalising your own cocktails, using professional-grade cocktail equipment.",

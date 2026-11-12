@@ -536,7 +536,9 @@ function NotifySheet17({ open, onClose }) {
   return (
     <Sheet open onClose={onClose} title="Notifications">
       <div className="ff-ntf17">
-        {rows.length === 0 ? <p className="none">You are all caught up.</p> : (
+        {rows.length === 0 ? (state.auth.status !== "signedIn"
+          ? <p className="none">Sign in to view your notifications.</p>
+          : <p className="none">You are all caught up.</p>) : (
           <ul className="ff-ndlist17">{rows.map(r => (
             <NoteDrop17 key={r.id} id={r.id} open={at === r.id} onToggle={() => setAt(at === r.id ? null : r.id)} icon={r.icon} title={r.title} sub={r.sub}>{r.body}</NoteDrop17>))}</ul>)}
         <section className="ff-ntf-next17" aria-labelledby="ff-ntf-next-h">
