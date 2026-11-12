@@ -4046,3 +4046,23 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-agrp-rate { display:block; margin-top:4px; font-size:12.5px; font-weight:700; color:var(--gold-dk,#7E611D); }
 .ff .ff-ct17-m{display:grid;gap:8px;justify-items:stretch}
 .ff button.ff-biz19-call { font-family:inherit; cursor:pointer; }
+
+/* v17.4.6.6 — Add to team is the highlighted, shiny action; Add to network is a quiet cream button. */
+.ff .ff-btn.gold { position:relative; overflow:hidden; color:#2A1E04; border:1px solid #8A6A18; corner-shape:squircle; background:linear-gradient(172deg,#F8DE86 0%,#E0B13E 36%,#B98A22 62%,#EDCB66 100%); box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 10px 24px rgba(176,141,42,.5); text-shadow:0 1px 0 rgba(255,255,255,.35); }
+.ff .ff-btn.gold::after { content:""; position:absolute; top:0; bottom:0; left:-60%; width:40%; transform:skewX(-20deg); background:linear-gradient(90deg,transparent,rgba(255,255,255,.65),transparent); animation:ffgoldshine 3.6s ease-in-out infinite; pointer-events:none; }
+@keyframes ffgoldshine { 0%,55% { left:-60%; } 100% { left:130%; } }
+.ff .ff-btn.gold:hover { background:linear-gradient(172deg,#FAEBB4 0%,#EBC862 40%,#D4AC52 64%,#F2DB8A 100%); }
+@media (prefers-reduced-motion:reduce) { .ff .ff-btn.gold::after { animation:none; display:none; } }
+.ff .ff-btn.net { color:#F1DFA8; background:linear-gradient(175deg,#7A1B2E,#4E0F1C); border:1px solid #A5802F; corner-shape:squircle; box-shadow:0 1px 2px rgba(60,10,20,.3); }
+.ff .ff-btn.net:hover { background:linear-gradient(175deg,#8A2236,#5C1220); }
+.ff .ff-btn.net svg { color:#E6C873; }
+
+/* Availability sheet: fits a phone (date field, WhatsApp preview, answer box). */
+.ff .ff-sheet { max-height:88vh; max-height:88dvh; overflow-x:hidden; }
+.ff .ff-sheet input[type="date"] { display:block; width:100%; min-width:0; max-width:100%; box-sizing:border-box; -webkit-appearance:none; appearance:none; min-height:48px; text-align:left; }
+.ff .ff-sheet input[type="date"]::-webkit-date-and-time-value { text-align:left; min-width:0; }
+.ff .ff-wapv, .ff .ff-wapv-bubble { max-width:100%; box-sizing:border-box; overflow-wrap:anywhere; }
+.ff .ff-wapv-btns { display:flex; flex-wrap:wrap; gap:6px; }
+.ff .ff-wapv-btns span { flex:1 1 72px; min-width:0; }
+.ff .ff-av-result { flex-wrap:wrap; }
+.ff .ff-av-result > span:last-child { flex:1 1 180px; min-width:0; }

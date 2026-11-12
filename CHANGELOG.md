@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.4.6.6 — 2026-11-12 — FF Team profile page: no Review button, shiny Add to team, availability sheet fits phones (Phase 3 prototype)
+Artifact version 1794487307-afc6.
+- Viewing another person on FF Team: the Review button is gone (the Add to team sheet already collects the review). FF Staff and FF Party keep it.
+- Add to team is the highlighted action: a shiny gold button. Add to network is deep burgundy with gold text (no more black).
+- Check availability sheet: the date field, WhatsApp preview and answer box now fit a phone width; the sheet height follows the visible screen.
+- Checks run: `npm run check`, `npm run build`, headless Chrome at 360 and 390 wide (no overflow, send and answer flow works). Not tested on a real iPhone.
+
 ## v17.4.6.5 — 2026-11-12 — Share sits under your own Profile Card (Phase 3 prototype)
 Artifact version 1794487142-9f78.
 - Viewing your own profile (including "as a guest sees it"), a Share button now sits directly under your Profile Card and opens the card-sharing menu (Share, WhatsApp, Download PNG, Copy Link).

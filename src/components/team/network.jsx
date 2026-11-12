@@ -179,7 +179,7 @@ function PersonProfile() {
             ) : pending ? (
               <Btn variant="ghost" onClick={() => setAdding(true)}><Clock size={14} /> Invitation sent</Btn>
             ) : (
-              <Btn variant="primary" onClick={() => setAdding(true)}><Plus size={14} /> Add to team</Btn>
+              <Btn variant="gold" onClick={() => setAdding(true)}><Plus size={14} /> Add to team</Btn>
             )}
           </div>
         </>)}
@@ -209,7 +209,7 @@ function PersonProfile() {
             <Btn onClick={() => setAsking(true)}><MessageSquare size={14} /> Ask a question</Btn>
             <Btn onClick={() => setChecking(true)}><I11.CalendarCheck size={14} /> Availability</Btn>
           </div>
-          <Btn variant="wide" onClick={() => setReviewing(true)}><Award size={14} /> Review</Btn>
+          {state.role !== "team" && <Btn variant="wide" onClick={() => setReviewing(true)}><Award size={14} /> Review</Btn>}
         </div>
       </div>) : null;
   const cardEl = <PlayerCard person={person} format="full" nameAs="div" themeKey={person.id === "me" ? state.profile.theme : (person.theme || "ivory")}  />;
@@ -313,7 +313,7 @@ function NetBtn17({ id, name, wide }) {
     if (state.auth.status !== "signedIn") { window.dispatchEvent(new CustomEvent("ff-login")); return; }
     dispatch({ type: "NET_TOGGLE", id }); dispatch({ type: "TOAST", toast: on ? `${name} removed from your network` : `${name} added to your network` });
   };
-  return <Btn variant={(on ? "ghost" : "primary") + (wide ? " wide" : "")} disabled={team} onClick={go}>{on ? <><Check size={14} /> In your network</> : <><UserPlus size={14} /> Add to network</>}</Btn>;
+  return <Btn variant={(on ? "ghost" : "net") + (wide ? " wide" : "")} disabled={team} onClick={go}>{on ? <><Check size={14} /> In your network</> : <><UserPlus size={14} /> Add to network</>}</Btn>;
 }
 
 
