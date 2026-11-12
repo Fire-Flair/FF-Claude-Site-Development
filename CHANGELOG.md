@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.16 — 2026-11-12 — Review + Share row, Edit + Share, Your team sections
+Artifact version 1794496606-0ad7.
+
+- FF Team, viewing someone else's profile: Review and Share now sit side by side on the bottom row. Review is shown for FF Team viewers too.
+- Completed own profile: Edit on the left, Share on the right, under the card. Share is the same green WhatsApp squircle button as everywhere else (the round icon is gone from this page).
+- Network page: "Your network" is now "Your team". The main row is the team (people on your team, plus Invite). Two collapsed drop-downs sit below it: Companies and Network. All three count towards the team number, so one person can work with several companies.
+
 ## v17.4.7.15 — 2026-11-12 — Shorter Shift Card, one package card on every site
 Artifact version 1794496293-01b3.
 

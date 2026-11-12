@@ -169,6 +169,12 @@ function PersonProfile() {
     </button>
   );
   const guestNote = guestOfMe ? <div className="ff-guestnote"><Eye size={16} /> This is your profile as a guest sees it.</div> : null;
+  const myTag = state.auth.status === "signedIn" ? (state.auth.tag || state.session.tag) : "";
+  const shareTag = person.id === "me" ? myTag : String(person.tag || cx17Slug(person.name || person.id) || "");
+  const shareBtn = shareTag ? (
+      <CardShareBtn17 title={person.id === "me" ? "My FireFlair card" : `${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${shareTag}`} fileName={"fireflair-" + cx17Slug(shareTag)} label="Share" className="wide"
+        render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={person.id === "me" ? state.profile.theme : (person.theme || "ivory")} />} />) : null;
+  const shareEl = shareBtn ? <div style={{ marginTop: 8, width: "calc(50% - 4px)", marginInline: "auto" }}>{shareBtn}</div> : null;
   const actionsEl = other ? (<div className="ff-pub-acts">
         {hireSiteOf(state).party ? <FavBtn11 person={person} wide /> : (<>
           {state.role === "staff" && <div style={{ marginBottom: 8 }}><FavBtn11 person={person} wide /></div>}
@@ -209,20 +215,16 @@ function PersonProfile() {
             <Btn onClick={() => setAsking(true)}><MessageSquare size={14} /> Ask a question</Btn>
             <Btn onClick={() => setChecking(true)}><I11.CalendarCheck size={14} /> Availability</Btn>
           </div>
-          {state.role !== "team" && <Btn variant="wide" onClick={() => setReviewing(true)}><Award size={14} /> Review</Btn>}
+          <div style={{ display: "grid", gridTemplateColumns: shareBtn ? "1fr 1fr" : "1fr", gap: 8 }}>
+            <Btn variant="wide" onClick={() => setReviewing(true)}><Award size={14} /> Review</Btn>
+            {shareBtn}
+          </div>
         </div>
       </div>) : null;
   const cardEl = <PlayerCard person={person} format="full" nameAs="div" themeKey={person.id === "me" ? state.profile.theme : (person.theme || "ivory")}  />;
-  const myTag = state.auth.status === "signedIn" ? (state.auth.tag || state.session.tag) : "";
-  const shareTag = person.id === "me" ? myTag : String(person.tag || cx17Slug(person.name || person.id) || "");
-  const shareEl = shareTag ? (
-    <div style={{ marginTop: 8, width: "calc(50% - 4px)", marginInline: "auto" }}>
-      <CardShareBtn17 title={person.id === "me" ? "My FireFlair card" : `${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${shareTag}`} fileName={"fireflair-" + cx17Slug(shareTag)} label="Share" className="wide"
-        render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={person.id === "me" ? state.profile.theme : (person.theme || "ivory")} />} />
-    </div>) : null;
   return (
     <div className={publicView ? "ff-pubpage" : undefined}>
-      <PublicHero media={mediaOf(state, person)} card={cardEl} narrow below={<>{backBtn}{guestNote}{actionsEl}{shareEl}</>} />
+      <PublicHero media={mediaOf(state, person)} card={cardEl} narrow below={<>{backBtn}{guestNote}{actionsEl}{other ? null : shareEl}</>} />
       <HireCards11 person={person} />
       <PublicProfileBody person={person} />
       <ReviewSheet open={reviewing} person={person} onClose={() => setReviewing(false)} />
@@ -806,6 +808,21 @@ function Rankings() {
 
 
 
+/* A collapsed drop-down under Your team: Companies, Network. Both count towards the team number. */
+function NetDrop17({ title, count, children }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className={"ff-netdrop17" + (open ? " open" : "")}>
+      <button type="button" className="hd" aria-expanded={open} onClick={() => setOpen(o => !o)}>
+        <b>{title}</b><i>{count}</i><I11.ChevronDown size={16} />
+      </button>
+      {open && <div className="bd">{children}</div>}
+    </div>
+  );
+}
+
+
+
 /* NETWORK — the bartending network, for everyone. Signed-out visitors see
    the same people a member does; joining happens on Home and Profile. */
 function NetworkScreen({ guest = false }) {
@@ -844,8 +861,8 @@ function NetworkScreen({ guest = false }) {
 
       {!q && !guest && ph17(state) >= 2 && (
         <section style={{ marginTop: 20 }}>
-          <SectionHead icon={<Check size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Your network" count={connected.length + netPeople.length + netCos.length} />
-          <HScroll label="Your network">
+          <SectionHead icon={<Check size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Your team" count={connected.length + netPeople.length + netCos.length} />
+          <HScroll label="Your team">
             {connected.map(p => (
               <div key={p.id} className="ff-nettile">
                 <NetworkTile person={p} invited={!!(mine.inviter && mine.inviter.id === p.id)} onClick={() => view(p)} />
@@ -853,22 +870,34 @@ function NetworkScreen({ guest = false }) {
                 <button type="button" className="ff-btn sm ghost" onClick={() => setReviewing(p)}><Award size={12} /> Review</button>
               </div>
             ))}
-            {netPeople.map(p => (
-              <div key={p.id} className="ff-nettile">
-                <PlayerTile person={p} onClick={() => view(p)} />
-                <button type="button" className="ff-btn sm ghost" onClick={() => setReviewing(p)}><Award size={12} /> Review</button>
-              </div>
-            ))}
-            {netCos.map(c => (
-              <button key={c.id} type="button" className="ff-co11-tile ff-netco17" aria-label={`${c.name}: open their page`} onClick={() => { dispatch({ type: "VIEW_COMPANY", id: c.id }); window.scrollTo(0, 0); }}>
-                <CompanyCardFace c={c} size="sm" />
-              </button>
-            ))}
             <button className="ff-card ff-portrait ff-addtile" style={{ width: CARD_W.player }} onClick={() => setInviting(true)}>
               <span style={{ textAlign: "center" }}><UserPlus size={20} color="var(--gold-dk)" />
                 <span className="ff-label" style={{ display: "block", marginTop: 6 }}>Invite</span></span>
             </button>
           </HScroll>
+          <NetDrop17 title="Companies" count={netCos.length}>
+            {netCos.length ? (
+              <HScroll label="Companies">
+                {netCos.map(c => (
+                  <button key={c.id} type="button" className="ff-co11-tile ff-netco17" aria-label={`${c.name}: open their page`} onClick={() => { dispatch({ type: "VIEW_COMPANY", id: c.id }); window.scrollTo(0, 0); }}>
+                    <CompanyCardFace c={c} size="sm" />
+                  </button>
+                ))}
+              </HScroll>
+            ) : <p className="ff-body ff-muted" style={{ margin: 0 }}>No companies yet.</p>}
+          </NetDrop17>
+          <NetDrop17 title="Network" count={netPeople.length}>
+            {netPeople.length ? (
+              <HScroll label="Network">
+                {netPeople.map(p => (
+                  <div key={p.id} className="ff-nettile">
+                    <PlayerTile person={p} onClick={() => view(p)} />
+                    <button type="button" className="ff-btn sm ghost" onClick={() => setReviewing(p)}><Award size={12} /> Review</button>
+                  </div>
+                ))}
+              </HScroll>
+            ) : <p className="ff-body ff-muted" style={{ margin: 0 }}>No one yet.</p>}
+          </NetDrop17>
         </section>
       )}
       {!q && !guest && ph17(state) >= 2 && <SentInvitations />}

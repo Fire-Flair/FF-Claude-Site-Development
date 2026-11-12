@@ -4187,3 +4187,12 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
   background:linear-gradient(172deg,#F6E8B8 0%,#DCC070 38%,#AD8C3C 64%,#EBD58F 100%) padding-box, conic-gradient(from var(--ffang),#8C7230 0%,#8C7230 55%,#E9D07A 70%,#FFFFFF 78%,#E9D07A 86%,#8C7230 100%) border-box !important;
   animation:ffrimorbit 5s linear infinite !important; }
 .ff .ff-pk17 .tx .go.gold::after { width:26%; background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.5),rgba(255,255,255,0)); animation:ffgoldshine 4s ease-in-out infinite !important; }
+
+/* v17.4.7.16 — Your team: Companies and Network drop-downs */
+.ff .ff-netdrop17 { margin-top:10px; border:1px solid var(--rule,#d8ccb0); border-radius:18px; corner-shape:squircle; background:rgba(255,255,255,.6); overflow:hidden; }
+.ff .ff-netdrop17 .hd { display:flex; align-items:center; gap:8px; width:100%; min-height:48px; padding:8px 14px; background:none; border:0; text-align:left; cursor:pointer; color:inherit; font:inherit; }
+.ff .ff-netdrop17 .hd b { font-size:15px; font-weight:700; flex:1; }
+.ff .ff-netdrop17 .hd i { font-style:normal; font-size:12px; font-weight:700; padding:2px 9px; border-radius:999px; background:rgba(201,162,39,.18); color:#6A4F12; }
+.ff .ff-netdrop17 .hd svg { transition:transform .15s; color:var(--gold-dk); }
+.ff .ff-netdrop17.open .hd svg { transform:rotate(180deg); }
+.ff .ff-netdrop17 .bd { padding:4px 12px 14px; }

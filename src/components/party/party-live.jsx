@@ -48,7 +48,7 @@ function LiveActionBar17({ placement }) {
 
 /* The completed profile is the public page, exactly as anyone else sees it from the network. */
 function DoneProfile17({ kind }) {
-  const { state } = useStore();
+  const { state, dispatch } = useStore();
   const all = useDirectory();
   if (kind === "team") {
     const p = state.profile;
@@ -56,7 +56,11 @@ function DoneProfile17({ kind }) {
     const person = mine ? { ...meAsStaff(p, state.session), group: "Your profile" } : (["stf_pri", "stf_leo", "stf_ava"].map(id => all.find(x => x.id === id)).find(Boolean) || meAsStaff(p, state.session));
     const card = <PlayerCard person={person} format="full" nameAs="h1" themeKey={mine ? p.theme : (person.theme || "ivory")} />;
     const dTag = state.auth.status === "signedIn" ? (state.auth.tag || state.session.tag) : "";
-    const cardShare = dTag && mine ? <div style={{ marginTop: 10, textAlign: "center" }}><CardShareBtn17 title="My FireFlair card" url={`https://${CARD_DOMAIN}/${dTag}`} fileName={"fireflair-" + cx17Slug(dTag)} label="" className="icon" render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={p.theme} />} /></div> : null;
+    const edit17 = () => { dispatch({ type: "V11_SET", patch: { ed17: "team" } }); dispatch({ type: "PE_START" }); window.scrollTo(0, 0); };
+    const cardShare = dTag && mine ? <div style={{ marginTop: 10, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, maxWidth: 440, marginInline: "auto" }}>
+      <Btn variant="wide" onClick={edit17}><S17I.Pencil size={14} /> Edit</Btn>
+      <CardShareBtn17 title="My FireFlair card" url={`https://${CARD_DOMAIN}/${dTag}`} fileName={"fireflair-" + cx17Slug(dTag)} label="Share" className="wide" render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={p.theme} />} />
+    </div> : null;
     return (
       <div className="ff-pubpage ff-done17 team">
         <PublicHero media={mediaOf(state, person)} card={<>{card}{cardShare}</>} below={null} />
