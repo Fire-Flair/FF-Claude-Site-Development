@@ -329,10 +329,12 @@ function PublicProfileBody({ person }) {
   const attrs = attributesOf(state, person, cats);
   const records = recordsForPerson(state, person);
   const profs = (records.professions || []).filter(r => !r.hidden && !r.proposed);
+  /* Preferred hourly rates are shown on FF Staff only (v17.4.6), never on FF Party or FF Team. */
+  const onStaff = state.role === "staff" && state.site !== "party";
   const asked = person.id === "me" ? [] : [...ASKED_EXAMPLES.filter(q => q.personId === person.id), ...(state.profileQuestions || []).filter(q => q.personId === person.id)];
   const tabs = [
     { key: "overview", label: "Overview" },
-    { key: "services", label: "Packages", count: services.length + (person.id === "me" ? (state.myServices || []).filter(x => String(x.title).trim()).length + (state.myCocktails || []).filter(x => String(x.name).trim()).length : 0) },
+    { key: "services", label: "Packages", count: services.length + (person.id === "me" ? myContent17(state, "services").filter(x => String(x.title).trim()).length + myContent17(state, "cocktails").filter(x => String(x.name).trim()).length + myContent17(state, "stories").filter(x => String(x.title).trim()).length : 0) },
     ...(ph17(state) >= 2 ? [{ key: "teams", label: "Team", count: teams.length }] : []),
     { key: "reviews", label: "Reviews", count: reviews.length },
   ];
@@ -359,6 +361,7 @@ function PublicProfileBody({ person }) {
                   <button key={r.id} type="button" className="ff-agrp prof" aria-label={`${r.name}. Open details`}
                     onClick={() => setOpenRec({ record: r, def: cats.professions, category: "professions" })}>
                     <span className="ff-agrp-top"><span className="ff-agrp-h">{r.name}</span></span>
+                    {onStaff && staffRateP17(state, person.tag, r.name) != null && <span className="ff-agrp-rate">Preferred rate {gbp17(staffRateP17(state, person.tag, r.name))}/hour</span>}
                     {String(r.description || "").trim() && <span className="ff-agrp-d">{r.description}</span>}
                   </button>
                 ))}

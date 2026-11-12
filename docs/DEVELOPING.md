@@ -11,6 +11,7 @@ npm install            # esbuild only (no framework, no install scripts needed)
 npm run build          # src/ -> build/fireflair-v17.4.html (one file, deterministic)
 npm run check          # manifest, directives, assets, no inline images in src, two builds byte-identical
 npm run stories        # stories/*/*.md -> src/content/stories/*.json
+npm run locations      # data/front-doors/ inputs -> src/content/data/fd-rows.json + fd-aliases.json (validated)
 npm run publish-build  # build/fireflair-v17.4.html -> build/release/ (index.html + hashed images + manifest.json)
 ```
 

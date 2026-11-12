@@ -163,9 +163,88 @@ function BkDrop17({ id, title, desc, icon: Icon, photo, children }) {
 
 
 
-/* Suggested pay rate per profession, shown under "Are you available for bookings?" on FF Team Bookings.
-   Key: profession name in lower case. Value: the text to show. Empty until FireFlair supplies the rates. */
-const SUGGESTED_PAY21 = {};
+/* ---- FF Staff Shifts (v17.4.6): one card per profession, from the Pick your professions catalogue ----
+   Grey/silver version of the FF Party package card. The card asks the availability question (answers kept
+   in profile.staffAvail, as before) and takes an optional preferred hourly rate: a typed Q&A answer
+   rate.<profession id> in pence, visibility "ff-staff" (shown on the member's FF Staff profile only).
+   Businesses set the actual shift rate on each Shift Card. */
+function ProfRateTile17({ name, cat, guest }) {
+  const { state, dispatch } = useStore();
+  const account = qaAccount17(state);
+  const saved = account ? prefRateP17(state, account, name) : null;
+  const [v, setV] = useState(saved != null ? String(saved / 100) : "");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+  useEffect(() => { setV(saved != null ? String(saved / 100) : ""); }, [saved, account]);
+  const staffAvail = state.profile.staffAvail || {};
+  const ans = staffAvail[name] || "";
+  const q = `Are you available for bookings as ${/^[aeiou]/i.test(name) ? "an" : "a"} ${name.toLowerCase()}?`;
+  const login = () => window.dispatchEvent(new Event("ff-login"));
+  const setAvail = (o) => { if (!account) { login(); return; } dispatch({ type: "PROFILE", patch: { staffAvail: { ...staffAvail, [name]: o } } }); };
+  const save = async () => {
+    if (!account || busy) return;
+    const t = String(v).trim();
+    if (!t) {
+      if (saved == null) return;
+      setBusy(true); const r = await qaWithdraw17(dispatch, { account, questionId: qaRateQid17(name) }); setBusy(false);
+      if (r.ok) dispatch({ type: "TOAST", toast: `Preferred rate removed for ${name}` });
+      return;
+    }
+    const n = Number(t);
+    if (!isFinite(n) || n <= 0 || !/^\d+(\.\d{1,2})?$/.test(t)) { setErr("Enter an amount in pounds, like 18 or 18.50."); return; }
+    const pence = Math.round(n * 100);
+    if (pence === saved) return;
+    setBusy(true); setErr("");
+    const r = await qaSubmit17(dispatch, { questionId: qaRateQid17(name), account, typed: { kind: "rate_gbp_hour", pence, profession: name }, visibility: "ff-staff", source: "FF Team Bookings · FF Staff Shifts" });
+    setBusy(false);
+    if (!r.ok) { setErr(r.reason === "invalid-rate" ? "Enter an amount in pounds, like 18 or 18.50." : "That couldn't be saved."); return; }
+    dispatch({ type: "TOAST", toast: `Preferred rate saved for ${name}` });
+  };
+  return (
+    <div className="ff-tp17 grey prof" role="group" aria-label={name}>
+      <span className="lv">{cat}</span>
+      <b className="tt">{name}</b>
+      <span className="in">{q}</span>
+      <span className="yn" role="group" aria-label={q}>
+        {["Yes", "No"].map(o => <button key={o} type="button" className={ans === o ? "on" : ""} aria-pressed={ans === o} onClick={() => setAvail(o)}>{o}</button>)}
+      </span>
+      <span className="pay">
+        <small>Your preferred hourly rate</small>
+        {guest || !account ? <button type="button" className="go" onClick={login}>Log in</button> : (
+          <span className="rt">
+            <span aria-hidden="true">£</span>
+            <input type="text" inputMode="decimal" value={v} aria-label={`Your preferred hourly rate as ${name}, pounds per hour`} disabled={busy}
+              onChange={(e) => { setV(e.target.value.replace(/[^\d.]/g, "").slice(0, 7)); setErr(""); }}
+              onBlur={save} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); e.currentTarget.blur(); } }} />
+            <span>/hour</span>
+          </span>)}
+        {err ? <span className="er" role="alert">{err}</span> : <span className="vis">Optional · shown to businesses on FF Staff only</span>}
+      </span>
+    </div>
+  );
+}
+
+
+function ProfRates17({ guest }) {
+  const { state } = useStore();
+  const account = qaAccount17(state);
+  const mine = recsOf(state.profile, "professions").filter(r => !r.proposed).map(r => r.name);
+  const answered = [...Object.keys(state.profile.staffAvail || {}), ...ALL_PROFESSIONS.map(p => p.name).filter(n => account && prefRateP17(state, account, n) != null)];
+  const yours = [...new Set([...mine, ...answered])];
+  const [cat, setCat] = useState(() => (!guest && yours.length ? "Yours" : PROFESSION_CATEGORIES[0].key));
+  const list = cat === "Yours" ? yours.map(n => ({ name: n, cat: professionCategory(n) || "Other" })) : ALL_PROFESSIONS.filter(p => p.cat === cat).map(p => ({ name: p.name, cat: p.cat }));
+  const chips = [...(!guest && yours.length ? ["Yours"] : []), ...PROFESSION_CATEGORIES.map(c => c.key)];
+  return (
+    <>
+      <div className="ff-pr17-chips" role="group" aria-label="Profession categories">
+        {chips.map(k => <button key={k} type="button" className="ff-chip" aria-pressed={k === cat} onClick={() => setCat(k)}>{k === "Yours" ? "Your professions" : k}</button>)}
+      </div>
+      <HScroll label="FF Staff Shifts" snap>
+        {list.map(p => <div key={p.name} className="ff-tp17-cell"><ProfRateTile17 name={p.name} cat={p.cat} guest={guest} /></div>)}
+      </HScroll>
+    </>
+  );
+}
 
 
 function TeamBookings({ guest = false }) {
@@ -188,18 +267,20 @@ function TeamBookings({ guest = false }) {
     dispatch({ type: "TOAST", toast: st === "confirmed" ? `Confirmed: ${x.shift.role}, ${x.shift.date}. It's now in your bookings.` : "Declined. The company has been told." });
   };
   const svcInterest = state.profile.serviceInterest || [];
-  const toggleService = (sv) => {
+  /* v17.4.6: package sign-ups are one Q&A answer (int.party_package, option ids = package ids). */
+  const toggleService = async (sv) => {
+    const account = qaAccount17(state);
+    if (!account) { window.dispatchEvent(new Event("ff-login")); return; }
     const on = svcInterest.includes(sv.id);
-    dispatch({ type: "PROFILE", patch: { serviceInterest: on ? svcInterest.filter(x => x !== sv.id) : [...svcInterest, sv.id] } });
+    const next = on ? svcInterest.filter(x => x !== sv.id) : [...svcInterest, sv.id];
+    const mirror = { type: "PROFILE", patch: { serviceInterest: next } };
+    const r = next.length
+      ? await qaSubmit17(dispatch, { questionId: "int.party_package", account, optionIds: next, visibility: "private", source: "FF Team Bookings · FF Party packages" }, mirror)
+      : await qaWithdraw17(dispatch, { questionId: "int.party_package", account }, mirror);
+    dispatch({ type: "TOAST", toast: r.ok ? (on ? `Withdrawn from ${sv.title}` : `Signed up for ${sv.title}`) : "That couldn't be saved. Try again." });
   };
-  const FQ = QUESTIONS.find(q => q.id === "g_freelance");
-  const freeAns = (state.profile.answers || {}).g_freelance;
-  const setFree = (v) => dispatch({ type: "ANSWER", qid: "g_freelance", value: v });
   const ownPackage = () => { dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); let n = 0; const go = () => { const el = document.getElementById("ff-cr17-service"); if (el) el.scrollIntoView({ behavior: "auto", block: "start" }); else if (++n < 20) setTimeout(go, 60); }; setTimeout(go, 120); };
   const pkgs = [...PARTY_SERVICES.filter(sv => sv.id !== "svc_full"), ...(hid17(state, "packages", "svc_staffing") ? [] : [STAFFING_SERVICE])];
-  const profs = recsOf(state.profile, "professions").filter(r => !r.proposed).map(r => r.name);
-  const staffAvail = state.profile.staffAvail || {};
-  const setAvail = (name, v) => dispatch({ type: "PROFILE", patch: { staffAvail: { ...staffAvail, [name]: v } } });
 
   const Row = ({ x, tag, onClick }) => (
     <button type="button" className="ff-bk-row" onClick={onClick}>
@@ -239,34 +320,14 @@ function TeamBookings({ guest = false }) {
         <style>{BKD_CSS}</style>
         <BigHead20 title="FireFlair bookings" />
         <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-staff">
-          <h3>FF Staff</h3>
+          <h3>FF Staff Shifts</h3>
           <p>Businesses create shift cards and set their pay rates.</p>
-          {profs.length ? profs.map(name => {
-            const q = `Are you available for bookings as ${/^[aeiou]/i.test(name) ? "an" : "a"} ${name.toLowerCase()}?`;
-            const ans = staffAvail[name] || "";
-            const rate = SUGGESTED_PAY21[name.toLowerCase()];
-            return (
-              <div key={name} className="ff-fb21-row">
-                <div className="ff-bz17" role="group" aria-label={q}>
-                  <b>{q}</b>
-                  <div className="yn">
-                    {["Yes", "No"].map(o => <button key={o} type="button" className={ans === o ? "on" : ""} aria-pressed={ans === o} onClick={() => setAvail(name, o)}>{o}</button>)}
-                  </div>
-                </div>
-                {rate ? <span className="rate"><b>Suggested pay rate:</b> {rate}</span> : null}
-              </div>);
-          }) : <Btn variant="sm" onClick={goProfile}>Add your professions</Btn>}
+          <ProfRates17 guest={guest || !signedIn} />
         </div>
 
         <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-party">
           <h3>FF Party packages</h3>
           <p>FireFlair sets the pay rate for each package. You deal directly with the client, and FireFlair is here to support you. Packages are advertised at a set rate, and by signing up to one you agree to that rate. The rates are strong, so we expect strong work in return.</p>
-          <div className="ff-bz17" role="group" aria-label={FQ.text}>
-            <b>{FQ.text}</b>
-            <div className="yn">
-              {FQ.options.map(o => <button key={o} type="button" className={freeAns === o ? "on" : ""} aria-pressed={freeAns === o} onClick={() => setFree(o)}>{o}</button>)}
-            </div>
-          </div>
           <HScroll label="FF Party packages" snap>
             {pkgs.map(sv => <div key={sv.id} className="ff-tp17-cell"><PkgTile17 sv={sv} on={svcInterest.includes(sv.id)} onClick={() => toggleService(sv)} /></div>)}
             <div className="ff-tp17-cell"><button type="button" className="ff-tp17 own" onClick={ownPackage}><span className="pl"><Plus size={22} /></span><b className="tt">Create your own package</b></button></div>
@@ -315,7 +376,7 @@ function TeamProfile() {
   useEffect(() => {
     if (!barEdit) return;
     const h = () => {
-      syncCardRecords(state, dispatch, d);
+      syncCardRecords(state, dispatch, d, ["professions", "skills", "interests", "languages"]);
       dispatch({ type: "PROFILE", patch: { name: d.name.trim() || state.profile.name, photo: d.photo, theme: pvBase17(th) } });
     };
     window.addEventListener("ff-save", h);
@@ -332,7 +393,7 @@ function TeamProfile() {
      live on the records and are never clobbered by a card edit: existing
      records are matched by name and kept whole. */
   const save = () => {
-    syncCardRecords(state, dispatch, d);
+    syncCardRecords(state, dispatch, d, ["professions", "skills", "interests", "languages"]);
     dispatch({ type: "PROFILE", patch: { name: d.name.trim() || state.profile.name, photo: d.photo, theme: pvBase17(th) } });
     setEditing(false);
     dispatch({ type: "TOAST", toast: "Card updated" });

@@ -1,0 +1,13 @@
+{
+ "names": {
+  "st johns wood": "gn:2638768",
+  "saint john's wood": "gn:2638768",
+  "dulwich village": "gn:2650803",
+  "henley": "gn:2647101"
+ },
+ "paths": {
+  "/areas/uk/england/greater-london/westminster/saint-johns-wood": "/areas/uk/england/greater-london/westminster/st-johns-wood",
+  "/areas/uk/england/greater-london/southwark/dulwich-village": "/areas/uk/england/greater-london/southwark/dulwich",
+  "/areas/uk/england/oxfordshire/henley": "/areas/uk/england/oxfordshire/henley-on-thames"
+ }
+}

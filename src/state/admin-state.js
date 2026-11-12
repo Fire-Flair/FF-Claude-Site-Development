@@ -203,9 +203,9 @@ function guestsAll17(state) {
 
 function cardsAll17(state) {
   return [
-    ...(state.myServices || []).filter(x => String(x.title || "").trim()).map(x => ({ id: x.id, type: "Service card", title: x.title, sub: x.type === "addon" ? "Add-on" : "Package", by: acct17(state) })),
-    ...(state.myCocktails || []).filter(x => String(x.name || "").trim()).map(x => ({ id: x.id, type: x.style === "classic" ? "Classic cocktail" : "Signature cocktail", title: x.name, sub: x.base || x.glass || "", by: acct17(state) })),
-    ...(state.myPosts || []).filter(x => String(x.title || "").trim()).map(x => ({ id: x.id, type: "Story", title: x.title, sub: x.place || "", by: acct17(state) })),
+    ...myContent17(state, "services").filter(x => String(x.title || "").trim()).map(x => ({ id: x.id, type: "Service card", title: x.title, sub: x.type === "addon" ? "Add-on" : "Package", by: acct17(state) })),
+    ...myContent17(state, "cocktails").filter(x => String(x.name || "").trim()).map(x => ({ id: x.id, type: x.style === "classic" ? "Classic cocktail" : "Signature cocktail", title: x.name, sub: x.base || x.glass || "", by: acct17(state) })),
+    ...myContent17(state, "stories").filter(x => String(x.title || "").trim()).map(x => ({ id: x.id, type: "Story", title: x.title, sub: x.place || "", by: acct17(state) })),
   ];
 }
 
@@ -250,18 +250,9 @@ function qaRows17(state, people) {
     hideId: q.id,
     at: q.askedAt
   }));
-  const pick = (list, ids) => (ids || []).map((id) => (list.find((x) => x.id === id) || {}).title || id);
-  const { trainingInterest: ti, jobsInterest: ji, rewardsInterest: ri } = state;
-  if (ti)
-    [...pick(TRAINING_COURSES, ti.courses), ...ti.own || []].forEach((t) => rows.push({ area: "Training", q: "Interested in", a: t, account: ti.account || me, at: ti.at }));
-  if (ji)
-    [...pick(DREAM_JOBS, ji.jobs), ...ji.dream || []].forEach((t) => rows.push({ area: "Dream jobs", q: "Interested in", a: t, account: ji.account || me, at: ji.at }));
-  if (ri)
-    [...pick(XP_REWARDS, ri.rewards), ...ri.own || []].forEach((t) => rows.push({ area: "FF rewards", q: "Interested in", a: t, account: ri.account || me, at: ri.at }));
-  if (state.vipInterest)
-    add("FF VIP", "Register interest", state.vipInterest);
-  const pk = allPackages17();
-  (state.profile.serviceInterest || []).forEach((id) => rows.push({ area: "Party card sign-ups", q: "Signed up for", a: (pk.find((x) => x.id === id) || {}).title || id, account: me }));
+  /* v17.4.6: Training, Dream jobs, FF Rewards, FF VIP, package sign-ups, plan interest, area interest and
+     preferred rates all come from the one Q&A store. */
+  qaAdminRows17(state).forEach((r) => rows.push(r));
   if ((state.profile.unavail17 || []).length)
     add("Availability", "Not available", [...state.profile.unavail17].sort().map(shortDay));
   (state.availabilityAsks || []).forEach((x) => add("Availability requests", x.text || x.role || "Availability request", x));

@@ -410,21 +410,21 @@ const interestCfg = (kind) => {
   if (kind === "training") return {
     id: "ff-training-sect", boxed: true, eyebrow: "Training", title: "Learn, qualify, get booked.",
     lede: "Courses and training events for every level, from your first cocktail to an internationally recognised qualification. Qualifications you earn go on your profile, so clients can find you by them.",
-    list: TRAINING_COURSES, imgs: I.training, stateKey: "trainingInterest", action: "TRAINING_INTEREST", idsKey: "courses", ownKey: "own",
+    list: TRAINING_COURSES, imgs: I.training, stateKey: "trainingInterest", action: "TRAINING_INTEREST", qid: "int.training", idsKey: "courses", ownKey: "own",
     ownLabel: "Anything else you'd like to learn?", ownPh: "A course or skill…", empty: "Choose a training event above, or add your own.",
     ok: "Interest registered", follow: "We'll tell you when dates are set.", noun: "training",
   };
   if (kind === "jobs") return {
     id: "ff-jobs-sect", boxed: "dark", eyebrow: "Dream jobs", title: "The jobs you actually want.",
     lede: "FireFlair: we're here to work with you. Register your interest and we'll go out there, negotiate the best rate for you and get you the work. When you get work, we get paid too. Win-win.",
-    list: DREAM_JOBS, imgs: I.jobs, stateKey: "jobsInterest", action: "JOBS_INTEREST", idsKey: "jobs", ownKey: "dream",
+    list: DREAM_JOBS, imgs: I.jobs, stateKey: "jobsInterest", action: "JOBS_INTEREST", qid: "int.jobs", idsKey: "jobs", ownKey: "dream",
     ownLabel: "What's your dream hospitality job?", ownPh: "Your dream job…", empty: "Choose a job above, or tell us your dream job.",
     ok: "Interest registered. We'll find you the work.", follow: "We'll go out and find the work.", noun: "jobs",
   };
   return {
     id: "ff-rewards-sect", boxed: "dark", eyebrow: "FF Rewards", title: "Rewards for growing FireFlair.",
     lede: "Verification helps you get bookings. We're also building rewards for the people who grow FireFlair. Tell us what you'd want — the rewards with the most interest come first.",
-    list: XP_REWARDS, imgs: I.rewards, stateKey: "rewardsInterest", action: "P1_REWARDS_INTEREST", idsKey: "rewards", ownKey: "own",
+    list: XP_REWARDS, imgs: I.rewards, stateKey: "rewardsInterest", action: "P1_REWARDS_INTEREST", qid: "int.rewards", idsKey: "rewards", ownKey: "own",
     ownLabel: "What reward would help you most?", ownPh: "Your own reward idea…", empty: "Choose a reward above, or suggest your own.",
     ok: "Interest registered — we'll tell you when FF Rewards open", follow: "We'll tell you when FF Rewards open.", noun: "rewards",
   };
@@ -464,15 +464,30 @@ function InterestSection({ kind, inner }) {
     if (!t) return own;
     return own.some(x => x.toLowerCase() === t.toLowerCase()) ? own : [...own, t];
   };
-  const submit = () => {
+  /* v17.4.6: saved through the Q&A adapter (question c.qid, option ids = the catalogue ids); the legacy
+     key is written in the same step so older screens keep reading it. Success shows only after the save. */
+  const [busy, setBusy] = useState(false);
+  const ref = useRef(null);
+  const submit = async () => {
     const nextOwn = addOwn();
     if (!picked.length && !nextOwn.length) { setErr(c.empty); return; }
-    dispatch({ type: c.action, interest: { [c.idsKey]: picked, [c.ownKey]: nextOwn, account: acct, at: Date.now() } });
+    if (busy) return;
+    setBusy(true);
+    ref.current = ref.current || qaRef17();
+    const r = await qaSubmit17(dispatch, { questionId: c.qid, account: acct, optionIds: picked, own: nextOwn, visibility: "private", submissionRef: ref.current, source: `Register interest · ${c.eyebrow}` },
+      { type: c.action, interest: { [c.idsKey]: picked, [c.ownKey]: nextOwn, account: acct, at: Date.now() } });
+    setBusy(false);
+    if (!r.ok) { setErr("That couldn't be saved. Try again."); return; }
+    ref.current = null;
     dispatch({ type: "TOAST", toast: c.ok });
     setOwn(nextOwn); setV(""); setErr(null); setEditing(false);
   };
-  const withdraw = () => {
-    dispatch({ type: c.action, interest: null });
+  const withdraw = async () => {
+    if (busy) return;
+    setBusy(true);
+    const r = await qaWithdraw17(dispatch, { questionId: c.qid, account: acct }, { type: c.action, interest: null });
+    setBusy(false);
+    if (!r.ok) { setErr("That couldn't be saved. Try again."); return; }
     dispatch({ type: "TOAST", toast: "Interest withdrawn" });
     setPicked([]); setOwn([]); setV(""); setErr(null); setEditing(false);
   };
@@ -505,7 +520,7 @@ function InterestSection({ kind, inner }) {
             <Btn variant="sm ghost" onClick={() => setEditing(true)}><Pencil size={12} /> Change</Btn>
             <Btn variant="sm ghost" onClick={withdraw}><X size={12} /> Withdraw</Btn>
           </div>
-          <p className="ff-body ff-muted ff-ireg-proto">Prototype: saved on this device. Saving to your account needs the backend.</p>
+          <p className="ff-body ff-muted ff-ireg-proto">Prototype: saved through the Q&A adapter to this preview's data. Saving to your account needs the backend.</p>
         </>) : (<>
           <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
             <div className="ff-label" style={{ flex: 1 }}>Register your interest</div>
@@ -524,7 +539,7 @@ function InterestSection({ kind, inner }) {
           <div className="ff-ireg-bar">
             <input id={`${c.id}-own`} className="ff-input" value={v} maxLength={60} placeholder={c.ownPh}
               onChange={(e) => { setV(e.target.value); setErr(null); }} onKeyDown={(e) => e.key === "Enter" && submit()} />
-            <Btn variant="primary" onClick={submit}>Submit</Btn>
+            <Btn variant="primary" onClick={submit} disabled={busy}>{busy ? "Saving…" : "Submit"}</Btn>
           </div>
           {err && <p className="ff-body" role="alert" style={{ margin: "8px 0 0", fontSize: 12.5, color: "var(--bad)" }}>{err}</p>}
         </>)}

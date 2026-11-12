@@ -69,3 +69,18 @@
 .ff-av11 button.prof{background:none;border:0;color:#6B1226;text-decoration:underline;font-size:12.5px;cursor:pointer}
 .ff-nbadge11{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#6B1226;color:var(--paper,#FBF8F1);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--paper,#FBF8F1)}
 .ff-ntf17 .ff-sdlist11{display:flex;flex-direction:column;gap:10px;margin:0 0 12px}
+/* v17.4.6: source label and style per booking source, Pay row Hourly | Shift total, one footprint in the rail */
+.ff .ff-sd11 .ssrc{display:block;margin:14px auto 0;width:max-content;max-width:100%;padding:3px 10px;border-radius:999px;corner-shape:squircle;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--paper,#FBF8F1);background:var(--ink,#0B0B0C)}
+.ff .ff-sd11.src-party .ssrc{background:#7A5A12;color:#FCF7EA}
+.ff .ff-evc.ff-sd11.src-party{--bur:#7A5A12;--bg:#F6EED6;--bg2:#FCF7EA;border-color:#B08D2A}
+.ff .ff-evc.ff-sd11.src-party .ff-evc-plate{background:#16130F;color:#E8C75E;border-color:#B08D2A}
+.ff .ff-pay17{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
+.ff .ff-pay17>span{display:flex;flex-direction:column;min-width:0}
+.ff .ff-pay17 small{font-size:11px;letter-spacing:.06em;text-transform:uppercase;opacity:.7}
+.ff .ff-pay17 small.m{text-transform:none;letter-spacing:0}
+.ff .ff-pay17 b{font-size:15px}
+.ff .ff-pay17.bad{display:inline;color:#8A2A1D;font-weight:700}
+.ff-sdrail11 .ff-hitem{display:flex}
+.ff-sdrail11 .ff-hitem>.ff-evc.ff-sd11{display:flex;flex-direction:column;width:100%}
+.ff-sdrail11 .ff-hitem>.ff-evc.ff-sd11 .sbd{margin-top:auto}
+.ff-sdrail11 .ff-sd11 .nt{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}

@@ -145,6 +145,7 @@ function reducer(s, a) {
     return { ...s, company: { ...c, records: out.profile.records } };
   }
   { const r11 = v11Reducer(s, a); if (r11) return r11; }
+  { const rq = qa17Reducer(s, a) || pc17Reducer(s, a) || cov17Reducer(s, a); if (rq) return rq; }
   switch (a.type) {
     case "FOCUS":     return { ...s, focus: a.focus };
     case "NET_QUERY": return { ...s, netQuery: a.q || "" };
@@ -414,7 +415,7 @@ function reducer(s, a) {
        no demo data, so the full sign-up flow can be walked through again.
        The referral tag from the link is kept. */
     case "SIGN_OUT":  return { ...initialState, session: { ...initialState.session, refTag: s.session.refTag }, toast: "Signed out" };
-    case "HYDRATE":   return { ...s, ...a.patch, _hydrated: true };
+    case "HYDRATE":   return migrate1746({ ...s, ...a.patch, _hydrated: true });
     default:          return s;
   }
 }
@@ -442,6 +443,7 @@ function meAsStaff(profile, session) {
     interests: primaryNames(profile, "interests", 3),
     languages: primaryNames(profile, "languages", 5).length ? primaryNames(profile, "languages", 5) : ["English"],
     locations: primaryNames(profile, "locations", 3).length ? primaryNames(profile, "locations", 3) : ["London"],
+    coverage: covForFd17(profile), coverageText: covText17(profile, 3),
     hasCar: profile.hasCar, availability: "open", photo: profile.photo, theme: profile.theme, about: profile.about || "",
     intro: profile.introduction || null,
     /* Top profession's confirmed display category, if the person set one. */

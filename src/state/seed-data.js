@@ -47,17 +47,17 @@ const roadmapItem = (id) => ROADMAP.find(r => r.id === id);
 
 
 const DEMO_EVENTS = [
-  { id: "evt_autumn", title: "Autumn Cocktail Party", iso: "2026-09-02", date: "2 September 2026", venue: "The Loft Lounge, Enfield", guests: "60", team: "2", notes: "Two-hour reception, then open bar." },
-  { id: "evt_members", title: "Members' Night", iso: "2026-09-08", date: "8 September 2026", venue: "Mayfair Rooms", guests: "150", team: "1", notes: "" },
-  { id: "evt_lunch", title: "Riverside Seated Lunch", iso: "2026-09-14", date: "14 September 2026", venue: "Riverside Pavilion", guests: "90", team: "1", notes: "" },
-  { id: "evt_charl", title: "Charlotte House Reception", iso: "2026-09-21", date: "21 September 2026", venue: "Charlotte House", guests: "70", team: "1", notes: "" },
-  { id: "evt_dryden", title: "Private Party — Enfield", iso: "2026-09-29", date: "29 September 2026", venue: "8 Dryden Road, Enfield", guests: "40", team: "2", notes: "" },
-  { id: "evt_launch", title: "Brand Launch — Hackney", iso: "2026-10-11", date: "11 October 2026", venue: "Hackney Depot", guests: "180", team: "5", notes: "Press arrive at 18:00." },
-  { id: "evt_wedding", title: "Rowntree Wedding", iso: "2026-11-15", date: "15 November 2026", venue: "Charlotte House", guests: "120", team: "3", notes: "Reception drinks then dinner service." },
-  { id: "evt_xmas", title: "Loft Christmas Party", kind: "Christmas party", iso: "2026-12-12", date: "12 December 2026", start: "19:00", time: "19:00", venue: "The Loft Lounge, Enfield", guests: "90", team: "3", notes: "" },
-  { id: "evt_nye", title: "New Year's Eve Gala", kind: "Private party", iso: "2026-12-31", date: "31 December 2026", start: "20:00", time: "20:00", venue: "Mayfair Rooms", guests: "200", team: "4", notes: "" },
-  { id: "evt_vgala", title: "Vooshka Winter Gala", hirer: "Vooshka Cocktail Bar", kind: "Corporate event", iso: "2026-12-05", date: "5 December 2026", start: "18:00", time: "18:00", venue: "The Loft Lounge, Enfield", guests: "140", team: "1", notes: "Black tie. Champagne reception, then the signature menu." },
-  { id: "evt_vdin", title: "Vooshka Private Dinner", hirer: "Vooshka Cocktail Bar", kind: "Private party", iso: "2026-12-19", date: "19 December 2026", start: "19:00", time: "19:00", venue: "Charlotte House, London", guests: "60", team: "1", notes: "Welcome cocktails, then a pairing menu." }
+  { id: "evt_autumn", source: "staff", title: "Autumn Cocktail Party", iso: "2026-09-02", date: "2 September 2026", venue: "The Loft Lounge, Enfield", guests: "60", team: "2", notes: "Two-hour reception, then open bar." },
+  { id: "evt_members", source: "staff", title: "Members' Night", iso: "2026-09-08", date: "8 September 2026", venue: "Mayfair Rooms", guests: "150", team: "1", notes: "" },
+  { id: "evt_lunch", source: "staff", title: "Riverside Seated Lunch", iso: "2026-09-14", date: "14 September 2026", venue: "Riverside Pavilion", guests: "90", team: "1", notes: "" },
+  { id: "evt_charl", source: "staff", title: "Charlotte House Reception", iso: "2026-09-21", date: "21 September 2026", venue: "Charlotte House", guests: "70", team: "1", notes: "" },
+  { id: "evt_dryden", source: "party", title: "Private Party — Enfield", iso: "2026-09-29", date: "29 September 2026", venue: "8 Dryden Road, Enfield", guests: "40", team: "2", notes: "" },
+  { id: "evt_launch", source: "staff", title: "Brand Launch — Hackney", iso: "2026-10-11", date: "11 October 2026", venue: "Hackney Depot", guests: "180", team: "5", notes: "Press arrive at 18:00." },
+  { id: "evt_wedding", source: "party", title: "Rowntree Wedding", iso: "2026-11-15", date: "15 November 2026", venue: "Charlotte House", guests: "120", team: "3", notes: "Reception drinks then dinner service." },
+  { id: "evt_xmas", source: "staff", title: "Loft Christmas Party", kind: "Christmas party", iso: "2026-12-12", date: "12 December 2026", start: "19:00", time: "19:00", venue: "The Loft Lounge, Enfield", guests: "90", team: "3", notes: "" },
+  { id: "evt_nye", source: "staff", title: "New Year's Eve Gala", kind: "Private party", iso: "2026-12-31", date: "31 December 2026", start: "20:00", time: "20:00", venue: "Mayfair Rooms", guests: "200", team: "4", notes: "" },
+  { id: "evt_vgala", source: "staff", title: "Vooshka Winter Gala", hirer: "Vooshka Cocktail Bar", kind: "Corporate event", iso: "2026-12-05", date: "5 December 2026", start: "18:00", time: "18:00", venue: "The Loft Lounge, Enfield", guests: "140", team: "1", notes: "Black tie. Champagne reception, then the signature menu." },
+  { id: "evt_vdin", source: "staff", title: "Vooshka Private Dinner", hirer: "Vooshka Cocktail Bar", kind: "Private party", iso: "2026-12-19", date: "19 December 2026", start: "19:00", time: "19:00", venue: "Charlotte House, London", guests: "60", team: "1", notes: "Welcome cocktails, then a pairing menu." }
 ];
 
 

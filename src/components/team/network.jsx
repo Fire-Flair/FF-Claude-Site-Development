@@ -585,13 +585,7 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
   })), React.createElement(Row, {
     kind: "location",
     label: "Work locations"
-  }, React.createElement(ChipEdit, {
-    values: draft.locations,
-    onChange: set("locations"),
-    placeholder: "Add an area you work",
-    ink,
-    rule
-  })), React.createElement(Row, {
+  }, React.createElement(CoverageTree17, { compact: true, title: null })), React.createElement(Row, {
     kind: "languages",
     label: "Languages"
   }, React.createElement(ChipEdit, {

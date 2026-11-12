@@ -256,8 +256,7 @@ function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd
             dispatch({ type: "TOAST", toast: `${n} added` });
           }} />
         )}
-        {isMe && catKey === "locations" && owner !== "company" && <WorkLocationsBox items={items} onAdd={onAdd} />}
-        {isMe && catKey === "locations" && <AreaTicks19 items={items} owner={owner} />}
+        {isMe && catKey === "locations" && <CoverageTree17 owner={owner} />}
         <div style={{ height: isMe && (catKey === "professions" || catKey === "locations") && owner !== "company" ? 12 : 0 }} />
         {editing ? (
           <TierEditor catKey={catKey} def={def} rows={eRows} onOpen={(r) => onOpen(r)} tail={addTile} />

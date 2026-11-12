@@ -263,3 +263,22 @@ function Journal17({ kind = "team" }) {
         more.length > 0 && React.createElement("div", { className: "ff-st-more" }, React.createElement("b", null, "Keep reading"),
           more.map((s) => React.createElement("a", { key: s, href: "/stories/" + s, onClick: (e) => { if (e.button === 0 && !e.metaKey && !e.ctrlKey) { e.preventDefault(); openStory(s); } } }, JR17[s].title))))));
 }
+
+/* v17.4.6: the FireFlair Stories editor shows the member's story rendered as an article, with the same
+   article layout as the published Stories. User text goes through pcSafeMd17, so only https and
+   /stories/ links stay links; everything else is plain text (React escapes it). */
+function StoryPreview17({ p, by }) {
+  const img = (k) => (window.FF_IMG || {})[k] || k;
+  const paras = String(p.body || "").split(/\n{2,}/).map((t) => t.trim()).filter(Boolean);
+  const words = [p.intro, p.body].join(" ").split(/\s+/).filter(Boolean).length;
+  return React.createElement("section", { className: "ff-st17-prev", "aria-label": "Article preview" },
+    React.createElement("style", null, ST18_CSS + ".ff .ff-st17-prev{margin:14px 0 4px;padding:14px;border:1px solid rgba(126,97,29,.3);border-radius:18px;corner-shape:squircle;background:#FFFDF8}.ff .ff-st17-prev .hero{width:100%;max-height:220px;object-fit:cover;border-radius:14px;corner-shape:squircle}.ff .ff-st17-prev h3{margin:8px 0 4px}.ff .ff-st17-prev .meta{display:flex;gap:10px;font-size:12.5px;color:#6A6253}.ff .ff-st17-prev .by{font-size:13px;margin:4px 0 10px}"),
+    React.createElement("article", { className: "ff-jr17-art" },
+      p.photo && React.createElement("img", { className: "hero", src: img(p.photo), alt: "" }),
+      React.createElement("div", { className: "meta" }, React.createElement("span", null, p.cat || "Story"), React.createElement("time", null, p.date), React.createElement("span", null, Math.max(1, Math.round(words / 200)) + " min read")),
+      React.createElement("h3", null, p.title || "Untitled story"),
+      React.createElement("div", { className: "by" }, "By ", React.createElement("b", null, by || "You")),
+      p.intro && React.createElement("div", { className: "lede" }, ST18_blocks(pcSafeMd17(p.intro))),
+      paras.map((t, i) => React.createElement(React.Fragment, { key: i }, ST18_blocks(pcSafeMd17(t)))),
+      (p.places || []).length > 0 && React.createElement("p", { className: "ff-st-rev" }, (p.places || []).join(" · "))));
+}

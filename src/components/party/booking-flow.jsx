@@ -996,7 +996,14 @@ function Plans11() {
     { k: "silver", t: "Silver", p: "£50", per: "per month", perks: ["Unlimited Shift cards", "Priority staff matching", "Featured Company Card"], soon: true },
     { k: "gold", t: "Gold", p: "", per: "For our most valuable users", perks: ["Unlimited Shift cards", "Shareholder privileges", "Dedicated account manager"], soon: true },
   ];
-  const reg = (x) => { if (want.includes(x.k)) return; dispatch({ type: "V11_SET", patch: { planInterest: [...want, x.k] } }); dispatch({ type: "TOAST", toast: `Thanks. We'll be in touch about ${x.t}` }); };
+  /* v17.4.6: plan interest is a Q&A answer (int.planning, option ids bronze/silver/gold). */
+  const reg = async (x) => {
+    if (want.includes(x.k)) return;
+    const account = (state.company && state.company.slug) || qaAccount17(state);
+    if (!account) { window.dispatchEvent(new Event("ff-login")); return; }
+    const r = await qaSubmit17(dispatch, { questionId: "int.planning", account, optionIds: [...want, x.k], visibility: "private", source: "FF Staff · Business packages" }, { type: "V11_SET", patch: { planInterest: [...want, x.k] } });
+    dispatch({ type: "TOAST", toast: r.ok ? `Thanks. We'll be in touch about ${x.t}` : "That couldn't be saved. Try again." });
+  };
   return (
     <section className="ff-plans11" aria-labelledby="ff-plans11-h">
       <span className="coin"><Coin size={30} tier="gold" /></span>
@@ -1316,7 +1323,7 @@ function BookingBox({ ev, setView, bkey }) {
   const ensure = () => {
     if (ev) return ev.id;
     const id = uid("evt");
-    dispatch({ type: "EVENT_ADD", event: { id, title: "", kind: "", iso: "", start: "", venue: "", guests: "", date: "", time: "", questionIds: [] } });
+    dispatch({ type: "EVENT_ADD", event: { id, source: state.site === "party" ? "party" : "staff", title: "", kind: "", iso: "", start: "", venue: "", guests: "", date: "", time: "", questionIds: [] } });
     dispatch({ type: "ACTIVE_EVENT", id });
     setView({ eventId: id, keep: bkey });
     return id;
@@ -1332,7 +1339,7 @@ function BookingBox({ ev, setView, bkey }) {
       shifts.forEach(sh => dispatch({ type: "SHIFT_PATCH", id: sh.id, patch: { iso: data.iso, date: data.date, venue: data.venue, ...(sh.svcId ? { time: svcTimeFor({ time: sh.svcTime }, data.start) } : {}) } }));
     } else {
       const id = uid("evt");
-      dispatch({ type: "EVENT_ADD", event: { id, ...data, phone: state.bookPhone || "", email: state.bookEmail || "", questionIds: [] } });
+      dispatch({ type: "EVENT_ADD", event: { id, source: state.site === "party" ? "party" : "staff", ...data, phone: state.bookPhone || "", email: state.bookEmail || "", questionIds: [] } });
       dispatch({ type: "ACTIVE_EVENT", id }); setView({ eventId: id, keep: bkey });
     }
     dispatch({ type: "TOAST", toast: "Event Card saved" });
@@ -1384,7 +1391,7 @@ function BookingBox({ ev, setView, bkey }) {
     const data = eventData11(d);
     let id;
     if (ev) { id = ev.id; dispatch({ type: "EVENT_PATCH", id, patch: data }); shifts.filter(x => x.svcId && data.start).forEach(x => dispatch({ type: "SHIFT_PATCH", id: x.id, patch: { time: svcTimeFor({ time: x.svcTime }, data.start) } })); }
-    else { id = uid("evt"); dispatch({ type: "EVENT_ADD", event: { id, ...data, phone: state.bookPhone || "", email: state.bookEmail || "", questionIds: [] } }); dispatch({ type: "ACTIVE_EVENT", id }); setView({ eventId: id, keep: bkey }); }
+    else { id = uid("evt"); dispatch({ type: "EVENT_ADD", event: { id, source: state.site === "party" ? "party" : "staff", ...data, phone: state.bookPhone || "", email: state.bookEmail || "", questionIds: [] } }); dispatch({ type: "ACTIVE_EVENT", id }); setView({ eventId: id, keep: bkey }); }
     r.shifts.forEach(x => {
       const have = shifts.filter(y => String(y.role).toLowerCase() === x.role.toLowerCase()).length;
       for (let i = have; i < (x.qty || 1); i++) dispatch({ type: "SHIFT_ADD", shift: { id: uid("shf"), eventId: id, staffIds: [], staffId: "", skills: [], role: x.role, qty: 1,
@@ -1495,7 +1502,7 @@ function BookingBox({ ev, setView, bkey }) {
         shifts.forEach(sh => dispatch({ type: "SHIFT_PATCH", id: sh.id, patch: { iso: data.iso, date: data.date, venue: data.venue, ...(sh.svcId ? { time: svcTimeFor({ time: sh.svcTime }, data.start) } : {}) } }));
       } else {
         const id = uid("evt");
-        dispatch({ type: "EVENT_ADD", event: { id, ...data, phone: state.bookPhone || "", email: state.bookEmail || "", questionIds: [] } });
+        dispatch({ type: "EVENT_ADD", event: { id, source: state.site === "party" ? "party" : "staff", ...data, phone: state.bookPhone || "", email: state.bookEmail || "", questionIds: [] } });
         dispatch({ type: "ACTIVE_EVENT", id }); setView({ eventId: id, keep: bkey });
       }
     }, 350);

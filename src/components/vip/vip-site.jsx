@@ -1002,10 +1002,18 @@ function VipCardPage21() {
   const W = vipIcon21("Wine"), H = vipIcon21("Heart"), S = vipIcon21("Sparkles"), L = vipIcon21("Leaf"), Im = vipIcon21("Images"), U = vipIcon21("Armchair");
   const stock = ["training_mixology", "reward_bar_kit", "jr_menuteam"].map(k => ({ id: "stock_" + k, src: vipImg21(k), name: "" })).filter(m => m.src);
   const own = (c.media || []).filter(m => m.src);
-  const save = () => {
+  const save = async () => {
     if (!String(c.name || "").trim()) { dispatch({ type: "TOAST", toast: "Add your name" }); window.scrollTo({ top: 0, behavior: "smooth" }); return; }
     const first = !v.guest;
     const guest = v.guest || { ref: vipRef21("VG"), at: Date.now() };
+    /* v17.4.6: joining the launch party guest list is a Q&A answer (int.vip), linked to the guest-list
+       lead by the same reference. */
+    let qaId = null;
+    if (first) {
+      const r = await qaSubmit17(dispatch, { questionId: "int.vip", account: qaAccount17(state), optionIds: ["launch_party_guest_list"], contact: { name: c.name.trim() }, submissionRef: guest.ref, visibility: "private", source: "FF VIP · launch party guest list" });
+      if (!r.ok) { dispatch({ type: "TOAST", toast: "That couldn't be saved. Try again." }); return; }
+      qaId = r.answer.id;
+    }
     vipPatch21(dispatch, state, { card: { ...c, name: c.name.trim(), savedAt: Date.now() }, guest });
     if (first) {
       const cur = fdOf(state), ref = guest.ref;
@@ -1015,7 +1023,7 @@ function VipCardPage21() {
         contact: { name: c.name.trim(), email: "", phone: "", whatsappOk: true },
         headcount: "1", brief: "Launch party guest list | " + [c.drinks.slice(0, 3).join(", "), c.diet.join(", ")].filter(Boolean).join(" | "), companyId: null, companyName: "",
         createdAt: new Date().toISOString(), status: "new", assignee: "", adminNote: "", eventId: null,
-        sourcePath: "", sourceSite: "vip", notif: { admin: "simulated", ack: "simulated message", failed: false }, bookingId: null,
+        sourcePath: "", sourceSite: "vip", notif: { admin: "simulated", ack: "simulated message", failed: false }, bookingId: null, qaResponseId: qaId,
       };
       fdSet(state, dispatch, { requests: [rec, ...cur.requests], log: [{ at: rec.createdAt, by: "visitor", what: "vip_guest " + ref, site: "vip" }, ...cur.log].slice(0, 200) });
     }

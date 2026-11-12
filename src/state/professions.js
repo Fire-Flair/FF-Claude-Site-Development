@@ -44,6 +44,11 @@ function professionCategory(name, override) {
 }
 
 
+/* Stable profession id (v17.4.6): "prof." + the name in lower case with dashes, the same for the catalogue
+   and for typed professions. Q&A answers (preferred rates) are keyed by it. */
+const professionId = (name) => "prof." + String(name || "").trim().toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+
+
 const personCategory = (p) => professionCategory(p.profession, p.categoryOverride) || "Other";
 
 

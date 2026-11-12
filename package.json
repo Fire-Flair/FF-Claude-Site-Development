@@ -6,7 +6,8 @@
     "build": "node scripts/build.mjs",
     "stories": "python3 scripts/build-stories.py --src src",
     "check": "node scripts/check-src.mjs",
-    "publish-build": "python3 scripts/split-images.py build/fireflair-v17.4.html build/release"
+    "publish-build": "python3 scripts/split-images.py build/fireflair-v17.4.html build/release",
+    "locations": "python3 scripts/build-locations.py"
   },
   "devDependencies": {
     "esbuild": "0.28.2"

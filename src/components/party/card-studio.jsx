@@ -654,7 +654,7 @@ function PostBack17({ p, edit, set }) {
 
 /* ---- One studio per card type: your cards, and the card you are making ------------------------ */
 const STUDIO17 = {
-  cocktail: { key: "myCocktails", title: "Cocktails", plate: "Signature Cocktail", plateOf: (x) => (x && x.style === "classic" ? "Classic Cocktail" : "Signature Cocktail"), back: "Recipe", icon: S17I.Martini, add: "New cocktail", makes: [["classic", "Classic"], ["signature", "Signature"]], make: NEW_COCKTAIL17, ok: (x) => String(x.name).trim(), name: (x) => x.name, tone: () => "dark",
+  cocktail: { key: "myCocktails", title: "Cocktails", plate: "Signature Cocktail", plateOf: (x) => (x && x.style === "classic" ? "Classic Cocktail" : "Signature Cocktail"), back: "Recipe", icon: S17I.Martini, add: "New cocktail", make: NEW_COCKTAIL17, ok: (x) => String(x.name).trim(), name: (x) => x.name, tone: () => "dark",
     Front: ({ x, edit, set }) => <CocktailFront17 c={x} edit={edit} set={set} />, Back: ({ x, edit, set }) => <CocktailBack17 c={x} edit={edit} set={set} /> },
   service: { key: "myServices", title: "Service Cards", plate: "Service Card", back: "Details", icon: S17I.Sparkles, add: "New Service Card", make: NEW_SERVICE17, ok: (x) => String(x.title).trim(), name: (x) => x.title, tone: () => "ivory",
     Front: ({ x, edit, set, site }) => <ServiceFront17 s={x} edit={edit} set={set} site={site} />, Back: ({ x, edit, set }) => <ServiceBack17 s={x} edit={edit} set={set} /> },
@@ -692,23 +692,41 @@ function CardPop17({ type, x, site, by, tag, onClose }) {
 }
 
 
-function Studio17({ type, site, by, tag, k: listKey, seed }) {
+/* v17.4.6: one studio per card type. The editor sits inline and is open from the start (a fresh card
+   when there is none), with one plus card for a new entry; Classic or Signature is chosen inside the card.
+   FF Team (profile): entries live in profile.content and Save goes through PROFILE_ADAPTER.saveContent;
+   saving is the only publication step. FF Staff (company): the company lists, as before. */
+function Studio17({ type, site, by, tag, k: listKey, seed, profile }) {
   const { state, dispatch } = useStore();
   const T = STUDIO17[type];
   const sk = listKey || T.key;
-  const list = state[sk] || seed || [];
-  const [draft, setDraft] = useState(null);
-  const save = (arr) => dispatch({ type: "V11_SET", patch: { [sk]: arr } });
+  const kind = PC17_KINDS[type];
+  const list = profile ? myContent17(state, kind) : (state[sk] || seed || []);
+  const [draft, setDraft] = useState(() => (list.length ? null : T.make()));
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
   const isNew = draft && !list.some(x => x.id === draft.id);
-  const done = () => {
-    if (!draft || !T.ok(draft)) return;
-    save(isNew ? [draft, ...list] : list.map(x => x.id === draft.id ? draft : x));
-    dispatch({ type: "TOAST", toast: `${T.plateOf ? T.plateOf(draft) : T.plate} saved` });
-    setDraft(null);
+  const account = qaAccount17(state) || state.session.tag || "";
+  const commit = async (entry, remove) => {
+    if (!profile) {
+      dispatch({ type: "V11_SET", patch: { [sk]: remove ? list.filter(x => x.id !== entry.id) : isNew ? [entry, ...list] : list.map(x => x.id === entry.id ? entry : x) } });
+      return true;
+    }
+    const cur = pcOf17(state.profile);
+    setBusy(true); setErr("");
+    const r = await PROFILE_ADAPTER.saveContent(account, { ...pcWith17(cur, kind, entry, remove), owner: account });
+    setBusy(false);
+    if (!r.ok) { setErr(r.reason === "not-owner" ? "Sign in to save." : r.reason === "name-required" ? "Add a name first." : r.reason === "bad-image" ? "That photo can't be used." : r.reason === "too-many" ? "You've reached the limit for these cards." : "That couldn't be saved."); return false; }
+    dispatch({ type: "PC_SAVE", content: r.content });
+    return true;
   };
-  const remove = () => { save(list.filter(x => x.id !== draft.id)); setDraft(null); };
+  const done = async () => {
+    if (!draft || !T.ok(draft) || busy) return;
+    if (await commit(draft, false)) { dispatch({ type: "TOAST", toast: `${T.plateOf ? T.plateOf(draft) : T.plate} saved` }); setDraft(null); }
+  };
+  const remove = async () => { if (busy) return; if (await commit(draft, true)) setDraft(null); };
   const edRef = useRef(null);
-  const open = (x) => { setDraft(JSON.parse(JSON.stringify(x))); setTimeout(() => { if (edRef.current) edRef.current.scrollIntoView({ behavior: "smooth", block: "start" }); }, 60); };
+  const open = (x) => { setErr(""); setDraft(JSON.parse(JSON.stringify(x))); setTimeout(() => { if (edRef.current) edRef.current.scrollIntoView({ behavior: "smooth", block: "start" }); }, 60); };
   const addr = (x) => `${CARD_DOMAIN}/${tag || "yourtag"}/${PATH17[type]}/${slug17(T.name(x)) || "your-card"}`;
   return (
     <div className="ff-st17">
@@ -717,14 +735,16 @@ function Studio17({ type, site, by, tag, k: listKey, seed }) {
           <StudioPair17 key={draft.id} type={type} x={draft} edit set={(p) => setDraft(d => ({ ...d, ...p }))} site={site} by={by} tag={tag} />
           <div className="ff-c17-addr"><S17I.Link2 size={13} /><span>{addr(draft)}</span></div>
           {type === "service" && <TermsBox17 s={draft} set={(p) => setDraft(d => ({ ...d, ...p }))} />}
+          {type === "post" && <V101.StoryPreview17 p={draft} by={by} />}
+          {err && <p className="ff-st17-err" role="alert">{err}</p>}
           <div className="acts">
-            <Btn variant="primary" onClick={done} disabled={!T.ok(draft)}><S17I.Check size={14} /> Save</Btn>
-            <Btn variant="ghost" onClick={() => setDraft(null)}>Cancel</Btn>
-            {!isNew && <button type="button" className="del" onClick={remove}><S17I.Trash2 size={14} /> Delete</button>}
+            <Btn variant="primary" onClick={done} disabled={!T.ok(draft) || busy}><S17I.Check size={14} /> {busy ? "Saving…" : "Save"}</Btn>
+            {(list.length > 0 || !isNew) && <Btn variant="ghost" onClick={() => { setErr(""); setDraft(null); }}>Cancel</Btn>}
+            {!isNew && <button type="button" className="del" onClick={remove} disabled={busy}><S17I.Trash2 size={14} /> Delete</button>}
           </div>
         </div>
       ) : null}
-      {(
+      {(list.length > 0 || !draft) && (
         <HScroll label={T.title}>
           {list.map(x => (
             <div className="ff-st17-item" key={x.id}>
@@ -733,8 +753,7 @@ function Studio17({ type, site, by, tag, k: listKey, seed }) {
               </div>
               <span className="ff-c17-addr"><S17I.Link2 size={12} /><span>{addr(x)}</span></span>
             </div>))}
-          {(T.makes || [[undefined, ""]]).map(([mk, ml]) => (
-            <div className="ff-st17-item" key={mk || "new"}><button type="button" className="ff-st17-plus" aria-label={ml ? `New ${ml.toLowerCase()} cocktail` : T.add} onClick={() => setDraft(T.make(mk))}><S17I.Plus size={34} strokeWidth={1.5} />{ml && <span className="lb">{ml}</span>}</button></div>))}
+          <div className="ff-st17-item"><button type="button" className="ff-st17-plus" aria-label={T.add} onClick={() => open(T.make())}><S17I.Plus size={34} strokeWidth={1.5} /></button></div>
         </HScroll>
       )}
     </div>
@@ -742,8 +761,8 @@ function Studio17({ type, site, by, tag, k: listKey, seed }) {
 }
 
 
-function Sec17({ icon, title, count, children, id }) {
-  const [open, setOpen] = useState(true);
+function Sec17({ icon, title, count, children, id, first }) {
+  const [open, setOpen] = useState(!!first);
   return <StaffBox id={id} icon={icon} title={title} count={count} open={open} onToggle={() => setOpen(o => !o)}>{children}</StaffBox>;
 }
 
@@ -773,19 +792,21 @@ function BulkAI17() {
 
 function Creators17({ kind, by: byIn }) {
   const { state } = useStore();
-  const site = kind === "team" ? "FF Team" : "FF Staff";
-  const by = byIn || (kind === "team" ? (String(state.profile.name || "").trim() || "You") : (String((state.company || {}).name || "").trim() || "You"));
-  const demoCo = kind !== "team" && !String((state.company || {}).name || "").trim() ? COMPANY_PAGES.co_vooshka : null;
-  const tag = kind === "team" ? (state.auth.tag || state.session.tag || "yourtag") : ((state.company || {}).slug || (demoCo && demoCo.slug) || "yourbusiness");
-  const bizKeys = kind === "team" ? {} : { cocktail: "coCocktails17", service: "coServices17" };
+  const team = kind === "team";
+  const site = team ? "FF Team" : "FF Staff";
+  const by = byIn || (team ? (String(state.profile.name || "").trim() || "You") : (String((state.company || {}).name || "").trim() || "You"));
+  const demoCo = !team && !String((state.company || {}).name || "").trim() ? COMPANY_PAGES.co_vooshka : null;
+  const tag = team ? (state.auth.tag || state.session.tag || "yourtag") : ((state.company || {}).slug || (demoCo && demoCo.slug) || "yourbusiness");
+  const bizKeys = team ? {} : { cocktail: "coCocktails17", service: "coServices17" };
   const seeds = demoCo ? vkSeeds17() : {};
-  const types = ph17(state) === 2 ? ["cocktail", "post"] : ["cocktail", "service", "post"];
+  const types = ["cocktail", "service", "post"];
+  const count = (t) => team ? myContent17(state, PC17_KINDS[t]).length : (state[bizKeys[t] || STUDIO17[t].key] || seeds[t] || []).length;
   return (
     <section className="ff-cr17" aria-labelledby="ff-cr17-h">
       <h2 id="ff-cr17-h" className="ff-done17-h">Build your packages</h2>
+      {types.map((t, i) => { const T = STUDIO17[t]; return (
+        <Sec17 key={t} first={i === 0} id={`ff-cr17-${t}`} icon={T.icon} title={t === "cocktail" ? "Signature cocktails" : T.title} count={count(t)}><Studio17 type={t} site={site} by={by} tag={tag} k={bizKeys[t]} seed={seeds[t]} profile={team} /></Sec17>); })}
       <BulkAI17 />
-      {types.map(t => { const T = STUDIO17[t]; return (
-        <Sec17 key={t} id={`ff-cr17-${t}`} icon={T.icon} title={kind !== "team" && t === "cocktail" ? "Signature cocktails" : T.title} count={(state[bizKeys[t] || T.key] || seeds[t] || []).length}><Studio17 type={t} site={site} by={by} tag={tag} k={bizKeys[t]} seed={seeds[t]} /></Sec17>); })}
     </section>
   );
 }
@@ -797,8 +818,10 @@ function PkgExtras17({ person }) {
   const { state } = useStore();
   const [view, setView] = useState(null);
   const mine = person.id === "me";
-  const svs = mine ? (state.myServices || []).filter(x => String(x.title).trim() && !hid17(state, "cards", x.id)) : [];
-  const cks = mine ? (state.myCocktails || []).filter(x => String(x.name).trim() && !hid17(state, "cards", x.id)) : [];
+  const contentOf = state.viewingAsGuest ? publicContent17 : myContent17;
+  const svs = mine ? contentOf(state, "services").filter(x => String(x.title).trim() && !hid17(state, "cards", x.id)) : [];
+  const cks = mine ? contentOf(state, "cocktails").filter(x => String(x.name).trim() && !hid17(state, "cards", x.id)) : [];
+  const sts = mine ? contentOf(state, "stories").filter(x => String(x.title).trim() && !hid17(state, "cards", x.id)) : [];
   const by = person.name || "You";
   const tag = state.auth.tag || state.session.tag || "yourtag";
   const grid = (type, list) => <div className="ff-pkg17-grid">{list.map(x => (
@@ -807,8 +830,9 @@ function PkgExtras17({ person }) {
     </div>))}</div>;
   return (
     <>
-      {svs.length > 0 && ph17(state) === 3 && <section className="ff-pkg17"><h2 className="ff-about-h">Service cards</h2>{grid("service", svs)}</section>}
+      {svs.length > 0 && <section className="ff-pkg17"><h2 className="ff-about-h">Service cards</h2>{grid("service", svs)}</section>}
       {cks.length > 0 && <section className="ff-pkg17"><h2 className="ff-about-h">Cocktails</h2>{grid("cocktail", cks)}</section>}
+      {sts.length > 0 && <section className="ff-pkg17"><h2 className="ff-about-h">FireFlair Stories</h2>{grid("post", sts)}</section>}
       <PublicQA person={person} />
       {view && <CardPop17 type={view.type} x={view.x} site="FF Team" by={by} tag={tag} onClose={() => setView(null)} />}
     </>

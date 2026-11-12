@@ -52,6 +52,13 @@ const FD_DUP_NAMES = (() => { const c = {}; FD_NODES.forEach(n => { c[n.name] = 
 const FD_PATH_ALIASES = { "/areas": "/areas/uk", "/areas/uk/england/london": "/areas/uk/england/greater-london", "/areas/worldwide/europe/united-kingdom": "/areas/uk" };
 
 
+/* v17.4.6: alternate names and legacy paths from the catalogue build (scripts/build-locations.py). */
+const FD_ALIASES = __ff_json("content/data/fd-aliases.json");
+
+
+Object.assign(FD_PATH_ALIASES, FD_ALIASES.paths || {});
+
+
 const FD_LONDON = "gn:2648110", FD_HERTS = "gn:2647043";
 
 
@@ -140,7 +147,11 @@ const fdPersonCover = (p) => {
   const fx = FD_PERSON_COV[p.id] || {};
   const sub = new Set(fx.sub || []);
   (p.locations || []).forEach(l => (FD_REGION[l] || []).forEach(b => { const id = fdBoroughId(b); if (id) sub.add(id); }));
-  return { whole: fx.whole || [], sub: [...sub], fixture: true };
+  /* v17.4.6: a profile's own coverage (ticked places by id, with exceptions) joins the fixtures. */
+  const own = p.coverage || { whole: [], exc: [] };
+  const exc = own.exc || [];
+  const whole = [...new Set([...(fx.whole || []), ...(own.whole || [])])];
+  return { whole, sub: [...sub].filter(id => !exc.includes(id)), exc, fixture: !own.whole || !own.whole.length };
 };
 
 
@@ -167,19 +178,27 @@ const fdCompanyCover = (c) => {
 
 
 const fdCoverNames = (cov) => {
-  const w = (cov.whole || []).map(id => FD_BY_ID[id]).filter(Boolean).map(n => n.name + " (whole area)");
+  const exOf = (n) => (cov.exc || []).map(id => FD_BY_ID[id]).filter(m => m && fdUnder(m, n.id));
+  const w = (cov.whole || []).map(id => FD_BY_ID[id]).filter(Boolean).map(n => { const ex = exOf(n); return n.name + (ex.length ? ` (not ${ex.slice(0, 2).map(m => m.name).join(", ")}${ex.length > 2 ? "…" : ""})` : " (whole area)"); });
   const s = (cov.sub || []).map(id => FD_BY_ID[id]).filter(Boolean).map(n => n.name);
   const all = [...w, ...s];
   return all.length > 3 ? all.slice(0, 3).join(", ") + " and " + (all.length - 3) + " more" : all.join(", ");
 };
 
 
-/* Does coverage include this exact location? whole = ancestor-or-self, sub = this very place. */
-const fdCovers = (cov, node) => (cov.whole || []).some(id => fdUnder(node, id)) || (cov.sub || []).includes(node.id);
+/* Does coverage include this exact location? whole = ancestor-or-self, sub = this very place, and an
+   exclusion (v17.4.6: cov.exc) closer to the place than the ticked area wins. */
+const fdCovers = (cov, node) => {
+  if ((cov.sub || []).includes(node.id)) return true;
+  const exc = cov.exc || [];
+  for (const a of fdAnc(node)) { if (exc.includes(a.id)) return false; if ((cov.whole || []).includes(a.id)) return true; }
+  return false;
+};
 
 
 /* Does coverage touch anything beneath (or at) this location? Used for parent pages and fallback. */
-const fdServesWithin = (cov, node) => (cov.whole || []).concat(cov.sub || []).some(id => { const n = FD_BY_ID[id]; return n && fdUnder(n, node.id); });
+const fdServesWithin = (cov, node) => (cov.whole || []).concat(cov.sub || []).some(id => { const n = FD_BY_ID[id]; return n && fdUnder(n, node.id) && fdCovers(cov, n); })
+  || (!!(cov.exc || []).length && (cov.whole || []).some(id => fdUnder(node, id)) && fdCovers(cov, node));
 
 
 
@@ -274,12 +293,14 @@ function fdCopyBase20(siteKey, node, ctx) {
   const q = (question, answer) => ({ q: question, a: answer });
   if (siteKey === "team") {
     const live = ctx.mode === "recruiting" || ctx.mode === "operational";
+    /* v17.4.6 page intent: "Bartending jobs in X". Real job listings appear only when FireFlair has them
+       (none in this prototype), so the page leads with the sign-up and work journey. */
     return {
-      title: live ? `Freelance bar work in ${X} — join FF Team` : `FF Team in ${X} — join the network`,
-      h1: live ? `Freelance bar and hospitality work in ${X}` : `FF Team in ${X}`,
-      desc: `Create a free FF Team Profile Card and say you work in ${X}. Hosts and businesses request people through FireFlair for events.`,
+      title: live ? `Bartending jobs in ${X} — FF Team` : `FF Team in ${X} — join the network`,
+      h1: live ? `Bartending and hospitality jobs in ${X}` : `FF Team in ${X}`,
+      desc: `Bartending and hospitality work in ${X}: create a free FF Team Profile Card, add ${X} to the areas you cover and get shift requests from businesses and hosts.`,
       intro: [
-        `FF Team is where bartenders and event professionals build a Profile Card and say where they work. Hosts and businesses then find people for private events and shifts.`,
+        `Create your Profile Card, add ${X} to the areas you cover, and say which professions you're available for. Businesses booking shifts in ${X} and hosts planning parties find you, and every request comes to you on WhatsApp.`,
         nExact ? `${nExact === 1 ? "One professional has" : nExact + " professionals have"} chosen ${X} as somewhere they work.` : (live ? `Nobody has chosen ${X} as a place they work yet.` : `FF Team is opening up in ${X}. Create your Profile Card and add ${X} as a place you work.`),
         `Joining the network is not applying for a job. There are no vacancies on this page, and a Profile Card does not guarantee work, hours or income.`],
       cta: "Create your Profile Card", cta2: null, ask: null, ctaKind: "signup",
@@ -290,9 +311,10 @@ function fdCopyBase20(siteKey, node, ctx) {
     };
   }
   if (siteKey === "staff") {
+    /* v17.4.6 page intent: businesses hiring shift staff in X. */
     return {
-      title: `Bar and hospitality staffing in ${X} — FF Staff`,
-      h1: `Bar and hospitality staffing in ${X}`,
+      title: `Hire shift staff in ${X} — FF Staff`,
+      h1: `Hire bar and event shift staff in ${X}`,
       desc: nExact ? `Hire bar and hospitality professionals who work in ${X}. Choose your people and book your shift with FireFlair.` : `Hire bar and hospitality staff for ${X}. Start an Event Card and choose your people with FireFlair.`,
       intro: [
         nExact ? `${nExact === 1 ? "One professional lists" : nExact + " professionals list"} ${X} as somewhere they work. Choose your people and start your booking.`
@@ -305,9 +327,11 @@ function fdCopyBase20(siteKey, node, ctx) {
         q("How does booking work?", `Choose your package, choose your people and choose your add-ons. The details and terms are shown before anything is confirmed.`)],
     };
   }
+  /* v17.4.6 page intent: "Hire a bartender in X". No date-specific availability is claimed here;
+     availability comes from booking data when a date is chosen. */
   return {
-    title: nExact ? `Hire a bartender for your party in ${X} | FF Party` : `Find a bartender for your party in ${X} | FF Party`,
-    h1: nExact ? `Hire a bartender for your party in ${X}` : `Find a bartender for your party in ${X}`,
+    title: `Hire a bartender in ${X} | FF Party`,
+    h1: `Hire a bartender in ${X}`,
     desc: nExact ? `Browse professionals who work in ${X} and plan your event with FireFlair.` : `Plan your party in ${X} with FireFlair. Start an Event Card and choose your package and your people.`,
     intro: [
       nExact ? `These professionals have said they work in ${X}. Choose someone to view their profile, then plan your event around them.`
@@ -391,7 +415,8 @@ function fdSearch(q) {
   const s = String(q || "").trim().toLowerCase();
   if (s.length < 2) return [];
   const rank = { a: 1, b: 1, p: 2, h: 3, n: 0, c: 0 };
-  return FD_NODES.filter(n => n.k !== "r" && n.k !== "t" && n.name.toLowerCase().includes(s))
+  const al = Object.entries(FD_ALIASES.names || {}).filter(([k]) => k.includes(s)).map(([, id]) => id);
+  return FD_NODES.filter(n => n.k !== "r" && n.k !== "t" && (n.name.toLowerCase().includes(s) || al.includes(n.id)))
     .sort((a, b) => (a.name.toLowerCase().startsWith(s) ? 0 : 1) - (b.name.toLowerCase().startsWith(s) ? 0 : 1) || (rank[a.k] - rank[b.k]) || a.name.localeCompare(b.name)).slice(0, 8);
 }
 
@@ -416,7 +441,7 @@ function FdAsk11({ siteKey, node, kind, company, onDone }) {
   const set = (k, v) => setF(x => ({ ...x, [k]: v }));
   const venue = siteKey === "staff";
   const toggleRole = (id) => set("roles", f.roles.includes(id) ? f.roles.filter(x => x !== id) : [...f.roles, id]);
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     if (busy.current) return;
     const er = {};
@@ -445,6 +470,13 @@ function FdAsk11({ siteKey, node, kind, company, onDone }) {
       createdAt: new Date().toISOString(), status: "new", assignee: "", adminNote: "",
       sourcePath: node ? node.path : "", sourceSite: siteKey, notif: { admin: "simulated", ack: em ? "simulated email" : "simulated message", failed: false }, bookingId: null,
     };
+    /* v17.4.6: interest is a Q&A answer first (int.area_expansion, option ids = roles, subject = the
+       place); the lead queue entry carries its id (qaResponseId) and the same reference. */
+    if (leadKind === "expansion_interest") {
+      const r = await qaSubmit17(dispatch, { questionId: "int.area_expansion", account: qaAccount17(state), subjectId: rec.locationId || rec.locationText, optionIds: f.roles, text: rec.brief, contact: rec.contact, submissionRef: ref, visibility: "private", source: `${site.name} area page ${rec.sourcePath}` });
+      if (!r.ok) { setErr({ contact: "That couldn't be saved. Try again." }); busy.current = false; return; }
+      rec.qaResponseId = r.answer.id;
+    }
     fdSet(state, dispatch, { requests: [rec, ...cur.requests], log: [{ at: rec.createdAt, by: "visitor", what: `${leadKind} ${ref}`, site: siteKey }, ...cur.log].slice(0, 200) });
     setDone({ ref, dupe: false });
     busy.current = false;
@@ -542,7 +574,7 @@ let FD_TICK_MAP19 = null;
 
 
 const fdTickNode19 = (name) => {
-  if (!FD_TICK_MAP19) { FD_TICK_MAP19 = {}; FD_NODES.forEach((n) => { const k = FD_TICK_NAME19(n).toLowerCase(); if (!FD_TICK_MAP19[k]) FD_TICK_MAP19[k] = n; }); FD_TICK_MAP19["united kingdom"] = FD_BY_ID["country:GB"]; FD_TICK_MAP19["greater london"] = FD_BY_ID[FD_LONDON]; }
+  if (!FD_TICK_MAP19) { FD_TICK_MAP19 = {}; FD_NODES.forEach((n) => { const k = FD_TICK_NAME19(n).toLowerCase(); if (!FD_TICK_MAP19[k]) FD_TICK_MAP19[k] = n; }); FD_TICK_MAP19["united kingdom"] = FD_BY_ID["country:GB"]; FD_TICK_MAP19["greater london"] = FD_BY_ID[FD_LONDON]; Object.entries(FD_ALIASES.names || {}).forEach(([k, id]) => { if (!FD_TICK_MAP19[k] && FD_BY_ID[id]) FD_TICK_MAP19[k] = FD_BY_ID[id]; }); }
   return FD_TICK_MAP19[String(name || "").trim().toLowerCase()] || null;
 };
 
@@ -554,101 +586,25 @@ const fdTickKids19 = (n) => {
 };
 
 
-function AreaTicks19(props) {
-  const h = React.createElement;
-  const dispatch = useStore().dispatch;
-  const items = props.items || [];
-  const owner = props.owner === "company" ? "company" : undefined;
-  const [openIds, setOpenIds] = useState({});
-  const ticked = {};
-  items.forEach((r) => { const n = fdTickNode19(r.name); if (n) ticked[n.id] = r; });
-  const implied = (n) => fdAnc(n).slice(1).some((a) => ticked[a.id]);
-  const toggle = (n) => {
-    if (ticked[n.id]) { dispatch({ type: "REC_DELETE", owner: owner, category: "locations", id: ticked[n.id].id }); return; }
-    fdDesc(n).forEach((d) => { if (ticked[d.id]) dispatch({ type: "REC_DELETE", owner: owner, category: "locations", id: ticked[d.id].id }); });
-    dispatch({ type: "REC_ADD", owner: owner, category: "locations", record: makeRecord("locations", FD_TICK_NAME19(n)) });
-  };
-  const row = (n, depth) => {
-    const kids = fdTickKids19(n), on = !!ticked[n.id], imp = implied(n), isOpen = !!openIds[n.id];
-    const label = FD_TICK_NAME19(n) === "UK-wide" ? "United Kingdom" : n.name;
-    return h("li", { key: n.id, className: "ff-tk19-li" },
-      h("div", { className: "ff-tk19-row", style: { paddingLeft: depth * 16 } },
-        kids.length ? h("button", { type: "button", className: "ff-tk19-x", "aria-expanded": isOpen, "aria-label": (isOpen ? "Collapse " : "Expand ") + label, onClick: () => setOpenIds({ ...openIds, [n.id]: !isOpen }) }, isOpen ? "▾" : "▸") : h("span", { className: "ff-tk19-x" }),
-        h("label", { className: "ff-tk19-lb" },
-          h("input", { type: "checkbox", checked: on || imp, disabled: imp, onChange: () => toggle(n) }),
-          h("span", null, label))),
-      isOpen && kids.length ? h("ul", { className: "ff-tk19-ul" }, kids.slice(0, 200).map((k) => row(k, depth + 1))) : null);
-  };
-  const roots = [FD_BY_ID["country:GB"], FD_BY_ID["worldwide"]].filter(Boolean);
-  return h("div", { className: "ff-frame ff-tk19", style: { padding: 14, marginTop: 14 } },
-    h("style", null, ".ff-tk19 h3{margin:0 0 4px;font-size:15px}.ff-tk19 p{margin:0 0 8px;font-size:12.5px}.ff-tk19-box{max-height:320px;overflow:auto;border-top:1px solid var(--line,#e5dcc8);padding-top:6px}.ff-tk19-ul,.ff-tk19-box{list-style:none;margin:0;padding-left:0}.ff-tk19-row{display:flex;align-items:center;gap:4px;min-height:36px}.ff-tk19-x{width:28px;height:28px;flex:none;border:0;background:none;color:var(--gold-dk);font-size:14px;cursor:pointer}.ff-tk19-lb{display:flex;align-items:center;gap:9px;flex:1;cursor:pointer;font-size:14px}.ff-tk19-lb input{width:20px;height:20px;accent-color:var(--gold-dk)}"),
-    h("h3", { className: "ff-label" }, "What areas do you cover?"),
-    h("p", { className: "ff-body ff-muted" }, "Default pricing includes travel. Consider this when you choose your areas."),
-    h("ul", { className: "ff-tk19-box", "aria-label": "Areas you cover" }, roots.map((n) => row(n, 0))));
-}
-
-
-function fdShown19(n, fd, siteKey) {
-  if (!n) return [];
-  if (n.id === "worldwide") return FD_WORLD_ORDER19.map((s) => FD_BY_PATH["/areas/worldwide/" + s]).filter(Boolean);
-  if (n.k === "t") return (FD_TOP19[n.slug] || []).map((s) => FD_BY_PATH[n.path + "/" + s]).filter(Boolean);
-  const kids = n.kids.map((i) => FD_NODES[i]);
-  if (n.id === "country:GB") return kids;
-  const live = kids.filter((k) => fdPageState(fd, siteKey, k).pub !== "prepared");
-  live.sort((a, b) => (b.id === FD_LONDON) - (a.id === FD_LONDON) || a.name.localeCompare(b.name));
-  return live.slice(0, 10);
-}
-
-
+/* Explore by area (v17.4.6): the same tree as "What areas do you cover?", in links mode. Places are links to
+   their area pages and branches expand on their own; the people listed in the last branch opened (Greater
+   London to start with) show underneath, as before. */
 function AreaExplorer11() {
   const h = React.createElement;
   const { state, dispatch } = useStore();
-  const siteKey = fdSiteKey(state), fd = fdOf(state);
+  const siteKey = fdSiteKey(state);
   const people = useDirectory();
-  const [q, setQ] = useState("");
-  const [sel, setSel] = useState(() => ["country:GB", "gn:6269131", FD_LONDON]);
-  const path = sel.map((id) => FD_BY_ID[id]).filter(Boolean);
-  const cur = path[path.length - 1] || FD_NODES[0];
+  const [cur, setCur] = useState(() => FD_BY_ID[FD_LONDON] || FD_NODES[0]);
   const res = useMemo(() => fdResults(state, cur, people, ""), [state.directory, state.admin17, state.company, cur.id, people.length]);
   const tiles = res.exact.concat(res.within);
-  const hits = fdSearch(q);
   const open = (e, n) => { e.preventDefault(); fdNav(dispatch, siteKey, n.path); };
-  const pick = (level, n) => {
-    const next = sel.slice(0, level).concat([n.id]);
-    if (n.id === "country:GB") next.push("gn:6269131", FD_LONDON);
-    else if (n.id === "gn:6269131" && level === 1) next.push(FD_LONDON);
-    else if (n.id === "worldwide") next.push("continent:EU");
-    setSel(next);
-  };
-  const chip = (n, level) => h("button", { key: n.id, type: "button", className: "ff-ax19-chip" + (sel[level] === n.id ? " on" : ""), "aria-pressed": sel[level] === n.id, onClick: () => pick(level, n) }, n.name);
-  const l1 = FD_NODES.filter((n) => n.pi < 0);
-  const l2 = path[0] ? fdShown19(path[0], fd, siteKey) : [];
-  const l3 = path[1] ? fdShown19(path[1], fd, siteKey) : [];
-  const l4 = path[2] && path[2].id === FD_LONDON ? path[2].kids.map((i) => FD_NODES[i]).sort((a, b) => a.name.localeCompare(b.name)) : [];
-  const l4On = l4.some((n) => path[3] && n.id === path[3].id);
-  const east = path[1] && path[1].slug === "europe" ? FD_EAST19.map((s) => FD_BY_PATH[path[1].path + "/" + s]).filter(Boolean) : [];
-  const eastOn = east.some((n) => path[2] && n.id === path[2].id);
-  const body = q.trim().length >= 2
-    ? h("ul", { className: "ff-fd-hits", "aria-label": "Matching places" }, hits.length
-        ? hits.map((n) => h("li", { key: n.id }, h("span", { className: "ff-fd-nm" }, h("a", { href: fdHref(siteKey, n.path), onClick: (e) => open(e, n) }, fdLabel(n)), h("small", null, FD_KIND_LABEL[n.k] + (fdChain(n) ? " · " + fdChain(n) : "")))))
-        : h("li", { className: "none" }, "No matching place."))
-    : h(React.Fragment, null,
-        h("div", { className: "ff-ax19-row ff-ax19-top", role: "group", "aria-label": "Where" }, l1.map((n) => chip(n, 0))),
-        l2.length > 0 && h("div", { className: "ff-ax19-row", role: "group", "aria-label": "Region" }, l2.map((n) => chip(n, 1))),
-        (l3.length > 0 || east.length > 0) && h("div", { className: "ff-ax19-row", role: "group", "aria-label": "Places" }, l3.map((n) => chip(n, 2)),
-          east.length > 0 && h("select", { className: "ff-ax19-sel" + (eastOn ? " on" : ""), "aria-label": "Eastern Europe", value: eastOn ? path[2].id : "", onChange: (e) => { if (e.target.value) setSel([sel[0], sel[1], e.target.value]); } },
-            h("option", { value: "" }, "Eastern Europe"), east.map((n) => h("option", { key: n.id, value: n.id }, n.name)))),
-        l4.length > 0 && h("div", { className: "ff-ax19-row", role: "group", "aria-label": "London areas" },
-          h("select", { className: "ff-ax19-sel" + (l4On ? " on" : ""), "aria-label": "London areas", value: l4On ? path[3].id : "", onChange: (e) => setSel([sel[0], sel[1], sel[2], e.target.value].filter(Boolean)) },
-            h("option", { value: "" }, "London areas"), l4.map((n) => h("option", { key: n.id, value: n.id }, n.name)))),
-        h("div", { className: "ff-ax19-head" }, h("h3", null, fdLabel(cur)),
-          h("a", { className: "ff-ax19-open", href: fdHref(siteKey, cur.path), onClick: (e) => open(e, cur) }, tiles.length > 12 ? "See all " + tiles.length : tiles.length ? "See everyone in " + cur.name : "Open the " + cur.name + " page")),
-        tiles.length > 0 && h(HScroll, { label: "People in " + fdLabel(cur), snap: true }, tiles.slice(0, 12).map((x) => h(FdResultTile11, { key: x.key, x, scope: res.within.includes(x) }))));
   return h("section", { id: "ff-fd-explore", style: { marginTop: 22, scrollMarginTop: 70 } },
     h("style", null, FD_CSS19),
     h(Fold17, { id: "ff-fd-explore-f", icon: h(I11.MapPinned, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title: "Explore by area", shut: true },
-      h("label", { className: "ff-fd-search" }, h(A17I.Search, { size: 14 }), h("span", { className: "ff-fd-sr" }, "Search for a place"), h("input", { value: q, onChange: (e) => setQ(e.target.value), placeholder: "Search for a town, borough or neighbourhood" })),
-      body));
+      h(CoverageTree17, { mode: "links", siteKey, compact: true, title: null, onOpen: setCur, startOpen: ["country:GB", "gn:6269131"] }),
+      h("div", { className: "ff-ax19-head" }, h("h3", null, fdLabel(cur)),
+        h("a", { className: "ff-ax19-open", href: fdHref(siteKey, cur.path), onClick: (e) => open(e, cur) }, tiles.length > 12 ? "See all " + tiles.length : tiles.length ? "See everyone in " + cur.name : "Open the " + cur.name + " page")),
+      tiles.length > 0 && h(HScroll, { label: "People in " + fdLabel(cur), snap: true }, tiles.slice(0, 12).map((x) => h(FdResultTile11, { key: x.key, x, scope: res.within.includes(x) })))));
 }
 
 

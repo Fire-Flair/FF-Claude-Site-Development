@@ -1,0 +1,205 @@
+{
+ "rows": 1068,
+ "kit_rows": 1000,
+ "world_rows": 34,
+ "added": [
+  {
+   "id": "gn:2642878",
+   "name": "Mayfair",
+   "path": "/areas/uk/england/greater-london/westminster/mayfair"
+  },
+  {
+   "id": "gn:6545247",
+   "name": "Belgravia",
+   "path": "/areas/uk/england/greater-london/westminster/belgravia"
+  },
+  {
+   "id": "gn:6690580",
+   "name": "Knightsbridge",
+   "path": "/areas/uk/england/greater-london/westminster/knightsbridge"
+  },
+  {
+   "id": "gn:2645801",
+   "name": "Kensington",
+   "path": "/areas/uk/england/greater-london/kensington-and-chelsea/kensington"
+  },
+  {
+   "id": "gn:2638768",
+   "name": "St John's Wood",
+   "path": "/areas/uk/england/greater-london/westminster/st-johns-wood"
+  },
+  {
+   "id": "gn:2650803",
+   "name": "Dulwich",
+   "path": "/areas/uk/england/greater-london/southwark/dulwich"
+  },
+  {
+   "id": "gn:2650079",
+   "name": "Elmbridge",
+   "path": "/areas/uk/england/surrey/elmbridge"
+  },
+  {
+   "id": "gn:2652689",
+   "name": "Cobham",
+   "path": "/areas/uk/england/surrey/elmbridge/cobham"
+  },
+  {
+   "id": "gn:2640718",
+   "name": "Oxshott",
+   "path": "/areas/uk/england/surrey/elmbridge/oxshott"
+  },
+  {
+   "id": "gn:6620367",
+   "name": "Virginia Water",
+   "path": "/areas/uk/england/surrey/virginia-water"
+  },
+  {
+   "id": "gn:2636520",
+   "name": "Sunningdale",
+   "path": "/areas/uk/england/windsor-and-maidenhead/sunningdale"
+  },
+  {
+   "id": "gn:2656120",
+   "name": "Beaconsfield",
+   "path": "/areas/uk/england/buckinghamshire/beaconsfield"
+  },
+  {
+   "id": "gn:2639720",
+   "name": "Radlett",
+   "path": "/areas/uk/england/hertfordshire/radlett"
+  },
+  {
+   "id": "gn:2653085",
+   "name": "Chorleywood",
+   "path": "/areas/uk/england/hertfordshire/chorleywood"
+  },
+  {
+   "id": "gn:2647101",
+   "name": "Henley-on-Thames",
+   "path": "/areas/uk/england/oxfordshire/henley-on-thames"
+  },
+  {
+   "id": "gn:2657546",
+   "name": "Alderley Edge",
+   "path": "/areas/uk/england/cheshire-east/alderley-edge"
+  },
+  {
+   "id": "gn:2645093",
+   "name": "Knutsford",
+   "path": "/areas/uk/england/cheshire-east/knutsford"
+  },
+  {
+   "id": "gn:6640028",
+   "name": "Hale",
+   "path": "/areas/uk/england/trafford/hale"
+  },
+  {
+   "id": "gn:2655069",
+   "name": "Bowdon",
+   "path": "/areas/uk/england/trafford/bowdon"
+  },
+  {
+   "id": "gn:2646272",
+   "name": "Ilkley",
+   "path": "/areas/uk/england/bradford/ilkley"
+  },
+  {
+   "id": "gn:6544203",
+   "name": "Sandbanks",
+   "path": "/areas/uk/england/bournemouth-christchurch-and-poole-council/sandbanks"
+  },
+  {
+   "id": "gn:2653895",
+   "name": "Canford Cliffs",
+   "path": "/areas/uk/england/bournemouth-christchurch-and-poole-council/canford-cliffs"
+  },
+  {
+   "id": "gn:2638682",
+   "name": "Salcombe",
+   "path": "/areas/uk/england/devon/salcombe"
+  },
+  {
+   "id": "gn:9168473",
+   "name": "Stockbridge",
+   "path": "/areas/uk/scotland/edinburgh/stockbridge"
+  },
+  {
+   "id": "gn:6697585",
+   "name": "Morningside",
+   "path": "/areas/uk/scotland/edinburgh/morningside"
+  },
+  {
+   "id": "gn:2648683",
+   "name": "Giffnock",
+   "path": "/areas/uk/scotland/east-renfrewshire/giffnock"
+  },
+  {
+   "id": "gn:2641419",
+   "name": "North Berwick",
+   "path": "/areas/uk/scotland/east-lothian/north-berwick"
+  },
+  {
+   "id": "gn:2647778",
+   "name": "Gullane",
+   "path": "/areas/uk/scotland/east-lothian/gullane"
+  },
+  {
+   "id": "gn:2652209",
+   "name": "Cowbridge",
+   "path": "/areas/uk/wales/vale-of-glamorgan/cowbridge"
+  },
+  {
+   "id": "gn:2642313",
+   "name": "Monmouth",
+   "path": "/areas/uk/wales/monmouthshire/monmouth"
+  },
+  {
+   "id": "gn:2635052",
+   "name": "Usk",
+   "path": "/areas/uk/wales/monmouthshire/usk"
+  },
+  {
+   "id": "gn:2646670",
+   "name": "Holywood",
+   "path": "/areas/uk/northern-ireland/ards-and-north-down/holywood"
+  },
+  {
+   "id": "gn:2651723",
+   "name": "Cultra",
+   "path": "/areas/uk/northern-ireland/ards-and-north-down/cultra"
+  },
+  {
+   "id": "gn:2646890",
+   "name": "Hillsborough",
+   "path": "/areas/uk/northern-ireland/lisburn-and-castlereagh/hillsborough"
+  }
+ ],
+ "aliases": {
+  "names": {
+   "st johns wood": "gn:2638768",
+   "saint john's wood": "gn:2638768",
+   "dulwich village": "gn:2650803",
+   "henley": "gn:2647101"
+  },
+  "paths": {
+   "/areas/uk/england/greater-london/westminster/saint-johns-wood": "/areas/uk/england/greater-london/westminster/st-johns-wood",
+   "/areas/uk/england/greater-london/southwark/dulwich-village": "/areas/uk/england/greater-london/southwark/dulwich",
+   "/areas/uk/england/oxfordshire/henley": "/areas/uk/england/oxfordshire/henley-on-thames"
+  }
+ },
+ "errors": [],
+ "notes": [
+  "12 names are shared by more than one page; the prototype labels them with their parent (fdLabel)."
+ ],
+ "checks": [
+  "duplicate ids",
+  "duplicate paths",
+  "unknown parents",
+  "parent order",
+  "cycles",
+  "empty names or slugs",
+  "alias collisions",
+  "every route has a row",
+  "additions under /areas/uk"
+ ]
+}

@@ -57,7 +57,7 @@ function pkgsOf17(state) {
   if (bt) ff.push({ ...bt, id: "svc_supplier", title: "Bar company supplier", tagline: "A bar company supplies the bar, the drinks and the team.", includes: "Bar, drinks and bartenders from one company",
     role: "Bartender", ideal: "Parties that want everything supplied", time: "From 4 hours", noPrice: true, drinks: true, shop: false,
     features: ["A bar company looks after your whole bar", "Bar, drinks and bartenders supplied", "Set-up, service and tidy-down included", "Chosen from FireFlair bar companies"] });
-  const mine = (state.myServices || []).filter(x => x.type !== "addon" && String(x.title).trim() && !hid17(state, "cards", x.id)).map(x => ({ ...svcFrom17(x), cat: x.cat || "bar", bands: (x.bands && x.bands.length) ? x.bands : ALLB17, mine: true }));
+  const mine = myContent17(state, "services").filter(x => x.type !== "addon" && String(x.title).trim() && !hid17(state, "cards", x.id)).map(x => ({ ...svcFrom17(x), cat: x.cat || "bar", bands: (x.bands && x.bands.length) ? x.bands : ALLB17, mine: true }));
   return [...ff, ...mine, ...SAMPLE_PKGS17];
 }
 
@@ -165,7 +165,7 @@ const ALLCK17 = [...CLASSICS17, ...MOCKS17];
 
 
 /* The cocktails chosen for an event, with servings (steps of 20), and a recipe scaled to those servings. */
-const cocktailLines17 = (state, evId) => { const sel = ((state.addons17 || {})[evId || "draft"]) || {}; return [...ALLCK17, ...(state.myCocktails || [])].filter(c => sel[c.id] > 0).map(c => ({ c, qty: sel[c.id] })); };
+const cocktailLines17 = (state, evId) => { const sel = ((state.addons17 || {})[evId || "draft"]) || {}; return [...ALLCK17, ...myContent17(state, "cocktails")].filter(c => sel[c.id] > 0).map(c => ({ c, qty: sel[c.id] })); };
 
 
 const scaleAmt17 = (i, qty) => { const a = parseFloat(i.amt); if (!a) return "–"; const t = +(a * qty).toFixed(2), u = i.unit || "ml";

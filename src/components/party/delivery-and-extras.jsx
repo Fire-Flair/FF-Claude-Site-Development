@@ -22,6 +22,33 @@ if (typeof document !== "undefined" && !document.getElementById("ff-sd11-css")) 
 const hirerOf11 = (state, ev) => (ev && ev.hirer) || (state.company && (state.company.name || state.company.title)) || "The host";
 
 
+/* Where a booking came from (v17.4.6): the event record says so (event.source, or site "party" for
+   FF Party bookings); older records without either are read from the hirer, as hirerCard11 does. */
+function eventSource17(state, ev) {
+  if (!ev) return "staff";
+  if (ev.source === "party" || ev.source === "staff") return ev.source;
+  if (ev.site === "party" || ev.hirerKind === "host") return "party";
+  return hirerCard11(state, ev).party ? "party" : "staff";
+}
+
+
+const SRC17_LABEL = { staff: "FF Staff shift", party: "FF Party package" };
+
+
+/* The Pay row: Hourly and Shift total side by side, from payOf17. Missing or unreadable pay is shown
+   as such, never filled in. */
+function PayPair17({ shift }) {
+  const p = payOf17(shift);
+  if (p.status !== "ok") return <span className="ff-pay17 bad" title={p.problem || ""}>{p.status === "missing" ? "Pay not recorded" : "Pay can't be read"}</span>;
+  return (
+    <span className="ff-pay17">
+      <span><small>Hourly</small><b>{gbp17(p.hourlyP)}</b></span>
+      <span><small>Shift total</small><b>{gbp17(p.totalP)}</b><small className="m">{minsText17(p.mins)}</small></span>
+    </span>
+  );
+}
+
+
 const whenOf11 = (sh) => `${shortDay(sh.iso) || sh.date || ""}${sh.time ? ` · ${sh.time}` : ""}`;
 
 
@@ -54,6 +81,7 @@ function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
   const handTo = e.handover && ((findPerson(all, state, (state.engagements.find(x => x.id === e.handover.to) || {}).staffId) || {}).name || e.handover.name);
   const handEng = e.handover && state.engagements.find(x => x.id === e.handover.to);
   const kind = e.auto ? "auto" : "sel";
+  const src = eventSource17(state, event);
   const hv = viewer === "hirer", act = !hv;
   const who = findPerson(all, state, e.staffId) || {};
   const fn = firstName(who.name || "");
@@ -66,7 +94,7 @@ function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
     <div className="ff-evc-rows">
       <EvRow icon={I11.CalendarDays} k="When">{whenOf11(shift)}</EvRow>
       <EvRow icon={I11.MapPin} k="Where">{shift.venue || (event && event.venue) || "To be confirmed"}</EvRow>
-      <EvRow icon={I11.Banknote} k="Pay">{shift.pay || (shift.total ? `£${shift.total}` : "Agreed with the host")}</EvRow>
+      <EvRow icon={I11.Banknote} k="Pay"><PayPair17 shift={shift} /></EvRow>
       <EvRow icon={I11.Shirt} k="Dress">{shift.dress || "To be confirmed"}</EvRow>
       <EvRow icon={I11.Briefcase} k="Hired by">{hirer}</EvRow>
     </div>
@@ -74,8 +102,9 @@ function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
   const askBox = ask && <div className="ask"><input aria-label="Your question" value={txt} onChange={(x) => setTxt(x.target.value.slice(0, 200))} placeholder="Your question" /><div className="btns" style={{ gridTemplateColumns: "1fr" }}><button type="button" className="yes" disabled={!txt.trim()} onClick={send}>Send question</button></div></div>;
   const thread = (e.thread || []).length > 0 && <div className="thread">{e.thread.map((m, i) => <p key={i}>{m.from === "pro" ? (viewer === "hirer" ? `${firstName((findPerson(all, state, e.staffId) || {}).name || "") || "They"}: ` : "You: ") : (viewer === "hirer" ? "You: " : `${hirer}: `)}{m.text}</p>)}</div>;
   return (<>
-    <article className={`ff-evc ff-sd11 ${kind}${mini ? " mini" : ""}`} aria-label={`Shift card: ${shift.role}`}>
+    <article className={`ff-evc ff-sd11 ${kind} src-${src}${mini ? " mini" : ""}`} aria-label={`${SRC17_LABEL[src]}: ${shift.role}`}>
       <span className="ff-evc-plate">Shift Card</span>
+      <span className="ssrc">{SRC17_LABEL[src]}</span>
       <span className="ff-evc-coin"><Coin size={30} tier="gold" /></span>
       <span className="stag">{tag}</span>
       <h3 className="ff-evc-name">{shift.role}</h3>
@@ -528,13 +557,26 @@ function TeamExtras17() {
 
 /* FF Staff: train and reward the people who work for you. */
 function BizInterest17({ kind }) {
-  const { dispatch } = useStore();
+  const { state, dispatch } = useStore();
   const I = swipeImgs();
   const list = kind === "train" ? TRAINING_COURSES : XP_REWARDS, imgs = kind === "train" ? I.training : I.rewards;
-  const [picked, setPicked] = useState([]);
-  const [sent, setSent] = useState(false);
+  /* v17.4.6: saved as a Q&A answer for the company account (was UI state only). */
+  const qid = kind === "train" ? "int.biz_training" : "int.biz_rewards";
+  const account = (state.company && state.company.slug) || qaAccount17(state);
+  const savedAns = account ? qaAnswer17(state, account, qid) : null;
+  const [picked, setPicked] = useState(() => (savedAns ? savedAns.optionIds : []));
+  const [sent, setSent] = useState(!!savedAns);
+  const [busy, setBusy] = useState(false);
   const toggle = (id) => { setSent(false); setPicked(p => p.includes(id) ? p.filter(x => x !== id) : [...p, id]); };
-  const send = () => { if (!picked.length) return; setSent(true); dispatch({ type: "TOAST", toast: "Interest registered. We'll tell you when a date is available." }); };
+  const send = async () => {
+    if (!picked.length || busy) return;
+    if (!account) { window.dispatchEvent(new Event("ff-login")); return; }
+    setBusy(true);
+    const r = await qaSubmit17(dispatch, { questionId: qid, account, optionIds: picked, visibility: "private", source: kind === "train" ? "FF Staff · Train your staff" : "FF Staff · Reward your staff" });
+    setBusy(false);
+    if (!r.ok) { dispatch({ type: "TOAST", toast: "That couldn't be saved. Try again." }); return; }
+    setSent(true); dispatch({ type: "TOAST", toast: "Interest registered. We'll tell you when a date is available." });
+  };
   return (
     <div className="ff-bi17">
       <div className="ff-courses ff-courses-img">
