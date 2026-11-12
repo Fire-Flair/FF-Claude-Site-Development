@@ -39,7 +39,7 @@ const FIRE17_STILL = __ff_json("content/data/fire17-still.json");
 
   const HIRE = {
     staff: { img: "training_ff_open_bar", h: "Welcome to FF Staff", sub: "Find staff. Book staff.", cta: "Hire staff", search: "Search staff, skills, locations…" },
-    party: { img: "teams", h: "Welcome to FF Party", sub: "Plan your party. Choose your people.", cta: "Plan your event", search: "Search people, skills, areas…" }
+    party: { img: "teams", h: "Welcome to FF Party", sub: "Plan your party. Choose your people.", cta: "Book now", search: "Search people, skills, areas…" }
   };
 
   function HireSearch({ placeholder }) {
@@ -126,12 +126,16 @@ const FIRE17_STILL = __ff_json("content/data/fire17-still.json");
     }, c.h), React.createElement("p", {
       className: "ff-hero-sub101"
     }, c.sub), React.createElement("div", {
-      className: "ff-hero17-cta"
+      className: kind === "party" ? "ff-hero17-cta two" : "ff-hero17-cta"
     }, React.createElement(ShineButton, {
       onClick: nav.toEvent
     }, React.createElement(CalDays11, {
       size: 15
-    }), " ", c.cta)), React.createElement("div", {
+    }), " ", c.cta), kind === "party" ? React.createElement("button", {
+      type: "button",
+      className: "ff-btn",
+      onClick: () => nav.toNetwork("")
+    }, "Browse our network") : null), React.createElement("div", {
       className: "ff-hero17-ai"
     }, React.createElement(HireSearch, {
       placeholder: c.search

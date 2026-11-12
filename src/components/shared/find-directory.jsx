@@ -340,7 +340,7 @@ function fdCopyBase20(siteKey, node, ctx) {
       nExact ? `These professionals have said they work in ${X}. Choose someone to view their profile, then plan your event around them.`
              : `Plan your party in ${X}. Start an Event Card with your date, place and guests, and FireFlair shows the packages and people that suit it.`,
       `Availability for your date is confirmed when you book. Nothing is booked, reserved or charged when you start an Event Card.`],
-    cta: nExact ? "See who works here" : "Plan your event", cta2: nExact ? "Plan your event" : null, ask: null, ctaKind: nExact ? "results" : "event",
+    cta: nExact ? "See who works here" : null, cta2: null, ask: null, ctaKind: nExact ? "results" : "event",
     faq: [
       q(`Can I book a bartender in ${X}?`, `Yes. Start an Event Card with your date and place, choose your package, then choose your people and add-ons.`),
       q("Are the people shown free on my date?", `Not necessarily. Each person has said where they work. Availability for your date is confirmed when you book.`),
@@ -670,6 +670,12 @@ function AreaPage11() {
   const goAsk = (c) => { setAskCo(c); try { askRef.current && askRef.current.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) { /* ignore */ } };
   const signup = () => { fdClose(dispatch); if (state.role === "team") dispatch({ type: "TAB", tab: "profile" }); else dispatch({ type: "ROLE", role: "team" }); };
   const cta = () => { if (copy.ctaKind === "signup") signup(); else if (copy.ctaKind === "results") { const el = document.getElementById("ff-fd-results"); el && el.scrollIntoView({ behavior: "smooth", block: "start" }); } else go19(); };
+  /* Packages someone listed here offers (their profession decides, as on their profile), and who. */
+  const pkgHere = (() => {
+    const by = {};
+    [...res.exact, ...res.within].filter(x => x.kind === "person").forEach(x => { servicesOf(state, x.p).filter(sv => sv.kind === "std").forEach(sv => { (by[sv.id] = by[sv.id] || []).push(x.p); }); });
+    return { by, ids: Object.keys(by) };
+  })();
   const kidsLive = node.kids.map(i => FD_NODES[i]).filter(livePub);
   const sibs = fdParent(node) ? fdParent(node).kids.map(i => FD_NODES[i]).filter(n => n.id !== node.id && livePub(n)) : [];
   const CAP = 12;
@@ -685,7 +691,7 @@ function AreaPage11() {
       <div className="ff-eyebrow">{site.name}</div>
       <h1 id="fd-h1" className="ff-h1">{copy.h1}</h1>
       {copy.intro.map((t, i) => <p key={i} className="ff-fd-intro">{t}</p>)}
-      {!copy.ctaAfterFaq && <div className="ff-fd-cta"><Btn variant="gold" onClick={cta}>{copy.cta}</Btn>
+      {!copy.ctaAfterFaq && (copy.cta || copy.cta2 || siteKey === "staff") && <div className="ff-fd-cta">{copy.cta && <Btn variant="gold" onClick={cta}>{copy.cta}</Btn>}
         {copy.cta2 && <button type="button" className="ff-fd-link" onClick={go19}>{copy.cta2}</button>}
         {siteKey === "staff" && <button type="button" className="ff-fd-link" onClick={() => dispatch({ type: "ROLE", role: "staff", site: "staff" })}>Create a company profile</button>}</div>}
 
@@ -711,6 +717,10 @@ function AreaPage11() {
           <b>{role ? `No ${FD_ROLE_LABEL[role].toLowerCase()} lists ${fdLabel(node)} yet.` : `Nobody lists ${fdLabel(node)} yet.`}</b>
           <p>{siteKey === "team" ? `You could be the first. Create a Profile Card and choose ${fdLabel(node)} as a place you work.` : "Start an Event Card with your date and place, and FireFlair shows the packages and people that suit it."}</p></div>}
       </section>
+
+      {pkgHere.ids.length > 0 && window.PartyPackages18 && <section id="ff-fd-pkgs" aria-label={`Available packages in ${fdLabel(node)}`} style={{ marginTop: 26, scrollMarginTop: 70 }}>
+        {React.createElement(window.PartyPackages18, { ids: pkgHere.ids, peopleOf: (id) => pkgHere.by[id] || [], place: fdLabel(node), title: "Available packages" })}
+      </section>}
 
       {res.dir.length > 0 && <section id="ff-fd-dir" aria-labelledby="fd-dir-h" style={{ marginTop: 26, scrollMarginTop: 70 }}>
         <h2 id="fd-dir-h" className="ff-h2">FF Event Directory</h2>

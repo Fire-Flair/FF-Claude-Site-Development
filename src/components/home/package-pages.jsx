@@ -223,56 +223,88 @@ function PkgBody18({ m, onPlan }) {
       h18("div", null, h18("dt", null, "Duration"), h18("dd", null, sv.time)),
       m.cond ? h18("div", null, h18("dt", null, "Good to know"), h18("dd", null, m.cond)) : null,
       h18("div", null, h18("dt", null, "Price"), h18("dd", null, sv.price))),
-    h18("ol", { className: "ff-pk18-steps" }, ["Choose your package", "Choose your people", "Choose your add-ons", "Your booking is secured"].map((t, i) => h18("li", { key: t }, h18("span", null, i + 1), t))),
+    h18("ol", { className: "ff-pk18-steps" }, ["Choose your package", "Choose your people", "Choose your add\u2011ons", "Your booking is secured"].map((t, i) => h18("li", { key: t }, h18("span", null, i + 1), t))),
     h18("p", { className: "ff-pk18-g" }, h18("b", null, "The FireFlair Booking Guarantee. "), "Confirmed, or refunded in full."),
     h18("div", { className: "ff-pk18-cta" }, h18(ShineButton, { onClick: onPlan }, "Plan your event")));
 }
 
 /* v17.4.7.18 the package card button, by site: FF Team Sign up, FF Staff Create your own, FF Party Book now (gold, shiny). */
+function pk18Site(state) {
+  const team = state.role === "team", staffSite = state.role === "staff" && !(hireSiteOf(state) || {}).party;
+  return { team: team, staffSite: staffSite, party: !team && !staffSite, label: team ? "Sign up" : staffSite ? "Create your own" : "Book now" };
+}
+
 function pk18Act(st, m, hire) {
-  const state = st.state, dispatch = st.dispatch, sv = m.sv;
-  if (state.role === "team") {
+  const state = st.state, dispatch = st.dispatch, sv = m.sv, site = pk18Site(state);
+  if (site.team) {
     if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; }
     const on = ((state.profile && state.profile.serviceInterest) || []).includes(sv.id);
     if (!on) pkgSignup17(state, dispatch, sv);
     dispatch({ type: "TAB", tab: "bookings" }); window.scrollTo(0, 0);
     return;
   }
-  if (state.role === "staff" && !(hireSiteOf(state) || {}).party) { dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); return; }
+  if (site.staffSite) { dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); return; }
   selectPkg17(state, dispatch, sv.id, false);
   hire.toEvent();
 }
 
-function PartyPackages18() {
+function PkgBtn18({ st, m, hire, onDone, full }) {
+  const site = pk18Site(st.state);
+  return h18("button", { type: "button", className: "ff-btn ff-pk18-go" + (full ? " full" : "") + (site.party ? " gold ff-shine" : ""), onClick: (e) => { e.stopPropagation(); if (onDone) onDone(); pk18Act(st, m, hire); } }, site.label);
+}
+
+/* The pop-up: the card, larger, with the full text. Scrolls on a phone. */
+function PkgFull18({ m, st, hire, onClose, people, place }) {
+  const sv = m.sv, state = st.state;
+  const inc = m.more && m.more.length ? m.more : [sv.includes];
+  const price = state.role === "staff" || state.site === "party" ? sv.price : String(sv.price).replace(/£(\d+)/, (x, n) => "£" + Math.max(0, +n - 50));
+  const lines = (arr) => h18(React.Fragment, null, arr.map((x) => h18("span", { key: x, className: "ff-pk18full-li" }, x)));
+  const rows = [
+    { icon: h18(Sparkles, { size: 17 }), label: "Includes", value: lines(inc) },
+    { icon: h18(Users, { size: 17 }), label: "Perfect for", value: sv.ideal },
+    m.pers ? { icon: h18(Sparkles, { size: 17 }), label: "Your way", value: m.pers } : null,
+    { icon: h18(Clock, { size: 17 }), label: "Duration", value: sv.time },
+    m.cond ? { icon: h18(Sparkles, { size: 17 }), label: "Good to know", value: m.cond } : null
+  ].filter(Boolean);
+  return h18("div", { className: "ff-pk18full" },
+    h18(PosterCard, {
+      tone: sv.tone, ribbon: "Package Card", eyebrow: `${sv.level} · FF Party`, title: sv.title, subtitle: m.head, tagline: m.desc, price: price, rows: rows,
+      footer: h18(PkgBtn18, { st: st, m: m, hire: hire, onDone: onClose, full: true })
+    }),
+    people && people.length ? h18("div", { className: "ff-pk18-who" },
+      h18("b", null, "Available in " + place),
+      h18("div", { className: "ff-pk18-chips" }, people.map((p) => h18("button", { type: "button", key: p.id, className: "ff-pk18-chip", onClick: () => { onClose(); st.dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); } }, p.name)))) : null,
+    h18("ol", { className: "ff-pk18-steps" }, ["Choose your package", "Choose your people", "Choose your add\u2011ons", "Your booking is secured"].map((t, i) => h18("li", { key: t }, h18("span", null, i + 1), t))),
+    h18("p", { className: "ff-pk18-g" }, h18("b", null, "The FireFlair Booking Guarantee. "), "Confirmed, or refunded in full."));
+}
+
+/* The package cards. ids / peopleOf / place are optional: the location pages show only the packages someone there offers. */
+function PartyPackages18({ ids, peopleOf, place, title } = {}) {
   const st18 = useStore();
   const [open, setOpen] = useState(null);
   const hire = useHireNav();
-  const list = PKG18_ORDER.map(pkg18).filter(Boolean);
+  const list = PKG18_ORDER.map(pkg18).filter(Boolean).filter((m) => !ids || ids.includes(m.sv.id));
   const cur = open ? pkg18(open) : null;
-  const state = st18.state;
-  const party = state.role !== "team" && !(state.role === "staff" && !(hireSiteOf(state) || {}).party);
-  const label = state.role === "team" ? "Sign up" : party ? "Book now" : "Create your own";
+  const heading = title === undefined ? "FireFlair Packages" : title;
+  if (!list.length) return null;
   return h18(
     "section",
     { className: "ff-sect ff-pk18-sect", id: "ff-offer", "aria-labelledby": "ff-pk18-h" },
-    h18("h2", { id: "ff-pk18-h", className: "ff-h1" }, "FireFlair Packages"),
-    h18(HomeCarousel, { label: "FireFlair Packages" }, list.map((m) => h18(
+    h18(Css18, null),
+    heading ? h18("h2", { id: "ff-pk18-h", className: "ff-h1" }, heading) : null,
+    h18(HomeCarousel, { label: heading || "FireFlair Packages" }, list.map((m) => h18(
       "div",
       { key: m.slug, style: { width: CARD_W.poster, flex: "none" } },
       h18(
         "div",
         { className: "ff-pk18-hit", role: "group", "aria-label": m.sv.title, tabIndex: 0, onClick: () => setOpen(m.slug), onKeyDown: (e) => { if (e.target === e.currentTarget && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); setOpen(m.slug); } } },
-        h18(ServicePoster, { svc: Object.assign({}, m.sv, { kind: "package" }), cta: h18("button", { type: "button", className: "ff-btn ff-pk18-go" + (party ? " gold ff-shine" : ""), onClick: (e) => { e.stopPropagation(); pk18Act(st18, m, hire); } }, label) })
+        h18(ServicePoster, { svc: Object.assign({}, m.sv, { kind: "package" }), cta: h18(PkgBtn18, { st: st18, m: m, hire: hire }) })
       )
     ))),
     cur ? h18(
       Sheet,
       { open: true, onClose: () => setOpen(null), title: cur.sv.title, center: true },
-      h18(PkgBody18, { m: cur, onPlan: () => {
-        selectPkg17(st18.state, st18.dispatch, cur.sv.id, false);
-        setOpen(null);
-        hire.toEvent();
-      } })
+      h18(PkgFull18, { m: cur, st: st18, hire: hire, onClose: () => setOpen(null), people: peopleOf ? peopleOf(cur.sv.id) : null, place: place })
     ) : null
   );
 }

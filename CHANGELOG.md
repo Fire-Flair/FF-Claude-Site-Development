@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.19 — 2026-11-12 — Package pop-up, Available packages on location pages
+Artifact version 1794498550-27c1.
+
+- Package pop-up: tapping a FireFlair package card opens a larger version of the same card. It scrolls full screen on a phone, carries the full text (includes, perfect for, your way, duration, good to know), the four booking steps and the guarantee, and keeps the site button (Sign up, Create your own, Book now).
+- Location pages (for example Bexley): new "Available packages" section between the people and the FF Event Directory. It shows the packages that someone listed there offers (from their profession, as on their profile). The pop-up lists those people as "Available in <place>" and each links to their profile.
+- Location pages: the "Plan your event" button is removed.
+- FF Party home hero: the button now says "Book now", with "Browse our network" beside it.
+- The package card styles (css18) now load wherever the cards appear.
+- "Choose your add-ons" no longer breaks at the hyphen.
+
 ## v17.4.7.18 — 2026-11-12 — Package card buttons by site
 Artifact version 1794497924-b130.
 
