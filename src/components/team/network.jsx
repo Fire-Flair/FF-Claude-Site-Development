@@ -214,10 +214,11 @@ function PersonProfile() {
       </div>) : null;
   const cardEl = <PlayerCard person={person} format="full" nameAs="div" themeKey={person.id === "me" ? state.profile.theme : (person.theme || "ivory")}  />;
   const myTag = state.auth.status === "signedIn" ? (state.auth.tag || state.session.tag) : "";
-  const shareEl = person.id === "me" && myTag ? (
+  const shareTag = person.id === "me" ? myTag : String(person.tag || cx17Slug(person.name || person.id) || "");
+  const shareEl = shareTag ? (
     <div style={{ marginTop: 10 }}>
-      <CardShareBtn17 title="My FireFlair card" url={`https://${CARD_DOMAIN}/${myTag}`} fileName={"fireflair-" + cx17Slug(myTag)} label="Share" className="wide"
-        render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={state.profile.theme} />} />
+      <CardShareBtn17 title={person.id === "me" ? "My FireFlair card" : `${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${shareTag}`} fileName={"fireflair-" + cx17Slug(shareTag)} label="Share" className="wide"
+        render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={person.id === "me" ? state.profile.theme : (person.theme || "ivory")} />} />
     </div>) : null;
   return (
     <div className={publicView ? "ff-pubpage" : undefined}>

@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.2 — 2026-11-12 — Share on every professional profile
+Artifact version 1794490729-a1ed.
+
+- Share button now appears on every professional profile on FF Party: the full profile page (below the card, for anyone, not just your own), the quick card pop-up in the directory and booking flow, and every company profile (previously only when the company had a slug; now falls back to the company name).
+- Link under each shared card is ffparty.uk/<tag> (people) or ffparty.uk/<company-slug>; the shared image is that person's or company's card.
+
 ## v17.4.7.1 — 2026-11-12 — Special Request card; VIP Host Card without stock photo
 Artifact version 1794490235-f6ae.
 

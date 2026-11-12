@@ -145,6 +145,7 @@ function CardPeek() {
             <Btn variant={inTeam ? "ghost wide" : "wide"} onClick={teamT}>{inTeam ? <><I11.Check size={14} /> In your team</> : <><I11.Plus size={14} /> Add to team</>}</Btn>
             <Btn variant="wide ghost" onClick={favT}>{fav ? <><I11.Check size={14} /> In your favourites</> : <><I11.Heart size={14} /> Add to favourites</>}</Btn>
           </>)}
+          <CardShareBtn17 title={`${p.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${p.tag || cx17Slug(p.name || p.id)}`} fileName={"fireflair-" + cx17Slug(p.tag || p.name || p.id)} label="Share" className="wide" render={() => <PlayerCard person={p} format="full" nameAs="div" themeKey={p.theme || "paper"} />} />
           <Btn variant="wide" onClick={() => { close(); dispatch({ type: "VIEW", id: p.id, direct: true }); window.scrollTo(0, 0); }}><I11.Eye size={14} /> View profile</Btn>
         </div>
       </div>
