@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.4.5 — 2026-11-10 — Networking, per-site notifications, quick answers (merged to main 2026-11-12)
+Built file: `fireflair-v17.4.5.html` (made with `npm run build`). Source is in `src/`; see `docs/DEVELOPING.md`.
+
+- **v17.4.1** Unclaimed company cards show no profile URL (card footer and hire-list tile). URLs are for claimed profiles only.
+- **v17.4.2** Profile media: a picture shows only once it has loaded. No black placeholder slides or dots when there is no image.
+- **v17.4.3** Notifications rebuilt. A notification is only a card waiting for your reply. Each is a dropdown, closed by default, that opens the card with its reply buttons; it leaves the list once answered. Next steps sits under the list. No sideways scroll. Booking-history rows removed.
+- **v17.4.4** Networking. Add to network (one tap, one way) for people and companies: `NET_TOGGLE`, `state.netAdds17`. Profile buttons: FF Team = network + team; FF Staff = favourites + network + team; FF Party unchanged. Your network lists team, network people and network companies. Team invitations sent to you: `TEAM_ASK_REPLY` (sample data `TEAM_ASKS_DEMO17`; Core supplies these in production). Notifications differ per site: FF Team = Shift Cards, Availability Cards, team invitations, questions on your profile; FF Staff and FF Party = questions asked on Shift Cards you sent, answered with `AF_REPLY`.
+- **v17.4.5** Question Cards in notifications use the same `QuestionCard` as the profile page. Every open question is answered with `QuickAnswer17`: Yes, No, or a one-line type box. Availability Cards are Yes / No / type (was Yes / No / Maybe). Accepting a team invitation from a person opens the review sheet. Reviews use five stars and can be posted with stars only.
+
 ## v17.4 — 2026-11-10 — Source reorganised into src/ with a small build (UI unchanged)
 Branch `v17.4`, built on v17.3.138. Build output: `fireflair-v17.4.html` (not committed; `npm run build`).
 
