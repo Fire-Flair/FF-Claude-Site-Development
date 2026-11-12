@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.14 — 2026-11-12 — Gold button rim with orbiting light
+Artifact version 1794495555-025f.
+
+- Gold buttons now have a 3px rim with a bright point of light orbiting the edge (chosen from the in-chat preview, option 3), on top of the champagne face and soft sweep.
+- Applies to every gold button (hero Create your Profile Card, Join Challenge, Book now and the other gold buttons). The orbit uses a registered CSS angle property, supported by current Safari, Chrome and Firefox.
+
 ## v17.4.7.13 — 2026-11-12 — Champagne gold buttons
 Artifact version 1794495196-d77e.
 

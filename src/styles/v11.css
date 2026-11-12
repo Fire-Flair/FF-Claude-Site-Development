@@ -4164,3 +4164,16 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-home .ff-btn.ff-shine .sp { display:none !important; }
 .ff .ff-home button.ff-btn.ff-shine::after, .ff .ff-home .ff-hero17-cta button.ff-btn.ff-shine::after { width:26%; background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.5),rgba(255,255,255,0)) !important; animation:ffgoldshine 4s ease-in-out infinite !important; }
 .ff .ff-btn.gold::after { width:26%; background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.5),rgba(255,255,255,0)); animation-duration:4s; }
+
+/* v17.4.7.14 — champagne gold buttons: 3px rim with a light orbiting the edge (chosen from the in-chat preview, option 3) */
+@property --ffang { syntax:"<angle>"; inherits:false; initial-value:0deg; }
+@keyframes ffrimorbit { to { --ffang:360deg; } }
+.ff .ff-btn.gold, .ff .ff-home button.ff-btn.ff-shine {
+  border:3px solid transparent !important;
+  background:linear-gradient(172deg,#F6E8B8 0%,#DCC070 38%,#AD8C3C 64%,#EBD58F 100%) padding-box, conic-gradient(from var(--ffang),#8C7230 0%,#8C7230 55%,#E9D07A 70%,#FFFFFF 78%,#E9D07A 86%,#8C7230 100%) border-box !important;
+  background-size:100% 100% !important;
+  animation:ffrimorbit 5s linear infinite !important;
+}
+.ff .ff-btn.gold:hover, .ff .ff-home button.ff-btn.ff-shine:hover {
+  background:linear-gradient(172deg,#FBF1CC 0%,#E6CD84 40%,#BE9C4C 64%,#F1DEA2 100%) padding-box, conic-gradient(from var(--ffang),#8C7230 0%,#8C7230 55%,#E9D07A 70%,#FFFFFF 78%,#E9D07A 86%,#8C7230 100%) border-box !important;
+}
