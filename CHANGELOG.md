@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.9 — 2026-11-12 — Rich gold shine on the hero button; coin shine removed
+Artifact version 1794493637-8fc0.
+
+- Removed the shine from the home hero FF coin.
+- Home hero "Create your Profile Card" (and every ShineButton, including Join Challenge): a rich, nearly flat gold with a bright sheen that now shows on it (the old pale gradient hid the white sheen, and a more specific button rule was overriding the shine styles). The hero button's sheen is full strength; the others are softer. The sheen stays on with reduced motion.
+
 ## v17.4.7.8 — 2026-11-12 — Home hero: button and coin shine
 Artifact version 1794493122-7906.
 
