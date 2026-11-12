@@ -434,7 +434,7 @@ const CARD_W = {
   svcsq: "clamp(218px, 62vw, 248px)",
   question: "clamp(176px, 52vw, 204px)",
   venue: "clamp(260px, 82vw, 320px)",
-  poster: "clamp(282px, 84vw, 330px)",
+  poster: "clamp(296px, 86vw, 340px)",
 };
 
 

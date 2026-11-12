@@ -50,6 +50,7 @@
 .ff-bkq-rail .ff-evc .ff-evc-foot,.ff-bkq-rail .ff-evc .ff-evc-end{margin-top:auto}
 .ff-sdrail11 .ff-hitem{width:min(320px,84vw)}
 .ff-sdrail11 .ff-evc.ff-sd11{margin:0;max-width:none}
+.ff-sdrail11 .ff-sdw{max-width:none;margin:0;width:100%}
 .ff-bst11{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px}
 .ff-bst11 li{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .ff-bst11 b{flex:none;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.04em;color:#fff}
@@ -84,3 +85,24 @@
 .ff-sdrail11 .ff-hitem>.ff-evc.ff-sd11{display:flex;flex-direction:column;width:100%}
 .ff-sdrail11 .ff-hitem>.ff-evc.ff-sd11 .sbd{margin-top:auto}
 .ff-sdrail11 .ff-sd11 .nt{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+
+/* v17.4.7.15 — Shift Card: short, with the four buttons underneath */
+.ff .ff-sdw{display:flex;flex-direction:column;gap:10px;max-width:380px;margin:0 auto 14px}
+.ff .ff-sdw>.ff-evc.ff-sd11{margin:0;max-width:none}
+.ff .ff-sd11.acts{--bg:#F4EFE4;--bg2:#FBF8F1;--bur:#6B1226;--ink:#0B0B0C;color:var(--ink);display:flex;flex-direction:column;gap:10px;text-align:left}
+.ff .ff-sd11.acts.src-party{--bur:#7A5A12;--bg:#F6EED6;--bg2:#FCF7EA}
+.ff .ff-sd11.acts .btns{grid-template-columns:1fr 1fr}
+.ff .ff-sd11.acts .nt{background:var(--bg)}
+.ff .ff-sd11 .ssrc{display:none}
+.ff .ff-pay17.one{display:block}
+.ff .ff-pay17.one b{font-size:14px;white-space:nowrap}
+.ff .ff-sd11 .sbd:empty{display:none}
+.ff .ff-sd11 .sbd{padding:6px 0 12px}
+.ff .ff-brief11 .tc{margin-top:16px}
+.ff .ff-brief11 .tc h4{margin:0 0 8px}
+.ff .ff-brief11 .tc ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.ff .ff-brief11 .tc li{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:14px;corner-shape:squircle;background:rgba(0,0,0,.04);font-size:13.5px;line-height:1.4}
+.ff-sdrail11 .ff-hitem>.ff-sdw>.ff-evc.ff-sd11{display:flex;flex-direction:column;width:100%}
+.ff-sdrail11 .ff-hitem>.ff-sdw>.ff-evc.ff-sd11 .sbd{margin-top:auto}
+.ff .ff-pay17.one b{white-space:normal;font-size:13px;line-height:1.25}
+.ff-sdrail11 .ff-sd11.acts .nt{display:block;-webkit-line-clamp:unset;overflow:visible;font-size:13px}

@@ -1,5 +1,16 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.15 — 2026-11-12 — Shorter Shift Card, one package card on every site
+Artifact version 1794496293-01b3.
+
+- Shift Card: the plate at top left now says where it came from ("FF Party card" or "FF Staff shift card"); the separate "FF Party package" / "FF Staff shift" label is gone.
+- Shift Card pay is one short line: hourly rate × shift hours = shift total.
+- The four buttons (Accept or I'm available, Unavailable, Ask, More information) now sit under the card, not inside it, so the card is shorter. The "View T&Cs" line is removed from the card: the terms are at the bottom of More information (the Event brief), which scrolls.
+- The open-shift explanation under the card is shorter and no longer cut off.
+- FireFlair package cards are now one design on every site, the same as the packages on FF Party (larger, bullet lists, FF Party pill, no "Bar" label, no "Coming 2027"). This replaces the old poster cards on the home pages, FF Team bookings, company pages and the hire page.
+- Package card buttons by site: FF Team "Sign up" (then "Signed up"), FF Staff "Create your own", FF Party gold champagne "Book now".
+- FF Team packages intro now starts "You are your own boss."
+
 ## v17.4.7.14 — 2026-11-12 — Gold button rim with orbiting light
 Artifact version 1794495555-025f.
 

@@ -131,7 +131,7 @@ const bul17 = (t) => String(t || "").split(/,\s*|\s+and\s+/).map(x => x.trim()).
 
 
 function pkgCta17(state, on) {
-  if (state.role === "team") return "Sign up";
+  if (state.role === "team") return on ? "Signed up" : "Sign up";
   if (state.role === "staff" && !(hireSiteOf(state) || {}).party) return "Create your own";
   return on ? "Added" : "Book now";
 }
@@ -155,12 +155,42 @@ function PkgCard17({ svc, n, noun, match, on, onToggle, onInfo }) {
           {inc.length > 0 && <span className="bl"><i>Includes</i><ul>{inc.map(x => <li key={x}>{x}</li>)}</ul></span>}
           {ideal.length > 0 && <span className="bl"><i>Ideal for</i><ul>{ideal.map(x => <li key={x}>{x}</li>)}</ul></span>}
           {(svc.by && svc.by !== "FF Party" && svc.by !== "FireFlair") || n > 0 ? <span className="by">{svc.by && svc.by !== "FF Party" && svc.by !== "FireFlair" ? svc.by : `${n} ${noun} to choose from`}</span> : null}
-          <span className="go">{on ? <><S17I.Check size={13} strokeWidth={2.6} /> {pkgCta17(state, on)}</> : pkgCta17(state, on)}</span>
+          <span className={"go" + (pkgCta17(state, on) === "Book now" || pkgCta17(state, on) === "Added" ? " gold" : "")}>{on ? <><S17I.Check size={13} strokeWidth={2.6} /> {pkgCta17(state, on)}</> : pkgCta17(state, on)}</span>
         </span>
       </button>
-      <button type="button" className="inf" aria-label={`${svc.title}: details`} onClick={onInfo}><S17I.Info size={16} strokeWidth={2} /></button>
+      {onInfo && <button type="button" className="inf" aria-label={`${svc.title}: details`} onClick={onInfo}><S17I.Info size={16} strokeWidth={2} /></button>}
     </div>
   );
+}
+
+
+/* FF Team: sign up to a package (one Q&A answer, int.party_package, option ids = package ids). */
+async function pkgSignup17(state, dispatch, sv) {
+  const account = qaAccount17(state);
+  if (!account) { window.dispatchEvent(new Event("ff-login")); return; }
+  const cur = (state.profile && state.profile.serviceInterest) || [];
+  const on = cur.includes(sv.id);
+  const next = on ? cur.filter(x => x !== sv.id) : [...cur, sv.id];
+  const mirror = { type: "PROFILE", patch: { serviceInterest: next } };
+  const r = next.length
+    ? await qaSubmit17(dispatch, { questionId: "int.party_package", account, optionIds: next, visibility: "private", source: "FF Team Bookings · FF Party packages" }, mirror)
+    : await qaWithdraw17(dispatch, { questionId: "int.party_package", account }, mirror);
+  dispatch({ type: "TOAST", toast: r.ok ? (on ? `Withdrawn from ${sv.title}` : `Signed up for ${sv.title}`) : "That couldn't be saved. Try again." });
+}
+
+
+/* One package card for any site: FF Team signs up, FF Staff creates their own, FF Party books it. */
+function PkgCardSite17({ svc }) {
+  const { state, dispatch } = useStore();
+  const team = state.role === "team", staffSite = state.role === "staff" && !(hireSiteOf(state) || {}).party;
+  const on = team ? ((state.profile && state.profile.serviceInterest) || []).includes(svc.id) : (!staffSite && bkOf17(state).pk.includes(svc.id));
+  const shown = team && svc.pay ? { ...svc, price: "You earn " + svc.pay } : svc;
+  const act = () => {
+    if (team) { pkgSignup17(state, dispatch, svc); return; }
+    if (staffSite) { dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); return; }
+    selectPkg17(state, dispatch, svc.id, true);
+  };
+  return <div className="ff-br17-co ff-pkx"><PkgCard17 svc={shown} n={0} noun="" on={on} onToggle={act} /></div>;
 }
 
 

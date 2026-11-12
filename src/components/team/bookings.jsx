@@ -327,9 +327,9 @@ function TeamBookings({ guest = false }) {
 
         <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-party">
           <h3>FF Party packages</h3>
-          <p>FireFlair sets the pay rate for each package. You deal directly with the client, and FireFlair is here to support you. Packages are advertised at a set rate, and by signing up to one you agree to that rate. The rates are strong, so we expect strong work in return.</p>
+          <p>You are your own boss. FireFlair sets the pay rate for each package. You deal directly with the client, and FireFlair is here to support you. Packages are advertised at a set rate, and by signing up to one you agree to that rate. The rates are strong, so we expect strong work in return.</p>
           <HScroll label="FF Party packages" snap>
-            {pkgs.map(sv => <div key={sv.id} className="ff-tp17-cell"><PkgTile17 sv={sv} on={svcInterest.includes(sv.id)} onClick={() => toggleService(sv)} /></div>)}
+            {pkgs.map(sv => <div key={sv.id} className="ff-tp17-cell pk"><PkgCardSite17 svc={sv} /></div>)}
             <div className="ff-tp17-cell"><button type="button" className="ff-tp17 own" onClick={ownPackage}><span className="pl"><Plus size={22} /></span><b className="tt">Create your own package</b></button></div>
           </HScroll>
         </div>

@@ -40,17 +40,17 @@ function eventSource17(state, ev) {
 const SRC17_LABEL = { staff: "FF Staff shift", party: "FF Party package" };
 
 
+/* The plate at the top left of a Shift Card says where it came from. */
+const PLATE17 = { staff: "FF Staff shift card", party: "FF Party card" };
+
+
 /* The Pay row: Hourly and Shift total side by side, from payOf17. Missing or unreadable pay is shown
    as such, never filled in. */
 function PayPair17({ shift }) {
   const p = payOf17(shift);
   if (p.status !== "ok") return <span className="ff-pay17 bad" title={p.problem || ""}>{p.status === "missing" ? "Pay not recorded" : "Pay can't be read"}</span>;
-  return (
-    <span className="ff-pay17">
-      <span><small>Hourly</small><b>{gbp17(p.hourlyP)}</b></span>
-      <span><small>Shift total</small><b>{gbp17(p.totalP)}</b><small className="m">{minsText17(p.mins)}</small></span>
-    </span>
-  );
+  const hrs = Math.round((p.mins / 60) * 100) / 100;
+  return <span className="ff-pay17 one"><b>{gbp17(p.hourlyP)} p/h × {hrs} {hrs === 1 ? "hr" : "hrs"} = {gbp17(p.totalP)}</b></span>;
 }
 
 
@@ -93,7 +93,7 @@ function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
   const tag = e.auto ? "Open shift" : hv ? (e.staffId ? `Selected${fn ? ` · ${fn}` : ""}` : "Shift card") : `${fn ? `${fn}, you've` : "You've"} been selected`;
   const hn = hirer === "The host" ? "the host" : hirer;
   const intro = e.auto
-    ? `${hirer} needs a ${shift.role}. You're one of ${e.batchSize || 10} people invited. If you're free, ${hn} will choose from everyone available. Saying you're available doesn't confirm the shift.`
+    ? `${hirer} needs a ${shift.role}. If you're free, say so and ${hn} will choose. Saying you're available doesn't confirm the shift.`
     : `${hirer} has chosen you for this shift. It is held for you until ${dt17(e.expiresAt)}.`;
   const rows = (
     <div className="ff-evc-rows">
@@ -106,10 +106,9 @@ function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
   );
   const askBox = ask && <div className="ask"><input aria-label="Your question" value={txt} onChange={(x) => setTxt(x.target.value.slice(0, 200))} placeholder="Your question" /><div className="btns" style={{ gridTemplateColumns: "1fr" }}><button type="button" className="yes" disabled={!txt.trim()} onClick={send}>Send question</button></div></div>;
   const thread = (e.thread || []).length > 0 && <div className="thread">{e.thread.map((m, i) => <p key={i}>{m.from === "pro" ? (viewer === "hirer" ? `${firstName((findPerson(all, state, e.staffId) || {}).name || "") || "They"}: ` : "You: ") : (viewer === "hirer" ? "You: " : `${hirer}: `)}{m.text}</p>)}</div>;
-  return (<>
+  return (<div className="ff-sdw">
     <article className={`ff-evc ff-sd11 ${kind} src-${src}${mini ? " mini" : ""}`} aria-label={`${SRC17_LABEL[src]}: ${shift.role}`}>
-      <span className="ff-evc-plate">Shift Card</span>
-      <span className="ssrc">{SRC17_LABEL[src]}</span>
+      <span className="ff-evc-plate">{PLATE17[src]}</span>
       <span className="ff-evc-coin"><Coin size={30} tier="gold" /></span>
       <span className="stag">{tag}</span>
       <h3 className="ff-evc-name">{shift.role}</h3>
@@ -117,11 +116,14 @@ function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
       <div className="ff-evc-rule" aria-hidden="true"><i /><span>◆</span><i /></div>
       {mini ? <p className="sev" style={{ marginTop: 8 }}>{whenOf11(shift)}</p> : rows}
       <div className="sbd">
-        {act && pend && <p className="nt">{intro}</p>}
         {!mini && shift.notes ? <p className="nt">{shift.notes}</p> : null}
-        {!mini && <p className="by">{tcsLine(state, shift)}</p>}
         {thread}
         {hv && <p className="ok">{engText(e) || "Not sent yet"}{conf ? ` · Ref ${e.ref || ref17(e)}` : ""}</p>}
+      </div>
+    </article>
+    {act && (
+      <div className={`ff-sd11 acts src-${src}`}>
+        {act && pend && <p className="nt">{intro}</p>}
         {act && pend && !ended && (<>
           <div className="btns" role="group" aria-label="Your reply" style={{ gridTemplateColumns: "1fr 1fr" }}>
             <button type="button" className="yes" onClick={yes}>{e.auto ? WA_BTN17.auto[0] : WA_BTN17.exclusive[0]}</button>
@@ -189,9 +191,9 @@ function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
         {act && e.state === "cancelled_pro" && <p className="mute">{e.handedOver ? "Handed over. Your reputation is kept." : "You cancelled this shift."}</p>}
         {act && ["completed", "signed_off", "paid"].includes(e.state) && <p className="mute">Worked.</p>}
       </div>
-    </article>
+    )}
     {brief && <EventBrief11 ev={event} shift={shift} e={e} onClose={() => setBrief(false)} />}
-  </>);
+  </div>);
 }
 
 
@@ -225,6 +227,10 @@ function EventBrief11({ ev, shift, e, onClose }) {
           <HScroll label={h.party ? "VIP Host Card" : "Company Card"}>
             <div className="hc-i">{h.party ? <PartyCard11 demo={h.c} /> : <CompanyCardFace c={h.c} />}</div>
           </HScroll>
+        </section>
+        <section className="tc" aria-label="Terms and conditions">
+          <h4>Terms and conditions</h4>
+          <ol>{termsOf(h.c).map((t) => <li key={t.k}><b>{t.label}</b><span>{t.text}</span></li>)}</ol>
         </section>
       </div>
     </Sheet>
