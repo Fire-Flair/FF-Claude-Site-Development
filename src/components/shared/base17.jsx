@@ -58,6 +58,13 @@ function baseMigrate17(s) {
 const baseLabel17 = (s) => baseLabelOf17(baseNode17(s));
 
 
+/* The same base place for a company (FF Staff / FF Party Company Card): company.base17 = { locId, at }. */
+function baseNodeOfCo17(co) {
+  const id = co && co.base17 && co.base17.locId;
+  return id && FD_BY_ID[id] ? FD_BY_ID[id] : null;
+}
+
+
 /* Where distances are measured from: the private postcode point when it belongs to this base, otherwise the
    centre of the base place. Returns { lat, lng, precise } or null. */
 function baseOrigin17(s) {
@@ -88,6 +95,7 @@ function base17Reducer(s, a) {
   if (a.type === "BASE_SET") {
     const n = FD_BY_ID[a.locId];
     if (!n || !BASE_KINDS17.includes(n.k)) return s;
+    if (a.owner === "company") return { ...s, company: { ...(s.company || {}), base17: { locId: n.id, at: Date.now() } } };
     const pc = a.postcode && a.postcode.code ? { code: String(a.postcode.code).slice(0, 9), lat: a.postcode.lat != null ? a.postcode.lat : null, lng: a.postcode.lng != null ? a.postcode.lng : null, approx: !!a.postcode.approx, baseId: n.id, at: Date.now() } : null;
     return { ...s, profile: { ...s.profile, base17: { locId: n.id, at: Date.now() } }, workPostcode: pc };
   }
@@ -111,20 +119,22 @@ const BASE17_CSS = `
 
 
 /* The card's location field. The postcode finds places; the person chooses exactly one. */
-function BaseField17({ ink }) {
+function BaseField17({ ink, owner }) {
   const { state, dispatch } = useStore();
-  const cur = baseNode17(state);
-  const [editing, setEditing] = useCovState17("base17", "editing", false);
-  const [pc, setPc] = useCovState17("base17", "pc", "");
-  const [q, setQ] = useCovState17("base17", "q", "");
-  const [opts, setOpts] = useCovState17("base17", "opts", []);
-  const [look, setLook] = useCovState17("base17", "look", null);
-  const [msg, setMsg] = useCovState17("base17", "msg", "");
-  const [manual, setManual] = useCovState17("base17", "manual", false);
+  const co = owner === "company";
+  const mk = co ? "base17co" : "base17";
+  const cur = co ? baseNodeOfCo17(state.company) : baseNode17(state);
+  const [editing, setEditing] = useCovState17(mk, "editing", false);
+  const [pc, setPc] = useCovState17(mk, "pc", "");
+  const [q, setQ] = useCovState17(mk, "q", "");
+  const [opts, setOpts] = useCovState17(mk, "opts", []);
+  const [look, setLook] = useCovState17(mk, "look", null);
+  const [msg, setMsg] = useCovState17(mk, "msg", "");
+  const [manual, setManual] = useCovState17(mk, "manual", false);
   const [busy, setBusy] = useState(false);
   const hits = q.trim().length >= 2 ? fdSearch(q).filter(n => BASE_KINDS17.includes(n.k)) : [];
   const choose = (n, withPostcode) => {
-    dispatch({ type: "BASE_SET", locId: n.id, postcode: withPostcode && look ? { code: look.display, lat: look.lat, lng: look.lng, approx: look.approx } : null });
+    dispatch({ type: "BASE_SET", owner: co ? "company" : undefined, locId: n.id, postcode: withPostcode && look ? { code: look.display, lat: look.lat, lng: look.lng, approx: look.approx } : null });
     setEditing(false); setOpts([]); setLook(null); setPc(""); setQ(""); setMsg(""); setManual(false);
   };
   const find = async () => {
@@ -139,7 +149,7 @@ function BaseField17({ ink }) {
   };
   const radio = (n, withPostcode) => (
     <label key={n.id} className="ff-base17-opt">
-      <input type="radio" name="ff-base17" checked={cur && cur.id === n.id && !editing} onChange={() => choose(n, withPostcode)} />
+      <input type="radio" name={"ff-base17" + (co ? "co" : "")} checked={cur && cur.id === n.id && !editing} onChange={() => choose(n, withPostcode)} />
       <span>{baseLabelOf17(n)}</span>
     </label>
   );

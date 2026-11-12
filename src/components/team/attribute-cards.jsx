@@ -256,9 +256,9 @@ function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd
             dispatch({ type: "TOAST", toast: `${n} added` });
           }} />
         )}
-        {isMe && catKey === "locations" && <CoverageTree17 owner={owner} />}
+        {isMe && catKey === "locations" && <CoverageTree17 owner={owner} {...(owner === "company" ? { title: null, compact: true, startOpen: ["country:GB"] } : {})} />}
         <div style={{ height: isMe && (catKey === "professions" || catKey === "locations") && owner !== "company" ? 12 : 0 }} />
-        {editing ? (
+        {isMe && catKey === "locations" && owner === "company" ? null : editing ? (
           <TierEditor catKey={catKey} def={def} rows={eRows} onOpen={(r) => onOpen(r)} tail={addTile} />
         ) : (
           pub && !isMe ? <PubGrid catKey={catKey} def={def} items={items} shade={shade} onOpen={onOpen} /> : (

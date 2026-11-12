@@ -328,7 +328,8 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party }) {
   const t = THEMES[co.theme] || THEMES.onyx;
   const layout = co.layout || "logo";
   const slug = co.slug || slugify(co.name) || (party ? "your-name" : "your-company");
-  const areas = co.areas !== undefined ? co.areas : (co.location || co.area || "");
+  const baseN = baseNodeOfCo17(co);
+  const areas = baseN ? baseLabelOf17(baseN) : (co.areas !== undefined ? co.areas : (co.location || co.area || ""));
   const logoRef = useRef(null);
   const pick = (e) => { const f = e.target.files && e.target.files[0]; e.target.value = ""; if (!f || !set) return; const r = new FileReader(); r.onload = () => set({ logo: r.result }); r.readAsDataURL(f); };
   const vars = { "--ink": t.ink, "--sub": t.sub, "--rule": t.rule, "--acc": t.accent || "#D9BE68" };
@@ -345,9 +346,7 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party }) {
   const kind = edit ? <span className="kd2"><I11.Briefcase size={12} /><input className="ff-cardin kd" value={co.kind || ""} placeholder="What do you do?" aria-label="What do you do?" maxLength={70} onChange={(e) => set({ kind: e.target.value })} /></span>
     : <span className="kd kd2"><I11.Briefcase size={12} /><span>{co.kind || "What you do"}</span></span>;
   const area = (
-    <span className="ar"><I11.MapPin size={12} />{edit
-      ? <input className="ff-cardin" value={areas} placeholder="Where are you based?" aria-label="Where are you based?" maxLength={60} onChange={(e) => set({ areas: e.target.value })} />
-      : <span>{areas || "Where you're based"}</span>}</span>
+    <span className="ar"><I11.MapPin size={12} /><span>{areas || "Where you're based"}</span></span>
   );
   return (
     <CardFrame tier={(co.theme === "silver" || co.theme === "gold") ? co.theme : (co.tier || "gold")} theme={t} premium ratio="8 / 5" className={`ff-cocard ff-cc11 l-${layout} ${size}`} style={{ ...vars, maxWidth: 460, margin: size ? 0 : "0 auto" }}>
@@ -375,6 +374,10 @@ function EditableCompanyCard({ plain }) {
   return (
     <>
       <CompanyCardFace c={c} edit set={set} party={party} />
+      <div className="ff-cc11-base">
+        <span className="ff-cc11-baseh">Where are you based?</span>
+        <BaseField17 ink="#16130F" owner="company" />
+      </div>
       {!plain && <>
       <div className="ff-swatches" role="group" aria-label="Card colour">
         {Object.entries(THEMES).map(([k, th]) => (

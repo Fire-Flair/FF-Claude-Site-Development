@@ -14,6 +14,11 @@
    to suggest places. A suggestion is a tick box on the same coverage: it starts unticked unless already covered.
    The same tree, in "links" mode, is Explore by area: every place is a link to its area page.
    ========================================================================== */
+/* Coverage tree shape: Northern Ireland sits with Ireland (the island), not under the UK. Covering Ireland covers
+   Northern Ireland; covering the UK covers England, Scotland and Wales. Area pages and URLs are unchanged. */
+const COV_NI17 = "gn:2641364", COV_IE17 = "country:IE";
+const covAnc17 = (n) => { if (n && n.id === COV_NI17 && FD_BY_ID[COV_IE17]) return [n, ...fdAnc(FD_BY_ID[COV_IE17])]; return fdAnc(n); };
+const covUnder17 = (n, id) => covAnc17(n).some(a => a.id === id);
 const covIdOfName17 = (name) => { const n = fdTickNode19(name); return n ? n.id : null; };
 
 
@@ -30,7 +35,7 @@ function covOf17(owner) {
 
 /* Is this place covered? The nearest marked place at or above it decides. */
 function covOn17(cov, n) {
-  for (const a of fdAnc(n)) { if (cov.exc.has(a.id)) return false; if (cov.inc.has(a.id)) return true; }
+  for (const a of covAnc17(n)) { if (cov.exc.has(a.id)) return false; if (cov.inc.has(a.id)) return true; }
   return false;
 }
 
@@ -41,7 +46,7 @@ function covPartial17(cov, n) {
   for (const id of [...cov.inc, ...cov.exc]) {
     if (id === n.id) continue;
     const m = FD_BY_ID[id];
-    if (m && fdUnder(m, n.id) && covOn17(cov, m) !== on) return true;
+    if (m && covUnder17(m, n.id) && covOn17(cov, m) !== on) return true;
   }
   return false;
 }
@@ -51,7 +56,7 @@ function covPartial17(cov, n) {
 function covToggle17(cov, n) {
   const want = covPartial17(cov, n) ? true : !covOn17(cov, n);
   const inc = new Set(cov.inc), exc = new Set(cov.exc);
-  [...inc, ...exc].forEach(id => { const m = FD_BY_ID[id]; if (m && (id === n.id || fdUnder(m, n.id))) { inc.delete(id); exc.delete(id); } });
+  [...inc, ...exc].forEach(id => { const m = FD_BY_ID[id]; if (m && (id === n.id || covUnder17(m, n.id))) { inc.delete(id); exc.delete(id); } });
   const inherited = covOn17({ inc, exc }, n);
   if (inherited !== want) (want ? inc : exc).add(n.id);
   return { inc, exc };
@@ -59,14 +64,22 @@ function covToggle17(cov, n) {
 
 
 /* Coverage in the Front Door matching shape: whole = ticked places, exc = exceptions. */
-const covForFd17 = (owner) => { const c = covOf17(owner); return { whole: [...c.inc], sub: [], exc: [...c.exc] }; };
+const covForFd17 = (owner) => {
+  const c = covOf17(owner), whole = [...c.inc], exc = [...c.exc], ni = FD_BY_ID[COV_NI17];
+  if (ni) { /* Front Door matching walks the area-page parents, where Northern Ireland is under the UK: keep it in line with the tree. */
+    const i = exc.indexOf(COV_NI17);
+    if (covOn17(c, ni)) { if (!whole.includes(COV_NI17)) whole.push(COV_NI17); if (i >= 0) exc.splice(i, 1); }
+    else if (i < 0) exc.push(COV_NI17);
+  }
+  return { whole, sub: [], exc };
+};
 
 
 /* Short public text: "Greater London (not Camden), St Albans". */
 function covText17(owner, max) {
   const c = covOf17(owner);
   const parts = [...c.inc].map(id => FD_BY_ID[id]).filter(Boolean).map(n => {
-    const ex = [...c.exc].map(id => FD_BY_ID[id]).filter(m => m && fdUnder(m, n.id));
+    const ex = [...c.exc].map(id => FD_BY_ID[id]).filter(m => m && covUnder17(m, n.id));
     return FD_TICK_NAME19(n) + (ex.length ? ` (not ${ex.slice(0, 2).map(m => m.name).join(", ")}${ex.length > 2 ? ` and ${ex.length - 2} more` : ""})` : "");
   });
   return max && parts.length > max ? parts.slice(0, max).join(", ") + ` and ${parts.length - max} more` : parts.join(", ");
@@ -139,7 +152,11 @@ const COV17_CSS = `
 const covRoots17 = () => [FD_BY_ID["country:GB"], FD_BY_ID["worldwide"]].filter(Boolean);
 
 
-const covKids17 = (n) => fdTickKids19(n);
+const covKids17 = (n) => {
+  if (n.id === COV_IE17) return FD_BY_ID[COV_NI17] ? [FD_BY_ID[COV_NI17]] : [];
+  const k = fdTickKids19(n);
+  return n.id === "country:GB" ? k.filter(m => m.id !== COV_NI17) : k;
+};
 
 
 function CovCheck17({ n, cov, onToggle, label }) {
@@ -181,11 +198,14 @@ function CoverageTree17({ mode = "select", owner: ownerKind, siteKey, compact, t
   const [openIds, setOpenIds] = useCovState17(mk, "open", () => Object.fromEntries((startOpen || []).map(id => [id, true])));
   const [q, setQ] = useCovState17(mk, "q", "");
   const hits = fdSearch(q);
+  /* A Company Card that has never set its areas starts as the whole UK, England, Scotland and Wales (Northern Ireland is covered with Ireland). */
+  const untouched = co && !owner.coverage17 && !(((owner.records || {}).locations) || []).length;
+  useEffect(() => { if (untouched && !links) dispatch({ type: "COV_SET", owner: "company", inc: ["country:GB"], exc: [] }); }, [untouched]);
   const toggle = (n) => { const next = covToggle17(cov, n); dispatch({ type: "COV_SET", owner: co ? "company" : undefined, inc: [...next.inc], exc: [...next.exc] }); };
-  const openTo = (n) => { const o = { ...openIds }; fdAnc(n).slice(1).forEach(a => { o[a.id] = true; }); setOpenIds(o); };
+  const openTo = (n) => { const o = { ...openIds }; covAnc17(n).slice(1).forEach(a => { o[a.id] = true; }); setOpenIds(o); };
   const setOpen = (id, v) => { setOpenIds(o => ({ ...o, [id]: v })); if (v && onOpen && FD_BY_ID[id]) onOpen(FD_BY_ID[id]); };
   const row = (n, depth) => {
-    const kids = covKids17(n), isOpen = !!openIds[n.id];
+    const kids = links ? fdTickKids19(n) : covKids17(n), isOpen = !!openIds[n.id];
     const x = kids.length ? (
       <button type="button" className="ff-cov17-x" aria-expanded={isOpen} aria-label={`${isOpen ? "Collapse" : "Expand"} ${n.name}`}
         onClick={() => setOpen(n.id, !isOpen)}

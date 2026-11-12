@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.12 — 2026-11-12 — Company Card location, Areas covered tree, Northern Ireland with Ireland
+Artifact version 1794494184-d2f5.
+
+- Company Card (FF Staff and FF Party): "Where are you based?" now works exactly as on FF Team (postcode lookup or search, one place, postcode kept private). It sits under the card; the card face shows the chosen place in all three layouts (Classic, Big logo, Centred). Stored as company.base17; the team profile base is untouched.
+- Areas covered on the Company Card: the tick-box tree with the UK expanded and ticked by default; the cards underneath are removed. Venues unchanged.
+- Northern Ireland now sits with Ireland in the coverage tree (not under the UK): UK covers England, Scotland and Wales; covering Ireland covers Ireland and Northern Ireland. This applies to FF Team coverage too. Area pages and URLs are unchanged; Front Door matching (covForFd17) is kept in line with the tree.
+
 ## v17.4.7.11 — 2026-11-12 — Hero button: approved gold + shine
 Artifact version 1794493924-13b8.
 

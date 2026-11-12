@@ -4154,3 +4154,7 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-home button.ff-btn.ff-shine::after { content:""; position:absolute; z-index:1; top:0; bottom:0; left:-60%; width:40%; transform:skewX(-20deg); pointer-events:none;
   background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent) !important; animation:ffgoldshine 3.6s ease-in-out infinite !important; }
 .ff .ff-home .ff-hero17-cta button.ff-btn.ff-shine::after { background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent) !important; animation:ffgoldshine 3s ease-in-out infinite !important; }
+
+/* v17.4.7.12 — Company Card: "Where are you based?" under the card, same field as FF Team */
+.ff .ff-cc11-base { max-width:460px; margin:12px auto 0; padding:12px 14px; border-radius:18px; corner-shape:squircle; background:rgba(255,255,255,.7); border:1px solid var(--rule,#d8ccb0); color:#16130F; display:flex; flex-direction:column; gap:8px; }
+.ff .ff-cc11-baseh { font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#6A4F12; }
