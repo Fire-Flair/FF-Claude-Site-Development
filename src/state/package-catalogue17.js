@@ -102,7 +102,9 @@ const pkgSorted17 = (list) => (list || PKG_CAT17).slice().sort((a, b) => (a.pric
 function pkgServices17(opts) {
   const o = opts || {};
   const pool = PKG_CAT17.filter(p => p.visible && (o.all ? true : o.baseOnly ? p.kind === "base" : p.kind !== "standalone"));
-  return [...pkgSorted17(pool.filter(p => p.kind !== "standalone")), ...pool.filter(p => p.kind === "standalone")].map(p => ({
+  /* Platinum Tasting is listed last. */
+  const lastFirst = (l) => [...l.filter(p => p.kind !== "consultation"), ...l.filter(p => p.kind === "consultation")];
+  return lastFirst([...pkgSorted17(pool.filter(p => p.kind !== "standalone")), ...pool.filter(p => p.kind === "standalone")]).map(p => ({
     id: p.id, tone: p.tone, level: p.kind === "consultation" ? "Platinum" : p.kind === "standalone" ? "Staffing" : "Bar", title: o.short ? p.short : p.name,
     tagline: p.tagline, includes: p.includes, ideal: p.ideal, time: p.durationLabel, price: pkgPriceLabel17(p.id), from: pkgGBP17(p.pricePence),
     points: p.points.slice(), description: p.description, conditions: p.conditions, pay: pkgPayLabel17(p.id), role: p.role,

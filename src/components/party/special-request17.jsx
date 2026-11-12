@@ -12,6 +12,15 @@ const SR_PKGS17 = SR17_CATS.map(function (c) {
     ideal: "Something not listed here", time: "Arranged with you", noPrice: true, by: "FireFlair", tone: "special", role: c[1], bands: ALLB17 };
 });
 
+/* Choosing the Special Request records a pending request from what the Event Card already holds. No form: FireFlair follows up from the booking. */
+function srAuto17(state, dispatch, cat) {
+  const ev = state.events.find(function (e) { return e.id === state.activeEventId; }) || null;
+  const who = srWho17(state);
+  const draft = { cat: cat, kind: (ev && ev.kind) || "", what: (ev && String(ev.details || "").trim()) || "Details to be agreed with FireFlair", iso: (ev && ev.iso) || "", flex: false, where: (ev && ev.venue) || "", guests: (ev && ev.guests) || "", name: who.name, contact: who.contact, budget: "", eventId: ev ? ev.id : "" };
+  const r = sr17Add(state, draft, Date.now());
+  if (r.added) dispatch({ type: "V11_SET", patch: { specialReq17: r.list } });
+}
+
 /* Choose a package for the booking: it joins the basket and the booking screen builds its Service card and People slot. */
 function selectPkg17(state, dispatch, id, go) {
   const bk = bkOf17(state);

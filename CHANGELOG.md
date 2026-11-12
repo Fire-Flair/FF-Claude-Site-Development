@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.6 — 2026-11-12 — Package card redesign; Book now / Sign up / Create your own
+Artifact version 1794492517-9e6f.
+
+- Package cards redesigned (src/components/party/terms-and-packages.jsx, PkgCard17): an "FF Party" pill instead of the category label, the name, then "Includes" and "Ideal for" as short bullet lists, then one action. The old "Bar" label, the "FF Party" provider line, the tagline and the "Select" wording are gone. All cards in a row are the same height.
+- The action reads by site: FF Party "Book now" (adds the package to Services and opens the booking screen, where the People step fills the slot as before), FF Team "Sign up", FF Staff "Create your own" (both open the profile page). Nothing says Coming 2027.
+- Platinum Tasting is listed last in the catalogue order, the panels and the package pages.
+- Special Request card: muted gold, no shine, shown on FF Party only. Choosing it no longer opens a form. It adds a Special Request service and a gold "To be found" people card and records a pending request from the Event Card details (category, date, venue, guests, brief).
+- Known gap for the developers: the customer-side "agree arrangement" step for a request now has no screen on this prototype (the earlier pop-up that held it was removed). Admin stage moves in Admin > Bookings are unchanged.
+
 ## v17.4.7.5 — 2026-11-12 — Green WhatsApp Share everywhere; profile buttons box
 Artifact version 1794491818-20e7.
 

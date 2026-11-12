@@ -4119,3 +4119,24 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-csm-btn.icon { background:#1FA855; color:#fff; border-color:#188A45; box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 8px 18px rgba(31,168,85,.26); }
 .ff .ff-prest.narrow { max-width:480px; margin-inline:auto; width:100%; box-sizing:border-box; }
 .ff .ff-pp-h1 { position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+
+/* v17.4.7.6 package card redesign: readable bullets, one action, uniform height; muted gold Special Request without shine */
+.ff .ff-br17-co > .ff-pk17w { height:auto; }
+.ff .ff-br17-co > .ff-pk17w > .ff-lst { height:100%; min-height:440px; }
+.ff .ff-pk17 .ph { height:120px; }
+.ff .ff-pk17 .ph .ic { width:52px; height:52px; }
+.ff .ff-pk17 .tx { gap:8px; padding:14px 16px 16px; }
+.ff .ff-pk17 .tx .bl { display:block; white-space:normal; overflow:visible; }
+.ff .ff-pk17 .tx .bl i { display:block; font-style:normal; font:800 10.5px/1 var(--sans); letter-spacing:.12em; text-transform:uppercase; color:#7A5E14; margin-bottom:5px; }
+.ff .ff-pk17 .tx .bl ul { margin:0; padding:0; list-style:none; display:grid; gap:3px; }
+.ff .ff-pk17 .tx .bl li { position:relative; padding-left:14px; font-size:14px; line-height:1.3; color:#2A2620; white-space:normal; }
+.ff .ff-pk17 .tx .bl li::before { content:""; position:absolute; left:2px; top:.5em; width:5px; height:5px; border-radius:50%; background:var(--gold-mid,#B08D2A); }
+.ff .ff-pk17 .tx .go { align-self:stretch; text-align:center; margin-top:auto; padding:11px 14px; border-radius:14px; corner-shape:squircle; background:#3A0C16; color:#F3DE9C; font-weight:800; font-size:14px; }
+.ff .ff-pk17.special { background:linear-gradient(172deg,#E3CE8E 0%,#CDB06A 100%); border-color:#9C8240; box-shadow:var(--lift-1); }
+.ff .ff-pk17.special::after { content:none; animation:none; }
+.ff .ff-pk17.special .ph { background:linear-gradient(140deg,#D9C27C,#B89A52 70%,#8F763A); }
+.ff .ff-pk17.special .tx .bl i { color:#5A4510; }
+.ff .ff-pk17.special .tx .bl li::before { background:#5A4510; }
+.ff .ff-pk17.special .tx .go { background:#3A0C16; color:#EADBA6; }
+.ff .ff-br17-co > .ff-pk17w > .ff-lst { height:490px; min-height:0; }
+.ff .ff-pk17 .tx .go { display:flex; align-items:center; justify-content:center; gap:6px; text-align:center; }
