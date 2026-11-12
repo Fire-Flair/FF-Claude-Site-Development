@@ -296,7 +296,7 @@ function reducer(s, a) {
           ? { ...e, state: "expired", history: [...e.history, { state: "expired", at: now }] } : e),
       };
     }
-    case "COMPANY_SAVE": return vipClaim20({ ...s, company: { ...(s.company || {}), ...a.company } }, a.company);
+    case "COMPANY_SAVE": return V101.vipClaim20({ ...s, company: { ...(s.company || {}), ...a.company } }, a.company);
     /* A business signs in with its company name (its page address) and a
        verified phone number: the business equivalent of an FF Tag. */
     case "COMPANY_SIGNED_IN": return { ...s, auth: { status: "signedIn", tag: a.slug, method: "company" }, company: { ...(s.company || {}), verified: true } };

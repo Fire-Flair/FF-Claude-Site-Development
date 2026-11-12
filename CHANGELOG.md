@@ -1,5 +1,10 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.10 — 2026-11-12 — Fix: Company Card crash on typing
+Artifact version 1794493789-773c.
+
+- Fixed a crash: typing in the Company Card (FF Staff / FF Party host card) blanked the screen. The store's COMPANY_SAVE called `vipClaim20`, which lives inside the home-code group (V101) and was never exported, so it threw "vipClaim20 is not defined" on the first keystroke. It is now exported and called as V101.vipClaim20. This had been broken since the v17.4 src/ refactor, so any build from src/ before this one has the bug.
+
 ## v17.4.7.9 — 2026-11-12 — Rich gold shine on the hero button; coin shine removed
 Artifact version 1794493637-8fc0.
 
