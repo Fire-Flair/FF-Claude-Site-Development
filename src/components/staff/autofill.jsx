@@ -111,7 +111,27 @@ function confirm17(s, e) {
   if (full && (n.af17 || {})[sh.id]) n = { ...n, af17: { ...n.af17, [sh.id]: { ...n.af17[sh.id], status: "filled", needBatch: false, endedAt: now } } };
   n = note17(n, { to: "booker", eventId: sh.eventId, shiftId: sh.id, text: `Confirmed: ${sh.role}. Booking reference ${ref17(e)}. Invoice, shift details and contact are on your booking.` });
   n = note17(n, { to: "pro", staffId: e.staffId, eventId: sh.eventId, shiftId: sh.id, text: `You're confirmed for ${sh.role}. Booking reference ${ref17(e)}.` });
+  n = goldClaim17(n, n.events.find(v => v.id === sh.eventId));
   return audit17(n, e.staffId === "me" ? "Professional" : "Booker", `Confirmed ${ref17(e)} for ${sh.role}`);
+}
+
+
+/* FF Staff launch (Be first in line for Gold): a company is recorded once, at its first confirmed hire on an FF Staff
+   booking. The list is the prototype's stand-in for the server-side count; nothing is enrolled automatically. */
+const goldKey17 = (s) => {
+  const c = (s && s.company) || {};
+  const nm = c.slug || c.name;
+  if (nm) return "co:" + slugify(nm);
+  return s && s.auth && s.auth.status === "signedIn" && s.role === "staff" && s.site !== "party" && s.auth.tag ? "tag:" + String(s.auth.tag).toLowerCase() : "";
+};
+
+
+function goldClaim17(s, ev) {
+  if (!ev || eventSource17(s, ev) !== "staff") return s;
+  const key = ev.hirer ? "co:" + slugify(ev.hirer) : goldKey17(s);
+  const list = s.goldClaims17 || [];
+  if (!key || list.some(x => x.key === key)) return s;
+  return { ...s, goldClaims17: [...list, { key, n: list.length + 1, at: now17(s), eventId: ev.id }] };
 }
 
 
@@ -158,6 +178,8 @@ function auto17Reduce(s, a) {
   const r11 = ship11Reduce(s, a); if (r11) return r11;
   const now = now17(s);
   switch (a.type) {
+    /* After payment: use Autofill if the chosen people don't reply in time. Nothing is sent or charged here. */
+    case "AF_BACKUP": return audit17({ ...s, shifts: s.shifts.map(x => a.shiftIds.includes(x.id) ? { ...x, afBackup: !!a.on } : x) }, "Booker", `Autofill ${a.on ? "on" : "off"} if no reply: ${a.shiftIds.length} Service Card${a.shiftIds.length === 1 ? "" : "s"}`);
     case "AF_ROUTE": {
       const ids = a.shiftIds;
       return { ...s, shifts: s.shifts.map(x => ids.includes(x.id) ? { ...x, route: a.on ? "auto" : "", ...(a.on ? { staffIds: staffOf(x).filter(pid => engFor(s, x.id, pid)), staffId: staffOf(x).filter(pid => engFor(s, x.id, pid))[0] || "" } : {}) } : x) };
@@ -328,7 +350,8 @@ function AutofillEngine17() {
       const af = (state.af17 || {})[sh.id];
       if (af) return;
       const ex = state.engagements.filter(e => e.shiftId === sh.id && e.exclusive);
-      if (ex.length && !ex.some(e => PEND17.includes(e.state) || DONE.includes(e.state)) && open17(state, sh) > 0) dispatch({ type: "AF_START", shiftId: sh.id });
+      /* v17.4.6.1: only when Autofill is on for this shift (chosen at booking, or turned on afterwards). */
+      if ((sh.route === "auto" || sh.afBackup) && ex.length && !ex.some(e => PEND17.includes(e.state) || DONE.includes(e.state)) && open17(state, sh) > 0) dispatch({ type: "AF_START", shiftId: sh.id });
     });
     Object.values(state.af17 || {}).forEach(af => {
       if (af.status !== "matching" || !af.needBatch || af.exhausted) return;
@@ -532,16 +555,16 @@ function ProOffer17({ e, shift, onDone }) {
       <p className="ff-body ff-muted ff-pro17-note">This invitation has been shared with {Math.max(0, (e.batchSize || 1) - 1)} other professional{(e.batchSize || 1) - 1 === 1 ? "" : "s"}. Saying you're available doesn't guarantee the work. You aren't held exclusively and can withdraw before you're confirmed.</p>
       {share}{thread}
       <div className="ff-pro17-btns">
-        <Btn variant="sm primary" onClick={() => go("available")}><Check size={12} /> Available</Btn>
+        <Btn variant="sm primary" onClick={() => go("available")}><Check size={12} /> I’m available</Btn>
         <Btn variant="sm ghost" onClick={() => setAsk(!ask)}>Discuss first</Btn>
         <Btn variant="sm ghost" onClick={() => go("unavailable")}>Unavailable</Btn>
       </div>{askBox}
     </div>);
     return (<div className="ff-pro17">
-      {e.exclusive ? <p className="ff-body">This invitation is held for you until <b>{dt17(e.expiresAt)}</b>. Accept & confirm books you straight away on these terms.</p> : <p className="ff-body">Reply by <b>{dt17(e.expiresAt)}</b>. The first to accept gets the shift.</p>}
+      {e.exclusive ? <p className="ff-body">This invitation is held for you until <b>{dt17(e.expiresAt)}</b>. Accept shift books you straight away on these terms.</p> : <p className="ff-body">Reply by <b>{dt17(e.expiresAt)}</b>. The first to accept gets the shift.</p>}
       {share}{thread}
       <div className="ff-pro17-btns">
-        <Btn variant="sm primary" onClick={() => go("accept")}><Check size={12} /> Accept &amp; confirm</Btn>
+        <Btn variant="sm primary" onClick={() => go("accept")}><Check size={12} /> Accept shift</Btn>
         <Btn variant="sm ghost" onClick={() => setAsk(!ask)}>Discuss first</Btn>
         <Btn variant="sm ghost" onClick={() => go("unavailable")}>Unavailable</Btn>
       </div>{askBox}

@@ -19,6 +19,11 @@ if (typeof document !== "undefined" && !document.getElementById("ff-sd11-css")) 
 }
 
 
+/* Reply buttons for a Shift Card, the same on the website and in the WhatsApp templates (docs/whatsapp-templates.md).
+   WhatsApp allows three quick-reply buttons: the third is Ask. */
+const WA_BTN17 = { exclusive: ["Accept shift", "Unavailable", "Ask"], auto: ["I’m available", "Unavailable", "Ask"] };
+
+
 const hirerOf11 = (state, ev) => (ev && ev.hirer) || (state.company && (state.company.name || state.company.title)) || "The host";
 
 
@@ -56,8 +61,8 @@ const whenOf11 = (sh) => `${shortDay(sh.iso) || sh.date || ""}${sh.time ? ` · $
 const waMsg11 = (state, e, sh, ev) => {
   const h = hirerOf11(state, ev), when = whenOf11(sh), place = sh.venue || (ev && ev.venue) || "";
   return e.auto
-    ? `${h} needs a ${sh.role} on ${when}${place ? ` at ${place}` : ""}.\nYou're one of ${e.batchSize || 10} people invited. If you're free, tap Yes and ${h} will choose from everyone available.`
-    : `${h} has chosen you as ${sh.role} on ${when}${place ? ` at ${place}` : ""}.\nThe shift is held for you until ${dt17(e.expiresAt)}. Tap Yes to confirm it.`;
+    ? `${h} needs a ${sh.role} on ${when}${place ? ` at ${place}` : ""}.\nYou're one of ${e.batchSize || 10} people invited. If you're free, tap I'm available and ${h} will choose from everyone available. This doesn't confirm the shift.`
+    : `${h} has chosen you as ${sh.role} on ${when}${place ? ` at ${place}` : ""}.\nThe shift is held for you until ${dt17(e.expiresAt)}. Tap Accept shift to confirm it.`;
 };
 
 
@@ -74,8 +79,8 @@ function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
   const pend = ["requested", "discuss"].includes(e.state), avail = e.state === "available", conf = e.state === "confirmed";
   const hirer = hirerOf11(state, event);
   const go = (as, text) => dispatch({ type: "AF_RESPOND", id: e.id, as, text });
-  const yes = () => { go(e.auto ? "available" : "accept"); dispatch({ type: "TOAST", toast: e.auto ? "Marked available. The host will choose" : "Confirmed. It's in your bookings" }); onDone && onDone(); };
-  const no = () => { go("unavailable"); dispatch({ type: "TOAST", toast: "Declined. The host has been told" }); onDone && onDone(); };
+  const yes = () => { go(e.auto ? "available" : "accept"); dispatch({ type: "TOAST", toast: e.auto ? "You're available. The host will choose" : "Shift accepted. It's in your bookings" }); onDone && onDone(); };
+  const no = () => { go("unavailable"); dispatch({ type: "TOAST", toast: "Marked unavailable. The host has been told" }); onDone && onDone(); };
   const send = () => { if (!txt.trim()) return; go("discuss", txt.trim()); setTxt(""); setAsk(false); };
   const people = (state.connections || []).map(c => findPerson(all, state, c.id)).filter(p => p && !p.isCompany && p.id !== "me").slice(0, 8);
   const handTo = e.handover && ((findPerson(all, state, (state.engagements.find(x => x.id === e.handover.to) || {}).staffId) || {}).name || e.handover.name);
@@ -88,7 +93,7 @@ function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
   const tag = e.auto ? "Open shift" : hv ? (e.staffId ? `Selected${fn ? ` · ${fn}` : ""}` : "Shift card") : `${fn ? `${fn}, you've` : "You've"} been selected`;
   const hn = hirer === "The host" ? "the host" : hirer;
   const intro = e.auto
-    ? `${hirer} needs a ${shift.role}. You're one of ${e.batchSize || 10} people invited. If you're free, say yes and ${hn} will choose.`
+    ? `${hirer} needs a ${shift.role}. You're one of ${e.batchSize || 10} people invited. If you're free, ${hn} will choose from everyone available. Saying you're available doesn't confirm the shift.`
     : `${hirer} has chosen you for this shift. It is held for you until ${dt17(e.expiresAt)}.`;
   const rows = (
     <div className="ff-evc-rows">
@@ -119,8 +124,8 @@ function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
         {hv && <p className="ok">{engText(e) || "Not sent yet"}{conf ? ` · Ref ${e.ref || ref17(e)}` : ""}</p>}
         {act && pend && !ended && (<>
           <div className="btns" role="group" aria-label="Your reply" style={{ gridTemplateColumns: "1fr 1fr" }}>
-            <button type="button" className="yes" onClick={yes}>Yes</button>
-            <button type="button" className="no" onClick={no}>No</button>
+            <button type="button" className="yes" onClick={yes}>{e.auto ? WA_BTN17.auto[0] : WA_BTN17.exclusive[0]}</button>
+            <button type="button" className="no" onClick={no}>{WA_BTN17.exclusive[1]}</button>
           </div>
           <div className="btns" style={{ gridTemplateColumns: "1fr 1fr" }}>
             <button type="button" onClick={() => setAsk(!ask)} aria-expanded={ask}>Ask</button>
@@ -355,11 +360,39 @@ function shiftQuestionsWaiting17(state) {
 }
 
 
+/* Booker side (v17.4.6.1): replies to the invitations you sent, read from the same engagement records that drive the
+   Event Card. One update per invitation and state, so retries and reloads never duplicate. Scoped to the site the
+   booking was made on. "available" is an action (choose them) until it lapses; the others are updates. */
+function bookingUpdates17(state) {
+  if (!(state.auth && state.auth.status === "signedIn" && state.role === "staff")) return [];
+  const site = state.site === "party" ? "party" : "staff", now = now17(state), out = [];
+  (state.engagements || []).forEach(e => {
+    if (e.staffId === "me") return;
+    const sh = state.shifts.find(x => x.id === e.shiftId), ev = sh && state.events.find(x => x.id === sh.eventId);
+    if (!sh || !ev || isPast(ev.iso) || eventSource17(state, ev) !== site) return;
+    const h = e.history || [], last = h[h.length - 1] || {}, prev = h[h.length - 2] || {};
+    let kind = null;
+    if (e.state === "confirmed") kind = "confirmed";
+    else if (e.state === "unavailable") kind = "unavailable";
+    else if (e.state === "available" && e.selectBy > now) kind = "available";
+    else if (e.state === "expired" && !e.filled && !e.closed && !e.cancelled && ["requested", "discuss"].includes(prev.state)) kind = "noreply";
+    if (kind) out.push({ id: `${e.id}:${kind}`, kind, e, sh, ev, at: last.at || e.sentAt || 0, action: kind === "available" });
+  });
+  return out.sort((a, b) => b.at - a.at);
+}
+
+
+/* Join requests to your company (FF Staff) and company invitations to you (FF Team). */
+const coRequests17 = (state) => ctRequestsForMe17(state);
+const coInvites17 = (state) => ctInvitesForMe17(state);
+
+
 /* One list per site. FF Team: cards sent to you, team invitations, questions on your profile.
-   FF Staff and FF Party: questions from the people you asked to work. */
+   FF Staff and FF Party: replies to your invitations, questions from the people you asked to work, join requests.
+   The badge counts what the list shows as new: every action, plus updates since the list was last opened. */
 const notifyCount17 = (state) => state.role === "team"
-  ? pending11(state).length + availWaiting17(state).length + teamAsksWaiting17(state).length + questionsWaiting17(state, state.directory || []).length
-  : shiftQuestionsWaiting17(state).length;
+  ? pending11(state).length + availWaiting17(state).length + teamAsksWaiting17(state).length + coInvites17(state).length + questionsWaiting17(state, state.directory || []).length
+  : shiftQuestionsWaiting17(state).length + coRequests17(state).length + bookingUpdates17(state).filter(u => u.action || u.at > (state.notesSeenAt || 0)).length;
 
 
 function TeamAskNote17({ x, onAccepted }) {
@@ -377,6 +410,40 @@ function TeamAskNote17({ x, onAccepted }) {
         <button type="button" className="yes" onClick={() => reply(true)}>Accept</button>
         <button type="button" className="no" onClick={() => reply(false)}>Decline</button>
       </div>
+    </div>
+  );
+}
+
+
+/* A company team invitation (to you, on FF Team) or a join request (to your company, on FF Staff). */
+function CoTeamNote17({ x }) {
+  const { state, dispatch } = useStore();
+  const all = useDirectory();
+  const co = companyList(state).find(c => coKey17(c) === x.companyKey);
+  const person = x.personId ? findPerson(all, state, x.personId) : null;
+  const reply = (accept) => { dispatch({ type: "CT_DECIDE", id: x.id, accept }); dispatch({ type: "TOAST", toast: accept ? (x.dir === "invite" ? `You're on ${x.companyName || "the company"}'s team` : `${firstName((person || x).name || "") || "They"} joined your team`) : x.dir === "invite" ? "Invitation declined" : "Request declined" }); };
+  return (
+    <div className="ff-ndcard17">
+      <div className="face">{x.dir === "invite" ? (co ? <CompanyCardFace c={co} size="sm" /> : null) : person ? <PlayerCard person={person} format="portrait" themeKey={person.theme || "paper"} /> : null}</div>
+      <p className="nt">{x.dir === "invite" ? `${x.companyName || "A company"} invites you to join their company team.` : `${(person || x).name || "Someone"} asks to join your company team.`}</p>
+      <div className="btns two">
+        <button type="button" className="yes" onClick={() => reply(true)}>Accept</button>
+        <button type="button" className="no" onClick={() => reply(false)}>Decline</button>
+      </div>
+    </div>
+  );
+}
+
+
+/* A reply to one of your invitations. Available opens the selection step on that booking; the rest open the booking. */
+function BookingUpdateNote17({ u, who, onGo }) {
+  const { dispatch } = useStore();
+  const go = () => { dispatch({ type: "VIEW", id: null }); dispatch({ type: "V11_SET", patch: { bkView: { eventId: u.ev.id, open: "confirm", n: Date.now() } } }); dispatch({ type: "TAB", tab: "bookings" }); onGo && onGo(); window.scrollTo(0, 0); };
+  const text = { confirmed: `${who.name || "They"} accepted the shift. It's confirmed.`, unavailable: `${who.name || "They"} can't work this shift.`, available: `${who.name || "They"} is available. Choosing them confirms the shift.`, noreply: `${who.name || "They"} didn't reply before the deadline. The invitation has ended.` }[u.kind];
+  return (
+    <div className="ff-ndcard17">
+      <p className="nt">{text}</p>
+      <div className="btns"><button type="button" className="yes" onClick={go}>{u.kind === "available" ? "Choose who to confirm" : "Open booking"}</button></div>
     </div>
   );
 }
@@ -431,6 +498,10 @@ function NotifySheet17({ open, onClose }) {
   const people = useDirectory();
   const [review, setReview] = useState(null);
   const [at, setAt] = useState(null);
+  /* Updates that were new when the list opened stay listed while it is open. */
+  const since = useRef(0), was = useRef(false);
+  if (open && !was.current) since.current = state.notesSeenAt || 0;
+  was.current = open;
   useEffect(() => { if (open) { dispatch({ type: "NOTES_SEEN" }); setAt(null); } }, [open]);
   if (!open) return null;
   const lastQ = (e) => e.thread[e.thread.length - 1].text;
@@ -441,11 +512,21 @@ function NotifySheet17({ open, onClose }) {
     }).filter(Boolean),
     ...availWaiting17(state).map(x => ({ id: x.id, icon: <I11.CalendarCheck size={18} />, title: "Are you available?", sub: `${x.byName} · ${shortDay(x.iso)}`, body: <QuestionNote17 q={availQ(x.iso)} label="Availability" asker={`Asked by ${x.byName}`} /> })),
     ...teamAsksWaiting17(state).map(x => ({ id: x.id, icon: <I11.Users size={18} />, title: "Team invitation", sub: x.name, body: <TeamAskNote17 x={x} onAccepted={setReview} /> })),
+    ...coInvites17(state).map(x => ({ id: x.id, icon: <I11.Users size={18} />, title: "Company team invitation", sub: x.companyName, body: <CoTeamNote17 x={x} /> })),
     ...questionsWaiting17(state, people).map(q => ({ id: q.id, icon: <I11.MessageSquare size={18} />, title: "Question for you", sub: `${askerName(q, people)} · ${q.text}`, body: <QuestionNote17 q={q} asker={`Asked by ${askerName(q, people)}`} /> })),
-  ] : shiftQuestionsWaiting17(state).map(e => {
-    const sh = state.shifts.find(x => x.id === e.shiftId), who = findPerson(people, state, e.staffId) || {};
-    return { id: e.id, icon: <I11.MessageSquare size={18} />, title: `Question from ${firstName(who.name || "") || "your team"}`, sub: `${sh.role} · ${lastQ(e)}`, body: <ShiftQuestionNote17 e={e} /> };
-  });
+  ] : [
+    ...coRequests17(state).map(x => ({ id: x.id, icon: <I11.UserPlus size={18} />, title: "Asks to join your team", sub: x.name || (findPerson(people, state, x.personId) || {}).name || "", body: <CoTeamNote17 x={x} /> })),
+    ...shiftQuestionsWaiting17(state).map(e => {
+      const sh = state.shifts.find(x => x.id === e.shiftId), who = findPerson(people, state, e.staffId) || {};
+      return { id: e.id, icon: <I11.MessageSquare size={18} />, title: `Question from ${firstName(who.name || "") || "your team"}`, sub: `${sh.role} · ${lastQ(e)}`, body: <ShiftQuestionNote17 e={e} /> };
+    }),
+    ...bookingUpdates17(state).filter(u => u.action || u.at > since.current).map(u => {
+      const who = findPerson(people, state, u.e.staffId) || {}, fn = firstName(who.name || "") || "Someone";
+      const title = { confirmed: `${fn} confirmed`, unavailable: `${fn} is unavailable`, available: `${fn} is available`, noreply: "No reply before the deadline" }[u.kind];
+      const icon = { confirmed: <I11.Check size={18} />, unavailable: <I11.X size={18} />, available: <I11.CalendarCheck size={18} />, noreply: <I11.Clock size={18} /> }[u.kind];
+      return { id: u.id, icon, title, sub: `${u.sh.role} · ${eventTitle(u.ev)} · ${whenOf11(u.sh)}`, body: <BookingUpdateNote17 u={u} who={who} onGo={onClose} /> };
+    }),
+  ];
   return (
     <Sheet open onClose={onClose} title="Notifications">
       <div className="ff-ntf17">

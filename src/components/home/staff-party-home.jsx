@@ -24,6 +24,7 @@
         cats: DX_BIZ,
         kind: "staff"
       }),
+      React.createElement(GoldLaunch20, { key: "gold" }),
       React.createElement(HowBooking17, {
         key: "how",
         kind: "staff"
@@ -35,17 +36,8 @@
       React.createElement(Journal17, {
         key: "journal",
         kind: "staff"
-      }), React.createElement(React.Fragment, {
-        key: "why"
-      }, React.createElement(WhyFlair17, {
-        kind: "staff"
-      }), React.createElement(OurDream17, {
-        kind: "staff"
-      })),
-      React.createElement(HireBeta, {
-        key: "beta",
-        name: "FF Staff"
-      }),
+      }), React.createElement(FireFlairFold18, { key: "why", kind: "staff" }),
+      React.createElement(BusinessSupport19, { key: "business" }),
       React.createElement(HireJoin, {
         key: "join",
         kind: "staff"
@@ -254,6 +246,7 @@
         key: "journal",
         kind: "party"
       }), React.createElement(FireFlairFold18, { key: "why" }),
+      React.createElement(BusinessSupport19, { key: "business" }),
       React.createElement(HireJoin, {
         key: "join",
         kind: "party"

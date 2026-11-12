@@ -15,6 +15,7 @@
   "utils/pay17.js",
   "adapters/qa-adapter.js",
   "state/profile-content17.js",
+  "state/co-teams17.js",
   "content/people-demo.js",
   "content/companies.js",
   "state/seed-data.js",

@@ -145,7 +145,7 @@ function reducer(s, a) {
     return { ...s, company: { ...c, records: out.profile.records } };
   }
   { const r11 = v11Reducer(s, a); if (r11) return r11; }
-  { const rq = qa17Reducer(s, a) || pc17Reducer(s, a) || cov17Reducer(s, a); if (rq) return rq; }
+  { const rq = qa17Reducer(s, a) || pc17Reducer(s, a) || cov17Reducer(s, a) || ct17Reducer(s, a); if (rq) return rq; }
   switch (a.type) {
     case "FOCUS":     return { ...s, focus: a.focus };
     case "NET_QUERY": return { ...s, netQuery: a.q || "" };

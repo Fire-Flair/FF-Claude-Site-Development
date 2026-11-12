@@ -110,7 +110,6 @@ const VIP21_CSS = [
   ".ff-vc21-nm{min-width:0}.ff-vc21-nm b{display:block;font-size:clamp(19px,5.4vw,25px);line-height:1.1;color:#fff;overflow-wrap:anywhere}.ff-vc21-nm small{display:block;margin-top:3px;font-size:12px;color:#D9DCE2;letter-spacing:.06em}",
   ".ff-vc21-rows{display:grid;gap:6px;font-size:12.5px;line-height:1.35}.ff-vc21-rows div{display:flex;gap:8px;align-items:baseline}.ff-vc21-rows em{flex:none;font-style:normal;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#9EA3AD;min-width:56px}",
   ".ff-vc21-bot{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}",
-  ".ff-vc21-qr{flex:none;width:46px;height:46px;border-radius:10px;background:#F4F2EC;padding:4px}",
   ".ff-v21-cardwrap{display:flex;flex-direction:column;gap:14px;align-items:flex-start}",
   ".ff-v21-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}.ff-v21-list li{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.4}.ff-v21-list li svg{flex:none;margin-top:2px;color:var(--gold-dk,#A5802F)}",
   ".ff-v21-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}",
@@ -144,8 +143,7 @@ const VIP21_CSS = [
   ".ff-v21 .ff-btn{border-radius:18px}",
   ".ff-v21 .ff-v21-chips .ff-v21-chip{padding:8px 14px;border-radius:18px;border:1px solid rgba(165,128,47,.55);background:#fff;color:var(--onyx,#141416);font:inherit;font-size:13.5px;cursor:pointer}.ff-v21 .ff-v21-chips .ff-v21-chip[aria-pressed=true]{background:var(--onyx,#141416);color:#E7CB7A;border-color:var(--onyx,#141416)}",
   ".ff-v21 .ff-vcard21 .r span:not(.ic){overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}.ff-v21 .ff-vcard21 .r .ph0{opacity:.5}",
-  ".ff-v21 .ff-vcard21 .vq{position:absolute;right:10px;top:44px;z-index:3;width:44px;height:44px;padding:4px;border-radius:8px;background:#fff;display:block}.ff-v21 .ff-vcard21 .vq svg{width:100%;height:100%;display:block}",
-  ".ff-v21 .ff-vcard21.mini{width:100%}.ff-v21 .ff-vcard21.mini .vq{display:none}",
+  ".ff-v21 .ff-vcard21.mini{width:100%}",
   ".ff-v21 .ff-v21-pc{flex:none;width:220px;padding:0;border:0;background:none;cursor:pointer;font:inherit;text-align:left}",
   ".ff-v21 .ff-v21-xg{margin-top:14px}.ff-v21 .ff-v21-gh{margin:0 0 10px;font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dk,#8A6A1F)}",
   ".ff-v21 .ff-v21-xl{display:grid;gap:12px;grid-template-columns:1fr}@media(min-width:760px){.ff-v21 .ff-v21-xl{grid-template-columns:1fr 1fr}}",
@@ -238,20 +236,6 @@ function vipCopy21(dispatch, text) {
 }
 
 
-/* A small deterministic QR-style block for the card; the real one carries the signed card address. */
-function VipQr21({ seed }) {
-  const s = String(seed || "ffvip");
-  let h = 7; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
-  const cells = [];
-  for (let y = 0; y < 9; y++) for (let x = 0; x < 9; x++) {
-    h = (h * 1103515245 + 12345) >>> 0;
-    const eye = (x < 3 && y < 3) || (x > 5 && y < 3) || (x < 3 && y > 5);
-    if (eye || (h >>> 16) & 1) cells.push(<rect key={x + "-" + y} x={x} y={y} width="1" height="1" />);
-  }
-  return <svg className="ff-vc21-qr" viewBox="0 0 9 9" fill="#0B0B0D" aria-hidden="true">{cells}</svg>;
-}
-
-
 /* The VIP card: the same 5:7 card as the VIP Host Card, mostly their photo. */
 function VipCard21({ card, tag, sample, edit, set, mini }) {
   const c = card || {};
@@ -269,7 +253,6 @@ function VipCard21({ card, tag, sample, edit, set, mini }) {
       {React.createElement(edit ? "button" : "div", edit ? { type: "button", className: "ph", onClick: () => ref.current && ref.current.click(), "aria-label": src ? "Change your photo" : "Add your photo" } : { className: "ph", style: { cursor: "inherit" } },
         src ? <img decoding="async" src={src} alt="" /> : <span className="add"><CameraPlusGlyph size={28} /><span>{edit ? "Add your photo" : "Your photo"}</span></span>,
         edit ? <input ref={ref} type="file" accept="image/*" hidden onChange={pick} /> : null)}
-      <span className="vq" aria-hidden="true"><VipQr21 seed={(c.name || "") + (tag || "")} /></span>
       <div className="body">
         {edit ? <input className="ff-cardin nm" value={c.name || ""} placeholder="Your name" aria-label="Your name" maxLength={40} onChange={(e) => set && set({ name: e.target.value })} />
           : <b className="nm">{c.name || "Your name"}</b>}
@@ -565,6 +548,7 @@ function VipHome21() {
           <VipLaunch21 key="launch" />,
           <VipKnown21 key="known" />,
           <VipHow21 key="how" />,
+          <V101.BusinessSupport19 key="business" />,
           <VipFaq21 key="faq" />,
         ].filter(Boolean))}
       </div>
@@ -1067,8 +1051,9 @@ function VipRouter21() {
   const { state } = useStore();
   const { tab } = state;
   if (state.viewing) return React.createElement(PersonProfile, null);
-  if (tab === "network") return React.createElement(VipExperiences21, null);
-  if (tab === "bookings") return React.createElement(VipBook21, null);
+  /* Business & Support closes every Network and Bookings page (v17.4.6.1). */
+  if (tab === "network") return React.createElement(React.Fragment, null, React.createElement(VipExperiences21, null), React.createElement(V101.BusinessSupport19, null));
+  if (tab === "bookings") return React.createElement(React.Fragment, null, React.createElement(VipBook21, null), React.createElement(V101.BusinessSupport19, null));
   if (tab === "profile") return React.createElement(VipCardPage21, null);
   return React.createElement(VipHome21, null);
 }
@@ -1091,9 +1076,9 @@ function StaffRouter() {
   if (state.viewing)
     return React.createElement(PersonProfile, null);
   if (tab === "network")
-    return React.createElement(StaffRoster, null);
+    return React.createElement(React.Fragment, null, React.createElement(StaffRoster, null), React.createElement(V101.BusinessSupport19, null));
   if (tab === "bookings")
-    return React.createElement(StaffBookings, null);
+    return React.createElement(React.Fragment, null, React.createElement(StaffBookings, null), React.createElement(V101.BusinessSupport19, null));
   if (tab === "profile")
     return React.createElement(ProfileGate17, {
       kind: state.site === "party" ? "party" : "biz"

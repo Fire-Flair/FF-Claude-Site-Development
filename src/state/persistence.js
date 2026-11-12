@@ -7,7 +7,7 @@
    they left off. Demo directory/venues/services stay static — not persisted.
    ========================================================================== */
 
-const PERSIST_KEYS = ["admin17", "vip21", "vipClaims", "feedback", "profileQuestions", "auth", "role", "route", "tab", "session", "profile", "connections", "invitations", "reviews", "reviewRequests", "events", "shifts", "engagements", "categoryVisibility", "credits", "company", "activeEventId", "site", "partyEvents", "trainingInterest", "jobsInterest", "cocktailMenu", "vipInterest", "teamInvites", "joinedPeople", "profileEdit", "staffNotify", "rewardsInterest", "workPostcode", "availabilityAsks", "notesSeenAt", "favs", "netAdds17", "teamAsks17", "myCocktails", "myServices", "myPosts", "devDone", "admin17", "myTerms17", "svcTerms17", "fd", "qa17"];
+const PERSIST_KEYS = ["admin17", "vip21", "vipClaims", "feedback", "profileQuestions", "auth", "role", "route", "tab", "session", "profile", "connections", "invitations", "reviews", "reviewRequests", "events", "shifts", "engagements", "categoryVisibility", "credits", "company", "activeEventId", "site", "partyEvents", "trainingInterest", "jobsInterest", "cocktailMenu", "vipInterest", "teamInvites", "joinedPeople", "profileEdit", "staffNotify", "rewardsInterest", "workPostcode", "availabilityAsks", "notesSeenAt", "favs", "netAdds17", "teamAsks17", "myCocktails", "myServices", "myPosts", "devDone", "admin17", "myTerms17", "svcTerms17", "fd", "qa17", "goldClaims17", "coTeams17"];
 
 
 

@@ -230,7 +230,10 @@
 
   const Mail19 = lucideIcon("Mail"), Phone19 = lucideIcon("Phone");
 
+  /* One instance per page: second from bottom on every home page, last on every Network and Bookings page. */
   function BusinessSupport19() {
+    const { state } = useStore();
+    const dom = state.role === "team" || !state.role ? "FFTeam.uk" : state.site === "party" ? "FFParty.uk" : state.role === "vip" || state.site === "vip" ? "FFVIP.uk" : "FFStaff.uk";
     const row = (k, label, value) => React.createElement("div", { key: k, className: "ff-biz19-row" }, React.createElement("dt", null, label), React.createElement("dd", null, value));
     return React.createElement("section", {
       className: "ff-sect ff-biz19",
@@ -245,7 +248,7 @@
       className: "ff-biz19-grid"
     }, React.createElement("div", null, React.createElement("p", {
       className: "ff-biz19-lead"
-    }, "FFTeam.uk is operated by FIREFLAIR LTD."), React.createElement("dl", {
+    }, dom, " is operated by FIREFLAIR LTD."), React.createElement("dl", {
       className: "ff-biz19-dl"
     }, row("num", "Company no.", "17240998, incorporated 25 May 2026"), row("reg", "Registered in", "England and Wales"), row("off", "Office", React.createElement(React.Fragment, null, "71\u201375 Shelton Street, Covent Garden, London, ", React.createElement("span", { className: "ff-biz19-nb" }, "WC2H 9JQ"))))), React.createElement("div", {
       className: "ff-biz19-sup"
@@ -487,6 +490,50 @@ const vipClaim20 = (s, patch) => {
 };
 
 const vipFoundingCount20 = (state) => (state.vipClaims || []).filter((x) => x.status === "founding").length;
+
+/* FF Staff launch box (v17.4.6.1): Be first in line for Gold. Launch messaging only: no counter, no automatic
+   Gold enrolment. Eligibility is recorded once per company at its first confirmed hire (goldClaims17, see
+   goldClaim17 in autofill.jsx); this box only reads it. */
+const GOLD20 = {
+  limit: 100,
+  tiles: [
+    { k: "marketing", t: "Marketing", img: "reward_photoshoot", d: ["We help promote your company across FireFlair, so more hosts and businesses find you."], story: "how-to-get-mobile-bar-bookings" },
+    { k: "training", t: "Staff training and equipment", img: "reward_bar_kit", d: ["We help train your team and provide them with cocktail equipment."] },
+    { k: "events", t: "Smaller events", img: "dream_after_dark", d: ["We can help you run smaller events under your own brand."], story: "small-cocktail-event-profitability" },
+    { k: "brand", t: "Your brand", img: "training_brand_training", d: ["Your cocktails, your staff and your events, booked through FireFlair."], story: "signature-cocktail-services-on-ff-party" },
+  ],
+};
+
+function GoldLaunch20() {
+  const h = React.createElement;
+  const { state } = useStore();
+  const nav = useHireNav();
+  const [box, setBox] = useState(null);
+  const IM = window.FF_IMG || {};
+  const cur = box === null ? null : GOLD20.tiles[box];
+  const key = goldKey17(state);
+  const mine = key && (state.goldClaims17 || []).find((x) => x.key === key);
+  const story = cur && cur.story && typeof JR17 !== "undefined" && JR17[cur.story] ? JR17[cur.story] : null;
+  const read = () => { const id = cur.story; setBox(null); setTimeout(() => window.dispatchEvent(new CustomEvent("ff-openstory", { detail: id })), 60); };
+  return h("section", { className: "ff-sect", id: "ff-gold", "aria-labelledby": "ff-gold-h" },
+    h("style", null, PROMO_CSS20 + PROMO_BOX_CSS20 + ".ff-gold20-tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}.ff-gold20-t{position:relative;display:flex;align-items:flex-end;aspect-ratio:1/1;padding:10px;border-radius:16px;corner-shape:squircle;border:1px solid rgba(201,162,75,.45);background:#1C0E12 center/cover no-repeat;color:#F4EBD6;font:inherit;text-align:left;cursor:pointer;overflow:hidden}.ff-gold20-t:before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,10,9,0) 35%,rgba(11,10,9,.85))}.ff-gold20-t b{position:relative;font-size:13.5px;line-height:1.2;overflow-wrap:normal;word-break:normal}@media(max-width:640px){.ff-gold20-tiles{grid-template-columns:repeat(2,1fr)}}"),
+    h("div", { className: "ff-cp20" },
+      h("div", { className: "ff-cp20-in" },
+        h("div", null,
+          h("div", { className: "ff-cp20-eye" }, h(Coin, { size: 34, tier: "gold" }), h("span", null, "FF Staff launch · Gold")),
+          h("h2", { id: "ff-gold-h" }, "Be first in line for Gold"),
+          h("p", null, "The first " + GOLD20.limit + " companies to sign up and confirm a hire through FF Staff will be eligible for priority access to our Gold business package."),
+          mine ? h("span", { className: "ff-cp20-date" }, mine.n <= GOLD20.limit ? "Your company is in line for Gold" : "Your first hire is confirmed") : null,
+          h("div", { className: "ff-cp20-btns" }, h(ShineButton, { onClick: nav.toEvent }, "Hire staff"))),
+        h("div", null,
+          h("div", { className: "ff-gold20-tiles", role: "group", "aria-label": "What Gold includes" },
+            GOLD20.tiles.map((t, i) => h("button", { key: t.k, type: "button", className: "ff-gold20-t", style: IM[t.img] ? { backgroundImage: "url(" + IM[t.img] + ")" } : undefined, onClick: () => setBox(i) }, h("b", null, t.t)))),
+          h("div", { className: "ff-cp20-url" }, "FFStaff.uk")))),
+    h(Sheet, { open: box !== null, onClose: () => setBox(null), title: cur ? cur.t : "", center: true },
+      cur ? h("div", { className: "ff-cp20r" }, cur.d.map((p, i) => h("p", { key: i }, p)),
+        story ? h(Button, { variant: "ghost", onClick: read }, "Read: " + story.title) : null) : null));
+}
+
 
 function VipFounding20() {
   const h = React.createElement;

@@ -712,7 +712,7 @@ function InviteSheet({ open, onClose }) {
 
 
 
-function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "", shut = false }) {
+function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "", shut = false, insertAfter = "", insert = null }) {
   const { state, dispatch } = useStore();
   const everyone = useDirectory();
   const n = query.trim().toLowerCase();
@@ -722,14 +722,16 @@ function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "", 
   const order = CATEGORY_ORDER;
   const groups = all.reduce((m, p) => { (m[p.group] = m[p.group] || []).push(p); return m; }, {});
   const keys = Object.keys(groups).sort((a, b) => order.indexOf(a) - order.indexOf(b));
+  /* Something placed straight after one group (FF Staff: Your team after Chefs); at the end if that group isn't shown. */
+  const slotAt = insert ? (keys.includes(insertAfter) ? insertAfter : null) : null;
 
   return (
     <>
       {keys.map(g => {
         const key = `${scope}${g}`;
         const visible = state.categoryVisibility[key] === undefined ? (!shut && state.role !== "staff") : state.categoryVisibility[key] !== false;
-        return (
-          <section key={g} style={{ marginTop: 20 }}>
+        return (<React.Fragment key={g}>
+          <section style={{ marginTop: 20 }}>
             <SectionHead icon={<GroupIcon group={g} />} title={g} count={groups[g].length}
               action={<CategoryToggle sectionKey={key} defaultOpen={!shut} />} />
             {visible && (
@@ -746,8 +748,10 @@ function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "", 
               </HScroll>
             )}
           </section>
-        );
+          {slotAt === g ? insert : null}
+        </React.Fragment>);
       })}
+      {insert && !slotAt ? insert : null}
     </>
   );
 }

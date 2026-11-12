@@ -107,9 +107,6 @@
       h: "Hospitality, brought together.",
       p: ["Hospitality is a community, and FireFlair brings it together: bartenders, waiters, event staff and the businesses that hire them, all in one place, all building the same thing.", "Everyone shares the same values: be reliable, be kind, and make every event a night worth remembering. Find the people who work that way and keep them close.", "Reputation travels with people on FireFlair, so you hire with confidence. Choose staff your colleagues already trust and build a bench you can call on all year."],
       parts: [
-        { id: "ff-core", label: "What is FireFlair?", r: () => React.createElement(CoreValues, {
-          kind: "staff"
-        }) },
         { id: "ff-teams", label: "Book a team", r: () => React.createElement(StaffTeams, null) },
         { id: "ff-relationships", label: "Reviews", r: () => React.createElement(HireReviews, {
           kind: "staff"
@@ -278,14 +275,15 @@ function Fold18({ id, title, sub, children }) {
     open ? h18("div", { className: "ff-fold18-c" }, children) : null);
 }
 
-function FireFlairFold18() {
-  /* Collapsed: a compact card with a small fire picture. Open: the original Fire / Flair section and Our dream, unchanged. */
+function FireFlairFold18({ kind = "party" }) {
+  /* Collapsed: a compact card with a small fire picture. Open: the original Fire / Flair section and Our dream, unchanged.
+     v17.4.6.1: FF Staff uses the same fold; What is FireFlair? (moved out of Our community) sits inside it. */
   const [open, setOpen] = useState(false);
   return h18("div", { className: "ff-sect ff-firefold18", id: "ff-why-fold" },
     h18("button", { type: "button", className: "ff-firefold18-b", "aria-expanded": open, "aria-controls": "ff-why-panel", onClick: () => setOpen(!open) },
       h18("span", { className: "th", "aria-hidden": "true" }, h18("img", { src: FIRE17_STILL, alt: "", width: 64, height: 60, decoding: "async", draggable: false })),
       h18("span", { className: "tx" }, h18("b", null, "Fire & Flair"), h18("small", null, "Why we are called FireFlair?"))),
-    open ? h18("div", { id: "ff-why-panel" }, h18(WhyFlair17, { kind: "party" }), h18(OurDream17, { kind: "party" })) : null);
+    open ? h18("div", { id: "ff-why-panel" }, h18(WhyFlair17, { kind }), kind === "staff" ? h18(CoreValues, { kind: "staff" }) : null, h18(OurDream17, { kind })) : null);
 }
 
 const PKG18_RE = /^#\/ff-party\/packages(?:\/([a-z0-9-]+))?\/?$/i;

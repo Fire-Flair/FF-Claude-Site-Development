@@ -153,7 +153,8 @@ function v11Reducer(s, a) {
     case "TEAM_ASK_REPLY": {
       const done = { ...(s.teamAsks17 || {}), [a.ask.id]: a.accept ? "accepted" : "declined" };
       if (!a.accept) return { ...s, teamAsks17: done };
-      if (a.ask.company) return { ...s, teamAsks17: done, netAdds17: (s.netAdds17 || []).includes(a.ask.fromId) ? s.netAdds17 : [...(s.netAdds17 || []), a.ask.fromId] };
+      /* v17.4.6.1: accepting a company's invitation makes you a member of its team (and keeps it in your network). */
+      if (a.ask.company) { const co = companyById(s, a.ask.fromId) || { name: a.ask.name }; return ct17Reducer({ ...s, teamAsks17: done, netAdds17: (s.netAdds17 || []).includes(a.ask.fromId) ? s.netAdds17 : [...(s.netAdds17 || []), a.ask.fromId] }, { type: "CT_ACCEPTED", companyKey: coKey17(co), companyName: co.name || a.ask.name, personId: "me", tag: (s.auth && s.auth.tag) || "", name: (s.profile && s.profile.name) || "", ref: a.ask.id }); }
       return { ...s, teamAsks17: done, connections: s.connections.some(c => c.id === a.ask.fromId) ? s.connections : [...s.connections, { id: a.ask.fromId, name: a.ask.name, onFF: true, tag: a.ask.tag }] };
     }
     /* On FF Staff, tapping someone's card enlarges it first (CardPeek):

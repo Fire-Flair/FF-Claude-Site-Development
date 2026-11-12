@@ -199,6 +199,12 @@ function Journal17({ kind = "team" }) {
     setOpen(id);
     if (ST18_ROUTES) { try { window.history.pushState({ story: id }, "", "/stories/" + id); } catch (e) { /* ignore */ } }
   };
+  /* Other parts of the page (the FF Staff Gold box) open a story with the "ff-openstory" event. */
+  useEffect(() => {
+    const h = (e) => { if (e && e.detail && ids.indexOf(e.detail) >= 0) openStory(e.detail); };
+    window.addEventListener("ff-openstory", h);
+    return () => window.removeEventListener("ff-openstory", h);
+  }, [ids.join("|")]);
   const closeStory = () => {
     setOpen(null);
     if (ST18_ROUTES && /^\/stories\//.test(window.location.pathname)) { try { window.history.back(); } catch (e) { /* ignore */ } }

@@ -77,7 +77,7 @@ function v11BookReducer(s, a) {
       const got = engs.filter(x => x.shiftId === sh.id && DONE.includes(x.state)).length;
       if (got >= q) engs = engs.map(x => x.shiftId === sh.id && x.state === "requested" ? { ...x, state: "expired", filled: true, history: [...(x.history || []), { state: "expired", at: now }] } : x);
       const ids = [...new Set([...staffOf(sh), e.staffId])];
-      return { ...s, credits, engagements: engs, shifts: s.shifts.map(x => x.id === sh.id ? { ...x, staffIds: ids, staffId: ids[0] || "" } : x) };
+      return goldClaim17({ ...s, credits, engagements: engs, shifts: s.shifts.map(x => x.id === sh.id ? { ...x, staffIds: ids, staffId: ids[0] || "" } : x) }, s.events.find(v => v.id === sh.eventId));
     }
     case "PEEK": return { ...s, peek: a.id || null };
     default: return auto17Reduce(s, a);
@@ -748,7 +748,7 @@ function Availability11() {
           </li>
         ))}
       </ol>
-      <p className="note">The person you choose has 24 hours to accept, and is held for you meanwhile. If they decline or don't reply, Autofill invites matching professionals near your event and you choose from those who are available. If we can't fill your shift, you get your money back.</p>
+      <p className="note">The person you choose has 24 hours to accept, and is held for you meanwhile. If they're unavailable or don't reply and Autofill is on, Autofill invites matching professionals near your event and you choose from those who are available. If we can't fill your shift, you get your money back.</p>
     </section>
   );
 }
@@ -1078,8 +1078,13 @@ function ConfirmPanel({ ev, shifts, missing, fix, onClose }) {
   const afterPay = () => {
     setStripe(false);
     dispatch({ type: "BOOK_SEND", eventId: ev.id, questions: questions.map(q => q.id) });
-    dispatch({ type: "TOAST", toast: `Booking confirmed. Availability requests sent to ${nSend} ${nSend === 1 ? "person" : "people"} on WhatsApp` });
   };
+  /* v17.4.6.1: the sent state shows only once the invitations exist (or Autofill has started); then a plain
+     progress line, and for shifts without Autofill the option to turn it on if the chosen people don't reply. */
+  const dispatched = paid17(state, ev.id) && (rows.some(r => r.es.length) || shifts.some(sh => (state.af17 || {})[sh.id]));
+  const need = shifts.reduce((n, sh) => n + qtyOf(sh), 0), gotAll = shifts.reduce((n, sh) => n + got17(state, sh), 0);
+  const noAuto = shifts.filter(sh => sh.route !== "auto" && !(state.af17 || {})[sh.id] && open17(state, sh) > 0 && staffOf(sh).length > 0);
+  const backupOff = noAuto.filter(sh => !sh.afBackup), backupOn = noAuto.filter(sh => sh.afBackup);
   return (
     <div className="ff-cpanel" id="ff-bs-confirm-open">
       {!anySent && (<>
@@ -1095,8 +1100,12 @@ function ConfirmPanel({ ev, shifts, missing, fix, onClose }) {
         {stripe && <StripePay17 total={fee17} reference={ev.id} payLabel="Pay and confirm" onClose={() => setStripe(false)} onPaid={afterPay} />}
       </>)}
       {anySent && (<>
-        <h3 className="ff-fh">{allDone ? "Everything's confirmed" : "Sent. Waiting for replies"}</h3>
-        <p className="ff-fp">{allDone ? "Everyone has said yes. We've let you know on WhatsApp." : "Availability requests are out on WhatsApp. We'll tell you the moment everything is confirmed."}</p>
+        <h3 className="ff-fh" role="status">{allDone ? "Everything's confirmed" : dispatched ? "Your invitations have been sent" : "Sending your invitations"}</h3>
+        {need > 0 && <p className="ff-fp ff-prog17"><b>{gotAll} of {need}</b> staff confirmed</p>}
+        {!allDone && backupOff.length > 0 && <div className="ff-afoff17">
+          <p className="ff-fp">Autofill is off for {backupOff.map(sh => sh.role).join(", ")}.</p>
+          <Btn variant="sm" onClick={() => { dispatch({ type: "AF_BACKUP", shiftIds: backupOff.map(sh => sh.id), on: true }); dispatch({ type: "TOAST", toast: "Autofill will step in if they don't reply in time" }); }}><I11.Sparkles size={13} /> Use Autofill if they don't reply in time</Btn></div>}
+        {!allDone && backupOn.length > 0 && <p className="ff-fp ff-afon17"><I11.Sparkles size={13} /> Autofill steps in for {backupOn.map(sh => sh.role).join(", ")} if they don't reply in time. <button type="button" className="ff-linkbtn" onClick={() => dispatch({ type: "AF_BACKUP", shiftIds: backupOn.map(sh => sh.id), on: false })}>Turn off</button></p>}
         <div className="ff-sum">
           <div className="ff-sum-ev"><I11.MapPin size={14} /><b>{ev.venue || "Location to confirm"}</b><span>{ev.iso ? shortDay(ev.iso) : "Date to confirm"}{startOf(ev) ? ` · ${startOf(ev)}` : ""}</span></div>
           {rows.map(({ sh, es }) => (
@@ -1759,16 +1768,22 @@ function StaffBookings() {
   const sv = svcWords(state);
   const picked = view.eventId ? state.events.find(e => e.id === view.eventId) : null;
   const bk = String(view.keep || view.n || (picked ? picked.id : "new"));
+  /* v17.4.6.1 (FF Staff): with a booking under way, Your bookings comes first and the new booking builder
+     sits below it. Without one, the builder stays the first thing a business sees. */
+  const signedIn = !!(state.auth && state.auth.status === "signedIn");
+  const active = !site.party && signedIn && state.events.some(e => !isPast(e.iso) && !hid17(state, "events", e.id) && (e.iso || e.venue || state.shifts.some(x => x.eventId === e.id)) && flowInfo(state, e).sent);
+  const list = !site.party && <BookingsList11 onOpen={(e) => setView({ eventId: e.id })} />;
   return (
     <div className="ff-bk11 v4">
       <div className="ff-eyebrow">{site.name}</div>
       <div className="ff-bk11-top"><h1 className="ff-h1">{site.party ? "Confirm your booking" : "Bookings"}</h1></div>
 
+      {active && list}
       {picked && isPast(picked.iso)
         ? <PastBooking key={picked.id} ev={picked} close={() => setView({})} />
         : site.party ? <><BuildBooking17 /><ConfirmBooking17 key={bk} bkey={bk} ev={picked} setView={setView} /></> : <BookingBox key={bk} bkey={bk} ev={picked} setView={setView} />}
 
-      {!site.party && <BookingsList11 onOpen={(e) => setView({ eventId: e.id })} />}
+      {!active && list}
       {!site.party && <FFEvents17 />}
     </div>
   );

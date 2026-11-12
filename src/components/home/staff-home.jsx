@@ -321,7 +321,7 @@ const FIRE17_STILL = __ff_json("content/data/fire17-still.json");
       className: "it wa"
     }, React.createElement(WhatsAppPreview, {
       lines: ["FireFlair · Vooshka Cocktail Bar would like to book you:", "Cocktail Bartender · Sat 20 Mar · 17:00 · Hackney Depot"],
-      buttons: ["Accept", "Decline"]
+      buttons: ["Accept shift", "Unavailable"]
     }), React.createElement("div", {
       className: "ff-hw11-ok"
     }, React.createElement(Check, {
@@ -767,29 +767,6 @@ const FIRE17_STILL = __ff_json("content/data/fire17-still.json");
       size: 10,
       strokeWidth: 2.4
     }), " Coming 2027")))));
-  }
-
-  function HireBeta({ name }) {
-    const [open, setOpen] = useState(false);
-    return React.createElement("section", {
-      className: "ff-sect",
-      id: "ff-beta",
-      "aria-labelledby": "ff-beta11-h"
-    }, React.createElement("div", {
-      className: "ff-beta-box"
-    }, React.createElement("span", {
-      className: "ff-beta-tag"
-    }, "Beta ", BETA_VERSION), React.createElement("h2", {
-      id: "ff-beta11-h",
-      className: "ff-beta-h"
-    }, "We're in beta - please give us feedback."), React.createElement("p", {
-      className: "ff-beta-t"
-    }, "Tell us what works and what you'd like next. It goes straight to the people building ", name, "."), React.createElement(Button, {
-      onClick: () => setOpen(true)
-    }, "Give feedback")), React.createElement(BetaFeedbackSheet, {
-      open,
-      onClose: () => setOpen(false)
-    }));
   }
 
   function HireJoin({ kind }) {

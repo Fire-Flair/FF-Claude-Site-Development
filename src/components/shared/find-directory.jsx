@@ -301,13 +301,16 @@ function fdCopyBase20(siteKey, node, ctx) {
       desc: `Bartending and hospitality work in ${X}: create a free FF Team Profile Card, add ${X} to the areas you cover and get shift requests from businesses and hosts.`,
       intro: [
         `Create your Profile Card, add ${X} to the areas you cover, and say which professions you're available for. Businesses booking shifts in ${X} and hosts planning parties find you, and every request comes to you on WhatsApp.`,
-        nExact ? `${nExact === 1 ? "One professional has" : nExact + " professionals have"} chosen ${X} as somewhere they work.` : (live ? `Nobody has chosen ${X} as a place they work yet.` : `FF Team is opening up in ${X}. Create your Profile Card and add ${X} as a place you work.`),
-        `Joining the network is not applying for a job. There are no vacancies on this page, and a Profile Card does not guarantee work, hours or income.`],
-      cta: "Create your Profile Card", cta2: null, ask: null, ctaKind: "signup",
+        nExact ? `${nExact === 1 ? "One professional has" : nExact + " professionals have"} chosen ${X} as somewhere they work.` : `Be one of the first professionals in ${X}: add ${X} to the areas you cover.`],
+      cta: "Create your Profile Card", cta2: null, ask: null, ctaKind: "signup", ctaAfterFaq: true,
+      /* v17.4.6.1: five area questions. This page recruits people into the network and is the landing page
+         for individual job adverts, which carry the details of their own role and link to this area's page. */
       faq: [
-        q("Does joining FF Team guarantee work?", `No. A Profile Card lets people find you and lets you receive booking requests. FireFlair cannot promise bookings, hours or income in ${X} or anywhere else.`),
-        q("Is this a job vacancy?", `No. This page invites professionals to join the network. If FireFlair ever lists a genuine vacancy it will have its own page with its own details.`),
-        q(`How do I show that I work in ${X}?`, `When you create your Profile Card you choose the areas you work in. Only the areas you choose are treated as your coverage; FireFlair does not guess it from your address or your CV.`)],
+        q(`Is FF Team recruiting in ${X}?`, `Yes. We’re actively building a hospitality network in ${X}. Create your Profile Card so event businesses can find you and hire you directly from your profile.`),
+        q("What kind of event work can I do?", "Think cocktail parties, weddings, private dinners and corporate events. Add the roles you want to work in, from bartending and waiting to cooking and hosting."),
+        q("How much could I earn on an event shift?", "Event shifts can offer strong rates. Each invitation shows the hourly rate and total shift pay before you decide."),
+        q("When do event shifts come up?", "Shifts come up as events are planned. Add the areas you cover so businesses can find you for events you’d like to work."),
+        q(`How do I get started in ${X}?`, "Create your free Profile Card, add your professions and work areas, then publish it so businesses can find you.")],
     };
   }
   if (siteKey === "staff") {
@@ -362,6 +365,8 @@ function fdSeo(state, people) {
   const robots = ps.pub === "prepared" ? "noindex, nofollow" : approved ? "index, follow" : "noindex, follow";
   const crumbs = fdAnc(node).reverse().filter(n => fdPageState(fd, siteKey, n).pub !== "prepared").map((n, i) => ({ "@type": "ListItem", position: i + 1, name: n.name, item: fdUrl(siteKey, n.path) }));
   const ld = [{ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: crumbs }];
+  /* FAQ markup is built from the same questions the page shows. */
+  if ((copy.faq || []).length) ld.push({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: copy.faq.map(f => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) });
   if (res.exactPeople.length && siteKey !== "staff") ld.push({ "@context": "https://schema.org", "@type": "CollectionPage", name: copy.h1, url: fdUrl(siteKey, node.path),
     mainEntity: { "@type": "ItemList", itemListElement: res.exactPeople.slice(0, 12).map((x, i) => ({ "@type": "ListItem", position: i + 1, url: FF_SEO.profileOrigin + "/" + (x.p.tag || x.p.id) })) } });
   if (sourcing) ld.push({ "@context": "https://schema.org", "@type": "Service", name: siteKey === "staff" ? `Hospitality staffing requests in ${fdLabel(node)}` : `Event staffing requests in ${fdLabel(node)}`, areaServed: { "@type": "Place", name: fdLabel(node) }, provider: { "@type": "Organization", name: "FireFlair" } });
@@ -680,9 +685,9 @@ function AreaPage11() {
       <div className="ff-eyebrow">{site.name}</div>
       <h1 id="fd-h1" className="ff-h1">{copy.h1}</h1>
       {copy.intro.map((t, i) => <p key={i} className="ff-fd-intro">{t}</p>)}
-      <div className="ff-fd-cta"><Btn variant="gold" onClick={cta}>{copy.cta}</Btn>
+      {!copy.ctaAfterFaq && <div className="ff-fd-cta"><Btn variant="gold" onClick={cta}>{copy.cta}</Btn>
         {copy.cta2 && <button type="button" className="ff-fd-link" onClick={go19}>{copy.cta2}</button>}
-        {siteKey === "staff" && <button type="button" className="ff-fd-link" onClick={() => dispatch({ type: "ROLE", role: "staff", site: "staff" })}>Create a company profile</button>}</div>
+        {siteKey === "staff" && <button type="button" className="ff-fd-link" onClick={() => dispatch({ type: "ROLE", role: "staff", site: "staff" })}>Create a company profile</button>}</div>}
 
       <section id="ff-fd-results" aria-labelledby="fd-res-h" style={{ marginTop: 26, scrollMarginTop: 70 }}>
         <div className="ff-fd-rhead"><h2 id="fd-res-h" className="ff-h2">{siteKey === "team" ? "Who works here" : "Professionals and companies"}</h2>
@@ -717,12 +722,9 @@ function AreaPage11() {
         <p className="ff-fd-sub">{sourcing ? `Tell us the date and the kind of professional you need. Our team will look for suitable people and contact you about the options.` : siteKey === "team" ? `Tell us where you work and what you do and we'll contact you if FF Team starts recruiting here.` : `FireFlair isn't taking requests here yet. Tell us what you'd need and we'll contact you if that changes.`}</p>
         <FdAsk11 key={siteKey + node.id + (askCo ? askCo.id : "")} siteKey={siteKey} node={node} company={askCo} />
       </section>}
-      {siteKey === "team" && <section className="ff-fd-card" aria-labelledby="fd-t-h"><h2 id="fd-t-h" className="ff-h2">Joining the network, not applying for a job</h2>
-        <p className="ff-fd-sub">Your Profile Card says who you are and where you work. People who need a professional can then find you, or ask FireFlair to. There are no vacancies on this page.</p>
-        <Btn variant="gold" onClick={signup}>Create your Profile Card</Btn></section>}
-
       <section aria-labelledby="fd-how-h" style={{ marginTop: 26 }}><h2 id="fd-how-h" className="ff-h2">Questions</h2>
         {copy.faq.map(f => <details key={f.q} className="ff-fd-faq"><summary>{f.q}</summary><p>{f.a}</p></details>)}</section>
+      {copy.ctaAfterFaq && <div className="ff-fd-cta" style={{ marginTop: 16 }}><Btn variant="gold" onClick={cta}>{copy.cta}</Btn></div>}
 
       {(kidsLive.length > 0 || sibs.length > 0) && <nav aria-label="Other places" className="ff-fd-links">
         {kidsLive.length > 0 && <><h2 className="ff-h2">Places in {fdLabel(node)}</h2><ul>{kidsLive.slice(0, 24).map(n => <li key={n.id}>{lk(n)}</li>)}</ul>{kidsLive.length > 24 && <p className="ff-fd-fine">and {kidsLive.length - 24} more</p>}</>}

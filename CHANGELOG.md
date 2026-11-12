@@ -1,5 +1,16 @@
 # FireFlair prototype — changelog
 
+## v17.4.6.1 — 2026-11-12 — Area FAQs, FF Staff Gold box, company teams, booking updates (Phase 3 prototype)
+Artifact version 1794480225-2135. Detail and production dependencies: `docs/handoff-v17.4.6.1.md`, `docs/whatsapp-templates.md`.
+
+- FF Team area pages: five area questions, one Create your Profile Card button after the FAQ.
+- FF Staff homepage: What is FireFlair? moved into Our philosophy; Be first in line for Gold box with four picture tiles.
+- Company teams: Your team in FF Staff network; invitations and requests accepted by the recipient; roster and per-member selection.
+- Bookings: Your bookings first; Your invitations have been sent after dispatch; Autofill backup without resend.
+- Wording Accept shift / I am available / Unavailable; booker notifications incl. No reply before the deadline.
+- Business & Support on every Network, Bookings and homepage; beta box and VIP QR block removed.
+- Checks run: `npm run check`, `npm run build`, headless Chrome desktop and mobile (home, support placement, Gold box, FAQ, VIP card), reducer-level company team flow. Simulated, not live: team invitations, notifications. Not browser-tested this round: payment-to-sent flow and per-member selection.
+
 ## v17.4.6 — 2026-11-12 — Bookings rates and Shift Card pay, inline package builders, Q&A for every interest, shared UK location tree (Phase 3 prototype)
 Artifact version 1794478190-59d1 (renamed "FireFlair Phase 3"). Build: `npm run build` (source in `src/`). Full detail: `docs/handoff-v17.4.6.md`.
 

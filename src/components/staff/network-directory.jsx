@@ -90,6 +90,85 @@ function NetPackages20({ pillar }) {
 }
 
 
+/* Your team (FF Staff, signed in): the business's accepted company members. Open, after Chefs, above FF Event Directory. */
+function CompanyTeam17() {
+  const { state, dispatch } = useStore();
+  const all = useDirectory();
+  const [inviting, setInviting] = useState(false);
+  const key = myCoKey17(state);
+  if (!key) return null;
+  const members = ctMembers17(state, key).map(id => findPerson(all, state, id)).filter(Boolean);
+  const pending = ctPending17(state, key);
+  const sel = state.selection || [];
+  return (
+    <section id="ff-coteam" style={{ marginTop: 20, scrollMarginTop: 70 }} aria-labelledby="ff-coteam-h">
+      <style>{CT17_CSS}</style>
+      <SectionHead icon={<I11.Users size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={<span id="ff-coteam-h">Your team</span>} count={members.length} />
+      {members.length ? (
+        <HScroll label="Your team">
+          {members.map(p => <PlayerTile key={p.id} person={p} selected={sel.includes(p.id)} onClick={() => dispatch({ type: "VIEW", id: p.id })} />)}
+          <button type="button" className="ff-card ff-portrait ff-addtile" style={{ width: CARD_W.player }} onClick={() => setInviting(true)}>
+            <span style={{ textAlign: "center" }}><I11.UserPlus size={20} color="var(--gold-dk)" /><span className="ff-label" style={{ display: "block", marginTop: 6 }}>Invite your team</span></span>
+          </button>
+        </HScroll>
+      ) : (
+        <div className="ff-ct17-empty">
+          <span className="ic" aria-hidden="true"><I11.Users size={26} /></span>
+          <b>Build your company team</b>
+          <p>The people you invite join your team once they accept. You can book them by name through your company.</p>
+          <Btn variant="primary" onClick={() => setInviting(true)}><I11.UserPlus size={14} /> Invite your team</Btn>
+        </div>
+      )}
+      {pending.length > 0 && <ul className="ff-ct17-pend" aria-label="Waiting for a reply">{pending.map(x => <li key={x.id}><b>{x.name || (findPerson(all, state, x.personId) || {}).name || x.phone}</b><small>{x.dir === "invite" ? "Invited" : "Asked to join"}</small></li>)}</ul>}
+      <InviteTeamSheet17 open={inviting} onClose={() => setInviting(false)} companyKey={key} />
+    </section>
+  );
+}
+
+
+const CT17_CSS = ".ff .ff-ct17-empty{display:grid;justify-items:start;gap:8px;padding:18px;border:1.5px dashed rgba(126,97,29,.5);border-radius:20px;corner-shape:squircle;background:#FFFDF8}.ff .ff-ct17-empty .ic{color:var(--gold-dk)}.ff .ff-ct17-empty b{font-size:16px}.ff .ff-ct17-empty p{margin:0;font-size:14px;line-height:1.45;color:#3A342B}"
+  + ".ff .ff-ct17-pend{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}.ff .ff-ct17-pend li{display:flex;gap:6px;align-items:baseline;padding:6px 10px;border:1px solid rgba(126,97,29,.35);border-radius:14px;corner-shape:squircle;font-size:13px}.ff .ff-ct17-pend small{color:#6A6253}"
+  + ".ff .ff-ct17-sheet .row{display:flex;align-items:center;gap:10px;width:100%;padding:8px;border:1px solid rgba(126,97,29,.3);border-radius:14px;corner-shape:squircle;background:#fff;font:inherit;text-align:left;margin-bottom:6px;cursor:pointer}.ff .ff-ct17-sheet .row[aria-pressed=true]{border-color:#5C1220;background:#FBF1F3}.ff .ff-ct17-sheet .row span{flex:1;min-width:0}.ff .ff-ct17-sheet .row small{display:block;color:#6A6253}.ff .ff-ct17-sheet .new{display:grid;gap:8px;margin-top:12px}.ff .ff-ct17-sheet .new input{font-size:16px;padding:10px 12px;border:1px solid var(--rule,#d8ccb0);border-radius:12px;corner-shape:squircle}";
+
+
+/* Invite people to the company team: someone already on FireFlair, or anyone by name and mobile number (they join
+   FF Team first, then accept; the invitation waits for them against that number). */
+function InviteTeamSheet17({ open, onClose, companyKey }) {
+  const { state, dispatch } = useStore();
+  const all = useDirectory();
+  const [picked, setPicked] = useState([]);
+  const [nm, setNm] = useState(""), [ph, setPh] = useState("");
+  const [q, setQ] = useState("");
+  const coName = (state.company && state.company.name) || "Your company";
+  const taken = new Set(ctAll17(state).filter(x => x.companyKey === companyKey && (x.status === "accepted" || x.status === "pending")).map(x => x.personId).filter(Boolean));
+  const pool = all.filter(p => !p.isCompany && !taken.has(p.id) && (!q.trim() || personSearchText(p).includes(q.trim().toLowerCase()))).slice(0, 30);
+  const send = () => {
+    let n = 0;
+    picked.forEach(id => { const p = all.find(x => x.id === id); if (!p) return; dispatch({ type: "CT_INVITE", companyKey, companyName: coName, personId: p.id, tag: p.tag, name: p.name }); n++; });
+    if (nm.trim() && ph.replace(/\D/g, "").length >= 7) { dispatch({ type: "CT_INVITE", companyKey, companyName: coName, name: nm.trim(), phone: ph.trim() }); n++; }
+    dispatch({ type: "TOAST", toast: n ? `${n} invitation${n === 1 ? "" : "s"} sent on WhatsApp` : "Choose someone to invite" });
+    if (n) { setPicked([]); setNm(""); setPh(""); onClose(); }
+  };
+  return (
+    <Sheet open={open} onClose={onClose} title="Invite your team">
+      <div className="ff-ct17-sheet">
+        <label className="ff-fd-search"><A17I.Search size={14} /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search the network" aria-label="Search the network" /></label>
+        {pool.map(p => { const on = picked.includes(p.id); return (
+          <button key={p.id} type="button" className="row" aria-pressed={on} onClick={() => setPicked(on ? picked.filter(x => x !== p.id) : [...picked, p.id])}>
+            <Portrait src={p.photo} name={p.name} size={34} tier={p.tier} /><span><b>{p.name}</b><small>{p.profession}</small></span>{on && <I11.Check size={16} />}
+          </button>); })}
+        <div className="new">
+          <b>Someone not on FireFlair yet</b>
+          <input value={nm} onChange={(e) => setNm(e.target.value)} placeholder="Their name" aria-label="Their name" autoComplete="off" />
+          <input value={ph} onChange={(e) => setPh(e.target.value)} placeholder="Mobile number" aria-label="Their mobile number" inputMode="tel" autoComplete="off" />
+        </div>
+        <div style={{ marginTop: 12 }}><Btn variant="primary wide" onClick={send}><WhatsAppIcon size={15} /> Send invitations</Btn></div>
+      </div>
+    </Sheet>
+  );
+}
+
+
 function NetBrowse17(props) {
   const query = props.query || "";
   const st = useStore(), state = st.state, dispatch = st.dispatch;
@@ -104,7 +183,7 @@ function NetBrowse17(props) {
     React.createElement("section", { id: "ff-our-pros", style: { marginTop: 30, scrollMarginTop: 70 } },
       React.createElement(BigHead20, { title: "Our professionals" }),
       React.createElement(TopStaff11, null),
-      React.createElement(GroupedPeople, { query: "", onPick: props.onPick, scope: props.scope, only: groups, shut: true })),
+      React.createElement(GroupedPeople, { query: "", onPick: props.onPick, scope: props.scope, only: groups, shut: true, insertAfter: props.teamSlot ? "Chefs" : "", insert: props.teamSlot || null })),
     React.createElement(NetDirectory19, null));
 }
 
@@ -120,7 +199,16 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   const [tab, setTab] = useState("overview");
   if (!co) return null;
   const isStaff = state.role === "staff";
-  const team = (co.team || []).map(id => all.find(p => p.id === id)).filter(Boolean);
+  /* v17.4.6.1: the roster is the company's accepted members (plus any listed roster), people with a published Profile Card only. */
+  const ck = coKey17(co);
+  const team = [...new Set([...(co.team || []), ...ctMembers17(state, ck)])].map(id => findPerson(all, state, id)).filter(p => p && !p.isCompany);
+  const teamSite = state.role === "team" && state.auth && state.auth.status === "signedIn";
+  const myRel = teamSite && ck ? ctMyStatus17(state, ck) : "";
+  const joinTeam = () => {
+    dispatch({ type: "CT_REQUEST", companyKey: ck, companyName: co.name || "", personId: "me", tag: state.auth.tag || "", name: state.profile.name || "" });
+    dispatch({ type: "TOAST", toast: `Request sent to ${co.name || "the company"}` });
+  };
+  const inv = myRel === "invited" && ctInvitesForMe17(state).find(x => x.companyKey === ck);
   const back = () => { dispatch({ type: "VIEW_COMPANY", id: null }); window.scrollTo(0, 0); };
   const asPerson = { id: co.id, name: co.name || "this company", tag: co.slug, profession: co.kind, isCompany: true, photo: co.logo || null, tier: co.tier };
   const contact = co.mine ? recsOf(co, "contact").filter(r => !r.hidden).map(r => [r.description || "Contact", r.name]) : (co.contact || []);
@@ -149,6 +237,12 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
       <PublicHero media={(co.mediaList || []).map(m => ({ id: m.id, src: m.src, name: m.alt || "" }))} card={<CompanyCardFace c={co} />} below={<>
       {!done && <button type="button" className="ff-pback ff-copub-back" onClick={back}><I11.ChevronLeft size={20} /> <span>Back</span></button>}
       {!done && !co.mine && !isParty && <div className="ff-copub-acts"><NetBtn17 id={co.id} name={co.name} wide /></div>}
+      {!done && !co.mine && !co.unclaimed && teamSite && ck && <div className="ff-copub-acts">
+        {myRel === "member" ? <Btn variant="wide" disabled><I11.Check size={14} /> On their team</Btn>
+          : myRel === "requested" ? <Btn variant="wide" disabled><I11.Clock size={14} /> Request sent</Btn>
+          : inv ? <div className="two"><Btn variant="primary" onClick={() => { dispatch({ type: "CT_DECIDE", id: inv.id, accept: true }); dispatch({ type: "TOAST", toast: `You're on ${co.name}'s team` }); }}><I11.Check size={14} /> Accept invitation</Btn><Btn onClick={() => dispatch({ type: "CT_DECIDE", id: inv.id, accept: false })}>Decline</Btn></div>
+          : <Btn variant="primary wide" onClick={joinTeam}><I11.UserPlus size={14} /> Join team</Btn>}
+      </div>}
       {co.unclaimed || done ? null : (
       <div className="ff-copub-acts">
         {isStaff && team.length > 0 && (isParty
@@ -187,7 +281,10 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
             {pubQa.length ? <ul className="ff-copub-qa">{pubQa.map(q => <li key={q.id}><b>{q.text}</b><span>{qaShown(q)}</span></li>)}</ul>
               : <p className="ff-body ff-muted" style={{ margin: 0 }}>No answers yet.</p>}</section>}
           {tab === "team" && <section className="ff-copub-sec">
-            {team.length ? <HScroll label="Their team">{team.map(p => <PlayerTile key={p.id} person={p} selected={state.selection.includes(p.id)} onClick={() => { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); }} />)}</HScroll>
+            {team.length ? <HScroll label="Their team">{team.map(p => { const on = state.selection.includes(p.id); return (
+              <div key={p.id} className="ff-ct17-m"><PlayerTile person={p} selected={on} onClick={() => { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); }} />
+                {isStaff && !isParty && !co.mine && <Btn variant={on ? "sm" : "sm primary"} onClick={() => { dispatch({ type: on ? "SELECT" : "SELECT_ADD", id: p.id }); dispatch({ type: "TOAST", toast: on ? `${firstName(p.name)} removed from your booking bar` : `${firstName(p.name)} added to your booking bar` }); }}>{on ? <><I11.Check size={13} /> In your booking</> : <><I11.Plus size={13} /> Add to booking</>}</Btn>}
+              </div>); })}</HScroll>
               : <p className="ff-body ff-muted" style={{ margin: 0 }}>No team yet.</p>}</section>}
           {tab === "reviews" && <section className="ff-copub-sec">
             {reviews.length ? <div className="ff-copub-revs">{reviews.map(([by, rating, text, byName], i) => { const p = by && all.find(x => x.id === by); return (
@@ -218,8 +315,6 @@ function StaffRosterStaff11() {
   const all = useDirectory();
   const [q, setQ] = useState(() => state.netQuery || "");
   useEffect(() => { if (state.netQuery) dispatch({ type: "NET_QUERY", q: "" }); }, []);
-  const worked = state.engagements.filter(e => ["confirmed", "completed", "signed_off", "paid"].includes(e.state));
-  const regulars = [...new Set(worked.map(e => e.staffId))].filter(id => id !== "me").map(id => all.find(p => p.id === id)).filter(Boolean);
   return (
     <div>
       <BigHead20 tag="h1" title="Our network" />
@@ -228,15 +323,7 @@ function StaffRosterStaff11() {
       <FFAI query={q} onQuery={setQ} title="Search the network" context="FF Staff"
         purpose="Find people to hire — search by name, profession, skill or area. Tap a card to see their profile."
         placeholder="Name, profession, skill or area…" />
-      <NetBrowse17 query={q} onPick={(p) => dispatch({ type: "VIEW", id: p.id })} scope="staff_" after={!q && !state.netBrief ? <NetMap11 /> : null} />
-      {!q && regulars.length > 0 && (
-        <section style={{ marginTop: 18 }}>
-          <SectionHead icon={<I11.Check size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Your team" count={regulars.length} />
-          <HScroll label="Your team">
-            {regulars.map(p => <PlayerTile key={p.id} person={p} selected={state.selection.includes(p.id)} onClick={() => dispatch({ type: "VIEW", id: p.id })} />)}
-          </HScroll>
-        </section>
-      )}
+      <NetBrowse17 query={q} onPick={(p) => dispatch({ type: "VIEW", id: p.id })} scope="staff_" after={!q && !state.netBrief ? <NetMap11 /> : null} teamSlot={myCoKey17(state) ? <CompanyTeam17 /> : null} />
     </div>
   );
 }
