@@ -228,6 +228,38 @@ function ShareCardSheet({ open, onClose }) {
       setBusy(false);
     }
   };
+  const phoneUi = React.createElement(React.Fragment, null, React.createElement("p", {
+    className: "ff-body",
+    style: { marginTop: 0, fontSize: 15 }
+  }, "Type someone's phone number here to share your card with them."), React.createElement(Field, {
+    label: "Phone number"
+  }, React.createElement("input", {
+    className: "ff-input",
+    type: "tel",
+    inputMode: "tel",
+    autoComplete: "off",
+    placeholder: "+44 7700 900000",
+    value: phone,
+    autoFocus: FF_FINE_POINTER && (true),
+    onChange: (e) => setPhone(e.target.value),
+    onKeyDown: (e) => e.key === "Enter" && send()
+  })), React.createElement(Btn, {
+    variant: "primary wide",
+    disabled: !ok || busy,
+    onClick: send
+  }, busy ? React.createElement(Loader2, {
+    size: 14,
+    className: "ff-spin"
+  }) : React.createElement(WhatsAppIcon, {
+    size: 15
+  }), " Send my card"));
+  if (tag && !sent) {
+    const me = meAsStaff(state.profile, state.session);
+    return React.createElement(CardShareSheet17, {
+      open: true, onClose, title: "My FireFlair card", url: "https://" + CARD_DOMAIN + "/" + tag, fileName: "fireflair-" + cx17Slug(tag),
+      extra: React.createElement("div", { style: { marginTop: 14 } }, phoneUi)
+    }, React.createElement(PlayerCard, { person: me, format: "full", themeKey: state.profile.theme }));
+  }
   return React.createElement(Sheet, {
     open: true,
     onClose,
@@ -266,31 +298,7 @@ function ShareCardSheet({ open, onClose }) {
     }
   }, React.createElement(Plus, {
     size: 13
-  }), " Share with someone else")) : React.createElement(React.Fragment, null, React.createElement("p", {
-    className: "ff-body",
-    style: { marginTop: 0, fontSize: 15 }
-  }, "Type someone's phone number here to share your card with them."), React.createElement(Field, {
-    label: "Phone number"
-  }, React.createElement("input", {
-    className: "ff-input",
-    type: "tel",
-    inputMode: "tel",
-    autoComplete: "off",
-    placeholder: "+44 7700 900000",
-    value: phone,
-    autoFocus: FF_FINE_POINTER && (true),
-    onChange: (e) => setPhone(e.target.value),
-    onKeyDown: (e) => e.key === "Enter" && send()
-  })), React.createElement(Btn, {
-    variant: "primary wide",
-    disabled: !ok || busy,
-    onClick: send
-  }, busy ? React.createElement(Loader2, {
-    size: 14,
-    className: "ff-spin"
-  }) : React.createElement(WhatsAppIcon, {
-    size: 15
-  }), " Send my card")));
+  }), " Share with someone else")) : null);
 }
 
 

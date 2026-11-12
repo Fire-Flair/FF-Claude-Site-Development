@@ -1662,7 +1662,8 @@ function PastBooking({ ev, close }) {
         <button type="button" className="ff-flow-x" onClick={close} aria-label="Close"><I11.X size={18} /></button>
       </header>
       <div className="ff-evwrap"><EventCard11 ev={ev} people={people} foot={<><I11.ClipboardList size={15} /><span>{sv.n(shifts.length)}</span></>} /></div>
-      {shifts.length > 0 && <div className="ff-fcards-shifts" style={{ maxWidth: 380, margin: "12px auto 0" }}>{shifts.map(sh => <ShiftMini11 key={sh.id} sh={sh} ev={ev} />)}</div>}
+      {shifts.length > 0 && <div className="ff-fcards-shifts" style={{ maxWidth: 380, margin: "12px auto 0" }}>{shifts.map(sh => <div key={sh.id}><ShiftMini11 sh={sh} ev={ev} /><div style={{ marginTop: 6 }}><CardShareBtn17 title={sh.role || "Shift"} url="https://ffstaff.uk" fileName={"fireflair-shift-" + cx17Slug(sh.role)} render={() => <ShiftMini11 sh={sh} ev={ev} />} label="Share Shift Card" /></div></div>)}</div>}
+      <div style={{ marginTop: 12 }}><CardShareBtn17 title={eventTitle(ev)} url="https://ffparty.uk" fileName={"fireflair-event-" + cx17Slug(eventTitle(ev))} render={() => <EventCard11 ev={ev} people={people} />} label="Share Event Card" /></div>
       <div style={{ marginTop: 14 }}><PastReviews ev={ev} /></div>
     </section>
   );

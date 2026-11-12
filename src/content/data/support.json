@@ -1,0 +1,6 @@
+{
+  "_note": "The ONE place the call-booking address is set. Paste the Calendly event link (https://calendly.com/<account>/<event>) into calendlyUrl. While it is empty, the booking page shows a configuration state and nothing is presented as live.",
+  "calendlyUrl": "",
+  "callLabel": "Book a 15-minute Call",
+  "path": "/support/book-a-call"
+}

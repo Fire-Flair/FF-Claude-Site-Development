@@ -232,7 +232,7 @@
 
   /* One instance per page: second from bottom on every home page, last on every Network and Bookings page. */
   function BusinessSupport19() {
-    const { state } = useStore();
+    const { state, dispatch } = useStore();
     const dom = state.role === "team" || !state.role ? "FFTeam.uk" : state.site === "party" ? "FFParty.uk" : state.role === "vip" || state.site === "vip" ? "FFVIP.uk" : "FFStaff.uk";
     const row = (k, label, value) => React.createElement("div", { key: k, className: "ff-biz19-row" }, React.createElement("dt", null, label), React.createElement("dd", null, value));
     return React.createElement("section", {
@@ -258,7 +258,11 @@
     }, React.createElement(Mail19, { size: 16, strokeWidth: 1.8, "aria-hidden": "true" }), "MrG@FFVip.uk"), React.createElement("a", {
       className: "ff-biz19-link",
       href: "tel:+442045020424"
-    }, React.createElement(Phone19, { size: 16, strokeWidth: 1.8, "aria-hidden": "true" }), "+442045 020424"))), React.createElement("p", {
+    }, React.createElement(Phone19, { size: 16, strokeWidth: 1.8, "aria-hidden": "true" }), "+442045 020424"), React.createElement("button", {
+      type: "button",
+      className: "ff-biz19-link ff-biz19-call",
+      onClick: () => V101.support20Open(dispatch)
+    }, React.createElement(Phone19, { size: 16, strokeWidth: 1.8, "aria-hidden": "true" }), "Book a 15-minute Call"))), React.createElement("p", {
       className: "ff-biz19-legal"
     }, "\u00A9 2026 FIREFLAIR LTD. All rights reserved.")));
   }

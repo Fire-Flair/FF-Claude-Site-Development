@@ -38,7 +38,7 @@ const Briefcase = lucideIcon("Briefcase"), SlidersHorizontal = lucideIcon("Slide
   Lock = lucideIcon("Lock"), Copy = lucideIcon("Copy"), Trash2 = lucideIcon("Trash2"),
   Link2 = lucideIcon("Link2"), Receipt = lucideIcon("Receipt"), Sparkles = lucideIcon("Sparkles"),
   CreditCard = lucideIcon("CreditCard"), Timer = lucideIcon("Timer"), HelpCircle = lucideIcon("HelpCircle"),
-  MessageCircle = lucideIcon("MessageCircle"), Globe = lucideIcon("Globe"), RotateCcw = lucideIcon("RotateCcw"),
+  MessageCircle = lucideIcon("MessageCircle"), Download = lucideIcon("Download"), Globe = lucideIcon("Globe"), RotateCcw = lucideIcon("RotateCcw"),
   Star = lucideIcon("Star"), ArrowLeft = lucideIcon("ArrowLeft"), ArrowRight = lucideIcon("ArrowRight"),
   Wine = lucideIcon("Wine"), Tent = lucideIcon("Tent");
 

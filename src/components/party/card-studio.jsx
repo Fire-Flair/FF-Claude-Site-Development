@@ -681,13 +681,13 @@ function StudioPair17({ type, x, edit, set, site, by, tag, size, only }) {
 function CardPop17({ type, x, site, by, tag, onClose }) {
   const T = STUDIO17[type];
   const tone = T.tone(x);
+  const addr = `${CARD_DOMAIN}/${tag || "yourtag"}/${PATH17[type]}/${slug17(T.name(x)) || "your-card"}`;
+  const nm = T.name(x) || (T.plateOf ? T.plateOf(x) : T.plate);
   return (
-    <Sheet open onClose={onClose} title={T.name(x) || (T.plateOf ? T.plateOf(x) : T.plate)}>
-      <div className="ff-pop17">
-        <Card17 kind={type} tone={tone} plate={T.plateOf ? T.plateOf(x) : T.plate} tag={tag} size="lg"><T.Front x={x} site={site} by={by} /></Card17>
-        <Card17 kind={type} tone={tone} plate={T.back} tag={tag} size="auto lg"><T.Back x={x} /></Card17>
-      </div>
-    </Sheet>
+    <CardShareSheet17 open onClose={onClose} title={nm} url={"https://" + addr} fileName={"fireflair-" + cx17Slug(nm)}
+      extra={<div className="ff-pop17" style={{ marginTop: 14 }}><Card17 kind={type} tone={tone} plate={T.back} tag={tag} size="auto lg"><T.Back x={x} /></Card17></div>}>
+      <Card17 kind={type} tone={tone} plate={T.plateOf ? T.plateOf(x) : T.plate} tag={tag} url={addr} size="lg"><T.Front x={x} site={site} by={by} /></Card17>
+    </CardShareSheet17>
   );
 }
 

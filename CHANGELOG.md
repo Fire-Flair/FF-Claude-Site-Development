@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.4.6.4 — 2026-11-12 — Universal card sharing and Book a 15-minute Call (Phase 3 prototype)
+Artifact version 1794486583-aa2b. Detail: `docs/handoff-v17.4.6.4.md`.
+
+- **Share menu on every card:** Share, WhatsApp, Download PNG, Copy Link. One browser-side export draws the real card as a PNG (5:7 cards 1500 x 2100, other shapes keep their ratio) with the FireFlair address visible. Wired into Profile Card (existing Share sheet), Signature/Classic Cocktail, Service and Story cards, Event, Shift, VIP and Company cards.
+- Pictures that cannot be read stop the export with a clear message; no incomplete images. Book, Review, Join and referrals unchanged.
+- **Book a 15-minute Call** in Business & Support on all four sites and at `#/support/book-a-call`. The Calendly address is set in one file, `src/content/data/support.json`; empty for now, so the page shows a not-connected state.
+- Checks run: `npm run check`, `npm run build`, headless Chrome desktop and mobile. Real iPhone and Android share sheets not tested.
+
 ## v17.4.6.3 — 2026-11-12 — Where are you based, area suggestions, remote work, green FF Staff Shifts cards (Phase 3 prototype)
 Artifact version 1794482756-de4f. Detail: `docs/handoff-v17.4.6.3.md`.
 

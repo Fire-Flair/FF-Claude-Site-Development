@@ -1036,7 +1036,7 @@ function VipCardPage21() {
             <VipChips21 list={VIP21_DIET} value={c.diet} onChange={(x) => set({ diet: x })} />
             <label style={{ display: "block", marginTop: 12 }}><span className="ff-v21-k">Allergies and anything else</span><input className="ff-v21-in" value={c.allergies} onChange={(e) => set({ allergies: e.target.value })} aria-label="Allergies and anything else" /></label>
           </section>
-          {done ? <div className="ff-v21-btns" style={{ marginTop: 22 }}><VipShine21 onClick={() => setWallet(true)}>Add to wallet</VipShine21><Btn onClick={share}>Share my card</Btn></div> : null}
+          {done ? <div className="ff-v21-btns" style={{ marginTop: 22 }}><VipShine21 onClick={() => setWallet(true)}>Add to wallet</VipShine21><CardShareBtn17 title={`${c.name || "My"} FF VIP card`} url={`https://${VIP21.domain}/${VIP21.slug(state)}`} fileName={"fireflair-vip-" + cx17Slug(VIP21.slug(state))} render={() => <VipCard21 card={c} tag={tag} />} label="Share my card" /></div> : null}
         </>} />
         <ConfirmSpin17 lines={["Save"]} label={v.guest ? "Save VIP card" : "Save VIP card and join the guest list"} onClick={save} />
         <VipRewardsSect21 />

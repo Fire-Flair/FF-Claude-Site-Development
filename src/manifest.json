@@ -13,6 +13,7 @@
   "components/shared/primitives.jsx",
   "state/records.js",
   "utils/pay17.js",
+  "utils/card-export17.js",
   "adapters/qa-adapter.js",
   "state/profile-content17.js",
   "state/co-teams17.js",
@@ -31,6 +32,7 @@
   "utils/speech-and-media.js",
   "components/team/profile-card-parts.jsx",
   "components/team/questions.jsx",
+  "components/shared/card-share17.jsx",
   "components/team/profile-from-text.jsx",
   "components/team/attribute-cards.jsx",
   "components/team/network.jsx",
@@ -101,6 +103,7 @@
     "components/home/package-pages.jsx",
     "components/home/discover-hub.jsx",
     "components/home/staff-party-home.jsx",
+    "components/home/support-book20.jsx",
     "components/home/exports.js"
    ]
   },

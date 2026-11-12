@@ -115,6 +115,7 @@ function ffSeoPersonPage(person) {
 
 
 function ffSeoFor(state, people) {
+  if (state.supportPage20) { const sS = V101.support20Seo(state); if (sS) return sS; }
   if (state.pkgPage) { const pkS = V101.pkgSeo18(state); if (pkS) return pkS; }
   if (state.fdArea) { const fdS = fdSeo(state, people); if (fdS) return fdS; }
   if (state.viewing) {
