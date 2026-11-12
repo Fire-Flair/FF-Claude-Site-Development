@@ -10,7 +10,8 @@
    Ticking London covers every borough and neighbourhood beneath it; unticking Camden then adds
    Camden to exc, and London shows as partly selected. Ticking a partly selected place clears the
    exceptions beneath it. Expanding a branch and selecting it are separate controls.
-   The postcode (state.workPostcode) is private: it opens and suggests branches, nothing more.
+   The postcode (state.workPostcode) is private and belongs to the base (base17.jsx); the tree only reads the base
+   to suggest places. A suggestion is a tick box on the same coverage: it starts unticked unless already covered.
    The same tree, in "links" mode, is Explore by area: every place is a link to its area page.
    ========================================================================== */
 const covIdOfName17 = (name) => { const n = fdTickNode19(name); return n ? n.id : null; };
@@ -127,6 +128,9 @@ const COV17_CSS = `
 .ff .ff-cov17-sug{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
 .ff .ff-cov17-msg{font-size:13px;margin:0 0 8px;color:#5C1220}
 .ff .ff-cov17-hits{list-style:none;margin:0 0 8px;padding:0}
+.ff .ff-cov17-sug2{display:flex;flex-direction:column;gap:2px;margin:0 0 10px;padding:8px 10px;border-radius:14px;corner-shape:squircle;background:rgba(201,162,39,.10)}
+.ff .ff-cov17-sugh{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6A4F12}
+.ff .ff-cov17-sug2 .ff-cov17-lb{min-height:36px}
 .ff .ff-cov17-sum{font-size:13px;margin:8px 0 0;color:#3A342B}
 `;
 
@@ -175,26 +179,11 @@ function CoverageTree17({ mode = "select", owner: ownerKind, siteKey, compact, t
   const sk = siteKey || fdSiteKey(state);
   const mk = `${mode}|${ownerKind || "profile"}|${compact ? "c" : "f"}|${sk}`;
   const [openIds, setOpenIds] = useCovState17(mk, "open", () => Object.fromEntries((startOpen || []).map(id => [id, true])));
-  const [pc, setPc] = useCovState17(mk, "pc", "");
-  const [busy, setBusy] = useState(false);
-  const [msg, setMsg] = useCovState17(mk, "msg", "");
-  const [sug, setSug] = useCovState17(mk, "sug", []);
   const [q, setQ] = useCovState17(mk, "q", "");
   const hits = fdSearch(q);
   const toggle = (n) => { const next = covToggle17(cov, n); dispatch({ type: "COV_SET", owner: co ? "company" : undefined, inc: [...next.inc], exc: [...next.exc] }); };
   const openTo = (n) => { const o = { ...openIds }; fdAnc(n).slice(1).forEach(a => { o[a.id] = true; }); setOpenIds(o); };
   const setOpen = (id, v) => { setOpenIds(o => ({ ...o, [id]: v })); if (v && onOpen && FD_BY_ID[id]) onOpen(FD_BY_ID[id]); };
-  const find = async () => {
-    if (busy || !pc.trim()) return;
-    setBusy(true); setMsg(""); setSug([]);
-    const r = await LOCATION_ADAPTER.lookupPostcode(pc);
-    setBusy(false);
-    if (!r.ok) { setMsg(r.reason === "format" ? "That isn't a UK postcode." : "We couldn't look that postcode up. Search for your area instead."); return; }
-    const near = covSuggest17(r);
-    setSug(near);
-    if (near[0]) openTo(near[0]);
-    dispatch({ type: "V11_SET", patch: { workPostcode: { code: r.display, town: near[0] ? near[0].name : "", at: Date.now(), approx: !!r.approx } } });
-  };
   const row = (n, depth) => {
     const kids = covKids17(n), isOpen = !!openIds[n.id];
     const x = kids.length ? (
@@ -220,19 +209,7 @@ function CoverageTree17({ mode = "select", owner: ownerKind, siteKey, compact, t
     <div className={`ff-cov17${compact ? "" : " ff-frame"}`}>
       <style>{COV17_CSS}</style>
       {title !== null && <h3 className="ff-label">{title || (links ? "Explore by area" : "What areas do you cover?")}</h3>}
-      {!links && !co && (
-        <div className="ff-cov17-pc">
-          <input value={pc} onChange={(e) => { setPc(e.target.value.toUpperCase().slice(0, 9)); setMsg(""); }} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); find(); } }}
-            placeholder="Your postcode" aria-label="Your postcode (private)" autoComplete="postal-code" spellCheck={false} />
-          <Btn variant="sm" onClick={find} disabled={busy || !pc.trim()}>{busy ? "Finding…" : "Find"}</Btn>
-        </div>
-      )}
-      {msg && <p className="ff-cov17-msg" role="alert">{msg}</p>}
-      {sug.length > 0 && (
-        <div className="ff-cov17-sug" role="group" aria-label="Places near you">
-          {sug.map(n => { const on = covOn17(cov, n); return <button key={n.id} type="button" className="ff-chip" aria-pressed={on} onClick={() => toggle(n)} style={on ? { background: "#5C1220", borderColor: "#5C1220", color: "#F6E7B4" } : undefined}>{on ? "✓ " : "+ "}{fdLabel(n)}</button>; })}
-        </div>
-      )}
+      {!links && !co && <CovSuggest17 cov={cov} toggle={toggle} openTo={openTo} />}
       <label className="ff-cov17-q"><A17I.Search size={14} /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search for a town, borough or neighbourhood" aria-label="Search for a place" /></label>
       {q.trim().length >= 2 ? (
         <ul className="ff-cov17-hits" aria-label="Matching places">
@@ -247,6 +224,36 @@ function CoverageTree17({ mode = "select", owner: ownerKind, siteKey, compact, t
         <ul className="ff-cov17-box" role="tree" aria-label={links ? "Places" : "Areas you cover"}>{covRoots17().map(n => row(n, 0))}</ul>
       )}
       {summary ? <p className="ff-cov17-sum"><b>Shown on your profile:</b> {summary}</p> : null}
+    </div>
+  );
+}
+
+
+/* Short list of places around the member's base, shown above the tree. Ticking one writes the same coverage as
+   ticking it in the tree. Picking or changing the base never ticks anything. */
+function covBaseSuggestions17(base) {
+  if (!base) return [];
+  const out = [], seen = new Set();
+  const add = (n) => { if (n && n.id !== "country:GB" && !seen.has(n.id) && ["p", "h", "b", "a"].includes(n.k)) { seen.add(n.id); out.push(n); } };
+  add(base);
+  const par = baseParent17(base);
+  add(par);
+  if (base.lat != null) {
+    FD_NODES.filter(n => n.uk && n.lat != null && (n.k === "p" || n.k === "h" || n.k === "b") && n.id !== base.id)
+      .map(n => [fdHav(base.lat, base.lng, n.lat, n.lng), n]).filter(x => x[0] < 25).sort((a, b) => a[0] - b[0]).slice(0, 4).forEach(x => add(x[1]));
+  }
+  return out.slice(0, 6);
+}
+
+
+function CovSuggest17({ cov, toggle, openTo }) {
+  const { state } = useStore();
+  const list = covBaseSuggestions17(baseNode17(state));
+  if (!list.length) return null;
+  return (
+    <div className="ff-cov17-sug2" role="group" aria-label="Suggested areas">
+      <span className="ff-cov17-sugh">Suggested areas</span>
+      {list.map(n => <CovCheck17 key={n.id} n={n} cov={cov} onToggle={(m) => { toggle(m); openTo(m); }} label={baseLabelOf17(n)} />)}
     </div>
   );
 }

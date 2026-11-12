@@ -145,7 +145,7 @@ function reducer(s, a) {
     return { ...s, company: { ...c, records: out.profile.records } };
   }
   { const r11 = v11Reducer(s, a); if (r11) return r11; }
-  { const rq = qa17Reducer(s, a) || pc17Reducer(s, a) || cov17Reducer(s, a) || ct17Reducer(s, a); if (rq) return rq; }
+  { const rq = qa17Reducer(s, a) || pc17Reducer(s, a) || cov17Reducer(s, a) || ct17Reducer(s, a) || base17Reducer(s, a); if (rq) return rq; }
   switch (a.type) {
     case "FOCUS":     return { ...s, focus: a.focus };
     case "NET_QUERY": return { ...s, netQuery: a.q || "" };
@@ -443,6 +443,7 @@ function meAsStaff(profile, session) {
     interests: primaryNames(profile, "interests", 3),
     languages: primaryNames(profile, "languages", 5).length ? primaryNames(profile, "languages", 5) : ["English"],
     locations: primaryNames(profile, "locations", 3).length ? primaryNames(profile, "locations", 3) : ["London"],
+    base: baseLabelOf17(profile.base17 && FD_BY_ID[profile.base17.locId]),
     coverage: covForFd17(profile), coverageText: covText17(profile, 3),
     hasCar: profile.hasCar, availability: "open", photo: profile.photo, theme: profile.theme, about: profile.about || "",
     intro: profile.introduction || null,

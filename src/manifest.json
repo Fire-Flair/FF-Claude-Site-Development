@@ -67,6 +67,7 @@
   "components/staff/network-directory.jsx",
   "components/shared/find-directory.jsx",
   "components/shared/coverage17.jsx",
+  "components/shared/base17.jsx",
   "components/shared/map.jsx",
   "components/party/party-home.jsx",
   "components/party/booking-flow.jsx",

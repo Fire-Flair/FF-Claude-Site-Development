@@ -414,6 +414,14 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
         </div>
       )}
 
+      {/* Remote work for this profession: independent of the areas covered */}
+      {category === "professions" && !readOnly && owner !== "company" && !adding && (
+        <label className="ff-remote17" style={{ display: "flex", alignItems: "center", gap: 10, minHeight: 44, margin: "0 0 14px", cursor: "pointer", fontSize: 14.5, color: "#16130F" }}>
+          <input type="checkbox" checked={!!live.remote} onChange={(e) => patch({ remote: e.target.checked })} style={{ width: 20, height: 20, accentColor: "#5C1220", flex: "none" }} />
+          <span>Available for remote work</span>
+        </label>
+      )}
+
       {/* Profession level: only ever seen by the owner, while editing */}
       {category === "professions" && !readOnly && (
         <div className="ff-field">

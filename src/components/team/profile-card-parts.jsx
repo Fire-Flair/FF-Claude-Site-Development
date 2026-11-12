@@ -22,7 +22,7 @@ function PlayerCard({ person, format = "portrait", themeKey = "onyx", selected, 
   const professions = top3(person.professions || person.profession);
   const skills = top3(person.skills);
   const interests = top3(person.interests);
-  const locations = top3(person.locations);
+  const locations = person.base ? [person.base] : top3(person.locations);
   const langs = (person.languages || []).slice(0, 5);
   const dot = "  ·  ";
   const address = `${CARD_DOMAIN}/${person.tag}`;
@@ -110,8 +110,8 @@ function PlayerCard({ person, format = "portrait", themeKey = "onyx", selected, 
     ["roles", "Roles", professions.length > 1 ? professions : []],
     ["skills", "Skills", skills],
     ["interests", "Interests", interests],
-    ["locations", "Locations", locations]
-  ] : [["skills", "Skills", skills], ["interests", "Interests", interests], ["locations", "Locations", locations]];
+    ["locations", person.base ? "Based in" : "Locations", locations]
+  ] : [["skills", "Skills", skills], ["interests", "Interests", interests], ["locations", person.base ? "Based in" : "Locations", locations]];
   const rows = rowDefs.filter((r) => r[2].length);
   const PC_ICON = { experience: Briefcase, roles: Users, skills: Star, interests: Heart, locations: MapPin, languages: MessageSquare };
   const FILLED = { skills: true, interests: true };
@@ -355,8 +355,9 @@ function InformationCard({ record, def, themeKey = "onyx", onClick, width, compa
       ) : (
         pub && !body ? null : <div className="ff-ic2-desc" style={{ color: t.ink }}>{body || <span style={{ opacity: .62 }}>{isCocktail ? "No ingredients yet." : "No description yet."}</span>}</div>
       )}
-      {(hasDoc || verified) && (
+      {(hasDoc || verified || (isProf && record.remote)) && (
         <span className="ff-ic2-badges">
+          {isProf && record.remote && <span className="ff-ic2-doc" style={{ color: t.accent, borderColor: t.rule }}><Globe size={11} strokeWidth={1.8} /> Remote</span>}
           {verified && <span className="ff-ic2-doc" style={{ color: t.accent, borderColor: t.rule }}><ShieldCheck size={11} strokeWidth={1.9} /> Verified</span>}
           {hasDoc && <span className="ff-ic2-doc" style={{ color: t.sub, borderColor: t.rule }}><FileText size={11} strokeWidth={1.7} /> Doc</span>}
         </span>

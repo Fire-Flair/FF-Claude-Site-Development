@@ -99,5 +99,6 @@ function migrate1746(s) {
   }
   n = qaMigrate17(n);
   n = covMigrate17(n);
+  n = baseMigrate17(n);
   return n;
 }

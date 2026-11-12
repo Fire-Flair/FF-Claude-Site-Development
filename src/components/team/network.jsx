@@ -565,6 +565,9 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
   }))), React.createElement("div", {
     style: { height: 8 }
   }), React.createElement(Row, {
+    kind: "location",
+    label: "Where are you based?"
+  }, React.createElement(BaseField17, { ink })), React.createElement(Row, {
     kind: "skills",
     label: "Skills"
   }, React.createElement(ChipEdit, {
@@ -583,9 +586,6 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
     ink,
     rule
   })), React.createElement(Row, {
-    kind: "location",
-    label: "Work locations"
-  }, React.createElement(CoverageTree17, { compact: true, title: null })), React.createElement(Row, {
     kind: "languages",
     label: "Languages"
   }, React.createElement(ChipEdit, {

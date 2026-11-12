@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.4.6.3 — 2026-11-12 — Where are you based, area suggestions, remote work, green FF Staff Shifts cards (Phase 3 prototype)
+Artifact version 1794482756-de4f. Detail: `docs/handoff-v17.4.6.3.md`.
+
+- **Where are you based?** On the editable Profile Card: postcode lookup suggests places from the shared catalogue, the member chooses exactly one (manual search if the lookup fails). Saved by stable id as `profile.base17`, shown as place plus nearest parent ("Berkhamsted, Hertfordshire") and as "Based in" on the rendered card. Postcode and coordinates stay private and drive travel distance through `baseDistanceKm17`.
+- **What areas do you cover?** Suggested areas from the base sit above the tick-box tree and share its coverage. Changing the base keeps saved coverage and does not change search eligibility. Older profiles get a base once from their saved postcode area without touching coverage.
+- **Available for remote work** checkbox on each profession in the card editor, independent of the area tree.
+- **FF Team Bookings.** FF Staff Shifts cards are matte forest green; FF Party Packages keep their red. Rate helper text is now "Shown to businesses on FF Staff only".
+- Checks run: `npm run check`, `npm run build`, headless Chrome desktop and mobile (details in the handoff). Postcode service mocked in the test.
+
 ## v17.4.6.2 — 2026-11-12 — Site logos from the 3D coin pack (Phase 3 prototype)
 Artifact version 1794481618-7fd6 (the first publish, 1794480941-9ab2, left out the four new image files; fixed).
 - The top-left logo and the FireFlair sites dropdown now use the FF coin, one metal per site: FF Team bronze, FF Staff silver, FF Party gold, FF VIP platinum. The top-left coin follows the site you are on; the dropdown shows all four.

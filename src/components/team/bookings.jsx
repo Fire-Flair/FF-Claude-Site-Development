@@ -164,7 +164,7 @@ function BkDrop17({ id, title, desc, icon: Icon, photo, children }) {
 
 
 /* ---- FF Staff Shifts (v17.4.6): one card per profession, from the Pick your professions catalogue ----
-   Grey/silver version of the FF Party package card. The card asks the availability question (answers kept
+   Matte forest-green version of the FF Party package card (green is the FF Staff accent within FF Team). The card asks the availability question (answers kept
    in profile.staffAvail, as before) and takes an optional preferred hourly rate: a typed Q&A answer
    rate.<profession id> in pence, visibility "ff-staff" (shown on the member's FF Staff profile only).
    Businesses set the actual shift rate on each Shift Card. */
@@ -201,7 +201,7 @@ function ProfRateTile17({ name, cat, guest }) {
     dispatch({ type: "TOAST", toast: `Preferred rate saved for ${name}` });
   };
   return (
-    <div className="ff-tp17 grey prof" role="group" aria-label={name}>
+    <div className="ff-tp17 grn prof" role="group" aria-label={name}>
       <span className="lv">{cat}</span>
       <b className="tt">{name}</b>
       <span className="in">{q}</span>
@@ -218,7 +218,7 @@ function ProfRateTile17({ name, cat, guest }) {
               onBlur={save} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); e.currentTarget.blur(); } }} />
             <span>/hour</span>
           </span>)}
-        {err ? <span className="er" role="alert">{err}</span> : <span className="vis">Optional · shown to businesses on FF Staff only</span>}
+        {err ? <span className="er" role="alert">{err}</span> : <span className="vis">Shown to businesses on FF Staff only</span>}
       </span>
     </div>
   );
