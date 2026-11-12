@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.8 — 2026-11-12 — Home hero: button and coin shine
+Artifact version 1794493122-7906.
+
+- Home hero: the Create your Profile Card button keeps its sheen and glow even when the device has "reduce motion" on (it is the main call to action; other animations still follow the setting). This was why it looked static on some devices.
+- Home hero FF coin (FF Team, FF Staff, FF Party, FF VIP): a slow gold sheen sweeps across the coin with a soft gold glow pulse.
+
 ## v17.4.7.7 — 2026-11-12 — Gold shine on the main calls to action
 Artifact version 1794492858-3885.
 

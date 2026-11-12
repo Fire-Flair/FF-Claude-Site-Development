@@ -4146,3 +4146,15 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-pk17 .tx .go::after { content:""; position:absolute; top:0; bottom:0; left:-60%; width:40%; transform:skewX(-20deg); background:linear-gradient(90deg,transparent,rgba(255,255,255,.65),transparent); animation:ffgoldshine 3.6s ease-in-out infinite; pointer-events:none; }
 .ff .ff-pk17.special .tx .go { background:linear-gradient(172deg,#F8DE86 0%,#E0B13E 36%,#B98A22 62%,#EDCB66 100%); color:#2A1E04; }
 @media (prefers-reduced-motion:reduce) { .ff .ff-pk17 .tx .go::after { animation:none; } }
+
+/* v17.4.7.8 home hero: the Create your Profile Card button and the FF coin shine. The gentle sheen stays on even with
+   reduced motion, because it is the main call to action; the other animations still follow the setting. */
+.ff .ff-home .ff-hero17-cta .ff-btn.ff-shine, .ff .ff-home .ff-hero17-cta .ff-btn.ff-shine::after { animation-play-state:running; }
+@media (prefers-reduced-motion: reduce) {
+  .ff .ff-home .ff-hero17-cta .ff-btn.ff-shine { animation:ffShineBg 6s ease-in-out infinite, ffShineGlow 2.8s ease-in-out infinite; }
+  .ff .ff-home .ff-hero17-cta .ff-btn.ff-shine::after { animation:ffSheen 3.4s ease-in-out infinite; }
+}
+.ff .ff-hero18-coin.ff-hero17-coin { border-radius:50%; overflow:hidden; animation:ffcoinglow 3.6s ease-in-out infinite; }
+.ff .ff-hero18-coin.ff-hero17-coin::after { content:""; position:absolute; top:-20%; bottom:-20%; left:-60%; width:38%; transform:skewX(-20deg); pointer-events:none; background:linear-gradient(100deg,transparent,rgba(255,248,214,.8),transparent); animation:ffcoinsheen 4.2s ease-in-out infinite; }
+@keyframes ffcoinsheen { 0%,45% { left:-60%; } 100% { left:140%; } }
+@keyframes ffcoinglow { 0%,100% { filter:drop-shadow(0 6px 14px rgba(0,0,0,.55)); } 50% { filter:drop-shadow(0 6px 14px rgba(0,0,0,.55)) drop-shadow(0 0 16px rgba(246,214,110,.55)); } }
