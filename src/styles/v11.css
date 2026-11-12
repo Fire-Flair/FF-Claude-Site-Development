@@ -4147,14 +4147,10 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-pk17.special .tx .go { background:linear-gradient(172deg,#F8DE86 0%,#E0B13E 36%,#B98A22 62%,#EDCB66 100%); color:#2A1E04; }
 @media (prefers-reduced-motion:reduce) { .ff .ff-pk17 .tx .go::after { animation:none; } }
 
-/* v17.4.7.9 ShineButton (Create your Profile Card in the hero, Join Challenge and the other main calls to action):
-   a rich, nearly flat gold with a bright sheen that is visible on it. The sheen stays on with reduced motion. */
-.ff .ff-home button.ff-btn.ff-shine { background:linear-gradient(180deg,#EDBE2F 0%,#D6A116 100%) !important; background-size:100% 100% !important; border:1px solid #8A6A18 !important; color:#2A1604 !important;
-  box-shadow:inset 0 1px 0 rgba(255,244,196,.85), 0 8px 22px -8px rgba(190,140,20,.85), 0 0 18px rgba(237,190,47,.35); animation:ffShineGlow 2.8s ease-in-out infinite; }
-.ff .ff-home button.ff-btn.ff-shine::after { width:26%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.95),transparent); animation:ffSheen 2.8s ease-in-out infinite; }
-@media (prefers-reduced-motion: reduce) {
-  .ff .ff-home button.ff-btn.ff-shine { animation:ffShineGlow 2.8s ease-in-out infinite; }
-  .ff .ff-home button.ff-btn.ff-shine::after { animation:ffSheen 2.8s ease-in-out infinite; }
-}
-.ff .ff-home button.ff-btn.ff-shine::after { background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent); }
-.ff .ff-home .ff-hero17-cta button.ff-btn.ff-shine::after { background:linear-gradient(100deg,transparent,rgba(255,255,255,.95),transparent); }
+/* v17.4.7.11 ShineButton (hero Create your Profile Card, Join Challenge, other main calls to action): the same gold and the same
+   sweeping shine as the gold Special Request card Alex approved (ffgoldshine). The animation is forced on, including with reduced motion. */
+.ff .ff-home button.ff-btn.ff-shine { background:linear-gradient(172deg,#F8DE86 0%,#E0B13E 36%,#B98A22 62%,#EDCB66 100%) !important; background-size:100% 100% !important; border:1px solid #8A6A18 !important; color:#2A1E04 !important;
+  box-shadow:0 1px 0 rgba(255,255,255,.6) inset, 0 10px 24px rgba(176,141,42,.5) !important; text-shadow:0 1px 0 rgba(255,255,255,.35); animation:none !important; }
+.ff .ff-home button.ff-btn.ff-shine::after { content:""; position:absolute; z-index:1; top:0; bottom:0; left:-60%; width:40%; transform:skewX(-20deg); pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent) !important; animation:ffgoldshine 3.6s ease-in-out infinite !important; }
+.ff .ff-home .ff-hero17-cta button.ff-btn.ff-shine::after { background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent) !important; animation:ffgoldshine 3s ease-in-out infinite !important; }

@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.11 — 2026-11-12 — Hero button: approved gold + shine
+Artifact version 1794493924-13b8.
+
+- Home hero "Create your Profile Card" button uses the same gold as the Special Request card (replaces the yellower gold).
+- The animated shine sweep is forced on for this button, including on devices set to reduced motion, so it is always visible.
+- Other main CTAs share the same gold and sweep.
+
 ## v17.4.7.10 — 2026-11-12 — Fix: Company Card crash on typing
 Artifact version 1794493789-773c.
 
