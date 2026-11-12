@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v17.4.6.5 — 2026-11-12 — Share sits under your own Profile Card (Phase 3 prototype)
+Artifact version 1794487142-9f78.
+- Viewing your own profile (including "as a guest sees it"), a Share button now sits directly under your Profile Card and opens the card-sharing menu (Share, WhatsApp, Download PNG, Copy Link).
+- The Share button under the card on the Welcome step now opens the same menu; publishing behaviour is unchanged.
+- Checks run: `npm run check`, `npm run build`, headless Chrome mobile (button shown, menu opens).
+
 ## v17.4.6.4 — 2026-11-12 — Universal card sharing and Book a 15-minute Call (Phase 3 prototype)
 Artifact version 1794486583-aa2b. Detail: `docs/handoff-v17.4.6.4.md`.
 

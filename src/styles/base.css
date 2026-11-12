@@ -1498,3 +1498,4 @@
 .ff .ff-csm-opt:disabled { opacity:.5; }
 .ff .ff-csm-live { min-height:20px; margin-top:8px; text-align:center; font:600 13px var(--sans); }
 .ff .ff-csm-btn { display:inline-flex; gap:7px; align-items:center; min-height:44px; padding:8px 14px; border:1px solid var(--gold-dk); border-radius:16px; background:var(--paper); color:inherit; font:700 13.5px var(--sans); white-space:nowrap; }
+.ff .ff-csm-btn.wide { width:100%; justify-content:center; }

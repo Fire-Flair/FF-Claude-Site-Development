@@ -213,9 +213,15 @@ function PersonProfile() {
         </div>
       </div>) : null;
   const cardEl = <PlayerCard person={person} format="full" nameAs="div" themeKey={person.id === "me" ? state.profile.theme : (person.theme || "ivory")}  />;
+  const myTag = state.auth.status === "signedIn" ? (state.auth.tag || state.session.tag) : "";
+  const shareEl = person.id === "me" && myTag ? (
+    <div style={{ marginTop: 10 }}>
+      <CardShareBtn17 title="My FireFlair card" url={`https://${CARD_DOMAIN}/${myTag}`} fileName={"fireflair-" + cx17Slug(myTag)} label="Share" className="wide"
+        render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={state.profile.theme} />} />
+    </div>) : null;
   return (
     <div className={publicView ? "ff-pubpage" : undefined}>
-      <PublicHero media={mediaOf(state, person)} card={cardEl} below={<>{backBtn}{guestNote}{actionsEl}</>} />
+      <PublicHero media={mediaOf(state, person)} card={cardEl} below={<>{shareEl}{backBtn}{guestNote}{actionsEl}</>} />
       <HireCards11 person={person} />
       <PublicProfileBody person={person} />
       <ReviewSheet open={reviewing} person={person} onClose={() => setReviewing(false)} />

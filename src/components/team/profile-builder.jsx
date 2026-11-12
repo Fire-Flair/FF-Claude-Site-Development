@@ -178,8 +178,8 @@ function useShareCard() {
   const tag = state.auth.status === "signedIn" ? (state.auth.tag || state.session.tag) : null;
   const share = async () => {
     if (!tag || busy) return;
-    /* v1.01: straight from the click, so the new tab isn't blocked as a popup. */
-    window.open(`https://wa.me/?text=${encodeURIComponent(`${String(state.profile.name || "").trim() ? String(state.profile.name).trim() + " on FireFlair" : "My FireFlair Profile Card"}: ${CARD_DOMAIN}/${tag}`)}`, "_blank", "noopener,noreferrer");
+    /* v17.4.6.4: the Share menu (Share, WhatsApp, Download PNG, Copy Link) opens straight from the click. */
+    window.dispatchEvent(new Event("ff-add"));
     setBusy(true);
     try {
       const r = await PROFILE_ADAPTER.share(tag, state.session.phone);
@@ -188,7 +188,7 @@ function useShareCard() {
       const now = Date.now();
       dispatch({ type: "PROFILE", patch: { live: true, saved: true, savedAt: now, sharedAt: now, publishedAt: state.profile.publishedAt || now } });
       dispatch({ type: "PUBLISH_XP" });
-      dispatch({ type: "TOAST", toast: `Your profile link is ready to send on WhatsApp${fresh ? xpNote(XP_VALUES.task) : ""}` });
+      dispatch({ type: "TOAST", toast: `Your profile link is ready to share${fresh ? xpNote(XP_VALUES.task) : ""}` });
       if (first) window.scrollTo(0, 0);
     } finally { setBusy(false); }
   };
