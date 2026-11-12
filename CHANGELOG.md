@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.20 — 2026-11-12 — Create your Profile Card button: black and gold rim
+Artifact version 1794508808-0ff9.
+
+- The "Create your Profile Card" button keeps the gold light that travels around its rim, but the rim is now half black, half gold, so the button stands out against the page.
+- The label is solid black and heavier for readability; the icon matches.
+- Developers: the look is one CSS block at the end of `src/styles/v11.css` (class `ff-pcard`). The class is added automatically to any Btn, Button or ShineButton whose label is "Create your Profile Card" (`ffPcardClass` in `src/components/shared/primitives.jsx`), so every place that button appears picks it up. Other gold buttons are unchanged.
+
 ## v17.4.7.19 — 2026-11-12 — Package pop-up, Available packages on location pages
 Artifact version 1794498550-27c1.
 

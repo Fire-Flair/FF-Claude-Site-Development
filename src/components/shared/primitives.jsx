@@ -1,6 +1,12 @@
 /* src/components/shared/primitives.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
+// The "Create your Profile Card" button carries its own black-and-gold rim (class ff-pcard, styles/v11.css).
+function ffPcardClass(children) {
+  const walk = (n) => Array.isArray(n) ? n.map(walk).join("") : (typeof n === "string" ? n : "");
+  return walk(children).replace(/\s+/g, " ").trim().toLowerCase() === "create your profile card" ? " ff-pcard" : "";
+}
+
 function Btn({ children, variant = "", onClick, disabled, type = "button", style }) {
-  return <button type={type} disabled={disabled} onClick={onClick} className={`ff-btn ${variant}`} style={style}>{children}</button>;
+  return <button type={type} disabled={disabled} onClick={onClick} className={`ff-btn ${variant}${ffPcardClass(children)}`} style={style}>{children}</button>;
 }
 
 

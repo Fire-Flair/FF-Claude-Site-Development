@@ -34,7 +34,7 @@
   function Button({ children, variant = "", className = "", type = "button", ...rest }) {
     return React.createElement("button", {
       type,
-      className: `ff-btn ${variant} ${className}`.trim(),
+      className: `ff-btn ${variant} ${className}${ffPcardClass(children)}`.trim(),
       ...rest
     }, children);
   }

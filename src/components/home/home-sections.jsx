@@ -66,7 +66,7 @@
   function ShineButton({ onClick, children }) {
     return React.createElement("button", {
       type: "button",
-      className: "ff-btn ff-shine",
+      className: "ff-btn ff-shine" + ffPcardClass(children),
       onClick
     }, React.createElement("i", {
       className: "sp s1",

@@ -4196,3 +4196,16 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-netdrop17 .hd svg { transition:transform .15s; color:var(--gold-dk); }
 .ff .ff-netdrop17.open .hd svg { transform:rotate(180deg); }
 .ff .ff-netdrop17 .bd { padding:4px 12px 14px; }
+
+/* v17.4.7.20 — Create your Profile Card button: rim half black, half gold, with the gold still orbiting; label in solid black */
+.ff .ff-btn.ff-pcard.ff-pcard, .ff .ff-home button.ff-btn.ff-pcard.ff-pcard, .ff .ff-home button.ff-btn.ff-shine.ff-pcard, .ff .ff-home .ff-hero17-cta button.ff-btn.ff-shine.ff-pcard {
+  border:3px solid transparent !important; color:#000 !important; font-weight:900 !important; letter-spacing:.09em; text-shadow:0 1px 0 rgba(255,255,255,.28) !important;
+  background:linear-gradient(172deg,#F6E8B8 0%,#DCC070 38%,#AD8C3C 64%,#EBD58F 100%) padding-box,
+    conic-gradient(from var(--ffang),#0A0A0A 0%,#0A0A0A 46%,#9A7424 52%,#E9D07A 64%,#FFF6CF 75%,#E9D07A 85%,#9A7424 95%,#0A0A0A 100%) border-box !important;
+  background-size:100% 100% !important; animation:ffrimorbit 5s linear infinite !important;
+}
+.ff .ff-btn.ff-pcard.ff-pcard:hover, .ff .ff-home button.ff-btn.ff-pcard.ff-pcard:hover {
+  background:linear-gradient(172deg,#FBF1CC 0%,#E6CD84 40%,#BE9C4C 64%,#F1DEA2 100%) padding-box,
+    conic-gradient(from var(--ffang),#0A0A0A 0%,#0A0A0A 46%,#9A7424 52%,#E9D07A 64%,#FFF6CF 75%,#E9D07A 85%,#9A7424 95%,#0A0A0A 100%) border-box !important;
+}
+.ff .ff-btn.ff-pcard svg { color:#000; stroke:#000; }
