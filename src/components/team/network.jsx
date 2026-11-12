@@ -216,8 +216,8 @@ function PersonProfile() {
   const myTag = state.auth.status === "signedIn" ? (state.auth.tag || state.session.tag) : "";
   const shareTag = person.id === "me" ? myTag : String(person.tag || cx17Slug(person.name || person.id) || "");
   const shareEl = shareTag ? (
-    <div style={{ marginTop: 10 }}>
-      <CardShareBtn17 title={person.id === "me" ? "My FireFlair card" : `${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${shareTag}`} fileName={"fireflair-" + cx17Slug(shareTag)} label="Share" className="wide"
+    <div style={{ marginTop: 10, textAlign: "center" }}>
+      <CardShareBtn17 title={person.id === "me" ? "My FireFlair card" : `${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${shareTag}`} fileName={"fireflair-" + cx17Slug(shareTag)} label="" className="icon"
         render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={person.id === "me" ? state.profile.theme : (person.theme || "ivory")} />} />
     </div>) : null;
   return (
@@ -572,9 +572,6 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
   }))), React.createElement("div", {
     style: { height: 8 }
   }), React.createElement(Row, {
-    kind: "location",
-    label: "Where are you based?"
-  }, React.createElement(BaseField17, { ink })), React.createElement(Row, {
     kind: "skills",
     label: "Skills"
   }, React.createElement(ChipEdit, {
@@ -593,6 +590,9 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
     ink,
     rule
   })), React.createElement(Row, {
+    kind: "location",
+    label: "Where are you based?"
+  }, React.createElement(BaseField17, { ink })), React.createElement(Row, {
     kind: "languages",
     label: "Languages"
   }, React.createElement(ChipEdit, {

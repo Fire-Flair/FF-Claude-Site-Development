@@ -806,7 +806,6 @@ function Creators17({ kind, by: byIn }) {
       <h2 id="ff-cr17-h" className="ff-done17-h">Build your packages</h2>
       {types.map((t, i) => { const T = STUDIO17[t]; return (
         <Sec17 key={t} first={i === 0} id={`ff-cr17-${t}`} icon={T.icon} title={t === "cocktail" ? "Signature cocktails" : T.title} count={count(t)}><Studio17 type={t} site={site} by={by} tag={tag} k={bizKeys[t]} seed={seeds[t]} profile={team} /></Sec17>); })}
-      <BulkAI17 />
     </section>
   );
 }

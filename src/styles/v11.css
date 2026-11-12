@@ -4095,3 +4095,20 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-mc.tbf { background:linear-gradient(172deg,#F8DE86 0%,#E0B13E 55%,#EDCB66 100%); border:1px solid #8A6A18; border-style:solid; }
 .ff .ff-mc.tbf b { color:#2A1E04; }
 .ff .ff-mc .tbf-t { font-size:12px; font-weight:800; color:#3A0C16; text-align:center; line-height:1.15; padding:0 6px; }
+
+/* v17.4.7.4 icon-only Share; centred profile heading; gold / silver / bronze profession and attribute cards */
+.ff .ff-csm-btn.icon { display:inline-grid; place-items:center; width:44px; height:44px; padding:0; border-radius:50%; corner-shape:round; border:1px solid #8A6A18; background:linear-gradient(172deg,#F8DE86 0%,#E0B13E 45%,#EDCB66 100%); color:#2A1E04; box-shadow:0 6px 16px rgba(176,141,42,.4); }
+.ff .ff-pp-h1 { text-align:center; font-size:clamp(14px,3.6vw,16px); font-weight:600; color:#5A5448; margin:12px 0 4px; }
+.ff .ff-agrp.t-gold { border-color:#8A6A18; background:linear-gradient(165deg,#F8DE86 0%,#E0B13E 45%,#B98A22 100%); color:#2A1E04; }
+.ff .ff-agrp.t-silver { border-color:#7C838E; background:linear-gradient(165deg,#F1F3F6 0%,#C3C8D0 45%,#8E959F 100%); color:#1E2126; }
+.ff .ff-agrp.t-bronze { border-color:#7A4524; background:linear-gradient(165deg,#E8B58A 0%,#C27B47 45%,#8A4F2A 100%); color:#241208; }
+.ff .ff-agrp.t-gold .ff-agrp-h, .ff .ff-agrp.t-silver .ff-agrp-h, .ff .ff-agrp.t-bronze .ff-agrp-h,
+.ff .ff-agrp.t-gold .ff-agrp-n, .ff .ff-agrp.t-silver .ff-agrp-n, .ff .ff-agrp.t-bronze .ff-agrp-n,
+.ff .ff-agrp.t-gold .ff-agrp-d, .ff .ff-agrp.t-silver .ff-agrp-d, .ff .ff-agrp.t-bronze .ff-agrp-d,
+.ff .ff-agrp.t-gold .ff-agrp-l > span, .ff .ff-agrp.t-silver .ff-agrp-l > span, .ff .ff-agrp.t-bronze .ff-agrp-l > span,
+.ff .ff-agrp.t-gold .ff-agrp-more, .ff .ff-agrp.t-silver .ff-agrp-more, .ff .ff-agrp.t-bronze .ff-agrp-more,
+.ff .ff-agrp.t-gold .ff-agrp-rate, .ff .ff-agrp.t-silver .ff-agrp-rate, .ff .ff-agrp.t-bronze .ff-agrp-rate { color:inherit; }
+.ff .ff-agrp.t-gold .ff-agrp-l > span, .ff .ff-agrp.t-silver .ff-agrp-l > span, .ff .ff-agrp.t-bronze .ff-agrp-l > span { border-top-color:rgba(0,0,0,.18); }
+.ff .ff-agrp.t-gold .ff-agrp-l > span::before, .ff .ff-agrp.t-silver .ff-agrp-l > span::before, .ff .ff-agrp.t-bronze .ff-agrp-l > span::before { background:currentColor; }
+.ff .ff-agrp.t-gold .ff-agrp-top, .ff .ff-agrp.t-silver .ff-agrp-top, .ff .ff-agrp.t-bronze .ff-agrp-top { background:linear-gradient(90deg,rgba(0,0,0,.35),rgba(0,0,0,0)) left bottom/100% 1px no-repeat; }
+.ff .ff-agrp.t-gold::before, .ff .ff-agrp.t-silver::before, .ff .ff-agrp.t-bronze::before { border-color:rgba(255,255,255,.45); }

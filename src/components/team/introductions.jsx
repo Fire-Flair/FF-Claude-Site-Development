@@ -357,8 +357,8 @@ function PublicProfileBody({ person }) {
             <section className="ff-pp ff-profs" aria-labelledby="ff-profs-h">
               <h2 id="ff-profs-h" className="ff-about-h">Professions</h2>
               <MemScroll mem={mem} k="profs" label={`Professions, ${profs.length} card${profs.length === 1 ? "" : "s"}`} className="ff-acar">
-                {profs.map(r => (
-                  <button key={r.id} type="button" className="ff-agrp prof" aria-label={`${r.name}. Open details`}
+                {profs.map((r, ri) => (
+                  <button key={r.id} type="button" className={"ff-agrp prof " + ["t-gold", "t-silver", "t-bronze"][ri % 3]} aria-label={`${r.name}. Open details`}
                     onClick={() => setOpenRec({ record: r, def: cats.professions, category: "professions" })}>
                     <span className="ff-agrp-top"><span className="ff-agrp-h">{r.name}</span></span>
                     {onStaff && staffRateP17(state, person.tag, r.name) != null && <span className="ff-agrp-rate">Preferred rate {gbp17(staffRateP17(state, person.tag, r.name))}/hour</span>}

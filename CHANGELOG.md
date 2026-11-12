@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.4 — 2026-11-12 — Profile page: Share icon, tiered cards, edit-only autofill box
+Artifact version 1794491257-c4c5.
+
+- FF Team profile page: Share is now a gold round icon centred under the profile card (also added to your own live profile page, where it was missing). The name and role line under it is smaller, centred and muted.
+- Profession cards and attribute cards now use gold, silver and bronze in turn (dark text on the metallic faces).
+- The "Coming soon" many-cards-at-once box (cocktail menu / service packages / stories upload) is removed from the full profile page and now appears only on the edit page. Terms and conditions, FireFlair Stories, Service Cards and Signature cocktails stay.
+- Profile card editor: "Where are you based?" now sits between Interests and Languages.
+
 ## v17.4.7.3 — 2026-11-12 — Special Request as a package card; packages selectable
 Artifact version 1794490967-fc18.
 

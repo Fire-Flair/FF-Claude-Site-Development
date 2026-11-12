@@ -558,11 +558,11 @@ function AttrGroups({ items, mem, onOpen }) {
   groups.forEach(g => g.list.sort((a, b) => a.at - b.at));
   return (
     <MemScroll mem={mem} k="overview" label={`Attributes, ${groups.length} card${groups.length === 1 ? "" : "s"}`} className="ff-acar">
-      {groups.map(g => {
+      {groups.map((g, gi) => {
         const show = g.list.slice(0, 9), more = g.list.length - show.length;
         const label = (g.def && g.def.label) || g.key;
         return (
-          <button key={g.key} type="button" className="ff-agrp" onClick={() => onOpen(g.key)}
+          <button key={g.key} type="button" className={"ff-agrp " + ["t-gold", "t-silver", "t-bronze"][gi % 3]} onClick={() => onOpen(g.key)}
             aria-label={`${label}: ${g.list.map(it => it.record.name).join(", ")}. View all attributes`}>
             <span className="ff-agrp-top"><span className="ff-agrp-h">{label}</span><span className="ff-agrp-n">{g.list.length}</span></span>
             <span className="ff-agrp-l">{show.map(it => <span key={it.id}>{it.record.name}</span>)}</span>

@@ -55,9 +55,11 @@ function DoneProfile17({ kind }) {
     const mine = String(p.name || "").trim() && recsOf(p, "professions").length;
     const person = mine ? { ...meAsStaff(p, state.session), group: "Your profile" } : (["stf_pri", "stf_leo", "stf_ava"].map(id => all.find(x => x.id === id)).find(Boolean) || meAsStaff(p, state.session));
     const card = <PlayerCard person={person} format="full" nameAs="h1" themeKey={mine ? p.theme : (person.theme || "ivory")} />;
+    const dTag = state.auth.status === "signedIn" ? (state.auth.tag || state.session.tag) : "";
+    const cardShare = dTag && mine ? <div style={{ marginTop: 10, textAlign: "center" }}><CardShareBtn17 title="My FireFlair card" url={`https://${CARD_DOMAIN}/${dTag}`} fileName={"fireflair-" + cx17Slug(dTag)} label="" className="icon" render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={p.theme} />} /></div> : null;
     return (
       <div className="ff-pubpage ff-done17 team">
-        <PublicHero media={mediaOf(state, person)} card={card} below={null} />
+        <PublicHero media={mediaOf(state, person)} card={<>{card}{cardShare}</>} below={null} />
         <PublicProfileBody person={person} />
         <Creators17 kind="team" by={person.name} />
         <PersonalTerms17 />
@@ -250,9 +252,9 @@ function ProfileGate17({ kind }) {
     kind
   }), justShared && kind === "team" && React.createElement("div", {
     className: "ff-pg17-shared"
-  }, React.createElement(PublishedPanel, null))) : done ? kind === "team" ? React.createElement(ProfilePage, null) : React.createElement(StaffEdit17, {
+  }, React.createElement(PublishedPanel, null))) : done ? React.createElement(React.Fragment, null, kind === "team" ? React.createElement(ProfilePage, null) : React.createElement(StaffEdit17, {
     kind
-  }) : kind === "team" ? React.createElement(ProfilePage, null) : React.createElement(StaffProfile, null));
+  }), React.createElement(BulkAI17, null)) : kind === "team" ? React.createElement(ProfilePage, null) : React.createElement(StaffProfile, null));
 }
 
 
