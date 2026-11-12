@@ -302,6 +302,7 @@ function AdmBookings17({ d, act, can, state, dispatch }) {
   return (
     <>
       <AdmAutofill17 state={state} dispatch={dispatch} can={can} />
+      <AdmSpecial17 state={state} dispatch={dispatch} />
       <div className="ff-adm-kpis">
         <span><b>{d.engagements.length}</b> requests</span><span><b>{n("requested")}</b> waiting</span><span><b>{n("confirmed")}</b> confirmed</span>
         <span><b>{avg != null ? dur17(avg) : "–"}</b> average reply</span>

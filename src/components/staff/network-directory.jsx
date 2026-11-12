@@ -86,6 +86,7 @@ function NetPackages20({ pillar }) {
       return React.createElement("div", { className: "ff-br17-row", key: x[0] }, React.createElement("h3", { className: "ff-br17-h3" }, x[0]),
         React.createElement(HScroll, { label: x[0] }, x[1].map(function (svc) { return React.createElement("div", { className: "ff-br17-co", key: svc.id }, React.createElement(PkgCard17, { svc: svc, n: 0, noun: "person", on: false, match: false, onToggle: function () { setPop(svc); }, onInfo: function () { setPop(svc); } })); })));
     }),
+    React.createElement(SpecialRequestCard17, { cat: pillar }),
     pop ? React.createElement(PkgSheet17, { svc: pop, qual: "", onClose: function () { setPop(null); } }) : null);
 }
 

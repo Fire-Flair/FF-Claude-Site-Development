@@ -312,14 +312,12 @@ function StaffProfile() {
 function HostPage17() {
   const { state, dispatch } = useStore();
   const c = state.company || {};
-  const img = window.FF_IMG || {};
   const own = (c.media || []).map(m => ({ id: m.id, src: m.dataUrl || m.src, name: m.name || "" })).filter(m => m.src);
-  const stock = ["dream_music_festivals", "training_ff_open_bar", "reward_photoshoot"].map(k => ({ id: "stock_" + k, src: img[k], name: "" })).filter(m => m.src);
   const save = () => { dispatch({ type: "COMPANY_SAVE", company: { cardSavedAt: Date.now(), finishedAt: Date.now(), joinedAt: c.joinedAt || Date.now() } }); dispatch({ type: "TOAST", toast: "VIP Host Card saved" }); window.scrollTo({ top: 0, behavior: "smooth" }); };
   return (
     <div className="ff-host17">
       <div className="ff-eyebrow">FF Party · VIP Host Card</div>
-      <PublicHero media={own.length ? own : stock} card={<PartyCard11 edit />} below={<PartySections11 />} />
+      <PublicHero media={own} card={<PartyCard11 edit />} below={<PartySections11 />} />
       <ConfirmSpin17 lines={["Save"]} label="Save VIP Host Card" onClick={save} />
     </div>);
 }

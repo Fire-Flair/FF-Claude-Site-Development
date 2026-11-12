@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.1 — 2026-11-12 — Special Request card; VIP Host Card without stock photo
+Artifact version 1794490235-f6ae.
+
+- VIP Host Card page (FF Party): stock photos removed. Photos show only when the host has added their own, so nothing sits behind or overlaps the card when signed out.
+- New gold Special Request Card in the Bar, Entertainment, Services and Food panels of "Explore our packages" (src/components/party/special-request17.jsx). Free to submit; form captures category, event type, description, date (+flexible), location, guests, name, contact, optional budget, prefilled from the active Event Card.
+- Requests are stored in state.specialReq17 (persisted), kept out of events/engagements so they never count as a booking. Repeat submits are de-duplicated.
+- Stages with audit history (src/state/special-requests17.js): pending review, proposal ready, awaiting customer approval, awaiting deposit, confirmed, completed, closed. Only the customer can agree (moves to awaiting deposit); FireFlair admin moves the rest (Admin > Bookings).
+- Not built: taking the deposit payment for a request, and any server-side storage; both need the real backend.
+
 ## v17.4.7 — 2026-11-12 — One package catalogue; one deposit function (Phase 3 prototype, package system stage 1)
 Artifact version 1794489677-2398.
 Detail: `docs/handoff-v17.4.7.md`.
