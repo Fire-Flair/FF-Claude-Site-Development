@@ -328,7 +328,7 @@ function MediaMosaic({ items, onBad }) {
 /* The top of a visitor's page: the pictures, then the Profile Card, then
    Back and the actions. Phone: pictures stay in place and the card slides over
    them. Desktop: card on the left, pictures taking the rest. */
-function PublicHero({ media, card, below }) {
+function PublicHero({ media, card, below, narrow }) {
   const wide = useWide();
   const [seen, setSeen] = useState({});
   const key = media.map(m => m.src).join("|");
@@ -353,7 +353,7 @@ function PublicHero({ media, card, below }) {
       {has && (wide && list.length <= 4 ? <MediaMosaic items={list} onBad={onBad} /> : <MediaCarousel items={list} onBad={onBad} pull={!wide} />)}
       <div className="ff-pcol">
         <div className="ff-ph-card">{card}</div>
-        <div className="ff-prest">{below}</div>
+        <div className={"ff-prest" + (narrow ? " narrow" : "")}>{below}</div>
       </div>
     </div>
   );

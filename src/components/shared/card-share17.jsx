@@ -80,7 +80,7 @@ function CardShareBtn17({ title, url, fileName, render, label = "Share", classNa
   const [open, setOpen] = useState(false);
   return (
     <>
-      <button type="button" className={"ff-csm-btn " + className} onClick={() => setOpen(true)} aria-label={`${label || "Share"} ${title}`}><Share2 size={label ? 14 : 18} />{label ? " " + label : null}</button>
+      <button type="button" className={"ff-csm-btn " + className} onClick={() => setOpen(true)} aria-label={`${label || "Share"} ${title}`}><WhatsAppIcon size={label ? 18 : 22} />{label ? " " + label : null}</button>
       {open ? <CardShareSheet17 open onClose={() => setOpen(false)} title={title} url={url} fileName={fileName}>{render()}</CardShareSheet17> : null}
     </>
   );

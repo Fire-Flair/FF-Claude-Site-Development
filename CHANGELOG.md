@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.5 — 2026-11-12 — Green WhatsApp Share everywhere; profile buttons box
+Artifact version 1794491818-20e7.
+
+- Share is now the green WhatsApp-logo button everywhere (card pop-ups, company cards, VIP card, event and shift cards, profiles). Sizes: labelled button, full-width button, and a round icon-only version.
+- Profile page: the box now reads Back, then Add to network / Add to team, Ask a question / Availability, then Share below them, centred at the width of one button. The box is narrowed to the width of its buttons.
+- The "Name — Profession in Area" line under the card is no longer shown (it repeats the card). It stays in the page as hidden text for search engines and screen readers.
+
 ## v17.4.7.4 — 2026-11-12 — Profile page: Share icon, tiered cards, edit-only autofill box
 Artifact version 1794491257-c4c5.
 

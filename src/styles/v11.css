@@ -4112,3 +4112,10 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-agrp.t-gold .ff-agrp-l > span::before, .ff .ff-agrp.t-silver .ff-agrp-l > span::before, .ff .ff-agrp.t-bronze .ff-agrp-l > span::before { background:currentColor; }
 .ff .ff-agrp.t-gold .ff-agrp-top, .ff .ff-agrp.t-silver .ff-agrp-top, .ff .ff-agrp.t-bronze .ff-agrp-top { background:linear-gradient(90deg,rgba(0,0,0,.35),rgba(0,0,0,0)) left bottom/100% 1px no-repeat; }
 .ff .ff-agrp.t-gold::before, .ff .ff-agrp.t-silver::before, .ff .ff-agrp.t-bronze::before { border-color:rgba(255,255,255,.45); }
+
+/* v17.4.7.5 Share is the green WhatsApp button everywhere; profile buttons box is as narrow as its buttons; the name line is for search engines only */
+.ff .ff-csm-btn { background:#1FA855; color:#fff; border-color:#188A45; box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 8px 18px rgba(31,168,85,.26); }
+.ff .ff-csm-btn:hover { background:#1A9A4D; }
+.ff .ff-csm-btn.icon { background:#1FA855; color:#fff; border-color:#188A45; box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 8px 18px rgba(31,168,85,.26); }
+.ff .ff-prest.narrow { max-width:480px; margin-inline:auto; width:100%; box-sizing:border-box; }
+.ff .ff-pp-h1 { position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
