@@ -63,6 +63,7 @@ const AUTH_ADAPTER = {
   isAvailable(tag, current) {
     const t = AUTH_ADAPTER.cleanTag(tag);
     if (!AUTH_ADAPTER.tagOk(t)) return false;
+    if (rt17Reserved(t)) return false;      /* page names (network, profile, party ...) are never FF Tags: see docs/URLS.md */
     return t === String(current || "").toLowerCase() || !AUTH_ADAPTER._taken(t);
   },
   /* A suggested Tag from the person's name: their first name where it's

@@ -27,7 +27,7 @@
    ========================================================================== */
 const FF_SEO = {
   siteName: "FireFlair",
-  origin: "https://ffparty.uk", profileOrigin: "https://ffteam.uk",
+  origin: "https://ffparty.uk", profileOrigin: "https://ffparty.uk",   // profiles and companies are canonical on ffparty.uk, whichever site they are viewed on
   locale: "en_GB",
   demoData: true,                       // sample people are fictional: never offered to search engines
   title: { min: 10, max: 60 },
@@ -79,14 +79,21 @@ function ffSeoPeople(state) {
 
 
 
-function ffSeoPersonPage(person) {
+/* FF Team, FF Staff and FF VIP views of a profile or company are noindex; the canonical still names the ffparty.uk address. */
+function ffSeoOffParty17(state) {
+  return state && (state.role === "team" || state.role === "vip" || (state.role === "staff" && state.site !== "party"));
+}
+
+
+
+function ffSeoPersonPage(person, state) {
   const name = ffSeoClean(person.name);
   const prof = ffSeoList(person.professions || person.profession)[0] || "";
   const locs = ffSeoList(person.locations).slice(0, 3);
   const langs = ffSeoList(person.languages).slice(0, 5);
   const tag = ffSeoClean(person.tag).replace(/[^A-Za-z0-9_-]/g, "");
-  const url = ffSeoProfileUrl17(tag);
-  const indexable = !FF_SEO.demoData && person.public === true && !!tag;
+  const url = ffSeoProfileUrl17(tag.toLowerCase());
+  const indexable = !FF_SEO.demoData && person.public === true && !!tag && !ffSeoOffParty17(state);
   const title = ffSeoClip(prof ? `${name} — ${prof} | ${FF_SEO.siteName}` : `${name} | ${FF_SEO.siteName}`, FF_SEO.title.max);
   const description = ffSeoClip(
     `${prof ? `${name} is ${ffSeoA(prof)} on FireFlair` : `${name} on FireFlair`}` +
@@ -107,9 +114,25 @@ function ffSeoPersonPage(person) {
     if (/^\d{4}-\d\d-\d\dT/.test(person.updatedAt || "")) jsonLd.dateModified = person.updatedAt;
   }
   return {
-    page: "person", ...ffIntroSeo17(person, title, description), canonical: indexable ? url : ffSeoUrl(""),
+    page: "person", ...ffIntroSeo17(person, title, description), canonical: tag ? url : ffSeoUrl(""),
     robots: indexable ? "index, follow" : "noindex, nofollow", type: "profile", jsonLd,
   };
+}
+
+
+
+/* A claimed company's page: canonical ffparty.uk/<slug>. A Directory entry has no address, so it is noindex and points at the home page. */
+function ffSeoCompanyPage17(state) {
+  const co = companyById(state, state.viewingCompany);
+  const name = co && ffSeoClean(co.name);
+  if (!name) return null;
+  const slug = rt17Slug(co).replace(/[^a-z0-9-]/g, "");
+  const claimed = !co.unclaimed && !co.mine && !!slug;
+  const url = claimed ? ffSeoProfileUrl17(slug) : ffSeoUrl("");
+  const title = ffSeoClip(`${name} | ${FF_SEO.siteName}`, FF_SEO.title.max);
+  const description = ffSeoClip(`${name} on FireFlair${co.kind ? `: ${ffSeoClean(co.kind).toLowerCase()}` : ""}. See their packages, team and reviews.`, FF_SEO.description.max);
+  const indexable = !FF_SEO.demoData && claimed && !ffSeoOffParty17(state);
+  return { page: "company", title, description, canonical: url, robots: indexable ? "index, follow" : "noindex, nofollow", type: "profile", jsonLd: null };
 }
 
 
@@ -118,9 +141,10 @@ function ffSeoFor(state, people) {
   if (state.supportPage20) { const sS = V101.support20Seo(state); if (sS) return sS; }
   if (state.pkgPage) { const pkS = V101.pkgSeo18(state); if (pkS) return pkS; }
   if (state.fdArea) { const fdS = fdSeo(state, people); if (fdS) return fdS; }
+  if (state.viewingCompany) { const coS = ffSeoCompanyPage17(state); if (coS) return coS; }
   if (state.viewing) {
     const person = (people || []).find(p => p && p.id === state.viewing);
-    if (person && ffSeoClean(person.name)) return ffSeoPersonPage(person);
+    if (person && ffSeoClean(person.name)) return ffSeoPersonPage(person, state);
   }
   const tab = state.tab || "home";
   const area = FF_SEO_TAB_LABEL[tab] || "Home";
@@ -268,7 +292,7 @@ function ffSeoSelfTest() {
     let seo = view(pub); checked++;
     ffSeoValidate(seo).forEach(i => fail("[published card] " + i));
     if (seo.robots !== "index, follow") fail("[published card] should be indexable");
-    if (seo.canonical !== FF_SEO.profileOrigin + "/TESTP") fail("[published card] canonical is " + seo.canonical);
+    if (seo.canonical !== FF_SEO.profileOrigin + "/testp") fail("[published card] canonical is " + seo.canonical);
     if (!seo.jsonLd || seo.jsonLd["@type"] !== "ProfilePage") fail("[published card] missing ProfilePage JSON-LD");
     if (/7700|example\.com/.test(JSON.stringify(seo) )) fail("[published card] private contact details leaked into metadata");
     if (seo.jsonLd && seo.jsonLd.dateModified) fail("[published card] dateModified invented");

@@ -55,6 +55,10 @@ printed (references, unique files, duplicates, small inline images left on purpo
 packaged, bytes before and after). The run fails on malformed base64 or an unexpected image type, rebuilds the output
 directory from scratch, and exits 1 if `index.html` is over 5 MiB (5,242,880 bytes). Upload `index.html` plus `i/`.
 
+## Addresses
+
+Every page has an address on all three sites (hash form in the prototype, real path in production). `src/utils/routes17.js` is the router; `docs/URLS.md` is the full map, reserved words, redirect rules and the test list.
+
 ## Contracts for the real services
 
 * **ADMIN_ADAPTER** (`src/adapters/admin-adapter.js`): one method per Admin API route with its inputs and outputs.

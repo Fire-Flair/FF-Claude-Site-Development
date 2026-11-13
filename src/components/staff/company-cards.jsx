@@ -428,7 +428,9 @@ function CompanyJoin({ inBooking }) {
   const emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(String(email).trim());
   const ready = signedIn || phoneOk;
   const via = "phone";
-  const slug = c.slug || slugify(c.name) || slugify(String(email).split("@")[0]) || `ff-${digits.slice(-6) || Date.now().toString(36)}`;
+  const slug0 = c.slug || slugify(c.name) || slugify(String(email).split("@")[0]) || `ff-${digits.slice(-6) || Date.now().toString(36)}`;
+  /* Reserved words (network, profile, stories ...) are page names, so a company address never uses one. */
+  const slug = rt17Reserved(slug0) ? slug0 + "-co" : slug0;
   const create = () => {
     dispatch({ type: "COMPANY_SAVE", company: {
       slug,

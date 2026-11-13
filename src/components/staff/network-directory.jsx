@@ -279,7 +279,11 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   const co = coIn || companyById(state, state.viewingCompany);
   const [asking, setAsking] = useState(false);
   const [reviewing, setReviewing] = useState(false);
-  const [tab, setTab] = useState("overview");
+  /* On a public company page the tab is kept in the store so it is part of the address; the owner's preview keeps its own. */
+  const [ltab, setLtab] = useState("overview");
+  const inStore = !coIn && !!state.viewingCompany;
+  const tab = !inStore ? ltab : (co && state.ptab17 && state.ptab17.key === "c:" + co.id ? state.ptab17.tab : "overview");
+  const setTab = (t) => !inStore ? setLtab(t) : dispatch({ type: "V11_SET", patch: { ptab17: t === "overview" || !co ? null : { key: "c:" + co.id, tab: t } } });
   if (!co) return null;
   const isStaff = state.role === "staff";
   /* v17.4.6.1: the roster is the company's accepted members (plus any listed roster), people with a published Profile Card only. */

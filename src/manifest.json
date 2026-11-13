@@ -64,6 +64,7 @@
   "components/vip/vip-site.jsx",
   "state/persistence.js",
   "utils/seo.js",
+  "utils/routes17.js",
   "App.jsx",
   "styles/css-registry.js",
   "components/staff/questions-and-dates.jsx",

@@ -311,7 +311,11 @@ window.__ffIntro17 = { snapshot: fiSnapshot17, fallback: fiFallback17, compose: 
 
 function PublicProfileBody({ person }) {
   const { state, dispatch } = useStore();
-  const [tab, setTab] = useState("overview");
+  /* The tab is kept in the store so it can be part of the address (#/<site>/<tag>/reviews). */
+  const inStore = state.viewing === person.id;
+  const [ltab, setLtab] = useState("overview");
+  const tab = inStore ? (state.ptab17 && state.ptab17.key === "p:" + person.id ? state.ptab17.tab : "overview") : ltab;
+  const setTab = (t) => inStore ? dispatch({ type: "V11_SET", patch: { ptab17: t === "overview" ? null : { key: "p:" + person.id, tab: t } } }) : setLtab(t);
   const [openRec, setOpenRec] = useState(null);
   const [svcOpen, setSvcOpen] = useState(null);
   const [revOpen, setRevOpen] = useState(null);
@@ -319,7 +323,7 @@ function PublicProfileBody({ person }) {
   const [attrCat, setAttrCat] = useState(null);
   const [allReviews, setAllReviews] = useState(false);
   const mem = useRef({});
-  useEffect(() => { setTab("overview"); mem.current = {}; }, [person.id]);
+  useEffect(() => { setLtab("overview"); mem.current = {}; }, [person.id]);
   const cats = BASE_CATEGORIES;
   const first = String(person.name || "").split(" ")[0] || "them";
   const services = servicesOf(state, person);

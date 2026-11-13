@@ -190,7 +190,14 @@ function Journal17({ kind = "team" }) {
     const m = /^\/stories\/([a-z0-9-]+)\/?$/.exec(window.location.pathname || "");
     if (m && ids.indexOf(m[1]) >= 0) setOpen(m[1]);
     const pop = () => { const mm = /^\/stories\/([a-z0-9-]+)/.exec(window.location.pathname || ""); setOpen(mm && JR17[mm[1]] ? mm[1] : null); };
-    if (ST18_ROUTES) { window.addEventListener("popstate", pop); return () => window.removeEventListener("popstate", pop); }
+    /* Address (single file): #/<site>/stories/<slug> opens the article on load, on Back and on Forward. */
+    const site = RT17_SITE_OF_KIND(kind);
+    const fromHash = () => { const r = rt17Parse(window.location.hash); return r.kind === "stories" && r.site === site && ids.indexOf(r.slug) >= 0 ? r.slug : null; };
+    const h0 = fromHash(); if (h0) setOpen(h0);
+    const hpop = () => { if (rt17Parse(window.location.hash).kind !== "foreign") setOpen(fromHash()); };
+    window.addEventListener("popstate", hpop);
+    if (ST18_ROUTES) window.addEventListener("popstate", pop);
+    return () => { window.removeEventListener("popstate", hpop); if (ST18_ROUTES) window.removeEventListener("popstate", pop); };
   }, []);
 
   const openStory = (id, trigger) => {
@@ -198,6 +205,7 @@ function Journal17({ kind = "team" }) {
     if (trigger) opener.current = trigger;
     setOpen(id);
     if (ST18_ROUTES) { try { window.history.pushState({ story: id }, "", "/stories/" + id); } catch (e) { /* ignore */ } }
+    else rt17Go(rt17Href({ kind: "stories", site: RT17_SITE_OF_KIND(kind), slug: id }));
   };
   /* Other parts of the page (the FF Staff Gold box) open a story with the "ff-openstory" event. */
   useEffect(() => {
@@ -208,6 +216,7 @@ function Journal17({ kind = "team" }) {
   const closeStory = () => {
     setOpen(null);
     if (ST18_ROUTES && /^\/stories\//.test(window.location.pathname)) { try { window.history.back(); } catch (e) { /* ignore */ } }
+    else if (!ST18_ROUTES && rt17Parse(window.location.hash).kind === "stories") rt17Go(rt17Href({ kind: "home", site: RT17_SITE_OF_KIND(kind) }));
     const t = opener.current; if (t && t.focus) setTimeout(() => { try { t.focus(); } catch (e) { /* ignore */ } }, 50);
   };
 

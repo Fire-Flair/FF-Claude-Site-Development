@@ -73,9 +73,9 @@ const DX_ALIAS = { "ff-career": "ff-booktiles", "ff-training": "ff-booktiles", "
     })();
     const fromUrl = () => {
       const parts = String(window.location.hash || "").replace(/^#\/?/, "").split("/");
-      if (parts[0] !== base)
+      if (parts[0] !== base || parts[1] !== "home")
         return null;
-      const i = slugs.indexOf(parts[1]);
+      const i = slugs.indexOf(parts[2]);
       return i < 0 ? null : cats[i].k;
     };
     const [open, setOpen] = useState(() => {
@@ -322,7 +322,7 @@ const DX_ALIAS = { "ff-career": "ff-booktiles", "ff-training": "ff-booktiles", "
         if (!open)
           return;
       }
-      const path = open ? `${base}/${slugs[cats.findIndex((c) => c.k === open)]}` : base;
+      const path = open ? `${base}/home/${slugs[cats.findIndex((c) => c.k === open)]}` : base;
       try {
         const u = "#/" + path;
         if (window.location.hash !== u)
@@ -363,7 +363,7 @@ const DX_ALIAS = { "ff-career": "ff-booktiles", "ff-training": "ff-booktiles", "
         window.removeEventListener("hashchange", sync);
         document.removeEventListener("click", home, true);
         try {
-          if (String(window.location.hash).indexOf("#/" + base + "/") === 0)
+          if (String(window.location.hash).indexOf("#/" + base + "/home/") === 0)
             window.history.replaceState(null, "", "#/" + base);
         } catch (_) {}
       };
