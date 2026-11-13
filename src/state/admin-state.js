@@ -126,7 +126,7 @@ let PS_ALL17 = null, P1_DEF17 = null;
 
 const allPackages17 = () => {
   const base = PS_ALL17 || PARTY_SERVICES;
-  return [...(base.some(x => x.id === "svc_staffing") ? base : [...base, STAFFING_SERVICE]), ...DJ_PKGS17];
+  return [...(base.some(x => x.id === "svc_staffing") ? base : [...base, STAFFING_SERVICE])];
 };
 
 

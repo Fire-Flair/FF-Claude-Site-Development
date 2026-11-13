@@ -1602,11 +1602,13 @@
       type: "button",
       className: "ff-drop-reset",
       onClick: () => api.current?.reset(),
-      "aria-label": "Put the coins back in the box"
+      "aria-label": "Put the coins back in the box",
+      title: "Reset"
     }, React.createElement(RotateCcw, {
-      size: 13,
-      strokeWidth: 2.4
-    }), " Reset"));
+      size: 16,
+      strokeWidth: 2.4,
+      "aria-hidden": "true"
+    })));
   }
 
   function HomeSearch() {

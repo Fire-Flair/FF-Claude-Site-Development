@@ -324,7 +324,9 @@ function PublicProfileBody({ person }) {
   const first = String(person.name || "").split(" ")[0] || "them";
   const services = servicesOf(state, person);
   const teamAll_ = useDirectory();
-  const teams = networkOf11(state, teamAll_, person);
+  const teams = person.id === "me" ? myNetwork(state, teamAll_).list : networkOf11(state, teamAll_, person);
+  const tCos = personCompanies17(state, person);
+  const tNet = person.id === "me" ? (state.netAdds17 || []).map(id => teamAll_.find(p => p.id === id)).filter(p => p && !p.isCompany && !teams.some(t => t.id === p.id)) : [];
   const reviews = reviewsOf(state, person);
   const attrs = attributesOf(state, person, cats);
   const records = recordsForPerson(state, person);
@@ -335,7 +337,7 @@ function PublicProfileBody({ person }) {
   const tabs = [
     { key: "overview", label: "Overview" },
     { key: "services", label: "Packages", count: services.length + (person.id === "me" ? myContent17(state, "services").filter(x => String(x.title).trim()).length + myContent17(state, "cocktails").filter(x => String(x.name).trim()).length + myContent17(state, "stories").filter(x => String(x.title).trim()).length : 0) },
-    ...(ph17(state) >= 2 ? [{ key: "teams", label: "Team", count: teams.length }] : []),
+    ...(ph17(state) >= 2 ? [{ key: "teams", label: "Team", count: teams.length + tCos.length + tNet.length }] : []),
     { key: "reviews", label: "Reviews", count: reviews.length },
   ];
   const openAttr = (it) => setOpenRec({ record: it.record, def: it.def, category: it.category });
@@ -382,11 +384,7 @@ function PublicProfileBody({ person }) {
           ? <CoverFlow items={services} label="Packages" mem={mem} k="services" half={150} onOpen={setSvcOpen} render={(it) => svcCard(it)} />
           : (person.id === "me" ? null : <Empty1 icon={<Sparkles size={20} />}>{first} hasn't added any packages yet.</Empty1>))}
         {tab === "services" && <PkgExtras17 person={person} />}
-        {tab === "teams" && (teams.length
-          ? <HScroll label={`Team, ${teams.length}`}>
-              {teams.map(t => <PlayerTile key={t.id} person={t} onClick={() => { dispatch({ type: "VIEW", id: t.id }); window.scrollTo(0, 0); }} />)}
-            </HScroll>
-          : <Empty1 icon={<Users size={20} />}>{person.id === "me" ? "Your team is everyone you add to your network." : `${first} hasn't added anyone to their team yet.`}</Empty1>)}
+        {tab === "teams" && <TeamParts17 team={teams} companies={tCos} network={tNet} teamEmpty={person.id === "me" ? "No one on your team yet." : `${first} hasn't added anyone to their team yet.`} />}
         {tab === "reviews" && (reviews.length ? (<>
           <CoverFlow items={reviews} label="Reviews" mem={mem} k="reviews" half={140} onOpen={setRevOpen} render={reviewCard} />
           {reviews.length > 1 && <div className="ff-rv-all"><button type="button" className="ff-pp-all" onClick={() => setAllReviews(true)}>View all reviews <ChevronRight size={13} /></button></div>}

@@ -331,15 +331,24 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party }) {
   const baseN = baseNodeOfCo17(co);
   const areas = baseN ? baseLabelOf17(baseN) : (co.areas !== undefined ? co.areas : (co.location || co.area || ""));
   const logoRef = useRef(null);
-  const pick = (e) => { const f = e.target.files && e.target.files[0]; e.target.value = ""; if (!f || !set) return; const r = new FileReader(); r.onload = () => set({ logo: r.result }); r.readAsDataURL(f); };
+  const pick = (e) => { const f = e.target.files && e.target.files[0]; e.target.value = ""; if (!f || !set) return; const r = new FileReader(); r.onload = () => {
+    const src = r.result, im = new Image();
+    im.onload = () => {
+      const k = im.naturalWidth / Math.max(1, im.naturalHeight), wide = k >= 1.8;
+      set({ logo: src, logoWide: wide, logoRatio: wide ? Math.min(5, Math.round(k * 100) / 100) : null });
+    };
+    im.onerror = () => set({ logo: src, logoWide: false, logoRatio: null });
+    im.src = src;
+  }; r.readAsDataURL(f); };
+  const lr = co.logoWide && co.logoRatio ? { "--lr": co.logoRatio } : undefined;
   const vars = { "--ink": t.ink, "--sub": t.sub, "--rule": t.rule, "--acc": t.accent || "#D9BE68" };
   const logo = edit ? (
-    <button type="button" className={"ff-cc11-logo" + (co.logoWide ? " w" : "")} onClick={() => logoRef.current && logoRef.current.click()} aria-label={co.logo ? "Change your logo" : "Add your logo"}>
+    <button type="button" className={"ff-cc11-logo" + (co.logoWide ? " w" : "")} style={lr} onClick={() => logoRef.current && logoRef.current.click()} aria-label={co.logo ? "Change your logo" : "Add your logo"}>
       {co.logo ? <img decoding="async" src={co.logo} referrerPolicy="no-referrer" alt="" /> : <><CameraPlusGlyph size={layout === "logo" ? 26 : 20} /><span>Logo</span></>}
       <input ref={logoRef} type="file" accept="image/*" hidden onChange={pick} />
     </button>
   ) : (
-    <span className={"ff-cc11-logo" + (co.logoWide ? " w" : "") + (co.unclaimed && co.logo ? (co.logoBg === "light" ? " ul lt" : " ul") : "")}>{co.unclaimed && co.logo ? <><span className="mono">{coInitials(co.name)}</span><img decoding="async" src={co.logo} referrerPolicy="no-referrer" alt="" onError={(e) => { e.currentTarget.style.display = "none"; }} /></> : co.logo ? <img decoding="async" src={co.logo} referrerPolicy="no-referrer" alt="" /> : <span className="mono">{coInitials(co.name)}</span>}</span>
+    <span style={lr} className={"ff-cc11-logo" + (co.logoWide ? " w" : "") + (co.unclaimed && co.logo ? (co.logoBg === "light" ? " ul lt" : " ul") : "")}>{co.unclaimed && co.logo ? <><span className="mono">{coInitials(co.name)}</span><img decoding="async" src={co.logo} referrerPolicy="no-referrer" alt="" onError={(e) => { e.currentTarget.style.display = "none"; }} /></> : co.logo ? <img decoding="async" src={co.logo} referrerPolicy="no-referrer" alt="" /> : <span className="mono">{coInitials(co.name)}</span>}</span>
   );
   const name = edit ? <input className="ff-cardin nm" value={co.name || ""} placeholder={party ? "Your name" : "Company name"} aria-label={party ? "Your name" : "Company name"} maxLength={60} onChange={(e) => set({ name: e.target.value })} />
     : <span className="nm">{co.name || (party ? "Your name" : "Your company")}</span>;
@@ -349,7 +358,7 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party }) {
     <span className="ar"><I11.MapPin size={12} /><span>{areas || "Where you're based"}</span></span>
   );
   return (
-    <CardFrame tier={(co.theme === "silver" || co.theme === "gold") ? co.theme : (co.tier || "gold")} theme={t} premium ratio="8 / 5" className={`ff-cocard ff-cc11 l-${layout} ${size}`} style={{ ...vars, maxWidth: 460, margin: size ? 0 : "0 auto" }}>
+    <CardFrame tier={(co.theme === "silver" || co.theme === "gold") ? co.theme : (co.tier || "gold")} theme={t} premium ratio="8 / 5" className={`ff-cocard ff-cc11 l-${layout} ${size}${co.logoWide ? " lw" : ""}`} style={{ ...vars, maxWidth: 460, margin: size ? 0 : "0 auto" }}>
       <span className="ff-pc-plate ff-cc11-plate">{co.unclaimed ? "Company card" : party ? "VIP Host Card" : "Company Card"}</span>
       {!co.unclaimed && <span className="ff-cc11-coin"><Coin size={size ? 24 : 30} tier={co.theme === "silver" ? "silver" : "gold"} /></span>}
       <div className="ff-cc11-body">
@@ -691,6 +700,99 @@ function AboutBox11() {
 
 
 
+/* FF Staff: More information. Sections a company writes for its public page (a title, a text, and items with an optional photo). */
+function InfoBuilder17() {
+  const { state, dispatch } = useStore();
+  const list = (state.company || {}).info || [];
+  const [ed, setEd] = useState(null);
+  const save = (next) => dispatch({ type: "COMPANY_SAVE", company: { info: next } });
+  return (
+    <div className="ff-info17">
+      {list.map(sec => (
+        <button key={sec.id} type="button" className="ff-info17-row" onClick={() => setEd(sec)}>
+          <span><b>{sec.title || "Untitled"}</b><small>{(sec.items || []).length} {(sec.items || []).length === 1 ? "item" : "items"}</small></span>
+          <I11.Pencil size={15} aria-hidden="true" />
+        </button>
+      ))}
+      <button type="button" className="ff-info17-add" onClick={() => setEd({ id: uid("info"), title: "", text: "", items: [], fresh: true })}><I11.Plus size={15} /> Add a section</button>
+      {ed && <InfoSheet17 sec={ed} onClose={() => setEd(null)}
+        onSave={(x) => { const { fresh, ...clean } = x; save(list.some(y => y.id === x.id) ? list.map(y => y.id === x.id ? clean : y) : [...list, clean]); setEd(null); }}
+        onDelete={() => { save(list.filter(y => y.id !== ed.id)); setEd(null); }} />}
+    </div>
+  );
+}
+
+function InfoSheet17({ sec, onSave, onDelete, onClose }) {
+  const [x, setX] = useState(() => JSON.parse(JSON.stringify(sec)));
+  const items = x.items || [];
+  const setItem = (i, p) => setX({ ...x, items: items.map((it, j) => j === i ? { ...it, ...p } : it) });
+  const photo = (i, e) => {
+    const f = e.target.files && e.target.files[0];
+    e.target.value = "";
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = () => setItem(i, { photo: r.result });
+    r.readAsDataURL(f);
+  };
+  return (
+    <Sheet open onClose={onClose} title={sec.fresh ? "Add a section" : "Edit section"}>
+      <div className="ff-info17-ed">
+        <Field label="Title"><input className="ff-input" value={x.title || ""} maxLength={60} onChange={(e) => setX({ ...x, title: e.target.value })} placeholder="Why choose us" /></Field>
+        <Field label="Text"><textarea className="ff-input" rows={3} value={x.text || ""} onChange={(e) => setX({ ...x, text: e.target.value })} placeholder="A few lines about this" /></Field>
+        <div className="ff-label" style={{ margin: "4px 0 8px" }}>Items</div>
+        {items.map((it, i) => (
+          <div key={i} className="ff-info17-it">
+            <label className="ph" aria-label={it.photo ? "Change the photo" : "Add a photo"}>
+              {it.photo ? <img src={it.photo} alt="" /> : <I11.ImagePlus size={18} />}
+              <input type="file" accept="image/*" hidden onChange={(e) => photo(i, e)} />
+            </label>
+            <div className="tx">
+              <input className="ff-input" value={it.title || ""} maxLength={60} onChange={(e) => setItem(i, { title: e.target.value })} placeholder="Item" aria-label="Item title" />
+              <input className="ff-input" value={it.text || ""} maxLength={240} onChange={(e) => setItem(i, { text: e.target.value })} placeholder="One line about it" aria-label="Item line" />
+            </div>
+            <button type="button" className="del" aria-label="Remove this item" onClick={() => setX({ ...x, items: items.filter((_, j) => j !== i) })}><I11.Trash2 size={15} /></button>
+          </div>
+        ))}
+        <Btn variant="sm ghost" onClick={() => setX({ ...x, items: [...items, { title: "", text: "" }] })}><I11.Plus size={13} /> Add an item</Btn>
+        <div className="acts">
+          <Btn variant="primary wide" disabled={!String(x.title || "").trim()} onClick={() => onSave({ ...x, title: x.title.trim(), items: items.filter(it => String(it.title || it.text || it.photo || "").trim()) })}><I11.Check size={14} /> Save section</Btn>
+          {!sec.fresh && <button type="button" className="ff-info17-del" onClick={onDelete}><I11.Trash2 size={14} /> Delete section</button>}
+        </div>
+      </div>
+    </Sheet>
+  );
+}
+
+/* The companies a company works with, picked from the directory. */
+function PartnerPick17({ open, onClose }) {
+  const { state, dispatch } = useStore();
+  const [q, setQ] = useState("");
+  if (!open) return null;
+  const mine = (state.company || {}).partners || [];
+  const t = q.trim().toLowerCase();
+  const pool = browseCompanies17(state).filter(co => co && co.id !== "mine" && (!t || `${co.name} ${co.kind || ""} ${co.area || ""}`.toLowerCase().includes(t))).slice(0, 60);
+  const toggle = (id) => dispatch({ type: "COMPANY_SAVE", company: { partners: mine.includes(id) ? mine.filter(x => x !== id) : [...mine, id] } });
+  return (
+    <Sheet open onClose={onClose} title="Companies" center>
+      <div className="ff-fav17-pick">
+        <label className="srch"><I11.Search size={14} /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search companies" aria-label="Search companies" /></label>
+        <ul>
+          {pool.map(co => {
+            const on = mine.includes(co.id);
+            return (
+              <li key={co.id}>
+                <button type="button" className={on ? "on" : ""} aria-pressed={on} onClick={() => toggle(co.id)}>
+                  <I11.Briefcase size={20} /><span><b>{co.name}</b><small>{co.kind || ""}</small></span>{on ? <I11.Check size={17} /> : <I11.Plus size={17} />}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </Sheet>
+  );
+}
+
 function CompanySections() {
   const { state, dispatch } = useStore();
   const all = useDirectory();
@@ -699,6 +801,10 @@ function CompanySections() {
   const [addingTo, setAddingTo] = useState(null);
   const [termsOpen, setTermsOpen] = useState(false);
   const [tab, setTab] = useState("overview");
+  const [picking, setPicking] = useState(false);
+  const partners = coPartners17(state, { mine: true });
+  const cards = coCards17(state, { mine: true });
+  const seeds = coSeeds17(state);
   const engs = state.auth && state.auth.status === "signedIn" ? state.engagements : [];
   const stat = (st) => engs.filter(e => e.state === st).length;
   const teamIds = [...new Set(engs.filter(e => ["confirmed", "completed", "signed_off", "paid"].includes(e.state)).map(e => e.staffId))];
@@ -753,6 +859,11 @@ function CompanySections() {
               )}
             </section>
 
+            <section id="ff-co-info" style={{ marginTop: 22 }}>
+              <SectionHead icon={<I11.FileText size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="More information" count={(c.info || []).length} action={<CategoryToggle sectionKey="co_info" defaultOpen={false} />} />
+              {vis("co_info") && <InfoBuilder17 />}
+            </section>
+
             {recSection("contact")}
             {recSection("locations")}
             {recSection("venues")}
@@ -772,12 +883,12 @@ function CompanySections() {
 
           {tab === "services" && (<>
             <section id="ff-co-svc" style={{ marginTop: 22 }}>
-              <SectionHead icon={<I11.Sparkles size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Services" count={(c.svcCards || []).length} action={<CategoryToggle sectionKey="co_svc" defaultOpen={false} />} />
-              {vis("co_svc") && <SvcBuilder11 />}
+              <SectionHead icon={<I11.Sparkles size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Packages" count={cards.services.length} action={<CategoryToggle sectionKey="co_svc" defaultOpen={false} />} />
+              {vis("co_svc") && <Studio17 type="service" site="FF Staff" by={String(c.name || "").trim() || "You"} tag={c.slug || "yourbusiness"} k="coServices17" seed={seeds.service} />}
             </section>
             <section id="ff-co-ck" style={{ marginTop: 22 }}>
-              <SectionHead icon={<I11.Martini size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Cocktail menu" count={(c.menu || []).length} action={<CategoryToggle sectionKey="co_ck" defaultOpen={false} />} />
-              {vis("co_ck") && <MenuBuilder11 />}
+              <SectionHead icon={<I11.Martini size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Cocktails" count={cards.cocktails.length} action={<CategoryToggle sectionKey="co_ck" defaultOpen={false} />} />
+              {vis("co_ck") && <Studio17 type="cocktail" site="FF Staff" by={String(c.name || "").trim() || "You"} tag={c.slug || "yourbusiness"} k="coCocktails17" seed={seeds.cocktail} />}
             </section>
             <section id="ff-co-questions" style={{ marginTop: 22 }}>
               <SectionHead icon={<I11.MessageSquare size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Q&A" count={coQa(c).length} action={<CategoryToggle sectionKey="co_qa" defaultOpen={false} />} />
@@ -793,6 +904,12 @@ function CompanySections() {
                 </HScroll>
               ) : <p className="ff-body ff-muted" style={{ margin: 0 }}>Everyone you book joins your team, so you can rebook them in a tap.</p>}
               <div style={{ marginTop: 12 }}><Btn variant="sm ghost" onClick={() => dispatch({ type: "TAB", tab: "network" })}>Find more</Btn></div>
+              <div style={{ marginTop: 22 }}>
+                <SectionHead icon={<I11.Briefcase size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Companies" count={partners.length} />
+                {partners.length > 0 && <CoTiles17 list={partners} />}
+                <div style={{ marginTop: 12 }}><Btn variant="sm ghost" onClick={() => setPicking(true)}><I11.Plus size={13} /> Add companies</Btn></div>
+              </div>
+              <PartnerPick17 open={picking} onClose={() => setPicking(false)} />
             </section>
           )}
 

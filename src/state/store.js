@@ -133,6 +133,11 @@ function claimListXP(s, cat, list) {
 
 
 function reducer(s, a) {
+  return pkgGuard17(reducerCore17(s, a));
+}
+
+
+function reducerCore17(s, a) {
   if (a.type === "PROFILE" && a.patch && typeof a.patch.about === "string") a = { ...a, patch: { ...a.patch, about: a.patch.about.slice(0, BIO_MAX) } };
   /* v1.2: Edit Profile actions (PE_*) */
   if (a.type && (a.type.startsWith("PE_") || a.type.startsWith("P1_"))) { const r = p1EditReducer(s, a); if (r) return r; }
@@ -141,7 +146,7 @@ function reducer(s, a) {
      record logic against company.records (no FF Team XP is awarded). */
   if (a && a.owner === "company" && /^REC_/.test(a.type)) {
     const c = s.company || {};
-    const out = reducer({ ...s, profile: { ...s.profile, records: c.records || {} } }, { ...a, owner: undefined });
+    const out = reducerCore17({ ...s, profile: { ...s.profile, records: c.records || {} } }, { ...a, owner: undefined });
     return { ...s, company: { ...c, records: out.profile.records } };
   }
   { const r11 = v11Reducer(s, a); if (r11) return r11; }

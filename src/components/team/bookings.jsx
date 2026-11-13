@@ -236,13 +236,16 @@ function ProfRates17({ guest }) {
   const chips = [...(!guest && yours.length ? ["Yours"] : []), ...PROFESSION_CATEGORIES.map(c => c.key)];
   return (
     <>
-      <div className="ff-pr17-chips" role="group" aria-label="Profession categories">
-        {chips.map(k => <button key={k} type="button" className="ff-chip" aria-pressed={k === cat} onClick={() => setCat(k)}>{k === "Yours" ? "Your professions" : k}</button>)}
+      <div className="ff-pr17-chips" role="tablist" aria-label="Profession categories">
+        {chips.map(k => <button key={k} type="button" role="tab" className="ff-chip ff-pr17-tab" aria-selected={k === cat} aria-pressed={k === cat} onClick={() => setCat(k)}>{k === "Yours" ? "Your professions" : k}</button>)}
       </div>
-      <HScroll label="FF Staff Shifts" snap>
-        {list.map(p => <div key={p.name} className="ff-tp17-cell"><ProfRateTile17 name={p.name} cat={p.cat} value={valOf(p.name)} busy={busy} err={errs[p.name]}
-          onChange={(v) => { setDrafts(d => ({ ...d, [p.name]: v })); setErrs(e => { const { [p.name]: _, ...rest } = e; return rest; }); }} /></div>)}
-      </HScroll>
+      <div className="ff-pr17-panel" role="tabpanel">
+        <div className="ff-pr17-ph"><I11.ChevronDown size={16} aria-hidden="true" /> <b>{cat === "Yours" ? "Your professions" : cat}</b> shifts</div>
+        <HScroll label="FF Staff Shifts" snap>
+          {list.map(p => <div key={p.name} className="ff-tp17-cell"><ProfRateTile17 name={p.name} cat={p.cat} value={valOf(p.name)} busy={busy} err={errs[p.name]}
+            onChange={(v) => { setDrafts(d => ({ ...d, [p.name]: v })); setErrs(e => { const { [p.name]: _, ...rest } = e; return rest; }); }} /></div>)}
+        </HScroll>
+      </div>
       <div className="ff-bk-submit"><Btn variant="primary" disabled={!dirty.length || busy} onClick={submit}>Submit</Btn></div>
     </>
   );
@@ -287,7 +290,7 @@ function TeamBookings({ guest = false }) {
     dispatch({ type: "TOAST", toast: r.ok ? "Packages saved" : "That couldn't be saved. Try again." });
   };
   const ownPackage = () => { dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); let n = 0; const go = () => { const el = document.getElementById("ff-cr17-service"); if (el) el.scrollIntoView({ behavior: "auto", block: "start" }); else if (++n < 20) setTimeout(go, 60); }; setTimeout(go, 120); };
-  const pkgs = [...PARTY_SERVICES.filter(sv => sv.id !== "svc_full"), ...(hid17(state, "packages", "svc_staffing") ? [] : [STAFFING_SERVICE])];
+  const pkgs = [...(hid17(state, "packages", "svc_staffing") ? [] : [STAFFING_SERVICE]), ...PARTY_SERVICES.filter(sv => sv.id !== "svc_full")];
 
   const Row = ({ x, tag, onClick }) => (
     <button type="button" className="ff-bk-row" onClick={onClick}>
@@ -313,19 +316,17 @@ function TeamBookings({ guest = false }) {
         </section>
       )}
 
-      <section className="ff-bk-sec">
-        <div className="ff-bk-hrow"><h2 className="ff-bk-h ff-bk-hl">Confirmed bookings {demo && upcoming.length > 0 && <i>{upcoming.length}</i>}</h2><button type="button" className="ff-bk-hist" aria-pressed={showPast} onClick={() => setShowPast(v => !v)}><Clock size={12} /> History</button></div>
+      {signedIn && <section className="ff-bk-sec ff-bk-conf17">
+        <div className="ff-bk-hrow"><BigHead20 title="Confirmed" count={demo && upcoming.length > 0 ? upcoming.length : undefined} /><button type="button" className="ff-bk-hist" aria-pressed={showPast} onClick={() => setShowPast(v => !v)}><Clock size={12} /> History</button></div>
         {upcoming.length ? <div className="ff-sdrail11"><HScroll label="Confirmed bookings">{upcoming.map(x => <ShiftDelivery11 key={x.e.id} e={x.e} shift={x.shift} event={x.event} />)}</HScroll></div>
-          : (
-            <BookingsSoon />
-          )}
+          : <p className="ff-bk-none ff-bk-none17">Your booked shifts will be shown here.</p>}
         {showPast && (previous.length ? previous.map(x => <Row key={x.e.id} x={x} onClick={() => setOpen(x.e)} tag={<span className="ff-bk-done">Worked</span>} />)
           : <p className="ff-bk-none">No past bookings yet.</p>)}
-      </section>
+      </section>}
 
       <section className="ff-bk-sec ff-fb21" id="ff-bk-fireflair">
         <style>{BKD_CSS}</style>
-        <BigHead20 title="FireFlair bookings" />
+        <BigHead20 title="FireFlair" />
         <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-party">
           <h3>FF Party packages</h3>
           <p>You are your own boss. FireFlair sets the pay rate for each package. You deal directly with the client, and FireFlair is here to support you. Packages are advertised at a set rate, and by signing up to one you agree to that rate. The rates are strong, so we expect strong work in return.</p>

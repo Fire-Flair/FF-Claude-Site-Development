@@ -55,7 +55,7 @@ function CreatorMedia() {
       <SectionHead icon={<Camera size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Media" count={items.length} action={<CategoryToggle sectionKey="cr_media" defaultOpen={true} />} />
       {mOpen && (<>
       <p className="ff-body ff-muted" id="ff-cmedia-h" style={{ margin: "-2px 0 10px", fontSize: 13 }}>
-        These pictures play across the top of your public profile. The first one shows first.
+        These pictures play across the top of your public profile.
       </p>
       <input ref={repRef} type="file" accept="image/*" className="ff-sr" aria-label="Choose a replacement picture" tabIndex={-1} onChange={(e) => { replace(e.target.files && e.target.files[0]); e.target.value = ""; }} />
       <div className={`ff-mgrid${drag ? " drop" : ""}`}

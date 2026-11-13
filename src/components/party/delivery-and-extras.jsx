@@ -326,6 +326,46 @@ function TeamSteps11({ onClose }) {
 
 
 
+/* FF VIP: the same Next steps list. Steps that need the VIP card or booking show a lock until FF VIP opens. */
+function VipSteps21({ onClose }) {
+  const { state, dispatch } = useStore();
+  const v = state.vip21 || {};
+  const cardDone = vipCardDone21(v), joined = !!v.guest, booked = (v.bookings || []).length > 0;
+  const go = (tab) => {
+    onClose();
+    if (state.role !== "vip") dispatch({ type: "ROLE", role: "vip" });
+    dispatch({ type: "TAB", tab });
+    window.scrollTo(0, 0);
+  };
+  const steps = [
+    { id: "card", label: "Create your VIP card", hint: "Your drinks, what you eat and where you like to sit", done: cardDone, lock: true, onClick: () => go("profile") },
+    { id: "guest", label: "Join the guest list", hint: "Your card is your invitation to the launch party", done: joined, lock: true, onClick: () => go("profile") },
+    { id: "exp", label: "Explore experiences", hint: "Venues, spa days and private tables, chosen for you", done: false, lock: false, onClick: () => go("network") },
+    { id: "book", label: "Book a VIP table", hint: "Send your card to the venue with your drinks ready", done: booked, lock: true, onClick: () => go("bookings") },
+  ];
+  return (
+    <div className="ff-xpsec">
+      {steps.map(t => (
+        <button key={t.id} type="button" className={`ff-task${t.done ? " done" : ""}`} onClick={t.onClick} aria-label={t.label + (VIP_LOCKED21 && t.lock && !t.done ? ". " + VIP_LOCK_LABEL21 : "")}>
+          <span className="dot">{t.done && <Check size={13} strokeWidth={2.6} />}</span>
+          <span style={{ flex: 1, minWidth: 0 }}>
+            <span className="ff-serif" style={{ fontSize: 15.5, display: "block", color: "#1D1B18", lineHeight: 1.2 }}>{t.label}</span>
+            <span className="ff-body ff-muted" style={{ fontSize: 11.5 }}>{t.hint}</span>
+          </span>
+          {t.done ? <Pill tone="ok">Done</Pill> : (VIP_LOCKED21 && t.lock ? <Lock size={15} color="var(--gold-dk)" style={{ flex: "none" }} aria-hidden="true" /> : <ChevronRight size={16} color="var(--gold-dk)" style={{ flex: "none" }} />)}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function notifySite17(state) {
+  if (state.role === "vip") return "vip";
+  if (state.role === "staff") return state.site === "party" ? "party" : "staff";
+  return "team";
+}
+
+
 /* Notifications (v17.4.3): only cards that are waiting for YOUR reply. A Shift Card you were sent, or an
    Availability Card you were asked. Each is a dropdown, closed by default; opened, it shows the card itself
    with its reply buttons. Answer it and it leaves the list (history lives in Bookings). Booking history,
@@ -396,7 +436,7 @@ const coInvites17 = (state) => ctInvitesForMe17(state);
 /* One list per site. FF Team: cards sent to you, team invitations, questions on your profile.
    FF Staff and FF Party: replies to your invitations, questions from the people you asked to work, join requests.
    The badge counts what the list shows as new: every action, plus updates since the list was last opened. */
-const notifyCount17 = (state) => state.role === "team"
+const notifyCount17 = (state) => state.role === "vip" ? 0 : state.role === "team"
   ? pending11(state).length + availWaiting17(state).length + teamAsksWaiting17(state).length + coInvites17(state).length + questionsWaiting17(state, state.directory || []).length
   : shiftQuestionsWaiting17(state).length + coRequests17(state).length + bookingUpdates17(state).filter(u => u.action || u.at > (state.notesSeenAt || 0)).length;
 
@@ -511,7 +551,7 @@ function NotifySheet17({ open, onClose }) {
   useEffect(() => { if (open) { dispatch({ type: "NOTES_SEEN" }); setAt(null); } }, [open]);
   if (!open) return null;
   const lastQ = (e) => e.thread[e.thread.length - 1].text;
-  const rows = state.role === "team" ? [
+  const rows = state.role === "vip" ? [] : state.role === "team" ? [
     ...pending11(state).map(e => {
       const sh = state.shifts.find(x => x.id === e.shiftId), ev = sh && state.events.find(x => x.id === sh.eventId);
       return sh ? { id: e.id, icon: <I11.Briefcase size={18} />, title: `${e.auto ? "Open shift" : "You've been selected"} · ${sh.role}`, sub: `${hirerOf11(state, ev)} · ${whenOf11(sh)}`, body: <ShiftDelivery11 e={e} shift={sh} event={ev} /> } : null;
@@ -543,7 +583,7 @@ function NotifySheet17({ open, onClose }) {
             <NoteDrop17 key={r.id} id={r.id} open={at === r.id} onToggle={() => setAt(at === r.id ? null : r.id)} icon={r.icon} title={r.title} sub={r.sub}>{r.body}</NoteDrop17>))}</ul>)}
         <section className="ff-ntf-next17" aria-labelledby="ff-ntf-next-h">
           <h3 id="ff-ntf-next-h">Next steps</h3>
-          {state.role === "team" ? <TeamSteps11 onClose={onClose} /> : <StaffGuideSheet open bare onClose={onClose} />}
+          {{ team: <TeamSteps11 onClose={onClose} />, vip: <VipSteps21 onClose={onClose} /> }[notifySite17(state)] || <StaffGuideSheet open bare onClose={onClose} />}
         </section>
       </div>
       <ReviewSheet open={!!review} person={review} onClose={() => setReview(null)} />

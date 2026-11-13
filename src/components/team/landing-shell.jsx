@@ -540,7 +540,6 @@ function Shell({ children }) {
                 Add <AddFireFlairMark size={16} />
               </button>
             )}
-            <BetaBadge />
             <button type="button" className={`ff-authbtn${authed ? " out" : ""}`} onClick={() => authed ? logout() : setLoginOpen(true)}>
               {authed ? "Log out" : "Log in"}
             </button>

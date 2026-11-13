@@ -234,18 +234,12 @@ const vkMedia17 = () => [
 ];
 
 
-const vkExtras17 = () => ({
-  offering: ["Bespoke Bars", "Cocktails", "Mocktails", "Spirits", "Beers"],
-  website: "http://www.vooshkabars.co.uk/",
-  experience: ["A little theatre. A lot of elegance.", "A great bar brings people together. At Vooshka, distinctive design, expertly made drinks and a warm welcome create a natural gathering place at the heart of your celebration.", "From intimate gatherings to grand receptions, we work with you to find the right look, menu and style of service. You bring the people and the reason to celebrate; we\u2019ll take care of the bar."],
-  why: VK17_WHY,
-  occasions: VK17_OCC.map(([t, d], i) => ({ t, d, src: VK17.occ[i] || "" })),
-  steps: VK17_STEPS,
-  quote: "Not just a bar. A beautiful part of your celebration.",
-  barsNote: "Ordered by overall span, from smallest to largest. Made-to-measure designs appear last. All bars are 1.2 m high.",
-  bars: VK17.bars.map(([f, l, s]) => ({ src: f, label: l, size: s })),
-  cocktails: [{ cat: "Signature cocktails", items: VK17.sig.map(([f, n]) => ({ src: f, name: n })) }]
-});
+const vkInfo17 = () => [
+  { id: "vk_exp", title: "The Vooshka experience", lead: "A little theatre. A lot of elegance.", text: "You bring the people and the reason to celebrate; we\u2019ll take care of the bar.", chips: ["Bespoke Bars", "Cocktails", "Mocktails", "Spirits", "Beers"], items: [] },
+  { id: "vk_why", title: "Why Vooshka", items: VK17_WHY.map(([t, d]) => ({ title: t, text: d })) },
+  { id: "vk_steps", title: "The Vooshka process", numbered: true, items: VK17_STEPS.map(([t, d]) => ({ title: t, text: d })), quote: "Not just a bar. A beautiful part of your celebration." },
+  { id: "vk_bars", title: "Bar styles", text: "Ordered by overall span, from smallest to largest. Made-to-measure designs appear last. All bars are 1.2 m high.", items: VK17.bars.map(([f, l, sz]) => ({ title: l, text: sz, photo: f })) }
+];
 
 
 const vkReviews17 = () => VK17.revs.map(([by, text]) => [null, 0, text, by]);
@@ -255,7 +249,6 @@ const vkContact17 = () => [["WhatsApp", "+44 7814 904355"], ["Instagram", "@voos
 
 
 function vooshkaEditable17() {
-  const quick = (t) => t.length > 90 ? t.slice(0, t.lastIndexOf(" ", 90)) + "." : t;
   return {
     name: "Vooshka Cocktail Bar",
     kind: "Luxury mobile cocktail bar",
@@ -279,14 +272,13 @@ function vooshkaEditable17() {
         makeRecord("locations", "United Kingdom")
       ]
     },
-    svcCards: VK17_OCC.map(([title, tagline, includes, ideal]) => ({ id: uid("svcCards"), tone: "gold", title, tagline: quick(tagline), includes, ideal, time: "Tailored to your event", price: "" })),
-    menu: VK17.sig.map(([f, name]) => ({ id: uid("menu"), tone: "dark", name, desc: "Signature cocktail", ingredients: "See the Vooshka cocktail menu", method: "Made fresh at the bar", glass: "Glassware and garnish may vary", price: "", img: f })),
     qa: [
       ...CO_QA_SEED.filter((q) => q.group === "feedback"),
       ...VK17_QA.map(([text, answer, note], i) => ({ id: "qa_vk" + i, group: "business", text, answer, note }))
     ],
     reviews: VK17.revs.map(([byName, text], i) => ({ id: "vkr" + i, rating: 0, text, byName })),
-    extras: vkExtras17()
+    info: vkInfo17(),
+    partners: []
   };
 }
 
@@ -328,6 +320,30 @@ function VkGrid17({ items }) {
       e.currentTarget.style.visibility = "hidden";
     }
   }), (it.name || it.label) && React.createElement("figcaption", null, React.createElement("b", null, it.name || it.label), it.size && React.createElement("small", null, it.size)))));
+}
+
+
+/* A company's own "More information" sections, as people see them. */
+function CoInfo17({ list }) {
+  return (
+    <>
+      {(list || []).filter(sec => String(sec.title || "").trim()).map((sec, si) => {
+        const items = (sec.items || []).filter(it => String(it.title || it.text || it.photo || "").trim());
+        const rows = items.filter(it => !it.photo), pics = items.filter(it => it.photo);
+        const paras = String(sec.text || "").split(/\n\s*\n/).map(x => x.trim()).filter(Boolean);
+        return (
+          <VkFold17 key={sec.id || si} title={sec.title} count={items.length || null}>
+            {sec.lead ? <h4 className="ff-vk-h">{sec.lead}</h4> : null}
+            {paras.map((p, i) => <p key={"p" + i} className="ff-body ff-vk-p">{p}</p>)}
+            {sec.chips && sec.chips.length ? <div className="ff-copub-chips">{sec.chips.map(c => <span key={c}>{c}</span>)}</div> : null}
+            {rows.map((it, i) => <div key={"r" + i} className="ff-vk-row"><b>{sec.numbered ? String(i + 1).padStart(2, "0") + "  " : ""}{it.title}</b>{it.text ? <span>{it.text}</span> : null}</div>)}
+            {pics.length ? <VkGrid17 items={pics.map(it => ({ src: it.photo, label: it.title, size: it.text }))} /> : null}
+            {sec.quote ? <p className="ff-vk-quote">{sec.quote}</p> : null}
+          </VkFold17>
+        );
+      })}
+    </>
+  );
 }
 
 
@@ -463,7 +479,11 @@ const COMPANY_PAGES = {
     venues: [],
     reviews: vkReviews17(),
     qa: [...CO_QA_SEED.filter((q) => q.group === "feedback"), ...VK17_QA.map(([text, answer, note], i) => ({ id: "qa_vk" + i, group: "business", text, answer, note }))],
-    extras: vkExtras17()
+    /* Packages and Cocktails are the same Service Cards and Cocktail Cards a company makes on FF Staff. */
+    get services() { return vkSeeds17().service; },
+    get cocktails() { return vkSeeds17().cocktail; },
+    info: vkInfo17(),
+    partners: []
   },
   ...Object.fromEntries(REAL_COMPANIES11.map(realPage11)),
   "co_raise-the-bar": rtbPage17(),
@@ -477,6 +497,30 @@ function companyById(state, id) {
   const page = COMPANY_PAGES[id];
   if (!base || !page) return null;
   return { ...base, ...page, id, mediaList: page.media.map(k => typeof k === "string" ? { id: k, src: IMG11[k] } : k).filter(m => m.src) };
+}
+
+
+function coIsVk17(state) {
+  const c = state.company || {};
+  return !String(c.name || "").trim() || c.slug === "vooshka";
+}
+
+
+function coSeeds17(state) { return coIsVk17(state) ? vkSeeds17() : {}; }
+
+
+function coCards17(state, co) {
+  if (!co) return { services: [], cocktails: [] };
+  const sd = co.mine ? coSeeds17(state) : {};
+  const services = co.mine ? (state.coServices17 || sd.service || []) : (co.services || []);
+  const cocktails = co.mine ? (state.coCocktails17 || sd.cocktail || []) : (co.cocktails || []);
+  return { services: services.filter(x => String(x.title || "").trim()), cocktails: cocktails.filter(x => String(x.name || "").trim()) };
+}
+
+
+function coPartners17(state, co) {
+  const ids = (co && (co.mine ? (state.company || {}).partners : co.partners)) || [];
+  return ids.map(id => companyById(state, id)).filter(Boolean);
 }
 
 

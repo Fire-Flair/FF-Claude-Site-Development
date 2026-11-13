@@ -2234,8 +2234,8 @@ html,body{ overscroll-behavior-y: none}
 .ff .ff-home .ff-game .ff-drop-art .curve{ stroke:rgba(228,195,106,.22); stroke-width:1.5; filter:none}
 .ff .ff-home .ff-game .ff-drop-art .bin{ fill:rgba(201,162,39,.06); stroke:rgba(201,162,39,.22)}
 .ff .ff-home .ff-game .ff-drop-art .hopper{ fill:rgba(255,255,255,.03)}
-.ff .ff-home .ff-drop-reset{ position:absolute; top:14px; right:14px; z-index:3; display:inline-flex; align-items:center; gap:6px; min-height:32px; padding:0 12px; border-radius:99px;
-  font-size:12px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#E4C36A; background:rgba(22,19,15,.75); border:1px solid rgba(201,162,39,.55); cursor:pointer}
+.ff .ff-home .ff-drop-reset{ position:absolute; top:14px; right:14px; z-index:3; display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; min-height:0; padding:0; border-radius:50%;
+  color:#E4C36A; background:rgba(22,19,15,.75); border:1px solid rgba(201,162,39,.55); cursor:pointer}
 .ff .ff-home .ff-drop-reset:hover{ background:#16130F; border-color:#E4C36A}
 .ff .ff-home .ff-drop-reset:active{ transform:scale(.96)}
 .ff .ff-home .ff-hero-h101{ margin-bottom:4px; font-size:clamp(32px,9vw,44px)}

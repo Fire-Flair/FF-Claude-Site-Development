@@ -798,7 +798,7 @@ function Creators17({ kind, by: byIn }) {
   const demoCo = !team && !String((state.company || {}).name || "").trim() ? COMPANY_PAGES.co_vooshka : null;
   const tag = team ? (state.auth.tag || state.session.tag || "yourtag") : ((state.company || {}).slug || (demoCo && demoCo.slug) || "yourbusiness");
   const bizKeys = team ? {} : { cocktail: "coCocktails17", service: "coServices17" };
-  const seeds = demoCo ? vkSeeds17() : {};
+  const seeds = team ? {} : coSeeds17(state);
   const types = ["cocktail", "service", "post"];
   const count = (t) => team ? myContent17(state, PC17_KINDS[t]).length : (state[bizKeys[t] || STUDIO17[t].key] || seeds[t] || []).length;
   return (
@@ -818,7 +818,7 @@ function PkgExtras17({ person }) {
   const [view, setView] = useState(null);
   const mine = person.id === "me";
   const contentOf = state.viewingAsGuest ? publicContent17 : myContent17;
-  const svs = mine ? contentOf(state, "services").filter(x => String(x.title).trim() && !hid17(state, "cards", x.id)) : [];
+  const svs = mine && !state.viewingAsGuest ? contentOf(state, "services").filter(x => String(x.title).trim() && !hid17(state, "cards", x.id)) : [];
   const cks = mine ? contentOf(state, "cocktails").filter(x => String(x.name).trim() && !hid17(state, "cards", x.id)) : [];
   const sts = mine ? contentOf(state, "stories").filter(x => String(x.title).trim() && !hid17(state, "cards", x.id)) : [];
   const by = person.name || "You";

@@ -821,6 +821,39 @@ function NetDrop17({ title, count, children }) {
   );
 }
 
+/* The companies a person works with: accepted team links first, then (for your own profile) companies you added to your network. */
+function personCompanies17(state, person) {
+  if (!person) return [];
+  const me = person.id === "me";
+  const tag = String(person.tag || "").toLowerCase();
+  const keys = new Set(ctAll17(state).filter(x => x.status === "accepted" && (me ? ctIsMe17(state, x) : (x.personId === person.id || (tag && String(x.tag || "").toLowerCase() === tag)))).map(x => x.companyKey));
+  const out = browseCompanies17(state).filter(c => c && c.id !== "mine" && (keys.has(coKey17(c)) || (c.team || []).includes(person.id)));
+  if (me) (state.netAdds17 || []).filter(id => String(id).startsWith("co_")).forEach(id => {
+    const c = companyById(state, id);
+    if (c && !out.some(x => x.id === c.id)) out.push(c);
+  });
+  return out;
+}
+
+/* Team tab of a profile: the team, then Companies and Network drop-downs. */
+function TeamParts17({ team, companies, network, teamEmpty, renderTeam }) {
+  const { dispatch } = useStore();
+  const view = (p) => { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); };
+  const none = (t) => <p className="ff-body ff-muted" style={{ margin: 0 }}>{t}</p>;
+  return (
+    <div className="ff-tparts17">
+      <SectionHead icon={<I11.Users size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Team" count={team.length} />
+      {team.length ? <HScroll label="Team">{team.map(p => renderTeam ? renderTeam(p) : <PlayerTile key={p.id} person={p} onClick={() => view(p)} />)}</HScroll> : none(teamEmpty || "No one yet.")}
+      <NetDrop17 title="Companies" count={companies.length}>
+        {companies.length ? <CoTiles17 list={companies} label="Companies" /> : none("No companies yet.")}
+      </NetDrop17>
+      <NetDrop17 title="Network" count={network.length}>
+        {network.length ? <HScroll label="Network">{network.map(p => <PlayerTile key={p.id} person={p} onClick={() => view(p)} />)}</HScroll> : none("No one yet.")}
+      </NetDrop17>
+    </div>
+  );
+}
+
 
 
 /* NETWORK — the bartending network, for everyone. Signed-out visitors see

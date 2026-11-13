@@ -48,7 +48,7 @@ const dataUrlToFile = (u, name, type) => {
 };
 
 
-function CVPanel() {
+function CVPanel({ inline = false } = {}) {
   const { state, dispatch } = useStore();
   const ref = useRef(null);
   const [st, setSt] = useState(null);
@@ -87,6 +87,25 @@ function CVPanel() {
       <ImportToEdit key={ex.st.result.report && ex.st.result.report.ms} result={ex.st.result} onDone={ex.reset} />
     )}
   </>);
+
+  /* Inline: the compact form inside the one FF AI box at the top of Create a profile. */
+  if (inline) return (
+    <div className="ff-cvinl17">
+      {input}
+      {cvRec ? (
+        <div className="row">
+          <span className="ok"><Check size={16} strokeWidth={2.4} /></span>
+          <span className="nm"><b>CV uploaded</b><small>{(cvRec.document && cvRec.document.name) || "Saved under Qualifications"}</small></span>
+          {ex.st.phase === "idle" && <Btn variant="sm" disabled={st && st.busy} onClick={readSaved}><Sparkles size={13} /> Read my CV</Btn>}
+          <Btn variant="sm ghost" disabled={(st && st.busy) || ex.busy} onClick={() => ref.current && ref.current.click()}><Upload size={13} /> Replace</Btn>
+        </div>
+      ) : (
+        <Btn variant="gold ff-bigcv17" disabled={(st && st.busy) || ex.busy} onClick={() => ref.current && ref.current.click()}><Upload size={16} strokeWidth={2.2} /> Upload CV</Btn>
+      )}
+      {status}
+      {below}
+    </div>
+  );
 
   /* Uploaded: stays on the page, calm — done, but still there to read or replace. */
   if (cvRec) return (
@@ -429,7 +448,7 @@ function AccountSettings() {
 }
 
 
-function TagSection() {
+function TagSection({ inSave = false, top = false, onSignedIn } = {}) {
   const { state, dispatch } = useStore();
   const signedIn = state.auth.status === "signedIn" && !!(state.auth.tag || state.session.tag);
   const suggestion = useMemo(() => AUTH_ADAPTER.suggestTag(state.profile.name), [state.profile.name]);
@@ -469,7 +488,9 @@ function TagSection() {
     dispatch({ type: "TOAST", toast: `${CARD_DOMAIN}/${r.tag} is yours` });
     setStage("details");
     setCode("");
-    setPwOpen(true);
+    if (inSave || top) {
+      if (onSignedIn) onSignedIn();
+    } else setPwOpen(true);
   });
   return React.createElement("div", {
     id: "ff-sec-tag",
@@ -477,7 +498,8 @@ function TagSection() {
   }, signedIn ? React.createElement(AccountSettings, null) : stage === "details" ? React.createElement(React.Fragment, null, React.createElement("div", {
     className: "ff-tagrow"
   }, React.createElement(Field, {
-    label: "FF Tag"
+    label: "FF Tag",
+    hint: top ? "Your personal website, displaying all your profile information." : undefined
   }, React.createElement(TagInput, {
     value: clean,
     onChange: setTyped,
@@ -485,7 +507,8 @@ function TagSection() {
   }), React.createElement(TagNote, {
     clean
   })), React.createElement(Field, {
-    label: "Phone number"
+    label: "Phone number",
+    hint: top ? "Used to send you bookings via WhatsApp." : undefined
   }, React.createElement("input", {
     className: "ff-input",
     type: "tel",
@@ -502,16 +525,7 @@ function TagSection() {
   }, busy ? React.createElement(Loader2, {
     size: 14,
     className: "ff-spin"
-  }) : React.createElement(WhatsAppIcon, {
-    size: 15
-  }), " Continue"), React.createElement("p", {
-    className: "ff-body",
-    style: { fontSize: 13, margin: "10px 0 0", textAlign: "center" }
-  }, React.createElement("button", {
-    type: "button",
-    className: "ff-linkbtn",
-    onClick: () => window.dispatchEvent(new Event("ff-login"))
-  }, "I already have a Tag"))) : React.createElement(React.Fragment, null, React.createElement(Field, {
+  }) : null, inSave ? "Save" : "Continue")) : React.createElement(React.Fragment, null, React.createElement(Field, {
     label: "WhatsApp code",
     hint: `Sent to ${phone} · any six digits in this preview`
   }, React.createElement("input", {
@@ -534,7 +548,7 @@ function TagSection() {
     className: "ff-spin"
   }) : React.createElement(Check, {
     size: 14
-  }), " Create"), React.createElement("div", {
+  }), inSave ? " Save" : " Create"), React.createElement("div", {
     style: { display: "flex", justifyContent: "space-between", gap: 10, marginTop: 10, flexWrap: "wrap" }
   }, React.createElement("button", {
     type: "button",
@@ -605,14 +619,18 @@ function SaveShareCard({ onSaved }) {
     });
   };
   useEffect(() => { const h = () => publish(); window.addEventListener("ff-save", h); return () => window.removeEventListener("ff-save", h); });
+  const hire = () => {
+    dispatch({ type: "ROLE", role: "team" });
+    dispatch({ type: "TAB", tab: "bookings" });
+    window.scrollTo(0, 0);
+  };
 
   return (
     <div id="ff-sec-share" className="ff-publishcard" style={{ marginTop: 26 }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
-        <Coin size={30} tier="gold" />
-        <span className="ff-h2" style={{ fontSize: 19, color: "var(--gold-lt)", flex: 1 }}>Save</span>
+      <div className="ff-save17-row">
+        <button type="button" className="ff-btn gold ff-save17" onClick={save}>Save</button>
+        <button type="button" className="ff-btn gold ff-save17" onClick={hire}>Available for hire</button>
       </div>
-      <button type="button" className="ff-publish-btn" onClick={publish}><Check size={17} /> Save</button>
       {blocker && signedIn && <p style={{ margin: "10px 0 0", fontSize: 12.5, color: "rgba(244,239,228,.72)", textAlign: "center" }}>{blocker}</p>}
       {signedIn && p.savedAt && <p style={{ margin: "10px 0 0", fontSize: 12, color: "rgba(244,239,228,.66)", display: "flex", gap: 5, alignItems: "center", justifyContent: "center" }}>
         <Check size={13} color="#8FDCAE" strokeWidth={2.4} /> Saved {timeOf(p.savedAt)}{p.publishedAt && <> · <button type="button" className="ff-livelink17" onClick={() => { dispatch({ type: "VIEW", id: "me", guest: true }); window.scrollTo(0, 0); }}><Eye size={13} /> Live · view</button></>}</p>}
@@ -655,6 +673,77 @@ function BigStepHead({ n, title, done, id }) {
 
 
 
+/* The GPT mark, beside "Talk or type to GPT". */
+function GptLogo17({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" fillRule="evenodd" aria-hidden="true" focusable="false">
+      <path d="M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z" />
+    </svg>
+  );
+}
+
+
+/* Book an interview: a short call where FireFlair fills the profile out with you. Opens the booking page with your details filled in. */
+function InterviewBook17({ notes, onClose }) {
+  const { state, dispatch } = useStore();
+  const [phone, setPhone] = useState(state.session.phone || "");
+  const ok = phone.replace(/\D/g, "").length >= 9;
+  const cal = V101.support20Url();
+  let href = cal;
+  try {
+    const u = new URL(cal);
+    if (state.profile.name) u.searchParams.set("name", state.profile.name);
+    if (ok) u.searchParams.set("attendeePhoneNumber", phone.replace(/[^\d+]/g, ""));
+    if (notes && notes.trim()) u.searchParams.set("notes", notes.trim().slice(0, 500));
+    href = u.toString();
+  } catch (e) { /* keep the plain link */ }
+  const go = (e) => {
+    if (!ok) { e.preventDefault(); return; }
+    dispatch({ type: "SESSION", patch: { phone: phone.trim() } });
+    setTimeout(onClose, 150);
+  };
+  return (
+    <Sheet open onClose={onClose} title="Book an interview">
+      <div className="ff-ib17">
+        <Field label="Phone number"><input className="ff-input" type="tel" inputMode="tel" autoComplete="tel" placeholder="+44 7700 900000" value={phone} onChange={(e) => setPhone(e.target.value)} /></Field>
+        <div className="ff-ib17-cv"><CVPanel inline /></div>
+        <a className={"ff-btn gold ff-bigcv17" + (ok ? "" : " off")} href={ok ? href : undefined} aria-disabled={!ok} target="_blank" rel="noopener noreferrer" onClick={go}><Calendar size={16} /> Choose a time</a>
+      </div>
+    </Sheet>
+  );
+}
+
+
+/* Create a profile: one box. Upload a CV, or talk or type to GPT, or book an interview. */
+function StartBox17() {
+  const [text, setText] = useState("");
+  const [book, setBook] = useState(false);
+  const ex = useExtraction({ withAnswers: true });
+  const run = (v) => { if (String(v || "").trim().length < 3 || ex.busy) return; ex.start({ text: v }); };
+  const cal = V101.support20Url();
+  return (
+    <div id="ff-sec-ffai" className="ff-start17">
+      <div className="ff-start17-top">
+        <span className="ff-start17-q">Have a CV?</span>
+        <div className="ff-start17-cv"><CVPanel inline /></div>
+      </div>
+      <section className="ff-way17">
+        <h3><GptLogo17 size={16} /> Talk or type to GPT</h3>
+        <FFAI bare plain multiline tint={false} tagIcon title="Tell us who you are" noMicStatus placeholder="I'm a bartender…" query={text} onQuery={setText} onSubmit={run} submitLabel="Fill out my profile">
+          <ExtractionStatus ex={ex} />
+          {ex.st.phase === "review" && <ImportToEdit key={ex.st.result.report && ex.st.result.report.ms} result={ex.st.result} onDone={() => { ex.reset(); setText(""); }} />}
+        </FFAI>
+      </section>
+      {cal && <div className="ff-start17-help">
+        <span>Prefer a chat? Book an interview and we'll fill out your profile for you.</span>
+        <Btn variant="sm" onClick={() => setBook(true)}><Calendar size={14} /> Book an interview</Btn>
+      </div>}
+      {book && <InterviewBook17 notes={text} onClose={() => setBook(false)} />}
+    </div>
+  );
+}
+
+
 function ProfileBuilder() {
   const { state, dispatch } = useStore();
   const p = state.profile;
@@ -671,17 +760,14 @@ function ProfileBuilder() {
       <div className="ff-eyebrow">FF Team · Profile</div>
 
       <div className="ff-journey">
-        <BigStepHead n={1} title="Join the Team" done={signedIn} />
-        <TagSection />
+        <BigStepHead n={1} title={<>Create a profile<span className="ff-1min17"><Timer size={15} strokeWidth={2.4} aria-hidden="true" />1&nbsp;minute</span></>} done={hasCV(p) || cardReady} />
+        <StartBox17 />
 
         <StepHead n={2} title="Profile Card" done={cardReady} />
         <div id="ff-sec-card"><CardBuilder /></div>
 
-        <StepHead n={3} title="FF AI and CV upload" done={hasCV(p)} />
-        <ProfileFFAI />
-        <CVPanel />
-
-        <StepHead n={4} title="Your profile" done={false} />
+        <StepHead n={3} title="Your profile" done={false} />
+        <TagSection top />
         <CreatorMedia />
         <CreatorAboutMe />
         <ProfileSections person={me} isMe />
@@ -695,8 +781,8 @@ function ProfileBuilder() {
       <div className={`ff-finale${finished ? " open" : ""}`}>
         <div className="ff-s5row">
           {!finished && (
-            <div className="ff-s5mark" title="Section 5 opens when you save" aria-label="Section 5 — opens when you save">
-              <span className="ff-stepnum closed" aria-hidden="true">05</span>
+            <div className="ff-s5mark" title="Section 4 opens when you save" aria-label="Section 4 — opens when you save">
+              <span className="ff-stepnum closed" aria-hidden="true">04</span>
             </div>
           )}
           <SaveShareCard onSaved={toWelcome} />

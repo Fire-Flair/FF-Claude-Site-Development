@@ -166,6 +166,7 @@ function v11Reducer(s, a) {
     case "TAB": case "ROLE": case "ACTIVE_EVENT": {
       /* Leaving the Network drops the booking you were searching for. */
       const base = (a.type === "TAB" && a.tab !== "network" && s.netBrief) ? { ...s, netBrief: null } : s;
+      if (a.type === "TAB" && base.supportPage20) return reducer({ ...base, supportPage20: null }, a);
       if (base.viewingCompany || base.peek) return reducer({ ...base, viewingCompany: null, peek: null }, a);
       return base !== s ? reducer(base, a) : null;
     }

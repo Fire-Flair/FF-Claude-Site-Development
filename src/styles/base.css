@@ -381,6 +381,8 @@
 .ff-hscroll {
   display:flex; gap:10px; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x proximity;
   -webkit-overflow-scrolling:touch; scrollbar-width:none; padding:2px 16px 24px; margin:0 -16px -18px;
+  /* Snapping stops at the row's inset, so the first card sits in line with the content, not against the screen edge. */
+  scroll-padding-inline:16px;
 }
 .ff-hscroll::-webkit-scrollbar { display:none; }
 .ff-hscroll.snapmand { scroll-snap-type:x mandatory; }

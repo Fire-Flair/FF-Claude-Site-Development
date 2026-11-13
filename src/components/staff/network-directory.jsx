@@ -203,6 +203,50 @@ function NetBrowse17(props) {
 
 
 
+/* A company's public Q&A: a search, then Question Cards that open in a pop-up. */
+function CoQA17({ list, name }) {
+  const [q, setQ] = useState("");
+  const [open, setOpen] = useState(null);
+  const t = q.trim().toLowerCase();
+  const shown = t ? list.filter(x => `${x.text} ${x.answer || ""} ${x.note || ""}`.toLowerCase().includes(t)) : list;
+  return (
+    <div className="ff-coqa17">
+      <label className="ff-coqa17-srch">
+        <I11.Search size={15} aria-hidden="true" />
+        <input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search questions" aria-label={`Search ${name || "the company"}'s questions and answers`} />
+        {q ? <button type="button" aria-label="Clear the search" onClick={() => setQ("")}><I11.X size={14} /></button> : null}
+      </label>
+      {shown.length
+        ? <HScroll label="Q&A" snap>{shown.map(x => <QuestionCard key={x.id} q={{ text: x.text, group: "hiring" }} label="Q&A" answer={qaShown(x)} onClick={() => setOpen(x)} />)}</HScroll>
+        : <p className="ff-body ff-muted" style={{ margin: "6px 2px 0" }} role="status">No questions match.</p>}
+      <Sheet open={!!open} onClose={() => setOpen(null)} title={name || "Q&A"} center>
+        {open ? <div className="ff-coqa17-pop"><p className="q">{open.text}</p>{open.answer ? <p className="a">{open.answer}</p> : null}{open.note ? <p className="n">{open.note}</p> : null}</div> : null}
+      </Sheet>
+    </div>
+  );
+}
+
+/* A company's Service Cards or Cocktail Cards, as people see them: tap one to open it. */
+function CoCardRow17({ type, list, by, tag }) {
+  const [view, setView] = useState(null);
+  const T = STUDIO17[type];
+  return (
+    <>
+      <HScroll label={type === "service" ? "Packages" : "Cocktails"}>
+        {list.map(x => (
+          <div key={x.id} className="ff-st17-item">
+            <div className="ff-st17-tap" role="button" tabIndex={0} aria-label={`Open ${T.name(x) || T.plate}`} onClick={() => setView(x)}
+              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setView(x); } }}>
+              <StudioPair17 type={type} x={x} site="FF Staff" by={by} tag={tag} size="sm" only />
+            </div>
+          </div>
+        ))}
+      </HScroll>
+      {view ? <CardPop17 type={type} x={view} site="FF Staff" by={by} tag={tag} onClose={() => setView(null)} /> : null}
+    </>
+  );
+}
+
 /* A company's page, as anyone sees it. */
 function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   const { state, dispatch } = useStore();
@@ -216,6 +260,9 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   /* v17.4.6.1: the roster is the company's accepted members (plus any listed roster), people with a published Profile Card only. */
   const ck = coKey17(co);
   const team = [...new Set([...(co.team || []), ...ctMembers17(state, ck)])].map(id => findPerson(all, state, id)).filter(p => p && !p.isCompany);
+  const partners = coPartners17(state, co);
+  const coNet = co.mine ? (state.netAdds17 || []).filter(id => !String(id).startsWith("co_")).map(id => findPerson(all, state, id)).filter(p => p && !p.isCompany && !team.some(t => t.id === p.id)) : [];
+  const coCos = co.mine ? [...partners, ...(state.netAdds17 || []).filter(id => String(id).startsWith("co_") && !partners.some(x => x.id === id)).map(id => companyById(state, id)).filter(Boolean)] : partners;
   const teamSite = state.role === "team" && state.auth && state.auth.status === "signedIn";
   const myRel = teamSite && ck ? ctMyStatus17(state, ck) : "";
   const joinTeam = () => {
@@ -229,10 +276,10 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   const areas = co.mine ? companyLocations(co) : String(co.areas || "").split("·").map(x => x.trim()).filter(Boolean);
   const venues = co.mine ? recsOf(co, "venues").filter(r => !r.hidden).map(r => r.name) : (co.venues || []);
   const reviews = co.mine ? (co.reviews || []).map(r => [null, r.rating, r.text, r.byName]) : (co.reviews || []);
-  const pubQa = co.mine || co.qa ? coQa(co).filter(q => q.group !== "feedback" && q.answer) : coQa({}).filter(q => q.group !== "feedback").map((q, i) => ({ ...q, answer: (i + String(co.id).length) % 3 ? "Yes" : "No" }));
+  const pubQa = co.mine || co.qa ? coQa(co).filter(q => q.group !== "feedback" && q.answer) : [];
+  const { services, cocktails } = coCards17(state, co);
   const isParty = isStaff && hireSiteOf(state).party;
-  const pkgs = isParty ? ((typeof PARTY_SERVICES !== "undefined" && PARTY_SERVICES) || []) : [];
-  const tabs = [{ key: "overview", label: "Overview" }, { key: "qa", label: "Packages", count: isParty ? pkgs.length : pubQa.length }, ...(ph17(state) >= 2 ? [{ key: "team", label: "Team", count: team.length }] : []), { key: "reviews", label: "Reviews", count: reviews.length }];
+  const tabs = [{ key: "overview", label: "Overview" }, { key: "qa", label: "Packages", count: services.length + cocktails.length }, ...(ph17(state) >= 2 ? [{ key: "team", label: "Team", count: team.length + coCos.length + coNet.length }] : []), { key: "reviews", label: "Reviews", count: reviews.length }];
   const cIcon = (k) => /mail/i.test(k) ? I11.Mail : /phone/i.test(k) ? I11.Phone : /web/i.test(k) ? I11.Globe : I11.MessageCircle;
   const addTeam = () => {
     const ids = team.map(p => p.id).filter(id => !state.selection.includes(id));
@@ -246,36 +293,39 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
     dispatch({ type: "VIEW_COMPANY", id: null });
     dispatch({ type: "TAB", tab: "bookings" }); window.scrollTo(0, 0);
   };
+  const tag = co.slug || cx17Slug(co.name || "");
+  const shareBtn = (co.slug || co.name) ? <CardShareBtn17 title={`${co.name || "Company"} on FireFlair`} url={`https://${CARD_DOMAIN}/${tag}`} fileName={"fireflair-" + cx17Slug(co.slug || co.name)} render={() => <CompanyCardFace c={co} />} label="Share" className="wide" /> : null;
+  const acts = done ? [] : [
+    !co.unclaimed && ["ask", <Btn variant="wide" onClick={() => setAsking(true)}><I11.MessageSquare size={14} /> Ask a question</Btn>],
+    !co.mine && !isParty && ["net", <NetBtn17 id={co.id} name={co.name} wide />],
+    !co.unclaimed && ["rev", <Btn variant="wide" onClick={() => setReviewing(true)}><I11.Award size={14} /> Review</Btn>],
+    shareBtn && ["share", shareBtn],
+  ].filter(Boolean);
+  const about = String(co.description || "").split(/\n\s*\n/).map(x => x.trim()).filter(Boolean);
   return (
     <div className="ff-copub">
-      <PublicHero media={(co.mediaList || []).map(m => ({ id: m.id, src: m.src, name: m.alt || "" }))} card={<><CompanyCardFace c={co} />{(co.slug || co.name) ? <div style={{ marginTop: 10, textAlign: "center" }}><CardShareBtn17 title={`${co.name || "Company"} on FireFlair`} url={`https://${CARD_DOMAIN}/${co.slug || cx17Slug(co.name)}`} fileName={"fireflair-" + cx17Slug(co.slug || co.name)} render={() => <CompanyCardFace c={co} />} label="Share Company Card" /></div> : null}</>} below={<>
+      <PublicHero media={(co.mediaList || []).map(m => ({ id: m.id, src: m.src, name: m.alt || "" }))} card={<><CompanyCardFace c={co} />{done && shareBtn ? <div style={{ marginTop: 10, textAlign: "center" }}><CardShareBtn17 title={`${co.name || "Company"} on FireFlair`} url={`https://${CARD_DOMAIN}/${tag}`} fileName={"fireflair-" + cx17Slug(co.slug || co.name)} render={() => <CompanyCardFace c={co} />} label="Share Company Card" /></div> : null}</>} below={<>
       {!done && <button type="button" className="ff-pback ff-copub-back" onClick={back}><I11.ChevronLeft size={20} /> <span>Back</span></button>}
-      {!done && !co.mine && !isParty && <div className="ff-copub-acts"><NetBtn17 id={co.id} name={co.name} wide /></div>}
       {!done && !co.mine && !co.unclaimed && teamSite && ck && <div className="ff-copub-acts">
         {myRel === "member" ? <Btn variant="wide" disabled><I11.Check size={14} /> On their team</Btn>
           : myRel === "requested" ? <Btn variant="wide" disabled><I11.Clock size={14} /> Request sent</Btn>
           : inv ? <div className="two"><Btn variant="primary" onClick={() => { dispatch({ type: "CT_DECIDE", id: inv.id, accept: true }); dispatch({ type: "TOAST", toast: `You're on ${co.name}'s team` }); }}><I11.Check size={14} /> Accept invitation</Btn><Btn onClick={() => dispatch({ type: "CT_DECIDE", id: inv.id, accept: false })}>Decline</Btn></div>
           : <Btn variant="primary wide" onClick={joinTeam}><I11.UserPlus size={14} /> Join team</Btn>}
       </div>}
-      {co.unclaimed || done ? null : (
-      <div className="ff-copub-acts">
-        {isStaff && team.length > 0 && (isParty
+      {!done && !co.unclaimed && isStaff && team.length > 0 && <div className="ff-copub-acts">
+        {isParty
           ? <Btn variant="primary wide" onClick={bookForEvent}><I11.PartyPopper size={14} /> Book for your event</Btn>
-          : <Btn variant="primary wide" onClick={addTeam}><I11.Users size={14} /> Book from their team</Btn>)}
-        <div className="two">
-          <Btn onClick={() => setAsking(true)}><I11.MessageSquare size={14} /> Ask a question</Btn>
-          <Btn onClick={() => setReviewing(true)}><I11.Award size={14} /> Review</Btn>
-        </div>
-      </div>
-      )}
+          : <Btn variant="primary wide" onClick={addTeam}><I11.Users size={14} /> Book from their team</Btn>}
+      </div>}
+      {acts.length > 0 && <div className="ff-copub-grid">{acts.map(([k, el], i) => <div key={k} className={"c-" + k + (acts.length % 2 && i === acts.length - 1 ? " span" : "")}>{el}</div>)}</div>}
       </>} />
 
       <div className="ff-ptabs-wrap">
         {!co.unclaimed && <ProfileTabs tabs={tabs} active={tab} onChange={setTab} />}
         <div role="tabpanel" id="ff-tabpanel" aria-labelledby={`ff-tab-${tab}`} className="ff-tabpanel" tabIndex={0}>
           {tab === "overview" && (<>
-            {co.description && <section className="ff-copub-sec"><SectionHead icon={<I11.Briefcase size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="About" />
-              <p className="ff-body" style={{ margin: 0, fontSize: 15, lineHeight: 1.55, color: "#2A2620" }}>{co.description}</p></section>}
+            {about.length > 0 && <section className="ff-copub-sec"><SectionHead icon={<I11.Briefcase size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="About" />
+              {about.map((p, i) => <p key={i} className="ff-body" style={{ margin: i ? "12px 0 0" : 0, fontSize: 15, lineHeight: 1.55, color: "#2A2620" }}>{p}</p>)}</section>}
             {contact.length > 0 && <section className="ff-copub-sec"><SectionHead icon={<I11.MessageCircle size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Contact" />
               <ul className="ff-copub-contact">{contact.map(([k, v]) => { const Ic = cIcon(k); return <li key={k + v}><span className="ic"><Ic size={15} /></span><span><small>{k}</small><b>{v}</b></span></li>; })}</ul></section>}
             {(areas.length > 0 || venues.length > 0) && <section className="ff-copub-sec"><SectionHead icon={<I11.MapPinned size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Areas covered" />
@@ -283,23 +333,21 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
             {co.seed && [["Services", co.seed.services], ["Events", co.seed.eventTypes], ["Scale", co.seed.scale], ["Good to know", co.seed.facts]].filter(([, v]) => v && v.length > 0).map(([h, v]) => (
               <section key={h} className="ff-copub-sec"><SectionHead icon={<I11.Star size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={h} />
                 <div className="ff-copub-chips">{v.map(x => <span key={x}>{x}</span>)}</div></section>))}
+            {co.info && co.info.length > 0 && <CoInfo17 list={co.info} />}
             {co.extras && <VkExtras17 x={co.extras} />}
           </>)}
-          {tab === "qa" && isParty && <section className="ff-copub-sec">
-            <HScroll label="Packages">{pkgs.map(sv => <div key={sv.id} style={{ width: CARD_W.poster, flex: "none" }}><ServicePoster svc={sv} /></div>)}</HScroll>
-            {pubQa.length > 0 && <><SectionHead icon={<I11.MessageSquare size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Questions and answers" />
-              <ul className="ff-copub-qa">{pubQa.map(q => <li key={q.id}><b>{q.text}</b><span>{qaShown(q)}</span></li>)}</ul></>}
+          {tab === "qa" && <section className="ff-copub-sec ff-copub-pk">
+            {services.length > 0 && <VkFold17 title="Packages" count={services.length}><CoCardRow17 type="service" list={services} by={co.name} tag={tag} /></VkFold17>}
+            {cocktails.length > 0 && <VkFold17 title="Cocktails" count={cocktails.length}><CoCardRow17 type="cocktail" list={cocktails} by={co.name} tag={tag} /></VkFold17>}
+            {pubQa.length > 0 && <VkFold17 title="Q&A" count={pubQa.length}><CoQA17 list={pubQa} name={co.name} /></VkFold17>}
+            {!services.length && !cocktails.length && !pubQa.length && <p className="ff-body ff-muted" style={{ margin: 0 }}>No packages yet.</p>}
           </section>}
-          {tab === "qa" && !isParty && <section className="ff-copub-sec">
-            {pubQa.length > 0 && <SectionHead icon={<I11.MessageSquare size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Questions and answers" />}
-            {pubQa.length ? <ul className="ff-copub-qa">{pubQa.map(q => <li key={q.id}><b>{q.text}</b><span>{qaShown(q)}</span></li>)}</ul>
-              : <p className="ff-body ff-muted" style={{ margin: 0 }}>No answers yet.</p>}</section>}
           {tab === "team" && <section className="ff-copub-sec">
-            {team.length ? <HScroll label="Their team">{team.map(p => { const on = state.selection.includes(p.id); return (
+            <TeamParts17 team={team} companies={coCos} network={coNet} teamEmpty="No team yet." renderTeam={(p) => { const on = state.selection.includes(p.id); return (
               <div key={p.id} className="ff-ct17-m"><PlayerTile person={p} selected={on} onClick={() => { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); }} />
                 {isStaff && !isParty && !co.mine && <Btn variant={on ? "sm" : "sm primary"} onClick={() => { dispatch({ type: on ? "SELECT" : "SELECT_ADD", id: p.id }); dispatch({ type: "TOAST", toast: on ? `${firstName(p.name)} removed from your booking bar` : `${firstName(p.name)} added to your booking bar` }); }}>{on ? <><I11.Check size={13} /> In your booking</> : <><I11.Plus size={13} /> Add to booking</>}</Btn>}
-              </div>); })}</HScroll>
-              : <p className="ff-body ff-muted" style={{ margin: 0 }}>No team yet.</p>}</section>}
+              </div>); }} />
+          </section>}
           {tab === "reviews" && <section className="ff-copub-sec">
             {reviews.length ? <div className="ff-copub-revs">{reviews.map(([by, rating, text, byName], i) => { const p = by && all.find(x => x.id === by); return (
               <figure key={i} className="ff-copub-rev">{rating > 0 && <span className="st" aria-label={`${rating} out of 5`}>{"★".repeat(rating)}{"☆".repeat(5 - rating)}</span>}<blockquote>"{text}"</blockquote>
@@ -311,6 +359,20 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
       <AskQuestionSheet open={asking} person={asPerson} onClose={() => setAsking(false)} />
       <ReviewSheet open={reviewing} person={asPerson} onClose={() => setReviewing(false)} />
     </div>
+  );
+}
+
+/* A row of company tiles (opens the company's page). */
+function CoTiles17({ list, label = "Companies" }) {
+  const { dispatch } = useStore();
+  return (
+    <HScroll label={label}>
+      {list.map(co => (
+        <button key={co.id} type="button" className="ff-co11-tile" onClick={() => { dispatch({ type: "VIEW_COMPANY", id: co.id }); window.scrollTo(0, 0); }} aria-label={`${co.name}: open their page`}>
+          <CompanyCardFace c={co} size="sm" />
+        </button>
+      ))}
+    </HScroll>
   );
 }
 

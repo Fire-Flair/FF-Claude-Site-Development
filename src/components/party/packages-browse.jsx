@@ -48,14 +48,31 @@ const recOf17 = (b) => REC17[(b || []).join(",")] || "parties of any size";
 const lvl17 = (l) => (/^(bronze|silver|gold)$/i.test(l || "") ? "" : (l || ""));
 
 
+/* A company's own package (custom, DJ, bar supplier or sample) is not part of the booking flow in Phase Two. */
+function isCoPkg17(id) {
+  if (typeof id !== "string" || !id) return false;
+  return /^my_/.test(id) || DJ_IDS17.includes(id) || RTB_PKGS17.some(x => x.id === id) || SAMPLE_PKGS17.some(x => x.id === id);
+}
+
+
+/* Phase Two guard: shifts and basket picks never carry a company's package. Runs after every reducer step. */
+function pkgGuard17(s) {
+  if (!s) return s;
+  let out = s;
+  if (Array.isArray(s.shifts) && s.shifts.some(x => x && isCoPkg17(x.svcId))) out = { ...out, shifts: s.shifts.filter(x => !(x && isCoPkg17(x.svcId))) };
+  const bk = s.bk17;
+  if (bk && Array.isArray(bk.pk) && bk.pk.some(isCoPkg17)) out = { ...out, bk17: { ...bk, pk: bk.pk.filter(x => !isCoPkg17(x)) } };
+  return out;
+}
+
+
 function pkgsOf17(state) {
-  const ff = [...(V101.PARTY_SERVICES || []).map(sv => ({ ...sv, features: FEATS17[sv.id], cat: FFCAT17[sv.id] || "bar", bands: SVC_BANDS11[sv.id] || ALLB17, ff: true })),     ...[...DJ_PKGS17, ...RTB_PKGS17].filter(x => !hid17(state, "packages", x.id)).map(x => ({ ...x, ff: true }))];
+  const ff = [...(V101.PARTY_SERVICES || []).map(sv => ({ ...sv, features: FEATS17[sv.id], cat: FFCAT17[sv.id] || "bar", bands: SVC_BANDS11[sv.id] || ALLB17, ff: true }))];
   const bt = ff.find(x => x.id === "svc_bartending");
   if (bt) ff.push({ ...bt, id: "svc_supplier", title: "Bar company supplier", tagline: "A bar company supplies the bar, the drinks and the team.", includes: "Bar, drinks and bartenders from one company",
     role: "Bartender", ideal: "Parties that want everything supplied", time: "From 4 hours", noPrice: true, drinks: true, shop: false,
     features: ["A bar company looks after your whole bar", "Bar, drinks and bartenders supplied", "Set-up, service and tidy-down included", "Chosen from FireFlair bar companies"] });
-  const mine = myContent17(state, "services").filter(x => x.type !== "addon" && String(x.title).trim() && !hid17(state, "cards", x.id)).map(x => ({ ...svcFrom17(x), cat: x.cat || "bar", bands: (x.bands && x.bands.length) ? x.bands : ALLB17, mine: true }));
-  return [...ff, ...mine, ...SAMPLE_PKGS17, ...SR_PKGS17];
+  return [...ff, ...SR_PKGS17];
 }
 
 

@@ -8,8 +8,27 @@ const SUPPORT20 = __ff_json("content/data/support.json");
 const SUPPORT20_RE = /^(?:#)?\/support\/book-a-call\/?$/i;
 
 function support20Url() {
-  const u = String(SUPPORT20.calendlyUrl || "").trim();
-  return /^https:\/\/(?:www\.)?calendly\.com\/[^\s]+$/i.test(u) ? u : "";
+  const u = String(SUPPORT20.bookingUrl || SUPPORT20.calendlyUrl || "").trim();
+  return /^https:\/\/(?:www\.|app\.)?(?:cal\.com|calendly\.com)\/[^\s]+$/i.test(u) ? u : "";
+}
+
+/* The booking page's address with the person's details filled in, so the call page opens ready to book. */
+function support20Embed(u, pre) {
+  if (!u) return "";
+  const q = new URLSearchParams();
+  if (/cal\.com/i.test(u)) { q.set("embed", "ff"); q.set("layout", "month_view"); }
+  else { q.set("embed_domain", window.location.hostname || "ffteam.uk"); q.set("embed_type", "Inline"); q.set("hide_gdpr_banner", "1"); }
+  const x = pre || {};
+  if (x.name) q.set("name", x.name);
+  if (x.phone) q.set(/cal\.com/i.test(u) ? "attendeePhoneNumber" : "a1", x.phone);
+  if (x.notes) q.set("notes", String(x.notes).slice(0, 500));
+  return u + (u.includes("?") ? "&" : "?") + q.toString();
+}
+
+function support20Booked(e) {
+  try { if (!/(^|\.)cal\.com$/i.test(new URL(e.origin).hostname)) return false; } catch (x) { return false; }
+  const d = e.data || {};
+  return /bookingSuccessful/i.test(String(d.type || "") + " " + String(d.fullType || ""));
 }
 
 function support20Match() {
@@ -20,6 +39,11 @@ function support20Match() {
 function SupportRoute20() {
   const { state, dispatch } = useStore();
   const ref = useRef(state); ref.current = state;
+  useEffect(() => {
+    if (!state.supportPage20 && support20Match()) {
+      try { window.history.replaceState(null, "", "/" === window.location.pathname || !SUPPORT20_RE.test(window.location.pathname) ? window.location.pathname + window.location.search : "/"); } catch (e) { /* ignore */ }
+    }
+  }, [state.supportPage20]);
   useEffect(() => {
     const sync = () => {
       const on = support20Match(), cur = ref.current.supportPage20;
@@ -56,7 +80,7 @@ function SupportBookPage20() {
   const key = siteBrandKey(state.role === "partners" ? "partners" : state.role === "vip" || state.site === "vip" ? "vip" : state.site === "party" ? "party" : state.role === "staff" ? "staff" : "team");
   const brand = FF_SITE_BRAND[key] || FF_SITE_BRAND.team;
   const cal = support20Url();
-  const embed = cal ? cal + (cal.includes("?") ? "&" : "?") + "embed_domain=" + encodeURIComponent(window.location.hostname || "ffteam.uk") + "&embed_type=Inline&hide_gdpr_banner=1" : "";
+  const embed = support20Embed(cal, { name: state.profile && state.profile.name, phone: state.session && state.session.phone });
   const back = h18("button", { type: "button", className: "ff-fd-back", onClick: () => support20Close(dispatch) }, "← Back to support options");
   return h18("main", { className: "ff-fd-page ff-sb20", "aria-labelledby": "sb20-h1" },
     h18("style", null, ".ff-sb20-top{display:flex;align-items:center;gap:12px;margin:2px 0 12px}.ff-sb20-top img{width:44px;height:44px;border-radius:14px}.ff-sb20-top span{font:700 13px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--gold-dk)}.ff-sb20 h1{margin:0 0 8px;font-size:clamp(24px,6vw,34px);line-height:1.12}.ff-sb20 p{margin:0 0 14px;line-height:1.5}.ff-sb20-frame{width:100%;min-height:680px;border:1px solid var(--gold-dk);border-radius:22px;background:var(--paper)}.ff-sb20-cfg{padding:18px;border:1px dashed var(--gold-dk);border-radius:22px}"),
@@ -70,5 +94,5 @@ function SupportBookPage20() {
           h18("p", { style: { marginTop: 12 } }, h18("a", { className: "ff-biz19-link", href: cal, target: "_blank", rel: "noopener" }, "Open the booking page in a new tab")))
       : h18("div", { className: "ff-sb20-cfg", role: "status" },
           h18("b", null, "Call booking isn't connected yet."),
-          h18("p", { style: { margin: "6px 0 0" } }, "The Calendly link hasn't been added. It is set in one place, content/data/support.json (calendlyUrl).")));
+          h18("p", { style: { margin: "6px 0 0" } }, "The booking link hasn't been added. It is set in one place, content/data/support.json (bookingUrl).")));
 }

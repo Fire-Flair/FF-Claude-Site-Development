@@ -132,7 +132,8 @@ function BaseField17({ ink, owner }) {
   const [msg, setMsg] = useCovState17(mk, "msg", "");
   const [manual, setManual] = useCovState17(mk, "manual", false);
   const [busy, setBusy] = useState(false);
-  const hits = q.trim().length >= 2 ? fdSearch(q).filter(n => BASE_KINDS17.includes(n.k)) : [];
+  const pcLike = /^[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}$/i.test(pc.trim());
+  const hits = !pcLike && pc.trim().length >= 2 ? fdSearch(pc).filter(n => BASE_KINDS17.includes(n.k)) : [];
   const choose = (n, withPostcode) => {
     dispatch({ type: "BASE_SET", owner: co ? "company" : undefined, locId: n.id, postcode: withPostcode && look ? { code: look.display, lat: look.lat, lng: look.lng, approx: look.approx } : null });
     setEditing(false); setOpts([]); setLook(null); setPc(""); setQ(""); setMsg(""); setManual(false);
@@ -142,26 +143,21 @@ function BaseField17({ ink, owner }) {
     setBusy(true); setMsg(""); setOpts([]); setLook(null);
     const r = await LOCATION_ADAPTER.lookupPostcode(pc);
     setBusy(false);
-    if (!r.ok) { setMsg(r.reason === "format" ? "That isn't a UK postcode." : "We couldn't look that postcode up."); setManual(true); return; }
+    if (!r.ok) { setMsg(r.reason === "format" ? "That isn't a UK postcode." : "We couldn't look that postcode up."); return; }
     const near = baseCandidates17(r);
-    if (!near.length) { setMsg("No places found for that postcode."); setManual(true); return; }
+    if (!near.length) { setMsg("No places found for that postcode."); return; }
     setLook(r); setOpts(near);
   };
+  useEffect(() => {
+    if (!pcLike) { if (opts.length) setOpts([]); if (look) setLook(null); if (msg) setMsg(""); return; }
+    const t = setTimeout(find, 450);
+    return () => clearTimeout(t);
+  }, [pc]);
   const radio = (n, withPostcode) => (
     <label key={n.id} className="ff-base17-opt">
       <input type="radio" name={"ff-base17" + (co ? "co" : "")} checked={cur && cur.id === n.id && !editing} onChange={() => choose(n, withPostcode)} />
       <span>{baseLabelOf17(n)}</span>
     </label>
-  );
-  const search = (
-    <div className="ff-base17">
-      <div className="ff-base17-in">
-        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search for a town or area" aria-label="Search for your town or area" style={{ color: "#16130F" }} />
-      </div>
-      {q.trim().length >= 2 && (hits.length
-        ? <div role="radiogroup" aria-label="Places" className="ff-base17-opts">{hits.map(n => radio(n, false))}</div>
-        : <p className="ff-base17-msg">No matching place.</p>)}
-    </div>
   );
   return (
     <div className="ff-base17">
@@ -174,14 +170,16 @@ function BaseField17({ ink, owner }) {
       ) : (
         <>
           <div className="ff-base17-in">
-            <input value={pc} onChange={(e) => { setPc(e.target.value.toUpperCase().slice(0, 9)); setMsg(""); }}
-              onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); find(); } }}
-              placeholder="Your postcode" aria-label="Your postcode (kept private)" autoComplete="postal-code" spellCheck={false} />
-            <Btn variant="sm" onClick={find} disabled={busy || !pc.trim()}>{busy ? "Finding…" : "Find"}</Btn>
+            <input value={pc} onChange={(e) => { setPc(e.target.value.slice(0, 40)); setMsg(""); }}
+              onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); if (pcLike) find(); } }}
+              placeholder="Your town or area" aria-label="Your town or area" autoComplete="off" spellCheck={false} />
           </div>
+          <p className="ff-base17-note">We only display your area.</p>
           {msg && <p className="ff-base17-msg" role="alert">{msg}</p>}
           {opts.length > 0 && <div role="radiogroup" aria-label="Where are you based?" className="ff-base17-opts">{opts.map(n => radio(n, true))}</div>}
-          {manual ? search : <button type="button" className="ff-base17-link" style={{ color: ink }} onClick={() => setManual(true)}>Search for a place</button>}
+          {pc.trim().length >= 2 && !pcLike && (hits.length
+            ? <div role="radiogroup" aria-label="Places" className="ff-base17-opts">{hits.map(n => radio(n, false))}</div>
+            : <p className="ff-base17-msg">No matching place.</p>)}
           {cur && <button type="button" className="ff-base17-link" style={{ color: ink }} onClick={() => { setEditing(false); setOpts([]); setMsg(""); }}>Keep {baseLabelOf17(cur)}</button>}
         </>
       )}
