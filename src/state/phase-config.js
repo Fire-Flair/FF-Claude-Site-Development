@@ -23,8 +23,8 @@ const PHASE1 = {
   status: "In development",
   /* The top-left selector, in this order. FF Team, FF Staff and FF Party
      are open in this prototype (FF VIP opens with its launch party in early 2027). */
-  sitesShown: ["team", "staff", "party", "vip"],
-  sitesOpen: ["team", "staff", "party", "vip"],
+  sitesShown: ["team", "staff", "party", "partners", "vip"],
+  sitesOpen: ["team", "staff", "party", "partners", "vip"],
   /* Profile sections in Phase 1, in this order. Qualifications above Skills;
      Venues straight after Experience; Work locations as its own section.
      Signature cocktails stay in BASE_CATEGORIES for a later release. */
@@ -47,7 +47,7 @@ const PHASE1 = {
 const p1SiteOpen = (key) => PHASE1.sitesOpen.includes(key);
 
 
-const p1SiteName = (key) => ({ team: "FF Team", staff: "FF Staff", party: "FF Party", vip: "FF VIP" })[key] || "That";
+const p1SiteName = (key) => ({ team: "FF Team", staff: "FF Staff", party: "FF Party", partners: "FF Partners", vip: "FF VIP" })[key] || "That";
 
 
 /* " · +10 XP" after a toast, only once XP is live. */

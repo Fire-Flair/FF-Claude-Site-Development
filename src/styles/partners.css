@@ -1,0 +1,71 @@
+/* FF Partners (Phase 3). Reuses the shared tokens; squircle corners throughout; words wrap between words only. */
+.ff .ff-ptn { max-width: 860px; margin: 0 auto; padding: 0 0 24px; }
+.ff .ff-ptn.ff-home { max-width: none; padding: 0; }
+.ff .ff-ptn, .ff .ff-ptn * { overflow-wrap: normal; word-break: normal; hyphens: none; }
+.ff .ff-ptn-sect { padding: 22px 16px 6px; max-width: 860px; margin: 0 auto; }
+.ff .ff-ptn-btns { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; align-items: center; }
+.ff .ff-ptn-bar { display: flex; justify-content: flex-end; margin: 10px 0 0; }
+.ff .ff-ptn-panel { display: flex; flex-direction: column; gap: 14px; }
+.ff .ff-ptn-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.ff .ff-ptn-chip { padding: 7px 13px; border-radius: 999px; corner-shape: squircle; border: 1px solid var(--rule, #d8ccb0); background: rgba(255,255,255,.7); color: #16130F; font-size: 13px; font-weight: 600; white-space: nowrap; }
+.ff .ff-ptn-chip.btn { cursor: pointer; }
+.ff .ff-ptn-chip.btn:hover { border-color: var(--gold, #C9A227); }
+.ff .ff-ptn-list, .ff .ff-ptn-rows, .ff .ff-ptn-pk, .ff .ff-ptn-cap, .ff .ff-ptn-ideas ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.ff .ff-ptn-list li button { width: 100%; text-align: left; padding: 12px 14px; border-radius: 18px; corner-shape: squircle; border: 1px solid var(--rule, #d8ccb0); background: rgba(255,255,255,.75); display: flex; flex-direction: column; gap: 2px; cursor: pointer; color: inherit; font: inherit; }
+.ff .ff-ptn small { color: #6b6354; font-size: 12.5px; }
+.ff .ff-ptn-pk li, .ff .ff-ptn-rows li, .ff .ff-ptn-cap li, .ff .ff-ptn-ideas li { padding: 12px 14px; border-radius: 18px; corner-shape: squircle; border: 1px solid var(--rule, #d8ccb0); background: rgba(255,255,255,.75); display: flex; flex-direction: column; gap: 4px; }
+.ff .ff-ptn-ideas li { flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; }
+.ff .ff-ptn-ideas li > span { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ff .ff-ptn-ideas h3, .ff .ff-ptn-qa h3, .ff .ff-ptn-priv h3 { font-size: 15px; margin: 0 0 8px; }
+.ff .ff-ptn-tag { display: block; margin-top: 8px; }
+.ff .ff-ptn-cases { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 700px) { .ff .ff-ptn-cases { grid-template-columns: 1fr 1fr; } }
+.ff .ff-ptn-cases article { padding: 16px; border-radius: 22px; corner-shape: squircle; border: 1px solid var(--rule, #d8ccb0); background: rgba(255,255,255,.75); }
+.ff .ff-ptn-cases p { margin: 6px 0 0; }
+.ff .ff-ptn-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+@media (min-width: 700px) { .ff .ff-ptn-steps { grid-template-columns: repeat(3, 1fr); } }
+.ff .ff-ptn-steps li { display: flex; gap: 12px; align-items: center; padding: 14px; border-radius: 20px; corner-shape: squircle; border: 1px solid var(--rule, #d8ccb0); background: rgba(255,255,255,.75); }
+.ff .ff-ptn-steps b { width: 30px; height: 30px; flex: none; display: grid; place-items: center; border-radius: 50%; background: #16130F; color: #EAD79C; }
+.ff .ff-ptn-faq details { border: 1px solid var(--rule, #d8ccb0); border-radius: 18px; corner-shape: squircle; background: rgba(255,255,255,.75); margin-bottom: 8px; padding: 0 14px; }
+.ff .ff-ptn-faq summary { padding: 13px 0; font-weight: 700; cursor: pointer; }
+.ff .ff-ptn-faq p { margin: 0 0 13px; }
+.ff .ff-ptn-card { padding: 16px; border-radius: 22px; corner-shape: squircle; border: 1px solid var(--rule, #d8ccb0); background: rgba(255,255,255,.8); margin: 14px 0; }
+.ff .ff-ptn-form { display: flex; flex-direction: column; gap: 12px; }
+.ff .ff-ptn-two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.ff .ff-ptn-check { display: flex; gap: 8px; align-items: center; font-size: 14px; }
+.ff .ff-ptn-exp { border: 1px solid var(--rule, #d8ccb0); border-radius: 18px; corner-shape: squircle; padding: 10px 14px; display: flex; flex-direction: column; gap: 6px; }
+.ff .ff-ptn-err { color: #8a1c1c; font-weight: 600; margin: 0; }
+.ff .ff-ptn-none { color: #6b6354; font-size: 13px; margin: 6px 0; }
+.ff .ff-ptn-tag { color: #6A4F12; font-size: 13px; }
+.ff .ff-ptn-state { font-style: normal; font-size: 12.5px; font-weight: 700; color: #6A4F12; }
+.ff .ff-ptn-sec { margin-top: 22px; }
+.ff .ff-ptn-sec .ff-h2 i { font-style: normal; font-size: 12px; padding: 2px 9px; border-radius: 999px; background: rgba(201,162,39,.18); color: #6A4F12; margin-left: 6px; }
+.ff .ff-ptn-hits { list-style: none; margin: -6px 0 0; padding: 0; border: 1px solid var(--rule, #d8ccb0); border-radius: 16px; corner-shape: squircle; background: #fff; overflow: hidden; }
+.ff .ff-ptn-hits button { width: 100%; text-align: left; padding: 10px 14px; background: none; border: 0; cursor: pointer; display: flex; flex-direction: column; font: inherit; color: inherit; }
+.ff .ff-ptn-qa .q { display: flex; flex-direction: column; gap: 6px; padding: 10px 0; border-bottom: 1px solid var(--rule, #d8ccb0); }
+.ff .ff-ptn-qa .yn { display: flex; gap: 8px; }
+.ff .ff-ptn-qa .yn button, .ff .ff-ptn-vis button { min-width: 72px; padding: 8px 14px; border-radius: 14px; corner-shape: squircle; border: 1px solid var(--rule, #d8ccb0); background: #fff; font-weight: 700; cursor: pointer; }
+.ff .ff-ptn-qa .yn button.on, .ff .ff-ptn-vis button.on { background: #16130F; color: #EAD79C; border-color: #16130F; }
+.ff .ff-ptn-vis { display: flex; gap: 8px; flex-wrap: wrap; }
+.ff .ff-ptn-vis button:disabled { opacity: .4; cursor: default; }
+.ff .ff-ptn-photos .ff-c17-media { margin: 0; }
+.ff .ff-ptn-cardwrap { display: flex; justify-content: center; margin: 12px 0; }
+.ff .ff-ptn-pcard { width: 320px; border-radius: 26px; corner-shape: squircle; overflow: hidden; background: #16130F; color: #F4EFE4; border: 1px solid #8C7230; }
+.ff .ff-ptn-pcard img, .ff .ff-ptn-pcard .ph { width: 100%; height: 180px; object-fit: cover; display: grid; place-items: center; background: #0d0b09; }
+.ff .ff-ptn-pcard .ph img { width: 120px; height: 120px; object-fit: contain; }
+.ff .ff-ptn-pcard .tx { padding: 14px 16px 18px; display: flex; flex-direction: column; gap: 3px; }
+.ff .ff-ptn-pcard .tx small { color: #EAD79C; letter-spacing: .12em; text-transform: uppercase; }
+.ff .ff-ptn-pcard .tx b { font-size: 20px; }
+.ff .ff-ptn-pcard .tx em { font-style: normal; color: #EAD79C; margin-top: 8px; }
+.ff .ff-ptn-guest { padding: 12px 16px 28px; }
+.ff .ff-ptn-gh { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
+.ff .ff-ptn-back { align-self: flex-start; display: inline-flex; align-items: center; gap: 4px; background: none; border: 0; padding: 6px 0; font: inherit; font-weight: 700; cursor: pointer; color: inherit; }
+.ff .ff-ptn-sub { margin: 0; color: #6b6354; }
+.ff .ff-ptn-gal { display: flex; gap: 10px; overflow-x: auto; margin: 10px 0; scroll-snap-type: x mandatory; }
+.ff .ff-ptn-gal img { height: 220px; border-radius: 22px; corner-shape: squircle; object-fit: cover; scroll-snap-align: start; flex: none; max-width: 86vw; }
+.ff .ff-ptn-preview { padding: 8px 14px; border-radius: 14px; corner-shape: squircle; background: rgba(201,162,39,.18); color: #6A4F12; font-weight: 700; }
+.ff .ff-ptn-qad { margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.ff .ff-ptn-qad dt { font-weight: 700; }
+.ff .ff-ptn-qad dd { margin: 2px 0 0; }
+.ff .ff-ptn-note { margin: 8px 0; font-weight: 700; color: #6A4F12; }
+.ff .ff-ptn-done { display: flex; flex-direction: column; gap: 6px; }

@@ -53,7 +53,7 @@ function support20Seo(state) {
 
 function SupportBookPage20() {
   const { state, dispatch } = useStore();
-  const key = siteBrandKey(state.role === "vip" || state.site === "vip" ? "vip" : state.site === "party" ? "party" : state.role === "staff" ? "staff" : "team");
+  const key = siteBrandKey(state.role === "partners" ? "partners" : state.role === "vip" || state.site === "vip" ? "vip" : state.site === "party" ? "party" : state.role === "staff" ? "staff" : "team");
   const brand = FF_SITE_BRAND[key] || FF_SITE_BRAND.team;
   const cal = support20Url();
   const embed = cal ? cal + (cal.includes("?") ? "&" : "?") + "embed_domain=" + encodeURIComponent(window.location.hostname || "ffteam.uk") + "&embed_type=Inline&hide_gdpr_banner=1" : "";

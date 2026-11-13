@@ -113,6 +113,8 @@ const FF_SITES = [
     line: "For hospitality businesses", pitch: "Bars, restaurants, venues, caterers and event companies: hire staff for your events and keep the people you trust.", cta: "Hire staff" },
   { key: "party", name: "FF Party", domain: "ffparty.uk", url: "https://ffparty.uk", tier: "gold",
     line: "Plan an event and book your team", pitch: "Planning a party? Find your team and create your Event Card in minutes.", cta: "Plan an event" },
+  { key: "partners", name: "FF Partners", domain: "", url: "", tier: "gold",
+    line: "For hosts, property managers and concierges", pitch: "Offer private cocktail experiences at your property, or arrange something bespoke for your guests.", cta: "Become a partner" },
   { key: "vip",   name: "FF VIP",   domain: "ffvip.uk",   url: "https://ffvip.uk",   tier: "standard", logo: FF_VIP_LOGO,
     line: "Your VIP card, luxury experiences and rewards", pitch: "Create your VIP card, book luxury experiences and VIP tables, and earn FF Rewards. Launch party in Shoreditch, early 2027.", cta: "Join the guest list" },
 ];
@@ -145,6 +147,15 @@ function useGoSite() {
     if (key === "team") {
       if (state.role !== "team") dispatch({ type: "ROLE", role: "team" });
       dispatch({ type: "TAB", tab: opts.to === "profile" ? "profile" : "home", route: opts.to === "profile" ? "home" : undefined });
+      window.scrollTo(0, 0);
+      return;
+    }
+    /* FF Partners is Phase 3 only. In Phase 2 it takes the same safe path as a closed site: a note, then FF Team. */
+    if (key === "partners") {
+      if (ph17(state) === 2) { dispatch({ type: "TOAST", toast: "FF Partners is part of Phase 3" }); if (state.role !== "team") dispatch({ type: "ROLE", role: "team" }); return; }
+      if (state.role !== "partners") dispatch({ type: "ROLE", role: "partners" });
+      dispatch({ type: "V11_SET", patch: { ptnGuest: null } });
+      dispatch({ type: "TAB", tab: opts.to === "profile" ? "profile" : "home" });
       window.scrollTo(0, 0);
       return;
     }

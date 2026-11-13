@@ -115,6 +115,7 @@ function ffSeoPersonPage(person) {
 
 
 function ffSeoFor(state, people) {
+  if (state.ptnGuest) return { page: "partners-guest", title: "Guest page — FireFlair Partners", description: "A property guest page in the FF Partners preview.", canonical: ffSeoUrl(""), robots: "noindex, nofollow", type: "website", jsonLd: null };
   if (state.supportPage20) { const sS = V101.support20Seo(state); if (sS) return sS; }
   if (state.pkgPage) { const pkS = V101.pkgSeo18(state); if (pkS) return pkS; }
   if (state.fdArea) { const fdS = fdSeo(state, people); if (fdS) return fdS; }
@@ -128,7 +129,7 @@ function ffSeoFor(state, people) {
     return { page: "home", title: FF_SEO_HOME.title, description: FF_SEO_HOME.description,
       canonical: ffSeoUrl(""), robots: "index, follow", type: "website", jsonLd: null };
   }
-  const who = state.role === "team" ? "FF Team" : state.role === "staff" ? (state.site === "party" ? "FF Party" : "FF Staff") : "";
+  const who = state.role === "partners" ? "FF Partners" : state.role === "team" ? "FF Team" : state.role === "staff" ? (state.site === "party" ? "FF Party" : "FF Staff") : "";
   return {
     page: (who ? who.replace(/\s/g, "-").toLowerCase() : "guest") + "-" + tab,
     title: `${who ? who + " · " : ""}${area} — ${FF_SEO.siteName}`,

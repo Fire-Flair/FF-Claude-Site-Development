@@ -1724,7 +1724,8 @@ function BuildBooking17() {
   const popS = useState(null), pop = popS[0], setPop = popS[1];
   const cont = () => {
     const label = (PARTY_BANDS11.find(b => b.k === band) || {}).guests || "";
-    let ev = state.events.find(e => e.id === state.activeEventId);
+    /* FF Partners: a basket bound to its own unsent draft (bk17.evId) builds on that draft, never on whichever event is active. */
+    let ev = ptnBasketEvent(state, bk) || state.events.find(e => e.id === state.activeEventId);
     let evId = ev && ev.id;
     if (!evId) {
       evId = uid("evt");
@@ -1750,7 +1751,7 @@ function BuildBooking17() {
   useEffect(function () {
     const gone = prev.current.filter(function (id) { return !bk.pk.includes(id); });
     prev.current = bk.pk.slice();
-    const cur = state.events.find(function (e) { return e.id === state.activeEventId; });
+    const cur = ptnBasketEvent(state, bk) || state.events.find(function (e) { return e.id === state.activeEventId; });
     if (cur) gone.forEach(function (id) { state.shifts.filter(function (x) { return x.eventId === cur.id && x.svcId === id; }).forEach(function (x) { dispatch({ type: "SHIFT_DELETE", id: x.id }); }); });
     if (bk.pk.length) cont();
   }, [JSON.stringify([bk.pk, bk.pp, bk.ck, bk.ex])]);
@@ -1779,6 +1780,7 @@ function StaffBookings() {
     <div className="ff-bk11 v4">
       <div className="ff-eyebrow">{site.name}</div>
       <div className="ff-bk11-top"><h1 className="ff-h1">{site.party ? "Confirm your booking" : "Bookings"}</h1></div>
+      {site.party && <PtnEventNote ev={picked || state.events.find(e => e.id === state.activeEventId)} />}
 
       {active && list}
       {picked && isPast(picked.iso)

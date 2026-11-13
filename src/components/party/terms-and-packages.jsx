@@ -80,6 +80,7 @@ function TermsRow17() {
 /* Tab names, by site: FF Party is Home, Browse, Book, Party. FF Staff is Home, Our people, Your bookings, Your business. */
 const tabLabel17 = (key, state, dflt) => {
   const staff = state.role === "staff", party = staff && state.site === "party";
+  if (state.role === "partners") return ({ network: "People" })[key] || dflt;
   if (state.role === "vip") return ({ network: "Experiences", bookings: "Book", profile: "My card" })[key] || dflt;
   if (party) return ({ network: "Browse", bookings: "Book", profile: "Party" })[key] || dflt;
   if (staff) return ({ network: "Our people", bookings: "Your bookings", profile: "Your business" })[key] || dflt;

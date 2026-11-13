@@ -414,8 +414,9 @@ function Shell({ children }) {
   const isStaff = state.role === "staff";
   const isParty = isStaff && state.site === "party";
   const isVip = state.role === "vip";
+  const isPartners = state.role === "partners";
   const goSite = useGoSite();
-  const currentSite = isVip ? "vip" : isParty ? "party" : isStaff ? "staff" : isTeam ? "team" : null;
+  const currentSite = isVip ? "vip" : isPartners ? "partners" : isParty ? "party" : isStaff ? "staff" : isTeam ? "team" : null;
   useEffect(() => {
     if (!menuOpen) return;
     const h = (e) => { if (e.key === "Escape") setMenuOpen(false); };
@@ -471,11 +472,11 @@ function Shell({ children }) {
             <button type="button" className="ff-acct-btn"
               aria-haspopup="menu" aria-expanded={menuOpen} aria-label="FireFlair sites and account"
               onClick={() => setMenuOpen(o => !o)}>
-              <img decoding="async" className="ff-acct-logo" src={FF_SITE_BRAND[isVip ? "vip" : isParty ? "party" : isStaff ? "staff" : "team"].icon} width={30} height={30} alt="" draggable={false} />
+              <img decoding="async" className="ff-acct-logo" src={FF_SITE_BRAND[isVip ? "vip" : isPartners ? "partners" : isParty ? "party" : isStaff ? "staff" : "team"].icon} width={30} height={30} alt="" draggable={false} />
               <span style={{ lineHeight: 1.1, textAlign: "left" }}>
                 <Wordmark size={13} />
                 <span style={{ display: "block", fontSize: 9, letterSpacing: ".2em", color: "rgba(234,215,156,.7)", textTransform: "uppercase" }}>
-                  {isVip ? "VIP" : isParty ? "Party" : isStaff ? "Staff" : "Team"}
+                  {isVip ? "VIP" : isPartners ? "Partners" : isParty ? "Party" : isStaff ? "Staff" : "Team"}
                 </span>
               </span>
               <span aria-hidden="true" className="ff-acct-caret">
@@ -488,14 +489,15 @@ function Shell({ children }) {
                 <div className="ff-acct-menu" role="menu" aria-label="FireFlair sites">
                   {state.role && (
                     <div className="ff-acct-who">
-                      <div className="ff-acct-name">{isVip ? (((state.vip21 || {}).card || {}).name || "FF VIP") : isTeam ? (state.profile.name || state.session.tag || "Your profile") : ((state.company && state.company.name) || (isParty ? "FF Party" : "FF Staff"))}</div>
+                      <div className="ff-acct-name">{isPartners ? ((((ptnMine(ptnGet(), ptnOwner(state)).partner) || {}).org) || "FF Partners") : isVip ? (((state.vip21 || {}).card || {}).name || "FF VIP") : isTeam ? (state.profile.name || state.session.tag || "Your profile") : ((state.company && state.company.name) || (isParty ? "FF Party" : "FF Staff"))}</div>
                       <div className="ff-acct-sub">
-                        {isVip ? "FF VIP" : isTeam ? "FF Team" : isParty ? "FF Party" : "FF Staff"}{isVip ? (state.session.tag ? ` · ${state.session.tag}` : "") : isTeam ? (state.session.tag ? ` · ${state.session.tag}` : "") : (state.company && state.company.slug ? ` · ${CARD_DOMAIN}/${state.company.slug}` : "")}
+                        {isPartners ? "FF Partners" : isVip ? "FF VIP" : isTeam ? "FF Team" : isParty ? "FF Party" : "FF Staff"}{isPartners ? (state.session.tag ? ` · ${state.session.tag}` : "") : isVip ? (state.session.tag ? ` · ${state.session.tag}` : "") : isTeam ? (state.session.tag ? ` · ${state.session.tag}` : "") : (state.company && state.company.slug ? ` · ${CARD_DOMAIN}/${state.company.slug}` : "")}
                       </div>
                     </div>
                   )}
                   <div className="ff-acct-sect">FireFlair sites</div>
-                  {FF_SITES.filter(s => PHASE1.sitesShown.includes(s.key)).sort((a, b) => ({ party: ["party","vip","team","staff"], staff: ["staff","team","party","vip"], vip: ["vip","party","staff","team"], team: ["team","staff","party","vip"] }[currentSite] || ["team","staff","party","vip"]).indexOf(a.key) - ({ party: ["party","vip","team","staff"], staff: ["staff","team","party","vip"], vip: ["vip","party","staff","team"], team: ["team","staff","party","vip"] }[currentSite] || ["team","staff","party","vip"]).indexOf(b.key)).map(s => (
+                  {FF_SITES.filter(s => PHASE1.sitesShown.includes(s.key) && (ph17(state) >= 3 || s.key !== "partners")).sort((a, b) => ph17(state) >= 3 ? PHASE1.sitesShown.indexOf(a.key) - PHASE1.sitesShown.indexOf(b.key) : ({ party: ["party","vip","team","staff"], staff: ["staff","team","party","vip"], vip: ["vip","party","staff","team"], team: ["team","staff","party","vip"] }[currentSite || "team"] || ["team","staff","party","vip"]).indexOf(a.key) - ({ party: ["party","vip","team","staff"], staff: ["staff","team","party","vip"], vip: ["vip","party","staff","team"], team: ["team","staff","party","vip"] }[currentSite || "team"] || ["team","staff","party","vip"]).indexOf(b.key))
+                  .map(s => (
                     <button key={s.key} type="button" role="menuitem" className={`ff-site${s.locked ? " locked" : ""}`} data-href={s.url}
                       aria-current={currentSite === s.key ? "page" : undefined} aria-disabled={s.locked || undefined}
                       onClick={() => { setMenuOpen(false); goSite(s.key); }}>
@@ -503,7 +505,7 @@ function Shell({ children }) {
                       <span style={{ minWidth: 0 }}>
                         <span className="ff-site-name">{s.name}</span>
                         <span className="ff-site-line">{s.line}</span>
-                        <span className="ff-site-dom">{s.domain}</span>
+                        {s.domain ? <span className="ff-site-dom">{s.domain}</span> : null}
                       </span>
                       {currentSite === s.key ? <span className="ff-site-here">You're here</span>
                         : s.locked ? <span className="ff-site-soon"><Lock size={10} /> Coming 2027</span>

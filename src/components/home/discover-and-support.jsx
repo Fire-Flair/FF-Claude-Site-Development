@@ -233,7 +233,7 @@
   /* One instance per page: second from bottom on every home page, last on every Network and Bookings page. */
   function BusinessSupport19() {
     const { state, dispatch } = useStore();
-    const dom = state.role === "team" || !state.role ? "FFTeam.uk" : state.site === "party" ? "FFParty.uk" : state.role === "vip" || state.site === "vip" ? "FFVIP.uk" : "FFStaff.uk";
+    const dom = state.role === "partners" ? "FFParty.uk" : state.role === "team" || !state.role ? "FFTeam.uk" : state.site === "party" ? "FFParty.uk" : state.role === "vip" || state.site === "vip" ? "FFVIP.uk" : "FFStaff.uk";
     const row = (k, label, value) => React.createElement("div", { key: k, className: "ff-biz19-row" }, React.createElement("dt", null, label), React.createElement("dd", null, value));
     return React.createElement("section", {
       className: "ff-sect ff-biz19",

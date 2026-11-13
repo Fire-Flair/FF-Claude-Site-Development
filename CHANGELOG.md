@@ -1,5 +1,18 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.22 — 2026-11-13 — FF Partners (Phase 3)
+Artifact version 1794553380-858a.
+
+- New fourth site, FF Partners, in Phase 3 only. Site order is FF Team, FF Staff, FF Party, FF Partners, FF VIP from every site. Tabs: Home, People, Bookings, Profile.
+- Home: "Bring exceptional experiences to your guests.", Become a partner / Arrange an experience, four Discover entries, two use cases, How it works, Partners FAQ and the shared Book a 15-minute Call block.
+- Journeys: a host adds a property (Q&A, Public or Link only, share menu, guest preview); a guest books at the property through a co-branded FF Party page that hands off to the FF Party Event Card; a concierge arranges an experience through a brief.
+- Visibility: one resolver handles ok, missing and paused with no leaks. Private fields stay out of discovery, share cards and URLs. A brief is an enquiry, outside bookings and invoices. Saves say plainly that they are on this device only.
+- Handoff audit: the FF Party basket is bound to its own draft event, so repeat taps, refresh and Back act only on that draft.
+- UK pilot: other places, Italy included, are labelled enquiries.
+- Stories: two guides added to FF Party (private cocktail experience at a holiday let; briefing a bespoke guest itinerary).
+- SEO: Partners screens and local previews are noindex. Analytics carries no brief text.
+- Developers: see `docs/handoff-v17.4.7.22.md` for production dependencies.
+
 ## v17.4.7.21 — 2026-11-12 — Bookings: one Submit for rates and packages; signed-out notifications
 Artifact version 1794509873-5d42.
 

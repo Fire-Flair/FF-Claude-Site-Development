@@ -65,7 +65,7 @@ const DX_ALIAS = { "ff-career": "ff-booktiles", "ff-training": "ff-booktiles", "
     const hire = useHireNav();
     const home = useHomeNav();
     const goSite = useGoSite();
-    const base = kind === "staff" ? "ff-staff" : kind === "party" ? "ff-party" : "ff-team";
+    const base = kind === "staff" ? "ff-staff" : kind === "party" ? "ff-party" : kind === "partners" ? "ff-partners" : "ff-team";
     const slugs = (() => {
       const raw = cats.map((c) => c.t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""));
       const short = raw.map((x) => x.replace(/^(our|your)-/, ""));
@@ -173,6 +173,10 @@ const DX_ALIAS = { "ff-career": "ff-booktiles", "ff-training": "ff-booktiles", "
     const run = (go) => {
       if (go[0] === "#") {
         jump(go.slice(1));
+        return;
+      }
+      if (go.indexOf("ev:") === 0) {
+        window.dispatchEvent(new CustomEvent("ff-ptn", { detail: go.slice(3) }));
         return;
       }
       if (go.indexOf("site:") === 0) {
