@@ -265,6 +265,7 @@ function TeamBookings({ guest = false }) {
   const byIso = (a, b) => String(a.iso).localeCompare(String(b.iso));
   const requests = all.filter(x => ["requested", "discuss", "available"].includes(x.e.state)).filter(x => { const t = startMs17(x.shift); return !(t && t <= now17(state)); }).sort(byIso);
   const upcoming = all.filter(x => ["confirmed"].includes(x.e.state)).sort(byIso);
+  const cancelledByBiz = all.filter(x => x.e.state === "cancelled_biz").sort(byIso);
   const previous = all.filter(x => PAST_STATES.includes(x.e.state)).sort((a, b) => byIso(b, a));
   const goProfile = () => { dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); };
   const respond = (x, st) => {
@@ -319,7 +320,8 @@ function TeamBookings({ guest = false }) {
       {signedIn && <section className="ff-bk-sec ff-bk-conf17">
         <div className="ff-bk-hrow"><BigHead20 title="Confirmed" count={demo && upcoming.length > 0 ? upcoming.length : undefined} /><button type="button" className="ff-bk-hist" aria-pressed={showPast} onClick={() => setShowPast(v => !v)}><Clock size={12} /> History</button></div>
         {upcoming.length ? <div className="ff-sdrail11"><HScroll label="Confirmed bookings">{upcoming.map(x => <ShiftDelivery11 key={x.e.id} e={x.e} shift={x.shift} event={x.event} />)}</HScroll></div>
-          : <p className="ff-bk-none ff-bk-none17">Your booked shifts will be shown here.</p>}
+          : cancelledByBiz.length ? null : <p className="ff-bk-none ff-bk-none17">Your booked shifts will be shown here.</p>}
+        {cancelledByBiz.map(x => <Row key={x.e.id} x={x} onClick={() => setOpen(x.e)} tag={<span className="ff-bk-done">Cancelled by the business</span>} />)}
         {showPast && (previous.length ? previous.map(x => <Row key={x.e.id} x={x} onClick={() => setOpen(x.e)} tag={<span className="ff-bk-done">Worked</span>} />)
           : <p className="ff-bk-none">No past bookings yet.</p>)}
       </section>}

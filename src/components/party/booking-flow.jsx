@@ -55,7 +55,7 @@ function v11BookReducer(s, a) {
       const snap = (s.snap17 || {})[a.eventId] ? s.snap17 : { ...(s.snap17 || {}), [a.eventId]: { policy: POLICY17.version, at: now, kind: party ? "party" : "business", fee: party ? partyDeposit17(s, s.shifts.filter(x => x.eventId === a.eventId)) : R.feeBusiness, shifts: mine.map(x => ({ id: x.id, role: x.role, qty: qtyOf(x), pay: x.total || "", rate: x.rate || "", time: x.time || "", venue: (ev && ev.venue) || x.venue || "" })) } };
       let n = { ...s, paid17: paid, snap17: snap, engagements: [...s.engagements, ...made], selection: s.selection.filter(x => !sent.includes(x)) };
       /* Payment first, then Autofill: Service Cards on the Autofill route start matching now. */
-      mine.filter(x => x.route === "auto" && !(n.af17 || {})[x.id] && open17(n, x) > 0).forEach(sh => {
+      mine.filter(x => afRoute17(n, x) && !(n.af17 || {})[x.id] && open17(n, x) > 0).forEach(sh => {
         n = { ...n, af17: { ...(n.af17 || {}), [sh.id]: { id: uid("af"), shiftId: sh.id, eventId: sh.eventId, status: "matching", replacement: false, batches: [], needBatch: true, exhausted: false, startedAt: now } } };
       });
       return audit17(n, "Booker", `Paid and sent: ${ev ? eventTitle(ev) : a.eventId}`);
@@ -251,7 +251,7 @@ function flowInfo(state, ev) {
   const shifts = ev ? state.shifts.filter(x => x.eventId === ev.id) : [];
   const sent = shifts.some(sh => state.engagements.some(e => e.shiftId === sh.id && LIVE.includes(e.state)));
   const hasShifts = shifts.length > 0;
-  const has1 = evComplete(ev), has2 = hasShifts && shifts.every(detailsOK), has3 = hasShifts && shifts.every(staffPlanned);
+  const has1 = evComplete(ev), has2 = hasShifts && shifts.every(detailsOK), has3 = hasShifts && shifts.every(sh => staffPlanned17(state, sh));
   return { shifts, has1, has2, has3, hasShifts, sent, doneN: [has1, has2, has3, sent].filter(Boolean).length };
 }
 
@@ -539,7 +539,7 @@ function StaffPanel({ ev, shifts, slotId, setSlotId, place, onRemove, onClose, o
   const pool = party ? favs : team, poolName = party ? "favourites" : "team";
   const [openB, setOpenB] = useState({ prof: true, team: false, rec: false, find: false, fav: false });
   const [q, setQ] = useState("");
-  const forSh = shifts.find(x => x.id === slotId) || shifts.find(x => !staffPlanned(x)) || shifts[0] || null;
+  const forSh = shifts.find(x => x.id === slotId) || shifts.find(x => !staffPlanned17(state, x)) || shifts[0] || null;
   const placed = new Set(shifts.flatMap(staffOf));
   const picks = state.selection.filter(id => !placed.has(id) && id !== "me").map(id => findPerson(all, state, id)).filter(Boolean);
   const rec = rankPeople(state, all, { role: forSh && (forSh.matchRole || forSh.role), iso: ev && ev.iso, area: areaOf(ev), exclude: [...placed], team: pool.map(t => t.id), teamLabel: party ? "Your favourite" : "In your team" }).filter(r => r.score > -5).slice(0, 10);
@@ -646,7 +646,7 @@ const personArea11 = (p) => (p.locations || []).find(l => MAP_AREAS[l]) || "";
 const roleKey11 = (role) => { const w = String(role || "").toLowerCase().split(/[^a-z]+/).filter(Boolean); const h = w[w.length - 1] || ""; return h.slice(0, Math.max(4, Math.min(6, h.length))); };
 
 
-function StaffRow11({ ev, shifts, sel, onToggle }) {
+function StaffRow11({ ev, shifts, sel, onToggle, onAuto }) {
   const { state } = useStore();
   const all = useDirectory();
   const [q, setQ] = useState("");
@@ -684,8 +684,8 @@ function StaffRow11({ ev, shifts, sel, onToggle }) {
         <button type="button" key="more" className="ff-pick11-t ff-pick11-more" aria-label="Search for more staff" onClick={(e) => { const i = e.currentTarget.closest(".ff-srow11").querySelector("input[type=search]"); if (i) { i.scrollIntoView({ behavior: "smooth", block: "center" }); i.focus(); } }}>
           <span className="card"><I11.Plus size={38} strokeWidth={2.2} /></span><i>Search</i>
         </button>
-        <AutofillCard17 key="auto" shifts={sel ? [sel] : shifts} />
       </HScroll>
+      <label className="ff-afchk17"><input type="checkbox" checked={!(ev && ev.afOff)} onChange={(e) => onAuto(e.target.checked)} />Autofill</label>
       {!pool.length && <p className="ff-body ff-muted" style={{ margin: "8px 0 0", fontSize: 13 }}>{sel && !nq ? `Nobody with ${sel.role} on their profile yet.` : "Nobody matches that yet."}</p>}
     </div>
   );
@@ -882,7 +882,7 @@ function EventGuide({ ev, shifts, billTo, stamp, viewer }) {
                 {sh.dress && <div><dt>Uniform</dt><dd>{sh.dress}</dd></div>}
                 <div><dt>{sh.svcId ? "Price" : "Pay"}</dt><dd>{sh.svcId ? sh.svcPrice : (sh.total ? `£${sh.total}` : (sh.pay || "Not set"))}{!sh.svcId && sh.rate ? ` (£${sh.rate} an hour)` : ""}</dd></div>
                 {sh.notes && <div><dt>Extra details</dt><dd>{sh.notes}</dd></div>}
-                {!pro && <div><dt>Staff</dt><dd>{whoAll(sh).length ? <ul className="ff-bst11">{whoAll(sh).map(x => { const b = bst11(x.e); return <li key={x.p.id}><span>{x.p.name}</span>{b && <b className={b[0]}>{b[1]}</b>}</li>; })}</ul> : sh.route === "auto" ? "Autofill. We invite matching professionals and you choose" : "Not chosen yet"}{w.length > 1 ? ". The first to accept gets it." : ""}</dd></div>}
+                {!pro && <div><dt>Staff</dt><dd>{whoAll(sh).length ? <ul className="ff-bst11">{whoAll(sh).map(x => { const b = bst11(x.e); return <li key={x.p.id}><span>{x.p.name}</span>{b && <b className={b[0]}>{b[1]}</b>}</li>; })}</ul> : afRoute17(state, sh) ? "Autofill. We invite matching professionals and you choose" : "Not chosen yet"}{w.length > 1 ? ". The first to accept gets it." : ""}</dd></div>}
               </dl>
             </div>
           );
@@ -978,7 +978,7 @@ function FFInvoice11({ shifts, no, today, contact }) {
       </GuideSec>
       <button type="button" className="ff-tcbox" onClick={() => setTerms(true)}>
         <span className="ic"><I11.FileText size={15} /></span>
-        <span className="tx"><b>Review T&amp;Cs</b><small>Beta: no payment taken</small></span>
+        <span className="tx"><b>Review T&amp;Cs</b>{!paid17(state, shifts[0] && shifts[0].eventId) && <small>Beta: no payment taken</small>}</span>
         <I11.ChevronRight size={18} />
       </button>
       <FFTerms11 open={terms} onClose={() => setTerms(false)} />
@@ -1054,7 +1054,7 @@ function CardPrompt11() {
 
 
 
-function ConfirmPanel({ ev, shifts, missing, fix, onClose }) {
+function ConfirmPanel({ ev, shifts, missing, fix, onClose, onDeleted }) {
   const { state, dispatch } = useStore();
   const sv = svcWords(state);
   const all = useDirectory();
@@ -1063,14 +1063,14 @@ function ConfirmPanel({ ev, shifts, missing, fix, onClose }) {
   const name = (pid) => (findPerson(all, state, pid) || {}).name || "Someone";
   const live = (sh, pid) => { const e = engFor(state, sh.id, pid); return e && LIVE.includes(e.state) ? e : null; };
   const nSend0 = shifts.reduce((n, sh) => n + staffOf(sh).filter(pid => !live(sh, pid) && !(engFor(state, sh.id, pid) || {}).exclusive).length, 0);
-  const nAuto = shifts.filter(sh => sh.route === "auto" && !(state.af17 || {})[sh.id]).length;
+  const nAuto = shifts.filter(sh => afRoute17(state, sh) && !(state.af17 || {})[sh.id]).length;
   const nSend = nSend0 + nAuto;
   const fee17 = sv.party ? partyDeposit17(state, shifts) : shifts.length * BOOKING_FEE;
   const rows = shifts.map(sh => ({ sh, es: state.engagements.filter(e => e.shiftId === sh.id && !e.auto && (LIVE.includes(e.state) || e.filled)) }));
   const anySent = rows.some(r => r.es.length) || paid17(state, ev.id);
   const open = shifts.reduce((n, sh) => n + Math.max(0, qtyOf(sh) - state.engagements.filter(e => e.shiftId === sh.id && DONE.includes(e.state)).length), 0);
   const allDone = anySent && !nSend && open === 0;
-  const [stripe, setStripe] = useState(false);
+  const [stripe, setStripe] = useState(false), [sureDel, setSureDel] = useState(false);
   const send = () => {
     if (missing.length) { dispatch({ type: "TOAST", toast: missing[0].t }); missing[0].go(); return; }
     if (!nSend) return;
@@ -1080,12 +1080,9 @@ function ConfirmPanel({ ev, shifts, missing, fix, onClose }) {
     setStripe(false);
     dispatch({ type: "BOOK_SEND", eventId: ev.id, questions: questions.map(q => q.id) });
   };
-  /* v17.4.6.1: the sent state shows only once the invitations exist (or Autofill has started); then a plain
-     progress line, and for shifts without Autofill the option to turn it on if the chosen people don't reply. */
+  /* v17.4.6.1: the sent state shows only once the invitations exist (or Autofill has started); then a plain progress line. */
   const dispatched = paid17(state, ev.id) && (rows.some(r => r.es.length) || shifts.some(sh => (state.af17 || {})[sh.id]));
   const need = shifts.reduce((n, sh) => n + qtyOf(sh), 0), gotAll = shifts.reduce((n, sh) => n + got17(state, sh), 0);
-  const noAuto = shifts.filter(sh => sh.route !== "auto" && !(state.af17 || {})[sh.id] && open17(state, sh) > 0 && staffOf(sh).length > 0);
-  const backupOff = noAuto.filter(sh => !sh.afBackup), backupOn = noAuto.filter(sh => sh.afBackup);
   return (
     <div className="ff-cpanel" id="ff-bs-confirm-open">
       {!anySent && (<>
@@ -1103,10 +1100,6 @@ function ConfirmPanel({ ev, shifts, missing, fix, onClose }) {
       {anySent && (<>
         <h3 className="ff-fh" role="status">{allDone ? "Everything's confirmed" : dispatched ? "Your invitations have been sent" : "Sending your invitations"}</h3>
         {need > 0 && <p className="ff-fp ff-prog17"><b>{gotAll} of {need}</b> staff confirmed</p>}
-        {!allDone && backupOff.length > 0 && <div className="ff-afoff17">
-          <p className="ff-fp">Autofill is off for {backupOff.map(sh => sh.role).join(", ")}.</p>
-          <Btn variant="sm" onClick={() => { dispatch({ type: "AF_BACKUP", shiftIds: backupOff.map(sh => sh.id), on: true }); dispatch({ type: "TOAST", toast: "Autofill will step in if they don't reply in time" }); }}><I11.Sparkles size={13} /> Use Autofill if they don't reply in time</Btn></div>}
-        {!allDone && backupOn.length > 0 && <p className="ff-fp ff-afon17"><I11.Sparkles size={13} /> Autofill steps in for {backupOn.map(sh => sh.role).join(", ")} if they don't reply in time. <button type="button" className="ff-linkbtn" onClick={() => dispatch({ type: "AF_BACKUP", shiftIds: backupOn.map(sh => sh.id), on: false })}>Turn off</button></p>}
         <div className="ff-sum">
           <div className="ff-sum-ev"><I11.MapPin size={14} /><b>{ev.venue || "Location to confirm"}</b><span>{ev.iso ? shortDay(ev.iso) : "Date to confirm"}{startOf(ev) ? ` · ${startOf(ev)}` : ""}</span></div>
           {rows.map(({ sh, es }) => (
@@ -1127,6 +1120,15 @@ function ConfirmPanel({ ev, shifts, missing, fix, onClose }) {
           <EventGuide ev={ev} shifts={shifts} stamp="Sent" /></details>
         <p className="ff-co11out-note">Your invoice goes to you on WhatsApp and by email.</p>
         {!sv.party && !(state.auth && state.auth.status === "signedIn" && c.joinedAt) && <CardPrompt11 />}
+        {gotAll > 0 && (sureDel ? (
+          <div className="ff-del17" role="group" aria-label="Delete booking">
+            <p>Are you sure? This will affect your reputation. If you wish to get a refund, please contact MrG@FFVip.uk.</p>
+            <div className="btns">
+              <button type="button" className="yes" onClick={() => { dispatch({ type: "BOOKING_DELETE", eventId: ev.id }); setSureDel(false); if (onDeleted) onDeleted(); }}>Delete booking</button>
+              <button type="button" onClick={() => setSureDel(false)}>Keep booking</button>
+            </div>
+          </div>
+        ) : <button type="button" className="ff-del17-link" onClick={() => setSureDel(true)}>Delete booking</button>)}
       </>)}
     </div>
   );
@@ -1364,7 +1366,7 @@ function BookingBox({ ev, setView, bkey }) {
     dispatch({ type: "TOAST", toast: `${firstName(p.name)} added to ${sh.role}` });
   };
   const addPerson = (p) => {
-    const target = shifts.find(x => x.id === slotId) || shifts.find(x => !staffPlanned(x)) || shifts[0];
+    const target = shifts.find(x => x.id === slotId) || shifts.find(x => !staffPlanned17(state, x)) || shifts[0];
     if (target) { placeOn(p, target.id); return; }
     if (!state.selection.includes(p.id)) dispatch({ type: "SELECT_ADD", id: p.id });
     dispatch({ type: "TOAST", toast: party ? `${firstName(p.name)} picked. Pick a ${sv.T}, then add them to it` : `${firstName(p.name)} picked. Tap a role, then add them to it` });
@@ -1492,8 +1494,8 @@ function BookingBox({ ev, setView, bkey }) {
   const missing = [];
   if (!info.has1) missing.push({ t: "Add the date and location on your Event Card", go: openEvent });
   if (!String(contact).trim()) missing.push({ t: "Add your phone number", go: () => { const el = document.querySelector("#ff-bill-phone"); if (el) { el.scrollIntoView({ behavior: "smooth", block: "center" }); el.focus(); } } });
-  const autoN = shifts.filter(sh => sh.route === "auto" && !staffOf(sh).length).length;
-  if (!staffN && !autoN) missing.push({ t: party ? "Choose a Service Card and your staff" : "Choose your staff", go: goStaff });
+  const autoN = shifts.filter(sh => afRoute17(state, sh)).length;
+  if (shifts.some(sh => !staffPlanned17(state, sh)) || (!shifts.length && !staffN)) missing.push({ t: party ? "Choose a Service Card and your staff" : "Choose your staff", go: goStaff });
   const placedB = new Set(shifts.flatMap(staffOf));
   const hasBasket = shifts.length > 0 || state.selection.some(id => id !== "me" && !placedB.has(id));
 
@@ -1566,7 +1568,7 @@ function BookingBox({ ev, setView, bkey }) {
       {op.staff ? (<>
         {party && <SecHead n={n} title="Staff" onToggle={() => setOpK("staff", false)} />}
         {!party ? <div className="ff-staffbub">
-          <button type="button" className="ff-staffbub-x" onClick={() => setOpK("staff", false)} aria-label="Close staff" title="Close"><I11.ChevronDown size={18} /></button><StaffRow11 ev={ev} shifts={shifts} sel={selSh} onToggle={(p) => {
+          <button type="button" className="ff-staffbub-x" onClick={() => setOpK("staff", false)} aria-label="Close staff" title="Close"><I11.ChevronDown size={18} /></button><StaffRow11 ev={ev} shifts={shifts} sel={selSh} onAuto={(on) => dispatch({ type: "AF_CHECKBOX", eventId: ensure(), on })} onToggle={(p) => {
           if (!selSh) { staffToggle(p); return; }
           if (staffOf(selSh).includes(p.id)) { removeFrom(selSh, p.id); dispatch({ type: "TOAST", toast: `${firstName(p.name)} removed from ${selSh.role}` }); return; }
           const other = shifts.find(sh => sh.id !== selSh.id && staffOf(sh).includes(p.id)); if (other) removeFrom(other, p.id);
@@ -1614,7 +1616,7 @@ function BookingBox({ ev, setView, bkey }) {
       <div className="ff-bsec s4 coin" id="ff-bs-confirm">
         {op.confirm && ev ? (<>
           <SecHead n={4} title="Confirm" onToggle={() => setOpK("confirm", false)} />
-          <ConfirmPanel ev={ev} shifts={shifts} missing={missing} onClose={() => setOpK("confirm", false)} />
+          <ConfirmPanel ev={ev} shifts={shifts} missing={missing} onClose={() => setOpK("confirm", false)} onDeleted={() => setView({})} />
         </>) : (
           <Spin3D11 half={8} inset="0px" className="cfm" back={<div className="ff-cfm-back big"><span className="lg" /></div>}>
           <button type="button" className={`ff-cfm11${info.sent && ev ? " done" : ""}`} aria-label={info.sent && ev ? "Booking sent. See who has replied" : "Confirm: review your order"}
@@ -1679,13 +1681,14 @@ function BookingsList11({ onOpen, onAgain }) {
   const byDate = (a, b) => String(a.iso || "9").localeCompare(String(b.iso || "9"));
   const hasShifts = (e) => state.shifts.some(x => x.eventId === e.id);
   const events = !signedIn ? [] : [...state.events].filter(e => (e.iso || e.venue || hasShifts(e)) && !hid17(state, "events", e.id)).sort(byDate);
-  const current = events.filter(e => !isPast(e.iso));
-  const past = events.filter(e => isPast(e.iso)).reverse();
+  const current = events.filter(e => !isPast(e.iso) && !e.deletedAt);
+  const past = events.filter(e => isPast(e.iso) || e.deletedAt).reverse();
   const [hist, setHist] = useState(false);
   const [openId, setOpenId] = useState(null);
   const label = (e) => {
     const i = flowInfo(state, e), need = i.shifts.reduce((n, sh) => n + qtyOf(sh), 0);
     const conf = i.shifts.reduce((n, sh) => n + state.engagements.filter(x => x.shiftId === sh.id && DONE.includes(x.state)).length, 0);
+    if (e.deletedAt) return "Deleted";
     if (isPast(e.iso)) return `Past · ${conf} worked`;
     if (i.sent) return conf >= need && need ? "Confirmed" : `Sent · ${conf} of ${need}`;
     return `Draft · ${i.doneN} of 4 done`;
@@ -1707,7 +1710,7 @@ function BookingsList11({ onOpen, onAgain }) {
       ) : <div className="ff-bkempty"><I11.CalendarDays size={20} /><p>{signedIn ? "No bookings yet." : "Your bookings will appear here."}</p></div>}
       {sel && <Sheet open onClose={() => setOpenId(null)} title={eventTitle(sel)}>
         <EventGuide ev={sel} shifts={state.shifts.filter(x => x.eventId === sel.id)} viewer="hirer" stamp={label(sel)} />
-        <Btn variant="sm primary" onClick={() => open(sel)}><I11.ArrowRight size={13} /> {isPast(sel.iso) ? "Open and review" : "Open booking"}</Btn>
+        {!sel.deletedAt && <Btn variant="sm primary" onClick={() => open(sel)}><I11.ArrowRight size={13} /> {isPast(sel.iso) ? "Open and review" : "Open booking"}</Btn>}
         {isPast(sel.iso) && onAgain && <Btn variant="sm ghost" onClick={() => onAgain(sel)}><I11.CalendarDays size={13} /> Book again</Btn>}
       </Sheet>}
     </section>
@@ -1773,7 +1776,7 @@ function StaffBookings() {
   /* v17.4.6.1 (FF Staff): with a booking under way, Your bookings comes first and the new booking builder
      sits below it. Without one, the builder stays the first thing a business sees. */
   const signedIn = !!(state.auth && state.auth.status === "signedIn");
-  const active = !site.party && signedIn && state.events.some(e => !isPast(e.iso) && !hid17(state, "events", e.id) && (e.iso || e.venue || state.shifts.some(x => x.eventId === e.id)) && flowInfo(state, e).sent);
+  const active = !site.party && signedIn && state.events.some(e => !isPast(e.iso) && !e.deletedAt && !hid17(state, "events", e.id) && (e.iso || e.venue || state.shifts.some(x => x.eventId === e.id)) && flowInfo(state, e).sent);
   const list = !site.party && <BookingsList11 onOpen={(e) => setView({ eventId: e.id })} />;
   return (
     <div className="ff-bk11 v4">

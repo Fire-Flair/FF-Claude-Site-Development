@@ -4412,3 +4412,27 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-ntf-clear17 { display:flex; justify-content:flex-end; margin-top:-4px; }
 .ff .ff-ntf-clear17 button { min-height:32px; padding:0 14px; border-radius:999px; corner-shape:squircle; border:1.5px solid rgba(126,97,29,.5); background:transparent; font-size:12.5px; font-weight:700; color:#4A443A; cursor:pointer; }
 .ff .ff-ntf-clear17 button:focus-visible { outline:2px solid var(--gold,#B08D2A); outline-offset:2px; }
+
+/* ---- Phase 2 Final stage 3C: FF Staff favourites, Autofill checkbox and invited list, Delete booking ---- */
+.ff .ff-favtile17 { position:relative; }
+.ff .ff-favtile17 .fav { position:absolute; top:4px; right:4px; z-index:2; width:30px; height:30px; border-radius:10px; corner-shape:squircle; display:grid; place-items:center; color:var(--gold-dk,#7E611D); background:rgba(255,253,248,.94); border:1px solid rgba(126,97,29,.35); cursor:pointer; }
+.ff .ff-favtile17 .fav.on { color:#B3263E; }
+.ff .ff-favtile17 .fav.on svg { fill:#B3263E; }
+.ff .ff-favtile17 .fav:focus-visible { outline:2px solid var(--gold,#B08D2A); outline-offset:2px; }
+.ff .ff-afchk17 { display:inline-flex; align-items:center; gap:7px; margin-top:10px; font-size:12px; cursor:pointer; padding:6px 11px; border:1px solid var(--rule); border-radius:12px; corner-shape:squircle; background:#fff; color:var(--ink); }
+.ff .ff-afchk17 input { accent-color:#7E611D; width:15px; height:15px; margin:0; }
+.ff .ff-inv17 { border:1px solid var(--ff-line,rgba(201,162,39,.35)); border-radius:14px; corner-shape:squircle; padding:0 10px; }
+.ff .ff-inv17 > summary { cursor:pointer; padding:9px 2px; font-weight:700; font-size:13px; }
+.ff .ff-inv17 .ff-inv17-t { display:grid; gap:6px; justify-items:center; flex:none; padding-bottom:10px; }
+.ff .ff-inv17 .ff-pill { white-space:nowrap; }
+.ff .ff-inv17 button.pick { width:100%; min-height:38px; padding:0 12px; border-radius:999px; corner-shape:squircle; border:0; background:#6B1226; color:var(--paper,#FBF8F1); font-weight:700; cursor:pointer; }
+.ff .ff-inv17 button.pick:disabled { opacity:.45; cursor:default; }
+.ff .ff-inv17 button.prof { background:none; border:0; color:#6B1226; text-decoration:underline; font-size:12.5px; cursor:pointer; }
+.ff .ff-del17-link { display:block; margin:18px auto 0; padding:6px 8px; background:none; border:0; font-size:12px; color:#8A8272; text-decoration:underline; cursor:pointer; }
+.ff .ff-del17-link:focus-visible { outline:2px solid var(--gold,#B08D2A); outline-offset:2px; }
+.ff .ff-del17 { margin-top:18px; padding:12px; border:1px solid rgba(126,97,29,.3); border-radius:16px; corner-shape:squircle; background:#FFFDF8; display:grid; gap:10px; }
+.ff .ff-del17 p { margin:0; font-size:13px; line-height:1.45; color:#3A342B; }
+.ff .ff-del17 .btns { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.ff .ff-del17 .btns button { min-height:40px; padding:0 10px; border-radius:999px; corner-shape:squircle; border:1.5px solid rgba(126,97,29,.5); background:transparent; font-weight:700; font-size:13px; cursor:pointer; color:#3A342B; }
+.ff .ff-del17 .btns button.yes { background:#6B1226; border-color:#6B1226; color:#FBF8F1; }
+.ff .ff-cpanel, .ff .ff-sum, .ff .ff-sum-sh, .ff .ff-af17, .ff .ff-af17 > *, .ff .ff-inv17 { min-width:0; max-width:100%; }

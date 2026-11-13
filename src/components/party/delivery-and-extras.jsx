@@ -271,24 +271,6 @@ function ship11Reduce(s, a) {
 
 
 
-/* The host's view of someone who said they're available: a card, with Choose. */
-function AvailCard11({ e, who, disabledWhy, onChoose, onProfile }) {
-  const { state } = useStore();
-  const n = reviewRecordsFor(state, who.id || "").length;
-  return (
-    <div className="ff-av11">
-      <Portrait src={who.photo} name={who.name} size={56} tier={who.tier} />
-      <b>{who.name}</b>
-      <small>{who.profession || "Professional"}</small>
-      <small>{n} review{n === 1 ? "" : "s"}</small>
-      <button type="button" className="pick" disabled={!!disabledWhy} title={disabledWhy || ""} onClick={onChoose}>Choose {firstName(who.name)}</button>
-      <button type="button" className="prof" onClick={onProfile}>View profile</button>
-    </div>
-  );
-}
-
-
-
 /* FF Team next steps: nothing about Event Cards, which belong to FF Staff and FF Party. */
 function TeamSteps11({ onClose }) {
   const { state, dispatch } = useStore();
@@ -413,15 +395,17 @@ function bookingUpdates17(state) {
   if (!(state.auth && state.auth.status === "signedIn" && state.role === "staff")) return [];
   const site = state.site === "party" ? "party" : "staff", now = now17(state), out = [];
   (state.engagements || []).forEach(e => {
-    if (e.staffId === "me") return;
     const sh = state.shifts.find(x => x.id === e.shiftId), ev = sh && state.events.find(x => x.id === sh.eventId);
     if (!sh || !ev || isPast(ev.iso) || eventSource17(state, ev) !== site) return;
+    /* The signed-in FF Team user ("me") counts only on a shift from their own FF Staff company, so a decline there reaches this list too. */
+    if (e.staffId === "me" && !(ev.hirer && ((state.company && ev.hirer === state.company.name) || (["SAM42", "ALEXG"].includes(state.auth.tag) && coIsVk17(state) && ev.hirer === "Vooshka Cocktail Bar")))) return;
+    const chosen = !!e.exclusive && !e.auto;
     const h = e.history || [], last = h[h.length - 1] || {}, prev = h[h.length - 2] || {};
     let kind = null;
     if (e.state === "confirmed") kind = "confirmed";
-    else if (e.state === "unavailable") kind = "unavailable";
+    else if (e.state === "unavailable" && chosen) kind = "unavailable";
     else if (e.state === "available" && e.selectBy > now) kind = "available";
-    else if (e.state === "expired" && !e.filled && !e.closed && !e.cancelled && ["requested", "discuss"].includes(prev.state)) kind = "noreply";
+    else if (e.state === "expired" && chosen && !e.filled && !e.closed && !e.cancelled && ["requested", "discuss"].includes(prev.state)) kind = "noreply";
     if (kind) out.push({ id: `${e.id}:${kind}`, kind, e, sh, ev, at: last.at || e.sentAt || 0, action: kind === "available" });
   });
   return out.sort((a, b) => b.at - a.at);
@@ -554,7 +538,7 @@ function NoteDrop17({ id, open, onToggle, icon, title, sub, children }) {
 }
 
 
-const NOTE_ICON17 = { shift: "Briefcase", avail: "CalendarCheck", team: "Users", coinvite: "Users", corequest: "UserPlus", question: "MessageSquare", coquestion: "MessageSquare", netadd: "Users" };
+const NOTE_ICON17 = { shift: "Briefcase", avail: "CalendarCheck", team: "Users", coinvite: "Users", corequest: "UserPlus", question: "MessageSquare", coquestion: "MessageSquare", netadd: "Users", bkavail: "CalendarCheck", bkupd: "Check" };
 
 
 function NotifySheet17({ open, onClose }) {
@@ -575,6 +559,7 @@ function NotifySheet17({ open, onClose }) {
     if (it.kind === "avail") return <QuestionNote17 q={availQ(it.x.iso)} label="Availability" asker={`Asked by ${it.x.byName}`} noVis />;
     if (it.kind === "team") return <TeamAskNote17 x={it.x} onAccepted={setReview} />;
     if (it.kind === "coinvite" || it.kind === "corequest") return <CoTeamNote17 x={it.x} />;
+    if (it.kind === "bkavail") return <BookingUpdateNote17 u={it.u} who={findPerson(people, state, it.u.e.staffId) || {}} onGo={onClose} />;
     if (it.kind === "question") return <QuestionNote17 q={it.q} asker={`Asked by ${askerName(it.q, people)}`} />;
     return <CoQuestionNote17 q={it.q} />;
   };
@@ -584,9 +569,9 @@ function NotifySheet17({ open, onClose }) {
       const sh = state.shifts.find(x => x.id === e.shiftId), who = findPerson(people, state, e.staffId) || {};
       return { id: e.id, icon: <I11.MessageSquare size={18} />, title: `Question from ${firstName(who.name || "") || "your team"}`, sub: `${sh.role} · ${lastQ(e)}`, body: <ShiftQuestionNote17 e={e} /> };
     }),
-    ...bookingUpdates17(state).filter(u => u.action || u.at > since.current).map(u => {
+    ...bookingUpdates17(state).filter(u => !u.action && u.at > since.current).map(u => {
       const who = findPerson(people, state, u.e.staffId) || {}, fn = firstName(who.name || "") || "Someone";
-      const title = { confirmed: `${fn} confirmed`, unavailable: `${fn} is unavailable`, available: `${fn} is available`, noreply: "No reply before the deadline" }[u.kind];
+      const title = { confirmed: `${fn} confirmed`, unavailable: `${fn} is unavailable`, available: `${fn} is available`, noreply: `${fn} didn't reply` }[u.kind];
       const icon = { confirmed: <I11.Check size={18} />, unavailable: <I11.X size={18} />, available: <I11.CalendarCheck size={18} />, noreply: <I11.Clock size={18} /> }[u.kind];
       return { id: u.id, icon, title, sub: `${u.sh.role} · ${eventTitle(u.ev)} · ${whenOf11(u.sh)}`, body: <BookingUpdateNote17 u={u} who={who} onGo={onClose} /> };
     }),

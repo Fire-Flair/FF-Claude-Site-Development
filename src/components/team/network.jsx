@@ -717,12 +717,13 @@ function InviteSheet({ open, onClose }) {
 
 
 
-function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "", shut = false, insertAfter = "", insert = null }) {
+function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "", shut = false, insertAfter = "", insert = null, quietEmpty = false }) {
   const { state, dispatch } = useStore();
   const everyone = useDirectory();
   const n = query.trim().toLowerCase();
   const all0 = n ? everyone.filter(p => personSearchText(p).includes(n)) : everyone;
   const all = only && only.length ? all0.filter(p => [].concat(only).includes(p.group)) : all0;
+  if (n && !all.length && quietEmpty) return null;
   if (n && !all.length) return <div style={{ marginTop: 18 }}><Empty icon={<Search size={26} />} title={`Nobody matches “${query}” yet. Try a different name, skill or area.`} /></div>;
   const order = CATEGORY_ORDER;
   const groups = all.reduce((m, p) => { (m[p.group] = m[p.group] || []).push(p); return m; }, {});

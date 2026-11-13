@@ -63,11 +63,6 @@
 .ff-brief11 .hc h4{margin:0 0 10px;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-dk,#7E611D)}
 .ff-brief11 .hc .ff-hscroll{margin:0;padding:4px 0 10px;gap:14px}
 .ff-brief11 .hc .ff-hitem{width:min(300px,78vw)}
-.ff-av11{display:flex;flex-direction:column;gap:8px;width:210px;flex:none;background:var(--paper,#FBF8F1);color:var(--ink,#0B0B0C);border:1.5px solid #6B1226;border-radius:20px;corner-shape:squircle;padding:12px;text-align:center;align-items:center}
-.ff-av11 b{font-size:15px}.ff-av11 small{font-size:12px;opacity:.75}
-.ff-av11 button.pick{width:100%;min-height:40px;border-radius:999px;border:0;background:#6B1226;color:var(--paper,#FBF8F1);font-weight:700;cursor:pointer}
-.ff-av11 button.pick:disabled{opacity:.45;cursor:default}
-.ff-av11 button.prof{background:none;border:0;color:#6B1226;text-decoration:underline;font-size:12.5px;cursor:pointer}
 .ff-nbadge11{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#6B1226;color:var(--paper,#FBF8F1);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--paper,#FBF8F1)}
 .ff-ntf17 .ff-sdlist11{display:flex;flex-direction:column;gap:10px;margin:0 0 12px}
 /* v17.4.6: source label and style per booking source, Pay row Hourly | Shift total, one footprint in the rail */

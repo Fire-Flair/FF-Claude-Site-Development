@@ -179,11 +179,40 @@ function InviteTeamSheet17({ open, onClose, companyKey }) {
 }
 
 
+/* The search text now being used by the network pages, read by the map so its pins follow the results. */
+const NetQ17 = React.createContext("");
+
+
+/* Search text for a company or Directory entry: name, kind and what they do, areas and location, category. */
+function coSearchText17(c) {
+  const cat = (NET_CO_TYPES17.find(function (x) { return x[0] === (c.cat || "bar"); }) || [])[1] || "";
+  const places = [].concat(c.area || [], c.areas || [], c.location || [], c.serviceLocations || [], (c.locations || []).map(function (l) { return (l && l.label) || l; }));
+  const what = [].concat(c.kind || [], (c.seed && c.seed.services) || [], (c.seed && c.seed.base) || []);
+  return [c.name, c.tag].concat(what, places, [cat]).filter(Boolean).join(" ").toLowerCase();
+}
+
+
+/* Companies and FF Event Directory entries that match a network search. cos: claimed companies, dir: unclaimed Directory entries. */
+function netSearch17(state, query) {
+  const n = String(query || "").trim().toLowerCase();
+  if (!n) return null;
+  const hit = browseCompanies17(state).filter(function (c) { return coSearchText17(c).includes(n); });
+  return { cos: hit.filter(function (c) { return !c.unclaimed; }), dir: hit.filter(function (c) { return c.unclaimed; }) };
+}
+
+
 function NetBrowse17(props) {
   const query = props.query || "";
   const st = useStore(), state = st.state, dispatch = st.dispatch;
   const open = state.netPillar17 || "";
-  if (query.trim()) return React.createElement(React.Fragment, null, props.after || null, React.createElement(GroupedPeople, { query: query, onPick: props.onPick, scope: props.scope }));
+  if (query.trim()) {
+    const found = netSearch17(state, query);
+    const anyCo = found.cos.length + found.dir.length > 0;
+    return React.createElement(NetQ17.Provider, { value: query }, props.after || null,
+      React.createElement(GroupedPeople, { query: query, onPick: props.onPick, scope: props.scope, quietEmpty: anyCo }),
+      found.cos.length ? React.createElement(CompaniesSection, { title: "Companies", list: found.cos }) : null,
+      found.dir.length ? React.createElement(CompaniesSection, { title: "FF Event Directory", list: found.dir }) : null);
+  }
   const groups = open ? Object.keys(PILLAR_OF_GROUP17).filter(function (g) { return PILLAR_OF_GROUP17[g] === open; }) : "";
   const items = BCATS17.map(function (c) { return { k: c.k, t: c.label, s: NET_PILLAR_TEXT17[c.k], img: (window.FF_IMG || {})[BIMG17[c.k]] }; });
   return React.createElement(React.Fragment, null,
@@ -400,7 +429,7 @@ function StaffRosterStaff11() {
       <FFAI query={q} onQuery={setQ} title="Search the network" context="FF Staff"
         purpose="Find people to hire — search by name, profession, skill or area. Tap a card to see their profile."
         placeholder="Name, profession, skill or area…" />
-      <NetBrowse17 query={q} onPick={(p) => dispatch({ type: "VIEW", id: p.id })} scope="staff_" after={!q && !state.netBrief ? <NetMap11 /> : null} teamSlot={myCoKey17(state) ? <CompanyTeam17 /> : null} />
+      <NetBrowse17 query={q} onPick={(p) => dispatch({ type: "VIEW", id: p.id })} scope="staff_" after={!state.netBrief ? <NetMap11 /> : null} teamSlot={myCoKey17(state) ? <CompanyTeam17 /> : null} />
     </div>
   );
 }

@@ -492,14 +492,14 @@ const VenueCard = ({ venue, onClick, width }) => <OrgCard org={venue} kindLabel=
 
 
 const ENG_LABEL = {
-  requested: "Availability requested", available: "Available", unavailable: "Declined", discuss: "Discuss first", withdrawn: "Withdrawn", not_selected: "Not selected", cancelled_pro: "Cancelled by professional",
+  requested: "Availability requested", available: "Available", unavailable: "Declined", discuss: "Discuss first", withdrawn: "Withdrawn", not_selected: "Not selected", cancelled_pro: "Cancelled by professional", cancelled_biz: "Cancelled by the business",
   expired: "No reply — expired", confirmed: "Confirmed", completed: "Work completed",
   signed_off: "Signed off", paid: "Closed",
 };
 
 
 const ENG_TONE = {
-  requested: "warn", available: "ok", unavailable: "bad", expired: "bad", discuss: "warn", withdrawn: "bad", not_selected: "bad", cancelled_pro: "bad",
+  requested: "warn", available: "ok", unavailable: "bad", expired: "bad", discuss: "warn", withdrawn: "bad", not_selected: "bad", cancelled_pro: "bad", cancelled_biz: "bad",
   confirmed: "gold", completed: "gold", signed_off: "ok", paid: "ok",
 };
 

@@ -30,6 +30,20 @@ const dt17 = (ms) => ms ? new Date(ms).toLocaleString("en-GB", { weekday: "short
 const PEND17 = ["requested", "available", "discuss"];
 
 
+/* Autofill is one ticked-by-default checkbox per booking (event.afOff = unticked). Ticked and nobody chosen: Autofill starts straight
+   away. Ticked and someone chosen: that person is asked first and Autofill is the back-up. "To be found" shifts always use Autofill. */
+const afOn17 = (s, sh) => { if (sh && sh.special) return true; const ev = (s.events || []).find(v => v.id === (sh && sh.eventId)); return !(ev && ev.afOff); };
+
+
+const afRoute17 = (s, sh) => staffOf(sh).length === 0 && afOn17(s, sh);
+
+
+const afBackup17 = (s, sh) => staffOf(sh).length > 0 && afOn17(s, sh);
+
+
+const staffPlanned17 = (s, sh) => staffOf(sh).length > 0 || afRoute17(s, sh);
+
+
 const startMs17 = (sh) => {
   if (!sh || !sh.iso) return 0;
   const m = /^(\d{1,2}):(\d{2})/.exec(splitTime(sh.time || "")[0] || "");
@@ -178,14 +192,11 @@ function auto17Reduce(s, a) {
   const r11 = ship11Reduce(s, a); if (r11) return r11;
   const now = now17(s);
   switch (a.type) {
-    /* After payment: use Autofill if the chosen people don't reply in time. Nothing is sent or charged here. */
-    case "AF_BACKUP": return audit17({ ...s, shifts: s.shifts.map(x => a.shiftIds.includes(x.id) ? { ...x, afBackup: !!a.on } : x) }, "Booker", `Autofill ${a.on ? "on" : "off"} if no reply: ${a.shiftIds.length} Service Card${a.shiftIds.length === 1 ? "" : "s"}`);
-    case "AF_ROUTE": {
-      const ids = a.shiftIds;
-      return { ...s, shifts: s.shifts.map(x => ids.includes(x.id) ? { ...x, route: a.on ? "auto" : "", ...(a.on ? { staffIds: staffOf(x).filter(pid => engFor(s, x.id, pid)), staffId: staffOf(x).filter(pid => engFor(s, x.id, pid))[0] || "" } : {}) } : x) };
-    }
+    /* The "Autofill" checkbox in the Staff step: ticked (default) or unticked for one booking. Nothing is sent or charged here. */
+    case "AF_CHECKBOX": return audit17({ ...s, events: s.events.map(v => v.id === a.eventId ? { ...v, afOff: !a.on } : v) }, "Booker", `Autofill ${a.on ? "ticked" : "unticked"} for the booking`);
     case "AF_START": {
       const sh = s.shifts.find(x => x.id === a.shiftId); if (!sh || !paid17(s, sh.eventId)) return s;
+      if ((s.events.find(v => v.id === sh.eventId) || {}).deletedAt) return s;
       const old = (s.af17 || {})[sh.id];
       if (old && old.status === "matching") return s;
       if (open17(s, sh) < 1 || (startMs17(sh) && startMs17(sh) <= now)) return s;
@@ -253,6 +264,17 @@ function auto17Reduce(s, a) {
       shs.forEach(sh => { n = settle17(n, sh, "Cancelled before confirmation"); });
       return audit17(n, "Booker", `Cancel request & refund: ${shs.map(x => x.role).join(", ")}`);
     }
+    /* Delete booking, after a professional has accepted: the event moves to History marked Deleted, everyone still on it is freed and sees the shift
+       as cancelled by the business (state cancelled_biz). No refund is issued here. */
+    case "BOOKING_DELETE": {
+      const ev = s.events.find(v => v.id === a.eventId); if (!ev || ev.deletedAt) return s;
+      const shs = s.shifts.filter(x => x.eventId === ev.id), ids = new Set(shs.map(x => x.id));
+      let n = { ...s, events: s.events.map(v => v.id === ev.id ? { ...v, deletedAt: now } : v), activeEventId: s.activeEventId === ev.id ? null : s.activeEventId,
+        engagements: s.engagements.map(e => ids.has(e.shiftId) && ["requested", "available", "discuss", "confirmed"].includes(e.state) ? mark17(e, "cancelled_biz", now, { closed: true, cancelledAt: now }) : e),
+        af17: Object.fromEntries(Object.entries(s.af17 || {}).map(([k, v]) => [k, ids.has(k) && v.status === "matching" ? { ...v, status: "cancelled", needBatch: false, endedAt: now, reason: "The booking was deleted" } : v])) };
+      s.engagements.filter(e => ids.has(e.shiftId) && e.state === "confirmed").forEach(e => { const sh = s.shifts.find(x => x.id === e.shiftId); n = note17(n, { to: "pro", staffId: e.staffId, eventId: ev.id, shiftId: sh.id, text: `${eventTitle(ev)}: ${sh.role} was cancelled by the business.` }); });
+      return audit17(n, "Booker", `Deleted booking: ${eventTitle(ev)}`);
+    }
     /* A confirmed professional cancels: only that position reopens and replacement matching starts at once. No new fee. */
     case "PRO_CANCEL": {
       const e = s.engagements.find(x => x.id === a.id); if (!e || e.state !== "confirmed") return s;
@@ -310,7 +332,7 @@ function auto17Reduce(s, a) {
         if (!af.needBatch && !af.exhausted && !waiting && !avail) n = { ...n, af17: { ...n.af17, [sh.id]: { ...af, needBatch: true } } };
       });
       /* A paid booking whose shift has started with nobody confirmed and no Autofill running is refunded. */
-      Object.keys(n.paid17 || {}).forEach(eid => n.shifts.filter(x => x.eventId === eid && startMs17(x) && startMs17(x) <= now && open17(n, x) > 0 && !(n.af17 || {})[x.id] && n.engagements.some(e => e.shiftId === x.id) && !n.engagements.some(e => e.shiftId === x.id && PEND17.includes(e.state))).forEach(x => { n = settle17(n, x, "The shift started before it was confirmed"); }));
+      Object.keys(n.paid17 || {}).filter(eid => !(n.events.find(v => v.id === eid) || {}).deletedAt).forEach(eid => n.shifts.filter(x => x.eventId === eid && startMs17(x) && startMs17(x) <= now && open17(n, x) > 0 && !(n.af17 || {})[x.id] && n.engagements.some(e => e.shiftId === x.id) && !n.engagements.some(e => e.shiftId === x.id && PEND17.includes(e.state))).forEach(x => { n = settle17(n, x, "The shift started before it was confirmed"); }));
       /* Reminder 30 days out, only for bookings made further ahead than that. */
       { const es = keep17(n.engagements, e => {
         if (e.state !== "confirmed" || e.remind30 || !e.confirmedAt) return e;
@@ -351,7 +373,7 @@ function AutofillEngine17() {
       if (af) return;
       const ex = state.engagements.filter(e => e.shiftId === sh.id && e.exclusive);
       /* v17.4.6.1: only when Autofill is on for this shift (chosen at booking, or turned on afterwards). */
-      if ((sh.route === "auto" || sh.afBackup) && ex.length && !ex.some(e => PEND17.includes(e.state) || DONE.includes(e.state)) && open17(state, sh) > 0) dispatch({ type: "AF_START", shiftId: sh.id });
+      if (afBackup17(state, sh) && ex.length && !ex.some(e => PEND17.includes(e.state) || DONE.includes(e.state)) && open17(state, sh) > 0) dispatch({ type: "AF_START", shiftId: sh.id });
     });
     Object.values(state.af17 || {}).forEach(af => {
       if (af.status !== "matching" || !af.needBatch || af.exhausted) return;
@@ -364,20 +386,33 @@ function AutofillEngine17() {
 
 
 
-/* ---- The Autofill card, last in the row after Search ---- */
-function AutofillCard17({ shifts }) {
+/* Under a shift once Autofill has started: everyone it was sent to, with a live status. Collapsed by default. The business chooses from those who are Available. */
+const INV_STATUS17 = { requested: ["Waiting", "warn"], available: ["Available", "ok"], discuss: ["Wants to discuss", "warn"], unavailable: ["Unavailable", "bad"], withdrawn: ["Unavailable", "bad"], expired: ["Unavailable", "bad"], not_selected: ["Not chosen", "bad"], confirmed: ["Confirmed", "gold"] };
+
+
+function InvitedList17({ sh, auto, who }) {
   const { state, dispatch } = useStore();
-  const R = rules17(state);
-  const ids = shifts.filter(sh => !(state.af17 || {})[sh.id] && open17(state, sh) > 0).map(sh => sh.id);
-  const on = ids.length > 0 && shifts.filter(sh => ids.includes(sh.id)).every(sh => sh.route === "auto");
-  const text = `Invite ${R.batch === 10 ? "ten" : R.batch} matching professionals near your event, then choose from those available.`;
-  if (!ids.length) return null;
+  const now = now17(state);
   return (
-    <button type="button" className={`ff-pick11-t ff-pick11-more ff-pick11-auto${on ? " on" : ""}`} aria-pressed={on} aria-label={`Autofill. ${text}`} onClick={() => dispatch({ type: "AF_ROUTE", shiftIds: ids, on: !on })}>
-      <span className="card"><I11.Sparkles size={34} strokeWidth={2} /></span>
-      {on && <span className="tick" aria-hidden="true"><I11.Check size={16} strokeWidth={3} /></span>}
-      <i>Autofill</i><small>{text}</small>
-    </button>
+    <details className="ff-inv17">
+      <summary>Autofill · {auto.length} invited</summary>
+      <HScroll label={`Autofill invited for ${sh.role}`}>
+        {auto.map((e) => {
+          const p = who(e.staffId), st = INV_STATUS17[e.state] || [ENG_LABEL[e.state] || e.state, ""];
+          const can = e.state === "available" && e.selectBy > now, why = can ? pickCheck17(state, e) : "";
+          return (
+            <div key={e.id} className="ff-inv17-t" data-eng={e.id}>
+              <PlayerTile person={p} onClick={() => dispatch({ type: "PEEK", id: p.id })} />
+              <span className={`ff-pill ${st[1]}`}>{st[0]}</span>
+              {can && <>
+                <button type="button" className="pick" disabled={!!why} title={why || ""} onClick={() => { dispatch({ type: "AF_PICK", id: e.id }); dispatch({ type: "TOAST", toast: `${firstName(p.name)} confirmed for ${sh.role}` }); }}>Choose {firstName(p.name)}</button>
+                <button type="button" className="prof" onClick={() => dispatch({ type: "PEEK", id: p.id })}>View profile</button>
+              </>}
+            </div>
+          );
+        })}
+      </HScroll>
+    </details>
   );
 }
 
@@ -390,11 +425,12 @@ function AutoPanel17({ sh, ev }) {
   const mine = state.engagements.filter((e) => e.shiftId === sh.id);
   const auto = mine.filter((e) => e.auto), ex = mine.filter((e) => e.exclusive && !e.auto);
   const rf = (state.refunds17 || []).filter((r) => r.status !== "void" && (r.shiftId === sh.id || r.kind === "party" && r.eventId === sh.eventId));
-  if (!af && !ex.length && !auto.length && sh.route !== "auto")
+  if (!af && !ex.length && !auto.length && !afRoute17(state, sh))
     return null;
   const who = (pid) => findPerson(all, state, pid) || { name: "Someone" };
-  const avail = auto.filter((e) => e.state === "available" && e.selectBy > now), talk = auto.filter((e) => e.state === "discuss");
+  const talk = auto.filter((e) => e.state === "discuss");
   const waitN = auto.filter((e) => e.state === "requested").length, noN = auto.filter((e) => e.state === "unavailable" || e.state === "withdrawn").length;
+  const backup = afBackup17(state, sh);
   const last = af && af.batches[af.batches.length - 1];
   const exPend = ex.find((e) => ["requested", "discuss"].includes(e.state) && e.expiresAt > now);
   const done = af && af.status !== "matching";
@@ -406,9 +442,9 @@ function AutoPanel17({ sh, ev }) {
     "aria-label": `Autofill for ${sh.role}`
   }, exPend && React.createElement("p", {
     className: "ln"
-  }, React.createElement("b", null, "Held for ", firstName(who(exPend.staffId).name)), " until ", dt17(exPend.expiresAt), ". If they decline or don't reply, Autofill starts."), af && af.replacement && af.status === "matching" && React.createElement("p", {
+  }, React.createElement("b", null, "Held for ", firstName(who(exPend.staffId).name)), " until ", dt17(exPend.expiresAt), ".", backup ? " Autofill starts if they decline or don't reply." : ""), af && af.replacement && af.status === "matching" && React.createElement("p", {
     className: "ln warn"
-  }, React.createElement("b", null, "Replacement being sourced."), ` Your professional cancelled. There is no new ${svcWords(state).party ? "deposit" : "booking charge"}, and you are refunded if FireFlair can't fulfil the booking.`), sh.route === "auto" && !af && React.createElement("p", {
+  }, React.createElement("b", null, "Replacement being sourced."), ` Your professional cancelled. There is no new ${svcWords(state).party ? "deposit" : "booking charge"}, and you are refunded if FireFlair can't fulfil the booking.`), afRoute17(state, sh) && !af && React.createElement("p", {
     className: "ln"
   }, "Autofill starts as soon as your booking is paid."), af && af.status === "matching" && last && React.createElement("p", {
     className: "ln"
@@ -416,15 +452,7 @@ function AutoPanel17({ sh, ev }) {
     className: "ln"
   }, "Finding professionals near your event…"), af && af.status === "matching" && af.exhausted && React.createElement("p", {
     className: "ln"
-  }, "Everyone who matches has been invited."), avail.length > 0 && React.createElement(React.Fragment, null, React.createElement("h4", {
-    className: "h"
-  }, avail.length, " available. Choose one to confirm"), React.createElement(HScroll, { label: "Available professionals" }, avail.map((e) => {
-  const p = who(e.staffId), why = pickCheck17(state, e);
-  return React.createElement(AvailCard11, { key: e.id, e, who: p, disabledWhy: why, onChoose: () => {
-    dispatch({ type: "AF_PICK", id: e.id });
-    dispatch({ type: "TOAST", toast: `${firstName(p.name)} confirmed for ${sh.role}` });
-  }, onProfile: () => dispatch({ type: "PEEK", id: p.id }) });
-}))), talk.length > 0 && React.createElement(React.Fragment, null, React.createElement("h4", {
+  }, "Everyone who matches has been invited."), auto.length > 0 && React.createElement(InvitedList17, { sh, auto, who }), talk.length > 0 && React.createElement(React.Fragment, null, React.createElement("h4", {
     className: "h"
   }, "Questions before they commit"), talk.map((e) => {
     const p = who(e.staffId);
@@ -507,11 +535,14 @@ function AutoPanel17({ sh, ev }) {
     type: "button",
     className: "ff-linkbtn",
     onClick: () => setSure(true)
-  }, "Cancel request & refund")), af && af.status === "matching" && React.createElement("details", {
+  }, "Cancel request & refund")), (exPend || af && af.status === "matching") && React.createElement("details", {
     className: "ff-af17-dev"
   }, React.createElement("summary", null, "Prototype controls"), React.createElement("div", {
     className: "row"
-  }, React.createElement("button", {
+  }, exPend && React.createElement("button", {
+    type: "button",
+    onClick: () => dispatch({ type: "AF_RESPOND", id: exPend.id, as: "unavailable" })
+  }, firstName(who(exPend.staffId).name), " declines"), af && af.status === "matching" && React.createElement(React.Fragment, null, React.createElement("button", {
     type: "button",
     onClick: () => dispatch({ type: "AF_SIM", shiftId: sh.id, kind: "available", index: 0 })
   }, "One says available"), React.createElement("button", {
@@ -520,7 +551,7 @@ function AutoPanel17({ sh, ev }) {
   }, "One wants to discuss"), React.createElement("button", {
     type: "button",
     onClick: () => dispatch({ type: "AF_SIM", shiftId: sh.id, kind: "decline" })
-  }, "Everyone declines"), React.createElement("button", {
+  }, "Everyone declines")), React.createElement("button", {
     type: "button",
     onClick: () => dispatch({ type: "AF_WARP", ms: 86400000 })
   }, "+24 hours"))));

@@ -793,6 +793,31 @@ function PartnerPick17({ open, onClose }) {
   );
 }
 
+/* FF Staff, "Your business", owner only: the people you added with "Add to favourites". Collapsed by default; never part of the public company page. */
+function CompanyFavs17() {
+  const { state, dispatch } = useStore();
+  const all = useDirectory();
+  const favs = favsOf(state, all);
+  const open = state.categoryVisibility.co_favs === true;
+  return (
+    <section id="ff-co-favs" style={{ marginTop: 22 }}>
+      <SectionHead icon={<I11.Heart size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Favourites" count={favs.length} action={<CategoryToggle sectionKey="co_favs" defaultOpen={false} />} />
+      {open && favs.length > 0 && (
+        <HScroll label="Favourites">
+          {favs.map(p => (
+            <div key={p.id} className="ff-favtile17">
+              <PlayerTile person={p} onClick={() => { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); }} />
+              <button type="button" className="fav on" aria-pressed="true" aria-label={`Remove ${firstName(p.name)} from favourites`}
+                onClick={() => { dispatch({ type: "FAV_TOGGLE", id: p.id }); dispatch({ type: "TOAST", toast: `${firstName(p.name)} removed from your favourites` }); }}><I11.Heart size={14} /></button>
+            </div>
+          ))}
+        </HScroll>
+      )}
+    </section>
+  );
+}
+
+
 function CompanySections() {
   const { state, dispatch } = useStore();
   const all = useDirectory();
@@ -878,6 +903,8 @@ function CompanySections() {
                 </HScroll>
               )}
             </section>
+
+            {state.auth && state.auth.status === "signedIn" && <CompanyFavs17 />}
 
           </>)}
 

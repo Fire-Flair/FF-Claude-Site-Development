@@ -499,5 +499,5 @@ function PartyBrowse17() {
     React.createElement(FFAI, { query: q, onQuery: setQ, title: "Search for your team", context: "FF Party", purpose: "Find the right people for your event: search by name, profession, skill or area.", placeholder: "Name, profession, skill or area\u2026" }),
     pop && React.createElement(PkgSheet17, { svc: pop, qual: qual, onClose: function () { setPop(null); } }),
     state.netBrief && React.createElement(BookingBrief, { brief: state.netBrief }),
-    !state.netBrief && React.createElement(NetBrowse17, { query: q, onPick: function (p) { dispatch({ type: "VIEW", id: p.id }); }, scope: "staff_", after: !q ? React.createElement(NetMap11, null) : null }));
+    !state.netBrief && React.createElement(NetBrowse17, { query: q, onPick: function (p) { dispatch({ type: "VIEW", id: p.id }); }, scope: "staff_", after: React.createElement(NetMap11, null) }));
 }

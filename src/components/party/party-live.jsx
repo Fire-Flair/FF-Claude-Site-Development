@@ -73,7 +73,7 @@ function DoneProfile17({ kind }) {
   if (kind === "biz") {
     const cos = companyList(state);
     const co = cos.find(c => c.mine && String(c.name || "").trim()) || cos.find(c => !c.mine);
-    return <CompanyPublic co={co} done slot={<Creators17 kind="biz" by={co && co.name} />} />;
+    return <CompanyPublic co={co} done slot={<>{co && co.mine && state.auth && state.auth.status === "signedIn" && <div className="ff-pubpage-fav17"><CompanyFavs17 /></div>}<Creators17 kind="biz" by={co && co.name} /></>} />;
   }
   return <PartyDone17 />;
 }

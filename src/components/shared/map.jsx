@@ -161,12 +161,16 @@ function FFMap({ mode = "home" }) {
       return { ...p, x: Math.max(4, Math.min(96, bx + ring[0])), y: Math.max(5, Math.min(95, by + ring[1])) };
     }), ...cos, ...partnerPins];
   }, [home, mode, directory.length, state.company]);
-  const netPillar = mode === "network" ? (state.netPillar17 || "") : "";
+  const netQ = useContext(NetQ17), searching = mode === "network" && !!String(netQ || "").trim();
+  const netPillar = mode === "network" && !searching ? (state.netPillar17 || "") : "";
   const pinsAll = useMemo(() => {
     if (!netPillar) return pins0;
     return pins0.filter((p) => p.kind === "company" ? PILLAR_OF_CAT17[p.cat || "bar"] === netPillar : p.kind === "person" ? PILLAR_OF_GROUP17[p.group] === netPillar : false);
   }, [pins0, netPillar]);
-  const pins = useMemo(() => mode !== "network" ? pinsAll : pinsAll.filter(mapLayer19(show, hideCat)), [pinsAll, show, hideCat, mode]);
+  /* While a network search is active the map shows only the matching people, companies and Directory entries (venues are hidden). */
+  const hitCos = useMemo(() => { const f = searching ? netSearch17(state, netQ) : null; return f ? new Set([...f.cos, ...f.dir].map(c => c.id)) : null; }, [searching, netQ, state.company, state.admin17]);
+  const pinsFound = useMemo(() => !searching ? pinsAll : pinsAll.filter(p => p.kind === "person" ? personSearchText(p).includes(String(netQ).trim().toLowerCase()) : p.kind === "company" ? hitCos.has(p.coId) : false), [pinsAll, searching, netQ, hitCos]);
+  const pins = useMemo(() => mode !== "network" ? pinsAll : pinsFound.filter(mapLayer19(show, hideCat)), [pinsAll, pinsFound, show, hideCat, mode]);
 
   const boxRef = useRef(null), mapRef = useRef(null);
   const [fallback, setFallback] = useState(() => !window.L || !ukGeo11());
@@ -296,7 +300,7 @@ function FFMap({ mode = "home" }) {
         </div>
       )}
 
-      {mode === "network" && <MapLegend19 pins={pinsAll} show={show} setShow={setShow} hide={hideCat} setHide={setHideCat} />}
+      {mode === "network" && <MapLegend19 pins={pinsFound} show={show} setShow={setShow} hide={hideCat} setHide={setHideCat} />}
       <div style={{ display: mode === "network" ? "none" : "flex", gap: 14, alignItems: "center", justifyContent: "center", margin: "10px 0 14px", flexWrap: "wrap" }}>
         <span className="ff-body ff-muted" style={{ fontSize: 11, display: "flex", gap: 6, alignItems: "center" }}><MapPerson17 size={18} /> Professionals{nPeople ? ` (${nPeople})` : ""}</span>
         {companyLegend17(pins)}

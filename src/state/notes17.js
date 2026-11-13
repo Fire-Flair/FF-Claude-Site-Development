@@ -7,7 +7,7 @@
 
    state.notesDone17 = [{ id, acct, kind, title, sub, outcome, at }]
      acct   "<role>:<FF Tag>"  one list per account and site
-     kind   shift | avail | team | coinvite | corequest | question | coquestion | netadd
+     kind   shift | avail | team | coinvite | corequest | question | coquestion | netadd | bkavail | bkupd
    Production: Core keeps the same record on the notification row (status, outcome, decided_at) and drops rows 7 days
    after they were decided.
 
@@ -51,8 +51,17 @@ function notesBrief17(s, people) {
   } else if (s.role === "staff") {
     coRequests17(s).forEach(x => out.push({ id: x.id, kind: "corequest", title: "Asks to join your team", sub: x.name || (findPerson(people, s, x.personId) || {}).name || "", x }));
     coQuestionsWaiting17(s).forEach(q => out.push({ id: q.id, kind: "coquestion", title: "Question for your company", sub: `${q.byName || "Someone"} · ${q.text}`, q }));
+    /* "<Name> is available" waits for the business to choose; it greys out once they are chosen, passed over or lapse. */
+    bookingUpdates17(s).filter(u => u.action).forEach(u => out.push({ id: u.id, kind: "bkavail", title: bookingTitle17(u, people), sub: `${u.sh.role} · ${eventTitle(u.ev)} · ${whenOf11(u.sh)}`, u, eid: u.e.id }));
   }
   return out;
+}
+
+
+/* The row title for a reply to one of your invitations ("<Name> is available", "<Name> is unavailable", "<Name> didn't reply"). */
+function bookingTitle17(u, people) {
+  const who = (people || []).find(p => p.id === u.e.staffId) || {}, fn = String(who.name || "").split(" ")[0] || "Someone";
+  return { confirmed: `${fn} confirmed`, unavailable: `${fn} is unavailable`, available: `${fn} is available`, noreply: `${fn} didn't reply` }[u.kind];
 }
 
 
@@ -66,6 +75,10 @@ function notesOutcome17(it, n) {
   if (it.kind === "avail") { const v = ((n.profile && n.profile.answers) || {})[it.qid]; return isAnswered(v) ? `Answered: ${short(v)}` : null; }
   if (it.kind === "question") { const v = ((n.profile && n.profile.answers) || {})[it.qid]; return isAnswered(v) ? `Answered: ${short(v)}` : null; }
   if (it.kind === "coquestion") { const q = (n.profileQuestions || []).find(x => x.id === it.id); return q && isAnswered(q.answer) ? `Answered: ${short(q.answer)}` : null; }
+  if (it.kind === "bkavail") {
+    const st = ((n.engagements || []).find(x => x.id === it.eid) || {}).state;
+    return st === "confirmed" ? "Chosen" : st === "not_selected" ? "Someone else chosen" : st === "withdrawn" ? "Withdrawn" : st === "unavailable" ? "Unavailable" : null;
+  }
   if (it.kind === "team") {
     const v = (n.teamAsks17 || {})[it.id];
     return v === "accepted" ? "Accepted" : v === "declined" ? "Declined" : (n.connections || []).some(c => c.id === it.x.fromId) ? "Accepted" : null;
@@ -111,6 +124,9 @@ function notesSeen17(s) {
     out.coNetNotes17 = (s.coNetNotes17 || []).map(x => un.includes(x) ? { ...x, seen: true } : x);
     un.forEach(x => kept.push({ id: x.id, acct, kind: "netadd", title: `${x.fromName} added you to their network`, sub: "Network", outcome: "Seen", at: t }));
   }
+  /* Replies that are only news (confirmed, unavailable, no reply) grey out the first time the list is opened. */
+  if (s.role === "staff") bookingUpdates17(s).filter(u => !u.action && u.at > (s.notesSeenAt || 0) && !kept.some(d => d.id === u.id && d.acct === acct))
+    .forEach(u => kept.push({ id: u.id, acct, kind: "bkupd", title: bookingTitle17(u, s.directory || []), sub: `${u.sh.role} · ${eventTitle(u.ev)} · ${whenOf11(u.sh)}`, outcome: "Seen", at: t }));
   out.notesDone17 = kept;
   return out;
 }
