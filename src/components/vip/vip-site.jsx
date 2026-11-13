@@ -1092,6 +1092,9 @@ function StaffRouter() {
   const { route, tab } = state;
   if (state.viewing)
     return React.createElement(PersonProfile, null);
+  /* Phase 2: FF Party shows Home and Browse only; whatever state or link asks for Book or Party lands on Home. */
+  if (isPartySite17(state) && (PARTY_LOCKED_TABS17.includes(tab) || PARTY_LOCKED_ROUTES17.includes(route)))
+    return React.createElement(V101.PartyHome11, null);
   if (tab === "network")
     return React.createElement(React.Fragment, null, React.createElement(StaffRoster, null), React.createElement(V101.BusinessSupport19, null));
   if (tab === "bookings")

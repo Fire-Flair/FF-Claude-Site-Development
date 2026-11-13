@@ -65,7 +65,7 @@ const DX_ALIAS = { "ff-career": "ff-booktiles", "ff-training": "ff-booktiles", "
     const hire = useHireNav();
     const home = useHomeNav();
     const goSite = useGoSite();
-    const base = kind === "staff" ? "ff-staff" : kind === "party" ? "ff-party" : kind === "partners" ? "ff-partners" : "ff-team";
+    const base = kind === "staff" ? "ff-staff" : kind === "party" ? "ff-party" : "ff-team";
     const slugs = (() => {
       const raw = cats.map((c) => c.t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""));
       const short = raw.map((x) => x.replace(/^(our|your)-/, ""));
@@ -173,10 +173,6 @@ const DX_ALIAS = { "ff-career": "ff-booktiles", "ff-training": "ff-booktiles", "
     const run = (go) => {
       if (go[0] === "#") {
         jump(go.slice(1));
-        return;
-      }
-      if (go.indexOf("ev:") === 0) {
-        window.dispatchEvent(new CustomEvent("ff-ptn", { detail: go.slice(3) }));
         return;
       }
       if (go.indexOf("site:") === 0) {
@@ -464,7 +460,9 @@ const DX_ALIAS = { "ff-career": "ff-booktiles", "ff-training": "ff-booktiles", "
         draggable: false
       }) : null, React.createElement("i", null, i + 1)), React.createElement("b", null, j.t), React.createElement("span", {
         className: "t"
-      }, j.x), React.createElement("button", {
+      }, j.x), kind === "party" && ["book", "profile", "bookings"].includes(j.go) ? React.createElement(LockedBtn17, {
+        bare: true
+      }, j.b) : React.createElement("button", {
         type: "button",
         onClick: () => run(j.go)
       }, j.b));
@@ -964,7 +962,10 @@ if (k === "package") return React.createElement("div", { className: "mc sv" }, R
       onClick: home.goProfile
     }, React.createElement(User, {
       size: 14
-    }), " Create your Profile Card") : React.createElement(ShineButton, {
+    }), " Create your Profile Card") : kind === "party" ? React.createElement(LockedBtn17, {
+      shine: true,
+      icon: React.createElement(Popper11, { size: 15 })
+    }, "Plan your event") : React.createElement(ShineButton, {
       onClick: hire.toEvent
     }, React.createElement(Popper11, {
       size: 15

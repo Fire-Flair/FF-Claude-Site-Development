@@ -138,7 +138,7 @@ function CardPeek() {
           {sv.party ? (<>
             {added
               ? <Btn variant="ghost wide" onClick={remove}><I11.Check size={14} /> {onShift ? `On ${onShift.role || sv.a}` : "In your booking"} · Remove</Btn>
-              : <Btn variant="primary wide" onClick={add}><I11.Plus size={14} /> Add to booking</Btn>}
+              : <LockedBtn17 variant="primary wide" icon={<I11.Plus size={14} />}>Add to booking</LockedBtn17>}
             <Btn variant="wide ghost" onClick={favT}>{fav ? <><I11.Check size={14} /> In your favourites</> : <><I11.Heart size={14} /> Add to favourites</>}</Btn>
           </>) : (<>
             <Btn variant={inNet ? "ghost wide" : "primary wide"} onClick={netT}>{inNet ? <><I11.Check size={14} /> In your network</> : <><I11.Plus size={14} /> Add to network</>}</Btn>
@@ -1223,7 +1223,7 @@ function aiSummary(r, sv) {
 /* ---- Guide: the FF button on FF Staff and FF Party ------------------------------------ */
 function StaffGuideSheet({ open, onClose, bare }) {
   const { state, dispatch } = useStore();
-  if (!open) return null;
+  if (!open || isPartySite17(state)) return null;
   const ev = state.events.find(e => e.id === state.activeEventId && !isPast(e.iso)) || null;
   const info = flowInfo(state, ev);
   const sv = svcWords(state);
@@ -1724,8 +1724,7 @@ function BuildBooking17() {
   const popS = useState(null), pop = popS[0], setPop = popS[1];
   const cont = () => {
     const label = (PARTY_BANDS11.find(b => b.k === band) || {}).guests || "";
-    /* FF Partners: a basket bound to its own unsent draft (bk17.evId) builds on that draft, never on whichever event is active. */
-    let ev = ptnBasketEvent(state, bk) || state.events.find(e => e.id === state.activeEventId);
+    let ev = state.events.find(e => e.id === state.activeEventId);
     let evId = ev && ev.id;
     if (!evId) {
       evId = uid("evt");
@@ -1751,7 +1750,7 @@ function BuildBooking17() {
   useEffect(function () {
     const gone = prev.current.filter(function (id) { return !bk.pk.includes(id); });
     prev.current = bk.pk.slice();
-    const cur = ptnBasketEvent(state, bk) || state.events.find(function (e) { return e.id === state.activeEventId; });
+    const cur = state.events.find(function (e) { return e.id === state.activeEventId; });
     if (cur) gone.forEach(function (id) { state.shifts.filter(function (x) { return x.eventId === cur.id && x.svcId === id; }).forEach(function (x) { dispatch({ type: "SHIFT_DELETE", id: x.id }); }); });
     if (bk.pk.length) cont();
   }, [JSON.stringify([bk.pk, bk.pp, bk.ck, bk.ex])]);
@@ -1780,7 +1779,6 @@ function StaffBookings() {
     <div className="ff-bk11 v4">
       <div className="ff-eyebrow">{site.name}</div>
       <div className="ff-bk11-top"><h1 className="ff-h1">{site.party ? "Confirm your booking" : "Bookings"}</h1></div>
-      {site.party && <PtnEventNote ev={picked || state.events.find(e => e.id === state.activeEventId)} />}
 
       {active && list}
       {picked && isPast(picked.iso)

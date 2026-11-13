@@ -30,6 +30,7 @@ function Landing() {
 
 function ActionSheet({ open, onClose }) {
   const { state, dispatch } = useStore();
+  if (isPartySite17(state)) return null;
   const go = (fn) => () => { onClose(); fn(); };
   const item = (Icon, label, note, onClick) => (
     <button onClick={onClick} className="ff-frame" style={{ width: "100%", textAlign: "left", padding: 14, marginBottom: 8, display: "flex", gap: 12, alignItems: "center" }}>
@@ -49,7 +50,7 @@ function ActionSheet({ open, onClose }) {
         <>
           {item(FileText, "Send a CV", "We read it and propose your cards", go(() => { dispatch({ type: "TAB", tab: "profile", route: "home" }); dispatch({ type: "FOCUS", focus: { target: "cv" } }); }))}
           {item(Plus, "Add information cards", "Professions, skills, interests, qualifications", go(() => { dispatch({ type: "TAB", tab: "profile", route: "home" }); dispatch({ type: "FOCUS", focus: { target: "professions" } }); }))}
-          {ph17(state) >= 2 && item(Users, "Invite people you work with", "They accept before anything connects", go(() => dispatch({ type: "TAB", tab: "network" })))}
+          {item(Users, "Invite people you work with", "They accept before anything connects", go(() => dispatch({ type: "TAB", tab: "network" })))}
           {item(Share2, "Share my card", `${CARD_DOMAIN}/${state.session.tag || "username"}`, go(() => dispatch({ type: "TOAST", toast: "Link copied" })))}
         </>
       ) : (
@@ -413,10 +414,10 @@ function Shell({ children }) {
   const isTeam = state.role === "team";
   const isStaff = state.role === "staff";
   const isParty = isStaff && state.site === "party";
+  const partyLocked = isParty;
   const isVip = state.role === "vip";
-  const isPartners = state.role === "partners";
   const goSite = useGoSite();
-  const currentSite = isVip ? "vip" : isPartners ? "partners" : isParty ? "party" : isStaff ? "staff" : isTeam ? "team" : null;
+  const currentSite = isVip ? "vip" : isParty ? "party" : isStaff ? "staff" : isTeam ? "team" : null;
   useEffect(() => {
     if (!menuOpen) return;
     const h = (e) => { if (e.key === "Escape") setMenuOpen(false); };
@@ -424,6 +425,7 @@ function Shell({ children }) {
     return () => window.removeEventListener("keydown", h);
   }, [menuOpen]);
   const goTab = (tab) => {
+    if (partyLocked && PARTY_LOCKED_TABS17.includes(tab)) return;
     if (!state.role && tab === "profile") { dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "profile" }); return; }
     if (!state.role) { dispatch({ type: "TAB", tab }); return; }
     if (isTeam) dispatch({ type: "TAB", tab, route: state.profile.live ? "home" : state.route });
@@ -472,11 +474,11 @@ function Shell({ children }) {
             <button type="button" className="ff-acct-btn"
               aria-haspopup="menu" aria-expanded={menuOpen} aria-label="FireFlair sites and account"
               onClick={() => setMenuOpen(o => !o)}>
-              <img decoding="async" className="ff-acct-logo" src={FF_SITE_BRAND[isVip ? "vip" : isPartners ? "partners" : isParty ? "party" : isStaff ? "staff" : "team"].icon} width={30} height={30} alt="" draggable={false} />
+              <img decoding="async" className="ff-acct-logo" src={FF_SITE_BRAND[isVip ? "vip" : isParty ? "party" : isStaff ? "staff" : "team"].icon} width={30} height={30} alt="" draggable={false} />
               <span style={{ lineHeight: 1.1, textAlign: "left" }}>
                 <Wordmark size={13} />
                 <span style={{ display: "block", fontSize: 9, letterSpacing: ".2em", color: "rgba(234,215,156,.7)", textTransform: "uppercase" }}>
-                  {isVip ? "VIP" : isPartners ? "Partners" : isParty ? "Party" : isStaff ? "Staff" : "Team"}
+                  {isVip ? "VIP" : isParty ? "Party" : isStaff ? "Staff" : "Team"}
                 </span>
               </span>
               <span aria-hidden="true" className="ff-acct-caret">
@@ -489,14 +491,14 @@ function Shell({ children }) {
                 <div className="ff-acct-menu" role="menu" aria-label="FireFlair sites">
                   {state.role && (
                     <div className="ff-acct-who">
-                      <div className="ff-acct-name">{isPartners ? ((((ptnMine(ptnGet(), ptnOwner(state)).partner) || {}).org) || "FF Partners") : isVip ? (((state.vip21 || {}).card || {}).name || "FF VIP") : isTeam ? (state.profile.name || state.session.tag || "Your profile") : ((state.company && state.company.name) || (isParty ? "FF Party" : "FF Staff"))}</div>
+                      <div className="ff-acct-name">{isVip ? (((state.vip21 || {}).card || {}).name || "FF VIP") : isTeam ? (state.profile.name || state.session.tag || "Your profile") : ((state.company && state.company.name) || (isParty ? "FF Party" : "FF Staff"))}</div>
                       <div className="ff-acct-sub">
-                        {isPartners ? "FF Partners" : isVip ? "FF VIP" : isTeam ? "FF Team" : isParty ? "FF Party" : "FF Staff"}{isPartners ? (state.session.tag ? ` · ${state.session.tag}` : "") : isVip ? (state.session.tag ? ` · ${state.session.tag}` : "") : isTeam ? (state.session.tag ? ` · ${state.session.tag}` : "") : (state.company && state.company.slug ? ` · ${CARD_DOMAIN}/${state.company.slug}` : "")}
+                        {isVip ? "FF VIP" : isTeam ? "FF Team" : isParty ? "FF Party" : "FF Staff"}{isVip ? (state.session.tag ? ` · ${state.session.tag}` : "") : isTeam ? (state.session.tag ? ` · ${state.session.tag}` : "") : (state.company && state.company.slug ? ` · ${CARD_DOMAIN}/${state.company.slug}` : "")}
                       </div>
                     </div>
                   )}
                   <div className="ff-acct-sect">FireFlair sites</div>
-                  {FF_SITES.filter(s => PHASE1.sitesShown.includes(s.key) && (ph17(state) >= 3 || s.key !== "partners")).sort((a, b) => ph17(state) >= 3 ? PHASE1.sitesShown.indexOf(a.key) - PHASE1.sitesShown.indexOf(b.key) : ({ party: ["party","vip","team","staff"], staff: ["staff","team","party","vip"], vip: ["vip","party","staff","team"], team: ["team","staff","party","vip"] }[currentSite || "team"] || ["team","staff","party","vip"]).indexOf(a.key) - ({ party: ["party","vip","team","staff"], staff: ["staff","team","party","vip"], vip: ["vip","party","staff","team"], team: ["team","staff","party","vip"] }[currentSite || "team"] || ["team","staff","party","vip"]).indexOf(b.key))
+                  {FF_SITES.filter(s => PHASE1.sitesShown.includes(s.key)).sort((a, b) => { const o = SITE_ORDER17[currentSite || "team"] || SITE_ORDER17.team; return o.indexOf(a.key) - o.indexOf(b.key); })
                   .map(s => (
                     <button key={s.key} type="button" role="menuitem" className={`ff-site${s.locked ? " locked" : ""}`} data-href={s.url}
                       aria-current={currentSite === s.key ? "page" : undefined} aria-disabled={s.locked || undefined}
@@ -512,8 +514,6 @@ function Shell({ children }) {
                         : <ChevronRight size={15} color="rgba(234,215,156,.7)" />}
                     </button>
                   ))}
-                  <AdminSiteItem17 onPick={() => setMenuOpen(false)} />
-                  <PhaseSwitch17 />
                   {authed && state.session.tag && (
                     <div className="ff-acct-foot">
                       <button type="button" role="menuitem" className="ff-acct-item" onClick={() => { setMenuOpen(false); setAcctOpen(true); }}>
@@ -528,7 +528,9 @@ function Shell({ children }) {
           {/* Home, Network, Bookings, Profile — centred in the bar on desktop. */}
           <nav className="ff-desknav" aria-label="Main">
             {/* v1.3: the FF coin sits to the right of Profile. */}
-            {NAV.filter(n => n.key !== "__ff").map(n => (
+            {NAV.filter(n => n.key !== "__ff").map(n => partyLocked && PARTY_LOCKED_TABS17.includes(n.key) ? (
+              <button key={n.key} type="button" className="ff-navlocked17" aria-disabled="true" aria-label={`${tabLabel17(n.key, state, n.label)}. ${LOCKED_LABEL17}`} title={LOCKED_LABEL17} onClick={(e) => e.preventDefault()}>{tabLabel17(n.key, state, n.label)}<Lock size={9} className="ff-locked17-ic" aria-hidden="true" /></button>
+            ) : (
               <button key={n.key} className={state.tab === n.key ? "on" : ""} aria-current={state.tab === n.key ? "page" : undefined} onClick={() => goTab(n.key)}>{tabLabel17(n.key, state, n.label)}</button>
             ))}
             <button key="__ff" type="button" className="ff-topcoin ff-navcoin" style={{ position: "relative" }} onClick={() => setNotifyOpen(true)} aria-label="Notifications"><Coin size={30} tier="gold" />{notifyCount17(state) > 0 && <i className="ff-nbadge11">{notifyCount17(state)}</i>}</button>
@@ -589,6 +591,10 @@ function Shell({ children }) {
                 <Coin size={56} tier={isTeam ? xpProgress(state.profile.xp).currentTier : "gold"} />{notifyCount17(state) > 0 && <i className="ff-nbadge11">{notifyCount17(state)}</i>}
               </button>
             </div>
+          ) : partyLocked && PARTY_LOCKED_TABS17.includes(n.key) ? (
+            <button key={n.key} type="button" className="ff-navbtn ff-navlocked17" aria-disabled="true" aria-label={`${tabLabel17(n.key, state, n.label)}. ${LOCKED_LABEL17}`} title={LOCKED_LABEL17} onClick={(e) => e.preventDefault()}>
+              <NavMark shape={n.mark} size={23} tone="#D8D6D0" /><Lock size={9} className="ff-locked17-ic" aria-hidden="true" />
+            </button>
           ) : (
             <button key={n.key} className={`ff-navbtn ${state.tab === n.key ? "on" : ""}`}
               onClick={() => goTab(n.key)} aria-label={tabLabel17(n.key, state, n.label)} aria-current={state.tab === n.key ? "page" : undefined} title={tabLabel17(n.key, state, n.label)}>

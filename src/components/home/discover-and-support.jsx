@@ -233,7 +233,7 @@
   /* One instance per page: second from bottom on every home page, last on every Network and Bookings page. */
   function BusinessSupport19() {
     const { state, dispatch } = useStore();
-    const dom = state.role === "partners" ? "FFParty.uk" : state.role === "team" || !state.role ? "FFTeam.uk" : state.site === "party" ? "FFParty.uk" : state.role === "vip" || state.site === "vip" ? "FFVIP.uk" : "FFStaff.uk";
+    const dom = state.role === "team" || !state.role ? "FFTeam.uk" : state.site === "party" ? "FFParty.uk" : state.role === "vip" || state.site === "vip" ? "FFVIP.uk" : "FFStaff.uk";
     const row = (k, label, value) => React.createElement("div", { key: k, className: "ff-biz19-row" }, React.createElement("dt", null, label), React.createElement("dd", null, value));
     return React.createElement("section", {
       className: "ff-sect ff-biz19",
@@ -561,7 +561,7 @@ function VipFounding20() {
           h("p", null, "Be one of our first " + lim + " VIP Hosts and enjoy exclusive FireFlair rates, special offers and member benefits."),
           left !== null ? h("span", { className: "ff-cp20-date" }, left.toLocaleString("en-GB") + " founding places left") : null,
           h("div", { className: "ff-cp20-btns" },
-            h(ShineButton, { onClick: go }, vip ? "Open your VIP Host Card" : "Create your VIP Host Card"),
+            h(LockedBtn17, { shine: true }, vip ? "Open your VIP Host Card" : "Create your VIP Host Card"),
             h(Button, { onClick: () => setInfo(true) }, "VIP details"))),
         h("div", null,
           h("div", { className: "ff-cp20-boxes" }, cfg.benefits.map((b, i) => h("button", { key: b.t, type: "button", className: "ff-cp20-box", onClick: () => setBox(i) }, h("b", null, b.t), h("span", null, b.s)))),

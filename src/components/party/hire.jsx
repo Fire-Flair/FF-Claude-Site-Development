@@ -48,8 +48,6 @@ const signedUp11 = (p, svcId) => {
 const svcsOf11 = (p) => (V101.PARTY_SERVICES || []).filter(sv => signedUp11(p, sv.id));
 
 
-/* Custom Service Cards a person offers, drawn from their own skills (sample data). */
-const customOf11 = (p) => (p.skills || []).slice(0, 2).map(s => ({ id: "cust_" + p.id + "_" + s, title: s, line: `${firstName(p.name)}'s own ${String(s).toLowerCase()} service, made to fit your event.` }));
 
 
 
@@ -88,21 +86,15 @@ function CompanyListing11({ co }) {
 function HireCards11({ person }) {
   const { state, dispatch } = useStore();
   if (!person || person.id === "me" || person.isCompany || !hireSiteOf(state).party || state.role !== "staff") return null;
-  const svcs = svcsOf11(person), custom = customOf11(person), first = firstName(person.name);
-  const book = () => {
-    if (!state.selection.includes(person.id)) dispatch({ type: "SELECT_ADD", id: person.id });
-    dispatch({ type: "V11_SET", patch: { bkView: { mode: "new", open: "event" } } });
-    dispatch({ type: "TAB", tab: "bookings" }); window.scrollTo(0, 0);
-  };
+  const svcs = svcsOf11(person), first = firstName(person.name);
   return (
     <section className="ff-hire11" aria-label={`Hire ${first}`}>
       <div className="ff-hire11-h"><h2>Hire {first}</h2></div>
-      {(svcs.length > 0 || custom.length > 0) && <>
+      {svcs.length > 0 && <>
         <div className="ff-hire11-k">Services</div>
         {svcs.length > 0 && <HScroll label="FireFlair Service Cards">
           {svcs.map(sv => <div key={sv.id} style={{ width: CARD_W.poster, flex: "none" }}><V101.ServicePoster svc={sv} /></div>)}
         </HScroll>}
-        {custom.length > 0 && <ul className="ff-hire11-c" aria-label={`${first}'s own Custom Service Cards`}>{custom.map(c => <li key={c.id}><I11.Sparkles size={15} /><span><b>{c.title}</b><small>{c.line}</small></span></li>)}</ul>}
       </>}
     </section>
   );
@@ -113,11 +105,10 @@ function HireCards11({ person }) {
 /* In the quick card pop-up on FF Party: they can be hired, and for what. */
 function PeekHire11({ p }) {
   if (!p || p.isCompany || p.id === "me") return null;
-  const svcs = svcsOf11(p), custom = customOf11(p);
+  const svcs = svcsOf11(p);
   return (
     <div className="ff-peekhire">
       {svcs.length > 0 && <ul className="sv">{svcs.map(sv => <li key={sv.id} className={sv.tone}><b>{sv.level}</b>{sv.title}</li>)}</ul>}
-      {custom.length > 0 && <ul className="cu">{custom.map(c => <li key={c.id}><I11.Sparkles size={12} />{c.title}</li>)}</ul>}
     </div>
   );
 }

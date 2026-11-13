@@ -185,7 +185,7 @@ function Photo17({ src, fallback, edit, onChange, label = "Add a photo", icon: P
 const slug17 = (t) => String(t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
 
-const PATH17 = { cocktail: "cocktails", service: "services", post: "stories" };
+const PATH17 = { cocktail: "cocktails", service: "services" };
 
 
 /* The same base on every card, the one the Profile Card has: the coin and the owner's FF Tag address. */
@@ -556,110 +556,12 @@ function ServiceBack17({ s, edit, set }) {
 
 
 /* ---- Blog post: FireFlair Stories -------------------------------------------------------------- */
-const POST_CATS17 = ["Story", "How-to", "Travel", "Question", "News", "Recipe"];
-
-
-const NEW_POST17 = () => ({ id: uid("bp"), cat: "Story", title: "", intro: "", photo: "", date: today17(), body: "", places: [], socials: [], media: [] });
-
-
-/* Cocktail bars and cities to tag. Free text works too; a Google Maps place replaces this list later. */
-const PLACES17 = [["Connaught Bar", "London"], ["Nightjar", "London"], ["Dukes Bar", "London"], ["Satan's Whiskers", "London"], ["Dante", "New York"], ["Attaboy", "New York"],
-  ["Employees Only", "New York"], ["Little Red Door", "Paris"], ["Harry's Bar", "Venice"], ["Locale", "Florence"], ["Paradiso", "Barcelona"], ["Bar Trench", "Tokyo"],
-  ["Bar High Five", "Tokyo"], ["Manhattan", "Singapore"], ["Native", "Singapore"], ["Himkok", "Oslo"], ["Handshake Speakeasy", "Mexico City"], ["Floridita", "Havana"]];
-
-
-const CITIES17 = ["London", "Edinburgh", "Manchester", "Paris", "Barcelona", "Venice", "Florence", "Tokyo", "Singapore", "Hong Kong", "New York", "Mexico City", "Oslo", "Copenhagen", "Havana", "Sydney", "Dubai", "Berlin", "Athens", "Lisbon"];
-
-
-function PlaceTag17({ value = [], onChange, edit }) {
-  const [t, setT] = useState("");
-  const [open, setOpen] = useState(false);
-  const q = t.trim().toLowerCase();
-  const hits = q.length < 2 ? [] : [...PLACES17.filter(([n, c]) => `${n} ${c}`.toLowerCase().includes(q)).map(([n, c]) => `${n}, ${c}`), ...CITIES17.filter(c => c.toLowerCase().includes(q))]
-    .filter(x => !value.includes(x)).slice(0, 6);
-  const add = (v) => { v = String(v).trim(); if (v && !value.includes(v) && value.length < 8) onChange([...value, v]); setT(""); setOpen(false); };
-  if (!edit && !value.length) return null;
-  return (
-    <div className="ff-c17-place">
-      <div className="ff-c17-chips">
-        {value.map(v => <span key={v} className="chip"><S17I.MapPin size={11} />{v}{edit && <button type="button" aria-label={`Remove ${v}`} onClick={() => onChange(value.filter(x => x !== v))}><S17I.X size={10} /></button>}</span>)}
-      </div>
-      {edit && value.length < 8 && (
-        <div className="srch">
-          <S17I.Search size={13} />
-          <input value={t} placeholder="Search a bar or a city" aria-label="Search a bar or a city" onChange={(e) => { setT(e.target.value); setOpen(true); }} onFocus={() => setOpen(true)}
-            onBlur={() => setTimeout(() => setOpen(false), 150)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); add(hits[0] || t); } }} />
-          {open && q.length > 1 && (
-            <ul role="listbox" aria-label="Places">
-              {hits.map(h => <li key={h}><button type="button" onPointerDown={(e) => { e.preventDefault(); add(h); }}><S17I.MapPin size={12} />{h}</button></li>)}
-              {!hits.some(h => h.toLowerCase() === q) && <li><button type="button" onPointerDown={(e) => { e.preventDefault(); add(t); }}><S17I.Plus size={12} />Add “{t.trim()}”</button></li>}
-            </ul>)}
-        </div>)}
-    </div>
-  );
-}
-
-
-function PostFront17({ p, edit, set, by }) {
-  return (<>
-    <Photo17 src={p.photo} fallback="dream_after_dark" edit={edit} onChange={(photo) => set({ photo })} label="Add a cover photo" />
-    <div className="ff-c17-body post">
-      <div className="ff-c17-pm">
-        {edit ? <select value={p.cat} onChange={(e) => set({ cat: e.target.value })} aria-label="Kind of story">{POST_CATS17.map(c => <option key={c}>{c}</option>)}</select> : <span className="cat">{p.cat}</span>}
-        <span className="dt">{p.date}</span>
-      </div>
-      {edit ? <Grow17 className="ttl" value={p.title} onChange={(title) => set({ title })} placeholder="Name your story" max={90} />
-        : <h3 className="ttl">{p.title || "Untitled story"}</h3>}
-      {edit ? <Grow17 className="note" value={p.intro} onChange={(intro) => set({ intro })} placeholder="Introduce your story" max={180} />
-        : (p.intro && <p className="note">{p.intro}</p>)}
-      <div className="by">By <b>{by}</b></div>
-      {!edit && <Chips17 edit={false} value={p.places} icon={S17I.MapPin} />}
-    </div>
-  </>);
-}
-
-
-function Media17({ value = [], onChange, edit, max = 10 }) {
-  const add = async (e) => {
-    const files = [...(e.target.files || [])].slice(0, max - value.length); e.target.value = "";
-    const out = [];
-    for (const f of files) { try { out.push(await shrinkPhoto(f, 900)); } catch (_) {} }
-    if (out.length) onChange([...value, ...out].slice(0, max));
-  };
-  if (!edit && !value.length) return null;
-  return (
-    <div className="ff-c17-media">
-      {value.map((src, i) => (
-        <span className="m" key={i}><img decoding="async" src={src} alt="" draggable={false} />{edit && <button type="button" aria-label="Remove photo" onClick={() => onChange(value.filter((_, j) => j !== i))}><S17I.X size={11} /></button>}</span>))}
-      {edit && value.length < max && <label className="m add"><input type="file" accept="image/*" multiple onChange={add} /><S17I.Camera size={16} /><small>{value.length}/{max}</small></label>}
-    </div>
-  );
-}
-
-
-function PostBack17({ p, edit, set }) {
-  return (
-    <div className="ff-c17-body back post">
-      <b className="h"><S17I.BookOpen size={14} /> {p.title || "Your story"}</b>
-      {edit ? <Grow17 className="long" value={p.body} onChange={(body) => set({ body })} placeholder="Write it the way you would tell it. A story from a shift, the answer to a question you get asked, a place worth travelling to…" max={4000} />
-        : <div className="long">{String(p.body || "").split(/\n{2,}/).filter(Boolean).map((t, i) => <p key={i}>{t}</p>)}</div>}
-      <div className="ff-c17-f"><small><S17I.MapPin size={12} /> Places</small><PlaceTag17 edit={edit} value={p.places} onChange={(places) => set({ places })} /></div>
-      <div className="ff-c17-f"><small><S17I.AtSign size={12} /> Tagged</small><Chips17 edit={edit} value={p.socials} onChange={(socials) => set({ socials })} placeholder="@someone or #tag" /></div>
-      {(edit || (p.media || []).length > 0) && <div className="ff-c17-f"><small><S17I.Camera size={12} /> Photos</small><Media17 edit={edit} value={p.media || []} onChange={(media) => set({ media })} /></div>}
-    </div>
-  );
-}
-
-
-
 /* ---- One studio per card type: your cards, and the card you are making ------------------------ */
 const STUDIO17 = {
   cocktail: { key: "myCocktails", title: "Cocktails", plate: "Signature Cocktail", plateOf: (x) => (x && x.style === "classic" ? "Classic Cocktail" : "Signature Cocktail"), back: "Recipe", icon: S17I.Martini, add: "New cocktail", make: NEW_COCKTAIL17, ok: (x) => String(x.name).trim(), name: (x) => x.name, tone: () => "dark",
     Front: ({ x, edit, set }) => <CocktailFront17 c={x} edit={edit} set={set} />, Back: ({ x, edit, set }) => <CocktailBack17 c={x} edit={edit} set={set} /> },
   service: { key: "myServices", title: "Service Cards", plate: "Service Card", back: "Details", icon: S17I.Sparkles, add: "New Service Card", make: NEW_SERVICE17, ok: (x) => String(x.title).trim(), name: (x) => x.title, tone: () => "ivory",
     Front: ({ x, edit, set, site }) => <ServiceFront17 s={x} edit={edit} set={set} site={site} />, Back: ({ x, edit, set }) => <ServiceBack17 s={x} edit={edit} set={set} /> },
-  post: { key: "myPosts", title: "FireFlair Stories", plate: "FireFlair Stories", back: "The story", icon: S17I.BookOpen, add: "New story", make: NEW_POST17, ok: (x) => String(x.title).trim(), name: (x) => x.title, tone: () => "ivory",
-    Front: ({ x, edit, set, by }) => <PostFront17 p={x} edit={edit} set={set} by={by} />, Back: ({ x, edit, set }) => <PostBack17 p={x} edit={edit} set={set} /> },
 };
 
 
@@ -735,7 +637,6 @@ function Studio17({ type, site, by, tag, k: listKey, seed, profile }) {
           <StudioPair17 key={draft.id} type={type} x={draft} edit set={(p) => setDraft(d => ({ ...d, ...p }))} site={site} by={by} tag={tag} />
           <div className="ff-c17-addr"><S17I.Link2 size={13} /><span>{addr(draft)}</span></div>
           {type === "service" && <TermsBox17 s={draft} set={(p) => setDraft(d => ({ ...d, ...p }))} />}
-          {type === "post" && <V101.StoryPreview17 p={draft} by={by} />}
           {err && <p className="ff-st17-err" role="alert">{err}</p>}
           <div className="acts">
             <Btn variant="primary" onClick={done} disabled={!T.ok(draft) || busy}><S17I.Check size={14} /> {busy ? "Saving…" : "Save"}</Btn>
@@ -761,6 +662,12 @@ function Studio17({ type, site, by, tag, k: listKey, seed, profile }) {
 }
 
 
+/* Phase 2: the card builders work and save, but are marked Coming soon: a very small lock beside the section title. */
+function SoonTitle17({ children }) {
+  return <span className="ff-soon17-t">{children}<span className="ff-soon17"><Lock size={9} aria-hidden="true" /> {LOCKED_LABEL17}</span></span>;
+}
+
+
 function Sec17({ icon, title, count, children, id, first }) {
   const [open, setOpen] = useState(!!first);
   return <StaffBox id={id} icon={icon} title={title} count={count} open={open} onToggle={() => setOpen(o => !o)}>{children}</StaffBox>;
@@ -770,7 +677,6 @@ function Sec17({ icon, title, count, children, id, first }) {
 const BULK17 = {
   cocktail: { label: "Cocktail menu", icon: S17I.Martini, ph: "Upload a menu photo, or paste your drinks" },
   service: { label: "Service packages", icon: S17I.Sparkles, ph: "Upload your packages, or describe them" },
-  post: { label: "Stories", icon: S17I.BookOpen, ph: "Paste a post or a link, or describe a night" },
 };
 
 
@@ -799,50 +705,24 @@ function Creators17({ kind, by: byIn }) {
   const tag = team ? (state.auth.tag || state.session.tag || "yourtag") : ((state.company || {}).slug || (demoCo && demoCo.slug) || "yourbusiness");
   const bizKeys = team ? {} : { cocktail: "coCocktails17", service: "coServices17" };
   const seeds = team ? {} : coSeeds17(state);
-  const types = ["cocktail", "service", "post"];
+  const types = ["cocktail", "service"];
   const count = (t) => team ? myContent17(state, PC17_KINDS[t]).length : (state[bizKeys[t] || STUDIO17[t].key] || seeds[t] || []).length;
   return (
     <section className="ff-cr17" aria-labelledby="ff-cr17-h">
       <h2 id="ff-cr17-h" className="ff-done17-h">Build your packages</h2>
       {types.map((t, i) => { const T = STUDIO17[t]; return (
-        <Sec17 key={t} first={i === 0} id={`ff-cr17-${t}`} icon={T.icon} title={t === "cocktail" ? "Signature cocktails" : T.title} count={count(t)}><Studio17 type={t} site={site} by={by} tag={tag} k={bizKeys[t]} seed={seeds[t]} profile={team} /></Sec17>); })}
+        <Sec17 key={t} first={i === 0} id={`ff-cr17-${t}`} icon={T.icon} title={<SoonTitle17>{t === "cocktail" ? "Signature cocktails" : T.title}</SoonTitle17>} count={count(t)}><Studio17 type={t} site={site} by={by} tag={tag} k={bizKeys[t]} seed={seeds[t]} profile={team} /></Sec17>); })}
     </section>
   );
 }
 
 
 
-/* The Packages tab on a profile: the person's own Service Cards and Signature Cocktails, then the Q&A. */
+/* The Packages tab on a profile: the Q&A. In Phase 2 what a person saves in the card builders (Signature cocktails, Service Cards)
+   is kept on their profile editor only and is not shown on any public view. */
 function PkgExtras17({ person }) {
-  const { state } = useStore();
-  const [view, setView] = useState(null);
-  const mine = person.id === "me";
-  const contentOf = state.viewingAsGuest ? publicContent17 : myContent17;
-  const svs = mine && !state.viewingAsGuest ? contentOf(state, "services").filter(x => String(x.title).trim() && !hid17(state, "cards", x.id)) : [];
-  const cks = mine ? contentOf(state, "cocktails").filter(x => String(x.name).trim() && !hid17(state, "cards", x.id)) : [];
-  const sts = mine ? contentOf(state, "stories").filter(x => String(x.title).trim() && !hid17(state, "cards", x.id)) : [];
-  const by = person.name || "You";
-  const tag = state.auth.tag || state.session.tag || "yourtag";
-  const grid = (type, list) => <div className="ff-pkg17-grid">{list.map(x => (
-    <div key={x.id} className="ff-pkg17-tap" role="button" tabIndex={0} aria-label={`Open ${STUDIO17[type].name(x)}`} onClick={() => setView({ type, x })} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setView({ type, x }); } }}>
-      <StudioPair17 type={type} x={x} site="FF Team" by={by} tag={tag} size="lg" only />
-    </div>))}</div>;
-  return (
-    <>
-      {svs.length > 0 && <section className="ff-pkg17"><h2 className="ff-about-h">Service cards</h2>{grid("service", svs)}</section>}
-      {cks.length > 0 && <section className="ff-pkg17"><h2 className="ff-about-h">Cocktails</h2>{grid("cocktail", cks)}</section>}
-      {sts.length > 0 && <section className="ff-pkg17"><h2 className="ff-about-h">FireFlair Stories</h2>{grid("post", sts)}</section>}
-      <PublicQA person={person} />
-      {view && <CardPop17 type={view.type} x={view.x} site="FF Team" by={by} tag={tag} onClose={() => setView(null)} />}
-    </>
-  );
+  return <PublicQA person={person} />;
 }
-
-
-
-/* ---- FF Party booking: a host's base packages, and add-ons with quantities -------------------- */
-const svcFrom17 = (x) => ({ id: "my_" + x.id, tone: "silver", level: x.type === "addon" ? "Add-on" : "Package",
-  title: x.title, tagline: x.tagline, includes: x.includes, ideal: x.ideal, time: x.time, price: x.price ? `£${x.price}${x.priceFor ? " " + x.priceFor : ""}` : "" });
 
 
 

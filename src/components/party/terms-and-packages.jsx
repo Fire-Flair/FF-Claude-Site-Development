@@ -80,7 +80,6 @@ function TermsRow17() {
 /* Tab names, by site: FF Party is Home, Browse, Book, Party. FF Staff is Home, Our people, Your bookings, Your business. */
 const tabLabel17 = (key, state, dflt) => {
   const staff = state.role === "staff", party = staff && state.site === "party";
-  if (state.role === "partners") return ({ network: "People" })[key] || dflt;
   if (state.role === "vip") return ({ network: "Experiences", bookings: "Book", profile: "My card" })[key] || dflt;
   if (party) return ({ network: "Browse", bookings: "Book", profile: "Party" })[key] || dflt;
   if (staff) return ({ network: "Our people", bookings: "Your bookings", profile: "Your business" })[key] || dflt;
@@ -172,9 +171,15 @@ function PkgCard17({ svc, n, noun, match, on, onToggle, onInfo }) {
   const { state } = useStore();
   const Ic = PKICON17[svc.cat] || S17I.Sparkles;
   const inc = bul17(svc.includes), ideal = bul17(svc.ideal);
+  /* Phase 2: on FF Party the card shows the package; its Book now is locked. Tapping the card opens the details. */
+  const locked = pkgCta17(state, on) === "Book now";
+  const Card = locked ? "div" : "button";
+  const cardProps = locked
+    ? { role: "group", tabIndex: 0, "aria-label": svc.title, style: { cursor: onInfo ? "pointer" : "default" }, onClick: onInfo || undefined, onKeyDown: (e) => { if (onInfo && e.target === e.currentTarget && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); onInfo(); } } }
+    : { type: "button", onClick: onToggle, "aria-pressed": !!on, "aria-label": `${svc.title}: ${pkgCta17(state, on)}` };
   return (
     <div className={`ff-pk17w rd${on ? " sel" : ""}`} data-pk17={svc.id} data-pk17-alt={svc.title === "BYOB" ? "byob" : ""}>
-      <button type="button" className={`ff-lst ff-pk17 rd ${svc.tone || ""}${match ? " match" : ""}`} onClick={onToggle} aria-pressed={!!on} aria-label={`${svc.title}: ${pkgCta17(state, on)}`}>
+      <Card className={`ff-lst ff-pk17 rd ${svc.tone || ""}${match ? " match" : ""}`} {...cardProps}>
         <span className="ph" style={svc.img ? { backgroundImage: `linear-gradient(rgba(10,8,8,.12),rgba(10,8,8,.55)), url(${svc.img})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}>
           <span className="pl">FF Party</span>
           <span className="cn"><Coin size={30} tier="gold" /></span>
@@ -186,9 +191,10 @@ function PkgCard17({ svc, n, noun, match, on, onToggle, onInfo }) {
           {inc.length > 0 && <span className="bl"><i>Includes</i><ul>{inc.map(x => <li key={x}>{x}</li>)}</ul></span>}
           {ideal.length > 0 && <span className="bl"><i>Ideal for</i><ul>{ideal.map(x => <li key={x}>{x}</li>)}</ul></span>}
           {(svc.by && svc.by !== "FF Party" && svc.by !== "FireFlair") || n > 0 ? <span className="by">{svc.by && svc.by !== "FF Party" && svc.by !== "FireFlair" ? svc.by : `${n} ${noun} to choose from`}</span> : null}
-          <span className={"go" + (pkgCta17(state, on) === "Book now" || pkgCta17(state, on) === "Added" ? " gold" : "")}>{on ? <><S17I.Check size={13} strokeWidth={2.6} /> {pkgCta17(state, on)}</> : pkgCta17(state, on)}</span>
+          {locked ? <LockedBtn17 bare className="go gold">Book now</LockedBtn17>
+            : <span className={"go" + (pkgCta17(state, on) === "Book now" || pkgCta17(state, on) === "Added" ? " gold" : "")}>{on ? <><S17I.Check size={13} strokeWidth={2.6} /> {pkgCta17(state, on)}</> : pkgCta17(state, on)}</span>}
         </span>
-      </button>
+      </Card>
       {onInfo && <button type="button" className="inf" aria-label={`${svc.title}: details`} onClick={onInfo}><S17I.Info size={16} strokeWidth={2} /></button>}
     </div>
   );
@@ -258,7 +264,7 @@ function PkgSheet17({ svc, qual, onClose }) {
         {svc.id === "svc_full" && <div className="ff-br17-qual" role="group" aria-label="Preferred quality">
           {QUALITY17.map(o => <button key={o.k} type="button" className={`${o.k}${qual === o.k ? " on" : ""}`} aria-pressed={qual === o.k} onClick={() => dispatch({ type: "V11_SET", patch: { br17: { ...(state.br17 || {}), q: qual === o.k ? "" : o.k } } })}><b>{o.label}</b></button>)}
         </div>}
-        <button type="button" className="ff-pks17-go" aria-pressed={on} onClick={toggle}>{on ? <><S17I.Check size={16} strokeWidth={2.6} /> In your basket</> : <><S17I.Plus size={16} /> Add to basket</>}</button>
+        {pkgCta17(state, false) === "Book now" ? <LockedBtn17 bare className="ff-pks17-go">Add to basket</LockedBtn17> :         <button type="button" className="ff-pks17-go" aria-pressed={on} onClick={toggle}>{on ? <><S17I.Check size={16} strokeWidth={2.6} /> In your basket</> : <><S17I.Plus size={16} /> Add to basket</>}</button>}
         <button type="button" className={`ff-pks17-fav${inF ? " on" : ""}`} aria-pressed={inF} onClick={toggleF}><S17I.Heart size={16} fill={inF ? "currentColor" : "none"} /> {inF ? "In your favourites" : "Add to favourites"}</button>
       </div>
     </Sheet>

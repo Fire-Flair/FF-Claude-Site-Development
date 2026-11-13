@@ -70,8 +70,8 @@ function an17ViewEnd() { if (AN17.cur && AN17.since) track17("view_end", { ms: D
 
 /* Runs in the root render. Watches the screen and a few funnel signals; a few listeners for the whole page. */
 function useAnalytics17(state) {
-  const site = state.role === "partners" ? "FF Partners" : state.role === "team" ? "FF Team" : state.site === "party" ? "FF Party" : state.role === "staff" ? "FF Staff" : "FF Team";
-  const screen = state.adminOpen17 ? "FF Admin" : [site, state.viewingCompany ? "company page" : state.viewing ? "profile page" : (state.tab || "home"), typeof state.route === "string" && !/home|entry/i.test(state.route) ? state.route : ""].filter(Boolean).join(" / ");
+  const site = state.role === "team" ? "FF Team" : state.site === "party" ? "FF Party" : state.role === "staff" ? "FF Staff" : "FF Team";
+  const screen = [site, state.viewingCompany ? "company page" : state.viewing ? "profile page" : (state.tab || "home"), typeof state.route === "string" && !/home|entry/i.test(state.route) ? state.route : ""].filter(Boolean).join(" / ");
   const prev = useRef({});
   useEffect(() => {
     an17Session(state.auth && state.auth.tag);

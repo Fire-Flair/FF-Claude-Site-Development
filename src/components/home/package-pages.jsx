@@ -211,6 +211,7 @@ function Css18() { return h18("style", null, CSS18); }
 
 function PkgBody18({ m, onPlan }) {
   const sv = m.sv;
+  const partyOnly = pk18Site(useStore().state).party;
   const inc = m.more && m.more.length ? m.more : [sv.includes];
   return h18("div", { className: "ff-pk18" },
     h18("p", { className: "ff-pk18-eb" }, "FireFlair Package"),
@@ -225,7 +226,7 @@ function PkgBody18({ m, onPlan }) {
       h18("div", null, h18("dt", null, "Price"), h18("dd", null, sv.price))),
     h18("ol", { className: "ff-pk18-steps" }, ["Choose your package", "Choose your people", "Choose your add\u2011ons", "Your booking is secured"].map((t, i) => h18("li", { key: t }, h18("span", null, i + 1), t))),
     h18("p", { className: "ff-pk18-g" }, h18("b", null, "The FireFlair Booking Guarantee. "), "Confirmed, or refunded in full."),
-    h18("div", { className: "ff-pk18-cta" }, h18(ShineButton, { onClick: onPlan }, "Plan your event")));
+    h18("div", { className: "ff-pk18-cta" }, partyOnly ? h18(LockedBtn17, { shine: true }, "Plan your event") : h18(ShineButton, { onClick: onPlan }, "Plan your event")));
 }
 
 /* v17.4.7.18 the package card button, by site: FF Team Sign up, FF Staff Create your own, FF Party Book now (gold, shiny). */
@@ -250,6 +251,7 @@ function pk18Act(st, m, hire) {
 
 function PkgBtn18({ st, m, hire, onDone, full }) {
   const site = pk18Site(st.state);
+  if (site.party) return h18(LockedBtn17, { className: "ff-pk18-go" + (full ? " full" : ""), variant: "gold", shine: true }, site.label);
   return h18("button", { type: "button", className: "ff-btn ff-pk18-go" + (full ? " full" : "") + (site.party ? " gold ff-shine" : ""), onClick: (e) => { e.stopPropagation(); if (onDone) onDone(); pk18Act(st, m, hire); } }, site.label);
 }
 

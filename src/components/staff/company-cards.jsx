@@ -883,11 +883,11 @@ function CompanySections() {
 
           {tab === "services" && (<>
             <section id="ff-co-svc" style={{ marginTop: 22 }}>
-              <SectionHead icon={<I11.Sparkles size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Packages" count={cards.services.length} action={<CategoryToggle sectionKey="co_svc" defaultOpen={false} />} />
+              <SectionHead icon={<I11.Sparkles size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={<SoonTitle17>Packages</SoonTitle17>} count={cards.services.length} action={<CategoryToggle sectionKey="co_svc" defaultOpen={false} />} />
               {vis("co_svc") && <Studio17 type="service" site="FF Staff" by={String(c.name || "").trim() || "You"} tag={c.slug || "yourbusiness"} k="coServices17" seed={seeds.service} />}
             </section>
             <section id="ff-co-ck" style={{ marginTop: 22 }}>
-              <SectionHead icon={<I11.Martini size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Cocktails" count={cards.cocktails.length} action={<CategoryToggle sectionKey="co_ck" defaultOpen={false} />} />
+              <SectionHead icon={<I11.Martini size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={<SoonTitle17>Cocktails</SoonTitle17>} count={cards.cocktails.length} action={<CategoryToggle sectionKey="co_ck" defaultOpen={false} />} />
               {vis("co_ck") && <Studio17 type="cocktail" site="FF Staff" by={String(c.name || "").trim() || "You"} tag={c.slug || "yourbusiness"} k="coCocktails17" seed={seeds.cocktail} />}
             </section>
             <section id="ff-co-questions" style={{ marginTop: 22 }}>

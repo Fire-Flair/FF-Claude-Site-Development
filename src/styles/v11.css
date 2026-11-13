@@ -3300,9 +3300,6 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 
 /* v17.4 — FF Admin */
 .ff .ff-dev17.tag { position:static; display:inline-block; padding:3px 7px; font-size:11px; border-width:1.5px; border-radius:6px; white-space:nowrap; }
-.ff .ff-site-adm { border-top:1px dashed rgba(224,0,122,.45); margin-top:4px; }
-.ff .ff-site-adm .ff-site-admark { flex:none; width:30px; height:30px; border-radius:50%; display:grid; place-items:center; background:#2A1A20; color:#F3DE9C; border:1px solid rgba(234,215,156,.45); }
-.ff .ff-site-adm .ff-dev17.tag { margin-top:5px; }
 .ff .ff-adm { --a-ink:#16130F; --a-sub:#6A6253; --a-line:rgba(126,97,29,.22); --a-card:#FFFDF8; --a-gold:#B08D2A; color:var(--a-ink); margin:-8px -4px 0; }
 .ff .ff-adm-top { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; padding:14px 16px; border-radius:20px; background:linear-gradient(135deg,#120A0B,#2A1218); color:#F7EED8; box-shadow:var(--lift-1); }
 .ff .ff-adm-top .l { display:flex; align-items:center; gap:10px; }
@@ -3559,15 +3556,8 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-adm-af17 .ln .mn{flex:1;min-width:160px}
 
 /* v17.3.45: Phase 2 / Phase 3 switch in the site menu */
-.ff .ff-phase17{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;margin:6px 0 0;border-top:1px solid rgba(234,215,156,.25)}
-.ff .ff-phase17 .lb{font-size:12px;letter-spacing:.08em;text-transform:uppercase;opacity:.75}
-.ff .ff-phase17 .seg{display:inline-flex;border:1px solid rgba(234,215,156,.5);border-radius:999px;overflow:hidden}
-.ff .ff-phase17 .seg button{font:inherit;font-size:12px;padding:6px 12px;background:transparent;color:inherit;border:0;cursor:pointer}
-.ff .ff-phase17 .seg button.on{background:rgba(234,215,156,.9);color:#1a1209;font-weight:600}
-.ff .ff-phase17 .seg button{white-space:nowrap}.ff .ff-phase17 .lb{white-space:nowrap}
 
 /* v17.3.46: cocktail browser + launch note */
-.ff .ff-br17-launch { margin:0 0 14px; padding:10px 14px; border-radius:12px; background:rgba(201,162,39,.12); border:1px solid rgba(201,162,39,.4); font-size:14px; line-height:1.45; color:var(--ink); }
 .ff .ff-br17-ck { margin-top:22px; }
 .ff .ff-br17-cksub { margin:-4px 0 10px; font-size:14px; color:var(--muted); }
 .ff .ff-br17-ckc { all:unset; box-sizing:border-box; display:block; cursor:pointer; flex:none; border-radius:22px; }
@@ -4391,3 +4381,16 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
   animation:ffrimorbit 5s linear infinite; box-shadow:0 14px 34px -14px rgba(201,162,39,.55); }
 .ff .ff-finale #ff-sec-share.ff-publishcard::after { content:""; position:absolute; top:-20%; bottom:-20%; left:-60%; width:30%; transform:skewX(-20deg); pointer-events:none; background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,236,170,.28),rgba(255,255,255,0)); animation:ffgoldshine 4s ease-in-out infinite; }
 @media (prefers-reduced-motion:reduce) { .ff .ff-finale #ff-sec-share.ff-publishcard, .ff .ff-finale #ff-sec-share.ff-publishcard::after { animation:none; } }
+
+/* Phase 2: the one locked control for FF Party actions (display only). */
+.ff .ff-locked17, .ff button.ff-btn.ff-locked17 { opacity:.55; cursor:not-allowed; filter:saturate(.55); display:inline-flex; align-items:center; justify-content:center; gap:6px; animation:none !important; pointer-events:auto; }
+.ff .ff-locked17::before, .ff .ff-locked17::after { display:none !important; animation:none !important; }
+.ff .ff-locked17 .ff-locked17-ic { flex:none; width:11px; height:11px; }
+.ff .ff-locked17:hover, .ff .ff-locked17:active { transform:none; box-shadow:none; }
+.ff .ff-navlocked17 { opacity:.55; cursor:not-allowed; }
+.ff .ff-navlocked17 .ff-locked17-ic { width:9px; height:9px; margin-left:4px; vertical-align:-1px; }
+.ff .ff-navbtn.ff-navlocked17 { position:relative; }
+.ff .ff-navbtn.ff-navlocked17 .ff-locked17-ic { position:absolute; right:calc(50% - 20px); top:6px; margin:0; }
+
+.ff .ff-soon17-t { display:inline-flex; align-items:center; flex-wrap:wrap; gap:4px 8px; }
+.ff .ff-soon17 { display:inline-flex; align-items:center; gap:3px; font-size:9px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; opacity:.7; white-space:nowrap; }

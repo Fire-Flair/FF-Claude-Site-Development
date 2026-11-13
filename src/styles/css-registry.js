@@ -8,4 +8,4 @@ const TRIAL_DESIGN_CSS = __ff_css("styles/trial-design.css");
 const V101_CSS = __ff_css("styles/tokens.css", "styles/v101.css");
 
 
-const V11_CSS = __ff_css("styles/v11.css", "styles/partners.css");
+const V11_CSS = __ff_css("styles/v11.css");

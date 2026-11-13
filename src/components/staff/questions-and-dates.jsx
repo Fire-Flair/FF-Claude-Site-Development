@@ -133,8 +133,10 @@ const I11 = {
 
 /* ---- State: one small reducer in front of the main one ------------------- */
 function v11Reducer(s, a) {
-  /* v17.4: leaving FF Admin — any move to a tab, a site or a profile closes it first. */
-  if (s.adminOpen17 && ["TAB", "ROLE", "VIEW", "VIEW_COMPANY"].includes(a.type)) return reducer({ ...s, adminOpen17: false }, a);
+  /* Phase 2: FF Party is display only. Book and Party (the host profile) cannot be opened, whatever asks for them. */
+  if (isPartySite17(s) && a.type === "TAB" && PARTY_LOCKED_TABS17.includes(a.tab)) return s;
+  if (isPartySite17(s) && a.type === "TAB" && PARTY_LOCKED_ROUTES17.includes(a.route)) return v11Reducer(s, { ...a, route: undefined });
+  if (isPartySite17(s) && a.type === "GO" && PARTY_LOCKED_ROUTES17.includes(a.route)) return s;
   const booked = v11BookReducer(s, a); if (booked) return booked;
   switch (a.type) {
     case "ADMIN17": return admin17Reduce(s, a);

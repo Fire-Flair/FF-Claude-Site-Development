@@ -127,7 +127,7 @@ const FIRE17_STILL = __ff_json("content/data/fire17-still.json");
       className: "ff-hero-sub101"
     }, c.sub), React.createElement("div", {
       className: kind === "party" ? "ff-hero17-cta two" : "ff-hero17-cta"
-    }, React.createElement(ShineButton, {
+    }, kind === "party" ? React.createElement(LockedBtn17, { shine: true, icon: React.createElement(CalDays11, { size: 15 }) }, c.cta) : React.createElement(ShineButton, {
       onClick: nav.toEvent
     }, React.createElement(CalDays11, {
       size: 15
@@ -796,7 +796,10 @@ const FIRE17_STILL = __ff_json("content/data/fire17-still.json");
       className: "ff-join-h"
     }, c.h), React.createElement("p", {
       className: "ff-join-t"
-    }, c.t), React.createElement(ShineButton, {
+    }, c.t), kind === "party" ? React.createElement(LockedBtn17, {
+      shine: true,
+      icon: React.createElement(c.icon, { size: 15 })
+    }, c.b) : React.createElement(ShineButton, {
       onClick: c.go
     }, React.createElement(c.icon, {
       size: 15

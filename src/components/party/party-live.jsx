@@ -139,12 +139,6 @@ function seedDemo17(state, dispatch, kind) {
     base: "North London", areas: ["London", "Hertfordshire", "Essex"], equipment: "Portable bar, glassware, ice, garnishes", extras: ["Extra bartender", "Cocktail masterclass"], events: ["Birthdays", "Weddings", "Launches"],
     guests: "20 to 80", bands: ["s", "m"], cat: "bar", staff: "1 bartender", setup: "45 minutes before", provides: "A table near power and water", days: ["Thu", "Fri", "Sat", "Sun"], keywords: ["Cocktail bartender", "Mixologist"] },
     { ...NEW_SERVICE17(), type: "addon", tone: "bronze", title: "Extra bartender", tagline: "A second pair of hands behind the bar.", includes: "One more bartender for the night", ideal: "Larger guest lists", time: "4 hours", base: "North London", areas: ["London"], staff: "1 bartender", keywords: ["Extra bartender"] }];
-  const demoStory = {
-    id: uid("bp"), cat: "Story", title: "A night at the Connaught Bar", intro: "Why the martini trolley is still worth the trip.", photo: "", date: today17(),
-    body: "Space comes first. A bar needs a flat surface about two metres long, close to power and water, out of the main walkway.\n\nThen ice. Plan on about a third of a kilo per guest for the night, more in summer.\n\nFinally the menu. Three or four cocktails is plenty: one long and refreshing, one classic, one stronger sipper and one alcohol-free.",
-    places: ["Connaught Bar, London"], socials: ["@fireflair", "#houseparty"] };
-  if (kind === "team" && !myContent17(state, "stories").length) { const pc = pcOf17(state.profile); dispatch({ type: "PC_SAVE", content: { ...pc, rev: (pc.rev || 0) + 1, updatedAt: new Date().toISOString(), stories: [demoStory] } }); }
-  if (kind !== "team" && !(state.myPosts || []).length) patch.myPosts = [demoStory];
   if (Object.keys(patch).length) dispatch({ type: "V11_SET", patch });
 }
 
@@ -266,17 +260,3 @@ function ProfileGate17({ kind }) {
 /* ==== FF Party: Browse ===========================================================================
    Packages first. The guest count and what the person is after narrow the packages; FireFlair's own
    come first. Booking a package starts the event with what was entered and adds the package to it. */
-/* Prototype phase. Phase 3 is everything. Phase 2 is the launch scope: FF Party offers FireFlair's own bar packages only, with no custom Service Cards, add-ons or menu builder. */
-const ph17 = (state) => (state && state.phase17 === "2" ? 2 : 3);
-
-
-function PhaseSwitch17() {
-  const { state, dispatch } = useStore();
-  const p = ph17(state);
-  return (
-    <div className="ff-phase17" role="group" aria-label="Prototype phase">
-      <span className="lb">Prototype phase</span>
-      <span className="seg">{[2, 3].map(n => <button key={n} type="button" role="radio" aria-checked={p === n} className={p === n ? "on" : ""} onClick={() => { dispatch({ type: "V11_SET", patch: { phase17: String(n) } }); dispatch({ type: "TOAST", toast: `Phase ${n} prototype` }); }}>Phase {n}</button>)}</span>
-    </div>
-  );
-}

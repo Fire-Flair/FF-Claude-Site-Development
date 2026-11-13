@@ -866,7 +866,7 @@ function FdPages11({ fd, state, dispatch, can, by, people, stamp }) {
   const okForm = reason.trim().length >= 10 && FD_CHECKS.every(c => checks[c[0]]) && approveIds.length > 0;
   const approve = () => { const ids = approveIds.filter(id => ["recruiting", "operational"].includes(fdMarket(fd, site, FD_BY_ID[id]))); if (!ids.length) { dispatch({ type: "TOAST", toast: "Only recruiting or operational markets can be approved for search." }); return; }
     write(ids, "approved", { reason: reason.trim(), checks: { ...checks }, exceptions: sel.filter(id => skip[id]) }); };
-  const pre = (id) => { dispatch({ type: "V11_SET", patch: { adminOpen17: false, fdPreview: true } }); fdNav(dispatch, site, FD_BY_ID[id].path); };
+  const pre = (id) => { dispatch({ type: "V11_SET", patch: { fdPreview: true } }); fdNav(dispatch, site, FD_BY_ID[id].path); };
   const showAdmin = !!canEdit;
   return (
     <>

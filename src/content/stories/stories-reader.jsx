@@ -238,6 +238,8 @@ function Journal17({ kind = "team" }) {
     if (o && o.site === "ffteam.uk") { dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); }
     else nav.toEvent();
   };
+  /* Phase 2: on FF Party a button that would start a booking is locked; one that opens the network or another site still works. */
+  const ctaLocked = !!o && o.site !== "ffteam.uk" && !/packages/i.test((o && o.to) || "") && kind === "party";
   const more = o && o.related ? o.related.map((r) => ST18_IDS[r]).filter((s) => s && JR17[s] && JR17[s].site === o.site) : [];
 
   return React.createElement("section", { className: "ff-sect ff-jr17", id: "ff-journal", "aria-labelledby": "ff-jr-h" },
@@ -265,7 +267,7 @@ function Journal17({ kind = "team" }) {
         React.createElement("div", { className: "lede" }, ST18_blocks(o.intro, openStory)),
         o.body.map(([h, t]) => React.createElement(React.Fragment, { key: h }, React.createElement("h4", null, h), ST18_blocks(t, openStory))),
         React.createElement(ST19_Footer, { key: o.slug, o },
-          o.cta && React.createElement("div", { className: "ff-st-cta" }, React.createElement(Button, { onClick: cta }, o.cta))),
+          o.cta && React.createElement("div", { className: "ff-st-cta" }, ctaLocked ? React.createElement(LockedBtn17, null, o.cta) : React.createElement(Button, { onClick: cta }, o.cta))),
         more.length > 0 && React.createElement("div", { className: "ff-st-more" }, React.createElement("b", null, "Keep reading"),
           more.map((s) => React.createElement("a", { key: s, href: "/stories/" + s, onClick: (e) => { if (e.button === 0 && !e.metaKey && !e.ctrlKey) { e.preventDefault(); openStory(s); } } }, JR17[s].title))))));
 }

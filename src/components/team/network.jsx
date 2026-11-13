@@ -197,11 +197,7 @@ function PersonProfile() {
         )}
         <div style={{ marginTop: 8, display: "grid", gap: 8 }}>
           {state.role === "staff" && state.site === "party" && !person.isCompany && (
-            <Btn variant="primary wide" onClick={() => {
-              if (!state.selection.includes(person.id)) dispatch({ type: "SELECT_ADD", id: person.id });
-              dispatch({ type: "V11_SET", patch: { bkView: { mode: "new", open: "event" } } });
-              dispatch({ type: "TAB", tab: "bookings" }); window.scrollTo(0, 0);
-            }}><Users size={14} /> Book this person</Btn>
+            <LockedBtn17 variant="primary wide" icon={<Users size={14} />}>Book this person</LockedBtn17>
           )}
           {state.role === "staff" && state.site !== "party" && (
             <Btn variant={state.selection.includes(person.id) ? "ghost wide" : "primary wide"} onClick={() => {
@@ -749,7 +745,7 @@ function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "", 
                   <PlayerTile key={p.id} person={p} selected={selectable && state.selection.includes(p.id)}
                     onClick={() => onPick(p)} />
                 ))}
-                {ph17(state) >= 2 && <button className="ff-card ff-portrait ff-addtile" style={{ width: CARD_W.player }}
+                {<button className="ff-card ff-portrait ff-addtile" style={{ width: CARD_W.player }}
                   onClick={() => state.role === "team" ? window.dispatchEvent(new Event("ff-invite")) : dispatch({ type: "TOAST", toast: "Join FF Team to invite the people you work with." })}>
                   <span style={{ textAlign: "center" }}><Plus size={20} color="var(--gold-dk)" />
                     <span className="ff-label" style={{ display: "block", marginTop: 6 }}>Invite</span></span>
@@ -877,7 +873,7 @@ function NetworkScreen({ guest = false }) {
     <div>
       <div style={{ display: "flex", alignItems: "flex-end", gap: 10, marginTop: 4 }}>
         <div style={{ flex: 1 }}><BigHead20 tag="h1" title="Our network" /></div>
-        {!guest && ph17(state) >= 2 && <Btn variant="sm" onClick={() => setInviting(true)}><Send size={12} /> Invite</Btn>}
+        {!guest && <Btn variant="sm" onClick={() => setInviting(true)}><Send size={12} /> Invite</Btn>}
       </div>
 
       <FFAI query={q} onQuery={setQ} title="Search the network"
@@ -885,14 +881,14 @@ function NetworkScreen({ guest = false }) {
 
       {guest && !q && (
         <div className="ff-pendingnote" style={{ marginTop: 6 }}>
-          <span>{ph17(state) >= 2 ? "Join FF Team to build your own network. Whoever invites you is added to it automatically." : "Join FF Team to create your own Profile Card."}</span>
+          <span>Join FF Team to build your own network. Whoever invites you is added to it automatically.</span>
           <Btn variant="sm gold" onClick={join}><User size={12} /> Create your Profile Card</Btn>
         </div>
       )}
 
-      {!q && ph17(state) >= 2 && mine.inviter && <InvitedByBanner person={mine.inviter} onReview={() => setReviewing(mine.inviter)} />}
+      {!q && mine.inviter && <InvitedByBanner person={mine.inviter} onReview={() => setReviewing(mine.inviter)} />}
 
-      {!q && !guest && ph17(state) >= 2 && (
+      {!q && !guest && (
         <section style={{ marginTop: 20 }}>
           <SectionHead icon={<Check size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Your team" count={connected.length + netPeople.length + netCos.length} />
           <HScroll label="Your team">
@@ -933,7 +929,7 @@ function NetworkScreen({ guest = false }) {
           </NetDrop17>
         </section>
       )}
-      {!q && !guest && ph17(state) >= 2 && <SentInvitations />}
+      {!q && !guest && <SentInvitations />}
 
       <NetBrowse17 query={q} onPick={view} after={<NetMap11 />} />
       {!q && (<>

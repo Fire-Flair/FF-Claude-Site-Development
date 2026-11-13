@@ -78,20 +78,16 @@ function NetPackages20({ pillar }) {
   const [pop, setPop] = useState(null);
   const isParty = state.role === "staff" && !!(hireSiteOf(state) || {}).party;
   const all = pkgsOf17(state).filter(function (x) { return (x.cat || "bar") === pillar; });
-  const sr = isParty ? all.filter(function (x) { return x.special; }) : [];
   const pkgs = all.filter(function (x) { return !x.special; });
   const co = pkgs.filter(function (x) { return x.by || x.id === "svc_supplier"; });
   const pro = pkgs.filter(function (x) { return !x.ff; });
   const secs = pillar === "bar" ? [["Professional packages", pro], ["Company packages", co]] : [["Company packages", co], ["Professional packages", pro]];
   const shown = secs.filter(function (x) { return x[1].length; });
-  /* The Special Request card leads the first row, the same size as every package card. */
-  if (shown.length) shown[0] = [shown[0][0], sr.concat(shown[0][1])]; else if (sr.length) shown.push(["FireFlair packages", sr]);
   const picked = bkOf17(state).pk;
   const pick = function (svc) {
     /* FF Team: Sign up. FF Staff: Create your own. Both go to the profile where that is done. */
     if (!isParty) { dispatch({ type: "TAB", tab: "profile" }); window.scrollTo(0, 0); return; }
     if (picked.includes(svc.id)) { dispatch({ type: "V11_SET", patch: { bk17: { ...bkOf17(state), pk: picked.filter(function (x) { return x !== svc.id; }) } } }); return; }
-    if (svc.special) srAuto17(state, dispatch, svc.cat);
     selectPkg17(state, dispatch, svc.id, true);
   };
   return React.createElement(React.Fragment, null,
@@ -277,9 +273,9 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   const venues = co.mine ? recsOf(co, "venues").filter(r => !r.hidden).map(r => r.name) : (co.venues || []);
   const reviews = co.mine ? (co.reviews || []).map(r => [null, r.rating, r.text, r.byName]) : (co.reviews || []);
   const pubQa = co.mine || co.qa ? coQa(co).filter(q => q.group !== "feedback" && q.answer) : [];
-  const { services, cocktails } = coCards17(state, co);
+  const { services, cocktails } = coCards17(state, co, true);
   const isParty = isStaff && hireSiteOf(state).party;
-  const tabs = [{ key: "overview", label: "Overview" }, { key: "qa", label: "Packages", count: services.length + cocktails.length }, ...(ph17(state) >= 2 ? [{ key: "team", label: "Team", count: team.length + coCos.length + coNet.length }] : []), { key: "reviews", label: "Reviews", count: reviews.length }];
+  const tabs = [{ key: "overview", label: "Overview" }, { key: "qa", label: "Packages", count: services.length + cocktails.length }, { key: "team", label: "Team", count: team.length + coCos.length + coNet.length }, { key: "reviews", label: "Reviews", count: reviews.length }];
   const cIcon = (k) => /mail/i.test(k) ? I11.Mail : /phone/i.test(k) ? I11.Phone : /web/i.test(k) ? I11.Globe : I11.MessageCircle;
   const addTeam = () => {
     const ids = team.map(p => p.id).filter(id => !state.selection.includes(id));
@@ -314,7 +310,7 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
       </div>}
       {!done && !co.unclaimed && isStaff && team.length > 0 && <div className="ff-copub-acts">
         {isParty
-          ? <Btn variant="primary wide" onClick={bookForEvent}><I11.PartyPopper size={14} /> Book for your event</Btn>
+          ? <LockedBtn17 variant="primary wide" icon={<I11.PartyPopper size={14} />}>Book for your event</LockedBtn17>
           : <Btn variant="primary wide" onClick={addTeam}><I11.Users size={14} /> Book from their team</Btn>}
       </div>}
       {acts.length > 0 && <div className="ff-copub-grid">{acts.map(([k, el], i) => <div key={k} className={"c-" + k + (acts.length % 2 && i === acts.length - 1 ? " span" : "")}>{el}</div>)}</div>}

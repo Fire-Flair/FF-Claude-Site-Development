@@ -336,8 +336,8 @@ function PublicProfileBody({ person }) {
   const asked = person.id === "me" ? [] : [...ASKED_EXAMPLES.filter(q => q.personId === person.id), ...(state.profileQuestions || []).filter(q => q.personId === person.id)];
   const tabs = [
     { key: "overview", label: "Overview" },
-    { key: "services", label: "Packages", count: services.length + (person.id === "me" ? myContent17(state, "services").filter(x => String(x.title).trim()).length + myContent17(state, "cocktails").filter(x => String(x.name).trim()).length + myContent17(state, "stories").filter(x => String(x.title).trim()).length : 0) },
-    ...(ph17(state) >= 2 ? [{ key: "teams", label: "Team", count: teams.length + tCos.length + tNet.length }] : []),
+    { key: "services", label: "Packages", count: services.length },
+    { key: "teams", label: "Team", count: teams.length + tCos.length + tNet.length },
     { key: "reviews", label: "Reviews", count: reviews.length },
   ];
   const openAttr = (it) => setOpenRec({ record: it.record, def: it.def, category: it.category });

@@ -509,8 +509,8 @@ function coIsVk17(state) {
 function coSeeds17(state) { return coIsVk17(state) ? vkSeeds17() : {}; }
 
 
-function coCards17(state, co) {
-  if (!co) return { services: [], cocktails: [] };
+function coCards17(state, co, pub) {
+  if (!co || (pub && co.mine)) return { services: [], cocktails: [] };  /* Phase 2: what a company saves in its card builders is not shown on its public page. */
   const sd = co.mine ? coSeeds17(state) : {};
   const services = co.mine ? (state.coServices17 || sd.service || []) : (co.services || []);
   const cocktails = co.mine ? (state.coCocktails17 || sd.cocktail || []) : (co.cocktails || []);

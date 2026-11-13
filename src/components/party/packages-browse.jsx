@@ -72,7 +72,7 @@ function pkgsOf17(state) {
   if (bt) ff.push({ ...bt, id: "svc_supplier", title: "Bar company supplier", tagline: "A bar company supplies the bar, the drinks and the team.", includes: "Bar, drinks and bartenders from one company",
     role: "Bartender", ideal: "Parties that want everything supplied", time: "From 4 hours", noPrice: true, drinks: true, shop: false,
     features: ["A bar company looks after your whole bar", "Bar, drinks and bartenders supplied", "Set-up, service and tidy-down included", "Chosen from FireFlair bar companies"] });
-  return [...ff, ...SR_PKGS17];
+  return ff;
 }
 
 
@@ -453,7 +453,6 @@ function PartyBrowse17() {
   const [q, setQ] = useState(() => state.netQuery || "");
   useEffect(() => { if (state.netQuery) dispatch({ type: "NET_QUERY", q: "" }); }, []);
   const br = state.br17 || {};
-  const p2 = ph17(state) === 2;
   const qual = br.q || "";
   const [pop, setPop] = useState(null);
   const cos = companyList(state).filter(c => !c.mine && !c.unclaimed);
@@ -497,7 +496,6 @@ function PartyBrowse17() {
   }, [JSON.stringify(bk), band, qual, state.activeEventId, state.events.length, state.shifts.length]);
   return React.createElement("div", { className: "ff-pn ff-br17" },
     React.createElement(BigHead20, { tag: "h1", title: "Our network" }),
-    p2 && React.createElement("p", { className: "ff-br17-launch", role: "note" }, React.createElement("b", null, "FireFlair is launching with bar packages."), " Every other profession on the platform will be added later."),
     React.createElement(FFAI, { query: q, onQuery: setQ, title: "Search for your team", context: "FF Party", purpose: "Find the right people for your event: search by name, profession, skill or area.", placeholder: "Name, profession, skill or area\u2026" }),
     pop && React.createElement(PkgSheet17, { svc: pop, qual: qual, onClose: function () { setPop(null); } }),
     state.netBrief && React.createElement(BookingBrief, { brief: state.netBrief }),

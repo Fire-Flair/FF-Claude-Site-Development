@@ -147,7 +147,7 @@
         party: ["Visit FF Party", () => goSite("party")]
       },
       party: {
-        plan: ["Plan your event", () => hire.toEvent()],
+        plan: ["Plan your event", null],
         offer: ["See what we offer", sec("ff-offer")],
         cocktails: ["Choose your cocktails", sec("ff-cocktails")],
         companies: ["See bar companies", sec("ff-companies")],
@@ -239,7 +239,9 @@
       }, o.l))), ans && React.createElement("div", {
         className: "res",
         role: "status"
-      }, React.createElement("p", null, ans.r), React.createElement("button", {
+      }, React.createElement("p", null, ans.r), !ans.c[1] ? React.createElement(LockedBtn17, {
+        variant: "primary wide"
+      }, ans.c[0]) : React.createElement("button", {
         type: "button",
         className: "ff-btn primary wide",
         onClick: ans.c[1]

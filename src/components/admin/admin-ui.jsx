@@ -791,21 +791,3 @@ function Admin17() {
     </div>
   );
 }
-
-
-
-/* The FF Admin row in the top-left site menu. A development entry: the live site shows it only to admins. */
-function AdminSiteItem17({ onPick }) {
-  const { dispatch } = useStore();
-  return (
-    <button type="button" role="menuitem" className="ff-site ff-site-adm" onClick={() => { onPick(); dispatch({ type: "V11_SET", patch: { adminOpen17: true } }); window.scrollTo(0, 0); }}>
-      <span className="ff-site-admark"><A17I.Shield size={16} /></span>
-      <span style={{ minWidth: 0 }}>
-        <span className="ff-site-name">FF Admin</span>
-        <span className="ff-site-line">Manage every site</span>
-        <span className="ff-dev17 tag">DEV · admin preview</span>
-      </span>
-      <ChevronRight size={15} color="rgba(234,215,156,.7)" />
-    </button>
-  );
-}

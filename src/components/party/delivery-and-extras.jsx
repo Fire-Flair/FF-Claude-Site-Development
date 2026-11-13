@@ -483,13 +483,13 @@ function CoTeamNote17({ x }) {
 
 /* A reply to one of your invitations. Available opens the selection step on that booking; the rest open the booking. */
 function BookingUpdateNote17({ u, who, onGo }) {
-  const { dispatch } = useStore();
+  const { state, dispatch } = useStore();
   const go = () => { dispatch({ type: "VIEW", id: null }); dispatch({ type: "V11_SET", patch: { bkView: { eventId: u.ev.id, open: "confirm", n: Date.now() } } }); dispatch({ type: "TAB", tab: "bookings" }); onGo && onGo(); window.scrollTo(0, 0); };
   const text = { confirmed: `${who.name || "They"} accepted the shift. It's confirmed.`, unavailable: `${who.name || "They"} can't work this shift.`, available: `${who.name || "They"} is available. Choosing them confirms the shift.`, noreply: `${who.name || "They"} didn't reply before the deadline. The invitation has ended.` }[u.kind];
   return (
     <div className="ff-ndcard17">
       <p className="nt">{text}</p>
-      <div className="btns"><button type="button" className="yes" onClick={go}>{u.kind === "available" ? "Choose who to confirm" : "Open booking"}</button></div>
+      <div className="btns">{isPartySite17(state) ? <LockedBtn17 bare className="yes">{u.kind === "available" ? "Choose who to confirm" : "Open booking"}</LockedBtn17> : <button type="button" className="yes" onClick={go}>{u.kind === "available" ? "Choose who to confirm" : "Open booking"}</button>}</div>
     </div>
   );
 }
@@ -581,10 +581,10 @@ function NotifySheet17({ open, onClose }) {
           : <p className="none">You are all caught up.</p>) : (
           <ul className="ff-ndlist17">{rows.map(r => (
             <NoteDrop17 key={r.id} id={r.id} open={at === r.id} onToggle={() => setAt(at === r.id ? null : r.id)} icon={r.icon} title={r.title} sub={r.sub}>{r.body}</NoteDrop17>))}</ul>)}
-        <section className="ff-ntf-next17" aria-labelledby="ff-ntf-next-h">
+        {!isPartySite17(state) && <section className="ff-ntf-next17" aria-labelledby="ff-ntf-next-h">
           <h3 id="ff-ntf-next-h">Next steps</h3>
           {{ team: <TeamSteps11 onClose={onClose} />, vip: <VipSteps21 onClose={onClose} /> }[notifySite17(state)] || <StaffGuideSheet open bare onClose={onClose} />}
-        </section>
+        </section>}
       </div>
       <ReviewSheet open={!!review} person={review} onClose={() => setReview(null)} />
     </Sheet>

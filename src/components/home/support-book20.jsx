@@ -77,7 +77,7 @@ function support20Seo(state) {
 
 function SupportBookPage20() {
   const { state, dispatch } = useStore();
-  const key = siteBrandKey(state.role === "partners" ? "partners" : state.role === "vip" || state.site === "vip" ? "vip" : state.site === "party" ? "party" : state.role === "staff" ? "staff" : "team");
+  const key = siteBrandKey(state.role === "vip" || state.site === "vip" ? "vip" : state.site === "party" ? "party" : state.role === "staff" ? "staff" : "team");
   const brand = FF_SITE_BRAND[key] || FF_SITE_BRAND.team;
   const cal = support20Url();
   const embed = support20Embed(cal, { name: state.profile && state.profile.name, phone: state.session && state.session.phone });
