@@ -14,7 +14,8 @@
    Production: Core owns these records and sends the invitations and requests through the same notification
    service as team invitations (WhatsApp template "company_team_invite" / "company_team_request").
    ========================================================================== */
-const coKey17 = (c) => { const nm = c && (c.slug || c.name); return nm ? "co:" + slugify(nm) : ""; };
+/* A directory entry (id "co_vooshka") and the business signed in as that company (slug "vooshka") share one key. */
+const coKey17 = (c) => { const nm = c && (c.slug || (/^co_/.test(c.id || "") ? String(c.id).slice(3) : "") || c.name); return nm ? "co:" + slugify(nm) : ""; };
 
 
 const phoneKey17 = (p) => String(p || "").replace(/[^\d]/g, "").replace(/^0/, "44").slice(-12);
@@ -24,6 +25,14 @@ const phoneKey17 = (p) => String(p || "").replace(/[^\d]/g, "").replace(/^0/, "4
 const myCoKey17 = (s) => {
   if (!(s && s.role === "staff" && s.site !== "party" && s.auth && s.auth.status === "signedIn")) return "";
   return s.company && (s.company.name || s.company.slug) ? coKey17(s.company) : (s.auth.tag ? "co:" + slugify(s.auth.tag) : "");
+};
+
+
+/* Every key the signed-in business answers to: its slug, its name and its FF Tag. */
+const myCoKeys17 = (s) => {
+  if (!(s && s.role === "staff" && s.site !== "party" && s.auth && s.auth.status === "signedIn")) return [];
+  const c = s.company || {};
+  return [...new Set([myCoKey17(s), c.name ? "co:" + slugify(c.name) : "", c.slug ? "co:" + slugify(c.slug) : "", s.auth.tag ? "co:" + slugify(s.auth.tag) : ""].filter(Boolean))];
 };
 
 
@@ -55,7 +64,7 @@ const ctInvitesForMe17 = (s) => (s && s.role === "team") ? ctAll17(s).filter(x =
 
 
 /* Join requests waiting for the signed-in business (FF Staff). */
-const ctRequestsForMe17 = (s) => { const k = myCoKey17(s); return k ? ctAll17(s).filter(x => x.dir === "request" && x.status === "pending" && x.companyKey === k) : []; };
+const ctRequestsForMe17 = (s) => { const ks = myCoKeys17(s); return ks.length ? ctAll17(s).filter(x => x.dir === "request" && x.status === "pending" && ks.includes(x.companyKey)) : []; };
 
 
 /* The signed-in member's relation to a company: "member" | "requested" | "invited" | "". */
@@ -84,7 +93,7 @@ function ct17Reducer(s, a) {
     if (!x || x.status !== "pending") return s;
     /* Only the recipient accepts an invitation; only the business accepts a request. */
     if (x.dir === "invite" && !ctIsMe17(s, x)) return s;
-    if (x.dir === "request" && myCoKey17(s) !== x.companyKey) return s;
+    if (x.dir === "request" && !myCoKeys17(s).includes(x.companyKey)) return s;
     const personId = x.personId || (a.accept && ctIsMe17(s, x) ? "me" : null);
     const dupe = a.accept && list.some(y => y.id !== x.id && y.companyKey === x.companyKey && y.status === "accepted" && y.personId && y.personId === personId);
     return { ...s, coTeams17: list.map(y => y.id === x.id ? { ...y, personId, status: a.accept && !dupe ? "accepted" : a.accept ? "accepted-dupe" : "declined", decidedAt: now } : y).filter(y => y.status !== "accepted-dupe") };

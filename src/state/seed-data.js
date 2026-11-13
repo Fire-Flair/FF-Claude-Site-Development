@@ -203,6 +203,7 @@ const QUESTION_GROUP_COLOR = {
   ai:       { bg: "linear-gradient(165deg,#3A2712,#1B1108)", ink: "#FBF0DE", sub: "#E0B274", rule: "rgba(224,178,116,.34)" }, // amber
   personal: { bg: "linear-gradient(165deg,#232323,#101010)", ink: "#F0EFEC", sub: "#C6C2BA", rule: "rgba(198,194,186,.28)" },
   asked:    { bg: "linear-gradient(165deg,#3E1424,#18070C)", ink: "#FBEFF2", sub: "#E9BAC5", rule: "rgba(233,186,197,.30)" }, // burgundy: asked on a profile
+  interest: { bg: "linear-gradient(165deg,#10332F,#071816)", ink: "#E8F7F4", sub: "#86D4C8", rule: "rgba(134,212,200,.32)" }, // teal: Interests
   hiring:   { bg: "linear-gradient(165deg,#2E2614,#110D06)", ink: "#FBF3DF", sub: "#E5C77A", rule: "rgba(229,199,122,.32)" }, // gold: a company's hiring questions
 };
 

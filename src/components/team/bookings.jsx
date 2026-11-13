@@ -285,7 +285,7 @@ function TeamBookings({ guest = false }) {
     const next = pkgSel;
     const mirror = { type: "PROFILE", patch: { serviceInterest: next } };
     const r = next.length
-      ? await qaSubmit17(dispatch, { questionId: "int.party_package", account, optionIds: next, visibility: "private", source: "FF Team Bookings · FF Party packages" }, mirror)
+      ? await qaSubmit17(dispatch, { questionId: "int.party_package", account, optionIds: next, visibility: "public", source: "FF Team Bookings · FF Party packages" }, mirror)
       : await qaWithdraw17(dispatch, { questionId: "int.party_package", account }, mirror);
     dispatch({ type: "TOAST", toast: r.ok ? "Packages saved" : "That couldn't be saved. Try again." });
   };

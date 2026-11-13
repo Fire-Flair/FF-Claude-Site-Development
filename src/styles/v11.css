@@ -4394,3 +4394,21 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 
 .ff .ff-soon17-t { display:inline-flex; align-items:center; flex-wrap:wrap; gap:4px 8px; }
 .ff .ff-soon17 { display:inline-flex; align-items:center; gap:3px; font-size:9px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; opacity:.7; white-space:nowrap; }
+
+/* ---- Phase 2 Final stage 3: Public / Private switch, Q&A filter chips, edit pencil, greyed notifications ---- */
+.ff .ff-vis17 { display:inline-grid; grid-template-columns:1fr 1fr; gap:3px; padding:3px; border-radius:999px; corner-shape:squircle; background:#EFE6D2; min-width:0; max-width:100%; }
+.ff .ff-vis17 button { min-height:30px; padding:0 14px; border-radius:999px; corner-shape:squircle; font-size:12.5px; font-weight:700; line-height:1; color:#4A443A; white-space:nowrap; cursor:pointer; }
+.ff .ff-vis17 button[aria-pressed="true"] { background:#16130F; color:#F4EBD6; }
+.ff .ff-vis17 button:focus-visible { outline:2px solid var(--gold,#B08D2A); outline-offset:2px; }
+.ff .ff-qa17 .ff-vis17 { justify-self:start; }
+.ff .ff-qa-filter17 { display:flex; flex-wrap:wrap; max-width:100%; margin:0 0 12px; border-radius:22px; corner-shape:squircle; }
+.ff .ff-qa-filter17 button { white-space:nowrap; }
+.ff .ff-qedit17 { position:absolute; top:7px; right:38px; z-index:6; width:26px; height:26px; border-radius:9px; corner-shape:squircle; display:grid; place-items:center; background:rgba(255,255,255,.2); color:#fff; cursor:pointer; border:0; }
+.ff .ff-qedit17:focus-visible { outline:2px solid var(--gold,#B08D2A); outline-offset:2px; }
+.ff .ff-nd17.done { opacity:.58; background:#F3EFE6; border-color:rgba(126,97,29,.22); }
+.ff .ff-nd17.done .hd { cursor:default; grid-template-columns:auto minmax(0,1fr) auto; }
+.ff .ff-nd17.done .hd .ic { background:#6B655A; color:#EFE9DA; }
+.ff .ff-nd17.done .hd .oc { font-size:12.5px; font-weight:700; color:#3F392F; text-align:right; max-width:42vw; overflow-wrap:anywhere; }
+.ff .ff-ntf-clear17 { display:flex; justify-content:flex-end; margin-top:-4px; }
+.ff .ff-ntf-clear17 button { min-height:32px; padding:0 14px; border-radius:999px; corner-shape:squircle; border:1.5px solid rgba(126,97,29,.5); background:transparent; font-size:12.5px; font-weight:700; color:#4A443A; cursor:pointer; }
+.ff .ff-ntf-clear17 button:focus-visible { outline:2px solid var(--gold,#B08D2A); outline-offset:2px; }

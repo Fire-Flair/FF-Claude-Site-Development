@@ -73,6 +73,25 @@ const initialState = {
 
 
 
+/* Where a Question Card answer's Public / Private lives: on the person's own question, otherwise in profile.qaVis17. */
+function setQaVis17(s, qid, vis) {
+  const v = vis === "public" ? "public" : "private";
+  const ai = s.profile.aiQuestions || [];
+  if (ai.some(x => x.id === qid && x.mine)) return { ...s, profile: { ...s.profile, aiQuestions: ai.map(x => x.id === qid ? { ...x, visibility: v } : x) } };
+  return { ...s, profile: { ...s.profile, qaVis17: { ...(s.profile.qaVis17 || {}), [qid]: v } } };
+}
+
+
+/* Public or private. Default private; the Interests cards ("int.…") default to public. */
+function qaVisOf17(state, q) {
+  if (!q || q.group === "feedback") return "private";
+  const id = String(q.id || "");
+  if (q.mine) { const x = (state.profile.aiQuestions || []).find(y => y.id === id); return x && x.visibility === "public" ? "public" : "private"; }
+  const v = (state.profile.qaVis17 || {})[id];
+  return v || (id.startsWith("int.") ? "public" : "private");
+}
+
+
 const withRecords = (s, cat, list) => ({
   ...s, profile: { ...s.profile, records: { ...s.profile.records, [cat]: list } },
 });
@@ -133,7 +152,7 @@ function claimListXP(s, cat, list) {
 
 
 function reducer(s, a) {
-  return pkgGuard17(reducerCore17(s, a));
+  return notesWatch17(s, pkgGuard17(reducerCore17(s, a)), a);
 }
 
 
@@ -150,7 +169,7 @@ function reducerCore17(s, a) {
     return { ...s, company: { ...c, records: out.profile.records } };
   }
   { const r11 = v11Reducer(s, a); if (r11) return r11; }
-  { const rq = qa17Reducer(s, a) || pc17Reducer(s, a) || cov17Reducer(s, a) || ct17Reducer(s, a) || base17Reducer(s, a); if (rq) return rq; }
+  { const rq = qa17Reducer(s, a) || pc17Reducer(s, a) || cov17Reducer(s, a) || ct17Reducer(s, a) || base17Reducer(s, a) || notes17Reducer(s, a); if (rq) return rq; }
   switch (a.type) {
     case "FOCUS":     return { ...s, focus: a.focus };
     case "NET_QUERY": return { ...s, netQuery: a.q || "" };
@@ -313,9 +332,19 @@ function reducerCore17(s, a) {
     case "MY_QUESTION_ADD": {
       const list = s.profile.aiQuestions || [];
       if (list.filter(x => x.mine).length >= 10) return s;
-      const nq = { id: a.question.id, text: a.question.text, type: a.question.type === "yesno" ? "choice" : "text", mine: true, answer: a.value };
+      const nq = { id: a.question.id, text: a.question.text, type: a.question.type === "yesno" ? "choice" : "text", mine: true, answer: a.value, visibility: a.visibility === "public" ? "public" : "private" };
       return { ...s, profile: { ...s.profile, aiQuestions: [...list, nq] } };
     }
+    /* Edit your own question's text (the answer is changed the usual way, with ANSWER). */
+    case "MY_QUESTION_EDIT": {
+      const text = String(a.text || "").trim().slice(0, CUSTOM_QUESTION_MAX);
+      if (!text) return s;
+      return { ...s, profile: { ...s.profile, aiQuestions: (s.profile.aiQuestions || []).map(x => x.id === a.id && x.mine ? { ...x, text } : x) } };
+    }
+    /* Public / Private on one Question Card answer (or on one Interests card, id "int.<question>:<option>"). */
+    case "QA_VIS": return setQaVis17(s, a.qid, a.visibility);
+    /* A business answers a question asked on its Company page; the answer is public only when the business says so. */
+    case "COQ_ANSWER": return { ...s, profileQuestions: (s.profileQuestions || []).map(q => q.id === a.id ? { ...q, answer: a.value, answeredAt: Date.now(), visibility: a.visibility === "public" ? "public" : "private" } : q) };
     case "MY_QUESTION_DELETE": return { ...s, profile: { ...s.profile, aiQuestions: (s.profile.aiQuestions || []).filter(x => x.id !== a.id) } };
     case "ANSWER": {
       const q = QUESTIONS.find(x => x.id === a.qid);
@@ -336,6 +365,7 @@ function reducerCore17(s, a) {
         if (a.qid === "g_travel") patch.hasCar = a.value === "I drive";
         next = { ...s, profile: { ...s.profile, ...patch } };
       }
+      if (a.visibility && !(q && q.group === "feedback")) next = setQaVis17(next, a.qid, a.visibility);
       /* +1 XP the first time a question is answered, never on edits. */
       return isAnswered(prevVal) ? next : claimXP(next, `question_${a.qid}`, XP_VALUES.question);
     }

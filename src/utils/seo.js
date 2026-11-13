@@ -27,7 +27,6 @@
    ========================================================================== */
 const FF_SEO = {
   siteName: "FireFlair",
-  shellTitle: "FireFlair Phase 2",      // the browser tab and share title for this release
   origin: "https://ffparty.uk", profileOrigin: "https://ffteam.uk",
   locale: "en_GB",
   demoData: true,                       // sample people are fictional: never offered to search engines
@@ -153,17 +152,17 @@ function ffSeoApply(seo, doc) {
     Object.keys(attrs).forEach(k => el.setAttribute(k, attrs[k]));
     return el;
   };
-  doc.title = FF_SEO.shellTitle;
+  doc.title = seo.title;
   upsert('meta[name="description"]', "meta", { name: "description", content: seo.description });
   upsert('meta[name="robots"]', "meta", { name: "robots", content: seo.robots });
   upsert('link[rel="canonical"]', "link", { rel: "canonical", href: seo.canonical });
   upsert('meta[property="og:type"]', "meta", { property: "og:type", content: seo.type });
   upsert('meta[property="og:site_name"]', "meta", { property: "og:site_name", content: FF_SEO.siteName });
   upsert('meta[property="og:locale"]', "meta", { property: "og:locale", content: FF_SEO.locale });
-  upsert('meta[property="og:title"]', "meta", { property: "og:title", content: FF_SEO.shellTitle });
+  upsert('meta[property="og:title"]', "meta", { property: "og:title", content: seo.title });
   upsert('meta[property="og:description"]', "meta", { property: "og:description", content: seo.description });
   upsert('meta[property="og:url"]', "meta", { property: "og:url", content: seo.canonical });
-  upsert('meta[name="twitter:title"]', "meta", { name: "twitter:title", content: FF_SEO.shellTitle });
+  upsert('meta[name="twitter:title"]', "meta", { name: "twitter:title", content: seo.title });
   upsert('meta[name="twitter:description"]', "meta", { name: "twitter:description", content: seo.description });
   const old = doc.getElementById("ff-jsonld-page");
   if (seo.jsonLd) {

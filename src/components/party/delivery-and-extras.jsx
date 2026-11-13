@@ -438,7 +438,7 @@ const coInvites17 = (state) => ctInvitesForMe17(state);
    The badge counts what the list shows as new: every action, plus updates since the list was last opened. */
 const notifyCount17 = (state) => state.role === "vip" ? 0 : state.role === "team"
   ? pending11(state).length + availWaiting17(state).length + teamAsksWaiting17(state).length + coInvites17(state).length + questionsWaiting17(state, state.directory || []).length
-  : shiftQuestionsWaiting17(state).length + coRequests17(state).length + bookingUpdates17(state).filter(u => u.action || u.at > (state.notesSeenAt || 0)).length;
+  : shiftQuestionsWaiting17(state).length + coRequests17(state).length + coQuestionsWaiting17(state).length + coNetUnseen17(state).length + bookingUpdates17(state).filter(u => u.action || u.at > (state.notesSeenAt || 0)).length;
 
 
 function TeamAskNote17({ x, onAccepted }) {
@@ -496,13 +496,28 @@ function BookingUpdateNote17({ u, who, onGo }) {
 
 
 /* A question in a notification is the same Question Card as on the profile page, with the quick answer under it. */
-function QuestionNote17({ q, label, asker }) {
+function QuestionNote17({ q, label, asker, noVis }) {
   const { state, dispatch } = useStore();
-  const save = (v) => { dispatch({ type: "ANSWER", qid: q.id, value: v }); dispatch({ type: "TOAST", toast: "Answer saved" }); };
+  const [vis, setVis] = useState("private");
+  const save = (v) => { dispatch({ type: "ANSWER", qid: q.id, value: v, visibility: noVis ? undefined : vis }); dispatch({ type: "TOAST", toast: "Answer saved" }); };
   return (
     <div className="ff-ndcard17">
       <div className="face"><QuestionCard q={q} answer={answerOf(state, q)} label={label} asker={asker} pending=" " /></div>
-      <QuickAnswer17 onSave={save} />
+      <QuickAnswer17 onSave={save} vis={vis} onVis={noVis ? undefined : setVis} />
+    </div>
+  );
+}
+
+
+/* A profile question asked on your Company page (FF Staff): answered Yes, No or typed, and Public or Private. */
+function CoQuestionNote17({ q }) {
+  const { dispatch } = useStore();
+  const [vis, setVis] = useState("private");
+  const save = (v) => { dispatch({ type: "COQ_ANSWER", id: q.id, value: v, visibility: vis }); dispatch({ type: "TOAST", toast: "Answer saved" }); };
+  return (
+    <div className="ff-ndcard17">
+      <div className="face"><QuestionCard q={{ text: q.text, group: "asked" }} answer="" label="Asked" asker={`Asked by ${q.byName || "someone on FireFlair"}`} pending=" " /></div>
+      <QuickAnswer17 onSave={save} vis={vis} onVis={setVis} />
     </div>
   );
 }
@@ -539,6 +554,9 @@ function NoteDrop17({ id, open, onToggle, icon, title, sub, children }) {
 }
 
 
+const NOTE_ICON17 = { shift: "Briefcase", avail: "CalendarCheck", team: "Users", coinvite: "Users", corequest: "UserPlus", question: "MessageSquare", coquestion: "MessageSquare", netadd: "Users" };
+
+
 function NotifySheet17({ open, onClose }) {
   const { state, dispatch } = useStore();
   const people = useDirectory();
@@ -551,17 +569,17 @@ function NotifySheet17({ open, onClose }) {
   useEffect(() => { if (open) { dispatch({ type: "NOTES_SEEN" }); setAt(null); } }, [open]);
   if (!open) return null;
   const lastQ = (e) => e.thread[e.thread.length - 1].text;
-  const rows = state.role === "vip" ? [] : state.role === "team" ? [
-    ...pending11(state).map(e => {
-      const sh = state.shifts.find(x => x.id === e.shiftId), ev = sh && state.events.find(x => x.id === sh.eventId);
-      return sh ? { id: e.id, icon: <I11.Briefcase size={18} />, title: `${e.auto ? "Open shift" : "You've been selected"} · ${sh.role}`, sub: `${hirerOf11(state, ev)} · ${whenOf11(sh)}`, body: <ShiftDelivery11 e={e} shift={sh} event={ev} /> } : null;
-    }).filter(Boolean),
-    ...availWaiting17(state).map(x => ({ id: x.id, icon: <I11.CalendarCheck size={18} />, title: "Are you available?", sub: `${x.byName} · ${shortDay(x.iso)}`, body: <QuestionNote17 q={availQ(x.iso)} label="Availability" asker={`Asked by ${x.byName}`} /> })),
-    ...teamAsksWaiting17(state).map(x => ({ id: x.id, icon: <I11.Users size={18} />, title: "Team invitation", sub: x.name, body: <TeamAskNote17 x={x} onAccepted={setReview} /> })),
-    ...coInvites17(state).map(x => ({ id: x.id, icon: <I11.Users size={18} />, title: "Company team invitation", sub: x.companyName, body: <CoTeamNote17 x={x} /> })),
-    ...questionsWaiting17(state, people).map(q => ({ id: q.id, icon: <I11.MessageSquare size={18} />, title: "Question for you", sub: `${askerName(q, people)} · ${q.text}`, body: <QuestionNote17 q={q} asker={`Asked by ${askerName(q, people)}`} /> })),
-  ] : [
-    ...coRequests17(state).map(x => ({ id: x.id, icon: <I11.UserPlus size={18} />, title: "Asks to join your team", sub: x.name || (findPerson(people, state, x.personId) || {}).name || "", body: <CoTeamNote17 x={x} /> })),
+  const ic = (k, size = 18) => { const C = I11[NOTE_ICON17[k]] || I11.Users; return <C size={size} />; };
+  const bodyOf = (it) => {
+    if (it.kind === "shift") { const sh = state.shifts.find(x => x.id === it.e.shiftId), ev = sh && state.events.find(x => x.id === sh.eventId); return <ShiftDelivery11 e={it.e} shift={sh} event={ev} />; }
+    if (it.kind === "avail") return <QuestionNote17 q={availQ(it.x.iso)} label="Availability" asker={`Asked by ${it.x.byName}`} noVis />;
+    if (it.kind === "team") return <TeamAskNote17 x={it.x} onAccepted={setReview} />;
+    if (it.kind === "coinvite" || it.kind === "corequest") return <CoTeamNote17 x={it.x} />;
+    if (it.kind === "question") return <QuestionNote17 q={it.q} asker={`Asked by ${askerName(it.q, people)}`} />;
+    return <CoQuestionNote17 q={it.q} />;
+  };
+  const brief = notesBrief17(state, people).map(it => ({ id: it.id, icon: ic(it.kind), title: it.title, sub: it.sub, body: bodyOf(it) }));
+  const staffRows = state.role === "staff" ? [
     ...shiftQuestionsWaiting17(state).map(e => {
       const sh = state.shifts.find(x => x.id === e.shiftId), who = findPerson(people, state, e.staffId) || {};
       return { id: e.id, icon: <I11.MessageSquare size={18} />, title: `Question from ${firstName(who.name || "") || "your team"}`, sub: `${sh.role} · ${lastQ(e)}`, body: <ShiftQuestionNote17 e={e} /> };
@@ -572,15 +590,30 @@ function NotifySheet17({ open, onClose }) {
       const icon = { confirmed: <I11.Check size={18} />, unavailable: <I11.X size={18} />, available: <I11.CalendarCheck size={18} />, noreply: <I11.Clock size={18} /> }[u.kind];
       return { id: u.id, icon, title, sub: `${u.sh.role} · ${eventTitle(u.ev)} · ${whenOf11(u.sh)}`, body: <BookingUpdateNote17 u={u} who={who} onGo={onClose} /> };
     }),
-  ];
+    ...coNetUnseen17(state).map(x => ({ id: x.id, icon: ic("netadd"), title: `${x.fromName} added you to their network`, sub: "Network", body: <div className="ff-ndcard17"><p className="nt">{x.fromName} added you to their network.</p></div> })),
+  ] : [];
+  const rows = state.role === "vip" ? [] : [...brief, ...staffRows];
+  const ids = new Set(rows.map(r => r.id));
+  const done = state.role === "vip" ? [] : notesDoneFor17(state).filter(d => !ids.has(d.id));
   return (
     <Sheet open onClose={onClose} title="Notifications">
       <div className="ff-ntf17">
-        {rows.length === 0 ? (state.auth.status !== "signedIn"
+        {rows.length === 0 && done.length === 0 ? (state.auth.status !== "signedIn"
           ? <p className="none">Sign in to view your notifications.</p>
           : <p className="none">You are all caught up.</p>) : (
-          <ul className="ff-ndlist17">{rows.map(r => (
-            <NoteDrop17 key={r.id} id={r.id} open={at === r.id} onToggle={() => setAt(at === r.id ? null : r.id)} icon={r.icon} title={r.title} sub={r.sub}>{r.body}</NoteDrop17>))}</ul>)}
+          <ul className="ff-ndlist17">
+            {rows.map(r => (
+              <NoteDrop17 key={r.id} id={r.id} open={at === r.id} onToggle={() => setAt(at === r.id ? null : r.id)} icon={r.icon} title={r.title} sub={r.sub}>{r.body}</NoteDrop17>))}
+            {done.map(d => (
+              <li key={`done-${d.id}`} className="ff-nd17 done" data-done="1">
+                <div className="hd">
+                  <span className="ic" aria-hidden="true">{ic(d.kind)}</span>
+                  <span className="tx"><b>{d.title}</b><small>{d.sub}</small></span>
+                  <span className="oc">{d.outcome}</span>
+                </div>
+              </li>))}
+          </ul>)}
+        {done.length > 0 && <div className="ff-ntf-clear17"><button type="button" onClick={() => dispatch({ type: "NOTES_CLEAR" })}>Clear</button></div>}
         {!isPartySite17(state) && <section className="ff-ntf-next17" aria-labelledby="ff-ntf-next-h">
           <h3 id="ff-ntf-next-h">Next steps</h3>
           {{ team: <TeamSteps11 onClose={onClose} />, vip: <VipSteps21 onClose={onClose} /> }[notifySite17(state)] || <StaffGuideSheet open bare onClose={onClose} />}

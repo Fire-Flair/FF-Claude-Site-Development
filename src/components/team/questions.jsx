@@ -118,7 +118,7 @@ function QuestionCard({ q, answer, onClick, label, pending, celebrate, asker }) 
 
 
 /* Every open question is answered the same quick way: Yes, No, or type something. One tap or one line. */
-function QuickAnswer17({ value = "", onSave }) {
+function QuickAnswer17({ value = "", onSave, vis, onVis }) {
   const [txt, setTxt] = useState(value === "Yes" || value === "No" ? "" : value);
   const send = () => { if (txt.trim()) onSave(txt.trim()); };
   return (
@@ -131,13 +131,16 @@ function QuickAnswer17({ value = "", onSave }) {
         <input aria-label="Type your answer" value={txt} maxLength={400} onChange={(e) => setTxt(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") send(); }} placeholder="Type your answer" />
         <button type="button" aria-label="Send answer" disabled={!txt.trim()} onClick={send}><Send size={16} /></button>
       </div>
+      {onVis && <VisSwitch17 value={vis || "private"} onChange={onVis} />}
     </div>
   );
 }
 
 
-function QuestionSheet({ open, q, onClose, onSaved }) {
+function QuestionSheet({ open, q, onClose, onSaved, edit }) {
   const { state, dispatch } = useStore();
+  const [vis, setVis] = useState("private");
+  const [qtext, setQtext] = useState("");
   const [val, setVal] = useState("");
   const [choice, setChoice] = useState("");
   const [detail, setDetail] = useState("");
@@ -145,6 +148,8 @@ function QuestionSheet({ open, q, onClose, onSaved }) {
     if (!open || !q)
       return;
     const ex = String(answerOf(state, q) || "");
+    setVis(qaVisOf17(state, q));
+    setQtext(q.text || "");
     setVal(ex);
     if (q.detail && ex.startsWith(q.detail.option)) {
       setChoice(q.detail.option);
@@ -159,7 +164,7 @@ function QuestionSheet({ open, q, onClose, onSaved }) {
   const existing = answerOf(state, q);
   const isNew = !isAnswered(existing);
   const save = (v) => {
-    dispatch({ type: "ANSWER", qid: q.id, value: v });
+    dispatch({ type: "ANSWER", qid: q.id, value: v, visibility: q.group === "feedback" ? undefined : vis });
     dispatch({ type: "TOAST", toast: isNew ? `Answered${xpNote(q.xp)}` : "Answer updated" });
     if (onSaved)
       onSaved(q.id, isNew);
@@ -173,7 +178,10 @@ function QuestionSheet({ open, q, onClose, onSaved }) {
     save(o);
   };
   const needsDetail = q.detail && choice === q.detail.option;
-  const note = q.group === "feedback" ? "Feedback goes to the FireFlair team to improve FF Team. It's kept separately from your profile and never shown on it." : q.group === "ai" ? q.mine ? "Your own question. It isn't shown on your public card." : "FireFlair created this Question Card from information you gave it. It isn't shown on your public card." : q.group === "asked" ? `${q.byName || "Someone"} asked this on your profile. Your answer shows on your profile, under the question, with who asked it.` : "Answers help FireFlair match you to work. They don't appear on your public card.";
+  const note = q.group === "feedback" ? "Feedback goes to the FireFlair team to improve FF Team. It's kept separately from your profile and never shown on it." : "";
+  const canVis = q.group !== "feedback";
+  const changeVis = (v) => { setVis(v); if (isAnswered(existing)) dispatch({ type: "QA_VIS", qid: q.id, visibility: v }); };
+  const editing = !!(edit && q.mine);
   return React.createElement(Sheet, {
     open: true,
     onClose,
@@ -181,10 +189,25 @@ function QuestionSheet({ open, q, onClose, onSaved }) {
   }, q.group === "asked" && q.byName && React.createElement("p", {
     className: "ff-label",
     style: { margin: "0 0 6px" }
-  }, "Asked by ", q.byName), React.createElement("p", {
+  }, "Asked by ", q.byName), !editing && React.createElement("p", {
     className: "ff-serif",
     style: { fontSize: 19, lineHeight: 1.35, marginTop: 0 }
-  }, q.text), q.type === "choice" && React.createElement("div", {
+  }, q.text), editing && React.createElement(Field, {
+    label: "Your question",
+    hint: `${qtext.length} / ${CUSTOM_QUESTION_MAX}`
+  }, React.createElement("input", {
+    className: "ff-input",
+    value: qtext,
+    maxLength: CUSTOM_QUESTION_MAX,
+    "aria-label": "Your question",
+    onChange: (e) => setQtext(e.target.value)
+  })), editing && React.createElement(Btn, {
+    variant: "primary wide",
+    disabled: !qtext.trim() || qtext.trim() === q.text,
+    onClick: () => { dispatch({ type: "MY_QUESTION_EDIT", id: q.id, text: qtext }); dispatch({ type: "TOAST", toast: "Question updated" }); onClose(); }
+  }, "Save question"), editing && React.createElement("div", { style: { height: 12 } }), canVis && React.createElement("div", {
+    style: { margin: "0 0 12px" }
+  }, React.createElement(VisSwitch17, { value: vis, onChange: changeVis })), q.type === "choice" && React.createElement("div", {
     style: { display: "grid", gap: 8 }
   }, q.options.map((o) => React.createElement(Btn, {
     key: o,
@@ -204,7 +227,7 @@ function QuestionSheet({ open, q, onClose, onSaved }) {
     variant: "primary wide",
     disabled: !q.detail.optional && !detail.trim(),
     onClick: () => save(detail.trim() ? `${choice} — ${detail.trim()}` : choice)
-  }, isNew ? `Save${xpNote(q.xp)}` : "Save answer")), q.type === "text" && React.createElement(QuickAnswer17, { value: val, onSave: save }), React.createElement("p", {
+  }, isNew ? `Save${xpNote(q.xp)}` : "Save answer")), q.type === "text" && React.createElement(QuickAnswer17, { value: val, onSave: save }), note && React.createElement("p", {
     className: "ff-body ff-muted",
     style: { fontSize: 11.5, marginTop: 14, marginBottom: 0 }
   }, note), q.mine && React.createElement(DeleteMyQuestion, {

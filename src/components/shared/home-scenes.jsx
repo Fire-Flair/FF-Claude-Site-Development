@@ -474,7 +474,7 @@ function InterestSection({ kind, inner }) {
     if (busy) return;
     setBusy(true);
     ref.current = ref.current || qaRef17();
-    const r = await qaSubmit17(dispatch, { questionId: c.qid, account: acct, optionIds: picked, own: nextOwn, visibility: "private", submissionRef: ref.current, source: `Register interest · ${c.eyebrow}` },
+    const r = await qaSubmit17(dispatch, { questionId: c.qid, account: acct, optionIds: picked, own: nextOwn, visibility: c.qid === "int.vip" ? "private" : "public", submissionRef: ref.current, source: `Register interest · ${c.eyebrow}` },
       { type: c.action, interest: { [c.idsKey]: picked, [c.ownKey]: nextOwn, account: acct, at: Date.now() } });
     setBusy(false);
     if (!r.ok) { setErr("That couldn't be saved. Try again."); return; }

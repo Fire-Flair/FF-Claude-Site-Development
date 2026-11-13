@@ -110,46 +110,57 @@ const askedOn = (ms) => ms ? new Date(ms).toLocaleDateString("en-GB", { day: "nu
 
 
 
-/* The Q&A collection on your own profile, in one rounded panel: questions
-   people asked you first, then your Question Cards. */
+/* The Q&A collection on your own profile, in one rounded panel: filter chips (All, About me, Asked, Interests), the
+   questions people asked you, your Question Cards (To answer / Answered) and your Interests. */
 function QuestionCardsCollection() {
   const { state } = useStore();
   const people = useDirectory();
   const [openId, setOpenId] = useState(null);
+  const [editId, setEditId] = useState(null);
   const [openAsked, setOpenAsked] = useState(null);
+  const [openInt, setOpenInt] = useState(null);
   const [celebrate, setCelebrate] = useState(null);
   const [side, setSide] = useState("todo");
   const [adding, setAdding] = useState(false);
+  const [cat, setCat] = useState("all");
   const qs = allQuestions(state);
   const asked = askedOfMe(state, people);
+  const interests = interestCards17(state, { id: "me" });
   const canAdd = qs.filter(q => q.mine).length < CUSTOM_QUESTION_LIMIT;
   const isDone = (q) => isAnswered(answerOf(state, q));
   const byRank = (a, b) => qaRank(a.id) - qaRank(b.id);
-  const todo = qs.filter(q => !isDone(q)).sort(byRank);
-  const done = qs.filter(isDone).sort(byRank);
-  const openQ = qs.find(q => q.id === openId) || null;
+  const aboutQs = cat === "about" ? qs.filter(q => q.group !== "feedback") : qs;
+  const todo = aboutQs.filter(q => !isDone(q)).sort(byRank);
+  const done = aboutQs.filter(isDone).sort(byRank);
+  const openQ = qs.find(q => q.id === (openId || editId)) || null;
   const askedQ = asked.find(q => q.id === openAsked) || null;
-  const present = QUESTION_GROUPS.filter(g => qs.some(q => q.group === g.key));
+  const intCard = interests.find(c => c.id === openInt) || null;
+  const present = QUESTION_GROUPS.filter(g => aboutQs.some(q => q.group === g.key));
+  const counts = { about: qs.filter(q => q.group !== "feedback").length, asked: asked.length, interest: interests.length };
+  const showAsked = asked.length > 0 && (cat === "all" || cat === "asked");
+  const showAbout = cat === "all" || cat === "about";
+  const showInt = interests.length > 0 && (cat === "all" || cat === "interest");
   const onSaved = (id, isNew) => {
     if (!isNew) return;
     setCelebrate(id);
     setTimeout(() => setCelebrate(c => (c === id ? null : c)), 2000);
   };
   const card = (q) => (
-    <span key={q.id} data-qid={q.id} style={{ display: "block" }}>
-      <QuestionCard q={q} answer={answerOf(state, q)} celebrate={celebrate === q.id} onClick={() => setOpenId(q.id)} />
+    <span key={q.id} data-qid={q.id} style={{ display: "block", position: "relative" }}>
+      <QuestionCard q={q} answer={answerOf(state, q)} label={q.mine ? "My question" : undefined} celebrate={celebrate === q.id} onClick={() => setOpenId(q.id)} />
+      {q.mine && <button type="button" className="ff-qedit17" aria-label="Edit question" onClick={() => setEditId(q.id)}><Pencil size={13} strokeWidth={2} /></button>}
     </span>
   );
   const list = side === "todo" ? todo : done;
   return (
     <div className="ff-qa-panel">
-      {asked.length > 0 && (
+      <QaFilter17 counts={counts} value={cat} onChange={setCat} />
+      {showAsked && (
         <div className="ff-qa-asked">
           <div className="ff-qa-subh">
             <span className="ff-qa-ic"><MessageSquare size={14} /></span>
             <b>Asked on your profile</b><span className="ff-pill">{asked.length}</span>
           </div>
-          <p className="ff-qa-note">When someone asks you a question from your profile on Network, it shows here and on your profile, with who asked.</p>
           <HScroll label="Questions people asked you">
             {asked.map(q => (
               <QuestionCard key={q.id} q={q} answer={answerOf(state, q)} label="Asked you" onClick={() => setOpenAsked(q.id)}
@@ -158,11 +169,12 @@ function QuestionCardsCollection() {
           </HScroll>
         </div>
       )}
+      {showAbout && (
       <div className="ff-qa-cards">
         <div className="ff-qa-subh">
           <span className="ff-qa-ic"><HelpCircle size={14} /></span>
           <b>Question Cards</b>
-          <span className="ff-qa-meta">{PHASE1.xpLive ? `+${XP_VALUES.question} XP each · ` : ""}never on your public card</span>
+          {PHASE1.xpLive && <span className="ff-qa-meta">{`+${XP_VALUES.question} XP each`}</span>}
         </div>
         <div className="ff-qa-tabs" role="tablist" aria-label="Question Cards">
           <button type="button" role="tab" aria-selected={side === "todo"} className={side === "todo" ? "on" : ""} onClick={() => setSide("todo")}>To answer <span>{todo.length}</span></button>
@@ -179,42 +191,77 @@ function QuestionCardsCollection() {
           {canAdd && <AddQuestionCard onClick={() => setAdding(true)} />}
         </HScroll>
       </div>
-      <NewQuestionSheet open={adding} onClose={() => setAdding(false)} onAdded={() => setSide("done")} />
-      <QuestionSheet open={!!openQ} q={openQ} onClose={() => setOpenId(null)} onSaved={onSaved} />
+      )}
+      {showInt && (
+        <div className="ff-qa-cards ff-qa-ints" style={cat === "all" ? { marginTop: 14 } : undefined}>
+          <div className="ff-qa-subh">
+            <span className="ff-qa-ic"><I11.Heart size={14} /></span>
+            <b>Interests</b><span className="ff-pill">{interests.length}</span>
+          </div>
+          <HScroll label="Interests">
+            {interests.map(c => (
+              <QuestionCard key={c.id} q={c} answer="Yes" label="Interests" onClick={() => setOpenInt(c.id)} />
+            ))}
+          </HScroll>
+        </div>
+      )}
+      <NewQuestionSheet open={adding} onClose={() => setAdding(false)} onAdded={() => { setSide("done"); setCat(c => (c === "asked" || c === "interest" ? "about" : c)); }} />
+      <QuestionSheet open={!!openQ} q={openQ} edit={!!editId} onClose={() => { setOpenId(null); setEditId(null); }} onSaved={onSaved} />
       <QuestionSheet open={!!askedQ} q={askedQ} onClose={() => setOpenAsked(null)} />
+      <InterestSheet17 card={intCard} onClose={() => setOpenInt(null)} />
     </div>
   );
 }
 
 
 
-/* Q&A on a profile someone views: every question people asked there, with
-   who asked; on someone else's profile, Ask a question. */
+/* What a profile shows in Q&A: answered questions the person made public (About me, Asked), and their Interests.
+   Someone else's pending questions are not shown to the public; the person who asked still sees theirs, marked as sent. */
+function publicQaItems17(state, person, people) {
+  const isMine = person.id === "me";
+  const items = [];
+  if (isMine) {
+    allQuestions(state).filter(q => q.group !== "feedback" && isAnswered(answerOf(state, q)) && qaVisOf17(state, q) === "public")
+      .forEach(q => items.push({ id: q.id, cat: "about", q: { text: q.text, group: q.group }, label: q.mine ? "My question" : undefined, answer: answerOf(state, q) }));
+    askedOfMe(state, people).filter(q => !hid17(state, "questions", q.id)).forEach(q => {
+      const ans = answerOf(state, { ...q, group: "asked" });
+      if (isAnswered(ans) && qaVisOf17(state, q) === "public") items.push({ id: q.id, cat: "asked", q: { text: q.text, group: "asked" }, label: "Asked", asker: `Asked by ${askerName(q, people, String(state.profile.name || "").trim())}${q.askedAt ? ` · ${askedOn(q.askedAt)}` : ""}`, answer: ans });
+    });
+  } else {
+    [...ASKED_EXAMPLES.filter(q => q.personId === person.id), ...(state.profileQuestions || []).filter(q => q.personId === person.id && !q.companyKey && !hid17(state, "questions", q.id))].forEach(q => {
+      const mineAsk = q.byId === "me" || (!q.byId && !q.byName), answered = isAnswered(q.answer), pub = ASKED_EXAMPLES.includes(q) || q.visibility === "public";
+      if (answered && pub) items.push({ id: q.id, cat: "asked", q: { text: q.text, group: "asked" }, label: mineAsk ? "Your question" : "Asked", asker: `Asked by ${mineAsk ? "you" : askerName(q, people)}${q.askedAt ? ` · ${askedOn(q.askedAt)}` : ""}`, answer: q.answer });
+      else if (!answered && mineAsk) items.push({ id: q.id, cat: "asked", q: { text: q.text, group: "asked" }, label: "Your question", asker: `Asked by you${q.askedAt ? ` · ${askedOn(q.askedAt)}` : ""}`, answer: "", pending: `Sent to ${String(person.name || "").split(" ")[0] || "them"}` });
+    });
+  }
+  interestCards17(state, person).filter(c => c.vis === "public")
+    .forEach(c => items.push({ id: c.id, cat: "interest", q: { text: c.text, group: "interest" }, label: "Interests", answer: "Yes" }));
+  return items;
+}
+
+
+
+/* Q&A on a profile someone views: the public answers in three categories with a filter; on someone else's profile, Ask a question. */
 function PublicQA({ person }) {
   const { state } = useStore();
   const people = useDirectory();
   const [asking, setAsking] = useState(false);
+  const [cat, setCat] = useState("all");
   const first = String(person.name || "").split(" ")[0] || "them";
   const isMine = person.id === "me";
-  const myName = String(state.profile.name || "").trim();
-  const list = isMine
-    ? askedOfMe(state, people).filter(q => !hid17(state, "questions", q.id))
-    : [...ASKED_EXAMPLES.filter(q => q.personId === person.id), ...(state.profileQuestions || []).filter(q => q.personId === person.id && !hid17(state, "questions", q.id))];
-  const answerFor = (q) => isMine ? answerOf(state, { ...q, group: "asked" }) : q.answer;
+  const all = publicQaItems17(state, person, people);
+  const counts = { about: all.filter(x => x.cat === "about").length, asked: all.filter(x => x.cat === "asked").length, interest: all.filter(x => x.cat === "interest").length };
+  const shown = cat === "all" || !counts[cat] ? all : all.filter(x => x.cat === cat);
   return (
     <section id="ff-public-qa" style={{ marginTop: 26 }}>
-      <SectionHead icon={<MessageSquare size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Q&A" count={list.length} />
+      <SectionHead icon={<MessageSquare size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Q&A" count={all.length} />
       <div className="ff-qa-panel">
-        {list.length > 0 ? (
+        <QaFilter17 counts={counts} value={counts[cat] ? cat : "all"} onChange={setCat} />
+        {shown.length > 0 ? (
           <HScroll label="Q&A" snap>
-            {list.map(q => {
-              const mineAsk = q.byId === "me" || (!q.byId && !q.byName);
-              return (
-                <QuestionCard key={q.id} q={{ text: q.text, group: "asked" }} answer={answerFor(q)}
-                  label={mineAsk ? "Your question" : "Asked"} asker={`Asked by ${mineAsk ? "you" : askerName(q, people, myName)}${q.askedAt ? ` · ${askedOn(q.askedAt)}` : ""}`}
-                  pending={isMine ? "Not answered yet" : mineAsk ? `Sent to ${first}` : "Waiting for an answer"} />
-              );
-            })}
+            {shown.map(x => (
+              <QuestionCard key={x.id} q={x.q} answer={x.answer} label={x.label} asker={x.asker} pending={x.pending || "Waiting for an answer"} />
+            ))}
           </HScroll>
         ) : (
           <p className="ff-body ff-muted" style={{ margin: 0, fontSize: 13.5 }}>No questions yet{isMine ? "." : ` — ask ${first} the first one.`}</p>

@@ -267,12 +267,17 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   };
   const inv = myRel === "invited" && ctInvitesForMe17(state).find(x => x.companyKey === ck);
   const back = () => { dispatch({ type: "VIEW_COMPANY", id: null }); window.scrollTo(0, 0); };
-  const asPerson = { id: co.id, name: co.name || "this company", tag: co.slug, profession: co.kind, isCompany: true, photo: co.logo || null, tier: co.tier };
+  const asPerson = { id: co.id, name: co.name || "this company", tag: co.slug, profession: co.kind, isCompany: true, photo: co.logo || null, tier: co.tier, companyKey: ck };
   const contact = co.mine ? recsOf(co, "contact").filter(r => !r.hidden).map(r => [r.description || "Contact", r.name]) : (co.contact || []);
   const areas = co.mine ? companyLocations(co) : String(co.areas || "").split("·").map(x => x.trim()).filter(Boolean);
   const venues = co.mine ? recsOf(co, "venues").filter(r => !r.hidden).map(r => r.name) : (co.venues || []);
-  const reviews = co.mine ? (co.reviews || []).map(r => [null, r.rating, r.text, r.byName]) : (co.reviews || []);
-  const pubQa = co.mine || co.qa ? coQa(co).filter(q => q.group !== "feedback" && q.answer) : [];
+  /* Reviews posted on this company's page (state.reviews, newest first) come before its own. */
+  const posted = (state.reviews || []).filter(r => r.aboutId === co.id || ck &&  (r.aboutId && r.aboutId !== "me" && coKey17(companyById(state, r.aboutId)) === ck)).slice().reverse().map(r => [null, r.rating, r.text, r.byName]);
+  const reviews = [...posted, ...(co.mine ? (co.reviews || []).map(r => [null, r.rating, r.text, r.byName]) : (co.reviews || []))];
+  const ownQa = co.mine || co.qa ? coQa(co).filter(q => q.group !== "feedback" && q.answer) : [];
+  /* Questions asked on this page that the company answered and made public sit next to its own Q&A, newest first. */
+  const askedQa = (state.profileQuestions || []).filter(q => q.companyKey && q.companyKey === ck && q.visibility === "public" && isAnswered(q.answer)).slice().reverse().map(q => ({ id: q.id, text: q.text, answer: q.answer, note: "", group: "business" }));
+  const pubQa = [...askedQa, ...ownQa];
   const { services, cocktails } = coCards17(state, co, true);
   const isParty = isStaff && hireSiteOf(state).party;
   const tabs = [{ key: "overview", label: "Overview" }, { key: "qa", label: "Packages", count: services.length + cocktails.length }, { key: "team", label: "Team", count: team.length + coCos.length + coNet.length }, { key: "reviews", label: "Reviews", count: reviews.length }];

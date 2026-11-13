@@ -210,7 +210,7 @@ async function pkgSignup17(state, dispatch, sv) {
   const next = on ? cur.filter(x => x !== sv.id) : [...cur, sv.id];
   const mirror = { type: "PROFILE", patch: { serviceInterest: next } };
   const r = next.length
-    ? await qaSubmit17(dispatch, { questionId: "int.party_package", account, optionIds: next, visibility: "private", source: "FF Team Bookings · FF Party packages" }, mirror)
+    ? await qaSubmit17(dispatch, { questionId: "int.party_package", account, optionIds: next, visibility: "public", source: "FF Team Bookings · FF Party packages" }, mirror)
     : await qaWithdraw17(dispatch, { questionId: "int.party_package", account }, mirror);
   dispatch({ type: "TOAST", toast: r.ok ? (on ? `Withdrawn from ${sv.title}` : `Signed up for ${sv.title}`) : "That couldn't be saved. Try again." });
 }

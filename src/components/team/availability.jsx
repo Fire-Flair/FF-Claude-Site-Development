@@ -221,7 +221,7 @@ function AskQuestionSheet({ open, person, onClose }) {
   const send = () => {
     if (!ok)
       return;
-    const q = { id: uid("ask"), personId: person.id, text: text.trim(), askedAt: Date.now(), by: state.session.tag || null, byId: "me", byName: me, answer: null };
+    const q = { id: uid("ask"), personId: person.id, text: text.trim(), askedAt: Date.now(), by: state.session.tag || null, byId: "me", byName: me, answer: null, ...(person.companyKey ? { companyKey: person.companyKey } : {}) };
     dispatch({ type: "ASK_QUESTION", q });
     setSent(q);
   };

@@ -21,11 +21,13 @@ function NewQuestionSheet({ open, onClose, onAdded }) {
   const [question, setQuestion] = useState("");
   const [yes, setYes] = useState(null);
   const [text, setText] = useState("");
+  const [vis, setVis] = useState("private");
   useEffect(() => {
     if (open) {
       setQuestion("");
       setYes(null);
       setText("");
+      setVis("private");
     }
   }, [open]);
   if (!open)
@@ -35,7 +37,7 @@ function NewQuestionSheet({ open, onClose, onAdded }) {
   const submit = () => {
     if (!ready)
       return;
-    dispatch({ type: "MY_QUESTION_ADD", question: { id: `my_${Date.now().toString(36)}`, text: question.trim(), type: kind }, value: kind === "yesno" ? yes ? "Yes" : "No" : text.trim() });
+    dispatch({ type: "MY_QUESTION_ADD", question: { id: `my_${Date.now().toString(36)}`, text: question.trim(), type: kind }, value: kind === "yesno" ? yes ? "Yes" : "No" : text.trim(), visibility: vis });
     onAdded && onAdded();
     onClose();
   };
@@ -85,14 +87,13 @@ function NewQuestionSheet({ open, onClose, onAdded }) {
         setYes(null);
     },
     placeholder: "Type your answer"
-  })), React.createElement(Btn, {
+  })), React.createElement("div", {
+    style: { margin: "0 0 14px" }
+  }, React.createElement(VisSwitch17, { value: vis, onChange: setVis })), React.createElement(Btn, {
     type: "submit",
     variant: "primary wide",
     disabled: !ready
-  }, "Add question"), React.createElement("p", {
-    className: "ff-body ff-muted",
-    style: { margin: "14px 0 0", fontSize: 11.5 }
-  }, "Like the other Question Cards, it doesn't appear on your public card.")));
+  }, "Add question")));
 }
 
 
@@ -148,9 +149,18 @@ function v11Reducer(s, a) {
     case "AVAIL_ASK_PATCH": return { ...s, availabilityAsks: (s.availabilityAsks || []).map(x => x.id === a.id ? { ...x, ...a.patch } : x) };
     case "COMPANY_MEDIA_ADD": { const c = s.company || {}; return { ...s, company: { ...c, media: [...(c.media || []), a.item] } }; }
     case "COMPANY_MEDIA_DELETE": { const c = s.company || {}; return { ...s, company: { ...c, media: (c.media || []).filter(m => m.id !== a.id) } }; }
-    case "NOTES_SEEN": return { ...s, notesSeenAt: Date.now() };
+    case "NOTES_SEEN": return notesSeen17(s);
     /* v17.4.4 networking. Network = a one-way add of a person or a company (no confirmation). Team stays two-way (TEAM_INVITE). */
-    case "NET_TOGGLE": { const n = s.netAdds17 || []; return { ...s, netAdds17: n.includes(a.id) ? n.filter(x => x !== a.id) : [...n, a.id] }; }
+    case "NET_TOGGLE": {
+      const n = s.netAdds17 || [], adding = !n.includes(a.id);
+      const out = { ...s, netAdds17: adding ? [...n, a.id] : n.filter(x => x !== a.id) };
+      /* Adding a company tells that company ("<Name> added you to their network"). */
+      const co = adding && String(a.id).startsWith("co_") ? companyById(s, a.id) : null, ck = co && coKey17(co);
+      const from = String((s.role === "staff" ? (s.company && s.company.name) : "") || s.profile.name || "").trim() || "Someone";
+      if (ck && !(s.role === "staff" && myCoKeys17(s).includes(ck)) && !(s.coNetNotes17 || []).some(x => x.companyKey === ck && x.fromName === from && !x.seen))
+        out.coNetNotes17 = [...(s.coNetNotes17 || []), { id: uid("cn"), companyKey: ck, fromName: from, at: Date.now(), seen: false }];
+      return out;
+    }
     /* A team invitation sent TO you: accept (you join each other's team) or decline. */
     case "TEAM_ASK_REPLY": {
       const done = { ...(s.teamAsks17 || {}), [a.ask.id]: a.accept ? "accepted" : "declined" };
