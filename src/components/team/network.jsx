@@ -258,7 +258,7 @@ function ShiftCard({ shift, event, footer }) {
   return (
     <CardFrame tier="standard" theme={THEMES.paper} style={{ marginBottom: 12, paddingTop: 24 }}>
       <span className="ff-label" style={{ position: "absolute", top: 10, left: 14, fontSize: 7, letterSpacing: ".2em", zIndex: 4 }}>Shift</span>
-      <span style={{ position: "absolute", top: 8, right: 8, zIndex: 4 }}><Coin size={24} /></span>
+      <span style={{ position: "absolute", top: 8, right: 8, zIndex: 4 }}><FFLogo size={24} /></span>
       <div style={{ padding: "6px 14px 0" }}>
         <div className="ff-display" style={{ fontSize: 21, lineHeight: 1.1 }}>{shift.role}</div>
         {event && <div className="ff-body ff-muted" style={{ marginTop: 4 }}>{event.title}</div>}
@@ -273,7 +273,7 @@ function ShiftCard({ shift, event, footer }) {
       </div>
       {footer && <div style={{ padding: 14 }}>{footer}</div>}
       <div style={{ background: "#141416", padding: "9px 14px", display: "flex", alignItems: "center", gap: 9 }}>
-        <Coin size={20} /><Wordmark size={11} />
+        <FFLogo size={20} /><Wordmark size={11} />
         <span style={{ marginLeft: "auto", fontSize: 8.5, letterSpacing: ".14em", color: "rgba(234,215,156,.75)", textTransform: "uppercase" }}>FF Staff</span>
       </div>
     </CardFrame>
@@ -486,7 +486,7 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
     className: "ff-pc-plate"
   }, "Profile Card"), React.createElement("span", {
     style: { position: "absolute", top: 9, right: 9, zIndex: 4 }
-  }, React.createElement(Coin, {
+  }, React.createElement(FFLogo, {
     size: 32,
     tier
   })), React.createElement("div", {
@@ -602,7 +602,7 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
     rule
   })), React.createElement("div", {
     style: { margin: "0 -16px", background: t.dark ? "rgba(0,0,0,.45)" : "#141416", borderTop: `1px solid ${rule}`, padding: "9px 16px", display: "flex", alignItems: "center", gap: 9 }
-  }, React.createElement(Coin, {
+  }, React.createElement(FFLogo, {
     size: 20,
     tier
   }), React.createElement(Wordmark, {

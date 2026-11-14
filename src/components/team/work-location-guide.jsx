@@ -287,7 +287,7 @@ function CardPreviewSoon() {
     <div className="ff-cardpreview-wrap">
       <div className="ff-cardpreview">
         <div className="ff-cardghost" aria-hidden="true">
-          <span className="coin"><Coin size={22} tier="gold" /></span>
+          <span className="coin"><FFLogo size={22} tier="gold" /></span>
           <span className="av" /><span className="l1" /><span className="l2" /><span className="l3" /><span className="l4" />
         </div>
         <div className="ff-cardpreview-tx">

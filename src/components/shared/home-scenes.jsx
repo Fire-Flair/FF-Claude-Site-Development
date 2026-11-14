@@ -334,7 +334,7 @@ function TeamCard17({ name, tag, url, members, more = 0 }) {
   return (
     <article className="ff-tc17" aria-label={`Team card: ${name}`}>
       <span className="ff-tc17-label">Team</span>
-      <span className="ff-tc17-coin"><Coin size={26} tier="gold" /></span>
+      <span className="ff-tc17-coin"><FFLogo size={26} tier="gold" /></span>
       <div className="ff-tc17-faces">
         {members.slice(0, 4).map(p => <span key={p.id} className="f"><Portrait src={p.photo} name={p.name} size={60} tier={p.tier} /></span>)}
         {more > 0 && <span className="f more">+{more}</span>}

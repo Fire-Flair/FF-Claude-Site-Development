@@ -425,7 +425,7 @@ const FIRE17_STILL = __ff_json("content/data/fire17-still.json");
       fill: "currentColor"
     }), " Review Card"), React.createElement("span", {
       className: "ff-rvcard-coin"
-    }, React.createElement(Coin, {
+    }, React.createElement(FFLogo, {
       size: 34,
       tier: "gold"
     })), React.createElement("div", {

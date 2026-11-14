@@ -190,7 +190,7 @@ const PATH17 = { cocktail: "cocktails", service: "services" };
 
 /* The same base on every card, the one the Profile Card has: the coin and the owner's FF Tag address. */
 function CardBase17({ tag, url }) {
-  return <div className="base"><Coin size={20} tier="gold" /><em>{url || `${CARD_DOMAIN}/${tag || "yourtag"}`}</em></div>;
+  return <div className="base"><FFLogo size={20} tier="gold" /><em>{url || `${CARD_DOMAIN}/${tag || "yourtag"}`}</em></div>;
 }
 
 
@@ -199,7 +199,7 @@ function Card17({ kind, tone = "", plate, tag, url, edit, size = "", children })
     <div className={`ff-c17 k-${kind} ${tone}${edit ? " edit" : ""} ${size}`}>
       <div className="in"><div className="face">
         <span className="pl">{plate}</span>
-        {kind === "cocktail" && <span className="cn" aria-hidden="true"><Coin size={34} tier="gold" /></span>}
+        {kind === "cocktail" && <span className="cn" aria-hidden="true"><FFLogo size={34} tier="gold" /></span>}
         {children}
         <CardBase17 tag={tag} url={url} />
       </div></div>

@@ -416,7 +416,7 @@
       className: "ff-tcard-plate"
     }, "Team Card"), React.createElement("span", {
       className: "ff-tcard-coin"
-    }, React.createElement(Coin, {
+    }, React.createElement(FFLogo, {
       size: 34,
       tier: "gold"
     })), React.createElement("div", {
@@ -460,7 +460,7 @@
       className: "v"
     }, interests.join(" · ")))), React.createElement("span", {
       className: "ff-tcard-url"
-    }, React.createElement(Coin, {
+    }, React.createElement(FFLogo, {
       size: 18,
       tier: "gold"
     }), " ", url));
@@ -664,7 +664,7 @@
       fill: "currentColor"
     }), " Review Card"), React.createElement("span", {
       className: "ff-rvcard-coin"
-    }, React.createElement(Coin, {
+    }, React.createElement(FFLogo, {
       size: 34,
       tier: "gold"
     })), React.createElement("div", {

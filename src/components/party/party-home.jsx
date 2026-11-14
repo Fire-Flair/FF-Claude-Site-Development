@@ -22,7 +22,7 @@ function PartyCard11({ edit, demo }) {
     <div className="ff-pcard11">
       <span className="plate">VIP Host Card</span>
       {c.vip && c.vip.status === "founding" && <span className="fnd" style={{ position: "absolute", left: 10, bottom: 10, padding: "3px 10px", borderRadius: 12, background: "linear-gradient(135deg,#E6C877,#B8912F)", color: "#1A1408", fontSize: 10.5, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", zIndex: 2 }}>Founding VIP</span>}
-      <span className="coin"><Coin size={28} tier="gold" /></span>
+      <span className="coin"><FFLogo size={28} tier="gold" /></span>
       <button type="button" className="ph" onClick={() => edit && ref.current && ref.current.click()} aria-label={c.photo ? "Change your photo" : "Add your photo"} disabled={!edit}>
         {c.photo ? <img decoding="async" src={c.photo} alt="" /> : <span className="add"><CameraPlusGlyph size={28} /><span>Add your photo</span></span>}
         <input ref={ref} type="file" accept="image/*" hidden onChange={pick} />
@@ -158,7 +158,7 @@ function InviteCard17({ iv, host }) {
       {iv.venue && <span className="dt"><I11.MapPin size={14} /> {iv.venue}</span>}
       {iv.msg && <p className="ms">{iv.msg}</p>}
       <span className="ho">{host ? `Hosted by ${host}` : "FF Party"}</span>
-      <span className="cn" aria-hidden="true"><Coin size={26} tier="gold" /></span>
+      <span className="cn" aria-hidden="true"><FFLogo size={26} tier="gold" /></span>
     </article>);
 }
 

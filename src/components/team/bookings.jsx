@@ -21,7 +21,7 @@ function PosterCard({ tone = "dark", ribbon, eyebrow, title, subtitle, tagline, 
   return (
     <article className={`ff-poster ${t.cls}`} style={{ "--pc-accent": t.accent, ...(t.edge ? { "--pc-edge": metalEdge(t.edge) } : {}) }}>
       <div className="ff-poster-ribbon"><Sparkles size={11} /> {ribbon}</div>
-      <span className="ff-poster-coin"><Coin size={44} tier={t.edge || "gold"} /></span>
+      <span className="ff-poster-coin"><FFLogo size={44} tier={t.edge || "gold"} /></span>
       <div className="ff-poster-head">
         {eyebrow && <div className="ff-poster-eyebrow">✦ {eyebrow} ✦</div>}
         <h3 className="ff-poster-title">{title}</h3>

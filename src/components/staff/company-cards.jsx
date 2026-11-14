@@ -360,13 +360,13 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party }) {
   return (
     <CardFrame tier={(co.theme === "silver" || co.theme === "gold") ? co.theme : (co.tier || "gold")} theme={t} premium ratio="8 / 5" className={`ff-cocard ff-cc11 l-${layout} ${size}${co.logoWide ? " lw" : ""}`} style={{ ...vars, maxWidth: 460, margin: size ? 0 : "0 auto" }}>
       <span className="ff-pc-plate ff-cc11-plate">{co.unclaimed ? "Company card" : party ? "VIP Host Card" : "Company Card"}</span>
-      {!co.unclaimed && <span className="ff-cc11-coin"><Coin size={size ? 24 : 30} tier={co.theme === "silver" ? "silver" : "gold"} /></span>}
+      {!co.unclaimed && <span className="ff-cc11-coin"><FFLogo size={size ? 24 : 30} tier={co.theme === "silver" ? "silver" : "gold"} /></span>}
       <div className="ff-cc11-body">
         {logo}
         <span className="ff-cc11-tx">{name}{kind}{area}{socialsOf11(co).length > 0 && <span className="soc">{socialsOf11(co).map(k => <span key={k} className="si" title={(SOC11.find(x => x.k === k) || {}).label}><SocialIcon11 k={k} size={size ? 11 : 15} /></span>)}</span>}</span>
       </div>
       <div className="ff-cc11-foot" style={{ background: t.dark ? "rgba(0,0,0,.45)" : "#141416" }}>
-        {!co.unclaimed && <><Coin size={size ? 15 : 18} /><Wordmark size={size ? 9 : 11} /></>}
+        {!co.unclaimed && <><FFLogo size={size ? 15 : 18} /><Wordmark size={size ? 9 : 11} /></>}
         <span className="url">{CARD_DOMAIN}/{slug}</span>
       </div>
     </CardFrame>

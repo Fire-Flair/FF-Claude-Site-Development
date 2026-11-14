@@ -147,7 +147,7 @@ function ReviewCardSample({ from, to, worked, how, text, status, done }) {
   return (
     <article className="ff-rvcard" aria-label={`Example Review Card from ${from.name} to ${to.name}`}>
       <div className="ff-rvcard-ribbon"><Star size={11} fill="currentColor" /> Review Card</div>
-      <span className="ff-rvcard-coin"><Coin size={34} tier="gold" /></span>
+      <span className="ff-rvcard-coin"><FFLogo size={34} tier="gold" /></span>
       <div className="ff-rvcard-who">
         <span className="p"><Portrait src={from.photo} name={from.name} size={54} tier={from.tier} /><b>{first(from)}</b><small>{from.profession}</small></span>
         <span className="arrow" aria-hidden="true"><ArrowRight size={18} /></span>

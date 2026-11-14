@@ -109,7 +109,7 @@ function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
   return (<div className="ff-sdw">
     <article className={`ff-evc ff-sd11 ${kind} src-${src}${mini ? " mini" : ""}`} aria-label={`${SRC17_LABEL[src]}: ${shift.role}`}>
       <span className="ff-evc-plate">{PLATE17[src]}</span>
-      <span className="ff-evc-coin"><Coin size={30} tier="gold" /></span>
+      <span className="ff-evc-coin"><FFLogo size={30} tier="gold" /></span>
       <span className="stag">{tag}</span>
       <h3 className="ff-evc-name">{shift.role}</h3>
       <p className="sev">{event ? eventTitle(event) : ""}</p>

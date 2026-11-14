@@ -230,7 +230,7 @@
       width: 44,
       height: 44,
       className: "block rounded-full"
-    }) : React.createElement(Coin, {
+    }) : React.createElement(FFLogo, {
       size: 44,
       tier: t.edge ?? "gold"
     })), React.createElement("div", {

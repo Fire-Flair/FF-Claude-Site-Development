@@ -164,7 +164,7 @@ function PkgCardOld17({ svc, n, noun, match, on, onToggle, onInfo }) {
       <button type="button" className={`ff-lst ff-pk17 ${svc.tone || ""}${match ? " match" : ""}`} onClick={onToggle} aria-pressed={!!on} aria-label={`${svc.title}: ${on ? "selected" : "select"}`}>
         <span className="ph" style={svc.img ? { backgroundImage: `linear-gradient(rgba(10,8,8,.12),rgba(10,8,8,.55)), url(${svc.img})`, backgroundSize: "cover", backgroundPosition: "center 20%" } : undefined}>
           <span className="pl">{lvl17(svc.level)}</span>
-          <span className="cn"><Coin size={30} tier="gold" /></span>
+          <span className="cn"><FFLogo size={30} tier="gold" /></span>
           <span className="ic"><Ic size={34} strokeWidth={1.4} /></span>
           {svc.price && !svc.noPrice && <span className="pr">{svc.price}</span>}
         </span>
@@ -201,7 +201,7 @@ function PkgCard17({ svc, n, noun, match, on, onToggle, onInfo }) {
       <Card className={`ff-lst ff-pk17 rd ${svc.tone || ""}${match ? " match" : ""}`} {...cardProps}>
         <span className="ph" style={svc.img ? { backgroundImage: `linear-gradient(rgba(10,8,8,.12),rgba(10,8,8,.55)), url(${svc.img})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}>
           <span className="pl">FF Party</span>
-          <span className="cn"><Coin size={30} tier="gold" /></span>
+          <span className="cn"><FFLogo size={30} tier="gold" /></span>
           <span className="ic"><Ic size={30} strokeWidth={1.4} /></span>
           {svc.price && !svc.noPrice && <span className="pr">{svc.price}</span>}
         </span>

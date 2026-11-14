@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.5.4 (Phase Two, almost final)
+Artifact version 1794670999-61b2.
+
+- FireFlair's new logo (black disc, gold ring, thin burgundy line just inside the ring, heavy slanted gold "FF") replaces the old FF coin emblem as the brand mark on every card. New component `FFLogo` in src/components/shared/card-brand.jsx: inline SVG drawn from assets/brand/ff-logo-social-print.png (sharp from 18 px up, per-instance gradient ids, same props as `Coin`: `size`, `tier`, `flat`, `style`; `size="100%"` works).
+- Tiers: `standard` and `gold` use the logo's own gold. `bronze`, `silver` and `base` take the ring and letter metal from `metalOf(tier)`; the disc stays black and the inner line stays burgundy in every tier.
+- Moved to `FFLogo` (card faces and footers): Profile Card (editable card, card faces, mini and footer bar), Company Card and its footer, Company listing card, Organisation/Venue card, Team Card, Review Card, Event Card, Event poster card (face and footer), Shift Card (face, footer, shift editor face), Service Card, Shift delivery card, Package/Service poster card, FF Party package cards, VIP Host Card, Invite card, Cocktail and Service cards with their shared base (card studio), landing role cards, the card-family row on the home pages, and the card preview placeholder in the profile builder.
+- Unchanged, still `Coin`: top navigation and notification coin, XP and verification-level coins, spinning, hero and boot coins, site-menu coins, level and tier coins shown as coins (including package tier coins), admin, map layer icon, search and FFAI input tags and headers, sheet headers, Save & Share and VIP promo headers, invoice and event-brief headers, basket and "Auto match" tiles, Host info and Create-card prompts, Coming-soon tiles, footers, Stories byline, Booking Guarantee. The platinum poster keeps the VIP logo.
+- No other changes. `npm run check` and `npm run build` pass.
+
 ## v17.5.3 (Phase Two, almost final)
 
 - FF VIP is locked in the prototype: it keeps its lock and "Coming 2027" in every site menu and cannot be opened. FF VIP is no longer in `PHASE1.sitesOpen` (src/state/phase-config.js), and its entry in `FF_SITES` carries `locked: true`.

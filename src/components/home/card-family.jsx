@@ -19,7 +19,7 @@
       className: "tx"
     }, React.createElement("b", null, name), React.createElement("small", null, role)), React.createElement("span", {
       className: "coin"
-    }, React.createElement(Coin, {
+    }, React.createElement(FFLogo, {
       size: 26,
       tier,
       flat: true
@@ -51,7 +51,7 @@
       className: "rb"
     }, "Service Card"), React.createElement("span", {
       className: "coin"
-    }, React.createElement(Coin, {
+    }, React.createElement(FFLogo, {
       size: 28,
       tier: tone === "bronze" ? "bronze" : tone === "silver" ? "silver" : "gold",
       flat: true

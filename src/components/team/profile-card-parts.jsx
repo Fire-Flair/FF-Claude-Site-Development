@@ -28,7 +28,7 @@ function PlayerCard({ person, format = "portrait", themeKey = "onyx", selected, 
   const address = `${CARD_DOMAIN}/${person.tag}`;
   const Emblem = ({ size }) => React.createElement("span", {
     style: { position: "absolute", top: size > 26 ? 9 : 7, right: size > 26 ? 9 : 7, zIndex: 4 }
-  }, React.createElement(Coin, {
+  }, React.createElement(FFLogo, {
     size,
     tier
   }));
@@ -169,7 +169,7 @@ function PlayerCard({ person, format = "portrait", themeKey = "onyx", selected, 
   }, "Profile Card"), React.createElement("span", {
     className: "ff-pc-coin",
     style: { width: cq(sz.coin), height: cq(sz.coin) }
-  }, React.createElement(Coin, {
+  }, React.createElement(FFLogo, {
     size: "100%",
     tier
   })), React.createElement("div", {
@@ -237,7 +237,7 @@ function PlayerCard({ person, format = "portrait", themeKey = "onyx", selected, 
     style: { height: cq(sz.url), background: t.dark ? "rgba(0,0,0,.45)" : "#141416", borderTop: `1px solid ${t.rule}` }
   }, React.createElement("span", {
     style: { width: cq(sz.url - 3.4), height: cq(sz.url - 3.4), display: "block", flex: "none" }
-  }, React.createElement(Coin, {
+  }, React.createElement(FFLogo, {
     size: "100%",
     tier
   })), full && React.createElement(Wordmark, {
@@ -462,7 +462,7 @@ function OrgCard({ org, kindLabel, onClick, width }) {
     <CardFrame as={onClick ? "button" : "div"} tier={org.tier} theme={t} onClick={onClick}
       style={{ width: width || CARD_W.org, padding: "12px 13px", display: "flex", gap: 12, alignItems: "center", textAlign: "left", minHeight: 96 }}>
       <span className="ff-label" style={{ position: "absolute", top: 8, left: 13, fontSize: 6.5, letterSpacing: ".22em", color: t.sub, zIndex: 4 }}>{kindLabel}</span>
-      <span style={{ position: "absolute", top: 7, right: 9, zIndex: 4 }}><Coin size={19} tier={org.tier} /></span>
+      <span style={{ position: "absolute", top: 7, right: 9, zIndex: 4 }}><FFLogo size={19} tier={org.tier} /></span>
 
       <span style={{
         width: 46, height: 46, flex: "none", borderRadius: 3, display: "grid", placeItems: "center",

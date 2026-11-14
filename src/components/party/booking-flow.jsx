@@ -462,7 +462,7 @@ function ShiftFaceEdit({ sh, ev, ensure, onClose, n, onConfirm, onStaff }) {
     <div className="ff-sfwrap" id={sh ? `ff-sf-${sh.id}` : undefined}>
       <div className="ff-sface edit">
         <span className="plate"><I11.ClipboardList size={11} /> {sv.plate}{n ? ` ${n}` : ""}</span>
-        <span className="coin"><Coin size={28} tier="gold" /></span>
+        <span className="coin"><FFLogo size={28} tier="gold" /></span>
         <div className="bxs">
           <RoleBox11 value={f.role} onChange={(v) => {
             const g = { ...f, role: v }; setF(g);
