@@ -2,17 +2,17 @@
 /* ==========================================================================
    WHERE ARE YOU BASED? (v17.4.6.3) — one base place per FF Team Profile Card.
 
-   v17.6: Where are you based? is one map point. state.profile.base17 (and state.company.base17) =
+   v17.6: Where are you based? is one map point (v17.6.1: used for the map pin only; nothing is measured from it).
+   state.profile.base17 (and state.company.base17) =
      { locId, label, lat, lng, approx, postcode?: { code, lat, lng, approx }, at }
        locId, label   the public place, chosen at town or city level (any London postcode gives London). Public.
        lat, lng       the centre of that public place (or the postcode point rounded to about 1 km when the place is not
                       in the catalogue). This is the only point ever plotted on the map. Public.
-       postcode       PRIVATE and optional: the postcode and its exact point. Used only to measure travel distance.
+       postcode       PRIVATE and optional: the postcode and its exact point. Never shown, plotted or sent in a public payload.
        approx         true when there is no postcode-accurate point (a typed place such as London, or an offline estimate).
      A base saved before v17.6 is { locId, at }: its place centre stands in for the missing fields.
    state.workPostcode   = { code, lat, lng, approx, baseId, at }   PRIVATE (profile only, kept as before). Never part
                           of the profile, a card, an area page or any public payload.
-   Travel distance is a separate value on the owner: owner.travel17 = 5 | 10 | 25 | 50 | 100 (miles) | "uk" (see coverage17.jsx).
    The base is not coverage. Choosing it never touches records.locations or coverage17, so changing the
    base keeps every saved coverage selection, and search eligibility only changes when coverage is edited.
    Older profiles have no base17: baseMigrate17 (run with the other one-time moves) sets it once from their saved
@@ -79,7 +79,7 @@ function baseLabelOfOwner17(owner) {
 }
 
 
-/* Is there a base to plot or measure from? */
+/* Is there a base to plot? */
 const baseHas17 = (owner) => !!(owner && owner.base17 && (owner.base17.lat != null || (owner.base17.locId && FD_BY_ID[owner.base17.locId])));
 
 
@@ -92,19 +92,6 @@ function basePublicPoint17(owner) {
   if (n && n.lat != null) return { lat: n.lat, lng: n.lng, label: baseLabelOfOwner17(owner) };
   if (b.lat != null && b.lng != null) return { lat: Math.round(b.lat * 100) / 100, lng: Math.round(b.lng * 100) / 100, label: baseLabelOfOwner17(owner) };
   return null;
-}
-
-
-/* The point distances are measured from: the private postcode point when there is one, otherwise the centre of
-   the public place. Returns { lat, lng, precise, locId } or null. Used for matching only, never plotted. */
-function baseOriginOf17(owner) {
-  const b = owner && owner.base17;
-  if (!b) return null;
-  const n = b.locId && FD_BY_ID[b.locId];
-  const pc = b.postcode;
-  if (pc && pc.lat != null && pc.lng != null) return { lat: pc.lat, lng: pc.lng, precise: !pc.approx, locId: b.locId || null };
-  if (b.lat != null && b.lng != null) return { lat: b.lat, lng: b.lng, precise: false, locId: b.locId || null };
-  return n && n.lat != null ? { lat: n.lat, lng: n.lng, precise: false, locId: n.id } : null;
 }
 
 
@@ -135,26 +122,6 @@ function baseResolve17(r) {
 function baseNodeOfCo17(co) {
   const id = co && co.base17 && co.base17.locId;
   return id && FD_BY_ID[id] ? FD_BY_ID[id] : null;
-}
-
-
-/* Where distances are measured from for the signed-in member: the private postcode point of the base (v17.6), then the
-   older private postcode record when it belongs to this base, otherwise the centre of the base place.
-   Returns { lat, lng, precise } or null. */
-function baseOrigin17(s) {
-  const o = baseOriginOf17(s && s.profile);
-  const wp = s && s.workPostcode, n = baseNode17(s);
-  if (o && s.profile.base17.postcode) return o;
-  if (wp && wp.lat != null && wp.lng != null && (!wp.baseId || (n && wp.baseId === n.id))) return { lat: wp.lat, lng: wp.lng, precise: !wp.approx };
-  return o;
-}
-
-
-/* Travel distance in kilometres from the member's base to a point; null when there is no base. */
-function baseDistanceKm17(s, lat, lng) {
-  const o = baseOrigin17(s);
-  if (!o || lat == null || lng == null) return null;
-  return fdHav(o.lat, o.lng, lat, lng);
 }
 
 
@@ -235,7 +202,7 @@ function BaseField17({ ink, owner }) {
     const t = setTimeout(find, partial ? 1200 : 400);
     return () => clearTimeout(t);
   }, [pc]);
-  const line = co ? "We put you on the map so people nearby can find you." : "We put you on the map to find jobs as close to you as possible.";
+  const line = co ? "We put you on the map so people nearby can find you." : "We put you on the map to find jobs close to you.";
   return (
     <div className="ff-base17">
       <style>{BASE17_CSS}</style>

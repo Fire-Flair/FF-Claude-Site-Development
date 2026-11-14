@@ -513,7 +513,7 @@ function attributesOf(state, person, cats) {
   const recs = recordsForPerson(state, person);
   const order = categoryOrder().filter(k => !cats[k].system && k !== "professions");
   const keys = [...PUB_ORDER.filter(k => order.includes(k)), ...order.filter(k => !PUB_ORDER.includes(k))];
-  const flat = keys.flatMap((k, ki) => withRanks((recs[k] || []).filter(r => !r.hidden && !r.proposed)).map(({ r, rank }, i) => ({ id: `${k}:${r.id}`, record: r, def: cats[k], category: k, rank, score: completeness(r), at: ki * 1000 + i })));
+  const flat = keys.flatMap((k, ki) => (k === "locations" ? covRecsFor17(state, person, (recs[k] || []).filter(r => !r.hidden && !r.proposed)).map(r => ({ r, rank: "tertiary" })) : withRanks((recs[k] || []).filter(r => !r.hidden && !r.proposed))).map(({ r, rank }, i) => ({ id: `${k}:${r.id}`, record: r, def: cats[k], category: k, rank, score: completeness(r), at: ki * 1000 + i })));
   return flat.sort((a, b) => b.score - a.score || a.at - b.at);
 }
 

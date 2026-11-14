@@ -53,7 +53,7 @@ function fiFacts17(state, person) {
   const name = fiClean17(person.name);
   if (name) facts.push({ field_id: "name", category: "name", value: name, detail: "", verification: "owner-declared" });
   ["professions", "experience", "qualifications", "skills", "languages", "interests", "locations"].forEach((cat) => {
-    (recs[cat] || []).filter((r) => r && !r.hidden && !r.proposed).forEach((r) => {
+    (cat === "locations" ? covRecsFor17(state, person, recs[cat]) : (recs[cat] || []).filter((r) => r && !r.hidden && !r.proposed)).forEach((r) => {
       const v = fiClean17(r.name); if (!v) return;
       const emp = r.details && r.details.employer ? fiClean17(r.details.employer) : "";
       facts.push({ field_id: cat + ":" + (r.id || v), category: cat, value: v, detail: fiClean17([r.description, emp].filter(Boolean).join(" · ")).slice(0, 240), verification: r.verified ? "verified" : "owner-declared" });
@@ -399,13 +399,13 @@ function PublicProfileBody({ person }) {
       <Sheet open={allAttrs} onClose={() => setAllAttrs(false)} title="All attributes">
         <div className="ff-pub">
           {[...PUB_ORDER, ...categoryOrder().filter(k => !cats[k].system && !PUB_ORDER.includes(k))].filter(k => cats[k]).map(k => (
-            <ProfileAttributeSection key={k} catKey={k} def={cats[k]} list={records[k] || []} isMe={false} shade="onyx" pub lead={person.travelText} onAdd={() => {}}
+            <ProfileAttributeSection key={k} catKey={k} def={cats[k]} list={records[k] || []} isMe={false} shade="onyx" pub onAdd={() => {}}
               onOpen={(r) => setOpenRec({ record: r, def: cats[k], category: k })} />
           ))}
         </div>
       </Sheet>
       <Sheet center open={!!attrCat} onClose={() => setAttrCat(null)} title={attrCat && cats[attrCat] ? cats[attrCat].label : ""}>
-        {attrCat && cats[attrCat] && <ExpandedAttrs list={(records[attrCat] || []).filter(r => !r.hidden && !r.proposed)} />}
+        {attrCat && cats[attrCat] && <ExpandedAttrs list={attrCat === "locations" ? covRecsFor17(state, person, records[attrCat]) : (records[attrCat] || []).filter(r => !r.hidden && !r.proposed)} />}
       </Sheet>
       <Sheet open={!!svcOpen} onClose={() => setSvcOpen(null)} title={svcOpen ? (svcOpen.kind === "std" ? svcOpen.svc.title : svcOpen.item.title) : "Service"}>
         {svcOpen && <div className="ff-svfull">{svcCard(svcOpen)}</div>}

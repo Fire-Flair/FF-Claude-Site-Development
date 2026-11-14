@@ -30,7 +30,7 @@ const RANK_NAME = { primary: "Primary", secondary: "Secondary", tertiary: "Extra
 
 
 /* Sections that Edit Profile manages (Reviews and Q&A aren't cards you rank). */
-const EDIT_CATS = ["professions", "qualifications", "skills", "experience", "venues", "locations", "languages", "interests", "media"];
+const EDIT_CATS = ["professions", "qualifications", "skills", "experience", "venues", "languages", "interests", "media"];
 
 
 
@@ -116,7 +116,6 @@ function p1EditReducer(s, a) {
     case "PE_START": return { ...s, profileEdit: { on: true, at: Date.now() } };
     case "P1_STAFF_NOTIFY": return { ...s, staffNotify: { at: a.at } };
     case "P1_REWARDS_INTEREST": return { ...s, rewardsInterest: a.interest };
-    case "P1_SET_PRIMARY_LOC": return p1PrimaryLocationReducer(s, a);
     case "P1_MEDIA_MOVE": {
       const m = [...(s.profile.media || [])], i = m.findIndex(x => x.id === a.id), j = i + a.dir;
       if (i < 0 || j < 0 || j >= m.length) return s;

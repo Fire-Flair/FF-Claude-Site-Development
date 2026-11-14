@@ -151,7 +151,7 @@ const fdPersonCover = (p) => {
   const own = p.coverage || { whole: [], exc: [] };
   const exc = own.exc || [];
   const whole = [...new Set([...(fx.whole || []), ...(own.whole || [])])];
-  return { whole, sub: [...sub].filter(id => !exc.includes(id)), exc, fixture: !own.whole || !own.whole.length, near: own.near || null, uk: !!own.uk, travelText: own.travelText || "" };
+  return { whole, sub: [...sub].filter(id => !exc.includes(id)), exc, fixture: !own.whole || !own.whole.length };
 };
 
 
@@ -183,7 +183,7 @@ const fdCoverNames = (cov) => {
   const exOf = (n) => (cov.exc || []).map(id => FD_BY_ID[id]).filter(m => m && fdUnder(m, n.id));
   const w = (cov.whole || []).map(id => FD_BY_ID[id]).filter(Boolean).map(n => { const ex = exOf(n); return n.name + (ex.length ? ` (not ${ex.slice(0, 2).map(m => m.name).join(", ")}${ex.length > 2 ? "…" : ""})` : " (whole area)"); });
   const s = (cov.sub || []).map(id => FD_BY_ID[id]).filter(Boolean).map(n => n.name);
-  const all = [...(cov.travelText ? [cov.travelText] : []), ...w, ...s];
+  const all = [...w, ...s];
   return all.length > 3 ? all.slice(0, 3).join(", ") + " and " + (all.length - 3) + " more" : all.join(", ");
 };
 
@@ -194,34 +194,13 @@ const fdCovers = (cov, node) => {
   if ((cov.sub || []).includes(node.id)) return true;
   const exc = cov.exc || [];
   for (const a of fdAnc(node)) { if (exc.includes(a.id)) return false; if ((cov.whole || []).includes(a.id)) return true; }
-  return fdNearHit(cov, node);
-};
-
-
-/* v17.6: travel distance and UK-wide. cov.near = { lat, lng, km, baseId } (straight line from the base point);
-   cov.uk = travels anywhere in the UK. A place is covered when its centre is within the distance. */
-const fdNearHit = (cov, n) => (!!cov.uk && n.uk) || (!!cov.near && fdNearPoint(n) && fdHav(cov.near.lat, cov.near.lng, n.lat, n.lng) <= cov.near.km);
-
-
-/* Only places that are a point on the map are tested by distance (towns, neighbourhoods, boroughs, counties and unitary areas);
-   a nation or country is never covered because its middle happens to be near. Its page lists the person as working within it. */
-const fdNearPoint = (n) => n.lat != null && (n.k === "p" || n.k === "h" || n.k === "b" || n.k === "a");
-
-
-/* Is anything beneath n within the travel distance (or the base itself beneath n)? */
-const fdNearWithin = (cov, n) => {
-  if (!cov.near && !cov.uk) return false;
-  if (fdNearHit(cov, n)) return true;
-  const b = cov.near && cov.near.baseId && FD_BY_ID[cov.near.baseId];
-  if (b && fdUnder(b, n.id)) return true;
-  return n.kids.length > 0 && fdDesc(n).some(d => fdNearHit(cov, d));
+  return false;
 };
 
 
 /* Does coverage touch anything beneath (or at) this location? Used for parent pages and fallback. */
 const fdServesWithin = (cov, node) => (cov.whole || []).concat(cov.sub || []).some(id => { const n = FD_BY_ID[id]; return n && fdUnder(n, node.id) && fdCovers(cov, n); })
-  || (!!(cov.exc || []).length && (cov.whole || []).some(id => fdUnder(node, id)) && fdCovers(cov, node))
-  || fdNearWithin(cov, node);
+  || (!!(cov.exc || []).length && (cov.whole || []).some(id => fdUnder(node, id)) && fdCovers(cov, node));
 
 
 
