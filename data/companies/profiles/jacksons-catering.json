@@ -1,0 +1,90 @@
+{
+  "formatVersion": 2,
+  "slug": "jacksons-catering",
+  "name": "Jackson's Catering",
+  "kind": "External catering",
+  "base": "Newcastle",
+  "areas": [
+    "Newcastle",
+    "Northumberland",
+    "Teesside",
+    "North East"
+  ],
+  "description": "An external catering company with premises in Newcastle, Northumberland, North Shields and Middlesbrough, working seven days a week across the North East with buffets, BBQs, hog roasts and more.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/jacksons-catering",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Buffets",
+        "BBQs",
+        "Hog roasts",
+        "American catering",
+        "Fish and chip vans"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/jacksons-catering",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/jacksons-catering",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Seven-day service across the North East"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/jacksons-catering",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "catering",
+    "tag": "JACKS",
+    "position": 96,
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/jacksons-catering"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Newcastle",
+        "lat": 54.9783,
+        "lng": -1.6178,
+        "approx": false
+      }
+    ]
+  }
+}

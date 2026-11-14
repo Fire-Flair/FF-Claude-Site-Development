@@ -1,0 +1,164 @@
+{
+  "formatVersion": 2,
+  "slug": "storm-djs",
+  "name": "Storm DJs",
+  "kind": "DJ agency",
+  "base": "London",
+  "areas": [
+    "London",
+    "UK-wide"
+  ],
+  "description": "A London DJ agency, established in 2011, that matches DJs, saxophonists and live musicians to weddings, private parties, corporate events and venues across the UK and abroad. FireFlair's primary DJ partner: their Starter Party, Signature Set and Unforgettable Night packages are bookable on FF Party.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://storm-djs.com/about",
+    "at": "2026-11-07"
+  },
+  "media": [
+    {
+      "id": "storm-djs_0",
+      "src": "https://storm-djs.com/media/123e8ddd-ec6e-422b-a318-87141d3c51f1",
+      "alt": "Storm DJs",
+      "source": {
+        "by": "agent",
+        "url": "https://storm-djs.com/about",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "storm-djs_1",
+      "src": "https://storm-djs.com/wp-content/uploads/2019/03/storm-djs-wedding-chris-taylor12.jpg",
+      "alt": "Storm DJs",
+      "source": {
+        "by": "agent",
+        "url": "https://storm-djs.com/about",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "storm-djs_2",
+      "src": "https://storm-djs.com/wp-content/uploads/2017/01/paul-dove-saxophonist-with-dj-storm.jpg",
+      "alt": "Storm DJs",
+      "source": {
+        "by": "agent",
+        "url": "https://storm-djs.com/about",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "storm-djs_3",
+      "src": "https://storm-djs.com/wp-content/uploads/2012/07/Storm09_Intro_012.jpg",
+      "alt": "Storm DJs",
+      "source": {
+        "by": "agent",
+        "url": "https://storm-djs.com/about",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding DJs",
+        "Party DJs",
+        "Corporate DJs",
+        "Hotel and venue residencies",
+        "Live saxophonists and musicians",
+        "Sound, lighting and photo booth packages"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://storm-djs.com/about",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Birthdays",
+        "Corporate events",
+        "Hotels and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://storm-djs.com/about",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "scale",
+      "title": "Scale",
+      "chips": [
+        "Small",
+        "Medium",
+        "Large"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://storm-djs.com/about",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Established 2011",
+        "203 published artists",
+        "UK-wide coverage",
+        "Over 3,200 past customers"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://storm-djs.com/about",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://storm-djs.com",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://storm-djs.com/about",
+          "at": "2026-11-07"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "STORM",
+    "partner": true,
+    "position": 30,
+    "source": {
+      "urls": [
+        "https://storm-djs.com/about",
+        "https://storm-djs.com/best-dj-packages"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "granted"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": true
+      }
+    ]
+  }
+}

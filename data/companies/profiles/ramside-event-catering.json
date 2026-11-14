@@ -1,0 +1,89 @@
+{
+  "formatVersion": 2,
+  "slug": "ramside-event-catering",
+  "name": "Ramside Event Catering",
+  "kind": "Event & wedding catering",
+  "base": "Durham",
+  "areas": [
+    "Durham",
+    "Newcastle",
+    "Northumberland",
+    "Tyne and Wear",
+    "North Yorkshire"
+  ],
+  "description": "Part of the family-run Ramside Estates Group, one of the largest privately owned event caterers in the North East, serving County Durham, Northumberland, Tyne and Wear and North Yorkshire.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://guidesforbrides.co.uk/wedding-caterers-and-catering-hire/tyne-and-wear/ramside-event-catering/154796",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding catering",
+        "Event catering"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://guidesforbrides.co.uk/wedding-caterers-and-catering-hire/tyne-and-wear/ramside-event-catering/154796",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://guidesforbrides.co.uk/wedding-caterers-and-catering-hire/tyne-and-wear/ramside-event-catering/154796",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Part of Ramside Estates Group",
+        "Family-run for over 60 years"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://guidesforbrides.co.uk/wedding-caterers-and-catering-hire/tyne-and-wear/ramside-event-catering/154796",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "catering",
+    "tag": "RAMSI",
+    "position": 95,
+    "source": {
+      "urls": [
+        "https://guidesforbrides.co.uk/wedding-caterers-and-catering-hire/tyne-and-wear/ramside-event-catering/154796"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Durham",
+        "lat": 54.7761,
+        "lng": -1.5733,
+        "approx": true
+      }
+    ]
+  }
+}

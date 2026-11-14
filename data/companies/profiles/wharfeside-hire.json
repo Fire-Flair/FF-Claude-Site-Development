@@ -1,0 +1,104 @@
+{
+  "formatVersion": 2,
+  "slug": "wharfeside-hire",
+  "name": "Wharfeside Hire",
+  "kind": "Glassware hire & delivery",
+  "base": "Wetherby",
+  "areas": [
+    "Leeds",
+    "York",
+    "Harrogate",
+    "Yorkshire"
+  ],
+  "description": "A Wetherby event hire company supplying glasses, bespoke bars, linen, furniture and catering equipment across Yorkshire.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://wharfesidehire.co.uk",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Glassware hire",
+        "Bespoke bar hire",
+        "Furniture hire",
+        "Catering equipment hire"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://wharfesidehire.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://wharfesidehire.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Yorkshire coverage"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://wharfesidehire.co.uk",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://wharfesidehire.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://wharfesidehire.co.uk",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "svc",
+    "sub": "glassware",
+    "tag": "WHARF",
+    "position": 138,
+    "source": {
+      "urls": [
+        "https://wharfesidehire.co.uk"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Wetherby",
+        "lat": 53.9283,
+        "lng": -1.3844,
+        "approx": true
+      }
+    ]
+  }
+}

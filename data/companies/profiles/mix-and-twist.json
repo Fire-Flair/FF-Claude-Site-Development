@@ -1,0 +1,160 @@
+{
+  "formatVersion": 2,
+  "slug": "mix-and-twist",
+  "name": "Mix & Twist",
+  "kind": "Bar hire for large events",
+  "base": "Leeds and London",
+  "areas": [
+    "Leeds",
+    "London",
+    "UK-wide"
+  ],
+  "logo": "https://www.mixandtwist.co.uk/hs-fs/hubfs/M%26TIcon-black.png?width=133&height=134&name=M%26TIcon-black.png",
+  "logoBg": "light",
+  "logoWide": false,
+  "description": "A specialist bar hire company working with freelance mixologists. It runs large corporate events, private parties and weddings, and provides the bars, bartenders, glassware and an event manager on the day.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.mixandtwist.co.uk/corporate-services/large-events",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Customisable mobile bars",
+        "Themed bars",
+        "Bartenders and mixologists",
+        "Glassware",
+        "Bespoke drinks menus",
+        "Event management",
+        "Brand drinks development",
+        "Team-building cocktail classes"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.mixandtwist.co.uk/corporate-services/large-events",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Large corporate events",
+        "Private parties",
+        "Weddings",
+        "Team building"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.mixandtwist.co.uk/corporate-services/large-events",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "scale",
+      "title": "Scale",
+      "chips": [
+        "Founded 2014",
+        "Large events from 150 guests",
+        "Case example: 500-guest event with five bars"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.mixandtwist.co.uk/corporate-services/large-events",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Good Business Charter accredited",
+        "Public and employer's liability insurance held"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.mixandtwist.co.uk/corporate-services/large-events",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://www.mixandtwist.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://www.mixandtwist.co.uk/corporate-services/large-events",
+          "at": "2026-11-07"
+        }
+      },
+      {
+        "id": "instagram",
+        "name": "@mixandtwistuk",
+        "description": "Instagram",
+        "source": {
+          "by": "agent",
+          "url": "https://www.mixandtwist.co.uk/corporate-services/large-events",
+          "at": "2026-11-07"
+        }
+      },
+      {
+        "id": "facebook",
+        "name": "mixandtwistuk",
+        "description": "Facebook",
+        "source": {
+          "by": "agent",
+          "url": "https://www.mixandtwist.co.uk/corporate-services/large-events",
+          "at": "2026-11-07"
+        }
+      },
+      {
+        "id": "linkedin",
+        "name": "mixandtwistuk",
+        "description": "LinkedIn",
+        "source": {
+          "by": "agent",
+          "url": "https://www.mixandtwist.co.uk/corporate-services/large-events",
+          "at": "2026-11-07"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "MIXTW",
+    "position": 1,
+    "source": {
+      "urls": [
+        "https://www.mixandtwist.co.uk/corporate-services/large-events"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "granted"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Leeds",
+        "lat": 53.8008,
+        "lng": -1.5491,
+        "approx": false
+      },
+      {
+        "label": "London",
+        "lat": 51.532,
+        "lng": -0.1,
+        "approx": false
+      }
+    ]
+  }
+}

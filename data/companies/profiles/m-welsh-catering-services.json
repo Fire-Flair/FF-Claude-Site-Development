@@ -1,0 +1,85 @@
+{
+  "formatVersion": 2,
+  "slug": "m-welsh-catering-services",
+  "name": "M Welsh Catering Services",
+  "kind": "Wedding & event catering",
+  "base": "Christow",
+  "areas": [
+    "Devon",
+    "South West"
+  ],
+  "description": "A family-run Devon catering company voted best wedding caterer in the South West Wedding Awards in 2019 and 2020.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://app-proxy-dev-1.bridebook.com/uk/search/wedding-catering/wellington",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding catering",
+        "Event catering"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app-proxy-dev-1.bridebook.com/uk/search/wedding-catering/wellington",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app-proxy-dev-1.bridebook.com/uk/search/wedding-catering/wellington",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Family-run",
+        "Best Wedding Caterer, South West Wedding Awards 2019 and 2020"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app-proxy-dev-1.bridebook.com/uk/search/wedding-catering/wellington",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "catering",
+    "tag": "MWELS",
+    "position": 117,
+    "source": {
+      "urls": [
+        "https://app-proxy-dev-1.bridebook.com/uk/search/wedding-catering/wellington"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Christow",
+        "lat": 50.66,
+        "lng": -3.67,
+        "approx": false
+      }
+    ]
+  }
+}

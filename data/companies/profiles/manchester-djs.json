@@ -1,0 +1,75 @@
+{
+  "formatVersion": 2,
+  "slug": "manchester-djs",
+  "name": "Manchester DJs",
+  "kind": "DJ, sound & lighting hire",
+  "base": "Manchester",
+  "areas": [
+    "Manchester",
+    "Lancashire",
+    "Cheshire"
+  ],
+  "description": "A Manchester DJ hire company supplying DJs, sound and lighting for weddings, birthdays and other events, from small gatherings to large ones. It covers Greater Manchester, Lancashire and Cheshire.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/manchester-djs",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "DJ hire",
+        "Sound hire",
+        "Lighting hire"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/manchester-djs",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Birthdays",
+        "Corporate events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/manchester-djs",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "MANCH",
+    "position": 31,
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/manchester-djs"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Manchester",
+        "lat": 53.4808,
+        "lng": -2.2426,
+        "approx": false
+      }
+    ]
+  }
+}

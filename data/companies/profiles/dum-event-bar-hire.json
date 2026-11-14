@@ -1,0 +1,153 @@
+{
+  "formatVersion": 2,
+  "slug": "dum-event-bar-hire",
+  "name": "Dum Event Bar Hire",
+  "kind": "LED mobile bars & cocktails",
+  "base": "Dalston, London",
+  "areas": [
+    "London"
+  ],
+  "description": "A London mobile bar company with around fifteen years' experience, offering LED cash bars, portable bar set-ups and original cocktails.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.poptop.uk.com/supplier/dum-event-bar-hire/",
+    "at": "2026-11-07"
+  },
+  "media": [
+    {
+      "id": "dum-event-bar-hire_0",
+      "src": "https://dumeventbar.co.uk/wp-content/uploads/2024/06/1.jpeg",
+      "alt": "Dum Event Bar Hire",
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/dum-event-bar-hire/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "dum-event-bar-hire_1",
+      "src": "https://dumeventbar.co.uk/wp-content/uploads/2024/06/2.jpeg",
+      "alt": "Dum Event Bar Hire",
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/dum-event-bar-hire/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "dum-event-bar-hire_2",
+      "src": "https://dumeventbar.co.uk/wp-content/uploads/2024/06/3.jpeg",
+      "alt": "Dum Event Bar Hire",
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/dum-event-bar-hire/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "dum-event-bar-hire_3",
+      "src": "https://dumeventbar.co.uk/wp-content/uploads/2024/06/4.jpeg",
+      "alt": "Dum Event Bar Hire",
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/dum-event-bar-hire/",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Mobile bars",
+        "LED cash bar",
+        "Portable LED bar set-ups",
+        "Original cocktails"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/dum-event-bar-hire/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Private events",
+        "Corporate events",
+        "House parties",
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/dum-event-bar-hire/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "scale",
+      "title": "Scale",
+      "chips": [
+        "Around fifteen years trading"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/dum-event-bar-hire/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Listing details only; own website not confirmed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/dum-event-bar-hire/",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://dumeventbar.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://www.poptop.uk.com/supplier/dum-event-bar-hire/",
+          "at": "2026-11-07"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "DUMEB",
+    "position": 17,
+    "source": {
+      "urls": [
+        "https://www.poptop.uk.com/supplier/dum-event-bar-hire/"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Dalston, London",
+        "lat": 51.546,
+        "lng": -0.075,
+        "approx": false
+      }
+    ]
+  }
+}

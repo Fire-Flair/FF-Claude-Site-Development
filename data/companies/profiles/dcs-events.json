@@ -1,0 +1,73 @@
+{
+  "formatVersion": 2,
+  "slug": "dcs-events",
+  "name": "DCS Events",
+  "kind": "Sound, light & DJ company",
+  "base": "London",
+  "areas": [
+    "London"
+  ],
+  "description": "A London entertainment company providing sound, lighting and DJs, with wedding packages that include a DJ and sound and lighting crew where needed.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/dcs-events",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "DJs",
+        "Sound",
+        "Lighting"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/dcs-events",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Private events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/dcs-events",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "DCSEV",
+    "position": 55,
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/dcs-events"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": false
+      }
+    ]
+  }
+}

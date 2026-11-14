@@ -1,0 +1,87 @@
+{
+  "formatVersion": 2,
+  "slug": "blue-blazer-events",
+  "name": "Blue Blazer Events",
+  "kind": "Flair bartending & mobile bar",
+  "base": "Billericay, Essex",
+  "areas": [
+    "Essex"
+  ],
+  "description": "An Essex mobile bar and flair bartending company, with mixologists, bar setup and glassware hire for parties and corporate events.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.poptop.uk.com/supplier/blue-blazer-events",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Mobile bar",
+        "Flair bartending",
+        "Mixologists",
+        "Bar setup",
+        "Glassware hire"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/blue-blazer-events",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Private parties",
+        "Corporate events",
+        "Hen parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/blue-blazer-events",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Listing details only; own website not confirmed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/blue-blazer-events",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "BLUBZ",
+    "position": 15,
+    "source": {
+      "urls": [
+        "https://www.poptop.uk.com/supplier/blue-blazer-events"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "none"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Billericay",
+        "lat": 51.6277,
+        "lng": 0.4181,
+        "approx": false
+      }
+    ]
+  }
+}

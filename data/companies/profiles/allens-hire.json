@@ -1,0 +1,88 @@
+{
+  "formatVersion": 2,
+  "slug": "allens-hire",
+  "name": "Allens Hire",
+  "kind": "Glassware hire & delivery",
+  "base": "London",
+  "areas": [
+    "London",
+    "South of England"
+  ],
+  "description": "A hire company supplying glassware and event equipment in London and the South.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://allenshire.co.uk",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Glassware hire",
+        "Event equipment hire"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://allenshire.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://allenshire.co.uk",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://allenshire.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://allenshire.co.uk",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "svc",
+    "sub": "glassware",
+    "tag": "ALLEN",
+    "position": 132,
+    "source": {
+      "urls": [
+        "https://allenshire.co.uk"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": true
+      }
+    ]
+  }
+}

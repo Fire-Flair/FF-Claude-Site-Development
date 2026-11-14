@@ -1,0 +1,73 @@
+{
+  "formatVersion": 2,
+  "slug": "requedainious-entertainment",
+  "name": "Requedainious Entertainment",
+  "kind": "Wedding, corporate & party DJs",
+  "base": "London",
+  "areas": [
+    "London"
+  ],
+  "description": "A London DJ, sound and lighting company for weddings, corporate events and parties. It lists work at London landmarks and for large brands.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://lastminutemusicians.com/members/requedainious.html",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "DJs",
+        "Sound hire",
+        "Lighting hire"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://lastminutemusicians.com/members/requedainious.html",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://lastminutemusicians.com/members/requedainious.html",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "REQUE",
+    "position": 54,
+    "source": {
+      "urls": [
+        "https://lastminutemusicians.com/members/requedainious.html"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": false
+      }
+    ]
+  }
+}

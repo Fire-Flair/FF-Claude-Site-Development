@@ -1,0 +1,72 @@
+{
+  "formatVersion": 2,
+  "slug": "logic-discos",
+  "name": "Logic Discos",
+  "kind": "Mobile disco",
+  "base": "Wolverhampton",
+  "areas": [
+    "Wolverhampton",
+    "Telford",
+    "Midlands"
+  ],
+  "description": "A premium-standard mobile disco service based near Wolverhampton and covering the whole of the Midlands.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://findit.scotsman.com/search/willenhall/discos-and-djs-hire",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Mobile disco"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://findit.scotsman.com/search/willenhall/discos-and-djs-hire",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://findit.scotsman.com/search/willenhall/discos-and-djs-hire",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "LOGIC",
+    "position": 52,
+    "source": {
+      "urls": [
+        "https://findit.scotsman.com/search/willenhall/discos-and-djs-hire"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Wolverhampton",
+        "lat": 52.587,
+        "lng": -2.1288,
+        "approx": false
+      }
+    ]
+  }
+}

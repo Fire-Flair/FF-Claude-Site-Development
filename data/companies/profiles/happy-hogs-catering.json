@@ -1,0 +1,72 @@
+{
+  "formatVersion": 2,
+  "slug": "happy-hogs-catering",
+  "name": "Happy Hogs Catering",
+  "kind": "Hog roast catering",
+  "base": "York",
+  "areas": [
+    "York",
+    "Yorkshire"
+  ],
+  "description": "A York hog roast caterer serving weddings and events across Yorkshire.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://app.bridebook.com/search/wedding-catering/yorkshire",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Hog roast catering"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/search/wedding-catering/yorkshire",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/search/wedding-catering/yorkshire",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "catering",
+    "tag": "HAPPY",
+    "position": 99,
+    "source": {
+      "urls": [
+        "https://app.bridebook.com/search/wedding-catering/yorkshire"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "York",
+        "lat": 53.9591,
+        "lng": -1.0815,
+        "approx": false
+      }
+    ]
+  }
+}

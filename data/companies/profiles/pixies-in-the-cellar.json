@@ -1,0 +1,69 @@
+{
+  "formatVersion": 2,
+  "slug": "pixies-in-the-cellar",
+  "name": "Pixies in the Cellar",
+  "kind": "Wedding photography",
+  "base": "Stalybridge",
+  "areas": [
+    "Greater Manchester"
+  ],
+  "description": "A Stalybridge creative wedding photography team.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://app-proxy-dev-4.bridebook.com/uk/search/wedding-photographers/north-west",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding photography"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app-proxy-dev-4.bridebook.com/uk/search/wedding-photographers/north-west",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app-proxy-dev-4.bridebook.com/uk/search/wedding-photographers/north-west",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "PIXIE",
+    "position": 75,
+    "source": {
+      "urls": [
+        "https://app-proxy-dev-4.bridebook.com/uk/search/wedding-photographers/north-west"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Stalybridge",
+        "lat": 53.483,
+        "lng": -2.06,
+        "approx": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "formatVersion": 2,
+  "slug": "the-bar-people",
+  "name": "The Bar People",
+  "kind": "Mobile bars for large corporate events",
+  "base": "",
+  "areas": [
+    "London",
+    "Essex",
+    "Hertfordshire"
+  ],
+  "logoBg": "dark",
+  "logoWide": false,
+  "description": "A mobile bar company with over ten years in operation, working from private house parties to large-scale corporate events. It provides customised bars, bar staff, glassware, refrigeration and equipment.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/suppliers/the-bar-people",
+    "at": "2026-11-07"
+  },
+  "media": [
+    {
+      "id": "the-bar-people_0",
+      "src": "https://www.addtoevent.co.uk/sites/default/files/styles/x_large/public/ce683194-685c-4d5d-ac18-320aea060ee8.jpeg",
+      "alt": "The Bar People",
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-bar-people",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "the-bar-people_1",
+      "src": "https://www.addtoevent.co.uk/sites/default/files/styles/x_large/public/e478571c-1e52-4aeb-b6ed-452d35efc307.jpeg",
+      "alt": "The Bar People",
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-bar-people",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "the-bar-people_2",
+      "src": "https://www.addtoevent.co.uk/sites/default/files/styles/x_large/public/77b9d71f-1ba7-4c7e-a4e6-0d7249cb285e.jpeg",
+      "alt": "The Bar People",
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-bar-people",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Customised bars",
+        "Cocktail bars",
+        "Bar staff",
+        "Glassware and tableware",
+        "Refrigeration and ice storage",
+        "Beverages and bar equipment"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-bar-people",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Private parties",
+        "Large corporate events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-bar-people",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "scale",
+      "title": "Scale",
+      "chips": [
+        "Over ten years in operation"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-bar-people",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Listing details only; own website not confirmed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-bar-people",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "BARPE",
+    "position": 8,
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/suppliers/the-bar-people"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "granted"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.54,
+        "lng": -0.05,
+        "approx": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "formatVersion": 2,
+  "slug": "the-m-bar",
+  "name": "The M Bar",
+  "kind": "Fully operated mobile bar packages",
+  "base": "Kingston upon Thames",
+  "areas": [
+    "London",
+    "Surrey",
+    "East Sussex",
+    "West Sussex"
+  ],
+  "logo": "https://www.the-mbar.co.uk/wp-content/uploads/mbar400px.jpg",
+  "logoBg": "dark",
+  "logoWide": false,
+  "description": "A mobile bar company offering fully operated packages with a range of bar units, bar staff and cocktails across London and the South East.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.poptop.uk.com/supplier/the-m-bar-ltd",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Fully operated mobile bars",
+        "Range of bar units",
+        "Bar staff",
+        "Cocktails"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/the-m-bar-ltd",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Parties",
+        "Corporate functions",
+        "Special events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/the-m-bar-ltd",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Listing details only; own website not confirmed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/the-m-bar-ltd",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://www.the-mbar.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://www.poptop.uk.com/supplier/the-m-bar-ltd",
+          "at": "2026-11-07"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "THEMB",
+    "position": 11,
+    "legal": {
+      "form": null,
+      "legalName": "The M Bar (South) Ltd",
+      "companyNumber": null
+    },
+    "source": {
+      "urls": [
+        "https://www.poptop.uk.com/supplier/the-m-bar-ltd"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Kingston upon Thames",
+        "lat": 51.4123,
+        "lng": -0.3007,
+        "approx": false
+      }
+    ]
+  }
+}

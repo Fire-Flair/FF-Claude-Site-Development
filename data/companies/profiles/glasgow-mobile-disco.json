@@ -1,0 +1,71 @@
+{
+  "formatVersion": 2,
+  "slug": "glasgow-mobile-disco",
+  "name": "Glasgow Mobile Disco",
+  "kind": "Wedding DJ & mobile disco",
+  "base": "Glasgow",
+  "areas": [
+    "Glasgow",
+    "Scotland"
+  ],
+  "description": "A Glasgow wedding DJ and mobile disco supplier that performs at Scottish wedding venues.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/glasgow-mobile-disco",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding DJ",
+        "Mobile disco"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/glasgow-mobile-disco",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/glasgow-mobile-disco",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "GLASG",
+    "position": 44,
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/glasgow-mobile-disco"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Glasgow",
+        "lat": 55.8642,
+        "lng": -4.2518,
+        "approx": false
+      }
+    ]
+  }
+}

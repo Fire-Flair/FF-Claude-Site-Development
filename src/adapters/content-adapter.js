@@ -11,11 +11,13 @@
    Methods (inputs: none; outputs: JSON, see each comment). Editing data = edit the JSON file (or the
    Markdown under stories/ and run `npm run stories`); no .jsx file needs to change. */
 const CONTENT_ADAPTER = {
-  /** Company profile pages shown on Network (FF Team and FF Staff) and each company page. Returns an array of profile objects (slug, name, about, services, events, contact, areas, packages, questions).
-   *  Prototype source: src/content/companies/real-companies.json. Replace the body with a Content API call. */
+  /** Bar company profile pages shown on Network (FF Team and FF Staff) and each company page. Returns an array of company profiles in format version 2
+   *  (docs/company-profile-format.md: slug, name, kind, base, areas, description, media, info, records, qa, meta), each with areaPlaces, the stated areas
+   *  resolved to place ids. Prototype source: src/content/companies/real-companies.json, written by npm run companies from data/companies/profiles/<slug>.json.
+   *  Replace the body with a Content API call that returns the same profiles. */
   companyProfiles() { return __ff_json("content/companies/real-companies.json"); },
-  /** Directory of supplier companies (bar, DJ, entertainment, services, caterers). Returns an array of supplier objects (slug, tag, name, kind, cat, base, areas, ...).
-   *  Prototype source: src/content/companies/suppliers.json. Replace the body with a Content API call. */
+  /** Directory of the other companies (DJ, photo, catering, bar services): the same format 2 profiles as companyProfiles(), with meta.category dj, photo, catering or svc.
+   *  Prototype source: src/content/companies/suppliers.json, written by npm run companies. Replace the body with a Content API call. */
   supplierProfiles() { return __ff_json("content/companies/suppliers.json"); },
   /** Raise the Bar cocktail menu source data (name, size options, ingredients).
    *  Prototype source: src/content/packages/raise-the-bar-menu.json. Replace the body with a Content API call. */

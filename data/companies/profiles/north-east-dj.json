@@ -1,0 +1,73 @@
+{
+  "formatVersion": 2,
+  "slug": "north-east-dj",
+  "name": "North East DJ",
+  "kind": "DJ company",
+  "base": "Newcastle",
+  "areas": [
+    "Newcastle",
+    "Tyne and Wear",
+    "North East"
+  ],
+  "description": "A North East company of professional DJs with experience in the entertainment and music industry, supplying live DJs to venues, bars and events.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.bark.com/en/gb/wedding-dj/tyne-and-wear/",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "DJ hire",
+        "Venue and bar DJs"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.bark.com/en/gb/wedding-dj/tyne-and-wear/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Bars and venues",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.bark.com/en/gb/wedding-dj/tyne-and-wear/",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "NORTHE",
+    "position": 37,
+    "source": {
+      "urls": [
+        "https://www.bark.com/en/gb/wedding-dj/tyne-and-wear/"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Newcastle",
+        "lat": 54.9783,
+        "lng": -1.6178,
+        "approx": true
+      }
+    ]
+  }
+}

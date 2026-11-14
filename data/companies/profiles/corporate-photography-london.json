@@ -1,0 +1,74 @@
+{
+  "formatVersion": 2,
+  "slug": "corporate-photography-london",
+  "name": "Corporate Photography London",
+  "kind": "Corporate event photography & video",
+  "base": "London",
+  "areas": [
+    "London",
+    "Greater London"
+  ],
+  "description": "A London team of photographers and videographers for corporate events, presentations, awards and conferences, working with small events or large company days.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/corporate-photography-london",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Corporate event photography",
+        "Event video",
+        "Video streaming"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/corporate-photography-london",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Corporate events",
+        "Conferences",
+        "Awards"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/corporate-photography-london",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "CORPO",
+    "position": 65,
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/corporate-photography-london"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": false
+      }
+    ]
+  }
+}

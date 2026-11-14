@@ -1,0 +1,86 @@
+{
+  "formatVersion": 2,
+  "slug": "roast-event",
+  "name": "Roast Event",
+  "kind": "Hog roast catering",
+  "base": "Nottingham",
+  "areas": [
+    "Nottingham",
+    "East Midlands",
+    "London"
+  ],
+  "description": "A Nottingham hog roast and barbecue company with more than twenty years of catering experience, covering the East Midlands and London.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://app.bridebook.com/uk/wedding-catering/roastevent-nottingham-nottinghamshire-bbaXq44478",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Hog roasts",
+        "Barbecues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/wedding-catering/roastevent-nottingham-nottinghamshire-bbaXq44478",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/wedding-catering/roastevent-nottingham-nottinghamshire-bbaXq44478",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Over 20 years' catering experience"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/wedding-catering/roastevent-nottingham-nottinghamshire-bbaXq44478",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "catering",
+    "tag": "ROAST",
+    "position": 107,
+    "source": {
+      "urls": [
+        "https://app.bridebook.com/uk/wedding-catering/roastevent-nottingham-nottinghamshire-bbaXq44478"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Nottingham",
+        "lat": 52.9548,
+        "lng": -1.1581,
+        "approx": false
+      }
+    ]
+  }
+}

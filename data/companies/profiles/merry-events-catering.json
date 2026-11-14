@@ -1,0 +1,87 @@
+{
+  "formatVersion": 2,
+  "slug": "merry-events-catering",
+  "name": "Merry Events Catering",
+  "kind": "Wedding & event catering",
+  "base": "Whitley Bay",
+  "areas": [
+    "Whitley Bay",
+    "Newcastle",
+    "North East"
+  ],
+  "description": "A husband-and-wife catering team in Whitley Bay with over thirty years' combined hospitality experience, offering wedding catering, private dining, parties and corporate catering across the North East.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/suppliers/merry-events-catering",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding catering",
+        "Private dining",
+        "Corporate catering"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/merry-events-catering",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/merry-events-catering",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "30+ years' combined experience"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/merry-events-catering",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "catering",
+    "tag": "MERRY",
+    "position": 97,
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/suppliers/merry-events-catering"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Whitley Bay",
+        "lat": 55.045,
+        "lng": -1.449,
+        "approx": false
+      }
+    ]
+  }
+}

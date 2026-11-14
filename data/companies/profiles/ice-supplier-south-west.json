@@ -1,0 +1,105 @@
+{
+  "formatVersion": 2,
+  "slug": "ice-supplier-south-west",
+  "name": "Ice Supplier South West & South Wales",
+  "kind": "Ice delivery",
+  "base": "Bristol",
+  "areas": [
+    "Bristol",
+    "Bath",
+    "Cardiff",
+    "Newport",
+    "Cheltenham",
+    "Gloucester",
+    "Wiltshire",
+    "Somerset"
+  ],
+  "description": "A Bristol ice supplier, established in 2011, delivering to Bristol, Bath, Cardiff, Newport, Cheltenham, Gloucester, Wiltshire and Somerset.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://ice-supplier.co.uk",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Ice delivery"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://ice-supplier.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://ice-supplier.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Established 2011"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://ice-supplier.co.uk",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://ice-supplier.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://ice-supplier.co.uk",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "svc",
+    "sub": "ice",
+    "tag": "ICESS",
+    "position": 126,
+    "source": {
+      "urls": [
+        "https://ice-supplier.co.uk"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Bristol",
+        "lat": 51.4545,
+        "lng": -2.5879,
+        "approx": true
+      }
+    ]
+  }
+}

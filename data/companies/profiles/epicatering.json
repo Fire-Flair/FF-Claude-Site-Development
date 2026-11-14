@@ -1,0 +1,73 @@
+{
+  "formatVersion": 2,
+  "slug": "epicatering",
+  "name": "EpiCatering",
+  "kind": "Event & wedding catering",
+  "base": "Lewes",
+  "areas": [
+    "East Sussex",
+    "Sussex"
+  ],
+  "description": "An East Sussex catering company taking a modern, innovative approach to event and wedding food.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.eventsense.co.uk/browse/caterers/warwickshire/gaydon?page=2",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding catering",
+        "Event catering"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.eventsense.co.uk/browse/caterers/warwickshire/gaydon?page=2",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.eventsense.co.uk/browse/caterers/warwickshire/gaydon?page=2",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "catering",
+    "tag": "EPICA",
+    "position": 113,
+    "source": {
+      "urls": [
+        "https://www.eventsense.co.uk/browse/caterers/warwickshire/gaydon?page=2"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Lewes",
+        "lat": 50.874,
+        "lng": 0.009,
+        "approx": true
+      }
+    ]
+  }
+}

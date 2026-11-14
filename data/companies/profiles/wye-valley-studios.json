@@ -1,0 +1,82 @@
+{
+  "formatVersion": 2,
+  "slug": "wye-valley-studios",
+  "name": "Wye Valley Studios",
+  "kind": "Family photography business",
+  "base": "Caldicot",
+  "areas": [
+    "Monmouthshire",
+    "South Wales"
+  ],
+  "description": "A family photography business in Caldicot that has operated since 1956, taking wedding bookings.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://bridebook.com/uk/search/wedding-photographers/south-wales?page=5",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding photography"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/search/wedding-photographers/south-wales?page=5",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/search/wedding-photographers/south-wales?page=5",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Operating since 1956"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/search/wedding-photographers/south-wales?page=5",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "WYEVA",
+    "position": 87,
+    "source": {
+      "urls": [
+        "https://bridebook.com/uk/search/wedding-photographers/south-wales?page=5"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Caldicot",
+        "lat": 51.592,
+        "lng": -2.749,
+        "approx": false
+      }
+    ]
+  }
+}

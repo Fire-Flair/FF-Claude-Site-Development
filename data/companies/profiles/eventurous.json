@@ -1,0 +1,109 @@
+{
+  "formatVersion": 2,
+  "slug": "eventurous",
+  "name": "Eventurous",
+  "kind": "Event management",
+  "base": "Tamworth",
+  "areas": [
+    "London",
+    "Birmingham",
+    "Manchester",
+    "Bristol",
+    "Leeds",
+    "Oxford",
+    "Leicester",
+    "Coventry",
+    "Nottingham"
+  ],
+  "description": "A corporate events agency and team-building company, established in 1989, delivering live, virtual and hybrid events across major UK cities.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.eventurous.co.uk",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Corporate events",
+        "Team building",
+        "Event production",
+        "Venue finding"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.eventurous.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.eventurous.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Established 1989"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.eventurous.co.uk",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://www.eventurous.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://www.eventurous.co.uk",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "svc",
+    "sub": "events",
+    "tag": "EVENU",
+    "position": 148,
+    "source": {
+      "urls": [
+        "https://www.eventurous.co.uk"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Tamworth",
+        "lat": 52.634,
+        "lng": -1.695,
+        "approx": true
+      }
+    ]
+  }
+}

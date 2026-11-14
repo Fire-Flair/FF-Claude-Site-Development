@@ -1,0 +1,87 @@
+{
+  "formatVersion": 2,
+  "slug": "grapevine-event-management",
+  "name": "Grapevine Event Management",
+  "kind": "Event management",
+  "base": "Cardiff",
+  "areas": [
+    "Cardiff",
+    "Wales"
+  ],
+  "description": "A Cardiff event management company.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://grapevineeventmanagement.co.uk",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Event management"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://grapevineeventmanagement.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://grapevineeventmanagement.co.uk",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://grapevineeventmanagement.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://grapevineeventmanagement.co.uk",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "svc",
+    "sub": "events",
+    "tag": "GRAPE",
+    "position": 145,
+    "source": {
+      "urls": [
+        "https://grapevineeventmanagement.co.uk"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Cardiff",
+        "lat": 51.4816,
+        "lng": -3.1791,
+        "approx": true
+      }
+    ]
+  }
+}

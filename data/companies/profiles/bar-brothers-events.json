@@ -1,0 +1,211 @@
+{
+  "formatVersion": 2,
+  "slug": "bar-brothers-events",
+  "name": "Bar Brothers Events",
+  "kind": "Mobile bars & event catering",
+  "base": "London",
+  "areas": [
+    "London",
+    "Home Counties",
+    "UK-wide"
+  ],
+  "logo": "https://barbrothersevents.co.uk/wp-content/themes/bar-brothers/images/general/bar-bro-big-logo-white.svg",
+  "logoBg": "dark",
+  "logoWide": true,
+  "description": "A London bar hire and event catering company. It supplies mobile bars with bartenders, glassware and ice for weddings, corporate events and private parties, and also offers dry hire and food.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://barbrothersevents.co.uk/",
+    "at": "2026-11-07"
+  },
+  "media": [
+    {
+      "id": "bar-brothers-events_0",
+      "src": "https://barbrothersevents.co.uk/wp-content/uploads/2024/01/Tequila_Rose_Bar_Brothers_Events_masterclass_london_Kay_Zieba_Photography-10-739x575.jpg",
+      "alt": "Bar Brothers Events",
+      "source": {
+        "by": "agent",
+        "url": "https://barbrothersevents.co.uk/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "bar-brothers-events_1",
+      "src": "https://barbrothersevents.co.uk/wp-content/uploads/2023/05/Wedding-Bar-Hire-739x575.jpeg",
+      "alt": "Bar Brothers Events",
+      "source": {
+        "by": "agent",
+        "url": "https://barbrothersevents.co.uk/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "bar-brothers-events_2",
+      "src": "https://barbrothersevents.co.uk/wp-content/uploads/2024/01/Hamleys_Kay_Zieba_Photography-57-770x326.jpg",
+      "alt": "Bar Brothers Events",
+      "source": {
+        "by": "agent",
+        "url": "https://barbrothersevents.co.uk/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "bar-brothers-events_3",
+      "src": "https://barbrothersevents.co.uk/wp-content/uploads/2023/02/Science_event__Kay_Zieba_Photography-42-770x326.jpg",
+      "alt": "Bar Brothers Events",
+      "source": {
+        "by": "agent",
+        "url": "https://barbrothersevents.co.uk/",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Mobile bar hire",
+        "Dry hire",
+        "Bartenders and mixologists",
+        "Flair bartenders",
+        "Waiting staff",
+        "Glassware and ice",
+        "Custom cocktail menus",
+        "Cocktail masterclasses",
+        "Event catering",
+        "Food trucks"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://barbrothersevents.co.uk/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Christmas parties",
+        "Private parties",
+        "Conferences",
+        "Film sets"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://barbrothersevents.co.uk/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "scale",
+      "title": "Scale",
+      "chips": [
+        "Travels across the UK from London"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://barbrothersevents.co.uk/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Trading name of Celebrify Limited"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://barbrothersevents.co.uk/",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://barbrothersevents.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://barbrothersevents.co.uk/",
+          "at": "2026-11-07"
+        }
+      },
+      {
+        "id": "instagram",
+        "name": "@barbrothersevents",
+        "description": "Instagram",
+        "source": {
+          "by": "agent",
+          "url": "https://barbrothersevents.co.uk/",
+          "at": "2026-11-07"
+        }
+      },
+      {
+        "id": "facebook",
+        "name": "BarBrothersEvents",
+        "description": "Facebook",
+        "source": {
+          "by": "agent",
+          "url": "https://barbrothersevents.co.uk/",
+          "at": "2026-11-07"
+        }
+      },
+      {
+        "id": "linkedin",
+        "name": "bar-brothers-events-ltd-763a051a4",
+        "description": "LinkedIn",
+        "source": {
+          "by": "agent",
+          "url": "https://barbrothersevents.co.uk/",
+          "at": "2026-11-07"
+        }
+      },
+      {
+        "id": "tiktok",
+        "name": "@barbrothersevents",
+        "description": "TikTok",
+        "source": {
+          "by": "agent",
+          "url": "https://barbrothersevents.co.uk/",
+          "at": "2026-11-07"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "BARBR",
+    "position": 0,
+    "legal": {
+      "form": null,
+      "legalName": "Celebrify Limited",
+      "companyNumber": "15546685"
+    },
+    "source": {
+      "urls": [
+        "https://barbrothersevents.co.uk/"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "granted"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "formatVersion": 2,
+  "slug": "birmingham-crew-djs",
+  "name": "Birmingham Crew DJs & Events",
+  "kind": "DJs & events",
+  "base": "Birmingham",
+  "areas": [
+    "Birmingham",
+    "West Midlands"
+  ],
+  "description": "A Birmingham DJ and events company listed among the city's mobile disco suppliers.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://findit.scotsman.com/search/willenhall/discos-and-djs-hire",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "DJ hire",
+        "Events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://findit.scotsman.com/search/willenhall/discos-and-djs-hire",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://findit.scotsman.com/search/willenhall/discos-and-djs-hire",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "BIRMI",
+    "position": 51,
+    "source": {
+      "urls": [
+        "https://findit.scotsman.com/search/willenhall/discos-and-djs-hire"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Birmingham",
+        "lat": 52.4862,
+        "lng": -1.8904,
+        "approx": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "formatVersion": 2,
+  "slug": "inferno-dj-event-hire",
+  "name": "Inferno DJ & Event Hire",
+  "kind": "DJs & event hire",
+  "base": "Rutherglen",
+  "areas": [
+    "Glasgow",
+    "Edinburgh",
+    "Fife",
+    "Dundee",
+    "Central Scotland"
+  ],
+  "description": "A South Lanarkshire DJ and event hire company supplying DJs for weddings, birthdays, private parties and corporate events across Glasgow, Edinburgh, Fife, Dundee, Falkirk, Stirling and Ayrshire.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://bridebook.com/uk/wedding-musicians-bands-djs/inferno-dj-event-hire-rutherglen-south-lanarkshire-csBXrjMl0X",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "DJ hire",
+        "Event hire"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/wedding-musicians-bands-djs/inferno-dj-event-hire-rutherglen-south-lanarkshire-csBXrjMl0X",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Birthdays",
+        "Corporate events",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/wedding-musicians-bands-djs/inferno-dj-event-hire-rutherglen-south-lanarkshire-csBXrjMl0X",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "INFER",
+    "position": 39,
+    "source": {
+      "urls": [
+        "https://bridebook.com/uk/wedding-musicians-bands-djs/inferno-dj-event-hire-rutherglen-south-lanarkshire-csBXrjMl0X"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Rutherglen",
+        "lat": 55.83,
+        "lng": -4.212,
+        "approx": false
+      }
+    ]
+  }
+}

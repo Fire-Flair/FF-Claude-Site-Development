@@ -1,0 +1,73 @@
+{
+  "formatVersion": 2,
+  "slug": "saffron-events-uk",
+  "name": "Saffron Events UK",
+  "kind": "Asian event management & catering",
+  "base": "Glasgow",
+  "areas": [
+    "Glasgow",
+    "Scotland",
+    "Northern England"
+  ],
+  "description": "A long-established Glasgow Asian event management and catering company with several menus, serving events of all sizes across Scotland and northern England.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://app.bridebook.com/search/wedding-catering/motherwell",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Asian catering",
+        "Event management"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/search/wedding-catering/motherwell",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/search/wedding-catering/motherwell",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "catering",
+    "tag": "SAFFR",
+    "position": 93,
+    "source": {
+      "urls": [
+        "https://app.bridebook.com/search/wedding-catering/motherwell"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Glasgow",
+        "lat": 55.8642,
+        "lng": -4.2518,
+        "approx": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "formatVersion": 2,
+  "slug": "ice2u",
+  "name": "ICE2U",
+  "kind": "Ice delivery",
+  "base": "Liverpool",
+  "areas": [
+    "Liverpool",
+    "Manchester",
+    "Leeds"
+  ],
+  "description": "An ice delivery company serving Liverpool, Manchester and Leeds.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://ice2u.co.uk",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Ice delivery"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://ice2u.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://ice2u.co.uk",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://ice2u.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://ice2u.co.uk",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "svc",
+    "sub": "ice",
+    "tag": "ICE2U",
+    "position": 130,
+    "source": {
+      "urls": [
+        "https://ice2u.co.uk"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Liverpool",
+        "lat": 53.4084,
+        "lng": -2.9916,
+        "approx": true
+      }
+    ]
+  }
+}

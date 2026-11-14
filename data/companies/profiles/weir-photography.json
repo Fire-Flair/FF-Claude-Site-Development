@@ -1,0 +1,86 @@
+{
+  "formatVersion": 2,
+  "slug": "weir-photography",
+  "name": "Weir Photography",
+  "kind": "Wedding, portrait & commercial photography",
+  "base": "Linlithgow",
+  "areas": [
+    "Linlithgow",
+    "Edinburgh",
+    "Scotland"
+  ],
+  "description": "A Linlithgow husband-and-wife photography team offering modern wedding, portrait and commercial photography across Scotland, with over 900 weddings photographed since 2005.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://app.bridebook.com/uk/search/wedding-photographers/scotland",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding photography",
+        "Portraits",
+        "Commercial photography"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/search/wedding-photographers/scotland",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/search/wedding-photographers/scotland",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Over 900 weddings since 2005"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/search/wedding-photographers/scotland",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "WEIRP",
+    "position": 80,
+    "source": {
+      "urls": [
+        "https://app.bridebook.com/uk/search/wedding-photographers/scotland"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Linlithgow",
+        "lat": 55.976,
+        "lng": -3.602,
+        "approx": false
+      }
+    ]
+  }
+}

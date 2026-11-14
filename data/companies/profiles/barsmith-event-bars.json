@@ -1,0 +1,182 @@
+{
+  "formatVersion": 2,
+  "slug": "barsmith-event-bars",
+  "name": "Barsmith Event Bars",
+  "kind": "Event bars & bartender hire",
+  "base": "Marylebone, London",
+  "areas": [
+    "London",
+    "UK-wide"
+  ],
+  "logo": "https://barsmitheventbars.com/wp-content/uploads/2016/04/large-logo-300x103.png",
+  "logoBg": "light",
+  "logoWide": true,
+  "description": "A London event bar company, part of Marylebone Leisure Group. It supplies bespoke bars, bartenders, mixologists and waiting staff, with infusions made in its own laboratory.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://barsmitheventbars.com/",
+    "at": "2026-11-07"
+  },
+  "media": [
+    {
+      "id": "barsmith-event-bars_0",
+      "src": "https://barsmitheventbars.com/wp-content/uploads/2020/06/DCM9743-scaled.jpg",
+      "alt": "Barsmith Event Bars",
+      "source": {
+        "by": "agent",
+        "url": "https://barsmitheventbars.com/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "barsmith-event-bars_1",
+      "src": "https://barsmitheventbars.com/wp-content/uploads/2016/04/Beavertown-Night.jpg",
+      "alt": "Barsmith Event Bars",
+      "source": {
+        "by": "agent",
+        "url": "https://barsmitheventbars.com/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "barsmith-event-bars_2",
+      "src": "https://barsmitheventbars.com/wp-content/uploads/2016/04/Black-Sapphire.jpg",
+      "alt": "Barsmith Event Bars",
+      "source": {
+        "by": "agent",
+        "url": "https://barsmitheventbars.com/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "barsmith-event-bars_3",
+      "src": "https://barsmitheventbars.com/wp-content/uploads/2016/04/Breakfast-Margarita.jpg",
+      "alt": "Barsmith Event Bars",
+      "source": {
+        "by": "agent",
+        "url": "https://barsmitheventbars.com/",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Bespoke bars",
+        "Bartenders and mixologists",
+        "Waiting staff",
+        "Hosts and entertainment",
+        "Ice, refrigeration and glassware",
+        "Mixology masterclasses",
+        "Handmade infused spirits and cocktails"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://barsmitheventbars.com/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Corporate functions",
+        "Weddings",
+        "Private parties",
+        "Festivals",
+        "Dinner parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://barsmitheventbars.com/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "scale",
+      "title": "Scale",
+      "chips": [
+        "Events from 50 to around 500 guests"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://barsmitheventbars.com/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Part of Marylebone Leisure Group",
+        "Bar of the Year Award 2016 and 2018"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://barsmitheventbars.com/",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://barsmitheventbars.com",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://barsmitheventbars.com/",
+          "at": "2026-11-07"
+        }
+      },
+      {
+        "id": "instagram",
+        "name": "@barsmitheventbars",
+        "description": "Instagram",
+        "source": {
+          "by": "agent",
+          "url": "https://barsmitheventbars.com/",
+          "at": "2026-11-07"
+        }
+      },
+      {
+        "id": "facebook",
+        "name": "barsmitheventbars",
+        "description": "Facebook",
+        "source": {
+          "by": "agent",
+          "url": "https://barsmitheventbars.com/",
+          "at": "2026-11-07"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "BARSM",
+    "position": 3,
+    "source": {
+      "urls": [
+        "https://barsmitheventbars.com/"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "granted"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Marylebone, London",
+        "lat": 51.5205,
+        "lng": -0.1547,
+        "approx": false
+      }
+    ]
+  }
+}

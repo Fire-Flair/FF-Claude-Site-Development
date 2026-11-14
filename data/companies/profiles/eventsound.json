@@ -1,0 +1,75 @@
+{
+  "formatVersion": 2,
+  "slug": "eventsound",
+  "name": "EventSound",
+  "kind": "DJs, sound & lights",
+  "base": "London",
+  "areas": [
+    "London",
+    "Home Counties"
+  ],
+  "description": "A London company providing DJs, sound and lighting for weddings, corporate events, birthday parties and bar and bat mitzvahs across the capital and home counties.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://addtoevent.co.uk/suppliers/eventsound",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "DJs",
+        "Sound",
+        "Lighting"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://addtoevent.co.uk/suppliers/eventsound",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Birthdays",
+        "Bar and bat mitzvahs"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://addtoevent.co.uk/suppliers/eventsound",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "EVENT",
+    "position": 59,
+    "source": {
+      "urls": [
+        "https://addtoevent.co.uk/suppliers/eventsound"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": false
+      }
+    ]
+  }
+}

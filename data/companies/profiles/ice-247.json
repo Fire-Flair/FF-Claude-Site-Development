@@ -1,0 +1,99 @@
+{
+  "formatVersion": 2,
+  "slug": "ice-247",
+  "name": "Ice 24/7",
+  "kind": "Ice delivery",
+  "base": "Glasgow",
+  "areas": [
+    "Glasgow",
+    "Scotland"
+  ],
+  "description": "A Glasgow ice supplier delivering ice to bars, venues and events across Scotland.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://ice247.co.uk",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Ice delivery"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://ice247.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://ice247.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Scotland coverage"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://ice247.co.uk",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://ice247.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://ice247.co.uk",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "svc",
+    "sub": "ice",
+    "tag": "ICE24",
+    "position": 129,
+    "source": {
+      "urls": [
+        "https://ice247.co.uk"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Glasgow",
+        "lat": 55.8642,
+        "lng": -4.2518,
+        "approx": true
+      }
+    ]
+  }
+}

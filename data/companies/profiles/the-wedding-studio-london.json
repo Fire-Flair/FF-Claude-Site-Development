@@ -1,0 +1,82 @@
+{
+  "formatVersion": 2,
+  "slug": "the-wedding-studio-london",
+  "name": "The Wedding Studio",
+  "kind": "Wedding photography",
+  "base": "Richmond",
+  "areas": [
+    "London",
+    "Surrey"
+  ],
+  "description": "A Richmond wedding photography studio run by a small team of three, covering London weddings.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://app.bridebook.com/uk/wedding-photographers/the-wedding-studio-london-richmond-surrey-csK8Mp6r7Y",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding photography"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/wedding-photographers/the-wedding-studio-london-richmond-surrey-csK8Mp6r7Y",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/wedding-photographers/the-wedding-studio-london-richmond-surrey-csK8Mp6r7Y",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Team of three"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/wedding-photographers/the-wedding-studio-london-richmond-surrey-csK8Mp6r7Y",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "WEDDIN",
+    "position": 64,
+    "source": {
+      "urls": [
+        "https://app.bridebook.com/uk/wedding-photographers/the-wedding-studio-london-richmond-surrey-csK8Mp6r7Y"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Richmond",
+        "lat": 51.4613,
+        "lng": -0.3037,
+        "approx": false
+      }
+    ]
+  }
+}

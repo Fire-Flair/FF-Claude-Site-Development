@@ -1,0 +1,155 @@
+{
+  "formatVersion": 2,
+  "slug": "bars-and-beyond",
+  "name": "Bars and Beyond",
+  "kind": "Mobile bars & event staffing",
+  "base": "Cheshire",
+  "areas": [
+    "Cheshire",
+    "North West",
+    "UK-wide"
+  ],
+  "logo": "https://images.squarespace-cdn.com/content/v1/66f16e608b59d740e6887d21/bde2dc4c-1e10-4041-a198-6848bdae0476/Bars_And_Beyond_Transparent.png?format=1500w",
+  "logoBg": "dark",
+  "logoWide": false,
+  "description": "A Cheshire company supplying cocktail, craft beer, whisky, wine and gin mobile bars, draught systems and bar and event staff, from garden parties to large festivals.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/suppliers/bars-and-beyond-limited",
+    "at": "2026-11-07"
+  },
+  "media": [
+    {
+      "id": "bars-and-beyond_0",
+      "src": "https://images.squarespace-cdn.com/content/v1/66f16e608b59d740e6887d21/a8a3d8a9-c254-46a7-8ee4-efabbd6cfdae/Bar+Hire+Services.png",
+      "alt": "Bars and Beyond",
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/bars-and-beyond-limited",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "bars-and-beyond_1",
+      "src": "https://images.squarespace-cdn.com/content/v1/66f16e608b59d740e6887d21/9cf1b108-b8c2-4317-bb7d-94d578ef667f/Image+2+Wedding.png",
+      "alt": "Bars and Beyond",
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/bars-and-beyond-limited",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "bars-and-beyond_2",
+      "src": "https://images.squarespace-cdn.com/content/v1/66f16e608b59d740e6887d21/f99ef105-5906-4c3f-9fe5-fc70867f6319/Image+1+Corporate.png",
+      "alt": "Bars and Beyond",
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/bars-and-beyond-limited",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Mobile bars",
+        "Cocktail, craft beer, whisky, wine and gin bars",
+        "Draught systems",
+        "Bartenders and bar staff",
+        "Event staffing"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/bars-and-beyond-limited",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Private parties",
+        "Festivals",
+        "Charity functions"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/bars-and-beyond-limited",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "scale",
+      "title": "Scale",
+      "chips": [
+        "Over 200 events completed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/bars-and-beyond-limited",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Listing details only; own website not confirmed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/bars-and-beyond-limited",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://www.barsandbeyond.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://www.addtoevent.co.uk/suppliers/bars-and-beyond-limited",
+          "at": "2026-11-07"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "BARBY",
+    "position": 21,
+    "legal": {
+      "form": null,
+      "legalName": "Bars and Beyond Limited",
+      "companyNumber": null
+    },
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/suppliers/bars-and-beyond-limited"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Cheshire",
+        "lat": 53.23,
+        "lng": -2.55,
+        "approx": true
+      }
+    ]
+  }
+}

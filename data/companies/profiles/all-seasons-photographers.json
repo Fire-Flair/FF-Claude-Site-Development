@@ -1,0 +1,70 @@
+{
+  "formatVersion": 2,
+  "slug": "all-seasons-photographers",
+  "name": "All Seasons Photographers",
+  "kind": "Wedding photography",
+  "base": "Liverpool",
+  "areas": [
+    "Liverpool",
+    "Merseyside"
+  ],
+  "description": "A Liverpool wedding photography business.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://app.bridebook.com/uk/search/wedding-photographers/north-west?page=7",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding photography"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/search/wedding-photographers/north-west?page=7",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/search/wedding-photographers/north-west?page=7",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "ALLSE",
+    "position": 76,
+    "source": {
+      "urls": [
+        "https://app.bridebook.com/uk/search/wedding-photographers/north-west?page=7"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Liverpool",
+        "lat": 53.4084,
+        "lng": -2.9916,
+        "approx": false
+      }
+    ]
+  }
+}

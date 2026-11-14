@@ -1,0 +1,85 @@
+{
+  "formatVersion": 2,
+  "slug": "ultimate-wedding-dj",
+  "name": "Ultimate Wedding DJ",
+  "kind": "Wedding DJ & disco",
+  "base": "Middlesbrough",
+  "areas": [
+    "Teesside",
+    "County Durham",
+    "Newcastle",
+    "North East"
+  ],
+  "description": "A North East wedding disco service, an offshoot of the established party DJ company Boogie Nights. It covers Middlesbrough, Darlington, Teesside, County Durham and Newcastle.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/suppliers/ultimate-wedding-dj",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding DJ",
+        "Mobile disco"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/ultimate-wedding-dj",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/ultimate-wedding-dj",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Offshoot of the party DJ company Boogie Nights"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/ultimate-wedding-dj",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "ULTIM",
+    "position": 36,
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/suppliers/ultimate-wedding-dj"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Middlesbrough",
+        "lat": 54.5742,
+        "lng": -1.235,
+        "approx": true
+      }
+    ]
+  }
+}

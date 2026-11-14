@@ -1,0 +1,73 @@
+{
+  "formatVersion": 2,
+  "slug": "lindleys-catering",
+  "name": "Lindley's Catering",
+  "kind": "Wedding catering",
+  "base": "Leigh",
+  "areas": [
+    "Manchester",
+    "Warrington",
+    "Bolton",
+    "Liverpool",
+    "Lancashire"
+  ],
+  "description": "A Leigh-based wedding caterer serving couples across Manchester, Warrington, Bolton, Liverpool and Lancashire.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://app.bridebook.com/uk/wedding-catering/lindley-s-catering-co-warrington-cheshire-bbo8arKoXy",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding catering"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/wedding-catering/lindley-s-catering-co-warrington-cheshire-bbo8arKoXy",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/wedding-catering/lindley-s-catering-co-warrington-cheshire-bbo8arKoXy",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "catering",
+    "tag": "LINDL",
+    "position": 103,
+    "source": {
+      "urls": [
+        "https://app.bridebook.com/uk/wedding-catering/lindley-s-catering-co-warrington-cheshire-bbo8arKoXy"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Leigh",
+        "lat": 53.497,
+        "lng": -2.519,
+        "approx": false
+      }
+    ]
+  }
+}

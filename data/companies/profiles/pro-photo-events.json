@@ -1,0 +1,88 @@
+{
+  "formatVersion": 2,
+  "slug": "pro-photo-events",
+  "name": "Pro Photo Events",
+  "kind": "Wedding & event photography",
+  "base": "London",
+  "areas": [
+    "London",
+    "UK-wide",
+    "Europe"
+  ],
+  "description": "A London photography business established in 2004, covering weddings, portraits and events across the UK and Europe, with a team supporting the lead photographer.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/suppliers/pro-photo-events",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding photography",
+        "Portraits",
+        "Event photography",
+        "Photo booth"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/pro-photo-events",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/pro-photo-events",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Established in 2004",
+        "Over 500 weddings photographed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/pro-photo-events",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "PROPH",
+    "position": 61,
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/suppliers/pro-photo-events"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": false
+      }
+    ]
+  }
+}

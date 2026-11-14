@@ -1,0 +1,73 @@
+{
+  "formatVersion": 2,
+  "slug": "studio8-events-photography",
+  "name": "Studio8 Events Photography",
+  "kind": "Events photography",
+  "base": "Stockton-on-Tees",
+  "areas": [
+    "Teesside",
+    "County Durham",
+    "North East"
+  ],
+  "description": "A Stockton-on-Tees events photography business covering weddings and other occasions in the North East.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://app-proxy-dev-4.bridebook.com/uk/search/wedding-photographers/england?page=24",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Event photography",
+        "Wedding photography"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app-proxy-dev-4.bridebook.com/uk/search/wedding-photographers/england?page=24",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app-proxy-dev-4.bridebook.com/uk/search/wedding-photographers/england?page=24",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "STUDI",
+    "position": 78,
+    "source": {
+      "urls": [
+        "https://app-proxy-dev-4.bridebook.com/uk/search/wedding-photographers/england?page=24"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Stockton-on-Tees",
+        "lat": 54.5704,
+        "lng": -1.318,
+        "approx": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "formatVersion": 2,
+  "slug": "maximum-music-uk",
+  "name": "Maximum Music UK",
+  "kind": "Wedding DJ & entertainment",
+  "base": "Manchester",
+  "areas": [
+    "Manchester",
+    "Lancashire",
+    "Yorkshire",
+    "Cheshire",
+    "Shropshire"
+  ],
+  "description": "A Manchester DJ and entertainment company that specialises in weddings. It offers a range of packages and will travel across Lancashire, North and West Yorkshire, Cheshire and Shropshire.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://bridebook.com/uk/wedding-musicians-bands-djs/maximum-music-uk-manchester-greater-manchester-csog499zDY",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding DJ",
+        "Entertainment packages"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/wedding-musicians-bands-djs/maximum-music-uk-manchester-greater-manchester-csog499zDY",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/wedding-musicians-bands-djs/maximum-music-uk-manchester-greater-manchester-csog499zDY",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "MAXIM",
+    "position": 33,
+    "source": {
+      "urls": [
+        "https://bridebook.com/uk/wedding-musicians-bands-djs/maximum-music-uk-manchester-greater-manchester-csog499zDY"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Manchester",
+        "lat": 53.4808,
+        "lng": -2.2426,
+        "approx": false
+      }
+    ]
+  }
+}

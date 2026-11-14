@@ -1,0 +1,85 @@
+{
+  "formatVersion": 2,
+  "slug": "the-wedding-djs",
+  "name": "The Wedding DJs",
+  "kind": "Wedding disco company",
+  "base": "Barry",
+  "areas": [
+    "South Wales",
+    "Mid Wales",
+    "Gloucestershire",
+    "Cotswolds"
+  ],
+  "description": "A full-time mobile disco company in Barry that specialises in wedding discos and DJs across South Wales, Mid Wales, Gloucestershire and the Cotswolds.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.easyweddings.co.uk/WeddingMusic/Barry/TheWeddingDJs",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding DJs",
+        "Wedding discos"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.easyweddings.co.uk/WeddingMusic/Barry/TheWeddingDJs",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.easyweddings.co.uk/WeddingMusic/Barry/TheWeddingDJs",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Full-time company"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.easyweddings.co.uk/WeddingMusic/Barry/TheWeddingDJs",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "WEDDI",
+    "position": 49,
+    "source": {
+      "urls": [
+        "https://www.easyweddings.co.uk/WeddingMusic/Barry/TheWeddingDJs"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Barry",
+        "lat": 51.4,
+        "lng": -3.274,
+        "approx": false
+      }
+    ]
+  }
+}

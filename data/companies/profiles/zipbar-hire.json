@@ -1,0 +1,101 @@
+{
+  "formatVersion": 2,
+  "slug": "zipbar-hire",
+  "name": "Zipbar Hire",
+  "kind": "Mobile bars & cocktail bartenders",
+  "base": "London",
+  "areas": [
+    "London",
+    "Home Counties"
+  ],
+  "description": "A London mobile bar company with bars from 1.2 metres to over 40 metres, cocktail bartenders and cocktail classes, working in offices, homes and landmark venues.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/suppliers/zipbar-hire",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Mobile bars",
+        "Cocktail bartenders",
+        "Bar staff",
+        "Mobile cocktail classes",
+        "Drinks consultation"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/zipbar-hire",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Private homes",
+        "Offices",
+        "Landmark venues",
+        "Blank-canvas spaces"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/zipbar-hire",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "scale",
+      "title": "Scale",
+      "chips": [
+        "Bars from 1.2 m to over 40 m"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/zipbar-hire",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Listing details only; own website not confirmed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/zipbar-hire",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "ZIPBR",
+    "position": 28,
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/suppliers/zipbar-hire"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "none"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.48,
+        "lng": -0.19,
+        "approx": true
+      }
+    ]
+  }
+}
