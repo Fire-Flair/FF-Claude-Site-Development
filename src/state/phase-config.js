@@ -24,7 +24,7 @@ const PHASE1 = {
   /* The top-left selector, in this order. FF Team, FF Staff and FF Party
      are open in this prototype (FF VIP opens with its launch party in early 2027). */
   sitesShown: ["team", "staff", "party", "vip"],
-  sitesOpen: ["team", "staff", "party", "vip"],
+  sitesOpen: ["team", "staff", "party"],
   /* Profile sections in Phase 1, in this order. Qualifications above Skills;
      Venues straight after Experience; Work locations as its own section.
      Signature cocktails stay in BASE_CATEGORIES for a later release. */

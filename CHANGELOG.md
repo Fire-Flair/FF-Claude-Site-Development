@@ -1,5 +1,10 @@
 # FireFlair prototype — changelog
 
+## v17.5.3 (Phase Two, almost final)
+
+- FF VIP is locked in the prototype: it keeps its lock and "Coming 2027" in every site menu and cannot be opened. FF VIP is no longer in `PHASE1.sitesOpen` (src/state/phase-config.js), and its entry in `FF_SITES` carries `locked: true`.
+- The prototype is renamed "Phase Two, almost final".
+
 ## v17.5.2 (Phase 2 Final, review changes)
 
 - FF Staff Gold box: the four tile photos are replaced with library photos (p12, p21, p35, p10), cropped square with faces kept in frame.
