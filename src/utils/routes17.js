@@ -25,7 +25,7 @@
 const RT17_SITE_BY_PREFIX = { "ff-party": "party", "ff-team": "team", "ff-staff": "staff" };
 const RT17_PREFIX = { party: "ff-party", team: "ff-team", staff: "ff-staff" };
 /* First segments that can never be a tag or a company slug. */
-const RT17_RESERVED = ["network", "browse", "bookings", "book", "profile", "party", "areas", "packages", "stories", "vip", "team", "staff", "admin", "login", "home", "fx"];
+const RT17_RESERVED = ["network", "browse", "bookings", "book", "profile", "party", "areas", "packages", "stories", "vip", "team", "staff", "admin", "login", "home", "fx", "join"];
 const RT17_TAB_WORD = { browse: "network", network: "network", book: "bookings", bookings: "bookings", party: "profile", profile: "profile" };
 /* Profile tab words in the address, and the tab each one opens (people and companies name their tabs differently). */
 const RT17_SUB_PERSON = { packages: "services", team: "teams", reviews: "reviews" };
@@ -112,6 +112,8 @@ function rt17Parse(hash) {
   if (s0 === "home") return { kind: "pillar", site };
   /* /fx/<code>: the shift brief. FF Team shows the professional's brief, FF Staff opens the hirer's booking, FF Party is reserved (home for now). */
   if (s0 === "fx") return site !== "party" && /^[a-z0-9]{4,5}$/i.test(s1) ? { kind: "fx", site, code: s1.toUpperCase() } : { kind: "home", site };
+  /* /join/<code>: a team invitation link (FF Team only). The code is checked when it is opened; an unknown one lands on Profile without a banner. */
+  if (s0 === "join") return site === "team" ? { kind: "join", site, code: s1.toUpperCase() } : { kind: "home", site };
   if (s0 === "stories") return /^[a-z0-9-]{1,120}$/.test(s1) ? { kind: "stories", site, slug: s1 } : { kind: "home", site };
   if (RT17_TAB_WORD[s0]) return { kind: "tab", site, tab: RT17_TAB_WORD[s0] };
   if (rt17Reserved(s0) || !/^[a-z0-9-]{1,40}$/.test(s0)) return { kind: "home", site };
@@ -126,6 +128,7 @@ function rt17Href(r) {
   if (r.kind === "tab") return base + "/" + r.tab;
   if (r.kind === "stories") return base + "/stories/" + r.slug;
   if (r.kind === "fx") return base + "/fx/" + r.code;
+  if (r.kind === "join") return base + "/join/" + String(r.code || "").toLowerCase();
   if (r.kind === "person" || r.kind === "company") return base + "/" + r.key + (r.sub ? "/" + r.sub : "");
   return base;
 }
@@ -207,6 +210,18 @@ function rt17Replace(hash) {
    Returns the address the screen will show once it is open (null: nothing to wait for). */
 function rt17Apply(route0, state, dispatch) {
   let r = rt17Resolve(route0, state);
+  /* A join link: signed out, it records who sent it and opens Profile (the create-a-profile page); signed in, it opens the sender's profile.
+     An unknown or own code opens Profile with nothing recorded. */
+  if (r.kind === "join") {
+    const signedIn = !!(state.auth && state.auth.status === "signedIn");
+    const sender = inv17Sender(state, r.code);
+    if (signedIn && sender) r = { kind: "person", site: "team", key: String(sender.tag || "").toLowerCase(), id: sender.id, sub: "" };
+    else {
+      if (!signedIn) dispatch({ type: "INV_REF", code: r.code, kind: "team" });
+      r = { kind: "tab", site: "team", tab: "profile" };
+      setTimeout(() => window.scrollTo(0, 0), 60);
+    }
+  }
   if (r.kind === "foreign") return null;
   if (r.kind === "root" && state.role) r = { kind: "home", site: rt17SiteOf(state) };
   if (r.kind === "tab" && r.site === "party" && PARTY_LOCKED_TABS17.includes(r.tab)) r = { kind: "home", site: "party" };

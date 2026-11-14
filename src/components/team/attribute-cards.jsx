@@ -643,6 +643,12 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
                 <span className="ff-label" style={{ display: "block", marginTop: 6 }}>Add people</span></span>
             </button>
           )}
+          {isMe && (
+            <button className="ff-card ff-portrait ff-addtile" style={{ width: CARD_W.player }} onClick={() => window.dispatchEvent(new Event("ff-invite"))}>
+              <span style={{ textAlign: "center" }}><UserPlus size={20} color="var(--gold-dk)" />
+                <span className="ff-label" style={{ display: "block", marginTop: 6 }}>Invite</span></span>
+            </button>
+          )}
         </HScroll>
         )}
       </section>

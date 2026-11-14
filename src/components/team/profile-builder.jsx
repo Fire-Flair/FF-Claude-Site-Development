@@ -753,6 +753,7 @@ function ProfileBuilder() {
   }, 80);
   return (
     <div>
+      <InviteBanner17 />
       <div className="ff-eyebrow">FF Team · Profile</div>
 
       <div className="ff-journey">

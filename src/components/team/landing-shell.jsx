@@ -50,7 +50,7 @@ function ActionSheet({ open, onClose }) {
         <>
           {item(FileText, "Send a CV", "We read it and propose your cards", go(() => { dispatch({ type: "TAB", tab: "profile", route: "home" }); dispatch({ type: "FOCUS", focus: { target: "cv" } }); }))}
           {item(Plus, "Add information cards", "Professions, skills, interests, qualifications", go(() => { dispatch({ type: "TAB", tab: "profile", route: "home" }); dispatch({ type: "FOCUS", focus: { target: "professions" } }); }))}
-          {item(Users, "Invite people you work with", "They accept before anything connects", go(() => dispatch({ type: "TAB", tab: "network" })))}
+          {item(Users, "Invite people you work with", "They accept before anything connects", go(() => window.dispatchEvent(new Event("ff-invite"))))}
           {item(ShareUp17, "Share my card", `${CARD_DOMAIN}/${state.session.tag || "username"}`, go(() => dispatch({ type: "TOAST", toast: "Link copied" })))}
         </>
       ) : (
@@ -303,7 +303,7 @@ function LoginSheet({ open, onClose }) {
     if (demo) dispatch({ type: "SEED_DEMO" });
     else if (res.method === "otp") dispatch({ type: "SESSION", patch: { tag: res.tag, phone, verified: true } });
     else dispatch({ type: "SESSION", patch: { tag: res.tag } });
-    dispatch({ type: "AUTH_SIGNED_IN", tag: demo ? "SAM42" : res.tag, method: res.method });
+    dispatch({ type: "AUTH_SIGNED_IN", tag: demo ? "SAM42" : res.tag, method: res.method, login: true });
     dispatch({ type: "TOAST", toast: `Logged in as ${demo ? "SAM42" : res.tag}` });
     onClose();
   };
@@ -382,6 +382,15 @@ function LoginSheet({ open, onClose }) {
         dispatch({ type: "TOAST", toast: "Complete profile loaded" });
         onClose();
       }}>DEV · complete profile</button>
+      <button type="button" className="ff-dev17 login" onClick={() => {
+        dispatch({ type: "SIGN_OUT" });
+        dispatch({ type: "ROLE", role: "team" });
+        dispatch({ type: "SESSION", patch: { refTag: "DONGE", refKind: "team" } });
+        dispatch({ type: "TAB", tab: "profile" });
+        dispatch({ type: "TOAST", toast: "Join from invite loaded" });
+        onClose();
+        window.scrollTo(0, 0);
+      }}>DEV · join from invite</button>
     </Sheet>
   );
 }

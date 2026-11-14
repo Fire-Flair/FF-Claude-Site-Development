@@ -3,7 +3,7 @@ const initialState = {
   role: null,
   route: "entry",
   tab: "home",
-  session: { refTag: null, channel: "web", phone: "", verified: false, tag: "" },
+  session: { refTag: null, refKind: null, channel: "web", phone: "", verified: false, tag: "" },
   /* Authentication — real app state, written only by AUTH_ADAPTER results.
      The nav reads auth.status and nothing else. */
   auth: { status: "signedOut", tag: null, method: null },
@@ -23,6 +23,7 @@ const initialState = {
   },
   /* Feedback Question Card answers — product research, not profile data. */
   feedback: {},
+  teamAsksIn17: [],
   connections: [], invitations: [], reviews: [], reviewRequests: [],
   /* Questions visitors ask on a profile ("Ask a question") — one Question
      Card each, tied to that person: { id, personId, text, askedAt, by, answer }. */
@@ -152,7 +153,7 @@ function claimListXP(s, cat, list) {
 
 
 function reducer(s, a) {
-  return notesWatch17(s, pkgGuard17(reducerCore17(s, a)), a);
+  return notesWatch17(s, inv17Post(pkgGuard17(reducerCore17(s, a))), a);
 }
 
 
@@ -172,7 +173,7 @@ function reducerCore17(s0, a) {
     return { ...s, company: { ...c, records: out.profile.records } };
   }
   { const r11 = v11Reducer(s, a); if (r11) return r11; }
-  { const rq = qa17Reducer(s, a) || pc17Reducer(s, a) || cov17Reducer(s, a) || ct17Reducer(s, a) || base17Reducer(s, a) || notes17Reducer(s, a); if (rq) return rq; }
+  { const rq = inv17Reducer(s, a) || qa17Reducer(s, a) || pc17Reducer(s, a) || cov17Reducer(s, a) || ct17Reducer(s, a) || base17Reducer(s, a) || notes17Reducer(s, a); if (rq) return rq; }
   switch (a.type) {
     case "FOCUS":     return { ...s, focus: a.focus };
     case "NET_QUERY": return { ...s, netQuery: a.q || "" };
@@ -393,17 +394,6 @@ function reducerCore17(s0, a) {
       return a.review.aboutId === "me" ? claimXP(next, "first_review") : next;
     }
     case "REVIEW_REQUEST": return { ...s, reviewRequests: [...s.reviewRequests, a.request] };
-    case "INVITE":    return { ...s, invitations: [...s.invitations, ...a.people] };
-    /* Phase 1 preview: someone you invited joins. They are added to your
-       network automatically (and you to theirs) — no search, no second request. */
-    case "INVITE_JOINED": {
-      const p = a.person;
-      return { ...s,
-        directory: s.directory.some(x => x.id === p.id) ? s.directory : [...s.directory, p],
-        joinedPeople: [...(s.joinedPeople || []).filter(x => x.id !== p.id), p],
-        connections: s.connections.some(c => c.id === p.id) ? s.connections : [...s.connections, { id: p.id, name: p.name, onFF: true, tag: p.tag, viaInvite: true }],
-        invitations: s.invitations.map(c => `inv_${c.id}` === p.id ? { ...c, onFF: true, joined: true } : c) };
-    }
     case "VIEW":      return { ...s, viewing: a.id, viewingAsGuest: !!(a.id && a.guest) };
     case "TEAM_INVITE": return { ...s, teamInvites: [...(s.teamInvites || []).filter(i => i.personId !== a.invite.personId || i.status === "accepted"), a.invite] };
     case "TEAM_INVITE_ACCEPT": {
@@ -437,7 +427,7 @@ function reducerCore17(s0, a) {
       Object.keys(n.profile.records).forEach(cat => { n = claimListXP(n, cat, n.profile.records[cat]); });
       return n;
     }
-    case "AUTH_SIGNED_IN": return { ...s, auth: { status: "signedIn", tag: a.tag, method: a.method }, session: { ...s.session, tag: s.session.tag || a.tag } };
+    case "AUTH_SIGNED_IN": return inv17AtSignIn(s, { ...s, auth: { status: "signedIn", tag: a.tag, method: a.method }, session: { ...s.session, tag: s.session.tag || a.tag } }, a);
     case "TOAST":     return { ...s, toast: a.toast };
     case "PARTY_EVENT_SAVE": return { ...s, partyEvents: [a.event, ...(s.partyEvents || [])] };
     case "TRAINING_INTEREST": return { ...s, trainingInterest: a.interest };
@@ -460,8 +450,8 @@ function reducerCore17(s0, a) {
     case "RESET":     return { ...initialState, role: s.role, route: s.role === "team" ? "entry" : "staffHome" };
     /* Sign out: back to the signed-out home page with no role, no profile and
        no demo data, so the full sign-up flow can be walked through again.
-       The referral tag from the link is kept. */
-    case "SIGN_OUT":  return { ...initialState, session: { ...initialState.session, refTag: s.session.refTag }, toast: "Signed out" };
+       The invitation code from a link is cleared too: it belongs to the visit that used it. */
+    case "SIGN_OUT":  return { ...initialState, toast: "Signed out" };
     case "HYDRATE":   return migrate1746({ ...s, ...a.patch, _hydrated: true });
     default:          return s;
   }

@@ -84,17 +84,11 @@ const ASKED_EXAMPLES = [
 ];
 
 
-const ASK_FROM_INVITER = "Do you run cocktail masterclasses for private parties?";
-
-
-/* What people asked you: anything in profileQuestions for "me", plus (in
-   this preview) one question from whoever invited you. Answers are kept
+/* What people asked you: anything in profileQuestions for "me". Answers are kept
    with your other answers; answering one counts as a Question Card. */
 function askedOfMe(state, people) {
-  const inv = inviterOf(state, people);
-  const demo = inv ? [{ id: `ask_in_${inv.id}`, personId: "me", text: ASK_FROM_INVITER, byId: inv.id, byName: inv.name, askedAt: Date.UTC(2026, 9, 14), example: true }] : [];
   const mine = (state.profileQuestions || []).filter(q => q.personId === "me");
-  return [...demo, ...mine].map(q => ({ ...q, type: "text", group: "asked", placeholder: "Your answer", xp: XP_VALUES.question }));
+  return mine.map(q => ({ ...q, type: "text", group: "asked", placeholder: "Your answer", xp: XP_VALUES.question }));
 }
 
 
