@@ -1,5 +1,19 @@
 # FireFlair prototype — changelog
 
+## v17.5 — 2026-11-13 — Phase 2 Final
+
+- The Phase 2 build, on the `phase-2-final` branch. Phase 3 stays on `main`.
+- Removed: FF Partners, the FF Admin menu item, the Phase 2 / Phase 3 switch, custom packages and add-ons in bookings, the Stories builder and Special Request. The site menu is FF Team, FF Staff, FF Party, FF VIP. Page title "FireFlair Phase 2".
+- FF Party is display only: browsing, profiles, companies, area and package pages and Stories work; every control that would start a booking is greyed with a small lock and does nothing. The Book and Party tabs cannot be opened. FF VIP stays locked.
+- Card builders on FF Team and FF Staff still work and save, marked "Coming soon" with a small lock; what they save is not shown on public pages.
+- Q&A: three categories with a filter (About me, Asked, Interests), Public / Private on every answer (Private by default), edit your own questions, and "I'm interested" shows as an Interests card.
+- Notifications stay once dealt with: they grey out with their outcome, a Clear button removes them, and they drop off after seven days. The badge counts active ones only.
+- FF Staff inbox: "Question for your company", "<Name> added you to their network" and join-team requests. Reviews posted on a company page show on its Reviews tab, credited to the reviewer.
+- FF Staff: private Favourites on Your business; network search also finds companies and Directory entries, and the map follows the results; Autofill is one ticked-by-default checkbox per booking with an "Autofill · N invited" list under each shift; after a professional accepts, a quiet "Delete booking" link replaces the refund option.
+- Every page has an address on all three sites; see `docs/URLS.md`. Home sections moved to `#/<site>/home/<section>`.
+- Verification fixes: review credit, the business's own Company Card shown once on Our people, home-section addresses opening on direct load.
+- Developers: see `docs/handoff-v17.5.md`.
+
 ## v17.4.7.22 — 2026-11-13 — FF Partners (Phase 3)
 Artifact version 1794553380-858a.
 
