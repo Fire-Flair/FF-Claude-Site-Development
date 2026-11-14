@@ -1,11 +1,11 @@
 /* src/components/team/work-locations.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
-/* ---- v1.3.4: Work locations — why list several, and a postcode step ------
-   The postcode is kept private (state.workPostcode, never shown on a profile
-   or card). Its area becomes the Primary location, which is what travel
-   distances to jobs are measured from. FireFlair then suggests nearby towns and
-   some wider ones to list for search engines. In the prototype the postcode
-   → area step is this table; the real site would use a postcode lookup (e.g.
-   postcodes.io) plus Griffy's Google Places search. */
+/* ---- Postcode → area table (offline estimate) ---------------------------
+   v17.6.1: the postcode is private (state.workPostcode, never shown on a profile
+   or card) and only puts the base on the map (base17.jsx). Work locations are
+   ticked from one list (coverage17.jsx), with no primary place and no distance.
+   In the prototype the postcode → area step is this table, used when the live
+   postcode lookup cannot be reached (LOCATION_ADAPTER.offline); the real site
+   would use a postcode lookup (e.g. postcodes.io). */
 const PC_PRESETS = {
   SE: ["London", "Central London", "Birmingham"],
   LDN: ["Central London", "Hertfordshire", "Birmingham"],
@@ -106,21 +106,3 @@ function postcodeArea(p) {
   const letters = (p.outward.match(/^[A-Z]+/) || [""])[0];
   return PC_AREAS[p.outward] || PC_AREAS[letters] || null;
 }
-
-
-
-function p1PrimaryLocationReducer(s, a) {
-  let list = rankAll(recsOf(s.profile, "locations"));
-  let rec = list.find(r => r.name.toLowerCase() === a.name.toLowerCase());
-  if (!rec) { rec = { ...makeRecord("locations", a.name), rank: "tertiary" }; list = [...list, rec]; }
-  rec = { ...rec, hidden: false, proposed: false };
-  list = list.map(r => r.id === rec.id ? rec : r);
-  const olds = list.filter(r => r.id !== rec.id && !r.hidden && !r.proposed && r.rank === "primary");
-  list = moveRecord(list, rec.id, "primary", 0).list;
-  olds.forEach(o => { list = moveRecord(list, o.id, "secondary", 0).list; });
-  const next = withRecords(s, "locations", list);
-  return a.postcode ? { ...next, workPostcode: { code: a.postcode, town: a.name, at: Date.now() } } : next;
-}
-
-
-

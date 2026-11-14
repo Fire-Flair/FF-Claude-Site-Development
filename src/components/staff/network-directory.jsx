@@ -350,7 +350,7 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   const back = () => { dispatch({ type: "VIEW_COMPANY", id: null }); window.scrollTo(0, 0); };
   const asPerson = { id: co.id, name: co.name || "this company", tag: co.slug, profession: co.kind, isCompany: true, photo: co.logo || null, tier: co.tier, companyKey: ck };
   const contact = co.mine ? recsOf(co, "contact").filter(r => !r.hidden).map(r => [r.description || "Contact", r.name]) : (co.contact || []);
-  /* One rule for every company: the areas come from the location records (and travel distance) when the page has them; the free-text areas line is only for directory drafts without records. */
+  /* One rule for every company: the areas come from the location records when the page has them; the free-text areas line is only for directory drafts without records. */
   const recAreas = companyLocations(co);
   const areas = co.mine || recAreas.length ? recAreas : String(co.areas || "").split("·").map(x => x.trim()).filter(Boolean);
   const venues = co.mine ? recsOf(co, "venues").filter(r => !r.hidden).map(r => r.name) : (co.venues || []);

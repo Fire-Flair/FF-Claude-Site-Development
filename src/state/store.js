@@ -489,10 +489,11 @@ function meAsStaff(profile, session) {
     skills: primaryNames(profile, "skills", 3),
     interests: primaryNames(profile, "interests", 3),
     languages: primaryNames(profile, "languages", 5).length ? primaryNames(profile, "languages", 5) : ["English"],
-    locations: primaryNames(profile, "locations", 3).length ? primaryNames(profile, "locations", 3) : ["London"],
+    /* v17.6.1: no ranked "primary location". The base town (public label) stands in; with no base, the first ticked place in the tree's order; with neither, London as before. */
+    locations: baseLabelOfOwner17(profile) ? [baseLabelOfOwner17(profile)] : (covPlaces17(profile)[0] ? [covPlaces17(profile)[0].name] : ["London"]),
     base: baseLabelOfOwner17(profile),
     /* v17.6: the public map point (centre of the public place, never the postcode point). */
-    basePin: basePublicPoint17(profile), travelText: travelText17(profile),
+    basePin: basePublicPoint17(profile),
     coverage: covForFd17(profile), coverageText: covText17(profile, 3),
     hasCar: profile.hasCar, availability: "open", photo: profile.photo, theme: profile.theme, about: profile.about || "",
     intro: profile.introduction || null,
