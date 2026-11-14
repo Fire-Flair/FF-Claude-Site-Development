@@ -684,7 +684,7 @@ function GptLogo17({ size = 18 }) {
 
 
 /* Book an interview: a short call where FireFlair fills the profile out with you. Opens the booking page with your details filled in. */
-function InterviewBook17({ notes, onClose }) {
+function InterviewBook17({ notes, onClose, name, title = "Book an interview" }) {
   const { state, dispatch } = useStore();
   const [phone, setPhone] = useState(state.session.phone || "");
   const ok = phone.replace(/\D/g, "").length >= 9;
@@ -692,7 +692,7 @@ function InterviewBook17({ notes, onClose }) {
   let href = cal;
   try {
     const u = new URL(cal);
-    if (state.profile.name) u.searchParams.set("name", state.profile.name);
+    if (name || state.profile.name) u.searchParams.set("name", name || state.profile.name);
     if (ok) u.searchParams.set("attendeePhoneNumber", phone.replace(/[^\d+]/g, ""));
     if (notes && notes.trim()) u.searchParams.set("notes", notes.trim().slice(0, 500));
     href = u.toString();
@@ -703,7 +703,7 @@ function InterviewBook17({ notes, onClose }) {
     setTimeout(onClose, 150);
   };
   return (
-    <Sheet open onClose={onClose} title="Book an interview">
+    <Sheet open onClose={onClose} title={title}>
       <div className="ff-ib17">
         <Field label="Phone number"><input className="ff-input" type="tel" inputMode="tel" autoComplete="tel" placeholder="+44 7700 900000" value={phone} onChange={(e) => setPhone(e.target.value)} /></Field>
         <a className={"ff-btn gold ff-bigcv17" + (ok ? "" : " off")} href={ok ? href : undefined} aria-disabled={!ok} target="_blank" rel="noopener noreferrer" onClick={go}><Calendar size={16} /> Choose a time</a>
@@ -835,6 +835,20 @@ function WelcomeSection({ me }) {
           </div>
         </Sheet>
       )}
+    </div>
+  );
+}
+
+
+/* FF Staff company profile, step 3: a meeting instead of typing a description. Opens the same booking page as the FF Team interview. */
+function CompanyMeeting17() {
+  const { state } = useStore();
+  const [book, setBook] = useState(false);
+  if (!V101.support20Url()) return null;
+  return (
+    <div className="ff-start17 ff-comeet17">
+      <Btn variant="sm" onClick={() => setBook(true)}><Calendar size={14} /> Book a meeting</Btn>
+      {book && <InterviewBook17 name={(state.company || {}).name} title="Book a meeting" onClose={() => setBook(false)} />}
     </div>
   );
 }

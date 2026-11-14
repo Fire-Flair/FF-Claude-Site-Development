@@ -880,16 +880,16 @@ function CompanySections() {
               {vis("co_about") && <AboutBox11 />}
             </section>
 
+            <section id="ff-co-info" style={{ marginTop: 22 }}>
+              <SectionHead icon={<I11.FileText size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="More information" count={(c.info || []).length} action={<CategoryToggle sectionKey="co_info" defaultOpen={false} />} />
+              {vis("co_info") && <InfoBuilder17 />}
+            </section>
+
             <section id="ff-co-social" style={{ marginTop: 22 }}>
               <SectionHead icon={<I11.Globe size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Social links" action={<CategoryToggle sectionKey="co_social" defaultOpen={false} />} />
               {vis("co_social") && (
                 <SocialEdit11 value={soc} onChange={(socials) => dispatch({ type: "COMPANY_SAVE", company: { socials } })} />
               )}
-            </section>
-
-            <section id="ff-co-info" style={{ marginTop: 22 }}>
-              <SectionHead icon={<I11.FileText size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="More information" count={(c.info || []).length} action={<CategoryToggle sectionKey="co_info" defaultOpen={false} />} />
-              {vis("co_info") && <InfoBuilder17 />}
             </section>
 
             {recSection("contact")}

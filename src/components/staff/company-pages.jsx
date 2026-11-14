@@ -326,8 +326,12 @@ function VkGrid17({ items }) {
 
 /* A company's own "More information" sections, as people see them. */
 function CoInfo17({ list }) {
+  const [pop, setPop] = useState(null);
   return (
     <>
+      <Sheet open={!!pop} onClose={() => setPop(null)} title={pop ? pop.title : ""} center>
+        {pop ? <div className="ff-coqa17-pop"><p className="a">{pop.text}</p></div> : null}
+      </Sheet>
       {(list || []).filter(sec => String(sec.title || "").trim()).map((sec, si) => {
         const items = (sec.items || []).filter(it => String(it.title || it.text || it.photo || "").trim());
         const rows = items.filter(it => !it.photo), pics = items.filter(it => it.photo);
@@ -337,7 +341,7 @@ function CoInfo17({ list }) {
             {sec.lead ? <h4 className="ff-vk-h">{sec.lead}</h4> : null}
             {paras.map((p, i) => <p key={"p" + i} className="ff-body ff-vk-p">{p}</p>)}
             {sec.chips && sec.chips.length ? <div className="ff-copub-chips">{sec.chips.map(c => <span key={c}>{c}</span>)}</div> : null}
-            {rows.map((it, i) => <div key={"r" + i} className="ff-vk-row"><b>{sec.numbered ? String(i + 1).padStart(2, "0") + "  " : ""}{it.title}</b>{it.text ? <span>{it.text}</span> : null}</div>)}
+            {rows.length ? <HScroll label={sec.title}>{rows.map((it, i) => <InformationCard key={"r" + i} record={{ ...makeRecord("info", it.title || sec.title), id: (sec.id || si) + "_" + i, description: it.text || "" }} def={{ label: sec.title, singular: sec.title, icon: "qualification", fields: ["description"] }} themeKey="onyx" onClick={() => setPop({ title: it.title || sec.title, text: it.text || "" })} />)}</HScroll> : null}
             {pics.length ? <VkGrid17 items={pics.map(it => ({ src: it.photo, label: it.title, size: it.text }))} /> : null}
             {sec.quote ? <p className="ff-vk-quote">{sec.quote}</p> : null}
           </VkFold17>

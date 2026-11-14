@@ -501,10 +501,10 @@ const vipFoundingCount20 = (state) => (state.vipClaims || []).filter((x) => x.st
 const GOLD20 = {
   limit: 100,
   tiles: [
-    { k: "marketing", t: "Marketing", img: "reward_photoshoot", d: ["We help promote your company across FireFlair, so more hosts and businesses find you."], story: "how-to-get-mobile-bar-bookings" },
-    { k: "training", t: "Staff training and equipment", img: "reward_bar_kit", d: ["We help train your team and provide them with cocktail equipment."] },
-    { k: "events", t: "Smaller events", img: "dream_after_dark", d: ["We can help you run smaller events under your own brand."], story: "small-cocktail-event-profitability" },
-    { k: "brand", t: "Your brand", img: "training_brand_training", d: ["Your cocktails, your staff and your events, booked through FireFlair."], story: "signature-cocktail-services-on-ff-party" },
+    { k: "marketing", t: "Marketing", img: "gold_marketing", d: ["We help promote your company across FireFlair, so more hosts and businesses find you."], story: "how-to-get-mobile-bar-bookings" },
+    { k: "training", t: "Staff training and equipment", img: "gold_training", d: ["We help train your team and provide them with cocktail equipment."] },
+    { k: "events", t: "Smaller events", img: "gold_events", d: ["We can help you run smaller events under your own brand."], story: "small-cocktail-event-profitability" },
+    { k: "brand", t: "Your brand", img: "gold_brand", d: ["Your cocktails, your staff and your events, booked through FireFlair."], story: "signature-cocktail-services-on-ff-party" },
   ],
 };
 
@@ -531,7 +531,7 @@ function GoldLaunch20() {
           h("div", { className: "ff-cp20-btns" }, h(ShineButton, { onClick: nav.toEvent }, "Hire staff"))),
         h("div", null,
           h("div", { className: "ff-gold20-tiles", role: "group", "aria-label": "What Gold includes" },
-            GOLD20.tiles.map((t, i) => h("button", { key: t.k, type: "button", className: "ff-gold20-t", style: IM[t.img] ? { backgroundImage: "url(" + IM[t.img] + ")" } : undefined, onClick: () => setBox(i) }, h("b", null, t.t)))),
+            GOLD20.tiles.map((t, i) => h("button", { key: t.k, type: "button", className: "ff-gold20-t", style: IM[t.img] ? { backgroundImage: "url(" + IM[t.img] + ")", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" } : undefined, onClick: () => setBox(i) }, h("b", null, t.t)))),
           h("div", { className: "ff-cp20-url" }, "FFStaff.uk")))),
     h(Sheet, { open: box !== null, onClose: () => setBox(null), title: cur ? cur.t : "", center: true },
       cur ? h("div", { className: "ff-cp20r" }, cur.d.map((p, i) => h("p", { key: i }, p)),

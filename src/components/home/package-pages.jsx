@@ -179,7 +179,7 @@
       ],
       jn: [
         { ic: "Briefcase", t: "Your Company Card", d: "Sent to everyone you hire.", b: "See the Company Card", go: "#ff-company", x: "Your Company Card is what everyone you hire sees first. It says who you are, what you do and who is on your team." },
-        { ic: "Contact", t: "Join FF Staff", d: "Set up your company and your team.", b: "Create your Company Card", go: "profile", x: "Joining FF Staff sets up your company and your team, so you can book, and be booked, with your own card." },
+        { ic: "Contact", t: "Create your company profile", d: "Set up your company and your team.", b: "Create your Company Card", go: "profile", x: "Joining FF Staff sets up your company and your team, so you can book, and be booked, with your own card." },
         { ic: "Search", t: "Find your people", d: "Search the whole network.", b: "Explore the network", go: "network", x: "People search the whole network by skill, area and level, so you find the right person for every event." }
       ]
     }
@@ -336,7 +336,7 @@ function FireFlairFold18({ kind = "party" }) {
     h18("button", { type: "button", className: "ff-firefold18-b", "aria-expanded": open, "aria-controls": "ff-why-panel", onClick: () => setOpen(!open) },
       h18("span", { className: "th", "aria-hidden": "true" }, h18("img", { src: FIRE17_STILL, alt: "", width: 64, height: 60, decoding: "async", draggable: false })),
       h18("span", { className: "tx" }, h18("b", null, "Fire & Flair"), h18("small", null, "Why we are called FireFlair?"))),
-    open ? h18("div", { id: "ff-why-panel" }, h18(WhyFlair17, { kind }), kind === "staff" ? h18(CoreValues, { kind: "staff" }) : null, h18(OurDream17, { kind })) : null);
+    open ? h18("div", { id: "ff-why-panel" }, h18(WhyFlair17, { kind }), h18(OurDream17, { kind })) : null);
 }
 
 const PKG18_RE = /^#\/ff-party\/packages(?:\/([a-z0-9-]+))?\/?$/i;

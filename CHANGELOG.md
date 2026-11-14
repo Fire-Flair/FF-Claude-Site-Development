@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.5.2 (Phase 2 Final, review changes)
+
+- FF Staff Gold box: the four tile photos are replaced with library photos (p12, p21, p35, p10), cropped square with faces kept in frame.
+- FF Stories: five categories plus All on all three sites (How it works, Planning and booking, Pay and costs, Skills and growth, Local and news). Each story's own category is folded into one of them in `storyCat17`.
+- FF Staff Fire & Flair fold now matches FF Party (philosophy and dream only).
+- FF Staff booking screen: the "Tell us about your event" box is removed; the first section is open and titled Event details.
+- FF Staff profile: step 1 reads Create your company profile; step 3 (Describe your business) is replaced by Book a meeting, which opens the same booking page as the FF Team interview.
+- FF Staff company profile: More information sits directly under About, and a company's information sections show as cards that open in a pop-up.
+
 ## v17.5.1 (Phase 2 Final, review changes)
 
 - FF Team profile: Book an interview sits on the right, under the CV button, and its sheet no longer has the CV upload box.

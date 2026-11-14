@@ -1322,7 +1322,7 @@ function BookingBox({ ev, setView, bkey }) {
   const sv = svcWords(state), party = sv.party;
   const info = flowInfo(state, ev);
   const shifts = info.shifts;
-  const [op, setOp] = useState(() => { const o = (state.bkView || {}).open; return o ? { [o]: true } : {}; });                   // event / staff / confirm: any mix can be open at once
+  const [op, setOp] = useState(() => { const o = (state.bkView || {}).open; return o ? { event: true, [o]: true } : { event: true }; });                   // event / staff / confirm: any mix can be open at once
   const setOpK = (k, v) => setOp(o => ({ ...o, [k]: v }));
   const [editShift, setEditShift] = useState(null);   // "new" | shift id | null
   const [draft, setDraft] = useState(() => eventDraft11(ev));
@@ -1524,10 +1524,10 @@ function BookingBox({ ev, setView, bkey }) {
   const secEvent = (n) => (
     <div className={`ff-bsec s${n}`} id="ff-bs-event" key="event">
       {op.event ? (<>
-        <SecHead n={n} title="Event Card" onToggle={collapseEvent} />
+        <SecHead n={n} title="Event details" onToggle={collapseEvent} />
         <div className="ff-evwrap"><EventCard11 ev={draft} edit onPatch={(x) => setDraft(d => ({ ...d, ...x }))} /></div>
       </>) : (
-        <BigBtn n={n} icon={I11.CalendarDays} mini="event" title="Event Card" done={info.has1}
+        <BigBtn n={n} icon={I11.CalendarDays} mini="event" title="Event details" done={info.has1}
           hint={info.has1 ? [ev.iso ? new Date(ev.iso + "T12:00").toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" }) : ev.date, startOf(ev), ev.venue].filter(Boolean).join(" · ") : ev && (ev.iso || ev.venue) ? "Still needed: " + [!ev.iso && "date", !String(ev.venue || "").trim() && "location"].filter(Boolean).join(" and ") : "Where and when."} onClick={openEvent} />
       )}
     </div>
@@ -1606,8 +1606,6 @@ function BookingBox({ ev, setView, bkey }) {
         <div>{ev && <span className="ff-ev11-eye">Your booking</span>}<h2>{ev ? (evComplete(ev) ? eventTitle(ev) : "Your booking") : "Create a booking"}</h2></div>
         {ev && <button type="button" className="ff-flow-x" onClick={() => setView({ n: Date.now() })} aria-label="Start a new booking" title="New booking"><I11.Plus size={18} /></button>}
       </header>
-      <div className="ff-pb-top">
-      <BookingAI onFill={fill} note={state.aiNote} onClear={() => dispatch({ type: "V11_SET", patch: { aiNote: "" } })} /></div>
       {order.flatMap((k, i) => [body[k](i + 1), i === 1 && (op.shift || op.staff)
         ? <Basket11 key="basket" ev={ev} onEvent={openEvent} shifts={shifts} bub={selSh ? { id: selSh.id } : null} onSelect={selectRole} onAdd={() => { setBub({ none: true }); setOpK("shift", true); setTimeout(() => { const g = gridEl(); if (g) g.scrollTo({ left: g.scrollWidth, behavior: "smooth" }); const el = document.querySelector("#ff-bs-shift .ff-sfwrap:last-child .ff-pick5 .hd"); if (el && el.getAttribute("aria-expanded") !== "true") el.click(); focusSec("ff-bs-shift"); }, 200); }} placeOn={placeOn} onRemove={removeFrom} onRemoveSlot={(sh) => { if (bub && bub.id === sh.id) setBub(undefined); removeSlot(sh); }} />
         : <div key={k + "-j"} className={`ff-barrow j${i + 1}`} aria-hidden="true"><I11.ChevronDown size={20} strokeWidth={2.4} /></div>])}

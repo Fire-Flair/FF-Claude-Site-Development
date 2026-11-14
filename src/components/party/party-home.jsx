@@ -273,7 +273,7 @@ function StaffProfile() {
     <div>
       <div className="ff-eyebrow">{site.name} · {site.party ? "Your Party" : "Your Business"}</div>
       <div className="ff-journey">
-        <BigStepHead n={1} title={`Join ${site.name}`} done={joined} id="ff-co-step-1" />
+        <BigStepHead n={1} title={site.party ? `Join ${site.name}` : "Create your company profile"} done={joined} id="ff-co-step-1" />
         <CompanyJoin />
         {site.party ? (<>
           <StepHead n={2} title="Your FF Party Card" done={cardReady} note="Shared with the people you book, so they know who you are and how you like your parties." />
@@ -283,8 +283,8 @@ function StaffProfile() {
         </>) : (<>
           <StepHead n={2} title="Company Card" done={cardReady} note="Sent to anyone you hire, to show them who you are. It can also be added to FF Party to advertise your services." />
           <div id="ff-co-card"><EditableCompanyCard /></div>
-          <StepHead n={3} title="Describe your business" done={!!c.description} />
-          <CompanyFFAI />
+          <StepHead n={3} title="Book a meeting" done={false} note="We'll fill your profile out for you." />
+          <CompanyMeeting17 />
           <StepHead n={4} title="Your company profile" done={false} />
           <CompanySections />
         </>)}
