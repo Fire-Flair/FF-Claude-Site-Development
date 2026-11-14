@@ -1,0 +1,141 @@
+{
+  "formatVersion": 2,
+  "slug": "surrey-bar-hire",
+  "name": "Surrey Bar Hire",
+  "kind": "Mobile bars & marquee bars",
+  "base": "Surrey",
+  "areas": [
+    "Surrey",
+    "Sussex",
+    "Hampshire",
+    "Berkshire",
+    "Kent",
+    "London"
+  ],
+  "logo": "https://static.wixstatic.com/media/ed6558_683bdeead4a1c3db9b6a630366365405.png",
+  "logoBg": "light",
+  "logoWide": true,
+  "description": "A mobile bar hire company trading since 2011, with four bar styles, refrigeration, marquee furniture and bar staff across the South East.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/suppliers/surrey-bar-hire",
+    "at": "2026-11-07"
+  },
+  "media": [
+    {
+      "id": "surrey-bar-hire_0",
+      "src": "https://static.wixstatic.com/media/ed6558_0793ff88c66ef5819631ad0344a3ff9f.jpg",
+      "alt": "Surrey Bar Hire",
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/surrey-bar-hire",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "surrey-bar-hire_1",
+      "src": "https://static.wixstatic.com/media/ed6558_e98e3745eb174d26b50f6fd3e396c91d~mv2.jpg",
+      "alt": "Surrey Bar Hire",
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/surrey-bar-hire",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Mobile bars in four styles",
+        "Cash, free and dry hire",
+        "Refrigeration",
+        "Marquee furniture",
+        "Bar staff"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/surrey-bar-hire",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Marquee events",
+        "Hall events",
+        "Outdoor events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/surrey-bar-hire",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "scale",
+      "title": "Scale",
+      "chips": [
+        "Trading since 2011"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/surrey-bar-hire",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Listing details only; own website not confirmed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/surrey-bar-hire",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://www.surreybarhire.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://www.addtoevent.co.uk/suppliers/surrey-bar-hire",
+          "at": "2026-11-07"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "SURRB",
+    "position": 22,
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/suppliers/surrey-bar-hire"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Guildford",
+        "lat": 51.2362,
+        "lng": -0.5704,
+        "approx": true
+      }
+    ]
+  }
+}

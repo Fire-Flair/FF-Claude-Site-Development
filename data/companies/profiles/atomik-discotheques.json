@@ -1,0 +1,75 @@
+{
+  "formatVersion": 2,
+  "slug": "atomik-discotheques",
+  "name": "Atomik Discotheques",
+  "kind": "Mobile disco & karaoke",
+  "base": "Dalkeith",
+  "areas": [
+    "Edinburgh",
+    "East Lothian",
+    "Midlothian"
+  ],
+  "description": "A Midlothian mobile disco and karaoke supplier serving parties and events around Edinburgh, East Lothian and Midlothian, including wedding receptions, civil partnerships and family parties.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://bridebook.com/uk/wedding-musicians-bands-djs/atomik-discotheques-dalkeith-midlothian-bbmgbqZLXx",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Mobile disco",
+        "Karaoke",
+        "Mobile DJs"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/wedding-musicians-bands-djs/atomik-discotheques-dalkeith-midlothian-bbmgbqZLXx",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Birthdays",
+        "Family parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/wedding-musicians-bands-djs/atomik-discotheques-dalkeith-midlothian-bbmgbqZLXx",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "ATOMI",
+    "position": 40,
+    "source": {
+      "urls": [
+        "https://bridebook.com/uk/wedding-musicians-bands-djs/atomik-discotheques-dalkeith-midlothian-bbmgbqZLXx"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Dalkeith",
+        "lat": 55.896,
+        "lng": -3.069,
+        "approx": false
+      }
+    ]
+  }
+}

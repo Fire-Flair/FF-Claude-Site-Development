@@ -1,0 +1,71 @@
+{
+  "formatVersion": 2,
+  "slug": "creative-depiction-studio",
+  "name": "Creative Depiction Studio",
+  "kind": "Photography & videography",
+  "base": "Gloucester",
+  "areas": [
+    "Gloucestershire",
+    "Cotswolds"
+  ],
+  "description": "A Gloucester studio at the edge of the Cotswolds offering wedding photography and videography.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://app.bridebook.com/uk/search/wedding-photographers/gb?page=100",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding photography",
+        "Videography"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/search/wedding-photographers/gb?page=100",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/search/wedding-photographers/gb?page=100",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "CREAT",
+    "position": 71,
+    "source": {
+      "urls": [
+        "https://app.bridebook.com/uk/search/wedding-photographers/gb?page=100"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Gloucester",
+        "lat": 51.8642,
+        "lng": -2.238,
+        "approx": false
+      }
+    ]
+  }
+}

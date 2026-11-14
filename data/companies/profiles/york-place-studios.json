@@ -1,0 +1,72 @@
+{
+  "formatVersion": 2,
+  "slug": "york-place-studios",
+  "name": "York Place Studios",
+  "kind": "Photography & film studio",
+  "base": "London",
+  "areas": [
+    "London",
+    "UK-wide"
+  ],
+  "description": "A family team of photographers and filmmakers with bases in London and across the UK, working worldwide and recognised in photography competitions.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.lovemydress.net/?p=802668",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding photography",
+        "Film"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.lovemydress.net/?p=802668",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.lovemydress.net/?p=802668",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "YORKP",
+    "position": 63,
+    "source": {
+      "urls": [
+        "https://www.lovemydress.net/?p=802668"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": false
+      }
+    ]
+  }
+}

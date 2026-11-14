@@ -1,0 +1,72 @@
+{
+  "formatVersion": 2,
+  "slug": "about-today-photography",
+  "name": "About Today Photography",
+  "kind": "Wedding photography",
+  "base": "Manchester",
+  "areas": [
+    "Manchester",
+    "Liverpool",
+    "Lancashire",
+    "Yorkshire"
+  ],
+  "description": "A Manchester wedding photography team focused on natural, candid moments, travelling through the North West including Liverpool, Lancashire and Yorkshire.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://bridebook.com/uk/wedding-photographers/about-today-photography-manchester-greater-manchester-cs6qYNmpgV",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding photography"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/wedding-photographers/about-today-photography-manchester-greater-manchester-cs6qYNmpgV",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/wedding-photographers/about-today-photography-manchester-greater-manchester-cs6qYNmpgV",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "ABOUT",
+    "position": 74,
+    "source": {
+      "urls": [
+        "https://bridebook.com/uk/wedding-photographers/about-today-photography-manchester-greater-manchester-cs6qYNmpgV"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Manchester",
+        "lat": 53.4808,
+        "lng": -2.2426,
+        "approx": false
+      }
+    ]
+  }
+}

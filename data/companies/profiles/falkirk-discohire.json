@@ -1,0 +1,74 @@
+{
+  "formatVersion": 2,
+  "slug": "falkirk-discohire",
+  "name": "Falkirk Discohire",
+  "kind": "Mobile entertainment, DJs & karaoke",
+  "base": "Falkirk",
+  "areas": [
+    "Falkirk",
+    "Edinburgh",
+    "Glasgow",
+    "Central Scotland"
+  ],
+  "description": "A Falkirk mobile entertainment company providing DJs, discos and karaoke, based in central Scotland and covering Edinburgh, Glasgow and further afield.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.mixcloud.com/thediscoguy/",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "DJs",
+        "Discos",
+        "Karaoke"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.mixcloud.com/thediscoguy/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.mixcloud.com/thediscoguy/",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "FALKI",
+    "position": 43,
+    "source": {
+      "urls": [
+        "https://www.mixcloud.com/thediscoguy/"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Falkirk",
+        "lat": 56.0019,
+        "lng": -3.7839,
+        "approx": false
+      }
+    ]
+  }
+}

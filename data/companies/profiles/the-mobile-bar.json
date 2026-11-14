@@ -1,0 +1,90 @@
+{
+  "formatVersion": 2,
+  "slug": "the-mobile-bar",
+  "name": "The Mobile Bar",
+  "kind": "Mobile bar & cocktail sessions",
+  "base": "Chester",
+  "areas": [
+    "Chester",
+    "Liverpool",
+    "Leeds",
+    "North West"
+  ],
+  "description": "A Chester-based mobile bar offering cocktail making and tasting sessions, mocktails and bar set-up, plus an ice cream bike for events.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.poptop.uk.com/supplier/the-mobile-bar",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Mobile bar",
+        "Cocktail making and tasting sessions",
+        "Mocktails",
+        "Ice cream bike"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/the-mobile-bar",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Parties",
+        "Hen parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/the-mobile-bar",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Listing details only; own website not confirmed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/the-mobile-bar",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "MOBBR",
+    "position": 18,
+    "source": {
+      "urls": [
+        "https://www.poptop.uk.com/supplier/the-mobile-bar"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "none"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Chester",
+        "lat": 53.193,
+        "lng": -2.892,
+        "approx": false
+      }
+    ]
+  }
+}

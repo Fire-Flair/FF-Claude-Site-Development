@@ -1,0 +1,72 @@
+{
+  "formatVersion": 2,
+  "slug": "maytree-photography",
+  "name": "Maytree Photography",
+  "kind": "Wedding & event photography",
+  "base": "Sheffield",
+  "areas": [
+    "Sheffield",
+    "South Yorkshire"
+  ],
+  "description": "A Sheffield photography business with many years of experience documenting weddings and events.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://bridebook.com/uk/search/wedding-photographers/reino-unido?page=146",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding photography",
+        "Event photography"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/search/wedding-photographers/reino-unido?page=146",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/search/wedding-photographers/reino-unido?page=146",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "MAYTR",
+    "position": 77,
+    "source": {
+      "urls": [
+        "https://bridebook.com/uk/search/wedding-photographers/reino-unido?page=146"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Sheffield",
+        "lat": 53.3811,
+        "lng": -1.4701,
+        "approx": false
+      }
+    ]
+  }
+}

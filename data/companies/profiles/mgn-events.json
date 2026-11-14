@@ -1,0 +1,86 @@
+{
+  "formatVersion": 2,
+  "slug": "mgn-events",
+  "name": "MGN Events",
+  "kind": "Event management",
+  "base": "London",
+  "areas": [
+    "London"
+  ],
+  "description": "A London event management company.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://mgnevents.co.uk",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Event management"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://mgnevents.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://mgnevents.co.uk",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://mgnevents.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://mgnevents.co.uk",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "svc",
+    "sub": "events",
+    "tag": "MGNEV",
+    "position": 141,
+    "source": {
+      "urls": [
+        "https://mgnevents.co.uk"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": true
+      }
+    ]
+  }
+}

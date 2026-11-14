@@ -1,0 +1,83 @@
+{
+  "formatVersion": 2,
+  "slug": "i-d-image-development",
+  "name": "I-d Image Development",
+  "kind": "Photographic studio",
+  "base": "St Neots",
+  "areas": [
+    "St Neots",
+    "Cambridgeshire"
+  ],
+  "description": "A photographic studio in the centre of St Neots specialising in wedding and portrait photography, with a team of award-winning photographers.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://bridebook.com/uk/search/wedding-photographers/uk?page=163",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding photography",
+        "Portrait photography"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/search/wedding-photographers/uk?page=163",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/search/wedding-photographers/uk?page=163",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Studio in St Neots town centre"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/search/wedding-photographers/uk?page=163",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "IDIMA",
+    "position": 69,
+    "source": {
+      "urls": [
+        "https://bridebook.com/uk/search/wedding-photographers/uk?page=163"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "St Neots",
+        "lat": 52.229,
+        "lng": -0.266,
+        "approx": false
+      }
+    ]
+  }
+}

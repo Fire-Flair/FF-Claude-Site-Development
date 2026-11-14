@@ -1,0 +1,100 @@
+{
+  "formatVersion": 2,
+  "slug": "nice-ice-london",
+  "name": "Nice Ice London",
+  "kind": "Ice delivery",
+  "base": "London",
+  "areas": [
+    "London"
+  ],
+  "description": "A London ice supplier producing ice at its own factory in Tottenham and delivering across the capital for bars, restaurants and events, with next-day delivery.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://nice-ice.co",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Ice delivery",
+        "Bagged ice"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://nice-ice.co",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://nice-ice.co",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Own ice factory in Tottenham",
+        "Next-day London delivery"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://nice-ice.co",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://nice-ice.co",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://nice-ice.co",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "svc",
+    "sub": "ice",
+    "tag": "NICEI",
+    "position": 121,
+    "source": {
+      "urls": [
+        "https://nice-ice.co"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Tottenham",
+        "lat": 51.588,
+        "lng": -0.06,
+        "approx": true
+      }
+    ]
+  }
+}

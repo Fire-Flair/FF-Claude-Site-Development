@@ -1,0 +1,74 @@
+{
+  "formatVersion": 2,
+  "slug": "baba-ganoush-york",
+  "name": "Baba Ganoush",
+  "kind": "Wedding & event catering",
+  "base": "York",
+  "areas": [
+    "York",
+    "Leeds",
+    "Yorkshire"
+  ],
+  "description": "A York catering company that serves weddings and events across Yorkshire and likes to try new ways of delivering food to the table.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/baba-ganoush-dining-by-matthew-hyde",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding catering",
+        "Event catering"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/baba-ganoush-dining-by-matthew-hyde",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/baba-ganoush-dining-by-matthew-hyde",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "catering",
+    "tag": "BABAG",
+    "position": 98,
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/baba-ganoush-dining-by-matthew-hyde"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "York",
+        "lat": 53.9591,
+        "lng": -1.0815,
+        "approx": false
+      }
+    ]
+  }
+}

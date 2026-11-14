@@ -1,0 +1,70 @@
+{
+  "formatVersion": 2,
+  "slug": "limelight-studio",
+  "name": "Limelight Studio",
+  "kind": "Wedding photography",
+  "base": "St Ives",
+  "areas": [
+    "Cornwall",
+    "South West"
+  ],
+  "description": "A Cornish studio in St Ives where two photographers shoot together throughout each event to catch every moment.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://bridebook.co.uk/wedding-photo/limelight-studio-st-ives-st-ives-cornwall-bbNg0JER8d",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding photography"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.co.uk/wedding-photo/limelight-studio-st-ives-st-ives-cornwall-bbNg0JER8d",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.co.uk/wedding-photo/limelight-studio-st-ives-st-ives-cornwall-bbNg0JER8d",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "LIMEL",
+    "position": 72,
+    "source": {
+      "urls": [
+        "https://bridebook.co.uk/wedding-photo/limelight-studio-st-ives-st-ives-cornwall-bbNg0JER8d"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "St Ives",
+        "lat": 50.211,
+        "lng": -5.48,
+        "approx": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "formatVersion": 2,
+  "slug": "mobile-disco-belfast",
+  "name": "Mobile Disco Belfast",
+  "kind": "Wedding & event DJ",
+  "base": "Belfast",
+  "areas": [
+    "Belfast",
+    "Northern Ireland"
+  ],
+  "description": "A Belfast wedding and events DJ. Clients are invited to help shape the soundtrack, and the service covers weddings, birthdays, engagements, corporate events, hen parties, clubs and bars.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://addtoevent.co.uk/suppliers/mobile-disco-belfast",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding DJ",
+        "Event DJ",
+        "Personalised DJ service"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://addtoevent.co.uk/suppliers/mobile-disco-belfast",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Birthdays",
+        "Corporate events",
+        "Hen parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://addtoevent.co.uk/suppliers/mobile-disco-belfast",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "MOBIL",
+    "position": 53,
+    "source": {
+      "urls": [
+        "https://addtoevent.co.uk/suppliers/mobile-disco-belfast"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Belfast",
+        "lat": 54.5973,
+        "lng": -5.9301,
+        "approx": false
+      }
+    ]
+  }
+}

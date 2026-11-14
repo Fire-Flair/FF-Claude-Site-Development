@@ -1,0 +1,70 @@
+{
+  "formatVersion": 2,
+  "slug": "safelight-weddings",
+  "name": "Safelight Weddings",
+  "kind": "Wedding photography",
+  "base": "Swansea",
+  "areas": [
+    "Swansea",
+    "South Wales"
+  ],
+  "description": "A Swansea wedding photography business.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://bridebook.com/uk/search/wedding-photographers/wales?page=6",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding photography"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/search/wedding-photographers/wales?page=6",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/search/wedding-photographers/wales?page=6",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "SAFEL",
+    "position": 88,
+    "source": {
+      "urls": [
+        "https://bridebook.com/uk/search/wedding-photographers/wales?page=6"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Swansea",
+        "lat": 51.6214,
+        "lng": -3.9436,
+        "approx": false
+      }
+    ]
+  }
+}

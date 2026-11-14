@@ -1,0 +1,73 @@
+{
+  "formatVersion": 2,
+  "slug": "innov8-djs",
+  "name": "Innov8 DJs",
+  "kind": "DJs & karaoke",
+  "base": "Leeds",
+  "areas": [
+    "Leeds",
+    "West Yorkshire"
+  ],
+  "description": "A Leeds company providing professional DJs for events of every kind, with karaoke also available.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/weddings/djs/west-yorkshire/leeds",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "DJ hire",
+        "Karaoke"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/weddings/djs/west-yorkshire/leeds",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/weddings/djs/west-yorkshire/leeds",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "INNOV",
+    "position": 35,
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/weddings/djs/west-yorkshire/leeds"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Leeds",
+        "lat": 53.8008,
+        "lng": -1.5491,
+        "approx": false
+      }
+    ]
+  }
+}

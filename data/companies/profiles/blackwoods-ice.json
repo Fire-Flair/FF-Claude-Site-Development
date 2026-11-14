@@ -1,0 +1,100 @@
+{
+  "formatVersion": 2,
+  "slug": "blackwoods-ice",
+  "name": "Blackwood's Ice Delivery",
+  "kind": "Ice delivery",
+  "base": "Henley-on-Thames",
+  "areas": [
+    "Buckinghamshire",
+    "Berkshire",
+    "Oxfordshire"
+  ],
+  "description": "A family-run ice delivery company in Henley-on-Thames, operating since 1987 and serving Buckinghamshire, Berkshire and Oxfordshire.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://blackwoodsice.co.uk",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Ice delivery"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://blackwoodsice.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://blackwoodsice.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Operating since 1987"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://blackwoodsice.co.uk",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://blackwoodsice.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://blackwoodsice.co.uk",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "svc",
+    "sub": "ice",
+    "tag": "BLACK",
+    "position": 125,
+    "source": {
+      "urls": [
+        "https://blackwoodsice.co.uk"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Henley-on-Thames",
+        "lat": 51.536,
+        "lng": -0.902,
+        "approx": true
+      }
+    ]
+  }
+}

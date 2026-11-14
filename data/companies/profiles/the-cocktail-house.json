@@ -1,0 +1,135 @@
+{
+  "formatVersion": 2,
+  "slug": "the-cocktail-house",
+  "name": "The Cocktail House",
+  "kind": "Pop-up cocktail bars & mixologists",
+  "base": "",
+  "areas": [
+    "UK-wide"
+  ],
+  "logo": "https://images.squarespace-cdn.com/content/v1/5a0dd9c2d55b416f9d6016b5/10c2cea4-5b94-4b5e-94c0-a401f8f095a8/The+Cocktail+House.png",
+  "logoBg": "dark",
+  "logoWide": false,
+  "description": "A pop-up mobile cocktail bar company with fifteen years in events, supplying all-inclusive bars with professional mixologists, including for major sporting and racing events.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.poptop.uk.com/supplier/the-cocktail-house",
+    "at": "2026-11-07"
+  },
+  "media": [
+    {
+      "id": "the-cocktail-house_0",
+      "src": "https://images.squarespace-cdn.com/content/v1/5a0dd9c2d55b416f9d6016b5/a7a83b48-223a-4292-836d-e56b07a5d91b/Cocktail+Shaker.jpg",
+      "alt": "The Cocktail House",
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/the-cocktail-house",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "the-cocktail-house_1",
+      "src": "https://images.squarespace-cdn.com/content/v1/5a0dd9c2d55b416f9d6016b5/1711987763666-QV34H7EBF6P0VHOFNBXQ/Mirror+Bar+5.png",
+      "alt": "The Cocktail House",
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/the-cocktail-house",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Pop-up mobile bars",
+        "All-inclusive bar service",
+        "Mixologists and bartenders"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/the-cocktail-house",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Private events",
+        "Corporate events",
+        "Launches",
+        "Large sporting events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/the-cocktail-house",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "scale",
+      "title": "Scale",
+      "chips": [
+        "Around fifteen years in events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/the-cocktail-house",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Listing details only; own website not confirmed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/the-cocktail-house",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://www.the-cocktailhouse.com",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://www.poptop.uk.com/supplier/the-cocktail-house",
+          "at": "2026-11-07"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "COCKH",
+    "position": 14,
+    "source": {
+      "urls": [
+        "https://www.poptop.uk.com/supplier/the-cocktail-house"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5,
+        "lng": -0.08,
+        "approx": true
+      }
+    ]
+  }
+}

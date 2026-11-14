@@ -1,0 +1,73 @@
+{
+  "formatVersion": 2,
+  "slug": "dj-edinburgh",
+  "name": "DJ Edinburgh",
+  "kind": "Wedding DJ & MC",
+  "base": "Edinburgh",
+  "areas": [
+    "Edinburgh",
+    "Scotland"
+  ],
+  "description": "An Edinburgh wedding DJ and master of ceremonies offering evening entertainment, or an all-day service with sound hire, for private and corporate clients in Scottish venues.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://app.bridebook.com/uk/wedding-entertainment/dj-edinburgh-edinburgh-edinburgh-csqgOMrKD8",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding DJ",
+        "Master of ceremonies",
+        "Sound hire"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/wedding-entertainment/dj-edinburgh-edinburgh-edinburgh-csqgOMrKD8",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/wedding-entertainment/dj-edinburgh-edinburgh-edinburgh-csqgOMrKD8",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "DJEDI",
+    "position": 41,
+    "source": {
+      "urls": [
+        "https://app.bridebook.com/uk/wedding-entertainment/dj-edinburgh-edinburgh-edinburgh-csqgOMrKD8"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Edinburgh",
+        "lat": 55.9533,
+        "lng": -3.1883,
+        "approx": false
+      }
+    ]
+  }
+}

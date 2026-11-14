@@ -1,0 +1,70 @@
+{
+  "formatVersion": 2,
+  "slug": "studio-cwtch",
+  "name": "Studio Cwtch",
+  "kind": "Photography studio",
+  "base": "Cardiff",
+  "areas": [
+    "Cardiff",
+    "South Wales"
+  ],
+  "description": "A Cardiff photography studio working on weddings.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://bridebook.com/uk/search/wedding-photographers/south-wales?page=5",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding photography"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/search/wedding-photographers/south-wales?page=5",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/search/wedding-photographers/south-wales?page=5",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "STUDIO",
+    "position": 86,
+    "source": {
+      "urls": [
+        "https://bridebook.com/uk/search/wedding-photographers/south-wales?page=5"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Cardiff",
+        "lat": 51.4816,
+        "lng": -3.1791,
+        "approx": false
+      }
+    ]
+  }
+}

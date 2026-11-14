@@ -1,0 +1,71 @@
+{
+  "formatVersion": 2,
+  "slug": "brat-bros-catering",
+  "name": "Brat-Bros Catering",
+  "kind": "Street food catering",
+  "base": "London",
+  "areas": [
+    "Greater London"
+  ],
+  "description": "A London modern street food caterer for all kinds of events.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.eventsense.co.uk/category/corporate-event-caterers",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Street food catering"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.eventsense.co.uk/category/corporate-event-caterers",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.eventsense.co.uk/category/corporate-event-caterers",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "catering",
+    "tag": "BRATB",
+    "position": 111,
+    "source": {
+      "urls": [
+        "https://www.eventsense.co.uk/category/corporate-event-caterers"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": false
+      }
+    ]
+  }
+}

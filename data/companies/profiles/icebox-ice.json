@@ -1,0 +1,103 @@
+{
+  "formatVersion": 2,
+  "slug": "icebox-ice",
+  "name": "Icebox",
+  "kind": "Ice delivery",
+  "base": "London",
+  "areas": [
+    "London",
+    "UK-wide",
+    "Europe"
+  ],
+  "description": "A London ice company, trading since 1993, supplying ice cubes, ice sculptures and ice bars for events across the UK and Europe.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://theicebox.com",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Ice cubes",
+        "Ice sculptures",
+        "Ice bars"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://theicebox.com",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://theicebox.com",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Trading since 1993",
+        "UK and Europe"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://theicebox.com",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://theicebox.com",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://theicebox.com",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "svc",
+    "sub": "ice",
+    "tag": "ICEBO",
+    "position": 122,
+    "source": {
+      "urls": [
+        "https://theicebox.com"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": true
+      }
+    ]
+  }
+}

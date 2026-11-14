@@ -1,0 +1,155 @@
+{
+  "formatVersion": 2,
+  "slug": "the-bartender",
+  "name": "The Bartender",
+  "kind": "Event bartenders & mobile bars",
+  "base": "Bristol",
+  "areas": [
+    "Bristol",
+    "South West",
+    "UK-wide"
+  ],
+  "logo": "https://thebartender.co.uk/wp-content/uploads/2026/01/cropped-favicon-2-270x270.png",
+  "logoBg": "light",
+  "logoWide": false,
+  "description": "A Bristol drinks and bartending company with over fifteen years of event experience. It provides mobile and branded bars, mixologists, glassware and uniforms for corporate receptions, launches and team events.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://thebartender.co.uk/corporate-events/",
+    "at": "2026-11-07"
+  },
+  "media": [
+    {
+      "id": "the-bartender_0",
+      "src": "https://thebartender.co.uk/wp-content/uploads/2026/01/Lamborghini-Bartender-Team-scaled.jpg",
+      "alt": "The Bartender",
+      "source": {
+        "by": "agent",
+        "url": "https://thebartender.co.uk/corporate-events/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "the-bartender_1",
+      "src": "https://thebartender.co.uk/wp-content/uploads/2026/01/Bartender-filling-glasses-with-crushed-ice.jpeg",
+      "alt": "The Bartender",
+      "source": {
+        "by": "agent",
+        "url": "https://thebartender.co.uk/corporate-events/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "the-bartender_2",
+      "src": "https://thebartender.co.uk/wp-content/uploads/2026/01/The-Bartender-Living-Bar.jpeg",
+      "alt": "The Bartender",
+      "source": {
+        "by": "agent",
+        "url": "https://thebartender.co.uk/corporate-events/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "the-bartender_3",
+      "src": "https://thebartender.co.uk/wp-content/uploads/2026/01/GuestsSmilingDrinksMatrix-scaled.jpg",
+      "alt": "The Bartender",
+      "source": {
+        "by": "agent",
+        "url": "https://thebartender.co.uk/corporate-events/",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Mobile bar units",
+        "Branded bars",
+        "Exhibition cocktail bars",
+        "Frozen cocktails",
+        "Bespoke cocktail menus",
+        "Mixologists and bar staff",
+        "Glassware and uniforms",
+        "Cocktail workshops",
+        "Product launch support"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://thebartender.co.uk/corporate-events/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Corporate receptions",
+        "Exhibitions",
+        "Product launches",
+        "Awards dinners",
+        "Christmas parties",
+        "Team building",
+        "Weddings",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://thebartender.co.uk/corporate-events/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "scale",
+      "title": "Scale",
+      "chips": [
+        "Over fifteen years in events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://thebartender.co.uk/corporate-events/",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://thebartender.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://thebartender.co.uk/corporate-events/",
+          "at": "2026-11-07"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "THEBA",
+    "position": 4,
+    "source": {
+      "urls": [
+        "https://thebartender.co.uk/corporate-events/"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "granted"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Bristol",
+        "lat": 51.4545,
+        "lng": -2.5879,
+        "approx": false
+      }
+    ]
+  }
+}

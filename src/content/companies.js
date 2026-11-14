@@ -1,23 +1,65 @@
 /* src/content/companies.js — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
-/* Real UK event bar companies, built as unclaimed draft Company Cards from public information.
-   The same data lives in data/companies/seed-companies.json, ready to import into the real site
-   as drafts. Unclaimed: not offered for booking and kept off FF Party until the company claims it. */
-const REAL_COMPANIES11 = CONTENT_ADAPTER.companyProfiles();
+/* Real UK event companies, as unclaimed draft Company Cards built from public information.
+   Source of truth: one file per company in data/companies/profiles/<slug>.json (format version 2, docs/company-profile-format.md).
+   npm run companies (also part of npm run build) checks them and writes src/content/companies/real-companies.json (bar companies) and
+   suppliers.json (every other category), which CONTENT_ADAPTER reads. The page is the profile passed through as it is, so a directory
+   company with packages, cocktails, Q&A or its own sections shows them with no further code.
+   Unclaimed: not offered for booking and kept off FF Party until the company claims it. */
+
+/* The kind each contact card is, as the key the Company Card icons use. */
+const DIR_SOCIAL17 = { Instagram: "instagram", Facebook: "facebook", LinkedIn: "linkedin", TikTok: "tiktok", WhatsApp: "whatsapp" };
+
+/* The short row the lists, the map and the search read, taken from a profile. The profile itself stays on the row. */
+function dirRow17(p) {
+  const m = p.meta || {};
+  return { slug: p.slug, name: p.name, kind: p.kind, tag: m.tag, base: p.base || "", areas: p.areas || [], locations: m.pins || [], cat: m.category === "bar" ? undefined : m.category, status: m.partner ? "partner" : "unclaimed", unclaimed: m.status !== "claimed", profile: p };
+}
+
+const REAL_COMPANIES11 = CONTENT_ADAPTER.companyProfiles().map(dirRow17);
 
 
-const realBase11 = (c) => ({ id: "co_" + c.slug, name: c.name, kind: c.kind, area: c.areas[0] || "", tag: c.tag, tier: "standard", unclaimed: true, locations: c.locations || [] });
+const realBase11 = (c) => ({ id: "co_" + c.slug, name: c.name, kind: c.kind, area: c.areas[0] || "", tag: c.tag, tier: "standard", unclaimed: c.unclaimed, locations: c.locations || [] });
 
 
-const realPage11 = (c) => ["co_" + c.slug, {
-  name: c.name, kind: c.kind, areas: c.areas.join(" · "), slug: c.slug, socials: c.social || {}, theme: "onyx", layout: "classic", tier: "standard", unclaimed: true,
-  description: c.summary, team: [], venues: [], reviews: [],
-  logo: (c.images && c.images.logo) || undefined, logoWide: !!(c.images && c.images.logoWide), logoBg: (c.images && c.images.logoBg) || "dark",
-  media: ((c.images && c.images.photos) || []).map((u, i) => ({ id: c.slug + "_" + i, src: u, alt: c.name })),
-  contact: c.website ? [["Website", c.website.replace(/^https?:\/\/(www\.)?/, "")]] : [],
-  /* Services, Events, Scale and Good to know are sections that use Tags. */
-  info: [["Services", c.services], ["Events", c.eventTypes], ["Scale", c.scale], ["Good to know", c.facts]].filter(([, v]) => v && v.length > 0).map(([title, chips], i) => ({ id: "seed_" + i, title, chips: [...chips] })),
-  seed: { services: c.services || [], eventTypes: c.eventTypes || [], scale: c.scale || [], facts: c.facts || [], base: c.base || "" },
-}];
+/* A profile card as the builder's card record. A card with no source reads as written by a person. */
+function dirCard17(cat, r) {
+  return makeRecord(cat, r.name, {
+    id: r.id,
+    description: r.description || "",
+    media: (r.media || []).slice(0, 5).map((m, i) => ({ id: m.id || r.id + "_p" + i, name: m.alt || r.name, dataUrl: m.src })),
+    document: r.document ? { name: r.document.name, type: r.document.type || "application/pdf", dataUrl: r.document.src } : null,
+    hidden: !!r.hidden,
+    proposed: !!r.proposed,
+    source: r.source || { by: "owner" },
+  });
+}
+
+
+const realPage11 = (c) => {
+  const p = c.profile, m = p.meta || {};
+  const chipsOf = (title) => ((p.info || []).find((s) => s.title === title) || {}).chips || [];
+  const cards = (p.records && p.records.contact) || [];
+  const live = cards.filter((r) => !r.hidden && !r.proposed);
+  const records = Object.fromEntries(Object.entries(p.records || {}).filter(([, list]) => list && list.length).map(([key, list]) => [key, rankAll(list.map((r) => dirCard17(key.startsWith("info_") ? "info" : key, r)))]));
+  const qa = (p.qa || []).filter((q) => !q.proposed).map((q, i) => ({ id: q.id || "qa_" + p.slug + i, group: q.group || "business", answer: "", note: "", ...q }));
+  return ["co_" + c.slug, {
+    name: p.name, kind: p.kind, areas: (p.areas || []).join(" · "), slug: p.slug,
+    socials: Object.fromEntries(live.filter((r) => DIR_SOCIAL17[r.description]).map((r) => [DIR_SOCIAL17[r.description], r.name])),
+    theme: "onyx", layout: "classic", tier: "standard", unclaimed: c.unclaimed,
+    description: p.description, team: [], venues: [], reviews: [],
+    logo: p.logo || undefined, logoWide: !!p.logoWide, logoBg: p.logoBg || "dark",
+    media: (p.media || []).map((x) => ({ id: x.id, src: x.src, alt: x.alt || p.name })),
+    /* Contact rows are the website, phone, email and WhatsApp cards; the social links show as the icons on the Company Card. */
+    contact: live.filter((r) => !DIR_SOCIAL17[r.description] || r.description === "WhatsApp").map((r) => [r.description || "Contact", r.description === "Website" ? r.name.replace(/^https?:\/\/(www\.)?/, "") : r.name]),
+    /* The company's own sections (their cards are in records["info_<id>"]). Services, Events, Scale and Good to know are sections that use Tags. */
+    info: (p.info || []).filter((s) => !s.proposed).map((s) => ({ ...s, ...(s.chips ? { chips: [...s.chips] } : {}) })),
+    seed: { services: chipsOf("Services"), eventTypes: chipsOf("Events"), scale: chipsOf("Scale"), facts: chipsOf("Good to know"), base: p.base || "" },
+    ...(Object.keys(records).length ? { records } : {}),
+    ...(qa.length ? { qa } : {}),
+    areaPlaces: c.profile.areaPlaces || [],
+    profileMeta: m,
+  }];
+};
 
 
 /* ===========================================================================
@@ -27,7 +69,7 @@ const realPage11 = (c) => ["co_" + c.slug, {
    "catering". They have a page and a map pin but are NOT added to COMPANIES,
    so the FF Party "Bar companies" lists stay bars only.
    =========================================================================== */
-const REAL_SUPPLIERS17 = CONTENT_ADAPTER.supplierProfiles();
+const REAL_SUPPLIERS17 = CONTENT_ADAPTER.supplierProfiles().map(dirRow17);
 
 
 const SUPPLIER_BASES17 = Object.fromEntries(REAL_SUPPLIERS17.map((c) => ["co_" + c.slug, { ...realBase11(c), cat: c.cat, ...(c.status === "partner" ? { partner: true } : {}) }]));

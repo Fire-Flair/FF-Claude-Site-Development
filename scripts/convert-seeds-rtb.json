@@ -1,0 +1,127 @@
+{
+ "_note": "Raise the Bar Glasgow as it shows on its page at v17.6.1: the directory row (src/content/companies/real-companies.json) and the strings written by hand in company-pages.jsx (rtbPage17). Used once by scripts/convert-seeds.mjs.",
+ "row": {
+  "slug": "raise-the-bar",
+  "tag": "RAISB",
+  "name": "Raise the Bar Mobile Bar Services",
+  "legalName": null,
+  "companyNumber": null,
+  "kind": "Mobile cocktail bar",
+  "base": "Glasgow",
+  "areas": [
+   "Glasgow",
+   "Scotland"
+  ],
+  "summary": "A Glasgow mobile cocktail bar company supplying a mixologist, a fully stocked bar and a printed menu for weddings, parties and corporate events, plus cocktail masterclasses and whisky tastings across Scotland.",
+  "services": [
+   "Mobile cocktail bars",
+   "Individual serve cocktails",
+   "Mini and party packs",
+   "Mocktails",
+   "Cocktail masterclasses",
+   "Whisky tastings",
+   "Branded bars"
+  ],
+  "eventTypes": [
+   "Weddings",
+   "Birthday parties",
+   "Hen parties",
+   "Corporate events",
+   "Product launches",
+   "Christmas parties",
+   "Festivals"
+  ],
+  "scale": [
+   "Events of all sizes"
+  ],
+  "facts": [
+   "3 hours of service",
+   "Team arrives 30 minutes early",
+   "Travel within 30 miles of Glasgow included",
+   "Public liability insurance"
+  ],
+  "website": "https://raisethebarglasgow.com",
+  "social": {},
+  "images": {
+   "logo": "https://raisethebarglasgow.com/icon.png",
+   "photos": [
+    "https://6istx3ephgqw5ngz.public.blob.vercel-storage.com/cocktails/1769265189036.jpg",
+    "https://6istx3ephgqw5ngz.public.blob.vercel-storage.com/cocktails/1783870927210.jpg",
+    "https://6istx3ephgqw5ngz.public.blob.vercel-storage.com/cocktails/1776281026122.jpg",
+    "https://6istx3ephgqw5ngz.public.blob.vercel-storage.com/cocktails/1783871506162.jpg",
+    "https://6istx3ephgqw5ngz.public.blob.vercel-storage.com/cocktails/1783871617205.jpg"
+   ],
+   "permission": "granted_by_owner",
+   "logoBg": "light",
+   "logoWide": false
+  },
+  "status": "unclaimed",
+  "source": {
+   "urls": [
+    "https://www.addtoevent.co.uk/suppliers/raise-the-bar-mobile-bar-services"
+   ],
+   "retrievedAt": "2026-11-07"
+  },
+  "verifiedBy": null,
+  "locations": [
+   {
+    "label": "Glasgow",
+    "lat": 55.8642,
+    "lng": -4.2518,
+    "approx": false
+   }
+  ]
+ },
+ "position": 20,
+ "packages": [
+  [
+   "Mobile Cocktail Bar",
+   "From £400",
+   "A fully staffed mobile cocktail bar: mixologist, bar, printed menu, spirits, mixers, garnishes, ice and glassware. 3 hours of service. Choose your cocktails as add-ons."
+  ],
+  [
+   "Cocktail Masterclass",
+   "Enquire for a quote",
+   "A hands-on class led by professional mixologists, at your venue, for teams, hen parties and private groups. Alcohol-free options available."
+  ],
+  [
+   "Whisky Tasting",
+   "Enquire for a quote",
+   "A guided Scotch whisky tasting led by kilted hosts, with distillery stories and a curated selection of drams."
+  ]
+ ],
+ "faq": [
+  [
+   "What is included?",
+   "A professional mixologist, a fully stocked mobile bar, a bespoke printed cocktail menu, spirits, liqueurs, mixers, fresh ingredients, garnishes, ice and all glassware."
+  ],
+  [
+   "Is there a minimum booking?",
+   "Yes, £400 before any travel charge. Travel within 30 miles of Glasgow is included; beyond that a travel charge may apply and is quoted before you confirm."
+  ],
+  [
+   "How long is the service?",
+   "3 hours from your start time. The team arrives about 30 minutes before to set up. Longer service is quoted on request."
+  ],
+  [
+   "How many cocktails can I choose?",
+   "Up to 6 online. For a longer menu, or drinks that are not on the menu, ask for a bespoke menu."
+  ],
+  [
+   "Can I order single serves?",
+   "Yes, with a minimum of 5 of each cocktail, and the £400 minimum booking still applies."
+  ],
+  [
+   "How do deposits work?",
+   "A £50 deposit secures the request and the team confirm within 48 hours. The balance is invoiced and due within 14 days, and no later than 72 hours before the event. The deposit is non-refundable if you cancel, and refunded in full if they cannot attend."
+  ],
+  [
+   "How big is the bar?",
+   "About 1.6 m by 1 m, with working room needed behind it. The front can be branded for an extra fee."
+  ],
+  [
+   "Are they insured?",
+   "Yes, they hold public liability insurance and can share proof on request."
+  ]
+ ]
+}

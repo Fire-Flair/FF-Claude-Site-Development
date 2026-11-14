@@ -1,0 +1,136 @@
+{
+  "formatVersion": 2,
+  "slug": "the-village-bar-company",
+  "name": "The Village Bar Company",
+  "kind": "Mobile bars for village & garden events",
+  "base": "Kent",
+  "areas": [
+    "Kent",
+    "East Sussex"
+  ],
+  "logo": "https://thevillagebarcompany.co.uk/wp-content/uploads/2021/06/The-Village-Bar-Company-Logo-01.svg",
+  "logoBg": "light",
+  "logoWide": false,
+  "description": "A mobile bar company serving Kent and East Sussex, with cocktail bars, glassware and bar staff for marquees, village halls, barns and gardens.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/suppliers/the-village-bar-company",
+    "at": "2026-11-07"
+  },
+  "media": [
+    {
+      "id": "the-village-bar-company_0",
+      "src": "https://thevillagebarcompany.co.uk/wp-content/uploads/2021/06/1-scaled.jpeg",
+      "alt": "The Village Bar Company",
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-village-bar-company",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "the-village-bar-company_1",
+      "src": "https://thevillagebarcompany.co.uk/wp-content/uploads/2021/06/2-scaled.jpg",
+      "alt": "The Village Bar Company",
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-village-bar-company",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "the-village-bar-company_2",
+      "src": "https://thevillagebarcompany.co.uk/wp-content/uploads/2021/06/3-scaled.jpg",
+      "alt": "The Village Bar Company",
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-village-bar-company",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Mobile bar hire",
+        "Cocktail bars",
+        "Glassware",
+        "Bar staff"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-village-bar-company",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Birthdays",
+        "Weddings",
+        "Christenings",
+        "Celebrations of life",
+        "Family get-togethers"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-village-bar-company",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Listing details only; own website not confirmed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-village-bar-company",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://thevillagebarcompany.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://www.addtoevent.co.uk/suppliers/the-village-bar-company",
+          "at": "2026-11-07"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "VILLB",
+    "position": 24,
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/suppliers/the-village-bar-company"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Kent",
+        "lat": 51.22,
+        "lng": 0.62,
+        "approx": true
+      }
+    ]
+  }
+}

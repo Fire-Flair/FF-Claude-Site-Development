@@ -1,0 +1,73 @@
+{
+  "formatVersion": 2,
+  "slug": "max-marcus-events",
+  "name": "Max Marcus Events",
+  "kind": "DJ & events company",
+  "base": "London",
+  "areas": [
+    "London",
+    "South East"
+  ],
+  "description": "A London DJ and events company specialising in weddings, corporate events and parties across London and the South East.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://addtoevent.co.uk/suppliers/max-marcus-events",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "DJs",
+        "Event services"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://addtoevent.co.uk/suppliers/max-marcus-events",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://addtoevent.co.uk/suppliers/max-marcus-events",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "MAXMA",
+    "position": 58,
+    "source": {
+      "urls": [
+        "https://addtoevent.co.uk/suppliers/max-marcus-events"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": false
+      }
+    ]
+  }
+}

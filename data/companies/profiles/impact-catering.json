@@ -1,0 +1,74 @@
+{
+  "formatVersion": 2,
+  "slug": "impact-catering",
+  "name": "Impact Catering",
+  "kind": "Corporate & events catering",
+  "base": "Eccles",
+  "areas": [
+    "Manchester",
+    "North West"
+  ],
+  "description": "A Manchester-based caterer specialising in creative corporate and events catering, with bespoke wedding packages.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://addtoevent.co.uk/suppliers/impact-catering",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Corporate catering",
+        "Events catering",
+        "Wedding packages"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://addtoevent.co.uk/suppliers/impact-catering",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://addtoevent.co.uk/suppliers/impact-catering",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "catering",
+    "tag": "IMPAC",
+    "position": 102,
+    "source": {
+      "urls": [
+        "https://addtoevent.co.uk/suppliers/impact-catering"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Eccles",
+        "lat": 53.485,
+        "lng": -2.335,
+        "approx": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "formatVersion": 2,
+  "slug": "backyard-photography-company",
+  "name": "The Backyard Photography Company",
+  "kind": "Photography",
+  "base": "Belfast",
+  "areas": [
+    "Belfast",
+    "Northern Ireland"
+  ],
+  "description": "A Belfast photography company shooting weddings and events.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://app.bridebook.com/uk/search/wedding-photographers/gb?page=100",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding photography"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/search/wedding-photographers/gb?page=100",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/search/wedding-photographers/gb?page=100",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "BACKY",
+    "position": 90,
+    "source": {
+      "urls": [
+        "https://app.bridebook.com/uk/search/wedding-photographers/gb?page=100"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Belfast",
+        "lat": 54.5973,
+        "lng": -5.9301,
+        "approx": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "formatVersion": 2,
+  "slug": "the-outside-bar-company",
+  "name": "The Outside Bar Company",
+  "kind": "Independent mobile bar company",
+  "base": "Cambridgeshire",
+  "areas": [
+    "Cambridgeshire",
+    "UK"
+  ],
+  "logoBg": "dark",
+  "logoWide": false,
+  "description": "An independent mobile bar company with over 25 years in the licensed trade. It supplies mobile and cocktail bars with experienced bar staff, glassware, ice, drinks and insurance.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/suppliers/the-outside-bar-company",
+    "at": "2026-11-07"
+  },
+  "media": [
+    {
+      "id": "the-outside-bar-company_0",
+      "src": "https://www.addtoevent.co.uk/sites/default/files/styles/x_large/gs.ate-mp-production-0a18-drupal-public-files/drupal/user/438847/supplier/images/outsidebar2.jpg",
+      "alt": "The Outside Bar Company",
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-outside-bar-company",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "the-outside-bar-company_1",
+      "src": "https://www.addtoevent.co.uk/sites/default/files/styles/x_large/gs.ate-mp-production-0a18-drupal-public-files/drupal/user/438847/supplier/images/img1032.jpg",
+      "alt": "The Outside Bar Company",
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-outside-bar-company",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "the-outside-bar-company_2",
+      "src": "https://www.addtoevent.co.uk/sites/default/files/styles/x_large/gs.ate-mp-production-0a18-drupal-public-files/drupal/user/438847/supplier/images/theoutsudebarcompany.jpg",
+      "alt": "The Outside Bar Company",
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-outside-bar-company",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "the-outside-bar-company_3",
+      "src": "https://www.addtoevent.co.uk/sites/default/files/styles/x_large/gs.ate-mp-production-0a18-drupal-public-files/drupal/user/438847/supplier/images/theoutsidebar.jpg",
+      "alt": "The Outside Bar Company",
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-outside-bar-company",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Mobile bars",
+        "Cocktail bars",
+        "Bar staff",
+        "Glassware",
+        "Ice and drinks",
+        "Insurance"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-outside-bar-company",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Festivals",
+        "Corporate events",
+        "Christmas parties",
+        "Birthdays",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-outside-bar-company",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "scale",
+      "title": "Scale",
+      "chips": [
+        "Over 25 years in the licensed trade"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-outside-bar-company",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Listing details only; own website not confirmed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-outside-bar-company",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "OUTSB",
+    "position": 9,
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/suppliers/the-outside-bar-company"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "granted"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Cambridge",
+        "lat": 52.2053,
+        "lng": 0.1218,
+        "approx": false
+      }
+    ]
+  }
+}

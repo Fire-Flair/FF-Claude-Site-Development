@@ -1,0 +1,72 @@
+{
+  "formatVersion": 2,
+  "slug": "olive-and-vine",
+  "name": "Olive & Vine Wedding & Event Catering",
+  "kind": "Wedding & event catering",
+  "base": "Armagh",
+  "areas": [
+    "Armagh",
+    "Northern Ireland"
+  ],
+  "description": "An Armagh wedding and event catering company serving Northern Ireland.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://bridebook.com/uk/search/wedding-catering/northern-ireland",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding catering",
+        "Event catering"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/search/wedding-catering/northern-ireland",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/search/wedding-catering/northern-ireland",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "catering",
+    "tag": "OLIVE",
+    "position": 120,
+    "source": {
+      "urls": [
+        "https://bridebook.com/uk/search/wedding-catering/northern-ireland"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Armagh",
+        "lat": 54.3503,
+        "lng": -6.6528,
+        "approx": false
+      }
+    ]
+  }
+}

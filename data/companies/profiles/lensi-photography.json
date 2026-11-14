@@ -1,0 +1,81 @@
+{
+  "formatVersion": 2,
+  "slug": "lensi-photography",
+  "name": "Lensi Photography",
+  "kind": "Event, portrait & wedding photography",
+  "base": "London",
+  "areas": [
+    "London",
+    "Birmingham"
+  ],
+  "description": "A photography business based in London and Birmingham, covering personal parties, business events and conferences, portraits, red carpet and weddings.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/suppliers/lensi-photography",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Event photography",
+        "Portraits",
+        "Red carpet",
+        "Wedding photography"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/lensi-photography",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Conferences"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/lensi-photography",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "LENSI",
+    "position": 68,
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/suppliers/lensi-photography"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": false
+      },
+      {
+        "label": "Birmingham",
+        "lat": 52.4862,
+        "lng": -1.8904,
+        "approx": false
+      }
+    ]
+  }
+}

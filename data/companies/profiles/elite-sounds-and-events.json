@@ -1,0 +1,74 @@
+{
+  "formatVersion": 2,
+  "slug": "elite-sounds-and-events",
+  "name": "Elite Sounds and Events",
+  "kind": "Mobile DJ services",
+  "base": "London",
+  "areas": [
+    "London",
+    "Kent"
+  ],
+  "description": "A mobile DJ company serving London, Kent and nearby areas, supplying sound systems, lighting and DJs for weddings, corporate events and club nights.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/suppliers/elite-sounds-and-events",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Mobile DJs",
+        "Sound systems",
+        "Lighting"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/elite-sounds-and-events",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Club nights"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/elite-sounds-and-events",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "ELITE",
+    "position": 57,
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/suppliers/elite-sounds-and-events"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": false
+      }
+    ]
+  }
+}

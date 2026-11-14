@@ -1,0 +1,71 @@
+{
+  "formatVersion": 2,
+  "slug": "wedabelle",
+  "name": "Wedabelle",
+  "kind": "Wedding photography & film team",
+  "base": "London",
+  "areas": [
+    "London",
+    "UK-wide"
+  ],
+  "description": "A London team of wedding photographers and videographers with different styles, so a couple can be matched to the look they prefer.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://wedabelle.pages.dev/meet-the-team",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding photography",
+        "Wedding videography"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://wedabelle.pages.dev/meet-the-team",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://wedabelle.pages.dev/meet-the-team",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "WEDAB",
+    "position": 62,
+    "source": {
+      "urls": [
+        "https://wedabelle.pages.dev/meet-the-team"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": false
+      }
+    ]
+  }
+}

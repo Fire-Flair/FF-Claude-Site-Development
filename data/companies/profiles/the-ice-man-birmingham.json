@@ -1,0 +1,101 @@
+{
+  "formatVersion": 2,
+  "slug": "the-ice-man-birmingham",
+  "name": "The Ice Man",
+  "kind": "Ice delivery",
+  "base": "Birmingham",
+  "areas": [
+    "Birmingham",
+    "West Midlands"
+  ],
+  "description": "A Birmingham ice company, trading since 1997, supplying ice sculptures, drinks luges, bagged cubed ice and crushed ice for events and venues.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.the-ice-man.co.uk",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Ice sculptures",
+        "Drinks luges",
+        "Cubed and crushed ice"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.the-ice-man.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.the-ice-man.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Trading since 1997"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.the-ice-man.co.uk",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://the-ice-man.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://www.the-ice-man.co.uk",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "svc",
+    "sub": "ice",
+    "tag": "ICEMA",
+    "position": 128,
+    "source": {
+      "urls": [
+        "https://www.the-ice-man.co.uk"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Birmingham",
+        "lat": 52.4862,
+        "lng": -1.8904,
+        "approx": true
+      }
+    ]
+  }
+}

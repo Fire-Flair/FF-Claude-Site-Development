@@ -1,0 +1,70 @@
+{
+  "formatVersion": 2,
+  "slug": "deja-vu-camera-crew",
+  "name": "Deja Vu Camera Crew",
+  "kind": "Wedding photography team",
+  "base": "Birmingham",
+  "areas": [
+    "Birmingham",
+    "West Midlands"
+  ],
+  "description": "A Birmingham team of female wedding photographers who describe their work as traditional moments with a modern touch.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://bridebook.com/uk/search/wedding-photographers/gb?page=141",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding photography"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/search/wedding-photographers/gb?page=141",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/search/wedding-photographers/gb?page=141",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "DEJAV",
+    "position": 67,
+    "source": {
+      "urls": [
+        "https://bridebook.com/uk/search/wedding-photographers/gb?page=141"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Birmingham",
+        "lat": 52.4862,
+        "lng": -1.8904,
+        "approx": false
+      }
+    ]
+  }
+}

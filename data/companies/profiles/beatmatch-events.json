@@ -1,0 +1,70 @@
+{
+  "formatVersion": 2,
+  "slug": "beatmatch-events",
+  "name": "Beatmatch Events",
+  "kind": "DJ & entertainment company",
+  "base": "Manchester",
+  "areas": [
+    "Manchester"
+  ],
+  "description": "A Manchester DJ company with a team of hand-picked DJs. It works with some of the city's established venues and lists weddings among its favourite events.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/beatmatch-events",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "DJ hire"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/beatmatch-events",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/beatmatch-events",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "BEATM",
+    "position": 32,
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/beatmatch-events"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Manchester",
+        "lat": 53.4808,
+        "lng": -2.2426,
+        "approx": false
+      }
+    ]
+  }
+}

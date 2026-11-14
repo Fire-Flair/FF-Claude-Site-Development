@@ -1,0 +1,102 @@
+{
+  "formatVersion": 2,
+  "slug": "the-ice-co",
+  "name": "The Ice Co",
+  "kind": "Ice delivery",
+  "base": "South Kirkby",
+  "areas": [
+    "Yorkshire",
+    "UK-wide"
+  ],
+  "description": "A Yorkshire ice manufacturer producing ice cubes, crushed ice, flake ice and ice blocks for the drinks trade and events.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://theiceco.co.uk",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Ice cubes",
+        "Crushed ice",
+        "Flake ice",
+        "Ice blocks"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://theiceco.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://theiceco.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Based in Yorkshire"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://theiceco.co.uk",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://theiceco.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://theiceco.co.uk",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "svc",
+    "sub": "ice",
+    "tag": "ICECO",
+    "position": 127,
+    "source": {
+      "urls": [
+        "https://theiceco.co.uk"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "South Kirkby",
+        "lat": 53.59,
+        "lng": -1.32,
+        "approx": true
+      }
+    ]
+  }
+}

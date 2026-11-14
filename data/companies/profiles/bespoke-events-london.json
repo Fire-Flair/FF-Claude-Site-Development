@@ -1,0 +1,86 @@
+{
+  "formatVersion": 2,
+  "slug": "bespoke-events-london",
+  "name": "Bespoke Events London",
+  "kind": "Event management",
+  "base": "London",
+  "areas": [
+    "London"
+  ],
+  "description": "A London event management company.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://bespoke-london.co.uk",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Event management"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bespoke-london.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bespoke-london.co.uk",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://bespoke-london.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://bespoke-london.co.uk",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "svc",
+    "sub": "events",
+    "tag": "BESPO",
+    "position": 139,
+    "source": {
+      "urls": [
+        "https://bespoke-london.co.uk"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": true
+      }
+    ]
+  }
+}

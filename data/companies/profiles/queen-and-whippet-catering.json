@@ -1,0 +1,75 @@
+{
+  "formatVersion": 2,
+  "slug": "queen-and-whippet-catering",
+  "name": "Queen and Whippet Catering",
+  "kind": "Wedding, event & corporate catering",
+  "base": "Bristol",
+  "areas": [
+    "Bristol",
+    "London",
+    "South of England"
+  ],
+  "description": "A Bristol company offering wedding, event and corporate catering and private dining, serving Bristol, London and the south of England.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://app.bridebook.com/uk/search/wedding-catering/south-west",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding catering",
+        "Corporate catering",
+        "Private dining"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/search/wedding-catering/south-west",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/search/wedding-catering/south-west",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "catering",
+    "tag": "QUEEN",
+    "position": 116,
+    "source": {
+      "urls": [
+        "https://app.bridebook.com/uk/search/wedding-catering/south-west"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Bristol",
+        "lat": 51.4545,
+        "lng": -2.5879,
+        "approx": false
+      }
+    ]
+  }
+}

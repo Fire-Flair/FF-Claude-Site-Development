@@ -1,0 +1,70 @@
+{
+  "formatVersion": 2,
+  "slug": "dimblebee-catering-company",
+  "name": "Dimblebee Catering Company",
+  "kind": "Wedding caterers",
+  "base": "Leicester",
+  "areas": [
+    "Leicester",
+    "Midlands"
+  ],
+  "description": "A Leicester wedding catering company serving Leicester and the Midlands.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://bridebook.com/uk/search/wedding-catering/lichfield?page=3",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding catering"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/search/wedding-catering/lichfield?page=3",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/search/wedding-catering/lichfield?page=3",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "catering",
+    "tag": "DIMBL",
+    "position": 105,
+    "source": {
+      "urls": [
+        "https://bridebook.com/uk/search/wedding-catering/lichfield?page=3"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Leicester",
+        "lat": 52.6369,
+        "lng": -1.1398,
+        "approx": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "formatVersion": 2,
+  "slug": "beyond-bar-hire",
+  "name": "Beyond Bar Hire",
+  "kind": "Mobile & cocktail bars in East Anglia",
+  "base": "Colchester",
+  "areas": [
+    "East Anglia",
+    "Essex"
+  ],
+  "description": "A Colchester company offering mobile bars, cocktail bars and bar staff across East Anglia for weddings, festivals, garden parties and village fayres.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/suppliers/beyond-bar-hire",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Mobile bars",
+        "Cocktail bars",
+        "Bar staff"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/beyond-bar-hire",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Birthdays",
+        "Corporate events",
+        "Festivals",
+        "Garden parties",
+        "Village fayres"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/beyond-bar-hire",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Listing details only; own website not confirmed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/beyond-bar-hire",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "BEYND",
+    "position": 27,
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/suppliers/beyond-bar-hire"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "none"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Colchester",
+        "lat": 51.8959,
+        "lng": 0.8919,
+        "approx": false
+      }
+    ]
+  }
+}

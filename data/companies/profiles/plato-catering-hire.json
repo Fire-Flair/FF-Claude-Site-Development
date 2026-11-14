@@ -1,0 +1,106 @@
+{
+  "formatVersion": 2,
+  "slug": "plato-catering-hire",
+  "name": "Plato Catering Hire",
+  "kind": "Glassware hire & delivery",
+  "base": "Alcester",
+  "areas": [
+    "Birmingham",
+    "Warwickshire",
+    "West Midlands",
+    "Stratford-upon-Avon",
+    "Worcestershire",
+    "Gloucestershire",
+    "Cotswolds"
+  ],
+  "description": "A Warwickshire catering equipment hire company, established in 1999, supplying glassware, cutlery, plates and kitchen equipment across the Midlands and the Cotswolds.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.platohire.co.uk",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Glassware hire",
+        "Cutlery and plate hire",
+        "Kitchen equipment hire"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.platohire.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.platohire.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Established 1999"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.platohire.co.uk",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://www.platohire.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://www.platohire.co.uk",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "svc",
+    "sub": "glassware",
+    "tag": "PLATO",
+    "position": 135,
+    "source": {
+      "urls": [
+        "https://www.platohire.co.uk"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Alcester",
+        "lat": 52.215,
+        "lng": -1.871,
+        "approx": true
+      }
+    ]
+  }
+}

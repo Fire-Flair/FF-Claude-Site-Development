@@ -1,0 +1,91 @@
+{
+  "formatVersion": 2,
+  "slug": "nottinghamshire-mobile-bar",
+  "name": "The Nottinghamshire Mobile Bar Company",
+  "kind": "Fully staffed mobile bars",
+  "base": "Nottinghamshire",
+  "areas": [
+    "Nottinghamshire",
+    "Midlands"
+  ],
+  "description": "A Midlands mobile bar company with a fully insured van, a stocked bar and staff, holding a food hygiene rating.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/suppliers/the-nottinghamshire-mobile-bar-company-ltd",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Mobile bars",
+        "Stocked bar",
+        "Bar staff"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-nottinghamshire-mobile-bar-company-ltd",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Festivals"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-nottinghamshire-mobile-bar-company-ltd",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Listing details only; own website not confirmed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/the-nottinghamshire-mobile-bar-company-ltd",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "NOTTM",
+    "position": 26,
+    "legal": {
+      "form": null,
+      "legalName": "The Nottinghamshire Mobile Bar Company Ltd",
+      "companyNumber": null
+    },
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/suppliers/the-nottinghamshire-mobile-bar-company-ltd"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "none"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Nottingham",
+        "lat": 52.9548,
+        "lng": -1.1581,
+        "approx": false
+      }
+    ]
+  }
+}

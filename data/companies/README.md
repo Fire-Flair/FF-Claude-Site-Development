@@ -1,5 +1,7 @@
 # Company seeds
 
+**The profiles folder is now the source.** Every company has one file in `profiles/<slug>.json` (format 2, `docs/company-profile-format.md`); the agent's instructions are `AGENT.md`, the check is `npm run check-companies`. The seed files below are kept as they were and are no longer read by the prototype.
+
 `seed-companies.json` holds 30 real UK event bar companies as draft Company Cards. The prototype loads this file as data, and the developers can import the same file into the real site through the content API.
 
 Rules for every record:
