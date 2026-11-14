@@ -579,14 +579,9 @@ function TagSection({ inSave = false, top = false, onSignedIn } = {}) {
 
 
 
-/* "Available for hire?" is ready once the person is signed in (FF Tag exists, phone verified),
-   has saved the profile at least once, and the card has a name, a photo and one confirmed profession. */
-function hireReady17(state) {
-  const p = state.profile;
-  const signedIn = state.auth.status === "signedIn" && !!(state.auth.tag || state.session.tag);
-  return signedIn && !!p.savedAt && !!String(p.name || "").trim() && !!p.photo
-    && recsOf(p, "professions").some(r => !r.proposed);
-}
+/* "Available for hire?" uses the one rule for a complete profile, profileBasics17 (src/state/invite17.js):
+   signed in, saved once, a name, a photo and one confirmed profession. The same rule decides when an inviter is rewarded. */
+const hireReady17 = (state) => profileBasics17(state);
 
 
 /* SAVE & SHARE — at the foot of the profile. The profile already saves
