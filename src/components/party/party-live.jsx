@@ -207,6 +207,8 @@ function ProfileGate17({ kind }) {
   }, [live]);
   const edit = () => {
     snap.current = state.company || {};
+    /* Edit opens with every company section closed. */
+    if (kind === "biz") Object.keys(state.categoryVisibility || {}).filter((k) => /^co_/.test(k) && state.categoryVisibility[k] === true).forEach((k) => dispatch({ type: "TOGGLE_CATEGORY", key: k, visible: false }));
     if (kind !== "team" && !String((state.company || {}).name || "").trim()) {
       const demo = kind === "party" ? { ...DEMO_HOST17, tier: undefined, photo: (window.FF_IMG || {}).face_you || "" } : (() => {
         const demoCo = companyList(state).find((x) => !x.mine) || {};

@@ -4500,6 +4500,9 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-copub-contact li a > span:last-child { min-width:0; }
 .ff .ff-cc11 .soc a.si { color:inherit; text-decoration:none; display:inline-flex; }
 .ff .ff-copub .ff-prest:empty { display:none; }
+.ff .ff-pg17 > .ff-s5open { margin-bottom:18px; }
+.ff .ff-pg17 > .ff-s5open::before { display:none; }
+.ff .ff-pg17 > .ff-s5open .ff-s5head { margin-left:0; }
 .ff .ff-cmedia.row { display:flex; gap:8px; overflow-x:auto; padding-bottom:6px; scrollbar-width:thin; }
 .ff .ff-cmedia.row .ff-cmedia-it, .ff .ff-cmedia.row .ff-cmedia-add { flex:none; width:150px; }
 .ff .ff-cmedia-open { display:block; width:100%; height:100%; padding:0; border:0; background:none; cursor:pointer; position:static; border-radius:0; }
