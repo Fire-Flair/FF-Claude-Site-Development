@@ -440,7 +440,8 @@ function CoSimpleRow17({ cards, label }) {
 }
 
 
-/* Raise the Bar Glasgow (v17.3.138): full profile built from their public website, with their permission. */
+/* Raise the Bar Glasgow: their page is data/companies/profiles/raise-the-bar.json like every other company.
+   These three constants are only for the FF Party package browser (packages-browse.jsx). */
 const RTB_BLOB17 = "https://6istx3ephgqw5ngz.public.blob.vercel-storage.com/cocktails/";
 
 
@@ -450,45 +451,10 @@ const RTB_MENU17 = CONTENT_ADAPTER.raiseTheBarMenu();
 const rtbMoney17 = (n) => "£" + (n % 1 ? n.toFixed(2) : String(n));
 
 
-function rtbPage17() {
-  const base = realPage11(REAL_COMPANIES11.find((c) => c.slug === "raise-the-bar"))[1];
-  const exp = ["Fully staffed mobile cocktail bars for Glasgow and Scotland.", "Raise the Bar brings a professional mixologist, a fully stocked mobile bar and a printed menu of the cocktails you choose to weddings, parties, corporate events and festivals. Everything needed for the service is included, and travel within 30 miles of Glasgow is part of the price."];
-  const pkgs = [
-    ["Mobile Cocktail Bar", "From £400", "A fully staffed mobile cocktail bar: mixologist, bar, printed menu, spirits, mixers, garnishes, ice and glassware. 3 hours of service. Choose your cocktails as add-ons."],
-    ["Cocktail Masterclass", "Enquire for a quote", "A hands-on class led by professional mixologists, at your venue, for teams, hen parties and private groups. Alcohol-free options available."],
-    ["Whisky Tasting", "Enquire for a quote", "A guided Scotch whisky tasting led by kilted hosts, with distillery stories and a curated selection of drams."]
-  ];
-  const faq = [
-    ["What is included?", "A professional mixologist, a fully stocked mobile bar, a bespoke printed cocktail menu, spirits, liqueurs, mixers, fresh ingredients, garnishes, ice and all glassware."],
-    ["Is there a minimum booking?", "Yes, £400 before any travel charge. Travel within 30 miles of Glasgow is included; beyond that a travel charge may apply and is quoted before you confirm."],
-    ["How long is the service?", "3 hours from your start time. The team arrives about 30 minutes before to set up. Longer service is quoted on request."],
-    ["How many cocktails can I choose?", "Up to 6 online. For a longer menu, or drinks that are not on the menu, ask for a bespoke menu."],
-    ["Can I order single serves?", "Yes, with a minimum of 5 of each cocktail, and the £400 minimum booking still applies."],
-    ["How do deposits work?", "A £50 deposit secures the request and the team confirm within 48 hours. The balance is invoiced and due within 14 days, and no later than 72 hours before the event. The deposit is non-refundable if you cancel, and refunded in full if they cannot attend."],
-    ["How big is the bar?", "About 1.6 m by 1 m, with working room needed behind it. The front can be branded for an extra fee."],
-    ["Are they insured?", "Yes, they hold public liability insurance and can share proof on request."]
-  ];
-  return {
-    ...base,
-    contact: [["Website", "raisethebarglasgow.com"], ["Email", "info@raisethebarglasgow.com"], ["Phone", "07498 723388"]],
-    info: [
-      ...(base.info || []),
-      { id: "rtb_exp", title: "The Raise the Bar experience", lead: exp[0], text: exp.slice(1).join("\n\n"), chips: ["Mobile cocktail bar", "Individual serve cocktails", "Mini party packs", "Party packs", "Mocktails", "Masterclasses", "Whisky tastings", "Branded bars"] }
-    ],
-    records: {
-      packages: coCardList17("packages", "rtb_pk", pkgs.map(([t, pr, d]) => [t + " · " + pr, d, []])),
-      cocktail_menu: coCardList17("cocktail_menu", "rtb_ck", RTB_MENU17.map(([n, i, m, p, f]) => [n, [i && "Single " + rtbMoney17(i), m && "Mini " + rtbMoney17(m), p && "Party " + rtbMoney17(p)].filter(Boolean).join(" · "), [RTB_BLOB17 + f]]))
-    },
-    qa: faq.map(([text, note], i) => ({ id: "qa_rtb" + i, group: "business", text, answer: "", note }))
-  };
-}
-
-
 const COMPANY_PAGES = {
   /* The same source the DEV owner's account is built from. */
   co_vooshka: { ...vooshkaSource17(), tier: "gold", team: [], contact: vkContact17(), venues: [] },
   ...Object.fromEntries(REAL_COMPANIES11.map(realPage11)),
-  "co_raise-the-bar": rtbPage17(),
   ...Object.fromEntries(REAL_SUPPLIERS17.map(realPage11)),
 };
 

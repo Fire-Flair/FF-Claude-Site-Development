@@ -15,7 +15,27 @@ function dirRow17(p) {
   return { slug: p.slug, name: p.name, kind: p.kind, tag: m.tag, base: p.base || "", areas: p.areas || [], locations: m.pins || [], cat: m.category === "bar" ? undefined : m.category, status: m.partner ? "partner" : "unclaimed", unclaimed: m.status !== "claimed", profile: p };
 }
 
-const REAL_COMPANIES11 = CONTENT_ADAPTER.companyProfiles().map(dirRow17);
+/* Contact details a company supplied that must not sit in a profile file (this repository is public). The page shows them as
+   the company's own contact cards, after the file's cards (or at the position given). Core holds these in the company's private
+   contact record; this list is only the prototype's stand-in for it. Each entry: [kind, value, position]. */
+const DIR_PRIVATE17 = {
+  "raise-the-bar": [["Email", "info@raisethebarglasgow.com"], ["Phone", "07498 723388"]],
+  vooshka: [["WhatsApp", "+44 7814 904355", 0]],
+};
+
+/* A profile with the private contact cards added. Nothing else changes. */
+function dirWithPrivate17(p) {
+  const extra = DIR_PRIVATE17[p.slug];
+  if (!extra) return p;
+  const list = [...((p.records && p.records.contact) || [])];
+  extra.forEach(([kind, value, at]) => {
+    const card = { id: "private-" + kind.toLowerCase(), name: value, description: kind, source: { by: "owner", at: "2026-11-10" } };
+    if (at === undefined) list.push(card); else list.splice(at, 0, card);
+  });
+  return { ...p, records: { ...(p.records || {}), contact: list } };
+}
+
+const REAL_COMPANIES11 = CONTENT_ADAPTER.companyProfiles().map((p) => dirRow17(dirWithPrivate17(p)));
 
 
 const realBase11 = (c) => ({ id: "co_" + c.slug, name: c.name, kind: c.kind, area: c.areas[0] || "", tag: c.tag, tier: "standard", unclaimed: c.unclaimed, locations: c.locations || [] });
