@@ -1,5 +1,48 @@
 # FireFlair prototype — changelog
 
+## v17.6.1 (review fixes: profile creator, work locations as a tick list, invitations built properly)
+
+Three pieces of work, built separately and merged. Documents: `docs/locations-phase2.md` (rewritten), `docs/invitations-phase2.md` (new), `docs/URLS.md` (join route).
+
+### FF Team profile creator and company builder
+- Company builder: the `web_reviews` section is now labelled "Reviews from other sources" (builder, shape comments, `docs/company-profile-format.md`). The record key `web_reviews` is unchanged.
+- FF Team profile, step 1: heading "Let's get started" (the 1 minute pill is gone). The box holds three separate rows built the same way, a control and one short line each: Upload CV ("Create your profile in <1 minute"), Talk or type to GPT, and Book an interview (only when `V101.support20Url()` returns a link). Behaviour of `CVPanel inline`, `FFAI` and `InterviewBook17` is unchanged. Phones stack each row; from 720px wide the control sits left and the line right.
+- CSS: the stacked generations of `.ff-start17-*`, `.ff-way17` and `.ff-1min17` rules in `v11.css` are replaced by one block (`.ff-way17`, `-ctl`, `-line`, `-wide`). `.ff-start17` (box frame) is kept because the FF Staff "Book a meeting" box (`.ff-comeet17`) shares it.
+- FF Tag hint and Discover copy now say "personal web page" instead of "personal website".
+- "Available for hire?" is disabled (`disabled` and `aria-disabled`) until `hireReady17(state)` is true: signed in with an FF Tag (a verified phone is what creates the account), `profile.savedAt` set, a name, a profile photo and at least one non-proposed profession. No helper text. When ready it opens Bookings as before.
+- DEV "complete profile" seed (`seedDemo17` in `party-live.jsx`) now also sets `saved` and `savedAt` so the demo profile counts as saved.
+- Profile Card address follows the FF Tag field while typing: `TagSection` writes the cleaned value to `session.tagDraft`; the creator's card shows `session.tag || session.tagDraft || "username"`. `tagDraft` is display only and is not read anywhere else (share links, sign-in and `shareCode17` still use the real tag). Clearing the field brings back the placeholder. The company card address already follows the name live, so it is unchanged.
+
+### Work locations
+- Work locations are now chosen only from one closed tick-list, headed "Tick all the places you'd like to work", on the FF Team profile and the FF Staff company builder (`CoverageTree17`, select mode, in `src/components/shared/coverage17.jsx`). Every branch starts closed. Rows are at least 44px tall; the list scrolls with the page.
+- Removed: the distance setting, its reducer case, the typed "Add a place" editor, the `COV_TREE_PHASE3` switch, the "Suggested areas" row, the typed-chip sheet (`WorkLocationsSheet`) and the Primary / Secondary / Extra cards for locations. Ranking for other categories is untouched.
+- Stored shape is unchanged: one Work Location record per ticked place, `{ locId, name, lat, lng, ... }`; exceptions stay in `coverage17.exc`. Records made by v17.6 chips are the same records and show as ticked.
+- A record whose place is not in the list is kept and shown as a ticked row at the end of the list; unticking it removes the record.
+- On load (`covMigrate17`): the saved v17.6 distance value is dropped (the key is built from two string pieces in the code so a search for the removed feature finds nothing else); "uk" becomes a tick on the United Kingdom (`country:GB`). Name-only records get `locId` and centre filled in when the name matches a place (`covFill17`, also run whenever a tick changes).
+- Centre points: every UK place has one; the United Kingdom uses the middle of its four nations. The 88 worldwide rows (Worldwide, 7 continents, 80 countries) have none, so ticking one stores `lat`/`lng` as null. The live site must fill them from the place id, because the back end requires both.
+- Public chips (profile, attribute card, all-attributes sheet, company page, introduction text, creator-media facts) come from `covPlaces17`: tree order, a ticked parent stands for what is beneath it, off-list records last.
+- Primary location readers now: `meAsStaff().locations` (base town label, else first ticked place in tree order, else "London" as before); the profile card already prefers `person.base`.
+- Matching is ticks only (`covForFd17` -> `{ whole, sub, exc }`); the base point is used for the map pin only. Distance helpers (`baseOriginOf17`, `baseOrigin17`, `baseDistanceKm17`, `fdNear*`) are gone.
+- Postcode line for FF Team: "We put you on the map to find jobs close to you." Company line unchanged.
+- Doc rewritten: `docs/locations-phase2.md`.
+- Vooshka's England and Wales areas now carry their place id and centre like any ticked place.
+
+### Invitations
+- Who brought you in is now a real record. `session.refTag` + `session.refKind` ("team" or "share") before sign-up; `profile.referredBy` after. No default code; the forced "DONGE" is gone, so nobody sees "Invited you" unless a link or a profile Join tap recorded it.
+- First valid code wins; unknown code or own tag ignored; same sender's join link upgrades share to team. Log in and the DEV complete-profile login never credit anyone. SIGN_OUT clears both fields.
+- Sign-up of a new account on FF Team with a valid code: `referredBy` written once, sender added to the network (`netAdds17`), and for a join link one pending team invitation in `state.teamAsksIn17` (persisted). `completedAt` is set the first time `profileBasics17` is true (Core sends 10.5 then).
+- New join route: `#/ff-team/join/<code>` (`ffteam.uk/join/<code>`); `join` is a reserved word; documented in docs/URLS.md.
+- New banner `InviteBanner17` on the create-a-profile page (one line added to ProfileBuilder). Accept / Not now; Accept opens the existing ReviewSheet once.
+- Team invitations from links appear in the notification centre and the banner from the same record. The two sample invitations and the sample "Are you available?" ask show only after the DEV complete-profile login.
+- Invite opens the Share sheet with the member's own card, "Join my team on FireFlair:" and `https://ffteam.uk/join/<tag>` (new `noRef` prop on CardShareSheet17). New Invite tile beside Add people in the Network section of the member's own profile.
+- Login sheet: new DEV button "DEV · join from invite" under "DEV · complete profile".
+- Removed: InviteSheet, CONTACTS, INVITE and INVITE_JOINED reducer cases, InvitedByBanner (unused), the contact-list half of SentInvitations, ASK_FROM_INVITER, `session.invitedBy`, INVITE_LINK_TAG.
+- Own profile Team tab now lists only accepted team members (the inviter sits in Network until accepted).
+- Full detail: docs/invitations-phase2.md.
+- `hireReady17` now calls `profileBasics17` (`src/state/invite17.js`), so "Available for hire?" and the inviter's reward use one rule for a complete profile.
+
+Checks run on the merged build: `npm run check`, `npm run build`, `npm run publish-build`; Playwright at 390x844 and 1280x900 for the profile creator, work locations and invitations test sets and a whole-site smoke test, all with zero page errors. Not checked: the image step of the Invite share sheet.
+
 ## v17.6 (company builder)
 
 We upgraded the company profile builder so it produces everything on Vooshka's page, using the same universal card tool as FF Team (`ProfileAttributeSection`, `GenericAttributeCardCreator`, `GenericAttributeCard` / `InformationCard`, `HorizontalCardRanker`). There is now one company-profile shape, read by the builder, the owner's own page, every directory company and the directory agent. The field-by-field description is in `docs/company-profile-format.md`.

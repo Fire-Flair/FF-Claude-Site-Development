@@ -266,10 +266,11 @@ function vooshkaSource17() {
           makeRecord("contact", "@vooshkacocktailbar", { description: "Instagram" }),
           makeRecord("contact", "vooshkabars.co.uk", { description: "Website" })
         ],
+        /* Each area carries its place id and centre (filled from the location list), like any ticked place. */
         locations: [
           makeRecord("locations", "England", { description: "Mobile bar experiences across England and Wales" }),
           makeRecord("locations", "Wales")
-        ],
+        ].map((r) => { try { return covFill17(r); } catch (e) { return r; } }),
         info_vk_why: coCardList17("info", "vk_why", VK17_WHY.map(([t, d]) => [t, d, []])),
         info_vk_steps: coCardList17("info", "vk_steps", VK17_STEPS.map(([t, d]) => [t, d, []])),
         info_vk_bars: coCardList17("info", "vk_bars", VK17.bars.map(([f, l, sz]) => [l, sz, [f]])),
