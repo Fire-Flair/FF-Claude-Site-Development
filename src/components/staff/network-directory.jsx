@@ -349,7 +349,7 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   const inv = myRel === "invited" && ctInvitesForMe17(state).find(x => x.companyKey === ck);
   const back = () => { dispatch({ type: "VIEW_COMPANY", id: null }); window.scrollTo(0, 0); };
   const asPerson = { id: co.id, name: co.name || "this company", tag: co.slug, profession: co.kind, isCompany: true, photo: co.logo || null, tier: co.tier, companyKey: ck };
-  const contact = co.mine ? recsOf(co, "contact").filter(r => !r.hidden).map(r => [r.description || "Contact", r.name]) : (co.contact || []);
+  const contact = coContacts17(co).map(x => [x.kind, x.value]);
   /* One rule for every company: the areas come from the location records when the page has them; the free-text areas line is only for directory drafts without records. */
   const recAreas = companyLocations(co);
   const areas = co.mine || recAreas.length ? recAreas : String(co.areas || "").split("·").map(x => x.trim()).filter(Boolean);
@@ -368,7 +368,7 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
     {pubQa.length > 0 && <VkFold17 title="Q&A" count={pubQa.length}><CoQA17 list={pubQa} name={co.name} /></VkFold17>}
   </section> : <section className="ff-copub-sec ff-copub-pk"><p className="ff-body ff-muted" style={{ margin: 0 }}>No packages yet.</p></section>;
   const isParty = isStaff && hireSiteOf(state).party;
-  const tabs = [{ key: "overview", label: "Overview" }, { key: "qa", label: "Packages", count: services.length + cocktails.length }, { key: "team", label: "Team", count: team.length + coCos.length + coNet.length }, { key: "reviews", label: "Reviews", count: reviews.length }];
+  const tabs = [{ key: "overview", label: "Overview" }, { key: "qa", label: "Packages", count: services.length + cocktails.length }, { key: "team", label: "Team", count: team.length }, { key: "reviews", label: "Reviews", count: reviews.length }];
   const cIcon = (k) => /mail/i.test(k) ? I11.Mail : /phone/i.test(k) ? I11.Phone : /web/i.test(k) ? I11.Globe : I11.MessageCircle;
   const addTeam = () => {
     const ids = team.map(p => p.id).filter(id => !state.selection.includes(id));
@@ -385,15 +385,15 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   const tag = rt17Slug(co) || cx17Slug(co.name || "");
   const shareBtn = (co.slug || co.name) ? <CardShareBtn17 title={`${co.name || "Company"} on FireFlair`} url={`https://${CARD_DOMAIN}/${tag}`} fileName={"fireflair-" + cx17Slug(co.slug || co.name)} render={() => <CompanyCardFace c={co} />} label="Share" className="wide" /> : null;
   const acts = done ? [] : [
-    !co.unclaimed && ["ask", <Btn variant="wide" onClick={() => setAsking(true)}><I11.MessageSquare size={14} /> Ask a question</Btn>],
+    !co.unclaimed && !co.mine && ["ask", <Btn variant="wide" onClick={() => setAsking(true)}><I11.MessageSquare size={14} /> Ask a question</Btn>],
     !co.mine && !isParty && ["net", <NetBtn17 id={co.id} name={co.name} wide />],
-    !co.unclaimed && ["rev", <Btn variant="wide" onClick={() => setReviewing(true)}><I11.Award size={14} /> Review</Btn>],
+    !co.unclaimed && !co.mine && ["rev", <Btn variant="wide" onClick={() => setReviewing(true)}><I11.Award size={14} /> Review</Btn>],
     shareBtn && ["share", shareBtn],
   ].filter(Boolean);
   const about = String(co.description || "").split(/\n\s*\n/).map(x => x.trim()).filter(Boolean);
   return (
     <div className="ff-copub">
-      <PublicHero media={(co.mediaList || []).map(m => ({ id: m.id, src: m.src, name: m.alt || "" }))} card={<><CompanyCardFace c={co} />{done && shareBtn ? <div style={{ marginTop: 10, textAlign: "center" }}><CardShareBtn17 title={`${co.name || "Company"} on FireFlair`} url={`https://${CARD_DOMAIN}/${tag}`} fileName={"fireflair-" + cx17Slug(co.slug || co.name)} render={() => <CompanyCardFace c={co} />} label="Share Company Card" /></div> : null}</>} below={<>
+      <PublicHero media={(co.mediaList || []).map(m => ({ id: m.id, src: m.src, name: m.alt || "" }))} card={<><CompanyCardFace c={co} links />{done && shareBtn ? <div style={{ marginTop: 10, textAlign: "center" }}><CardShareBtn17 title={`${co.name || "Company"} on FireFlair`} url={`https://${CARD_DOMAIN}/${tag}`} fileName={"fireflair-" + cx17Slug(co.slug || co.name)} render={() => <CompanyCardFace c={co} />} label="Share Company Card" /></div> : null}</>} below={<>
       {!done && <BackBtn17 fallback={back} />}
       {!done && !co.mine && !co.unclaimed && teamSite && ck && <div className="ff-copub-acts">
         {myRel === "member" ? <Btn variant="wide" disabled><I11.Check size={14} /> On their team</Btn>
@@ -416,7 +416,7 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
             {about.length > 0 && <section className="ff-copub-sec"><SectionHead icon={<I11.Briefcase size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="About" />
               {about.map((p, i) => <p key={i} className="ff-body" style={{ margin: i ? "12px 0 0" : 0, fontSize: 15, lineHeight: 1.55, color: "#2A2620" }}>{p}</p>)}</section>}
             {contact.length > 0 && <section className="ff-copub-sec"><SectionHead icon={<I11.MessageCircle size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Contact" />
-              <ul className="ff-copub-contact">{contact.map(([k, v]) => { const Ic = cIcon(k); return <li key={k + v}><span className="ic"><Ic size={15} /></span><span><small>{k}</small><b>{v}</b></span></li>; })}</ul></section>}
+              <ul className="ff-copub-contact">{contact.map(([k, v]) => { const href = coContactHref17(k, v); return <li key={k + v}><a href={href} target={/^https?:/.test(href) ? "_blank" : undefined} rel="noopener noreferrer"><span className="ic"><CoKindIcon17 kind={k} size={15} /></span><span><small>{k}</small><b>{v}</b></span></a></li>; })}</ul></section>}
             {(areas.length > 0 || venues.length > 0) && <section className="ff-copub-sec"><SectionHead icon={<I11.MapPinned size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Areas covered" />
               <div className="ff-copub-chips">{areas.map(a => <span key={a}><I11.MapPin size={12} /> {a}</span>)}{venues.map(v => <span key={v} className="ven"><I11.Star size={12} /> {v}</span>)}</div></section>}
             {co.info && co.info.length > 0 && <CoInfo17 co={co} />}

@@ -176,18 +176,26 @@ function StaffEdit17({ kind }) {
   }, site.name, " · ", party ? "Your Party" : "Your Business"), React.createElement("h1", {
     className: "ff-h1",
     style: { marginTop: 4, marginBottom: 14 }
-  }, party ? "Edit your VIP Host Card" : "Edit your Company Card"), React.createElement("div", {
+  }, party ? "Edit your VIP Host Card" : "Edit your company profile"), React.createElement("div", {
     id: "ff-co-card"
   }, party ? React.createElement(PartyCard11, {
     edit: true
-  }) : React.createElement(EditableCompanyCard, null)), party ? React.createElement(PartySections11, null) : React.createElement(CompanySections, null));
+  }) : React.createElement(EditableCompanyCard, { noType: true })), party ? React.createElement(PartySections11, null) : React.createElement(CompanySections, null));
 }
 
 
 function ProfileGate17({ kind }) {
   const { state, dispatch } = useStore();
   const live = kind === "team" && !!state.profile.live;
-  const done = live || !!(state.devDone || {})[kind];
+  /* A company that has joined and saved once gets its finished page, like the DEV login. */
+  const co = state.company || {};
+  const coSaved = kind === "biz" && state.auth.status === "signedIn" && !!co.joinedAt && !!co.finishedAt;
+  const done = live || coSaved || !!(state.devDone || {})[kind];
+  /* "Welcome to FF Staff" shows once, straight after the first save, above the finished page. */
+  const [welcome, setWelcome] = useState(false);
+  useEffect(() => {
+    if (coSaved && co.welcomeAt && !co.welcomeShown) { setWelcome(true); dispatch({ type: "COMPANY_SAVE", company: { welcomeShown: true } }); }
+  }, [coSaved, co.welcomeAt]);
   const editing = done && state.ed17 === kind;
   const snap = useRef(null);
   const [justShared, setJustShared] = useState(false);
@@ -222,8 +230,14 @@ function ProfileGate17({ kind }) {
     window.scrollTo(0, 0);
   };
   const cancel = () => {
-    if (kind !== "team" && snap.current)
-      dispatch({ type: "COMPANY_SAVE", company: snap.current });
+    if (kind !== "team" && snap.current) {
+      /* Back to how it was when Edit was pressed: the address (and what follows it), and every key added since (sections, cards, contacts). */
+      const cur = state.company || {};
+      if (kind === "biz" && snap.current.slug && cur.slug !== snap.current.slug) dispatch({ type: "CO_SLUG_SET", slug: snap.current.slug });
+      const gone = {};
+      Object.keys(cur).forEach((k) => { if (!(k in snap.current)) gone[k] = undefined; });
+      dispatch({ type: "COMPANY_SAVE", company: { ...gone, ...snap.current } });
+    }
     close();
   };
   const save = () => {
@@ -246,13 +260,13 @@ function ProfileGate17({ kind }) {
   }, [done, editing, kind]);
   return React.createElement("div", {
     className: `ff-pg17${done ? " done" : ""}`
-  }, kind === "party" ? React.createElement(HostPage17, null) : done && !editing ? React.createElement(React.Fragment, null, React.createElement(DoneProfile17, {
+  }, kind === "party" ? React.createElement(HostPage17, null) : done && !editing ? React.createElement(React.Fragment, null, kind === "biz" && welcome && React.createElement(CompanyWelcome, null), React.createElement(DoneProfile17, {
     kind
   }), justShared && kind === "team" && React.createElement("div", {
     className: "ff-pg17-shared"
   }, React.createElement(PublishedPanel, null))) : done ? React.createElement(React.Fragment, null, kind === "team" ? React.createElement(ProfilePage, null) : React.createElement(StaffEdit17, {
     kind
-  }), React.createElement(BulkAI17, null)) : kind === "team" ? React.createElement(ProfilePage, null) : React.createElement(StaffProfile, null));
+  }), kind === "team" ? React.createElement(BulkAI17, null) : null) : kind === "team" ? React.createElement(ProfilePage, null) : React.createElement(StaffProfile, null));
 }
 
 

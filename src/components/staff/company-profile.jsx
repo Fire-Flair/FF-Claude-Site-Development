@@ -46,15 +46,18 @@ const COMPANY_CATEGORIES = {
   venues: { ...BASE_CATEGORIES.venues },
   documents: { label: "Documents", singular: "Document", icon: "qualification", fields: ["description", "document"], placeholder: "Staff onboarding pack" },
   /* v17.6: simple cards made with the shared card tool (title, description, up to 5 photos, optional PDF). */
-  packages: { label: "Packages", singular: "Package", icon: "skills", fields: ["description", "media", "document"], placeholder: "Package name", maxMedia: 5 },
-  cocktail_menu: { label: "Cocktails", singular: "Cocktail", icon: "cocktails", fields: ["description", "media", "document"], placeholder: "Cocktail name", maxMedia: 5 },
-  web_reviews: { label: "Reviews from other sources", singular: "Review", icon: "reviews", fields: ["description", "media", "document"], placeholder: "Who said it", titleLabel: "Who said it", descLabel: "What they said", maxMedia: 5 },
+  packages: { label: "Packages", singular: "Package", icon: "skills", fields: ["description", "media", "document"], placeholder: "Wedding bar", titleLabel: "Package name", descLabel: "What's included", descPlaceholder: "Welcome drinks, a bespoke bar and an expert team", maxMedia: 5 },
+  cocktail_menu: { label: "Cocktails", singular: "Cocktail", icon: "cocktails", fields: ["description", "media", "document"], placeholder: "Espresso Martini", titleLabel: "Cocktail name", descLabel: "Ingredients", descPlaceholder: "Vodka, coffee liqueur, fresh espresso, sugar syrup", maxMedia: 5 },
+  web_reviews: { label: "Reviews from other sources", singular: "Review", icon: "reviews", fields: ["description", "media", "document"], placeholder: "Sophie, bride", titleLabel: "Who said it", descLabel: "What they said", descPlaceholder: "A brilliant bar and a lovely team. Our guests are still talking about it.", maxMedia: 5 },
   contact: { label: "Contact & social", singular: "Contact", icon: "languages", fields: ["description"], placeholder: "bookings@yourcompany.co.uk" },
 };
 
 
 /* The card settings of one "More information" section (its cards are records["info_<id>"]). */
-const coInfoDef17 = (sec) => ({ label: sec.title || "Untitled", singular: "Card", icon: "qualification", fields: ["description", "media", "document"], placeholder: "Title", maxMedia: 5 });
+const coInfoDef17 = (sec) => {
+  const st = coStarterOf17(sec);
+  return { label: sec.title || st.ph.title, singular: "Card", icon: "qualification", fields: ["description", "media", "document"], placeholder: st.ph.cardTitle, titleLabel: "Title", descLabel: "Text", descPlaceholder: st.ph.cardText, maxMedia: 5 };
+};
 
 
 const companyDocs = (c) => [...((c && c.documents) || []), ...recsOf(c || {}, "documents").filter(r => !r.hidden && !r.proposed)];
@@ -124,7 +127,10 @@ function CompanySaveShare({ onSaved }) {
   const save = () => {
     if (!joined) { scrollToSection("ff-co-join"); dispatch({ type: "TOAST", toast: "Add your company name and phone first" }); return; }
     const now = Date.now();
-    dispatch({ type: "COMPANY_SAVE", company: { saved: true, savedAt: now, finishedAt: c.finishedAt || now } });
+    /* The address word comes from the company name the first time the company is saved (not from the phone number at sign-up). */
+    const fresh = coSlugIsPhone17(c.slug) ? coSlugFromName17(c.name, c.slug) : "";
+    if (fresh && fresh !== c.slug) dispatch({ type: "CO_SLUG_SET", slug: fresh });
+    dispatch({ type: "COMPANY_SAVE", company: { saved: true, savedAt: now, finishedAt: c.finishedAt || now, ...(c.finishedAt ? {} : { welcomeAt: now }) } });
     dispatch({ type: "TOAST", toast: "Saved" });
     if (onSaved) onSaved();
   };
