@@ -399,7 +399,7 @@ function PublicProfileBody({ person }) {
       <Sheet open={allAttrs} onClose={() => setAllAttrs(false)} title="All attributes">
         <div className="ff-pub">
           {[...PUB_ORDER, ...categoryOrder().filter(k => !cats[k].system && !PUB_ORDER.includes(k))].filter(k => cats[k]).map(k => (
-            <ProfileAttributeSection key={k} catKey={k} def={cats[k]} list={records[k] || []} isMe={false} shade="onyx" pub onAdd={() => {}}
+            <ProfileAttributeSection key={k} catKey={k} def={cats[k]} list={records[k] || []} isMe={false} shade="onyx" pub lead={person.travelText} onAdd={() => {}}
               onOpen={(r) => setOpenRec({ record: r, def: cats[k], category: k })} />
           ))}
         </div>

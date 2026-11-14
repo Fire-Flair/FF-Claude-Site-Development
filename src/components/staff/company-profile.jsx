@@ -60,7 +60,8 @@ const coInfoDef17 = (sec) => ({ label: sec.title || "Untitled", singular: "Card"
 const companyDocs = (c) => [...((c && c.documents) || []), ...recsOf(c || {}, "documents").filter(r => !r.hidden && !r.proposed)];
 
 
-const companyLocations = (c) => [...new Set([...((c && c.serviceLocations) || []), ...recsOf(c || {}, "locations").filter(r => !r.hidden && !r.proposed).map(r => r.name)])];
+/* v17.6: the public chips in order: the travel distance ("Within 25 miles of Luton" or "UK-wide"), then each added place. */
+const companyLocations = (c) => [...new Set([travelText17(c || {}), ...((c && c.serviceLocations) || []), ...recsOf(c || {}, "locations").filter(r => !r.hidden && !r.proposed).map(r => r.name)].filter(Boolean))];
 
 
 

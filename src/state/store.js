@@ -490,7 +490,9 @@ function meAsStaff(profile, session) {
     interests: primaryNames(profile, "interests", 3),
     languages: primaryNames(profile, "languages", 5).length ? primaryNames(profile, "languages", 5) : ["English"],
     locations: primaryNames(profile, "locations", 3).length ? primaryNames(profile, "locations", 3) : ["London"],
-    base: baseLabelOf17(profile.base17 && FD_BY_ID[profile.base17.locId]),
+    base: baseLabelOfOwner17(profile),
+    /* v17.6: the public map point (centre of the public place, never the postcode point). */
+    basePin: basePublicPoint17(profile), travelText: travelText17(profile),
     coverage: covForFd17(profile), coverageText: covText17(profile, 3),
     hasCar: profile.hasCar, availability: "open", photo: profile.photo, theme: profile.theme, about: profile.about || "",
     intro: profile.introduction || null,

@@ -13,7 +13,33 @@
    The postcode (state.workPostcode) is private and belongs to the base (base17.jsx); the tree only reads the base
    to suggest places. A suggestion is a tick box on the same coverage: it starts unticked unless already covered.
    The same tree, in "links" mode, is Explore by area: every place is a link to its area page.
+
+   v17.6 (Phase 2): the tick tree is not used to collect coverage. What is collected is
+     owner.base17     one map point (see base17.jsx)
+     owner.travel17   5 | 10 | 25 | 50 | 100 (miles) or "uk"; absent until the owner chooses one
+     owner.records.locations[]   the places the owner added: { locId, lat, lng, name, ... } (unlimited)
+   A place is covered when it is at or under an added place (minus coverage17.exc, which nothing in the UI creates any
+   more but is still honoured), OR it lies within the travel distance of the base point, OR travel is "uk" and the place
+   is in the UK. covOn17, covForFd17 and the area pages all use this one rule.
+   The tree and its tick boxes stay in this file behind COV_TREE_PHASE3 and return in Phase 3.
    ========================================================================== */
+/* Phase 3 switch: the 1,000-place tick tree as the way to choose coverage. Off in Phase 2. */
+const COV_TREE_PHASE3 = false;
+const TRAVEL_MILES17 = [5, 10, 25, 50, 100];
+const MILE_KM17 = 1.609344;
+const travelOf17 = (owner) => { const t = owner && owner.travel17; return t === "uk" || TRAVEL_MILES17.includes(t) ? t : null; };
+/* "Within 25 miles of Luton" or "UK-wide"; "" when the owner has not chosen a distance. */
+function travelText17(owner) {
+  const t = travelOf17(owner);
+  if (t == null) return "";
+  if (t === "uk") return "UK-wide";
+  const l = baseLabelOfOwner17(owner);
+  return `Within ${t} miles` + (l ? ` of ${l}` : "");
+}
+/* The places an owner added, by name, in the order they were added. */
+const covPlaceNames17 = (owner) => (((owner && owner.records) || {}).locations || []).filter(r => !r.hidden && !r.proposed).map(r => r.name);
+/* The public chips in order: the travel distance, then each added place. */
+const covChips17 = (owner) => [travelText17(owner), ...covPlaceNames17(owner)].filter(Boolean);
 /* Coverage tree shape: Northern Ireland sits with Ireland (the island), not under the UK. Covering Ireland covers
    Northern Ireland; covering the UK covers England, Scotland and Wales. Area pages and URLs are unchanged. */
 const COV_NI17 = "gn:2641364", COV_IE17 = "country:IE";
@@ -29,13 +55,17 @@ function covOf17(owner) {
   const inc = new Set();
   recs.forEach(r => { if (r.hidden || r.proposed) return; const id = r.locId || covIdOfName17(r.name); if (id && FD_BY_ID[id]) inc.add(id); });
   const exc = new Set((c.exc || []).filter(id => FD_BY_ID[id]));
-  return { inc, exc };
+  /* v17.6: travel distance from the base point, and UK-wide. near uses the exact (private) point when there is one. */
+  const t = travelOf17(owner), o = typeof t === "number" ? baseOriginOf17(owner) : null;
+  return { inc, exc, uk: t === "uk", near: o ? { lat: o.lat, lng: o.lng, km: t * MILE_KM17, baseId: o.locId } : null };
 }
 
 
 /* Is this place covered? The nearest marked place at or above it decides. */
 function covOn17(cov, n) {
   for (const a of covAnc17(n)) { if (cov.exc.has(a.id)) return false; if (cov.inc.has(a.id)) return true; }
+  if (cov.uk && n.uk) return true;
+  if (cov.near && fdNearPoint(n) && fdHav(cov.near.lat, cov.near.lng, n.lat, n.lng) <= cov.near.km) return true;
   return false;
 }
 
@@ -71,7 +101,7 @@ const covForFd17 = (owner) => {
     if (covOn17(c, ni)) { if (!whole.includes(COV_NI17)) whole.push(COV_NI17); if (i >= 0) exc.splice(i, 1); }
     else if (i < 0) exc.push(COV_NI17);
   }
-  return { whole, sub: [], exc };
+  return { whole, sub: [], exc, uk: !!c.uk, near: c.near, travelText: travelText17(owner) };
 };
 
 
@@ -82,6 +112,8 @@ function covText17(owner, max) {
     const ex = [...c.exc].map(id => FD_BY_ID[id]).filter(m => m && covUnder17(m, n.id));
     return FD_TICK_NAME19(n) + (ex.length ? ` (not ${ex.slice(0, 2).map(m => m.name).join(", ")}${ex.length > 2 ? ` and ${ex.length - 2} more` : ""})` : "");
   });
+  const tt = travelText17(owner);
+  if (tt) parts.unshift(tt);
   return max && parts.length > max ? parts.slice(0, max).join(", ") + ` and ${parts.length - max} more` : parts.join(", ");
 }
 
@@ -90,6 +122,11 @@ function covText17(owner, max) {
    the ticked places (existing records keep their id, rank, description and media; free-text places
    that are not in the catalogue are kept as they are) and stores the exceptions. */
 function cov17Reducer(s, a) {
+  if (a.type === "TRAVEL_SET") {
+    const v = a.value === "uk" || TRAVEL_MILES17.includes(a.value) ? a.value : undefined;
+    if (a.owner === "company") return { ...s, company: { ...(s.company || {}), travel17: v } };
+    return { ...s, profile: { ...s.profile, travel17: v } };
+  }
   if (a.type !== "COV_SET") return null;
   const co = a.owner === "company";
   const owner = co ? (s.company || {}) : s.profile;
@@ -198,9 +235,6 @@ function CoverageTree17({ mode = "select", owner: ownerKind, siteKey, compact, t
   const [openIds, setOpenIds] = useCovState17(mk, "open", () => Object.fromEntries((startOpen || []).map(id => [id, true])));
   const [q, setQ] = useCovState17(mk, "q", "");
   const hits = fdSearch(q);
-  /* A Company Card that has never set its areas starts as the whole UK, England, Scotland and Wales (Northern Ireland is covered with Ireland). */
-  const untouched = co && !owner.coverage17 && !(((owner.records || {}).locations) || []).length;
-  useEffect(() => { if (untouched && !links) dispatch({ type: "COV_SET", owner: "company", inc: ["country:GB"], exc: [] }); }, [untouched]);
   const toggle = (n) => { const next = covToggle17(cov, n); dispatch({ type: "COV_SET", owner: co ? "company" : undefined, inc: [...next.inc], exc: [...next.exc] }); };
   const openTo = (n) => { const o = { ...openIds }; covAnc17(n).slice(1).forEach(a => { o[a.id] = true; }); setOpenIds(o); };
   const setOpen = (id, v) => { setOpenIds(o => ({ ...o, [id]: v })); if (v && onOpen && FD_BY_ID[id]) onOpen(FD_BY_ID[id]); };
@@ -290,4 +324,78 @@ function covSuggest17(r) {
       .map(n => [fdHav(r.lat, r.lng, n.lat, n.lng), n]).filter(x => x[0] < 25).sort((a, b) => a[0] - b[0]).slice(0, 6).forEach(x => add(x[1]));
   }
   return out.slice(0, 8);
+}
+
+
+/* ---- Areas you cover (Phase 2) ---------------------------------------------------------------------- */
+const AREAS17_CSS = `
+.ff .ff-ar17{display:flex;flex-direction:column;gap:10px;padding:14px;margin-top:14px}
+.ff .ff-ar17 select,.ff .ff-ar17-q input{font-size:16px;padding:10px 12px;border:1px solid var(--rule,#d8ccb0);border-radius:12px;corner-shape:squircle;background:#fff;color:#16130F;min-width:0;width:100%;box-sizing:border-box}
+.ff .ff-ar17-q{display:flex;align-items:center;gap:8px}
+.ff .ff-ar17-hits{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.ff .ff-ar17-hit{display:block;width:100%;text-align:left;border:0;background:rgba(255,255,255,.7);border-radius:12px;corner-shape:squircle;padding:9px 12px;font-size:14px;color:#16130F;cursor:pointer;overflow-wrap:normal;word-break:normal}
+.ff .ff-ar17-hit small{color:#7A7366;font-size:12px}
+.ff .ff-ar17-chips{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
+.ff .ff-ar17-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 6px 6px 12px;border-radius:14px;corner-shape:squircle;background:rgba(201,162,39,.14);border:1px solid rgba(201,162,39,.4);font-size:13.5px;color:#16130F;overflow-wrap:normal;word-break:normal;max-width:100%}
+.ff .ff-ar17-chip.ro{padding:6px 12px}
+.ff .ff-ar17-chip button{width:26px;height:26px;border:0;border-radius:9px;corner-shape:squircle;background:none;cursor:pointer;display:grid;place-items:center;color:inherit;flex:none}
+`;
+
+
+/* The areas of one owner (profile, or the company when `ownerKind` is "company"): travel distance, a place search,
+   and the added places as chips. Every chip is a location record; removing the chip removes the record. */
+function AreasEditor17({ ownerKind }) {
+  const { state, dispatch } = useStore();
+  const co = ownerKind === "company";
+  const owner = co ? (state.company || {}) : state.profile;
+  const [q, setQ] = useCovState17("areas17|" + (co ? "co" : "me"), "q", "");
+  const recs = (((owner.records || {}).locations) || []).filter(r => !r.proposed);
+  const have = new Set(recs.map(r => r.locId || covIdOfName17(r.name)).filter(Boolean));
+  const ql = q.trim().toLowerCase();
+  const hits = fdSearch(q).filter(n => !have.has(n.id)).sort((a, b) => (b.name.toLowerCase() === ql) - (a.name.toLowerCase() === ql));
+  const travel = travelOf17(owner);
+  const add = (n) => {
+    dispatch({ type: "REC_ADD", owner: co ? "company" : undefined, category: "locations", record: makeRecord("locations", FD_TICK_NAME19(n), { locId: n.id, lat: n.lat, lng: n.lng }) });
+    setQ("");
+  };
+  return (
+    <div className="ff-ar17 ff-frame">
+      <style>{AREAS17_CSS}</style>
+      <select aria-label="How far do you travel?" value={travel == null ? "" : String(travel)}
+        onChange={(e) => dispatch({ type: "TRAVEL_SET", owner: co ? "company" : undefined, value: e.target.value === "uk" ? "uk" : Number(e.target.value) })}>
+        <option value="" disabled hidden>How far do you travel?</option>
+        {TRAVEL_MILES17.map(m => <option key={m} value={String(m)}>{m} miles</option>)}
+        <option value="uk">UK-wide</option>
+      </select>
+      <label className="ff-ar17-q"><A17I.Search size={14} /><input value={q} onChange={(e) => setQ(e.target.value.slice(0, 60))} placeholder="Add a place" aria-label="Add a place" autoComplete="off" /></label>
+      {q.trim().length >= 2 && (
+        <ul className="ff-ar17-hits" aria-label="Matching places">
+          {hits.length ? hits.map(n => (
+            <li key={n.id}><button type="button" className="ff-ar17-hit" onClick={() => add(n)}>{fdLabel(n)} <small>{fdChain(n)}</small></button></li>
+          )) : <li className="ff-ar17-hit">No matching place.</li>}
+        </ul>
+      )}
+      {recs.length > 0 && (
+        <ul className="ff-ar17-chips" aria-label="Places you cover">
+          {recs.map(r => (
+            <li key={r.id} className="ff-ar17-chip"><span>{r.name}</span>
+              <button type="button" aria-label={`Remove ${r.name}`} onClick={() => dispatch({ type: "REC_DELETE", owner: co ? "company" : undefined, category: "locations", id: r.id })}><I11.X size={14} /></button>
+            </li>))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+
+/* The public form: the travel distance first, then each added place. */
+function AreasChips17({ owner, lead }) {
+  const chips = [lead, ...covChips17(owner)].filter(Boolean);
+  if (!chips.length) return null;
+  return (
+    <div style={{ marginTop: 6 }}>
+      <style>{AREAS17_CSS}</style>
+      <ul className="ff-ar17-chips" aria-label="Areas covered">{chips.map((c, i) => <li key={i} className="ff-ar17-chip ro">{c}</li>)}</ul>
+    </div>
+  );
 }

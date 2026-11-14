@@ -2,9 +2,17 @@
 /* ==========================================================================
    WHERE ARE YOU BASED? (v17.4.6.3) — one base place per FF Team Profile Card.
 
-   state.profile.base17 = { locId, at }      the chosen place, by stable catalogue id (public: shown as a label)
-   state.workPostcode   = { code, lat, lng, approx, baseId, at }   PRIVATE. Never part of the profile, a card, an
-                          area page or any public payload. Used only for travel distance from the base.
+   v17.6: Where are you based? is one map point. state.profile.base17 (and state.company.base17) =
+     { locId, label, lat, lng, approx, postcode?: { code, lat, lng, approx }, at }
+       locId, label   the public place, chosen at town or city level (any London postcode gives London). Public.
+       lat, lng       the centre of that public place (or the postcode point rounded to about 1 km when the place is not
+                      in the catalogue). This is the only point ever plotted on the map. Public.
+       postcode       PRIVATE and optional: the postcode and its exact point. Used only to measure travel distance.
+       approx         true when there is no postcode-accurate point (a typed place such as London, or an offline estimate).
+     A base saved before v17.6 is { locId, at }: its place centre stands in for the missing fields.
+   state.workPostcode   = { code, lat, lng, approx, baseId, at }   PRIVATE (profile only, kept as before). Never part
+                          of the profile, a card, an area page or any public payload.
+   Travel distance is a separate value on the owner: owner.travel17 = 5 | 10 | 25 | 50 | 100 (miles) | "uk" (see coverage17.jsx).
    The base is not coverage. Choosing it never touches records.locations or coverage17, so changing the
    base keeps every saved coverage selection, and search eligibility only changes when coverage is edited.
    Older profiles have no base17: baseMigrate17 (run with the other one-time moves) sets it once from their saved
@@ -58,6 +66,71 @@ function baseMigrate17(s) {
 const baseLabel17 = (s) => baseLabelOf17(baseNode17(s));
 
 
+/* A town or city is shown by its plain name; a name shared by two places gets its parent ("Newport, Wales"). */
+const baseTown17 = (n) => (n ? (FD_DUP_NAMES[n.name] > 1 ? baseLabelOf17(n) : n.name) : "");
+
+
+/* The public label of an owner's base (profile or company): the saved label, else the place's label. "" when none. */
+function baseLabelOfOwner17(owner) {
+  const b = owner && owner.base17;
+  if (!b) return "";
+  if (b.label) return b.label;
+  return b.locId && FD_BY_ID[b.locId] ? baseLabelOf17(FD_BY_ID[b.locId]) : "";
+}
+
+
+/* Is there a base to plot or measure from? */
+const baseHas17 = (owner) => !!(owner && owner.base17 && (owner.base17.lat != null || (owner.base17.locId && FD_BY_ID[owner.base17.locId])));
+
+
+/* The public map point of an owner's base: the centre of the public place. Never the postcode point.
+   Returns { lat, lng, label } or null. */
+function basePublicPoint17(owner) {
+  const b = owner && owner.base17;
+  if (!b) return null;
+  const n = b.locId && FD_BY_ID[b.locId];
+  if (n && n.lat != null) return { lat: n.lat, lng: n.lng, label: baseLabelOfOwner17(owner) };
+  if (b.lat != null && b.lng != null) return { lat: Math.round(b.lat * 100) / 100, lng: Math.round(b.lng * 100) / 100, label: baseLabelOfOwner17(owner) };
+  return null;
+}
+
+
+/* The point distances are measured from: the private postcode point when there is one, otherwise the centre of
+   the public place. Returns { lat, lng, precise, locId } or null. Used for matching only, never plotted. */
+function baseOriginOf17(owner) {
+  const b = owner && owner.base17;
+  if (!b) return null;
+  const n = b.locId && FD_BY_ID[b.locId];
+  const pc = b.postcode;
+  if (pc && pc.lat != null && pc.lng != null) return { lat: pc.lat, lng: pc.lng, precise: !pc.approx, locId: b.locId || null };
+  if (b.lat != null && b.lng != null) return { lat: b.lat, lng: b.lng, precise: false, locId: b.locId || null };
+  return n && n.lat != null ? { lat: n.lat, lng: n.lng, precise: false, locId: n.id } : null;
+}
+
+
+/* From a postcode lookup to the public place: London for any London postcode, otherwise the local authority's
+   town or area, then a named town, then the nearest town within 40 km. Returns a catalogue node or null. */
+function baseResolve17(r) {
+  const lon = FD_BY_ID[FD_LONDON];
+  const named = (nm, kinds) => {
+    const low = String(nm || "").toLowerCase();
+    if (!low) return null;
+    const m = FD_NODES.filter(x => x.uk && x.name.toLowerCase() === low && kinds.includes(x.k));
+    return m.find(x => x.k === "p") || m[0] || null;
+  };
+  let n = /^london$/i.test(r.region || "") ? lon : null;
+  if (!n) n = named(r.district, ["p", "a", "b"]);
+  if (!n) { for (const nm of (r.names || []).slice(1)) { if (r.source === "offline-estimate") break; n = named(nm, ["p"]); if (n) break; } }
+  if (!n && r.lat != null && r.lng != null) {
+    let best = null;
+    FD_NODES.forEach(x => { if (!x.uk || x.lat == null || x.k !== "p") return; const d = fdHav(r.lat, r.lng, x.lat, x.lng); if (!best || d < best[0]) best = [d, x]; });
+    if (best && best[0] < 40) n = best[1];
+  }
+  if (n && n !== lon && covUnder17(n, FD_LONDON)) n = lon;
+  return n;
+}
+
+
 /* The same base place for a company (FF Staff / FF Party Company Card): company.base17 = { locId, at }. */
 function baseNodeOfCo17(co) {
   const id = co && co.base17 && co.base17.locId;
@@ -65,13 +138,15 @@ function baseNodeOfCo17(co) {
 }
 
 
-/* Where distances are measured from: the private postcode point when it belongs to this base, otherwise the
-   centre of the base place. Returns { lat, lng, precise } or null. */
+/* Where distances are measured from for the signed-in member: the private postcode point of the base (v17.6), then the
+   older private postcode record when it belongs to this base, otherwise the centre of the base place.
+   Returns { lat, lng, precise } or null. */
 function baseOrigin17(s) {
-  const n = baseNode17(s);
-  const wp = s && s.workPostcode;
+  const o = baseOriginOf17(s && s.profile);
+  const wp = s && s.workPostcode, n = baseNode17(s);
+  if (o && s.profile.base17.postcode) return o;
   if (wp && wp.lat != null && wp.lng != null && (!wp.baseId || (n && wp.baseId === n.id))) return { lat: wp.lat, lng: wp.lng, precise: !wp.approx };
-  return n && n.lat != null ? { lat: n.lat, lng: n.lng, precise: false } : null;
+  return o;
 }
 
 
@@ -93,11 +168,15 @@ function baseCandidates17(r) {
 
 function base17Reducer(s, a) {
   if (a.type === "BASE_SET") {
-    const n = FD_BY_ID[a.locId];
-    if (!n || !BASE_KINDS17.includes(n.k)) return s;
-    if (a.owner === "company") return { ...s, company: { ...(s.company || {}), base17: { locId: n.id, at: Date.now() } } };
-    const pc = a.postcode && a.postcode.code ? { code: String(a.postcode.code).slice(0, 9), lat: a.postcode.lat != null ? a.postcode.lat : null, lng: a.postcode.lng != null ? a.postcode.lng : null, approx: !!a.postcode.approx, baseId: n.id, at: Date.now() } : null;
-    return { ...s, profile: { ...s.profile, base17: { locId: n.id, at: Date.now() } }, workPostcode: pc };
+    const n = a.locId ? FD_BY_ID[a.locId] : null;
+    if (a.locId && (!n || !BASE_KINDS17.includes(n.k))) return s;
+    if (!n && (a.lat == null || a.lng == null || !a.label)) return s;
+    const pc = a.postcode && a.postcode.code ? { code: String(a.postcode.code).slice(0, 9), lat: a.postcode.lat != null ? a.postcode.lat : null, lng: a.postcode.lng != null ? a.postcode.lng : null, approx: !!a.postcode.approx } : null;
+    const r2 = (x) => Math.round(x * 100) / 100;
+    const pub = n && n.lat != null ? { lat: n.lat, lng: n.lng } : { lat: r2(a.lat), lng: r2(a.lng) };
+    const base = { locId: n ? n.id : null, label: a.label || baseLabelOf17(n), lat: pub.lat, lng: pub.lng, approx: pc ? !!pc.approx : true, ...(pc ? { postcode: pc } : {}), at: Date.now() };
+    if (a.owner === "company") return { ...s, company: { ...(s.company || {}), base17: base } };
+    return { ...s, profile: { ...s.profile, base17: base }, workPostcode: pc ? { ...pc, baseId: n ? n.id : null, at: Date.now() } : null };
   }
   return null;
 }
@@ -114,75 +193,76 @@ const BASE17_CSS = `
 .ff .ff-base17-opt input{width:18px;height:18px;flex:none;accent-color:#5C1220}
 .ff .ff-base17-opt span{min-width:0;overflow-wrap:normal;word-break:normal}
 .ff .ff-base17-msg{font-size:12.5px;margin:0;color:#8A2A2A}
+.ff .ff-base17-note{margin:0;font-size:12.5px;opacity:.75;overflow-wrap:normal;word-break:normal}
 .ff .ff-base17-link{background:none;border:0;padding:4px 0;font-size:12.5px;font-weight:600;text-decoration:underline;color:inherit;cursor:pointer;text-align:left}
 `;
 
 
-/* The card's location field. The postcode finds places; the person chooses exactly one. */
+/* The card's location field: one postcode box. A postcode is looked up and saved at once; a place name can be
+   typed instead and is saved as an approximate base. */
 function BaseField17({ ink, owner }) {
   const { state, dispatch } = useStore();
   const co = owner === "company";
   const mk = co ? "base17co" : "base17";
-  const cur = co ? baseNodeOfCo17(state.company) : baseNode17(state);
+  const own = co ? (state.company || {}) : state.profile;
+  const curLabel = baseLabelOfOwner17(own);
   const [editing, setEditing] = useCovState17(mk, "editing", false);
   const [pc, setPc] = useCovState17(mk, "pc", "");
-  const [q, setQ] = useCovState17(mk, "q", "");
-  const [opts, setOpts] = useCovState17(mk, "opts", []);
-  const [look, setLook] = useCovState17(mk, "look", null);
   const [msg, setMsg] = useCovState17(mk, "msg", "");
-  const [manual, setManual] = useCovState17(mk, "manual", false);
   const [busy, setBusy] = useState(false);
-  const pcLike = /^[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}$/i.test(pc.trim());
-  const hits = !pcLike && pc.trim().length >= 2 ? fdSearch(pc).filter(n => BASE_KINDS17.includes(n.k)) : [];
-  const choose = (n, withPostcode) => {
-    dispatch({ type: "BASE_SET", owner: co ? "company" : undefined, locId: n.id, postcode: withPostcode && look ? { code: look.display, lat: look.lat, lng: look.lng, approx: look.approx } : null });
-    setEditing(false); setOpts([]); setLook(null); setPc(""); setQ(""); setMsg(""); setManual(false);
-  };
+  const latest = useRef("");
+  latest.current = pc;
+  const pcOk = parsePostcode(pc).ok;
+  const partial = pcOk && parsePostcode(pc).partial;
+  const hits = !pcOk && pc.trim().length >= 2 ? fdSearch(pc).filter(n => BASE_KINDS17.includes(n.k)) : [];
+  const done = () => { setEditing(false); setPc(""); setMsg(""); };
+  const pick = (n) => { dispatch({ type: "BASE_SET", owner: co ? "company" : undefined, locId: n.id, label: baseLabelOf17(n), approx: true }); done(); };
   const find = async () => {
-    if (busy || !pc.trim()) return;
-    setBusy(true); setMsg(""); setOpts([]); setLook(null);
-    const r = await LOCATION_ADAPTER.lookupPostcode(pc);
+    const typed = latest.current;
+    if (busy || !parsePostcode(typed).ok) return;
+    setBusy(true); setMsg("");
+    const r = await LOCATION_ADAPTER.lookupPostcode(typed);
     setBusy(false);
+    if (latest.current !== typed) return;
     if (!r.ok) { setMsg(r.reason === "format" ? "That isn't a UK postcode." : "We couldn't look that postcode up."); return; }
-    const near = baseCandidates17(r);
-    if (!near.length) { setMsg("No places found for that postcode."); return; }
-    setLook(r); setOpts(near);
+    const n = baseResolve17(r);
+    if (!n && (r.lat == null || r.lng == null)) { setMsg("We couldn't place that postcode."); return; }
+    dispatch({ type: "BASE_SET", owner: co ? "company" : undefined, locId: n ? n.id : undefined, label: n ? baseTown17(n) : (r.district || r.display), lat: r.lat, lng: r.lng, postcode: { code: r.display, lat: r.lat, lng: r.lng, approx: !!r.approx } });
+    done();
   };
   useEffect(() => {
-    if (!pcLike) { if (opts.length) setOpts([]); if (look) setLook(null); if (msg) setMsg(""); return; }
-    const t = setTimeout(find, 450);
+    if (!pcOk) { if (msg) setMsg(""); return; }
+    const t = setTimeout(find, partial ? 1200 : 400);
     return () => clearTimeout(t);
   }, [pc]);
-  const radio = (n, withPostcode) => (
-    <label key={n.id} className="ff-base17-opt">
-      <input type="radio" name={"ff-base17" + (co ? "co" : "")} checked={cur && cur.id === n.id && !editing} onChange={() => choose(n, withPostcode)} />
-      <span>{baseLabelOf17(n)}</span>
-    </label>
-  );
+  const line = co ? "We put you on the map so people nearby can find you." : "We put you on the map to find jobs as close to you as possible.";
   return (
     <div className="ff-base17">
       <style>{BASE17_CSS}</style>
-      {cur && !editing ? (
+      {curLabel && !editing ? (
         <div className="ff-base17-now">
-          <b style={{ color: ink }}>{baseLabelOf17(cur)}</b>
+          <b style={{ color: ink }}>{curLabel}</b>
           <button type="button" className="ff-base17-link" style={{ color: ink }} onClick={() => setEditing(true)}>Change</button>
         </div>
       ) : (
         <>
           <div className="ff-base17-in">
             <input value={pc} onChange={(e) => { setPc(e.target.value.slice(0, 40)); setMsg(""); }}
-              onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); if (pcLike) find(); } }}
-              placeholder="Your town or area" aria-label="Your town or area" autoComplete="off" spellCheck={false} />
+              onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); find(); } }}
+              placeholder="Postcode" aria-label="Postcode" autoComplete="off" spellCheck={false} />
           </div>
-          <p className="ff-base17-note">We only display your area.</p>
           {msg && <p className="ff-base17-msg" role="alert">{msg}</p>}
-          {opts.length > 0 && <div role="radiogroup" aria-label="Where are you based?" className="ff-base17-opts">{opts.map(n => radio(n, true))}</div>}
-          {pc.trim().length >= 2 && !pcLike && (hits.length
-            ? <div role="radiogroup" aria-label="Places" className="ff-base17-opts">{hits.map(n => radio(n, false))}</div>
+          {!pcOk && pc.trim().length >= 2 && (hits.length
+            ? <div role="radiogroup" aria-label="Places" className="ff-base17-opts">{hits.map(n => (
+              <label key={n.id} className="ff-base17-opt">
+                <input type="radio" name={"ff-base17" + (co ? "co" : "")} checked={false} onChange={() => pick(n)} />
+                <span>{baseLabelOf17(n)}</span>
+              </label>))}</div>
             : <p className="ff-base17-msg">No matching place.</p>)}
-          {cur && <button type="button" className="ff-base17-link" style={{ color: ink }} onClick={() => { setEditing(false); setOpts([]); setMsg(""); }}>Keep {baseLabelOf17(cur)}</button>}
+          {curLabel && <button type="button" className="ff-base17-link" style={{ color: ink }} onClick={done}>Keep {curLabel}</button>}
         </>
       )}
+      <p className="ff-base17-note" style={{ color: ink }}>{line}</p>
     </div>
   );
 }
