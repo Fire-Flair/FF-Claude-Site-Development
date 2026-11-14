@@ -134,11 +134,13 @@ function PersonProfile() {
     onReview: () => setReviewing(true),
     onJoin: () => {
       if (state.auth.status === "signedIn" || person.id === "me") { dispatch({ type: "TOAST", toast: "Share this card so they can join FireFlair" }); return; }
-      dispatch({ type: "SESSION", patch: { invitedBy: person.id } });
+      /* Joining from someone's profile: they are the one who brought you in, unless a code was already recorded. */
+      dispatch({ type: "INV_REF", code: person.tag, kind: "share" });
+      const credited = !state.session.refTag || String(state.session.refTag).toUpperCase() === String(person.tag || "").toUpperCase();
       dispatch({ type: "VIEW", id: null });
       if (state.role !== "team") dispatch({ type: "ROLE", role: "team" });
       dispatch({ type: "TAB", tab: "profile" });
-      dispatch({ type: "TOAST", toast: `Joining with ${first} — your first connection` });
+      if (credited) dispatch({ type: "TOAST", toast: `Joining with ${first} — your first connection` });
       window.scrollTo(0, 0);
     },
   };
@@ -246,19 +248,15 @@ function PersonProfile() {
    6. FF TEAM
    ========================================================================== */
 
-/* INVITES. Every new FireFlair user starts with one Network connection: the
-   person who brought them in. That's whoever's invite link they arrived on,
-   or — if they were browsing — whoever's profile they tapped Join on.
-   Prototype: everyone arrives on Don Gee's link (DONGE). Live, the tag comes
-   from the link itself. */
-const INVITE_LINK_TAG = "DONGE";
-
-
+/* INVITES. Who brought you in is a real record (src/state/invite17.js): the code from the link you arrived on, kept in
+   session.refTag before sign-up and in profile.referredBy after it. Nobody is the inviter unless that record says so. */
 function inviterOf(state, people) {
-  const id = state.session.invitedBy;
-  if (id) return people.find(p => p.id === id) || null;
-  const ref = String(state.session.refTag || "").toLowerCase();
-  return ref ? people.find(p => String(p.tag || "").toLowerCase() === ref) || null : null;
+  if (state.auth && state.auth.status === "signedIn") {
+    const r = state.profile && state.profile.referredBy;
+    return r ? people.find(p => p.id === r.personId) || null : null;
+  }
+  const s = inv17Sender(state, state.session.refTag);
+  return s ? people.find(p => p.id === s.id) || null : null;
 }
 
 
@@ -277,7 +275,7 @@ function NetBtn17({ id, name, wide }) {
 
 
 function myNetwork(state, people) {
-  const inv = inviterOf(state, people);
+  const inv = state.auth && state.auth.status === "signedIn" ? inviterOf(state, people) : null;
   const rest = state.connections.map(c => people.find(p => p.id === c.id)).filter(Boolean).filter(p => !inv || p.id !== inv.id);
   return { inviter: inv, list: inv ? [inv, ...rest] : rest };
 }
@@ -617,66 +615,6 @@ function syncCardRecords(state, dispatch, d, cats = ["professions", "skills", "i
 
 
 
-function InviteSheet({ open, onClose }) {
-  const { state, dispatch } = useStore();
-  const [granted, setGranted] = useState(false);
-  const [picked, setPicked] = useState([]);
-  const invitedIds = state.invitations.map(i => i.id);
-
-  return (
-    <Sheet open={open} onClose={onClose} title="Invite people you work with">
-      {!granted ? (
-        <>
-          <p className="ff-body">FireFlair can check your contacts for people already here. We only read them when you allow it, and we never invite anyone on your behalf.</p>
-          <div style={{ height: 12 }} />
-          <Btn variant="primary wide" onClick={() => setGranted(true)}>Allow contact access</Btn>
-          <div style={{ height: 8 }} />
-          <Btn variant="ghost wide" onClick={onClose}>Not now — share my link</Btn>
-        </>
-      ) : (
-        <>
-          {CONTACTS.map(c => {
-            const on = picked.includes(c.id), done = invitedIds.includes(c.id);
-            return (
-              <button key={c.id} disabled={done} onClick={() => setPicked(p => on ? p.filter(x => x !== c.id) : [...p, c.id])}
-                className="ff-frame" style={{ width: "100%", textAlign: "left", padding: 11, marginBottom: 8, display: "flex", gap: 11, alignItems: "center", opacity: done ? .55 : 1, background: on ? "rgba(201,162,39,.10)" : "var(--paper)" }}>
-                <Portrait name={c.name} size={36} ring={c.onFF ? "#C9A227" : "#B9B1A2"} />
-                <span style={{ flex: 1, minWidth: 0 }}>
-                  <span className="ff-display" style={{ fontSize: 13, display: "block" }}>{c.name}</span>
-                  <span className="ff-body ff-muted" style={{ fontSize: 12 }}>{c.note}{c.onFF ? ` · ${c.tag}` : ""}</span>
-                </span>
-                {done ? <Pill tone="ok">Invited</Pill> : on ? <Check size={17} color="var(--gold-dk)" /> : <Plus size={15} color="#B0A895" />}
-              </button>
-            );
-          })}
-          <Btn variant="primary wide" disabled={!picked.length}
-            onClick={() => {
-              const people = CONTACTS.filter(c => picked.includes(c.id));
-              dispatch({ type: "INVITE", people });
-              /* Phase 1: people already on FireFlair get a team invitation —
-                 connected once they accept, never assumed. */
-              people.filter(p => p.onFF).forEach(p => {
-                const d = state.directory.find(x => x.tag === p.tag);
-                if (d) dispatch({ type: "TEAM_INVITE", invite: { id: uid("tinv"), personId: d.id, name: d.name, tag: d.tag, note: d.profession || "",
-                  workedBefore: null, workAgain: null, howTo: null, rating: null, review: "", at: Date.now(), status: "pending" } });
-              });
-              setPicked([]); onClose();
-              dispatch({ type: "TOAST", toast: `${people.length} invitation${people.length > 1 ? "s" : ""} sent` });
-            }}>
-            <Send size={15} /> Invite {picked.length || ""}
-          </Btn>
-          <p className="ff-body ff-muted" style={{ fontSize: 12, marginTop: 12, marginBottom: 0 }}>
-            An invitation is not a connection. They accept first. When someone joins from your invitation, you're in each other's network automatically.
-          </p>
-          <ProtoNote />
-        </>
-      )}
-    </Sheet>
-  );
-}
-
-
-
 function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "", shut = false, insertAfter = "", insert = null, quietEmpty = false }) {
   const { state, dispatch } = useStore();
   const everyone = useDirectory();
@@ -817,9 +755,7 @@ function TeamParts17({ team, companies, network, teamEmpty, renderTeam }) {
    the same people a member does; joining happens on Home and Profile. */
 function NetworkScreen({ guest = false }) {
   const { state, dispatch } = useStore();
-  const [inviting, setInviting] = useState(false);
   const [reviewing, setReviewing] = useState(null);
-  useEffect(() => { const h = () => setInviting(true); window.addEventListener("ff-invite", h); return () => window.removeEventListener("ff-invite", h); }, []);
   const q = state.netQuery || "";
   const setQ = (v) => dispatch({ type: "NET_QUERY", q: v });
   const mine = guest ? { inviter: null, list: [] } : myNetwork(state, adminPeople17(state, state.directory));
@@ -849,7 +785,6 @@ function NetworkScreen({ guest = false }) {
         <Divider />
       </>)}
       <V101.BusinessSupport19 />
-      {!guest && <InviteSheet open={inviting} onClose={() => setInviting(false)} />}
       <ReviewSheet open={!!reviewing} person={reviewing} onClose={() => setReviewing(null)} />
     </div>
   );

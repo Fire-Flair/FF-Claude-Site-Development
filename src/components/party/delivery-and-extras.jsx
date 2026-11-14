@@ -244,7 +244,8 @@ function availWaiting17(state) {
 }
 
 
-/* Team invitations sent TO you (sample: one person, one company). Core supplies these in production. */
+/* Team invitations sent TO you. The real ones are state.teamAsksIn17 (a join link brought you in; see src/state/invite17.js).
+   Core supplies the rest in production. These two samples appear only for the DEV complete-profile login (state.devDone.team). */
 const TEAM_ASKS_DEMO17 = [
   { id: "tia_ava", fromId: "stf_ava", name: "Ava Clarke", tag: "AVA03", note: "Worked with you before · would work with you again", at: Date.UTC(2026, 10, 8) },
   { id: "tia_vooshka", fromId: "co_vooshka", name: "Vooshka Cocktail Bar", company: true, note: "Wants you on their company team", at: Date.UTC(2026, 10, 9) },
@@ -254,7 +255,9 @@ const TEAM_ASKS_DEMO17 = [
 function teamAsksWaiting17(state) {
   if (!(state.auth && state.auth.status === "signedIn" && state.role === "team")) return [];
   const done = state.teamAsks17 || {};
-  return TEAM_ASKS_DEMO17.filter(x => !done[x.id] && !(state.connections || []).some(c => c.id === x.fromId) && !(x.company && (state.netAdds17 || []).includes(x.fromId)));
+  const real = (state.teamAsksIn17 || []).filter(x => !done[x.id] && !(state.connections || []).some(c => c.id === x.fromId));
+  const sample = state.devDone && state.devDone.team ? TEAM_ASKS_DEMO17.filter(x => !done[x.id] && !(state.connections || []).some(c => c.id === x.fromId) && !(x.company && (state.netAdds17 || []).includes(x.fromId))) : [];
+  return [...real, ...sample];
 }
 
 
@@ -316,7 +319,7 @@ function TeamAskNote17({ x, onAccepted }) {
   const person = x.company ? null : all.find(p => p.id === x.fromId);
   const co = x.company ? companyById(state, x.fromId) : null;
   const first = x.company ? x.name : firstName(x.name);
-  const reply = (accept) => { dispatch({ type: "TEAM_ASK_REPLY", ask: x, accept }); dispatch({ type: "TOAST", toast: accept ? `You and ${first} are on each other's team` : "Invitation declined" }); if (accept && person && onAccepted) onAccepted(person); };
+  const reply = (accept) => { dispatch({ type: "TEAM_ASK_REPLY", ask: x, accept }); dispatch({ type: "TOAST", toast: accept ? `You and ${first} are on each other's team` : "Invitation declined" }); if (accept && x.viaLink) dispatch({ type: "INV_PATCH", patch: { reviewOfferedAt: Date.now() } }); if (accept && person && onAccepted) onAccepted(person); };
   return (
     <div className="ff-ndcard17">
       <div className="face">{co ? <CompanyCardFace c={co} size="sm" /> : person ? <PlayerCard person={person} format="portrait" themeKey={person.theme || "paper"} /> : null}</div>

@@ -20,6 +20,7 @@ Prefixes: FF Party `#/ff-party`, FF Team `#/ff-team`, FF Staff `#/ff-staff`. Pro
 | `/network` | `#/<site>/network` | Network (FF Party calls it Browse) | none of its own | noindex |
 | `/bookings` | `#/<site>/bookings` | Bookings (FF Team, FF Staff) | none of its own | noindex |
 | `/profile` | `#/<site>/profile` | your own profile or business page | none of its own | noindex |
+| `/join/<code>` | `#/ff-team/join/<code>` | a team invitation link (FF Team only). Signed out: records who sent it and opens Profile, the create-a-profile page, with the invitation banner on top. Signed in: opens the sender's profile (nothing changes). An unknown or own code opens Profile with no banner. The prototype rewrites the address to `#/ff-team/profile`. `/join/<code>` on FF Staff or FF Party goes to that site's home | none of its own | noindex |
 | `/fx/<code>` | `#/<site>/fx/<code>` | the shift brief. FF Team: the professional's view (Shift Card, then full details; public, no sign-in to read). FF Staff: opens the hirer's booking for that event. FF Party: reserved, goes to the FF Party home for now | none of its own | noindex (prototype) |
 | `/<tag>` | `#/<site>/<tag>` | a professional's profile | this site's own address, `https://<site host>/<tag>` | index (see below) |
 | `/<tag>/packages` `/team` `/reviews` | `#/<site>/<tag>/packages` etc. | the same profile on that tab | `https://<site host>/<tag>` | index |
@@ -74,7 +75,7 @@ two base pins each, not two entries).
 
 Reserved words that can never be a tag or a slug:
 
-`network`, `browse`, `bookings`, `book`, `profile`, `party`, `areas`, `packages`, `stories`, `vip`, `team`, `staff`, `admin`, `login`, `home`, `fx`.
+`network`, `browse`, `bookings`, `book`, `profile`, `party`, `areas`, `packages`, `stories`, `vip`, `team`, `staff`, `admin`, `login`, `home`, `fx`, `join`.
 
 The prototype already refuses them: `AUTH_ADAPTER.isAvailable` returns false for a reserved tag and a new company slug that
 matches one gets `-co` added. Add any new top-level page to the list in `src/utils/routes17.js` (`RT17_RESERVED`) and here.
@@ -128,6 +129,12 @@ at `/stories/<slug>` on the site named in `articles.json` (`site`).
 12. View-source on a profile: on each site the canonical is that site's own `https://<host>/<tag>` and robots is `index, follow` (for a published profile).
     No redirect from `ffteam.uk` or `ffstaff.uk` to `ffparty.uk`.
 13. Repeat 1 to 8 at 390 px and at 1280 px wide: no sideways scrolling, no console errors.
+
+## Join links (`/join/<code>`)
+
+`https://ffteam.uk/join/<code>`, where `<code>` is the sender's FF Tag in lower case (see `docs/invitations-phase2.md`). Not case sensitive.
+Core may later issue one code per invitation that resolves to the same sender; the page behaves the same.
+Test: `#/ff-team/join/donge` signed out shows the banner on Profile; signed in it opens Don Gee's profile; `#/ff-team/join/nosuchtag` opens Profile with no banner.
 
 ## Shift codes (`/fx/<code>`)
 

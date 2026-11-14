@@ -328,7 +328,7 @@ function PublicProfileBody({ person }) {
   const first = String(person.name || "").split(" ")[0] || "them";
   const services = servicesOf(state, person);
   const teamAll_ = useDirectory();
-  const teams = person.id === "me" ? myNetwork(state, teamAll_).list : networkOf11(state, teamAll_, person);
+  const teams = person.id === "me" ? myNetwork(state, teamAll_).list.filter(p => (state.connections || []).some(c => c.id === p.id)) : networkOf11(state, teamAll_, person);
   const tCos = personCompanies17(state, person);
   const tNet = person.id === "me" ? (state.netAdds17 || []).map(id => teamAll_.find(p => p.id === id)).filter(p => p && !p.isCompany && !teams.some(t => t.id === p.id)) : [];
   const reviews = reviewsOf(state, person);

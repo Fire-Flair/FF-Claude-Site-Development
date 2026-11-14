@@ -89,16 +89,6 @@ const COMPANIES = [
 
 
 
-const CONTACTS = [
-  { id: "c1", name: "Olivia Grace", note: "Event Planner", onFF: true, tag: "OLIVG" },
-  { id: "c2", name: "Marcus Bell", note: "Worked together at The Loft", onFF: false },
-  { id: "c3", name: "Priya Raman", note: "Bartender", onFF: true, tag: "PRIYA" },
-  { id: "c4", name: "Danny O'Shea", note: "Bar manager", onFF: false },
-  { id: "c5", name: "Elena Duarte", note: "Sommelier", onFF: false },
-];
-
-
-
 /* ==========================================================================
    FF STAFF 1.0 — booking rules held as data, so Core can serve them later.
    ========================================================================== */

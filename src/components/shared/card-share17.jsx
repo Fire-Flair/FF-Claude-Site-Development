@@ -15,7 +15,7 @@ const withRef17 = (url, code) => {
 };
 
 
-function CardShareSheet17({ open, onClose, title, url, fileName, children, extra }) {
+function CardShareSheet17({ open, onClose, title, url, fileName, children, extra, noRef }) {
   const { state, dispatch } = useStore();
   const holder = useRef(null);
   const [png, setPng] = useState(null);
@@ -23,7 +23,7 @@ function CardShareSheet17({ open, onClose, title, url, fileName, children, extra
   const [busy, setBusy] = useState(false);
   const [note, setNote] = useState("");
   const base = /^https?:/.test(url || "") ? url : "https://" + (url || "");
-  const full = withRef17(base, shareCode17(state));
+  const full = noRef ? base : withRef17(base, shareCode17(state));
   const make = () => {
     setPng(null); setErr(""); setBusy(true);
     const node = holder.current && holder.current.firstElementChild;

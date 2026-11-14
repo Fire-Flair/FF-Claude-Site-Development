@@ -44,7 +44,8 @@ const AVAIL_ASKED_DEMO = [{ id: "avx_loft", iso: "2026-12-12", byName: "Vooshka 
 
 function availabilityAskedOfMe(state) {
   const mine = (state.availabilityAsks || []).filter(x => x.personId === "me");
-  return [...(state.role === "team" || state.profile.live ? AVAIL_ASKED_DEMO : []), ...mine];
+  /* The sample ask from Vooshka appears only when the DEV complete-profile login put it there (nobody asked a real member). */
+  return [...((state.role === "team" || state.profile.live) && state.devDone && state.devDone.team ? AVAIL_ASKED_DEMO : []), ...mine];
 }
 
 
