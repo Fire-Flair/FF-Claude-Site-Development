@@ -706,7 +706,6 @@ function InterviewBook17({ notes, onClose }) {
     <Sheet open onClose={onClose} title="Book an interview">
       <div className="ff-ib17">
         <Field label="Phone number"><input className="ff-input" type="tel" inputMode="tel" autoComplete="tel" placeholder="+44 7700 900000" value={phone} onChange={(e) => setPhone(e.target.value)} /></Field>
-        <div className="ff-ib17-cv"><CVPanel inline /></div>
         <a className={"ff-btn gold ff-bigcv17" + (ok ? "" : " off")} href={ok ? href : undefined} aria-disabled={!ok} target="_blank" rel="noopener noreferrer" onClick={go}><Calendar size={16} /> Choose a time</a>
       </div>
     </Sheet>
@@ -726,6 +725,7 @@ function StartBox17() {
       <div className="ff-start17-top">
         <span className="ff-start17-q">Have a CV?</span>
         <div className="ff-start17-cv"><CVPanel inline /></div>
+        {cal && <Btn variant="sm ff-start17-int" onClick={() => setBook(true)}><Calendar size={14} /> Book an interview</Btn>}
       </div>
       <section className="ff-way17">
         <h3><GptLogo17 size={16} /> Talk or type to GPT</h3>
@@ -734,10 +734,6 @@ function StartBox17() {
           {ex.st.phase === "review" && <ImportToEdit key={ex.st.result.report && ex.st.result.report.ms} result={ex.st.result} onDone={() => { ex.reset(); setText(""); }} />}
         </FFAI>
       </section>
-      {cal && <div className="ff-start17-help">
-        <span>Prefer a chat? Book an interview and we'll fill out your profile for you.</span>
-        <Btn variant="sm" onClick={() => setBook(true)}><Calendar size={14} /> Book an interview</Btn>
-      </div>}
       {book && <InterviewBook17 notes={text} onClose={() => setBook(false)} />}
     </div>
   );

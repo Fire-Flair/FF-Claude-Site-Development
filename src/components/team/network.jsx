@@ -872,13 +872,6 @@ function NetworkScreen({ guest = false }) {
 
   return (
     <div>
-      <div style={{ display: "flex", alignItems: "flex-end", gap: 10, marginTop: 4 }}>
-        <div style={{ flex: 1 }}><BigHead20 tag="h1" title="Our network" /></div>
-        {!guest && <Btn variant="sm" onClick={() => setInviting(true)}><Send size={12} /> Invite</Btn>}
-      </div>
-
-      <FFAI query={q} onQuery={setQ} title="Search the network"
-        placeholder="Search the network. Describe who you're looking for." />
 
       {guest && !q && (
         <div className="ff-pendingnote" style={{ marginTop: 6 }}>
@@ -887,52 +880,10 @@ function NetworkScreen({ guest = false }) {
         </div>
       )}
 
-      {!q && mine.inviter && <InvitedByBanner person={mine.inviter} onReview={() => setReviewing(mine.inviter)} />}
-
-      {!q && !guest && (
-        <section style={{ marginTop: 20 }}>
-          <SectionHead icon={<Check size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Your team" count={connected.length + netPeople.length + netCos.length} />
-          <HScroll label="Your team">
-            {connected.map(p => (
-              <div key={p.id} className="ff-nettile">
-                <NetworkTile person={p} invited={!!(mine.inviter && mine.inviter.id === p.id)} onClick={() => view(p)} />
-                <span className="ff-invited"><Check size={11} /> On your team</span>
-                <button type="button" className="ff-btn sm ghost" onClick={() => setReviewing(p)}><Award size={12} /> Review</button>
-              </div>
-            ))}
-            <button className="ff-card ff-portrait ff-addtile" style={{ width: CARD_W.player }} onClick={() => setInviting(true)}>
-              <span style={{ textAlign: "center" }}><UserPlus size={20} color="var(--gold-dk)" />
-                <span className="ff-label" style={{ display: "block", marginTop: 6 }}>Invite</span></span>
-            </button>
-          </HScroll>
-          <NetDrop17 title="Companies" count={netCos.length}>
-            {netCos.length ? (
-              <HScroll label="Companies">
-                {netCos.map(c => (
-                  <button key={c.id} type="button" className="ff-co11-tile ff-netco17" aria-label={`${c.name}: open their page`} onClick={() => { dispatch({ type: "VIEW_COMPANY", id: c.id }); window.scrollTo(0, 0); }}>
-                    <CompanyCardFace c={c} size="sm" />
-                  </button>
-                ))}
-              </HScroll>
-            ) : <p className="ff-body ff-muted" style={{ margin: 0 }}>No companies yet.</p>}
-          </NetDrop17>
-          <NetDrop17 title="Network" count={netPeople.length}>
-            {netPeople.length ? (
-              <HScroll label="Network">
-                {netPeople.map(p => (
-                  <div key={p.id} className="ff-nettile">
-                    <PlayerTile person={p} onClick={() => view(p)} />
-                    <button type="button" className="ff-btn sm ghost" onClick={() => setReviewing(p)}><Award size={12} /> Review</button>
-                  </div>
-                ))}
-              </HScroll>
-            ) : <p className="ff-body ff-muted" style={{ margin: 0 }}>No one yet.</p>}
-          </NetDrop17>
-        </section>
-      )}
       {!q && !guest && <SentInvitations />}
 
-      <NetBrowse17 query={q} onPick={view} after={<NetMap11 />} />
+      <NetBrowse17 query={q} onPick={view} after={<NetMap11 />} search={<FFAI query={q} onQuery={setQ} title="Search the network"
+        placeholder="Search the network. Describe who you're looking for." />} />
       {!q && (<>
         {PHASE1.leaderboards && <Rankings />}
         <Divider />

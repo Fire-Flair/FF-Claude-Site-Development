@@ -58,7 +58,8 @@ function browseCompanies17(state) {
 function NetDirectory19(props) {
   const h = React.createElement;
   const st = useStore(), state = st.state;
-  const open = state.netPillar17 || "";
+  /* FF Team has no package explorer, so no pillar filter applies to its Directory: every company type shows. */
+  const open = state.role === "team" ? "" : (state.netPillar17 || "");
   const every = browseCompanies17(state);
   const all = every.filter(function (c) { return c.unclaimed; });
   /* On FF Staff the signed-in business sees its own Company Card once: the directory entry for the same company is left out. */
@@ -67,11 +68,16 @@ function NetDirectory19(props) {
   const top = every.filter(function (c) { return !c.unclaimed && !(ownKey && !c.mine && coKey17(c) === ownKey) && (!open || PILLAR_OF_CAT17[c.cat || "bar"] === open); });
   const secs = NET_CO_TYPES17.filter(function (t) { return !open || PILLAR_OF_CAT17[t[0]] === open; })
     .map(function (t) { return [t, all.filter(function (c) { return (c.cat || "bar") === t[0]; })]; })
-    .filter(function (x) { return x[1].length; });
+;
   return h("section", { id: "ff-directory", style: { marginTop: 30, scrollMarginTop: 70 } },
     h(BigHead20, { title: "FF Event Directory" }),
     top.length ? h(CompaniesSection, { title: "Top companies", list: top }) : null,
-    secs.map(function (x) { return h(CompaniesSection, { key: "dir" + x[0][0], title: x[0][1], list: x[1], fold: "ff-dir-" + x[0][0] }); }));
+    secs.map(function (x) {
+      return x[1].length
+        ? h(CompaniesSection, { key: "dir" + x[0][0], title: x[0][1], list: x[1], fold: "ff-dir-" + x[0][0] })
+        : h(Fold17, { key: "dir" + x[0][0], shut: true, id: "ff-dir-" + x[0][0], icon: h(I11.Briefcase, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title: x[0][1], count: 0 },
+            h("p", { className: "ff-body ff-muted", style: { margin: 0 } }, "No companies listed yet."));
+    }));
 }
 
 
@@ -204,6 +210,37 @@ function netSearch17(state, query) {
 }
 
 
+/* The five types of professional on the FF Team network, each a closed drop-down: Bar, Entertainment, Services, Food, Other. */
+const PRO_TYPES17 = [["bar", "Bar", "Bar"], ["ent", "Entertainment", "Entertainment"], ["svc", "Services", "Services"], ["food", "Food", "Chefs"], ["other", "Other", "Other"]];
+
+
+function ProsByType17({ onPick }) {
+  const { state, dispatch } = useStore();
+  const everyone = useDirectory();
+  const kindOf = (p) => PILLAR_OF_GROUP17[p.group] || "other";
+  return (
+    <>
+      {PRO_TYPES17.map(([k, label, icon]) => {
+        const list = everyone.filter(p => kindOf(p) === k);
+        return (
+          <Fold17 key={k} id={"ff-pros-" + k} icon={<GroupIcon group={icon} />} title={label} count={list.length} shut>
+            {list.length ? (
+              <HScroll label={label} snap>
+                {list.map(p => <PlayerTile key={p.id} person={p} onClick={() => onPick(p)} />)}
+                <button className="ff-card ff-portrait ff-addtile" style={{ width: CARD_W.player }} onClick={() => window.dispatchEvent(new Event("ff-invite"))}>
+                  <span style={{ textAlign: "center" }}><I11.Plus size={20} color="var(--gold-dk)" />
+                    <span className="ff-label" style={{ display: "block", marginTop: 6 }}>Invite</span></span>
+                </button>
+              </HScroll>
+            ) : <p className="ff-body ff-muted" style={{ margin: 0 }}>No one yet.</p>}
+          </Fold17>
+        );
+      })}
+    </>
+  );
+}
+
+
 function NetBrowse17(props) {
   const query = props.query || "";
   const st = useStore(), state = st.state, dispatch = st.dispatch;
@@ -211,21 +248,29 @@ function NetBrowse17(props) {
   if (query.trim()) {
     const found = netSearch17(state, query);
     const anyCo = found.cos.length + found.dir.length > 0;
-    return React.createElement(NetQ17.Provider, { value: query }, props.after || null,
+    return React.createElement(NetQ17.Provider, { value: query },
+      props.search ? React.createElement("section", { id: "ff-our-pros", style: { marginTop: 4, scrollMarginTop: 70 } }, React.createElement(BigHead20, { title: "Our professionals" }), props.search) : null,
+      props.after || null,
       React.createElement(GroupedPeople, { query: query, onPick: props.onPick, scope: props.scope, quietEmpty: anyCo }),
       found.cos.length ? React.createElement(CompaniesSection, { title: "Companies", list: found.cos }) : null,
       found.dir.length ? React.createElement(CompaniesSection, { title: "FF Event Directory", list: found.dir }) : null);
   }
   const groups = open ? Object.keys(PILLAR_OF_GROUP17).filter(function (g) { return PILLAR_OF_GROUP17[g] === open; }) : "";
   const items = BCATS17.map(function (c) { return { k: c.k, t: c.label, s: NET_PILLAR_TEXT17[c.k], img: (window.FF_IMG || {})[BIMG17[c.k]] }; });
+  /* FF Team (search passed in): no package explorer; the search sits under the Our professionals banner, then the five type drop-downs. */
+  const teamSite = !!props.search;
   return React.createElement(React.Fragment, null,
-    React.createElement(BigHead20, { title: "Explore our packages" }),
-    React.createElement(PillarBox17, { label: "Explore our packages", open: open, items: items, onPick: function (k) { dispatch({ type: "V11_SET", patch: { netPillar17: k } }); } }, open ? React.createElement(NetPackages20, { pillar: open }) : null),
-    props.after || null,
-    React.createElement("section", { id: "ff-our-pros", style: { marginTop: 30, scrollMarginTop: 70 } },
+    teamSite ? null : React.createElement(BigHead20, { title: "Explore our packages" }),
+    teamSite ? null : React.createElement(PillarBox17, { label: "Explore our packages", open: open, items: items, onPick: function (k) { dispatch({ type: "V11_SET", patch: { netPillar17: k } }); } }, open ? React.createElement(NetPackages20, { pillar: open }) : null),
+    teamSite ? null : (props.after || null),
+    React.createElement("section", { id: "ff-our-pros", style: { marginTop: teamSite ? 4 : 30, scrollMarginTop: 70 } },
       React.createElement(BigHead20, { title: "Our professionals" }),
+      props.search || null,
+      teamSite ? (props.after || null) : null,
       React.createElement(TopStaff11, null),
-      React.createElement(GroupedPeople, { query: "", onPick: props.onPick, scope: props.scope, only: groups, shut: true, insertAfter: props.teamSlot ? "Chefs" : "", insert: props.teamSlot || null })),
+      teamSite
+        ? React.createElement(ProsByType17, { onPick: props.onPick })
+        : React.createElement(GroupedPeople, { query: "", onPick: props.onPick, scope: props.scope, only: groups, shut: true, insertAfter: props.teamSlot ? "Chefs" : "", insert: props.teamSlot || null })),
     React.createElement(NetDirectory19, null));
 }
 

@@ -4442,3 +4442,7 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-del17 .btns button { min-height:40px; padding:0 10px; border-radius:999px; corner-shape:squircle; border:1.5px solid rgba(126,97,29,.5); background:transparent; font-weight:700; font-size:13px; cursor:pointer; color:#3A342B; }
 .ff .ff-del17 .btns button.yes { background:#6B1226; border-color:#6B1226; color:#FBF8F1; }
 .ff .ff-cpanel, .ff .ff-sum, .ff .ff-sum-sh, .ff .ff-af17, .ff .ff-af17 > *, .ff .ff-inv17 { min-width:0; max-width:100%; }
+
+/* FF Team profile start box: Book an interview sits on the right, under the CV button, instead of a row of its own. */
+.ff .ff-start17-top .ff-start17-int { grid-column:2; justify-self:stretch; justify-content:center; min-height:40px; white-space:nowrap; }
+@media (max-width:340px) { .ff .ff-start17-top .ff-start17-int { grid-column:1; } }

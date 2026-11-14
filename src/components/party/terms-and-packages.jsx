@@ -9,6 +9,25 @@ const MY_TERMS17 = [
 ];
 
 
+/* v17.5.1: the terms shown when you sign up to FF Party packages, and when you save your FF Staff shift rates. How the platform works, in five points each. */
+const PARTY_PKG_TERMS17 = [
+  { k: "how", label: "How packages work", text: "A package is a fixed offer that clients book on FF Party. FireFlair sets the pay rate for each package and shows it before you sign up. By signing up you agree to that rate." },
+  { k: "boss", label: "You are your own boss", text: "You work as a self-employed freelancer. You deal directly with the client, and FireFlair is here to support you. FireFlair is not your employer." },
+  { k: "book", label: "Bookings", text: "When a client books a package, FireFlair invites you on WhatsApp. The booking is yours once you accept, and not before." },
+  { k: "cancel", label: "Cancelling", text: "If you cannot make a booking, tell the client and FireFlair as early as you can. Late cancellations affect your reputation on FireFlair." },
+  { k: "work", label: "Standards and reviews", text: "Arrive on time, dressed as agreed, and deliver the package as it is described. Clients can review you afterwards, and your reviews appear on your profile." },
+];
+
+
+const STAFF_SHIFT_TERMS17 = [
+  { k: "how", label: "How shifts work", text: "Businesses create shift cards and set the pay rate for each shift. Your preferred rate is a guide that businesses see on FF Staff. It does not set the rate for a shift." },
+  { k: "invite", label: "Invitations", text: "When a business invites you to a shift, FireFlair sends you a WhatsApp message with the details. You are only booked once you accept." },
+  { k: "boss", label: "Self-employed", text: "You work as a self-employed freelancer and are responsible for your own tax. The business that books you is not your employer, and neither is FireFlair." },
+  { k: "cancel", label: "Cancelling", text: "If you can no longer work a shift, tell the business and FireFlair as early as you can. Late cancellations affect your reputation on FireFlair." },
+  { k: "rep", label: "Reputation", text: "Businesses can review you after a shift. Turning up on time and doing great work builds your reputation and gets you booked again." },
+];
+
+
 /* FF Team terms, the way FF Staff shows them: a card for each set of terms. Tap one to read and edit its five points in a pop-up. */
 const TERM_SETS17 = {
   mine: { key: "myTerms17", title: "Personal T&Cs", note: "Shown when a business hires you.", head: "Personal terms and conditions", list: MY_TERMS17 },

@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.5.1 (Phase 2 Final, review changes)
+
+- FF Team profile: Book an interview sits on the right, under the CV button, and its sheet no longer has the CV upload box.
+- FF Bookings: the extra "FireFlair" heading is removed.
+- FF Party package sign-up and FF Staff shift rates: both need a signed-in account, then show their own five-point terms (platform explanations, no prices) before saving.
+- FF Team Network: no "Our network" heading, no "Invited you" banner, and no Your team, Companies or Network lists (they live on the profile). Explore our packages is removed. Our professionals has the search under its banner, then five closed drop-downs: Bar, Entertainment, Services, Food, Other.
+- FF Event Directory on FF Team always lists all five company types (Bar companies, Entertainment, Event services, Caterers, Bar services).
+
 ## v17.5 — 2026-11-13 — Phase 2 Final
 
 - The Phase 2 build, on the `phase-2-final` branch. Phase 3 stays on `main`.

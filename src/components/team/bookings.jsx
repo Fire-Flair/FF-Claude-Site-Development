@@ -168,13 +168,13 @@ function BkDrop17({ id, title, desc, icon: Icon, photo, children }) {
    in profile.staffAvail, as before) and takes an optional preferred hourly rate: a typed Q&A answer
    rate.<profession id> in pence, visibility "ff-staff" (shown on the member's FF Staff profile only).
    Businesses set the actual shift rate on each Shift Card. */
-function PkgTerms17({ onClose, onAccept }) {
-  const { state } = useStore();
-  const mine = { ...Object.fromEntries(MY_TERMS17.map(t => [t.k, t.text])), ...(state.myTerms17 || {}) };
+/* Terms shown after signing in, before packages or rates are saved. kind "pkg": FF Party packages. kind "shift": FF Staff shifts. */
+function PkgTerms17({ kind = "pkg", onClose, onAccept }) {
+  const list = kind === "shift" ? STAFF_SHIFT_TERMS17 : PARTY_PKG_TERMS17;
   return (
-    <Sheet open onClose={onClose} title="Terms and conditions">
+    <Sheet open onClose={onClose} title={kind === "shift" ? "FF Staff shift terms" : "FF Party package terms"}>
       <div className="ff-tc5">
-        {MY_TERMS17.map((t, i) => <div key={t.k} className="ff-tc5-read"><span><b>{i + 1}</b>{t.label}</span><p>{mine[t.k]}</p></div>)}
+        {list.map((t, i) => <div key={t.k} className="ff-tc5-read"><span><b>{i + 1}</b>{t.label}</span><p>{t.text}</p></div>)}
       </div>
       <div className="ff-bsec-acts" style={{ marginTop: 10 }}><Btn variant="primary wide" onClick={onAccept}><Check size={14} /> Accept and confirm</Btn></div>
     </Sheet>
@@ -229,12 +229,17 @@ function ProfRates17({ guest }) {
   const chips = [...(!guest && yours.length ? ["Yours"] : []), ...PROFESSION_CATEGORIES.map(c => c.key)];
   const onVal = (n, v) => { setVals(x => ({ ...x, [n]: v })); setErrs(x => ({ ...x, [n]: "" })); };
   const dirty = Object.keys(vals).length > 0;
-  const confirm = async () => {
+  const [terms, setTerms] = useState(false);
+  const confirm = () => {
     if (busy || !dirty) return;
     const bad = {};
     Object.entries(vals).forEach(([n, t0]) => { const t = String(t0).trim(); if (t && (!isFinite(Number(t)) || Number(t) <= 0 || !/^\d+(\.\d{1,2})?$/.test(t))) bad[n] = "Enter an amount in pounds, like 18 or 18.50."; });
     if (Object.keys(bad).length) { setErrs(bad); return; }
     if (!account) { window.dispatchEvent(new Event("ff-login")); return; }
+    setTerms(true);
+  };
+  const save = async () => {
+    setTerms(false);
     setBusy(true);
     let okAll = true;
     for (const [n, t0] of Object.entries(vals)) {
@@ -264,6 +269,7 @@ function ProfRates17({ guest }) {
         </HScroll>
       </div>
       <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={busy || !dirty} onClick={confirm}><Check size={15} /> Save your rates</button>
+      {terms && <PkgTerms17 kind="shift" onClose={() => setTerms(false)} onAccept={save} />}
     </>
   );
 }
@@ -345,7 +351,6 @@ function TeamBookings({ guest = false }) {
 
       <section className="ff-bk-sec ff-fb21" id="ff-bk-fireflair">
         <style>{BKD_CSS}</style>
-        <BigHead20 title="FireFlair" />
         <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-party">
           <h3>FF Party packages</h3>
           <p>You are your own boss. FireFlair sets the pay rate for each package. You deal directly with the client, and FireFlair is here to support you. Packages are advertised at a set rate, and by signing up to one you agree to that rate. The rates are strong, so we expect strong work in return.</p>
@@ -353,8 +358,8 @@ function TeamBookings({ guest = false }) {
             {pkgs.map(sv => <div key={sv.id} className="ff-tp17-cell"><PkgTile17 sv={sv} on={picked.includes(sv.id)} onClick={() => tick(sv)} /></div>)}
             <div className="ff-tp17-cell"><button type="button" className="ff-tp17 own" onClick={ownPackage}><span className="pl"><Plus size={22} /></span><b className="tt">Create your own package</b></button></div>
           </HScroll>
-          <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={!sel} onClick={() => setPkgTerms(true)}><Check size={15} /> Confirm</button>
-          {pkgTerms && <PkgTerms17 onClose={() => setPkgTerms(false)} onAccept={confirmPkgs} />}
+          <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={!sel} onClick={() => { if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; } setPkgTerms(true); }}><Check size={15} /> Confirm</button>
+          {pkgTerms && <PkgTerms17 kind="pkg" onClose={() => setPkgTerms(false)} onAccept={confirmPkgs} />}
         </div>
 
         <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-staff">
