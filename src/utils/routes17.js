@@ -159,6 +159,8 @@ function rt17Apply(route0, state, dispatch) {
     dispatch({ type: "V11_SET", patch: { ...away, fdArea: null, pkgPage: null, supportPage20: null } });
     return null;
   }
+  /* Signed out, the start page is already the FF Team home: switching role would remount it and close the open section. */
+  if (r.kind === "pillar" && !state.role && r.site === "team") return null;
   const here = state.role === "vip" ? "" : state.role ? rt17SiteOf(state) : "";
   if (here !== r.site) {
     if (!p1SiteOpen(r.site)) return null;

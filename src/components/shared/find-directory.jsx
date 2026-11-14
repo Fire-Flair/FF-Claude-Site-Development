@@ -491,7 +491,7 @@ function FdAsk11({ siteKey, node, kind, company, onDone }) {
       <div className="ff-fd-done" role="status">
         <b>{sourcing ? "Request received." : "Thanks, we've noted your interest."}</b>
         <p>{done.dupe ? `We already have this request. ` : ""}Your reference is <b className="ref">{done.ref}</b>. {sourcing ? `Nothing is confirmed yet: no one has been booked or reserved, and you have not been charged. The FireFlair team will look for suitable people and contact you about the options${f.email || f.phone ? ` by ${f.email ? "email" : "telephone"}` : ""}.` : `FireFlair isn't taking requests here yet. We'll use your details only to tell you if that changes.`}</p>
-        <p className="ff-fd-dev"><span className="ff-dev17 tag">DEV</span> Saved to the preview's data as a local_service_request. Admin and acknowledgement notifications are simulated; see FF Admin → Areas and requests.</p>
+        <p className="ff-fd-dev"><span className="ff-dev17 tag">DEV</span> Saved to the preview's data as a local_service_request. Admin and acknowledgement notifications are simulated.</p>
         {onDone && <Btn onClick={onDone}>Done</Btn>}
       </div>
     );

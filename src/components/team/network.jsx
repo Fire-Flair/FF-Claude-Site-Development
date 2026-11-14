@@ -150,7 +150,7 @@ function PersonProfile() {
     if (invite.workedBefore && (invite.review || invite.rating)) {
       dispatch({ type: "REVIEW_ADD", review: {
         id: uid("rev"), aboutId: person.id, byId: "me", shiftId: null,
-        byName: state.company?.name || state.profile.name || "You", rating: invite.rating || 5,
+        byName: (state.role === "staff" && state.site !== "party" && state.company?.name) || state.profile.name || "You", rating: invite.rating || 5,
         text: invite.review || `${invite.howTo} to work with.`, at: Date.now(),
       } });
     }

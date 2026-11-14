@@ -61,7 +61,10 @@ function NetDirectory19(props) {
   const open = state.netPillar17 || "";
   const every = browseCompanies17(state);
   const all = every.filter(function (c) { return c.unclaimed; });
-  const top = every.filter(function (c) { return !c.unclaimed && (!open || PILLAR_OF_CAT17[c.cat || "bar"] === open); });
+  /* On FF Staff the signed-in business sees its own Company Card once: the directory entry for the same company is left out. */
+  const own = state.role === "staff" && every.find(function (c) { return c.mine; });
+  const ownKey = own ? coKey17(own) : "";
+  const top = every.filter(function (c) { return !c.unclaimed && !(ownKey && !c.mine && coKey17(c) === ownKey) && (!open || PILLAR_OF_CAT17[c.cat || "bar"] === open); });
   const secs = NET_CO_TYPES17.filter(function (t) { return !open || PILLAR_OF_CAT17[t[0]] === open; })
     .map(function (t) { return [t, all.filter(function (c) { return (c.cat || "bar") === t[0]; })]; })
     .filter(function (x) { return x[1].length; });

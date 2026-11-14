@@ -315,7 +315,7 @@ function ReviewSheet({ open, person, shiftId, onClose }) {
       type: "REVIEW_ADD",
       review: {
         id: uid("rev"), aboutId: person.id, byId: "me", shiftId: shiftId || null,
-        byName: state.company?.name || state.profile.name || "You", rating, text: text.trim(), at: Date.now(),
+        byName: (state.role === "staff" && state.site !== "party" && state.company?.name) || state.profile.name || "You", rating, text: text.trim(), at: Date.now(),
       },
     });
     dispatch({ type: "TOAST", toast: `Review posted for ${person.isCompany ? person.name : person.name.split(" ")[0]}` });

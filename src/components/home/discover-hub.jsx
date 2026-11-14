@@ -81,8 +81,10 @@ const DX_ALIAS = { "ff-career": "ff-booktiles", "ff-training": "ff-booktiles", "
     const [open, setOpen] = useState(() => {
       if (window.__ffUrlRead)
         return null;
-      window.__ffUrlRead = true;
-      return fromUrl();
+      const k = fromUrl();
+      if (k)
+        window.__ffUrlRead = true;
+      return k;
     });
     const [shape, setShape] = useState(null);
     const well = useRef(null), root = useRef(null), bar = useRef(null), sent = useRef(null), panel = useRef(null);
