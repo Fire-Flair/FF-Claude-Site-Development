@@ -3069,7 +3069,7 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-pc-rule { justify-content:center; }
 .ff .ff-pc-fit { display:block; min-width:0; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
 .ff .ff-pc-bar { align-self:stretch; flex:none; margin:auto -5.4cqw -4.6cqw; padding:0 5.4cqw; box-sizing:border-box; display:flex; align-items:center; gap:2.4cqw; color:#EAD79C; font-family:var(--sans); font-weight:600; letter-spacing:.04em; white-space:nowrap; }
-.ff .ff-pc-baru { flex:1; min-width:0; text-align:right; overflow:hidden; white-space:nowrap; }
+.ff .ff-pc-baru { flex:1; min-width:0; text-align:left; overflow:hidden; white-space:nowrap; }
 
 /* v17.3.25 — cards never scroll inside: they grow, turn over on a swipe, and open large in a pop-up */
 .ff .ff-c17.sm { width:300px; }

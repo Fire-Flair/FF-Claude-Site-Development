@@ -387,6 +387,11 @@ function EditableCompanyCard({ plain }) {
         <span className="ff-cc11-baseh">Where are you based?</span>
         <BaseField17 ink="#16130F" owner="company" />
       </div>
+      {!party && <div className="ff-cotype17" role="group" aria-label="Company type">
+        {[["limited", "Limited company"], ["sole", "Sole trader"]].map(([k, l]) => (
+          <button key={k} type="button" aria-pressed={c.companyType === k} onClick={() => set({ companyType: k })}>{l}</button>
+        ))}
+      </div>}
       {!plain && <>
       <div className="ff-swatches" role="group" aria-label="Card colour">
         {Object.entries(THEMES).map(([k, th]) => (

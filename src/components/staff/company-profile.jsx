@@ -120,7 +120,7 @@ function CompanySaveShare({ onSaved }) {
     if (onSaved) onSaved();
   };
   const share = () => {
-    window.open(`https://wa.me/?text=${encodeURIComponent(`${c.name || "My company"} on FireFlair: ${CARD_DOMAIN}/${c.slug}`)}`, "_blank", "noopener,noreferrer");
+    window.open(`https://wa.me/?text=${encodeURIComponent(`${c.name || "My company"} on FireFlair: ${withRef17(`https://${CARD_DOMAIN}/${c.slug}`, shareCode17(state))}`)}`, "_blank", "noopener,noreferrer");
     dispatch({ type: "TOAST", toast: "Your company link is ready to send on WhatsApp" });
   };
   useEffect(() => { const h = () => save(); window.addEventListener("ff-save", h); return () => window.removeEventListener("ff-save", h); });

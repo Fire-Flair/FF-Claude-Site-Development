@@ -20,6 +20,7 @@ Prefixes: FF Party `#/ff-party`, FF Team `#/ff-team`, FF Staff `#/ff-staff`. Pro
 | `/network` | `#/<site>/network` | Network (FF Party calls it Browse) | none of its own | noindex |
 | `/bookings` | `#/<site>/bookings` | Bookings (FF Team, FF Staff) | none of its own | noindex |
 | `/profile` | `#/<site>/profile` | your own profile or business page | none of its own | noindex |
+| `/fx/<code>` | `#/<site>/fx/<code>` | the shift brief. FF Team: the professional's view (Shift Card, then full details; public, no sign-in to read). FF Staff: opens the hirer's booking for that event. FF Party: reserved, goes to the FF Party home for now | none of its own | noindex (prototype) |
 | `/<tag>` | `#/<site>/<tag>` | a professional's profile | this site's own address, `https://<site host>/<tag>` | index (see below) |
 | `/<tag>/packages` `/team` `/reviews` | `#/<site>/<tag>/packages` etc. | the same profile on that tab | `https://<site host>/<tag>` | index |
 | `/<company-slug>` | `#/<site>/<slug>` | a company page: claimed company or FF Event Directory entry | `https://<site host>/<slug>` | index |
@@ -73,7 +74,7 @@ two base pins each, not two entries).
 
 Reserved words that can never be a tag or a slug:
 
-`network`, `browse`, `bookings`, `book`, `profile`, `party`, `areas`, `packages`, `stories`, `vip`, `team`, `staff`, `admin`, `login`, `home`.
+`network`, `browse`, `bookings`, `book`, `profile`, `party`, `areas`, `packages`, `stories`, `vip`, `team`, `staff`, `admin`, `login`, `home`, `fx`.
 
 The prototype already refuses them: `AUTH_ADAPTER.isAvailable` returns false for a reserved tag and a new company slug that
 matches one gets `-co` added. Add any new top-level page to the list in `src/utils/routes17.js` (`RT17_RESERVED`) and here.
@@ -127,3 +128,10 @@ at `/stories/<slug>` on the site named in `articles.json` (`site`).
 12. View-source on a profile: on each site the canonical is that site's own `https://<host>/<tag>` and robots is `index, follow` (for a published profile).
     No redirect from `ffteam.uk` or `ffstaff.uk` to `ffparty.uk`.
 13. Repeat 1 to 8 at 390 px and at 1280 px wide: no sideways scrolling, no console errors.
+
+## Shift codes (`/fx/<code>`)
+
+Five characters, not case sensitive, from an alphabet without lookalikes (no 0, 1, I, L, O): `23456789ABCDEFGHJKMNPQRSTUVWXYZ`.
+The first four identify the event, the fifth the shift within it (`7K2Q` is the event, `7K2QA` and `7K2QB` its shifts). Four characters open the event's first shift.
+The prototype derives codes from the demo ids (`fxCodeOf17`, `fxFind17` in `src/components/shared/shift-card17.jsx`); production issues them from Core and keeps them unique.
+Every link from the Share sheet carries the sharer's code as `?r=<code>`.

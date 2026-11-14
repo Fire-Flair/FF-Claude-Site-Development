@@ -370,12 +370,13 @@ function Wordmark({ size = 15, tone = "#EAD79C", text = "FIREFLAIR", spacing = "
 }
 
 
-function CardFrame({ tier = "standard", theme, ratio, selected, onClick, style, className = "", hair = true, corners = false, premium = false, as = "div", children }) {
+function CardFrame({ tier = "standard", theme, ratio, selected, onClick, style, className = "", hair = true, corners = false, premium = false, fixed = false, as = "div", children }) {
   const t = theme || THEMES.onyx;
   const m = metalOf(tier);
   const Tag = as;
   return React.createElement(Tag, {
     className: `ff-deck ${premium ? "pc" : ""} ${t.dark ? "" : "lite"} ${selected ? "ff-sel" : ""} ${className}`,
+    "data-cx-fixed": fixed ? "1" : undefined,
     onClick,
     style: {
       backgroundImage: `${t.bg}, ${metalEdge(tier)}`,

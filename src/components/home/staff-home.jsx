@@ -325,7 +325,7 @@ const FIRE17_STILL = __ff_json("content/data/fire17-still.json");
       className: "it wa"
     }, React.createElement(WhatsAppPreview, {
       lines: ["FireFlair · Vooshka Cocktail Bar would like to book you:", "Cocktail Bartender · Sat 20 Mar · 17:00 · Hackney Depot"],
-      buttons: ["Accept shift", "Unavailable"]
+      buttons: ["Available", "Unavailable", "More info"]
     }), React.createElement("div", {
       className: "ff-hw11-ok"
     }, React.createElement(Check, {

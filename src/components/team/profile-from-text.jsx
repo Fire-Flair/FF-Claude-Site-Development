@@ -258,7 +258,7 @@ function ShareCardSheet({ open, onClose }) {
     return React.createElement(CardShareSheet17, {
       open: true, onClose, title: "My FireFlair card", url: "https://" + CARD_DOMAIN + "/" + tag, fileName: "fireflair-" + cx17Slug(tag),
       extra: React.createElement("div", { style: { marginTop: 14 } }, phoneUi)
-    }, React.createElement(PlayerCard, { person: me, format: "full", themeKey: state.profile.theme }));
+    }, React.createElement(PlayerCard, { person: me, format: "portrait", themeKey: state.profile.theme }));
   }
   return React.createElement(Sheet, {
     open: true,
@@ -380,7 +380,7 @@ function AskForReviewSheet({ open, onClose }) {
         <div className="ff-frame" style={{ padding: 14, marginTop: 10 }}>
           <p className="ff-body" style={{ margin: "0 0 10px" }}>Nobody in your network yet. Share your card instead — they can send you a review once they have it.</p>
           <Btn variant="primary wide" onClick={() => { dispatch({ type: "TOAST", toast: "Link copied" }); onClose(); }}>
-            <Share2 size={14} /> Share my card
+            <ShareUp17 size={14} /> Share my card
           </Btn>
         </div>
       ) : network.map(p => (

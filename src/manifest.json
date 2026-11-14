@@ -37,6 +37,7 @@
   "components/team/questions.jsx",
   "components/team/qa17.jsx",
   "components/shared/card-share17.jsx",
+  "components/shared/shift-card17.jsx",
   "components/team/profile-from-text.jsx",
   "components/team/attribute-cards.jsx",
   "components/team/network.jsx",

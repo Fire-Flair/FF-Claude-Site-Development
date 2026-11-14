@@ -7,7 +7,8 @@
    first exports; it is not part of the page load). Container-relative sizes (the Profile Card) and fixed sizes both
    scale because the whole card is scaled as one piece.
 
-   Size:  5:7 portrait cards export at 1500 x 2100. Other shapes keep their own aspect ratio: portrait and square
+   Size:  Profile Cards and Shift Cards (data-cx-fixed) export at exactly 1080 x 1512 PNG, the card on a dark mat, no address band
+          (both carry their own address). Other 5:7 portrait cards export at 1500 x 2100. Other shapes keep their own aspect ratio: portrait and square
           at 1500 wide, landscape at 2100 wide. Never cropped to portrait. Capped at about 3.3 million pixels
           (iOS Safari's canvas limit is far above that).
    Link:  the card's FireFlair address must be visible on the image. If the card already shows it, nothing is
@@ -20,6 +21,8 @@
 const CX17 = {
   libUrls: ["https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js", "https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js"],
   portrait: [1500, 2100], wide: 2100, maxPixels: 3300000, ratio: 5 / 7,
+  /* Profile Cards and Shift Cards (marked data-cx-fixed): exactly 1080 x 1512, the card set on a dark mat. */
+  fixed: [1080, 1512], mat: [24, 33],
 };
 
 
@@ -114,9 +117,13 @@ function cx17Band(cv, url) {
 async function cardToPng17(node, opts) {
   opts = opts || {};
   if (!node) throw new CardExportError("node", "There is no card to export.");
+  /* A fixed-size card may sit inside a wrapper: export the card itself. */
+  const fx = node.hasAttribute && node.hasAttribute("data-cx-fixed") ? node : node.querySelector && node.querySelector("[data-cx-fixed]");
+  const fixed = !!fx;
+  if (fx) node = fx;
   const rect = node.getBoundingClientRect();
   if (!rect.width || !rect.height) throw new CardExportError("node", "The card isn't showing, so it can't be exported.");
-  const [W, H] = cx17Size(rect.width, rect.height);
+  const [W, H] = fixed ? [CX17.fixed[0] - 2 * CX17.mat[0], CX17.fixed[1] - 2 * CX17.mat[1]] : cx17Size(rect.width, rect.height);
   const k = W / rect.width;
   const lib = await cx17Lib();
   try { if (document.fonts && document.fonts.ready) await document.fonts.ready; } catch (e) { /* fonts API missing: carry on */ }
@@ -141,6 +148,18 @@ async function cardToPng17(node, opts) {
   let seen = null, varied = false;
   for (let i = 0; i < probe.length && !varied; i += 4 * 997) { const c = probe[i] + "," + probe[i + 1] + "," + probe[i + 2] + "," + probe[i + 3]; if (seen === null) seen = c; else if (c !== seen) varied = true; }
   if (!varied) throw new CardExportError("render", "The card came out blank. Try again.");
+  if (fixed) {
+    const out = document.createElement("canvas"); out.width = CX17.fixed[0]; out.height = CX17.fixed[1];
+    const o = out.getContext("2d");
+    const g = o.createRadialGradient(out.width / 2, 0, 0, out.width / 2, 0, out.height * 0.62);
+    g.addColorStop(0, "#2A210C"); g.addColorStop(1, "#0B0B0C");
+    o.fillStyle = "#0B0B0C"; o.fillRect(0, 0, out.width, out.height);
+    o.fillStyle = g; o.fillRect(0, 0, out.width, out.height);
+    o.drawImage(cv, CX17.mat[0], CX17.mat[1], W, H);
+    const blob = await new Promise((res) => out.toBlob(res, "image/png"));
+    if (!blob) throw new CardExportError("render", "The image couldn't be saved. Try again.");
+    return { blob, width: out.width, height: out.height, plate: false };
+  }
   const wantUrl = String(opts.url || "").replace(/^https?:\/\//, "");
   const shows = !wantUrl || (node.innerText || "").toLowerCase().includes(wantUrl.toLowerCase());
   const fin = shows ? cv : cx17Band(cv, wantUrl);
@@ -169,9 +188,9 @@ async function cx17Share(file, title, url) {
 
 
 /* The share sheet showed up without error, but the person may not have saved anything: only "shared" is reported. */
-function cx17Download(blob, name) {
+function cx17Download(blob, name, ext) {
   const a = document.createElement("a"), u = URL.createObjectURL(blob);
-  a.href = u; a.download = (name || "fireflair-card") + ".png"; a.rel = "noopener"; document.body.appendChild(a); a.click();
+  a.href = u; a.download = (name || "fireflair-card") + "." + (ext || "png"); a.rel = "noopener"; document.body.appendChild(a); a.click();
   setTimeout(() => { URL.revokeObjectURL(u); a.remove(); }, 4000);
 }
 
