@@ -199,10 +199,10 @@ function HorizontalCardRanker({ items, label, renderCard, tail }) {
 
 /* owner "company" (v16.12): the same section on the FF Staff Company profile,
    with its records in company.records and its own show/hide keys. */
-function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd, owner, pub }) {
+function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd, owner, pub, lead }) {
   const { state, dispatch } = useStore();
   const items = isMe ? list : list.filter(r => !r.hidden && !r.proposed);
-  if (!isMe && !items.length) return null;
+  if (!isMe && !items.length && !(catKey === "locations" && lead)) return null;
   const vkey = owner === "company" ? `co_${catKey}` : `attr_${catKey}`;
   const v = state.categoryVisibility[vkey];
   /* v1.2: on your own profile every section starts closed except Professions. */
@@ -256,9 +256,11 @@ function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd
             dispatch({ type: "TOAST", toast: `${n} added` });
           }} />
         )}
-        {isMe && catKey === "locations" && <CoverageTree17 owner={owner} {...(owner === "company" ? { title: null, compact: true, startOpen: ["country:GB"] } : {})} />}
+        {isMe && catKey === "locations" && (COV_TREE_PHASE3
+          ? <CoverageTree17 owner={owner} {...(owner === "company" ? { title: null, compact: true, startOpen: ["country:GB"] } : {})} />
+          : <AreasEditor17 ownerKind={owner === "company" ? "company" : undefined} />)}
         <div style={{ height: isMe && (catKey === "professions" || catKey === "locations") && owner !== "company" ? 12 : 0 }} />
-        {isMe && catKey === "locations" && owner === "company" ? null : editing ? (
+        {!isMe && catKey === "locations" ? <AreasChips17 owner={{ records: { locations: items } }} lead={lead} /> : isMe && catKey === "locations" && owner === "company" ? null : editing ? (
           <TierEditor catKey={catKey} def={def} rows={eRows} onOpen={(r) => onOpen(r)} tail={addTile} />
         ) : (
           pub && !isMe ? <PubGrid catKey={catKey} def={def} items={items} shade={shade} onOpen={onOpen} /> : (
@@ -684,7 +686,7 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
      qualifications and skills, experience, locations and languages, interests
      and anything else, then network, reviews, Q&A. */
   const renderPub = (catKey) => order.includes(catKey) ? (
-    <ProfileAttributeSection key={catKey} catKey={catKey} def={cats[catKey]} list={records[catKey] || []} isMe={false} shade={shade} pub
+    <ProfileAttributeSection key={catKey} catKey={catKey} def={cats[catKey]} list={records[catKey] || []} isMe={false} shade={shade} pub lead={person.travelText}
       onOpen={(r) => setOpenRec({ record: r, def: cats[catKey], category: catKey })} onAdd={() => {}} />
   ) : null;
 

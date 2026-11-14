@@ -144,7 +144,9 @@ function FFMap({ mode = "home" }) {
   const home = mode === "home";
 
   const pins0 = useMemo(() => {
-    const people = directory.map(p => ({ ...p, kind: "person", area: (p.locations || []).find(l => MAP_AREAS[l]) })).filter(p => p.area);
+    /* v17.6: a person with a base is plotted at the centre of their public base place (p.basePin, never the postcode point);
+       everyone else keeps the area pin from their work areas. */
+    const people = directory.map(p => ({ ...p, kind: "person", area: p.basePin ? p.basePin.label : (p.locations || []).find(l => MAP_AREAS[l]) })).filter(p => p.area);
     const p1 = mode === "phase1";
     const all = home || p1
       ? [...people, ...(p1 ? [] : MAP_BUSINESSES.map(b => ({ ...b, kind: "business" }))),
@@ -154,13 +156,28 @@ function FFMap({ mode = "home" }) {
     const RING = [[0, 0], [7, -6], [-7, 5], [8, 7], [-8, -6], [0, 9], [0, -9], [11, 0], [-11, 0], [10, -9], [-10, 9]];
     const cos = mode === "phase1" ? [] : COMPANY_PINS11.map(p => ({ ...p, x: (p.ll[1] + 0.4045) / 0.00525, y: (51.654 - p.ll[0]) / 0.002957 + 9 }));
     const partnerPins = mode !== "network" ? [] : companyList(state).filter((c) => !c.unclaimed && !c.mine && (c.locations || []).length).flatMap((c) => c.locations.map((l, i) => { const ll = [l.lat, l.lng]; return { id: "pt_" + c.id + "_" + i, coId: c.id, kind: "company", partner: true, name: c.name, profession: c.kind, area: l.label, ll, ldn: inLondon11(ll), cat: c.cat || "bar", x: (ll[1] + 0.4045) / 0.00525, y: (51.654 - ll[0]) / 0.002957 + 9 }; }));
+    const xyOf = (ll) => ({ x: (ll[1] + 0.4045) / 0.00525, y: (51.654 - ll[0]) / 0.002957 + 9 });
+    /* The signed-in company's base (the seeded companies already have their pins above). */
+    const mine = mode === "phase1" ? null : companyList(state).find(c => c.mine && baseHas17(c));
+    const bp = mine ? basePublicPoint17(mine) : null;
+    const minePin = bp && !COMPANY_PINS11.some(p => p.name === mine.name) ? (() => {
+      const k = bp.lat.toFixed(2) + "," + bp.lng.toFixed(2); const n = (seen["co" + k] = (seen["co" + k] || 0) + 1) - 1;
+      const ll = [bp.lat + (n ? 0.012 * Math.sin(n * 2.4) : 0), bp.lng + (n ? 0.019 * Math.cos(n * 2.4) : 0)];
+      return [{ id: "base_mine", coId: "mine", kind: "company", partner: mode === "network", name: mine.name, profession: mine.kind, area: bp.label, ll, ldn: inLondon11(ll), cat: mine.cat || "bar", ...xyOf(ll) }];
+    })() : [];
     return [...all.map(p => {
+      if (p.basePin) {
+        const k = p.basePin.lat.toFixed(2) + "," + p.basePin.lng.toFixed(2), n = (seen[k] = (seen[k] || 0) + 1) - 1;
+        const ll = [p.basePin.lat + (n ? 0.012 * Math.sin(n * 2.4) : 0), p.basePin.lng + (n ? 0.019 * Math.cos(n * 2.4) : 0)];
+        const xy = xyOf(ll);
+        return { ...p, ll, x: Math.max(4, Math.min(96, xy.x)), y: Math.max(5, Math.min(95, xy.y)) };
+      }
       const [bx, by] = MAP_AREAS[p.area];
       const n = (seen[p.area] = (seen[p.area] || 0) + 1) - 1;
       const ring = RING[n % RING.length];
       return { ...p, x: Math.max(4, Math.min(96, bx + ring[0])), y: Math.max(5, Math.min(95, by + ring[1])) };
-    }), ...cos, ...partnerPins];
-  }, [home, mode, directory.length, state.company]);
+    }), ...cos, ...partnerPins, ...minePin];
+  }, [home, mode, directory.length, state.company, state.profile.base17]);
   const netQ = useContext(NetQ17), searching = mode === "network" && !!String(netQ || "").trim();
   const netPillar = mode === "network" && !searching ? (state.netPillar17 || "") : "";
   const pinsAll = useMemo(() => {

@@ -1,5 +1,25 @@
 # FireFlair prototype — changelog
 
+## v17.6 (locations)
+
+Where you are based, and the areas you cover, are now two separate things. The 1,000-place tick tree is no longer used to collect coverage in Phase 2.
+
+- Where are you based? (`BaseField17`, FF Team profile and Company Card): one box, placeholder "Postcode". A full or partial UK postcode is looked up (`LOCATION_ADAPTER.lookupPostcode`) and saved at once: the private postcode and its point, and the public label at town or city level (any London postcode gives London). A place name can be typed instead (catalogue search); picking one saves that place's centre and marks the base `approx: true`. The line under the field is "We put you on the map to find jobs as close to you as possible." (FF Team) or "We put you on the map so people nearby can find you." (company). "We only display your area." is removed.
+- Offline: when the postcode service cannot be reached the adapter returns an estimate from the outward code (`source: "offline-estimate"`, always `approx`), with centre points added for the London areas. A lookup that fails with no estimate shows "We couldn't look that postcode up."
+- Areas you cover (FF Team Work locations and the company's Areas covered, both through the locations branch of `ProfileAttributeSection`): `AreasEditor17` has one drop-down, "How far do you travel?" (5, 10, 25, 50, 100 miles, UK-wide), and an "Add a place" search that adds an unlimited number of chips. Each chip is a location record, removable. The company no longer starts as UK-wide by itself.
+- The tick tree (`CoverageTree17` in select mode, `COV_SET`, exceptions) stays in the code behind `COV_TREE_PHASE3 = false` and returns in Phase 3. The "Explore by area" links tree, the area pages and their addresses are unchanged.
+- Matching: a place is covered when it is at or under an added place (minus any old `coverage17.exc`), or it is a town, neighbourhood, borough, county or unitary area whose centre lies within the travel distance of the base point (straight line), or travel is UK-wide and the place is in the UK. `covOn17`, `covForFd17` and the area pages (`fdCovers`, `fdServesWithin`) all use this. A nation or country is not covered by distance alone.
+- Public: the card shows the base label only. Areas show the travel distance first ("Within 25 miles of Luton" or "UK-wide"), then each added place: `companyLocations(c)` and `covText17` return them in that order; the area-page cards say "Works in: Within 10 miles of London, ...".
+- Map: every person and company with a base gets a pin from the centre of the base's public place (the postcode point is never plotted; a base outside the catalogue is rounded to about 1 km). The signed-in member's pin now comes from the base even when they have no work areas, and the signed-in company gets a pin from its base.
+- New document for the developers: docs/locations-phase2.md.
+
+State shape (all new fields optional; older saved data keeps working):
+- `profile.base17` and `company.base17` = `{ locId, label, lat, lng, approx, postcode?: { code, lat, lng, approx }, at }`. `lat`/`lng` are the public place centre; `postcode` is private and is used only for distance. A base saved as `{ locId, at }` uses the place centre. `state.workPostcode` is still written for the profile.
+- `profile.travel17` and `company.travel17` = `5 | 10 | 25 | 50 | 100 | "uk"`; absent until chosen.
+- Location records are unchanged and gain `lat`/`lng`: `{ id, name, locId, lat, lng, ... }` in `records.locations`.
+- Reducer: `BASE_SET { owner?, locId?, label?, lat?, lng?, postcode?, approx? }` (now accepts a base outside the catalogue when `label`, `lat` and `lng` are given) and new `TRAVEL_SET { owner?, value }` in `cov17Reducer`. `COV_SET` is unchanged.
+- Person object (`meAsStaff`) gains `basePin` and `travelText`; its `coverage` gains `near { lat, lng, km, baseId }`, `uk` and `travelText`.
+
 ## v17.5.4 (Phase Two, almost final)
 Artifact version 1794670999-61b2.
 
