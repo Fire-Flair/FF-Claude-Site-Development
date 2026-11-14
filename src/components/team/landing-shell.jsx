@@ -376,7 +376,7 @@ function LoginSheet({ open, onClose }) {
           const party = state.site === "party";
           dispatch({ type: "COMPANY_SAVE", company: party
             ? { name: "Jennifer Aniston", kind: "Host", location: "London", description: "Hosts private dinners, birthdays and garden parties across London.", saved: true, cardSavedAt: Date.now(), finishedAt: Date.now(), joinedAt: Date.now() }
-            : { ...vooshkaEditable17(), phone: "+44 7814 904355", saved: true, cardSavedAt: Date.now(), finishedAt: Date.now(), joinedAt: Date.now() } });
+            : { ...coFromProfile17("vooshka"), phone: "+44 7814 904355", saved: true, cardSavedAt: Date.now(), finishedAt: Date.now(), joinedAt: Date.now() } });
           dispatch({ type: "COMPANY_SIGNED_IN", slug: party ? "jenniferaniston" : "vooshka" });
         }
         dispatch({ type: "TOAST", toast: "Complete profile loaded" });

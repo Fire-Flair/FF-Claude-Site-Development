@@ -76,6 +76,25 @@ function coCard17(category, id, title, text, photos) {
 const coCardList17 = (category, idBase, rows) => rankAll(rows.map(([title, text, photos], i) => coCard17(category, idBase + "_" + i, title, text, photos)));
 
 
+/* A directory company's profile file as the builder's own shape (what the owner edits). Read at run time, so the page tables exist. */
+function coFromProfile17(slug) {
+  const page = COMPANY_PAGES["co_" + slug], base = COMPANIES.find((x) => x.id === "co_" + slug) || SUPPLIER_BASES17["co_" + slug];
+  if (!page) return null;
+  const places = String(page.areas || "").split(" · ").filter(Boolean);
+  const co = {
+    name: page.name, kind: page.kind, areas: places.join(" and "), slug: page.slug,
+    ...(base && base.base17 ? { base17: { ...base.base17, at: 0 } } : {}),
+    socials: { ...(page.socials || {}) }, theme: page.theme, layout: page.layout, logoWide: !!page.logoWide,
+    description: page.description, logo: page.logo, media: (page.media || []).map((m) => ({ ...m })),
+    info: (page.info || []).map((x) => ({ ...x })),
+    records: { ...(page.records || {}) },
+    qa: [...CO_QA_SEED.filter((q) => q.group === "feedback" && !(page.qa || []).some((x) => x.group === "feedback")), ...(page.qa || [])].map((q) => ({ ...q })), reviews: [], partners: [],
+  };
+  co.records.locations = places.map((a, i) => makeRecord("locations", a, i === 0 && page.areasNote ? { description: page.areasNote } : {}));
+  return co;
+}
+
+
 /* Photos picked in bulk become one card each, titled with the file name without its extension. */
 const coTitleOfFile17 = (name) => String(name || "").replace(/\.[A-Za-z0-9]{1,5}$/, "").trim();
 

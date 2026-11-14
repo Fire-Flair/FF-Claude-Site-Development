@@ -65,7 +65,7 @@ const realPage11 = (c) => {
   return ["co_" + c.slug, {
     name: p.name, kind: p.kind, areas: (p.areas || []).join(" · "), slug: p.slug,
     socials: Object.fromEntries(live.filter((r) => DIR_SOCIAL17[r.description]).map((r) => [DIR_SOCIAL17[r.description], r.name])),
-    theme: "onyx", layout: "classic", tier: "standard", unclaimed: c.unclaimed,
+    theme: (p.card && p.card.theme) || "onyx", layout: (p.card && p.card.layout) || "classic", tier: m.tier || "standard", unclaimed: c.unclaimed,
     description: p.description, team: [], venues: [], reviews: [],
     logo: p.logo || undefined, logoWide: !!p.logoWide, logoBg: p.logoBg || "dark",
     media: (p.media || []).map((x) => ({ id: x.id, src: x.src, alt: x.alt || p.name })),
@@ -77,6 +77,7 @@ const realPage11 = (c) => {
     ...(Object.keys(records).length ? { records } : {}),
     ...(qa.length ? { qa } : {}),
     areaPlaces: c.profile.areaPlaces || [],
+    areasNote: p.areasNote || "",
     profileMeta: m,
   }];
 };
@@ -145,7 +146,7 @@ function companyLegend17(pins) {
 const COMPANIES = [
   /* Based in Luton; covers England and Wales (not Scotland or Northern Ireland). cover is read by the area pages' company lookup (fdCompanyCover). */
   { id: "co_vooshka", name: "Vooshka Cocktail Bar", kind: "Luxury mobile cocktail bar", area: "Luton", tag: "VOOSH", tier: "gold", base17: { locId: "gn:3333168" }, cover: ["England", "Wales"], locations: [{ label: "Luton", lat: 51.8911, lng: -0.4279, approx: false }] },
-  ...REAL_COMPANIES11.map(realBase11),
+  ...REAL_COMPANIES11.filter((c) => c.slug !== "vooshka").map(realBase11),
 ];
 
 

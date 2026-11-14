@@ -213,7 +213,7 @@ function ProfileGate17({ kind }) {
       const demo = kind === "party" ? { ...DEMO_HOST17, tier: undefined, photo: (window.FF_IMG || {}).face_you || "" } : (() => {
         const demoCo = companyList(state).find((x) => !x.mine) || {};
         if (demoCo.id === "co_vooshka")
-          return vooshkaEditable17();
+          return coFromProfile17("vooshka");
         const { id, mine, tier, ...rest } = demoCo;
         return rest;
       })();

@@ -26,6 +26,7 @@ Nothing is renamed. Version 2 adds `formatVersion`, `meta`, `base`, `areas`, `so
 | `base` | Where the company is based, as a place name the way the company states it. The plain-name twin of `base17` | Where are you based? |
 | `areas` | Places covered, as the company states them. The build resolves each one to a place id (see "Areas") | Areas covered |
 | `logo`, `logoBg` (`dark` or `light`), `logoWide` | The logo and how it sits | The Company Card |
+| `card` (`theme`, `layout`), `areasNote` | How the Company Card looks; one sentence on where the company works. Set by the company or by us, the agent leaves them out | The Company Card, the builder |
 | `description`, `aboutSource` | The About text (paragraphs split on blank lines) and who wrote it | About |
 | `media[]` | The gallery in display order: `{ id, src, alt, source }`; `alt` is the caption | The Add photos row |
 | `info[]` | The company's own sections (see "Sections") | More information |
@@ -67,6 +68,7 @@ meta: {
   category:   "bar" | "dj" | "photo" | "catering" | "svc",
   sub:        "ice" | "glassware" | "events",   // only for category "svc"
   tag:        "BARBR",                 // the short code on the Company Card; unique across files
+  tier:       "gold",                  // verification level, set by us (standard, bronze, silver or gold)
   partner:    true,                    // FireFlair partner (Partners layer on the map)
   position:   20,                      // place in the directory list; lower first, no position goes last by slug
   legal:      { form: "limited" | "sole" | null, legalName, companyNumber },
