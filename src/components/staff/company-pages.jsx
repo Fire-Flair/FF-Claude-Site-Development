@@ -273,7 +273,7 @@ function vooshkaSource17() {
         info_vk_why: coCardList17("info", "vk_why", VK17_WHY.map(([t, d]) => [t, d, []])),
         info_vk_steps: coCardList17("info", "vk_steps", VK17_STEPS.map(([t, d]) => [t, d, []])),
         info_vk_bars: coCardList17("info", "vk_bars", VK17.bars.map(([f, l, sz]) => [l, sz, [f]])),
-        packages: coCardList17("packages", "vk_pk", VK17_OCC.map(([t, tag, inc, ideal], i) => [t, tag + "\n\nIncludes: " + inc + "\nIdeal for: " + ideal, [VK17.occ[i]]])),
+        packages: coCardList17("packages", "vk_pk", VK17_OCC.map(([t, tag, inc, ideal], i) => [t, tag + "\n\nIncludes: " + inc + "\nIdeal for: " + ideal, []])),
         cocktail_menu: coCardList17("cocktail_menu", "vk_ck", VK17.sig.map(([src, name]) => [name, sig(name), [src]])),
         web_reviews: coCardList17("web_reviews", "vk_wr", VK17.revs.map(([by, text]) => [by, text, []]))
       },
