@@ -149,7 +149,7 @@ function v11Reducer(s, a) {
     case "AVAIL_ASK_PATCH": return { ...s, availabilityAsks: (s.availabilityAsks || []).map(x => x.id === a.id ? { ...x, ...a.patch } : x) };
     case "COMPANY_MEDIA_ADD": { const c = s.company || {}; return { ...s, company: { ...c, media: [...(c.media || []), a.item] } }; }
     case "COMPANY_MEDIA_DELETE": { const c = s.company || {}; return { ...s, company: { ...c, media: (c.media || []).filter(m => m.id !== a.id) } }; }
-    case "COMPANY_MEDIA_PATCH": case "COMPANY_MEDIA_MOVE": case "CO_SECTION_DELETE": case "CO_INFO_MIGRATE": return coShapeReducer17(s, a) || s;
+    case "COMPANY_MEDIA_PATCH": case "COMPANY_MEDIA_MOVE": case "CO_SECTION_DELETE": case "CO_INFO_MIGRATE": case "CO_SEC_ADD": case "CO_SEC_PATCH": case "CO_SEC_MOVE": case "CO_SLUG_SET": return coShapeReducer17(s, a) || s;
     case "NOTES_SEEN": return notesSeen17(s);
     /* v17.4.4 networking. Network = a one-way add of a person or a company (no confirmation). Team stays two-way (TEAM_INVITE). */
     case "NET_TOGGLE": {

@@ -76,6 +76,7 @@
   "components/staff/events.jsx",
   "components/staff/company-shape.jsx",
   "components/staff/company-cards.jsx",
+  "components/staff/company-builder17.jsx",
   "components/staff/company-pages.jsx",
   "components/staff/network-directory.jsx",
   "components/shared/find-directory.jsx",

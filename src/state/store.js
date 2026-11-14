@@ -170,7 +170,9 @@ function reducerCore17(s0, a) {
   if (a && a.owner === "company" && /^REC_/.test(a.type)) {
     const c = s.company || {};
     const out = reducerCore17({ ...s, profile: { ...s.profile, records: c.records || {} } }, { ...a, owner: undefined });
-    return { ...s, company: { ...c, records: out.profile.records } };
+    /* The contact cards and the Company Card's social icons stay in step. */
+    const rec = out.profile.records;
+    return { ...s, company: { ...c, records: rec, ...(a.category === "contact" ? { socials: coSocialsFromContacts17(c, (rec || {}).contact) } : {}) } };
   }
   { const r11 = v11Reducer(s, a); if (r11) return r11; }
   { const rq = inv17Reducer(s, a) || qa17Reducer(s, a) || pc17Reducer(s, a) || cov17Reducer(s, a) || ct17Reducer(s, a) || base17Reducer(s, a) || notes17Reducer(s, a); if (rq) return rq; }

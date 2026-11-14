@@ -82,11 +82,13 @@ function ProfileSocial11({ isMe, person }) {
 }
 
 
-const socialsOf11 = (co) => {
+const socialValues11 = (co) => {
   const s = { ...((co && co.socials) || {}) };
   ((co && co.contact) || []).forEach(([k, v]) => { const m = SOC11.find(x => new RegExp(x.label, "i").test(k)); if (m && !s[m.k]) s[m.k] = v; });
-  return SOC11.filter(x => String(s[x.k] || "").trim()).map(x => x.k);
+  coRecsOf17(co, "contact").forEach((r) => { const m = coKindOf17(r.description).soc; if (m && !r.hidden && !s[m] && String(r.name || "").trim()) s[m] = r.name; });
+  return s;
 };
+const socialsOf11 = (co) => { const s = socialValues11(co); return SOC11.filter(x => String(s[x.k] || "").trim()).map(x => x.k); };
 
 
 
@@ -289,10 +291,11 @@ function CoQSheet11({ sheet, qa, save, onClose }) {
 }
 
 
-function CompanyQA11({ c }) {
+function CompanyQA11({ c, addSignal }) {
   const { dispatch } = useStore();
   const [view, setView] = useState("todo");
   const [sheet, setSheet] = useState(null);
+  useEffect(() => { if (addSignal) { setView("todo"); setSheet("new"); } }, [addSignal]);
   const qa = coQa(c);
   const isDone = (q) => !!(q.answer || q.note);
   const todo = qa.filter(q => !isDone(q)), done = qa.filter(isDone);
@@ -321,7 +324,7 @@ function CompanyQA11({ c }) {
 
 
 
-function CompanyCardFace({ c, edit, set, onLogo, size = "", party }) {
+function CompanyCardFace({ c, edit, set, onLogo, size = "", party, links }) {
   const co = c || {};
   const t = THEMES[co.theme] || THEMES.onyx;
   const layout = co.layout || "logo";
@@ -351,17 +354,18 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party }) {
   const name = edit ? <input className="ff-cardin nm" value={co.name || ""} placeholder={party ? "Your name" : "Company name"} aria-label={party ? "Your name" : "Company name"} maxLength={60} onChange={(e) => set({ name: e.target.value })} />
     : <span className="nm">{co.name || (party ? "Your name" : "Your company")}</span>;
   const kind = edit ? <span className="kd2"><I11.Briefcase size={12} /><input className="ff-cardin kd" value={co.kind || ""} placeholder="What do you do?" aria-label="What do you do?" maxLength={70} onChange={(e) => set({ kind: e.target.value })} /></span>
-    : <span className="kd kd2"><I11.Briefcase size={12} /><span>{co.kind || "What you do"}</span></span>;
-  const area = (
+    : (String(co.kind || "").trim() ? <span className="kd kd2"><I11.Briefcase size={12} /><span>{co.kind}</span></span> : null);
+  const area = (edit || String(areas || "").trim()) ? (
     <span className="ar"><I11.MapPin size={12} /><span>{areas || "Where you're based"}</span></span>
-  );
+  ) : null;
+  const sv = socialValues11(co);
   return (
     <CardFrame tier={(co.theme === "silver" || co.theme === "gold") ? co.theme : (co.tier || "gold")} theme={t} premium ratio="8 / 5" className={`ff-cocard ff-cc11 l-${layout} ${size}${co.logoWide ? " lw" : ""}`} style={{ ...vars, maxWidth: 460, margin: size ? 0 : "0 auto" }}>
       <span className="ff-pc-plate ff-cc11-plate">{co.unclaimed ? "Company card" : party ? "VIP Host Card" : "Company Card"}</span>
       {!co.unclaimed && <span className="ff-cc11-coin"><FFLogo size={size ? 24 : 30} tier={co.theme === "silver" ? "silver" : "gold"} /></span>}
       <div className="ff-cc11-body">
         {logo}
-        <span className="ff-cc11-tx">{name}{kind}{area}{socialsOf11(co).length > 0 && <span className="soc">{socialsOf11(co).map(k => <span key={k} className="si" title={(SOC11.find(x => x.k === k) || {}).label}><SocialIcon11 k={k} size={size ? 11 : 15} /></span>)}</span>}</span>
+        <span className="ff-cc11-tx">{name}{kind}{area}{socialsOf11(co).length > 0 && <span className="soc">{socialsOf11(co).map(k => { const lb = (SOC11.find(x => x.k === k) || {}).label, ic = <SocialIcon11 k={k} size={size ? 11 : 15} />; return links ? <a key={k} className="si" title={lb} aria-label={lb} href={coContactHref17(lb, sv[k])} target="_blank" rel="noopener noreferrer">{ic}</a> : <span key={k} className="si" title={lb}>{ic}</span>; })}</span>}</span>
       </div>
       <div className="ff-cc11-foot" style={{ background: t.dark ? "rgba(0,0,0,.45)" : "#141416" }}>
         {!co.unclaimed && <><FFLogo size={size ? 15 : 18} /><Wordmark size={size ? 9 : 11} /></>}
@@ -373,7 +377,7 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party }) {
 
 
 
-function EditableCompanyCard({ plain }) {
+function EditableCompanyCard({ plain, noType }) {
   const { state, dispatch } = useStore();
   const c = state.company || {};
   const set = (p) => dispatch({ type: "COMPANY_SAVE", company: p });
@@ -385,7 +389,7 @@ function EditableCompanyCard({ plain }) {
         <span className="ff-cc11-baseh">Where are you based?</span>
         <BaseField17 ink="#16130F" owner="company" />
       </div>
-      {!party && <div className="ff-cotype17" role="group" aria-label="Company type">
+      {!party && !noType && <div className="ff-cotype17" role="group" aria-label="Company type">
         {[["limited", "Limited company"], ["sole", "Sole trader"]].map(([k, l]) => (
           <button key={k} type="button" aria-pressed={c.companyType === k} onClick={() => set({ companyType: k })}>{l}</button>
         ))}
@@ -729,108 +733,11 @@ function AboutBox11() {
   const c = state.company || {};
   const [t, setT] = useState(c.description || "");
   useEffect(() => { setT(c.description || ""); }, [c.description]);
-  return <AutoText17 className="ff-input ff-aboutbox" rows={4} value={t} aria-label="About" placeholder="Tell people what your business does"
+  return <AutoText17 className="ff-input ff-aboutbox" rows={4} value={t} aria-label="About" placeholder="A mobile cocktail bar bringing exquisite drinks and a warm welcome to weddings and parties across the UK."
     onChange={(e) => setT(e.target.value)} onBlur={() => { if (t.trim() !== (c.description || "")) dispatch({ type: "COMPANY_SAVE", company: { description: t.trim() } }); }} />;
 }
 
 
-
-/* Many photos at once: one card per photo, titled with the file name without its extension. */
-function BulkPhotos17({ category }) {
-  const { state, dispatch } = useStore();
-  const ref = useRef(null);
-  const pick = async (e) => {
-    const files = [...(e.target.files || [])].filter(f => /^image\//.test(f.type));
-    e.target.value = "";
-    if (!files.length) return;
-    const made = (await Promise.all(files.map(async (f) => {
-      try {
-        const dataUrl = await shrinkPhoto(f, 900);
-        return makeRecord(category, coTitleOfFile17(f.name), { media: [{ id: uid("med"), name: f.name, dataUrl }] });
-      } catch (err) { return null; }
-    }))).filter(Boolean);
-    if (!made.length) return;
-    const have = coRecsOf17(state.company, category);
-    dispatch({ type: "REC_BULK", owner: "company", category, list: addRanked(have, made) });
-  };
-  return (
-    <button type="button" className="ff-card ff-addtile ff-bulk17" aria-label="Add photos" onClick={() => ref.current && ref.current.click()}
-      style={{ width: CARD_W.info, aspectRatio: "1 / 1", borderRadius: 22 }}>
-      <span style={{ textAlign: "center" }}>
-        <span style={{ display: "grid", placeItems: "center", width: 42, height: 42, margin: "0 auto", border: "1px solid var(--gold-dk)", borderRadius: 12 }}><I11.ImagePlus size={20} color="var(--gold-dk)" /></span>
-        <span className="ff-label" style={{ display: "block", marginTop: 8 }}>Add photos</span>
-      </span>
-      <input ref={ref} type="file" accept="image/*" multiple hidden onChange={pick} />
-    </button>
-  );
-}
-
-
-/* FF Staff: More information. Sections a company writes for its public page: settings plus cards made with the shared card tool. */
-function InfoBuilder17() {
-  const { state, dispatch } = useStore();
-  const c = state.company || {};
-  const list = c.info || [];
-  const [ed, setEd] = useState(null);
-  const [openRec, setOpenRec] = useState(null);
-  const [addingTo, setAddingTo] = useState(null);
-  useEffect(() => { if (list.some(x => x && x.items && x.items.length)) dispatch({ type: "CO_INFO_MIGRATE" }); }, [list]);
-  const save = (next) => dispatch({ type: "COMPANY_SAVE", company: { info: next } });
-  return (
-    <div className="ff-info17">
-      {list.map(sec => {
-        const key = coInfoKey17(sec.id), def = coInfoDef17(sec);
-        return (
-          <ProfileAttributeSection key={sec.id} catKey={key} def={def} list={coSecAll17(c, sec)} isMe shade="onyx" owner="company"
-            onOpen={(r) => setOpenRec({ record: r, def, category: key })} onAdd={() => setAddingTo({ key, def })}
-            top={<button type="button" className="ff-info17-set" aria-label={`Settings for ${sec.title || "this section"}`} onClick={() => setEd(sec)}><I11.Pencil size={14} /> Settings</button>}
-            moreTail={<BulkPhotos17 category={key} />} />
-        );
-      })}
-      <button type="button" className="ff-info17-add" onClick={() => setEd({ id: uid("info"), title: "", fresh: true })}><I11.Plus size={15} /> Add a section</button>
-      {ed && <InfoSheet17 sec={ed} index={list.findIndex(y => y.id === ed.id)} count={list.length} onClose={() => setEd(null)}
-        onSave={(x) => { const { fresh, ...clean } = x; save(list.some(y => y.id === x.id) ? list.map(y => y.id === x.id ? clean : y) : [...list, clean]); setEd(null); }}
-        onMove={(x, dir) => { const { fresh, ...clean } = x; const i = list.findIndex(y => y.id === x.id), j = i + dir; if (i < 0 || j < 0 || j >= list.length) return; const next = list.map(y => y.id === x.id ? clean : y); [next[i], next[j]] = [next[j], next[i]]; save(next); setEd(null); }}
-        onDelete={() => { dispatch({ type: "CO_SECTION_DELETE", id: ed.id }); setEd(null); }} />}
-      <GenericAttributeCardCreator owner="company" open={!!openRec} record={openRec && openRec.record} def={openRec && openRec.def} category={openRec && openRec.category} onClose={() => setOpenRec(null)} />
-      <GenericAttributeCardCreator owner="company" open={!!addingTo} record={null} category={addingTo && addingTo.key} def={addingTo && addingTo.def} onClose={() => setAddingTo(null)} />
-    </div>
-  );
-}
-
-const ChevronUpIcon17 = lucideIcon("ChevronUp");
-
-
-function InfoSheet17({ sec, index, count, onSave, onMove, onDelete, onClose }) {
-  const [x, setX] = useState(() => JSON.parse(JSON.stringify(sec)));
-  const set = (p) => setX({ ...x, ...p });
-  const clean = () => ({ ...x, title: String(x.title || "").trim(), lead: String(x.lead || "").trim(), text: String(x.text || "").trim(), quote: String(x.quote || "").trim(), chips: (x.chips || []).filter(Boolean) });
-  return (
-    <Sheet open onClose={onClose} title={sec.fresh ? "Add a section" : "Section"}>
-      <div className="ff-info17-ed">
-        <Field label="Title"><input className="ff-input" value={x.title || ""} maxLength={60} onChange={(e) => set({ title: e.target.value })} /></Field>
-        <Field label="Headline"><input className="ff-input" value={x.lead || ""} maxLength={120} onChange={(e) => set({ lead: e.target.value })} /></Field>
-        <Field label="Text"><AutoText17 value={x.text || ""} rows={3} onChange={(e) => set({ text: e.target.value })} /></Field>
-        <div className="ff-field">
-          <span className="ff-label" style={{ display: "block", marginBottom: 6 }}>Tags</span>
-          <Chips17 edit value={x.chips || []} onChange={(chips) => set({ chips })} placeholder="Add a tag" max={30} />
-        </div>
-        <label className="ff-info17-chk"><input type="checkbox" checked={!!x.numbered} onChange={(e) => set({ numbered: e.target.checked })} /><span>Numbered</span></label>
-        <Field label="Closing line"><input className="ff-input" value={x.quote || ""} maxLength={160} onChange={(e) => set({ quote: e.target.value })} /></Field>
-        <div className="acts">
-          <Btn variant="primary wide" disabled={!String(x.title || "").trim()} onClick={() => onSave(clean())}><I11.Check size={14} /> Save section</Btn>
-          {!sec.fresh && (
-            <div className="ff-co-shift17" role="group" aria-label="Order">
-              <button type="button" aria-label="Move section up" disabled={index <= 0 || !String(x.title || "").trim()} onClick={() => onMove(clean(), -1)}><ChevronUpIcon17 size={15} /> Up</button>
-              <button type="button" aria-label="Move section down" disabled={index >= count - 1 || !String(x.title || "").trim()} onClick={() => onMove(clean(), 1)}>Down <I11.ChevronDown size={15} /></button>
-            </div>
-          )}
-          {!sec.fresh && <button type="button" className="ff-info17-del" onClick={onDelete}><I11.Trash2 size={14} /> Delete section</button>}
-        </div>
-      </div>
-    </Sheet>
-  );
-}
 
 /* The companies a company works with, picked from the directory. */
 function PartnerPick17({ open, onClose }) {
@@ -883,153 +790,5 @@ function CompanyFavs17() {
         </HScroll>
       )}
     </section>
-  );
-}
-
-
-function CompanySections() {
-  const { state, dispatch } = useStore();
-  const all = useDirectory();
-  const c = state.company || {};
-  const [openRec, setOpenRec] = useState(null);
-  const [addingTo, setAddingTo] = useState(null);
-  const [termsOpen, setTermsOpen] = useState(false);
-  const [tab, setTab] = useState("overview");
-  const [picking, setPicking] = useState(false);
-  const partners = coPartners17(state, { mine: true });
-  const cards = coCards17(state, { mine: true });
-  const seeds = coSeeds17(state);
-  const engs = state.auth && state.auth.status === "signedIn" ? state.engagements : [];
-  const stat = (st) => engs.filter(e => e.state === st).length;
-  const teamIds = [...new Set(engs.filter(e => ["confirmed", "completed", "signed_off", "paid"].includes(e.state)).map(e => e.staffId))];
-  const team = teamIds.filter(id => id !== "me").map(id => findPerson(all, state, id)).filter(Boolean);
-  const reviews = (c.reviews || []).map(r => ({ ...makeRecord("reviews", r.byName), id: r.id, description: r.text, rating: r.rating, readOnly: true }));
-  const termsRecs = [
-    { ...makeRecord("terms", "T&Cs"), id: "co_tcs", description: "Your five terms, sent with every Service Card. Tap to view or edit." },
-  ];
-  const vis = (k) => state.categoryVisibility[k] === true;
-  const termsDef = { label: "Terms and conditions", singular: "Terms", icon: "qualification", fields: ["description"] };
-  const soc = c.socials || {};
-  const recSection = (k) => (
-    <ProfileAttributeSection key={k} catKey={k} def={COMPANY_CATEGORIES[k]} list={recsOf(c, k)} isMe shade="onyx" owner="company"
-      onOpen={(r) => setOpenRec({ record: r, def: COMPANY_CATEGORIES[k], category: k })} onAdd={() => setAddingTo(k)} />
-  );
-  const tabs = [
-    { key: "overview", label: "Overview" },
-    { key: "services", label: "Packages" },
-    { key: "team", label: "Team", count: team.length },
-    { key: "reviews", label: "Reviews", count: reviews.length + coRecsOf17(c, "web_reviews").filter(r => !r.hidden).length },
-  ];
-  return (
-    <>
-      <section id="ff-co-media" style={{ marginTop: 22 }}>
-        <CompanyMedia list={c.media || []} editable />
-      </section>
-
-      {c.joinedAt && (
-        <div className="ff-costats">
-          {[["Confirmed", stat("confirmed")], ["Awaiting", stat("requested")], ["Team", team.length]].map(([l, v]) => (
-            <div key={l} className="ff-frame" style={{ padding: 11 }}>
-              <div className="ff-display" style={{ fontSize: 22 }}>{v}</div>
-              <div className="ff-label">{l}</div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      <div className="ff-ptabs-wrap">
-        <ProfileTabs tabs={tabs} active={tab} onChange={setTab} />
-        <div role="tabpanel" id="ff-tabpanel" aria-labelledby={`ff-tab-${tab}`} className="ff-tabpanel" tabIndex={0}>
-          {tab === "overview" && (<>
-            <section id="ff-co-about" style={{ marginTop: 22 }}>
-              <SectionHead icon={<I11.Briefcase size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="About" action={<CategoryToggle sectionKey="co_about" defaultOpen={false} />} />
-              {vis("co_about") && <AboutBox11 />}
-            </section>
-
-            <section id="ff-co-info" style={{ marginTop: 22 }}>
-              <SectionHead icon={<I11.FileText size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="More information" count={(c.info || []).length} action={<CategoryToggle sectionKey="co_info" defaultOpen={false} />} />
-              {vis("co_info") && <InfoBuilder17 />}
-            </section>
-
-            <section id="ff-co-social" style={{ marginTop: 22 }}>
-              <SectionHead icon={<I11.Globe size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Social links" action={<CategoryToggle sectionKey="co_social" defaultOpen={false} />} />
-              {vis("co_social") && (
-                <SocialEdit11 value={soc} onChange={(socials) => dispatch({ type: "COMPANY_SAVE", company: { socials } })} />
-              )}
-            </section>
-
-            {recSection("contact")}
-            {recSection("locations")}
-            {recSection("venues")}
-            {recSection("documents")}
-
-            <section id="ff-co-terms" style={{ marginTop: 22 }}>
-              <SectionHead icon={<I11.FileText size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Terms and conditions" count={1 + companyDocs(c).length + (c.tcDocs || []).length}
-                action={<CategoryToggle sectionKey="co_terms" defaultOpen={false} />} />
-              {vis("co_terms") && (
-                <HScroll label="Terms and conditions">
-                  {termsRecs.map(r => <InformationCard key={r.id} record={r} def={termsDef} themeKey="onyx" editable onClick={() => setTermsOpen(true)} />)}
-                </HScroll>
-              )}
-            </section>
-
-            {state.auth && state.auth.status === "signedIn" && <CompanyFavs17 />}
-
-          </>)}
-
-          {tab === "services" && (<>
-            {recSection("packages")}
-            {recSection("cocktail_menu")}
-            <section id="ff-co-svc" style={{ marginTop: 22 }}>
-              <SectionHead icon={<I11.Sparkles size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={<SoonTitle17>Service Cards</SoonTitle17>} count={cards.services.length} action={<CategoryToggle sectionKey="co_svc" defaultOpen={false} />} />
-              {vis("co_svc") && <Studio17 type="service" site="FF Staff" by={String(c.name || "").trim() || "You"} tag={c.slug || "yourbusiness"} k="coServices17" seed={seeds.service} />}
-            </section>
-            <section id="ff-co-ck" style={{ marginTop: 22 }}>
-              <SectionHead icon={<I11.Martini size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={<SoonTitle17>Cocktail Cards</SoonTitle17>} count={cards.cocktails.length} action={<CategoryToggle sectionKey="co_ck" defaultOpen={false} />} />
-              {vis("co_ck") && <Studio17 type="cocktail" site="FF Staff" by={String(c.name || "").trim() || "You"} tag={c.slug || "yourbusiness"} k="coCocktails17" seed={seeds.cocktail} />}
-            </section>
-            <section id="ff-co-questions" style={{ marginTop: 22 }}>
-              <SectionHead icon={<I11.MessageSquare size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Q&A" count={coQa(c).length} action={<CategoryToggle sectionKey="co_qa" defaultOpen={false} />} />
-              {vis("co_qa") && <CompanyQA11 c={c} />}
-            </section>
-          </>)}
-
-          {tab === "team" && (
-            <section style={{ marginTop: 18 }}>
-              {team.length ? (
-                <HScroll label="Your team">
-                  {team.map(p => <PlayerTile key={p.id} person={p} onClick={() => dispatch({ type: "VIEW", id: p.id })} />)}
-                </HScroll>
-              ) : <p className="ff-body ff-muted" style={{ margin: 0 }}>Everyone you book joins your team, so you can rebook them in a tap.</p>}
-              <div style={{ marginTop: 12 }}><Btn variant="sm ghost" onClick={() => dispatch({ type: "TAB", tab: "network" })}>Find more</Btn></div>
-              <div style={{ marginTop: 22 }}>
-                <SectionHead icon={<I11.Briefcase size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Companies" count={partners.length} />
-                {partners.length > 0 && <CoTiles17 list={partners} />}
-                <div style={{ marginTop: 12 }}><Btn variant="sm ghost" onClick={() => setPicking(true)}><I11.Plus size={13} /> Add companies</Btn></div>
-              </div>
-              <PartnerPick17 open={picking} onClose={() => setPicking(false)} />
-            </section>
-          )}
-
-          {tab === "reviews" && (
-            <section id="ff-co-reviews" style={{ marginTop: 18 }}>
-              {reviews.length ? (
-                <HScroll label="Reviews">
-                  {reviews.map((r, i) => <InformationCard key={r.id} record={r} def={BASE_CATEGORIES.reviews} themeKey="onyx" highlight={i < 3} rank={cardRank(i)} />)}
-                </HScroll>
-              ) : <p className="ff-body ff-muted" style={{ margin: 0 }}>No reviews yet. Staff review you after each booking.</p>}
-            </section>
-          )}
-          {tab === "reviews" && recSection("web_reviews")}
-        </div>
-      </div>
-
-      <GenericAttributeCardCreator owner="company" open={!!openRec} record={openRec && openRec.record} def={openRec && openRec.def} category={openRec && openRec.category}
-        readOnly={!!(openRec && openRec.record && openRec.record.readOnly)} onClose={() => setOpenRec(null)} />
-      <GenericAttributeCardCreator owner="company" open={!!addingTo} record={null} category={addingTo} def={addingTo ? COMPANY_CATEGORIES[addingTo] : null}
-        onClose={() => setAddingTo(null)} />
-
-      <TermsSheet11 open={termsOpen} onClose={() => setTermsOpen(false)} />
-    </>
   );
 }

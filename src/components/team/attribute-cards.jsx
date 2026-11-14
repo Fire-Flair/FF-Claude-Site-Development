@@ -199,7 +199,7 @@ function HorizontalCardRanker({ items, label, renderCard, tail }) {
 
 /* owner "company" (v16.12): the same section on the FF Staff Company profile,
    with its records in company.records and its own show/hide keys. */
-function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd, owner, pub, top, moreTail }) {
+function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd, owner, pub, top, moreTail, quiet, plus, hideZero }) {
   const { state, dispatch } = useStore();
   const items = isMe ? list : list.filter(r => !r.hidden && !r.proposed);
   if (!isMe && !items.length) return null;
@@ -231,10 +231,14 @@ function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd
   );
   return (
     <section id={isMe ? (owner === "company" ? `ff-co-${catKey}` : `ff-sec-${catKey}`) : undefined} style={{ marginTop: 22 }}>
-      <SectionHead icon={<CatIcon kind={def.icon} size={15} color="var(--gold-dk)" />} title={def.label} count={locOwner ? covPlaces17(locOwner).length : editing ? eRows.filter(r => !r.rec.hidden).length : items.filter(r => !r.hidden).length}
-        action={editing
+      <SectionHead icon={<CatIcon kind={def.icon} size={15} color="var(--gold-dk)" />} title={def.label} count={(n => hideZero && !n ? undefined : n)(locOwner ? covPlaces17(locOwner).length : editing ? eRows.filter(r => !r.rec.hidden).length : items.filter(r => !r.hidden).length)}
+        action={plus ? <span className="ff-co17-acts">
+          <button type="button" className="ff-co17-plus" aria-label={`Add to ${def.label}`} onClick={() => { dispatch({ type: "TOGGLE_CATEGORY", key: vkey, visible: true }); plus(); }}><Plus size={14} /></button>
+          <CategoryToggle sectionKey={vkey} defaultOpen={startOpen} /></span>
+          : editing
           ? <CategoryToggle sectionKey={ekey} defaultOpen={catKey === "professions"} />
           : <CategoryToggle sectionKey={vkey} defaultOpen={startOpen} />} />
+      {quiet && !open ? <p className="ff-co17-quiet">{quiet}</p> : null}
       {open && (<>
         {top || null}
         {unresolved && (
@@ -487,14 +491,14 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
       <Field label={def.descLabel || "Description"}>
         {readOnly
           ? <p className="ff-serif" style={{ fontSize: 16, lineHeight: 1.5, margin: 0 }}>{draft.description || "Nothing written yet."}</p>
-          : <textarea className="ff-input" rows={5} value={draft.description || ""}
+          : <textarea className="ff-input" rows={5} value={draft.description || ""} placeholder={def.descPlaceholder || undefined}
               onChange={(e) => patch({ description: e.target.value })} />}
       </Field>
       )}
 
       <div style={{ marginBottom: 16 }}>
         <div className="ff-label" style={{ marginBottom: 4 }}>Images and documents</div>
-        {!readOnly && <p className="ff-body ff-muted" style={{ fontSize: 12, margin: "0 0 8px" }}>Add up to {maxMedia} images. They show under the card's title, in place of the description.</p>}
+        {!readOnly && owner !== "company" && <p className="ff-body ff-muted" style={{ fontSize: 12, margin: "0 0 8px" }}>Add up to {maxMedia} images. They show under the card's title, in place of the description.</p>}
         {(draft.media || []).length > 0 && (
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 10 }}>
             {draft.media.map(m => (

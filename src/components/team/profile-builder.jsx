@@ -215,17 +215,18 @@ function useShareCard() {
 }
 
 
-function TagInput({ value, onChange, placeholder = "username", current, check, autoFocus, label = "FF Tag" }) {
-  const clean = AUTH_ADAPTER.cleanTag(value);
-  const ok = AUTH_ADAPTER.isAvailable(clean, current);
-  const show = check && clean.length >= AUTH_ADAPTER.TAG_MIN;
+/* Optional (the company address uses them; FF Team leaves them out): cleanWith(value) makes the text, freeCheck(text) says whether it is available, minLength and maxLength set the bounds. */
+function TagInput({ value, onChange, placeholder = "username", current, check, autoFocus, label = "FF Tag", cleanWith, freeCheck, minLength, maxLength }) {
+  const clean = cleanWith ? cleanWith(value) : AUTH_ADAPTER.cleanTag(value);
+  const ok = freeCheck ? freeCheck(clean) : AUTH_ADAPTER.isAvailable(clean, current);
+  const show = check && clean.length >= (minLength || AUTH_ADAPTER.TAG_MIN);
   return React.createElement("span", {
     className: "ff-userfield"
   }, React.createElement("span", {
     className: "pre"
   }, CARD_DOMAIN, "/"), React.createElement("input", {
     value: clean,
-    maxLength: AUTH_ADAPTER.TAG_MAX,
+    maxLength: maxLength || AUTH_ADAPTER.TAG_MAX,
     onChange: (e) => onChange(e.target.value),
     placeholder,
     "aria-label": label,

@@ -282,7 +282,7 @@ function StaffProfile() {
           <PartySections11 />
         </>) : (<>
           <StepHead n={2} title="Company Card" done={cardReady} note="Sent to anyone you hire, to show them who you are. It can also be added to FF Party to advertise your services." />
-          <div id="ff-co-card"><EditableCompanyCard /></div>
+          <div id="ff-co-card"><EditableCompanyCard noType /></div>
           <StepHead n={3} title="Book a meeting" done={false} note="We'll fill your profile out for you." />
           <CompanyMeeting17 />
           <StepHead n={4} title="Your company profile" done={false} />
