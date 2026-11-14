@@ -48,7 +48,7 @@ const COMPANY_CATEGORIES = {
   /* v17.6: simple cards made with the shared card tool (title, description, up to 5 photos, optional PDF). */
   packages: { label: "Packages", singular: "Package", icon: "skills", fields: ["description", "media", "document"], placeholder: "Package name", maxMedia: 5 },
   cocktail_menu: { label: "Cocktails", singular: "Cocktail", icon: "cocktails", fields: ["description", "media", "document"], placeholder: "Cocktail name", maxMedia: 5 },
-  web_reviews: { label: "Reviews from your website", singular: "Review", icon: "reviews", fields: ["description", "media", "document"], placeholder: "Who said it", titleLabel: "Who said it", descLabel: "What they said", maxMedia: 5 },
+  web_reviews: { label: "Reviews from other sources", singular: "Review", icon: "reviews", fields: ["description", "media", "document"], placeholder: "Who said it", titleLabel: "Who said it", descLabel: "What they said", maxMedia: 5 },
   contact: { label: "Contact & social", singular: "Contact", icon: "languages", fields: ["description"], placeholder: "bookings@yourcompany.co.uk" },
 };
 

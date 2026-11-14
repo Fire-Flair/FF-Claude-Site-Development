@@ -4275,14 +4275,11 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-info17-ed .acts { display:grid; gap:10px; margin-top:16px; }
 .ff .ff-info17-del { justify-self:end; display:inline-flex; gap:6px; align-items:center; border:0; background:none; color:#7A2A2A; font:600 13px var(--sans); text-decoration:underline; cursor:pointer; }
 /* FF Team profile, Section 1: one box for FF AI, the CV and Need a hand? */
-.ff .ff-start17-cv { margin-top:12px; }
 .ff .ff-cvinl17 .row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; padding:10px 12px; border:1px solid rgba(126,97,29,.3); border-radius:16px; corner-shape:squircle; background:rgba(255,255,255,.7); }
 .ff .ff-cvinl17 .ok { flex:none; display:grid; place-items:center; width:30px; height:30px; border-radius:50%; background:rgba(47,125,79,.12); color:var(--ok); }
 .ff .ff-cvinl17 .nm { flex:1; min-width:120px; display:grid; gap:1px; }
 .ff .ff-cvinl17 .nm b { font:700 14.5px var(--sans); color:#16130F; }
 .ff .ff-cvinl17 .nm small { font-size:12px; color:#5C564B; overflow-wrap:anywhere; }
-.ff .ff-start17-help { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-top:12px; padding-top:12px; border-top:1px solid rgba(126,97,29,.22); }
-.ff .ff-start17-help > span { font:700 15px var(--sans); color:#4A0F1C; }
 /* Need a hand? pop-up */
 .ff .ff-hb17 .lead { margin:0 0 12px; font:600 15px var(--sans); color:#2A2620; }
 .ff .ff-hb17 .steps { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
@@ -4296,36 +4293,28 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 /* Section 4: signing up inside the Save box. */
 .ff .ff-publishcard .ff-tagsection { margin-top:2px; }
 /* Start box redesign: highlighted 1-minute heading, gold Upload CV on top, interview link */
-.ff .ff-start17-h { display:flex; align-items:center; justify-content:center; gap:12px; margin:0 0 14px; font:800 clamp(22px,6.4vw,30px)/1.1 var(--display); color:#4A0F1C; text-align:center; text-wrap:balance; }
-.ff .ff-start17-h .ic { flex:none; display:grid; place-items:center; width:48px; height:48px; border-radius:16px; corner-shape:squircle; color:#F4DC8E; background:linear-gradient(160deg,#6A1A2B,#3A0A15); box-shadow:0 8px 18px -6px rgba(74,15,28,.55), inset 0 1px 0 rgba(255,255,255,.18); }
-.ff .ff-start17-cv { margin:0 0 14px; }
-.ff .ff-cvinl17 .ff-bigcv17 { width:100%; min-height:58px; font-size:17px; gap:10px; justify-content:center; }
-.ff .ff-start17-help a.ff-btn { text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
 /* Start box compact: one framed card, heading left, Upload CV right */
 .ff .ff-start17 { padding:14px; border-radius:22px; corner-shape:squircle; border:1px solid rgba(126,97,29,.35); background:rgba(255,255,255,.5); box-shadow:0 10px 24px -16px rgba(74,15,28,.35); }
-.ff .ff-start17-top { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:10px; align-items:center; margin-bottom:10px; }
-.ff .ff-start17-top .ff-start17-h { margin:0; justify-content:flex-start; text-align:left; font-size:clamp(15px,4.6vw,20px); gap:8px; }
-.ff .ff-start17-top .ff-start17-h .ic { width:34px; height:34px; border-radius:12px; }
-.ff .ff-start17-top .ff-start17-cv { margin:0; }
-.ff .ff-start17-top .ff-cvinl17 .ff-bigcv17 { width:100%; min-height:44px; font-size:13px; padding:0 10px; white-space:nowrap; }
-.ff .ff-start17-top .ff-cvinl17 .row { padding:6px 8px; }
-.ff .ff-start17 .ff-start17-help { margin-top:8px; padding-top:8px; gap:8px; }
-.ff .ff-start17 .ff-start17-help > span { font:700 13px/1.3 var(--sans); flex:1 1 180px; }
-@media (max-width:340px) { .ff .ff-start17-top { grid-template-columns:1fr; } }
+/* Step 1 box: three separate rows, same structure. Control on the left, one short line beside it (stacked on a phone). */
+.ff .ff-start17 { display:grid; gap:10px; }
+.ff .ff-way17 { margin:0; padding:14px; display:grid; grid-template-columns:minmax(0,1fr); gap:10px; align-items:center; border:1px solid rgba(126,97,29,.3); border-radius:16px; corner-shape:squircle; background:rgba(255,255,255,.72); min-width:0; }
+.ff .ff-way17 > * { min-width:0; }
+.ff .ff-way17-ctl { margin:0; display:flex; align-items:center; gap:8px; font:800 15px/1.2 var(--sans); letter-spacing:.01em; color:#4A0F1C; }
+.ff .ff-way17-ctl > .ff-cvinl17 { width:100%; }
+.ff .ff-way17-line { margin:0; display:flex; align-items:center; gap:8px; font:500 14px/1.35 var(--sans); color:#4A4236; text-wrap:balance; }
+.ff .ff-way17-line svg { flex:none; color:#7E611D; }
+.ff .ff-way17-wide { min-width:0; }
+.ff .ff-way17 .ff-cvinl17 .ff-bigcv17, .ff .ff-way17 .ff-way17-ctl .ff-bigcv17 { width:100%; min-height:46px; font-size:14px; justify-content:center; display:inline-flex; align-items:center; gap:8px; padding:0 12px; box-sizing:border-box; white-space:nowrap; }
+@media (min-width:720px) {
+  .ff .ff-way17 { grid-template-columns:minmax(220px,300px) minmax(0,1fr); column-gap:22px; }
+  .ff .ff-way17-wide { grid-column:1 / -1; }
+}
+.ff .ff-comeet17 { display:block; }
 /* Start box: three equal ways in, divided by lines */
-.ff .ff-start17-top { display:block; margin-bottom:4px; }
-.ff .ff-start17-top .ff-start17-h { font-size:clamp(18px,5.2vw,22px); }
-.ff .ff-start17-sub { margin:6px 0 0; font:500 14px/1.35 var(--sans); color:#4A4236; }
-.ff .ff-way17 { margin:0; padding:12px 0; border-top:1px solid rgba(126,97,29,.3); display:grid; gap:8px; }
-.ff .ff-way17 h3 { margin:0; display:flex; align-items:center; gap:7px; font:700 13px/1.2 var(--sans); letter-spacing:.02em; color:#4A0F1C; }
-.ff .ff-way17:last-child { padding-bottom:0; }
-.ff .ff-way17 .ff-start17-cv { margin:0; }
-.ff .ff-way17 .ff-cvinl17 .ff-bigcv17, .ff .ff-way17 a.ff-bigcv17 { width:100%; min-height:46px; font-size:14px; justify-content:center; display:inline-flex; align-items:center; gap:8px; text-decoration:none; padding:0 12px; box-sizing:border-box; }
 .ff .ff-ai.plain, .ff .ff-ai.plain.ff-frame { background:none; border:0; box-shadow:none; padding:0; margin:0; border-radius:0; }
 .ff .ff-ai.plain::before, .ff .ff-ai.plain::after { display:none; }
 .ff .ff-ai.plain .ff-ai-in { font-size:14px; min-height:46px; border-radius:14px; corner-shape:squircle; }
 .ff .ff-ai.plain .ff-ai-row .ff-mic, .ff .ff-ai.plain .ff-ai-send { width:46px; height:46px; }
-.ff .ff-start17-sub { text-wrap:balance; }
 .ff .ff-ai.plain .ff-ai-row { gap:6px; align-items:center; }
 .ff .ff-ai.plain .ff-ai-in { font-size:13.5px; padding:0 10px; min-height:46px; line-height:46px; height:46px; }
 .ff .ff-ai.plain .ff-ai-in:not(:placeholder-shown) { line-height:1.35; padding:11px 10px; height:auto; }
@@ -4333,11 +4322,6 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-ai.plain .ff-ai-row .ff-mic, .ff .ff-ai.plain .ff-ai-send { width:42px; height:42px; }
 @media (max-width:350px) { .ff .ff-ai.plain .ff-ai-in { font-size:12px; padding-left:8px; padding-right:6px; } .ff .ff-ai.plain .ff-ai-row { gap:4px; } .ff .ff-ai.plain .ff-ai-row .ff-mic, .ff .ff-ai.plain .ff-ai-send { width:36px; height:36px; } }
 /* Start box: back to heading + Upload CV on the right, GPT in the middle, interview line below */
-.ff .ff-start17-top { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:10px; align-items:center; margin-bottom:10px; }
-.ff .ff-start17-top .ff-start17-h { font-size:clamp(15px,4.6vw,20px); }
-.ff .ff-start17-top .ff-cvinl17 .ff-bigcv17 { min-height:44px; font-size:13px; padding:0 10px; }
-.ff .ff-start17 .ff-start17-help { margin-top:0; padding-top:10px; border-top:1px solid rgba(126,97,29,.3); }
-.ff .ff-start17 .ff-way17:last-of-type { padding-bottom:12px; }
 /* Tag + phone at the top of Your profile */
 .ff .ff-tagwhy17 { list-style:none; margin:0 0 12px; padding:0; display:grid; gap:6px; font:400 14px/1.4 var(--sans); color:#3A3428; }
 .ff .ff-tagwhy17 b { color:#4A0F1C; }
@@ -4347,7 +4331,6 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 /* Save / Available for hire */
 .ff .ff-save17-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
 .ff .ff-publishcard .ff-save17 { min-height:52px; font-size:14px; letter-spacing:.06em; padding:0 8px; text-align:center; }
-.ff .ff-start17-q { font:800 clamp(16px,4.8vw,20px)/1.15 var(--display); color:#4A0F1C; }
 .ff .ff-ib17 { display:grid; gap:14px; }
 .ff .ff-ib17 a.ff-bigcv17 { width:100%; min-height:48px; justify-content:center; display:inline-flex; align-items:center; gap:8px; text-decoration:none; box-sizing:border-box; }
 .ff .ff-ib17 a.ff-bigcv17.off { opacity:.45; cursor:not-allowed; }
@@ -4364,6 +4347,7 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-publishcard .ff-save17.hire17 { background:transparent; color:#F4DC8E; border:1.5px solid rgba(233,208,122,.7); box-shadow:none; text-shadow:none; }
 .ff .ff-publishcard .ff-save17.hire17::after { display:none; }
 .ff .ff-publishcard .ff-save17.hire17:hover { background:rgba(244,220,142,.12); }
+.ff .ff-publishcard .ff-save17.hire17:disabled { opacity:.42; cursor:not-allowed; background:transparent; }
 .ff .ff-bkconfirm17 { margin-top:12px; }
 .ff .ff-bk .ff-big20:first-child { margin-top:8px; }
 /* FF Staff shifts: stronger profession selector, shifts open as a panel from the chosen profession */
@@ -4375,7 +4359,6 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-pr17-ph b { font-weight:800; }
 /* Step 1 heading: title plus a stopwatch pill */
 .ff .ff-stephead .ff-h1 { display:flex; align-items:center; flex-wrap:wrap; gap:6px 12px; }
-.ff .ff-1min17 { display:inline-flex; align-items:center; gap:6px; padding:5px 12px 5px 9px; border-radius:999px; font:800 13px/1 var(--sans); letter-spacing:.06em; text-transform:uppercase; white-space:nowrap; color:#F4DC8E; background:linear-gradient(160deg,#6A1A2B,#3A0A15); box-shadow:0 6px 14px -6px rgba(74,15,28,.6), inset 0 1px 0 rgba(255,255,255,.18); }
 .ff .ff-base17-note { margin:6px 0 0; font:400 12px/1.3 var(--sans); color:#6A6253; }
 /* Bookings: compact Confirmed */
 .ff .ff-bk-conf17 .ff-bk-hrow { margin-bottom:4px; }
@@ -4444,8 +4427,6 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-cpanel, .ff .ff-sum, .ff .ff-sum-sh, .ff .ff-af17, .ff .ff-af17 > *, .ff .ff-inv17 { min-width:0; max-width:100%; }
 
 /* FF Team profile start box: Book an interview sits on the right, under the CV button, instead of a row of its own. */
-.ff .ff-start17-top .ff-start17-int { grid-column:2; justify-self:stretch; justify-content:center; min-height:40px; white-space:nowrap; }
-@media (max-width:340px) { .ff .ff-start17-top .ff-start17-int { grid-column:1; } }
 
 /* v17.6 company page shape: cards, boxes, builder parts */
 .ff .ff-ic2-media.n5 { grid-template-columns:1fr 1fr 1fr; grid-template-rows:1fr 1fr; }

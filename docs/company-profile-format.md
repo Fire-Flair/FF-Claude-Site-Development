@@ -35,7 +35,7 @@ Everything is built from the universal card record that the live FF Team site al
 | Sections (`info[]`) | See below | More information |
 | Packages (`records.packages`) | Simple cards: title, description, photos, optional PDF | Packages tab, Packages |
 | Cocktails (`records.cocktail_menu`) | Simple cards: title, description, photos, optional PDF | Packages tab, Cocktails |
-| Reviews from the website (`records.web_reviews`) | Title is who said it, description is what they said | Reviews tab, Reviews from your website |
+| Reviews from other sources (`records.web_reviews`) | Title is who said it, description is what they said | Reviews tab, Reviews from other sources |
 | Q&A (`qa[]`) | `{ text, answer ("Yes" or "No" or empty), note }`; shown when it has an answer or a note | Q&A, Add a question |
 | Contact (`records.contact`) | Title is the value, description is its kind (WhatsApp, Website, Email, Phone) | Contact & social |
 

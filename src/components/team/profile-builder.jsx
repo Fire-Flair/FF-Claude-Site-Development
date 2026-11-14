@@ -19,7 +19,7 @@ function CardBuilder() {
   return (
     <>
       <EditablePlayerCard draft={d} setDraft={setD} themeKey={state.profile.theme}
-        tag={state.session.tag || "username"} tier={state.profile.tier} level={state.profile.level}
+        tag={state.session.tag || state.session.tagDraft || "username"} tier={state.profile.tier} level={state.profile.level}
         onPhoto={(url) => setD(x => ({ ...x, photo: url }))} />
       <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap", margin: "16px 0 4px" }}>
         {Object.entries(THEMES).map(([k, th]) => (
@@ -499,10 +499,14 @@ function TagSection({ inSave = false, top = false, onSignedIn } = {}) {
     className: "ff-tagrow"
   }, React.createElement(Field, {
     label: "FF Tag",
-    hint: top ? "Your personal website, displaying all your profile information." : undefined
+    hint: top ? "Your personal web page, displaying all your profile information." : undefined
   }, React.createElement(TagInput, {
     value: clean,
-    onChange: setTyped,
+    onChange: (v) => {
+      setTyped(v);
+      /* Display only: lets the Profile Card address follow the field. Never a real tag. */
+      dispatch({ type: "SESSION", patch: { tagDraft: AUTH_ADAPTER.cleanTag(v) } });
+    },
     check: true
   }), React.createElement(TagNote, {
     clean
@@ -575,6 +579,16 @@ function TagSection({ inSave = false, top = false, onSignedIn } = {}) {
 
 
 
+/* "Available for hire?" is ready once the person is signed in (FF Tag exists, phone verified),
+   has saved the profile at least once, and the card has a name, a photo and one confirmed profession. */
+function hireReady17(state) {
+  const p = state.profile;
+  const signedIn = state.auth.status === "signedIn" && !!(state.auth.tag || state.session.tag);
+  return signedIn && !!p.savedAt && !!String(p.name || "").trim() && !!p.photo
+    && recsOf(p, "professions").some(r => !r.proposed);
+}
+
+
 /* SAVE & SHARE — at the foot of the profile. The profile already saves
    itself; Save is the explicit "done" that opens Section 5. Share sends
    the finished card to the person on WhatsApp. */
@@ -619,7 +633,9 @@ function SaveShareCard({ onSaved }) {
     });
   };
   useEffect(() => { const h = () => publish(); window.addEventListener("ff-save", h); return () => window.removeEventListener("ff-save", h); });
+  const hireOk = hireReady17(state);
   const hire = () => {
+    if (!hireOk) return;
     dispatch({ type: "ROLE", role: "team" });
     dispatch({ type: "TAB", tab: "bookings" });
     window.scrollTo(0, 0);
@@ -629,7 +645,7 @@ function SaveShareCard({ onSaved }) {
     <div id="ff-sec-share" className="ff-publishcard" style={{ marginTop: 26 }}>
       <div className="ff-save17-row">
         <button type="button" className="ff-btn gold ff-save17" onClick={save}>Save</button>
-        <button type="button" className="ff-btn ff-save17 hire17" onClick={hire}>Available for hire</button>
+        <button type="button" className="ff-btn ff-save17 hire17" onClick={hire} disabled={!hireOk} aria-disabled={!hireOk}>Available for hire?</button>
       </div>
       {blocker && signedIn && <p style={{ margin: "10px 0 0", fontSize: 12.5, color: "rgba(244,239,228,.72)", textAlign: "center" }}>{blocker}</p>}
       {signedIn && p.savedAt && <p style={{ margin: "10px 0 0", fontSize: 12, color: "rgba(244,239,228,.66)", display: "flex", gap: 5, alignItems: "center", justifyContent: "center" }}>
@@ -722,18 +738,26 @@ function StartBox17() {
   const cal = V101.support20Url();
   return (
     <div id="ff-sec-ffai" className="ff-start17">
-      <div className="ff-start17-top">
-        <span className="ff-start17-q">Have a CV?</span>
-        <div className="ff-start17-cv"><CVPanel inline /></div>
-        {cal && <Btn variant="sm ff-start17-int" onClick={() => setBook(true)}><Calendar size={14} /> Book an interview</Btn>}
-      </div>
-      <section className="ff-way17">
-        <h3><GptLogo17 size={16} /> Talk or type to GPT</h3>
-        <FFAI bare plain multiline tint={false} tagIcon title="Tell us who you are" noMicStatus placeholder="I'm a bartender…" query={text} onQuery={setText} onSubmit={run} submitLabel="Fill out my profile">
-          <ExtractionStatus ex={ex} />
-          {ex.st.phase === "review" && <ImportToEdit key={ex.st.result.report && ex.st.result.report.ms} result={ex.st.result} onDone={() => { ex.reset(); setText(""); }} />}
-        </FFAI>
+      <section className="ff-way17 ff-way17-cv">
+        <div className="ff-way17-ctl"><CVPanel inline /></div>
+        <p className="ff-way17-line"><Timer size={16} strokeWidth={2.2} aria-hidden="true" /><span>Create your profile in &lt;1 minute</span></p>
       </section>
+      <section className="ff-way17 ff-way17-gpt">
+        <h3 className="ff-way17-ctl"><GptLogo17 size={18} /> Talk or type to GPT</h3>
+        <p className="ff-way17-line"><span>Tell us about yourself and we'll build the profile for you.</span></p>
+        <div className="ff-way17-wide">
+          <FFAI bare plain multiline tint={false} tagIcon title="Tell us who you are" noMicStatus placeholder="I'm a bartender…" query={text} onQuery={setText} onSubmit={run} submitLabel="Fill out my profile">
+            <ExtractionStatus ex={ex} />
+            {ex.st.phase === "review" && <ImportToEdit key={ex.st.result.report && ex.st.result.report.ms} result={ex.st.result} onDone={() => { ex.reset(); setText(""); }} />}
+          </FFAI>
+        </div>
+      </section>
+      {cal && (
+        <section className="ff-way17 ff-way17-int">
+          <div className="ff-way17-ctl"><Btn variant="gold ff-bigcv17" onClick={() => setBook(true)}><Calendar size={16} /> Book an interview</Btn></div>
+          <p className="ff-way17-line"><span>Meet the FireFlair team and ask us anything.</span></p>
+        </section>
+      )}
       {book && <InterviewBook17 notes={text} onClose={() => setBook(false)} />}
     </div>
   );
@@ -756,7 +780,7 @@ function ProfileBuilder() {
       <div className="ff-eyebrow">FF Team · Profile</div>
 
       <div className="ff-journey">
-        <BigStepHead n={1} title={<>Create a profile<span className="ff-1min17"><Timer size={15} strokeWidth={2.4} aria-hidden="true" />1&nbsp;minute</span></>} done={hasCV(p) || cardReady} />
+        <BigStepHead n={1} title="Let's get started" done={hasCV(p) || cardReady} />
         <StartBox17 />
 
         <StepHead n={2} title="Profile Card" done={cardReady} />
