@@ -137,12 +137,48 @@ Who is told what:
 sites. The full map, canonical rules, redirects and the test list are in `docs/URLS.md`. Home sections now use
 `#/<site>/home/<section>`.
 
+## Last pass (merged live update, directory addresses, Back, canonicals, Vooshka, fresh companies)
+
+### FF Team Bookings (merged from the live page)
+- Heading `BigHead20` "FF Bookings". Invitations show only for the demo account (`demo && requests.length`).
+- Packages: tiles are a selection (`sel`, `picked`); Confirm opens `PkgTerms17` (the personal terms, read-only, "Accept and confirm"), and accepting runs
+  `confirmPkgs`, the same `int.party_package` answer as before, `visibility: "public"` (Interests). Packages stay above FF Staff Shifts.
+- Rates: `ProfRateTile17` is controlled by `ProfRates17` (`val`, `onVal`, `err`); one "Save your rates" button (`ff-bkconfirm17`) saves every edited rate
+  (`rate_gbp_hour` answers) and withdraws an emptied one.
+- Profile builder Save row: two equal columns; "Available for hire" is the outline `hire17` button.
+
+### Directory addresses
+- Every company has one stable address word from `rt17SlugMap()` (`src/utils/routes17.js`); `rt17Slug(co)` reads it. Directory entries open at
+  `#/<site>/<slug>` and load, refresh, Back and Forward work. They have no tabs. `rt17Resolve` finds claimed companies and Directory entries
+  (`browseCompanies17`). `rt17DirSlugTaken` stops a new company taking a Directory slug (`-co`).
+- The Company Card footer shows the address for unclaimed entries again; the hire-list tile shows the same address.
+- No true duplicates in the directory data. "Pure Photo N.I" and "EPIC Caterers" each have two base locations, so they show two map pins.
+
+### Back
+- Each tab click is a history step. `rt17Back(fallback)` (`routes17.js`) calls `history.back()` when the app has pushed history (every entry carries `ff17i`,
+  added by a small `pushState`/`replaceState` wrapper), otherwise `fallback` (the parent list or home). `BackBtn17` (`src/components/shared/back17.jsx`)
+  is the profile-style button, now on the Story article; profile, company, Directory company, area page and package page use the same call.
+
+### Indexing and canonicals
+- `seo.js`: `ffSeoOrigin17(state)` gives the site's own host (`FF_SEO.siteOrigins`); the canonical of a profile, company or Directory entry is that host plus path.
+  The site-based `noindex` is removed. `FF_SEO.demoData` still makes the whole prototype `noindex`. Share links still use `FF_SEO.profileOrigin` (ffparty.uk).
+  `window.__ffSeo.selfTest()` checks the production rules for all four site views.
+
+### Vooshka Cocktail Bar
+- Based in Luton: `base17` (card subtitle), one `locations` entry (map pin). Coverage is `cover: ["England", "Wales"]` on the company; `fdCompanyCover` in
+  `find-directory.jsx` turns it into the two nations, so every English and Welsh area page lists it and no Scottish or Northern Irish page does. Areas covered reads "England and Wales".
+
+### Fresh companies start empty
+- The sample events, shifts, engagements and Autofill runs are the demo accounts' sample bookings. Joining a company with a new phone number dispatches
+  `SAMPLE_OFF` (clears them, `sampleOff17`); signing in as the dev Vooshka company or SAM42 / ALEXG puts them back (`sample17Pre` in `src/state/notes17.js`).
+  `coIsVk17` is true only for the `vooshka` company or the signed-out preview, so a joined company gets no sample cards either.
+
 ## Known gaps for the developers
 
-- A new FF Staff company sees the sample Vooshka bookings in Your bookings and their replies in Notifications. The sample events are
-  in the shared seed (`seed-data.js`) and `coIsVk17` treats a company with no name yet as the sample company. Core starts every
-  company empty, so this is prototype-only, but scope the sample data before any user testing on a fresh account.
 - The sample company Vooshka still shows its own Packages and Cocktails on its public page. These come from its company content file,
   not from the builders.
 - On FF Team the dev account still sees its own Company Card next to the Vooshka Directory tile (the dev account is both the person
   and the business). Only FF Staff hides the duplicate.
+- Opening an unknown address (for example `#/ff-party/zzqqxx`) while an area page is open lands on the site's Network tab instead of Home the first time
+  (the area router closes its page and the address follows the old tab before the address router reads the new one). A second load goes to Home. It was
+  there before the last pass.

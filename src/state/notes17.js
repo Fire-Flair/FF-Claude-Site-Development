@@ -136,3 +136,34 @@ function notes17Reducer(s, a) {
   if (a.type === "NOTES_CLEAR") { const acct = notesAcct17(s); return { ...s, notesDone17: (s.notesDone17 || []).filter(d => d.acct !== acct) }; }
   return null;
 }
+
+
+
+/* ==========================================================================
+   SAMPLE BOOKINGS (Phase 2 Final, fix C)
+   The seed events, shifts, engagements and Autofill runs are the sample bookings of the demo accounts: the dev/demo
+   Vooshka company on FF Staff and the demo FF Team account (SAM42 / ALEXG). A company that joins with a new phone
+   number starts empty: SAMPLE_OFF clears them and sets state.sampleOff17. Signing in as a demo account puts them back
+   (events and shifts the person made are kept). Core starts every company empty; this only scopes the prototype's sample.
+   ========================================================================== */
+const SAMPLE_TAGS17 = ["SAM42", "ALEXG"];
+
+
+function sample17Off(s) {
+  return { ...s, events: [], shifts: [], engagements: [], af17: {}, activeEventId: null, selection: [], sampleOff17: true };
+}
+
+
+function sample17On(s) {
+  if (!s.sampleOff17) return s;
+  const merge = (seed, cur) => [...(seed || []).filter(x => !(cur || []).some(y => y.id === x.id)), ...(cur || [])];
+  return { ...s, sampleOff17: false, events: merge(initialState.events, s.events), shifts: merge(initialState.shifts, s.shifts), engagements: merge(initialState.engagements, s.engagements), af17: { ...initialState.af17, ...(s.af17 || {}) } };
+}
+
+
+/* Run before the main reducer: returns the state to use (and handles SAMPLE_OFF). */
+function sample17Pre(s, a) {
+  if (a.type === "SAMPLE_OFF") return { done: sample17Off(s) };
+  if ((a.type === "AUTH_SIGNED_IN" && SAMPLE_TAGS17.includes(String(a.tag || "").toUpperCase())) || (a.type === "COMPANY_SIGNED_IN" && a.slug === "vooshka")) return { s: sample17On(s) };
+  return { s };
+}

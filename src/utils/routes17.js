@@ -35,7 +35,65 @@ const RT17_WORD_COMPANY = { qa: "packages", team: "team", reviews: "reviews" };
 
 const RT17_SITE_OF_KIND = (k) => (k === "party" || k === "staff" ? k : "team");
 const rt17Reserved = (w) => RT17_RESERVED.includes(String(w || "").toLowerCase());
-const rt17Slug = (co) => String((co && (co.slug || cx17Slug(co.name || ""))) || "").toLowerCase();
+
+/* Every company, claimed or in the FF Event Directory, has one stable address word. A Directory entry uses its own slug
+   (from its name). A clash with a reserved word, a person's tag or an earlier company is settled the same way every time:
+   claimed companies keep the plain slug, then entries in list order add their town (pure-photo-ni-lisburn), then -2, -3. */
+let RT17_SLUGS = null;
+function rt17SlugMap() {
+  if (RT17_SLUGS) return RT17_SLUGS;
+  const taken = new Set(RT17_RESERVED);
+  try { (initialState.directory || []).forEach(p => { if (p && p.tag) taken.add(String(p.tag).toLowerCase()); }); } catch (e) { /* ignore */ }
+  const rows = [...COMPANIES.map(x => ({ id: x.id, b: x, p: COMPANY_PAGES[x.id] })), ...REAL_SUPPLIERS17.map(c => ({ id: "co_" + c.slug, b: SUPPLIER_BASES17["co_" + c.slug], p: COMPANY_PAGES["co_" + c.slug] }))]
+    .filter(r => r.b && r.p);
+  const ordered = [...rows.filter(r => !r.b.unclaimed), ...rows.filter(r => r.b.unclaimed)];
+  const out = {}, dirSlugs = new Set();
+  ordered.forEach(r => {
+    const base = String(r.p.slug || cx17Slug(r.p.name || r.b.name || "")).toLowerCase().replace(/[^a-z0-9-]/g, "").slice(0, 40);
+    let k = base;
+    if (taken.has(k)) {
+      const town = cx17Slug(((r.p.seed && r.p.seed.base) || r.b.area || "")).toLowerCase();
+      k = town ? (base + "-" + town).slice(0, 40) : base;
+      for (let n = 2; taken.has(k); n++) k = (base + "-" + n).slice(0, 40);
+    }
+    taken.add(k); out[r.id] = k;
+    if (r.b.unclaimed) dirSlugs.add(k);
+  });
+  RT17_SLUGS = { ids: out, dir: dirSlugs };
+  return RT17_SLUGS;
+}
+const rt17DirSlugTaken = (k) => rt17SlugMap().dir.has(String(k || "").toLowerCase());
+const rt17Slug = (co) => {
+  if (!co) return "";
+  const m = !co.mine && co.id ? rt17SlugMap().ids[co.id] : "";
+  return String(m || co.slug || cx17Slug(co.name || "")).toLowerCase();
+};
+
+
+/* ---- Back ------------------------------------------------------------------ */
+/* Every history entry the app adds carries a step number (ff17i), so a screen can tell whether there is in-app history to go back to.
+   A page that was loaded directly has no number. */
+(function () {
+  try {
+    if (typeof window === "undefined" || window.__ff17Hist) return;
+    window.__ff17Hist = true;
+    const idx = () => { const s = window.history.state; return s && typeof s.ff17i === "number" ? s.ff17i : 0; };
+    const tag = (st, i) => (st && typeof st === "object" ? { ...st, ff17i: i } : { ff17i: i });
+    const push = window.history.pushState, rep = window.history.replaceState;
+    window.history.pushState = function (st, t, u) { return push.call(this, tag(st, idx() + 1), t, u); };
+    window.history.replaceState = function (st, t, u) { return rep.call(this, tag(st, idx()), t, u); };
+  } catch (e) { /* ignore */ }
+})();
+
+
+const rt17HasHistory = () => { try { const s = window.history.state; return !!(s && typeof s.ff17i === "number" && s.ff17i > 0); } catch (e) { return false; } };
+
+
+/* The Back button on every detail screen: one step back when the app has history, otherwise the parent list or the home page. */
+function rt17Back(fallback) {
+  if (rt17HasHistory()) { try { window.history.back(); return; } catch (e) { /* ignore */ } }
+  if (fallback) fallback();
+}
 
 
 /* ---- hash <-> route ------------------------------------------------------ */
@@ -91,22 +149,21 @@ function rt17PersonTag(state, p) {
 
 
 function rt17Companies(state) {
-  try { return companyList(state) || []; } catch (e) { return []; }
+  try { return browseCompanies17(state) || []; } catch (e) { return []; }
 }
 
 
-/* The address for what is on screen: a hash string, or null when another router owns the screen
-   or the screen has no address (a Directory entry leaves the address as it was). */
+/* The address for what is on screen: a hash string, or null when another router owns the screen. */
 function rt17Target(state) {
   if (state.supportPage20 || state.pkgPage || state.fdArea) return null;
   if (state.role === "vip") return "";
   const site = rt17SiteOf(state);
   if (state.viewingCompany) {
     const co = companyById(state, state.viewingCompany);
-    if (!co || co.unclaimed) return null;
+    if (!co) return null;
     const key = rt17Slug(co);
     if (!key || rt17Reserved(key)) return null;
-    const pt = state.ptab17 && state.ptab17.key === "c:" + co.id ? RT17_WORD_COMPANY[state.ptab17.tab] : "";
+    const pt = !co.unclaimed && state.ptab17 && state.ptab17.key === "c:" + co.id ? RT17_WORD_COMPANY[state.ptab17.tab] : "";
     return rt17Href({ kind: "company", site, key, sub: pt || "" });
   }
   if (state.viewing) {
@@ -130,8 +187,8 @@ function rt17Resolve(r, state) {
   if (r.kind !== "entity") return r;
   const p = rt17People(state).find(x => x && rt17PersonTag(state, x) === r.key);
   if (p) return { kind: "person", site: r.site, key: r.key, id: p.id, sub: RT17_WORD_PERSON[RT17_SUB_PERSON[r.sub]] || "" };
-  const co = rt17Companies(state).find(c => c && !c.unclaimed && rt17Slug(c) === r.key);
-  if (co) return { kind: "company", site: r.site, key: r.key, id: co.id, sub: RT17_WORD_COMPANY[RT17_SUB_COMPANY[r.sub]] || "" };
+  const co = rt17Companies(state).find(c => c && rt17Slug(c) === r.key);
+  if (co) return { kind: "company", site: r.site, key: r.key, id: co.id, sub: co.unclaimed ? "" : RT17_WORD_COMPANY[RT17_SUB_COMPANY[r.sub]] || "" };
   return { kind: "home", site: r.site };
 }
 

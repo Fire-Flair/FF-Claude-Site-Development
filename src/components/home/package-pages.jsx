@@ -394,7 +394,7 @@ function PackagePage18() {
   const goSite = useGoSite();
   const slug = (state.pkgPage && state.pkgPage.slug) || "";
   const m = slug ? pkg18(slug) : null;
-  const back = h18("button", { type: "button", className: "ff-fd-back", onClick: () => pkgClose18(dispatch) }, "← Back");
+  const back = h18("button", { type: "button", className: "ff-fd-back", onClick: () => rt17Back(() => pkgClose18(dispatch)) }, "← Back");
   const plan = () => { if (m) selectPkg17(state, dispatch, m.sv.id, false); pkgClose18(dispatch); goSite("party"); };
   const link = (s, kids, cls) => h18("a", { href: "#/ff-party/packages" + (s ? "/" + s : ""), className: cls, onClick: (e) => { e.preventDefault(); pkgNav18(dispatch, s); } }, kids);
   if (slug && !m) {

@@ -158,7 +158,7 @@ function PersonProfile() {
   };
 
   const backBtn = (
-    <button aria-label="Back" onClick={() => dispatch({ type: "VIEW", id: null })} className="ff-pback"
+    <button aria-label="Back" onClick={() => rt17Back(() => dispatch({ type: "VIEW", id: null }))} className="ff-pback"
       style={{
         display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
         width: "100%", padding: "12px 4px", marginBottom: 12,

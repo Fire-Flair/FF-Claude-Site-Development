@@ -629,7 +629,7 @@ function SaveShareCard({ onSaved }) {
     <div id="ff-sec-share" className="ff-publishcard" style={{ marginTop: 26 }}>
       <div className="ff-save17-row">
         <button type="button" className="ff-btn gold ff-save17" onClick={save}>Save</button>
-        <button type="button" className="ff-btn gold ff-save17" onClick={hire}>Available for hire</button>
+        <button type="button" className="ff-btn ff-save17 hire17" onClick={hire}>Available for hire</button>
       </div>
       {blocker && signedIn && <p style={{ margin: "10px 0 0", fontSize: 12.5, color: "rgba(244,239,228,.72)", textAlign: "center" }}>{blocker}</p>}
       {signedIn && p.savedAt && <p style={{ margin: "10px 0 0", fontSize: 12, color: "rgba(244,239,228,.66)", display: "flex", gap: 5, alignItems: "center", justifyContent: "center" }}>
@@ -781,7 +781,7 @@ function ProfileBuilder() {
       <div className={`ff-finale${finished ? " open" : ""}`}>
         <div className="ff-s5row">
           {!finished && (
-            <div className="ff-s5mark" title="Section 4 opens when you save" aria-label="Section 4 — opens when you save">
+            <div className="ff-s5mark" aria-hidden="true">
               <span className="ff-stepnum closed" aria-hidden="true">04</span>
             </div>
           )}

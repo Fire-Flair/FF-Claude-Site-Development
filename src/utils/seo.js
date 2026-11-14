@@ -13,6 +13,9 @@
    - A Profile Card is offered only when the card is published (person.public
      === true), has a tag, and FF_SEO.demoData is false. The sample people in
      this prototype are fictional, so demoData is true here.
+   - Which site shows a page makes no difference to indexing: FF Team, FF Staff
+     and FF Party each serve their own version, indexable, with a canonical
+     that names that site's own host and path (no redirects between sites).
    - Structured data is built from the same fields the card shows, never from
      phone numbers or e-mail addresses, and only for indexable pages.
 
@@ -27,7 +30,8 @@
    ========================================================================== */
 const FF_SEO = {
   siteName: "FireFlair",
-  origin: "https://ffparty.uk", profileOrigin: "https://ffparty.uk",   // profiles and companies are canonical on ffparty.uk, whichever site they are viewed on
+  origin: "https://ffparty.uk", profileOrigin: "https://ffparty.uk",   // profileOrigin is where Share links point
+  siteOrigins: { party: "https://ffparty.uk", team: "https://ffteam.uk", staff: "https://ffstaff.uk" },   // each site is canonical for its own pages
   locale: "en_GB",
   demoData: true,                       // sample people are fictional: never offered to search engines
   title: { min: 10, max: 60 },
@@ -79,9 +83,11 @@ function ffSeoPeople(state) {
 
 
 
-/* FF Team, FF Staff and FF VIP views of a profile or company are noindex; the canonical still names the ffparty.uk address. */
-function ffSeoOffParty17(state) {
-  return state && (state.role === "team" || state.role === "vip" || (state.role === "staff" && state.site !== "party"));
+/* Each site serves its own version of a profile or company and is canonical for it: the canonical is the site's own host plus the path.
+   FF VIP has no public pages of its own, so it falls back to FF Team like the signed-out start page. */
+function ffSeoOrigin17(state) {
+  const site = state && state.role === "staff" ? (state.site === "party" ? "party" : "staff") : "team";
+  return FF_SEO.siteOrigins[site];
 }
 
 
@@ -92,8 +98,8 @@ function ffSeoPersonPage(person, state) {
   const locs = ffSeoList(person.locations).slice(0, 3);
   const langs = ffSeoList(person.languages).slice(0, 5);
   const tag = ffSeoClean(person.tag).replace(/[^A-Za-z0-9_-]/g, "");
-  const url = ffSeoProfileUrl17(tag.toLowerCase());
-  const indexable = !FF_SEO.demoData && person.public === true && !!tag && !ffSeoOffParty17(state);
+  const url = ffSeoProfileUrl17(tag.toLowerCase(), ffSeoOrigin17(state));
+  const indexable = !FF_SEO.demoData && person.public === true && !!tag;
   const title = ffSeoClip(prof ? `${name} — ${prof} | ${FF_SEO.siteName}` : `${name} | ${FF_SEO.siteName}`, FF_SEO.title.max);
   const description = ffSeoClip(
     `${prof ? `${name} is ${ffSeoA(prof)} on FireFlair` : `${name} on FireFlair`}` +
@@ -121,17 +127,17 @@ function ffSeoPersonPage(person, state) {
 
 
 
-/* A claimed company's page: canonical ffparty.uk/<slug>. A Directory entry has no address, so it is noindex and points at the home page. */
+/* A company's page, claimed or in the FF Event Directory: canonical is this site's own address, <host>/<slug>. */
 function ffSeoCompanyPage17(state) {
   const co = companyById(state, state.viewingCompany);
   const name = co && ffSeoClean(co.name);
   if (!name) return null;
   const slug = rt17Slug(co).replace(/[^a-z0-9-]/g, "");
-  const claimed = !co.unclaimed && !co.mine && !!slug;
-  const url = claimed ? ffSeoProfileUrl17(slug) : ffSeoUrl("");
+  const claimed = !co.mine && !!slug;
+  const url = claimed ? ffSeoProfileUrl17(slug, ffSeoOrigin17(state)) : ffSeoUrl("");
   const title = ffSeoClip(`${name} | ${FF_SEO.siteName}`, FF_SEO.title.max);
   const description = ffSeoClip(`${name} on FireFlair${co.kind ? `: ${ffSeoClean(co.kind).toLowerCase()}` : ""}. See their packages, team and reviews.`, FF_SEO.description.max);
-  const indexable = !FF_SEO.demoData && claimed && !ffSeoOffParty17(state);
+  const indexable = !FF_SEO.demoData && claimed;
   return { page: "company", title, description, canonical: url, robots: indexable ? "index, follow" : "noindex, nofollow", type: "profile", jsonLd: null };
 }
 
@@ -219,7 +225,7 @@ function ffSeoValidate(seo) {
   try {
     const u = new URL(seo.canonical);
     if (u.protocol !== "https:") out.push("canonical is not https");
-    if (u.origin !== FF_SEO.origin && u.origin !== FF_SEO.profileOrigin) out.push("canonical is on another host: " + u.origin);
+    if (u.origin !== FF_SEO.origin && !Object.values(FF_SEO.siteOrigins).includes(u.origin)) out.push("canonical is on another host: " + u.origin);
     if (u.search || u.hash) out.push("canonical carries a query or fragment");
   } catch (e) { out.push("canonical is not a valid absolute URL"); }
   // ISO dates are digits too; take them out before looking for phone-number-like strings.
@@ -292,7 +298,15 @@ function ffSeoSelfTest() {
     let seo = view(pub); checked++;
     ffSeoValidate(seo).forEach(i => fail("[published card] " + i));
     if (seo.robots !== "index, follow") fail("[published card] should be indexable");
-    if (seo.canonical !== FF_SEO.profileOrigin + "/testp") fail("[published card] canonical is " + seo.canonical);
+    if (seo.canonical !== FF_SEO.siteOrigins.team + "/testp") fail("[published card] canonical is " + seo.canonical);
+    // Production: every site serves its own version, indexable, canonical to itself (no redirect, no ffparty.uk canonical).
+    [["party", { role: "staff", site: "party" }], ["team", { role: "team" }], ["staff", { role: "staff", site: "staff" }], ["vip", { role: "vip" }]].forEach(([site, st]) => {
+      const sx = ffSeoFor({ ...base, ...st, tab: "network", viewing: pub.id }, [pub]); checked++;
+      ffSeoValidate(sx).forEach(i => fail(`[published card on ${site}] ${i}`));
+      if (!/^index/.test(sx.robots)) fail(`[published card on ${site}] should be indexable`);
+      const want = FF_SEO.siteOrigins[site === "vip" ? "team" : site] + "/testp";
+      if (sx.canonical !== want) fail(`[published card on ${site}] canonical is ${sx.canonical}, expected ${want}`);
+    });
     if (!seo.jsonLd || seo.jsonLd["@type"] !== "ProfilePage") fail("[published card] missing ProfilePage JSON-LD");
     if (/7700|example\.com/.test(JSON.stringify(seo) )) fail("[published card] private contact details leaked into metadata");
     if (seo.jsonLd && seo.jsonLd.dateModified) fail("[published card] dateModified invented");

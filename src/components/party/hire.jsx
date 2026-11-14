@@ -75,7 +75,7 @@ function CompanyListing11({ co }) {
         <span className="tm">{team.slice(0, 4).map(p => <Portrait key={p.id} src={p.photo} name={p.name} size={26} tier={p.tier} />)}<small>{team.length ? `${team.length} on the team` : ""}</small></span>
         <span className="go">View company <I11.ArrowRight size={13} /></span>
       </span>
-      {!co.unclaimed && <span className="bar17"><Coin size={20} tier="gold" /><em>{CARD_DOMAIN}/{String(co.name || "").toLowerCase().replace(/[^a-z0-9]+/g, "")}</em></span>}
+      <span className="bar17">{!co.unclaimed && <Coin size={20} tier="gold" />}<em>{CARD_DOMAIN}/{rt17Slug(co)}</em></span>
     </button>
   );
 }

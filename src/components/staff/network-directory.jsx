@@ -330,7 +330,7 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
     dispatch({ type: "VIEW_COMPANY", id: null });
     dispatch({ type: "TAB", tab: "bookings" }); window.scrollTo(0, 0);
   };
-  const tag = co.slug || cx17Slug(co.name || "");
+  const tag = rt17Slug(co) || cx17Slug(co.name || "");
   const shareBtn = (co.slug || co.name) ? <CardShareBtn17 title={`${co.name || "Company"} on FireFlair`} url={`https://${CARD_DOMAIN}/${tag}`} fileName={"fireflair-" + cx17Slug(co.slug || co.name)} render={() => <CompanyCardFace c={co} />} label="Share" className="wide" /> : null;
   const acts = done ? [] : [
     !co.unclaimed && ["ask", <Btn variant="wide" onClick={() => setAsking(true)}><I11.MessageSquare size={14} /> Ask a question</Btn>],
@@ -342,7 +342,7 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   return (
     <div className="ff-copub">
       <PublicHero media={(co.mediaList || []).map(m => ({ id: m.id, src: m.src, name: m.alt || "" }))} card={<><CompanyCardFace c={co} />{done && shareBtn ? <div style={{ marginTop: 10, textAlign: "center" }}><CardShareBtn17 title={`${co.name || "Company"} on FireFlair`} url={`https://${CARD_DOMAIN}/${tag}`} fileName={"fireflair-" + cx17Slug(co.slug || co.name)} render={() => <CompanyCardFace c={co} />} label="Share Company Card" /></div> : null}</>} below={<>
-      {!done && <button type="button" className="ff-pback ff-copub-back" onClick={back}><I11.ChevronLeft size={20} /> <span>Back</span></button>}
+      {!done && <BackBtn17 fallback={back} />}
       {!done && !co.mine && !co.unclaimed && teamSite && ck && <div className="ff-copub-acts">
         {myRel === "member" ? <Btn variant="wide" disabled><I11.Check size={14} /> On their team</Btn>
           : myRel === "requested" ? <Btn variant="wide" disabled><I11.Clock size={14} /> Request sent</Btn>

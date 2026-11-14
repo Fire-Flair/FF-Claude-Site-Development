@@ -327,7 +327,7 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party }) {
   const co = c || {};
   const t = THEMES[co.theme] || THEMES.onyx;
   const layout = co.layout || "logo";
-  const slug = co.slug || slugify(co.name) || (party ? "your-name" : "your-company");
+  const slug = (co.id && !co.mine ? rt17Slug(co) : (co.slug || slugify(co.name))) || (party ? "your-name" : "your-company");
   const baseN = baseNodeOfCo17(co);
   const areas = baseN ? baseLabelOf17(baseN) : (co.areas !== undefined ? co.areas : (co.location || co.area || ""));
   const logoRef = useRef(null);
@@ -367,7 +367,7 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party }) {
       </div>
       <div className="ff-cc11-foot" style={{ background: t.dark ? "rgba(0,0,0,.45)" : "#141416" }}>
         {!co.unclaimed && <><Coin size={size ? 15 : 18} /><Wordmark size={size ? 9 : 11} /></>}
-        {!co.unclaimed && <span className="url">{CARD_DOMAIN}/{slug}</span>}
+        <span className="url">{CARD_DOMAIN}/{slug}</span>
       </div>
     </CardFrame>
   );
@@ -430,8 +430,9 @@ function CompanyJoin({ inBooking }) {
   const via = "phone";
   const slug0 = c.slug || slugify(c.name) || slugify(String(email).split("@")[0]) || `ff-${digits.slice(-6) || Date.now().toString(36)}`;
   /* Reserved words (network, profile, stories ...) are page names, so a company address never uses one. */
-  const slug = rt17Reserved(slug0) ? slug0 + "-co" : slug0;
+  const slug = rt17Reserved(slug0) || rt17DirSlugTaken(slug0) ? slug0 + "-co" : slug0;
   const create = () => {
+    if (!signedIn) dispatch({ type: "SAMPLE_OFF" });   /* a new company starts empty: the sample bookings belong to the demo accounts */
     dispatch({ type: "COMPANY_SAVE", company: {
       slug,
       theme: c.theme || "onyx",

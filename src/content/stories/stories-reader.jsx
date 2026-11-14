@@ -268,6 +268,7 @@ function Journal17({ kind = "team" }) {
     })),
     React.createElement(Sheet, { open: !!o, onClose: closeStory, title: o ? o.cat : "", center: true },
       o && React.createElement("article", { className: "ff-jr17-pop ff-jr17-art" },
+        React.createElement(BackBtn17, { fallback: closeStory }),
         img(o.img) && React.createElement("img", { className: "hero", src: img(o.img), style: fpos(o.img), alt: o.alt || "" }),
         React.createElement("div", { className: "meta" }, React.createElement("time", null, o.date), React.createElement("span", null, o.min + " min read")),
         React.createElement("h3", null, o.title),

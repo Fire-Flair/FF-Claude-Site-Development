@@ -4360,6 +4360,12 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-publishcard .ff-save17 { font-size:clamp(10px,3vw,13px); letter-spacing:.02em; padding:0 6px; }
 .ff .ff-save17-row { gap:8px; }
 .ff .ff-save17-row { grid-template-columns:.8fr 1.2fr; }
+.ff .ff-save17-row { grid-template-columns:1fr 1fr; }
+.ff .ff-publishcard .ff-save17.hire17 { background:transparent; color:#F4DC8E; border:1.5px solid rgba(233,208,122,.7); box-shadow:none; text-shadow:none; }
+.ff .ff-publishcard .ff-save17.hire17::after { display:none; }
+.ff .ff-publishcard .ff-save17.hire17:hover { background:rgba(244,220,142,.12); }
+.ff .ff-bkconfirm17 { margin-top:12px; }
+.ff .ff-bk .ff-big20:first-child { margin-top:8px; }
 /* FF Staff shifts: stronger profession selector, shifts open as a panel from the chosen profession */
 .ff .ff-pr17-chips { gap:8px; padding:2px 2px 0; margin-bottom:-1px; position:relative; z-index:1; }
 .ff .ff-pr17-chips .ff-pr17-tab { min-height:44px; padding:0 16px; font:800 14px var(--sans); border:1.5px solid rgba(126,97,29,.5); border-bottom-color:transparent; border-radius:14px 14px 0 0; corner-shape:squircle; background:rgba(255,255,255,.55); color:#4A0F1C; }

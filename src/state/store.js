@@ -156,7 +156,10 @@ function reducer(s, a) {
 }
 
 
-function reducerCore17(s, a) {
+function reducerCore17(s0, a) {
+  const smp = sample17Pre(s0, a);
+  if (smp.done) return smp.done;
+  const s = smp.s;
   if (a.type === "PROFILE" && a.patch && typeof a.patch.about === "string") a = { ...a, patch: { ...a.patch, about: a.patch.about.slice(0, BIO_MAX) } };
   /* v1.2: Edit Profile actions (PE_*) */
   if (a.type && (a.type.startsWith("PE_") || a.type.startsWith("P1_"))) { const r = p1EditReducer(s, a); if (r) return r; }

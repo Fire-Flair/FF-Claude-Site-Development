@@ -293,7 +293,7 @@ function IntroEditor17() {
 
 /* Search-facing helpers: the profile's own domain is its canonical, and the title and
    description come from the validated introduction when there is one. */
-const ffSeoProfileUrl17 = (tag) => FF_SEO.profileOrigin + "/" + (tag ? encodeURIComponent(tag) : "");
+const ffSeoProfileUrl17 = (tag, origin) => (origin || FF_SEO.profileOrigin) + "/" + (tag ? encodeURIComponent(tag) : "");
 
 
 function ffIntroSeo17(person, title, description) {

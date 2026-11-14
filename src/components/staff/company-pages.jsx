@@ -252,7 +252,8 @@ function vooshkaEditable17() {
   return {
     name: "Vooshka Cocktail Bar",
     kind: "Luxury mobile cocktail bar",
-    areas: "Nationwide",
+    areas: "England and Wales",
+    base17: { locId: "gn:3333168", at: 0 },
     slug: "vooshka",
     socials: { whatsapp: "+44 7814 904355", instagram: "@vooshkacocktailbar" },
     theme: "onyx",
@@ -268,8 +269,8 @@ function vooshkaEditable17() {
         makeRecord("contact", "vooshkabars.co.uk", { description: "Website" })
       ],
       locations: [
-        makeRecord("locations", "Nationwide", { description: "Mobile bar experiences across the UK" }),
-        makeRecord("locations", "United Kingdom")
+        makeRecord("locations", "England", { description: "Mobile bar experiences across England and Wales" }),
+        makeRecord("locations", "Wales")
       ]
     },
     qa: [
@@ -464,7 +465,7 @@ const COMPANY_PAGES = {
   co_vooshka: {
     name: "Vooshka Cocktail Bar",
     kind: "Luxury mobile cocktail bar",
-    areas: "Nationwide",
+    areas: "England and Wales",
     slug: "vooshka",
     socials: { whatsapp: "+44 7814 904355", instagram: "@vooshkacocktailbar" },
     theme: "onyx",
@@ -502,7 +503,8 @@ function companyById(state, id) {
 
 function coIsVk17(state) {
   const c = state.company || {};
-  return !String(c.name || "").trim() || c.slug === "vooshka";
+  /* The sample company: the dev/demo Vooshka account, or the signed-out preview (no company yet). A company that has joined has a slug and starts empty. */
+  return c.slug === "vooshka" || (!c.slug && !String(c.name || "").trim());
 }
 
 

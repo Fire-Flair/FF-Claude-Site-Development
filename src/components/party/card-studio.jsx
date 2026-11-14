@@ -701,7 +701,7 @@ function Creators17({ kind, by: byIn }) {
   const team = kind === "team";
   const site = team ? "FF Team" : "FF Staff";
   const by = byIn || (team ? (String(state.profile.name || "").trim() || "You") : (String((state.company || {}).name || "").trim() || "You"));
-  const demoCo = !team && !String((state.company || {}).name || "").trim() ? COMPANY_PAGES.co_vooshka : null;
+  const demoCo = !team && !(state.company || {}).slug && !String((state.company || {}).name || "").trim() ? COMPANY_PAGES.co_vooshka : null;
   const tag = team ? (state.auth.tag || state.session.tag || "yourtag") : ((state.company || {}).slug || (demoCo && demoCo.slug) || "yourbusiness");
   const bizKeys = team ? {} : { cocktail: "coCocktails17", service: "coServices17" };
   const seeds = team ? {} : coSeeds17(state);

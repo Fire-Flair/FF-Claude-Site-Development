@@ -46,6 +46,7 @@
   "components/staff/company-profile.jsx",
   "components/shared/landing-and-sites.jsx",
   "components/shared/locked17.jsx",
+  "components/shared/back17.jsx",
   "components/party/event-poster.jsx",
   "components/party/cocktails.jsx",
   "components/party/services.jsx",

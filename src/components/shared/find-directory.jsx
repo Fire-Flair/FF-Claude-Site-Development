@@ -173,6 +173,8 @@ const fdCompanyCover = (c) => {
     FD_NODES.forEach(n => { if (n.lat == null || (n.k !== "p" && n.k !== "a")) return; const d = fdHav(l.lat, l.lng, n.lat, n.lng); if (!best || d < best[0]) best = [d, n.id]; });
     if (best && best[0] < 30) whole.add(best[1]);
   });
+  /* Named coverage ("England", "Wales"): the whole nation, so every page under it lists the company. */
+  (c.cover || []).forEach(nm => { const n = FD_NODES.find(x => x.k === "n" && x.name === nm); if (n) whole.add(n.id); });
   return (FD_CO_CACHE[c.id] = { whole: [...whole], sub: [], fixture: true });
 };
 
@@ -640,7 +642,7 @@ function AreaPage11() {
   }, [a.path]);
   useEffect(() => { setRole(""); setShowAll(false); setAskCo(null); }, [a.path, siteKey]);
   const res = useMemo(() => node ? fdResults(state, node, people, role) : null, [state.directory, state.admin17, state.company, a.path, role, people.length]);
-  const back = <button type="button" className="ff-fd-back" onClick={() => fdClose(dispatch)}>← Back</button>;
+  const back = <button type="button" className="ff-fd-back" onClick={() => rt17Back(() => fdClose(dispatch))}>← Back</button>;
   if (FD_PATH_ALIASES[a.path]) return <div className="ff-fd-page"><p>Redirecting…</p></div>;
   if (!node) {
     return (
