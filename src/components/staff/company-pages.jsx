@@ -234,53 +234,66 @@ const vkMedia17 = () => [
 ];
 
 
-const vkInfo17 = () => [
-  { id: "vk_exp", title: "The Vooshka experience", lead: "A little theatre. A lot of elegance.", text: "You bring the people and the reason to celebrate; we\u2019ll take care of the bar.", chips: ["Bespoke Bars", "Cocktails", "Mocktails", "Spirits", "Beers"], items: [] },
-  { id: "vk_why", title: "Why Vooshka", items: VK17_WHY.map(([t, d]) => ({ title: t, text: d })) },
-  { id: "vk_steps", title: "The Vooshka process", numbered: true, items: VK17_STEPS.map(([t, d]) => ({ title: t, text: d })), quote: "Not just a bar. A beautiful part of your celebration." },
-  { id: "vk_bars", title: "Bar styles", text: "Ordered by overall span, from smallest to largest. Made-to-measure designs appear last. All bars are 1.2 m high.", items: VK17.bars.map(([f, l, sz]) => ({ title: l, text: sz, photo: f })) }
-];
+/* The ONE source for Vooshka, in the company builder's own shape: the directory page and the DEV owner's account both read it. */
+let VKSRC17 = null;
 
 
-const vkReviews17 = () => VK17.revs.map(([by, text]) => [null, 0, text, by]);
+function vooshkaSource17() {
+  if (!VKSRC17) {
+    const sig = (name) => (VK_SIG17[name] || [])[2] || "";
+    VKSRC17 = {
+      name: "Vooshka Cocktail Bar",
+      kind: "Luxury mobile cocktail bar",
+      areas: "England and Wales",
+      base17: { locId: "gn:3333168", at: 0 },
+      slug: "vooshka",
+      socials: { whatsapp: "+44 7814 904355", instagram: "@vooshkacocktailbar" },
+      theme: "onyx",
+      layout: "centre",
+      logoWide: true,
+      description: VK17_DESC,
+      logo: vkSrc17(VK17.logo),
+      media: vkMedia17(),
+      info: [
+        { id: "vk_exp", title: "The Vooshka experience", lead: "A little theatre. A lot of elegance.", text: "You bring the people and the reason to celebrate; we\u2019ll take care of the bar.", chips: ["Bespoke Bars", "Cocktails", "Mocktails", "Spirits", "Beers"] },
+        { id: "vk_why", title: "Why Vooshka" },
+        { id: "vk_steps", title: "The Vooshka process", numbered: true, quote: "Not just a bar. A beautiful part of your celebration." },
+        { id: "vk_bars", title: "Bar styles", text: "Ordered by overall span, from smallest to largest. Made-to-measure designs appear last. All bars are 1.2 m high." }
+      ],
+      records: {
+        contact: [
+          makeRecord("contact", "+44 7814 904355", { description: "WhatsApp" }),
+          makeRecord("contact", "@vooshkacocktailbar", { description: "Instagram" }),
+          makeRecord("contact", "vooshkabars.co.uk", { description: "Website" })
+        ],
+        locations: [
+          makeRecord("locations", "England", { description: "Mobile bar experiences across England and Wales" }),
+          makeRecord("locations", "Wales")
+        ],
+        info_vk_why: coCardList17("info", "vk_why", VK17_WHY.map(([t, d]) => [t, d, []])),
+        info_vk_steps: coCardList17("info", "vk_steps", VK17_STEPS.map(([t, d]) => [t, d, []])),
+        info_vk_bars: coCardList17("info", "vk_bars", VK17.bars.map(([f, l, sz]) => [l, sz, [f]])),
+        packages: coCardList17("packages", "vk_pk", VK17_OCC.map(([t, tag, inc, ideal], i) => [t, tag + "\n\nIncludes: " + inc + "\nIdeal for: " + ideal, [VK17.occ[i]]])),
+        cocktail_menu: coCardList17("cocktail_menu", "vk_ck", VK17.sig.map(([src, name]) => [name, sig(name), [src]])),
+        web_reviews: coCardList17("web_reviews", "vk_wr", VK17.revs.map(([by, text]) => [by, text, []]))
+      },
+      qa: [
+        ...CO_QA_SEED.filter((q) => q.group === "feedback"),
+        ...VK17_QA.map(([text, answer, note], i) => ({ id: "qa_vk" + i, group: "business", text, answer, note }))
+      ],
+      reviews: [],
+      partners: []
+    };
+  }
+  return { ...VKSRC17 };
+}
 
 
 const vkContact17 = () => [["WhatsApp", "+44 7814 904355"], ["Instagram", "@vooshkacocktailbar"], ["Website", "vooshkabars.co.uk"]];
 
 
 function vooshkaEditable17() {
-  return {
-    name: "Vooshka Cocktail Bar",
-    kind: "Luxury mobile cocktail bar",
-    areas: "England and Wales",
-    base17: { locId: "gn:3333168", at: 0 },
-    slug: "vooshka",
-    socials: { whatsapp: "+44 7814 904355", instagram: "@vooshkacocktailbar" },
-    theme: "onyx",
-    layout: "centre",
-    logoWide: true,
-    description: VK17_DESC,
-    logo: vkSrc17(VK17.logo),
-    media: vkMedia17(),
-    records: {
-      contact: [
-        makeRecord("contact", "+44 7814 904355", { description: "WhatsApp" }),
-        makeRecord("contact", "@vooshkacocktailbar", { description: "Instagram" }),
-        makeRecord("contact", "vooshkabars.co.uk", { description: "Website" })
-      ],
-      locations: [
-        makeRecord("locations", "England", { description: "Mobile bar experiences across England and Wales" }),
-        makeRecord("locations", "Wales")
-      ]
-    },
-    qa: [
-      ...CO_QA_SEED.filter((q) => q.group === "feedback"),
-      ...VK17_QA.map(([text, answer, note], i) => ({ id: "qa_vk" + i, group: "business", text, answer, note }))
-    ],
-    reviews: VK17.revs.map(([byName, text], i) => ({ id: "vkr" + i, rating: 0, text, byName })),
-    info: vkInfo17(),
-    partners: []
-  };
+  return vooshkaSource17();
 }
 
 
@@ -324,25 +337,87 @@ function VkGrid17({ items }) {
 }
 
 
-/* A company's own "More information" sections, as people see them. */
-function CoInfo17({ list }) {
+/* A card as people see it: open it for every photo, the full text and the PDF. */
+function CoCardPop17({ card, onClose }) {
+  const photos = card ? coPhotos17(card) : [];
+  const doc = card && card.document && card.document.name ? card.document : null;
+  return (
+    <Sheet open={!!card} onClose={onClose} title={card ? card.name : ""} center>
+      {card ? <div className="ff-coqa17-pop">
+        {photos.length > 0 && <div className={"ff-co-pop-ph n" + Math.min(photos.length, 5)}>{photos.map((src, i) => <img key={i} decoding="async" src={src} alt="" referrerPolicy="no-referrer" />)}</div>}
+        {String(card.description || "").trim() ? <p className="ff-co-pop-tx">{card.description}</p> : null}
+        {doc ? (doc.dataUrl ? <a className="ff-btn sm" href={doc.dataUrl} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}><I11.FileText size={13} /> {doc.name}</a> : <span className="ff-body"><I11.FileText size={13} /> {doc.name}</span>) : null}
+      </div> : null}
+    </Sheet>
+  );
+}
+
+
+/* Boxes in a row: a squircle per card with its first photo, its title and its text. A number shows when the section is numbered. */
+function CoBoxes17({ cards, label, numbered, onOpen }) {
+  return (
+    <HScroll label={label}>
+      {cards.map((r, i) => {
+        const ph = coPhotos17(r)[0];
+        return (
+          <button key={r.id} type="button" className="ff-co-box" onClick={() => onOpen(r)}>
+            {ph ? <img decoding="async" src={ph} alt="" loading="lazy" referrerPolicy="no-referrer" onError={(e) => { if (/^https?:/.test(ph)) e.currentTarget.style.display = "none"; }} /> : null}
+            {numbered ? <span className="no">{String(i + 1).padStart(2, "0")}</span> : null}
+            <b>{r.name}</b>
+            {String(r.description || "").trim() ? <span className="tx">{r.description}</span> : null}
+          </button>
+        );
+      })}
+    </HScroll>
+  );
+}
+
+
+/* One section's cards. Every card with a photo: the photo grid (title and text as the caption). Otherwise: boxes in a row. */
+function CoCardsView17({ cards, label, numbered, onOpen }) {
+  if (!cards.length) return null;
+  if (cards.every((r) => coPhotos17(r).length)) {
+    return (
+      <div className="ff-vk-grid">
+        {cards.map((r, i) => {
+          const more = coPhotos17(r).length > 1 || (r.document && r.document.name);
+          const inner = <>
+            <img decoding="async" src={coPhotos17(r)[0]} alt={r.name || ""} loading="lazy" referrerPolicy="no-referrer" onError={(e) => { e.currentTarget.style.visibility = "hidden"; }} />
+            <figcaption>{numbered ? <span className="no">{String(i + 1).padStart(2, "0")}</span> : null}{r.name ? <b>{r.name}</b> : null}{String(r.description || "").trim() ? <small>{r.description}</small> : null}</figcaption>
+          </>;
+          return more
+            ? <figure key={r.id} className="ff-vk-it"><button type="button" className="ff-vk-itb" onClick={() => onOpen(r)}>{inner}</button></figure>
+            : <figure key={r.id} className="ff-vk-it">{inner}</figure>;
+        })}
+      </div>
+    );
+  }
+  return <CoBoxes17 cards={cards} label={label} numbered={numbered} onOpen={onOpen} />;
+}
+
+
+/* A company's own "More information" sections, as people see them. Reads the one company shape (sections plus their cards). */
+function CoInfo17({ co }) {
   const [pop, setPop] = useState(null);
   return (
     <>
-      <Sheet open={!!pop} onClose={() => setPop(null)} title={pop ? pop.title : ""} center>
-        {pop ? <div className="ff-coqa17-pop"><p className="a">{pop.text}</p></div> : null}
-      </Sheet>
-      {(list || []).filter(sec => String(sec.title || "").trim()).map((sec, si) => {
-        const items = (sec.items || []).filter(it => String(it.title || it.text || it.photo || "").trim());
-        const rows = items.filter(it => !it.photo), pics = items.filter(it => it.photo);
-        const paras = String(sec.text || "").split(/\n\s*\n/).map(x => x.trim()).filter(Boolean);
+      <CoCardPop17 card={pop} onClose={() => setPop(null)} />
+      {coSections17(co).map((sec, si) => {
+        const cards = coShownCards17(coSecAll17(co, sec));
+        const paras = String(sec.text || "").split(/\n\s*\n/).map((x) => x.trim()).filter(Boolean);
+        const chips = (sec.chips || []).filter(Boolean);
+        if (!cards.length && !paras.length && !sec.lead && !sec.quote && chips.length) {
+          return (
+            <section key={sec.id || si} className="ff-copub-sec"><SectionHead icon={<I11.Star size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={sec.title} />
+              <div className="ff-copub-chips">{chips.map((x) => <span key={x}>{x}</span>)}</div></section>
+          );
+        }
         return (
-          <VkFold17 key={sec.id || si} title={sec.title} count={items.length || null}>
+          <VkFold17 key={sec.id || si} title={sec.title} count={cards.length || null}>
             {sec.lead ? <h4 className="ff-vk-h">{sec.lead}</h4> : null}
             {paras.map((p, i) => <p key={"p" + i} className="ff-body ff-vk-p">{p}</p>)}
-            {sec.chips && sec.chips.length ? <div className="ff-copub-chips">{sec.chips.map(c => <span key={c}>{c}</span>)}</div> : null}
-            {rows.length ? <HScroll label={sec.title}>{rows.map((it, i) => <InformationCard key={"r" + i} record={{ ...makeRecord("info", it.title || sec.title), id: (sec.id || si) + "_" + i, description: it.text || "" }} def={{ label: sec.title, singular: sec.title, icon: "qualification", fields: ["description"] }} themeKey="onyx" onClick={() => setPop({ title: it.title || sec.title, text: it.text || "" })} />)}</HScroll> : null}
-            {pics.length ? <VkGrid17 items={pics.map(it => ({ src: it.photo, label: it.title, size: it.text }))} /> : null}
+            {chips.length ? <div className="ff-copub-chips">{chips.map((x) => <span key={x}>{x}</span>)}</div> : null}
+            <CoCardsView17 cards={cards} label={sec.title} numbered={!!sec.numbered} onOpen={setPop} />
             {sec.quote ? <p className="ff-vk-quote">{sec.quote}</p> : null}
           </VkFold17>
         );
@@ -352,75 +427,15 @@ function CoInfo17({ list }) {
 }
 
 
-function VkExtras17({ x }) {
-  const total = (x.cocktails || []).reduce((n, g) => n + g.items.length, 0);
-  return React.createElement(React.Fragment, null, x.pkgs && React.createElement(VkFold17, {
-    title: "Packages",
-    count: x.pkgs.length
-  }, x.pkgs.map(([t, pr, d]) => React.createElement("div", {
-    key: t,
-    className: "ff-vk-row"
-  }, React.createElement("b", null, t + " · " + pr), React.createElement("span", null, d)))), x.faq && React.createElement(VkFold17, {
-    title: "Questions and answers",
-    count: x.faq.length
-  }, x.faq.map(([t, d]) => React.createElement("div", {
-    key: t,
-    className: "ff-vk-row"
-  }, React.createElement("b", null, t), React.createElement("span", null, d)))), x.experience && React.createElement(VkFold17, {
-    title: "The " + (x.name || "Vooshka") + " experience"
-  }, React.createElement("h4", {
-    className: "ff-vk-h"
-  }, x.experience[0]), x.experience.slice(1).map((p) => React.createElement("p", {
-    key: p,
-    className: "ff-body ff-vk-p"
-  }, p)), x.offering && React.createElement("div", {
-    className: "ff-copub-chips"
-  }, x.offering.map((o) => React.createElement("span", {
-    key: o
-  }, o)))), x.why && React.createElement(VkFold17, {
-    title: "Why " + (x.name || "Vooshka"),
-    count: x.why.length
-  }, x.why.map(([t, d]) => React.createElement("div", {
-    key: t,
-    className: "ff-vk-row"
-  }, React.createElement("b", null, t), React.createElement("span", null, d)))), x.occasions && React.createElement(VkFold17, {
-    title: "Occasions",
-    count: x.occasions.length
-  }, React.createElement("div", {
-    className: "ff-vk-grid wide"
-  }, x.occasions.map((o) => React.createElement("figure", {
-    key: o.t,
-    className: "ff-vk-it" + (o.src ? "" : " noimg")
-  }, o.src && React.createElement("img", { decoding: "async",
-    src: o.src,
-    alt: o.t,
-    loading: "lazy"
-  }), React.createElement("figcaption", null, React.createElement("b", null, o.t), React.createElement("small", null, o.d)))))), x.steps && React.createElement(VkFold17, {
-    title: "The " + (x.name || "Vooshka") + " process",
-    count: x.steps.length
-  }, x.steps.map(([t, d], i) => React.createElement("div", {
-    key: t,
-    className: "ff-vk-row"
-  }, React.createElement("b", null, String(i + 1).padStart(2, "0"), "  ", t), React.createElement("span", null, d))), x.quote && React.createElement("p", {
-    className: "ff-vk-quote"
-  }, x.quote)), x.bars && x.bars.length > 0 && React.createElement(VkFold17, {
-    title: "Bar styles",
-    count: x.bars.length
-  }, x.barsNote && React.createElement("p", {
-    className: "ff-body ff-vk-p"
-  }, x.barsNote), React.createElement(VkGrid17, {
-    items: x.bars
-  })), total > 0 && React.createElement(VkFold17, {
-    title: x.cocktailsTitle || "Signature cocktails",
-    count: total
-  }, x.cocktails.map((g) => React.createElement("div", {
-    key: g.cat,
-    className: "ff-vk-grp"
-  }, React.createElement("h4", {
-    className: "ff-vk-h"
-  }, g.cat), React.createElement(VkGrid17, {
-    items: g.items
-  })))));
+/* Packages and Cocktails: simple cards in a row, each opening its photos and full text. */
+function CoSimpleRow17({ cards, label }) {
+  const [pop, setPop] = useState(null);
+  return (
+    <>
+      <CoBoxes17 cards={cards} label={label} onOpen={setPop} />
+      <CoCardPop17 card={pop} onClose={() => setPop(null)} />
+    </>
+  );
 }
 
 
@@ -436,60 +451,41 @@ const rtbMoney17 = (n) => "£" + (n % 1 ? n.toFixed(2) : String(n));
 
 function rtbPage17() {
   const base = realPage11(REAL_COMPANIES11.find((c) => c.slug === "raise-the-bar"))[1];
+  const exp = ["Fully staffed mobile cocktail bars for Glasgow and Scotland.", "Raise the Bar brings a professional mixologist, a fully stocked mobile bar and a printed menu of the cocktails you choose to weddings, parties, corporate events and festivals. Everything needed for the service is included, and travel within 30 miles of Glasgow is part of the price."];
+  const pkgs = [
+    ["Mobile Cocktail Bar", "From £400", "A fully staffed mobile cocktail bar: mixologist, bar, printed menu, spirits, mixers, garnishes, ice and glassware. 3 hours of service. Choose your cocktails as add-ons."],
+    ["Cocktail Masterclass", "Enquire for a quote", "A hands-on class led by professional mixologists, at your venue, for teams, hen parties and private groups. Alcohol-free options available."],
+    ["Whisky Tasting", "Enquire for a quote", "A guided Scotch whisky tasting led by kilted hosts, with distillery stories and a curated selection of drams."]
+  ];
+  const faq = [
+    ["What is included?", "A professional mixologist, a fully stocked mobile bar, a bespoke printed cocktail menu, spirits, liqueurs, mixers, fresh ingredients, garnishes, ice and all glassware."],
+    ["Is there a minimum booking?", "Yes, £400 before any travel charge. Travel within 30 miles of Glasgow is included; beyond that a travel charge may apply and is quoted before you confirm."],
+    ["How long is the service?", "3 hours from your start time. The team arrives about 30 minutes before to set up. Longer service is quoted on request."],
+    ["How many cocktails can I choose?", "Up to 6 online. For a longer menu, or drinks that are not on the menu, ask for a bespoke menu."],
+    ["Can I order single serves?", "Yes, with a minimum of 5 of each cocktail, and the £400 minimum booking still applies."],
+    ["How do deposits work?", "A £50 deposit secures the request and the team confirm within 48 hours. The balance is invoiced and due within 14 days, and no later than 72 hours before the event. The deposit is non-refundable if you cancel, and refunded in full if they cannot attend."],
+    ["How big is the bar?", "About 1.6 m by 1 m, with working room needed behind it. The front can be branded for an extra fee."],
+    ["Are they insured?", "Yes, they hold public liability insurance and can share proof on request."]
+  ];
   return {
     ...base,
     contact: [["Website", "raisethebarglasgow.com"], ["Email", "info@raisethebarglasgow.com"], ["Phone", "07498 723388"]],
-    extras: {
-      name: "Raise the Bar",
-      cocktailsTitle: "Cocktail menu",
-      pkgs: [
-        ["Mobile Cocktail Bar", "From £400", "A fully staffed mobile cocktail bar: mixologist, bar, printed menu, spirits, mixers, garnishes, ice and glassware. 3 hours of service. Choose your cocktails as add-ons."],
-        ["Cocktail Masterclass", "Enquire for a quote", "A hands-on class led by professional mixologists, at your venue, for teams, hen parties and private groups. Alcohol-free options available."],
-        ["Whisky Tasting", "Enquire for a quote", "A guided Scotch whisky tasting led by kilted hosts, with distillery stories and a curated selection of drams."]
-      ],
-      experience: ["Fully staffed mobile cocktail bars for Glasgow and Scotland.", "Raise the Bar brings a professional mixologist, a fully stocked mobile bar and a printed menu of the cocktails you choose to weddings, parties, corporate events and festivals. Everything needed for the service is included, and travel within 30 miles of Glasgow is part of the price."],
-      offering: ["Mobile cocktail bar", "Individual serve cocktails", "Mini party packs", "Party packs", "Mocktails", "Masterclasses", "Whisky tastings", "Branded bars"],
-      faq: [
-        ["What is included?", "A professional mixologist, a fully stocked mobile bar, a bespoke printed cocktail menu, spirits, liqueurs, mixers, fresh ingredients, garnishes, ice and all glassware."],
-        ["Is there a minimum booking?", "Yes, £400 before any travel charge. Travel within 30 miles of Glasgow is included; beyond that a travel charge may apply and is quoted before you confirm."],
-        ["How long is the service?", "3 hours from your start time. The team arrives about 30 minutes before to set up. Longer service is quoted on request."],
-        ["How many cocktails can I choose?", "Up to 6 online. For a longer menu, or drinks that are not on the menu, ask for a bespoke menu."],
-        ["Can I order single serves?", "Yes, with a minimum of 5 of each cocktail, and the £400 minimum booking still applies."],
-        ["How do deposits work?", "A £50 deposit secures the request and the team confirm within 48 hours. The balance is invoiced and due within 14 days, and no later than 72 hours before the event. The deposit is non-refundable if you cancel, and refunded in full if they cannot attend."],
-        ["How big is the bar?", "About 1.6 m by 1 m, with working room needed behind it. The front can be branded for an extra fee."],
-        ["Are they insured?", "Yes, they hold public liability insurance and can share proof on request."]
-      ],
-      cocktails: [{ cat: "Single serve, mini party pack (14) and party pack (28)", items: RTB_MENU17.map(([n, i, m, p, f]) => ({ src: RTB_BLOB17 + f, name: n, size: [i && "Single " + rtbMoney17(i), m && "Mini " + rtbMoney17(m), p && "Party " + rtbMoney17(p)].filter(Boolean).join(" · ") })) }]
-    }
+    info: [
+      ...(base.info || []),
+      { id: "rtb_exp", title: "The Raise the Bar experience", lead: exp[0], text: exp.slice(1).join("\n\n"), chips: ["Mobile cocktail bar", "Individual serve cocktails", "Mini party packs", "Party packs", "Mocktails", "Masterclasses", "Whisky tastings", "Branded bars"] }
+    ],
+    records: {
+      packages: coCardList17("packages", "rtb_pk", pkgs.map(([t, pr, d]) => [t + " · " + pr, d, []])),
+      cocktail_menu: coCardList17("cocktail_menu", "rtb_ck", RTB_MENU17.map(([n, i, m, p, f]) => [n, [i && "Single " + rtbMoney17(i), m && "Mini " + rtbMoney17(m), p && "Party " + rtbMoney17(p)].filter(Boolean).join(" · "), [RTB_BLOB17 + f]]))
+    },
+    qa: faq.map(([text, note], i) => ({ id: "qa_rtb" + i, group: "business", text, answer: "", note }))
   };
 }
 
 
 const COMPANY_PAGES = {
-  co_vooshka: {
-    name: "Vooshka Cocktail Bar",
-    kind: "Luxury mobile cocktail bar",
-    areas: "England and Wales",
-    slug: "vooshka",
-    socials: { whatsapp: "+44 7814 904355", instagram: "@vooshkacocktailbar" },
-    theme: "onyx",
-    layout: "centre",
-    logoWide: true,
-    tier: "gold",
-    logo: vkSrc17(VK17.logo),
-    description: VK17_DESC,
-    media: vkMedia17(),
-    team: [],
-    contact: vkContact17(),
-    venues: [],
-    reviews: vkReviews17(),
-    qa: [...CO_QA_SEED.filter((q) => q.group === "feedback"), ...VK17_QA.map(([text, answer, note], i) => ({ id: "qa_vk" + i, group: "business", text, answer, note }))],
-    /* Packages and Cocktails are the same Service Cards and Cocktail Cards a company makes on FF Staff. */
-    get services() { return vkSeeds17().service; },
-    get cocktails() { return vkSeeds17().cocktail; },
-    info: vkInfo17(),
-    partners: []
-  },
+  /* The same source the DEV owner's account is built from. */
+  co_vooshka: { ...vooshkaSource17(), tier: "gold", team: [], contact: vkContact17(), venues: [] },
   ...Object.fromEntries(REAL_COMPANIES11.map(realPage11)),
   "co_raise-the-bar": rtbPage17(),
   ...Object.fromEntries(REAL_SUPPLIERS17.map(realPage11)),

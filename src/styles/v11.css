@@ -4446,3 +4446,35 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 /* FF Team profile start box: Book an interview sits on the right, under the CV button, instead of a row of its own. */
 .ff .ff-start17-top .ff-start17-int { grid-column:2; justify-self:stretch; justify-content:center; min-height:40px; white-space:nowrap; }
 @media (max-width:340px) { .ff .ff-start17-top .ff-start17-int { grid-column:1; } }
+
+/* v17.6 company page shape: cards, boxes, builder parts */
+.ff .ff-ic2-media.n5 { grid-template-columns:1fr 1fr 1fr; grid-template-rows:1fr 1fr; }
+.ff .ff-ic2-media.n5 span:first-child { grid-column:span 2; }
+.ff .ff-co-shift17 { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:12px 0 4px; }
+.ff .ff-co-shift17 button { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:10px 12px; border:1.5px solid rgba(126,97,29,.4); border-radius:14px; corner-shape:squircle; background:#FFFDF8; color:#2A2620; font:700 13.5px var(--sans); cursor:pointer; }
+.ff .ff-co-shift17 button:disabled { opacity:.45; cursor:default; }
+.ff .ff-info17-set { display:inline-flex; align-items:center; gap:6px; margin:0 0 10px; padding:8px 14px; border:1.5px solid rgba(176,141,42,.55); border-radius:14px; corner-shape:squircle; background:#FFFDF8; color:#5C4A16; font:700 13.5px var(--sans); cursor:pointer; }
+.ff .ff-info17-chk { display:flex; align-items:center; gap:10px; min-height:44px; margin:0 0 10px; font-size:15px; color:#16130F; cursor:pointer; }
+.ff .ff-info17-chk input { width:20px; height:20px; accent-color:#5C1220; flex:none; }
+.ff .ff-info17 > section { margin-top:14px !important; }
+.ff .ff-autotext { resize:none; overflow:hidden; width:100%; box-sizing:border-box; }
+.ff .ff-cmedia.row { display:flex; gap:8px; overflow-x:auto; padding-bottom:6px; scrollbar-width:thin; }
+.ff .ff-cmedia.row .ff-cmedia-it, .ff .ff-cmedia.row .ff-cmedia-add { flex:none; width:150px; }
+.ff .ff-cmedia-open { display:block; width:100%; height:100%; padding:0; border:0; background:none; cursor:pointer; position:static; border-radius:0; }
+.ff .ff-cmedia-it .ff-cmedia-open { position:absolute; inset:0; top:0; right:0; width:100%; height:100%; border-radius:inherit; background:none; }
+.ff .ff-cmedia-it .ff-cmedia-open img { width:100%; height:100%; object-fit:cover; }
+.ff .ff-cmedia-prev { margin:0 0 12px; border-radius:18px; corner-shape:squircle; overflow:hidden; background:#1C1B1E; }
+.ff .ff-cmedia-prev img { display:block; width:100%; max-height:260px; object-fit:contain; }
+.ff .ff-co-box { flex:none; display:flex; flex-direction:column; gap:6px; width:min(230px,72vw); padding:10px; text-align:left; border:1px solid rgba(126,97,29,.3); border-radius:20px; corner-shape:squircle; background:#FFFDF8; color:#2A2620; cursor:pointer; align-self:stretch; font-family:var(--sans); overflow-wrap:normal; word-break:normal; hyphens:none; }
+.ff .ff-co-box img { width:100%; aspect-ratio:4/3; object-fit:cover; object-position:50% 35%; border-radius:14px; corner-shape:squircle; background:#1C1B1E; display:block; }
+.ff .ff-co-box .no { font:700 12px var(--display); letter-spacing:.14em; color:#8A6A1E; }
+.ff .ff-co-box b { font-size:clamp(13px,3.8vw,15px); line-height:1.25; }
+.ff .ff-co-box .tx { font-size:13px; line-height:1.45; color:#5C564B; white-space:pre-line; }
+.ff .ff-vk-itb { display:flex; flex-direction:column; gap:6px; width:100%; padding:0; border:0; background:none; text-align:left; cursor:pointer; font:inherit; color:inherit; }
+.ff .ff-vk-it figcaption .no { font:700 11px var(--display); letter-spacing:.14em; color:#8A6A1E; }
+.ff .ff-co-pop-ph { display:grid; gap:6px; grid-template-columns:1fr 1fr; margin:0 0 12px; }
+.ff .ff-co-pop-ph.n1 { grid-template-columns:1fr; }
+.ff .ff-co-pop-ph img { width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:14px; corner-shape:squircle; display:block; }
+.ff .ff-co-pop-tx { margin:0 0 10px; font:500 15px/1.5 var(--sans); color:#2A2620; white-space:pre-line; }
+.ff .ff-info17 { grid-template-columns:minmax(0,1fr); }
+.ff .ff-info17 > section { min-width:0; }

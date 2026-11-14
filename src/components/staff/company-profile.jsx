@@ -45,8 +45,16 @@ const COMPANY_CATEGORIES = {
   cocktails: { ...BASE_CATEGORIES.cocktails },
   venues: { ...BASE_CATEGORIES.venues },
   documents: { label: "Documents", singular: "Document", icon: "qualification", fields: ["description", "document"], placeholder: "Staff onboarding pack" },
+  /* v17.6: simple cards made with the shared card tool (title, description, up to 5 photos, optional PDF). */
+  packages: { label: "Packages", singular: "Package", icon: "skills", fields: ["description", "media", "document"], placeholder: "Package name", maxMedia: 5 },
+  cocktail_menu: { label: "Cocktails", singular: "Cocktail", icon: "cocktails", fields: ["description", "media", "document"], placeholder: "Cocktail name", maxMedia: 5 },
+  web_reviews: { label: "Reviews from your website", singular: "Review", icon: "reviews", fields: ["description", "media", "document"], placeholder: "Who said it", titleLabel: "Who said it", descLabel: "What they said", maxMedia: 5 },
   contact: { label: "Contact & social", singular: "Contact", icon: "languages", fields: ["description"], placeholder: "bookings@yourcompany.co.uk" },
 };
+
+
+/* The card settings of one "More information" section (its cards are records["info_<id>"]). */
+const coInfoDef17 = (sec) => ({ label: sec.title || "Untitled", singular: "Card", icon: "qualification", fields: ["description", "media", "document"], placeholder: "Title", maxMedia: 5 });
 
 
 const companyDocs = (c) => [...((c && c.documents) || []), ...recsOf(c || {}, "documents").filter(r => !r.hidden && !r.proposed)];

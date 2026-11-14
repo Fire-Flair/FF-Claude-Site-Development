@@ -216,7 +216,7 @@ const CO_QA_SEED = [
 const coQa = (c) => (c && Array.isArray(c.qa) ? c.qa : CO_QA_SEED);
 
 
-const qaShown = (q) => (q.answer ? (q.note ? `${q.answer} — ${q.note}` : q.answer) : "");
+const qaShown = (q) => (q.answer ? (q.note ? `${q.answer} — ${q.note}` : q.answer) : String(q.note || "").trim());
 
 
 function CoQSheet11({ sheet, qa, save, onClose }) {
@@ -233,7 +233,7 @@ function CoQSheet11({ sheet, qa, save, onClose }) {
     return null;
   const done = () => {
     if (isNew)
-      save([...qa, { id: uid("qa"), group: "business", text: text.trim(), answer: "", note: "", custom: true }]);
+      save([...qa, { id: uid("qa"), group: "business", text: text.trim(), answer: ans, note: note.trim(), custom: true }]);
     else
       save(qa.map((x) => x.id === sheet.id ? { ...x, answer: ans, note: note.trim() } : x));
     onClose();
@@ -260,14 +260,12 @@ function CoQSheet11({ sheet, qa, save, onClose }) {
   }, ["Yes", "No"].map((o) => React.createElement("button", {
     key: o,
     type: "button",
-    disabled: isNew,
     "aria-pressed": ans === o,
     onClick: () => setAns(ans === o ? "" : o)
   }, o))), React.createElement("textarea", {
     className: "ff-input",
     rows: 3,
     value: note,
-    disabled: isNew,
     onChange: (e) => setNote(e.target.value),
     placeholder: "Type your answer",
     "aria-label": "Type your answer",
@@ -583,23 +581,42 @@ function CompanyJoin({ inBooking }) {
 function CompanyMedia({ list, editable }) {
   const { dispatch } = useStore();
   const ref = useRef(null);
+  const [sel, setSel] = useState(null);
   const add = (e) => {
     const files = [...(e.target.files || [])].slice(0, 6); e.target.value = "";
     files.forEach(f => { const r = new FileReader(); r.onload = () => dispatch({ type: "COMPANY_MEDIA_ADD", item: { id: uid("cm"), src: r.result } }); r.readAsDataURL(f); });
   };
+  const cur = sel && list.find(m => m.id === sel);
+  const idx = cur ? list.indexOf(cur) : -1;
   return (
-    <div className="ff-cmedia">
+    <div className={"ff-cmedia" + (editable ? " row" : "")}>
+      {editable && (
+        <button type="button" className="ff-cmedia-add" onClick={() => ref.current && ref.current.click()}>
+          <I11.ImagePlus size={22} /><b>Add photos</b>
+          <input ref={ref} type="file" accept="image/*" multiple hidden onChange={add} />
+        </button>
+      )}
       {list.map((m, mi) => (
         <figure key={m.id || m.src} className="ff-cmedia-it">
-          <img decoding="async" src={m.src} alt={m.alt || ""} loading={mi < 8 ? "eager" : "lazy"} referrerPolicy="no-referrer" onError={(e) => { if (/^https?:/.test(m.src)) e.currentTarget.style.visibility = "hidden"; }} />
+          {editable
+            ? <button type="button" className="ff-cmedia-open" aria-label={m.alt ? `Edit photo: ${m.alt}` : "Edit photo"} onClick={() => setSel(m.id)}>
+                <img decoding="async" src={m.src} alt={m.alt || ""} loading={mi < 8 ? "eager" : "lazy"} referrerPolicy="no-referrer" onError={(e) => { if (/^https?:/.test(m.src)) e.currentTarget.style.visibility = "hidden"; }} /></button>
+            : <img decoding="async" src={m.src} alt={m.alt || ""} loading={mi < 8 ? "eager" : "lazy"} referrerPolicy="no-referrer" onError={(e) => { if (/^https?:/.test(m.src)) e.currentTarget.style.visibility = "hidden"; }} />}
           {editable && <button type="button" aria-label="Remove photo" onClick={() => dispatch({ type: "COMPANY_MEDIA_DELETE", id: m.id })}><I11.X size={13} /></button>}
         </figure>
       ))}
-      {editable && (
-        <button type="button" className="ff-cmedia-add" onClick={() => ref.current && ref.current.click()}>
-          <I11.ImagePlus size={22} /><b>Add photos</b><small>Your bar, your events, your team</small>
-          <input ref={ref} type="file" accept="image/*" multiple hidden onChange={add} />
-        </button>
+      {editable && cur && (
+        <Sheet open onClose={() => setSel(null)} title="Photo">
+          <div className="ff-cmedia-prev"><img src={cur.src} alt="" /></div>
+          <Field label="Caption">
+            <input className="ff-input" value={cur.alt || ""} maxLength={120} onChange={(e) => dispatch({ type: "COMPANY_MEDIA_PATCH", id: cur.id, patch: { alt: e.target.value } })} />
+          </Field>
+          <div className="ff-co-shift17" role="group" aria-label="Order">
+            <button type="button" aria-label="Move earlier" disabled={idx <= 0} onClick={() => dispatch({ type: "COMPANY_MEDIA_MOVE", id: cur.id, dir: -1 })}><ChevronLeft size={15} /> Earlier</button>
+            <button type="button" aria-label="Move later" disabled={idx >= list.length - 1} onClick={() => dispatch({ type: "COMPANY_MEDIA_MOVE", id: cur.id, dir: 1 })}>Later <ChevronRight size={15} /></button>
+          </div>
+          <Btn variant="primary wide" onClick={() => setSel(null)}><I11.Check size={14} /> Done</Btn>
+        </Sheet>
       )}
     </div>
   );
@@ -691,74 +708,118 @@ function SearchBox11({ value, onChange, placeholder, label }) {
 
 
 
+/* A text box that grows with its content, so nothing scrolls inside it. */
+function AutoText17({ value, onChange, onBlur, rows = 3, className = "ff-input", ...rest }) {
+  const ref = useRef(null);
+  const fit = () => { const el = ref.current; if (!el) return; el.style.height = "auto"; el.style.height = el.scrollHeight + 2 + "px"; };
+  React.useLayoutEffect(fit, [value]);
+  useEffect(() => { window.addEventListener("resize", fit); return () => window.removeEventListener("resize", fit); }, []);
+  return <textarea ref={ref} className={className + " ff-autotext"} rows={rows} value={value} onChange={onChange} onBlur={onBlur} {...rest} />;
+}
+
+
 /* About: just a box you type in. It saves as you leave it. */
 function AboutBox11() {
   const { state, dispatch } = useStore();
   const c = state.company || {};
   const [t, setT] = useState(c.description || "");
   useEffect(() => { setT(c.description || ""); }, [c.description]);
-  return <textarea className="ff-input ff-aboutbox" rows={4} value={t} aria-label="About" placeholder="Tell people what your business does"
+  return <AutoText17 className="ff-input ff-aboutbox" rows={4} value={t} aria-label="About" placeholder="Tell people what your business does"
     onChange={(e) => setT(e.target.value)} onBlur={() => { if (t.trim() !== (c.description || "")) dispatch({ type: "COMPANY_SAVE", company: { description: t.trim() } }); }} />;
 }
 
 
 
-/* FF Staff: More information. Sections a company writes for its public page (a title, a text, and items with an optional photo). */
+/* Many photos at once: one card per photo, titled with the file name without its extension. */
+function BulkPhotos17({ category }) {
+  const { state, dispatch } = useStore();
+  const ref = useRef(null);
+  const pick = async (e) => {
+    const files = [...(e.target.files || [])].filter(f => /^image\//.test(f.type));
+    e.target.value = "";
+    if (!files.length) return;
+    const made = (await Promise.all(files.map(async (f) => {
+      try {
+        const dataUrl = await shrinkPhoto(f, 900);
+        return makeRecord(category, coTitleOfFile17(f.name), { media: [{ id: uid("med"), name: f.name, dataUrl }] });
+      } catch (err) { return null; }
+    }))).filter(Boolean);
+    if (!made.length) return;
+    const have = coRecsOf17(state.company, category);
+    dispatch({ type: "REC_BULK", owner: "company", category, list: addRanked(have, made) });
+  };
+  return (
+    <button type="button" className="ff-card ff-addtile ff-bulk17" aria-label="Add photos" onClick={() => ref.current && ref.current.click()}
+      style={{ width: CARD_W.info, aspectRatio: "1 / 1", borderRadius: 22 }}>
+      <span style={{ textAlign: "center" }}>
+        <span style={{ display: "grid", placeItems: "center", width: 42, height: 42, margin: "0 auto", border: "1px solid var(--gold-dk)", borderRadius: 12 }}><I11.ImagePlus size={20} color="var(--gold-dk)" /></span>
+        <span className="ff-label" style={{ display: "block", marginTop: 8 }}>Add photos</span>
+      </span>
+      <input ref={ref} type="file" accept="image/*" multiple hidden onChange={pick} />
+    </button>
+  );
+}
+
+
+/* FF Staff: More information. Sections a company writes for its public page: settings plus cards made with the shared card tool. */
 function InfoBuilder17() {
   const { state, dispatch } = useStore();
-  const list = (state.company || {}).info || [];
+  const c = state.company || {};
+  const list = c.info || [];
   const [ed, setEd] = useState(null);
+  const [openRec, setOpenRec] = useState(null);
+  const [addingTo, setAddingTo] = useState(null);
+  useEffect(() => { if (list.some(x => x && x.items && x.items.length)) dispatch({ type: "CO_INFO_MIGRATE" }); }, [list]);
   const save = (next) => dispatch({ type: "COMPANY_SAVE", company: { info: next } });
   return (
     <div className="ff-info17">
-      {list.map(sec => (
-        <button key={sec.id} type="button" className="ff-info17-row" onClick={() => setEd(sec)}>
-          <span><b>{sec.title || "Untitled"}</b><small>{(sec.items || []).length} {(sec.items || []).length === 1 ? "item" : "items"}</small></span>
-          <I11.Pencil size={15} aria-hidden="true" />
-        </button>
-      ))}
-      <button type="button" className="ff-info17-add" onClick={() => setEd({ id: uid("info"), title: "", text: "", items: [], fresh: true })}><I11.Plus size={15} /> Add a section</button>
-      {ed && <InfoSheet17 sec={ed} onClose={() => setEd(null)}
+      {list.map(sec => {
+        const key = coInfoKey17(sec.id), def = coInfoDef17(sec);
+        return (
+          <ProfileAttributeSection key={sec.id} catKey={key} def={def} list={coSecAll17(c, sec)} isMe shade="onyx" owner="company"
+            onOpen={(r) => setOpenRec({ record: r, def, category: key })} onAdd={() => setAddingTo({ key, def })}
+            top={<button type="button" className="ff-info17-set" aria-label={`Settings for ${sec.title || "this section"}`} onClick={() => setEd(sec)}><I11.Pencil size={14} /> Settings</button>}
+            moreTail={<BulkPhotos17 category={key} />} />
+        );
+      })}
+      <button type="button" className="ff-info17-add" onClick={() => setEd({ id: uid("info"), title: "", fresh: true })}><I11.Plus size={15} /> Add a section</button>
+      {ed && <InfoSheet17 sec={ed} index={list.findIndex(y => y.id === ed.id)} count={list.length} onClose={() => setEd(null)}
         onSave={(x) => { const { fresh, ...clean } = x; save(list.some(y => y.id === x.id) ? list.map(y => y.id === x.id ? clean : y) : [...list, clean]); setEd(null); }}
-        onDelete={() => { save(list.filter(y => y.id !== ed.id)); setEd(null); }} />}
+        onMove={(x, dir) => { const { fresh, ...clean } = x; const i = list.findIndex(y => y.id === x.id), j = i + dir; if (i < 0 || j < 0 || j >= list.length) return; const next = list.map(y => y.id === x.id ? clean : y); [next[i], next[j]] = [next[j], next[i]]; save(next); setEd(null); }}
+        onDelete={() => { dispatch({ type: "CO_SECTION_DELETE", id: ed.id }); setEd(null); }} />}
+      <GenericAttributeCardCreator owner="company" open={!!openRec} record={openRec && openRec.record} def={openRec && openRec.def} category={openRec && openRec.category} onClose={() => setOpenRec(null)} />
+      <GenericAttributeCardCreator owner="company" open={!!addingTo} record={null} category={addingTo && addingTo.key} def={addingTo && addingTo.def} onClose={() => setAddingTo(null)} />
     </div>
   );
 }
 
-function InfoSheet17({ sec, onSave, onDelete, onClose }) {
+const ChevronUpIcon17 = lucideIcon("ChevronUp");
+
+
+function InfoSheet17({ sec, index, count, onSave, onMove, onDelete, onClose }) {
   const [x, setX] = useState(() => JSON.parse(JSON.stringify(sec)));
-  const items = x.items || [];
-  const setItem = (i, p) => setX({ ...x, items: items.map((it, j) => j === i ? { ...it, ...p } : it) });
-  const photo = (i, e) => {
-    const f = e.target.files && e.target.files[0];
-    e.target.value = "";
-    if (!f) return;
-    const r = new FileReader();
-    r.onload = () => setItem(i, { photo: r.result });
-    r.readAsDataURL(f);
-  };
+  const set = (p) => setX({ ...x, ...p });
+  const clean = () => ({ ...x, title: String(x.title || "").trim(), lead: String(x.lead || "").trim(), text: String(x.text || "").trim(), quote: String(x.quote || "").trim(), chips: (x.chips || []).filter(Boolean) });
   return (
-    <Sheet open onClose={onClose} title={sec.fresh ? "Add a section" : "Edit section"}>
+    <Sheet open onClose={onClose} title={sec.fresh ? "Add a section" : "Section"}>
       <div className="ff-info17-ed">
-        <Field label="Title"><input className="ff-input" value={x.title || ""} maxLength={60} onChange={(e) => setX({ ...x, title: e.target.value })} placeholder="Why choose us" /></Field>
-        <Field label="Text"><textarea className="ff-input" rows={3} value={x.text || ""} onChange={(e) => setX({ ...x, text: e.target.value })} placeholder="A few lines about this" /></Field>
-        <div className="ff-label" style={{ margin: "4px 0 8px" }}>Items</div>
-        {items.map((it, i) => (
-          <div key={i} className="ff-info17-it">
-            <label className="ph" aria-label={it.photo ? "Change the photo" : "Add a photo"}>
-              {it.photo ? <img src={it.photo} alt="" /> : <I11.ImagePlus size={18} />}
-              <input type="file" accept="image/*" hidden onChange={(e) => photo(i, e)} />
-            </label>
-            <div className="tx">
-              <input className="ff-input" value={it.title || ""} maxLength={60} onChange={(e) => setItem(i, { title: e.target.value })} placeholder="Item" aria-label="Item title" />
-              <input className="ff-input" value={it.text || ""} maxLength={240} onChange={(e) => setItem(i, { text: e.target.value })} placeholder="One line about it" aria-label="Item line" />
-            </div>
-            <button type="button" className="del" aria-label="Remove this item" onClick={() => setX({ ...x, items: items.filter((_, j) => j !== i) })}><I11.Trash2 size={15} /></button>
-          </div>
-        ))}
-        <Btn variant="sm ghost" onClick={() => setX({ ...x, items: [...items, { title: "", text: "" }] })}><I11.Plus size={13} /> Add an item</Btn>
+        <Field label="Title"><input className="ff-input" value={x.title || ""} maxLength={60} onChange={(e) => set({ title: e.target.value })} /></Field>
+        <Field label="Headline"><input className="ff-input" value={x.lead || ""} maxLength={120} onChange={(e) => set({ lead: e.target.value })} /></Field>
+        <Field label="Text"><AutoText17 value={x.text || ""} rows={3} onChange={(e) => set({ text: e.target.value })} /></Field>
+        <div className="ff-field">
+          <span className="ff-label" style={{ display: "block", marginBottom: 6 }}>Tags</span>
+          <Chips17 edit value={x.chips || []} onChange={(chips) => set({ chips })} placeholder="Add a tag" max={30} />
+        </div>
+        <label className="ff-info17-chk"><input type="checkbox" checked={!!x.numbered} onChange={(e) => set({ numbered: e.target.checked })} /><span>Numbered</span></label>
+        <Field label="Closing line"><input className="ff-input" value={x.quote || ""} maxLength={160} onChange={(e) => set({ quote: e.target.value })} /></Field>
         <div className="acts">
-          <Btn variant="primary wide" disabled={!String(x.title || "").trim()} onClick={() => onSave({ ...x, title: x.title.trim(), items: items.filter(it => String(it.title || it.text || it.photo || "").trim()) })}><I11.Check size={14} /> Save section</Btn>
+          <Btn variant="primary wide" disabled={!String(x.title || "").trim()} onClick={() => onSave(clean())}><I11.Check size={14} /> Save section</Btn>
+          {!sec.fresh && (
+            <div className="ff-co-shift17" role="group" aria-label="Order">
+              <button type="button" aria-label="Move section up" disabled={index <= 0 || !String(x.title || "").trim()} onClick={() => onMove(clean(), -1)}><ChevronUpIcon17 size={15} /> Up</button>
+              <button type="button" aria-label="Move section down" disabled={index >= count - 1 || !String(x.title || "").trim()} onClick={() => onMove(clean(), 1)}>Down <I11.ChevronDown size={15} /></button>
+            </div>
+          )}
           {!sec.fresh && <button type="button" className="ff-info17-del" onClick={onDelete}><I11.Trash2 size={14} /> Delete section</button>}
         </div>
       </div>
@@ -852,7 +913,7 @@ function CompanySections() {
     { key: "overview", label: "Overview" },
     { key: "services", label: "Packages" },
     { key: "team", label: "Team", count: team.length },
-    { key: "reviews", label: "Reviews", count: reviews.length },
+    { key: "reviews", label: "Reviews", count: reviews.length + coRecsOf17(c, "web_reviews").filter(r => !r.hidden).length },
   ];
   return (
     <>
@@ -912,6 +973,8 @@ function CompanySections() {
           </>)}
 
           {tab === "services" && (<>
+            {recSection("packages")}
+            {recSection("cocktail_menu")}
             <section id="ff-co-svc" style={{ marginTop: 22 }}>
               <SectionHead icon={<I11.Sparkles size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={<SoonTitle17>Packages</SoonTitle17>} count={cards.services.length} action={<CategoryToggle sectionKey="co_svc" defaultOpen={false} />} />
               {vis("co_svc") && <Studio17 type="service" site="FF Staff" by={String(c.name || "").trim() || "You"} tag={c.slug || "yourbusiness"} k="coServices17" seed={seeds.service} />}
@@ -952,6 +1015,7 @@ function CompanySections() {
               ) : <p className="ff-body ff-muted" style={{ margin: 0 }}>No reviews yet. Staff review you after each booking.</p>}
             </section>
           )}
+          {tab === "reviews" && recSection("web_reviews")}
         </div>
       </div>
 

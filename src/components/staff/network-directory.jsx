@@ -354,12 +354,17 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   const venues = co.mine ? recsOf(co, "venues").filter(r => !r.hidden).map(r => r.name) : (co.venues || []);
   /* Reviews posted on this company's page (state.reviews, newest first) come before its own. */
   const posted = (state.reviews || []).filter(r => r.aboutId === co.id || ck &&  (r.aboutId && r.aboutId !== "me" && coKey17(companyById(state, r.aboutId)) === ck)).slice().reverse().map(r => [null, r.rating, r.text, r.byName]);
-  const reviews = [...posted, ...(co.mine ? (co.reviews || []).map(r => [null, r.rating, r.text, r.byName]) : (co.reviews || []))];
-  const ownQa = co.mine || co.qa ? coQa(co).filter(q => q.group !== "feedback" && q.answer) : [];
+  const reviews = [...posted, ...(co.mine ? (co.reviews || []).map(r => [null, r.rating, r.text, r.byName]) : (co.reviews || [])), ...coWebReviews17(co).map(r => [null, 0, r.description, r.name])];
+  const ownQa = co.mine || co.qa ? coQa(co).filter(q => q.group !== "feedback" && (q.answer || String(q.note || "").trim())) : [];
   /* Questions asked on this page that the company answered and made public sit next to its own Q&A, newest first. */
   const askedQa = (state.profileQuestions || []).filter(q => q.companyKey && q.companyKey === ck && q.visibility === "public" && isAnswered(q.answer)).slice().reverse().map(q => ({ id: q.id, text: q.text, answer: q.answer, note: "", group: "business" }));
   const pubQa = [...askedQa, ...ownQa];
-  const { services, cocktails } = coCards17(state, co, true);
+  const services = coPackages17(co), cocktails = coCocktails17(co);
+  const pkgBlock = (services.length > 0 || cocktails.length > 0 || pubQa.length > 0) ? <section className="ff-copub-sec ff-copub-pk">
+    {services.length > 0 && <VkFold17 title="Packages" count={services.length}><CoSimpleRow17 cards={services} label="Packages" /></VkFold17>}
+    {cocktails.length > 0 && <VkFold17 title="Cocktails" count={cocktails.length}><CoSimpleRow17 cards={cocktails} label="Cocktails" /></VkFold17>}
+    {pubQa.length > 0 && <VkFold17 title="Q&A" count={pubQa.length}><CoQA17 list={pubQa} name={co.name} /></VkFold17>}
+  </section> : <section className="ff-copub-sec ff-copub-pk"><p className="ff-body ff-muted" style={{ margin: 0 }}>No packages yet.</p></section>;
   const isParty = isStaff && hireSiteOf(state).party;
   const tabs = [{ key: "overview", label: "Overview" }, { key: "qa", label: "Packages", count: services.length + cocktails.length }, { key: "team", label: "Team", count: team.length + coCos.length + coNet.length }, { key: "reviews", label: "Reviews", count: reviews.length }];
   const cIcon = (k) => /mail/i.test(k) ? I11.Mail : /phone/i.test(k) ? I11.Phone : /web/i.test(k) ? I11.Globe : I11.MessageCircle;
@@ -412,18 +417,10 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
               <ul className="ff-copub-contact">{contact.map(([k, v]) => { const Ic = cIcon(k); return <li key={k + v}><span className="ic"><Ic size={15} /></span><span><small>{k}</small><b>{v}</b></span></li>; })}</ul></section>}
             {(areas.length > 0 || venues.length > 0) && <section className="ff-copub-sec"><SectionHead icon={<I11.MapPinned size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Areas covered" />
               <div className="ff-copub-chips">{areas.map(a => <span key={a}><I11.MapPin size={12} /> {a}</span>)}{venues.map(v => <span key={v} className="ven"><I11.Star size={12} /> {v}</span>)}</div></section>}
-            {co.seed && [["Services", co.seed.services], ["Events", co.seed.eventTypes], ["Scale", co.seed.scale], ["Good to know", co.seed.facts]].filter(([, v]) => v && v.length > 0).map(([h, v]) => (
-              <section key={h} className="ff-copub-sec"><SectionHead icon={<I11.Star size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={h} />
-                <div className="ff-copub-chips">{v.map(x => <span key={x}>{x}</span>)}</div></section>))}
-            {co.info && co.info.length > 0 && <CoInfo17 list={co.info} />}
-            {co.extras && <VkExtras17 x={co.extras} />}
+            {co.info && co.info.length > 0 && <CoInfo17 co={co} />}
+            {co.unclaimed && (services.length > 0 || cocktails.length > 0 || pubQa.length > 0) && pkgBlock}
           </>)}
-          {tab === "qa" && <section className="ff-copub-sec ff-copub-pk">
-            {services.length > 0 && <VkFold17 title="Packages" count={services.length}><CoCardRow17 type="service" list={services} by={co.name} tag={tag} /></VkFold17>}
-            {cocktails.length > 0 && <VkFold17 title="Cocktails" count={cocktails.length}><CoCardRow17 type="cocktail" list={cocktails} by={co.name} tag={tag} /></VkFold17>}
-            {pubQa.length > 0 && <VkFold17 title="Q&A" count={pubQa.length}><CoQA17 list={pubQa} name={co.name} /></VkFold17>}
-            {!services.length && !cocktails.length && !pubQa.length && <p className="ff-body ff-muted" style={{ margin: 0 }}>No packages yet.</p>}
-          </section>}
+          {tab === "qa" && pkgBlock}
           {tab === "team" && <section className="ff-copub-sec">
             <TeamParts17 team={team} companies={coCos} network={coNet} teamEmpty="No team yet." renderTeam={(p) => { const on = state.selection.includes(p.id); return (
               <div key={p.id} className="ff-ct17-m"><PlayerTile person={p} selected={on} onClick={() => { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); }} />

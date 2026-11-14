@@ -199,6 +199,15 @@ function reducerCore17(s0, a) {
       [list[i], list[j]] = [list[j], list[i]];
       return withRecords(s, a.category, list);
     }
+    /* One place left or right in the order people see (a company's card sections). The cards take their tiers from their new places. */
+    case "REC_SHIFT": {
+      const list = withRanks(recsOf(s.profile, a.category)).map(e => e.r);
+      const i = list.findIndex(r => r.id === a.id), j = i + a.dir;
+      if (i < 0 || j < 0 || j >= list.length || list[i].hidden || list[j].hidden) return s;
+      [list[i], list[j]] = [list[j], list[i]];
+      let k = 0;
+      return withRecords(s, a.category, list.map(r => (r.hidden || r.proposed) ? r : { ...r, rank: cardRank(k++) }));
+    }
     case "REC_BULK":  return claimListXP(withRecords(s, a.category, a.list), a.category, a.list);
     /* New information joins the ONE profile — from FireFlair, a CV or a card.
        A name the profile already holds is never duplicated (the existing

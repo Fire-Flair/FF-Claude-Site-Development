@@ -199,7 +199,7 @@ function HorizontalCardRanker({ items, label, renderCard, tail }) {
 
 /* owner "company" (v16.12): the same section on the FF Staff Company profile,
    with its records in company.records and its own show/hide keys. */
-function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd, owner, pub }) {
+function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd, owner, pub, top, moreTail }) {
   const { state, dispatch } = useStore();
   const items = isMe ? list : list.filter(r => !r.hidden && !r.proposed);
   if (!isMe && !items.length) return null;
@@ -233,6 +233,7 @@ function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd
           ? <CategoryToggle sectionKey={ekey} defaultOpen={catKey === "professions"} />
           : <CategoryToggle sectionKey={vkey} defaultOpen={startOpen} />} />
       {open && (<>
+        {top || null}
         {unresolved && (
           <div className="ff-frame" style={{ padding: 12, marginBottom: 10 }}>
             <div style={{ display: "flex", gap: 9, alignItems: "center", marginBottom: 8 }}>
@@ -264,7 +265,7 @@ function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd
           pub && !isMe ? <PubGrid catKey={catKey} def={def} items={items} shade={shade} onOpen={onOpen} /> : (
           <HorizontalCardRanker items={items} label={def.label}
             renderCard={(r, rank) => <GenericAttributeCard record={r} def={def} themeKey={shade} rank={rank} editable={isMe && !def.system} onClick={() => onOpen(r)} />}
-            tail={addTile} />)
+            tail={moreTail ? [React.cloneElement(addTile, { key: "add" }), React.cloneElement(moreTail, { key: "more" })] : addTile} />)
         )}
       </>)}
     </section>
@@ -348,7 +349,7 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
 
   const addMedia = async (file) => {
     if (!file) return;
-    if ((draft.media || []).length >= MAX_MEDIA_PER_CARD) { setBusy(`Each card holds up to ${MAX_MEDIA_PER_CARD} images.`); return; }
+    if ((draft.media || []).length >= (def.maxMedia || MAX_MEDIA_PER_CARD)) { setBusy(`Each card holds up to ${def.maxMedia || MAX_MEDIA_PER_CARD} images.`); return; }
     if (file.size > MAX_MEDIA_BYTES) { setBusy(`That image is ${prettyBytes(file.size)} — keep it under ${prettyBytes(MAX_MEDIA_BYTES)}.`); return; }
     setBusy("Adding…");
     try {
@@ -380,6 +381,7 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
 
   const doc = draft.document;
   const one = def.singular.toLowerCase();
+  const maxMedia = def.maxMedia || MAX_MEDIA_PER_CARD;
 
   return (
     <Sheet open onClose={onClose} title={adding ? `Add ${one}` : def.singular}>
@@ -391,7 +393,7 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
           onPick={(n) => patch({ name: n })} />
       )}
 
-      <Field label="Title">
+      <Field label={def.titleLabel || "Title"}>
         {readOnly
           ? <div className="ff-display" style={{ fontSize: 17 }}>{draft.name}</div>
           : <input className="ff-input" style={{ fontSize: 17 }} value={draft.name} autoFocus={FF_FINE_POINTER && (adding && category !== "professions")}
@@ -479,7 +481,7 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
       )}
 
       {!def.mediaCard && (
-      <Field label="Description">
+      <Field label={def.descLabel || "Description"}>
         {readOnly
           ? <p className="ff-serif" style={{ fontSize: 16, lineHeight: 1.5, margin: 0 }}>{draft.description || "Nothing written yet."}</p>
           : <textarea className="ff-input" rows={5} value={draft.description || ""}
@@ -489,7 +491,7 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
 
       <div style={{ marginBottom: 16 }}>
         <div className="ff-label" style={{ marginBottom: 4 }}>Images and documents</div>
-        {!readOnly && <p className="ff-body ff-muted" style={{ fontSize: 12, margin: "0 0 8px" }}>Add up to {MAX_MEDIA_PER_CARD} images. They show under the card's title, in place of the description.</p>}
+        {!readOnly && <p className="ff-body ff-muted" style={{ fontSize: 12, margin: "0 0 8px" }}>Add up to {maxMedia} images. They show under the card's title, in place of the description.</p>}
         {(draft.media || []).length > 0 && (
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 10 }}>
             {draft.media.map(m => (
@@ -525,7 +527,7 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
               onChange={(e) => { addMedia(e.target.files?.[0]); e.target.value = ""; }} />
             <input ref={docRef} type="file" accept=".pdf,.doc,.docx,.txt,application/pdf" style={{ display: "none" }}
               onChange={(e) => { addDoc(e.target.files?.[0]); e.target.value = ""; }} />
-            <Btn variant="sm" disabled={(draft.media || []).length >= MAX_MEDIA_PER_CARD} onClick={() => mediaRef.current?.click()}><Camera size={12} /> Image {(draft.media || []).length}/{MAX_MEDIA_PER_CARD}</Btn>
+            <Btn variant="sm" disabled={(draft.media || []).length >= maxMedia} onClick={() => mediaRef.current?.click()}><Camera size={12} /> Image {(draft.media || []).length}/{maxMedia}</Btn>
             <Btn variant="sm" onClick={() => docRef.current?.click()}><FileText size={12} /> {doc ? "Replace document" : "Document"}</Btn>
           </div>
         )}
@@ -548,6 +550,12 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
       )}
       {!readOnly && !adding && !draft.proposed && (<>
         <Btn variant="primary wide" disabled={!draft.name.trim()} onClick={onClose}><Check size={14} /> Update {one}</Btn>
+        {owner === "company" && !live.hidden && (
+          <div className="ff-co-shift17" role="group" aria-label="Order">
+            <button type="button" aria-label="Move earlier" onClick={() => dispatch({ type: "REC_SHIFT", category, id: record.id, dir: -1 })}><ChevronLeft size={15} /> Earlier</button>
+            <button type="button" aria-label="Move later" onClick={() => dispatch({ type: "REC_SHIFT", category, id: record.id, dir: 1 })}>Later <ChevronRight size={15} /></button>
+          </div>
+        )}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 12 }}>
           <button className="ff-btn sm ghost" onClick={() => { patch({ hidden: !live.hidden }); dispatch({ type: "TOAST", toast: live.hidden ? `${draft.name} shown again` : `${draft.name} hidden — still on your profile` }); }}>
             {live.hidden ? <><Eye size={12} /> Show {one}</> : <><EyeOff size={12} /> Hide {one}</>}

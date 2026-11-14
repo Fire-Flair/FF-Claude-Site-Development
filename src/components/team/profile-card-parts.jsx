@@ -313,7 +313,7 @@ function InformationCard({ record, def, themeKey = "onyx", onClick, width, compa
   const tier = !record.proposed && RANK_TIER[rank] || "standard";
   const t = tier !== "standard" ? RANK_THEMES[tier] : (THEMES[themeKey === "slate" ? "onyx" : themeKey] || THEMES.onyx);
   const hasDoc = !!(record.document && record.document.name);
-  const media = (record.media || []).slice(0, MAX_MEDIA_PER_CARD);
+  const media = (record.media || []).slice(0, def.maxMedia || MAX_MEDIA_PER_CARD);
   const desc = (record.description || "").trim();
   const det = record.details || null;
   const sub = detailsLine(det, record.proficiency, record.name);

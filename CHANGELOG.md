@@ -1,5 +1,29 @@
 # FireFlair prototype — changelog
 
+## v17.6 (company builder)
+
+We upgraded the company profile builder so it produces everything on Vooshka's page, using the same universal card tool as FF Team (`ProfileAttributeSection`, `GenericAttributeCardCreator`, `GenericAttributeCard` / `InformationCard`, `HorizontalCardRanker`). There is now one company-profile shape, read by the builder, the owner's own page, every directory company and the directory agent. The field-by-field description is in `docs/company-profile-format.md`.
+
+State shape (`state.company`, new helpers in `src/components/staff/company-shape.jsx`):
+- `info`: `[{ id, title, lead (headline), text, chips (tags), numbered, quote (closing line) }]`. Settings only. Old `info[].items` is read as cards on the fly and written to records by `CO_INFO_MIGRATE` when the builder opens.
+- `records["info_<section id>"]`: the cards of a section, as shared card records (name = title, description, `media` up to 5, `document`, `hidden`, `rank`).
+- `records.packages`, `records.cocktail_menu`, `records.web_reviews`: new simple card sections (Packages, Cocktails, Reviews from your website; for reviews the title is who said it and the description is what they said). They show on the public page for the owner and for directory companies. The existing Service Card and Cocktail Card builders are unchanged and still off the public page.
+- `media[]`: `{ id, src, alt }`, `alt` is the optional caption, array order is display order.
+- `qa[]`: a question can be created with its Yes/No and typed note straight away; the public page shows a question when it has an answer or a note.
+
+Reducer actions:
+- New: `REC_SHIFT { category, id, dir }` (store.js; moves a card one place in the order people see, tiers follow the place), `COMPANY_MEDIA_PATCH { id, patch }`, `COMPANY_MEDIA_MOVE { id, dir }`, `CO_SECTION_DELETE { id }` (section and its cards), `CO_INFO_MIGRATE` (the last three in `coShapeReducer17`, called from `v11Reducer`).
+- Existing, now used by company sections: `REC_ADD`, `REC_PATCH`, `REC_DELETE`, `REC_BULK` with `owner: "company"`. Bulk "Add photos" in a section makes one card per photo (title = file name without extension) with one `REC_BULK`.
+- Card tool: new optional `def` fields `maxMedia` (company cards allow 5 photos; FF Team keeps its own limit), `titleLabel`, `descLabel`; `ProfileAttributeSection` takes optional `top` and `moreTail`.
+
+Builder: More information lists the sections (closed); opening one shows Settings (pencil) and its cards row with the add tile and Add photos. The gallery is one horizontal row with the Add photos tile; each photo opens a caption and order sheet. About grows with its content.
+
+Public page (`CoInfo17`, `CompanyPublic`): one fold per section; headline, text paragraphs, tags, closing line. Cards show as a photo grid when every card has a photo, otherwise as boxes in a row (box with photos opens them in its pop-up); numbered sections show 01, 02, and so on. Packages tab: Packages, Cocktails, then Q&A. Reviews tab: FireFlair reviews, then reviews from the website (no stars).
+
+Vooshka is one source object (`vooshkaSource17`) used by `COMPANY_PAGES.co_vooshka` and `vooshkaEditable17()`. Raise the Bar (`rtbPage17`) and the unclaimed directory companies (`realPage11`: Services, Events, Scale, Good to know become sections with tags) use the same shape; `VkExtras17`, the `extras` path and the special `co.seed` rendering are removed (`seed` stays as data for search and routing). Unclaimed pages have no tab bar, so their Packages, Cocktails and Q&A folds sit under their sections on the Overview.
+
+Not touched: locations and base (`base17.jsx`, `coverage17.jsx`, `BaseField17`, `companyLocations`, `areas` in `CompanyPublic`), company address logic, Team tab, Contact and Social links, sign-in, FF Team pages, FF Party behaviour.
+
 ## v17.5.4 (Phase Two, almost final)
 Artifact version 1794670999-61b2.
 

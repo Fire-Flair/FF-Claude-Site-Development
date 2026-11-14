@@ -71,6 +71,7 @@
   "components/staff/questions-and-dates.jsx",
   "components/team/availability.jsx",
   "components/staff/events.jsx",
+  "components/staff/company-shape.jsx",
   "components/staff/company-cards.jsx",
   "components/staff/company-pages.jsx",
   "components/staff/network-directory.jsx",

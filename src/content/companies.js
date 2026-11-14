@@ -14,6 +14,8 @@ const realPage11 = (c) => ["co_" + c.slug, {
   logo: (c.images && c.images.logo) || undefined, logoWide: !!(c.images && c.images.logoWide), logoBg: (c.images && c.images.logoBg) || "dark",
   media: ((c.images && c.images.photos) || []).map((u, i) => ({ id: c.slug + "_" + i, src: u, alt: c.name })),
   contact: c.website ? [["Website", c.website.replace(/^https?:\/\/(www\.)?/, "")]] : [],
+  /* Services, Events, Scale and Good to know are sections that use Tags. */
+  info: [["Services", c.services], ["Events", c.eventTypes], ["Scale", c.scale], ["Good to know", c.facts]].filter(([, v]) => v && v.length > 0).map(([title, chips], i) => ({ id: "seed_" + i, title, chips: [...chips] })),
   seed: { services: c.services || [], eventTypes: c.eventTypes || [], scale: c.scale || [], facts: c.facts || [], base: c.base || "" },
 }];
 
