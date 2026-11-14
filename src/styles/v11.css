@@ -4440,7 +4440,8 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-info17 > section { margin-top:14px !important; }
 .ff .ff-autotext { resize:none; overflow:hidden; width:100%; box-sizing:border-box; }
 /* v17.7 company builder: the builder is the page */
-.ff .ff-co17 { display:grid; gap:0; min-width:0; }
+.ff .ff-co17 { display:grid; grid-template-columns:minmax(0,1fr); gap:0; min-width:0; }
+.ff .ff-co17 > * { min-width:0; }
 .ff .ff-co17-group { margin:30px 0 -6px; font:800 11px var(--sans); letter-spacing:.2em; text-transform:uppercase; color:#7E611D; }
 .ff .ff-co17-row { margin-top:22px; min-width:0; }
 .ff .ff-co17-acts { display:inline-flex; align-items:center; gap:6px; flex:none; }
