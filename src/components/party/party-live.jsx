@@ -59,7 +59,7 @@ function DoneProfile17({ kind }) {
     const edit17 = () => { dispatch({ type: "V11_SET", patch: { ed17: "team" } }); dispatch({ type: "PE_START" }); window.scrollTo(0, 0); };
     const cardShare = dTag && mine ? <div style={{ marginTop: 10, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, maxWidth: 440, marginInline: "auto" }}>
       <Btn variant="wide" onClick={edit17}><S17I.Pencil size={14} /> Edit</Btn>
-      <CardShareBtn17 title="My FireFlair card" url={`https://${CARD_DOMAIN}/${dTag}`} fileName={"fireflair-" + cx17Slug(dTag)} label="Share" className="wide" render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={p.theme} />} />
+      <CardShareBtn17 title="My FireFlair card" url={`https://${CARD_DOMAIN}/${dTag}`} fileName={"fireflair-" + cx17Slug(dTag)} label="Share" className="wide" render={() => <PlayerCard person={person} format="portrait" nameAs="div" themeKey={p.theme} />} />
     </div> : null;
     return (
       <div className="ff-pubpage ff-done17 team">

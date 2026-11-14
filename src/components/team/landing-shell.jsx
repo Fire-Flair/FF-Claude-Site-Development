@@ -51,7 +51,7 @@ function ActionSheet({ open, onClose }) {
           {item(FileText, "Send a CV", "We read it and propose your cards", go(() => { dispatch({ type: "TAB", tab: "profile", route: "home" }); dispatch({ type: "FOCUS", focus: { target: "cv" } }); }))}
           {item(Plus, "Add information cards", "Professions, skills, interests, qualifications", go(() => { dispatch({ type: "TAB", tab: "profile", route: "home" }); dispatch({ type: "FOCUS", focus: { target: "professions" } }); }))}
           {item(Users, "Invite people you work with", "They accept before anything connects", go(() => dispatch({ type: "TAB", tab: "network" })))}
-          {item(Share2, "Share my card", `${CARD_DOMAIN}/${state.session.tag || "username"}`, go(() => dispatch({ type: "TOAST", toast: "Link copied" })))}
+          {item(ShareUp17, "Share my card", `${CARD_DOMAIN}/${state.session.tag || "username"}`, go(() => dispatch({ type: "TOAST", toast: "Link copied" })))}
         </>
       ) : (
         <>

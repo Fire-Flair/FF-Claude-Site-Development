@@ -85,3 +85,29 @@ const gbp17 = (p) => p == null || !isFinite(p) ? "" : `£${(p / 100).toFixed(p %
 
 /* 4 hrs, 4 hrs 30 min */
 const minsText17 = (m) => { if (!m) return ""; const h = Math.floor(m / 60), r = m % 60; return `${h ? `${h} hr${h === 1 ? "" : "s"}` : ""}${h && r ? " " : ""}${r ? `${r} min` : ""}`; };
+
+
+/* ==========================================================================
+   SHIFT CARD PAY LINE (v17.5.5) — the one formatter for every Shift Card.
+   Fed only by payOf17(shift); never reads pay from anywhere else and never invents an amount.
+     payLine17(shift) -> { status, text, hourly, total, problem }
+       text  "37 p/h = £150"   (one pound sign, before the total)
+       hourly  fixed total entered: derived, rounded DOWN to whole pounds (150 over 4 hours -> "37")
+               hourly rate entered: exactly as entered, pence only when it has pence ("22.50", "125")
+       total   "£1,079.37", "£1,250", "£150" (comma from 1,000; pence only when there are pence)
+     No agreed pay: text "Pay not recorded". Unreadable pay: "Pay can't be read".
+   ========================================================================== */
+function numFmt17(p) {
+  const pounds = Math.floor(p / 100), pence = p % 100;
+  const w = String(pounds).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return pence ? `${w}.${String(pence).padStart(2, "0")}` : w;
+}
+
+
+function payLine17(shift) {
+  const p = payOf17(shift);
+  if (p.status !== "ok") return { status: p.status, text: p.status === "missing" ? "Pay not recorded" : "Pay can't be read", problem: p.problem };
+  const hourly = p.basis === "fixed" ? String(Math.floor((p.totalP * 60) / (p.mins * 100))) : numFmt17(p.hourlyP);
+  const total = "£" + numFmt17(p.totalP);
+  return { status: "ok", hourly, total, text: `${hourly} p/h = ${total}` };
+}

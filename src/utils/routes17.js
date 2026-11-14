@@ -25,7 +25,7 @@
 const RT17_SITE_BY_PREFIX = { "ff-party": "party", "ff-team": "team", "ff-staff": "staff" };
 const RT17_PREFIX = { party: "ff-party", team: "ff-team", staff: "ff-staff" };
 /* First segments that can never be a tag or a company slug. */
-const RT17_RESERVED = ["network", "browse", "bookings", "book", "profile", "party", "areas", "packages", "stories", "vip", "team", "staff", "admin", "login", "home"];
+const RT17_RESERVED = ["network", "browse", "bookings", "book", "profile", "party", "areas", "packages", "stories", "vip", "team", "staff", "admin", "login", "home", "fx"];
 const RT17_TAB_WORD = { browse: "network", network: "network", book: "bookings", bookings: "bookings", party: "profile", profile: "profile" };
 /* Profile tab words in the address, and the tab each one opens (people and companies name their tabs differently). */
 const RT17_SUB_PERSON = { packages: "services", team: "teams", reviews: "reviews" };
@@ -110,6 +110,8 @@ function rt17Parse(hash) {
   if (s0 === "areas") return { kind: "other", site };
   if (s0 === "packages") return site === "party" ? { kind: "other", site } : { kind: "home", site };
   if (s0 === "home") return { kind: "pillar", site };
+  /* /fx/<code>: the shift brief. FF Team shows the professional's brief, FF Staff opens the hirer's booking, FF Party is reserved (home for now). */
+  if (s0 === "fx") return site !== "party" && /^[a-z0-9]{4,5}$/i.test(s1) ? { kind: "fx", site, code: s1.toUpperCase() } : { kind: "home", site };
   if (s0 === "stories") return /^[a-z0-9-]{1,120}$/.test(s1) ? { kind: "stories", site, slug: s1 } : { kind: "home", site };
   if (RT17_TAB_WORD[s0]) return { kind: "tab", site, tab: RT17_TAB_WORD[s0] };
   if (rt17Reserved(s0) || !/^[a-z0-9-]{1,40}$/.test(s0)) return { kind: "home", site };
@@ -123,6 +125,7 @@ function rt17Href(r) {
   if (r.kind === "home") return base;
   if (r.kind === "tab") return base + "/" + r.tab;
   if (r.kind === "stories") return base + "/stories/" + r.slug;
+  if (r.kind === "fx") return base + "/fx/" + r.code;
   if (r.kind === "person" || r.kind === "company") return base + "/" + r.key + (r.sub ? "/" + r.sub : "");
   return base;
 }
@@ -158,6 +161,8 @@ function rt17Target(state) {
   if (state.supportPage20 || state.pkgPage || state.fdArea) return null;
   if (state.role === "vip") return "";
   const site = rt17SiteOf(state);
+  if (state.fxPage17 && site !== "party") return rt17Href({ kind: "fx", site, code: state.fxPage17 });
+  if (site === "staff" && state.fxStaff17 && state.activeEventId === state.fxStaff17.eventId && state.route === "eventPage" && state.tab === "home") return rt17Href({ kind: "fx", site, code: state.fxStaff17.code });
   if (state.viewingCompany) {
     const co = companyById(state, state.viewingCompany);
     if (!co) return null;
@@ -210,7 +215,7 @@ function rt17Apply(route0, state, dispatch) {
   const homeLike = r.kind === "stories" || r.kind === "pillar";
   const expect = r.kind === "other" ? null : homeLike ? rt17Href({ kind: "home", site: r.site }) : rt17Href(r);
   if (r.kind !== "other" && r.kind !== "pillar") rt17Replace(rt17Href(r));
-  const away = { viewing: null, viewingAsGuest: false, viewingCompany: null, peek: null, ptab17: null };
+  const away = { viewing: null, viewingAsGuest: false, viewingCompany: null, peek: null, ptab17: null, fxPage17: null, fxStaff17: null };
   if (r.kind === "other") { dispatch({ type: "V11_SET", patch: away }); return null; }
   if (r.kind === "root") {
     dispatch({ type: "V11_SET", patch: { ...away, fdArea: null, pkgPage: null, supportPage20: null } });
@@ -224,7 +229,20 @@ function rt17Apply(route0, state, dispatch) {
     dispatch(r.site === "team" ? { type: "ROLE", role: "team" } : { type: "ROLE", role: "staff", site: r.site });
   }
   const clear = { ...away, fdArea: null, fdPreview: false, pkgPage: null, supportPage20: null };
-  if (r.kind === "person") {
+  if (r.kind === "fx") {
+    const hit = fxFind17(state, r.code);
+    if (r.site === "staff" && hit) {
+      /* FF Staff: the hirer's booking for that event. */
+      dispatch({ type: "V11_SET", patch: { ...clear, fxStaff17: { code: r.code, eventId: hit.event.id }, activeEventId: hit.event.id } });
+      dispatch({ type: "TAB", tab: "home", route: "eventPage" });
+      /* TAB clears the marker; set it again once the booking is open. */
+      dispatch({ type: "V11_SET", patch: { fxStaff17: { code: r.code, eventId: hit.event.id } } });
+    } else if (r.site === "staff") {
+      dispatch({ type: "V11_SET", patch: clear });
+    } else {
+      dispatch({ type: "V11_SET", patch: { ...clear, fxPage17: r.code } });
+    }
+  } else if (r.kind === "person") {
     dispatch({ type: "V11_SET", patch: { ...clear, viewing: r.id, viewingAsGuest: r.id === "me", ptab17: r.sub ? { key: "p:" + r.id, tab: RT17_SUB_PERSON[r.sub] } : null } });
   } else if (r.kind === "company") {
     dispatch({ type: "V11_SET", patch: { ...clear, viewingCompany: r.id, ptab17: r.sub ? { key: "c:" + r.id, tab: RT17_SUB_COMPANY[r.sub] } : null } });
@@ -272,6 +290,11 @@ function Routes17() {
     window.addEventListener("popstate", pop);
     return () => window.removeEventListener("popstate", pop);
   }, []);
+  /* Someone who tapped Available on a brief without a profile comes back to it once signed in (the code was carried through Join). */
+  const fxBack = state.session && state.session.fxReturn17, fxIn = !!(state.auth && state.auth.status === "signedIn");
+  useEffect(() => {
+    if (fxBack && fxIn) { dispatch({ type: "SESSION", patch: { fxReturn17: null } }); openBrief17(dispatch, fxBack); }
+  }, [fxBack, fxIn]);
   /* 2. Opening a profile or company from an area, package or support page closes that page. */
   const s = state;
   useEffect(() => {

@@ -173,7 +173,7 @@ function PersonProfile() {
   const shareTag = person.id === "me" ? myTag : String(person.tag || cx17Slug(person.name || person.id) || "");
   const shareBtn = shareTag ? (
       <CardShareBtn17 title={person.id === "me" ? "My FireFlair card" : `${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${shareTag}`} fileName={"fireflair-" + cx17Slug(shareTag)} label="Share" className="wide"
-        render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={person.id === "me" ? state.profile.theme : (person.theme || "ivory")} />} />) : null;
+        render={() => <PlayerCard person={person} format="portrait" nameAs="div" themeKey={person.id === "me" ? state.profile.theme : (person.theme || "ivory")} />} />) : null;
   const shareEl = shareBtn ? <div style={{ marginTop: 8, width: "calc(50% - 4px)", marginInline: "auto" }}>{shareBtn}</div> : null;
   const actionsEl = other ? (<div className="ff-pub-acts">
         {hireSiteOf(state).party ? <FavBtn11 person={person} wide /> : (<>
@@ -239,46 +239,6 @@ function PersonProfile() {
   );
 }
 
-
-
-
-function ShiftCard({ shift, event, footer }) {
-  const row = (Icon, label, value) => value ? (
-    <div style={{ display: "flex", gap: 9, alignItems: "flex-start", padding: "8px 0", borderBottom: "1px solid var(--rule)" }}>
-      <span style={{ width: 26, height: 26, borderRadius: "50%", background: "#5C1220", display: "grid", placeItems: "center", flex: "none" }}>
-        <Icon size={13} color="#EAD79C" strokeWidth={1.6} />
-      </span>
-      <span style={{ flex: 1 }}>
-        <span className="ff-label" style={{ display: "block" }}>{label}</span>
-        <span className="ff-serif" style={{ fontSize: 16, color: "#1D1B18" }}>{value}</span>
-      </span>
-    </div>
-  ) : null;
-
-  return (
-    <CardFrame tier="standard" theme={THEMES.paper} style={{ marginBottom: 12, paddingTop: 24 }}>
-      <span className="ff-label" style={{ position: "absolute", top: 10, left: 14, fontSize: 7, letterSpacing: ".2em", zIndex: 4 }}>Shift</span>
-      <span style={{ position: "absolute", top: 8, right: 8, zIndex: 4 }}><FFLogo size={24} /></span>
-      <div style={{ padding: "6px 14px 0" }}>
-        <div className="ff-display" style={{ fontSize: 21, lineHeight: 1.1 }}>{shift.role}</div>
-        {event && <div className="ff-body ff-muted" style={{ marginTop: 4 }}>{event.title}</div>}
-        <Divider />
-        {row(Calendar, "Date", event?.date || shift.date)}
-        {row(Clock, "Start — finish", shift.time)}
-        {row(MapPin, "Venue", event?.venue || shift.venue)}
-        {row(SlidersHorizontal, "Requirements", (shift.skills || []).join("  ·  "))}
-        {row(Wallet, "Pay rate", shift.pay)}
-        {row(PenLine, "Notes", shift.notes)}
-        {row(User, "Dress code", shift.dress)}
-      </div>
-      {footer && <div style={{ padding: 14 }}>{footer}</div>}
-      <div style={{ background: "#141416", padding: "9px 14px", display: "flex", alignItems: "center", gap: 9 }}>
-        <FFLogo size={20} /><Wordmark size={11} />
-        <span style={{ marginLeft: "auto", fontSize: 8.5, letterSpacing: ".14em", color: "rgba(234,215,156,.75)", textTransform: "uppercase" }}>FF Staff</span>
-      </div>
-    </CardFrame>
-  );
-}
 
 
 
@@ -913,24 +873,19 @@ function BookingSheet({ engagement, onClose }) {
 
   return (
     <Sheet open onClose={onClose} title={shift.role}>
-      <ShiftCard shift={shift} event={event} footer={
-        <div>
-          <div style={{ marginBottom: 10 }}><Pill tone={ENG_TONE[e.state]}><span className="ff-dot" /> {ENG_LABEL[e.state]}</Pill></div>
-          {["requested", "discuss", "available", "withdrawn", "not_selected", "cancelled_pro"].includes(e.state) && <ProOffer17 e={e} shift={shift} onDone={onClose} />}
-          {e.state === "requested" && e.expiresAt && <p className="ff-body ff-muted" style={{ margin: "8px 0 0", fontSize: 12 }}>{timeLeft(e.expiresAt)}</p>}
-          {e.state === "expired" && <p className="ff-body ff-muted" style={{ margin: 0 }}>This request expired without a reply.</p>}
-          {e.state === "confirmed" && (
-            <div>
-              <p className="ff-body" style={{ margin: "0 0 10px" }}>You are booked.</p>
-              <ProOffer17 e={e} shift={shift} onDone={onClose} />
-              <WalletButton kind="booking" wide dark={false} payload={{ shiftId: shift.id, role: shift.role, date: shift.date, venue: shift.venue }} />
-            </div>
-          )}
-          {e.state === "completed" && <Btn variant="primary wide" onClick={() => act("signed_off")}><PenLine size={14} /> Sign off this shift</Btn>}
-          {e.state === "signed_off" && <p className="ff-body ff-muted" style={{ margin: 0 }}>Signed off. The hirer pays you directly, as agreed on the Service Card.</p>}
-          {e.state === "paid" && <p className="ff-body" style={{ margin: 0 }}>This shift is closed.</p>}
-        </div>
-      } />
+      <ShiftDelivery11 e={e} shift={shift} event={event} onDone={onClose} onMore={onClose} />
+      <div style={{ padding: "0 2px 6px" }}>
+        {e.state === "requested" && e.expiresAt && <p className="ff-body ff-muted" style={{ margin: "0 0 8px", fontSize: 12 }}>{timeLeft(e.expiresAt)}</p>}
+        {e.state === "confirmed" && (
+          <div>
+            {e.revised && <ProOffer17 e={e} shift={shift} onDone={onClose} />}
+            <WalletButton kind="booking" wide dark={false} payload={{ shiftId: shift.id, role: shift.role, date: shift.date, venue: shift.venue }} />
+          </div>
+        )}
+        {e.state === "completed" && <Btn variant="primary wide" onClick={() => act("signed_off")}><PenLine size={14} /> Sign off this shift</Btn>}
+        {e.state === "signed_off" && <p className="ff-body ff-muted" style={{ margin: 0 }}>Signed off. The hirer pays you directly, as agreed on the Service Card.</p>}
+        {e.state === "paid" && <p className="ff-body" style={{ margin: 0 }}>This shift is closed.</p>}
+      </div>
     </Sheet>
   );
 }

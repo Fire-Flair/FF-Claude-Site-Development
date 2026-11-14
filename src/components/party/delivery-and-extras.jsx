@@ -20,8 +20,8 @@ if (typeof document !== "undefined" && !document.getElementById("ff-sd11-css")) 
 
 
 /* Reply buttons for a Shift Card, the same on the website and in the WhatsApp templates (docs/whatsapp-templates.md).
-   WhatsApp allows three quick-reply buttons: the third is Ask. */
-const WA_BTN17 = { exclusive: ["Accept shift", "Unavailable", "Ask"], auto: ["I’m available", "Unavailable", "Ask"] };
+   WhatsApp allows three quick-reply buttons: Available, Unavailable, More info (the brief at /fx/<code>). */
+const WA_BTN17 = { exclusive: ["Available", "Unavailable", "More info"], auto: ["Available", "Unavailable", "More info"] };
 
 
 const hirerOf11 = (state, ev) => (ev && ev.hirer) || (state.company && (state.company.name || state.company.title)) || "The host";
@@ -44,16 +44,6 @@ const SRC17_LABEL = { staff: "FF Staff shift", party: "FF Party package" };
 const PLATE17 = { staff: "FF Staff shift card", party: "FF Party card" };
 
 
-/* The Pay row: Hourly and Shift total side by side, from payOf17. Missing or unreadable pay is shown
-   as such, never filled in. */
-function PayPair17({ shift }) {
-  const p = payOf17(shift);
-  if (p.status !== "ok") return <span className="ff-pay17 bad" title={p.problem || ""}>{p.status === "missing" ? "Pay not recorded" : "Pay can't be read"}</span>;
-  const hrs = Math.round((p.mins / 60) * 100) / 100;
-  return <span className="ff-pay17 one"><b>{gbp17(p.hourlyP)} p/h × {hrs} {hrs === 1 ? "hr" : "hrs"} = {gbp17(p.totalP)}</b></span>;
-}
-
-
 const whenOf11 = (sh) => `${shortDay(sh.iso) || sh.date || ""}${sh.time ? ` · ${sh.time}` : ""}`;
 
 
@@ -61,8 +51,8 @@ const whenOf11 = (sh) => `${shortDay(sh.iso) || sh.date || ""}${sh.time ? ` · $
 const waMsg11 = (state, e, sh, ev) => {
   const h = hirerOf11(state, ev), when = whenOf11(sh), place = sh.venue || (ev && ev.venue) || "";
   return e.auto
-    ? `${h} needs a ${sh.role} on ${when}${place ? ` at ${place}` : ""}.\nYou're one of ${e.batchSize || 10} people invited. If you're free, tap I'm available and ${h} will choose from everyone available. This doesn't confirm the shift.`
-    : `${h} has chosen you as ${sh.role} on ${when}${place ? ` at ${place}` : ""}.\nThe shift is held for you until ${dt17(e.expiresAt)}. Tap Accept shift to confirm it.`;
+    ? `${h} needs a ${sh.role} on ${when}${place ? ` at ${place}` : ""}.\nYou're one of ${e.batchSize || 10} people invited. If you're free, tap Available and ${h} will choose from everyone available. This doesn't confirm the shift.`
+    : `${h} has chosen you as ${sh.role} on ${when}${place ? ` at ${place}` : ""}.\nThe shift is held for you until ${dt17(e.expiresAt)}. Tap Available to confirm it.`;
 };
 
 
@@ -70,129 +60,16 @@ const pending11 = (state) => !(state.auth && state.auth.status === "signedIn" &&
 
 
 
-function ShiftDelivery11({ e, shift, event, mini, onDone, viewer }) {
-  const { state, dispatch } = useStore();
-  const all = useDirectory();
-  const [brief, setBrief] = useState(false), [ask, setAsk] = useState(false), [txt, setTxt] = useState(""), [mode, setMode] = useState(null), [nm, setNm] = useState(""), [ph, setPh] = useState("");
+function ShiftDelivery11({ e, shift, event, onDone, onMore, viewer }) {
+  const { state } = useStore();
   if (!shift) return null;
-  const now = now17(state), st = startMs17(shift), ended = !!(st && st <= now);
-  const pend = ["requested", "discuss"].includes(e.state), avail = e.state === "available", conf = e.state === "confirmed";
-  const hirer = hirerOf11(state, event);
-  const go = (as, text) => dispatch({ type: "AF_RESPOND", id: e.id, as, text });
-  const yes = () => { go(e.auto ? "available" : "accept"); dispatch({ type: "TOAST", toast: e.auto ? "You're available. The host will choose" : "Shift accepted. It's in your bookings" }); onDone && onDone(); };
-  const no = () => { go("unavailable"); dispatch({ type: "TOAST", toast: "Marked unavailable. The host has been told" }); onDone && onDone(); };
-  const send = () => { if (!txt.trim()) return; go("discuss", txt.trim()); setTxt(""); setAsk(false); };
-  const people = (state.connections || []).map(c => findPerson(all, state, c.id)).filter(p => p && !p.isCompany && p.id !== "me").slice(0, 8);
-  const handTo = e.handover && ((findPerson(all, state, (state.engagements.find(x => x.id === e.handover.to) || {}).staffId) || {}).name || e.handover.name);
-  const handEng = e.handover && state.engagements.find(x => x.id === e.handover.to);
-  const kind = e.auto ? "auto" : "sel";
   const src = eventSource17(state, event);
-  const hv = viewer === "hirer", act = !hv;
-  const who = findPerson(all, state, e.staffId) || {};
-  const fn = firstName(who.name || "");
-  const tag = e.auto ? "Open shift" : hv ? (e.staffId ? `Selected${fn ? ` · ${fn}` : ""}` : "Shift card") : `${fn ? `${fn}, you've` : "You've"} been selected`;
-  const hn = hirer === "The host" ? "the host" : hirer;
-  const intro = e.auto
-    ? `${hirer} needs a ${shift.role}. If you're free, say so and ${hn} will choose. Saying you're available doesn't confirm the shift.`
-    : `${hirer} has chosen you for this shift. It is held for you until ${dt17(e.expiresAt)}.`;
-  const rows = (
-    <div className="ff-evc-rows">
-      <EvRow icon={I11.CalendarDays} k="When">{whenOf11(shift)}</EvRow>
-      <EvRow icon={I11.MapPin} k="Where">{shift.venue || (event && event.venue) || "To be confirmed"}</EvRow>
-      <EvRow icon={I11.Banknote} k="Pay"><PayPair17 shift={shift} /></EvRow>
-      <EvRow icon={I11.Shirt} k="Dress">{shift.dress || "To be confirmed"}</EvRow>
-      <EvRow icon={I11.Briefcase} k="Hired by">{hirer}</EvRow>
-    </div>
-  );
-  const askBox = ask && <div className="ask"><input aria-label="Your question" value={txt} onChange={(x) => setTxt(x.target.value.slice(0, 200))} placeholder="Your question" /><div className="btns" style={{ gridTemplateColumns: "1fr" }}><button type="button" className="yes" disabled={!txt.trim()} onClick={send}>Send question</button></div></div>;
-  const thread = (e.thread || []).length > 0 && <div className="thread">{e.thread.map((m, i) => <p key={i}>{m.from === "pro" ? (viewer === "hirer" ? `${firstName((findPerson(all, state, e.staffId) || {}).name || "") || "They"}: ` : "You: ") : (viewer === "hirer" ? "You: " : `${hirer}: `)}{m.text}</p>)}</div>;
+  const hv = viewer === "hirer";
+  const conf = e.state === "confirmed";
   return (<div className="ff-sdw">
-    <article className={`ff-evc ff-sd11 ${kind} src-${src}${mini ? " mini" : ""}`} aria-label={`${SRC17_LABEL[src]}: ${shift.role}`}>
-      <span className="ff-evc-plate">{PLATE17[src]}</span>
-      <span className="ff-evc-coin"><FFLogo size={30} tier="gold" /></span>
-      <span className="stag">{tag}</span>
-      <h3 className="ff-evc-name">{shift.role}</h3>
-      <p className="sev">{event ? eventTitle(event) : ""}</p>
-      <div className="ff-evc-rule" aria-hidden="true"><i /><span>◆</span><i /></div>
-      {mini ? <p className="sev" style={{ marginTop: 8 }}>{whenOf11(shift)}</p> : rows}
-      <div className="sbd">
-        {!mini && shift.notes ? <p className="nt">{shift.notes}</p> : null}
-        {thread}
-        {hv && <p className="ok">{engText(e) || "Not sent yet"}{conf ? ` · Ref ${e.ref || ref17(e)}` : ""}</p>}
-      </div>
-    </article>
-    {act && (
-      <div className={`ff-sd11 acts src-${src}`}>
-        {act && pend && <p className="nt">{intro}</p>}
-        {act && pend && !ended && (<>
-          <div className="btns" role="group" aria-label="Your reply" style={{ gridTemplateColumns: "1fr 1fr" }}>
-            <button type="button" className="yes" onClick={yes}>{e.auto ? WA_BTN17.auto[0] : WA_BTN17.exclusive[0]}</button>
-            <button type="button" className="no" onClick={no}>{WA_BTN17.exclusive[1]}</button>
-          </div>
-          <div className="btns" style={{ gridTemplateColumns: "1fr 1fr" }}>
-            <button type="button" onClick={() => setAsk(!ask)} aria-expanded={ask}>Ask</button>
-            <button type="button" onClick={() => setBrief(true)}>More information</button>
-          </div>
-          {askBox}
-        </>)}
-        {act && pend && ended && <p className="mute">This shift has started.</p>}
-        {act && avail && (<>
-          <p className="ok">You're available. {hirer} will choose by {dt17(e.selectBy)}.</p>
-          <div className="btns" style={{ gridTemplateColumns: "1fr 1fr" }}>
-            <button type="button" onClick={() => setAsk(!ask)} aria-expanded={ask}>Ask</button>
-            <button type="button" onClick={() => setBrief(true)}>More information</button>
-          </div>
-          {askBox}
-        </>)}
-        {act && conf && (<>
-          <p className="ok">Confirmed</p>
-          <div className="btns" style={{ gridTemplateColumns: "1fr 1fr" }}>
-            <button type="button" onClick={() => setAsk(!ask)} aria-expanded={ask}>Ask</button>
-            <button type="button" onClick={() => setBrief(true)}>More information</button>
-          </div>
-          {askBox}
-          {e.handover && !e.handover.done && <p className="mute">Handover offered to {handTo || "your referral"}. You stay booked until they confirm.</p>}
-          {e.handover && !e.handover.done && handEng && handEng.state === "requested" && (
-            <div className="proto">Prototype: <button type="button" onClick={() => dispatch({ type: "SHIFT_REFER_ACCEPT", id: handEng.id })}>{handTo || "They"} accept</button></div>)}
-          {!ended && !(e.handover && !e.handover.done) && mode === null && <button type="button" className="quiet" onClick={() => setMode("menu")}>Can't make it?</button>}
-          {mode === "menu" && (
-            <div className="cm">
-              <button type="button" className="row" onClick={() => setMode("refer")}><b>Refer a team member</b></button>
-              <button type="button" className="row" onClick={() => setMode("invite")}><b>Invite someone new</b></button>
-              <button type="button" className="row hard" onClick={() => setMode("cancel")}><b>Cancel the shift</b></button>
-              <button type="button" className="quiet" onClick={() => setMode(null)}>Back</button>
-            </div>)}
-          {mode === "refer" && (
-            <div className="cm">
-              {people.length === 0 && <p className="mute">No one in your network yet.</p>}
-              {people.map(p => <button key={p.id} type="button" className="row" onClick={() => { dispatch({ type: "SHIFT_REFER", id: e.id, personId: p.id }); dispatch({ type: "TOAST", toast: `${firstName(p.name)} has been asked to take your shift` }); setMode(null); }}><Portrait src={p.photo} name={p.name} size={28} /><span><b>{p.name}</b><br /><small>{p.profession}</small></span></button>)}
-              <button type="button" className="quiet" onClick={() => setMode("menu")}>Back</button>
-            </div>)}
-          {mode === "invite" && (
-            <div className="cm">
-              <input aria-label="Their name" value={nm} onChange={(x) => setNm(x.target.value)} placeholder="Their name" />
-              <input aria-label="Their mobile number" value={ph} onChange={(x) => setPh(x.target.value)} placeholder="Mobile number" inputMode="tel" />
-              <div className="btns" style={{ gridTemplateColumns: "1fr" }}><button type="button" className="yes" disabled={!nm.trim() || !ph.trim()} onClick={() => { dispatch({ type: "SHIFT_REFER", id: e.id, name: nm.trim(), phone: ph.trim() }); dispatch({ type: "TOAST", toast: `${nm.trim()} has been invited to take your shift` }); setMode(null); }}>Send invitation</button></div>
-              <button type="button" className="quiet" onClick={() => setMode("menu")}>Back</button>
-            </div>)}
-          {mode === "cancel" && (
-            <div className="cm">
-              <p className="mute">Cancelling returns this shift to Autofill and affects your reputation. Referring someone keeps it.</p>
-              <div className="btns" style={{ gridTemplateColumns: "1fr 1fr" }}>
-                <button type="button" className="no" onClick={() => { dispatch({ type: "SHIFT_HARD_CANCEL", id: e.id }); dispatch({ type: "TOAST", toast: "Shift cancelled. The host has been told" }); setMode(null); onDone && onDone(); }}>Cancel shift</button>
-                <button type="button" onClick={() => setMode(null)}>Keep it</button>
-              </div>
-            </div>)}
-        </>)}
-        {act && e.state === "unavailable" && <p className="mute">You said no.</p>}
-        {act && e.state === "withdrawn" && <p className="mute">You withdrew.</p>}
-        {act && e.state === "expired" && <p className="mute">This request has ended.</p>}
-        {act && e.state === "not_selected" && <p className="mute">{e.filled ? "This shift has been filled." : "You weren't chosen for this one."}</p>}
-        {act && e.state === "cancelled_pro" && <p className="mute">{e.handedOver ? "Handed over. Your reputation is kept." : "You cancelled this shift."}</p>}
-        {act && ["completed", "signed_off", "paid"].includes(e.state) && <p className="mute">Worked.</p>}
-      </div>
-    )}
-    {brief && <EventBrief11 ev={event} shift={shift} e={e} onClose={() => setBrief(false)} />}
+    <ShiftCard17 shift={shift} event={event} source={src} status={statusOf17(e)} />
+    {hv && <div className="ff-sd11 acts"><p className="ok">{engText(e) || "Not sent yet"}{conf ? ` · Ref ${e.ref || ref17(e)}` : ""}</p></div>}
+    {!hv && <ShiftReplyBar17 e={e} shift={shift} event={event} mode="card" onMore={onMore} onDone={onDone} />}
   </div>);
 }
 
@@ -243,6 +120,14 @@ function EventBrief11({ ev, shift, e, onClose }) {
 function ship11Reduce(s, a) {
   const now = now17(s);
   if (a.type === "TEAM11_TOGGLE") { const t = s.myTeam11 || []; return { ...s, myTeam11: t.includes(a.id) ? t.filter(x => x !== a.id) : [...t, a.id] }; }
+  /* A signed-in member answers the open brief at /fx/<code> without having been invited: Available puts them on the list. */
+  if (a.type === "SHIFT_APPLY17") {
+    const sh = s.shifts.find(x => x.id === a.shiftId); if (!sh) return null;
+    if (s.engagements.some(x => x.shiftId === sh.id && x.staffId === "me" && !["expired", "withdrawn", "cancelled_pro"].includes(x.state))) return s;
+    const st = a.as === "unavailable" ? "unavailable" : "available";
+    const e = { id: uid("eng"), shiftId: sh.id, staffId: "me", state: st, auto: true, offer: false, batch: 0, batchSize: 1, sentAt: now, expiresAt: now + 36e5 * 24, selectBy: selectBy17(s, sh, now), thread: [], history: [{ state: st, at: now }], ...st === "available" ? { availableAt: now } : {} };
+    return audit17({ ...s, engagements: [...s.engagements, e] }, "Professional", `${st === "available" ? "Available" : "Unavailable"} from the brief: ${sh.role}`);
+  }
   if (a.type === "SHIFT_HARD_CANCEL") {
     const e = s.engagements.find(x => x.id === a.id); if (!e || e.state !== "confirmed") return null;
     const n = auto17Reduce(s, { type: "PRO_CANCEL", id: a.id });

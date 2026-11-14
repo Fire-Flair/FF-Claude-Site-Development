@@ -559,7 +559,7 @@ const DX_ALIAS = { "ff-career": "ff-booktiles", "ff-training": "ff-booktiles", "
       className: "it wa"
     }, React.createElement(WhatsAppPreview, {
       lines: ["FireFlair · Vooshka Cocktail Bar would like to book you:", "Cocktail Bartender · Sat 20 Mar · 17:00 · Hackney Depot"],
-      buttons: ["Accept shift", "Unavailable"]
+      buttons: ["Available", "Unavailable", "More info"]
     }), React.createElement("div", {
       className: "ff-hw11-ok"
     }, React.createElement(Check, {

@@ -180,6 +180,7 @@ function v11Reducer(s, a) {
       /* Leaving the Network drops the booking you were searching for. */
       const base = (a.type === "TAB" && a.tab !== "network" && s.netBrief) ? { ...s, netBrief: null } : s;
       if (a.type === "TAB" && base.supportPage20) return reducer({ ...base, supportPage20: null }, a);
+      if (a.type === "TAB" && (base.fxPage17 || base.fxStaff17)) return reducer({ ...base, fxPage17: null, fxStaff17: null }, a);
       if (base.viewingCompany || base.peek) return reducer({ ...base, viewingCompany: null, peek: null }, a);
       return base !== s ? reducer(base, a) : null;
     }

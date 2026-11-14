@@ -225,7 +225,7 @@ function EventPoster({ card, edit, onPatch, people = [], saved }) {
       </div>
 
       <footer className="ff-ec-foot">
-        <span className="qr"><Share2 size={26} /></span>
+        <span className="qr"><ShareUp17 size={26} /></span>
         <span className="msg">
           <b>{saved ? "Saved on FF Party" : "Share it on WhatsApp"}</b>
           <span>Your team sees the same card.</span>

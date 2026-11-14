@@ -24,6 +24,8 @@ function PlayerCard({ person, format = "portrait", themeKey = "onyx", selected, 
   const interests = top3(person.interests);
   const locations = person.base ? [person.base] : top3(person.locations);
   const langs = (person.languages || []).slice(0, 5);
+  const quals = top3(person.qualifications);
+  const morePros = professions.slice(1, 3);
   const dot = "  ·  ";
   const address = `${CARD_DOMAIN}/${person.tag}`;
   const Emblem = ({ size }) => React.createElement("span", {
@@ -111,9 +113,9 @@ function PlayerCard({ person, format = "portrait", themeKey = "onyx", selected, 
     ["skills", "Skills", skills],
     ["interests", "Interests", interests],
     ["locations", person.base ? "Based in" : "Locations", locations]
-  ] : [["skills", "Skills", skills], ["interests", "Interests", interests], ["locations", person.base ? "Based in" : "Locations", locations]];
+  ] : [["skills", "Skills", skills], ["interests", "Interests", interests], ["locations", person.base ? "Based in" : "Locations", locations], ...quals.length ? [["quals", "Qualifications", quals]] : [["roles", "Roles", morePros]]];
   const rows = rowDefs.filter((r) => r[2].length);
-  const PC_ICON = { experience: Briefcase, roles: Users, skills: Star, interests: Heart, locations: MapPin, languages: MessageSquare };
+  const PC_ICON = { quals: Award, experience: Briefcase, roles: Users, skills: Star, interests: Heart, locations: MapPin, languages: MessageSquare };
   const FILLED = { skills: true, interests: true };
   const sz = full ? { pad: 4, photo: 32, name: 7.4, title: 4.2, row: 9.2, ico: 4.3, icoW: 10.5, lbl: 2.45, lblW: 21.5, val: 3.95, flag: 4.4, url: 9.4, urlF: 3.5, coin: 12.5 } : { pad: 3, photo: 35, name: 8, title: 4.9, row: 10.6, ico: 5.2, icoW: 9.5, lbl: 0, val: 5.1, flag: 6.2, url: 10.8, urlF: 4.4, coin: 14 };
   const titleInk = t.dark ? acc : "#6A4F12";
@@ -158,15 +160,17 @@ function PlayerCard({ person, format = "portrait", themeKey = "onyx", selected, 
   })));
   const face = React.createElement(CardFrame, {
     premium: true,
+    fixed: true,
     tier,
     theme: t,
     ratio: "5 / 7",
     onClick,
     selected,
     style: { width: "100%", padding: 0 }
-  }, full && React.createElement("span", {
-    className: "ff-pc-plate"
-  }, "Profile Card"), React.createElement("span", {
+  }, React.createElement("span", {
+    className: "ff-pc-plate ff-pc-plate17",
+    style: { top: cq(sz.coin / 2 + 3.8 - 3.3) }
+  }, "Profile"), React.createElement("span", {
     className: "ff-pc-coin",
     style: { width: cq(sz.coin), height: cq(sz.coin) }
   }, React.createElement(FFLogo, {
@@ -235,18 +239,16 @@ function PlayerCard({ person, format = "portrait", themeKey = "onyx", selected, 
   }, React.createElement(Flags, null)), React.createElement("div", {
     className: "ff-pc-bar",
     style: { height: cq(sz.url), background: t.dark ? "rgba(0,0,0,.45)" : "#141416", borderTop: `1px solid ${t.rule}` }
-  }, React.createElement("span", {
+  }, React.createElement(FitText17, {
+    as: "span",
+    size: sz.urlF,
+    className: "ff-pc-baru"
+  }, address), React.createElement("span", {
     style: { width: cq(sz.url - 3.4), height: cq(sz.url - 3.4), display: "block", flex: "none" }
   }, React.createElement(FFLogo, {
     size: "100%",
     tier
-  })), full && React.createElement(Wordmark, {
-    size: cq(3.5)
-  }), React.createElement(FitText17, {
-    as: "span",
-    size: sz.urlF,
-    className: "ff-pc-baru"
-  }, address))), selected && React.createElement("span", {
+  })))), selected && React.createElement("span", {
     style: { position: "absolute", inset: 0, zIndex: 5, background: "rgba(201,162,39,.14)", display: "flex", alignItems: "center", justifyContent: "center" }
   }, React.createElement("span", {
     style: { background: metalEdge(tier, 140), color: "#0B0B0C", borderRadius: "50%", width: 40, height: 40, display: "grid", placeItems: "center", boxShadow: "0 3px 10px rgba(0,0,0,.5)" }
@@ -266,22 +268,31 @@ function PlayerCard({ person, format = "portrait", themeKey = "onyx", selected, 
 
 /* Book · Review · Join — under a card, or at the foot of a public profile. */
 function ProfileActions({ actions }) {
-  const { dispatch } = useStore();
+  const { state, dispatch } = useStore();
   /* Phase 1: Book waits for FF Party / FF Staff; Review and Join work. */
   const book = PHASE1.bookingsLive
     ? { key: "book", label: "Book", Icon: Calendar, onClick: actions.onBook }
     : { key: "book", label: "Book · 2027", Icon: Lock, soon: true, onClick: () => dispatch({ type: "TOAST", toast: "Booking opens with FF Party and FF Staff — coming in 2027" }) };
+  const review = { key: "review", label: "Review", Icon: Award, onClick: actions.onReview };
+  const join = { key: "join", label: "Join FireFlair", Icon: Plus, onClick: actions.onJoin };
+  const btn = (a, cls) => (
+    <button key={a.key} className={"ff-pc-act" + (cls ? " " + cls : "")} onClick={a.onClick} aria-disabled={a.soon || undefined} style={a.soon ? { opacity: .7 } : undefined}>
+      <a.Icon size={cls ? 20 : 16} strokeWidth={1.7} /><span>{a.label}</span>
+    </button>
+  );
+  /* Someone who is not signed in sees Join FireFlair first and largest, then Book and Review. */
+  if (!(state.auth && state.auth.status === "signedIn")) {
+    return (
+      <div className="ff-pc-acts ff-pc-acts17">
+        {btn(join, "big")}
+        {btn(book)}
+        {btn(review)}
+      </div>
+    );
+  }
   return (
     <div className="ff-pc-acts">
-      {[
-        book,
-        { key: "review", label: "Review", Icon: Award, onClick: actions.onReview },
-        { key: "join", label: "Join", Icon: Plus, onClick: actions.onJoin },
-      ].map(a => (
-        <button key={a.key} className="ff-pc-act" onClick={a.onClick} aria-disabled={a.soon || undefined} style={a.soon ? { opacity: .7 } : undefined}>
-          <a.Icon size={16} strokeWidth={1.7} /><span>{a.label}</span>
-        </button>
-      ))}
+      {[book, review, { ...join, label: "Join" }].map(a => btn(a))}
     </div>
   );
 }
