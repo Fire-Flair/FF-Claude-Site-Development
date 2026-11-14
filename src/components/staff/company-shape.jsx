@@ -10,7 +10,7 @@
    company.records["info_<id>"] the cards of that section (the shared card record)
    company.records.packages     the Packages cards
    company.records.cocktail_menu the Cocktails cards
-   company.records.web_reviews  "Reviews from your website" (title = who said it, description = what they said)
+   company.records.web_reviews  "Reviews from other sources" (title = who said it, description = what they said)
    company.media                [{ id, src, alt }]   gallery photos; alt is the caption; the array order is the display order
 
    A card is the shared card record (makeRecord): name, description, media (up to 5), document, hidden, rank.

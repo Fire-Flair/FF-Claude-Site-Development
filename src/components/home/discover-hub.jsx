@@ -776,7 +776,7 @@ const DX_ALIAS = { "ff-career": "ff-booktiles", "ff-training": "ff-booktiles", "
   }
 
   const HB17 = {
-    team: [[User, "Profile Card and personal web page", "Show who you are and what you do on your Profile Card, which links to your free personal website."], [MessageSquare, "Booking request", "Receive all the details via WhatsApp. Instantly."], [Check, "Confirm via WhatsApp", "Say yes in a tap, and your shift is confirmed."], [Star, "Review Card", "Every good night builds your reputation."]],
+    team: [[User, "Profile Card and personal web page", "Show who you are and what you do on your Profile Card, which links to your free personal web page."], [MessageSquare, "Booking request", "Receive all the details via WhatsApp. Instantly."], [Check, "Confirm via WhatsApp", "Say yes in a tap, and your shift is confirmed."], [Star, "Review Card", "Every good night builds your reputation."]],
     staff: [[CalDays11, "Event Card", "Your date, venue and the roles you need."], [Sparkles, "Service Card", "The shift details for each role."], [Users, "Profile Cards", "Choose your staff from the network."], [MessageSquare, "Confirmed on WhatsApp", "Everyone is asked, and answers, in a tap."]],
     party: [[Sparkles, "Service Card", "Choose the type of service that suits your event."], [Users, "Profile Cards", "Choose the people you want at your event."], [CalDays11, "Create your Event Card", "The date, the place and how many guests."], [MessageSquare, "Confirmation", "Confirmed within 24 hours."]]
   };
