@@ -1,5 +1,25 @@
 # FireFlair prototype — changelog
 
+## v17.8 (claim a directory profile; FireFlair editing; every company page comes from a file)
+
+Documents: `docs/company-claim-phase2.md` (new, with ready text for section 5.4 of the notifications document), `docs/company-profile-format.md` (status values, who-wrote-what on edit).
+
+- Claim, FireFlair edit and who-wrote-what live in `src/state/claims17.js`. The reducer chain calls `claim17Reducer` first and `claim17Post` after every action.
+- `state.coClaims17` and `state.dirEdits17` are persisted (`PERSIST_KEYS`) and kept across `SIGN_OUT`, together with `admin17`. Saved state from before has neither key; both are read with a default.
+- A claim keeps its own copy of the page in the builder's shape. The profile files are never written by the prototype.
+- `dirOverlay17` is applied in `companyById`. A pending claim leaves `unclaimed: true` and adds `claimPending`; approved sets `unclaimed: false`; rejected shows the plain directory page.
+- Owner stamping: after any change to `state.company` that has a `claimId`, changed items get `source: { by: "owner", at }` (items with no `by`, such as a record from `makeRecord`, count as unstamped). While FireFlair edits (`company.dirEditSlug`) the same code stamps `fireflair`. `COMPANY_SAVE` that carries a whole `records` object (the Cancel restore) is not stamped.
+- FireFlair Edit puts the page into `state.company` with `dirEditSlug`, keeps the signed-in company in `state.dirStash17`, and writes `state.dirEdits17[slug]` only on Save.
+- Admin: a `claims` permission and an `edit` permission were added to the owner and admin roles. The `claim` op of `ADMIN17` approves or rejects. The admin site entry was removed in Phase 2 stage 2; `App.jsx` renders `Admin17` again when `state.adminOpen17` is set, and the DEV · FireFlair admin button sets it together with `adminMode17`.
+- Vooshka is `data/companies/profiles/vooshka.json`. `coFromProfile17(slug)` turns any profile into the builder's shape (used by the DEV owner account and by claims). New optional profile fields: `card` (theme, layout), `areasNote`, `meta.tier`.
+- `DIR_PRIVATE17` in `src/content/companies.js` holds contact details that must not be in a profile file; it is the stand-in for Core's private contact record.
+- Kept on purpose: `RTB_BLOB17`, `RTB_MENU17`, `rtbMoney17` (FF Party package browser) and `vkSeeds17` with `VK17_OCC` (Studio card seeds). The base row for Vooshka in `COMPANIES` is kept for its cover list and place id.
+- The map filters company pins to unclaimed companies, so Vooshka (claimed) has no directory pin, as before.
+- DEV buttons on the login sheet: DEV · FireFlair admin (signs out, signs in as the admin tag, opens Claims) and DEV · claim a company (signs out, opens a directory page that can be claimed).
+- After a claim is live there is one copy of the page (the claim's): FireFlair's later edits are written to it, not to a separate overlay.
+
+Checks run on the merged build: `npm run check`, `npm run check-companies` (150 profiles, 0 errors), `npm run build`, `npm run publish-build`; Playwright at 390x844 and 1280x900 for claiming, approving, rejecting, FireFlair editing, Find your company and the DEV buttons, plus the builder, invitations, work-locations and profile-creator sets. Raise the Bar's and Vooshka's page text is unchanged apart from the new Claim this profile button on Raise the Bar's unclaimed page. Not checked: FireFlair editing a page after a claim has been made on it; Keep and Remove on proposed cards through the screen.
+
 ## v17.7 (company builder edited on the page; one company file for the directory agent, FireFlair and the company)
 
 Two pieces of work, built separately and merged. Documents: `docs/company-profile-format.md` (rewritten for format 2, with the mapping to the back end), `data/companies/AGENT.md` (the directory agent's instructions), `data/companies/company-profile.schema.json`.
