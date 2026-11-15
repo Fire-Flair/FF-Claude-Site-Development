@@ -8,7 +8,8 @@
    state.coClaims17   [{ id, slug, phone, at, status: "pending" | "approved" | "rejected", company }]
                       company is the owner's copy of the page in the builder's own shape. It is kept for every claim, so a
                       rejected claim is never lost and the owner can come back to it with the same phone number.
-   state.dirEdits17   { [slug]: company }   FireFlair's own edits of a directory page (the builder's shape).
+   state.dirEdits17   { [slug]: company }   FireFlair's own edits of a directory page (the builder's shape), until it is claimed.
+                      Once a claim is live, the claim's copy is the one page and FireFlair's later edits are written to it.
    company.claimSlug / company.claimId      set on the owner's company while it is a claim.
    company.dirEditSlug                      set while FireFlair edits a directory page in the builder.
    session.claimSlug                        the page the visitor pressed Claim this profile on.
@@ -34,7 +35,8 @@ const isAdmin17 = (s) => !!(s && s.adminMode17 && s.auth && s.auth.status === "s
 /* What the builder starts from for a directory page: FireFlair's edits, else a live claim, else the profile file. */
 function dirSource17(s, slug) {
   const e = (s.dirEdits17 || {})[slug], cl = coClaimOn17(s, slug);
-  return e || (cl && cl.company) || coFromProfile17(slug);
+  /* Once a claim is live there is one copy of the page: the claim's. It started from FireFlair's edits, and FireFlair edits it from then on. */
+  return (cl && cl.company) || e || coFromProfile17(slug);
 }
 
 /* Fields of the builder's copy that show on the public page. */
@@ -45,7 +47,7 @@ function dirOverlay17(s, id) {
   const slug = String(id || "").replace(/^co_/, "");
   const cl = coClaimOn17(s, slug), e = (s.dirEdits17 || {})[slug];
   if (!cl && !e) return null;
-  const src = e || cl.company;
+  const src = cl ? cl.company : e;
   const out = {};
   DIR_PUBLIC_KEYS17.forEach((k) => { if (src[k] !== undefined) out[k] = src[k]; });
   out.media = (src.media || []).map((m) => ({ id: m.id, src: m.src || m.dataUrl, alt: m.alt || m.name || src.name })).filter((m) => m.src);
@@ -123,8 +125,11 @@ function claim17Reducer(s, a) {
       const c = s.company || {}, slug = c.dirEditSlug; if (!slug) return s;
       const st = s.dirStash17 || {};
       const { dirEditSlug, joinedAt, finishedAt, saved, cardSavedAt, ...keep } = c;
-      return { ...s, dirStash17: null, ed17: null, company: st.company || {},
-        ...(a.commit ? { dirEdits17: { ...(s.dirEdits17 || {}), [slug]: keep } } : {}) };
+      const live = coClaimOn17(s, slug);
+      const commit = !a.commit ? {}
+        : live ? { coClaims17: coClaims17(s).map((x) => (x.id === live.id ? { ...x, company: { ...keep, claimId: live.id, claimSlug: slug, meta: (live.company || {}).meta } } : x)) }
+        : { dirEdits17: { ...(s.dirEdits17 || {}), [slug]: keep } };
+      return { ...s, dirStash17: null, ed17: null, company: st.company || {}, ...commit };
     }
     default: return null;
   }
