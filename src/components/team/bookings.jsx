@@ -377,8 +377,6 @@ function TeamBookings({ guest = false }) {
         <BkDrop17 id="ff-bk-rewards" title="FireFlair rewards" icon={E17I.Gift} photo="bk_rewards" desc="Perks for people who work with FireFlair: kit, tickets and experiences. Register your interest in the ones you want."><InterestSection kind="rewards" inner /></BkDrop17>
       </section>
 
-      <V101.BusinessSupport19 />
-
       <BookingSheet engagement={open} onClose={() => setOpen(null)} />
     </div>
   );

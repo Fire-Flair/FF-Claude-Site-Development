@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v17.8.2 — 2026-11-15 — Business & Support banner on home pages only
+Phase Two artifact: see the label "Business & Support on home pages only".
+
+- The Business & Support box now appears on the home page of each site and nowhere else: not on profiles (a person's or a company's page), and no longer on the Network and Bookings pages (this supersedes the v17.4.6.1 rule that it closes those pages). It is one component (`BusinessSupport19`), rendered only by the home pages (`team-home.jsx`, `staff-party-home.jsx`, the FF VIP home).
+- Developers: the live FF Team site shows the box at the bottom of every member's profile page. It should be removed from profile pages (and from Network and Bookings) and kept on Home only. The prototype already does this.
+
 ## v17.8.1 — 2026-11-15 — New hero image; FF Staff Network tidy; Business & Support "Book a meeting"
 Phase Two artifact version 1794771022-c8f0.
 

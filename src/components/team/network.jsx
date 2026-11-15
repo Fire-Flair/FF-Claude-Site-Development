@@ -784,7 +784,6 @@ function NetworkScreen({ guest = false }) {
         {PHASE1.leaderboards && <Rankings />}
         <Divider />
       </>)}
-      <V101.BusinessSupport19 />
       <ReviewSheet open={!!reviewing} person={reviewing} onClose={() => setReviewing(null)} />
     </div>
   );

@@ -230,7 +230,7 @@
 
   const Mail19 = lucideIcon("Mail"), Phone19 = lucideIcon("Phone"), Video19 = lucideIcon("Video");
 
-  /* One instance per page: second from bottom on every home page, last on every Network and Bookings page. */
+  /* One instance per page: second from bottom on every home page, and nowhere else (v17.8.2). */
   function BusinessSupport19() {
     const { state, dispatch } = useStore();
     const dom = state.role === "team" || !state.role ? "FFTeam.uk" : state.site === "party" ? "FFParty.uk" : state.role === "vip" || state.site === "vip" ? "FFVIP.uk" : "FFStaff.uk";
