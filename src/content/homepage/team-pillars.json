@@ -36,7 +36,7 @@
       "title": "Turn Your Hospitality CV into a Digital Profile | FF Team",
       "description": "Upload your CV and get a Profile Card and your own page in under a minute. A digital CV for bartenders, DJs, chefs, hosts and event staff."
      },
-     "card_img": "p21"
+     "card_img": "th_cv"
     },
     {
      "id": "ff-pl-team",
@@ -61,7 +61,7 @@
       "title": "Build Your Events Team and Hospitality Network | FF Team",
       "description": "Share your Profile Card, add the bartenders, DJs, chefs and photographers you work with, and get booked together for events."
      },
-     "card_img": "p24"
+     "card_img": "th_team"
     },
     {
      "id": "ff-pl-reviews",
@@ -86,7 +86,7 @@
       "title": "Collect Reviews for Bartending and Event Work | FF Team",
       "description": "Get reviewed by every client, business and teammate you work with. Build a reputation that brings your next event booking to you."
      },
-     "card_img": "p02"
+     "card_img": "th_reviews"
     }
    ]
   },
@@ -125,7 +125,7 @@
       "title": "Get Found for Event Work in the UK | FF Team",
       "description": "FireFlair acts as your agent, marketing your Profile Card to event clients, businesses and venues and matching you with work close to you."
      },
-     "card_img": "p03"
+     "card_img": "th_marketing"
     },
     {
      "id": "ff-pl-party",
@@ -150,7 +150,7 @@
       "title": "Private Event Bartender Jobs with Set Pay | FF Team",
       "description": "Sign up to FF Party packages and get booked by private clients for parties and celebrations. Set pay shown up front, with work matched close to you."
      },
-     "card_img": "p17"
+     "card_img": "th_party"
     },
     {
      "id": "ff-pl-own",
@@ -175,7 +175,7 @@
       "title": "Sell Your Own Event Packages and Cocktail Menus | FF Team",
       "description": "Our next major update: create your own event packages and signature cocktail menus on FF Team, for bartenders, DJs, photographers, chefs and entertainers."
      },
-     "card_img": "p19"
+     "card_img": "th_own"
     }
    ]
   },
@@ -214,7 +214,7 @@
       "title": "Set Your Freelance Hospitality Rates | FF Team",
       "description": "Set your own hourly rates and get hired by bar companies, caterers, venues and agencies through FF Staff and the FF Event Directory."
      },
-     "card_img": "p13"
+     "card_img": "th_rates"
     },
     {
      "id": "ff-pl-requests",
@@ -239,7 +239,7 @@
       "title": "Event Shift Requests on WhatsApp | FF Team",
       "description": "Receive personal shift requests on WhatsApp as a Shift Card, exclusive to you for 24 hours. Reply Available, Unavailable or More info in one tap."
      },
-     "card_img": "p23"
+     "card_img": "th_requests"
     },
     {
      "id": "ff-pl-terms",
@@ -264,7 +264,7 @@
       "title": "Booking Terms, Event Briefs and Getting Paid | FF Team",
       "description": "Every FireFlair booking has clear terms agreed up front and an event brief that doubles as the invoice, so you know what you are paid and when."
      },
-     "card_img": "p08"
+     "card_img": "th_terms"
     }
    ]
   },
@@ -303,7 +303,7 @@
       "title": "FF Team Launch Challenge: Build Your Team, Win Prizes",
       "description": "From 1 December 2026: build the best team on FireFlair in 90 days. The top 10 become Gold members and the winner flies to the Athens Bar Show."
      },
-     "card_img": "p46"
+     "card_img": "th_challenge"
     },
     {
      "id": "ff-pl-party-night",
@@ -353,13 +353,13 @@
       "title": "Bar Shows, Training and Hospitality Events | FF Team",
       "description": "FF Team members are invited to bar shows, brand nights and training across the UK and abroad, with a community that looks after each other."
      },
-     "card_img": "p47"
+     "card_img": "th_events"
     }
    ]
   }
  ],
  "photos": {
-  "_note": "Tile photo pools (the tile rotates through its pool; the three cards show the other pool photos unless a section sets img). Community uses fixed photos.",
+  "_note": "Tile photo pools (the tile rotates through its pool). The three cards of each pillar show card_img: a picture of the thing the section is about, made from the prototype's own cards by scripts/make-pillar-thumbs.py (th_*), or a photo.",
   "profiles": [
    "vkg15",
    "p11",
@@ -440,51 +440,230 @@
  "calendar": [
   {
    "n": "ScotHot",
-   "d": "24 February 2027",
-   "w": "SEC, Glasgow, Scotland",
-   "r": "Scotland"
+   "d": "24 and 25 February 2027",
+   "w": "SEC, Glasgow",
+   "dm": [
+    "24",
+    "Feb"
+   ]
   },
   {
    "n": "Northern Restaurant & Bar",
    "d": "26 March 2027",
-   "w": "Manchester Central, England",
-   "r": "England"
+   "w": "Manchester Central",
+   "dm": [
+    "26",
+    "Mar"
+   ]
   },
   {
    "n": "The Pub Show",
    "d": "5 to 7 April 2027",
-   "w": "ExCeL, London, England",
-   "r": "England"
+   "w": "ExCeL, London",
+   "dm": [
+    "5",
+    "Apr"
+   ]
   },
   {
    "n": "BCB London",
    "d": "10 and 11 May 2027",
-   "w": "Tobacco Dock, London, England",
-   "r": "England"
+   "w": "Tobacco Dock, London",
+   "dm": [
+    "10",
+    "May"
+   ]
   },
   {
    "n": "Dublin Cocktail Week",
-   "d": "Dates to be announced",
-   "w": "Dublin, Ireland",
-   "r": "Ireland"
+   "d": "2027 dates to be announced",
+   "w": "Dublin",
+   "dm": [
+    "TBA",
+    "2027"
+   ]
   },
   {
    "n": "Restaurant Show",
-   "d": "Dates to be announced",
-   "w": "NEC, Birmingham, England",
-   "r": "England"
+   "d": "2027 dates to be announced",
+   "w": "NEC, Birmingham",
+   "dm": [
+    "TBA",
+    "2027"
+   ]
   },
   {
    "n": "Bar Convent Berlin",
-   "d": "October 2027",
-   "w": "Messe Berlin, Germany",
-   "r": "Europe"
+   "d": "October 2027, dates to be announced",
+   "w": "Messe Berlin",
+   "dm": [
+    "Oct",
+    "2027"
+   ]
   },
   {
    "n": "Athens Bar Show",
-   "d": "November 2027",
-   "w": "Technopolis, Athens, Greece",
-   "r": "Europe"
+   "d": "November 2027, dates to be announced",
+   "w": "Technopolis, Athens",
+   "dm": [
+    "Nov",
+    "2027"
+   ]
   }
- ]
+ ],
+ "examples": {
+  "_note": "Real FF Team members' public Profile Cards (ffteam.uk), shown as the examples in Your profile. photo is an FF_IMG key; while it is empty the card shows the member's initials.",
+  "card": {
+   "id": "live_simao",
+   "name": "SIMAO",
+   "tag": "SIMAO",
+   "professions": [
+    "Mixologist",
+    "Cocktail Bartender",
+    "Bar Manager"
+   ],
+   "skills": [
+    "Cocktails creation"
+   ],
+   "interests": [
+    "Spirits",
+    "Flavours"
+   ],
+   "locations": [
+    "Milan",
+    "London",
+    "Lugano"
+   ],
+   "languages": [
+    "Italian",
+    "Spanish",
+    "Portuguese",
+    "English"
+   ],
+   "tier": "gold",
+   "photo": ""
+  },
+  "team": [
+   {
+    "id": "live_jamesall",
+    "name": "James Allcott",
+    "tag": "JAMESALL",
+    "professions": [
+     "Cocktail Bartender"
+    ],
+    "skills": [
+     "Flair",
+     "Speed",
+     "Efficiency"
+    ],
+    "interests": [
+     "Surfing",
+     "Golf",
+     "Travel"
+    ],
+    "locations": [
+     "St Albans",
+     "London"
+    ],
+    "languages": [
+     "English"
+    ],
+    "photo": ""
+   },
+   {
+    "id": "live_cuartero",
+    "name": "Bruno Cuartero",
+    "tag": "CUARTERO",
+    "professions": [
+     "Bar Manager"
+    ],
+    "skills": [
+     "Operations",
+     "Customer Service",
+     "Mixology"
+    ],
+    "interests": [
+     "Music",
+     "Films",
+     "Travel"
+    ],
+    "locations": [
+     "London"
+    ],
+    "languages": [
+     "English"
+    ],
+    "photo": ""
+   },
+   {
+    "id": "live_gavrilas",
+    "name": "Alexandru Gavrilas",
+    "tag": "GAVRILAS",
+    "professions": [
+     "Bartender"
+    ],
+    "skills": [
+     "Leadership",
+     "Customer Service",
+     "Attention to Detail"
+    ],
+    "interests": [
+     "Cooking",
+     "Running",
+     "Swimming"
+    ],
+    "locations": [
+     "London"
+    ],
+    "languages": [
+     "English"
+    ],
+    "photo": ""
+   }
+  ]
+ },
+ "community": [
+  [
+   "Industry events",
+   "Bar shows, brand nights and tastings"
+  ],
+  [
+   "Training",
+   "Regular sessions and mentors"
+  ],
+  [
+   "Support",
+   "Cover, advice and introductions"
+  ]
+ ],
+ "marketed": [
+  [
+   "FF Party",
+   "People planning a celebration"
+  ],
+  [
+   "FF Staff",
+   "Businesses hiring for events"
+  ],
+  [
+   "FF Event Directory",
+   "Event companies across the UK"
+  ],
+  [
+   "WhatsApp",
+   "Shared by you and your team"
+  ]
+ ],
+ "launchParty": {
+  "title": "FireFlair Launch Party",
+  "where": "London, early 2027",
+  "items": [
+   "Winners announced",
+   "Cocktail competition",
+   "Professional photoshoot",
+   "Training session",
+   "Cocktail equipment",
+   "NFC business cards"
+  ]
+ }
 }

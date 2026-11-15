@@ -65,7 +65,7 @@ const realPage11 = (c) => {
   return ["co_" + c.slug, {
     name: p.name, kind: p.kind, areas: (p.areas || []).join(" · "), slug: p.slug,
     socials: Object.fromEntries(live.filter((r) => DIR_SOCIAL17[r.description]).map((r) => [DIR_SOCIAL17[r.description], r.name])),
-    theme: (p.card && p.card.theme) || "onyx", layout: (p.card && p.card.layout) || "classic", tier: m.tier || "standard", unclaimed: c.unclaimed,
+    theme: (p.card && p.card.theme) || ({ dj: "magenta", photo: "cobalt", catering: "saffron", svc: "grey" })[c.cat] || "onyx", layout: (p.card && p.card.layout) || "classic", tier: m.tier || "standard", unclaimed: c.unclaimed,
     description: p.description, team: [], venues: [], reviews: [],
     logo: p.logo || undefined, logoWide: !!p.logoWide, logoBg: p.logoBg || "dark",
     media: (p.media || []).map((x) => ({ id: x.id, src: x.src, alt: x.alt || p.name })),

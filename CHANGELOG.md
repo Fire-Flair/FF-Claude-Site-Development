@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.9.2
+
+- Pillar pages: the 1, 2, 3 cards at the top are back to three small cards on one line with small pictures (src/styles/team-pillars21.css); the larger numbered sections follow below.
+- 1, 2, 3 pictures are made from the prototype's own cards and visuals, so each one relates to its subject.
+- FF Team home: new FF Team video (portrait, press to play, doors poster from its first frame); the gold border is now the video box itself, no black stage. Video served from v/ff-team-reel.mp4 (scripts/copy-media.mjs).
+- FF Event Directory: each category has its own icon (Bar companies cocktail glass, Entertainment music, Event services party popper, Caterers cutlery, Bar services wine glass, Featured star) and its own default card colour (bar black, entertainment magenta, event services cobalt, caterers saffron, bar services grey). New card themes: magenta, cobalt, saffron, grey (src/state/themes-xp.js, default by category in src/content/companies.js).
+- Event management companies moved from Bar services to Event services (data/companies/profiles); Bar services is now ice and glassware.
+- Photo album removed from the FF Team home; "Top companies" is now "Featured companies"; area pages list FF Directory companies from the nearest wider place when none are listed.
+
 ## v17.9.1 (artifact version 1794782522-a739): FF Team pillars redesign (iPad review), intro video panel
 
 - Pillar sections: text on the left, visual on the right from 680px wide (stacked on a phone). Number and title sit together; the title link underline is gone.

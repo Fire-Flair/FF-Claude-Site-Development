@@ -242,8 +242,17 @@ function fdResults(state, node, people, roleId) {
     }
   }
   const person = (l) => l.filter(x => x.kind === "person"), comp = (l) => l.filter(x => x.kind === "company");
-  const dir = all.filter((x) => isDir(x) && (fdCovers(x.cov, node) || (hasKids && fdServesWithin(x.cov, node))));
-  return { exact, within, wider, scope, total: provs.length, exactPeople: person(exact), exactCos: comp(exact), dir };
+  let dir = all.filter((x) => isDir(x) && (fdCovers(x.cov, node) || (hasKids && fdServesWithin(x.cov, node))));
+  /* A place with no listed company of its own shows the FF Event Directory companies that serve the nearest wider place. */
+  let dirScope = null;
+  if (!dir.length) {
+    for (const a of fdAnc(node).slice(1)) {
+      if (a.k === "r" || a.k === "t") break;
+      const found = all.filter((x) => isDir(x) && fdServesWithin(x.cov, a));
+      if (found.length) { dir = found; dirScope = a; break; }
+    }
+  }
+  return { exact, within, wider, scope, total: provs.length, exactPeople: person(exact), exactCos: comp(exact), dir, dirScope };
 }
 
 
@@ -726,7 +735,7 @@ function AreaPage11() {
 
       {res.dir.length > 0 && <section id="ff-fd-dir" aria-labelledby="fd-dir-h" style={{ marginTop: 26, scrollMarginTop: 70 }}>
         <h2 id="fd-dir-h" className="ff-h2">FF Event Directory</h2>
-        <p className="ff-fd-sub">Companies listed from their public contact details. FF companies are the companies that have joined and can be booked through FireFlair.</p>
+        <p className="ff-fd-sub">{res.dirScope ? `No companies are listed in ${fdLabel(node)} yet, so these serve ${fdLabel(res.dirScope)}. ` : ""}Companies listed from their public contact details. FF companies are the companies that have joined and can be booked through FireFlair.</p>
         <HScroll label={`FF Event Directory in ${fdLabel(node)}`} snap>{res.dir.slice(0, showAll ? 60 : 24).map(x => <FdResultTile11 key={x.key} x={x} />)}</HScroll>
       </section>}
       {copy.ask && <section id="ff-fd-ask" ref={askRef} className="ff-fd-card" aria-labelledby="fd-ask-h" style={{ scrollMarginTop: 70 }}>

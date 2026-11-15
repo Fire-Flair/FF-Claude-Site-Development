@@ -62,12 +62,14 @@
   /* ---- Visuals ---------------------------------------------------------------------------------------------------------------- */
   /* v17.9.2: every visual sits on the right of its text (stacked under it on a phone). Buttons and ticks in the visuals are live
      but lead nowhere: they only show their pressed state. */
-  const P21_CARD = "stf_leo";
-  const P21_TEAM = ["stf_tom", "stf_idr", "stf_jon"];
+  /* Real FF Team members' public Profile Cards (ffteam.uk). Their data is in team-pillars.json "examples". */
+  const p21Live = (x) => ({ level: 4, rating: null, reviews: 0, hasCar: false, availability: "open", qualifications: [], tier: "standard", photo: null, ...x, profession: x.professions[0], group: "Bartenders", theme: "onyx" });
+  const P21_CARD = p21Live(TP21.examples.card);
+  const P21_TEAM = TP21.examples.team.map(p21Live);
   const useTog21 = (init) => { const [v, setV] = useState(init || {}); return [v, (k) => setV((o) => ({ ...o, [k]: !o[k] }))]; };
 
   function VisCvToProfile21({ dir }) {
-    const me = p21Person(dir, P21_CARD);
+    const me = P21_CARD;
     return (
       <div className="pv pv-cv">
         <div className="pv-step">
@@ -84,8 +86,8 @@
   }
 
   function VisShareTeam21({ dir }) {
-    const me = p21Person(dir, P21_CARD);
-    const crew = P21_TEAM.map((id) => p21Person(dir, id)).filter(Boolean);
+    const me = P21_CARD;
+    const crew = P21_TEAM;
     const [on, tog] = useTog21();
     const acts = [["Book", P21I.Calendar], ["Review", P21I.Award], ["Join", P21I.Plus]];
     return (
@@ -115,9 +117,9 @@
       <div className="pv pv-rv">
         <InertBox className="ff-rvslide"><InformationCard record={rec} def={BASE_CATEGORIES.reviews} themeKey="onyx" pub="r" highlight rank="primary" /></InertBox>
         <div className="ff-tickqs pv-tq">
-          <TickChoice id="pv-w" label="Have you worked with Sammy before?" options={YES_NO} value={a.w} onChange={set("w")} />
-          <TickChoice id="pv-a" label="Would you like to work with Sammy again?" options={YES_NO} value={a.a} onChange={set("a")} />
-          <TickChoice id="pv-h" label="How is Sammy to work with?" options={HOW_TO_WORK.map((h) => ({ v: h.key, label: h.label }))} value={a.h} onChange={set("h")} />
+          <TickChoice id="pv-w" label="Have you worked with Simao before?" options={YES_NO} value={a.w} onChange={set("w")} />
+          <TickChoice id="pv-a" label="Would you like to work with Simao again?" options={YES_NO} value={a.a} onChange={set("a")} />
+          <TickChoice id="pv-h" label="How is Simao to work with?" options={HOW_TO_WORK.map((h) => ({ v: h.key, label: h.label }))} value={a.h} onChange={set("h")} />
         </div>
       </div>
     );
@@ -129,7 +131,7 @@
       <div className="pv pv-mk">
         {IM.pen_strip ? <img className="pv-pen" src={IM.pen_strip} alt="A black and gold FireFlair pen engraved Add FF, ffparty.uk" decoding="async" draggable={false} /> : null}
         <ul className="pv-pills" aria-label="Where your Profile Card is taken">
-          {["FF Party", "FF Staff", "FF Event Directory", "WhatsApp"].map((t) => <li key={t}>{t}</li>)}
+          {TP21.marketed.map(([t, d]) => <li key={t}><b>{t}</b><span>{d}</span></li>)}
         </ul>
       </div>
     );
@@ -304,7 +306,7 @@
 
   function VisLaunchParty21() {
     const IM = window.FF_IMG || {};
-    const items = ["Winners announced", "Cocktail competition", "Professional photoshoot", "Training session", "Cocktail equipment", "NFC business cards"];
+    const items = TP21.launchParty.items;
     const [on, tog] = useTog21();
     return (
       <div className="pv pv-lp">
@@ -319,22 +321,15 @@
   function VisEvents21() {
     const [open, setOpen] = useState(false);
     const cal = TP21.calendar;
-    const next = cal[0];
+    const row = (e) => (
+      <li key={e.n}><span className="dt"><b>{e.dm[0]}</b><i>{e.dm[1]}</i></span><span className="nm"><b>{e.n}</b><small>{e.w}</small></span></li>
+    );
     return (
       <div className="pv pv-ev">
-        <div className="pv-next">
-          <span className="ic" aria-hidden="true"><P21I.CalendarDays size={20} strokeWidth={1.7} /></span>
-          <b>{next.n}</b><em>{next.d}</em><small>{next.w}</small>
-        </div>
+        <ul className="pv-evs">{TP21.community.map(([t, d]) => <li key={t}><b>{t}</b><span>{d}</span></li>)}</ul>
         <div className={"pv-cal" + (open ? " open" : "")}>
           <button type="button" aria-expanded={open} onClick={() => setOpen(!open)}><b>Event calendar</b><P21I.ChevronDown size={18} /></button>
-          {open ? (
-            <ul>
-              {cal.map((e) => (
-                <li key={e.n}><b>{e.n}</b><em>{e.d}</em><small>{e.w}</small></li>
-              ))}
-            </ul>
-          ) : null}
+          {open ? <ul>{cal.map(row)}</ul> : null}
         </div>
       </div>
     );

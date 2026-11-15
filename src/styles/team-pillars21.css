@@ -28,7 +28,9 @@
 .ff .pv * { box-sizing:border-box; }
 .ff .pv-ph { display:block; width:100%; aspect-ratio:16/10; object-fit:cover; border-radius:16px; corner-shape:squircle; border:1.5px solid rgba(176,141,42,.6); }
 .ff .pv-pills { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:8px; }
-.ff .pv-pills li { padding:7px 14px; border-radius:99px; corner-shape:squircle; background:#fff; border:1px solid rgba(176,141,42,.6); font-size:13.5px; font-weight:600; white-space:nowrap; }
+.ff .pv-pills { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+.ff .pv-pills li { display:grid; gap:1px; padding:10px 14px; border-radius:16px; corner-shape:squircle; background:var(--color-sand,#F3EAD5); font-size:13.5px; line-height:1.3; }
+.ff .pv-pills li b { font-family:var(--display); font-size:15px; }
 
 /* WhatsApp frame, shared by the share, request and rate visuals */
 .ff .pv-wab { width:100%; max-width:360px; margin:0 auto; padding:10px; border-radius:20px; corner-shape:squircle; background:#E5DDD5; border:1px solid rgba(0,0,0,.08); }
@@ -128,16 +130,17 @@
 
 /* events */
 .ff .pv-ev { display:grid; gap:12px; }
-.ff .pv-next { display:grid; grid-template-columns:auto 1fr; gap:2px 12px; padding:14px 16px; border-radius:18px; corner-shape:squircle; background:#fff; border:1.5px solid rgba(176,141,42,.6); }
-.ff .pv-next .ic { grid-row:1 / 4; color:var(--color-ox,#5C1220); }
-.ff .pv-next b, .ff .pv-cal li b { font-family:var(--display); font-size:17px; line-height:1.2; }
-.ff .pv-next em, .ff .pv-cal em { font-style:normal; font-size:13.5px; font-weight:700; color:var(--color-gold-dk,#7E611D); }
-.ff .pv-next small, .ff .pv-cal small { font-size:13px; color:var(--color-text-2,#4A443A); }
+.ff .pv-evs { list-style:none; margin:0; padding:0; display:grid; gap:8px; }
+.ff .pv-evs li { display:grid; gap:1px; padding:10px 14px; border-radius:16px; corner-shape:squircle; background:var(--color-sand,#F3EAD5); font-size:14px; line-height:1.35; }
+.ff .pv-evs b { font-family:var(--display); font-size:16px; }
 .ff .pv-cal { border-radius:18px; corner-shape:squircle; background:#fff; border:1.5px solid rgba(176,141,42,.6); overflow:hidden; }
 .ff .pv-cal > button { display:flex; align-items:center; justify-content:space-between; width:100%; min-height:48px; padding:10px 16px; background:none; border:0; font:600 15px var(--font-sans,Inter,sans-serif); color:#16130F; cursor:pointer; }
 .ff .pv-cal.open > button svg { transform:rotate(180deg); }
-.ff .pv-cal ul { list-style:none; margin:0; padding:0 16px 8px; display:grid; }
-.ff .pv-cal li { display:grid; gap:1px; padding:10px 0; border-top:1px solid #EFE7D2; }
+.ff .pv-cal ul { list-style:none; margin:0; padding:0 12px 8px; display:grid; }
+.ff .pv-cal li { display:grid; grid-template-columns:54px minmax(0,1fr); gap:12px; align-items:center; padding:9px 0; border-top:1px solid #EFE7D2; }
+.ff .pv-cal .dt { display:grid; justify-items:center; padding:5px 0; border-radius:12px; corner-shape:squircle; background:#16130F; color:#F4DC8E; line-height:1.05; }
+.ff .pv-cal .dt b { font-size:16px; } .ff .pv-cal .dt i { font-style:normal; font-size:11px; }
+.ff .pv-cal .nm { display:grid; gap:1px; min-width:0; } .ff .pv-cal .nm b { font-family:var(--display); font-size:15px; } .ff .pv-cal .nm small { font-size:13px; color:var(--color-text-2,#4A443A); }
 
 /* pages */
 .ff .ff-ip21 { max-width:1100px; margin:0 auto; padding:0 16px 40px; }
@@ -157,3 +160,14 @@
 /* marketing visual */
 .ff .pv-mk { display:grid; grid-template-columns:minmax(0,1fr); gap:12px; }
 .ff .pv-pen { display:block; width:100%; max-width:100%; height:auto; border-radius:18px; corner-shape:squircle; border:1px solid rgba(176,141,42,.6); }
+
+/* the 1-2-3 cards: compact, so the sections below are reached quickly */
+.ff .ff-dx-panel .ff-cta17, .ff .ff-ip21 .ff-cta17 { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin:10px 0 4px; }
+.ff .ff-dx-panel .ff-cta17 li, .ff .ff-ip21 .ff-cta17 li { min-width:0; border-radius:14px; corner-shape:squircle; }
+.ff .ff-dx-panel .ff-cta17 .ph, .ff .ff-ip21 .ff-cta17 .ph { aspect-ratio:16 / 7; }
+.ff .ff-dx-panel .ff-cta17 .ph i, .ff .ff-ip21 .ff-cta17 .ph i { top:6px; left:6px; width:22px; height:22px; font-size:12px; }
+.ff .ff-dx-panel .ff-cta17 b, .ff .ff-ip21 .ff-cta17 b { font-size:13px; line-height:1.2; padding:7px 8px 0; }
+.ff .ff-dx-panel .ff-cta17 .t, .ff .ff-ip21 .ff-cta17 .t { font-size:11.5px; line-height:1.35; padding:3px 8px 6px; }
+.ff .ff-dx-panel .ff-cta17 button, .ff .ff-ip21 .ff-cta17 button, .ff .ff-ip21 .ff-cta17 a.btn { margin:0 8px 8px; padding:6px 10px; font-size:11.5px; }
+@media (max-width:639px) { .ff .ff-dx-panel .ff-cta17 .t, .ff .ff-ip21 .ff-cta17 .t { display:none; } .ff .ff-dx-panel .ff-cta17 li, .ff .ff-ip21 .ff-cta17 li { padding-bottom:0; } }
+@media (min-width:900px) { .ff .ff-dx-panel .ff-cta17 b, .ff .ff-ip21 .ff-cta17 b { font-size:15px; } .ff .ff-dx-panel .ff-cta17 .t, .ff .ff-ip21 .ff-cta17 .t { font-size:12.5px; } }

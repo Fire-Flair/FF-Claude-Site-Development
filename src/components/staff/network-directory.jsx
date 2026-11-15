@@ -9,10 +9,10 @@ function BigHead20({ tag, title, count, id }) {
 }
 
 
-function CompaniesSection({ title = "Companies", note, list: listIn, fold }) {
+function CompaniesSection({ title = "Companies", note, list: listIn, fold, icon }) {
   const { state, dispatch } = useStore();
   const list = listIn || companyList(state);
-  const Wrap = fold ? ({ children }) => React.createElement(Fold17, { shut: true, id: fold, icon: React.createElement(I11.Briefcase, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title, count: list.length }, children) : ({ children }) => React.createElement("section", { className: "ff-co11-sect", style: { marginTop: 22 } }, React.createElement(SectionHead, { icon: React.createElement(I11.Briefcase, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title, count: list.length }), children);
+  const Wrap = fold ? ({ children }) => React.createElement(Fold17, { shut: true, id: fold, icon: icon || React.createElement(I11.Briefcase, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title, count: list.length }, children) : ({ children }) => React.createElement("section", { className: "ff-co11-sect", style: { marginTop: 22 } }, React.createElement(SectionHead, { icon: icon || React.createElement(I11.Briefcase, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title, count: list.length }), children);
   return React.createElement(Wrap, null, note && React.createElement("p", { className: "ff-body", style: { margin: "-2px 0 8px", fontSize: 13.5 } }, note), React.createElement(HScroll, { label: title }, list.map((co) => React.createElement(
     "button",
     {
@@ -38,6 +38,8 @@ function CompaniesSection({ title = "Companies", note, list: listIn, fold }) {
 
 /* Browse under the map: the four pillars sort the people and companies, and the map follows. */
 const NET_CO_TYPES17 = [["bar", "Bar companies"], ["dj", "Entertainment"], ["photo", "Event services"], ["catering", "Caterers"], ["svc", "Bar services"]];
+const NET_CAT_VIEW17 = { bar: ["Martini", "#16130F"], dj: ["Music", "#B02FA8"], photo: ["PartyPopper", "#1F7BE0"], catering: ["UtensilsCrossed", "#E8832A"], svc: ["Wine", "#7C8088"] };
+function catIcon17(k) { const v = NET_CAT_VIEW17[k] || ["Briefcase", "var(--gold-dk)"]; return React.createElement(I11[v[0]] || I11.Briefcase, { size: 15, color: v[1], strokeWidth: 1.8 }); }
 
 
 const PILLAR_OF_GROUP17 = { "Bar": "bar", "Front of House": "bar", "Management": "bar", "Back of House": "bar", "Entertainment": "ent", "Services": "svc", "Chefs": "food" };
@@ -71,11 +73,11 @@ function NetDirectory19(props) {
 ;
   return h("section", { id: "ff-directory", style: { marginTop: 30, scrollMarginTop: 70 } },
     h(BigHead20, { title: "FF Event Directory" }),
-    top.length ? h(CompaniesSection, { title: "Top companies", list: top }) : null,
+    top.length ? h(CompaniesSection, { title: "Featured companies", list: top, icon: React.createElement(I11.Star, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.8 }) }) : null,
     secs.map(function (x) {
       return x[1].length
-        ? h(CompaniesSection, { key: "dir" + x[0][0], title: x[0][1], list: x[1], fold: "ff-dir-" + x[0][0] })
-        : h(Fold17, { key: "dir" + x[0][0], shut: true, id: "ff-dir-" + x[0][0], icon: h(I11.Briefcase, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title: x[0][1], count: 0 },
+        ? h(CompaniesSection, { key: "dir" + x[0][0], title: x[0][1], list: x[1], fold: "ff-dir-" + x[0][0], icon: catIcon17(x[0][0]) })
+        : h(Fold17, { key: "dir" + x[0][0], shut: true, id: "ff-dir-" + x[0][0], icon: catIcon17(x[0][0]), title: x[0][1], count: 0 },
             h("p", { className: "ff-body ff-muted", style: { margin: 0 } }, "No companies listed yet."));
     }));
 }

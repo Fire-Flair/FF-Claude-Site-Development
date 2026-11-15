@@ -34,12 +34,6 @@ const PHOTOS17 = __ff_json("content/data/photos17.json");
 /* Where the faces are in each crop, for any place a photo is shown at another shape
    (desktop tiles, the "Next" strip, story headers, the Bookings photos on desktop). */
 const FOCUS17 = {
- "j17_p02": "55% 50%",
- "j17_p03": "35% 50%",
- "j17_p17": "45% 50%",
- "j17_p19": "40% 50%",
- "j17_p21": "38% 32%",
- "j17_p47": "47% 55%",
  "t17_p35": "50% 52%",
  "t17_vke01": "39% 14%",
  "t17_vke06": "59% 62%",

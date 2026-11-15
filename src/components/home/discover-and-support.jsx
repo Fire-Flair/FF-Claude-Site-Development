@@ -343,35 +343,35 @@ const LB20_CSS = __ff_css("styles/lb20.css");
 
 const TM20_CSS = __ff_css("styles/tm20.css");
 
-/* v17.9.2: the "2 minutes" panel is now the FireFlair video: press to play, never autoplays. Source and poster: src/content/homepage/team-intro-video.json. */
+/* v17.9.2: the "2 minutes" panel is now the FF Team video. Portrait (9:16), press to play, never autoplays; the poster is the
+   video's own first frame (the doors). Source and poster: src/content/homepage/team-intro-video.json. */
 function TwoMinutes20() {
   const h = React.createElement;
-  const { dispatch } = useStore();
   const V = CONTENT_ADAPTER.homepageTeamIntroVideo();
   const IM = window.FF_IMG || {};
   const [play, setPlay] = useState(false);
   const ref = useRef(null);
   const poster = IM[V.poster];
-  const start = () => {
-    if (!V.src) { dispatch({ type: "TOAST", toast: "The video is on its way" }); return; }
-    setPlay(true);
-  };
-  useEffect(() => { if (play && ref.current) { try { ref.current.play(); } catch (e) { /* ignore */ } } }, [play]);
+  useEffect(() => { if (play && ref.current) { const p = ref.current.play(); if (p && p.catch) p.catch(() => {}); } }, [play]);
   return h(
     "section",
     { className: "ff-sect ff-tm20", id: "ff-two-minutes", "aria-label": V.label },
     h("style", null, TM20_CSS),
     h(
       "div",
-      { className: "ff-tm20-v" },
-      play && V.src
-        ? h("video", { ref, src: V.src, poster, controls: true, playsInline: true, preload: "metadata", "aria-label": V.label })
-        : h(
-            "button",
-            { type: "button", className: "ff-tm20-p", onClick: start, "aria-label": V.label },
-            poster ? h("img", { src: poster, alt: "", decoding: "async", draggable: false }) : null,
-            h("span", { className: "ff-tm20-play", "aria-hidden": "true" }, h("svg", { viewBox: "0 0 24 24", width: 30, height: 30 }, h("path", { d: "M8 5.5v13l11-6.5z", fill: "currentColor" })))
-          )
+      { className: "ff-tm20-st", style: poster ? { "--tm-poster": "url(" + poster + ")" } : undefined },
+      h(
+        "div",
+        { className: "ff-tm20-v", style: { aspectRatio: V.width + " / " + V.height } },
+        play
+          ? h("video", { ref, src: V.src, poster, controls: true, playsInline: true, preload: "auto", "aria-label": V.label })
+          : h(
+              "button",
+              { type: "button", className: "ff-tm20-p", onClick: () => setPlay(true), "aria-label": V.label },
+              poster ? h("img", { src: poster, alt: "", width: V.width, height: V.height, decoding: "async", draggable: false }) : null,
+              h("span", { className: "ff-tm20-play", "aria-hidden": "true" }, h("svg", { viewBox: "0 0 24 24", width: 30, height: 30 }, h("path", { d: "M8 5.5v13l11-6.5z", fill: "currentColor" })))
+            )
+      )
     )
   );
 }

@@ -12,6 +12,10 @@ const THEMES = {
   slate: { name: "Forest", bg: "linear-gradient(168deg,#173028,#0A1712)", ink: "#F1F4F0", sub: "#B7CDBF", rule: "rgba(201,162,39,.28)", accent: "#D9BE68", edge: "rgba(201,162,39,.5)", dark: true,  swatch: "#12241D" },
   paper: { name: "Paper", bg: "linear-gradient(168deg,#FAFAF8,#ECEBE6)", ink: "#1A1A1C", sub: "#5E5D58", rule: "rgba(26,26,28,.18)", accent: "#8A6A1E", edge: "rgba(176,141,42,.6)", dark: false, swatch: "#F2F1EC" },
   silver: { name: "Silver", bg: "radial-gradient(120% 55% at 18% 0%,rgba(255,255,255,.95),rgba(255,255,255,0) 62%), linear-gradient(160deg,#FFFFFF 0%,#D3D8DF 16%,#9AA2AE 36%,#F2F4F7 52%,#AAB2BD 72%,#E6E9EE 88%,#B7BEC8 100%)", ink: "#0E0F12", sub: "#262A30", rule: "rgba(18,19,22,.22)", accent: "#3C4048", edge: "rgba(110,116,126,.8)", dark: false, swatch: "linear-gradient(135deg,#F6F7F9,#A9AFB9)", locked: true },
+  magenta: { name: "Magenta", bg: "linear-gradient(168deg,#B02FA8,#5B1470)", ink: "#FFF4FD", sub: "#F3C9EE", rule: "rgba(255,230,250,.3)", accent: "#FFE08A", edge: "rgba(255,224,138,.6)", dark: true, swatch: "#B02FA8" },
+  cobalt: { name: "Cobalt", bg: "linear-gradient(168deg,#1F7BE0,#0B3A8C)", ink: "#F2F8FF", sub: "#BFD9FA", rule: "rgba(230,242,255,.3)", accent: "#FFD76A", edge: "rgba(255,215,106,.6)", dark: true, swatch: "#1F7BE0" },
+  saffron: { name: "Saffron", bg: "linear-gradient(168deg,#E8832A,#A8430C)", ink: "#FFF7EC", sub: "#FBD9B4", rule: "rgba(255,240,222,.32)", accent: "#FFF0B8", edge: "rgba(255,240,184,.6)", dark: true, swatch: "#E8832A" },
+  grey: { name: "Grey", bg: "linear-gradient(168deg,#D6D8DC,#B4B8BF)", ink: "#1B1C1F", sub: "#4A4D54", rule: "rgba(27,28,31,.2)", accent: "#5A4A1C", edge: "rgba(90,74,28,.5)", dark: false, swatch: "#C4C7CC" },
   gold: { name: "Gold", bg: "radial-gradient(120% 55% at 18% 0%,rgba(255,248,214,.9),rgba(255,248,214,0) 62%), linear-gradient(160deg,#FBEDB4 0%,#E7C060 22%,#B98A2B 48%,#F3D98A 62%,#C99A38 82%,#EBCB71 100%)", ink: "#14110A", sub: "#3A2D0F", rule: "rgba(20,17,10,.3)", accent: "#14110A", edge: "rgba(20,17,10,.55)", dark: false, swatch: "linear-gradient(135deg,#F7E3A0,#B98A2B)", locked: true },
 };
 

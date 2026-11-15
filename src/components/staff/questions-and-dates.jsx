@@ -123,7 +123,7 @@ const I11 = {
   ClipboardList: lucideIcon("ClipboardList"), BadgeCheck: lucideIcon("BadgeCheck"), MapPinned: lucideIcon("MapPinned"),
   Lock: lucideIcon("Lock"), Martini: lucideIcon("Martini"), Sparkles: lucideIcon("Sparkles"), Send: lucideIcon("Send"),
   ArrowRight: lucideIcon("ArrowRight"), Trash2: lucideIcon("Trash2"), UserPlus: lucideIcon("UserPlus"), Star: lucideIcon("Star"),
-  Search: lucideIcon("Search"), Briefcase: lucideIcon("Briefcase"), MessageCircle: lucideIcon("MessageCircle"),
+  Search: lucideIcon("Search"), Briefcase: lucideIcon("Briefcase"), Music: lucideIcon("Music"), UtensilsCrossed: lucideIcon("UtensilsCrossed"), Snowflake: lucideIcon("Snowflake"), Wine: lucideIcon("Wine"), PartyPopper2: lucideIcon("PartyPopper"), MessageCircle: lucideIcon("MessageCircle"),
   HelpCircle: lucideIcon("HelpCircle"), Users: lucideIcon("Users"), Clock: lucideIcon("Clock"), MapPin: lucideIcon("MapPin"),
   Check: lucideIcon("Check"), Plus: lucideIcon("Plus"), Pencil: lucideIcon("Pencil"), ChevronLeft: lucideIcon("ChevronLeft"),
   ChevronRight: lucideIcon("ChevronRight"), ChevronDown: lucideIcon("ChevronDown"), Banknote: lucideIcon("Banknote"), FileText: lucideIcon("FileText"), MessageSquare: lucideIcon("MessageSquare"),

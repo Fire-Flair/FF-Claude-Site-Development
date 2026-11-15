@@ -22,7 +22,7 @@ function Home101() {
       React.createElement(Journal17, {
         key: "journal",
         kind: "team"
-      }), React.createElement(PhotoAlbumFold20, { key: "album" }),
+      }),
       React.createElement(BusinessSupport19, {
         key: "business"
       }),
