@@ -750,7 +750,7 @@ function StartBox17() {
       </section>
       {cal && (
         <section className="ff-way17 ff-way17-int">
-          <div className="ff-way17-ctl"><Btn variant="gold ff-bigcv17" onClick={() => setBook(true)}><Calendar size={16} /> Book an interview</Btn></div>
+          <div className="ff-way17-ctl"><Btn variant="ghost ff-bigcv17" onClick={() => setBook(true)}><Calendar size={16} /> Book an interview</Btn></div>
           <p className="ff-way17-line"><span>Meet the FireFlair team and ask us anything.</span></p>
         </section>
       )}

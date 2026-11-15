@@ -1,0 +1,6 @@
+{
+  "_note": "The FF Team home video (press to play, no autoplay). poster is the doors image. src is the video file URL (mp4): leave it empty until the final cut is supplied. Use the cut that ends on the single splash screen.",
+  "src": "",
+  "poster": "intro_doors",
+  "label": "Watch the FireFlair video"
+}

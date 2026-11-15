@@ -15,14 +15,14 @@
   const TP21 = CONTENT_ADAPTER.homepageTeamPillars();
 
   const DX_TEAM = TP21.pillars.map((pl) => {
-    const fixed = pl.sections.every((x) => x.img);
+    const fixed = pl.sections.every((x) => x.card_img);
     return {
       k: pl.k,
       t: pl.t,
       s: pl.s,
       img: "t17_" + TP21.photos[pl.k][0],
       pool: TP21.photos[pl.k],
-      fixedCards: fixed ? pl.sections.map((x) => x.img) : null,
+      fixedCards: fixed ? pl.sections.map((x) => x.card_img) : null,
       icon: { profiles: DX_I.Contact, services: DX_I.Sparkles, events: DX_I.CalendarDays, community: DX_I.Users }[pl.k],
       h: pl.h,
       tldr: pl.tldr,

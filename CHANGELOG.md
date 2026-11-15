@@ -1,5 +1,16 @@
 # FireFlair prototype — changelog
 
+## v17.9.1 (artifact version 1794782522-a739): FF Team pillars redesign (iPad review), intro video panel
+
+- Pillar sections: text on the left, visual on the right from 680px wide (stacked on a phone). Number and title sit together; the title link underline is gone.
+- Your profile: CV to Profile Card (card on the right); share visual is a WhatsApp message with a Profile Card and three equal Book, Review, Join buttons, then three real team cards; review and its tick questions are one card and the ticks work.
+- Our packages: title "FireFlair is built to be your booking agent"; all "Coming 2027" badges removed; Flair tile outline overlap fixed; plain text pills instead of icon chips.
+- Your bookings: rate tiles are tickable and typable (nothing saved); request buttons are tappable; "Event brief and invoice" is a compact card with the five terms as editable drop-downs.
+- Our community: Athens prize shows the passport photo; launch party shows the NFC Profile Card picture and tickable list; event calendar drop-down (UK, Ireland, Europe) in industry events.
+- 1-2-3 cards now use 12 different photos from the pillar tile photos (new crops j17_p02, p03, p17, p19, p21, p47).
+- Profile start box: Book an interview is now a quiet button, not gold.
+- FF Team home: the "It takes 2 minutes to enter" panel is replaced by a press-to-play video (doors poster, no autoplay). The video file URL goes in src/content/homepage/team-intro-video.json; empty until the final cut is added.
+
 ## v17.9 — 2026-11-15 — FF Team home pillars rebuilt; 16 info pages; Launch Challenge prizes
 Phase Two artifact version 1794780711-1744. Full developer notes: `docs/handoff-v17.9.md`.
 

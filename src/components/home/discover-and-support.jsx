@@ -343,24 +343,36 @@ const LB20_CSS = __ff_css("styles/lb20.css");
 
 const TM20_CSS = __ff_css("styles/tm20.css");
 
+/* v17.9.2: the "2 minutes" panel is now the FireFlair video: press to play, never autoplays. Source and poster: src/content/homepage/team-intro-video.json. */
 function TwoMinutes20() {
   const h = React.createElement;
-  const nav = useHomeNav();
-  const steps = [["Sign up", "Create your account."], ["Upload your CV", "Your profile builds itself automatically."], ["Add pictures", "Show who you are."], ["Send invites", "Invite the hospitality professionals you have worked with, would like to work with, or believe are great."], ["You are in", "Everyone who creates a profile during the challenge is entered automatically."]];
+  const { dispatch } = useStore();
+  const V = CONTENT_ADAPTER.homepageTeamIntroVideo();
+  const IM = window.FF_IMG || {};
+  const [play, setPlay] = useState(false);
+  const ref = useRef(null);
+  const poster = IM[V.poster];
+  const start = () => {
+    if (!V.src) { dispatch({ type: "TOAST", toast: "The video is on its way" }); return; }
+    setPlay(true);
+  };
+  useEffect(() => { if (play && ref.current) { try { ref.current.play(); } catch (e) { /* ignore */ } } }, [play]);
   return h(
     "section",
-    { className: "ff-sect ff-tm20", id: "ff-two-minutes", "aria-labelledby": "ff-tm20-h" },
+    { className: "ff-sect ff-tm20", id: "ff-two-minutes", "aria-label": V.label },
     h("style", null, TM20_CSS),
     h(
       "div",
-      { className: "ff-tm20-h" },
-      h("span", { className: "ff-tm20-big", "aria-hidden": "true" }, h("b", null, "2"), h("span", null, "minutes")),
-      h("h2", { id: "ff-tm20-h", className: "ff-h1" }, "It takes 2 minutes to enter")
-    ),
-    h("p", null, "Create your profile, then invite the hospitality professionals you want on your Team. At the end of the challenge, whoever has built the largest and best Team wins."),
-    h("ol", { className: "ff-tm20-s" }, steps.map((s, i) => h("li", { key: s[0] }, h("span", { className: "n" }, i + 1), h("span", null, h("b", null, s[0]), h("small", null, s[1]))))),
-    h("div", { className: "ff-tm20-w" }, "Hospitality professionals can sign up anywhere in the world. Marketing in 2027 takes place in the UK. From 2028, marketing and bookings go worldwide, so you can take bookings all around the world."),
-    h("div", { style: { marginTop: 14 } }, h(ShineButton, { onClick: nav.goProfile }, "Join Challenge"))
+      { className: "ff-tm20-v" },
+      play && V.src
+        ? h("video", { ref, src: V.src, poster, controls: true, playsInline: true, preload: "metadata", "aria-label": V.label })
+        : h(
+            "button",
+            { type: "button", className: "ff-tm20-p", onClick: start, "aria-label": V.label },
+            poster ? h("img", { src: poster, alt: "", decoding: "async", draggable: false }) : null,
+            h("span", { className: "ff-tm20-play", "aria-hidden": "true" }, h("svg", { viewBox: "0 0 24 24", width: 30, height: 30 }, h("path", { d: "M8 5.5v13l11-6.5z", fill: "currentColor" })))
+          )
+    )
   );
 }
 

@@ -1,295 +1,490 @@
 {
-  "_note": "FF Team home pillars (v17.9). Approved order: Your profile, Our packages, Your bookings, Our community. Each pillar: title, one summary paragraph, three numbered cards, then one full section per card (title, three paragraphs, a visual). Every pillar and every section also has its own page at ffteam.uk/info/<slug>. Copy is final wording: change it here only.",
-  "pillars": [
+ "_note": "FF Team home pillars (v17.9). Approved order: Your profile, Our packages, Your bookings, Our community. Each pillar: title, one summary paragraph, three numbered cards, then one full section per card (title, three paragraphs, a visual). Every pillar and every section also has its own page at ffteam.uk/info/<slug>. Copy is final wording: change it here only.",
+ "pillars": [
+  {
+   "k": "profiles",
+   "slug": "your-profile",
+   "t": "Your profile",
+   "s": "Your CV, as a page of your own",
+   "h": "Your hospitality CV, turned into a profile that gets you booked",
+   "tldr": "FF Team is for everyone who makes events happen: bartenders first, and DJs, entertainers, photographers, waiters, hosts and chefs too. Upload your CV and it becomes a Profile Card and a page of your own. Share it, build your team around it and collect a review from everyone you work with.",
+   "seo": {
+    "title": "Digital CV and Profile Card for Hospitality Staff | FF Team",
+    "description": "Turn your CV into a Profile Card and a page of your own. Share it, build your team and collect reviews from everyone you work with at events."
+   },
+   "sections": [
     {
-      "k": "profiles",
-      "slug": "your-profile",
-      "t": "Your profile",
-      "s": "Your CV, as a page of your own",
-      "h": "Your hospitality CV, turned into a profile that gets you booked",
-      "tldr": "FF Team is for everyone who makes events happen: bartenders first, and DJs, entertainers, photographers, waiters, hosts and chefs too. Upload your CV and it becomes a Profile Card and a page of your own. Share it, build your team around it and collect a review from everyone you work with.",
-      "seo": {
-        "title": "Digital CV and Profile Card for Hospitality Staff | FF Team",
-        "description": "Turn your CV into a Profile Card and a page of your own. Share it, build your team and collect reviews from everyone you work with at events."
-      },
-      "sections": [
-        {
-          "id": "ff-pl-cv",
-          "slug": "hospitality-digital-cv",
-          "card": { "t": "Turn your CV into a profile", "d": "Upload your CV. Get a Profile Card and a page of your own.", "b": "See how it works" },
-          "h": "Your CV, turned into a digital profile",
-          "p": [
-            "Upload your CV and FireFlair reads it for you. Your professions, skills, experience, qualifications and languages are lifted out and placed on your profile in under a minute. You check each detail and confirm it.",
-            "You get two things. Your Profile Card is the headline: your photo, your top professions and what you do best, on a card that looks great on any phone. Your profile page holds the full story, with your experience, media and reviews at your own web address.",
-            "It works for every role at an event. A bartender lists cocktails and flair, a DJ adds mixes, a photographer shows a portfolio and a chef shares menus. One link carries your whole career, and it is always up to date."
-          ],
-          "visual": "cv-to-profile",
-          "cta": { "label": "Create your Profile Card", "go": "profile" },
-          "seo": {
-            "title": "Turn Your Hospitality CV into a Digital Profile | FF Team",
-            "description": "Upload your CV and get a Profile Card and your own page in under a minute. A digital CV for bartenders, DJs, chefs, hosts and event staff."
-          }
-        },
-        {
-          "id": "ff-pl-team",
-          "slug": "build-your-events-team",
-          "card": { "t": "Share your card, build your team", "d": "Add the people you work with and get booked together.", "b": "See how teams work" },
-          "h": "Share your Profile Card and build your team",
-          "p": [
-            "Your Profile Card is made to be shared. Send it on WhatsApp, add it to your socials or hand someone your link, and they can book you, review you or join you in a tap.",
-            "Invite the people you love working with onto your team: the bartender you trust on a busy bar, the DJ who fills the floor, the chef, the photographer, the host. Your team shows on your profile, so anyone booking you sees who you work with.",
-            "A strong network says a lot about you. It shows you are known in the industry, and it means a whole team can be booked together for the same event."
-          ],
-          "visual": "share-and-team",
-          "cta": { "label": "Explore the network", "go": "network" },
-          "seo": {
-            "title": "Build Your Events Team and Hospitality Network | FF Team",
-            "description": "Share your Profile Card, add the bartenders, DJs, chefs and photographers you work with, and get booked together for events."
-          }
-        },
-        {
-          "id": "ff-pl-reviews",
-          "slug": "hospitality-reviews",
-          "card": { "t": "Collect reviews from everyone", "d": "Clients and teammates review you after every shift.", "b": "See reviews" },
-          "h": "Collect reviews from everyone you work with",
-          "p": [
-            "On FireFlair, anyone you work with can review you: the client who booked you, the business that hired you and the people who worked beside you. Asking takes one tap, and they answer in seconds.",
-            "Every shift can bring several reviews, so they add up fast. Work regularly and within a year your profile could carry hundreds, each one from a real person at a real event.",
-            "Reviews keep you in touch with the people you have worked with, and they are the first thing a new client reads. Great reviews bring the next booking to you."
-          ],
-          "visual": "reviews",
-          "cta": { "label": "Create your Profile Card", "go": "profile" },
-          "seo": {
-            "title": "Collect Reviews for Bartending and Event Work | FF Team",
-            "description": "Get reviewed by every client, business and teammate you work with. Build a reputation that brings your next event booking to you."
-          }
-        }
-      ]
+     "id": "ff-pl-cv",
+     "slug": "hospitality-digital-cv",
+     "card": {
+      "t": "Turn your CV into a profile",
+      "d": "Upload your CV. Get a Profile Card and a page of your own.",
+      "b": "See how it works"
+     },
+     "h": "Your CV, turned into a digital profile",
+     "p": [
+      "Upload your CV and FireFlair reads it for you. Your professions, skills, experience, qualifications and languages are lifted out and placed on your profile in under a minute. You check each detail and confirm it.",
+      "You get two things. Your Profile Card is the headline: your photo, your top professions and what you do best, on a card that looks great on any phone. Your profile page holds the full story, with your experience, media and reviews at your own web address.",
+      "It works for every role at an event. A bartender lists cocktails and flair, a DJ adds mixes, a photographer shows a portfolio and a chef shares menus. One link carries your whole career, and it is always up to date."
+     ],
+     "visual": "cv-to-profile",
+     "cta": {
+      "label": "Create your Profile Card",
+      "go": "profile"
+     },
+     "seo": {
+      "title": "Turn Your Hospitality CV into a Digital Profile | FF Team",
+      "description": "Upload your CV and get a Profile Card and your own page in under a minute. A digital CV for bartenders, DJs, chefs, hosts and event staff."
+     },
+     "card_img": "p21"
     },
     {
-      "k": "services",
-      "slug": "our-packages",
-      "t": "Our packages",
-      "s": "We market you. You get booked.",
-      "h": "We find the work. You do what you do best.",
-      "tldr": "FireFlair markets you to the people who book events. FF Party sells set-price packages straight to clients, starting with bartending, and you sign up to the ones you can deliver. Soon every professional, from DJs and photographers to chefs and entertainers, will create packages of their own.",
-      "seo": {
-        "title": "Get Booked for Private Events | FireFlair Packages | FF Team",
-        "description": "FireFlair markets hospitality professionals to event clients. Sign up to set-price FF Party packages with strong pay, and soon create your own."
-      },
-      "sections": [
-        {
-          "id": "ff-pl-marketing",
-          "slug": "get-found-for-event-work",
-          "card": { "t": "We market you", "d": "We put your Profile Card in front of the people who book.", "b": "See how we market you" },
-          "h": "We market you to the people who book events",
-          "p": [
-            "Think of FireFlair as your agent. We take your Profile Card to clients planning parties, to businesses hiring for events and to venues that need great people, so you can focus on the work.",
-            "The more you tell us, the better we match you. Your professions, skills, areas and the work you want all shape which jobs we bring to you, and our map helps us find the ones close to home.",
-            "Our marketing follows the places events are booked: search, social, WhatsApp, and the FireFlair flyers and pens made for venues and holiday lets. Every campaign leads back to profiles like yours."
-          ],
-          "visual": "marketing",
-          "cta": { "label": "Create your Profile Card", "go": "profile" },
-          "seo": {
-            "title": "Get Found for Event Work in the UK | FF Team",
-            "description": "FireFlair acts as your agent, marketing your Profile Card to event clients, businesses and venues and matching you with work close to you."
-          }
-        },
-        {
-          "id": "ff-pl-party",
-          "slug": "private-event-bartender-jobs",
-          "card": { "t": "FF Party packages", "d": "Set-price bookings from private clients, with strong pay.", "b": "See the packages" },
-          "h": "FF Party packages: set-price work from private clients",
-          "p": [
-            "FF Party sells packages directly to people planning a celebration. Each package has a set price, so clients know exactly what they are paying and booking you is an easy yes.",
-            "We are launching with bartending. Sign up to the packages you can deliver and you see your pay before you agree. The Flair Package pays £200 for a three-hour shift, and we expect you to have a great time earning it.",
-            "Pay covers your travel, so our job matching looks for events close to you. More categories follow, with packages for DJs, entertainers, photographers, chefs and service staff."
-          ],
-          "visual": "party-packages",
-          "cta": { "label": "Choose your packages", "go": "bookings" },
-          "seo": {
-            "title": "Private Event Bartender Jobs with Set Pay | FF Team",
-            "description": "Sign up to FF Party packages and get booked by private clients for parties and celebrations. Set pay shown up front, with work matched close to you."
-          }
-        },
-        {
-          "id": "ff-pl-own",
-          "slug": "create-your-own-event-packages",
-          "card": { "t": "Create your own packages", "d": "Package your skills and we market them. Coming 2027.", "b": "See what is coming" },
-          "h": "Create your own packages and signature cocktails",
-          "p": [
-            "Our next major update lets you package whatever you do best. Set what is included, name your price and we market it for you alongside the FireFlair Packages.",
-            "Bartenders get a signature cocktail system. Showcase every cocktail you have created on your profile page. When a client books you they choose from your menu, and we send them the shopping list so everything is ready for you to be amazing.",
-            "The same goes for every profession. A photographer can offer a party shoot, a DJ a three-hour set, a chef a tasting menu and an entertainer a show. It is in active development now."
-          ],
-          "visual": "own-packages",
-          "tag": "Coming 2027",
-          "cta": { "label": "Create your Profile Card", "go": "profile" },
-          "seo": {
-            "title": "Sell Your Own Event Packages and Cocktail Menus | FF Team",
-            "description": "Coming 2027: create your own event packages and signature cocktail menus on FF Team, for bartenders, DJs, photographers, chefs and entertainers."
-          }
-        }
-      ]
+     "id": "ff-pl-team",
+     "slug": "build-your-events-team",
+     "card": {
+      "t": "Share your card, build your team",
+      "d": "Add the people you work with and get booked together.",
+      "b": "See how teams work"
+     },
+     "h": "Share your Profile Card and build your team",
+     "p": [
+      "Your Profile Card is made to be shared. Send it on WhatsApp, add it to your socials or hand someone your link, and they can book you, review you or join you in a tap.",
+      "Invite the people you love working with onto your team: the bartender you trust on a busy bar, the DJ who fills the floor, the chef, the photographer, the host. Your team shows on your profile, so anyone booking you sees who you work with.",
+      "A strong network says a lot about you. It shows you are known in the industry, and it means a whole team can be booked together for the same event."
+     ],
+     "visual": "share-and-team",
+     "cta": {
+      "label": "Explore the network",
+      "go": "network"
+     },
+     "seo": {
+      "title": "Build Your Events Team and Hospitality Network | FF Team",
+      "description": "Share your Profile Card, add the bartenders, DJs, chefs and photographers you work with, and get booked together for events."
+     },
+     "card_img": "p24"
     },
     {
-      "k": "events",
-      "slug": "your-bookings",
-      "t": "Your bookings",
-      "s": "Requests, rates and getting paid",
-      "h": "How you get booked, and how you get paid",
-      "tldr": "Bookings reach you in two ways. Private clients book FF Party packages, and businesses hire you through FF Staff at the rates you set. Every request arrives on WhatsApp, and every booking comes with clear terms and a full event brief.",
-      "seo": {
-        "title": "How Event Bookings and Pay Work for Freelancers | FF Team",
-        "description": "Set your own rates, receive shift requests on WhatsApp and work on clear terms with a full event brief. How bookings work on FF Team."
-      },
-      "sections": [
-        {
-          "id": "ff-pl-rates",
-          "slug": "set-your-freelance-rates",
-          "card": { "t": "Set your rates", "d": "Businesses hire you through FF Staff at your rates.", "b": "See how rates work" },
-          "h": "Set your own rates for business bookings",
-          "p": [
-            "FF Staff is where hospitality and event businesses hire. Bar companies, caterers, venues and agencies search the network, and you set the hourly rate you want for each profession you offer.",
-            "It sits alongside FF Party. Packages bring you private clients and smaller celebrations at a set price. FF Staff brings you shifts with the companies running bigger events, at your rates.",
-            "We are also building the FF Event Directory, a growing list of event businesses across the UK. As it grows, it puts FF Team professionals in front of the companies in their industry, whatever their role."
-          ],
-          "visual": "rates-and-staff",
-          "cta": { "label": "Set your rates", "go": "bookings" },
-          "seo": {
-            "title": "Set Your Freelance Hospitality Rates | FF Team",
-            "description": "Set your own hourly rates and get hired by bar companies, caterers, venues and agencies through FF Staff and the FF Event Directory."
-          }
-        },
-        {
-          "id": "ff-pl-requests",
-          "slug": "shift-requests-on-whatsapp",
-          "card": { "t": "Requests on WhatsApp", "d": "A personal request, yours alone for 24 hours.", "b": "See a request" },
-          "h": "Shift requests arrive on WhatsApp",
-          "p": [
-            "When someone wants you, you receive a personal request on WhatsApp. It arrives as a Shift Card with the event, the date and time, the place and the pay, and you reply with one tap: Available, Unavailable or More info.",
-            "A personal request is exclusive to you for 24 hours. That is your time to check your diary and say yes.",
-            "After 24 hours the shift is offered to other professionals in the area, so the client always gets a quick answer. Say you are available and the booking is confirmed, with the full shift brief one tap away."
-          ],
-          "visual": "whatsapp-request",
-          "cta": { "label": "Open Bookings", "go": "bookings" },
-          "seo": {
-            "title": "Event Shift Requests on WhatsApp | FF Team",
-            "description": "Receive personal shift requests on WhatsApp as a Shift Card, exclusive to you for 24 hours. Reply Available, Unavailable or More info in one tap."
-          }
-        },
-        {
-          "id": "ff-pl-terms",
-          "slug": "booking-terms-and-pay",
-          "card": { "t": "Get paid on clear terms", "d": "Terms agreed before you say yes, and a brief for every event.", "b": "See the terms" },
-          "h": "Get paid on clear terms, with a brief for every booking",
-          "p": [
-            "Every booking on FireFlair carries terms and conditions, agreed before you accept. They cover when and how you are paid, your hours and breaks, and what happens if plans change.",
-            "Businesses on FF Staff use simple terms that are already written and easy to edit, so you can read them in a minute. For bookings with private clients, you create your own.",
-            "Each booking also comes with an event brief that doubles as the invoice: who booked you, where to be, what to bring and what you are paid. Everything is in one place, and everyone has agreed to it."
-          ],
-          "visual": "terms-and-brief",
-          "cta": { "label": "Open Bookings", "go": "bookings" },
-          "seo": {
-            "title": "Booking Terms, Event Briefs and Getting Paid | FF Team",
-            "description": "Every FireFlair booking has clear terms agreed up front and an event brief that doubles as the invoice, so you know what you are paid and when."
-          }
-        }
-      ]
-    },
-    {
-      "k": "community",
-      "slug": "our-community",
-      "t": "Our community",
-      "s": "Challenges, parties and industry events",
-      "h": "A community that celebrates its people",
-      "tldr": "FF Team is a community of hospitality and events professionals who look out for each other. It starts with the 90-day Launch Challenge, celebrates at the FireFlair launch party and carries on all year with industry events, training and support.",
-      "seo": {
-        "title": "Hospitality Community, Events and Rewards | FF Team",
-        "description": "Join the FF Team community: the 90-day Launch Challenge, the FireFlair launch party, and industry events, training and support all year."
-      },
-      "sections": [
-        {
-          "id": "ff-pl-challenge",
-          "slug": "launch-challenge",
-          "card": { "t": "The Launch Challenge", "d": "90 days from 1 December. Build your team and win.", "b": "See the prizes" },
-          "h": "The 90-day Launch Challenge",
-          "p": [
-            "From 1 December 2026 you have 90 days to build the best team on FireFlair. Create your profile, share your card and invite the people you work with. Everyone who creates a profile during the challenge is entered.",
-            "The ten members who build the best teams become FireFlair Gold members. Gold members receive the American Express business expense card and are first in line for FF Party bookings.",
-            "The overall winner flies to the Athens Bar Show with flights, accommodation and a ticket to the show. The runners-up choose from rewards suggested by the community, so tell us what you would love to win."
-          ],
-          "visual": "challenge",
-          "img": "p45",
-          "cta": { "label": "Join the challenge", "go": "profile" },
-          "seo": {
-            "title": "FF Team Launch Challenge: Build Your Team, Win Prizes",
-            "description": "From 1 December 2026: build the best team on FireFlair in 90 days. The top 10 become Gold members and the winner flies to the Athens Bar Show."
-          }
-        },
-        {
-          "id": "ff-pl-party-night",
-          "slug": "launch-party",
-          "card": { "t": "The launch party", "d": "Winners announced, cocktails competed for, FF Party launched.", "b": "See the party" },
-          "h": "The FireFlair launch party",
-          "p": [
-            "The challenge ends with a party. Winners are announced at the FireFlair launch party in London in early 2027, the night FF Party officially launches and our marketing campaigns begin.",
-            "The night includes a cocktail competition, a professional photoshoot for your profile, a full training session and cocktail equipment to take home. The drinks are on us.",
-            "Every guest leaves with FireFlair NFC business cards and stickers. One tap on a phone opens your profile, so every introduction you make ends with your Profile Card in someone's hand."
-          ],
-          "visual": "launch-party",
-          "img": "hp04",
-          "cta": { "label": "Create your Profile Card", "go": "profile" },
-          "seo": {
-            "title": "The FireFlair Launch Party for Hospitality Pros | FF Team",
-            "description": "London, early 2027: challenge winners announced, a cocktail competition, a professional photoshoot, training and NFC business cards for every guest."
-          }
-        },
-        {
-          "id": "ff-pl-industry",
-          "slug": "hospitality-industry-events",
-          "card": { "t": "Industry events and support", "d": "Bar shows, training and a community behind you.", "b": "See the events" },
-          "h": "Industry events, training and support all year",
-          "p": [
-            "As an FF Team member you are invited to hospitality events throughout the year: bar shows, brand nights, tastings and competitions, across the UK and abroad. Many include drinks, and all of them are a chance to meet the industry.",
-            "Training runs alongside. We host regular sessions, and when you want to learn something new we pair you with someone who has mastered it.",
-            "Most of all, this is a community where people look after each other. Need cover, advice or an introduction? Ask, and we will make it happen."
-          ],
-          "visual": "events-and-support",
-          "img": "p43",
-          "cta": { "label": "Explore the network", "go": "network" },
-          "seo": {
-            "title": "Bar Shows, Training and Hospitality Events | FF Team",
-            "description": "FF Team members are invited to bar shows, brand nights and training across the UK and abroad, with a community that looks after each other."
-          }
-        }
-      ]
+     "id": "ff-pl-reviews",
+     "slug": "hospitality-reviews",
+     "card": {
+      "t": "Collect reviews from everyone",
+      "d": "Clients and teammates review you after every shift.",
+      "b": "See reviews"
+     },
+     "h": "Collect reviews from everyone you work with",
+     "p": [
+      "On FireFlair, anyone you work with can review you: the client who booked you, the business that hired you and the people who worked beside you. Asking takes one tap, and they answer in seconds.",
+      "Every shift can bring several reviews, so they add up fast. Work regularly and within a year your profile could carry hundreds, each one from a real person at a real event.",
+      "Reviews keep you in touch with the people you have worked with, and they are the first thing a new client reads. Great reviews bring the next booking to you."
+     ],
+     "visual": "reviews",
+     "cta": {
+      "label": "Create your Profile Card",
+      "go": "profile"
+     },
+     "seo": {
+      "title": "Collect Reviews for Bartending and Event Work | FF Team",
+      "description": "Get reviewed by every client, business and teammate you work with. Build a reputation that brings your next event booking to you."
+     },
+     "card_img": "p02"
     }
+   ]
+  },
+  {
+   "k": "services",
+   "slug": "our-packages",
+   "t": "Our packages",
+   "s": "We market you. You get booked.",
+   "h": "FireFlair is built to be your booking agent",
+   "tldr": "FireFlair markets you to the people who book events. FF Party sells set-price packages straight to clients, starting with bartending, and you sign up to the ones you can deliver. Soon every professional, from DJs and photographers to chefs and entertainers, will create packages of their own.",
+   "seo": {
+    "title": "Get Booked for Private Events | FireFlair Packages | FF Team",
+    "description": "FireFlair markets hospitality professionals to event clients. Sign up to set-price FF Party packages with strong pay, and soon create your own."
+   },
+   "sections": [
+    {
+     "id": "ff-pl-marketing",
+     "slug": "get-found-for-event-work",
+     "card": {
+      "t": "We market you",
+      "d": "We put your Profile Card in front of the people who book.",
+      "b": "See how we market you"
+     },
+     "h": "We market you to the people who book events",
+     "p": [
+      "Think of FireFlair as your agent. We take your Profile Card to clients planning parties, to businesses hiring for events and to venues that need great people, so you can focus on the work.",
+      "The more you tell us, the better we match you. Your professions, skills, areas and the work you want all shape which jobs we bring to you, and our map helps us find the ones close to home.",
+      "Our marketing follows the places events are booked: search, social, WhatsApp, and the FireFlair flyers and pens made for venues and holiday lets. Every campaign leads back to profiles like yours."
+     ],
+     "visual": "marketing",
+     "cta": {
+      "label": "Create your Profile Card",
+      "go": "profile"
+     },
+     "seo": {
+      "title": "Get Found for Event Work in the UK | FF Team",
+      "description": "FireFlair acts as your agent, marketing your Profile Card to event clients, businesses and venues and matching you with work close to you."
+     },
+     "card_img": "p03"
+    },
+    {
+     "id": "ff-pl-party",
+     "slug": "private-event-bartender-jobs",
+     "card": {
+      "t": "FF Party packages",
+      "d": "Set-price bookings from private clients, with strong pay.",
+      "b": "See the packages"
+     },
+     "h": "FF Party packages: set-price work from private clients",
+     "p": [
+      "FF Party sells packages directly to people planning a celebration. Each package has a set price, so clients know exactly what they are paying and booking you is an easy yes.",
+      "We are launching with bartending. Sign up to the packages you can deliver and you see your pay before you agree. The Flair Package pays £200 for a three-hour shift, and we expect you to have a great time earning it.",
+      "Pay covers your travel, so our job matching looks for events close to you. More categories follow, with packages for DJs, entertainers, photographers, chefs and service staff."
+     ],
+     "visual": "party-packages",
+     "cta": {
+      "label": "Choose your packages",
+      "go": "bookings"
+     },
+     "seo": {
+      "title": "Private Event Bartender Jobs with Set Pay | FF Team",
+      "description": "Sign up to FF Party packages and get booked by private clients for parties and celebrations. Set pay shown up front, with work matched close to you."
+     },
+     "card_img": "p17"
+    },
+    {
+     "id": "ff-pl-own",
+     "slug": "create-your-own-event-packages",
+     "card": {
+      "t": "Create your own packages",
+      "d": "Package your skills and we market them.",
+      "b": "See what is next"
+     },
+     "h": "Create your own packages and signature cocktails",
+     "p": [
+      "Our next major update lets you package whatever you do best. Set what is included, name your price and we market it for you alongside the FireFlair Packages.",
+      "Bartenders get a signature cocktail system. Showcase every cocktail you have created on your profile page. When a client books you they choose from your menu, and we send them the shopping list so everything is ready for you to be amazing.",
+      "The same goes for every profession. A photographer can offer a party shoot, a DJ a three-hour set, a chef a tasting menu and an entertainer a show. It is in active development now."
+     ],
+     "visual": "own-packages",
+     "cta": {
+      "label": "Create your Profile Card",
+      "go": "profile"
+     },
+     "seo": {
+      "title": "Sell Your Own Event Packages and Cocktail Menus | FF Team",
+      "description": "Our next major update: create your own event packages and signature cocktail menus on FF Team, for bartenders, DJs, photographers, chefs and entertainers."
+     },
+     "card_img": "p19"
+    }
+   ]
+  },
+  {
+   "k": "events",
+   "slug": "your-bookings",
+   "t": "Your bookings",
+   "s": "Requests, rates and getting paid",
+   "h": "How you get booked, and how you get paid",
+   "tldr": "Bookings reach you in two ways. Private clients book FF Party packages, and businesses hire you through FF Staff at the rates you set. Every request arrives on WhatsApp, and every booking comes with clear terms and a full event brief.",
+   "seo": {
+    "title": "How Event Bookings and Pay Work for Freelancers | FF Team",
+    "description": "Set your own rates, receive shift requests on WhatsApp and work on clear terms with a full event brief. How bookings work on FF Team."
+   },
+   "sections": [
+    {
+     "id": "ff-pl-rates",
+     "slug": "set-your-freelance-rates",
+     "card": {
+      "t": "Set your rates",
+      "d": "Businesses hire you through FF Staff at your rates.",
+      "b": "See how rates work"
+     },
+     "h": "Set your own rates for business bookings",
+     "p": [
+      "FF Staff is where hospitality and event businesses hire. Bar companies, caterers, venues and agencies search the network, and you set the hourly rate you want for each profession you offer.",
+      "It sits alongside FF Party. Packages bring you private clients and smaller celebrations at a set price. FF Staff brings you shifts with the companies running bigger events, at your rates.",
+      "We are also building the FF Event Directory, a growing list of event businesses across the UK. As it grows, it puts FF Team professionals in front of the companies in their industry, whatever their role."
+     ],
+     "visual": "rates-and-staff",
+     "cta": {
+      "label": "Set your rates",
+      "go": "bookings"
+     },
+     "seo": {
+      "title": "Set Your Freelance Hospitality Rates | FF Team",
+      "description": "Set your own hourly rates and get hired by bar companies, caterers, venues and agencies through FF Staff and the FF Event Directory."
+     },
+     "card_img": "p13"
+    },
+    {
+     "id": "ff-pl-requests",
+     "slug": "shift-requests-on-whatsapp",
+     "card": {
+      "t": "Requests on WhatsApp",
+      "d": "A personal request, yours alone for 24 hours.",
+      "b": "See a request"
+     },
+     "h": "Shift requests arrive on WhatsApp",
+     "p": [
+      "When someone wants you, you receive a personal request on WhatsApp. It arrives as a Shift Card with the event, the date and time, the place and the pay, and you reply with one tap: Available, Unavailable or More info.",
+      "A personal request is exclusive to you for 24 hours. That is your time to check your diary and say yes.",
+      "After 24 hours the shift is offered to other professionals in the area, so the client always gets a quick answer. Say you are available and the booking is confirmed, with the full shift brief one tap away."
+     ],
+     "visual": "whatsapp-request",
+     "cta": {
+      "label": "Open Bookings",
+      "go": "bookings"
+     },
+     "seo": {
+      "title": "Event Shift Requests on WhatsApp | FF Team",
+      "description": "Receive personal shift requests on WhatsApp as a Shift Card, exclusive to you for 24 hours. Reply Available, Unavailable or More info in one tap."
+     },
+     "card_img": "p23"
+    },
+    {
+     "id": "ff-pl-terms",
+     "slug": "booking-terms-and-pay",
+     "card": {
+      "t": "Get paid on clear terms",
+      "d": "Terms agreed before you say yes, and a brief for every event.",
+      "b": "See the terms"
+     },
+     "h": "Get paid on clear terms, with a brief for every booking",
+     "p": [
+      "Every booking on FireFlair carries terms and conditions, agreed before you accept. They cover when and how you are paid, your hours and breaks, and what happens if plans change.",
+      "Businesses on FF Staff use simple terms that are already written and easy to edit, so you can read them in a minute. For bookings with private clients, you create your own.",
+      "Each booking also comes with an event brief that doubles as the invoice: who booked you, where to be, what to bring and what you are paid. Everything is in one place, and everyone has agreed to it."
+     ],
+     "visual": "terms-and-brief",
+     "cta": {
+      "label": "Open Bookings",
+      "go": "bookings"
+     },
+     "seo": {
+      "title": "Booking Terms, Event Briefs and Getting Paid | FF Team",
+      "description": "Every FireFlair booking has clear terms agreed up front and an event brief that doubles as the invoice, so you know what you are paid and when."
+     },
+     "card_img": "p08"
+    }
+   ]
+  },
+  {
+   "k": "community",
+   "slug": "our-community",
+   "t": "Our community",
+   "s": "Challenges, parties and industry events",
+   "h": "A community that celebrates its people",
+   "tldr": "FF Team is a community of hospitality and events professionals who look out for each other. It starts with the 90-day Launch Challenge, celebrates at the FireFlair launch party and carries on all year with industry events, training and support.",
+   "seo": {
+    "title": "Hospitality Community, Events and Rewards | FF Team",
+    "description": "Join the FF Team community: the 90-day Launch Challenge, the FireFlair launch party, and industry events, training and support all year."
+   },
+   "sections": [
+    {
+     "id": "ff-pl-challenge",
+     "slug": "launch-challenge",
+     "card": {
+      "t": "The Launch Challenge",
+      "d": "90 days from 1 December. Build your team and win.",
+      "b": "See the prizes"
+     },
+     "h": "The 90-day Launch Challenge",
+     "p": [
+      "From 1 December 2026 you have 90 days to build the best team on FireFlair. Create your profile, share your card and invite the people you work with. Everyone who creates a profile during the challenge is entered.",
+      "The ten members who build the best teams become FireFlair Gold members. Gold members receive the American Express business expense card and are first in line for FF Party bookings.",
+      "The overall winner flies to the Athens Bar Show with flights, accommodation and a ticket to the show. The runners-up choose from rewards suggested by the community, so tell us what you would love to win."
+     ],
+     "visual": "challenge",
+     "cta": {
+      "label": "Join the challenge",
+      "go": "profile"
+     },
+     "seo": {
+      "title": "FF Team Launch Challenge: Build Your Team, Win Prizes",
+      "description": "From 1 December 2026: build the best team on FireFlair in 90 days. The top 10 become Gold members and the winner flies to the Athens Bar Show."
+     },
+     "card_img": "p46"
+    },
+    {
+     "id": "ff-pl-party-night",
+     "slug": "launch-party",
+     "card": {
+      "t": "The launch party",
+      "d": "Winners announced, cocktails competed for, FF Party launched.",
+      "b": "See the party"
+     },
+     "h": "The FireFlair launch party",
+     "p": [
+      "The challenge ends with a party. Winners are announced at the FireFlair launch party in London in early 2027, the night FF Party officially launches and our marketing campaigns begin.",
+      "The night includes a cocktail competition, a professional photoshoot for your profile, a full training session and cocktail equipment to take home. The drinks are on us.",
+      "Every guest leaves with FireFlair NFC business cards and stickers. One tap on a phone opens your profile, so every introduction you make ends with your Profile Card in someone's hand."
+     ],
+     "visual": "launch-party",
+     "cta": {
+      "label": "Create your Profile Card",
+      "go": "profile"
+     },
+     "seo": {
+      "title": "The FireFlair Launch Party for Hospitality Pros | FF Team",
+      "description": "London, early 2027: challenge winners announced, a cocktail competition, a professional photoshoot, training and NFC business cards for every guest."
+     },
+     "card_img": "hp04"
+    },
+    {
+     "id": "ff-pl-industry",
+     "slug": "hospitality-industry-events",
+     "card": {
+      "t": "Industry events and support",
+      "d": "Bar shows, training and a community behind you.",
+      "b": "See the events"
+     },
+     "h": "Industry events, training and support all year",
+     "p": [
+      "As an FF Team member you are invited to hospitality events throughout the year: bar shows, brand nights, tastings and competitions, across the UK and abroad. Many include drinks, and all of them are a chance to meet the industry.",
+      "Training runs alongside. We host regular sessions, and when you want to learn something new we pair you with someone who has mastered it.",
+      "Most of all, this is a community where people look after each other. Need cover, advice or an introduction? Ask, and we will make it happen."
+     ],
+     "visual": "events-and-support",
+     "cta": {
+      "label": "Explore the network",
+      "go": "network"
+     },
+     "seo": {
+      "title": "Bar Shows, Training and Hospitality Events | FF Team",
+      "description": "FF Team members are invited to bar shows, brand nights and training across the UK and abroad, with a community that looks after each other."
+     },
+     "card_img": "p47"
+    }
+   ]
+  }
+ ],
+ "photos": {
+  "_note": "Tile photo pools (the tile rotates through its pool; the three cards show the other pool photos unless a section sets img). Community uses fixed photos.",
+  "profiles": [
+   "vkg15",
+   "p11",
+   "vke07",
+   "vke09"
   ],
-  "photos": {
-    "_note": "Tile photo pools (the tile rotates through its pool; the three cards show the other pool photos unless a section sets img). Community uses fixed photos.",
-    "profiles": ["vkg15", "p11", "vke07", "vke09"],
-    "services": ["p01", "hp02", "p30", "vke02"],
-    "events": ["hp03", "hp01", "p32", "vke12"],
-    "community": ["p44"]
-  },
-  "challenge": {
-    "boxes": [
-      { "t": "90 day challenge", "s": "1 December 2026 to 28 February 2027" },
-      { "t": "Who can enter", "s": "Hospitality professionals, and anyone getting into hospitality" },
-      { "t": "The top 10 go Gold", "s": "Gold membership and the American Express business expense card" },
-      { "t": "The winner flies to Athens", "s": "Flights, accommodation and a ticket to the Athens Bar Show" }
-    ],
-    "rewards": [
-      ["Top 10", "The ten members who build the best teams become FireFlair Gold members. Gold members receive the American Express business expense card and are first in line for FF Party bookings."],
-      ["Overall winner", "The overall winner receives a trip to the Athens Bar Show: flights, accommodation and a ticket to the show."],
-      ["Runners-up", "Runners-up choose from rewards suggested by the community. Tell us what you would love to win."]
-    ],
-    "suggestQuestion": "Is there a reward you would love to win in the Launch Challenge?"
-  },
-  "growthEvents": [
-    { "n": "BCB London", "d": "10 and 11 May 2027", "w": "Tobacco Dock, London", "t": "Bar Convent London, two days for the UK and Ireland's bar trade." },
-    { "n": "Bar Convent Berlin", "d": "October 2027", "w": "Messe Berlin, Germany", "t": "The international bar and beverage trade show. Dates to be announced." },
-    { "n": "Athens Bar Show", "d": "November 2027", "w": "Technopolis City of Athens, Greece", "t": "The bar industry's favourite show, and the Launch Challenge winner's trip. Dates to be announced." }
+  "services": [
+   "p01",
+   "hp02",
+   "p30",
+   "vke02"
+  ],
+  "events": [
+   "hp03",
+   "hp01",
+   "p32",
+   "vke12"
+  ],
+  "community": [
+   "p44"
   ]
+ },
+ "challenge": {
+  "boxes": [
+   {
+    "t": "90 day challenge",
+    "s": "1 December 2026 to 28 February 2027"
+   },
+   {
+    "t": "Who can enter",
+    "s": "Hospitality professionals, and anyone getting into hospitality"
+   },
+   {
+    "t": "The top 10 go Gold",
+    "s": "Gold membership and the American Express business expense card"
+   },
+   {
+    "t": "The winner flies to Athens",
+    "s": "Flights, accommodation and a ticket to the Athens Bar Show"
+   }
+  ],
+  "rewards": [
+   [
+    "Top 10",
+    "The ten members who build the best teams become FireFlair Gold members. Gold members receive the American Express business expense card and are first in line for FF Party bookings."
+   ],
+   [
+    "Overall winner",
+    "The overall winner receives a trip to the Athens Bar Show: flights, accommodation and a ticket to the show."
+   ],
+   [
+    "Runners-up",
+    "Runners-up choose from rewards suggested by the community. Tell us what you would love to win."
+   ]
+  ],
+  "suggestQuestion": "Is there a reward you would love to win in the Launch Challenge?"
+ },
+ "growthEvents": [
+  {
+   "n": "BCB London",
+   "d": "10 and 11 May 2027",
+   "w": "Tobacco Dock, London",
+   "t": "Bar Convent London, two days for the UK and Ireland's bar trade."
+  },
+  {
+   "n": "Bar Convent Berlin",
+   "d": "October 2027",
+   "w": "Messe Berlin, Germany",
+   "t": "The international bar and beverage trade show. Dates to be announced."
+  },
+  {
+   "n": "Athens Bar Show",
+   "d": "November 2027",
+   "w": "Technopolis City of Athens, Greece",
+   "t": "The bar industry's favourite show, and the Launch Challenge winner's trip. Dates to be announced."
+  }
+ ],
+ "calendar": [
+  {
+   "n": "ScotHot",
+   "d": "24 February 2027",
+   "w": "SEC, Glasgow, Scotland",
+   "r": "Scotland"
+  },
+  {
+   "n": "Northern Restaurant & Bar",
+   "d": "26 March 2027",
+   "w": "Manchester Central, England",
+   "r": "England"
+  },
+  {
+   "n": "The Pub Show",
+   "d": "5 to 7 April 2027",
+   "w": "ExCeL, London, England",
+   "r": "England"
+  },
+  {
+   "n": "BCB London",
+   "d": "10 and 11 May 2027",
+   "w": "Tobacco Dock, London, England",
+   "r": "England"
+  },
+  {
+   "n": "Dublin Cocktail Week",
+   "d": "Dates to be announced",
+   "w": "Dublin, Ireland",
+   "r": "Ireland"
+  },
+  {
+   "n": "Restaurant Show",
+   "d": "Dates to be announced",
+   "w": "NEC, Birmingham, England",
+   "r": "England"
+  },
+  {
+   "n": "Bar Convent Berlin",
+   "d": "October 2027",
+   "w": "Messe Berlin, Germany",
+   "r": "Europe"
+  },
+  {
+   "n": "Athens Bar Show",
+   "d": "November 2027",
+   "w": "Technopolis, Athens, Greece",
+   "r": "Europe"
+  }
+ ]
 }
