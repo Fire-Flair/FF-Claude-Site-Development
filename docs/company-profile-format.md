@@ -163,7 +163,9 @@ What the check looks for: the schema; at most 5 photos and 1 PDF per card; a tit
 
 A directory company stays unclaimed on the page: no FireFlair logo or coin, "Not yet claimed", no Ask or Review, not bookable, and off FF Party's bar lists unless its category is `bar`.
 
-The old seed files (`data/companies/seed-*.json`) stay as they were; the profile files are now the source. Raise the Bar Glasgow is the worked example of a rich profile: its packages, cocktails and questions are cards written by the company (`source.by` `owner`). Vooshka is the one company still built by hand in `company-pages.jsx`.
+The old seed files (`data/companies/seed-*.json`) stay as they were; the profile files are now the source. Raise the Bar Glasgow is the worked example of a rich profile: its packages, cocktails and questions are cards written by the company (`source.by` `owner`). Vooshka is a profile file too (`vooshka.json`, status `claimed`); its page and the DEV owner account are both read from it, and nothing about it is built by hand. The one list of Vooshka's own signature cocktail and service cards for the Studio builders (`vkSeeds17`) is kept in `company-pages.jsx`.
+
+Claiming and FireFlair editing in the prototype are described in `docs/company-claim-phase2.md`. In the prototype a claim never writes to a profile file: the owner's copy and FireFlair's edits are kept in the app's state in the same format, and are shown over the file.
 
 ## How this maps to the back end you already have
 
