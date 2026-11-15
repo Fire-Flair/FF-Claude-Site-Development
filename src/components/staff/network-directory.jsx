@@ -258,12 +258,14 @@ function NetBrowse17(props) {
   const groups = open ? Object.keys(PILLAR_OF_GROUP17).filter(function (g) { return PILLAR_OF_GROUP17[g] === open; }) : "";
   const items = BCATS17.map(function (c) { return { k: c.k, t: c.label, s: NET_PILLAR_TEXT17[c.k], img: (window.FF_IMG || {})[BIMG17[c.k]] }; });
   /* FF Team (search passed in): no package explorer; the search sits under the Our professionals banner, then the five type drop-downs. */
-  const teamSite = !!props.search;
+  const teamSite = !!props.search && !props.noPackages;
+  /* FF Staff (noPackages): no package explorer either; the map comes first and the search sits under Our professionals. */
+  const noPkg = teamSite || !!props.noPackages;
   return React.createElement(React.Fragment, null,
-    teamSite ? null : React.createElement(BigHead20, { title: "Explore our packages" }),
-    teamSite ? null : React.createElement(PillarBox17, { label: "Explore our packages", open: open, items: items, onPick: function (k) { dispatch({ type: "V11_SET", patch: { netPillar17: k } }); } }, open ? React.createElement(NetPackages20, { pillar: open }) : null),
+    noPkg ? null : React.createElement(BigHead20, { title: "Explore our packages" }),
+    noPkg ? null : React.createElement(PillarBox17, { label: "Explore our packages", open: open, items: items, onPick: function (k) { dispatch({ type: "V11_SET", patch: { netPillar17: k } }); } }, open ? React.createElement(NetPackages20, { pillar: open }) : null),
     teamSite ? null : (props.after || null),
-    React.createElement("section", { id: "ff-our-pros", style: { marginTop: teamSite ? 4 : 30, scrollMarginTop: 70 } },
+    React.createElement("section", { id: "ff-our-pros", style: { marginTop: noPkg ? 4 : 30, scrollMarginTop: 70 } },
       React.createElement(BigHead20, { title: "Our professionals" }),
       props.search || null,
       teamSite ? (props.after || null) : null,
@@ -497,13 +499,13 @@ function StaffRosterStaff11() {
   useEffect(() => { if (state.netQuery) dispatch({ type: "NET_QUERY", q: "" }); }, []);
   return (
     <div>
-      <BigHead20 tag="h1" title="Our network" />
+      <BigHead20 tag="h1" title="Explore our network" />
       <p className="ff-body ff-muted" style={{ marginBottom: 4 }}>Find the people to book, and the companies they work with.</p>
       {state.netBrief && <BookingBrief brief={state.netBrief} />}
-      <FFAI query={q} onQuery={setQ} title="Search the network" context="FF Staff"
-        purpose="Find people to hire — search by name, profession, skill or area. Tap a card to see their profile."
-        placeholder="Name, profession, skill or area…" />
-      <NetBrowse17 query={q} onPick={(p) => dispatch({ type: "VIEW", id: p.id })} scope="staff_" after={!state.netBrief ? <NetMap11 /> : null} teamSlot={myCoKey17(state) ? <CompanyTeam17 /> : null} />
+      <NetBrowse17 query={q} onPick={(p) => dispatch({ type: "VIEW", id: p.id })} scope="staff_" noPackages
+        search={<FFAI query={q} onQuery={setQ} title="Search the network" context="FF Staff"
+          purpose="Find people to hire — search by name, profession, skill or area. Tap a card to see their profile."
+          placeholder="Name, profession, skill or area…" />} after={!state.netBrief ? <NetMap11 bare /> : null} teamSlot={myCoKey17(state) ? <CompanyTeam17 /> : null} />
     </div>
   );
 }

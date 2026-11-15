@@ -228,7 +228,7 @@
     })));
   }
 
-  const Mail19 = lucideIcon("Mail"), Phone19 = lucideIcon("Phone");
+  const Mail19 = lucideIcon("Mail"), Phone19 = lucideIcon("Phone"), Video19 = lucideIcon("Video");
 
   /* One instance per page: second from bottom on every home page, last on every Network and Bookings page. */
   function BusinessSupport19() {
@@ -262,7 +262,7 @@
       type: "button",
       className: "ff-biz19-link ff-biz19-call",
       onClick: () => V101.support20Open(dispatch)
-    }, React.createElement(Phone19, { size: 16, strokeWidth: 1.8, "aria-hidden": "true" }), "Book a 15-minute Call"))), React.createElement("p", {
+    }, React.createElement(Video19, { size: 16, strokeWidth: 1.8, "aria-hidden": "true" }), "Book a meeting"))), React.createElement("p", {
       className: "ff-biz19-legal"
     }, "\u00A9 2026 FIREFLAIR LTD. All rights reserved.")));
   }

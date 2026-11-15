@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.8.1 — 2026-11-15 — New hero image; FF Staff Network tidy; Business & Support "Book a meeting"
+Phase Two artifact version 1794771022-c8f0.
+
+- Hero: new people-free bar image on the FF Team, FF Staff and FF Party homes (one shared image, 1800 x 850 WebP plus a 900 x 425 version). Only `src/shell/ff-img.json` and two files in `src/assets/img/` changed; the previous hero is kept in `assets/photos/hero_whiskey_bar_v17.webp`, the new one as `hero_bar_gold_burgundy.webp`.
+- FF Staff Network: the "Explore our packages" pillar is removed (FF Party keeps it). The page has one heading, "Explore our network", then the map, then "Our professionals" with the search directly under that heading. `NetBrowse17` takes a new `noPackages` prop and `NetMap11` a `bare` prop (map without its own heading) for this. The map heading elsewhere now reads "Explore our network" instead of "Browse the network".
+- Business & Support box (one component, `BusinessSupport19`, so it changes on every page of every site): "Book a 15-minute Call" becomes "Book a meeting" with a video icon. It still opens the same booking page.
+
 ## v17.8 (claim a directory profile; FireFlair editing; every company page comes from a file)
 
 Documents: `docs/company-claim-phase2.md` (new, with ready text for section 5.4 of the notifications document), `docs/company-profile-format.md` (status values, who-wrote-what on edit).

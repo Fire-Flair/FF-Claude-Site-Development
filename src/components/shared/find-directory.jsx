@@ -972,6 +972,6 @@ const FD_CSS = __ff_css("styles/fd.css");
 
 
 
-function NetMap11() {
-  return React.createElement(React.Fragment, null, React.createElement("section", { id: "ff-netmap", style: { marginTop: 22, scrollMarginTop: 70 } }, React.createElement(BigHead20, { title: "Browse the network" }), React.createElement(FFMap, { mode: "network" })), React.createElement(AreaExplorer11, null));
+function NetMap11(props) {
+  return React.createElement(React.Fragment, null, React.createElement("section", { id: "ff-netmap", style: { marginTop: props && props.bare ? 14 : 22, scrollMarginTop: 70 } }, props && props.bare ? null : React.createElement(BigHead20, { title: "Explore our network" }), React.createElement(FFMap, { mode: "network" })), React.createElement(AreaExplorer11, null));
 }
