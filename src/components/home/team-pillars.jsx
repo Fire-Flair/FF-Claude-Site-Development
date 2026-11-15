@@ -70,16 +70,34 @@
 
   function VisCvToProfile21({ dir }) {
     const me = P21_CARD;
+    const IM = window.FF_IMG || {};
+    const ph = me && me.photo && IM[me.photo] ? IM[me.photo] : null;
+    const ini = me ? String(me.name || "").trim().charAt(0).toUpperCase() : "";
+    const down = <span className="pv-ar dn" aria-hidden="true"><P21I.ChevronDown size={26} strokeWidth={2.2} /></span>;
     return (
       <div className="pv pv-cv">
         <div className="pv-step">
-          <span className="pv-doc" aria-hidden="true"><P21I.FileText size={22} strokeWidth={1.6} /><i /><i /><i /><i className="s" /></span>
           <b>Your CV</b>
+          <span className="pv-doc" aria-hidden="true"><P21I.FileText size={22} strokeWidth={1.6} /><i /><i /><i /><i className="s" /><i /><i className="s" /></span>
         </div>
-        <span className="pv-ar" aria-hidden="true"><P21I.ArrowRight size={22} /></span>
+        {down}
         <div className="pv-step">
-          <InertBox className="pv-pcard">{me ? <PlayerCard person={me} /> : null}</InertBox>
           <b>Profile Card</b>
+          <InertBox className="pv-pcard">{me ? <PlayerCard person={me} /> : null}</InertBox>
+        </div>
+        {down}
+        <div className="pv-step">
+          <b>Profile page</b>
+          {me ? (
+            <div className="pv-ppage" aria-hidden="true">
+              <span className="av">{ph ? <img src={ph} alt="" draggable={false} /> : ini}</span>
+              <span className="nm">{me.name}</span>
+              <span className="ti">{(me.professions || []).join(" · ")}</span>
+              <span className="sec"><em>Skills</em>{(me.skills || []).concat(me.interests || []).map((x) => <u key={x}>{x}</u>)}</span>
+              <span className="sec"><em>Based in</em>{(me.locations || []).map((x) => <u key={x}>{x}</u>)}</span>
+              <span className="sec"><em>Languages</em>{(me.languages || []).map((x) => <u key={x}>{x}</u>)}</span>
+            </div>
+          ) : null}
         </div>
       </div>
     );
