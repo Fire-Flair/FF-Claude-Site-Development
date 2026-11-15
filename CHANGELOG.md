@@ -10,6 +10,7 @@
 - Your profile section: the visual is now a stack, Your CV, down arrow, Profile Card, down arrow, Profile page (VisCvToProfile21). A photo shows on the card and page as soon as examples.card.photo in team-pillars.json is set to an image key; until then the initial shows.
 - SIMAO example uses his real photo (cropped from his live profile photo); Profile page stand-in shows it too.
 - FF Team home: heading "FF Team is built for getting you bookings"; FF Stories now sits above the questions; video loads as a whole file before playing (fixes browsers that need byte ranges) and is full width on mobile.
+- Our packages: FF Party packages in price order (Masterclass, Flair, Cocktail, Bartending, Staffing) and wrap on desktop instead of scrolling sideways (still scroll on mobile); Event Photography sits above Signature Cocktail in Create your own packages.
 - Photo album removed from the FF Team home; "Top companies" is now "Featured companies"; area pages list FF Directory companies from the nearest wider place when none are listed.
 
 ## v17.9.1 (artifact version 1794782522-a739): FF Team pillars redesign (iPad review), intro video panel

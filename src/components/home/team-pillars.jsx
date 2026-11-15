@@ -156,8 +156,8 @@
   }
 
   function VisPartyPackages21() {
-    const all = pkgServices17({ baseOnly: true, short: true });
-    const order = ["svc_flair", "svc_bartending", "svc_mixology", "svc_masterclass"];
+    const all = pkgServices17({ all: true, short: true });
+    const order = ["svc_masterclass", "svc_flair", "svc_mixology", "svc_bartending", "svc_staffing"];
     const list = order.map((id) => all.find((x) => x.id === id)).filter(Boolean);
     return (
       <div className="pv pv-pk" aria-hidden="true">
@@ -177,8 +177,8 @@
     const ck = ckAdapt17({ name: "Raspberry Mint Martini", glass: "martini", description: "Fresh raspberry and mint, shaken cold.", ingredients: ["50ml vodka", "20ml raspberry liqueur", "Fresh mint", "Garnish: raspberries"], photo: IM.cocktail_0 });
     return (
       <div className="pv pv-own" aria-hidden="true">
-        <InertBox className="pv-ck"><Card17 kind="cocktail" tone="dark" plate="Signature Cocktail" size="sm" url="By you"><CocktailFront17 c={ck} /></Card17></InertBox>
         <InertBox className="pv-sq">{jon && ex ? <OwnServiceCard item={{ ...ex, person: jon }} /> : null}</InertBox>
+        <InertBox className="pv-ck"><Card17 kind="cocktail" tone="dark" plate="Signature Cocktail" size="sm" url="By you"><CocktailFront17 c={ck} /></Card17></InertBox>
       </div>
     );
   }
