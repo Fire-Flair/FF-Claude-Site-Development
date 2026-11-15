@@ -272,6 +272,7 @@ function StaffProfile() {
   return (
     <div>
       <div className="ff-eyebrow">{site.name} · {site.party ? "Your Party" : "Your Business"}</div>
+      {!joined && !site.party && !(state.session && state.session.claimSlug) && <CoFind17 />}
       <div className="ff-journey">
         <BigStepHead n={1} title={site.party ? `Join ${site.name}` : "Create your company profile"} done={joined} id="ff-co-step-1" />
         <CompanyJoin />

@@ -440,6 +440,25 @@ function CompanyJoin({ inBooking }) {
   const slug = rt17Reserved(slug0) || rt17DirSlugTaken(slug0) ? slug0 + "-co" : slug0;
   const create = () => {
     if (!signedIn) dispatch({ type: "SAMPLE_OFF" });   /* a new company starts empty: the sample bookings belong to the demo accounts */
+    /* Back with the phone number of an earlier claim: the page comes back as it was left, with its status. */
+    const prior = !signedIn && (state.coClaims17 || []).find((x) => phoneOk && CLAIM_DIG17(x.phone) === CLAIM_DIG17(phone));
+    if (prior) {
+      dispatch({ type: "CLAIM17_RESTORE", id: prior.id });
+      dispatch({ type: "COMPANY_SIGNED_IN", slug: prior.slug });
+      dispatch({ type: "TOAST", toast: `Welcome back to ${site.name}` });
+      setStage("details"); setCode("");
+      return;
+    }
+    /* Claim this profile: the company starts as the directory page, the way the agent left it. */
+    const claimSlug = state.session && state.session.claimSlug;
+    if (claimSlug && !signedIn) {
+      dispatch({ type: "CLAIM17_NEW", slug: claimSlug, phone: phoneOk ? String(phone).trim() : "" });
+      dispatch({ type: "COMPANY_SAVE", company: { email: emailOk ? String(email).trim() : "", tcMode: "template", questions: CO_QA_SEED.map((q) => ({ ...q })) } });
+      dispatch({ type: "COMPANY_SIGNED_IN", slug: claimSlug });
+      dispatch({ type: "TOAST", toast: `Welcome to ${site.name}` });
+      setStage("details"); setCode("");
+      return;
+    }
     dispatch({ type: "COMPANY_SAVE", company: {
       slug,
       theme: c.theme || "onyx",
@@ -577,6 +596,27 @@ function CompanyJoin({ inBooking }) {
     role: "alert",
     style: { color: "var(--bad)", fontSize: 13, margin: "10px 0 0", fontWeight: 600 }
   }, err));
+}
+
+
+
+/* Find your company: part of its name shows its Company Card; choosing it opens its page, where Claim this profile is. Closed until opened. */
+function CoFind17() {
+  const { state, dispatch } = useStore();
+  const [q, setQ] = useState("");
+  const t = q.trim().toLowerCase();
+  const hits = t.length < 2 ? [] : [...REAL_COMPANIES11, ...REAL_SUPPLIERS17].filter((r) => r.slug !== "vooshka" && String(r.name || "").toLowerCase().includes(t)).slice(0, 6)
+    .map((r) => companyById(state, "co_" + r.slug)).filter((c) => c && c.unclaimed);
+  return (
+    <VkFold17 title="Find your company">
+      <div className="ff-cofind17">
+        <label className="ff-cofind17-q"><I11.Search size={15} /><input value={q} onChange={(e) => setQ(e.target.value.slice(0, 60))} aria-label="Find your company" autoComplete="off" /></label>
+        <div className="ff-cofind17-res">
+          {hits.map((c) => <button key={c.id} type="button" className="ff-co11-tile" aria-label={c.name} onClick={() => { dispatch({ type: "VIEW_COMPANY", id: c.id }); window.scrollTo(0, 0); }}><CompanyCardFace c={c} size="sm" /></button>)}
+        </div>
+      </div>
+    </VkFold17>
+  );
 }
 
 

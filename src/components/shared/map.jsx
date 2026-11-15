@@ -90,7 +90,7 @@ const inLondon11 = (ll) => ll[0] >= LONDON_BOUNDS11[0][0] && ll[0] <= LONDON_BOU
 /* Bar companies on the map: one area-level pin per base (town centre, never an address). Same pins on FF Team, FF Staff and FF Party. */
 const COMPANY_PINS11 = (() => {
   const seen = {}, out = [];
-  [...REAL_COMPANIES11, ...REAL_SUPPLIERS17].forEach(c => (c.locations || []).forEach((l, i) => {
+  [...REAL_COMPANIES11, ...REAL_SUPPLIERS17].filter(c => c.unclaimed).forEach(c => (c.locations || []).forEach((l, i) => {
     const k = l.lat.toFixed(2) + "," + l.lng.toFixed(2), n = (seen[k] = (seen[k] || 0) + 1) - 1;
     const a = n * 2.4, r = n ? 0.012 + 0.006 * Math.floor(n / 6) : 0;
     const ll = [l.lat + r * Math.sin(a), l.lng + r * 1.6 * Math.cos(a)];

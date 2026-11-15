@@ -197,107 +197,6 @@ const VK17_OCC = [
 ];
 
 
-const VK17_WHY = [
-  ["Your Bar, Bespoke", "Created to complement your occasion. Work with our design team to tailor the size, style and finish of your bar, from understated elegance to a striking centrepiece."],
-  ["Drinks with Personality", "Your favourites, alongside something new to discover. Choose from classic cocktails, signature creations and alcohol-free serves, with a menu that reflects your tastes and gives every guest something to enjoy."],
-  ["Care in Every Detail", "Quality spirits, fresh ingredients and precise preparation make the difference. From the balance of a cocktail to the glass and garnish, each serve is finished with care."],
-  ["Expert Team", "Skilled bartenders, creative mixologists and accomplished flair bartenders bring exceptional drinks and effortless hosting to your occasion, with a touch of theatre when the moment calls for it."]
-];
-
-
-const VK17_STEPS = [
-  ["It Begins With You", "Our team will take you through the details of your event, exploring your vision, your venue and the atmosphere you\u2019d like to create. Together, we\u2019ll shape a bar experience that feels entirely yours."],
-  ["The Details, Designed Around You", "Enjoy a personal tasting with our mixologist to create a drinks menu for your occasion. Work alongside our design team to select your bar style and develop bespoke artwork, bringing your vision to life."],
-  ["A Date to Look Forward To", "Once you\u2019re happy with your proposal, return your signed agreement and pay the agreed deposit to secure your date."],
-  ["We\u2019ll Take It From Here", "We\u2019ll confirm the final arrangements and coordinate with your venue. From setup to the last drink and breakdown, our team takes care of the bar, leaving you free to enjoy the occasion."]
-];
-
-
-const VK17_QA = [
-  ["Do you offer a full bar service?", "Yes", "Bespoke bars, cocktails, mocktails, spirits, wines, beers, draught beer and soft drinks."],
-  ["Do you travel across the UK?", "Yes", "Mobile bar experiences across the UK. Share your venue or postcode to discuss availability and access."],
-  ["Do you design the bar around my event?", "Yes", "Choose from 42 bar styles or ask for a made to measure design, with bespoke artwork."],
-  ["Do you offer alcohol-free serves?", "Yes", "Mocktails and soft drinks sit alongside the cocktails."],
-  ["Do you hold a tasting before the event?", "Yes", "A personal tasting with our mixologist to create your drinks menu."],
-  ["Do you coordinate with my venue?", "Yes", "We confirm final arrangements with your venue, from setup to breakdown."],
-  ["Does my venue need to provide space, access, power and water?", "Yes", "Requirements depend on the bar and service you choose. We discuss them with you and your venue before the event."],
-  ["Does an enquiry reserve my date?", "No", "Your date is secured once your signed agreement and deposit are received."]
-];
-
-
-const VK17_DESC = "Vooshka is a luxury mobile cocktail bar bringing exquisite drinks and elevated hospitality to events across the UK. Bespoke bars, exceptional cocktails and complete drinks service for weddings, private celebrations and corporate events nationwide.\n\nA great bar brings people together. At Vooshka, distinctive design, expertly made drinks and a warm welcome create a natural gathering place at the heart of your celebration. From intimate gatherings to grand receptions, we work with you to find the right look, menu and style of service.";
-
-
-const vkMedia17 = () => [
-  ...VK17.occ.map((f, i) => f ? { id: "vk_occ" + i, src: f, alt: VK17_OCC[i][0] } : null).filter(Boolean),
-  ...VK17.gal.map(([f, a], i) => ({ id: "vk_g" + i, src: vkSrc17(f), alt: a }))
-];
-
-
-/* The ONE source for Vooshka, in the company builder's own shape: the directory page and the DEV owner's account both read it. */
-let VKSRC17 = null;
-
-
-function vooshkaSource17() {
-  if (!VKSRC17) {
-    const sig = (name) => (VK_SIG17[name] || [])[2] || "";
-    VKSRC17 = {
-      name: "Vooshka Cocktail Bar",
-      kind: "Luxury mobile cocktail bar",
-      areas: "England and Wales",
-      base17: { locId: "gn:3333168", at: 0 },
-      slug: "vooshka",
-      socials: { whatsapp: "+44 7814 904355", instagram: "@vooshkacocktailbar" },
-      theme: "onyx",
-      layout: "centre",
-      logoWide: true,
-      description: VK17_DESC,
-      logo: vkSrc17(VK17.logo),
-      media: vkMedia17(),
-      info: [
-        { id: "vk_exp", title: "The Vooshka experience", lead: "A little theatre. A lot of elegance.", text: "You bring the people and the reason to celebrate; we\u2019ll take care of the bar.", chips: ["Bespoke Bars", "Cocktails", "Mocktails", "Spirits", "Beers"] },
-        { id: "vk_why", title: "Why Vooshka" },
-        { id: "vk_steps", title: "The Vooshka process", numbered: true, quote: "Not just a bar. A beautiful part of your celebration." },
-        { id: "vk_bars", title: "Bar styles", text: "Ordered by overall span, from smallest to largest. Made-to-measure designs appear last. All bars are 1.2 m high." }
-      ],
-      records: {
-        contact: [
-          makeRecord("contact", "+44 7814 904355", { description: "WhatsApp" }),
-          makeRecord("contact", "@vooshkacocktailbar", { description: "Instagram" }),
-          makeRecord("contact", "vooshkabars.co.uk", { description: "Website" })
-        ],
-        /* Each area carries its place id and centre (filled from the location list), like any ticked place. */
-        locations: [
-          makeRecord("locations", "England", { description: "Mobile bar experiences across England and Wales" }),
-          makeRecord("locations", "Wales")
-        ].map((r) => { try { return covFill17(r); } catch (e) { return r; } }),
-        info_vk_why: coCardList17("info", "vk_why", VK17_WHY.map(([t, d]) => [t, d, []])),
-        info_vk_steps: coCardList17("info", "vk_steps", VK17_STEPS.map(([t, d]) => [t, d, []])),
-        info_vk_bars: coCardList17("info", "vk_bars", VK17.bars.map(([f, l, sz]) => [l, sz, [f]])),
-        packages: coCardList17("packages", "vk_pk", VK17_OCC.map(([t, tag, inc, ideal], i) => [t, tag + "\n\nIncludes: " + inc + "\nIdeal for: " + ideal, []])),
-        cocktail_menu: coCardList17("cocktail_menu", "vk_ck", VK17.sig.map(([src, name]) => [name, sig(name), [src]])),
-        web_reviews: coCardList17("web_reviews", "vk_wr", VK17.revs.map(([by, text]) => [by, text, []]))
-      },
-      qa: [
-        ...CO_QA_SEED.filter((q) => q.group === "feedback"),
-        ...VK17_QA.map(([text, answer, note], i) => ({ id: "qa_vk" + i, group: "business", text, answer, note }))
-      ],
-      reviews: [],
-      partners: []
-    };
-  }
-  return { ...VKSRC17 };
-}
-
-
-const vkContact17 = () => [["WhatsApp", "+44 7814 904355"], ["Instagram", "@vooshkacocktailbar"], ["Website", "vooshkabars.co.uk"]];
-
-
-function vooshkaEditable17() {
-  return vooshkaSource17();
-}
-
-
 function VkFold17({ title, count, children }) {
   const [open, setOpen] = useState(false);
   return React.createElement("section", {
@@ -440,7 +339,8 @@ function CoSimpleRow17({ cards, label }) {
 }
 
 
-/* Raise the Bar Glasgow (v17.3.138): full profile built from their public website, with their permission. */
+/* Raise the Bar Glasgow: their page is data/companies/profiles/raise-the-bar.json like every other company.
+   These three constants are only for the FF Party package browser (packages-browse.jsx). */
 const RTB_BLOB17 = "https://6istx3ephgqw5ngz.public.blob.vercel-storage.com/cocktails/";
 
 
@@ -450,55 +350,22 @@ const RTB_MENU17 = CONTENT_ADAPTER.raiseTheBarMenu();
 const rtbMoney17 = (n) => "£" + (n % 1 ? n.toFixed(2) : String(n));
 
 
-function rtbPage17() {
-  const base = realPage11(REAL_COMPANIES11.find((c) => c.slug === "raise-the-bar"))[1];
-  const exp = ["Fully staffed mobile cocktail bars for Glasgow and Scotland.", "Raise the Bar brings a professional mixologist, a fully stocked mobile bar and a printed menu of the cocktails you choose to weddings, parties, corporate events and festivals. Everything needed for the service is included, and travel within 30 miles of Glasgow is part of the price."];
-  const pkgs = [
-    ["Mobile Cocktail Bar", "From £400", "A fully staffed mobile cocktail bar: mixologist, bar, printed menu, spirits, mixers, garnishes, ice and glassware. 3 hours of service. Choose your cocktails as add-ons."],
-    ["Cocktail Masterclass", "Enquire for a quote", "A hands-on class led by professional mixologists, at your venue, for teams, hen parties and private groups. Alcohol-free options available."],
-    ["Whisky Tasting", "Enquire for a quote", "A guided Scotch whisky tasting led by kilted hosts, with distillery stories and a curated selection of drams."]
-  ];
-  const faq = [
-    ["What is included?", "A professional mixologist, a fully stocked mobile bar, a bespoke printed cocktail menu, spirits, liqueurs, mixers, fresh ingredients, garnishes, ice and all glassware."],
-    ["Is there a minimum booking?", "Yes, £400 before any travel charge. Travel within 30 miles of Glasgow is included; beyond that a travel charge may apply and is quoted before you confirm."],
-    ["How long is the service?", "3 hours from your start time. The team arrives about 30 minutes before to set up. Longer service is quoted on request."],
-    ["How many cocktails can I choose?", "Up to 6 online. For a longer menu, or drinks that are not on the menu, ask for a bespoke menu."],
-    ["Can I order single serves?", "Yes, with a minimum of 5 of each cocktail, and the £400 minimum booking still applies."],
-    ["How do deposits work?", "A £50 deposit secures the request and the team confirm within 48 hours. The balance is invoiced and due within 14 days, and no later than 72 hours before the event. The deposit is non-refundable if you cancel, and refunded in full if they cannot attend."],
-    ["How big is the bar?", "About 1.6 m by 1 m, with working room needed behind it. The front can be branded for an extra fee."],
-    ["Are they insured?", "Yes, they hold public liability insurance and can share proof on request."]
-  ];
-  return {
-    ...base,
-    contact: [["Website", "raisethebarglasgow.com"], ["Email", "info@raisethebarglasgow.com"], ["Phone", "07498 723388"]],
-    info: [
-      ...(base.info || []),
-      { id: "rtb_exp", title: "The Raise the Bar experience", lead: exp[0], text: exp.slice(1).join("\n\n"), chips: ["Mobile cocktail bar", "Individual serve cocktails", "Mini party packs", "Party packs", "Mocktails", "Masterclasses", "Whisky tastings", "Branded bars"] }
-    ],
-    records: {
-      packages: coCardList17("packages", "rtb_pk", pkgs.map(([t, pr, d]) => [t + " · " + pr, d, []])),
-      cocktail_menu: coCardList17("cocktail_menu", "rtb_ck", RTB_MENU17.map(([n, i, m, p, f]) => [n, [i && "Single " + rtbMoney17(i), m && "Mini " + rtbMoney17(m), p && "Party " + rtbMoney17(p)].filter(Boolean).join(" · "), [RTB_BLOB17 + f]]))
-    },
-    qa: faq.map(([text, note], i) => ({ id: "qa_rtb" + i, group: "business", text, answer: "", note }))
-  };
-}
-
-
 const COMPANY_PAGES = {
   /* The same source the DEV owner's account is built from. */
-  co_vooshka: { ...vooshkaSource17(), tier: "gold", team: [], contact: vkContact17(), venues: [] },
   ...Object.fromEntries(REAL_COMPANIES11.map(realPage11)),
-  "co_raise-the-bar": rtbPage17(),
   ...Object.fromEntries(REAL_SUPPLIERS17.map(realPage11)),
 };
 
 
 function companyById(state, id) {
-  if (id === "mine") { const c = state.company || {}; return { ...c, id: "mine", mine: true, mediaList: (c.media || []), areas: c.areas !== undefined ? c.areas : (c.location || "") }; }
+  if (id === "mine") { const c = state.company || {}; const cl = coClaimMine17(state), open = cl && cl.status !== "approved"; return { ...c, ...(open ? { unclaimed: true, claimPending: cl.status === "pending", claimRejected: cl.status === "rejected" } : {}), id: "mine", mine: true, mediaList: (c.media || []), areas: c.areas !== undefined ? c.areas : (c.location || "") }; }
   const base = COMPANIES.find(x => x.id === id) || SUPPLIER_BASES17[id];
   const page = COMPANY_PAGES[id];
   if (!base || !page) return null;
-  return { ...base, ...page, id, mediaList: page.media.map(k => typeof k === "string" ? { id: k, src: IMG11[k] } : k).filter(m => m.src) };
+  /* FireFlair's edits or a live claim sit over the profile file (claims17.js). */
+  const ov = dirOverlay17(state, id);
+  const merged = ov ? { ...base, ...page, ...ov } : { ...base, ...page };
+  return { ...merged, id, mediaList: merged.media.map(k => typeof k === "string" ? { id: k, src: IMG11[k] } : k).filter(m => m.src) };
 }
 
 

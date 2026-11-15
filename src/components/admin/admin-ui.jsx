@@ -184,6 +184,32 @@ function AdmCompanies17({ d, act, can, dispatch }) {
 
 
 
+function AdmClaims17({ d, act, can, dispatch }) {
+  const list = (d.claims || []).slice().sort((a, b) => (a.status === "pending" ? 0 : 1) - (b.status === "pending" ? 0 : 1) || b.at - a.at);
+  const view = (x) => { dispatch({ type: "V11_SET", patch: { adminOpen17: false } }); dispatch({ type: "VIEW_COMPANY", id: "co_" + x.slug }); window.scrollTo(0, 0); };
+  return (
+    <div className="ff-adm-list">
+      {list.map(x => (
+        <div key={x.id} className="ff-adm-row tall">
+          <button type="button" className="ff-adm-who" onClick={() => view(x)}>
+            <span className="ff-adm-logo">{x.company && x.company.logo ? <img decoding="async" src={x.company.logo} alt="" /> : <Coin size={30} tier="standard" />}</span>
+            <span className="mn"><b>{(x.company && x.company.name) || x.slug}</b><small>{[x.phone, `sent ${when17(x.at)}`].filter(Boolean).join(" · ")}</small></span>
+          </button>
+          {x.status === "pending"
+            ? <span className="ff-adm-acts">
+                <Btn variant="sm primary" disabled={!can("claims")} onClick={() => act({ op: "claim", id: x.id, status: "approved", label: (x.company && x.company.name) || x.slug })}>Approve</Btn>
+                <Btn variant="sm" disabled={!can("claims")} onClick={() => act({ op: "claim", id: x.id, status: "rejected", label: (x.company && x.company.name) || x.slug })}>Reject</Btn>
+              </span>
+            : <span className={`ff-adm-pill${x.status === "approved" ? " ok" : ""}`}>{x.status === "approved" ? "Approved" : "Not approved"}</span>}
+        </div>
+      ))}
+      {!list.length && <Empty17>No claims yet.</Empty17>}
+    </div>
+  );
+}
+
+
+
 function AdmCards17({ d, act, can }) {
   const [t, setT] = useState("packages");
   const HP = d.A.hidden.packages, HC = d.A.hidden.cards;
@@ -578,7 +604,7 @@ function AdmDatabase17({ state }) {
 
 /* ---- The admin site --------------------------------------------------------------------------------- */
 const ADM17_SECTIONS = [
-  ["overview", "Overview", A17I.Dash], ["people", "People", A17I.Users], ["companies", "Companies", A17I.Brief], ["guests", "Guests", A17I.Party],
+  ["overview", "Overview", A17I.Dash], ["people", "People", A17I.Users], ["companies", "Companies", A17I.Brief], ["claims", "Claims", A17I.Shield], ["guests", "Guests", A17I.Party],
   ["invites", "Invitations", A17I.Send], ["bookings", "Bookings", A17I.Cal], ["qa", "Q&A and sign-ups", A17I.Msg], ["analytics", "Analytics", A17I.Chart],
   ["reviews", "Reviews", A17I.Star], ["cards", "Packages and cards", A17I.Layers], ["sites", "Sites", A17I.Globe], ["areas", "Areas and requests", A17I.Globe],
   ["admins", "Admins", A17I.Shield], ["log", "Activity", A17I.Hist], ["db", "Database", A17I.Db], ["doors", "Front doors", A17I.Globe], ["photos", "Photos", A17I.Layers],
@@ -690,9 +716,9 @@ function AdmDoors20(props) {
 
 const ADM_TOOLS20 = {
   team: ["people", "doors", "reviews", "qa", "invites", "photos"],
-  staff: ["companies", "bookings", "doors", "cards", "photos"],
+  staff: ["claims", "companies", "bookings", "doors", "cards", "photos"],
   party: ["guests", "bookings", "doors", "cards", "photos"],
-  all: ["overview", "photos", "areas", "sites", "analytics", "admins", "log", "db"],
+  all: ["overview", "claims", "photos", "areas", "sites", "analytics", "admins", "log", "db"],
 };
 
 
@@ -730,13 +756,14 @@ function Admin17() {
     const tierP = (p) => A.tier.people[p.id] || p.tier, tierC = (c) => A.tier.companies[c.id] || c.tier;
     return {
       A, people, companies, guests: guestsAll17(state), packages: allPackages17(), cards: cardsAll17(state),
+      claims: state.coClaims17 || [],
       events: (state.events || []).filter(e => e.iso || e.venue || e.title || (state.shifts || []).some(x => x.eventId === e.id)),
       engagements: state.engagements || [], reviews: reviewsAll17(state, people), qa: qaRows17(state, people), admins: A.admins,
       gold: [...people.filter(p => tierP(p) === "gold").map(p => ({ id: p.id, name: p.name, kind: "FF Team" })), ...companies.filter(c => tierC(c) === "gold").map(c => ({ id: c.id, name: c.name, kind: "FF Staff" }))],
     };
   }, [state]);
-  const counts = { areas: fdOf(state).requests.filter(r => r.status === "new").length || null, people: d.people.length, companies: d.companies.length, guests: d.guests.length, invites: A.invites.length, bookings: d.engagements.length, cards: d.packages.length + d.cards.length, qa: d.qa.length, reviews: d.reviews.length, admins: d.admins.length, log: A.log.length };
-  const NEEDS = { qa: "data", db: "data", log: "data", analytics: "data", invites: "hide", bookings: "data" };
+  const counts = { claims: (state.coClaims17 || []).filter(x => x.status === "pending").length || null, areas: fdOf(state).requests.filter(r => r.status === "new").length || null, people: d.people.length, companies: d.companies.length, guests: d.guests.length, invites: A.invites.length, bookings: d.engagements.length, cards: d.packages.length + d.cards.length, qa: d.qa.length, reviews: d.reviews.length, admins: d.admins.length, log: A.log.length };
+  const NEEDS = { claims: "claims", qa: "data", db: "data", log: "data", analytics: "data", invites: "hide", bookings: "data" };
   const [site, setSite0] = useState(() => state.adminSite20 || "all");
   const setSite = (k) => { setSite0(k); setSec(ADM_TOOLS20[k][0]); dispatch({ type: "V11_SET", patch: { adminSite20: k, adminSec17: ADM_TOOLS20[k][0] } }); window.scrollTo(0, 0); };
   const secs = (ADM_TOOLS20[site] || ADM_TOOLS20.all).map((k) => ADM17_SECTIONS.find((x) => x[0] === k)).filter(Boolean).filter(([k]) => !NEEDS[k] || can(NEEDS[k]));
@@ -776,6 +803,7 @@ function Admin17() {
           {sk === "areas" && <AdmAreas11 {...P} />}
           {sk === "people" && <AdmPeople17 {...P} />}
           {sk === "companies" && <AdmCompanies17 {...P} />}
+          {sk === "claims" && <AdmClaims17 {...P} />}
           {sk === "cards" && <AdmCards17 {...P} />}
           {sk === "guests" && <AdmGuests17 {...P} />}
           {sk === "invites" && <AdmInvites17 {...P} />}

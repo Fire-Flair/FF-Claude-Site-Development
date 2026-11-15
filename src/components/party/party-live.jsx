@@ -197,6 +197,8 @@ function ProfileGate17({ kind }) {
     if (coSaved && co.welcomeAt && !co.welcomeShown) { setWelcome(true); dispatch({ type: "COMPANY_SAVE", company: { welcomeShown: true } }); }
   }, [coSaved, co.welcomeAt]);
   const editing = done && state.ed17 === kind;
+  const claim = kind === "biz" ? coClaimMine17(state) : null;
+  const dirSlug = kind === "biz" ? co.dirEditSlug : null;
   const snap = useRef(null);
   const [justShared, setJustShared] = useState(false);
   const was = useRef(live);
@@ -213,7 +215,7 @@ function ProfileGate17({ kind }) {
       const demo = kind === "party" ? { ...DEMO_HOST17, tier: undefined, photo: (window.FF_IMG || {}).face_you || "" } : (() => {
         const demoCo = companyList(state).find((x) => !x.mine) || {};
         if (demoCo.id === "co_vooshka")
-          return vooshkaEditable17();
+          return coFromProfile17("vooshka");
         const { id, mine, tier, ...rest } = demoCo;
         return rest;
       })();
@@ -241,15 +243,23 @@ function ProfileGate17({ kind }) {
       dispatch({ type: "COMPANY_SAVE", company: { ...gone, ...snap.current } });
     }
     close();
+    if (dirSlug) endDir(false);
+  };
+  /* FireFlair editing a directory page: Save keeps the edits, Cancel drops them; either way back to the page. */
+  const endDir = (commit) => {
+    dispatch({ type: "DIR_EDIT17_END", commit });
+    dispatch({ type: "VIEW_COMPANY", id: "co_" + dirSlug });
+    window.scrollTo(0, 0);
   };
   const save = () => {
     if (kind === "team")
       window.dispatchEvent(new Event("ff-save"));
     dispatch({ type: "TOAST", toast: "Saved" });
     close();
+    if (dirSlug) endDir(true);
   };
   useLiveAction17({
-    status: kind === "party" ? "" : done ? editing ? "Editing your profile" : "Your profile is live" : "Building your profile",
+    status: kind === "party" ? "" : done ? editing ? (dirSlug ? "Editing for FireFlair" : "Editing your profile") : claim && claim.status === "pending" ? "Claim being checked" : claim && claim.status === "rejected" ? "Claim not approved" : "Your profile is live" : claim && claim.status === "rejected" ? "Claim not approved" : "Building your profile",
     actions: kind === "party" ? [] : done ? editing ? [{ key: "cancel", label: "Cancel", icon: React.createElement(S17I.X, {
       size: 14
     }), onClick: cancel }, { key: "save", label: "Save", icon: React.createElement(S17I.Check, {
@@ -259,7 +269,7 @@ function ProfileGate17({ kind }) {
     }), onClick: edit, primary: true }] : [{ key: "save", label: "Save", icon: React.createElement(S17I.Check, {
       size: 14
     }), onClick: () => window.dispatchEvent(new Event("ff-save")), primary: true }]
-  }, [done, editing, kind]);
+  }, [done, editing, kind, claim && claim.status, dirSlug]);
   return React.createElement("div", {
     className: `ff-pg17${done ? " done" : ""}`
   }, kind === "party" ? React.createElement(HostPage17, null) : done && !editing ? React.createElement(React.Fragment, null, kind === "biz" && welcome && React.createElement(CompanyWelcome, null), React.createElement(DoneProfile17, {

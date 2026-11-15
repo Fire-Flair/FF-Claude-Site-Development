@@ -413,12 +413,12 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
 
       {draft.proposed && (
         <div className="ff-frame" style={{ padding: 12, marginBottom: 14 }}>
-          <p className="ff-body" style={{ margin: "0 0 10px" }}>Proposed from your CV — nothing is on your profile until you accept it.</p>
+          {owner !== "company" && <p className="ff-body" style={{ margin: "0 0 10px" }}>Proposed from your CV — nothing is on your profile until you accept it.</p>}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
             <Btn variant="primary" onClick={() => { dispatch({ type: "REC_ACCEPT", category, id: record.id }); patch({ proposed: false }); }}>
-              <Check size={13} /> Accept
+              <Check size={13} /> {owner === "company" ? "Keep" : "Accept"}
             </Btn>
-            <Btn variant="danger" onClick={() => { dispatch({ type: "REC_DELETE", category, id: record.id }); onClose(); }}>Reject</Btn>
+            <Btn variant="danger" onClick={() => { dispatch({ type: "REC_DELETE", category, id: record.id }); onClose(); }}>{owner === "company" ? "Remove" : "Reject"}</Btn>
           </div>
         </div>
       )}

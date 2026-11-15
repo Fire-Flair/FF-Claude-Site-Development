@@ -26,6 +26,7 @@ Nothing is renamed. Version 2 adds `formatVersion`, `meta`, `base`, `areas`, `so
 | `base` | Where the company is based, as a place name the way the company states it. The plain-name twin of `base17` | Where are you based? |
 | `areas` | Places covered, as the company states them. The build resolves each one to a place id (see "Areas") | Areas covered |
 | `logo`, `logoBg` (`dark` or `light`), `logoWide` | The logo and how it sits | The Company Card |
+| `card` (`theme`, `layout`), `areasNote` | How the Company Card looks; one sentence on where the company works. Set by the company or by us, the agent leaves them out | The Company Card, the builder |
 | `description`, `aboutSource` | The About text (paragraphs split on blank lines) and who wrote it | About |
 | `media[]` | The gallery in display order: `{ id, src, alt, source }`; `alt` is the caption | The Add photos row |
 | `info[]` | The company's own sections (see "Sections") | More information |
@@ -67,6 +68,7 @@ meta: {
   category:   "bar" | "dj" | "photo" | "catering" | "svc",
   sub:        "ice" | "glassware" | "events",   // only for category "svc"
   tag:        "BARBR",                 // the short code on the Company Card; unique across files
+  tier:       "gold",                  // verification level, set by us (standard, bronze, silver or gold)
   partner:    true,                    // FireFlair partner (Partners layer on the map)
   position:   20,                      // place in the directory list; lower first, no position goes last by slug
   legal:      { form: "limited" | "sole" | null, legalName, companyNumber },
@@ -161,7 +163,9 @@ What the check looks for: the schema; at most 5 photos and 1 PDF per card; a tit
 
 A directory company stays unclaimed on the page: no FireFlair logo or coin, "Not yet claimed", no Ask or Review, not bookable, and off FF Party's bar lists unless its category is `bar`.
 
-The old seed files (`data/companies/seed-*.json`) stay as they were; the profile files are now the source. Raise the Bar Glasgow is the worked example of a rich profile: its packages, cocktails and questions are cards written by the company (`source.by` `owner`). Vooshka is the one company still built by hand in `company-pages.jsx`.
+The old seed files (`data/companies/seed-*.json`) stay as they were; the profile files are now the source. Raise the Bar Glasgow is the worked example of a rich profile: its packages, cocktails and questions are cards written by the company (`source.by` `owner`). Vooshka is a profile file too (`vooshka.json`, status `claimed`); its page and the DEV owner account are both read from it, and nothing about it is built by hand. The one list of Vooshka's own signature cocktail and service cards for the Studio builders (`vkSeeds17`) is kept in `company-pages.jsx`.
+
+Claiming and FireFlair editing in the prototype are described in `docs/company-claim-phase2.md`. In the prototype a claim never writes to a profile file: the owner's copy and FireFlair's edits are kept in the app's state in the same format, and are shown over the file.
 
 ## How this maps to the back end you already have
 

@@ -132,18 +132,38 @@
         "url": "https://www.addtoevent.co.uk/suppliers/raise-the-bar-mobile-bar-services",
         "at": "2026-11-07"
       }
+    },
+    {
+      "id": "rtb_exp",
+      "title": "The Raise the Bar experience",
+      "lead": "Fully staffed mobile cocktail bars for Glasgow and Scotland.",
+      "text": "Raise the Bar brings a professional mixologist, a fully stocked mobile bar and a printed menu of the cocktails you choose to weddings, parties, corporate events and festivals. Everything needed for the service is included, and travel within 30 miles of Glasgow is part of the price.",
+      "chips": [
+        "Mobile cocktail bar",
+        "Individual serve cocktails",
+        "Mini party packs",
+        "Party packs",
+        "Mocktails",
+        "Masterclasses",
+        "Whisky tastings",
+        "Branded bars"
+      ],
+      "source": {
+        "by": "owner",
+        "url": "https://raisethebarglasgow.com",
+        "at": "2026-11-10"
+      }
     }
   ],
   "records": {
     "contact": [
       {
         "id": "website",
-        "name": "https://raisethebarglasgow.com",
+        "name": "raisethebarglasgow.com",
         "description": "Website",
         "source": {
-          "by": "agent",
-          "url": "https://www.addtoevent.co.uk/suppliers/raise-the-bar-mobile-bar-services",
-          "at": "2026-11-07"
+          "by": "fireflair",
+          "at": "2026-11-14"
         }
       }
     ],

@@ -78,7 +78,7 @@ function ShiftDelivery11({ e, shift, event, onDone, onMore, viewer }) {
 /* Who the shift is for: a Company Card for a business, a VIP Host Card for a person. */
 function hirerCard11(state, ev) {
   const nm = (ev && ev.hirer) || "";
-  if (/vooshka/i.test(nm)) return { party: false, c: vooshkaEditable17() };
+  if (/vooshka/i.test(nm)) return { party: false, c: coFromProfile17("vooshka") };
   const co = companyList(state).find(x => x.name === nm);
   if (co) { const { id, mine, tier, ...rest } = co; return { party: false, c: rest }; }
   const mineCo = state.company || {};

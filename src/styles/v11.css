@@ -258,6 +258,14 @@
 .ff .ff-soon11-it small { font-size:12px; line-height:1.35; color:rgba(244,235,214,.68); }
 
 /* ---- Companies on Network, and a company's page --------------------------- */
+.ff .ff-co17-dir { display:grid; gap:12px; }
+.ff .ff-co17-fld { display:grid; gap:4px; text-align:left; }
+.ff .ff-co17-fld small { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--gold-dk); }
+.ff .ff-cofind17 { display:grid; gap:12px; padding-top:4px; }
+.ff .ff-cofind17-q { display:flex; align-items:center; gap:8px; padding:0 14px; min-height:46px; border-radius:16px; border:1px solid var(--line, #D9D0BC); background:#fff; }
+.ff .ff-cofind17-q input, .ff .ff-cofind17-q input:focus { flex:1; min-width:0; border:0 !important; outline:0 !important; box-shadow:none !important; border-radius:0; background:transparent !important; font:inherit; font-size:16px; min-height:44px; padding:0; }
+.ff .ff-cofind17-q:focus-within { border-color:var(--gold-dk); }
+.ff .ff-cofind17-res { display:grid; gap:14px; justify-items:center; }
 .ff .ff-co11-tile { display:flex; flex-direction:column; gap:8px; width:clamp(262px,80vw,300px); padding:0; text-align:left; background:none; border:0; }
 .ff .ff-co11-tile.big { width:clamp(280px,84vw,340px); }
 .ff .ff-co11-tile .ff-cc11 { width:100%; max-width:none; }
@@ -3348,6 +3356,7 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-adm-ghost:disabled { opacity:.5; cursor:default; }
 .ff .ff-adm-list { display:grid; gap:8px; }
 .ff .ff-adm-row { display:flex; flex-wrap:wrap; align-items:center; gap:10px; padding:10px 12px; border-radius:14px; border:1px solid var(--a-line); background:#fff; }
+.ff .ff-adm-acts { display:flex; gap:8px; flex:none; }
 .ff .ff-adm-row .mn { flex:1 1 160px; min-width:0; display:grid; gap:2px; text-align:left; }
 .ff .ff-adm-row .mn b { font:700 14px/1.25 var(--sans); color:var(--a-ink); overflow-wrap:anywhere; }
 .ff .ff-adm-row .mn small { font-size:12px; line-height:1.35; color:var(--a-sub); overflow-wrap:anywhere; }

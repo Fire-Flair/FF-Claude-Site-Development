@@ -376,7 +376,7 @@ function LoginSheet({ open, onClose }) {
           const party = state.site === "party";
           dispatch({ type: "COMPANY_SAVE", company: party
             ? { name: "Jennifer Aniston", kind: "Host", location: "London", description: "Hosts private dinners, birthdays and garden parties across London.", saved: true, cardSavedAt: Date.now(), finishedAt: Date.now(), joinedAt: Date.now() }
-            : { ...vooshkaEditable17(), phone: "+44 7814 904355", saved: true, cardSavedAt: Date.now(), finishedAt: Date.now(), joinedAt: Date.now() } });
+            : { ...coFromProfile17("vooshka"), phone: "+44 7814 904355", saved: true, cardSavedAt: Date.now(), finishedAt: Date.now(), joinedAt: Date.now() } });
           dispatch({ type: "COMPANY_SIGNED_IN", slug: party ? "jenniferaniston" : "vooshka" });
         }
         dispatch({ type: "TOAST", toast: "Complete profile loaded" });
@@ -391,6 +391,26 @@ function LoginSheet({ open, onClose }) {
         onClose();
         window.scrollTo(0, 0);
       }}>DEV · join from invite</button>
+      <button type="button" className="ff-dev17 login" onClick={() => {
+        /* FireFlair's own staff: the admin site opens on the Claims list. Claims and edits made so far stay. */
+        dispatch({ type: "SIGN_OUT" });
+        dispatch({ type: "AUTH_SIGNED_IN", tag: "ALEXG", method: "dev" });
+        dispatch({ type: "ROLE", role: "staff", site: "staff" });
+        dispatch({ type: "V11_SET", patch: { adminMode17: true, adminOpen17: true, adminSite20: "staff", adminSec17: "claims" } });
+        dispatch({ type: "TOAST", toast: "FireFlair admin loaded" });
+        onClose();
+        window.scrollTo(0, 0);
+      }}>DEV · FireFlair admin</button>
+      <button type="button" className="ff-dev17 login" onClick={() => {
+        /* A visitor on FF Staff looking at a directory company they could claim. */
+        const row = REAL_COMPANIES11.find((c) => c.unclaimed && c.slug !== "vooshka");
+        dispatch({ type: "SIGN_OUT" });
+        dispatch({ type: "ROLE", role: "staff", site: "staff" });
+        dispatch({ type: "VIEW_COMPANY", id: row ? "co_" + row.slug : null });
+        dispatch({ type: "TOAST", toast: "Company to claim loaded" });
+        onClose();
+        window.scrollTo(0, 0);
+      }}>DEV · claim a company</button>
     </Sheet>
   );
 }

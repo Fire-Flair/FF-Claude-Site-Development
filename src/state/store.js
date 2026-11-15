@@ -153,7 +153,7 @@ function claimListXP(s, cat, list) {
 
 
 function reducer(s, a) {
-  return notesWatch17(s, inv17Post(pkgGuard17(reducerCore17(s, a))), a);
+  return claim17Post(s, notesWatch17(s, inv17Post(pkgGuard17(reducerCore17(s, a))), a), a);
 }
 
 
@@ -175,7 +175,7 @@ function reducerCore17(s0, a) {
     return { ...s, company: { ...c, records: rec, ...(a.category === "contact" ? { socials: coSocialsFromContacts17(c, (rec || {}).contact) } : {}) } };
   }
   { const r11 = v11Reducer(s, a); if (r11) return r11; }
-  { const rq = inv17Reducer(s, a) || qa17Reducer(s, a) || pc17Reducer(s, a) || cov17Reducer(s, a) || ct17Reducer(s, a) || base17Reducer(s, a) || notes17Reducer(s, a); if (rq) return rq; }
+  { const rq = claim17Reducer(s, a) || inv17Reducer(s, a) || qa17Reducer(s, a) || pc17Reducer(s, a) || cov17Reducer(s, a) || ct17Reducer(s, a) || base17Reducer(s, a) || notes17Reducer(s, a); if (rq) return rq; }
   switch (a.type) {
     case "FOCUS":     return { ...s, focus: a.focus };
     case "NET_QUERY": return { ...s, netQuery: a.q || "" };
@@ -453,7 +453,7 @@ function reducerCore17(s0, a) {
     /* Sign out: back to the signed-out home page with no role, no profile and
        no demo data, so the full sign-up flow can be walked through again.
        The invitation code from a link is cleared too: it belongs to the visit that used it. */
-    case "SIGN_OUT":  return { ...initialState, toast: "Signed out" };
+    case "SIGN_OUT":  return { ...initialState, toast: "Signed out", coClaims17: s.coClaims17, dirEdits17: s.dirEdits17, admin17: s.admin17 };
     case "HYDRATE":   return migrate1746({ ...s, ...a.patch, _hydrated: true });
     default:          return s;
   }

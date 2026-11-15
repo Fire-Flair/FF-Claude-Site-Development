@@ -46,7 +46,7 @@ const coIsOpen17 = (state, key) => state.categoryVisibility["co_" + key] === tru
 
 
 /* A closed row: its title, a count when there is one, one quiet line, a small "+" that opens it and starts adding, and the open/close control. */
-function CoRow17({ id, icon, title, count, quiet, onPlus, children, head }) {
+function CoRow17({ id, icon, title, count, quiet, onPlus, children, head, plate }) {
   const { state, dispatch } = useStore();
   const open = coIsOpen17(state, id);
   const plus = onPlus ? (
@@ -57,6 +57,7 @@ function CoRow17({ id, icon, title, count, quiet, onPlus, children, head }) {
     <section id={"ff-co-" + id} className="ff-co17-row">
       {head ? head(open, plus) : <SectionHead icon={icon} title={title} count={count > 0 ? count : undefined}
         action={<span className="ff-co17-acts">{plus}<CategoryToggle sectionKey={"co_" + id} defaultOpen={false} /></span>} />}
+      {plate ? <span className="ff-way17 row">From your website</span> : null}
       {quiet && !open ? <p className="ff-co17-quiet">{quiet}</p> : null}
       {open ? <div className="ff-co17-body">{children}</div> : null}
     </section>
@@ -76,7 +77,7 @@ function CoAbout17() {
   const c = state.company || {};
   const first = String(c.description || "").split("\n").map((x) => x.trim()).find(Boolean);
   return (
-    <CoRow17 id="about" icon={coHead17(I11.Briefcase)} title="About" quiet={coQuiet17(first)}
+    <CoRow17 id="about" icon={coHead17(I11.Briefcase)} title="About" quiet={coQuiet17(first)} plate={coFromAgent17(c.aboutSource)}
       onPlus={() => setTimeout(() => { const t = document.querySelector("#ff-co-about textarea"); if (t) t.focus(); }, 60)}>
       <AboutBox11 />
     </CoRow17>
@@ -107,7 +108,7 @@ function CoContact17() {
     setKind(""); setVal("");
   };
   return (
-    <CoRow17 id="contact" icon={coHead17(I11.MessageCircle)} title="Contact" count={cards.length}
+    <CoRow17 id="contact" plate={cards.some((r) => coFromAgent17(r.source))} icon={coHead17(I11.MessageCircle)} title="Contact" count={cards.length}
       quiet={coQuiet17(cards.slice(0, 3).map((r) => r.name).join(" · "), 110)}
       onPlus={() => {}}>
       {cards.length > 0 && (
@@ -241,7 +242,7 @@ function CoSection17({ sec, index, count, onOpenCard, onAddCard }) {
     </div>
   );
   return (
-    <CoRow17 id={id} head={head} quiet={coSecQuiet17(c, sec)} onPlus={() => onAddCard({ key: id, def })}>
+    <CoRow17 id={id} head={head} plate={coFromAgent17(sec.source)} quiet={coSecQuiet17(c, sec)} onPlus={() => onAddCard({ key: id, def })}>
       <div className="ff-co17-panel">
         <div className="ff-co17-tools" role="group" aria-label="Section tools">
           <button type="button" role="switch" aria-checked={!!sec.numbered} className={"sw" + (sec.numbered ? " on" : "")} onClick={() => patch({ numbered: !sec.numbered })}><i aria-hidden="true" /><span>Numbered</span></button>
@@ -377,6 +378,26 @@ function CoDetails17() {
     if (coSlugFree17(s, c.slug) && s !== c.slug) dispatch({ type: "CO_SLUG_SET", slug: s });
   };
   const type = c.companyType === "limited" ? "Limited company" : c.companyType === "sole" ? "Sole trader" : "";
+  /* FireFlair editing a directory page: who may be quoted and the company's legal details (stored in the profile's meta). */
+  if (c.dirEditSlug) {
+    const m = c.meta || {}, perm = m.permission || {}, legal = m.legal || {};
+    const set = (patch) => dispatch({ type: "COMPANY_SAVE", company: { meta: { ...m, ...patch } } });
+    const sel = (label, value, opts, on) => (
+      <label className="ff-co17-fld"><small>{label}</small>
+        <select className="ff-input" value={value || ""} aria-label={label} onChange={(e) => on(e.target.value)}>{opts.map(([k, l]) => <option key={k} value={k}>{l}</option>)}</select>
+      </label>);
+    return (
+      <CoRow17 id="details" icon={coHead17(I11.Briefcase)} title="Company details" quiet={coQuiet17([legal.form === "limited" ? "Limited company" : legal.form === "sole" ? "Sole trader" : "", legal.legalName].filter(Boolean).join(" · "), 110)}>
+        <div className="ff-co17-dir">
+          {sel("Text permission", perm.text || "own-words", [["own-words", "Own words only"], ["granted", "Granted"]], (v) => set({ permission: { ...perm, text: v, images: perm.images || "none" } }))}
+          {sel("Image permission", perm.images || "none", [["none", "None"], ["to_confirm", "To confirm"], ["granted", "Granted"]], (v) => set({ permission: { ...perm, images: v, text: perm.text || "own-words" } }))}
+          {sel("Legal form", legal.form || "", [["", "Not set"], ["limited", "Limited company"], ["sole", "Sole trader"]], (v) => set({ legal: { ...legal, form: v || null } }))}
+          <label className="ff-co17-fld"><small>Legal name</small><input className="ff-input" value={legal.legalName || ""} aria-label="Legal name" maxLength={120} onChange={(e) => set({ legal: { ...legal, legalName: e.target.value || null } })} /></label>
+          <label className="ff-co17-fld"><small>Company number</small><input className="ff-input" value={legal.companyNumber || ""} aria-label="Company number" maxLength={20} onChange={(e) => set({ legal: { ...legal, companyNumber: e.target.value || null } })} /></label>
+        </div>
+      </CoRow17>
+    );
+  }
   return (
     <CoRow17 id="details" icon={coHead17(I11.Briefcase)} title="Company details" quiet={coQuiet17([type, c.slug && `${CARD_DOMAIN}/${c.slug}`].filter(Boolean).join(" · "), 110)}>
       <div className="ff-cotype17" role="group" aria-label="Company type">
