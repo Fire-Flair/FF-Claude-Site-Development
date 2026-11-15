@@ -78,6 +78,7 @@ const realPage11 = (c) => {
     ...(qa.length ? { qa } : {}),
     areaPlaces: c.profile.areaPlaces || [],
     areasNote: p.areasNote || "",
+    aboutSource: p.aboutSource,
     profileMeta: m,
   }];
 };

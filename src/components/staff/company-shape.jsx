@@ -85,9 +85,10 @@ function coFromProfile17(slug) {
     name: page.name, kind: page.kind, areas: places.join(" and "), slug: page.slug,
     ...(base && base.base17 ? { base17: { ...base.base17, at: 0 } } : {}),
     socials: { ...(page.socials || {}) }, theme: page.theme, layout: page.layout, logoWide: !!page.logoWide,
-    description: page.description, logo: page.logo, media: (page.media || []).map((m) => ({ ...m })),
+    description: page.description, aboutSource: page.aboutSource, logo: page.logo, media: (page.media || []).map((m) => ({ ...m })),
     info: (page.info || []).map((x) => ({ ...x })),
     records: { ...(page.records || {}) },
+    meta: { ...(page.profileMeta || {}) },
     qa: [...CO_QA_SEED.filter((q) => q.group === "feedback" && !(page.qa || []).some((x) => x.group === "feedback")), ...(page.qa || [])].map((q) => ({ ...q })), reviews: [], partners: [],
   };
   co.records.locations = places.map((a, i) => makeRecord("locations", a, i === 0 && page.areasNote ? { description: page.areasNote } : {}));

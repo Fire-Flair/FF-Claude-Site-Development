@@ -366,6 +366,7 @@ function InformationCard({ record, def, themeKey = "onyx", onClick, width, compa
       ) : (
         pub && !body ? null : <div className="ff-ic2-desc" style={{ color: t.ink }}>{body || <span style={{ opacity: .62 }}>{isCocktail ? "No ingredients yet." : "No description yet."}</span>}</div>
       )}
+      {!pub && !record.proposed && record.source && record.source.by === "agent" && <span className="ff-way17">From your website</span>}
       {(hasDoc || verified || (isProf && record.remote)) && (
         <span className="ff-ic2-badges">
           {isProf && record.remote && <span className="ff-ic2-doc" style={{ color: t.accent, borderColor: t.rule }}><Globe size={11} strokeWidth={1.8} /> Remote</span>}

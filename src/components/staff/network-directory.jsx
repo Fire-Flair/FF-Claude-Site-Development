@@ -368,6 +368,26 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
     {pubQa.length > 0 && <VkFold17 title="Q&A" count={pubQa.length}><CoQA17 list={pubQa} name={co.name} /></VkFold17>}
   </section> : <section className="ff-copub-sec ff-copub-pk"><p className="ff-body ff-muted" style={{ margin: 0 }}>No packages yet.</p></section>;
   const isParty = isStaff && hireSiteOf(state).party;
+  /* Claim this profile: a directory company nobody has claimed, on FF Staff, for a visitor who is not already claiming one. */
+  const mineClaim = coClaimMine17(state);
+  const canClaim = !done && isStaff && !isParty && !co.mine && co.unclaimed && !co.claimPending && !isAdmin17(state) && !coClaimOn17(state, co.slug) && !(mineClaim && mineClaim.status !== "rejected");
+  const claimIt = () => {
+    dispatch({ type: "SESSION", patch: { claimSlug: co.slug } });
+    dispatch({ type: "VIEW_COMPANY", id: null });
+    dispatch({ type: "TAB", tab: "profile" });
+    window.scrollTo(0, 0);
+  };
+  /* FireFlair Edit: only in an admin session that may edit. */
+  const A17 = adm17(state), myAdmin = A17.admins.find(x => x.tag === String((state.auth && state.auth.tag) || "").toUpperCase() && x.active);
+  const adminRole = A17.viewAs || (myAdmin ? myAdmin.role : "owner");
+  const canEditDir = !done && !co.mine && isAdmin17(state) && (ADM17_ROLES[adminRole] || ADM17_ROLES.gold).can.includes("edit") && String(co.id).startsWith("co_");
+  const editDir = () => {
+    dispatch({ type: "DIR_EDIT17_START", slug: co.slug });
+    dispatch({ type: "VIEW_COMPANY", id: null });
+    dispatch({ type: "ROLE", role: "staff", site: "staff" });
+    dispatch({ type: "TAB", tab: "profile" });
+    window.scrollTo(0, 0);
+  };
   const tabs = [{ key: "overview", label: "Overview" }, { key: "qa", label: "Packages", count: services.length + cocktails.length }, { key: "team", label: "Team", count: team.length }, { key: "reviews", label: "Reviews", count: reviews.length }];
   const cIcon = (k) => /mail/i.test(k) ? I11.Mail : /phone/i.test(k) ? I11.Phone : /web/i.test(k) ? I11.Globe : I11.MessageCircle;
   const addTeam = () => {
@@ -388,6 +408,8 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
     !co.unclaimed && !co.mine && ["ask", <Btn variant="wide" onClick={() => setAsking(true)}><I11.MessageSquare size={14} /> Ask a question</Btn>],
     !co.mine && !isParty && ["net", <NetBtn17 id={co.id} name={co.name} wide />],
     !co.unclaimed && !co.mine && ["rev", <Btn variant="wide" onClick={() => setReviewing(true)}><I11.Award size={14} /> Review</Btn>],
+    canClaim && ["claim", <Btn variant="wide primary" onClick={claimIt}><I11.BadgeCheck size={14} /> Claim this profile</Btn>],
+    canEditDir && ["edit", <Btn variant="wide" onClick={editDir}><I11.Pencil size={14} /> Edit</Btn>],
     shareBtn && ["share", shareBtn],
   ].filter(Boolean);
   const about = String(co.description || "").split(/\n\s*\n/).map(x => x.trim()).filter(Boolean);
@@ -406,6 +428,7 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
           ? <LockedBtn17 variant="primary wide" icon={<I11.PartyPopper size={14} />}>Book for your event</LockedBtn17>
           : <Btn variant="primary wide" onClick={addTeam}><I11.Users size={14} /> Book from their team</Btn>}
       </div>}
+      {!done && (co.claimPending || co.claimRejected) && <div className="ff-copub-acts"><span style={{ display: "flex", justifyContent: "center" }}><Pill tone="warn">{co.claimRejected ? "Claim not approved" : "Claim being checked"}</Pill></span></div>}
       {acts.length > 0 && <div className="ff-copub-grid">{acts.map(([k, el], i) => <div key={k} className={"c-" + k + (acts.length % 2 && i === acts.length - 1 ? " span" : "")}>{el}</div>)}</div>}
       </>} />
 

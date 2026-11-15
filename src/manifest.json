@@ -20,6 +20,7 @@
   "state/profile-content17.js",
   "state/co-teams17.js",
   "state/notes17.js",
+  "state/claims17.js",
   "state/invite17.js",
   "content/people-demo.js",
   "content/companies.js",

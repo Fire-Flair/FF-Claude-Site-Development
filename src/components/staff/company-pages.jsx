@@ -358,11 +358,14 @@ const COMPANY_PAGES = {
 
 
 function companyById(state, id) {
-  if (id === "mine") { const c = state.company || {}; return { ...c, id: "mine", mine: true, mediaList: (c.media || []), areas: c.areas !== undefined ? c.areas : (c.location || "") }; }
+  if (id === "mine") { const c = state.company || {}; const cl = coClaimMine17(state), open = cl && cl.status !== "approved"; return { ...c, ...(open ? { unclaimed: true, claimPending: cl.status === "pending", claimRejected: cl.status === "rejected" } : {}), id: "mine", mine: true, mediaList: (c.media || []), areas: c.areas !== undefined ? c.areas : (c.location || "") }; }
   const base = COMPANIES.find(x => x.id === id) || SUPPLIER_BASES17[id];
   const page = COMPANY_PAGES[id];
   if (!base || !page) return null;
-  return { ...base, ...page, id, mediaList: page.media.map(k => typeof k === "string" ? { id: k, src: IMG11[k] } : k).filter(m => m.src) };
+  /* FireFlair's edits or a live claim sit over the profile file (claims17.js). */
+  const ov = dirOverlay17(state, id);
+  const merged = ov ? { ...base, ...page, ...ov } : { ...base, ...page };
+  return { ...merged, id, mediaList: merged.media.map(k => typeof k === "string" ? { id: k, src: IMG11[k] } : k).filter(m => m.src) };
 }
 
 
