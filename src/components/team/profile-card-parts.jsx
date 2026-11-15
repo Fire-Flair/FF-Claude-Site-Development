@@ -590,7 +590,7 @@ function FFAI({ query, onQuery, onSubmit, onEvent, onShift, placeholder, context
     if (a.go === "network") { if (onQuery && a.q) onQuery(a.q); ffDispatch({ type: "NET_QUERY", q: a.q || "" }); ffDispatch({ type: "TAB", tab: "network" }); window.scrollTo(0, 0); }
     else if (a.go === "booking") goBookingSection(ffDispatch, a.id);
     else if (a.go === "profile") { if (ffState.role !== "team") ffDispatch({ type: "ROLE", role: "team" }); ffDispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); }
-    else if (a.go === "next") goHomeSection(ffDispatch, "ff-coming");
+    else if (a.go === "next") goHomeSection(ffDispatch, "ff-pl-own");
   };
   const submit = () => {
     const v = val.trim();

@@ -124,7 +124,21 @@ const FOCUS17 = {
  "in_tr_ff_open_bar": "50% 60%",
  "in_tr_ff_masterclass": "50% 50%",
  "in_dj_food_festivals": "50% 50%",
- "in_rw_shoot": "49% 42%"
+ "in_rw_shoot": "49% 42%",
+ "j17_vke07": "55% 50%",
+ "j17_vke09": "62% 50%",
+ "t17_hp02": "40% 38%",
+ "j17_hp02": "40% 50%",
+ "j17_vke12": "50% 50%",
+ "t17_hp03": "55% 44%",
+ "j17_hp03": "55% 50%",
+ "t17_hp01": "30% 51%",
+ "j17_hp01": "30% 50%",
+ "t17_p44": "50% 62%",
+ "j17_p37": "60% 50%",
+ "t17_vkg15": "50% 30%",
+ "j17_hp04": "40% 55%",
+ "j17_p43": "60% 50%"
 };
 
 
@@ -153,6 +167,7 @@ function dxPick17(c, n, shape) {
 /* A card photo: from the pillar's own card photos when it has them (FF Team), otherwise the
    pool photos after the one on the tile. Either way a card never shows the tile's photo. */
 function dxCard17(c, n, i) {
+  if (c && c.fixedCards) return "j17_" + c.fixedCards[i % c.fixedCards.length];
   const k = c && c.cards; if (k && k.length) return "j17_" + k[(((n + i) % k.length) + k.length) % k.length];
   return dxPick17(c, n + 1 + i, "j");
 }

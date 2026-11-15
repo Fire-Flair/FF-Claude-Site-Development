@@ -31,6 +31,9 @@ const CONTENT_ADAPTER = {
   /** Homepage "discover" copy for FF Team (cards with title, text, image key).
    *  Prototype source: src/content/homepage/discover-team.json. Replace the body with a Content API call. */
   homepageDiscoverTeam() { return __ff_json("content/homepage/discover-team.json"); },
+  /** FF Team home pillars (v17.9): four pillars, each with a summary, three cards and three full sections (title, three paragraphs, visual key, call to action, SEO title and description), plus tile photo pools, Launch Challenge copy and growth events. Every pillar and section also has a page at ffteam.uk/info/<slug>.
+   *  Prototype source: src/content/homepage/team-pillars.json. Replace the body with a Content API call. */
+  homepageTeamPillars() { return __ff_json("content/homepage/team-pillars.json"); },
   /** Homepage "discover" copy for FF Staff.
    *  Prototype source: src/content/homepage/discover-staff.json. Replace the body with a Content API call. */
   homepageDiscoverStaff() { return __ff_json("content/homepage/discover-staff.json"); },

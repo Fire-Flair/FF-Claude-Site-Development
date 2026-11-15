@@ -1,5 +1,18 @@
 # FireFlair prototype — changelog
 
+## v17.9 — 2026-11-15 — FF Team home pillars rebuilt; 16 info pages; Launch Challenge prizes
+Phase Two artifact version 1794780711-1744. Full developer notes: `docs/handoff-v17.9.md`.
+
+- FF Team "Discover FireFlair" pillars are rebuilt and reordered: Your profile, Our packages, Your bookings, Our community. FF Staff, FF Party and FF VIP pillars are unchanged.
+- Every pillar now has the same shape: a title, one summary paragraph, three numbered cards, then one full section per card (title, three paragraphs, a visual built from the live Profile Card, Shift Card, package cards, terms and event brief). Featured professionals, the map block, the platforms roadmap and the old card journey are no longer in the FF Team pillars.
+- All wording lives in one file, `src/content/homepage/team-pillars.json`, read through `CONTENT_ADAPTER.homepageTeamPillars()`. Change copy there only.
+- New pages for search: each pillar and each section has its own address, `ffteam.uk/info/<slug>` (16 pages; `#/ff-team/info/<slug>` in the prototype), with its own title, description and canonical, `index, follow`. The home page drop-downs work as before; section titles link to the pages. Production must server-render the title, description, canonical and real links. See `docs/URLS.md`.
+- Launch Challenge box (same place on the home page, countdown and progress bar kept): the top 10 become FireFlair Gold members, the overall winner receives the Athens Bar Show trip, and runners-up choose from rewards members suggest. The earlier Gold, Silver, Bronze and Mystery Prize wording is removed everywhere, including the rules. "Suggest a reward" sends an answer through the existing Q&A system (`int.challenge_reward`).
+- Industry events list updated: BCB London 10 and 11 May 2027; Bar Convent Berlin October 2027 and Athens Bar Show November 2027 (dates to be announced).
+- Photos: new pillar photo pools (profile: single-person photos; packages and bookings: drinks and bars; community: the group photo p44). Four new event photos (hp01 to hp04) and two pen images (pen01 used on the site, pen02 library only) are in `photo-library/`. `scripts/check-team-photos.py` checks that no pillar photo repeats.
+- Fix: closing a pillar because the address moved to another page no longer overwrites that address with the home address (`discover-hub.jsx`).
+- Old anchors (`#ff-teams`, `#ff-terms`, `#ff-coming` and others) are re-pointed to the new sections; the full list is in the handoff document.
+
 ## v17.8.2 — 2026-11-15 — Business & Support banner on home pages only
 Phase Two artifact: see the label "Business & Support on home pages only".
 

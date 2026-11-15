@@ -273,7 +273,7 @@ const COMP_RULES20 = [
   ["Challenge dates", "The challenge runs for 90 days, from 1 December 2026 to 28 February 2027."],
   ["Eligibility", "Open to any hospitality professional, and anyone who wants to get into hospitality and is willing and available to undertake suitable freelance hospitality work. Previous hospitality experience is not mandatory. Hospitality professionals can sign up from anywhere in the world."],
   ["Entry", "Everyone who creates a profile during the challenge is entered automatically."],
-  ["Winning", "At the end of the challenge, whoever has built the largest and best Team wins."]
+  ["Winning", "At the end of the challenge, the ten members with the largest and best Teams become FireFlair Gold members. The overall winner receives the Athens Bar Show trip. Runners-up choose from rewards suggested by members."]
 ];
 
 const COMP_TBC20 = ["Scoring calculation", "Tie-break procedure", "Prize values", "Winner verification", "Fulfilment conditions", "Promoter details"];
@@ -293,6 +293,9 @@ const PROMO_CSS20 = ".ff-cp20{position:relative;margin:22px 0;border-radius:26px
     + ".ff-cp20r h3{margin:16px 0 4px;font-size:15px}.ff-cp20r p,.ff-cp20r li{font-size:14px;line-height:1.5;margin:0 0 6px}.ff-cp20r ul,.ff-cp20r ol{margin:0;padding-left:20px}"
     + ".ff-cp20r .tbc{display:inline-block;margin:0 6px 6px 0;padding:4px 10px;border-radius:12px;border:1px dashed var(--gold-dk,#A5802F);font-size:12.5px}"
     + ".ff-vip20-ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px}.ff-vip20-ul li{padding:7px 10px;border-radius:14px;border:1px solid rgba(201,162,75,.4);font-size:12px;line-height:1.3;color:#F4EBD6}";
+
+/* v17.9: a little more contrast, spacing and size for the FF Team Launch Challenge box (FF Staff and VIP boxes keep the shared look). */
+const TEAM_CP21_CSS = ".ff-cp20.t21 p{font-size:16px;line-height:1.55;color:rgba(244,235,214,.96)}.ff-cp20.t21 .ff-cp20-boxes{gap:12px}.ff-cp20.t21 .ff-cp20-box b{font-size:16px;line-height:1.25;color:#FFF6DC}.ff-cp20.t21 .ff-cp20-box span{font-size:14.5px;line-height:1.4;color:rgba(244,235,214,.94)}.ff-cp20.t21 .ff-cp20-date{font-size:14px}.ff-cp20.t21 .ff-cp20-rules{padding:10px 16px;min-height:44px;border-radius:99px;corner-shape:squircle;border:1px solid rgba(201,162,75,.6);background:transparent;color:#F4DC8E;font-weight:700;font-size:14px;font-family:inherit;cursor:pointer}@media(max-width:640px){.ff-cp20.t21 p{font-size:17px}.ff-cp20.t21 .ff-cp20-box span{font-size:15px}.ff-cp20.t21 .ff-cp20-in{gap:22px}}";
 
 const PROMO_BOX_CSS20 = __ff_css("styles/promo-box-20.css");
 
@@ -366,26 +369,24 @@ function TeamCompetition20() {
   const nav = useHomeNav();
   const [rules, setRules] = useState(false);
   const [box, setBox] = useState(null);
+  const CH = TP21.challenge;
   const boxes = [
-    ["90 day challenge", "Starting 1 December", [["Dates", "The challenge runs for 90 days, from 1 December 2026 to 28 February 2027."]]],
-    ["Who can enter", "Hospitality professionals, and anyone getting into hospitality", [["Who can enter", "Any hospitality professional, and anyone who wants to get into hospitality and is willing and available to undertake suitable freelance hospitality work."], ["Experience", "Previous hospitality experience is not mandatory."], ["Where", "Hospitality professionals can sign up from anywhere in the world."]]],
-    ["Competition rewards", "Gold, Silver, Bronze and Mystery", [["Winners", "Gold, Silver and Bronze go to the largest and best Teams. The Mystery Prize goes to a random eligible participant outside the top three."], ["Rewards", "Hospitality experiences, training, professional equipment, photography and more."]]],
-    ["Competition rules", "What you need to do", null]
+    [CH.boxes[0].t, CH.boxes[0].s, [["Dates", "The challenge runs for 90 days, from 1 December 2026 to 28 February 2027."]]],
+    [CH.boxes[1].t, CH.boxes[1].s, [["Who can enter", "Any hospitality professional, and anyone who wants to get into hospitality and is willing and available to undertake suitable freelance hospitality work."], ["Experience", "Previous hospitality experience is not mandatory."], ["Where", "Hospitality professionals can sign up from anywhere in the world."]]],
+    [CH.boxes[2].t, CH.boxes[2].s, [[CH.rewards[0][0], CH.rewards[0][1]]]],
+    [CH.boxes[3].t, CH.boxes[3].s, [[CH.rewards[1][0], CH.rewards[1][1]], [CH.rewards[2][0], CH.rewards[2][1]]]]
   ];
   const cur = box === null ? null : boxes[box];
-  const css = PROMO_CSS20 + PROMO_BOX_CSS20 + LB20_CSS;
+  const css = PROMO_CSS20 + PROMO_BOX_CSS20 + LB20_CSS + TEAM_CP21_CSS;
   const sec = (t, body) => h("div", { key: t }, h("h3", { className: "ff-label" }, t), body);
-  const pick = (i) => {
-    if (boxes[i][2]) setBox(i);
-    else setRules(true);
-  };
+  const pick = (i) => setBox(i);
   return h(
     "section",
     { className: "ff-sect", id: "ff-competition", "aria-labelledby": "ff-cp20-h" },
     h("style", null, css),
     h(
       "div",
-      { className: "ff-cp20" },
+      { className: "ff-cp20 t21" },
       h(
         "div",
         { className: "ff-cp20-in" },
@@ -395,11 +396,12 @@ function TeamCompetition20() {
           h("div", { className: "ff-cp20-eye" }, h(Coin, { size: 34, tier: "gold" }), h("span", null, "FF Team Launch Challenge")),
           h("h2", { id: "ff-cp20-h" }, "Build your Network. Grow your Team. Win prizes."),
           h("span", { className: "ff-cp20-date" }, "90 day challenge \xB7 starting 1 December 2026"),
-          h("p", null, "Prizes include hospitality experiences, training, professional equipment, photography and more."),
+          h("p", null, CH.boxes[2].t + ". " + CH.boxes[3].t + "."),
           h(
             "div",
             { className: "ff-cp20-btns" },
-            h(ShineButton, { onClick: nav.goProfile }, "Join Challenge")
+            h(ShineButton, { onClick: nav.goProfile }, "Join Challenge"),
+            h("button", { type: "button", className: "ff-cp20-rules", onClick: () => setRules(true) }, "Competition rules")
           )
         ),
         h(
@@ -415,7 +417,7 @@ function TeamCompetition20() {
     h(
       Sheet,
       { open: box !== null, onClose: () => setBox(null), title: cur ? cur[0] : "", center: true },
-      cur && cur[2] ? h("div", { className: "ff-cp20r" }, cur[2].map((r) => sec(r[0], h("p", null, r[1])))) : null
+      cur ? h("div", { className: "ff-cp20r" }, cur[2].map((r) => sec(r[0], h("p", null, r[1])))) : null
     ),
     h(
       Sheet,
@@ -441,15 +443,8 @@ function TeamCompetition20() {
         )),
         h("p", { style: { marginTop: 8 } }, "Network and Team are separate features. Team connections need mutual acceptance."),
         COMP_RULES20.map((r) => sec(r[0], h("p", null, r[1]))),
-        sec("Prizes", h(
-          "ul",
-          null,
-          h("li", null, h("b", null, "Gold: "), "premium hospitality experiences and professional rewards."),
-          h("li", null, h("b", null, "Silver: "), "career-enhancing training and rewards."),
-          h("li", null, h("b", null, "Bronze: "), "professional equipment and rewards."),
-          h("li", null, h("b", null, "Mystery Prize: "), "a random eligible participant outside the top three.")
-        )),
-        h("p", { style: { marginTop: 8 } }, "Challenge placements are separate from the Bronze, Silver and Gold XP levels."),
+        sec("Rewards", h("ul", null, CH.rewards.map((r) => h("li", { key: r[0] }, h("b", null, r[0] + ": "), r[1])))),
+        h("p", { style: { marginTop: 8 } }, "Challenge results are separate from XP levels."),
         sec("Fair participation", h("p", null, "Only genuine accounts and authentic professional connections qualify. Duplicate, fabricated or manipulated activity may be disqualified following review.")),
         sec("Final terms", h("div", null, h("p", null, "To be confirmed before the challenge opens:"), COMP_TBC20.map((t) => h("span", { key: t, className: "tbc" }, t + ": to be confirmed"))))
       )

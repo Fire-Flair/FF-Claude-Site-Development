@@ -3,6 +3,7 @@
     Users: lucideIcon("Users"),
     Sparkles: lucideIcon("Sparkles"),
     Contact: lucideIcon("Contact"),
+    CalendarDays: lucideIcon("CalendarDays"),
     PartyPopper: lucideIcon("PartyPopper"),
     ChevronDown: lucideIcon("ChevronDown"),
     ChevronUp: lucideIcon("ChevronUp"),
@@ -10,91 +11,29 @@
     X: lucideIcon("X")
   };
 
-  const DX_TEAM = [
-    {
-      k: "community",
-      t: "Our community",
-      s: "The people you work with",
-      img: "t17_p35",
-      pool: ["p35", "vke01", "vke06", "aiIntl", "vke10"],
-      cards: ["p45", "p13", "vkg15"],
-      icon: DX_I.Users,
-      h: "Meet the people behind great events.",
-      p: ["Hospitality is better with people you know. FireFlair brings bartenders, mixologists and event staff together in one community, so you can find the people you work with and be found by the ones you have not met yet.", "Add friends to your team and see who works near you on the map, so the community can see who you work with and trust.", "Every connection counts. The more people you add, the stronger your team becomes, and the more doors open when someone needs a great bartender at short notice."],
-      parts: [
-        { id: "ff-teams", label: "Your team", r: () => React.createElement(HomeTeam11, null) },
-        { id: "ff-map", label: "Put yourself on the map", r: () => React.createElement(HomeMapSection, null) }
-      ],
-      jn: [
-        { ic: "MapPin", t: "Find your people", d: "See who works where, on the map.", b: "See the map", go: "#ff-map", x: "The map shows hospitality professionals by area, so you can see who works near you and who is worth meeting." },
-        { ic: "UserPlus", t: "Build your team", d: "Add the people you work with, like friends.", b: "Build your team", go: "#ff-teams", x: "Everyone you add to your network is on your team. It shows on your profile, so the people who book you can see who you work with." },
-        { ic: "Users", t: "Work with friends", d: "Invite your friends and work together.", b: "Work with friends", go: "#ff-teams", x: "Invite your friends to join FireFlair and add them to your team. Working with people you know makes every event easier." }
-      ]
-    },
-    {
-      k: "services",
-      t: "Your packages",
-      s: "Services, bookings and terms",
-      img: "t17_p01",
-      pool: ["p01", "vke02", "vkg14", "vke12", "p30"],
-      cards: ["v01", "p05", "vkg02"],
-      icon: DX_I.Sparkles,
-      h: "Your services, your bookings, your terms.",
-      p: ["Your packages are what you offer: the services you are best at, from classic cocktail service to flair, set out as Service Cards that hosts and businesses can book.", "Every booking follows the same clear process, from the first request on WhatsApp to the confirmation and the review, so you always know what happens next.", "Terms and conditions are written in plain words and agreed before you say yes, so you and the person booking you both know exactly what to expect."],
-      parts: [
-        { id: "ff-cards", label: "Follow a booking", r: () => React.createElement(CardJourney11, {
-          kind: "team"
-        }) },
-        { id: "ff-coming", label: "Service Cards", r: () => React.createElement(HomeComingSoon, null) },
-        { id: "ff-terms", label: "Terms and conditions", r: () => React.createElement(Terms17, null) }
-      ],
-      jn: [
-        { ic: "Sparkles", t: "Offer a service", d: "Service Cards and signature cocktails.", b: "See Service Cards", go: "#ff-coming", x: "A Service Card describes one thing you offer, from classic cocktail service to flair. Hosts and businesses choose the card, then choose you." },
-        { ic: "Layers", t: "Follow a booking", d: "The cards, in the order a booking happens.", b: "Follow a booking", go: "#ff-cards", x: "A booking moves through four cards: the Profile Card, the Event Card, the Service Card and the Review Card. Following them shows you how every request is handled." },
-        { ic: "ShieldCheck", t: "Know the terms", d: "Clear terms, agreed up front.", b: "See how terms work", go: "#ff-terms", x: "Terms are short, plain and shown before you accept, so everyone agrees to the same thing and nobody is surprised on the night." }
-      ]
-    },
-    {
-      k: "events",
-      t: "Our events",
-      s: "Grow and meet the trade",
-      img: "t17_aiMusic",
-      pool: ["aiMusic", "vkg11", "vkg09", "vke05", "vke11"],
-      cards: ["p23", "p32", "vkg05"],
-      icon: DX_I.PartyPopper,
-      h: "Learn, grow and meet the industry.",
-      p: ["Our events is where hospitality keeps getting better: the industry's own events, and the places the trade gathers.", "It is also where we grow together. The platform grows with every profile and every booking, and we list the industry's own growth events so you know where the trade gathers.", "From the Athens Bar Show to BCB Berlin and BCB London, the biggest bar events in Europe are all in one place."],
-      parts: [
-        { id: "ff-barshows", label: "Growth events", r: () => React.createElement(GrowthEvents17, null) },
-        { id: "ff-how", label: "The platforms", r: () => React.createElement(HomePlatforms, null) }
-      ],
-      jn: [
-        { ic: "CalendarDays", t: "Go to a bar show", d: "Athens, London and Berlin.", b: "See growth events", go: "#ff-barshows", x: "Industry events are where the trade learns and meets. We list the big ones across Europe so you can plan which to attend." },
-        { ic: "Rocket", t: "Grow with FireFlair", d: "Where events are booked.", b: "See the platforms", go: "#ff-how", x: "The platforms are the places where events get booked. See where FireFlair fits, and how the network grows with every member." }
-      ]
-    },
-    {
-      k: "profiles",
-      t: "Your profile",
-      s: "Show who you are",
-      img: "t17_vke04",
-      pool: ["vke04", "vke09", "p11", "vke07"],
-      cards: ["p27", "p04", "p10"],
-      icon: DX_I.Contact,
-      h: "Your craft, on one card.",
-      p: ["Your Profile Card is your professional identity: your photo, skills, experience and CV in one place, shared with a single link.", "Collect reviews after every event and let your reputation do the talking when a business is choosing who to book.", "One card, one link, your whole career. Send it on WhatsApp, pin it to your socials and let people see exactly why you are the one to book."],
-      parts: [
-        { id: "ff-what", label: "Your CV", r: () => React.createElement(HomeWhatIs, null) },
-        { id: "ff-relationships", label: "Reviews", r: () => React.createElement(HomeRelationships, null) },
-        { id: "ff-team", label: "Featured", r: () => React.createElement(HomeFeatured, null) }
-      ],
-      jn: [
-        { ic: "Contact", t: "Show who you are", d: "Your Profile Card, your CV and your skills.", b: "Create your Profile Card", go: "profile", x: "Your Profile Card is your photo, professions, skills and experience in one place. It is the first thing a business sees." },
-        { ic: "Star", t: "Collect reviews", d: "Reputation, earned one event at a time.", b: "See reviews", go: "#ff-relationships", x: "Reviews are earned one event at a time. Each one adds to your reputation and shows people why you are worth booking." },
-        { ic: "BadgeCheck", t: "Get featured", d: "Professionals worth booking.", b: "See who is featured", go: "#ff-team", x: "Featured professionals are the people the community trusts most. Keep earning reviews and you could be one of them." }
-      ]
-    }
-  ];
+  /* v17.9: FF Team pillars are built from src/content/homepage/team-pillars.json (copy lives there only). */
+  const TP21 = CONTENT_ADAPTER.homepageTeamPillars();
+
+  const DX_TEAM = TP21.pillars.map((pl) => {
+    const fixed = pl.sections.every((x) => x.img);
+    return {
+      k: pl.k,
+      t: pl.t,
+      s: pl.s,
+      img: "t17_" + TP21.photos[pl.k][0],
+      pool: TP21.photos[pl.k],
+      fixedCards: fixed ? pl.sections.map((x) => x.img) : null,
+      icon: { profiles: DX_I.Contact, services: DX_I.Sparkles, events: DX_I.CalendarDays, community: DX_I.Users }[pl.k],
+      h: pl.h,
+      tldr: pl.tldr,
+      slug: pl.slug,
+      seo: pl.seo,
+      sections: pl.sections,
+      p: [pl.tldr],
+      parts: pl.sections.map((x) => ({ id: x.id, label: x.h })),
+      jn: pl.sections.map((x) => ({ t: x.card.t, x: x.card.d, b: x.card.b, go: "#" + x.id }))
+    };
+  });
 
   const DX_BIZ = [
     {

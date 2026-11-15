@@ -19,6 +19,7 @@ Prefixes: FF Party `#/ff-party`, FF Team `#/ff-team`, FF Staff `#/ff-staff`. Pro
 | `/` | `#/<site>` | the site's Home | the site's own home | index |
 | `/network` | `#/<site>/network` | Network (FF Party calls it Browse) | none of its own | noindex |
 | `/bookings` | `#/<site>/bookings` | Bookings (FF Team, FF Staff) | none of its own | noindex |
+| `/info/<slug>` | `#/ff-team/info/<slug>` | FF Team information pages (v17.9): 4 pillar pages and 12 section pages, listed in `docs/handoff-v17.9.md`. An unknown slug goes to the FF Team home | `https://ffteam.uk/info/<slug>` | index, follow |
 | `/profile` | `#/<site>/profile` | your own profile or business page | none of its own | noindex |
 | `/join/<code>` | `#/ff-team/join/<code>` | a team invitation link (FF Team only). Signed out: records who sent it and opens Profile, the create-a-profile page, with the invitation banner on top. Signed in: opens the sender's profile (nothing changes). An unknown or own code opens Profile with no banner. The prototype rewrites the address to `#/ff-team/profile`. `/join/<code>` on FF Staff or FF Party goes to that site's home | none of its own | noindex |
 | `/fx/<code>` | `#/<site>/fx/<code>` | the shift brief. FF Team: the professional's view (Shift Card, then full details; public, no sign-in to read). FF Staff: opens the hirer's booking for that event. FF Party: reserved, goes to the FF Party home for now | none of its own | noindex (prototype) |
@@ -75,7 +76,7 @@ two base pins each, not two entries).
 
 Reserved words that can never be a tag or a slug:
 
-`network`, `browse`, `bookings`, `book`, `profile`, `party`, `areas`, `packages`, `stories`, `vip`, `team`, `staff`, `admin`, `login`, `home`, `fx`, `join`.
+`network`, `browse`, `bookings`, `book`, `profile`, `party`, `areas`, `packages`, `stories`, `vip`, `team`, `staff`, `admin`, `login`, `home`, `fx`, `join`, `info`.
 
 The prototype already refuses them: `AUTH_ADAPTER.isAvailable` returns false for a reserved tag and a new company slug that
 matches one gets `-co` added. Add any new top-level page to the list in `src/utils/routes17.js` (`RT17_RESERVED`) and here.
@@ -142,3 +143,7 @@ Five characters, not case sensitive, from an alphabet without lookalikes (no 0, 
 The first four identify the event, the fifth the shift within it (`7K2Q` is the event, `7K2QA` and `7K2QB` its shifts). Four characters open the event's first shift.
 The prototype derives codes from the demo ids (`fxCodeOf17`, `fxFind17` in `src/components/shared/shift-card17.jsx`); production issues them from Core and keeps them unique.
 Every link from the Share sheet carries the sharer's code as `?r=<code>`.
+
+## FF Team home pillars (v17.9)
+
+The pillar slugs `profile`, `packages`, `bookings` and `community` open the matching pillar on the FF Team home (`#/ff-team/home/<slug>`). The old slug `events` still works and opens `bookings`. The title of every section on the home is a real link to its `/info/<slug>` page.

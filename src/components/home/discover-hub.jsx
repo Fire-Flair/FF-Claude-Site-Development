@@ -61,6 +61,9 @@ const DX_PARTY = [
 
 const DX_ALIAS = { "ff-career": "ff-booktiles", "ff-training": "ff-booktiles", "ff-nx-svc-h": "ff-coming", "ff-nx-ck-h": "ff-coming", "ff-nx-svc": "ff-coming", "ff-nx-ck": "ff-coming" };
 
+/* v17.9: FF Team pillars were rebuilt; the old section ids still scroll somewhere useful. */
+const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing", "ff-cards": "ff-pl-requests", "ff-coming": "ff-pl-own", "ff-nx-svc-h": "ff-pl-own", "ff-nx-ck-h": "ff-pl-own", "ff-nx-svc": "ff-pl-own", "ff-nx-ck": "ff-pl-own", "ff-terms": "ff-pl-terms", "ff-barshows": "ff-pl-industry", "ff-how": "ff-pl-requests", "ff-what": "ff-pl-cv", "ff-relationships": "ff-pl-reviews", "ff-team": "ff-pl-reviews", "ff-career": "ff-pl-industry", "ff-training": "ff-pl-industry" };
+
   function DiscoverHub11({ cats = DX_TEAM, kind = "team" }) {
     const hire = useHireNav();
     const home = useHomeNav();
@@ -71,11 +74,13 @@ const DX_ALIAS = { "ff-career": "ff-booktiles", "ff-training": "ff-booktiles", "
       const short = raw.map((x) => x.replace(/^(our|your)-/, ""));
       return raw.map((x, i) => short.filter((y) => y === short[i]).length > 1 ? x : short[i]);
     })();
+    /* v17.9: the FF Team pillar "Our events" became "Your bookings"; its old address still opens it. */
+    const legacy = kind === "team" ? { events: "bookings" } : {};
     const fromUrl = () => {
       const parts = String(window.location.hash || "").replace(/^#\/?/, "").split("/");
       if (parts[0] !== base || parts[1] !== "home")
         return null;
-      const i = slugs.indexOf(parts[2]);
+      const i = slugs.indexOf(legacy[parts[2]] || parts[2]);
       return i < 0 ? null : cats[i].k;
     };
     const [open, setOpen] = useState(() => {
@@ -325,6 +330,11 @@ const DX_ALIAS = { "ff-career": "ff-booktiles", "ff-training": "ff-booktiles", "
           return;
       }
       const path = open ? `${base}/home/${slugs[cats.findIndex((c) => c.k === open)]}` : base;
+      /* A pillar that closes because the address moved on (an /info page, a Story, a profile) must not write the
+         home address over it: the router owns that address. Only a close from a pillar address resets to Home. */
+      const hsh = String(window.location.hash || "");
+      if (!open && hsh && hsh !== "#" && hsh.indexOf("#/" + base + "/home/") !== 0)
+        return;
       try {
         const u = "#/" + path;
         if (window.location.hash !== u)
@@ -350,6 +360,9 @@ const DX_ALIAS = { "ff-career": "ff-booktiles", "ff-training": "ff-booktiles", "
       };
       window.addEventListener("popstate", sync);
       window.addEventListener("hashchange", sync);
+      /* Coming back from an /info/ page remounts the home: open the pillar the address names. */
+      if (window.__ffUrlRead && fromUrl() && !openRef.current)
+        sync();
       const home = (e) => {
         const b = e.target && e.target.closest ? e.target.closest(".ff-bottomnav button, .ff-desknav button") : null;
         if (!b)
@@ -376,7 +389,7 @@ const DX_ALIAS = { "ff-career": "ff-booktiles", "ff-training": "ff-booktiles", "
     }, [open]);
     useEffect(() => {
       window.__ffDxReveal = (id) => {
-        const pid = DX_ALIAS[id] || id;
+        const pid = (kind === "team" ? DX_ALIAS_TEAM21[id] : DX_ALIAS[id]) || id;
         const c = cats.find((x) => x.parts.some((p) => p.id === pid));
         if (!c)
           return false;
@@ -395,7 +408,7 @@ const DX_ALIAS = { "ff-career": "ff-booktiles", "ff-training": "ff-booktiles", "
       return () => {
         delete window.__ffDxReveal;
       };
-    }, [open, cats]);
+    }, [open, cats, kind]);
     const Ic = cur ? cur.icon : null;
     return React.createElement("section", {
       className: `ff-sect ff-dx${cur ? " is-open" : ""}`,
@@ -441,12 +454,24 @@ const DX_ALIAS = { "ff-career": "ff-booktiles", "ff-training": "ff-booktiles", "
       role: "region",
       "aria-label": cur.t,
       style: shape ? { "--tx": `${shape.tx}px`, "--tw": `${shape.tw}px`, "--tr": `${shape.tr}px` } : undefined
-    }, React.createElement("div", {
+    }, cur.sections && React.createElement(React.Fragment, null, React.createElement("style", null, TP21_CSS), React.createElement("div", {
+      className: "ff-dx-intro",
+      key: "t" + cur.k
+    }, React.createElement("h3", null, cur.h), React.createElement("p", {
+      className: "ff-dx-tl21"
+    }, cur.tldr)), React.createElement(PillarCards21, {
+      pl: cur,
+      photo: (i) => dxCard17(cur, rotOf(cur), i),
+      jump
+    }), React.createElement("div", {
+      className: "ff-dx-secs21",
+      key: "s" + cur.k
+    }, cur.sections.map((x, i) => React.createElement(PillarSection21, { key: x.id, s: x, n: i + 1, run, level: "h4", link: true })))), !cur.sections && React.createElement("div", {
       className: "ff-dx-intro",
       key: "b" + cur.k
     }, React.createElement("h3", null, cur.h), cur.p.map((t, n) => React.createElement("p", {
       key: n
-    }, t))), cur.jn && React.createElement(React.Fragment, null, React.createElement("ol", {
+    }, t))), !cur.sections && cur.jn && React.createElement(React.Fragment, null, React.createElement("ol", {
       className: "ff-cta17",
       "aria-label": `${cur.t}: three ways in`
     }, cur.jn.map((j, i) => {
@@ -468,7 +493,7 @@ const DX_ALIAS = { "ff-career": "ff-booktiles", "ff-training": "ff-booktiles", "
         type: "button",
         onClick: () => run(j.go)
       }, j.b));
-    })), React.createElement(CoinDivider, null)), React.createElement("div", {
+    })), React.createElement(CoinDivider, null)), !cur.sections && React.createElement("div", {
       className: "ff-dx-body",
       key: cur.k
     }, cur.parts.map((p, i) => React.createElement(React.Fragment, {

@@ -1,9 +1,6 @@
 /* src/components/home/growth-and-terms.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
-  const GE17 = [
-    { n: "Athens Bar Show", d: "2 to 5 November 2026", w: "Athens, Greece", t: "Four days for the bar industry, held at Technopolis City of Athens." },
-    { n: "BCB London", d: "10 and 11 May 2027", w: "Tobacco Dock, London", t: "Bar Convent London at Tobacco Dock, bringing the drinks trade together for two days." },
-    { n: "Bar Convent Berlin", d: "4 and 5 October 2027", w: "Exhibition Centre Berlin", t: "Bar Convent Berlin, the international bar trade event, held at the Exhibition Centre Berlin." }
-  ];
+  /* v17.9: dates come from src/content/homepage/team-pillars.json (growthEvents), the one list for FF Team. */
+  const GE17 = CONTENT_ADAPTER.homepageTeamPillars().growthEvents;
 
   function GrowthEvents17() {
     return React.createElement("section", {
@@ -135,7 +132,7 @@
       team: {
         profile: ["Create your Profile Card", () => nav.goProfile()],
         network: ["Explore the network", () => nav.goNetwork()],
-        career: ["See Career Support", sec("ff-career")],
+        career: ["See training and support", sec("ff-pl-industry")],
         party: ["Visit FF Party", () => goSite("party")],
         biz: ["Visit FF Staff", () => goSite("staff")]
       },

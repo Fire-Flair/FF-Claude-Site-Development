@@ -636,6 +636,6 @@ function goHomeSection(dispatch, id) {
   dispatch({ type: "TAB", tab: "home", route: "home" });
   window.scrollTo(0, 0);
   let tries = 0;
-  const go = () => { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: "auto", block: "start" }); else if (++tries < 20) setTimeout(go, 50); };
+  const go = () => { if (window.__ffDxReveal && window.__ffDxReveal(id)) return; const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: "auto", block: "start" }); else if (++tries < 20) setTimeout(go, 50); };
   setTimeout(go, 60);
 }

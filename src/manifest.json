@@ -115,6 +115,7 @@
     "content/stories/stories-reader.jsx",
     "components/home/growth-and-terms.jsx",
     "components/home/package-pages.jsx",
+    "components/home/team-pillars.jsx",
     "components/home/discover-hub.jsx",
     "components/home/staff-party-home.jsx",
     "components/home/support-book20.jsx",
