@@ -182,3 +182,10 @@
 @media (min-width:900px) { .ff .ff-dx-panel .ff-cta17 b, .ff .ff-ip21 .ff-cta17 b { font-size:15px; } .ff .ff-dx-panel .ff-cta17 .t, .ff .ff-ip21 .ff-cta17 .t { font-size:12.5px; } }
 
 @media (min-width:900px) { .ff .pv-pk .pv-scroll { flex-wrap:wrap; justify-content:center; overflow:visible; padding:4px 0; gap:14px; } .ff .pv-pk .pv-tile { width:calc(50% - 7px); max-width:190px; } .ff .pv-own { flex-direction:column; align-items:center; } }
+.ff .ff-cta17.nb .cd { display:flex; flex-direction:column; height:100%; color:inherit; text-decoration:none; cursor:pointer; }
+.ff .ff-cta17.nb .cd b { padding-bottom:8px; }
+.ff .ff-cta17.nb .cd .t { padding-top:0; }
+.ff .ff-cta17.nb .cd:focus-visible { outline:3px solid var(--gold-mid,#B08D2A); outline-offset:-3px; }
+.ff .ff-cta17.nb li { transition:transform .15s; } .ff .ff-cta17.nb li:hover { transform:translateY(-2px); }
+@media (prefers-reduced-motion:reduce) { .ff .ff-cta17.nb li { transition:none; } .ff .ff-cta17.nb li:hover { transform:none; } }
+.ff .pv-nfc figcaption small { display:block; margin-top:2px; font-family:var(--font-sans,Inter,sans-serif); font-size:12.5px; color:#D9BFB1; }

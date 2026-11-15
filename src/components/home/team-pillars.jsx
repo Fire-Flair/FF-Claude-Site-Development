@@ -328,7 +328,7 @@
     const [on, tog] = useTog21();
     return (
       <div className="pv pv-lp">
-        {IM.reward_nfc_card ? <figure className="pv-nfc"><img src={IM.reward_nfc_card} alt="A black and gold FireFlair NFC Profile Card" decoding="async" draggable={false} /><figcaption>NFC Profile Card</figcaption></figure> : null}
+        {IM.j17_hp04 ? <figure className="pv-nfc"><img src={IM.j17_hp04} style={fp17("j17_hp04")} alt="A grand venue set for an evening event" decoding="async" draggable={false} /><figcaption>{TP21.launchParty.title}<small>{TP21.launchParty.where}</small></figcaption></figure> : null}
         <ul className="pv-ticks">
           {items.map((t) => <li key={t}><button type="button" className={on[t] ? "on" : ""} aria-pressed={!!on[t]} onClick={() => tog(t)}><span className="bx" aria-hidden="true">{on[t] ? <P21I.Check size={13} strokeWidth={3} /> : null}</span>{t}</button></li>)}
         </ul>
@@ -399,17 +399,16 @@
   function PillarCards21({ pl, photo, jump, href, onLink }) {
     const IM = window.FF_IMG || {};
     return (
-      <ol className="ff-cta17" aria-label={`${pl.t}: three ways in`}>
+      <ol className="ff-cta17 nb" aria-label={`${pl.t}: three ways in`}>
         {pl.sections.map((s, i) => {
           const ik = photo(i);
           return (
             <li key={s.id}>
-              <span className="ph">{IM[ik] ? <img decoding="async" src={IM[ik]} style={fp17(ik)} alt="" draggable={false} /> : null}<i>{i + 1}</i></span>
-              <b>{s.card.t}</b>
-              <span className="t">{s.card.d}</span>
-              {href
-                ? <a className="btn" href={infoHref21(s.slug)} onClick={(e) => { e.preventDefault(); onLink(s.slug); }}>{s.card.b}</a>
-                : <button type="button" onClick={() => jump(s.id)}>{s.card.b}</button>}
+              <a className="cd" href={href ? infoHref21(s.slug) : "#" + s.id} onClick={(e) => { e.preventDefault(); if (href) onLink(s.slug); else jump(s.id); }}>
+                <span className="ph">{IM[ik] ? <img decoding="async" src={IM[ik]} style={fp17(ik)} alt="" draggable={false} /> : null}<i>{i + 1}</i></span>
+                <b>{s.card.t}</b>
+                <span className="t">{s.card.d}</span>
+              </a>
             </li>
           );
         })}

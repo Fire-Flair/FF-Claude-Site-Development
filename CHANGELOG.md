@@ -1,5 +1,10 @@
 # FireFlair prototype — changelog
 
+## v17.9.3
+
+- Pillar pages: the 1, 2, 3 cards have no button; the whole card is the link to its section (PillarCards21, class ff-cta17 nb).
+- Launch party section: venue photo with the party title and place, and the tick list below it (the NFC card picture is gone from this section).
+
 ## v17.9.2
 
 - Pillar pages: the 1, 2, 3 cards at the top are back to three small cards on one line with small pictures (src/styles/team-pillars21.css); the larger numbered sections follow below.
