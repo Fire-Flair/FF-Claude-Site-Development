@@ -1,6 +1,6 @@
 {
  "library": "FireFlair photo library",
- "count": 165,
+ "count": 169,
  "photos": [
   {
    "id": "p01",
@@ -6938,6 +6938,166 @@
     1
    ],
    "near_duplicate_of": null,
+   "used_in": []
+  },
+  {
+   "id": "hp01",
+   "title": "Gold bistro table with a posy vase in pink light",
+   "description": "A glass-topped gold cocktail table with a small cut-glass vase of dried and fresh flowers, pink uplighting and green velvet chairs softly blurred behind.",
+   "batch": "harry-pseftoudis",
+   "kind": "photo",
+   "original": "originals/hp01-gold-table-posy-pink-light.jpg",
+   "web": "web/hp01-gold-table-posy-pink-light.webp",
+   "thumb": "thumbs/hp01-gold-table-posy-pink-light.webp",
+   "web_size": [
+    920,
+    1374
+   ],
+   "original_size": [
+    920,
+    1374
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "events",
+    "venue styling",
+    "florals",
+    "cocktail table"
+   ],
+   "focus": [
+    0.3,
+    0.55
+   ],
+   "keep": [
+    0,
+    0.3,
+    0.8,
+    0.95
+   ],
+   "near_duplicate_of": null,
+   "credit": "Photography by Harry Pseftoudis, used with his permission",
+   "used_in": []
+  },
+  {
+   "id": "hp02",
+   "title": "Charred orange cocktail with cherries and rosemary",
+   "description": "A rocks glass with a large ice cube, a charred orange slice and a cherry on a pick, on a wooden board with rosemary, cherries and linen, in a dark moody setting.",
+   "batch": "harry-pseftoudis",
+   "kind": "photo",
+   "original": "originals/hp02-charred-orange-cocktail-rosemary.jpg",
+   "web": "web/hp02-charred-orange-cocktail-rosemary.webp",
+   "thumb": "thumbs/hp02-charred-orange-cocktail-rosemary.webp",
+   "web_size": [
+    922,
+    1370
+   ],
+   "original_size": [
+    922,
+    1370
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "cocktails",
+    "signature",
+    "garnish",
+    "dark and moody"
+   ],
+   "focus": [
+    0.4,
+    0.35
+   ],
+   "keep": [
+    0.1,
+    0.2,
+    0.95,
+    0.75
+   ],
+   "near_duplicate_of": null,
+   "credit": "Photography by Harry Pseftoudis, used with his permission",
+   "used_in": []
+  },
+  {
+   "id": "hp03",
+   "title": "Coupes and highballs on a mirrored bar",
+   "description": "Two red berry highballs, a stacked tower of coupes topped with a martini and a spritz, and rows of glassware on a mirrored bar in a panelled room with arched windows.",
+   "batch": "harry-pseftoudis",
+   "kind": "photo",
+   "original": "originals/hp03-coupes-highballs-mirrored-bar.jpg",
+   "web": "web/hp03-coupes-highballs-mirrored-bar.webp",
+   "thumb": "thumbs/hp03-coupes-highballs-mirrored-bar.webp",
+   "web_size": [
+    912,
+    1370
+   ],
+   "original_size": [
+    912,
+    1370
+   ],
+   "orientation": "portrait",
+   "people": 0,
+   "brands_visible": [],
+   "tags": [
+    "cocktails",
+    "event bar",
+    "glassware",
+    "venue"
+   ],
+   "focus": [
+    0.55,
+    0.4
+   ],
+   "keep": [
+    0.1,
+    0.2,
+    1,
+    0.8
+   ],
+   "near_duplicate_of": null,
+   "credit": "Photography by Harry Pseftoudis, used with his permission",
+   "used_in": []
+  },
+  {
+   "id": "hp04",
+   "title": "Glass chandelier in a domed hall",
+   "description": "A large blue and yellow glass chandelier hanging under a lit dome, with a mirrored drinks station, tall flower arrangements and white-jacketed staff in motion below.",
+   "batch": "harry-pseftoudis",
+   "kind": "photo",
+   "original": "originals/hp04-glass-chandelier-domed-hall.jpg",
+   "web": "web/hp04-glass-chandelier-domed-hall.webp",
+   "thumb": "thumbs/hp04-glass-chandelier-domed-hall.webp",
+   "web_size": [
+    916,
+    1382
+   ],
+   "original_size": [
+    916,
+    1382
+   ],
+   "orientation": "portrait",
+   "people": 5,
+   "brands_visible": [],
+   "tags": [
+    "events",
+    "venue",
+    "drinks reception",
+    "florals"
+   ],
+   "focus": [
+    0.5,
+    0.35
+   ],
+   "keep": [
+    0.1,
+    0.1,
+    0.9,
+    0.9
+   ],
+   "near_duplicate_of": null,
+   "credit": "Photography by Harry Pseftoudis, used with his permission",
    "used_in": []
   }
  ]
