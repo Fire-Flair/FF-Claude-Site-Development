@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.4.7.23 — 2026-11-15 — New homepage hero image
+Phase Two artifact version 1794758943-28c4.
+
+- The hero image on the FF Team, FF Staff and FF Party home pages is replaced with a new people-free bar scene (gold bar tools, a rocks glass with orange peel, burgundy velvet and candlelight). All three homes share one hero image, so it changes everywhere at once.
+- Same format as before: 1800 x 850 WebP (the box is fixed at 1800:850), with a 900 x 425 version for small screens. The code is unchanged.
+- Developers: only `src/shell/ff-img.json` (the `hero` and `hero_sm` keys) and the two new files in `src/assets/img/` changed. The previous hero is kept in `assets/photos/` as `hero_whiskey_bar_v17.webp`, and the new one as `hero_bar_gold_burgundy.webp`.
+
 ## v17.4.7.22 — 2026-11-13 — FF Partners (Phase 3)
 Artifact version 1794553380-858a.
 
