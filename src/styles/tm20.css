@@ -11,3 +11,5 @@
 .ff-tm20-p:hover .ff-tm20-play,.ff-tm20-p:focus-visible .ff-tm20-play{transform:scale(1.06)}
 .ff-tm20-p:focus-visible{outline:3px solid #F4DC8E;outline-offset:-3px}
 @media (prefers-reduced-motion:reduce){.ff-tm20-play{transition:none}}
+
+@media (max-width:639px){.ff-tm20-v{width:100%}}

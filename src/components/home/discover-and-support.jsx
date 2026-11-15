@@ -350,9 +350,20 @@ function TwoMinutes20() {
   const V = CONTENT_ADAPTER.homepageTeamIntroVideo();
   const IM = window.FF_IMG || {};
   const [play, setPlay] = useState(false);
+  const [src, setSrc] = useState(null);
   const ref = useRef(null);
   const poster = IM[V.poster];
-  useEffect(() => { if (play && ref.current) { const p = ref.current.play(); if (p && p.catch) p.catch(() => {}); } }, [play]);
+  /* Some hosts serve files without byte ranges, which iPad and iPhone browsers refuse to play: fetch the file whole and play it from memory, falling back to the plain address. */
+  const start = () => {
+    setPlay(true);
+    let done = false;
+    const use = (u) => { if (!done) { done = true; setSrc(u); } };
+    try {
+      fetch(V.src).then((r) => (r.ok ? r.blob() : Promise.reject(new Error("video")))).then((b) => use(URL.createObjectURL(new Blob([b], { type: "video/mp4" })))).catch(() => use(V.src));
+    } catch (e) { use(V.src); }
+  };
+  const failed = () => { if (src && src !== V.src) setSrc(V.src); };
+  useEffect(() => { if (src && ref.current) { const p = ref.current.play(); if (p && p.catch) p.catch(() => {}); } }, [src]);
   return h(
     "section",
     { className: "ff-sect ff-tm20", id: "ff-two-minutes", "aria-label": V.label },
@@ -363,11 +374,11 @@ function TwoMinutes20() {
       h(
         "div",
         { className: "ff-tm20-v", style: { aspectRatio: V.width + " / " + V.height } },
-        play
-          ? h("video", { ref, src: V.src, poster, controls: true, playsInline: true, preload: "auto", "aria-label": V.label })
+        play && src
+          ? h("video", { ref, src, poster, controls: true, playsInline: true, preload: "auto", onError: failed, "aria-label": V.label })
           : h(
               "button",
-              { type: "button", className: "ff-tm20-p", onClick: () => setPlay(true), "aria-label": V.label },
+              { type: "button", className: "ff-tm20-p", onClick: start, "aria-label": V.label },
               poster ? h("img", { src: poster, alt: "", width: V.width, height: V.height, decoding: "async", draggable: false }) : null,
               h("span", { className: "ff-tm20-play", "aria-hidden": "true" }, h("svg", { viewBox: "0 0 24 24", width: 30, height: 30 }, h("path", { d: "M8 5.5v13l11-6.5z", fill: "currentColor" })))
             )

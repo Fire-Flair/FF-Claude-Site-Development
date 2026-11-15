@@ -8,6 +8,8 @@
 - FF Event Directory: each category has its own icon (Bar companies cocktail glass, Entertainment music, Event services party popper, Caterers cutlery, Bar services wine glass, Featured star) and its own default card colour (bar black, entertainment magenta, event services cobalt, caterers saffron, bar services grey). New card themes: magenta, cobalt, saffron, grey (src/state/themes-xp.js, default by category in src/content/companies.js).
 - Event management companies moved from Bar services to Event services (data/companies/profiles); Bar services is now ice and glassware.
 - Your profile section: the visual is now a stack, Your CV, down arrow, Profile Card, down arrow, Profile page (VisCvToProfile21). A photo shows on the card and page as soon as examples.card.photo in team-pillars.json is set to an image key; until then the initial shows.
+- SIMAO example uses his real photo (cropped from his live profile photo); Profile page stand-in shows it too.
+- FF Team home: heading "FF Team is built for getting you bookings"; FF Stories now sits above the questions; video loads as a whole file before playing (fixes browsers that need byte ranges) and is full width on mobile.
 - Photo album removed from the FF Team home; "Top companies" is now "Featured companies"; area pages list FF Directory companies from the nearest wider place when none are listed.
 
 ## v17.9.1 (artifact version 1794782522-a739): FF Team pillars redesign (iPad review), intro video panel

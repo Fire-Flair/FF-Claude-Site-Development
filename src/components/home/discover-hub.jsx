@@ -951,7 +951,7 @@ if (k === "package") return React.createElement("div", { className: "mc sv" }, R
     }, React.createElement("h2", {
       id: "ff-hb17-h",
       className: "ff-h1"
-    }, kind === "team" ? "How FireFlair is built for getting you bookings" : "How a booking works"), kind === "team" && React.createElement("h3", {
+    }, kind === "team" ? "FF Team is built for getting you bookings" : "How a booking works"), kind === "team" && React.createElement("h3", {
       className: "ff-label",
       style: { margin: "0 0 10px" }
     }, "How bookings work"), React.createElement("ol", {

@@ -63,7 +63,7 @@
   /* v17.9.2: every visual sits on the right of its text (stacked under it on a phone). Buttons and ticks in the visuals are live
      but lead nowhere: they only show their pressed state. */
   /* Real FF Team members' public Profile Cards (ffteam.uk). Their data is in team-pillars.json "examples". */
-  const p21Live = (x) => ({ level: 4, rating: null, reviews: 0, hasCar: false, availability: "open", qualifications: [], tier: "standard", photo: null, ...x, profession: x.professions[0], group: "Bartenders", theme: "onyx" });
+  const p21Live = (x) => ({ level: 4, rating: null, reviews: 0, hasCar: false, availability: "open", qualifications: [], tier: "standard", photo: null, ...x, photo: (x.photo && (window.FF_IMG || {})[x.photo]) || null, profession: x.professions[0], group: "Bartenders", theme: "onyx" });
   const P21_CARD = p21Live(TP21.examples.card);
   const P21_TEAM = TP21.examples.team.map(p21Live);
   const useTog21 = (init) => { const [v, setV] = useState(init || {}); return [v, (k) => setV((o) => ({ ...o, [k]: !o[k] }))]; };
@@ -71,7 +71,7 @@
   function VisCvToProfile21({ dir }) {
     const me = P21_CARD;
     const IM = window.FF_IMG || {};
-    const ph = me && me.photo && IM[me.photo] ? IM[me.photo] : null;
+    const ph = me && me.photo ? me.photo : null;
     const ini = me ? String(me.name || "").trim().charAt(0).toUpperCase() : "";
     const down = <span className="pv-ar dn" aria-hidden="true"><P21I.ChevronDown size={26} strokeWidth={2.2} /></span>;
     return (

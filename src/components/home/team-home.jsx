@@ -15,12 +15,12 @@ function Home101() {
         key: "how",
         kind: "team"
       }),
-      React.createElement(GuideQuestions11, {
-        key: "guide",
-        kind: "team"
-      }),
       React.createElement(Journal17, {
         key: "journal",
+        kind: "team"
+      }),
+      React.createElement(GuideQuestions11, {
+        key: "guide",
         kind: "team"
       }),
       React.createElement(BusinessSupport19, {
