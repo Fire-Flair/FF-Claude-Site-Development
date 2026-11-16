@@ -11,6 +11,9 @@ For the developers: the FF Party and FF Staff home pillars now use exactly the F
 - New src/components/home/site-pillar-visuals.jsx (in the manifest after team-pillars.jsx) with the Party and Staff visuals, built from the real cards in a compact form. Live as before: package tiles open the package pop-up, featured people open their profile, company cards open the company page. Examples (ticks, Favourite, Book again, layout switch) are tappable but lead nowhere. Styles added to src/styles/team-pillars21.css (v17.10 block at the end).
 - Pictures: tile photo pools chosen from the library (t17_ crops). Card pictures thp_* (Party) and ths_* (Staff) are screenshots of each section's own visual, made by the new scripts/make-pillar-thumbs.py (python3 scripts/make-pillar-thumbs.py party|staff after npm run build) and registered in photos17.json as j17_thp_* and j17_ths_*.
 - Copy: "Mixology Package" is now "Cocktail Package". No prices, no payment talk and no new numbers in the new copy; package tiles show no price (the pop-up shows the card as before).
+- Next button in a pillar: pillars in the section format use a photo from their pool as the backdrop (nextImg21 in discover-hub.jsx), not a card picture.
+- FF Team home video: the play button is a see-through circle the size of the FF emblem on the doors, placed over it (src/styles/tm20.css).
+
 ## v17.9.5
 
 - Default profession descriptions. On a public profile page a profession whose description was left blank now shows a default description for that profession, so no profession box looks empty. It is display only: nothing is written to the member's record, and the profile builder still shows the box blank.
