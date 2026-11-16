@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v17.11
+
+- Pillar sections no longer have a call-to-action button at the bottom (Create your Profile Card, Join the Challenge, Explore the network and the rest). Applies to FF Team, FF Party and FF Staff. The 1-2-3 cards at the top still link as before.
+- Launch Party visual (FF Team, section 2 of Our Network): the six items are a plain list, no tick boxes (.pv-lpl in team-pillars21.css).
+- Versioning: the prototype stays on 17.1 until told otherwise; small updates are 17.11, 17.111 and so on.
+
 ## v17.10
 
 For the developers: the FF Party and FF Staff home pillars now use exactly the FF Team pillar format (same components, same CSS, same layout). Copy is kept; FF Team is unchanged (pixel-identical at 820 wide before and after).

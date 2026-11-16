@@ -333,13 +333,10 @@
   function VisLaunchParty21() {
     const IM = window.FF_IMG || {};
     const items = TP21.launchParty.items;
-    const [on, tog] = useTog21();
     return (
       <div className="pv pv-lp">
         {IM.j17_hp04 ? <figure className="pv-nfc"><img src={IM.j17_hp04} style={fp17("j17_hp04")} alt="A grand venue set for an evening event" decoding="async" draggable={false} /><figcaption>{TP21.launchParty.title}<small>{TP21.launchParty.where}</small></figcaption></figure> : null}
-        <ul className="pv-ticks">
-          {items.map((t) => <li key={t}><button type="button" className={on[t] ? "on" : ""} aria-pressed={!!on[t]} onClick={() => tog(t)}><span className="bx" aria-hidden="true">{on[t] ? <P21I.Check size={13} strokeWidth={3} /> : null}</span>{t}</button></li>)}
-        </ul>
+        <ul className="pv-lpl">{items.map((t) => <li key={t}>{t}</li>)}</ul>
       </div>
     );
   }
@@ -398,7 +395,6 @@
           <div className="tx">{s.p.map((t, i) => <p key={i}>{t}</p>)}</div>
           <div className="vs"><Visual21 k={s.visual} /></div>
         </div>
-        <div className="ft">{locked && P21_LOCKED_GO.includes(s.cta.go) ? <LockedBtn17 bare className="ff-ps21-cta">{s.cta.label}</LockedBtn17> : <button type="button" className="ff-ps21-cta" onClick={() => run(s.cta.go)}>{s.cta.label}</button>}</div>
       </article>
     );
   }
