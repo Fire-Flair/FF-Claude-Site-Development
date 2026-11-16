@@ -387,7 +387,7 @@ function TeamBookings({ guest = false }) {
 function draftFromProfile(state) {
   const names = (cat) => recsOf(state.profile, cat).filter(r => !r.proposed).map(r => r.name);
   return {
-    name: state.profile.name, professions: names("professions"), photo: state.profile.photo,
+    name: state.profile.name, headline: state.profile.headline || "", professions: names("professions"), photo: state.profile.photo,
     skills: names("skills"), interests: names("interests"),
     locations: names("locations"), languages: names("languages"),
   };

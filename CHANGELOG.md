@@ -1,5 +1,16 @@
 # FireFlair prototype — changelog
 
+## v17.15
+
+Artifact version 1794846979-291b (FireFlair — Phase Two, almost final).
+
+Venue cards simplified; Let's get started and the Profile Card tidied.
+
+- Venues: the Primary, Secondary and Extra boxes and the Add venue tile are gone from Venues. The section is one search box (VenueSearch17, the Google business search) with the member's venues below it. Nothing else is asked for.
+- Venue cards (VenueLandscapeCard, attribute-cards.jsx) are small and the same size as the dotted outline in the Primary, Secondary and Extra boxes (clamp(110px, 30vw, 140px) wide, 110px high, squircle), in one neutral faded blue, on profiles, area pages and the map. Each shows the name, the type and area, and View on Google Maps (Google venues only). An X removes a venue while editing. Long names shrink so no word splits.
+- Let's get started (desktop): Upload CV and Book an interview sit on the right; Book an interview is a soft faded red instead of solid burgundy.
+- Profile Card editor: Professions sit on the left; a Headline box sits under the name (saved as profile.headline; its details come from another thread); the double line between Skills and Interests is one line (the type-in underline now shows only while typing); the postcode box matches the card (no white box) and works the same.
+
 ## v17.14
 
 Artifact version 1794844826-2fe8 (FireFlair — Phase Two, almost final).

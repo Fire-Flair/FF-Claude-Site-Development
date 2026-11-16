@@ -99,27 +99,26 @@ const mapsUrl = (r) => `https://www.google.com/maps/search/?api=1&query=${encode
 
 
 
-function VenueLandscapeCard({ record, onClick }) {
-  const t = THEMES.onyx;
-  const desc = (record.description || "").trim();
+/* v17.15: a venue card is small and plain: the name, the kind of place and area, and the Google Maps link.
+   It is the same size as the dotted outline in the Primary, Secondary and Extra boxes (VEN_W17 x VEN_H17),
+   in one neutral, faded blue. onRemove adds the X while the profile is being edited; noLink is for cards
+   that already sit inside a Google Maps link. */
+function VenueLandscapeCard({ record, onClick, onRemove, noLink }) {
+  const words = String(record.name || "").split(/\s+/);
+  const lw = Math.max(...words.map(w => w.length), 1);
+  const n = String(record.name || "").length;
+  const fs = Math.min(lw <= 9 ? 14 : lw <= 12 ? 12.5 : lw <= 15 ? 11 : 9.5, n <= 14 ? 14 : n <= 20 ? 12.5 : n <= 28 ? 11 : 10);
+  const meta = record.place ? [venTypeLabel17(record.place), record.area && record.area.name].filter(Boolean).join(" · ") : "";
+  const Tag = onClick ? "button" : "div";
   return (
-    <CardFrame as={onClick ? "button" : "div"} tier="standard" theme={t} ratio="7 / 5" onClick={onClick}
-      style={{ width: CARD_W.venue, padding: "26px 16px 12px", display: "flex", flexDirection: "column", textAlign: "left" }}>
-      <span style={{ position: "absolute", top: 10, left: 15, fontSize: 8.5, letterSpacing: ".14em", textTransform: "uppercase", fontWeight: 700, color: t.sub, zIndex: 4 }}>Venue</span>
-      <span style={{ display: "flex", gap: 14, alignItems: "flex-start", flex: 1, minHeight: 0 }}>
-        <span style={{ flex: 1, minWidth: 0 }}>
-          <span style={{ display: "block", fontFamily: "var(--sans)", color: t.ink, fontSize: 15.5, fontWeight: 700, lineHeight: 1.25 }}>{record.name}</span>
-          {desc && <span style={{ display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden", fontFamily: "var(--sans)", color: t.ink, opacity: .82, fontSize: 13, marginTop: 6, lineHeight: 1.4 }}>{desc}</span>}
-        </span>
-        {record.address && <span style={{ flex: "none", maxWidth: "42%", fontFamily: "var(--sans)", color: t.sub, fontWeight: 600, fontSize: 12.5, textAlign: "right", display: "flex", gap: 5, alignItems: "flex-start" }}>
-          <MapPin size={12} strokeWidth={1.6} style={{ flex: "none", marginTop: 2 }} />{record.address}
-        </span>}
-      </span>
-      <span style={{ display: "flex", alignItems: "center", gap: 8, paddingTop: 7, borderTop: `1px solid ${t.rule}`, marginTop: 8, minHeight: 15 }}>
-        {record.area && record.place && <span style={{ fontFamily: "var(--sans)", fontSize: 11, color: t.sub, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{venTypeLabel17(record.place)} · {record.area.name}</span>}
-        {record.place && <span className="ff-label" style={{ marginLeft: "auto", fontSize: 8, color: "#EAD79C", whiteSpace: "nowrap" }}>View on Google Maps →</span>}
-      </span>
-    </CardFrame>
+    <Tag type={onClick ? "button" : undefined} className="ff-venmini17" onClick={onClick}>
+      <span className="nm" style={{ fontSize: fs }}>{record.name}</span>
+      {meta && <span className="meta">{meta}</span>}
+      {record.place && (noLink
+        ? <span className="map">{"View on Google Maps\u00a0→"}</span>
+        : <a className="map" href={venueMapsUrl17(record)} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>{"View on Google Maps\u00a0→"}</a>)}
+      {onRemove && <button type="button" className="x" aria-label={`Remove ${record.name}`} onClick={(e) => { e.stopPropagation(); onRemove(); }}><X size={12} strokeWidth={2.4} /></button>}
+    </Tag>
   );
 }
 
@@ -177,7 +176,7 @@ function MediaCard({ record, def, themeKey = "onyx", onClick, highlight, rank })
 /* rank: "primary" | "secondary" | "tertiary" (internal only, never shown as words). */
 function GenericAttributeCard({ record, def, themeKey, onClick, rank, editable, pub }) {
   const card = def.landscape && pub !== "c"
-    ? <VenueLandscapeCard record={record} onClick={onClick} />
+    ? <VenueLandscapeCard record={record} />
     : def.mediaCard
     ? <MediaCard record={record} def={def} themeKey={record.proposed ? "paper" : themeKey} onClick={onClick} highlight={rank !== "tertiary" && !record.hidden} rank={rank} />
     : <InformationCard record={record} def={def} themeKey={record.proposed ? "paper" : themeKey} onClick={onClick} highlight={rank !== "tertiary" && !record.hidden} rank={rank} editable={editable} pub={pub} />;
@@ -236,7 +235,7 @@ function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd
   const unresolved = isMe && catKey === "professions" ? items.find(r => !r.proposed && !r.hidden && !professionCategory(r.name, r.displayCategory)) : null;
   /* Phase 1: Professions are added from Pick your professions (typing one
      creates its card), so that section has no separate Add square. */
-  const addTile = isMe && !def.system && catKey !== "professions" && catKey !== "experience" && (
+  const addTile = isMe && !def.system && catKey !== "professions" && catKey !== "experience" && catKey !== "venues" && (
     <button className="ff-card ff-addtile" aria-label={`Add ${def.singular.toLowerCase()}`} onClick={onAdd}
       style={def.landscape ? { width: CARD_W.venue, aspectRatio: "7 / 5" } : { width: CARD_W.info, aspectRatio: "1 / 1", borderRadius: 22 }}>
       <span style={{ textAlign: "center" }}>
@@ -284,7 +283,9 @@ function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd
         )}
         {isMe && catKey === "locations" && <CoverageTree17 owner={owner} />}
         <div style={{ height: isMe && catKey === "professions" && owner !== "company" ? 12 : 0 }} />
-        {catKey === "locations" ? (isMe ? null : <AreasChips17 owner={locOwner} />) : editing ? (
+        {catKey === "locations" ? (isMe ? null : <AreasChips17 owner={locOwner} />) : catKey === "venues" && isMe && owner !== "company" && editing ? (
+          <VenuesEditor17 items={items} />
+        ) : editing ? (
           <TierEditor catKey={catKey} def={def} rows={eRows} onOpen={(r) => onOpen(r)} tail={addTile} />
         ) : (
           pub && !isMe ? <PubGrid catKey={catKey} def={def} items={items} shade={shade} onOpen={onOpen} /> : (

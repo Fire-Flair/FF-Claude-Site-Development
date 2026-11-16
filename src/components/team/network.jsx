@@ -312,7 +312,7 @@ function ChipEdit({ values, onChange, placeholder, flags, ink, rule, leadFirst }
           ))}
         </div>
       )}
-      <input className="ff-cardin" value={t} placeholder={placeholder} style={{ color: ink, borderBottomColor: rule }}
+      <input className="ff-cardin ff-cardin-row" value={t} placeholder={placeholder} style={{ color: ink }}
         onChange={(e) => setT(e.target.value)} onBlur={add}
         onKeyDown={(e) => { if (e.key === "Enter" || e.key === ",") { e.preventDefault(); add(); } }} />
     </div>
@@ -388,9 +388,9 @@ function ProfTypeIn({ profs, set, ink, rule, onAdd }) {
         placeholder={profs.length ? "Add another profession" : "Search or type a profession"} aria-label="Search or type a profession"
         onChange={(e) => setQ(e.target.value)}
         onKeyDown={(e) => { if (e.key === "Enter" && n) { e.preventDefault(); if (hits[0]) add(hits[0].name); else if (!custom) return; else if (customCat) add(custom); else if (cat) add(custom, cat); } }}
-        style={{ color: ink, borderBottomColor: rule, textAlign: "center", fontSize: 13.5 }} />
+        style={{ color: ink, borderBottomColor: rule, textAlign: "left", fontSize: 13.5 }} />
       {n && (hits.length > 0 || custom) && (
-        <div role="list" aria-label="Matching professions" style={{ display: "flex", flexWrap: "wrap", gap: 5, justifyContent: "center", marginTop: 8 }}>
+        <div role="list" aria-label="Matching professions" style={{ display: "flex", flexWrap: "wrap", gap: 5, justifyContent: "flex-start", marginTop: 8 }}>
           {hits.map(p => (
             <button key={p.name} type="button" role="listitem" className="ff-tagchip" onClick={() => add(p.name)} style={{ color: ink, cursor: "pointer" }}>+ {p.name}</button>
           ))}
@@ -398,9 +398,9 @@ function ProfTypeIn({ profs, set, ink, rule, onAdd }) {
         </div>
       )}
       {n && custom && !customCat && (
-        <div className="ff-profcat" style={{ marginTop: 8, textAlign: "center" }}>
+        <div className="ff-profcat" style={{ marginTop: 8, textAlign: "left" }}>
           <div style={{ color: ink, fontSize: 12.5, fontWeight: 600, marginBottom: 6 }}>Which category is “{custom}” in?</div>
-          <div role="list" aria-label="Categories" style={{ display: "flex", flexWrap: "wrap", gap: 5, justifyContent: "center" }}>
+          <div role="list" aria-label="Categories" style={{ display: "flex", flexWrap: "wrap", gap: 5, justifyContent: "flex-start" }}>
             {CATEGORY_ORDER.map(k => (
               <button key={k} type="button" role="listitem" className="ff-tagchip" aria-pressed={cat === k} onClick={() => setCat(k)}
                 style={cat === k ? { background: "#141416", color: "#EAD79C", borderColor: "#141416", cursor: "pointer" } : { color: ink, cursor: "pointer" }}>{k}</button>
@@ -510,10 +510,17 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
     placeholder: "Your name",
     onChange: (e) => setDraft({ ...draft, name: e.target.value }),
     style: { color: ink, borderBottomColor: rule, marginTop: 12 }
+  }), React.createElement("input", {
+    className: "ff-cardin headline",
+    value: draft.headline || "",
+    placeholder: "Headline",
+    "aria-label": "Headline",
+    onChange: (e) => setDraft({ ...draft, headline: e.target.value }),
+    style: { color: ink, borderBottomColor: rule, marginTop: 8, textAlign: "center", fontSize: 13.5 }
   }), React.createElement("div", {
     style: { marginTop: 8 }
   }, React.createElement("div", {
-    style: { display: "flex", alignItems: "center", gap: 6, justifyContent: "center", marginBottom: 4 }
+    style: { display: "flex", alignItems: "center", gap: 6, justifyContent: "flex-start", marginBottom: 4 }
   }, React.createElement(CatIcon, {
     kind: "profession",
     size: 12,
@@ -524,7 +531,7 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
   }, "Professions")), React.createElement("div", {
     ref: profRef
   }, React.createElement("div", {
-    style: { display: "flex", flexWrap: "wrap", gap: 5, justifyContent: "center", marginBottom: 6 }
+    style: { display: "flex", flexWrap: "wrap", gap: 5, justifyContent: "flex-start", marginBottom: 6 }
   }, profs.map((v, i) => React.createElement("span", {
     key: v + i,
     className: `ff-tagchip${i === 0 ? " lead" : ""}`,

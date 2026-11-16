@@ -162,7 +162,7 @@ const venueReviewKeep17 = (s) => venueReviewList17(s).map(venueReviewSlim17);
 
 
 /* ---- The business search ----------------------------------------------------------------------------- */
-function VenueSearch17({ value, onPick, autoFocus, label }) {
+function VenueSearch17({ value, onPick, autoFocus, label, placeholder }) {
   const [q, setQ] = useState(value || "");
   const [list, setList] = useState([]);
   const [live, setLive] = useState(false);
@@ -201,7 +201,7 @@ function VenueSearch17({ value, onPick, autoFocus, label }) {
   return (
     <div className="ff-ven17">
       <style>{VEN_CSS17}</style>
-      <input className="ff-input" style={{ fontSize: 17 }} value={q} autoFocus={autoFocus} role="combobox" aria-label={label || "Venue"}
+      <input className="ff-input" style={{ fontSize: 17 }} value={q} autoFocus={autoFocus} role="combobox" aria-label={label || "Venue"} placeholder={placeholder}
         aria-expanded={open && rows.length > 0} aria-controls={boxId} aria-autocomplete="list" aria-busy={busy || undefined}
         aria-activedescendant={act >= 0 ? `${boxId}-${act}` : undefined} autoComplete="off" spellCheck={false}
         onChange={(e) => { setQ(e.target.value); setOpen(true); }} onFocus={() => setOpen(true)} onKeyDown={onKey}
@@ -224,6 +224,33 @@ function VenueSearch17({ value, onPick, autoFocus, label }) {
 }
 
 
+/* ---- Editing: one search box, then the venue cards ----------------------------------------------------- */
+/* A venue is added by typing its name and picking it. Nothing else is asked for. */
+function VenuesEditor17({ items }) {
+  const { dispatch } = useStore();
+  const [key, setKey] = useState(0);
+  const same = (r, p) => (r.place && p.place && r.place.id === p.place.id) || String(r.name).toLowerCase() === String(p.name).toLowerCase();
+  const add = (p) => {
+    if (!p || !p.name) return;
+    if (items.some(r => same(r, p))) { dispatch({ type: "TOAST", toast: `${p.name} is already on your profile` }); setKey(k => k + 1); return; }
+    dispatch({ type: "REC_ADD", category: "venues", record: makeRecord("venues", p.name, p) });
+    dispatch({ type: "TOAST", toast: `${p.name} added` });
+    setKey(k => k + 1);
+  };
+  return (
+    <div className="ff-venedit17">
+      <style>{VEN_CSS17}</style>
+      <VenueSearch17 key={key} label="Search for a venue" placeholder="Search for a venue" onPick={add} />
+      {items.length > 0 && (
+        <div className="ff-venedit17-cards">
+          {items.map(r => <VenueLandscapeCard key={r.id} record={r} onRemove={() => dispatch({ type: "REC_DELETE", category: "venues", id: r.id })} />)}
+        </div>
+      )}
+    </div>
+  );
+}
+
+
 /* ---- Area pages: the venues in this place ------------------------------------------------------------ */
 function AreaVenues17({ node }) {
   const { state, dispatch } = useStore();
@@ -238,7 +265,7 @@ function AreaVenues17({ node }) {
         {list.map(v => (
           <div key={v.key} className="ff-ven17-tile">
             <a href={venueMapsUrl17(v.rec)} target="_blank" rel="noopener noreferrer" aria-label={`${v.rec.name}, ${v.rec.address}: view on Google Maps`}>
-              <VenueLandscapeCard record={v.rec} />
+              <VenueLandscapeCard record={v.rec} noLink />
             </a>
             <p className="ff-ven17-who">{v.by.map(b => (
               <button key={b.kind + b.id} type="button" onClick={() => openBy(b)}>{b.kind === "company" ? <Building2 size={12} /> : <User size={12} />} {b.name}</button>

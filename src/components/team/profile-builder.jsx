@@ -10,7 +10,7 @@ function CardBuilder() {
     const nd = typeof next === "function" ? next(d) : next;
     const changed = CATS.filter(c => JSON.stringify(nd[c] || []) !== JSON.stringify(d[c] || []));
     if (changed.length) syncCardRecords(state, dispatch, nd, changed);
-    if (nd.name !== d.name || nd.photo !== d.photo) dispatch({ type: "PROFILE", patch: { name: nd.name, photo: nd.photo } });
+    if (nd.name !== d.name || nd.photo !== d.photo || (nd.headline || "") !== (d.headline || "")) dispatch({ type: "PROFILE", patch: { name: nd.name, photo: nd.photo, headline: nd.headline || "" } });
     if (String(nd.name || "").trim() && (nd.professions || []).length && !(state.profile.xpClaimed || []).includes("create_card")) {
       dispatch({ type: "CARD_CREATED_XP" });
       dispatch({ type: "TOAST", toast: `Profile Card created${xpNote(XP_VALUES.task)}` });

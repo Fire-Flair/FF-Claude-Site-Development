@@ -346,7 +346,7 @@ function FFMap({ mode = "home" }) {
               <CompanyCardFace c={co} size="sm" />
             </button>) : null; })()
             : sel.kind === "business" ? <OrgCard org={{ ...sel, kind: sel.profession }} kindLabel="Company" width="100%" />
-            : sel.kind === "venue" ? <a className="ff-ven17-sel" href={venueMapsUrl17(sel.rec)} target="_blank" rel="noopener noreferrer" aria-label={`${sel.name}: view on Google Maps`}><style>{VEN_CSS17}</style><VenueLandscapeCard record={sel.rec} /></a>
+            : sel.kind === "venue" ? <a className="ff-ven17-sel" href={venueMapsUrl17(sel.rec)} target="_blank" rel="noopener noreferrer" aria-label={`${sel.name}: view on Google Maps`}><style>{VEN_CSS17}</style><VenueLandscapeCard record={sel.rec} noLink /></a>
             : sel.kind === "event" ? (
               <div className="ff-tile dark" style={{ width: "100%", minHeight: 0, gap: 6 }}>
                 <Corners />

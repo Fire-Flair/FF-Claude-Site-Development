@@ -155,6 +155,9 @@ const BASE17_CSS = `
 .ff .ff-base17-now b{font-size:15px;font-weight:700;overflow-wrap:normal;word-break:normal}
 .ff .ff-base17-in{display:flex;gap:6px}
 .ff .ff-base17-in input{flex:1;min-width:0;font-size:16px;padding:9px 11px;border:1px solid var(--rule,#d8ccb0);border-radius:12px;corner-shape:squircle;background:#fff;color:#16130F}
+.ff .ff-base17-in.card input{padding:3px 0;border:0;border-radius:0;background:transparent;font-size:15px;font-family:var(--sans);outline:none;border-bottom:1px solid transparent}
+.ff .ff-base17-in.card input:focus{border-bottom-color:var(--gold)}
+.ff .ff-base17-in.card input::placeholder{color:inherit;opacity:.62}
 .ff .ff-base17-opts{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
 .ff .ff-base17-opt{display:flex;align-items:center;gap:9px;min-height:40px;padding:4px 10px;border-radius:12px;corner-shape:squircle;border:1px solid var(--rule,#d8ccb0);background:rgba(255,255,255,.65);color:#16130F;cursor:pointer;font-size:14px}
 .ff .ff-base17-opt input{width:18px;height:18px;flex:none;accent-color:#5C1220}
@@ -213,10 +216,10 @@ function BaseField17({ ink, owner }) {
         </div>
       ) : (
         <>
-          <div className="ff-base17-in">
+          <div className={`ff-base17-in${ink ? " card" : ""}`}>
             <input value={pc} onChange={(e) => { setPc(e.target.value.slice(0, 40)); setMsg(""); }}
               onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); find(); } }}
-              placeholder="Postcode" aria-label="Postcode" autoComplete="off" spellCheck={false} />
+              placeholder="Postcode" aria-label="Postcode" autoComplete="off" spellCheck={false} style={ink ? { color: ink } : undefined} />
           </div>
           {msg && <p className="ff-base17-msg" role="alert">{msg}</p>}
           {!pcOk && pc.trim().length >= 2 && (hits.length

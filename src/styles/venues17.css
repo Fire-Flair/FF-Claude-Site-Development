@@ -21,3 +21,16 @@
   border-radius: 12px; corner-shape: squircle; padding: 5px 10px; font-size: 12px; cursor: pointer; color: var(--ink, #16130F); white-space: nowrap; }
 .ff .ff-ven17-who button svg { color: var(--gold-dk, #7E611D); }
 .ff .ff-ven17-sel { display: block; margin: 0 auto; width: max-content; max-width: 100%; text-decoration: none; color: inherit; }
+
+/* v17.15: venue cards are the size of the dotted outline in the Primary, Secondary and Extra boxes, in a neutral faded blue. */
+.ff .ff-venmini17 { position: relative; flex: none; box-sizing: border-box; width: clamp(110px, 30vw, 140px); height: 110px; margin: 0; padding: 12px 10px 10px;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 3px; text-align: left; border: 1px solid rgba(255,255,255,.14); border-radius: 18px; corner-shape: squircle;
+  background: linear-gradient(160deg, #46566B, #384659); color: #EDF1F6; font-family: var(--sans); overflow: hidden; cursor: default; }
+.ff button.ff-venmini17 { cursor: pointer; }
+.ff .ff-venmini17 .nm { display: block; max-width: 100%; padding-right: 18px; font-weight: 700; line-height: 1.2; overflow-wrap: normal; word-break: normal; hyphens: none; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.ff .ff-venmini17 .meta { display: block; max-width: 100%; font-size: 10.5px; line-height: 1.25; color: #B4C0CF; overflow-wrap: normal; word-break: normal; hyphens: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ff .ff-venmini17 .map { margin-top: auto; max-width: 100%; font-size: 9px; font-weight: 700; line-height: 1.2; color: #D9E3F0; text-decoration: none; overflow-wrap: normal; word-break: normal; hyphens: none; }
+.ff .ff-venmini17 a.map:hover { text-decoration: underline; }
+.ff .ff-venmini17 .x { position: absolute; top: 7px; right: 7px; width: 20px; height: 20px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 8px; corner-shape: squircle; background: rgba(255,255,255,.12); color: #EDF1F6; cursor: pointer; }
+.ff .ff-venedit17 { display: flex; flex-direction: column; gap: 14px; }
+.ff .ff-venedit17-cards { display: flex; flex-wrap: wrap; gap: 10px; }

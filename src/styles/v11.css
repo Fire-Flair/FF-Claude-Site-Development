@@ -4537,5 +4537,11 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-start17 { gap:0; padding:4px 16px; }
 .ff .ff-start17 > .ff-way17 { border:0; border-radius:0; background:transparent; box-shadow:none; padding:16px 0; opacity:1; }
 .ff .ff-start17 > .ff-way17 + .ff-way17 { border-top:1px solid rgba(126,97,29,.3); }
-.ff .ff-way17-int .ff-way17-ctl .ff-btn.ff-bigcv17 { background:linear-gradient(180deg,#6B1626,#4A0F1C); color:#F6E7B4; border:1px solid #4A0F1C; opacity:1; filter:none; }
-.ff .ff-way17-int .ff-way17-ctl .ff-btn.ff-bigcv17 svg { color:#F6E7B4; }
+.ff .ff-way17-int .ff-way17-ctl .ff-btn.ff-bigcv17 { background:rgba(107,22,38,.09); color:#7A2F3C; border:1px solid rgba(107,22,38,.26); opacity:1; filter:none; box-shadow:none; }
+.ff .ff-way17-int .ff-way17-ctl .ff-btn.ff-bigcv17 svg { color:#7A2F3C; }
+/* Desktop: Upload CV and Book an interview sit on the right, the line beside them on the left. */
+@media (min-width:720px) {
+  .ff .ff-way17-cv, .ff .ff-way17-int { grid-template-columns:minmax(0,1fr) minmax(220px,300px); }
+  .ff .ff-way17-cv > .ff-way17-ctl, .ff .ff-way17-int > .ff-way17-ctl { grid-column:2; grid-row:1; }
+  .ff .ff-way17-cv > .ff-way17-line, .ff .ff-way17-int > .ff-way17-line { grid-column:1; grid-row:1; }
+}
