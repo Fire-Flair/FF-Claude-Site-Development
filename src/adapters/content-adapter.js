@@ -34,6 +34,9 @@ const CONTENT_ADAPTER = {
   /** FF Team home pillars (v17.9): four pillars, each with a summary, three cards and three full sections (title, three paragraphs, visual key, call to action, SEO title and description), plus tile photo pools, Launch Challenge copy and growth events. Every pillar and section also has a page at ffteam.uk/info/<slug>.
    *  Prototype source: src/content/homepage/team-pillars.json. Replace the body with a Content API call. */
   homepageTeamPillars() { return __ff_json("content/homepage/team-pillars.json"); },
+  /** Default profession descriptions: shown on a public profile when the member left that profession's description blank (never saved, never shown in the builder).
+   *  Prototype source: src/content/data/profession-descriptions.json. Replace the body with a Content API call. */
+  professionDescriptions() { return __ff_json("content/data/profession-descriptions.json"); },
   /** FF Team home video (press to play). Source: src/content/homepage/team-intro-video.json. */
   homepageTeamIntroVideo() { return __ff_json("content/homepage/team-intro-video.json"); },
   /** Homepage "discover" copy for FF Staff.

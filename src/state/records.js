@@ -197,7 +197,8 @@ function recordsForPerson(state, person) {
     description: demoFiller(person.id + cat + n), primary: true, readOnly: true,
   }));
   return {
-    professions: mk("professions", [person.profession]).map((r, i) => (i === 0 && person.level ? { ...r, level: person.level } : r)),
+    /* No filler on demo professions: a blank description shows the profession's default one (v17.9.5). */
+    professions: mk("professions", [person.profession]).map((r, i) => ({ ...r, description: "", ...(i === 0 && person.level ? { level: person.level } : {}) })),
     skills: mk("skills", person.skills),
     interests: mk("interests", person.interests),
     locations: mk("locations", person.locations),

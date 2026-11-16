@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.9.5
+
+- Default profession descriptions. On a public profile page a profession whose description was left blank now shows a default description for that profession, so no profession box looks empty. It is display only: nothing is written to the member's record, and the profile builder still shows the box blank.
+- The list is content: `src/content/data/profession-descriptions.json`, read through `CONTENT_ADAPTER.professionDescriptions()`. `byProfession` has one line per profession (the 35 catalogue professions and 11 common typed ones), `byCategory` covers any other typed profession by its display category, `fallback` covers the rest. Lookup is `professionDefaultDesc(name, displayCategory)` in `src/state/professions.js`.
+- Where it shows: the Professions cards on the public profile (`introductions.jsx`), the visitor's Information Card (`profile-card-parts.jsx`) and the read-only pop-up (`attribute-cards.jsx`).
+- For ffteam.uk: apply the same rule in the public profile view only (member description if present, else the default for the profession, else the category line, else the fallback). Do not store the default and do not prefill the builder's text box.
+- Demo professions no longer carry filler text, so the demo profiles show the defaults.
+
 ## v17.9.4
 
 - FF Team home video is now the Launch Challenge reel v3 (marketing/reels/ff-team_launch-challenge_v3.mp4 on main, copied to media/video-content/ff-team-reel/ff-team-reel.mp4 with faststart). Poster is its first frame (closed doors).

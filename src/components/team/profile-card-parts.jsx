@@ -325,10 +325,11 @@ function InformationCard({ record, def, themeKey = "onyx", onClick, width, compa
   const t = tier !== "standard" ? RANK_THEMES[tier] : (THEMES[themeKey === "slate" ? "onyx" : themeKey] || THEMES.onyx);
   const hasDoc = !!(record.document && record.document.name);
   const media = (record.media || []).slice(0, def.maxMedia || MAX_MEDIA_PER_CARD);
-  const desc = (record.description || "").trim();
+  const isProf = def.icon === "profession";
+  /* A visitor never sees an empty profession box: a blank description shows the profession's default one (v17.9.5). */
+  const desc = (record.description || "").trim() || (isProf && !editable && !record.proposed ? professionDefaultDesc(record.name, record.displayCategory) : "");
   const det = record.details || null;
   const sub = detailsLine(det, record.proficiency, record.name);
-  const isProf = def.icon === "profession";
   const isCocktail = catHas(def, "ingredients");
   const body = isCocktail ? (keyIngredients(record, 5).join(" · ") || desc) : desc;
   const verified = pub === "d" && record.verified === true;   // only from real verification data
