@@ -38,7 +38,7 @@ function CompaniesSection({ title = "Companies", note, list: listIn, fold, icon 
 
 /* Browse under the map: the four pillars sort the people and companies, and the map follows. */
 const NET_CO_TYPES17 = [["bar", "Bar companies"], ["dj", "Entertainment"], ["photo", "Event services"], ["catering", "Caterers"], ["svc", "Bar services"]];
-const NET_CAT_VIEW17 = { bar: ["Martini", "#16130F"], dj: ["Music", "#B02FA8"], photo: ["PartyPopper", "#1F7BE0"], catering: ["UtensilsCrossed", "#E8832A"], svc: ["Wine", "#7C8088"] };
+const NET_CAT_VIEW17 = { bar: ["Martini", "#16130F"], dj: ["Music", "#964991"], photo: ["PartyPopper", "#467DB9"], catering: ["UtensilsCrossed", "#4E8A3A"], svc: ["Wine", "#7E8186"] };
 function catIcon17(k) { const v = NET_CAT_VIEW17[k] || ["Briefcase", "var(--gold-dk)"]; return React.createElement(I11[v[0]] || I11.Briefcase, { size: 15, color: v[1], strokeWidth: 1.8 }); }
 
 
@@ -247,12 +247,15 @@ function NetBrowse17(props) {
   const query = props.query || "";
   const st = useStore(), state = st.state, dispatch = st.dispatch;
   const open = state.netPillar17 || "";
+  /* v17.20 FF Team: map, then the search box, then the Directory and Venues. No Our professionals banner, no Explore by area. */
+  const team20 = !!props.search && !props.noPackages;
   if (query.trim()) {
     const found = netSearch17(state, query);
     const anyCo = found.cos.length + found.dir.length > 0;
     return React.createElement(NetQ17.Provider, { value: query },
-      props.search ? React.createElement("section", { id: "ff-our-pros", style: { marginTop: 4, scrollMarginTop: 70 } }, React.createElement(BigHead20, { title: "Our professionals" }), props.search) : null,
-      props.after || null,
+      team20 ? (props.after || null) : null,
+      props.search ? React.createElement("section", { id: "ff-our-pros", style: { marginTop: team20 ? 18 : 4, scrollMarginTop: 70 } }, team20 ? null : React.createElement(BigHead20, { title: "Our professionals" }), props.search) : null,
+      team20 ? null : (props.after || null),
       React.createElement(GroupedPeople, { query: query, onPick: props.onPick, scope: props.scope, quietEmpty: anyCo }),
       found.cos.length ? React.createElement(CompaniesSection, { title: "Companies", list: found.cos }) : null,
       found.dir.length ? React.createElement(CompaniesSection, { title: "FF Event Directory", list: found.dir }) : null);
@@ -263,6 +266,13 @@ function NetBrowse17(props) {
   const teamSite = !!props.search && !props.noPackages;
   /* FF Staff (noPackages): no package explorer either; the map comes first and the search sits under Our professionals. */
   const noPkg = teamSite || !!props.noPackages;
+  if (team20) {
+    return React.createElement(React.Fragment, null,
+      props.after || null,
+      React.createElement("section", { id: "ff-our-pros", style: { marginTop: 18, scrollMarginTop: 70 } }, props.search),
+      React.createElement(NetDirectory20, null),
+      React.createElement(NetVenues20, null));
+  }
   return React.createElement(React.Fragment, null,
     noPkg ? null : React.createElement(BigHead20, { title: "Explore our packages" }),
     noPkg ? null : React.createElement(PillarBox17, { label: "Explore our packages", open: open, items: items, onPick: function (k) { dispatch({ type: "V11_SET", patch: { netPillar17: k } }); } }, open ? React.createElement(NetPackages20, { pillar: open }) : null),

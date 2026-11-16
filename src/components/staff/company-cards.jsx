@@ -7,7 +7,36 @@ const CC_LAYOUTS = [
   { key: "classic", name: "Classic" },
   { key: "logo", name: "Big logo" },
   { key: "centre", name: "Centred" },
+  { key: "banner", name: "Banner" },
+  { key: "crest", name: "Crest" },
 ];
+
+
+/* v17.20: the text block shrinks (never wraps inside a word, never cut with "…") until it fits the card. The tagline keeps to
+   one line in the Banner and Crest layouts and only wraps, between words, when it still does not fit at the smallest size. */
+function useCardFit20(ref, sig, off) {
+  useLayoutEffect(() => {
+    const body = ref.current, tx = body && body.querySelector(".ff-cc11-tx");
+    if (!body || !tx || off) return;
+    let raf = 0;
+    const over = () => body.scrollHeight > body.clientHeight + 1 || tx.scrollWidth > tx.clientWidth + 1;
+    const fit = () => {
+      tx.classList.remove("wr"); tx.style.zoom = "";
+      for (let pass = 0; pass < 2; pass++) {
+        let z = 1;
+        while (over() && z > 0.55) { z = Math.round((z - 0.04) * 100) / 100; tx.style.zoom = z; }
+        if (!over()) return;
+        tx.classList.add("wr"); tx.style.zoom = "";
+      }
+    };
+    fit();
+    const ro = window.ResizeObserver ? new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(fit); }) : null;
+    if (ro) ro.observe(body);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+    const late = setTimeout(fit, 600);
+    return () => { if (ro) ro.disconnect(); clearTimeout(late); cancelAnimationFrame(raf); };
+  }, [sig, off]);
+}
 
 
 const coInitials = (n) => String(n || "").replace(/^the\s+/i, "").split(/\s+/).filter(Boolean).map(w => w[0]).slice(0, 2).join("").toUpperCase() || "FF";
@@ -360,17 +389,23 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party, links }) {
     <span className="ar"><I11.MapPin size={12} /><span>{areas || "Where you're based"}</span></span>
   ) : null;
   const sv = socialValues11(co);
+  const bodyRef = useRef(null);
+  useCardFit20(bodyRef, [co.name, co.kind, areas, layout, size, co.logoWide, socialsOf11(co).join(), edit].join("|"), !!edit);
+  /* v17.20: a claimed company has no plate; the FIREFLAIR logo sits top right instead (the VIP Host Card keeps its plate). */
+  const claimed = !co.unclaimed;
+  const urlText = `${CARD_DOMAIN}/${slug}`;
+  const urlFs = `min(3.3cqw, ${((claimed ? 56 : 86) / Math.max(12, urlText.length * 0.62)).toFixed(2)}cqw)`;
   return (
     <CardFrame tier={(co.theme === "silver" || co.theme === "gold") ? co.theme : (co.tier || "gold")} theme={t} premium ratio="8 / 5" className={`ff-cocard ff-cc11 l-${layout} ${size}${co.logoWide ? " lw" : ""}`} style={{ ...vars, maxWidth: 460, margin: size ? 0 : "0 auto" }}>
-      <span className="ff-pc-plate ff-cc11-plate">{co.unclaimed ? "Company card" : party ? "VIP Host Card" : "Company Card"}</span>
-      {!co.unclaimed && <span className="ff-cc11-coin"><FFLogo size={size ? 24 : 30} tier={co.theme === "silver" ? "silver" : "gold"} /></span>}
-      <div className="ff-cc11-body">
+      {(!claimed || party) && <span className="ff-pc-plate ff-cc11-plate">{party ? "VIP Host Card" : "Company Card"}</span>}
+      {claimed && <span className="ff-cc11-coin"><FFLogo size="100%" tier={co.theme === "silver" ? "silver" : "gold"} /></span>}
+      <div className="ff-cc11-body" ref={bodyRef}>
         {logo}
         <span className="ff-cc11-tx">{name}{kind}{area}{socialsOf11(co).length > 0 && <span className="soc">{socialsOf11(co).map(k => { const lb = (SOC11.find(x => x.k === k) || {}).label, ic = <SocialIcon11 k={k} size={size ? 11 : 15} />; return links ? <a key={k} className="si" title={lb} aria-label={lb} href={coContactHref17(lb, sv[k])} target="_blank" rel="noopener noreferrer">{ic}</a> : <span key={k} className="si" title={lb}>{ic}</span>; })}</span>}</span>
       </div>
       <div className="ff-cc11-foot" style={{ background: t.dark ? "rgba(0,0,0,.45)" : "#141416" }}>
-        {!co.unclaimed && <><FFLogo size={size ? 15 : 18} /><Wordmark size={size ? 9 : 11} /></>}
-        <span className="url">{CARD_DOMAIN}/{slug}</span>
+        <span className="url" style={{ fontSize: urlFs }}>{urlText}</span>
+        {claimed && <Wordmark size={size ? 9 : 11} />}
       </div>
     </CardFrame>
   );

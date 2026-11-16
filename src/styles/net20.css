@@ -1,0 +1,13 @@
+/* v17.20 — FF Team Network page: Directory and Venues tabs, Featured tag, venue tile with the members who listed it. */
+.ff .ff-ptabs.ff-nt20 { margin: 2px 0 12px; overflow-x: auto; scrollbar-width: none; flex-wrap: nowrap; }
+.ff .ff-ptabs.ff-nt20::-webkit-scrollbar { display: none; }
+.ff .ff-ptabs.ff-nt20 button { flex: none; flex-direction: row; gap: 6px; padding: 10px 14px; font-size: 13.5px; white-space: nowrap; overflow-wrap: normal; word-break: normal; }
+.ff .ff-ptabs.ff-nt20 button::after { left: 14px; right: 14px; }
+.ff .ff-ptabs.ff-nt20 .ic { display: inline-flex; color: var(--gold-dk, #7E611D); }
+.ff .ff-ptabs.ff-nt20 button.on .ic { color: #16130F; }
+.ff .ff-ft20 { align-self: flex-start; display: inline-flex; align-items: center; gap: 5px; margin: 0 4px; padding: 3px 9px 3px 7px; border-radius: 10px; corner-shape: squircle; background: #16130F; color: #E4C36A; border: 1px solid #B08D2A; font: 800 10.5px/1.2 var(--sans); letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
+.ff .ff-vt20 { display: flex; flex-direction: column; gap: 8px; width: 200px; }
+.ff .ff-vt20 .ff-vc19 { width: 100%; }
+.ff .ff-vt20 .by { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 2px; }
+.ff .ff-vt20 .by button { padding: 0; border: 0; background: none; cursor: pointer; border-radius: 50%; line-height: 0; }
+.ff .ff-vt20 .by button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }

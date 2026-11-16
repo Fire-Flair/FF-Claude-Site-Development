@@ -1,5 +1,18 @@
 # FireFlair prototype — changelog
 
+## v17.20
+
+Artifact version 1794860910-0648.
+
+FF Team Network page (Phase 2 = FFTeam.uk 1.1): map, legend, search, FF Event Directory with five tabs per section, a Venues section, and a rebuilt Company Card with two new layouts.
+
+- Page order: map → legend → Search the network → FF Event Directory → Venues (NetBrowse17, NetworkScreen). "Our professionals" and the Explore by area drop-downs are not shown here (the code stays for other pages). Member cards are reached through search and the map. The VIP and signed-out Network pages share this layout; FF Staff and FF Party keep theirs.
+- FF Event Directory (network-directory20.jsx, styles/net20.css): no Featured companies section; Vooshka keeps its Featured tag and sits first in Bar companies; Bar companies is open, the others start collapsed. Each section has up to five tabs (one constant, NET_DIR_TABS20, with the labels and match rules; empty tabs are hidden): Bar companies (Mobile cocktail bars, Event bar hire, Bartender staffing, Specialist bars, Bar & catering); Entertainment (Wedding DJs, Party & club DJs, Corporate DJs, DJ & live music, Sound & lighting); Event services (Photography, Videography, Photo booths, Styling & decor, Planning & staffing); Caterers (Street food, Private chefs, Wedding catering, Corporate catering, Desserts & cakes); Bar services (Glassware & equipment, Ice & drinks supply, Cocktail masterclasses, Mobile bar builds, Drinks consultancy).
+- Colours: muted category colours; Caterers is grassy green (#4E8A3A).
+- Venues section under the directory: every venue members have listed, once each (VenueCard19), in five tabs by type (Cocktail bars, Hotels, Restaurants, Event venues, Clubs & late bars; typed venues go to Event venues), scrolling across, with the listing members' portraits under each card.
+- Company Card (shared, company-cards.jsx, styles/cc20.css): plate and logo use the Profile Card insets so they line up with the rim and inner line. Claimed companies have no "Company Card" plate; the FF logo sits top right. Unclaimed Directory entries keep the plate, no logo. Footer: FFTeam.uk/<slug> left; claimed companies show FIREFLAIR right. Two new layouts in CC_LAYOUTS: Banner (logo band across the top, name and tagline below) and Crest (centred logo in a metal ring, centred name and tagline). All text shrinks to fit.
+- Small Profile Cards: FFTeam.uk/<Tag> left, FIREFLAIR word right (no logo).
+
 ## v17.19
 
 Artifact version 1794860123-92ae.

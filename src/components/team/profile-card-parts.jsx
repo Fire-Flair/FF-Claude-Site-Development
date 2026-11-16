@@ -181,6 +181,7 @@ function PlayerFace17({ person, large, themeKey, tier, onClick, selected, nameAs
       <div className="pc17-bar" style={{ borderColor: t.rule, background: dark ? "rgba(0,0,0,.45)" : "#141416" }}>
         <FitText17 as="span" size={4.3} className="pc17-url" style={{ color: "#EAD79C" }}>{`${CARD_DOMAIN}/${pc17Tag(person.tag)}`}</FitText17>
         {large && <span className="pc17-brand"><span className="pc17-mark"><FFLogo size="100%" tier={tier} /></span>FIREFLAIR</span>}
+        {!large && <span className="pc17-brand pc17-brand-sm">FIREFLAIR</span>}
       </div>
       {selected && (
         <span style={{ position: "absolute", inset: 0, zIndex: 5, background: "rgba(201,162,39,.14)", display: "flex", alignItems: "center", justifyContent: "center" }}>
