@@ -40,6 +40,9 @@ const CONTENT_ADAPTER = {
   /** FF Staff home pillars (v17.10): same shape as homepageTeamPillars().
    *  Prototype source: src/content/homepage/staff-pillars.json. Replace the body with a Content API call. */
   homepageStaffPillars() { return __ff_json("content/homepage/staff-pillars.json"); },
+  /** Default profession descriptions: shown on a public profile when the member left that profession's description blank (never saved, never shown in the builder).
+   *  Prototype source: src/content/data/profession-descriptions.json. Replace the body with a Content API call. */
+  professionDescriptions() { return __ff_json("content/data/profession-descriptions.json"); },
   /** FF Team home video (press to play). Source: src/content/homepage/team-intro-video.json. */
   homepageTeamIntroVideo() { return __ff_json("content/homepage/team-intro-video.json"); },
   /** Homepage "discover" copy for FF Staff.

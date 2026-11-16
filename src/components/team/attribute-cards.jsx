@@ -490,7 +490,7 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
       {!def.mediaCard && (
       <Field label={def.descLabel || "Description"}>
         {readOnly
-          ? <p className="ff-serif" style={{ fontSize: 16, lineHeight: 1.5, margin: 0 }}>{draft.description || "Nothing written yet."}</p>
+          ? <p className="ff-serif" style={{ fontSize: 16, lineHeight: 1.5, margin: 0 }}>{draft.description || (category === "professions" ? professionDefaultDesc(draft.name, draft.displayCategory) : "") || "Nothing written yet."}</p>
           : <textarea className="ff-input" rows={5} value={draft.description || ""} placeholder={def.descPlaceholder || undefined}
               onChange={(e) => patch({ description: e.target.value })} />}
       </Field>

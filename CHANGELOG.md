@@ -11,6 +11,17 @@ For the developers: the FF Party and FF Staff home pillars now use exactly the F
 - New src/components/home/site-pillar-visuals.jsx (in the manifest after team-pillars.jsx) with the Party and Staff visuals, built from the real cards in a compact form. Live as before: package tiles open the package pop-up, featured people open their profile, company cards open the company page. Examples (ticks, Favourite, Book again, layout switch) are tappable but lead nowhere. Styles added to src/styles/team-pillars21.css (v17.10 block at the end).
 - Pictures: tile photo pools chosen from the library (t17_ crops). Card pictures thp_* (Party) and ths_* (Staff) are screenshots of each section's own visual, made by the new scripts/make-pillar-thumbs.py (python3 scripts/make-pillar-thumbs.py party|staff after npm run build) and registered in photos17.json as j17_thp_* and j17_ths_*.
 - Copy: "Mixology Package" is now "Cocktail Package". No prices, no payment talk and no new numbers in the new copy; package tiles show no price (the pop-up shows the card as before).
+## v17.9.5
+
+- Default profession descriptions. On a public profile page a profession whose description was left blank now shows a default description for that profession, so no profession box looks empty. It is display only: nothing is written to the member's record, and the profile builder still shows the box blank.
+- The list is content: `src/content/data/profession-descriptions.json`, read through `CONTENT_ADAPTER.professionDescriptions()`. `byProfession` has one line per profession (the 35 catalogue professions and 11 common typed ones), `byCategory` covers any other typed profession by its display category, `fallback` covers the rest. Lookup is `professionDefaultDesc(name, displayCategory)` in `src/state/professions.js`.
+- Where it shows: the Professions cards on the public profile (`introductions.jsx`), the visitor's Information Card (`profile-card-parts.jsx`) and the read-only pop-up (`attribute-cards.jsx`).
+- For ffteam.uk: apply the same rule in the public profile view only (member description if present, else the default for the profession, else the category line, else the fallback). Do not store the default and do not prefill the builder's text box.
+- Demo professions no longer carry filler text, so the demo profiles show the defaults.
+
+## v17.9.4
+
+- FF Team home video is now the Launch Challenge reel v3 (marketing/reels/ff-team_launch-challenge_v3.mp4 on main, copied to media/video-content/ff-team-reel/ff-team-reel.mp4 with faststart). Poster is its first frame (closed doors).
 
 ## v17.9.3
 

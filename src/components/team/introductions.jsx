@@ -368,7 +368,7 @@ function PublicProfileBody({ person }) {
                     onClick={() => setOpenRec({ record: r, def: cats.professions, category: "professions" })}>
                     <span className="ff-agrp-top"><span className="ff-agrp-h">{r.name}</span></span>
                     {onStaff && staffRateP17(state, person.tag, r.name) != null && <span className="ff-agrp-rate">Preferred rate {gbp17(staffRateP17(state, person.tag, r.name))}/hour</span>}
-                    {String(r.description || "").trim() && <span className="ff-agrp-d">{r.description}</span>}
+                    {(String(r.description || "").trim() || professionDefaultDesc(r.name, r.displayCategory)) && <span className="ff-agrp-d">{String(r.description || "").trim() || professionDefaultDesc(r.name, r.displayCategory)}</span>}
                   </button>
                 ))}
               </MemScroll>

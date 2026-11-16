@@ -49,6 +49,18 @@ function professionCategory(name, override) {
 const professionId = (name) => "prof." + String(name || "").trim().toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 
 
+/* v17.9.5: the default description of a profession, for public profile pages only. Used when the member has left the
+   profession's own description blank, so no profession box looks empty. It is never written to the record and the
+   profile builder still shows the box blank. */
+const PROF_DESC17 = CONTENT_ADAPTER.professionDescriptions();
+const PROF_DESC_BY17 = Object.fromEntries(Object.entries(PROF_DESC17.byProfession).map(([k, v]) => [k.toLowerCase(), v]));
+function professionDefaultDesc(name, override) {
+  const n = String(name || "").trim().toLowerCase();
+  if (!n) return "";
+  return PROF_DESC_BY17[n] || PROF_DESC17.byCategory[professionCategory(name, override)] || PROF_DESC17.fallback;
+}
+
+
 const personCategory = (p) => professionCategory(p.profession, p.categoryOverride) || "Other";
 
 
