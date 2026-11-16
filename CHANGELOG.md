@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v17.111
+
+- Log-in screen redesigned (landing-shell.jsx LoginSheet, styles/login21.css). WhatsApp tab: phone number only (country code list + number), then six code boxes; the FF Tag is no longer asked for. Password tab: username (the FF Tag) and password, with show/hide.
+- AUTH_ADAPTER.sendCode(phone) and verifyCode(phone, code) no longer take a tag; verifyCode returns the account's tag. The FF Party host sheet (phone + password) is unchanged.
+- Backend check (FireFlair-Backend e643e5e): /auth/send-otp and /auth/verify-otp still require ff_tag, so phone-only log-in needs a backend change first. See the notes in the chat hand-off.
+
 ## v17.11
 
 - Pillar sections no longer have a call-to-action button at the bottom (Create your Profile Card, Join the Challenge, Explore the network and the rest). Applies to FF Team, FF Party and FF Staff. The 1-2-3 cards at the top still link as before.

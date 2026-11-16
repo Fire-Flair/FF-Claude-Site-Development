@@ -273,100 +273,125 @@ function XPBar({ info }) {
 
 
 
-/* LOG IN — FF Tag + WhatsApp code (every account), or FF Tag + password
-   (accounts that chose to create one). Talks only to AUTH_ADAPTER; a
-   successful result becomes AUTH_SIGNED_IN, which is the one thing the nav
-   button reads. */
+const LOGIN_CSS21 = __ff_css("styles/login21.css");
+
+/* Dial codes offered on the log-in sheet (the backend takes the code and the digits separately). */
+const LOGIN_DIAL21 = [["+44", "UK"], ["+353", "IE"], ["+1", "US"], ["+33", "FR"], ["+34", "ES"], ["+39", "IT"], ["+49", "DE"], ["+31", "NL"], ["+351", "PT"], ["+971", "AE"], ["+61", "AU"], ["+91", "IN"]];
+
+/* Six one-digit boxes for the WhatsApp code: types forward, backspace goes back, a pasted code fills all six. */
+function CodeBoxes21({ value, onChange, onDone }) {
+  const refs = useRef([]);
+  const set = (digits) => { const d = digits.replace(/\D/g, "").slice(0, 6); onChange(d); if (d.length === 6 && onDone) onDone(d); };
+  const put = (i, ch) => {
+    const d = value.split(""); d[i] = ch; const next = d.join("").slice(0, 6);
+    set(next); if (ch && refs.current[i + 1]) refs.current[i + 1].focus();
+  };
+  return (
+    <div className="ff-lg21-code" role="group" aria-label="Code from WhatsApp">
+      {[0, 1, 2, 3, 4, 5].map((i) => (
+        <input key={i} ref={(el) => (refs.current[i] = el)} className={value[i] ? "on" : ""} inputMode="numeric" autoComplete={i === 0 ? "one-time-code" : "off"} maxLength={1} aria-label={`Digit ${i + 1}`}
+          value={value[i] || ""}
+          onChange={(e) => { const ch = e.target.value.replace(/\D/g, "").slice(-1); if (ch) put(i, ch); else { const d = value.split(""); d[i] = ""; set(d.join("")); } }}
+          onKeyDown={(e) => { if (e.key === "Backspace" && !value[i] && i > 0) refs.current[i - 1].focus(); }}
+          onPaste={(e) => { e.preventDefault(); set(e.clipboardData.getData("text")); const n = Math.min(5, e.clipboardData.getData("text").replace(/\D/g, "").length); if (refs.current[n]) refs.current[n].focus(); }} />
+      ))}
+    </div>
+  );
+}
+
+/* LOG IN — phone number + WhatsApp code, or username (FF Tag) + password. Talks only to AUTH_ADAPTER;
+   a successful result becomes AUTH_SIGNED_IN, which is the one thing the nav button reads.
+   v17.111: the WhatsApp tab asks for the phone number only (the account's FF Tag comes back from the
+   service); the password tab asks for username and password. */
 function LoginSheet({ open, onClose }) {
   const { state, dispatch } = useStore();
   const [mode, setMode] = useState("otp");
-  const [tag, setTag] = useState("");
+  const [user, setUser] = useState("");
   const [pw, setPw] = useState("");
-  const [phone, setPhone] = useState("");
+  const [showPw, setShowPw] = useState(false);
+  const [dial, setDial] = useState("+44");
+  const [local, setLocal] = useState("");
   const [code, setCode] = useState("");
   const [sent, setSent] = useState(false);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState(null);
-  useEffect(() => { if (open) { setMode("otp"); setPw(""); setCode(""); setSent(false); setErr(null); setBusy(false); } }, [open]);
+  useEffect(() => { if (open) { setMode("otp"); setPw(""); setShowPw(false); setCode(""); setSent(false); setErr(null); setBusy(false); } }, [open]);
   if (!open) return null;
   if (hireSiteOf(state).party) return <PartyLoginSheet17 onClose={onClose} />;
 
-  const clean = AUTH_ADAPTER.cleanTag(tag);
+  const clean = AUTH_ADAPTER.cleanTag(user);
   const tagOk = AUTH_ADAPTER.tagOk(clean);
+  const digits = local.replace(/\D/g, "").replace(/^0+/, "");
+  const phone = `${dial} ${digits}`;
+  const phoneOk = (dial.replace(/\D/g, "") + digits).length >= 9;
   const run = async (fn) => {
     setBusy(true); setErr(null);
     try { return await fn(); } catch (e) { setErr(e.message); return null; } finally { setBusy(false); }
   };
   const done = (res) => {
     if (!res) return;
-    const demo = false;
-    if (demo) dispatch({ type: "SEED_DEMO" });
-    else if (res.method === "otp") dispatch({ type: "SESSION", patch: { tag: res.tag, phone, verified: true } });
-    else dispatch({ type: "SESSION", patch: { tag: res.tag } });
-    dispatch({ type: "AUTH_SIGNED_IN", tag: demo ? "SAM42" : res.tag, method: res.method, login: true });
-    dispatch({ type: "TOAST", toast: `Logged in as ${demo ? "SAM42" : res.tag}` });
+    const mine = state.session && state.session.phone && state.session.phone.replace(/\D/g, "") === phone.replace(/\D/g, "") && state.session.tag;
+    const tag = res.method === "otp" && mine ? state.session.tag : res.tag;
+    if (res.method === "otp") dispatch({ type: "SESSION", patch: { tag, phone, verified: true } });
+    else dispatch({ type: "SESSION", patch: { tag } });
+    dispatch({ type: "AUTH_SIGNED_IN", tag, method: res.method, login: true });
+    dispatch({ type: "TOAST", toast: `Logged in as ${tag}` });
     onClose();
   };
   const switchTo = (m) => { setMode(m); setErr(null); setSent(false); setCode(""); };
   const loginPw = () => run(() => AUTH_ADAPTER.loginWithPassword(clean, pw)).then(done);
-  const sendCode = () => run(() => AUTH_ADAPTER.sendCode(clean, phone)).then(r => { if (r) setSent(true); });
-  const verify = () => run(() => AUTH_ADAPTER.verifyCode(clean, phone, code)).then(done);
+  const sendCode = () => run(() => AUTH_ADAPTER.sendCode(phone)).then(r => { if (r) setSent(true); });
+  const verify = (c) => run(() => AUTH_ADAPTER.verifyCode(phone, c || code)).then(done);
 
   return (
     <Sheet open onClose={onClose} title="Log in">
-      <div className="ff-authtabs" role="tablist" aria-label="How to log in">
-        <button type="button" role="tab" aria-selected={mode === "otp"} className={mode === "otp" ? "on" : ""} onClick={() => switchTo("otp")}>
-          <WhatsAppIcon size={12} /> WhatsApp code
-        </button>
-        <button type="button" role="tab" aria-selected={mode === "password"} className={mode === "password" ? "on" : ""} onClick={() => switchTo("password")}>
-          <Lock size={11} /> Password
-        </button>
+      <style>{LOGIN_CSS21}</style>
+      <div className="ff-lg21">
+        <header className="ff-lg21-hd">
+          <span className="mk" aria-hidden="true"><Coin size={34} tier="gold" /></span>
+          <h2>Welcome back</h2>
+        </header>
+
+        <div className="ff-lg21-tabs" role="tablist" aria-label="How to log in">
+          <button type="button" role="tab" aria-selected={mode === "otp"} className={mode === "otp" ? "on" : ""} onClick={() => switchTo("otp")}><WhatsAppIcon size={14} /> WhatsApp</button>
+          <button type="button" role="tab" aria-selected={mode === "password"} className={mode === "password" ? "on" : ""} onClick={() => switchTo("password")}><Lock size={13} /> Password</button>
+        </div>
+
+        {mode === "password" ? (
+          <form className="ff-lg21-form" onSubmit={(e) => { e.preventDefault(); if (tagOk && pw && !busy) loginPw(); }}>
+            <label className="ff-lg21-f"><span>Username</span>
+              <input className="ff-lg21-in" autoComplete="username" autoCapitalize="none" spellCheck={false} placeholder="Your FF Tag" value={clean} maxLength={AUTH_ADAPTER.TAG_MAX} onChange={(e) => setUser(e.target.value)} />
+            </label>
+            <label className="ff-lg21-f"><span>Password</span>
+              <span className="ff-lg21-pw">
+                <input className="ff-lg21-in" type={showPw ? "text" : "password"} autoComplete="current-password" value={pw} onChange={(e) => setPw(e.target.value)} />
+                <button type="button" className="eye" aria-label={showPw ? "Hide password" : "Show password"} aria-pressed={showPw} onClick={() => setShowPw(v => !v)}>{showPw ? <EyeOff size={17} /> : <Eye size={17} />}</button>
+              </span>
+            </label>
+            <button type="submit" className="ff-lg21-go" disabled={busy || !tagOk || !pw}>{busy ? <Loader2 size={16} className="ff-spin" /> : <ShieldCheck size={16} />} Log in</button>
+          </form>
+        ) : !sent ? (
+          <form className="ff-lg21-form" onSubmit={(e) => { e.preventDefault(); if (phoneOk && !busy) sendCode(); }}>
+            <label className="ff-lg21-f"><span>Phone number</span>
+              <span className="ff-lg21-ph">
+                <select aria-label="Country code" value={dial} onChange={(e) => setDial(e.target.value)}>{LOGIN_DIAL21.map(([d, n]) => <option key={d} value={d}>{n} {d}</option>)}</select>
+                <input className="ff-lg21-in" type="tel" autoComplete="tel-national" placeholder="7700 900000" value={local} onChange={(e) => setLocal(e.target.value)} />
+              </span>
+            </label>
+            <button type="submit" className="ff-lg21-go wa" disabled={busy || !phoneOk}>{busy ? <Loader2 size={16} className="ff-spin" /> : <WhatsAppIcon size={16} />} Send code on WhatsApp</button>
+          </form>
+        ) : (
+          <div className="ff-lg21-form">
+            <p className="ff-lg21-to">Code sent to <b>{phone}</b></p>
+            <CodeBoxes21 value={code} onChange={setCode} onDone={(c) => !busy && verify(c)} />
+            <button type="button" className="ff-lg21-go" disabled={busy || code.length < 6} onClick={() => verify()}>{busy ? <Loader2 size={16} className="ff-spin" /> : <ShieldCheck size={16} />} Log in</button>
+            <button type="button" className="ff-lg21-link" onClick={() => { setSent(false); setCode(""); setErr(null); }}>Use a different number</button>
+          </div>
+        )}
+
+        {err && <p className="ff-lg21-err" role="alert">{err}</p>}
+        <p className="ff-lg21-note">{AUTH_ADAPTER.note}</p>
       </div>
-
-      <Field label="FF Tag">
-        <TagInput value={clean} onChange={setTag} />
-      </Field>
-
-      {mode === "password" ? (<>
-        <Field label="Password">
-          <input className="ff-input" type="password" autoComplete="current-password" value={pw}
-            onChange={(e) => setPw(e.target.value)} onKeyDown={(e) => e.key === "Enter" && tagOk && pw && !busy && loginPw()} />
-        </Field>
-        <Btn variant="primary wide" disabled={busy || !tagOk || !pw} onClick={loginPw}>
-          {busy ? <Loader2 size={14} className="ff-spin" /> : <ShieldCheck size={14} />} Log in
-        </Btn>
-        <div style={{ height: 8 }} />
-        <Btn variant="ghost wide" onClick={() => switchTo("otp")}><WhatsAppIcon size={13} /> Use a WhatsApp code instead</Btn>
-      </>) : (<>
-        <Field label="Phone number" hint="The mobile number on your FireFlair account. We'll send a code on WhatsApp.">
-          <input className="ff-input" type="tel" autoComplete="tel" placeholder="+44 7700 900000" value={phone} disabled={sent}
-            onChange={(e) => setPhone(e.target.value)} />
-        </Field>
-        {!sent ? (
-          <Btn variant="primary wide" disabled={busy || !tagOk || phone.replace(/\D/g, "").length < 9} onClick={sendCode}>
-            {busy ? <Loader2 size={14} className="ff-spin" /> : <WhatsAppIcon size={14} />} Send WhatsApp code
-          </Btn>
-        ) : (<>
-          <Field label="Code from WhatsApp" hint={`Sent to ${phone}.`}>
-            <input className="ff-input ff-tagin" inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={code}
-              onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))} placeholder="000000" aria-label="Code from WhatsApp" />
-          </Field>
-          <Btn variant="primary wide" disabled={busy || code.length < 6} onClick={verify}>
-            {busy ? <Loader2 size={14} className="ff-spin" /> : <ShieldCheck size={14} />} Verify & log in
-          </Btn>
-          <div style={{ height: 8 }} />
-          <Btn variant="ghost wide" onClick={() => { setSent(false); setCode(""); }}>Change number</Btn>
-        </>)}
-        <div style={{ height: 8 }} />
-        <Btn variant="ghost wide" onClick={() => switchTo("password")}><Lock size={13} /> Use your password instead</Btn>
-        <p className="ff-body ff-muted" style={{ fontSize: 11.5, margin: "8px 0 0", textAlign: "center" }}>Only if you created one — passwords are optional.</p>
-      </>)}
-
-      {err && <p className="ff-body" role="alert" style={{ color: "var(--bad)", fontSize: 12.5, margin: "12px 0 0" }}>{err}</p>}
-      <p className="ff-body ff-muted" style={{ fontSize: 11, margin: "14px 0 0" }}>
-        {AUTH_ADAPTER.note} Any FF Tag with a six-digit code, or a password of five or more characters, logs in.
-        New to FireFlair? Create your FF Tag at the top of the Profile page.
-      </p>
       <button type="button" className="ff-dev17 login" onClick={() => {
         ["team", "biz", "party"].forEach(k => seedDemo17(state, dispatch, k));
         dispatch({ type: "V11_SET", patch: { devDone: { team: true, biz: true, party: true } } });
