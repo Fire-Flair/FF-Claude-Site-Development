@@ -1,5 +1,10 @@
 # FireFlair prototype — changelog
 
+## v17.11111
+
+- Site icons from the new logo (black disc, gold ring, FF), made from assets/brand/ff-logo-social-print.png and kept in assets/brand/site-icons/: browser tab icon (64 px, round), Apple home-screen icon (180 px, logo on black), 192 and 512 px icons, and the link-preview image (1200 x 630, logo on black). index.html head now has the icon links, apple-touch-icon, Apple web-app tags, og:image and twitter:image (summary_large_image).
+- For the live site: serve the og image and icons from the real domain and make og:image and twitter:image absolute URLs (for example https://ffparty.uk/og-image.png); link-preview crawlers do not follow relative paths. Add assets/brand/site-icons/manifest.webmanifest as /manifest.webmanifest with `<link rel="manifest">` so Android installs with the same logo on a black background.
+
 ## v17.1111
 
 - New logo (FFLogo) on the log-in sheets (header and the large mark; FF Team and FF Party sheets) and on the centre FF button in the bottom bar. Sheet takes a new prop `newLogo`. Hero, spinning coins, the top-bar coin and every other Coin are unchanged.
