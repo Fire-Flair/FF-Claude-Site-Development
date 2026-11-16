@@ -1,7 +1,7 @@
 /* v17.111: log-in sheet. Cream card, onyx and gold, squircle corners, green only on the WhatsApp action. */
 .ff-lg21 { display:grid; gap:18px; padding:4px 2px 2px; }
 .ff-lg21-hd { display:flex; flex-direction:column; align-items:center; gap:10px; padding-top:2px; }
-.ff-lg21-hd .mk { display:grid; place-items:center; width:64px; height:64px; border-radius:50%; background:radial-gradient(circle at 35% 30%,#2A241A,#0E0C09); box-shadow:0 10px 24px -12px rgba(22,19,15,.7), inset 0 0 0 1px rgba(244,220,142,.45); }
+.ff-lg21-hd .mk { display:grid; place-items:center; width:72px; height:72px; filter:drop-shadow(0 10px 14px rgba(22,19,15,.35)); }
 .ff-lg21-hd h2 { margin:0; font-family:var(--display); font-weight:700; font-size:27px; line-height:1.1; letter-spacing:-.01em; color:#16130F; text-align:center; }
 .ff-lg21-tabs { display:grid; grid-template-columns:1fr 1fr; gap:4px; padding:4px; border-radius:18px; corner-shape:squircle; background:#EFE5CD; border:1px solid rgba(126,97,29,.28); }
 .ff .ff-lg21-tabs button { display:flex; align-items:center; justify-content:center; gap:7px; min-height:46px; border-radius:14px; corner-shape:squircle; font:700 14.5px var(--font-sans,Inter,sans-serif); color:#5B5346; background:transparent; border:0; cursor:pointer; transition:background .18s,color .18s,box-shadow .18s; }

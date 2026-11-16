@@ -250,7 +250,7 @@ function PartyLoginSheet17({ onClose }) {
     } catch (e) { setErr("That phone number and password do not match."); } finally { setBusy(false); }
   };
   return (
-    <Sheet open onClose={onClose} title="Log in">
+    <Sheet open onClose={onClose} title="Log in" newLogo>
       <Field label="Phone number"><input className="ff-input" type="tel" autoComplete="tel" placeholder="+44 7700 900000" value={phone} onChange={(e) => setPhone(e.target.value)} /></Field>
       <Field label="Password"><input className="ff-input" type="password" autoComplete="current-password" value={pw} onChange={(e) => setPw(e.target.value)} onKeyDown={(e) => e.key === "Enter" && ok && !busy && go()} /></Field>
       <Btn variant="primary wide" disabled={busy || !ok} onClick={go}>{busy ? <Loader2 size={14} className="ff-spin" /> : <ShieldCheck size={14} />} Log in</Btn>

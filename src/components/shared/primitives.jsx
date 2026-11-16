@@ -27,7 +27,7 @@ function Field({ label, hint, children }) {
 
 
 
-function Sheet({ open, onClose, title, children, center = false }) {
+function Sheet({ open, onClose, title, children, center = false, newLogo = false }) {
   const ref = useRef(null);
   const closeRef = useRef(onClose); closeRef.current = onClose;
   useEffect(() => {
@@ -54,7 +54,7 @@ function Sheet({ open, onClose, title, children, center = false }) {
     <div className={`ff-scrim${center ? " center" : ""}`} onClick={onClose}>
       <div className={`ff-sheet${center ? " center" : ""}`} ref={ref} tabIndex={-1} onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={title}>
         <div className="ff-sheet-head">
-          <Coin size={22} />
+          {newLogo ? <FFLogo size={24} tier="gold" /> : <Coin size={22} />}
           <span className="ff-h2" style={{ flex: 1 }}>{title}</span>
           <button onClick={onClose} aria-label="Close"><X size={20} /></button>
         </div>

@@ -1,5 +1,9 @@
 # FireFlair prototype — changelog
 
+## v17.1111
+
+- New logo (FFLogo) on the log-in sheets (header and the large mark; FF Team and FF Party sheets) and on the centre FF button in the bottom bar. Sheet takes a new prop `newLogo`. Hero, spinning coins, the top-bar coin and every other Coin are unchanged.
+
 ## v17.111
 
 - Log-in screen redesigned (landing-shell.jsx LoginSheet, styles/login21.css). WhatsApp tab: phone number only (country code list + number), then six code boxes; the FF Tag is no longer asked for. Password tab: username (the FF Tag) and password, with show/hide.

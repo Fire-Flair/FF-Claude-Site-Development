@@ -344,11 +344,11 @@ function LoginSheet({ open, onClose }) {
   const verify = (c) => run(() => AUTH_ADAPTER.verifyCode(phone, c || code)).then(done);
 
   return (
-    <Sheet open onClose={onClose} title="Log in">
+    <Sheet open onClose={onClose} title="Log in" newLogo>
       <style>{LOGIN_CSS21}</style>
       <div className="ff-lg21">
         <header className="ff-lg21-hd">
-          <span className="mk" aria-hidden="true"><Coin size={34} tier="gold" /></span>
+          <span className="mk" aria-hidden="true"><FFLogo size={64} tier="gold" /></span>
           <h2>Welcome back</h2>
         </header>
 
@@ -642,7 +642,7 @@ function Shell({ children }) {
           {NAV.map(n => n.key === "__ff" ? (
             <div key="ff" className="ff-navcentre">
               <button className="ff-coinbtn" style={{ position: "relative" }} onClick={() => setNotifyOpen(true)} aria-label="Notifications">
-                <Coin size={56} tier={isTeam ? xpProgress(state.profile.xp).currentTier : "gold"} />{notifyCount17(state) > 0 && <i className="ff-nbadge11">{notifyCount17(state)}</i>}
+                <FFLogo size={56} tier={isTeam ? xpProgress(state.profile.xp).currentTier : "gold"} />{notifyCount17(state) > 0 && <i className="ff-nbadge11">{notifyCount17(state)}</i>}
               </button>
             </div>
           ) : partyLocked && PARTY_LOCKED_TABS17.includes(n.key) ? (
