@@ -4532,3 +4532,10 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-co-pop-tx { margin:0 0 10px; font:500 15px/1.5 var(--sans); color:#2A2620; white-space:pre-line; }
 .ff .ff-info17 { grid-template-columns:minmax(0,1fr); }
 .ff .ff-info17 > section { min-width:0; }
+
+/* v17.11111111: Let's get started is one box, the three ways divided by lines; Book an interview is burgundy. */
+.ff .ff-start17 { gap:0; padding:4px 16px; }
+.ff .ff-start17 > .ff-way17 { border:0; border-radius:0; background:transparent; box-shadow:none; padding:16px 0; opacity:1; }
+.ff .ff-start17 > .ff-way17 + .ff-way17 { border-top:1px solid rgba(126,97,29,.3); }
+.ff .ff-way17-int .ff-way17-ctl .ff-btn.ff-bigcv17 { background:linear-gradient(180deg,#6B1626,#4A0F1C); color:#F6E7B4; border:1px solid #4A0F1C; opacity:1; filter:none; }
+.ff .ff-way17-int .ff-way17-ctl .ff-btn.ff-bigcv17 svg { color:#F6E7B4; }

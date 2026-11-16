@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.11111111
+
+Artifact version 1794842473-7ec3 (FireFlair — Phase Two, almost final).
+
+- Create a profile, "Let's get started": Upload CV, Talk or type to GPT and Book an interview now sit inside one box, divided by thin gold lines, instead of three separate boxes (.ff-start17 in src/styles/v11.css).
+- Book an interview is a burgundy button with gold text, so it no longer reads white on white.
+- The three sections are no longer faded (an older badge rule set .ff-way17 to 78% opacity).
+
 ## v17.1111111
 
 Artifact version 1794842296-2ba9 (FireFlair — Phase Two, almost final).
