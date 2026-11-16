@@ -484,12 +484,3 @@ const DEMO_GALLERY = {
 
 
 
-/* Venues and companies are organisations — landscape cards, never 5:7. */
-const VENUES = [
-  { id: "ven_loft", name: "The Loft Lounge", kind: "Cocktail bar", area: "Enfield", tag: "LOFTL", tier: "gold" },
-  { id: "ven_hack", name: "Hackney Depot", kind: "Warehouse venue", area: "East London", tag: "HACKD", tier: "silver" },
-  { id: "ven_mayf", name: "Mayfair Rooms", kind: "Private members", area: "Central London", tag: "MAYFR", tier: "gold" },
-  { id: "ven_river", name: "Riverside Pavilion", kind: "Marquee & garden", area: "South London", tag: "RIVER", tier: "bronze" },
-  { id: "ven_char", name: "Charlotte House", kind: "Townhouse", area: "West London", tag: "CHARH", tier: "silver" },
-  { id: "ven_north", name: "Northbank Studio", kind: "Production space", area: "North London", tag: "NRTHS", tier: "standard" },
-];

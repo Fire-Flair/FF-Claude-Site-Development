@@ -18,7 +18,7 @@ const prefersReducedMotion = () => { try { return window.matchMedia("(prefers-re
 const PUB_KIND = { professions: "m", experience: "x", qualifications: "d", skills: "s", interests: "s", languages: "s", locations: "s" };
 
 
-const PUB_ORDER = ["professions", "media", "qualifications", "skills", "experience", "locations", "languages", "interests"];
+const PUB_ORDER = ["professions", "media", "qualifications", "skills", "venues", "experience", "locations", "languages", "interests"];
 
 
 
@@ -533,6 +533,7 @@ function ExpandedAttrs({ list }) {
         return (
           <article key={r.id} className="ff-xatt-box">
             <h3>{r.name}</h3>
+            {r.category === "venues" && r.address && <div className="ff-xatt-note">{r.address}{r.place ? <> · <a href={venueMapsUrl17(r)} target="_blank" rel="noopener noreferrer">View on Google Maps</a></> : null}</div>}
             {String(r.description || "").trim() && <p>{r.description}</p>}
             {det.length > 0 && <dl>{det.map(([k, v]) => <div key={k}><dt>{cap(k)}</dt><dd>{String(v)}</dd></div>)}</dl>}
             {media.length > 0 && <div className="ff-xatt-media">{media.map((m, i) => <img decoding="async" key={i} src={m.dataUrl || m.src} alt={m.name || ""} loading="eager" />)}</div>}

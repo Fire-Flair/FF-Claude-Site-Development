@@ -730,6 +730,8 @@ function AreaPage11() {
         {React.createElement(window.PartyPackages18, { ids: pkgHere.ids, peopleOf: (id) => pkgHere.by[id] || [], place: fdLabel(node), title: "Available packages" })}
       </section>}
 
+      <AreaVenues17 node={node} />
+
       {res.dir.length > 0 && <section id="ff-fd-dir" aria-labelledby="fd-dir-h" style={{ marginTop: 26, scrollMarginTop: 70 }}>
         <h2 id="fd-dir-h" className="ff-h2">FF Event Directory</h2>
         <p className="ff-fd-sub">{res.dirScope ? `No companies are listed in ${fdLabel(node)} yet, so these serve ${fdLabel(res.dirScope)}. ` : ""}Companies listed from their public contact details. FF companies are the companies that have joined and can be booked through FireFlair.</p>

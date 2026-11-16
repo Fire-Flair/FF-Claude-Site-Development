@@ -1,0 +1,23 @@
+/* v17.14 Venues: the business search dropdown and the venue tiles on area pages. */
+.ff .ff-ven17 { position: relative; }
+.ff .ff-ven17-list { position: absolute; z-index: 40; left: 0; right: 0; top: calc(100% + 6px); margin: 0; padding: 6px; list-style: none;
+  background: #fff; border: 1px solid rgba(126,97,29,.22); border-radius: 18px; corner-shape: squircle;
+  box-shadow: 0 14px 34px rgba(20,16,10,.16); max-height: 330px; overflow: auto; }
+.ff .ff-ven17-list li { margin: 0; }
+.ff .ff-ven17-list button { display: flex; gap: 10px; align-items: flex-start; width: 100%; text-align: left; border: 0; background: none;
+  cursor: pointer; padding: 10px 11px; border-radius: 12px; corner-shape: squircle; color: var(--ink, #16130F); font: inherit; }
+.ff .ff-ven17-list button svg { flex: none; margin-top: 2px; color: var(--gold-dk, #7E611D); }
+.ff .ff-ven17-list button span { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.ff .ff-ven17-list button b { font-size: 14.5px; font-weight: 700; line-height: 1.25; overflow-wrap: normal; word-break: normal; hyphens: none; }
+.ff .ff-ven17-list button small { font-size: 12.5px; color: #6B6458; line-height: 1.3; overflow-wrap: normal; word-break: normal; hyphens: none; }
+.ff .ff-ven17-list button:hover, .ff .ff-ven17-list button.on { background: rgba(201,162,39,.12); }
+.ff .ff-ven17-list button.typed { border-top: 1px solid rgba(126,97,29,.14); border-radius: 0 0 12px 12px; margin-top: 2px; }
+.ff .ff-ven17-list button.typed b { font-weight: 600; }
+.ff .ff-ven17-by { padding: 6px 11px 2px; text-align: right; font-size: 10.5px; letter-spacing: .04em; color: #8A8273; }
+.ff .ff-ven17-tile { display: flex; flex-direction: column; gap: 6px; flex: none; }
+.ff .ff-ven17-tile > a { display: block; text-decoration: none; color: inherit; border-radius: 16px; corner-shape: squircle; }
+.ff .ff-ven17-who { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; max-width: 100%; }
+.ff .ff-ven17-who button { display: inline-flex; align-items: center; gap: 5px; border: 1px solid rgba(126,97,29,.2); background: #fff;
+  border-radius: 12px; corner-shape: squircle; padding: 5px 10px; font-size: 12px; cursor: pointer; color: var(--ink, #16130F); white-space: nowrap; }
+.ff .ff-ven17-who button svg { color: var(--gold-dk, #7E611D); }
+.ff .ff-ven17-sel { display: block; margin: 0 auto; width: max-content; max-width: 100%; text-decoration: none; color: inherit; }

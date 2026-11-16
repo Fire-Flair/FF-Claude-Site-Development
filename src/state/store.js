@@ -452,7 +452,7 @@ function reducerCore17(s0, a) {
     /* Sign out: back to the signed-out home page with no role, no profile and
        no demo data, so the full sign-up flow can be walked through again.
        The invitation code from a link is cleared too: it belongs to the visit that used it. */
-    case "SIGN_OUT":  return { ...initialState, toast: "Signed out", coClaims17: s.coClaims17, dirEdits17: s.dirEdits17, admin17: s.admin17 };
+    case "SIGN_OUT":  return { ...initialState, toast: "Signed out", coClaims17: s.coClaims17, dirEdits17: s.dirEdits17, admin17: s.admin17, venueReview17: venueReviewKeep17(s) };
     case "HYDRATE":   return migrate1746({ ...s, ...a.patch, _hydrated: true });
     default:          return s;
   }

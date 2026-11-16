@@ -131,12 +131,12 @@ const DEMO_RECORDS = () => {
   add("qualifications", "Personal Licence", { description: "Issued by Enfield Council. Valid and current.", document: { name: "personal-licence.pdf", size: 184320, type: "application/pdf", dataUrl: null } });
   add("qualifications", "WSET Level 2", { description: "Wines and spirits, merit pass." });
 
-  add("experience", "The Loft Lounge — Head Bartender", { description: "2022–2025. Ran the bar team, built the seasonal cocktail menus and managed supplier relationships." });
-  add("venues", "The Loft Lounge", { address: "Enfield, London", description: "Head bartender 2022–2025." });
-  add("venues", "Mayfair Rooms", { address: "Mayfair, London W1", description: "Members' club bar." });
-  add("venues", "Hackney Depot", { address: "Hackney, London E8", description: "Launch events and festival bars." });
+  /* v17.14: two venues picked from the sample business search (placed on their area pages and the map) and one typed
+     by hand (not on Google, so it waits in FF Admin under Venues to review). */
+  add("venues", "Tobacco Dock", { ...venueFromSample17("sample:tobacco-dock"), description: "Launch events and festival bars." });
+  add("venues", "Claridge's", { ...venueFromSample17("sample:claridges"), description: "Hotel bar, private events." });
+  add("venues", "The Loft Lounge", { ...venueTypedPatch17("The Loft Lounge"), description: "Head bartender 2022–2025." });
 
-  add("experience", "Mayfair Rooms — Bartender", { description: "2019–2022. Members' club service, high-spec classics." });
   return R;
 };
 
@@ -162,7 +162,7 @@ const XP_TASKS = [
   { id: "add_languages",      label: "Add languages",            hint: "What you speak" },
   { id: "add_locations",      label: "Add work locations",       hint: "Where you work" },
   { id: "add_qualifications", label: "Add a qualification",      hint: "Licences and certificates" },
-  { id: "add_experience",     label: "Add experience",           hint: "Where you've worked" },
+  { id: "add_venues",         label: "Add venues",               hint: "Where you've worked" },
   { id: "first_review",       label: "Receive a review",         hint: "Ask someone you've worked with" },
 ].map(t => ({ ...t, xp: XP_VALUES.task }));
 

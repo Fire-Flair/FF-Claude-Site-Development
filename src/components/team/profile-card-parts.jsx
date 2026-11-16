@@ -499,7 +499,6 @@ function OrgCard({ org, kindLabel, onClick, width }) {
 }
 
 
-const VenueCard = ({ venue, onClick, width }) => <OrgCard org={venue} kindLabel="Venue" onClick={onClick} width={width} />;
 
 
 

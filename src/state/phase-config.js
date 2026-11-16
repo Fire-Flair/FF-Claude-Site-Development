@@ -28,7 +28,9 @@ const PHASE1 = {
   /* Profile sections in Phase 1, in this order. Qualifications above Skills;
      Venues straight after Experience; Work locations as its own section.
      Signature cocktails stay in BASE_CATEGORIES for a later release. */
-  profileOrder: ["professions", "qualifications", "skills", "experience", "venues", "locations", "languages", "interests", "media", "reviews"],
+  /* v17.14: Venues replace Experience. Experience stays in the order only so entries already saved still show;
+     nobody can add a new one, and the section is left out when it is empty. */
+  profileOrder: ["professions", "qualifications", "skills", "venues", "experience", "locations", "languages", "interests", "media", "reviews"],
   /* FF XP · 2027 runs on the prototype's own XP and tier logic. The only
      way in is the FF coin pop-up: no XP bar, no XP page. */
   xpLive: false,   /* v1.2: XP isn't live in version 1 — the pop-up says Coming 2027 */

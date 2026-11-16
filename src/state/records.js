@@ -64,8 +64,10 @@ const BASE_CATEGORIES = {
     onCard: false, fields: ["media", "document"], system: true,
     placeholder: "Summer launch, Hackney Depot",
   },
+  /* v17.14: Venues take Experience's place. The name comes from Google's business search (venues17.jsx), which also
+     fills the address, the map point and the area; nothing about the venue is typed except a name Google doesn't know. */
   venues: {
-    label: "Venues", singular: "Venue", icon: "venue", landscape: true,
+    label: "Venues", singular: "Venue", icon: "venue", landscape: true, titleLabel: "Venue",
     onCard: false, fields: ["address", "description", "media"],
     placeholder: "Your venue",
   },

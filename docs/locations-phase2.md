@@ -112,3 +112,4 @@ The prototype asks `LOCATION_ADAPTER.lookupPostcode`. In production this runs on
 - `src/components/shared/base17.jsx`: the postcode box and the base point.
 - `src/components/shared/find-directory.jsx`: the area pages and their matching.
 - `src/adapters/location-adapter.js`: the postcode lookup.
+- Venues (v17.14) use the same list of places: `docs/venues-phase2.md` explains how a venue from Google's business search is placed on the area pages and the map.

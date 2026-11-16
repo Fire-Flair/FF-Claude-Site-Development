@@ -3,7 +3,8 @@
    THE MAP (FF Team, FF Staff, FF Party) — the FF Team coins on a real map of
    the UK. The map is drawn from Natural Earth data (public domain) embedded in
    the page (#ff-ukgeo), so nothing is fetched from a map server. It opens on
-   the UK; the London coin flies in to the areas. Pins stay area-only.
+   the UK; the London coin flies in to the areas. People's pins stay area-only;
+   v17.14: venues from Google's business search sit at their own point.
    ========================================================================== */
 let UK_GEO11 = null;
 
@@ -149,14 +150,18 @@ function FFMap({ mode = "home" }) {
     const people = directory.map(p => ({ ...p, kind: "person", area: p.basePin ? p.basePin.label : (p.locations || []).find(l => MAP_AREAS[l]) })).filter(p => p.area);
     const p1 = mode === "phase1";
     const all = home || p1
-      ? [...people, ...(p1 ? [] : MAP_BUSINESSES.map(b => ({ ...b, kind: "business" }))),
-         ...VENUES.map(v => ({ ...v, vtype: v.kind, kind: "venue", venue: true })), ...(p1 ? [] : MAP_EVENTS.map(e => ({ ...e, kind: "event" })))]
-      : mode === "network" ? [...people, ...VENUES.map((v) => ({ ...v, vtype: v.kind, kind: "venue", venue: true }))] : people;
+      ? [...people, ...(p1 ? [] : MAP_BUSINESSES.map(b => ({ ...b, kind: "business" }))), ...(p1 ? [] : MAP_EVENTS.map(e => ({ ...e, kind: "event" })))]
+      : people;
     const seen = {};
     const RING = [[0, 0], [7, -6], [-7, 5], [8, 7], [-8, -6], [0, 9], [0, -9], [11, 0], [-11, 0], [10, -9], [-10, 9]];
     const cos = mode === "phase1" ? [] : COMPANY_PINS11.map(p => ({ ...p, x: (p.ll[1] + 0.4045) / 0.00525, y: (51.654 - p.ll[0]) / 0.002957 + 9 }));
     const partnerPins = mode !== "network" ? [] : companyList(state).filter((c) => !c.unclaimed && !c.mine && (c.locations || []).length).flatMap((c) => c.locations.map((l, i) => { const ll = [l.lat, l.lng]; return { id: "pt_" + c.id + "_" + i, coId: c.id, kind: "company", partner: true, name: c.name, profession: c.kind, area: l.label, ll, ldn: inLondon11(ll), cat: c.cat || "bar", x: (ll[1] + 0.4045) / 0.00525, y: (51.654 - ll[0]) / 0.002957 + 9 }; }));
     const xyOf = (ll) => ({ x: (ll[1] + 0.4045) / 0.00525, y: (51.654 - ll[0]) / 0.002957 + 9 });
+    /* v17.14: venues members added from Google's business search, each at its own point (people stay at area level). */
+    const venuePins = home || p1 || mode === "network" ? publicVenues17(state).map(v => {
+      const ll = [v.rec.place.lat, v.rec.place.lng];
+      return { id: "ven_" + v.key, kind: "venue", venue: true, name: v.rec.name, vtype: venTypeLabel17(v.rec.place), area: v.rec.area.name, ll, ldn: inLondon11(ll), rec: v.rec, ...xyOf(ll) };
+    }) : [];
     /* The signed-in company's base (the seeded companies already have their pins above). */
     const mine = mode === "phase1" ? null : companyList(state).find(c => c.mine && baseHas17(c));
     const bp = mine ? basePublicPoint17(mine) : null;
@@ -176,8 +181,8 @@ function FFMap({ mode = "home" }) {
       const n = (seen[p.area] = (seen[p.area] || 0) + 1) - 1;
       const ring = RING[n % RING.length];
       return { ...p, x: Math.max(4, Math.min(96, bx + ring[0])), y: Math.max(5, Math.min(95, by + ring[1])) };
-    }), ...cos, ...partnerPins, ...minePin];
-  }, [home, mode, directory.length, state.company, state.profile.base17]);
+    }), ...cos, ...partnerPins, ...minePin, ...venuePins];
+  }, [home, mode, directory.length, state.company, state.profile.base17, state.profile.live, state.profile.records && state.profile.records.venues]);
   const netQ = useContext(NetQ17), searching = mode === "network" && !!String(netQ || "").trim();
   const netPillar = mode === "network" && !searching ? (state.netPillar17 || "") : "";
   const pinsAll = useMemo(() => {
@@ -313,7 +318,7 @@ function FFMap({ mode = "home" }) {
           {Object.entries(MAP_AREAS).map(([a, [x, y]]) => (
             <span key={a} style={{ position: "absolute", left: `${x}%`, top: `${y}%`, transform: "translate(-50%,-260%)", fontSize: 8, letterSpacing: ".16em", textTransform: "uppercase", color: "rgba(234,215,156,.45)", whiteSpace: "nowrap", pointerEvents: "none" }}>{a}</span>
           ))}
-          {pins.filter(p => p.kind !== "company" || (p.ldn && p.x > 2 && p.x < 98 && p.y > 2 && p.y < 98)).map(p => renderPin(p, { left: `${p.x}%`, top: `${p.y}%` }))}
+          {pins.filter(p => (p.kind !== "company" && p.kind !== "venue") || (p.ldn && p.x > 2 && p.x < 98 && p.y > 2 && p.y < 98)).map(p => renderPin(p, { left: `${p.x}%`, top: `${p.y}%` }))}
         </div>
       )}
 
@@ -341,7 +346,7 @@ function FFMap({ mode = "home" }) {
               <CompanyCardFace c={co} size="sm" />
             </button>) : null; })()
             : sel.kind === "business" ? <OrgCard org={{ ...sel, kind: sel.profession }} kindLabel="Company" width="100%" />
-            : sel.kind === "venue" ? <VenueCard venue={sel} width="100%" />
+            : sel.kind === "venue" ? <a className="ff-ven17-sel" href={venueMapsUrl17(sel.rec)} target="_blank" rel="noopener noreferrer" aria-label={`${sel.name}: view on Google Maps`}><style>{VEN_CSS17}</style><VenueLandscapeCard record={sel.rec} /></a>
             : sel.kind === "event" ? (
               <div className="ff-tile dark" style={{ width: "100%", minHeight: 0, gap: 6 }}>
                 <Corners />

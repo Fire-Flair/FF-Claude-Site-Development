@@ -1,5 +1,22 @@
 # FireFlair prototype — changelog
 
+## v17.14
+
+Artifact version 1794844826-2fe8 (FireFlair — Phase Two, almost final).
+
+Venues replace Experience, picked from Google's business search. Full write-up for the developers: docs/venues-phase2.md.
+
+- Profile → Venues → Add venue: one box. Typing a name ("Savoy") opens a dropdown like the location search: venue name, address underneath, and "Add “…” as a venue" at the bottom for places Google doesn't know. Picking a venue fills the address and a View on Google Maps link. No town, role or dates are asked. The same sheet works for FF Staff company venues.
+- Search: PLACES_ADAPTER (src/adapters/places-adapter.js), the live site's Google Places autocomplete with includedPrimaryTypes ["bar", "restaurant", "night_club", "hotel", "event_venue"] in place of ["(regions)"], then one Place Details call. The prototype has no key, so it searches 31 sample venues (src/content/data/venue-samples.json, shaped like Place Details). A key saved in the browser as localStorage "ff_places_key" switches it to Google. "Powered by Google" shows in live mode only.
+- Each Google venue is placed in the area list automatically (venueAreaFor17): the most specific name that is a place in our list (neighbourhood, then ward, parish and local authority from the postcode lookup, then postal town and locality), otherwise the nearest neighbourhood, borough or town within 50 km; abroad, the country. Claridge's goes to Mayfair, Satan's Whiskers to Bethnal Green, Three Blue Ducks to Australia.
+- Area pages: new "Venues in <place>" section (after Available packages, before the FF Event Directory) with every placed venue at or under that place. Each card opens Google Maps, and the names under it open the profiles that listed it.
+- Network map: the Venues layer shows members' venues, each at its own point (people stay at area level). The six invented venues (VENUES in people-demo.js) and the unused VenueCard are removed.
+- Typed venues, and Google venues that can't be placed, stay on the member's profile, are left off area pages and the map, and are listed in FF Admin under Venues to review (All sites and FF Team). The prototype keeps that list when someone signs out (venueReview17, like claims).
+- Experience: no new Experience cards. Profiles that already have entries (CV imports, the real members' work history) still show them after Venues; nothing is deleted. The "Add experience" next step is now "Add venues".
+- Venue cards show the address only when there is one, the type and area along the bottom, and View on Google Maps only for Google venues. The all-attributes view shows a venue's address.
+- LOCATION_ADAPTER.lookupPostcode also returns ward and parish.
+- Test profile (DEV · complete profile): its venues are Tobacco Dock and Claridge's from the sample search, plus The Loft Lounge typed by hand, so it shows on the review list. Its two invented Experience entries are removed.
+
 ## v17.13
 
 Artifact version 1794843150-a221 (FireFlair — Phase Two, almost final).

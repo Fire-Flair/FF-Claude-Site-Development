@@ -111,12 +111,13 @@ function VenueLandscapeCard({ record, onClick }) {
           <span style={{ display: "block", fontFamily: "var(--sans)", color: t.ink, fontSize: 15.5, fontWeight: 700, lineHeight: 1.25 }}>{record.name}</span>
           {desc && <span style={{ display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden", fontFamily: "var(--sans)", color: t.ink, opacity: .82, fontSize: 13, marginTop: 6, lineHeight: 1.4 }}>{desc}</span>}
         </span>
-        <span style={{ flex: "none", maxWidth: "42%", fontFamily: "var(--sans)", color: t.sub, fontWeight: 600, fontSize: 12.5, textAlign: "right", display: "flex", gap: 5, alignItems: "flex-start" }}>
-          <MapPin size={12} strokeWidth={1.6} style={{ flex: "none", marginTop: 2 }} />{record.address || "—"}
-        </span>
+        {record.address && <span style={{ flex: "none", maxWidth: "42%", fontFamily: "var(--sans)", color: t.sub, fontWeight: 600, fontSize: 12.5, textAlign: "right", display: "flex", gap: 5, alignItems: "flex-start" }}>
+          <MapPin size={12} strokeWidth={1.6} style={{ flex: "none", marginTop: 2 }} />{record.address}
+        </span>}
       </span>
-      <span style={{ display: "flex", alignItems: "center", paddingTop: 7, borderTop: `1px solid ${t.rule}`, marginTop: 8 }}>
-        <span className="ff-label" style={{ marginLeft: "auto", fontSize: 8, color: "#EAD79C" }}>View on Google Maps →</span>
+      <span style={{ display: "flex", alignItems: "center", gap: 8, paddingTop: 7, borderTop: `1px solid ${t.rule}`, marginTop: 8, minHeight: 15 }}>
+        {record.area && record.place && <span style={{ fontFamily: "var(--sans)", fontSize: 11, color: t.sub, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{venTypeLabel17(record.place)} · {record.area.name}</span>}
+        {record.place && <span className="ff-label" style={{ marginLeft: "auto", fontSize: 8, color: "#EAD79C", whiteSpace: "nowrap" }}>View on Google Maps →</span>}
       </span>
     </CardFrame>
   );
@@ -235,7 +236,7 @@ function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd
   const unresolved = isMe && catKey === "professions" ? items.find(r => !r.proposed && !r.hidden && !professionCategory(r.name, r.displayCategory)) : null;
   /* Phase 1: Professions are added from Pick your professions (typing one
      creates its card), so that section has no separate Add square. */
-  const addTile = isMe && !def.system && catKey !== "professions" && (
+  const addTile = isMe && !def.system && catKey !== "professions" && catKey !== "experience" && (
     <button className="ff-card ff-addtile" aria-label={`Add ${def.singular.toLowerCase()}`} onClick={onAdd}
       style={def.landscape ? { width: CARD_W.venue, aspectRatio: "7 / 5" } : { width: CARD_W.info, aspectRatio: "1 / 1", borderRadius: 22 }}>
       <span style={{ textAlign: "center" }}>
@@ -420,6 +421,8 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
       <Field label={def.titleLabel || "Title"}>
         {readOnly
           ? <div className="ff-display" style={{ fontSize: 17 }}>{draft.name}</div>
+          : category === "venues"
+          ? <VenueSearch17 value={draft.name} label={def.titleLabel} autoFocus={FF_FINE_POINTER && adding} onPick={(p) => patch(p)} />
           : <input className="ff-input" style={{ fontSize: 17 }} value={draft.name} autoFocus={FF_FINE_POINTER && (adding && category !== "professions")}
               onChange={(e) => patch({ name: e.target.value })} placeholder={def.placeholder || def.singular} />}
       </Field>
@@ -470,7 +473,17 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
         </Field>
       )}
 
-      {catHas(def, "address") && (
+      {catHas(def, "address") && category === "venues" && draft.address && (
+        <Field label="Address">
+          <p className="ff-ven17-addr" style={{ margin: "0 0 8px", fontSize: 15, lineHeight: 1.4 }}>{draft.address}</p>
+          {draft.place && (
+            <a className="ff-btn sm" href={venueMapsUrl17(draft)} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+              <MapPin size={12} /> View on Google Maps →
+            </a>
+          )}
+        </Field>
+      )}
+      {catHas(def, "address") && category !== "venues" && (
         <Field label="Location">
           {readOnly ? <div className="ff-serif" style={{ fontSize: 16 }}>{draft.address || "—"}</div>
             : <input className="ff-input" value={draft.address || ""} onChange={(e) => patch({ address: e.target.value })} placeholder="Street, area or postcode" />}
@@ -620,7 +633,8 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
       <p className="ff-body" style={{ margin: 0, fontSize: 15, lineHeight: 1.55, whiteSpace: "pre-wrap", color: "#2A2620" }}>{aboutText}</p>
     </section>
   ) : null;
-  const order = categoryOrder().filter(k => !cats[k].system);
+  /* v17.14: Experience shows only where entries were already saved; new work history goes into Venues. */
+  const order = categoryOrder().filter(k => !cats[k].system && (k !== "experience" || (records.experience || []).some(r => !r.hidden || isMe)));
   const reviewList = (records.reviews || []).filter(r => !hid17(state, "reviews", r.id));
   const reviewDef = cats.reviews || BASE_CATEGORIES.reviews;
   const pendingRequests = isMe

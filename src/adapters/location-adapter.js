@@ -2,10 +2,10 @@
 /* ADAPTER FILE — LOCATION_ADAPTER (v17.4.6)
    CONTRACT SUMMARY (the real service keeps these names, inputs and outputs):
    async lookupPostcode(raw) -> { ok, display, lat, lng, names: [district, ward, parish, region, country], approx,
-                                 district, region, source: "service" | "offline-estimate" }
+                                 district, ward, parish, region, source: "service" | "offline-estimate" }
                               | { ok: false, reason: "format" | "not-found" | "unavailable" }
    v17.6: district is the local authority name and region is the English region (for example "London"); both are
-   used to pick the public town or city. source "offline-estimate" means the request could not be made and the
+   used to pick the public town or city. v17.14: ward and parish (when the service gives them) help place a venue. source "offline-estimate" means the request could not be made and the
    point is the centre of the outward-code area (approx is then always true): it is never presented as exact.
    The postcode is private: it is used to suggest and open branches of the location tree and is never
    shown on a profile, a card or an area page, and never sent with a public payload.
@@ -28,7 +28,7 @@ const LOCATION_ADAPTER = {
         if (r) {
           const names = [].concat(r.admin_district || [], r.admin_ward || [], r.parish || [], r.admin_county || [], r.region || [], r.country || []).map(x => String(x).replace(/, unparished area$/i, ""));
           const first = (v) => String([].concat(v || [])[0] || "").replace(/, unparished area$/i, "");
-          return { ok: true, display: p.display, lat: r.latitude, lng: r.longitude, names, approx: !!p.partial, district: first(r.admin_district), region: first(r.region), source: "service" };
+          return { ok: true, display: p.display, lat: r.latitude, lng: r.longitude, names, approx: !!p.partial, district: first(r.admin_district), ward: first(r.admin_ward), parish: first(r.parish), region: first(r.region), source: "service" };
         }
       }
       if (res.status === 404) return LOCATION_ADAPTER.offline(p) || { ok: false, reason: "not-found" };
