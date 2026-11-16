@@ -6,7 +6,7 @@
    category for quick picking; any profession can be typed in. */
 const PROFESSION_CATEGORIES = [
   { key: "Bar",            suggested: ["Barback", "Bartender", "Cocktail Bartender", "Flair Bartender", "Mixologist"] },
-  { key: "Front of House", suggested: ["Waiter", "Host", "Front of House", "Event Host", "Catering Assistant"] },
+  { key: "Front of House", suggested: ["Waiter", "Host", "Front of House", "Event Host", "Catering Assistant", "Sommelier"] },
   { key: "Management",     suggested: ["Event Manager", "Event Planner", "Bar Manager", "Floor Manager", "Kitchen Manager"] },
   { key: "Entertainment",  suggested: ["DJ", "Saxophonist", "Violinist", "Singer", "Magician"] },
   { key: "Services",       suggested: ["Photographer", "Videographer", "Content Creator", "Influencer", "Event Stylist"] },
@@ -23,9 +23,9 @@ const CATEGORY_ORDER = [...PROFESSION_CATEGORIES.map(c => c.key), "Other"];
 const PROFESSION_RULES = [
   ["Management", /\b(manager|planner|coordinator|director|supervisor)\b/],
   ["Back of House", /\b(stock|porter|kitchen assistant|logistics|cellar)\b/],
-  ["Bar", /\b(bar|bartend\w*|mixolog\w*|barback|barista|sommelier)\b/],
+  ["Bar", /\b(bar|bartend\w*|mixolog\w*|barback|barista)\b/],
   ["Chefs", /\b(chef|cook|caterer|pastry|baker)\b/],
-  ["Front of House", /\b(waiter|waitress|host|hostess|front of house|server|catering assistant|usher|runner)\b/],
+  ["Front of House", /\b(waiter|waitress|host|hostess|front of house|server|catering assistant|usher|runner|sommelier)\b/],
   ["Entertainment", /\b(dj|music\w*|singer|sax\w*|violin\w*|magician|mc|band|performer|dancer|entertainer)\b/],
   ["Services", /\b(photo\w*|video\w*|content|influencer|stylist|florist|make-?up|decor\w*)\b/],
 ];

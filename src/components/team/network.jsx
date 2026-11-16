@@ -368,8 +368,9 @@ function FitList17({ items, accent }) {
 
 /* v17.3.77: type a profession straight into the card (as on the live ffteam.uk site):
    search the 35 known professions as you type, or add your own. */
-function ProfTypeIn({ profs, set, ink, rule }) {
+function ProfTypeIn({ profs, set, ink, rule, onAdd }) {
   const [q, setQ] = useState("");
+  const [cat, setCat] = useState(null);
   const n = q.trim().toLowerCase();
   const has = (x) => profs.some(p => String(p).toLowerCase() === String(x).toLowerCase());
   const hits = n ? [
@@ -378,20 +379,35 @@ function ProfTypeIn({ profs, set, ink, rule }) {
   ].filter(p => !has(p.name)).slice(0, 5) : [];
   const typed = q.trim().replace(/\s+/g, " ").replace(/\b\w/g, c => c.toUpperCase());
   const custom = n && !ALL_PROFESSIONS.some(p => p.name.toLowerCase() === n) && !has(typed) ? typed : null;
-  const add = (name) => { if (!has(name)) set("professions")([...profs, name]); setQ(""); };
+  /* v17.111111: a profession outside the FireFlair list that the rules can't place asks for its category first (or Other). */
+  const customCat = custom ? professionCategory(custom) : null;
+  const add = (name, category) => { if (!has(name)) { if (onAdd) onAdd(name, category); else set("professions")([...profs, name]); } setQ(""); setCat(null); };
   return (
     <div>
       <input className="ff-cardin" type="text" value={q} autoComplete="off" spellCheck={false}
         placeholder={profs.length ? "Add another profession" : "Search or type a profession"} aria-label="Search or type a profession"
         onChange={(e) => setQ(e.target.value)}
-        onKeyDown={(e) => { if (e.key === "Enter" && n) { e.preventDefault(); add(hits[0] ? hits[0].name : typed); } }}
+        onKeyDown={(e) => { if (e.key === "Enter" && n) { e.preventDefault(); if (hits[0]) add(hits[0].name); else if (!custom) return; else if (customCat) add(custom); else if (cat) add(custom, cat); } }}
         style={{ color: ink, borderBottomColor: rule, textAlign: "center", fontSize: 13.5 }} />
       {n && (hits.length > 0 || custom) && (
         <div role="list" aria-label="Matching professions" style={{ display: "flex", flexWrap: "wrap", gap: 5, justifyContent: "center", marginTop: 8 }}>
           {hits.map(p => (
             <button key={p.name} type="button" role="listitem" className="ff-tagchip" onClick={() => add(p.name)} style={{ color: ink, cursor: "pointer" }}>+ {p.name}</button>
           ))}
-          {custom && <button type="button" role="listitem" className="ff-tagchip" onClick={() => add(custom)} style={{ color: ink, cursor: "pointer" }}>+ Add “{custom}”</button>}
+          {custom && customCat && <button type="button" role="listitem" className="ff-tagchip" onClick={() => add(custom)} style={{ color: ink, cursor: "pointer" }}>+ Add “{custom}”</button>}
+        </div>
+      )}
+      {n && custom && !customCat && (
+        <div className="ff-profcat" style={{ marginTop: 8, textAlign: "center" }}>
+          <div style={{ color: ink, fontSize: 12.5, fontWeight: 600, marginBottom: 6 }}>Which category is “{custom}” in?</div>
+          <div role="list" aria-label="Categories" style={{ display: "flex", flexWrap: "wrap", gap: 5, justifyContent: "center" }}>
+            {CATEGORY_ORDER.map(k => (
+              <button key={k} type="button" role="listitem" className="ff-tagchip" aria-pressed={cat === k} onClick={() => setCat(k)}
+                style={cat === k ? { background: "#141416", color: "#EAD79C", borderColor: "#141416", cursor: "pointer" } : { color: ink, cursor: "pointer" }}>{k}</button>
+            ))}
+          </div>
+          <button type="button" className="ff-tagchip" disabled={!cat} onClick={() => cat && add(custom, cat)}
+            style={{ marginTop: 8, color: ink, opacity: cat ? 1 : 0.45, cursor: cat ? "pointer" : "default", fontWeight: 600 }}>+ Add “{custom}”{cat ? ` · ${cat}` : ""}</button>
         </div>
       )}
     </div>
@@ -524,7 +540,8 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
     profs,
     set,
     ink,
-    rule
+    rule,
+    onAdd: (name, category) => setDraft({ ...draft, professions: [...profs, name], ...(category ? { professionCats: { ...(draft.professionCats || {}), [name]: category } } : {}) })
   }))), React.createElement("div", {
     style: { height: 8 }
   }), React.createElement(Row, {
@@ -604,7 +621,11 @@ function syncCardRecords(state, dispatch, d, cats = ["professions", "skills", "i
     const has = (n) => want.some(v => v.toLowerCase() === n.toLowerCase());
     const front = want.map(v => {
       const match = existing.find(r => r.name.toLowerCase() === v.toLowerCase());
-      return match ? { ...match, name: v, hidden: false } : makeRecord(cat, v);
+      if (cat !== "professions") return match ? { ...match, name: v, hidden: false } : makeRecord(cat, v);
+      /* Professions keep where they came from: "approved" (the FireFlair list) or "user" (typed by the member), with any category the member chose. */
+      const chosen = (d.professionCats || {})[v];
+      const extra = { professionSource: ALL_PROFESSIONS.some(p => p.name.toLowerCase() === v.toLowerCase()) ? "approved" : "user", ...(chosen ? { displayCategory: chosen } : {}) };
+      return match ? { ...match, ...extra, ...(match.displayCategory && !chosen ? { displayCategory: match.displayCategory } : {}), name: v, hidden: false } : makeRecord(cat, v, extra);
     });
     /* The card lists every record, so one that is no longer wanted was removed
        with its X: delete it (only suggestions FireFlair proposed are kept). */

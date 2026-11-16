@@ -11,6 +11,7 @@ const ALL_PROFESSIONS = PROFESSION_CATEGORIES.flatMap(c => c.suggested.map(n => 
 function ProfessionPicker({ selected = [], onPick, title = "Pick your professions" }) {
   const [cat, setCat] = useState(PROFESSION_CATEGORIES[0].key);
   const [q, setQ] = useState("");
+  const [newCat, setNewCat] = useState(null);
   const c = PROFESSION_CATEGORIES.find(x => x.key === cat);
   const has = (n) => selected.some(x => String(x).toLowerCase() === n.toLowerCase());
   const n = q.trim().toLowerCase();
@@ -21,7 +22,7 @@ function ProfessionPicker({ selected = [], onPick, title = "Pick your profession
   const typed = q.trim().replace(/\s+/g, " ").replace(/\b\w/g, ch => ch.toUpperCase());
   const custom = n && !ALL_PROFESSIONS.some(p => p.name.toLowerCase() === n) ? typed : null;
   const customCat = custom ? professionCategory(custom) : null;
-  const pick = (name) => { onPick(name); setQ(""); };
+  const pick = (name, category) => { onPick(name, category); setQ(""); setNewCat(null); };
   const picked = (name) => has(name) ? { background: "#5C1220", borderColor: "#5C1220", color: "#F6E7B4" } : undefined;
   return (
     <div className="ff-frame ff-goldpick" style={{ padding: 14, marginTop: 14 }}>
@@ -39,12 +40,26 @@ function ProfessionPicker({ selected = [], onPick, title = "Pick your profession
               {has(p.name) ? "✓ " : "+ "}{p.name}<span className="ff-chipcat">{p.cat}</span>
             </button>
           ))}
-          {custom && (
+          {custom && customCat && (
             <button type="button" className="ff-chip ff-chip-custom" onClick={() => pick(custom)}>
-              + Add “{custom}”{customCat && <span className="ff-chipcat">{customCat}</span>}
+              + Add “{custom}”<span className="ff-chipcat">{customCat}</span>
             </button>
           )}
-          {custom && !customCat && <p className="ff-body ff-muted" style={{ fontSize: 11.5, margin: "4px 0 0" }}>FireFlair will ask which category “{custom}” belongs to.</p>}
+          {custom && !customCat && (
+            <div style={{ marginTop: 8 }}>
+              <div className="ff-label" style={{ marginBottom: 6 }}>Which category is “{custom}” in?</div>
+              <div>
+                {CATEGORY_ORDER.map(k => (
+                  <button key={k} type="button" className="ff-chip" aria-pressed={newCat === k} onClick={() => setNewCat(k)}
+                    style={newCat === k ? { background: "#141416", color: "#EAD79C", borderColor: "#141416" } : undefined}>{k}</button>
+                ))}
+              </div>
+              <button type="button" className="ff-chip ff-chip-custom" disabled={!newCat} onClick={() => newCat && pick(custom, newCat)}
+                style={{ marginTop: 6, opacity: newCat ? 1 : 0.45, cursor: newCat ? "pointer" : "default" }}>
+                + Add “{custom}”{newCat && <span className="ff-chipcat">{newCat}</span>}
+              </button>
+            </div>
+          )}
         </div>
       ) : (<>
         <div style={{ display: "flex", gap: 6, overflowX: "auto", paddingBottom: 6, scrollbarWidth: "none" }}>
@@ -248,19 +263,21 @@ function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd
               <span className="ff-body" style={{ fontSize: 13 }}><b>FireFlair:</b> which category is “{unresolved.name}”? It decides where you appear on Network.</span>
             </div>
             <div>
-              {PROFESSION_CATEGORIES.map(c => (
-                <button key={c.key} className="ff-chip" onClick={() => {
-                  dispatch({ type: "REC_PATCH", category: "professions", id: unresolved.id, patch: { displayCategory: c.key } });
-                  dispatch({ type: "TOAST", toast: `${unresolved.name} → ${c.key}` });
-                }}>{c.key}</button>
+              {CATEGORY_ORDER.map(k => (
+                <button key={k} className="ff-chip" onClick={() => {
+                  dispatch({ type: "REC_PATCH", category: "professions", id: unresolved.id, patch: { displayCategory: k } });
+                  dispatch({ type: "TOAST", toast: `${unresolved.name} → ${k}` });
+                }}>{k}</button>
               ))}
             </div>
           </div>
         )}
         {isMe && catKey === "professions" && (
-          <ProfessionPicker selected={items.map(r => r.name)} onPick={(n) => {
+          <ProfessionPicker selected={items.map(r => r.name)} onPick={(n, category) => {
             if (items.some(r => r.name.toLowerCase() === n.toLowerCase())) { dispatch({ type: "TOAST", toast: `${n} is already on your profile` }); return; }
-            dispatch({ type: "RECORDS_MERGE", byCategory: { professions: [makeRecord("professions", n)] } });
+            /* source of the profession: "approved" = on the FireFlair list, "user" = typed by the member (kept with the category they chose). */
+            const approved = ALL_PROFESSIONS.some(p => p.name.toLowerCase() === n.toLowerCase());
+            dispatch({ type: "RECORDS_MERGE", byCategory: { professions: [makeRecord("professions", n, { professionSource: approved ? "approved" : "user", ...(category ? { displayCategory: category } : {}) })] } });
             dispatch({ type: "TOAST", toast: `${n} added` });
           }} />
         )}
@@ -397,7 +414,7 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
       )}
       {adding && category === "professions" && (
         <ProfessionPicker title="Suggested professions" selected={[draft.name, ...recsOf(state.profile, "professions").map(r => r.name)]}
-          onPick={(n) => patch({ name: n })} />
+          onPick={(n, category) => patch({ name: n, professionSource: ALL_PROFESSIONS.some(p => p.name.toLowerCase() === n.toLowerCase()) ? "approved" : "user", ...(category ? { displayCategory: category } : {}) })} />
       )}
 
       <Field label={def.titleLabel || "Title"}>
@@ -545,7 +562,7 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
           <select className="ff-input" value={professionCategory(draft.name, draft.displayCategory) || ""}
             onChange={(e) => patch({ displayCategory: e.target.value || undefined })}>
             <option value="">Not sure yet</option>
-            {PROFESSION_CATEGORIES.map(c => <option key={c.key} value={c.key}>{c.key}</option>)}
+            {CATEGORY_ORDER.map(k => <option key={k} value={k}>{k}</option>)}
           </select>
         </Field>
       )}

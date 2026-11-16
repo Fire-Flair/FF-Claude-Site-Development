@@ -1,5 +1,16 @@
 # FireFlair prototype — changelog
 
+## v17.111111
+
+Artifact version 1794842092-8f66 (FireFlair — Phase Two, almost final).
+
+- Professions are open-ended: members can add any profession, as many as they want, because people describe their work in different ways. The list of professions grows as members add new ones.
+- A typed profession that isn't on the FireFlair list and that the rules can't place now asks "Which category is “…” in?" before it is added: Bar, Front of House, Management, Entertainment, Services, Chefs, Back of House or Other. Add stays disabled until one is chosen. This is on the Profile Card type-in (network.jsx ProfTypeIn) and on Pick your professions (attribute-cards.jsx ProfessionPicker). Typed professions the rules can place (for example "Head Sommelier") are added straight away as before.
+- Other is now a category everywhere a profession's category is chosen: the type-ins, the "which category" prompt on the Professions section and the Display category menu on a profession card (CATEGORY_ORDER).
+- Each profession record carries `professionSource`: "approved" (on the FireFlair list) or "user" (created by a member), plus `displayCategory` when the member chose one. syncCardRecords sets both from the card draft (draft.professionCats holds the chosen categories).
+- Sommelier added to Front of House (now six suggestions there); the category rules place any sommelier role under Front of House instead of Bar.
+- For the back end: keep FireFlair-approved professions and user-created professions apart (profession_master holds the approved list; store a member's own profession with created_by_type "user", the member's id and the category they chose). FireFlair can later approve a user-created profession into the list. Sommelier needs adding to profession_master under front_of_house.
+
 ## v17.11111
 
 - Site icons from the new logo (black disc, gold ring, FF), made from assets/brand/ff-logo-social-print.png and kept in assets/brand/site-icons/: one 512 px icon (logo on black) used as the browser tab icon and the Apple home-screen icon (the 64, 180 and 192 px versions are kept in assets/brand/site-icons for the live site), and the link-preview image (1200 x 630, logo on black). index.html head now has the icon links, apple-touch-icon, Apple web-app tags, og:image and twitter:image (summary_large_image).
