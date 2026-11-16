@@ -27,3 +27,18 @@
   .ff-bkd .bkd-ph img { position:absolute; inset:0; }
   .ff-bkd .bkd-tx { align-content:center; }
 }
+
+/* v17.11: photo is half the box; the title sits on the photo, the description beside it (never over it) */
+.ff-bkd .bkd-hd { display:grid !important; grid-template-columns:1fr 1fr; align-items:stretch; position:relative; }
+.ff-bkd .bkd-ph { position:relative; aspect-ratio:auto; min-height:176px; }
+.ff-bkd .bkd-ph img { position:absolute; inset:0; }
+.ff-bkd .bkd-ph::after { content:""; position:absolute; inset:0; background:linear-gradient(0deg,rgba(22,19,15,.78) 0%,rgba(22,19,15,0) 55%); }
+.ff-bkd .bkd-tx { position:static; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:8px; padding:14px 40px 14px 14px; }
+.ff-bkd .bkd-ic { flex:none; }
+.ff-bkd .bkd-tx > b { position:absolute; left:12px; bottom:12px; max-width:calc(50% - 20px); z-index:2; color:#fff; font-size:18px; line-height:1.15; text-shadow:0 1px 8px rgba(0,0,0,.6); overflow-wrap:normal; }
+.ff-bkd .bkd-ds { margin-top:0; font-size:13px; line-height:1.4; }
+.ff-bkd .bkd-chev { top:14px; }
+@media (min-width:720px) {
+  .ff-bkd .bkd-hd { grid-template-columns:1fr 1fr; }
+  .ff-bkd .bkd-ph { min-height:190px; }
+}
