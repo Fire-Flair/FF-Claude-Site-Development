@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.1111111
+
+Artifact version 1794842296-2ba9 (FireFlair — Phase Two, almost final).
+
+- Profile Card colour picker is back to seven colours: Ivory, Onyx, Burgundy, Forest, Paper, Silver, Gold. Magenta, Cobalt, Saffron and Grey no longer appear on the create-a-profile page or in the Bookings card editor.
+- Those four stay as the FF Event Directory category colours (entertainment, event services, caterers, bar services), marked `directoryOnly: true` in src/state/themes-xp.js; the Profile Card pickers filter them out. The company builder's picker is unchanged.
+
 ## v17.111111
 
 Artifact version 1794842092-8f66 (FireFlair — Phase Two, almost final).

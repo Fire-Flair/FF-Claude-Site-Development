@@ -22,7 +22,7 @@ function CardBuilder() {
         tag={state.session.tag || state.session.tagDraft || "username"} tier={state.profile.tier} level={state.profile.level}
         onPhoto={(url) => setD(x => ({ ...x, photo: url }))} />
       <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap", margin: "16px 0 4px" }}>
-        {Object.entries(THEMES).map(([k, th]) => (
+        {Object.entries(THEMES).filter(([, x]) => !x.directoryOnly).map(([k, th]) => (
           <button key={k} className={th.locked ? "ff-swatch-lock" : undefined} onClick={() => { const ap = (v) => dispatch({ type: "PROFILE", patch: { theme: v } }); if (th.locked) previewTheme17(k, state.profile.theme, ap); else { clearPv17(); ap(k); } }} aria-label={`${th.name} card`} title={th.name}
             style={{ width: 30, height: 30, borderRadius: "50%", background: th.swatch, border: state.profile.theme === k ? "2px solid var(--gold)" : "1px solid var(--rule)" }}>{th.locked ? <I11.Lock size={13} /> : null}</button>
         ))}

@@ -443,7 +443,7 @@ function TeamProfile() {
             tag={state.session.tag} tier={state.profile.tier} level={state.profile.level}
             onPhoto={(url) => setD(x => ({ ...x, photo: url }))} />
           <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap", margin: "16px 0 4px" }}>
-            {Object.entries(THEMES).map(([k, t]) => (
+            {Object.entries(THEMES).filter(([, x]) => !x.directoryOnly).map(([k, t]) => (
               <button key={k} type="button" className={t.locked ? "ff-swatch-lock" : undefined} onClick={() => { if (t.locked) previewTheme17(k, th, setTh); else { clearPv17(); setTh(k); } }} aria-label={`${t.name} card`} title={t.name}
                 style={{ width: 30, height: 30, borderRadius: "50%", background: t.swatch, border: th === k ? "2px solid var(--gold)" : "1px solid var(--rule)" }}>{t.locked ? <I11.Lock size={13} /> : null}</button>
             ))}
