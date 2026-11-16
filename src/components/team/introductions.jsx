@@ -309,7 +309,57 @@ window.__ffIntro17 = { snapshot: fiSnapshot17, fallback: fiFallback17, compose: 
 
 
 
-function PublicProfileBody({ person }) {
+/* v17.18: the Team and Reviews tabs are one piece of code, used on the displayed profile and in the profile builder. */
+function TabEmpty17({ icon, children }) { return <div className="ff-tab-empty">{icon}<p>{children}</p></div>; }
+
+
+function teamTabData17(state, all, person) {
+  const teams = person.id === "me" ? myNetwork(state, all).list.filter(p => (state.connections || []).some(c => c.id === p.id)) : networkOf11(state, all, person);
+  const tCos = personCompanies17(state, person);
+  const tNet = person.id === "me" ? (state.netAdds17 || []).map(id => all.find(p => p.id === id)).filter(p => p && !p.isCompany && !teams.some(t => t.id === p.id)) : [];
+  return { teams, tCos, tNet };
+}
+
+
+function TeamTab17({ person }) {
+  const { state } = useStore();
+  const all = useDirectory();
+  const first = String(person.name || "").split(" ")[0] || "them";
+  const { teams, tCos, tNet } = teamTabData17(state, all, person);
+  return <TeamParts17 team={teams} companies={tCos} network={tNet} teamEmpty={person.id === "me" ? "No one on your team yet." : `${first} hasn't added anyone to their team yet.`} />;
+}
+
+
+function ReviewsTab17({ person, mem }) {
+  const { state } = useStore();
+  const local = useRef({});
+  const m = mem || local;
+  const [revOpen, setRevOpen] = useState(null);
+  const [allReviews, setAllReviews] = useState(false);
+  const first = String(person.name || "").split(" ")[0] || "them";
+  const reviews = reviewsOf(state, person);
+  const def = BASE_CATEGORIES.reviews;
+  const reviewCard = (r, active) => (
+    <div className="ff-rvslide"><InformationCard record={r} def={def} themeKey="onyx" pub="r" highlight={active} rank={active ? "primary" : "secondary"} /></div>
+  );
+  return (<>
+    {reviews.length ? (<>
+      <CoverFlow items={reviews} label="Reviews" mem={m} k="reviews" half={140} onOpen={setRevOpen} render={reviewCard} />
+      {reviews.length > 1 && <div className="ff-rv-all"><button type="button" className="ff-pp-all" onClick={() => setAllReviews(true)}>View all reviews <ChevronRight size={13} /></button></div>}
+    </>) : <TabEmpty17 icon={<Award size={20} />}>No reviews for {first} yet.</TabEmpty17>}
+    <Sheet open={!!revOpen} onClose={() => setRevOpen(null)} title="Review">
+      {revOpen && <div className="ff-rvfull">{reviewCard(revOpen, true)}</div>}
+    </Sheet>
+    <Sheet open={allReviews} onClose={() => setAllReviews(false)} title={`Reviews (${reviews.length})`}>
+      <div className="ff-rvlist">{reviews.map(r => <div key={r.id}>{reviewCard(r, false)}</div>)}</div>
+    </Sheet>
+  </>);
+}
+
+
+
+/* packagesTail: shown in the Packages tab below the Q&A (the signed-in member's own page puts Build your packages, Service Cards and Terms and conditions here). */
+function PublicProfileBody({ person, packagesTail }) {
   const { state, dispatch } = useStore();
   /* The tab is kept in the store so it can be part of the address (#/<site>/<tag>/reviews). */
   const inStore = state.viewing === person.id;
@@ -318,19 +368,15 @@ function PublicProfileBody({ person }) {
   const setTab = (t) => inStore ? dispatch({ type: "V11_SET", patch: { ptab17: t === "overview" ? null : { key: "p:" + person.id, tab: t } } }) : setLtab(t);
   const [openRec, setOpenRec] = useState(null);
   const [svcOpen, setSvcOpen] = useState(null);
-  const [revOpen, setRevOpen] = useState(null);
   const [allAttrs, setAllAttrs] = useState(false);
   const [attrCat, setAttrCat] = useState(null);
-  const [allReviews, setAllReviews] = useState(false);
   const mem = useRef({});
   useEffect(() => { setLtab("overview"); mem.current = {}; }, [person.id]);
   const cats = BASE_CATEGORIES;
   const first = String(person.name || "").split(" ")[0] || "them";
   const services = servicesOf(state, person);
   const teamAll_ = useDirectory();
-  const teams = person.id === "me" ? myNetwork(state, teamAll_).list.filter(p => (state.connections || []).some(c => c.id === p.id)) : networkOf11(state, teamAll_, person);
-  const tCos = personCompanies17(state, person);
-  const tNet = person.id === "me" ? (state.netAdds17 || []).map(id => teamAll_.find(p => p.id === id)).filter(p => p && !p.isCompany && !teams.some(t => t.id === p.id)) : [];
+  const { teams, tCos, tNet } = teamTabData17(state, teamAll_, person);
   const reviews = reviewsOf(state, person);
   const attrs = attributesOf(state, person, cats);
   const records = recordsForPerson(state, person);
@@ -346,9 +392,6 @@ function PublicProfileBody({ person }) {
   ];
   const openAttr = (it) => setOpenRec({ record: it.record, def: it.def, category: it.category });
   const Empty1 = ({ icon, children }) => <div className="ff-tab-empty">{icon}<p>{children}</p></div>;
-  const reviewCard = (r, active) => (
-    <div className="ff-rvslide"><InformationCard record={r} def={cats.reviews || BASE_CATEGORIES.reviews} themeKey="onyx" pub="r" highlight={active} rank={active ? "primary" : "secondary"} /></div>
-  );
   const svcCard = (it) => it.kind === "std"
     ? <div className="ff-svslide std"><ServicePoster svc={it.svc} price /></div>
     : <div className="ff-svslide own"><OwnServiceCard item={it.item} /></div>;
@@ -364,7 +407,7 @@ function PublicProfileBody({ person }) {
               <h2 id="ff-profs-h" className="ff-about-h">Professions</h2>
               <MemScroll mem={mem} k="profs" label={`Professions, ${profs.length} card${profs.length === 1 ? "" : "s"}`} className="ff-acar">
                 {profs.map((r, ri) => (
-                  <button key={r.id} type="button" className={"ff-agrp prof " + ["t-gold", "t-silver", "t-bronze"][ri % 3]} aria-label={`${r.name}. Open details`}
+                  <button key={r.id} type="button" className={"ff-agrp prof " + tierCls17(ri)} aria-label={`${r.name}. Open details`}
                     onClick={() => setOpenRec({ record: r, def: cats.professions, category: "professions" })}>
                     <span className="ff-agrp-top"><span className="ff-agrp-h">{r.name}</span></span>
                     {onStaff && staffRateP17(state, person.tag, r.name) != null && <span className="ff-agrp-rate">Preferred rate {gbp17(staffRateP17(state, person.tag, r.name))}/hour</span>}
@@ -388,11 +431,9 @@ function PublicProfileBody({ person }) {
           ? <CoverFlow items={services} label="Packages" mem={mem} k="services" half={150} onOpen={setSvcOpen} render={(it) => svcCard(it)} />
           : (person.id === "me" ? null : <Empty1 icon={<Sparkles size={20} />}>{first} hasn't added any packages yet.</Empty1>))}
         {tab === "services" && <PkgExtras17 person={person} />}
-        {tab === "teams" && <TeamParts17 team={teams} companies={tCos} network={tNet} teamEmpty={person.id === "me" ? "No one on your team yet." : `${first} hasn't added anyone to their team yet.`} />}
-        {tab === "reviews" && (reviews.length ? (<>
-          <CoverFlow items={reviews} label="Reviews" mem={mem} k="reviews" half={140} onOpen={setRevOpen} render={reviewCard} />
-          {reviews.length > 1 && <div className="ff-rv-all"><button type="button" className="ff-pp-all" onClick={() => setAllReviews(true)}>View all reviews <ChevronRight size={13} /></button></div>}
-        </>) : <Empty1 icon={<Award size={20} />}>No reviews for {first} yet.</Empty1>)}
+        {tab === "services" && packagesTail}
+        {tab === "teams" && <TeamTab17 person={person} />}
+        {tab === "reviews" && <ReviewsTab17 person={person} mem={mem} />}
       </div>
 
       <GenericAttributeCardCreator open={!!openRec} record={openRec && openRec.record} def={openRec && openRec.def} category={openRec && openRec.category} readOnly onClose={() => setOpenRec(null)} />
@@ -409,12 +450,6 @@ function PublicProfileBody({ person }) {
       </Sheet>
       <Sheet open={!!svcOpen} onClose={() => setSvcOpen(null)} title={svcOpen ? (svcOpen.kind === "std" ? svcOpen.svc.title : svcOpen.item.title) : "Service"}>
         {svcOpen && <div className="ff-svfull">{svcCard(svcOpen)}</div>}
-      </Sheet>
-      <Sheet open={!!revOpen} onClose={() => setRevOpen(null)} title="Review">
-        {revOpen && <div className="ff-rvfull">{reviewCard(revOpen, true)}</div>}
-      </Sheet>
-      <Sheet open={allReviews} onClose={() => setAllReviews(false)} title={`Reviews (${reviews.length})`}>
-        <div className="ff-rvlist">{reviews.map(r => <div key={r.id}>{reviewCard(r, false)}</div>)}</div>
       </Sheet>
     </div>
   );

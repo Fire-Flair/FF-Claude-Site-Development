@@ -165,7 +165,7 @@ function ShiftCard17({ shift, event, source, status, company }) {
   const val = (text, size = 4.65) => <span className="v" data-fit={size}>{text}</span>;
   useFit17(ref, [title, shift.role, when, shift.time, where, pay.text, co, src, st]);
   return (
-    <article ref={ref} className="ff-sc17" data-cx-fixed="1" aria-label={`${src === "party" ? "FF Party" : "FF Staff"} shift: ${title}, ${SC17_STATUS[st]}`}>
+    <article ref={ref} className={`ff-sc17 src-${src === "party" ? "party" : "staff"}`} data-cx-fixed="1" aria-label={`${src === "party" ? "FF Party" : "FF Staff"} shift: ${title}, ${SC17_STATUS[st]}`}>
       <div className="card"><div className="face">
         <div className="in">
           <div className="top">
@@ -173,7 +173,7 @@ function ShiftCard17({ shift, event, source, status, company }) {
             <span className={"plate " + st}>{SC17_STATUS[st]}</span>
             <span className="logo"><FFLogo size="100%" tier="gold" /></span>
           </div>
-          <div className="role"><div className="rin"><h1 data-fit="7.85" data-fit-box="1">{title}</h1></div></div>
+          <div className="role"><div className="rin"><h1 data-fit="6.6" data-fit-box="1">{title}</h1></div></div>
           <div className="rows">
             {row("", SC17I.Martini, "Role", val(shift.role || "To be confirmed"))}
             {co ? row("", SC17I.Briefcase, "Company", val(co)) : null}

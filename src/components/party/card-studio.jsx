@@ -306,35 +306,7 @@ function CocktailBack17({ c, edit, set }) {
     else
       setIng(i.id, { unit: u });
   };
-  return React.createElement("div", {
-    className: "ff-c17-body back"
-  }, edit ? React.createElement("div", {
-    className: "ff-c17-kind"
-  }, React.createElement("div", {
-    className: "ff-c17-tabs",
-    role: "tablist",
-    "aria-label": "Classic or signature"
-  }, [["classic", "Classic"], ["signature", "Signature"]].map(([k, l]) => React.createElement("button", {
-    key: k,
-    type: "button",
-    role: "tab",
-    "aria-selected": (c.style || "signature") === k,
-    className: (c.style || "signature") === k ? "on" : "",
-    onClick: () => set({ style: k })
-  }, l))), React.createElement("div", {
-    className: "ff-c17-tabs",
-    role: "tablist",
-    "aria-label": "Cocktail or mocktail"
-  }, [["cocktail", "Cocktail"], ["mocktail", "Mocktail"]].map(([k, l]) => React.createElement("button", {
-    key: k,
-    type: "button",
-    role: "tab",
-    "aria-selected": (c.kind || "cocktail") === k,
-    className: (c.kind || "cocktail") === k ? "on" : "",
-    onClick: () => set({ kind: k })
-  }, l)))) : React.createElement("span", {
-    className: "ff-c17-kindline"
-  }, c.style === "classic" ? "Classic " : "Signature ", c.kind === "mocktail" ? "mocktail" : "cocktail", c.kind !== "mocktail" && (c.spirit === "other" ? c.spiritOther : c.spirit) ? ` · ${c.spirit === "other" ? c.spiritOther : c.spirit}` : ""), React.createElement("div", {
+  const recHead = React.createElement("div", {
     className: "ff-c17-rechead"
   }, React.createElement("b", {
     className: "h"
@@ -352,7 +324,39 @@ function CocktailBack17({ c, edit, set }) {
     className: n === x ? "on" : "",
     onClick: () => setN(x),
     "aria-label": x === 1 ? "1 cocktail" : "20 cocktails"
-  }, x)))), edit ? React.createElement("div", {
+  }, x))));
+  const modeTabs = React.createElement("div", {
+    className: "ff-c17-tabs",
+    role: "tablist",
+    "aria-label": "Cocktail or mocktail"
+  }, [["cocktail", "Cocktail"], ["mocktail", "Mocktail"]].map(([k, l]) => React.createElement("button", {
+    key: k,
+    type: "button",
+    role: "tab",
+    "aria-selected": (c.kind || "cocktail") === k,
+    className: (c.kind || "cocktail") === k ? "on" : "",
+    onClick: () => set({ kind: k })
+  }, l)));
+  return React.createElement("div", {
+    className: "ff-c17-body back"
+  }, edit ? React.createElement("div", {
+    className: "ff-c17-kind"
+  }, React.createElement("div", {
+    className: "ff-c17-tabs",
+    role: "tablist",
+    "aria-label": "Classic or signature"
+  }, [["classic", "Classic"], ["signature", "Signature"]].map(([k, l]) => React.createElement("button", {
+    key: k,
+    type: "button",
+    role: "tab",
+    "aria-selected": (c.style || "signature") === k,
+    className: (c.style || "signature") === k ? "on" : "",
+    onClick: () => set({ style: k })
+  }, l)))) : React.createElement("span", {
+    className: "ff-c17-kindline"
+  }, c.style === "classic" ? "Classic " : "Signature ", c.kind === "mocktail" ? "mocktail" : "cocktail", c.kind !== "mocktail" && (c.spirit === "other" ? c.spiritOther : c.spirit) ? ` · ${c.spirit === "other" ? c.spiritOther : c.spirit}` : ""), edit ? React.createElement("div", {
+    className: "ff-c17-modrow"
+  }, modeTabs, recHead) : recHead, edit ? React.createElement("div", {
     className: "ff-c17-rows"
   }, c.ings.map((i, ix) => {
     const sr = ix === 0 && c.kind !== "mocktail";
@@ -669,7 +673,8 @@ function SoonTitle17({ children }) {
 
 
 function Sec17({ icon, title, count, children, id, first }) {
-  const [open, setOpen] = useState(!!first);
+  /* v17.18: every collapsible box starts collapsed. */
+  const [open, setOpen] = useState(false);
   return <StaffBox id={id} icon={icon} title={title} count={count} open={open} onToggle={() => setOpen(o => !o)}>{children}</StaffBox>;
 }
 

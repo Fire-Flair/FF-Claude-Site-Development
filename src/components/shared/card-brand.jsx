@@ -97,12 +97,13 @@ const METAL = {
 const metalOf = (tier) => METAL[tier] || METAL.standard;
 
 
-/* v17.16: the metal a person's card is drawn in. Alexander Gagnon is Gold, Bruno Cuartero is Silver, everyone else is Bronze. */
+/* v17.16: the metal a person's card is drawn in. Alexander Gagnon is Gold; Bruno Cuartero and Simao are Silver (v17.18); everyone else is Bronze. */
 function cardTier17(person) {
   const tag = String((person && person.tag) || "").toUpperCase();
   const name = String((person && person.name) || "").trim().toLowerCase();
   if (tag === "ALEX424" || tag === "ALEXG" || name === "alexander gagnon") return "gold";
   if (tag === "CUARTERO" || name === "bruno cuartero") return "silver";
+  if (tag === "SIMAO" || name === "simao") return "silver";
   return "bronze";
 }
 

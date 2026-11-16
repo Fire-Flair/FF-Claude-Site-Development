@@ -2,7 +2,7 @@
 /* ==========================================================================
    FF TEAM PHASE 1 — v1.2 additions
    1. Card tiers: every profile card has a rank — primary (gold), secondary
-      (silver, two at most) or tertiary (bronze). Stored on the record as
+      (silver) or tertiary (bronze); one Gold and one Silver at most since v17.18. Stored on the record as
       `rank`; profiles saved before v1.2 have no rank and keep their old
       look (first card gold, next two silver, the rest bronze).
    2. Edit Profile mode: tick the cards to keep, drag them into order and
@@ -23,7 +23,14 @@ const TIER_KEYS = ["primary", "secondary", "tertiary"];
 const RANK_ORDER = { primary: 0, secondary: 1, tertiary: 2 };
 
 
-const SECONDARY_MAX = 2;
+/* v17.18: one Gold (Primary) and one Silver (Secondary); every other card is Bronze (Extra). */
+const PRIMARY_MAX = 1;
+
+
+const SECONDARY_MAX = 1;
+
+
+const RANK_CAP = { primary: PRIMARY_MAX, secondary: SECONDARY_MAX };
 
 
 const RANK_NAME = { primary: "Primary", secondary: "Secondary", tertiary: "Extra" };
@@ -39,9 +46,10 @@ const EDIT_CATS = ["professions", "qualifications", "skills", "venues", "experie
 function withRanks(list) {
   const shown = (r) => !r.hidden && !r.proposed;
   const legacy = !list.some(r => shown(r) && r.rank);
-  let i = 0, sec = 0;
+  let i = 0, pri = 0, sec = 0;
   const eff = list.map((r, idx) => {
     let k = !shown(r) ? "tertiary" : legacy ? cardRank(i++) : (RANK_ORDER[r.rank] !== undefined ? r.rank : "tertiary");
+    if (k === "primary" && shown(r) && ++pri > PRIMARY_MAX) k = "secondary";
     if (k === "secondary" && shown(r) && ++sec > SECONDARY_MAX) k = "tertiary";
     return { r, rank: k, idx, last: shown(r) ? 0 : 1 };
   });
@@ -86,26 +94,28 @@ function editRows(profile, cat) {
 }
 
 
-/* Move one card to a tier and a place in it. A third Secondary card sends
-   the last of the other two to the front of Tertiary (and says so). */
+/* Move one card to a tier and a place in it. Primary and Secondary hold one card each: the card that was there
+   moves down one box (Primary to Secondary, Secondary to the front of Extra), and the move says so. */
 function moveRecord(list, id, toRank, toIndex) {
   const rows = rankAll(list);
   const me = rows.find(r => r.id === id);
   if (!me) return { list: rows };
   const rest = rows.filter(r => r.id !== id);
   const lanes = Object.fromEntries(TIER_KEYS.map(k => [k, rest.filter(r => r.rank === k)]));
-  let bumped = null;
-  if (toRank === "secondary" && me.rank !== "secondary") {
-    const sec = lanes.secondary.filter(r => !r.hidden);
-    if (sec.length >= SECONDARY_MAX) {
-      bumped = sec[sec.length - 1];
-      lanes.secondary = lanes.secondary.filter(r => r.id !== bumped.id);
-      lanes.tertiary = [{ ...bumped, rank: "tertiary" }, ...lanes.tertiary];
-    }
-  }
   const lane = lanes[toRank];
   const at = Math.max(0, Math.min(toIndex === undefined ? lane.length : toIndex, lane.length));
   lane.splice(at, 0, { ...me, rank: toRank });
+  let bumped = null;
+  ["primary", "secondary"].forEach((k, ki) => {
+    const next = TIER_KEYS[ki + 1];
+    const shown = lanes[k].filter(r => !r.hidden && !r.proposed);
+    while (shown.length > RANK_CAP[k]) {
+      const out = shown.pop();
+      lanes[k] = lanes[k].filter(r => r.id !== out.id);
+      lanes[next] = [{ ...out, rank: next }, ...lanes[next]];
+      if (out.id !== id) bumped = { ...out, rank: next };
+    }
+  });
   return { list: TIER_KEYS.flatMap(k => lanes[k]), bumped };
 }
 
@@ -127,7 +137,7 @@ function p1EditReducer(s, a) {
     case "PE_MOVE": {
       const { list, bumped } = moveRecord(recsOf(s.profile, a.category), a.id, a.rank, a.index);
       const next = withRecords(s, a.category, list);
-      return bumped ? { ...next, toast: `${bumped.name} moved to Extra` } : next;
+      return bumped ? { ...next, toast: `${bumped.name} moved to ${RANK_NAME[bumped.rank]}` } : next;
     }
     default: return null;
   }
@@ -178,7 +188,14 @@ const DRAG_START_PX = 6;
 const HOLD_MS = 240;
 
 
-function TierEditor({ catKey, def, rows, onOpen, tail }) {
+/* Font size for a name inside a box, in container units: the longest word has to fit the box's width, so it never splits. */
+function boxFont17(name) {
+  const lw = Math.max(...String(name || "").split(/\s+/).map(w => w.length), 1);
+  return `${Math.max(8.5, Math.min(14, 66 / (lw * 0.62))).toFixed(2)}cqw`;
+}
+
+
+function TierEditor({ catKey, def, rows, onOpen, onAdd }) {
   const { dispatch } = useStore();
   const scrollRef = useRef(null);
   const [drag, setDrag] = useState(null);      // { id, x, y, w, dx, dy, over }
@@ -199,7 +216,7 @@ function TierEditor({ catKey, def, rows, onOpen, tail }) {
     let index = cards.length;
     for (let i = 0; i < cards.length; i++) {
       const r = cards[i].getBoundingClientRect();
-      if (x < r.left + r.width / 2) { index = i; break; }
+      if (y < r.top + r.height / 2) { index = i; break; }
     }
     return { rank, index };
   };
@@ -252,29 +269,14 @@ function TierEditor({ catKey, def, rows, onOpen, tail }) {
     el.addEventListener("touchmove", stop, { passive: false });
     return () => el.removeEventListener("touchmove", stop);
   }, []);
-  /* Near either end of the row, keep scrolling it while dragging. */
-  useEffect(() => {
-    if (!drag) return;
-    const t = setInterval(() => {
-      const sc = scrollRef.current, p0 = ptr.current;
-      if (!sc || !p0) return;
-      const b = sc.getBoundingClientRect();
-      const step = p0.x > b.right - 44 ? 16 : p0.x < b.left + 44 ? -16 : 0;
-      if (!step) return;
-      const before = sc.scrollLeft;
-      sc.scrollLeft += step;
-      if (sc.scrollLeft !== before) setDrag(d => d && ({ ...d, over: targetAt(p0.x, p0.y, d.id) || d.over }));
-    }, 30);
-    return () => clearInterval(t);
-  }, [!!drag]);
   const onKey = (ev, row) => {
     const lane = lanes[row.rank];
     const i = lane.findIndex(x => x.id === row.id);
     const up = { secondary: "primary", tertiary: "secondary" }, down = { primary: "secondary", secondary: "tertiary" };
-    if (ev.key === "ArrowLeft" && i > 0) { ev.preventDefault(); move(row.id, row.rank, i - 1); }
-    else if (ev.key === "ArrowRight" && i < lane.length - 1) { ev.preventDefault(); move(row.id, row.rank, i + 1); }
-    else if (ev.key === "ArrowUp" && up[row.rank]) { ev.preventDefault(); move(row.id, up[row.rank]); }
-    else if (ev.key === "ArrowDown" && down[row.rank]) { ev.preventDefault(); move(row.id, down[row.rank], 0); }
+    if (ev.key === "ArrowUp" && i > 0) { ev.preventDefault(); move(row.id, row.rank, i - 1); }
+    else if (ev.key === "ArrowDown" && i < lane.length - 1) { ev.preventDefault(); move(row.id, row.rank, i + 1); }
+    else if (ev.key === "ArrowLeft" && up[row.rank]) { ev.preventDefault(); move(row.id, up[row.rank], up[row.rank] === "primary" ? 0 : undefined); }
+    else if (ev.key === "ArrowRight" && down[row.rank]) { ev.preventDefault(); move(row.id, down[row.rank], 0); }
   };
 
   const cardFor = (row, rank) => <GenericAttributeCard record={row.rec} def={def} themeKey="onyx" rank={row.rec.hidden ? "tertiary" : rank} editable onClick={() => onOpen(row.rec)} />;
@@ -282,12 +284,14 @@ function TierEditor({ catKey, def, rows, onOpen, tail }) {
     ? <span className="ff-pe-drop" aria-hidden="true" key={`drop-${rank}-${index}`} /> : null;
 
   return (
-    <div className={`ff-pe-row${drag ? " dragging" : ""}`} ref={scrollRef}>
+    <div className={`ff-pe3${drag ? " dragging" : ""}`} ref={scrollRef}>
       {TIER_KEYS.map(rank => {
         const lane = lanes[rank];
         const others = lane.filter(r => !drag || r.id !== drag.id).length;
         let j = 0;
         const target = drag && drag.over && drag.over.rank === rank;
+        const empty = !lane.some(r => !drag || r.id !== drag.id);
+        const showPlus = !drag && (rank === "tertiary" || !lane.length);
         return (
           <div key={rank} className={`ff-pe-lane ${rank}${target ? " over" : ""}`} data-pe-lane={rank} data-pe-cat={catKey} aria-label={`${RANK_NAME[rank]} ${def.label.toLowerCase()}`}>
             <div className="ff-pe-lane-h"><span className={`dot ${rank}`} /><b>{RANK_NAME[rank]}</b></div>
@@ -298,7 +302,7 @@ function TierEditor({ catKey, def, rows, onOpen, tail }) {
                 return (
                   <React.Fragment key={row.id}>
                     {!lifted && indicator(rank, at)}
-                    <div className={`ff-pe-card${lifted ? " lifted" : ""}`} data-pe-card={row.id}
+                    <div className={`ff-pe-card${lifted ? " lifted" : ""}`} data-pe-card={row.id} style={{ "--pe-fs": boxFont17(row.rec.name) }}
                       onPointerDown={(ev) => onDown(ev, row)} onPointerMove={onMove}
                       onPointerUp={(ev) => finish(ev, false)} onPointerCancel={() => finish(null, true)}
                       onClickCapture={(ev) => { if (suppressClick.current) { ev.stopPropagation(); ev.preventDefault(); } }}
@@ -311,16 +315,18 @@ function TierEditor({ catKey, def, rows, onOpen, tail }) {
                 );
               })}
               {indicator(rank, others)}
-              {!lane.length && <div className="ff-pe-empty" aria-hidden="true">{drag ? "Drop here" : ""}</div>}
+              {showPlus && (onAdd
+                ? <button type="button" className="ff-pe-plus" aria-label={`Add ${def.singular.toLowerCase()} to ${RANK_NAME[rank]}`} onClick={() => onAdd(rank)}><Plus size={24} strokeWidth={1.6} /></button>
+                : <div className="ff-pe-empty" aria-hidden="true" />)}
+              {!showPlus && empty && <div className="ff-pe-empty" aria-hidden="true">{drag ? "Drop here" : ""}</div>}
             </div>
           </div>
         );
       })}
-      {tail && <div className="ff-pe-tail">{tail}</div>}
       {drag && (() => {
         const row = rows.find(r => r.id === drag.id);
         return row ? (
-          <div className="ff-pe-ghost" style={{ left: drag.x - drag.dx, top: drag.y - drag.dy, width: drag.w }} aria-hidden="true">
+          <div className="ff-pe-ghost ff-pe-card" style={{ left: drag.x - drag.dx, top: drag.y - drag.dy, width: drag.w, "--pe-fs": boxFont17(row.rec.name) }} aria-hidden="true">
             {cardFor(row, drag.over && drag.over.rank ? drag.over.rank : row.rank)}
           </div>
         ) : null;

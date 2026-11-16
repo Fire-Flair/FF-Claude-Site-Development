@@ -4,13 +4,16 @@
 .ff .ff-sc17{container-type:inline-size;width:100%;aspect-ratio:5 / 7;display:block;box-sizing:border-box;position:relative;font-family:var(--sans);color:#16130F;
   --g-light:#E4C36A;--g-mid:#B08D2A;--g-dk:#7E611D;--ink2:#16130F;
   --foil:linear-gradient(135deg,#8A6A1C 0%,#E9CE7C 16%,#FFF4C8 28%,#C9A227 44%,#8A6A1C 58%,#E4C36A 74%,#FFF1BE 86%,#B08D2A 100%);
-  overflow-wrap:normal;word-break:keep-all;hyphens:none;-webkit-font-smoothing:antialiased}
+  overflow-wrap:normal;word-break:keep-all;hyphens:none;-webkit-font-smoothing:antialiased;
+  /* v17.18: no gold outline. The edge takes the colour already used below the cards for the booking's source (FF Staff / FF Party). */
+  --sc-edge:#6B1226}
+.ff .ff-sc17.src-party{--sc-edge:#7A5A12}
 .ff .ff-sc17 *{box-sizing:border-box}
-.ff .ff-sc17 .card{height:100%;display:flex;border-radius:7.558cqw;corner-shape:squircle;padding:1.163cqw;background:var(--foil);box-shadow:0 3.488cqw 7.558cqw -16px rgba(30,22,6,.6)}
+.ff .ff-sc17 .card{height:100%;display:flex;border-radius:7.558cqw;corner-shape:squircle;padding:1.163cqw;background:var(--sc-edge);box-shadow:0 3.488cqw 7.558cqw -16px rgba(30,22,6,.6)}
 .ff .ff-sc17 .face{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0;border-radius:6.686cqw;corner-shape:squircle;overflow:hidden;text-align:center;
   background:radial-gradient(120% 34% at 50% 0%,#FFFFFF,rgba(255,255,255,0) 60%),linear-gradient(170deg,#FFFDF8,#F3EAD5)}
 .ff .ff-sc17 .in{flex:1;display:flex;flex-direction:column;min-height:0;position:relative;padding:4.07cqw 4.36cqw 3.779cqw}
-.ff .ff-sc17 .in::before{content:"";position:absolute;inset:1.744cqw;border-radius:5.233cqw;corner-shape:squircle;border:1px solid rgba(176,141,42,.6);pointer-events:none}
+.ff .ff-sc17 .in::before{content:"";position:absolute;inset:1.744cqw;border-radius:5.233cqw;corner-shape:squircle;border:1px solid var(--sc-edge);opacity:.55;pointer-events:none}
 .ff .ff-sc17 .top{display:flex;align-items:center;gap:1.744cqw;flex:none;height:12.209cqw}
 .ff .ff-sc17 .plate{border-radius:2.326cqw;corner-shape:squircle;font-weight:800;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap;line-height:1.2;padding:1.453cqw 2.616cqw;font-size:3.052cqw}
 .ff .ff-sc17 .plate.site{color:var(--g-light);background:var(--ink2);border:1px solid var(--g-mid)}
@@ -18,11 +21,10 @@
 .ff .ff-sc17 .plate.chosen{color:#F4EFE4;background:linear-gradient(160deg,#7A1830,#5C1220 60%,#4A0E1A);border:1px solid #3A0A14;box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
 .ff .ff-sc17 .plate.confirmed{color:#5C1220;background:linear-gradient(160deg,#FFFDF4,#F4EAC9);border:1px solid var(--g-dk);box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
 .ff .ff-sc17 .logo{margin-left:auto;width:12.209cqw;height:12.209cqw;border-radius:50%;flex:none;box-shadow:0 0.872cqw 2.326cqw -3px rgba(48,36,10,.6);display:block}
-.ff .ff-sc17 .role{flex:none;margin:3.198cqw 0 3.488cqw;height:30.233cqw;padding:0.872cqw;border-radius:5.233cqw;corner-shape:squircle;background:var(--foil);box-shadow:0 2.907cqw 5.233cqw -12px rgba(48,36,10,.7)}
-.ff .ff-sc17 .rin{height:100%;display:flex;flex-direction:column;justify-content:center;overflow:hidden;border-radius:4.36cqw;corner-shape:squircle;background:radial-gradient(120% 90% at 50% 0%,#2B2313 0%,#16130F 55%,#0B0B0C 100%)}
-.ff .ff-sc17 .role h1{margin:0;padding:0 2.326cqw;font-family:var(--display);font-weight:700;font-size:7.849cqw;line-height:1.16;letter-spacing:.06em;text-transform:uppercase;text-wrap:balance;
-  background:linear-gradient(180deg,#FFF3C4 0%,#EBCF7B 42%,#C9A227 78%,#A9862A 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.ff .ff-sc17 .rows{flex:1;display:flex;flex-direction:column;min-height:0;border:1px solid rgba(176,141,42,.6);border-radius:4.07cqw;corner-shape:squircle;overflow:hidden;text-align:left;background:rgba(255,255,255,.72)}
+.ff .ff-sc17 .role{flex:none;margin:3.198cqw 0 3.488cqw;height:30.233cqw;padding:0}
+.ff .ff-sc17 .rin{height:100%;display:flex;flex-direction:column;justify-content:center;overflow:hidden;background:none}
+.ff .ff-sc17 .role h1{margin:0;padding:0 2.326cqw;font-family:var(--display);font-weight:700;font-size:6.6cqw;line-height:1.16;letter-spacing:.06em;text-transform:uppercase;text-wrap:balance;color:var(--ink2)}
+.ff .ff-sc17 .rows{flex:1;display:flex;flex-direction:column;min-height:0;border:1px solid var(--sc-edge);border-radius:4.07cqw;corner-shape:squircle;overflow:hidden;text-align:left;background:rgba(255,255,255,.72)}
 .ff .ff-sc17 .row{flex:1;display:flex;align-items:center;min-height:0;border-top:1px solid rgba(176,141,42,.3)}
 .ff .ff-sc17 .row:first-child{border-top:0}
 .ff .ff-sc17 .row .ic{flex:none;align-self:stretch;width:11.628cqw;display:grid;place-items:center;color:var(--g-light);background:var(--ink2)}

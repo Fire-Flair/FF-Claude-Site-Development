@@ -36,11 +36,11 @@ function SocialIcon11({ k, size = 15 }) {
 
 
 /* Social links, each row named so nobody has to guess the icon. Used on the Company Card, the VIP Host Card and the FF Team profile. */
-function SocialEdit11({ value, onChange }) {
+function SocialEdit11({ value, onChange, noPhone }) {
   const v = value || {};
   return (
     <div className="ff-soc11-edit">
-      {SOC11.map(x => (
+      {SOC11.filter(x => !(noPhone && x.k === "whatsapp")).map(x => (
         <label key={x.k} className="row"><span className="ic"><SocialIcon11 k={x.k} size={18} /></span>
           <span className="col"><b className="sn">{x.label}</b>
             <input className="ff-input" value={v[x.k] || ""} placeholder={x.ph} aria-label={x.label} autoCapitalize="none" spellCheck={false}
@@ -63,7 +63,8 @@ function SocialRow11({ value, named }) {
 function ProfileSocial11({ isMe, person }) {
   const { state, dispatch } = useStore();
   if (!isMe) {
-    const s = person && person.socials;
+    /* v17.18: the WhatsApp number is not asked for or shown here (it comes from the account); a stored value is kept. */
+    const s = person && person.socials ? { ...person.socials, whatsapp: undefined } : null;
     if (!s || !SOC11.some(x => String(s[x.k] || "").trim())) return null;
     return (
       <section style={{ marginTop: 22 }}>
@@ -76,7 +77,7 @@ function ProfileSocial11({ isMe, person }) {
   return (
     <section id="ff-sec-social" style={{ marginTop: 22 }}>
       <SectionHead icon={<I11.Globe size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Social links" action={<CategoryToggle sectionKey="pf_social" defaultOpen={false} />} />
-      {open && <SocialEdit11 value={(state.profile || {}).socials} onChange={(socials) => dispatch({ type: "PROFILE", patch: { socials } })} />}
+      {open && <SocialEdit11 noPhone value={(state.profile || {}).socials} onChange={(socials) => dispatch({ type: "PROFILE", patch: { socials } })} />}
     </section>
   );
 }

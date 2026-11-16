@@ -226,7 +226,7 @@ function VenueSearch17({ value, onPick, autoFocus, label, placeholder }) {
 
 /* ---- Editing: one search box, then the venue cards ----------------------------------------------------- */
 /* A venue is added by typing its name and picking it. Nothing else is asked for. */
-function VenuesEditor17({ items }) {
+function VenuesEditor17({ items, onOpen }) {
   const { dispatch } = useStore();
   const [key, setKey] = useState(0);
   const same = (r, p) => (r.place && p.place && r.place.id === p.place.id) || String(r.name).toLowerCase() === String(p.name).toLowerCase();
@@ -240,10 +240,11 @@ function VenuesEditor17({ items }) {
   return (
     <div className="ff-venedit17">
       <style>{VEN_CSS17}</style>
+      <p className="ff-venedit17-line">Add the top venues you've worked at, or your favourite bars.</p>
       <VenueSearch17 key={key} label="Search for a venue" placeholder="Search for a venue" onPick={add} />
       {items.length > 0 && (
         <div className="ff-venedit17-cards">
-          {items.map(r => <VenueLandscapeCard key={r.id} record={r} onRemove={() => dispatch({ type: "REC_DELETE", category: "venues", id: r.id })} />)}
+          {items.map(r => <VenueLandscapeCard key={r.id} record={r} onClick={onOpen ? () => onOpen(r) : undefined} onRemove={() => dispatch({ type: "REC_DELETE", category: "venues", id: r.id })} />)}
         </div>
       )}
     </div>

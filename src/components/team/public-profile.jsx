@@ -18,7 +18,8 @@ const prefersReducedMotion = () => { try { return window.matchMedia("(prefers-re
 const PUB_KIND = { professions: "m", experience: "x", qualifications: "d", skills: "s", interests: "s", languages: "s", locations: "s" };
 
 
-const PUB_ORDER = ["professions", "media", "qualifications", "skills", "venues", "experience", "locations", "languages", "interests"];
+/* v17.18: the Profile Card's order (Skills, Interests, Locations, Languages), then Venues, Qualifications and the rest. */
+const PUB_ORDER = ["professions", "media", "skills", "interests", "locations", "languages", "venues", "qualifications", "experience"];
 
 
 
@@ -557,23 +558,34 @@ function AttrGroups({ items, mem, onOpen }) {
   });
   groups.sort((a, b) => a.ord - b.ord);
   groups.forEach(g => g.list.sort((a, b) => a.at - b.at));
+  /* v17.18: a summary card lists five entries at most; with more, a second card of the same category follows with the next five, and so on.
+     Work locations are the exception: the areas as they were ticked, three on the card and "+N" for the rest. */
+  const cards = [];
+  groups.forEach(g => {
+    if (g.key === "locations") { cards.push({ g, key: g.key, part: g.list.slice(0, 3), more: Math.max(0, g.list.length - 3) }); return; }
+    for (let i = 0; i < g.list.length; i += 5) cards.push({ g, key: `${g.key}-${i}`, part: g.list.slice(i, i + 5), more: 0 });
+  });
   return (
-    <MemScroll mem={mem} k="overview" label={`Attributes, ${groups.length} card${groups.length === 1 ? "" : "s"}`} className="ff-acar">
-      {groups.map((g, gi) => {
-        const show = g.list.slice(0, 9), more = g.list.length - show.length;
-        const label = (g.def && g.def.label) || g.key;
+    <MemScroll mem={mem} k="overview" label={`Attributes, ${cards.length} card${cards.length === 1 ? "" : "s"}`} className="ff-acar">
+      {cards.map((c, ci) => {
+        const label = (c.g.def && c.g.def.label) || c.g.key;
         return (
-          <button key={g.key} type="button" className={"ff-agrp " + ["t-gold", "t-silver", "t-bronze"][gi % 3]} onClick={() => onOpen(g.key)}
-            aria-label={`${label}: ${g.list.map(it => it.record.name).join(", ")}. View all attributes`}>
-            <span className="ff-agrp-top"><span className="ff-agrp-h">{label}</span><span className="ff-agrp-n">{g.list.length}</span></span>
-            <span className="ff-agrp-l">{show.map(it => <span key={it.id}>{it.record.name}</span>)}</span>
-            {more > 0 && <span className="ff-agrp-more">+{more} more</span>}
+          <button key={c.key} type="button" className={"ff-agrp " + tierCls17(ci)} onClick={() => onOpen(c.g.key)}
+            aria-label={`${label}: ${c.g.list.map(it => it.record.name).join(", ")}. View all attributes`}>
+            <span className="ff-agrp-top"><span className="ff-agrp-h">{label}</span><span className="ff-agrp-n">{c.part.length + c.more}</span></span>
+            <span className="ff-agrp-l">{c.part.map(it => <span key={it.id}>{it.record.name}</span>)}</span>
+            {c.more > 0 && <span className="ff-agrp-more">{`+${c.more}`}</span>}
           </button>
         );
       })}
     </MemScroll>
   );
 }
+
+
+
+/* v17.18: one Gold, one Silver, every other card Bronze (the order decides; the colours never repeat). */
+const tierCls17 = (i) => i === 0 ? "t-gold" : i === 1 ? "t-silver" : "t-bronze";
 
 
 

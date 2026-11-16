@@ -1,5 +1,23 @@
 # FireFlair prototype — changelog
 
+## v17.18
+
+Artifact version 1794855679-a976.
+
+Profile page update: the attribute boxes, rank colours, venues, builder tabs, invitations and work locations.
+
+- Rank colours (cardRank, records.js): one Gold (index 0), one Silver (index 1), every other card Bronze. Colour follows the order only. The builder boxes keep the labels Primary, Secondary and Extra; Primary and Secondary hold one card each (RANK_CAP in profile-edit.jsx) and a card dropped into a full box moves the occupant down one box. The Profile Card still features the top three by order (FEATURE_LIMIT). The displayed profile no longer repeats gold, silver, bronze (tierCls17 in public-profile.jsx, also used for the profession cards).
+- Builder attribute boxes (TierEditor, styles/p12.css): three boxes across, fitting the content width, the same size in every category. A card shows its name in its tier colour (the full card opens on a tap). An empty box shows a plus in its centre; tapping it adds straight into that box (Professions focus the profession search and the next pick goes into that box). The Extra box always ends with a plus. The company builder is unchanged.
+- Category order, builder and displayed profile, as on the Profile Card: Professions, Skills, Interests, Work locations, Languages, then Venues, Qualifications and the rest (profileOrder in phase-config.js, PUB_ORDER in public-profile.jsx).
+- Venues: one line under the heading ("Add the top venues you've worked at, or your favourite bars."). Venue cards are square and the same size as the attribute boxes, three across, in the neutral faded blue, with no rank colour. Tapping a venue opens the same card sheet (description, pictures, Google Maps link). The meta line wraps instead of ending in an ellipsis.
+- Social links in the builder: the WhatsApp number is no longer asked for or shown (it comes from the account). Stored values are kept.
+- Builder tabs (attribute-cards.jsx): Overview, Packages, Team and Reviews, the same tabs as the displayed profile. Q&A, Build your packages (Signature cocktails, Service Cards) and Terms and conditions are in Packages, in that order. Team and Reviews reuse TeamTab17 and ReviewsTab17 (introductions.jsx), now shared with the displayed profile. On the signed-in displayed profile, Build your packages and Terms and conditions moved from under the tabs into the Packages tab, below the Q&A (packagesTail on PublicProfileBody). Build your packages now starts collapsed like every other box.
+- Cocktail builder (card-studio.jsx, v11.css): the Cocktail / Mocktail switch, the Recipe label and the 1 / 20 size control share one row, the size control a little larger and the switch a little smaller. Fits at 360 px.
+- Invitations (Shift Cards, shift-card17.jsx, styles/shift17.css and sd11.css): no gold outline; the edge, inner line and rows border take one colour per source (--sc-edge: FF Staff and FF Party). The black panel behind the event name is gone: dark text, slightly smaller, still shrinks to fit. The three buttons are squircles; Available is the site's gold button. Note: the Shift Card on the home pillar demo uses the same component.
+- Work locations card (displayed profile): the areas as they were ticked (a ticked parent stands for what is beneath it), at most three, then "+N". Entries wrap between whole words; no ellipsis in any summary card.
+- More than five entries: a summary card lists five at most; a category with six or more continues on a second card of the same title with the next five, and so on (AttrGroups).
+- Simao's Profile Card is Silver (cardTier17). Alexander stays Gold, Bruno Silver, everyone else Bronze.
+
 ## v17.17
 
 Artifact version 1794852236-3e59 (FireFlair — Phase Two, almost final).

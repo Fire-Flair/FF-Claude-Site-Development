@@ -108,7 +108,7 @@ function VenueLandscapeCard({ record, onClick, onRemove, noLink }) {
   const lw = Math.max(...words.map(w => w.length), 1);
   const n = String(record.name || "").length;
   const fs = Math.min(lw <= 9 ? 14 : lw <= 12 ? 12.5 : lw <= 15 ? 11 : 9.5, n <= 14 ? 14 : n <= 20 ? 12.5 : n <= 28 ? 11 : 10);
-  const meta = record.place ? [venTypeLabel17(record.place), record.area && record.area.name].filter(Boolean).join(" · ") : "";
+  const meta = record.place ? [n > 10 ? null : venTypeLabel17(record.place), record.area && record.area.name].filter(Boolean).join(" · ") : "";
   const Tag = onClick ? "button" : "div";
   return (
     <Tag type={onClick ? "button" : undefined} className="ff-venmini17" onClick={onClick}>
@@ -216,6 +216,7 @@ function HorizontalCardRanker({ items, label, renderCard, tail }) {
    with its records in company.records and its own show/hide keys. */
 function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd, owner, pub, top, moreTail, quiet, plus, hideZero }) {
   const { state, dispatch } = useStore();
+  const pickRank = useRef(null);
   const items = isMe ? list : list.filter(r => !r.hidden && !r.proposed);
   if (!isMe && !items.length) return null;
   /* Work locations are the ticked places (one record each): the count and the public chips read them in the tree's order. */
@@ -277,16 +278,26 @@ function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd
             if (items.some(r => r.name.toLowerCase() === n.toLowerCase())) { dispatch({ type: "TOAST", toast: `${n} is already on your profile` }); return; }
             /* source of the profession: "approved" = on the FireFlair list, "user" = typed by the member (kept with the category they chose). */
             const approved = ALL_PROFESSIONS.some(p => p.name.toLowerCase() === n.toLowerCase());
-            dispatch({ type: "RECORDS_MERGE", byCategory: { professions: [makeRecord("professions", n, { professionSource: approved ? "approved" : "user", ...(category ? { displayCategory: category } : {}) })] } });
+            const fresh = makeRecord("professions", n, { professionSource: approved ? "approved" : "user", ...(category ? { displayCategory: category } : {}) });
+            dispatch({ type: "RECORDS_MERGE", byCategory: { professions: [fresh] } });
+            /* v17.18: a profession picked after tapping the plus in a box goes into that box. */
+            if (pickRank.current) { dispatch({ type: "PE_MOVE", category: "professions", id: fresh.id, rank: pickRank.current, index: 0 }); pickRank.current = null; }
             dispatch({ type: "TOAST", toast: `${n} added` });
           }} />
         )}
         {isMe && catKey === "locations" && <CoverageTree17 owner={owner} />}
         <div style={{ height: isMe && catKey === "professions" && owner !== "company" ? 12 : 0 }} />
         {catKey === "locations" ? (isMe ? null : <AreasChips17 owner={locOwner} />) : catKey === "venues" && isMe && owner !== "company" && editing ? (
-          <VenuesEditor17 items={items} />
+          <VenuesEditor17 items={items} onOpen={(r) => onOpen(r)} />
         ) : editing ? (
-          <TierEditor catKey={catKey} def={def} rows={eRows} onOpen={(r) => onOpen(r)} tail={addTile} />
+          <TierEditor catKey={catKey} def={def} rows={eRows} onOpen={(r) => onOpen(r)}
+            onAdd={isMe && !def.system && catKey !== "experience" ? (rank) => {
+              if (catKey !== "professions") { onAdd(rank); return; }
+              /* Professions are typed or picked in the search above the boxes: the next one picked goes into the tapped box. */
+              pickRank.current = rank;
+              const inp = document.querySelector("#ff-sec-professions input[type=search]");
+              if (inp) { inp.scrollIntoView({ block: "center", behavior: "smooth" }); inp.focus({ preventScroll: true }); }
+            } : undefined} />
         ) : (
           pub && !isMe ? <PubGrid catKey={catKey} def={def} items={items} shade={shade} onOpen={onOpen} /> : (
           <HorizontalCardRanker items={items} label={def.label}
@@ -353,7 +364,7 @@ function RecordDetailsField({ details, readOnly, onChange }) {
 
 
 
-function GenericAttributeCardCreator({ open, record, def, category, readOnly, onClose, owner }) {
+function GenericAttributeCardCreator({ open, record, def, category, readOnly, onClose, owner, rank }) {
   const { state, dispatch: rawDispatch } = useStore();
   /* owner "company": the same editor writes to the Company profile's records. */
   const dispatch = (a) => rawDispatch(owner && /^REC_/.test(a.type) ? { ...a, owner } : a);
@@ -401,6 +412,8 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
     const taskId = xpTaskFor(category);
     const fresh = !owner && XP_TASKS.some(t => t.id === taskId) && !(state.profile.xpClaimed || []).includes(taskId);
     dispatch({ type: "REC_ADD", category, record: rec });
+    /* v17.18: a card added from the plus in a box goes into that box. */
+    if (rank && !owner) dispatch({ type: "PE_MOVE", category, id: rec.id, rank, index: 0 });
     dispatch({ type: "TOAST", toast: `${def.singular} added${fresh ? xpNote(XP_VALUES.task) : ""}` });
     onClose();
   };
@@ -620,6 +633,8 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
   const all = useDirectory();
   const [openRec, setOpenRec] = useState(null);
   const [addingTo, setAddingTo] = useState(null);
+  const [addRank, setAddRank] = useState(null);
+  const [btab, setBtab] = useState("overview");
   const [asking, setAsking] = useState(false);
   const shade = "onyx";
 
@@ -642,6 +657,15 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
     ? state.reviewRequests.filter(r => r.aboutId === "me" && !state.reviews.some(rv => rv.aboutId === "me" && rv.byId === r.fromId))
     : [];
   const pendingCount = pendingRequests.length;
+  const bTabs = isMe ? (() => {
+    const td = teamTabData17(state, all, person);
+    return [
+      { key: "overview", label: "Overview" },
+      { key: "services", label: "Packages", count: servicesOf(state, person).length },
+      { key: "teams", label: "Team", count: td.teams.length + td.tCos.length + td.tNet.length },
+      { key: "reviews", label: "Reviews", count: reviewsOf(state, person).length },
+    ];
+  })() : [];
 
   /* Your own network shows on your profile whether you're editing it or
      viewing it as a guest. */
@@ -652,7 +676,7 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
 
   const focusHandlers = {
     reviews: () => { dispatch({ type: "TOGGLE_CATEGORY", key: "reviews", visible: true }); setAsking(true); },
-    questions: () => dispatch({ type: "TOGGLE_CATEGORY", key: "questions", visible: true }),
+    questions: () => { setBtab("services"); dispatch({ type: "TOGGLE_CATEGORY", key: "questions", visible: true }); setTimeout(() => { const el = document.getElementById("ff-sec-questions"); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }, 200); },
   };
   order.forEach(k => { focusHandlers[k] = k === "locations" ? () => dispatch({ type: "TOGGLE_CATEGORY", key: "attr_locations", visible: true }) : () => setAddingTo(k); });
   useProfileFocus(focusHandlers, isMe);
@@ -660,7 +684,7 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
   const renderCategorySection = (catKey) => (
     <ProfileAttributeSection key={catKey} catKey={catKey} def={cats[catKey]} list={records[catKey] || []} isMe={isMe} shade={shade}
       onOpen={(r) => setOpenRec({ record: r, def: cats[catKey], category: catKey })}
-      onAdd={() => setAddingTo(catKey)} />
+      onAdd={(rank) => { setAddRank(rank || null); setAddingTo(catKey); }} />
   );
 
   const networkSection = (
@@ -745,24 +769,35 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
     <>
       {isMe ? (<>
         <div id="ff-pe-anchor" style={{ scrollMarginTop: 84 }} />
-        <ProfileEditHead />
-        {order.map(renderCategorySection)}
-        <ProfileSocial11 isMe />
-        {networkSection}
-        {reviewsSection}
-        {isMe && <TermsRow17 />}
-      {isMe && (
-        <section id="ff-sec-questions" style={{ marginTop: 22 }}>
-          <SectionHead icon={<MessageSquare size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Q&A"
-            action={<CategoryToggle sectionKey="questions" defaultOpen={false} />} />
-          {state.categoryVisibility.questions === true && (<>
-            <p className="ff-body" style={{ margin: "-2px 0 6px", fontSize: 13.5 }}>
-              Saved to your profile — if anyone asks, FireFlair answers from what you've told it here.
-            </p>
-            <QuestionCardsCollection />
-          </>)}
-        </section>
-      )}
+        {/* v17.18: the builder has the same four tabs as the displayed profile. */}
+        <div className="ff-ptabs-wrap">
+          <ProfileTabs tabs={bTabs} active={btab} onChange={setBtab} />
+          <div role="tabpanel" id="ff-tabpanel" aria-labelledby={`ff-tab-${btab}`} className="ff-tabpanel" tabIndex={0}>
+            {btab === "overview" && (<>
+              <ProfileEditHead />
+              {order.map(renderCategorySection)}
+              <ProfileSocial11 isMe />
+              {networkSection}
+              {reviewsSection}
+            </>)}
+            {btab === "services" && (<>
+              <section id="ff-sec-questions" style={{ marginTop: 4 }}>
+                <SectionHead icon={<MessageSquare size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Q&A"
+                  action={<CategoryToggle sectionKey="questions" defaultOpen={false} />} />
+                {state.categoryVisibility.questions === true && (<>
+                  <p className="ff-body" style={{ margin: "-2px 0 6px", fontSize: 13.5 }}>
+                    Saved to your profile — if anyone asks, FireFlair answers from what you've told it here.
+                  </p>
+                  <QuestionCardsCollection />
+                </>)}
+              </section>
+              <Creators17 kind="team" by={person.name} />
+              <TermsRow17 />
+            </>)}
+            {btab === "teams" && <TeamTab17 person={person} />}
+            {btab === "reviews" && <ReviewsTab17 person={person} />}
+          </div>
+        </div>
       </>) : (
         <div className="ff-pub">
           {PUB_ORDER.map(renderPub)}
@@ -783,8 +818,8 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
 
       <GenericAttributeCardCreator open={!!openRec} record={openRec?.record} def={openRec?.def} category={openRec?.category}
         readOnly={!isMe || !!openRec?.record?.readOnly} onClose={() => setOpenRec(null)} />
-      <GenericAttributeCardCreator open={!!addingTo} record={null} category={addingTo} def={addingTo ? cats[addingTo] : null}
-        onClose={() => setAddingTo(null)} />
+      <GenericAttributeCardCreator open={!!addingTo} record={null} category={addingTo} def={addingTo ? cats[addingTo] : null} rank={addRank}
+        onClose={() => { setAddingTo(null); setAddRank(null); }} />
       <AskForReviewSheet open={asking} onClose={() => setAsking(false)} />
       <AboutSheet open={editingAbout} onClose={() => setEditingAbout(false)} />
     </>

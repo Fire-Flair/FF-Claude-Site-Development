@@ -4545,3 +4545,13 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
   .ff .ff-way17-cv > .ff-way17-ctl, .ff .ff-way17-int > .ff-way17-ctl { grid-column:2; grid-row:1; }
   .ff .ff-way17-cv > .ff-way17-line, .ff .ff-way17-int > .ff-way17-line { grid-column:1; grid-row:1; }
 }
+
+/* v17.18: the Cocktail / Mocktail switch, the Recipe label and the recipe size sit on one row (360 px and up); the size control is a little larger and the switch a little smaller. */
+.ff .ff-c17-modrow { display:flex; align-items:center; gap:6px; min-width:0; width:100%; margin-bottom:6px; }
+.ff .ff-c17-modrow > .ff-c17-tabs { flex:0 0 auto; gap:2px; padding:2px; }
+.ff .ff-c17-modrow > .ff-c17-tabs button { padding:5px 7px; font-size:10.5px; white-space:nowrap; }
+.ff .ff-c17-modrow > .ff-c17-rechead { flex:1 1 0; min-width:0; justify-content:flex-end; gap:6px; }
+.ff .ff-c17-modrow .ff-c17-rechead .h { font-size:11px; white-space:nowrap; }
+.ff .ff-c17-modrow .ff-c17-rechead .h svg { display:none; }
+.ff .ff-c17-modrow .ff-c17-size { flex:none; padding:3px; gap:3px; }
+.ff .ff-c17-modrow .ff-c17-size button { min-width:30px; padding:6px 8px; font-size:13px; }

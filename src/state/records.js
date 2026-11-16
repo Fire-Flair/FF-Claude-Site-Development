@@ -145,7 +145,8 @@ const recsOf = (profile, cat) => (profile.records && profile.records[cat]) || []
 const FEATURE_LIMIT = 3;
 
 
-const cardRank = (i) => i === 0 ? "primary" : i < FEATURE_LIMIT ? "secondary" : "tertiary";
+/* v17.18: colour follows the order only: the first is Gold, the second Silver, all the rest Bronze (FEATURE_LIMIT is how many the Profile Card shows). */
+const cardRank = (i) => i === 0 ? "primary" : i === 1 ? "secondary" : "tertiary";
 
 
 const visibleRecs = (profile, cat) => rankedRecords(recsOf(profile, cat)).filter(r => !r.proposed && !r.hidden);
