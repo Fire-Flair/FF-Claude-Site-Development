@@ -107,6 +107,12 @@ function cardTier17(person) {
   return "bronze";
 }
 
+/* v17.19: the card colour Silver or Gold sets the metal of the card (rim, inner line, photo ring, FF logo);
+   every other colour keeps the verification tier from cardTier17. */
+function cardMetal17(person, themeKey) {
+  return themeKey === "silver" || themeKey === "gold" ? themeKey : cardTier17(person);
+}
+
 
 
 const metalEdge = (tier, angle = 150) => {

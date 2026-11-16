@@ -377,7 +377,7 @@ function OwnEditTools() {
       <Btn variant="primary" onClick={() => { dispatch({ type: "VIEW", id: "me", guest: true }); window.scrollTo(0, 0); }}><Eye size={14} /> View as guest</Btn>
     </section>
   );
-  return (<><ProfileFFAI /><CVPanel /><CreatorMedia /><CreatorAboutMe /></>);
+  return (<><ProfileFFAI /><CVPanel /><CreatorMedia /></>);
 }
 
 
@@ -596,8 +596,8 @@ function AboutMeBlock({ text }) {
   useLayoutEffect(() => { const el = ref.current; if (el) setOver(more || el.scrollHeight > el.clientHeight + 2); }, [text, more]);
   if (!String(text || "").trim()) return null;
   return (
-    <section className="ff-about" aria-labelledby="ff-about-h">
-      <h2 id="ff-about-h" className="ff-about-h">About Me</h2>
+    <section className="ff-about" aria-label="About Me" style={{ marginTop: 22 }}>
+      <SectionHead icon={<User size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="About Me" />
       <p ref={ref} id="ff-about-text" className={more ? "" : "clamp"}>{text}</p>
       {(over || more) && <button type="button" className="ff-pub-more" aria-expanded={more} aria-controls="ff-about-text" onClick={() => setMore(!more)}>{more ? "Read less" : "Read more"}</button>}
     </section>

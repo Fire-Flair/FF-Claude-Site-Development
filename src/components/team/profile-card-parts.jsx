@@ -180,7 +180,7 @@ function PlayerFace17({ person, large, themeKey, tier, onClick, selected, nameAs
       </div>
       <div className="pc17-bar" style={{ borderColor: t.rule, background: dark ? "rgba(0,0,0,.45)" : "#141416" }}>
         <FitText17 as="span" size={4.3} className="pc17-url" style={{ color: "#EAD79C" }}>{`${CARD_DOMAIN}/${pc17Tag(person.tag)}`}</FitText17>
-        {large && <span className="pc17-brand">FIREFLAIR</span>}
+        {large && <span className="pc17-brand"><span className="pc17-mark"><FFLogo size="100%" tier={tier} /></span>FIREFLAIR</span>}
       </div>
       {selected && (
         <span style={{ position: "absolute", inset: 0, zIndex: 5, background: "rgba(201,162,39,.14)", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -196,7 +196,7 @@ function PlayerFace17({ person, large, themeKey, tier, onClick, selected, nameAs
 function PlayerCard({ person, format = "portrait", themeKey = "onyx", selected, onClick, actions, nameAs }) {
   const t = THEMES[themeKey] || THEMES.onyx;
   /* v17.16: the metal comes from the person (Alexander Gold, Bruno Silver, everyone else Bronze), never from the card theme. */
-  const tier = cardTier17(person);
+  const tier = cardMetal17(person, themeKey);
   const m = metalOf(tier);
   const { sub, ink } = t;
   const top3 = (v) => (Array.isArray(v) ? v : v ? [v] : []).filter(Boolean).slice(0, 3).map(capWords17);

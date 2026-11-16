@@ -366,10 +366,7 @@ function PublicProfileBody({ person, packagesTail }) {
   const [ltab, setLtab] = useState("overview");
   const tab = inStore ? (state.ptab17 && state.ptab17.key === "p:" + person.id ? state.ptab17.tab : "overview") : ltab;
   const setTab = (t) => inStore ? dispatch({ type: "V11_SET", patch: { ptab17: t === "overview" ? null : { key: "p:" + person.id, tab: t } } }) : setLtab(t);
-  const [openRec, setOpenRec] = useState(null);
   const [svcOpen, setSvcOpen] = useState(null);
-  const [allAttrs, setAllAttrs] = useState(false);
-  const [attrCat, setAttrCat] = useState(null);
   const mem = useRef({});
   useEffect(() => { setLtab("overview"); mem.current = {}; }, [person.id]);
   const cats = BASE_CATEGORIES;
@@ -378,7 +375,6 @@ function PublicProfileBody({ person, packagesTail }) {
   const teamAll_ = useDirectory();
   const { teams, tCos, tNet } = teamTabData17(state, teamAll_, person);
   const reviews = reviewsOf(state, person);
-  const attrs = attributesOf(state, person, cats);
   const records = recordsForPerson(state, person);
   const profs = (records.professions || []).filter(r => !r.hidden && !r.proposed);
   /* Preferred hourly rates are shown on FF Staff only (v17.4.6), never on FF Party or FF Team. */
@@ -390,7 +386,17 @@ function PublicProfileBody({ person, packagesTail }) {
     { key: "teams", label: "Team", count: teams.length + tCos.length + tNet.length },
     { key: "reviews", label: "Reviews", count: reviews.length },
   ];
-  const openAttr = (it) => setOpenRec({ record: it.record, def: it.def, category: it.category });
+  /* v17.19: Professions, About me, Qualifications, Skills, Interests, Work locations, Languages, Venues — the same numbered list as the builder, read-only. */
+  const pubList = (k, rows, extra) => {
+    const list = (rows || (records[k] || [])).filter(r => !r.hidden && !r.proposed);
+    if (!list.length || !cats[k]) return null;
+    return (
+      <section className="ff-pp" style={{ marginTop: 22 }} aria-label={cats[k].label}>
+        <SectionHead icon={<CatIcon kind={cats[k].icon} size={15} color="var(--gold-dk)" />} title={cats[k].label} count={list.length} />
+        <RankListView17 catKey={k} items={list} extra={extra} />
+      </section>
+    );
+  };
   const Empty1 = ({ icon, children }) => <div className="ff-tab-empty">{icon}<p>{children}</p></div>;
   const svcCard = (it) => it.kind === "std"
     ? <div className="ff-svslide std"><ServicePoster svc={it.svc} price /></div>
@@ -401,30 +407,27 @@ function PublicProfileBody({ person, packagesTail }) {
       <ProfileTabs tabs={tabs} active={tab} onChange={setTab} />
       <div role="tabpanel" id="ff-tabpanel" aria-labelledby={`ff-tab-${tab}`} className="ff-tabpanel" tabIndex={0}>
         {tab === "overview" && (<>
+          <style>{RANK_CSS17}</style>
+          {pubList("professions", profs, (r) => {
+            const rate = onStaff && staffRateP17(state, person.tag, r.name) != null ? `Preferred rate ${gbp17(staffRateP17(state, person.tag, r.name))}/hour` : "";
+            const dflt = String(r.description || "").trim() ? "" : professionDefaultDesc(r.name, r.displayCategory);
+            return (rate || dflt) ? <div className="ff-rl19-det">{rate && <p className="meta">{rate}</p>}{dflt && <p>{dflt}</p>}</div> : null;
+          })}
           <AboutMeBlock text={person.id === "me" ? state.profile.about : person.about} />
-          {profs.length > 0 && (
-            <section className="ff-pp ff-profs" aria-labelledby="ff-profs-h">
-              <h2 id="ff-profs-h" className="ff-about-h">Professions</h2>
-              <MemScroll mem={mem} k="profs" label={`Professions, ${profs.length} card${profs.length === 1 ? "" : "s"}`} className="ff-acar">
-                {profs.map((r, ri) => (
-                  <button key={r.id} type="button" className={"ff-agrp prof " + tierCls17(ri)} aria-label={`${r.name}. Open details`}
-                    onClick={() => setOpenRec({ record: r, def: cats.professions, category: "professions" })}>
-                    <span className="ff-agrp-top"><span className="ff-agrp-h">{r.name}</span></span>
-                    {onStaff && staffRateP17(state, person.tag, r.name) != null && <span className="ff-agrp-rate">Preferred rate {gbp17(staffRateP17(state, person.tag, r.name))}/hour</span>}
-                    {(String(r.description || "").trim() || professionDefaultDesc(r.name, r.displayCategory)) && <span className="ff-agrp-d">{String(r.description || "").trim() || professionDefaultDesc(r.name, r.displayCategory)}</span>}
-                  </button>
-                ))}
-              </MemScroll>
+          {pubList("qualifications")}
+          {pubList("skills")}
+          {pubList("interests")}
+          {records.locations && records.locations.length > 0 && cats.locations && (
+            <ProfileAttributeSection catKey="locations" def={cats.locations} list={records.locations} isMe={false} shade="onyx" pub onAdd={() => {}} onOpen={() => {}} />
+          )}
+          {pubList("languages")}
+          {(records.venues || []).some(r => !r.hidden && !r.proposed) && (
+            <section className="ff-pp" style={{ marginTop: 22 }}>
+              <SectionHead icon={<CatIcon kind="venue" size={15} color="var(--gold-dk)" />} title="Venues" count={(records.venues || []).filter(r => !r.hidden && !r.proposed).length} />
+              <div className="ff-ven19"><VenueRows19 items={records.venues} /></div>
             </section>
           )}
-          <section className="ff-pp" aria-labelledby="ff-pp-h" hidden={!attrs.length && profs.length > 0}>
-            <div className="ff-pp-head">
-              <h2 id="ff-pp-h" className="ff-about-h">Attributes</h2>
-              {attrs.length > 0 && <button type="button" className="ff-pp-all" onClick={() => setAllAttrs(true)}>View all <ChevronRight size={13} /></button>}
-            </div>
-            {attrs.length ? <AttrGroups items={attrs} mem={mem} onOpen={(k) => setAttrCat(k)} />
-              : <Empty1 icon={<Briefcase size={20} />}>{first} hasn't added any other profile cards yet.</Empty1>}
-          </section>
+          {pubList("experience")}
           <FireFlairIntroductions17 person={person} />
         </>)}
         {tab === "services" && (services.length
@@ -432,22 +435,10 @@ function PublicProfileBody({ person, packagesTail }) {
           : (person.id === "me" ? null : <Empty1 icon={<Sparkles size={20} />}>{first} hasn't added any packages yet.</Empty1>))}
         {tab === "services" && <PkgExtras17 person={person} />}
         {tab === "services" && packagesTail}
-        {tab === "teams" && <TeamTab17 person={person} />}
+        {tab === "teams" && (<><ProfileSocial11 person={person.id === "me" ? { ...person, socials: state.profile.socials } : person} /><div style={{ marginTop: 22 }}><TeamTab17 person={person} /></div></>)}
         {tab === "reviews" && <ReviewsTab17 person={person} mem={mem} />}
       </div>
 
-      <GenericAttributeCardCreator open={!!openRec} record={openRec && openRec.record} def={openRec && openRec.def} category={openRec && openRec.category} readOnly onClose={() => setOpenRec(null)} />
-      <Sheet open={allAttrs} onClose={() => setAllAttrs(false)} title="All attributes">
-        <div className="ff-pub">
-          {[...PUB_ORDER, ...categoryOrder().filter(k => !cats[k].system && !PUB_ORDER.includes(k))].filter(k => cats[k]).map(k => (
-            <ProfileAttributeSection key={k} catKey={k} def={cats[k]} list={records[k] || []} isMe={false} shade="onyx" pub onAdd={() => {}}
-              onOpen={(r) => setOpenRec({ record: r, def: cats[k], category: k })} />
-          ))}
-        </div>
-      </Sheet>
-      <Sheet center open={!!attrCat} onClose={() => setAttrCat(null)} title={attrCat && cats[attrCat] ? cats[attrCat].label : ""}>
-        {attrCat && cats[attrCat] && <ExpandedAttrs list={attrCat === "locations" ? covRecsFor17(state, person, records[attrCat]) : (records[attrCat] || []).filter(r => !r.hidden && !r.proposed)} />}
-      </Sheet>
       <Sheet open={!!svcOpen} onClose={() => setSvcOpen(null)} title={svcOpen ? (svcOpen.kind === "std" ? svcOpen.svc.title : svcOpen.item.title) : "Service"}>
         {svcOpen && <div className="ff-svfull">{svcCard(svcOpen)}</div>}
       </Sheet>

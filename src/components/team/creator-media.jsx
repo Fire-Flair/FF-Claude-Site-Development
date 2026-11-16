@@ -7,8 +7,7 @@ function CreatorMedia() {
   const { state, dispatch } = useStore();
   const items = state.profile.media || [];
   const mOpen = state.categoryVisibility.cr_media !== false;
-  const addRef = useRef(null), repRef = useRef(null);
-  const [repId, setRepId] = useState(null);
+  const addRef = useRef(null);
   const [busy, setBusy] = useState(0);
   const [err, setErr] = useState("");
   const [drag, setDrag] = useState(false);
@@ -44,44 +43,33 @@ function CreatorMedia() {
       setBusy(b => b - 1);
     }
   };
-  const replace = async (f) => {
-    if (!f || !repId) return; setErr(""); setBusy(b => b + 1);
-    try { dispatch({ type: "P1_MEDIA_REPLACE", id: repId, item: await read(f) }); }
-    catch (e) { setErr(e.message || "That picture couldn't be added."); }
-    setBusy(b => b - 1); setRepId(null);
-  };
+  /* v17.19: the Media box — a title row like the other sections, square squircle pictures in a row that scrolls across, a "+" box at the end. */
   return (
-    <section id="ff-sec-media-up" className="ff-cmedia" style={{ marginTop: 22 }} aria-labelledby="ff-cmedia-h">
+    <section id="ff-sec-media-up" className="ff-cmedia ff-box19" style={{ marginTop: 14 }} aria-label="Media">
+      <style>{RANK_CSS17}</style>
       <SectionHead icon={<Camera size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Media" count={items.length} action={<CategoryToggle sectionKey="cr_media" defaultOpen={true} />} />
       {mOpen && (<>
-      <p className="ff-body ff-muted" id="ff-cmedia-h" style={{ margin: "-2px 0 10px", fontSize: 13 }}>
-        These pictures play across the top of your public profile.
-      </p>
-      <input ref={repRef} type="file" accept="image/*" className="ff-sr" aria-label="Choose a replacement picture" tabIndex={-1} onChange={(e) => { replace(e.target.files && e.target.files[0]); e.target.value = ""; }} />
-      <div className={`ff-mgrid${drag ? " drop" : ""}`}
+      <div className={`ff-m19${drag ? " drop" : ""}`}
         onDragOver={(e) => { if (e.dataTransfer && [...(e.dataTransfer.types || [])].includes("Files")) { e.preventDefault(); setDrag(true); } }}
         onDragLeave={() => setDrag(false)}
         onDrop={(e) => { e.preventDefault(); setDrag(false); if (e.dataTransfer && e.dataTransfer.files) addMany(e.dataTransfer.files); }}>
         {items.map((m, i) => (
-          <div key={m.id} className="ff-mtile has">
+          <div key={m.id} className="ff-m19-t">
             <img decoding="async" src={m.dataUrl} alt={`Media ${i + 1}${m.name ? `: ${m.name}` : ""}`} draggable={false} />
-            <span className="n" aria-hidden="true">{i + 1}</span>
-            <button type="button" className="b tr" aria-label={`Remove media ${i + 1}`} onClick={() => dispatch({ type: "MEDIA_DELETE", id: m.id })}><X size={14} /></button>
-            <button type="button" className="b tl" aria-label={`Replace media ${i + 1}`} onClick={() => { setRepId(m.id); repRef.current && repRef.current.click(); }}><Camera size={14} /></button>
-            <button type="button" className="b bl" aria-label={`Move media ${i + 1} earlier`} disabled={i === 0} onClick={() => dispatch({ type: "P1_MEDIA_MOVE", id: m.id, dir: -1 })}><ChevronLeft size={15} /></button>
-            <button type="button" className="b br" aria-label={`Move media ${i + 1} later`} disabled={i === items.length - 1} onClick={() => dispatch({ type: "P1_MEDIA_MOVE", id: m.id, dir: 1 })}><ChevronRight size={15} /></button>
+            <button type="button" className="b x" aria-label={`Remove media ${i + 1}`} onClick={() => dispatch({ type: "MEDIA_DELETE", id: m.id })}><X size={12} strokeWidth={2.4} /></button>
+            <button type="button" className="b l" aria-label={`Move media ${i + 1} earlier`} disabled={i === 0} onClick={() => dispatch({ type: "P1_MEDIA_MOVE", id: m.id, dir: -1 })}><ChevronLeft size={13} /></button>
+            <button type="button" className="b r" aria-label={`Move media ${i + 1} later`} disabled={i === items.length - 1} onClick={() => dispatch({ type: "P1_MEDIA_MOVE", id: m.id, dir: 1 })}><ChevronRight size={13} /></button>
           </div>
         ))}
-        {Array.from({ length: busy }).map((_, i) => <div key={"b" + i} className="ff-mtile busy" role="status" aria-label="Uploading"><Loader2 size={20} className="ff-spin" /></div>)}
+        {Array.from({ length: busy }).map((_, i) => <div key={"b" + i} className="ff-m19-t busy" role="status" aria-label="Uploading"><Loader2 size={20} className="ff-spin" /></div>)}
         {room - busy > 0 && (
-          <label className="ff-mtile add">
+          <label className="ff-m19-t add">
             <input ref={addRef} type="file" accept="image/*" multiple className="ff-sr" aria-label={items.length ? "Add more pictures" : "Add pictures"} onChange={(e) => { addMany(e.target.files); e.target.value = ""; }} />
-            <Plus size={22} strokeWidth={1.8} aria-hidden="true" /><span>Add</span>
+            <Plus size={22} strokeWidth={1.8} aria-hidden="true" />
           </label>
         )}
       </div>
       {err && <p className="ff-wlbox-err" role="alert" style={{ marginTop: 8 }}>{err}</p>}
-      <p className="ff-body ff-muted" style={{ fontSize: 11.5, margin: "8px 0 0" }}>Tap Add or drop pictures here. Pictures only, up to {prettyBytes(MAX_MEDIA_BYTES)} each, {MEDIA_MAX_ITEMS} in all. Use the arrows to change the order.</p>
       </>)}
     </section>
   );
@@ -146,13 +134,10 @@ function CreatorAboutMe() {
   };
   const mode0 = text.trim() ? "improve" : "write";
   return (
-    <section id="ff-sec-aboutme" className="ff-cabout" style={{ marginTop: 22 }} aria-labelledby="ff-am-h">
+    <section id="ff-sec-aboutme" className="ff-cabout" style={{ marginTop: 22 }} aria-label="About Me">
       <SectionHead icon={<User size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="About Me" action={<CategoryToggle sectionKey="cr_about" defaultOpen={true} />} />
       {aOpen && (<>
-      <label id="ff-am-h" htmlFor="ff-am" className="ff-body ff-muted" style={{ display: "block", margin: "-2px 0 8px", fontSize: 13 }}>
-        A short introduction for the top of your public profile, in your own words.
-      </label>
-      <textarea id="ff-am" className="ff-input ff-am-ta" rows={4} value={text} aria-describedby="ff-am-count"
+      <textarea id="ff-am" className="ff-input ff-am-ta" rows={4} value={text} aria-describedby="ff-am-count" aria-label="About Me"
         placeholder="Introduce yourself, describe your professional experience, and tell people what makes you stand out."
         onChange={(e) => { const v = e.target.value.replace(/^\s+/, "").slice(0, BIO_MAX); setText(v); commit(v); }}
         onBlur={() => { const v = text.trim(); if (v !== text) setText(v); if (v !== last.current) commit(v); }} />

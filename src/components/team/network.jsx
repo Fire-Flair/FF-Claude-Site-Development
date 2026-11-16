@@ -417,7 +417,7 @@ function ProfTypeIn({ profs, set, ink, rule, onAdd }) {
 
 function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "username", level = 3, onPhoto }) {
   const t = THEMES[themeKey] || THEMES.onyx;
-  const tier = cardTier17({ name: draft.name, tag });
+  const tier = cardMetal17({ name: draft.name, tag }, themeKey);
   const tr = TIERS[tier] || TIERS.standard;
   const { ink, sub, rule } = t;
   const set = (k) => (v) => setDraft({ ...draft, [k]: v });
@@ -586,14 +586,16 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
     rule
   })), React.createElement("div", {
     style: { margin: "0 -16px", background: t.dark ? "rgba(0,0,0,.45)" : "#141416", borderTop: `1px solid ${rule}`, padding: "9px 16px", display: "flex", alignItems: "center", gap: 9 }
+  }, React.createElement("span", {
+    style: { fontFamily: "var(--sans)", fontSize: 12, fontWeight: 600, color: "#EAD79C" }
+  }, CARD_DOMAIN, "/", pc17Tag(tag)), React.createElement("span", {
+    style: { marginLeft: "auto", display: "flex", alignItems: "center", gap: 7 }
   }, React.createElement(FFLogo, {
     size: 20,
     tier
   }), React.createElement(Wordmark, {
     size: 12
-  }), React.createElement("span", {
-    style: { marginLeft: "auto", fontFamily: "var(--sans)", fontSize: 12, fontWeight: 600, color: "#EAD79C" }
-  }, CARD_DOMAIN, "/", pc17Tag(tag))));
+  }))));
 }
 
 

@@ -216,7 +216,7 @@ function useShareCard() {
 
 
 /* Optional (the company address uses them; FF Team leaves them out): cleanWith(value) makes the text, freeCheck(text) says whether it is available, minLength and maxLength set the bounds. */
-function TagInput({ value, onChange, placeholder = "username", current, check, autoFocus, label = "FF Tag", cleanWith, freeCheck, minLength, maxLength }) {
+function TagInput({ value, onChange, placeholder = "username", current, check, autoFocus, label = "FF Tag", cleanWith, freeCheck, minLength, maxLength, fit }) {
   const clean = cleanWith ? cleanWith(value) : AUTH_ADAPTER.cleanTag(value);
   const ok = freeCheck ? freeCheck(clean) : AUTH_ADAPTER.isAvailable(clean, current);
   const show = check && clean.length >= (minLength || AUTH_ADAPTER.TAG_MIN);
@@ -227,6 +227,7 @@ function TagInput({ value, onChange, placeholder = "username", current, check, a
   }, CARD_DOMAIN, "/"), React.createElement("input", {
     value: clean,
     maxLength: maxLength || AUTH_ADAPTER.TAG_MAX,
+    style: fit ? { flex: "none", width: `${Math.max(9, clean.length + 2)}ch` } : undefined,
     onChange: (e) => onChange(e.target.value),
     placeholder,
     "aria-label": label,
@@ -347,7 +348,7 @@ function PasswordSheet({ open, onClose, change }) {
 }
 
 
-function AccountSettings() {
+function AccountSettings({ boxes = false } = {}) {
   const { state, dispatch } = useStore();
   const tag = state.auth.tag || state.session.tag;
   const [editing, setEditing] = useState(false);
@@ -374,6 +375,19 @@ function AccountSettings() {
       setBusy(false);
     }
   };
+  if (boxes && !editing) return (<>
+    <AcctBox19 icon={<Phone size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Phone number">
+      <span className="ff-body" style={{ display: "flex", gap: 6, alignItems: "center", fontWeight: 600 }}><Check size={14} color="var(--ok)" strokeWidth={2.6} /> {phone || "Number verified"}</span>
+    </AcctBox19>
+    <AcctBox19 icon={<Hash size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="FF Tag">
+      <span className="ff-body" style={{ fontWeight: 700, color: "var(--ink)", overflowWrap: "anywhere" }}>{CARD_DOMAIN}/{tag}</span>
+      <div style={{ display: "flex", gap: 18, flexWrap: "wrap", marginTop: 10 }}>
+        <button type="button" className="ff-linkbtn" onClick={() => { setNext(tag); setErr(null); setEditing(true); }}>Change Tag</button>
+        <button type="button" className="ff-linkbtn" onClick={() => setPwOpen(true)}>{hasPw ? "Change password" : "Add a password"}</button>
+      </div>
+      <PasswordSheet open={pwOpen} change={hasPw} onClose={() => setPwOpen(false)} />
+    </AcctBox19>
+  </>);
   return React.createElement("div", null, React.createElement("div", {
     style: { display: "flex", gap: 14, alignItems: "center" }
   }, React.createElement("span", {
@@ -449,6 +463,18 @@ function AccountSettings() {
 }
 
 
+/* v17.19: an account box — a title row like the other sections, then its content (the same look as the Media box). */
+function AcctBox19({ icon, title, count, action, children, id }) {
+  return (
+    <section className="ff-box19" id={id} style={{ marginTop: 14 }}>
+      <style>{RANK_CSS17}</style>
+      <SectionHead icon={icon} title={title} count={count} action={action} />
+      {children}
+    </section>
+  );
+}
+
+
 function TagSection({ inSave = false, top = false, onSignedIn } = {}) {
   const { state, dispatch } = useStore();
   const signedIn = state.auth.status === "signedIn" && !!(state.auth.tag || state.session.tag);
@@ -493,6 +519,45 @@ function TagSection({ inSave = false, top = false, onSignedIn } = {}) {
       if (onSignedIn) onSignedIn();
     } else setPwOpen(true);
   });
+  /* v17.19: on the builder the sign-up is three boxes — Phone number, FF Tag, then Media (CreatorMedia, rendered after this). */
+  if (top) {
+    const dig = phone.replace(/\D/g, "").length > 0;
+    return (
+      <div id="ff-sec-tag" className="ff-tagsection ff-acct19">
+        {signedIn ? <AccountSettings boxes /> : stage === "details" ? (<>
+          <AcctBox19 icon={<Phone size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Phone number">
+            <input className="ff-input ff-fit19" type="tel" inputMode="tel" autoComplete="tel" placeholder="+44 7700 900000" aria-label="Phone number"
+              value={phone} style={{ width: `${Math.max(17, phone.length + 3)}ch` }} onChange={(e) => setPhone(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && available && phoneOk && !busy && send()} />
+            <div style={{ marginTop: 12 }}>
+              <Btn variant="primary" disabled={busy || !available || !phoneOk} onClick={send}>{busy ? <Loader2 size={14} className="ff-spin" /> : null}{dig ? "Verify" : "Continue"}</Btn>
+            </div>
+          </AcctBox19>
+          <AcctBox19 icon={<Hash size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="FF Tag">
+            <TagInput value={clean} fit check onChange={(v) => {
+              setTyped(v);
+              /* Display only: lets the Profile Card address follow the field. Never a real tag. */
+              dispatch({ type: "SESSION", patch: { tagDraft: AUTH_ADAPTER.cleanTag(v) } });
+            }} />
+            <TagNote clean={clean} />
+          </AcctBox19>
+        </>) : (
+          <AcctBox19 icon={<Phone size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Phone number">
+            <input className="ff-input ff-tagin ff-fit19" inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={code} style={{ width: "10ch" }}
+              autoFocus={FF_FINE_POINTER} onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))} placeholder="000000" aria-label="Code from WhatsApp"
+              onKeyDown={(e) => e.key === "Enter" && code.length === 6 && !busy && verify()} />
+            <div style={{ marginTop: 12, display: "flex", gap: 14, alignItems: "center", flexWrap: "wrap" }}>
+              <Btn variant="primary" disabled={busy || code.length < 6} onClick={verify}>{busy ? <Loader2 size={14} className="ff-spin" /> : <Check size={14} />} Create</Btn>
+              <button type="button" className="ff-linkbtn" onClick={() => { setStage("details"); setCode(""); setErr(null); }}>Change</button>
+              <button type="button" className="ff-linkbtn" disabled={busy} onClick={send}>Resend code</button>
+            </div>
+          </AcctBox19>
+        )}
+        {err && <p className="ff-body" role="alert" style={{ color: "var(--bad)", fontSize: 13, margin: "10px 0 0", fontWeight: 600 }}>{err}</p>}
+        <PasswordSheet open={pwOpen} onClose={() => setPwOpen(false)} />
+      </div>
+    );
+  }
   return React.createElement("div", {
     id: "ff-sec-tag",
     className: "ff-tagsection"
@@ -786,7 +851,6 @@ function ProfileBuilder() {
         <StepHead n={3} title="Your profile" done={false} />
         <TagSection top />
         <CreatorMedia />
-        <CreatorAboutMe />
         <ProfileSections person={me} isMe />
         <IntroEditor17 />
       </div>

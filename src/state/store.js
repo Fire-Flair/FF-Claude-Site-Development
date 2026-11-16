@@ -196,6 +196,16 @@ function reducerCore17(s0, a) {
       return claimListXP(withRecords(s, a.category, list), a.category, list);
     }
     case "REC_MOVE": {
+      /* v17.19: { id, to } puts one entry at a place in the list the member sees. The order is the rank: the entries take their ranks from their new places. */
+      if (a.to !== undefined) {
+        const seen = withRanks(recsOf(s.profile, a.category)).map(e => e.r);
+        const at = seen.findIndex(r => r.id === a.id);
+        if (at < 0) return s;
+        const [one] = seen.splice(at, 1);
+        seen.splice(Math.max(0, Math.min(a.to, seen.length)), 0, one);
+        let k = 0;
+        return withRecords(s, a.category, seen.map(r => (r.hidden || r.proposed) ? r : { ...r, rank: cardRank(k++) }));
+      }
       const list = [...recsOf(s.profile, a.category)];
       const i = list.findIndex(r => r.id === a.id), j = i + a.dir;
       if (i < 0 || j < 0 || j >= list.length) return s;

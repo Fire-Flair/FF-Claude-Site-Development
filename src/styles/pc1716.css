@@ -28,7 +28,8 @@
 .pc17-fit.wr .bl{margin:0 .2em 0 .45em}
 .pc17-bar{position:absolute;left:0;right:0;bottom:0;height:10cqw;display:flex;align-items:center;padding:0 5.4cqw;box-sizing:border-box;border-top:1px solid}
 .pc17-url{flex:1;min-width:0;font-size:4.3cqw;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-align:left}
-.pc17-brand{margin-left:auto;padding-left:2cqw;font-weight:700;font-size:3.3cqw;letter-spacing:.28em;color:#D9B54F;white-space:nowrap}
+.pc17-brand{margin-left:auto;padding-left:2cqw;font-weight:700;font-size:3.3cqw;letter-spacing:.28em;color:#D9B54F;white-space:nowrap;display:flex;align-items:center;gap:1.6cqw}
+.pc17-mark{display:block;width:5.6cqw;height:5.6cqw;flex:none}
 .pc17-row.one{position:relative;min-height:9cqw;display:flex;align-items:center}
 .pc17-row.one .pc17-lbl{margin-bottom:0}
 .pc17-row.one .pc17-flags{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}

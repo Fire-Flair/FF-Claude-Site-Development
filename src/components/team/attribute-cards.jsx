@@ -8,10 +8,17 @@
 const ALL_PROFESSIONS = PROFESSION_CATEGORIES.flatMap(c => c.suggested.map(n => ({ name: n, cat: c.key })));
 
 
-function ProfessionPicker({ selected = [], onPick, title = "Pick your professions" }) {
+const RANK_CSS17 = __ff_css("styles/rank17.css");
+
+
+/* v17.19: the category row is the profile's tab style; typed suggestions list the professions alone (no category beside them);
+   only a brand-new profession asks for its category. asRow: the picker is the last row of the Professions list
+   ("Add a profession" is typed straight into the row, the panel opens under it). */
+function ProfessionPicker({ selected = [], onPick, title = "Pick your professions", asRow = false }) {
   const [cat, setCat] = useState(PROFESSION_CATEGORIES[0].key);
   const [q, setQ] = useState("");
   const [newCat, setNewCat] = useState(null);
+  const [open, setOpen] = useState(!asRow);
   const c = PROFESSION_CATEGORIES.find(x => x.key === cat);
   const has = (n) => selected.some(x => String(x).toLowerCase() === n.toLowerCase());
   const n = q.trim().toLowerCase();
@@ -24,58 +31,75 @@ function ProfessionPicker({ selected = [], onPick, title = "Pick your profession
   const customCat = custom ? professionCategory(custom) : null;
   const pick = (name, category) => { onPick(name, category); setQ(""); setNewCat(null); };
   const picked = (name) => has(name) ? { background: "#5C1220", borderColor: "#5C1220", color: "#F6E7B4" } : undefined;
+  const enter = (e) => { if (e.key === "Enter" && n) { e.preventDefault(); pick(hits[0] ? hits[0].name : typed); } };
+  const tabs = (
+    <div className="ff-ptabs ff-ptabs-cat19" role="tablist" aria-label="Profession categories">
+      {PROFESSION_CATEGORIES.map(x => (
+        <button key={x.key} type="button" role="tab" aria-selected={x.key === cat} className={x.key === cat ? "on" : ""} onClick={() => setCat(x.key)}><span className="lb">{x.key}</span></button>
+      ))}
+    </div>
+  );
+  const body = (<>
+    {tabs}
+    {n ? (
+      <div role="list" aria-label="Matching professions" style={{ marginTop: 10 }}>
+        {hits.map(p => (
+          <button key={p.name} type="button" role="listitem" className="ff-chip" onClick={() => pick(p.name)} style={picked(p.name)}>
+            {has(p.name) ? "✓ " : "+ "}{p.name}
+          </button>
+        ))}
+        {custom && customCat && (
+          <button type="button" className="ff-chip ff-chip-custom" onClick={() => pick(custom)}>
+            + Add “{custom}”<span className="ff-chipcat">{customCat}</span>
+          </button>
+        )}
+        {custom && !customCat && (
+          <div style={{ marginTop: 8 }}>
+            <div className="ff-label" style={{ marginBottom: 6 }}>Which category is “{custom}” in?</div>
+            <div>
+              {CATEGORY_ORDER.map(k => (
+                <button key={k} type="button" className="ff-chip" aria-pressed={newCat === k} onClick={() => setNewCat(k)}
+                  style={newCat === k ? { background: "#141416", color: "#EAD79C", borderColor: "#141416" } : undefined}>{k}</button>
+              ))}
+            </div>
+            <button type="button" className="ff-chip ff-chip-custom" disabled={!newCat} onClick={() => newCat && pick(custom, newCat)}
+              style={{ marginTop: 6, opacity: newCat ? 1 : 0.45, cursor: newCat ? "pointer" : "default" }}>
+              + Add “{custom}”{newCat && <span className="ff-chipcat">{newCat}</span>}
+            </button>
+          </div>
+        )}
+      </div>
+    ) : (
+      <div style={{ marginTop: 10 }}>
+        {c.suggested.map(nm => (
+          <button key={nm} type="button" className="ff-chip" onClick={() => pick(nm)} style={picked(nm)}>
+            {has(nm) ? "✓ " : "+ "}{nm}
+          </button>
+        ))}
+      </div>
+    )}
+  </>);
+  if (asRow) return (
+    <div className="ff-rl19-addwrap">
+      <style>{RANK_CSS17}</style>
+      <div className="ff-rl19-add">
+        <button type="button" className={"ff-rl19-disc add" + (open ? " on" : "")} aria-label={open ? "Close the profession list" : "Open the profession list"} aria-expanded={open} onClick={() => setOpen(v => !v)}><Plus size={16} strokeWidth={2} /></button>
+        <input type="text" value={q} autoComplete="off" spellCheck={false} placeholder="Add a profession" aria-label="Add a profession"
+          onChange={(e) => { setQ(e.target.value); setOpen(true); }} onFocus={() => setOpen(true)} onKeyDown={enter} />
+      </div>
+      {open && <div className="ff-rl19-pick"><div className="ff-label" style={{ marginBottom: 8 }}>{title}</div>{body}</div>}
+    </div>
+  );
   return (
     <div className="ff-frame ff-goldpick" style={{ padding: 14, marginTop: 14 }}>
+      <style>{RANK_CSS17}</style>
       <div className="ff-label" style={{ marginBottom: 8 }}>{title}</div>
-      <div style={{ position: "relative", marginBottom: 8 }}>
+      <div style={{ position: "relative", marginBottom: 10 }}>
         <Search size={15} color="#7A7366" style={{ position: "absolute", left: 11, top: 13 }} />
         <input className="ff-input" type="search" value={q} style={{ paddingLeft: 34 }} autoComplete="off" spellCheck={false}
-          onChange={(e) => setQ(e.target.value)} placeholder="Search or type a profession" aria-label="Search or type a profession"
-          onKeyDown={(e) => { if (e.key === "Enter" && n) { e.preventDefault(); pick(hits[0] ? hits[0].name : typed); } }} />
+          onChange={(e) => setQ(e.target.value)} placeholder="Search or type a profession" aria-label="Search or type a profession" onKeyDown={enter} />
       </div>
-      {n ? (
-        <div role="list" aria-label="Matching professions">
-          {hits.map(p => (
-            <button key={p.name} type="button" role="listitem" className="ff-chip" onClick={() => pick(p.name)} style={picked(p.name)}>
-              {has(p.name) ? "✓ " : "+ "}{p.name}<span className="ff-chipcat">{p.cat}</span>
-            </button>
-          ))}
-          {custom && customCat && (
-            <button type="button" className="ff-chip ff-chip-custom" onClick={() => pick(custom)}>
-              + Add “{custom}”<span className="ff-chipcat">{customCat}</span>
-            </button>
-          )}
-          {custom && !customCat && (
-            <div style={{ marginTop: 8 }}>
-              <div className="ff-label" style={{ marginBottom: 6 }}>Which category is “{custom}” in?</div>
-              <div>
-                {CATEGORY_ORDER.map(k => (
-                  <button key={k} type="button" className="ff-chip" aria-pressed={newCat === k} onClick={() => setNewCat(k)}
-                    style={newCat === k ? { background: "#141416", color: "#EAD79C", borderColor: "#141416" } : undefined}>{k}</button>
-                ))}
-              </div>
-              <button type="button" className="ff-chip ff-chip-custom" disabled={!newCat} onClick={() => newCat && pick(custom, newCat)}
-                style={{ marginTop: 6, opacity: newCat ? 1 : 0.45, cursor: newCat ? "pointer" : "default" }}>
-                + Add “{custom}”{newCat && <span className="ff-chipcat">{newCat}</span>}
-              </button>
-            </div>
-          )}
-        </div>
-      ) : (<>
-        <div style={{ display: "flex", gap: 6, overflowX: "auto", paddingBottom: 6, scrollbarWidth: "none" }}>
-          {PROFESSION_CATEGORIES.map(x => (
-            <button key={x.key} className="ff-chip" onClick={() => setCat(x.key)} aria-pressed={x.key === cat}
-              style={{ whiteSpace: "nowrap", margin: 0, flex: "none", ...(x.key === cat ? { background: "#141416", color: "#EAD79C", borderColor: "#141416" } : {}) }}>{x.key}</button>
-          ))}
-        </div>
-        <div style={{ marginTop: 6 }}>
-          {c.suggested.map(nm => (
-            <button key={nm} className="ff-chip" onClick={() => pick(nm)} style={picked(nm)}>
-              {has(nm) ? "✓ " : "+ "}{nm}
-            </button>
-          ))}
-        </div>
-      </>)}
+      {body}
       <p className="ff-body ff-muted" style={{ fontSize: 11.5, margin: "6px 0 0" }}>
         Your first three show on your card.
       </p>
@@ -212,11 +236,299 @@ function HorizontalCardRanker({ items, label, renderCard, tail }) {
 
 
 
+/* ==========================================================================
+   v17.19 — RANKED LISTS (Professions, Qualifications, Skills, Interests, Languages)
+   One numbered list per section: number, name, "+" (detail text and pictures), a three-line handle to drag it into
+   place. The order is the rank; there are no coloured tiers. The detail text and every picture sit under the entry
+   once saved. RankListView17 is the read-only look for the displayed profile.
+   ========================================================================== */
+const RANK_CATS19 = ["professions", "qualifications", "skills", "interests", "languages", "experience"];
+
+
+function PhotoBoxes19({ media, onRemove, onAdd, max, busy }) {
+  const ref = useRef(null);
+  const list = (media || []).filter(m => m && (m.dataUrl || m.src));
+  if (!onAdd && !list.length) return null;
+  return (
+    <div className="ff-rl19-photos">
+      {list.map((m, i) => (
+        <span key={m.id || i} className="ff-rl19-ph" style={{ backgroundImage: `url("${m.dataUrl || m.src}")` }} role="img" aria-label={m.name || `Picture ${i + 1}`}>
+          {onRemove && <button type="button" className="x" aria-label={`Remove picture ${i + 1}`} onClick={() => onRemove(m)}><X size={12} strokeWidth={2.4} /></button>}
+        </span>
+      ))}
+      {onAdd && list.length < max && (
+        <>
+          <input ref={ref} type="file" accept="image/*" className="ff-sr" tabIndex={-1} aria-label="Add a picture" onChange={(e) => { onAdd(e.target.files && e.target.files[0]); e.target.value = ""; }} />
+          <button type="button" className="ff-rl19-ph add" aria-label="Add a picture" disabled={!!busy} onClick={() => ref.current && ref.current.click()}>{busy ? <Loader2 size={18} className="ff-spin" /> : <Plus size={20} strokeWidth={1.8} />}</button>
+        </>
+      )}
+    </div>
+  );
+}
+
+
+function RankDetail19({ r, catKey }) {
+  const meta = detailsLine(r.details, catKey === "languages" ? r.proficiency : "", r.name);
+  const text = String(r.description || "").trim();
+  const media = (r.media || []).filter(m => m && (m.dataUrl || m.src));
+  const doc = r.document && r.document.name ? r.document.name : "";
+  if (!meta && !text && !media.length && !doc) return null;
+  return (
+    <div className="ff-rl19-det">
+      {meta && <p className="meta">{meta}</p>}
+      {text && <p>{text}</p>}
+      {doc && !r.cv && <p className="meta">{doc}</p>}
+      <PhotoBoxes19 media={media} />
+    </div>
+  );
+}
+
+
+/* Read-only list: numbers, names, details and picture boxes. No buttons, no handles. */
+function RankListView17({ catKey, items, extra }) {
+  const rows = rankedRecords(items || []).filter(r => !r.hidden && !r.proposed);
+  if (!rows.length) return null;
+  return (
+    <div className="ff-rl19 view" role="list">
+      <style>{RANK_CSS17}</style>
+      {rows.map((r, i) => (
+        <div key={r.id} className="ff-rl19-item" role="listitem">
+          <div className="ff-rl19-row">
+            <span className="ff-rl19-disc" aria-hidden="true">{i + 1}</span>
+            <span className="nm">{r.name}{r.cv ? " (CV)" : ""}</span>
+          </div>
+          {extra ? extra(r) : null}
+          <RankDetail19 r={r} catKey={catKey} />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+
+/* Editable list. addRow: the last row (a node) — for Professions the picker; otherwise a typed row. */
+function RankList17({ catKey, def, items, addRow }) {
+  const { state, dispatch } = useStore();
+  const rows = rankedRecords(items || []);
+  const ids = rows.map(r => r.id);
+  const [openId, setOpenId] = useState(null);
+  const [drag, setDrag] = useState(null);
+  const [busy, setBusy] = useState(null);
+  const [typed, setTyped] = useState("");
+  const rects = useRef([]);
+  const maxMedia = def.maxMedia || MAX_MEDIA_PER_CARD;
+  const one = def.singular.toLowerCase();
+  const patch = (id, p) => dispatch({ type: "REC_PATCH", category: catKey, id, patch: p });
+
+  const down = (e, id) => {
+    if (e.button !== undefined && e.button !== 0) return;
+    const wrap = e.currentTarget.closest("[data-rl-list]");
+    if (!wrap) return;
+    rects.current = [...wrap.querySelectorAll("[data-rl-id]")].map(el => { const b = el.getBoundingClientRect(); return { id: el.getAttribute("data-rl-id"), mid: b.top + b.height / 2 }; });
+    try { e.currentTarget.setPointerCapture(e.pointerId); } catch (x) { /* older browsers */ }
+    e.preventDefault();
+    const from = ids.indexOf(id);
+    setDrag({ id, y0: e.clientY, dy: 0, from, over: from });
+  };
+  const move = (e) => {
+    setDrag(d => d && ({ ...d, dy: e.clientY - d.y0, over: rects.current.filter(r => r.id !== d.id && e.clientY > r.mid).length }));
+  };
+  const up = () => {
+    const d = drag;
+    setDrag(null);
+    if (d && d.over !== d.from) dispatch({ type: "REC_MOVE", category: catKey, id: d.id, to: d.over });
+  };
+  const key = (e, id, i) => {
+    if (e.key === "ArrowUp" && i > 0) { e.preventDefault(); dispatch({ type: "REC_MOVE", category: catKey, id, to: i - 1 }); }
+    else if (e.key === "ArrowDown" && i < rows.length - 1) { e.preventDefault(); dispatch({ type: "REC_MOVE", category: catKey, id, to: i + 1 }); }
+  };
+  const others = drag ? ids.filter(x => x !== drag.id) : [];
+  const dropBefore = drag && drag.over !== drag.from && drag.over < others.length ? others[drag.over] : null;
+  const dropAfter = drag && drag.over !== drag.from && drag.over >= others.length ? others[others.length - 1] : null;
+
+  const addPhoto = async (r, f) => {
+    if (!f) return;
+    if (!/^image\//.test(f.type || "")) { setBusy("Only pictures can be added here."); return; }
+    if (f.size > MAX_MEDIA_BYTES) { setBusy(`That image is ${prettyBytes(f.size)} — keep it under ${prettyBytes(MAX_MEDIA_BYTES)}.`); return; }
+    setBusy("loading");
+    try {
+      const dataUrl = await shrinkPhoto(f, 1000);
+      patch(r.id, { media: [...(r.media || []), { id: uid("med"), name: f.name, dataUrl }] });
+      setBusy(null);
+    } catch (e) { setBusy(e.message); }
+  };
+  const addTyped = (e) => {
+    e && e.preventDefault();
+    const nm = typed.trim();
+    if (!nm) return;
+    if (rows.some(r => String(r.name).toLowerCase() === nm.toLowerCase())) { dispatch({ type: "TOAST", toast: `${nm} is already on your profile` }); return; }
+    const taskId = xpTaskFor(catKey);
+    const fresh = XP_TASKS.some(t => t.id === taskId) && !(state.profile.xpClaimed || []).includes(taskId);
+    dispatch({ type: "REC_ADD", category: catKey, record: makeRecord(catKey, nm) });
+    dispatch({ type: "TOAST", toast: `${def.singular} added${fresh ? xpNote(XP_VALUES.task) : ""}` });
+    setTyped("");
+  };
+
+  return (
+    <div className={"ff-rl19" + (drag ? " dragging" : "")} data-rl-list={catKey}>
+      <style>{RANK_CSS17}</style>
+      {rows.map((r, i) => {
+        const open = openId === r.id;
+        const lifted = drag && drag.id === r.id;
+        return (
+          <div key={r.id} data-rl-id={r.id} className={"ff-rl19-item" + (open ? " open" : "") + (lifted ? " lifted" : "") + (dropBefore === r.id ? " before" : "") + (dropAfter === r.id ? " after" : "") + (r.hidden ? " hid" : "")}
+            style={lifted ? { transform: `translateY(${drag.dy}px)` } : undefined}>
+            <div className="ff-rl19-row">
+              <span className="ff-rl19-disc" aria-hidden="true">{i + 1}</span>
+              <span className="nm">{r.name}{r.cv ? " (CV)" : ""}{r.hidden ? <span className="hd"><EyeOff size={11} /> Hidden</span> : null}{r.proposed ? <span className="hd">Proposed</span> : null}</span>
+              <button type="button" className={"ff-rl19-pl" + (open ? " on" : "")} aria-expanded={open} aria-label={`Details for ${r.name}`} onClick={() => { setOpenId(open ? null : r.id); setBusy(null); }}><Plus size={15} strokeWidth={2} /></button>
+              <span className="ff-rl19-grip" role="button" tabIndex={0} aria-label={`Move ${r.name}. Drag, or use the up and down arrow keys`}
+                onPointerDown={(e) => down(e, r.id)} onPointerMove={(e) => drag && move(e)} onPointerUp={up} onPointerCancel={() => setDrag(null)} onKeyDown={(e) => key(e, r.id, i)}>
+                <i /><i /><i />
+              </span>
+            </div>
+            {!open && <RankDetail19 r={r} catKey={catKey} />}
+            {open && (
+              <div className="ff-rl19-panel">
+                {r.proposed && (
+                  <div className="ff-rl19-acts">
+                    <button type="button" className="ff-btn sm primary" onClick={() => dispatch({ type: "REC_ACCEPT", category: catKey, id: r.id })}><Check size={13} /> Accept</button>
+                    <button type="button" className="ff-btn sm ghost" onClick={() => dispatch({ type: "REC_DELETE", category: catKey, id: r.id })}>Reject</button>
+                  </div>
+                )}
+                {detailsLine(r.details, "", r.name) && <p className="meta">{detailsLine(r.details, "", r.name)}</p>}
+                <textarea className="ff-rl19-ta" rows={3} value={r.description || ""} aria-label={`Details for ${r.name}`} placeholder="Details"
+                  onChange={(e) => patch(r.id, { description: e.target.value })} />
+                <PhotoBoxes19 media={r.media} max={maxMedia} busy={busy === "loading"} onAdd={(f) => addPhoto(r, f)}
+                  onRemove={(m) => patch(r.id, { media: (r.media || []).filter(x => x.id !== m.id) })} />
+                {busy && busy !== "loading" && <p className="ff-wlbox-err" role="alert">{busy}</p>}
+                {catKey === "professions" && (<>
+                  <div className="ff-levels-wrap"><ProfessionLevelPicker value={r.level || null} onChange={(n) => patch(r.id, { level: n })} /></div>
+                  <label className="ff-remote17 ff-rl19-chk"><input type="checkbox" checked={!!r.remote} onChange={(e) => patch(r.id, { remote: e.target.checked })} /><span>Available for remote work</span></label>
+                </>)}
+                {catKey === "languages" && (
+                  <select className="ff-input" aria-label="Level" value={r.proficiency || ""} onChange={(e) => patch(r.id, { proficiency: e.target.value })}>
+                    <option value="">Level</option>
+                    {PROFICIENCY.map(p => <option key={p} value={p}>{p}</option>)}
+                  </select>
+                )}
+                <div className="ff-rl19-acts end">
+                  <button type="button" className="ff-btn sm ghost" onClick={() => { patch(r.id, { hidden: !r.hidden }); dispatch({ type: "TOAST", toast: r.hidden ? `${r.name} shown again` : `${r.name} hidden — still on your profile` }); }}>
+                    {r.hidden ? <><Eye size={12} /> Show</> : <><EyeOff size={12} /> Hide</>}
+                  </button>
+                  <button type="button" className="ff-btn sm ghost" onClick={() => { dispatch({ type: "REC_DELETE", category: catKey, id: r.id }); setOpenId(null); }}><X size={12} /> Remove</button>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })}
+      {addRow || (
+        <form className="ff-rl19-add" onSubmit={addTyped}>
+          <button type="submit" className="ff-rl19-disc add" aria-label={`Add ${one}`}><Plus size={16} strokeWidth={2} /></button>
+          <input type="text" value={typed} autoComplete="off" spellCheck={false} placeholder={`Add ${/^[aeiou]/i.test(one) ? "an" : "a"} ${one}`} aria-label={`Add ${/^[aeiou]/i.test(one) ? "an" : "a"} ${one}`} onChange={(e) => setTyped(e.target.value)} />
+        </form>
+      )}
+    </div>
+  );
+}
+
+
+
+/* ==========================================================================
+   v17.19 — VENUES: Worked at and Favourites, two rows that scroll across.
+   record.details.kind "worked" | "favourite"; a venue with no kind (every CV import) is "worked".
+   ========================================================================== */
+const venueKind19 = (r) => (r && r.details && r.details.kind === "favourite" ? "favourite" : "worked");
+
+
+const venueIcon19 = (r) => {
+  const t = (r.place && (r.place.primaryType || (r.place.types || [])[0])) || "";
+  if (!r.place) return Pencil;
+  if (/hotel|lodging/.test(t)) return Building2;
+  if (/wine/.test(t)) return Wine;
+  if (/bar|pub/.test(t)) return Martini;
+  if (/restaurant|cafe|food/.test(t)) return ChefHat;
+  if (/club|music/.test(t)) return Music;
+  if (/event|wedding|banquet/.test(t)) return PartyPopper;
+  return MapPin;
+};
+
+
+function VenueCard19({ record: r, onClick }) {
+  const hand = !r.place;
+  const Icon = venueIcon19(r);
+  const fav = venueKind19(r) === "favourite";
+  const street = String(r.address || "").split(",")[0].trim();
+  const where = [street, r.area && r.area.name].filter(Boolean).join(", ") || r.address || "";
+  const open = (e) => { if (onClick && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); onClick(); } };
+  return (
+    <div className={"ff-vc19" + (fav ? " fav" : "") + (hand ? " hand" : "")} role={onClick ? "button" : "group"} tabIndex={onClick ? 0 : undefined}
+      aria-label={onClick ? `${r.name}. Open details` : undefined} onClick={onClick} onKeyDown={onClick ? open : undefined}>
+      <span className="ic" aria-hidden="true"><Icon size={22} strokeWidth={1.8} /></span>
+      <span className="bd">
+        <span className="ty">{hand ? "Venue" : venTypeLabel17(r.place)}</span>
+        <b>{r.name}</b>
+        {where && <span className="ad">{where}</span>}
+        {String(r.description || "").trim() && <span className="nt">{r.description}</span>}
+        {hand
+          ? <span className="by">Added by hand</span>
+          : <a className="gm" href={venueMapsUrl17(r)} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}><MapPin size={12} strokeWidth={2.2} /> Google Maps</a>}
+      </span>
+    </div>
+  );
+}
+
+
+function VenueRows19({ items, onOpen }) {
+  const list = (items || []).filter(r => onOpen || (!r.hidden && !r.proposed));
+  const rows = [["worked", "Worked at"], ["favourite", "Favourites"]].map(([k, label]) => [k, label, list.filter(r => venueKind19(r) === k)]).filter(x => x[2].length);
+  return (<>
+    {rows.map(([k, label, group]) => (
+      <div key={k} className="ff-vr19">
+        <div className="ff-vr19-h">{label} · {group.length}</div>
+        <div className="ff-vr19-row" role="list" aria-label={label}>
+          {group.map(r => <div key={r.id} role="listitem" className="ff-vr19-it"><VenueCard19 record={r} onClick={onOpen ? () => onOpen(r) : undefined} /></div>)}
+        </div>
+      </div>
+    ))}
+  </>);
+}
+
+
+function VenuesEditor19({ items, onOpen }) {
+  const { dispatch } = useStore();
+  const [kind, setKind] = useState("worked");
+  const [key, setKey] = useState(0);
+  const same = (r, p) => (r.place && p.place && r.place.id === p.place.id) || String(r.name).toLowerCase() === String(p.name).toLowerCase();
+  const add = (p) => {
+    if (!p || !p.name) return;
+    if (items.some(r => same(r, p))) { dispatch({ type: "TOAST", toast: `${p.name} is already on your profile` }); setKey(k => k + 1); return; }
+    dispatch({ type: "REC_ADD", category: "venues", record: makeRecord("venues", p.name, { ...p, details: { kind } }) });
+    dispatch({ type: "TOAST", toast: `${p.name} added` });
+    setKey(k => k + 1);
+  };
+  return (
+    <div className="ff-venedit17 ff-ven19">
+      <style>{VEN_CSS17}</style>
+      <style>{RANK_CSS17}</style>
+      <p className="ff-venedit17-line">Add the top venues you've worked at, or your favourite bars.</p>
+      <div className="ff-seg19" role="radiogroup" aria-label="Kind of venue">
+        {[["worked", "Worked at"], ["favourite", "Favourites"]].map(([k, label]) => (
+          <button key={k} type="button" role="radio" aria-checked={kind === k} className={kind === k ? "on" : ""} onClick={() => setKind(k)}>{label}</button>
+        ))}
+      </div>
+      <VenueSearch17 key={key} label="Search for a venue" placeholder="Search for a venue" onPick={add} />
+      <VenueRows19 items={items} onOpen={onOpen} />
+    </div>
+  );
+}
+
+
 /* owner "company" (v16.12): the same section on the FF Staff Company profile,
    with its records in company.records and its own show/hide keys. */
 function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd, owner, pub, top, moreTail, quiet, plus, hideZero }) {
   const { state, dispatch } = useStore();
-  const pickRank = useRef(null);
   const items = isMe ? list : list.filter(r => !r.hidden && !r.proposed);
   if (!isMe && !items.length) return null;
   /* Work locations are the ticked places (one record each): the count and the public chips read them in the tree's order. */
@@ -229,7 +541,6 @@ function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd
   /* Editing: while the profile is being built, or after "Edit profile". */
   const savedOnce = state.auth.status === "signedIn" && (!!state.profile.finishedAt || !!state.profile.live);
   const editing = isMe && owner !== "company" && EDIT_CATS.includes(catKey) && (!savedOnce || !!(state.profileEdit && state.profileEdit.on));
-  const eRows = editing ? editRows(state.profile, catKey) : null;
   const ekey = `edit_${vkey}`;
   const ev = editing ? state.categoryVisibility[ekey] : undefined;
   const open = editing ? (ev === undefined ? catKey === "professions" : ev !== false) : (v === undefined ? startOpen : v !== false);
@@ -247,7 +558,7 @@ function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd
   );
   return (
     <section id={isMe ? (owner === "company" ? `ff-co-${catKey}` : `ff-sec-${catKey}`) : undefined} style={{ marginTop: 22 }}>
-      <SectionHead icon={<CatIcon kind={def.icon} size={15} color="var(--gold-dk)" />} title={def.label} count={(n => hideZero && !n ? undefined : n)(locOwner ? covPlaces17(locOwner).length : editing ? eRows.filter(r => !r.rec.hidden).length : items.filter(r => !r.hidden).length)}
+      <SectionHead icon={<CatIcon kind={def.icon} size={15} color="var(--gold-dk)" />} title={def.label} count={(n => hideZero && !n ? undefined : n)(locOwner ? covPlaces17(locOwner).length : items.filter(r => !r.hidden).length)}
         action={plus ? <span className="ff-co17-acts">
           <button type="button" className="ff-co17-plus" aria-label={`Add to ${def.label}`} onClick={() => { dispatch({ type: "TOGGLE_CATEGORY", key: vkey, visible: true }); plus(); }}><Plus size={14} /></button>
           <CategoryToggle sectionKey={vkey} defaultOpen={startOpen} /></span>
@@ -273,31 +584,19 @@ function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd
             </div>
           </div>
         )}
-        {isMe && catKey === "professions" && (
-          <ProfessionPicker selected={items.map(r => r.name)} onPick={(n, category) => {
-            if (items.some(r => r.name.toLowerCase() === n.toLowerCase())) { dispatch({ type: "TOAST", toast: `${n} is already on your profile` }); return; }
-            /* source of the profession: "approved" = on the FireFlair list, "user" = typed by the member (kept with the category they chose). */
-            const approved = ALL_PROFESSIONS.some(p => p.name.toLowerCase() === n.toLowerCase());
-            const fresh = makeRecord("professions", n, { professionSource: approved ? "approved" : "user", ...(category ? { displayCategory: category } : {}) });
-            dispatch({ type: "RECORDS_MERGE", byCategory: { professions: [fresh] } });
-            /* v17.18: a profession picked after tapping the plus in a box goes into that box. */
-            if (pickRank.current) { dispatch({ type: "PE_MOVE", category: "professions", id: fresh.id, rank: pickRank.current, index: 0 }); pickRank.current = null; }
-            dispatch({ type: "TOAST", toast: `${n} added` });
-          }} />
-        )}
         {isMe && catKey === "locations" && <CoverageTree17 owner={owner} />}
-        <div style={{ height: isMe && catKey === "professions" && owner !== "company" ? 12 : 0 }} />
-        {catKey === "locations" ? (isMe ? null : <AreasChips17 owner={locOwner} />) : catKey === "venues" && isMe && owner !== "company" && editing ? (
-          <VenuesEditor17 items={items} onOpen={(r) => onOpen(r)} />
-        ) : editing ? (
-          <TierEditor catKey={catKey} def={def} rows={eRows} onOpen={(r) => onOpen(r)}
-            onAdd={isMe && !def.system && catKey !== "experience" ? (rank) => {
-              if (catKey !== "professions") { onAdd(rank); return; }
-              /* Professions are typed or picked in the search above the boxes: the next one picked goes into the tapped box. */
-              pickRank.current = rank;
-              const inp = document.querySelector("#ff-sec-professions input[type=search]");
-              if (inp) { inp.scrollIntoView({ block: "center", behavior: "smooth" }); inp.focus({ preventScroll: true }); }
-            } : undefined} />
+        {catKey === "locations" ? (isMe ? null : <AreasChips17 owner={locOwner} />) : catKey === "venues" && isMe && owner !== "company" ? (
+          <VenuesEditor19 items={items} onOpen={(r) => onOpen(r)} />
+        ) : isMe && owner !== "company" && RANK_CATS19.includes(catKey) ? (
+          <RankList17 catKey={catKey} def={def} items={items}
+            addRow={catKey === "professions" ? <ProfessionPicker asRow selected={items.map(r => r.name)} onPick={(n, category) => {
+              if (items.some(r => r.name.toLowerCase() === n.toLowerCase())) { dispatch({ type: "TOAST", toast: `${n} is already on your profile` }); return; }
+              /* source of the profession: "approved" = on the FireFlair list, "user" = typed by the member (kept with the category they chose). */
+              const approved = ALL_PROFESSIONS.some(p => p.name.toLowerCase() === n.toLowerCase());
+              const fresh = makeRecord("professions", n, { professionSource: approved ? "approved" : "user", ...(category ? { displayCategory: category } : {}) });
+              dispatch({ type: "RECORDS_MERGE", byCategory: { professions: [fresh] } });
+              dispatch({ type: "TOAST", toast: `${n} added` });
+            }} /> : undefined} />
         ) : (
           pub && !isMe ? <PubGrid catKey={catKey} def={def} items={items} shade={shade} onOpen={onOpen} /> : (
           <HorizontalCardRanker items={items} label={def.label}
@@ -441,7 +740,7 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
               onChange={(e) => patch({ name: e.target.value })} placeholder={def.placeholder || def.singular} />}
       </Field>
 
-      {draft.details && Object.keys(draft.details).some(k => k !== "type" && draft.details[k] && (!Array.isArray(draft.details[k]) || draft.details[k].length)) && (
+      {draft.details && Object.keys(draft.details).some(k => k !== "type" && k !== "kind" && draft.details[k] && (!Array.isArray(draft.details[k]) || draft.details[k].length)) && (
         <RecordDetailsField details={draft.details} readOnly={readOnly} onChange={(d) => patch({ details: d })} />
       )}
 
@@ -650,7 +949,10 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
     </section>
   ) : null;
   /* v17.14: Experience shows only where entries were already saved; new work history goes into Venues. */
-  const order = categoryOrder().filter(k => !cats[k].system && (k !== "experience" || (records.experience || []).some(r => !r.hidden || isMe)));
+  const order0 = categoryOrder().filter(k => !cats[k].system && (k !== "experience" || (records.experience || []).some(r => !r.hidden || isMe)));
+  /* v17.19: Professions, About me, Qualifications, Skills, Interests, Work locations, Languages, Venues. */
+  const ORDER19 = ["professions", "qualifications", "skills", "interests", "locations", "languages", "venues"];
+  const order = [...ORDER19.filter(k => order0.includes(k)), ...order0.filter(k => !ORDER19.includes(k))];
   const reviewList = (records.reviews || []).filter(r => !hid17(state, "reviews", r.id));
   const reviewDef = cats.reviews || BASE_CATEGORIES.reviews;
   const pendingRequests = isMe
@@ -675,17 +977,18 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
   const revOpen = isMe ? false : reviewList.length > 0;
 
   const focusHandlers = {
-    reviews: () => { dispatch({ type: "TOGGLE_CATEGORY", key: "reviews", visible: true }); setAsking(true); },
+    reviews: () => { setBtab("reviews"); dispatch({ type: "TOGGLE_CATEGORY", key: "reviews", visible: true }); setAsking(true); },
     questions: () => { setBtab("services"); dispatch({ type: "TOGGLE_CATEGORY", key: "questions", visible: true }); setTimeout(() => { const el = document.getElementById("ff-sec-questions"); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }, 200); },
   };
   order.forEach(k => { focusHandlers[k] = k === "locations" ? () => dispatch({ type: "TOGGLE_CATEGORY", key: "attr_locations", visible: true }) : () => setAddingTo(k); });
   useProfileFocus(focusHandlers, isMe);
 
-  const renderCategorySection = (catKey) => (
-    <ProfileAttributeSection key={catKey} catKey={catKey} def={cats[catKey]} list={records[catKey] || []} isMe={isMe} shade={shade}
+  const renderCategorySection = (catKey) => (<React.Fragment key={catKey}>
+    <ProfileAttributeSection catKey={catKey} def={cats[catKey]} list={records[catKey] || []} isMe={isMe} shade={shade}
       onOpen={(r) => setOpenRec({ record: r, def: cats[catKey], category: catKey })}
       onAdd={(rank) => { setAddRank(rank || null); setAddingTo(catKey); }} />
-  );
+    {catKey === "professions" && isMe && <CreatorAboutMe />}
+  </React.Fragment>);
 
   const networkSection = (
       <section style={{ marginTop: 26 }}>
@@ -774,11 +1077,7 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
           <ProfileTabs tabs={bTabs} active={btab} onChange={setBtab} />
           <div role="tabpanel" id="ff-tabpanel" aria-labelledby={`ff-tab-${btab}`} className="ff-tabpanel" tabIndex={0}>
             {btab === "overview" && (<>
-              <ProfileEditHead />
               {order.map(renderCategorySection)}
-              <ProfileSocial11 isMe />
-              {networkSection}
-              {reviewsSection}
             </>)}
             {btab === "services" && (<>
               <section id="ff-sec-questions" style={{ marginTop: 4 }}>
@@ -794,8 +1093,15 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
               <Creators17 kind="team" by={person.name} />
               <TermsRow17 />
             </>)}
-            {btab === "teams" && <TeamTab17 person={person} />}
-            {btab === "reviews" && <ReviewsTab17 person={person} />}
+            {btab === "teams" && (<>
+              <ProfileSocial11 isMe />
+              {networkSection}
+              <div style={{ marginTop: 22 }}><TeamTab17 person={person} /></div>
+            </>)}
+            {btab === "reviews" && (<>
+              {reviewsSection}
+              <ReviewsTab17 person={person} />
+            </>)}
           </div>
         </div>
       </>) : (

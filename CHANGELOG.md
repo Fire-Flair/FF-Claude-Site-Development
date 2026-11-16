@@ -1,5 +1,20 @@
 # FireFlair prototype — changelog
 
+## v17.19
+
+Artifact version 1794860123-92ae.
+
+Profile page: numbered lists with details and photos, Worked at and Favourites venues, separate Phone, FF Tag and Media boxes, category tabs for professions, Silver and Gold card colours.
+
+- New list editor RankList17 (attribute-cards.jsx, styles/rank17.css) for Professions, Qualifications, Skills, Interests and Languages, on the builder and (read-only) on the displayed profile. Each entry: a plain number (no gold, silver or bronze), the name, a "+" that opens a panel for detail text and photos (up to 4, shrunk to 1000px; Hide and Remove live here), and a three-line handle to drag (touch and pointer; arrow keys too). Detail text and every photo (one square box each) always show under the entry. The order is the record order (backend display_order; one PATCH /sections/:id/data/order call), so rank is only order. REC_MOVE takes {id, to}.
+- Removed: the drag-and-drop introduction and the Primary / Secondary / Extra boxes (TierEditor, ProfileEditHead, editRows).
+- Overview order, builder and displayed profile: Professions, About me, Qualifications, Skills, Interests, Work locations, Languages, Venues. Social links and Network are on the Team tab; Reviews & References on the Reviews tab.
+- Venues (VenuesEditor19, VenueCard19): a "Worked at | Favourites" switch above the search box sets the kind of the next venue (record.details.kind "worked" | "favourite"; CV venues and venues with no kind count as worked). Two rows scroll across. Landscape cards (200px): type icon, type, name, street and area, the member's line. Google venues: blue (worked) or plum (favourites) with a Google Maps link. Typed venues: cream with a dashed outline, a pencil and "Added by hand", no map link. Remove is inside the venue's sheet (no X on cards). Backend: needs a "venue" section added to seedCards.js; the kind fits in additional_data.
+- Account boxes on the builder: Phone number, FF Tag and Media, each its own box, in that order. Inputs are as wide as their content. The phone button reads "Verify". Media: square tiles in a row that scrolls across with a "+" tile at the end.
+- Pick your professions: the category row uses the profile tab style; typed suggestions no longer print a category; only a new profession asks for one.
+- Card colour: picking Silver or Gold makes the rim, inner line, photo ring and FF logo silver or gold (cardMetal17); other colours keep the verification tier.
+- Card footer (editor and large card): FFTeam.uk/<Tag> bottom left; FF logo and FIREFLAIR bottom right.
+
 ## v17.18
 
 Artifact version 1794855679-a976.
