@@ -97,13 +97,13 @@
     );
   }
 
+  /* v17.17: same Review Card as FF Team (plate top left, five drawn stars, the review, who wrote it), written from the client's side. */
   function SvReview21({ kind }) {
-    const to = dirFind("dir_sam");
-    const from = kind === "party" ? { id: "smp_host", name: "Sophie Turner", profession: "Birthday party host", photo: FACE.you, tier: "standard" } : { id: "co_vooshka", name: "Vooshka Cocktail Bar", profession: "Luxury mobile cocktail bar", photo: null, tier: "gold", isCompany: true };
-    if (!to) return null;
+    const party = kind === "party";
     return (
       <div className="pv pv-rvp">
-        <InertBox className="pv-rvc"><ReviewCard11 from={from} to={to} how="Excellent" status={`Accepted · on ${to.name.split(" ")[0]}'s profile`} text={kind === "party" ? "Made our garden party. Amazing cocktails and the guests loved him." : "Ran the bar at our launch night without a single hiccup. Fast, clean and great with the guests."} /></InertBox>
+        <InertBox className="pv-rvc"><ReviewCardPv21 by={party ? "Sophie Turner" : "Vooshka"} photo={party ? FACE.you : null}
+          text={party ? "Made our garden party. Amazing cocktails and the guests loved him." : "Ran the bar at our launch night without a single hiccup. Fast, clean and great with the guests."} /></InertBox>
       </div>
     );
   }
@@ -202,9 +202,8 @@
   }
 
   function SvServices21({ dir }) {
-    const jon = { id: "you", name: "Your name", tag: "you", tier: "standard", photo: null, profession: "Photographer", group: "Photographers" }; /* v17.12: an example service card, made by "you" */
-    const ex = OWN_SERVICE_EXAMPLES.find((x) => x.id === "own_photo");
-    return <div className="pv pv-own" aria-hidden="true"><InertBox className="pv-sq">{jon && ex ? <OwnServiceCard item={{ ...ex, person: jon }} /> : null}</InertBox></div>;
+    const ex = ownPhotoExample17(); /* v17.16: Hayden's Event Photography card (see OWN_PHOTO_SAMPLE17) */
+    return <div className="pv pv-own" aria-hidden="true"><InertBox className="pv-sq">{ex ? <OwnServiceCard item={ex} /> : null}</InertBox></div>;
   }
 
   function SvCompanyCard21() {

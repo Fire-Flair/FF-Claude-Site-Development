@@ -1210,6 +1210,20 @@
 .ff-svcsq-title { position:relative; z-index:3; display:block; margin-top:12px; font-family:var(--sans); font-size:19px; font-weight:800; line-height:1.15; letter-spacing:-.01em; }
 .ff-svcsq-desc { position:relative; z-index:3; display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden; margin-top:7px; font-size:12.5px; line-height:1.42; opacity:.88; }
 .ff-svcsq-by { position:relative; z-index:3; display:flex; align-items:center; gap:9px; margin-top:auto; padding-top:10px; border-top:1px solid; }
+.ff-svcsq.has-ph { overflow:hidden; }
+/* the sample photo: the band with the faces (the picture is 640 x 400; its band from 145 to 335 fills the strip, so no head is cut) */
+.ff-svcsq-ph { position:relative; z-index:2; display:block; flex:none; height:76px; margin:-14px -14px 7px; overflow:hidden; background:#16130F; }
+.ff-svcsq-ph img { position:absolute; display:block; width:256px; max-width:none; height:auto; left:-4px; top:-58px; }
+.ff-svcsq-ph.ic { display:grid; place-items:center; color:#E4C36A; background:radial-gradient(120% 140% at 50% 30%,#2A2318 0%,#16130F 60%,#0B0A08 100%); }
+.ff-svcsq-ph.ic svg { display:block; filter:drop-shadow(0 2px 6px rgba(0,0,0,.6)); }
+.ff-svcsq.has-ph .ff-svcsq-top { white-space:nowrap; letter-spacing:.12em; font-size:10.5px; }
+.ff-svcsq.has-ph .ff-svcsq-top .kind { letter-spacing:.06em; font-size:10.5px; padding:2px 8px; }
+.ff-svcsq.has-ph .ff-svcsq-title { margin-top:7px; font-size:18px; }
+.ff-svcsq.has-ph .ff-svcsq-desc { -webkit-line-clamp:3; margin-top:4px; font-size:12px; line-height:1.4; }
+.ff-svcsq.has-ph .ff-svcsq-by { padding-top:8px; }
+.ff-svcsq-meta { display:flex !important; align-items:center; gap:8px; white-space:nowrap; overflow:hidden; }
+.ff-svcsq-meta .loc { display:inline-flex; align-items:center; gap:3px; min-width:0; }
+.ff-svcsq-meta .loc svg { flex:none; }
 .ff-svcsq-by b { display:block; font-size:12.5px; line-height:1.2; }
 .ff-svcsq-by small { display:block; font-size:11px; line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .ff .ff-hitem > button.ff-svcsq-add { display:grid; place-items:center; }

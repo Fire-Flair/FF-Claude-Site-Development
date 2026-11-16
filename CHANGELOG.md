@@ -1,5 +1,20 @@
 # FireFlair prototype — changelog
 
+## v17.17
+
+Artifact version 1794852236-3e59 (FireFlair — Phase Two, almost final).
+
+Home pillars on all three sites: new FF Team wording, picture-only 1-2-3 cards, titles level with the visuals on desktop, one Review Card design, and a real photographer on the example Service Card.
+
+- FF Team, Your profile pillar (team-pillars.json): tagline "Your CV can become a page of your own"; title "Build, share, grow". SEO titles and descriptions unchanged.
+- FF Team, Our packages pillar summary rewritten: FF Staff is built for hospitality businesses to request your services; FF Party markets set-price packages direct to private clients, launching with exciting bar packages; from 2027 every professional can create packages of their own.
+- 1-2-3 cards (PillarCards21, shared by FF Team, FF Staff and FF Party): picture and title only, no description line. The "more from this pillar" links on section pages show titles only. card.d stays in the JSON. Titles wrap between words only and shrink on narrow screens.
+- Pillar sections, desktop (from 680px, team-pillars21.css): two-column grid so the top of the section title lines up with the top of the visual. Mobile unchanged.
+- Profile Cards inside pillar visuals: the section's tall line height pushed the card's inline icons below their boxes (row icons clipped, profession marks running into the first row). Fixed with display:block on the card icons and line-height 1.2 inside the card, scoped to .pv. Applies to Simao's card in the CV and WhatsApp visuals and the three small team cards.
+- Review Card (ReviewCardPv21, team-pillars.jsx): "Review Card" plate top left, five drawn gold stars, the review, then the reviewer with logo or photo. FF Team: Vooshka reviewing Simao ("I worked with Simao on New Year's Eve..."). FF Staff and FF Party review visuals (SvReview21) now use the same card with their own client reviews instead of ReviewCard11.
+- Event Photography example Service Card (OwnServiceCard, ownPhotoExample17 in services.jsx, used by both pillar visual files): Hayden Forde-Pogson, HF portrait, a location pin with Norfolk, the package price on his card, and a drawn camera strip across the top (item.sampleIcon). Other own-service cards still read "Priced by <name>".
+- Pillar 1-2-3 pictures regenerated where their visuals changed: th_cv, th_team, th_reviews, th_own (FF Team), ths_reviews, ths_services (FF Staff), thp_reviews (FF Party). make-pillar-thumbs.py gained a team mode and an ONLY filter, and the review visuals are now captured from .pv-rvx.
+
 ## v17.16
 
 Artifact version 1794850484-a629.

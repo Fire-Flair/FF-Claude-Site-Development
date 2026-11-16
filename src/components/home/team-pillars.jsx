@@ -135,13 +135,28 @@
     );
   }
 
+  /* v17.16: the Review Card shown to FF Team members: plate top left, five drawn stars, the review, then who wrote it (Vooshka, a review given to Simao). */
+  const P21_REVIEW = { text: "I worked with Simao on New Year's Eve. He made over 500 cocktails and every single one of them looked amazing.", by: "Vooshka" };
+  function ReviewCardPv21({ text = P21_REVIEW.text, by = P21_REVIEW.by, logo: lg, photo } = {}) {
+    const co = (typeof COMPANY_PAGES !== "undefined" && COMPANY_PAGES.co_vooshka) || null;
+    const logo = lg !== undefined ? lg : (by === P21_REVIEW.by && co && co.logo ? co.logo : null);
+    const pic = logo || photo || null;
+    return (
+      <div className="pv-rvx" role="img" aria-label={`Review Card from ${by}: five stars. ${text}`}>
+        <span className="pl">Review Card</span>
+        <span className="stars" aria-hidden="true">{[0, 1, 2, 3, 4].map((i) => <Star key={i} size={20} strokeWidth={1.6} color="#E8C75E" fill="#E8C75E" />)}</span>
+        <p className="tx">{text}</p>
+        <span className="by"><span className={"av" + (logo ? " lg" : photo ? " ph" : "")}>{pic ? <img decoding="async" src={pic} alt="" draggable={false} /> : by.charAt(0)}</span><b>{by}</b></span>
+      </div>
+    );
+  }
+
   function VisReviews21() {
-    const rec = useMemo(() => ({ ...makeRecord("reviews", "5★ from Priya"), id: "demo_rv21", description: "Ran the bar at our launch night without a single hiccup. Fast, clean and great with the guests.", rating: 5, primary: true, readOnly: true }), []);
     const [a, setA] = useState({ w: true, a: true, h: "excellent" });
     const set = (k) => (v) => setA((o) => ({ ...o, [k]: v }));
     return (
       <div className="pv pv-rv">
-        <InertBox className="ff-rvslide"><InformationCard record={rec} def={BASE_CATEGORIES.reviews} themeKey="onyx" pub="r" highlight rank="primary" /></InertBox>
+        <InertBox className="ff-rvslide"><ReviewCardPv21 /></InertBox>
         <div className="ff-tickqs pv-tq">
           <TickChoice id="pv-w" label="Have you worked with Simao before?" options={YES_NO} value={a.w} onChange={set("w")} />
           <TickChoice id="pv-a" label="Would you like to work with Simao again?" options={YES_NO} value={a.a} onChange={set("a")} />
@@ -180,12 +195,11 @@
 
   function VisOwnPackages21({ dir }) {
     const IM = window.FF_IMG || {};
-    const jon = { id: "you", name: "Your name", tag: "you", tier: "standard", photo: null, profession: "Photographer", group: "Photographers" }; /* v17.12: an example service card, made by "you" */
-    const ex = OWN_SERVICE_EXAMPLES.find((x) => x.id === "own_photo");
+    const ex = ownPhotoExample17(); /* v17.16: Hayden's Event Photography card (see OWN_PHOTO_SAMPLE17) */
     const ck = ckAdapt17({ name: "Raspberry Mint Martini", glass: "martini", description: "Fresh raspberry and mint, shaken cold.", ingredients: ["50ml vodka", "20ml raspberry liqueur", "Fresh mint", "Garnish: raspberries"], photo: IM.cocktail_0 });
     return (
       <div className="pv pv-own" aria-hidden="true">
-        <InertBox className="pv-sq">{jon && ex ? <OwnServiceCard item={{ ...ex, person: jon }} /> : null}</InertBox>
+        <InertBox className="pv-sq">{ex ? <OwnServiceCard item={ex} /> : null}</InertBox>
         <InertBox className="pv-ck"><Card17 kind="cocktail" tone="dark" plate="Signature Cocktail" size="sm" url="By you"><CocktailFront17 c={ck} /></Card17></InertBox>
       </div>
     );
@@ -411,7 +425,6 @@
               <a className="cd" href={href ? infoHref21(s.slug) : "#" + s.id} onClick={(e) => { e.preventDefault(); if (href) onLink(s.slug); else jump(s.id); }}>
                 <span className="ph">{IM[ik] ? <img decoding="async" src={IM[ik]} style={fp17(ik)} alt="" draggable={false} /> : null}<i>{i + 1}</i></span>
                 <b>{s.card.t}</b>
-                <span className="t">{s.card.d}</span>
               </a>
             </li>
           );
@@ -462,7 +475,7 @@
         <nav aria-label="Breadcrumb" className="ff-ip21-bc">{link(pl.slug, pl.t, "")}</nav>
         <PillarSection21 s={s} n={n} run={run} level="h1" />
         <nav className="ff-ip21-more" aria-label={`More from ${pl.t}`}>
-          {others.map((x) => link(x.slug, <><b>{x.card.t}</b><span>{x.card.d}</span></>, "c"))}
+          {others.map((x) => link(x.slug, <b>{x.card.t}</b>, "c"))}
         </nav>
       </main>
     );

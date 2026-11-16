@@ -6,6 +6,7 @@ For every section of a site's pillars it screenshots the section's own visual in
 
   npm run build && python3 scripts/make-pillar-thumbs.py party    # thp_* (FF Party)
   npm run build && python3 scripts/make-pillar-thumbs.py staff    # ths_* (FF Staff)
+  ONLY=th_cv,th_team,th_reviews,th_own python3 scripts/make-pillar-thumbs.py team   # redo some FF Team pictures (v17.16)
 
 Needs Playwright with Chrome. CHROME / LIBS env vars point to the browser and to local copies of react, react-dom, lucide and leaflet
 (the page loads them from a CDN; offline runs route the requests to the local copies). The FF Team pictures (th_*) were made the same way."""
@@ -20,13 +21,18 @@ L = os.environ.get("LIBS", "/tmp/libs") + "/node_modules/"
 LOCAL = {"react.production": L + "react/umd/react.production.min.js", "react-dom.production": L + "react-dom/umd/react-dom.production.min.js",
          "lucide.min": L + "lucide/dist/umd/lucide.min.js", "leaflet.js": L + "leaflet/dist/leaflet.js", "leaflet.css": L + "leaflet/dist/leaflet.css"}
 BG = "#F3EAD5"
+ONLY = [x for x in os.environ.get("ONLY", "").split(",") if x]
 # visual key -> (selectors inside the section, crop height in css px or None)
 SPEC = {
+ "cv-to-profile": (['.pv-doc', '.pv-pcard'], None),
+ "share-and-team": (['.pv-row3'], None),
+ "reviews": (['.pv-rvx'], None),
+ "own-packages": (['.pv-sq', '.pv-ck'], None),
  "party-pkgs": (['.pv-tile:nth-child(1)', '.pv-tile:nth-child(2)'], None),
  "party-guarantee": (['.pv-gr .gb'], None),
  "party-people": (['.pv-row3'], None),
  "party-featured": (['.pv-tile:nth-child(1)', '.pv-tile:nth-child(2)'], None),
- "party-review": (['.ff-rvcard'], None),
+ "party-review": (['.pv-rvx'], None),
  "party-companies": (['.pv-tile:nth-child(1)'], None),
  "party-event": (['.pv-face'], None),
  "party-occasions": (['.pv-occ'], None),
@@ -36,7 +42,7 @@ SPEC = {
  "party-again": (['.pv-again'], None),
  "staff-featured": (['.pv-tile:nth-child(1)', '.pv-tile:nth-child(2)'], None),
  "staff-teams": (['.pv-tms'], None),
- "staff-review": (['.ff-rvcard'], None),
+ "staff-review": (['.pv-rvx'], None),
  "staff-event": (['.pv-face'], None),
  "staff-steps": (['.pv-steps'], None),
  "staff-modern": (['.pv-mod'], None),
@@ -73,6 +79,8 @@ async def main():
             await pg.locator(".ff-dx-tile").nth(n).click()
             await pg.wait_for_timeout(1500)
             for s in pl["sections"]:
+                if ONLY and s["card_img"] not in ONLY:
+                    continue
                 sels, ct = SPEC[s["visual"]]
                 ims = []
                 for sel in sels:
