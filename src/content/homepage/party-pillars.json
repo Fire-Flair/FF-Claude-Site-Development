@@ -1,0 +1,387 @@
+{
+ "_note": "FF Party home pillars (v17.10). Same schema and layout as team-pillars.json. Pillar names are approved and fixed: Our Packages, Our Network, Your Booking, Your Party. Card pictures (thp_*) are made by scripts/make-pillar-thumbs.py.",
+ "pillars": [
+  {
+   "k": "services",
+   "slug": "our-packages",
+   "t": "Our Packages",
+   "s": "Your celebration, beautifully looked after",
+   "h": "Everything for a celebration to remember.",
+   "tldr": "Looking for wonderful people with great personalities, quickly and easily? FireFlair Packages bring the people, the equipment and the shopping list for your celebration. Choose the package that suits you, from a classic bartender to a hands-on masterclass, and every booking comes with the FireFlair Booking Guarantee: confirmed, or refunded in full.",
+   "seo": {
+    "title": "FireFlair Packages for Your Party | FF Party",
+    "description": "Choose a FireFlair Package for your celebration, from a classic bartender to a hands-on masterclass, and book with the FireFlair Booking Guarantee."
+   },
+   "sections": [
+    {
+     "id": "ff-pp-find",
+     "slug": "find-your-package",
+     "card": {
+      "t": "Find your package",
+      "d": "From a classic bartender to a hands-on masterclass.",
+      "b": "See the packages"
+     },
+     "h": "Find the package that suits your celebration",
+     "p": [
+      "Each FireFlair Package brings the people, the shopping list and the equipment. Choose the one that suits your celebration.",
+      "Already have your drinks? The Cocktail Package brings a bartender with the equipment, a cocktail menu and a shopping list.",
+      "Planning a hen party or birthday to remember? The Masterclass Package is the Open Bar Masterclass: shake, stir and create your own recipes."
+     ],
+     "visual": "party-pkgs",
+     "cta": {
+      "label": "See all packages",
+      "go": "pkgs"
+     },
+     "seo": {
+      "title": "Find the package that suits your celebration | FF Party",
+      "description": "From a classic bartender to a hands-on masterclass."
+     },
+     "card_img": "thp_find"
+    },
+    {
+     "id": "ff-pp-guarantee",
+     "slug": "booking-guarantee",
+     "card": {
+      "t": "The FireFlair Booking Guarantee",
+      "d": "Confirmed, or refunded in full.",
+      "b": "See the guarantee"
+     },
+     "h": "Book with the FireFlair Booking Guarantee",
+     "p": [
+      "Book with nothing to lose. Your booking is confirmed, or you are refunded in full.",
+      "Every FireFlair Package follows the same four steps, so you always know where you are: choose your package, choose your people, choose your add-ons, and your booking is secured.",
+      "Every booking comes with an event brief and an invoice with clear terms, so everyone knows what to expect."
+     ],
+     "visual": "party-guarantee",
+     "cta": {
+      "label": "See the packages",
+      "go": "#ff-pp-find"
+     },
+     "seo": {
+      "title": "Book with the FireFlair Booking Guarantee | FF Party",
+      "description": "Confirmed, or refunded in full."
+     },
+     "card_img": "thp_guarantee"
+    },
+    {
+     "id": "ff-pp-people",
+     "slug": "choose-your-people",
+     "card": {
+      "t": "Your people, your way",
+      "d": "Choose a professional you love.",
+      "b": "Meet them"
+     },
+     "h": "Choose the professional you would love behind your bar",
+     "p": [
+      "Browse bartenders and choose the person you would love behind your bar.",
+      "Every professional has a Profile Card with their style, their experience and reviews from hosts, so you know who you are choosing.",
+      "Your first choice is asked first, so your favourite person gets the first chance to say yes."
+     ],
+     "visual": "party-people",
+     "cta": {
+      "label": "Meet them",
+      "go": "network"
+     },
+     "seo": {
+      "title": "Choose the professional you would love behind your bar | FF Party",
+      "description": "Choose a professional you love."
+     },
+     "card_img": "thp_people"
+    }
+   ]
+  },
+  {
+   "k": "community",
+   "slug": "our-network",
+   "t": "Our Network",
+   "s": "The people behind your celebration",
+   "h": "Meet the people who make it happen.",
+   "tldr": "Looking for a bartender whose style suits your celebration? Browse professionals with real reviews from hosts, and look for the Verified by FireFlair badges and the people who vouch for each one. Prefer a company that brings the bar? Browse bar companies and their teams.",
+   "seo": {
+    "title": "Bartenders and Bar Companies for Your Party | FF Party",
+    "description": "Browse bartenders with real reviews from hosts, Verified by FireFlair badges and bar companies with their own teams."
+   },
+   "sections": [
+    {
+     "id": "ff-pn-people",
+     "slug": "meet-your-bartenders",
+     "card": {
+      "t": "Meet your bartenders",
+      "d": "Hosts have booked them and said so.",
+      "b": "Meet them"
+     },
+     "h": "Meet the bartenders hosts have booked",
+     "p": [
+      "Featured professionals, with their reviews and the people who vouch for them.",
+      "Look for the Verified by FireFlair badges. Bronze, Silver and Gold are set by FireFlair and show on every profile.",
+      "The people they work with show on their profile too, so you can see who vouches for them."
+     ],
+     "visual": "party-featured",
+     "cta": {
+      "label": "Meet them",
+      "go": "network"
+     },
+     "seo": {
+      "title": "Meet the bartenders hosts have booked | FF Party",
+      "description": "Hosts have booked them and said so."
+     },
+     "card_img": "thp_featured"
+    },
+    {
+     "id": "ff-pn-reviews",
+     "slug": "real-reviews",
+     "card": {
+      "t": "Read real reviews",
+      "d": "From hosts who have booked them.",
+      "b": "Read reviews"
+     },
+     "h": "Read what hosts say about a night with them",
+     "p": [
+      "Reviews are written by hosts who have booked the same people, so you can read what a night with them was really like.",
+      "Every review comes from a real event and is left by the person who booked.",
+      "Every review shows on their profile. After your party, you review your team in a tap."
+     ],
+     "visual": "party-review",
+     "cta": {
+      "label": "Explore the network",
+      "go": "network"
+     },
+     "seo": {
+      "title": "Read what hosts say about a night with them | FF Party",
+      "description": "From hosts who have booked them."
+     },
+     "card_img": "thp_reviews"
+    },
+    {
+     "id": "ff-pn-companies",
+     "slug": "bar-companies",
+     "card": {
+      "t": "Bar companies",
+      "d": "Companies with their own teams.",
+      "b": "Browse companies"
+     },
+     "h": "Book a bar company and choose from its team",
+     "p": [
+      "Bar companies bring their own bar and team. Browse them, read their reviews and book for your event.",
+      "Book a company, then choose your bartenders from its team.",
+      "Every FF company has a Company Card that shows who they are, what they do and who is on the team."
+     ],
+     "visual": "party-companies",
+     "cta": {
+      "label": "Browse companies",
+      "go": "network"
+     },
+     "seo": {
+      "title": "Book a bar company and choose from its team | FF Party",
+      "description": "Companies with their own teams."
+     },
+     "card_img": "thp_companies"
+    }
+   ]
+  },
+  {
+   "k": "events",
+   "slug": "your-booking",
+   "t": "Your Booking",
+   "s": "Secure your booking",
+   "h": "Book your celebration.",
+   "tldr": "Choose your package, choose your people, choose your add-ons, and your booking is secured. Hen parties, birthdays, house parties, intimate weddings: whatever you are celebrating, the right packages appear after a few simple details.",
+   "seo": {
+    "title": "Book Your Celebration | FF Party",
+    "description": "Choose your package, choose your people, choose your add-ons, and your booking is secured on FF Party."
+   },
+   "sections": [
+    {
+     "id": "ff-pb-plan",
+     "slug": "plan-your-event",
+     "card": {
+      "t": "Plan your event",
+      "d": "Your date, your place, your guests.",
+      "b": "Plan your event"
+     },
+     "h": "Plan your event with an Event Card",
+     "p": [
+      "Your Event Card holds your date, place and guests. FireFlair uses it to show the packages that suit your celebration.",
+      "The right packages appear after a few simple details, so there is nothing to search for.",
+      "Your first choice is asked first, so your favourite person gets the first chance to say yes."
+     ],
+     "visual": "party-event",
+     "cta": {
+      "label": "Plan your event",
+      "go": "book"
+     },
+     "seo": {
+      "title": "Plan your event with an Event Card | FF Party",
+      "description": "Your date, your place, your guests."
+     },
+     "card_img": "thp_plan"
+    },
+    {
+     "id": "ff-pb-occasions",
+     "slug": "every-kind-of-party",
+     "card": {
+      "t": "Every kind of party",
+      "d": "From hen parties to intimate weddings.",
+      "b": "See occasions"
+     },
+     "h": "A package for every kind of party",
+     "p": [
+      "Hen parties, birthdays, house parties, intimate weddings and more: there is a package that suits it.",
+      "Stag dos, garden parties, anniversaries, Christmas parties and New Year's Eve are all covered too.",
+      "Whatever you are celebrating, the right packages appear after a few simple details."
+     ],
+     "visual": "party-occasions",
+     "cta": {
+      "label": "See the packages",
+      "go": "pkgs"
+     },
+     "seo": {
+      "title": "A package for every kind of party | FF Party",
+      "description": "From hen parties to intimate weddings."
+     },
+     "card_img": "thp_occasions"
+    },
+    {
+     "id": "ff-pb-steps",
+     "slug": "how-booking-works",
+     "card": {
+      "t": "How booking works",
+      "d": "Four simple steps.",
+      "b": "See the steps"
+     },
+     "h": "Four steps to a secured booking",
+     "p": [
+      "Choose your package, choose your people, choose your add-ons, and your booking is secured.",
+      "Your request reaches each professional on WhatsApp, so you hear back quickly.",
+      "When everything is confirmed, you see Your booking is secured, with an event brief and an invoice that set out the terms clearly."
+     ],
+     "visual": "party-steps",
+     "cta": {
+      "label": "Plan your event",
+      "go": "book"
+     },
+     "seo": {
+      "title": "Four steps to a secured booking | FF Party",
+      "description": "Four simple steps."
+     },
+     "card_img": "thp_steps"
+    }
+   ]
+  },
+  {
+   "k": "profiles",
+   "slug": "your-party",
+   "t": "Your Party",
+   "s": "Just the way you like it",
+   "h": "Your party, your way, every time.",
+   "tldr": "Save your tastes once and every booking begins with them in place: your drinks, your style and your favourite people. Keep your favourite bartenders, book your best nights again and share your VIP Host Card with the people you hire.",
+   "seo": {
+    "title": "Your Party: Your Preferences and Favourites | FF Party",
+    "description": "Save your preferences once, keep your favourite bartenders and book your best nights again on FF Party."
+   },
+   "sections": [
+    {
+     "id": "ff-py-prefs",
+     "slug": "your-preferences",
+     "card": {
+      "t": "Set your preferences",
+      "d": "Once, for every booking.",
+      "b": "Create your Party profile"
+     },
+     "h": "Save your preferences once",
+     "p": [
+      "Your preferences are saved once and travel with every booking: your kind of party, your drinks and anything your staff should know.",
+      "Your Party is your own space on FireFlair, so every future celebration starts exactly how you like it.",
+      "The people you hire see your VIP Host Card before the day."
+     ],
+     "visual": "party-prefs",
+     "cta": {
+      "label": "Create your Party profile",
+      "go": "profile"
+     },
+     "seo": {
+      "title": "Save your preferences once | FF Party",
+      "description": "Once, for every booking."
+     },
+     "card_img": "thp_prefs"
+    },
+    {
+     "id": "ff-py-favourites",
+     "slug": "your-favourites",
+     "card": {
+      "t": "Keep your favourites",
+      "d": "The people you want again.",
+      "b": "Find your favourites"
+     },
+     "h": "Keep the people you loved",
+     "p": [
+      "Favourites keep the bartenders you loved at the top of your list, ready for your next party.",
+      "Add them to your next booking in a tap.",
+      "Your first choice is asked first, so your favourite person gets the first chance to say yes."
+     ],
+     "visual": "party-favourites",
+     "cta": {
+      "label": "Find your favourites",
+      "go": "network"
+     },
+     "seo": {
+      "title": "Keep the people you loved | FF Party",
+      "description": "The people you want again."
+     },
+     "card_img": "thp_favourites"
+    },
+    {
+     "id": "ff-py-again",
+     "slug": "book-again",
+     "card": {
+      "t": "Book your best nights again",
+      "d": "Every party, ready to repeat.",
+      "b": "Open Bookings"
+     },
+     "h": "Book your best nights again",
+     "p": [
+      "Past bookings stay in Your Party, so your best nights can be booked again in a few taps.",
+      "Every party you have booked is kept with its details, ready to repeat.",
+      "Your Event Cards stay in Bookings, so the next celebration starts from what already worked."
+     ],
+     "visual": "party-again",
+     "cta": {
+      "label": "Open Bookings",
+      "go": "bookings"
+     },
+     "seo": {
+      "title": "Book your best nights again | FF Party",
+      "description": "Every party, ready to repeat."
+     },
+     "card_img": "thp_again"
+    }
+   ]
+  }
+ ],
+ "photos": {
+  "services": [
+   "p30",
+   "p01",
+   "hp03",
+   "v01"
+  ],
+  "community": [
+   "p11",
+   "p24",
+   "p23",
+   "vke06"
+  ],
+  "events": [
+   "p32",
+   "vkg09",
+   "vkg11",
+   "hp01"
+  ],
+  "profiles": [
+   "p12",
+   "p13",
+   "p18",
+   "hp02"
+  ]
+ }
+}

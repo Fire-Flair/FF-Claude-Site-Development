@@ -14,16 +14,17 @@
   /* v17.9: FF Team pillars are built from src/content/homepage/team-pillars.json (copy lives there only). */
   const TP21 = CONTENT_ADAPTER.homepageTeamPillars();
 
-  const DX_TEAM = TP21.pillars.map((pl) => {
+  /* v17.10: one mapper for the pillars of all three sites (FF Team, FF Party, FF Staff). */
+  const dxFromPillars21 = (P, icons, extra) => P.pillars.map((pl) => {
     const fixed = pl.sections.every((x) => x.card_img);
     return {
       k: pl.k,
       t: pl.t,
       s: pl.s,
-      img: "t17_" + TP21.photos[pl.k][0],
-      pool: TP21.photos[pl.k],
+      img: "t17_" + P.photos[pl.k][0],
+      pool: P.photos[pl.k],
       fixedCards: fixed ? pl.sections.map((x) => x.card_img) : null,
-      icon: { profiles: DX_I.Contact, services: DX_I.Sparkles, events: DX_I.CalendarDays, community: DX_I.Users }[pl.k],
+      icon: icons[pl.k],
       h: pl.h,
       tldr: pl.tldr,
       slug: pl.slug,
@@ -31,98 +32,14 @@
       sections: pl.sections,
       p: [pl.tldr],
       parts: pl.sections.map((x) => ({ id: x.id, label: x.h })),
-      jn: pl.sections.map((x) => ({ t: x.card.t, x: x.card.d, b: x.card.b, go: "#" + x.id }))
+      jn: pl.sections.map((x) => ({ t: x.card.t, x: x.card.d, b: x.card.b, go: "#" + x.id })),
+      ...extra
     };
   });
 
-  const DX_BIZ = [
-    {
-      k: "community",
-      t: "Our community",
-      s: "What we are building together",
-      img: "t17_aiIntl",
-      pool: ["aiIntl", "vke06", "p35", "p45", "aiMusic"],
-      icon: DX_I.Users,
-      h: "Hospitality, brought together.",
-      p: ["Hospitality is a community, and FireFlair brings it together: bartenders, waiters, event staff and the businesses that hire them, all in one place, all building the same thing.", "Everyone shares the same values: be reliable, be kind, and make every event a night worth remembering. Find the people who work that way and keep them close.", "Reputation travels with people on FireFlair, so you hire with confidence. Choose staff your colleagues already trust and build a bench you can call on all year."],
-      parts: [
-        { id: "ff-teams", label: "Book a team", r: () => React.createElement(StaffTeams, null) },
-        { id: "ff-relationships", label: "Reviews", r: () => React.createElement(HireReviews, {
-          kind: "staff"
-        }) },
-        { id: "ff-team", label: "Featured staff", r: () => React.createElement(HireFeatured, {
-          title: "Featured staff",
-          ids: ["dir_sam", "dir_priya", "dir_ines", "dir_theo", "stf_don", "dir_maya", "dir_kofi", "stf_jam"],
-          note: "Tap a card to see their profile and add them to your booking bar."
-        }) }
-      ],
-      jn: [
-        { ic: "Users", t: "Meet featured staff", d: "Bartenders, waiters and event staff to book.", b: "Meet the staff", go: "#ff-team", x: "Featured staff are bartenders, waiters and event staff with strong profiles and reviews. Browse them and see who they work with." },
-        { ic: "UserPlus", t: "Book a whole team", d: "Companies with teams ready to hire together.", b: "Book a team", go: "#ff-teams", x: "Companies on FireFlair bring teams that are ready to work together. Book the whole team in one go, rather than person by person." },
-        { ic: "Star", t: "Trust the reviews", d: "What other businesses say.", b: "Read reviews", go: "#ff-relationships", x: "Reviews come from other businesses that have hired the same people, so you can book with confidence." }
-      ]
-    },
-    {
-      k: "events",
-      t: "Your events",
-      s: "Enhance your events with the best staff, made easy",
-      img: "t17_vke04",
-      pool: ["vke04", "p23", "p46", "p24", "p31"],
-      icon: DX_I.PartyPopper,
-      h: "From one shift to a festival.",
-      p: ["Whether it is a single bar shift or a full festival, start with an Event Card: the date, the place and the roles you need.", "Choose your people, send the shifts and let everyone confirm on WhatsApp. Everything stays in one place.", "Plan once, repeat with ease. Your Event Cards stay in Bookings, so the next festival, launch or private party starts from what already worked."],
-      parts: [
-        { id: "ff-steps", label: "Book in four steps", r: () => React.createElement(HowSteps17, {
-          kind: "staff"
-        }) },
-        { id: "ff-what", label: "Hire the modern way", r: () => React.createElement(StaffWhatIs, null) },
-        { id: "ff-how", label: "The platforms", r: () => React.createElement(StaffPlatforms, null) }
-      ],
-      jn: [
-        { ic: "CalendarDays", t: "Create an Event Card", d: "Your date, venue and the staff you need.", b: "Create your Event Card", go: "book", x: "An Event Card holds your date, venue and the staff you need. Everything else in the booking grows from it." },
-        { ic: "ListChecks", t: "Book in four steps", d: "From Event Card to confirmation.", b: "See the steps", go: "#ff-steps", x: "Four steps take you from Event Card to confirmation: choose your people, send the request, and let everyone confirm on WhatsApp." },
-        { ic: "Rocket", t: "Hire the modern way", d: "From one bar shift to a festival.", b: "See how", go: "#ff-what", x: "Whether it is one bar shift or a festival, you book the same way, with everything in one place." }
-      ]
-    },
-    {
-      k: "services",
-      t: "Our events",
-      s: "Every booking, start to finish",
-      img: "t17_p06",
-      pool: ["p06", "v01", "p30", "p01", "p13"],
-      icon: DX_I.Sparkles,
-      h: "Grow with every event.",
-      p: ["Our events are where hospitality gets better: every booking is followed from the first request to the five-star review.", "Follow every booking from the first request to the five-star review, and learn from each event so the next one runs even better.", "If your company offers services of its own, list them as Service Cards, and get booked by hosts on FF Party as your reputation grows."],
-      parts: [
-        { id: "ff-cards", label: "Follow a booking", r: () => React.createElement(CardJourney11, {
-          kind: "staff"
-        }) },
-        { id: "ff-coming", label: "Service Cards", r: () => React.createElement(StaffComingSoon, null) }
-      ],
-      jn: [
-        { ic: "Layers", t: "Follow a booking", d: "The cards, in the order a booking happens.", b: "Follow a booking", go: "#ff-cards", x: "A booking moves through four cards, from the Event Card to the Review Card. Following them shows you how every request is handled." },
-        { ic: "PartyPopper", t: "Get booked on FF Party", d: "Hosts book companies like yours.", b: "Visit FF Party", go: "site:party", x: "FF Party is where hosts book bar companies for their events. List your company there and the bookings come to you." }
-      ]
-    },
-    {
-      k: "profiles",
-      t: "Your business",
-      s: "Build your company profile to advertise to staff and new customers",
-      img: "t17_p27",
-      pool: ["p27", "p11", "p05", "p04"],
-      icon: DX_I.Contact,
-      h: "A company card people trust.",
-      p: ["Your Company Card tells everyone you hire who you are, what you do and who is on your team.", "Share it with a link, send it with every booking and let your professionalism show before the first message.", "A strong Company Card wins the trust of the best people before you have said a word. Keep it fresh, add your team and let your reputation do the recruiting."],
-      parts: [
-        { id: "ff-company", label: "Company Card", r: () => React.createElement(StaffCompanyCard, null) }
-      ],
-      jn: [
-        { ic: "Briefcase", t: "Your Company Card", d: "Sent to everyone you hire.", b: "See the Company Card", go: "#ff-company", x: "Your Company Card is what everyone you hire sees first. It says who you are, what you do and who is on your team." },
-        { ic: "Contact", t: "Create your company profile", d: "Set up your company and your team.", b: "Create your Company Card", go: "profile", x: "Joining FF Staff sets up your company and your team, so you can book, and be booked, with your own card." },
-        { ic: "Search", t: "Find your people", d: "Search the whole network.", b: "Explore the network", go: "network", x: "People search the whole network by skill, area and level, so you find the right person for every event." }
-      ]
-    }
-  ];
+  const DX_TEAM = dxFromPillars21(TP21, { profiles: DX_I.Contact, services: DX_I.Sparkles, events: DX_I.CalendarDays, community: DX_I.Users }, { infoLinks: true });
+  const DX_PARTY = dxFromPillars21(CONTENT_ADAPTER.homepagePartyPillars(), { services: DX_I.Sparkles, community: DX_I.Users, events: DX_I.PartyPopper, profiles: DX_I.Contact }, { infoLinks: false });
+  const DX_BIZ = dxFromPillars21(CONTENT_ADAPTER.homepageStaffPillars(), { community: DX_I.Users, events: DX_I.PartyPopper, services: DX_I.Sparkles, profiles: DX_I.Contact }, { infoLinks: false });
 
   /* ---- v17.3.112: FireFlair Packages (pop-ups from the site, front-door pages for search), Our Packages / Our Network / Your Booking / Your Party ---- */
 const h18 = React.createElement;

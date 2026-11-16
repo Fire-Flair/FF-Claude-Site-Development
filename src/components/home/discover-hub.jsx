@@ -1,73 +1,28 @@
 /* src/components/home/discover-hub.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
-const DX_PARTY = [
-  { k: "services", t: "Our Packages", s: "Your celebration, beautifully looked after", img: "t17_p30", pool: ["p30", "p01", "v01", "p14", "vke02"], icon: DX_I.Sparkles,
-    h: "Everything for a celebration to remember.",
-    p: ["Looking for wonderful people with great personalities, quickly and easily? FireFlair Packages are made for you.",
-      "Already have your drinks? The Mixology Package brings a bartender with the equipment, a cocktail menu and a shopping list.",
-      "Planning a hen party or birthday to remember? The Masterclass Package is the Open Bar Masterclass: shake, stir and create your own recipes."],
-    parts: [
-      { id: "ff-offer", label: "FireFlair Packages", r: () => h18(PartyPackages18, null) },
-      { id: "ff-guarantee", label: "The FireFlair Booking Guarantee", r: () => h18(Guarantee18, null) },
-    ],
-    jn: [
-      { ic: "Sparkles", t: "Find your package", d: "From a classic bartender to a hands-on masterclass.", b: "See the packages", go: "#ff-offer", x: "Each FireFlair Package brings the people, the shopping list and the equipment. Choose the one that suits your celebration." },
-      { ic: "ShieldCheck", t: "The FireFlair Booking Guarantee", d: "Confirmed, or refunded in full.", b: "See the guarantee", go: "#ff-guarantee", x: "Book with nothing to lose. Your booking is confirmed, or you are refunded in full." },
-      { ic: "Users", t: "Your people, your way", d: "Choose a professional you love.", b: "Meet them", go: "network", x: "Browse bartenders and choose the person you would love behind your bar." },
-    ] },
-  { k: "community", t: "Our Network", s: "The people behind your celebration", img: "t17_p31", pool: ["p31", "vke04", "p11", "p35", "p27"], icon: DX_I.Users,
-    h: "Meet the people who make it happen.",
-    p: ["Looking for a bartender whose style suits your celebration? Browse professionals with real reviews from hosts.",
-      "Want a name you can trust? Look for the Verified by FireFlair badges and the people who vouch for each professional.",
-      "Prefer a company that brings the bar? Browse bar companies and their teams."],
-    parts: [
-      { id: "ff-trust", label: "Verified by the community", r: () => h18(TrustSection17, null) },
-      { id: "ff-team", label: "Featured people", r: () => h18(HireFeatured, { title: "Featured people", ids: ["dir_sam", "stf_don", "stf_fre", "dir_kofi", "dir_maya", "dir_theo"] }) },
-      { id: "ff-relationships", label: "Reviews", r: () => h18(HireReviews, { kind: "party" }) },
-      { id: "ff-companies", label: "Bar companies", r: () => h18(PartyCompanies, null) },
-    ],
-    jn: [
-      { ic: "Users", t: "Meet your bartenders", d: "Hosts have booked them and said so.", b: "Meet them", go: "#ff-team", x: "Featured professionals, with their reviews and the people who vouch for them." },
-      { ic: "Star", t: "Read real reviews", d: "From hosts who have booked them.", b: "Read reviews", go: "#ff-relationships", x: "Reviews are written by hosts who have booked the same people, so you can read what a night with them was really like." },
-      { ic: "Store", t: "Bar companies", d: "Companies with their own teams.", b: "Browse companies", go: "#ff-companies", x: "Bar companies bring their own bar and team. Browse them, read their reviews and book for your event." },
-    ] },
-  { k: "events", t: "Your Booking", s: "Secure your booking", img: "t17_p32", pool: ["p32", "aiMusic", "p24", "aiIntl", "p46"], icon: DX_I.PartyPopper,
-    h: "Book your celebration.",
-    p: ["Choose your package, choose your people, choose your add-ons, and your booking is secured.",
-      "Hen parties, birthdays, house parties, intimate weddings: whatever you are celebrating, the right packages appear after a few simple details.",
-      "Your first choice is asked first, so your favourite person gets the first chance to say yes."],
-    parts: [
-      { id: "ff-how", label: "How booking works", r: () => h18(HowBooking17, { kind: "party" }) },
-      { id: "ff-occasions", label: "Every kind of party", r: () => h18(PartyOccasions17, null) },
-    ],
-    jn: [
-      { ic: "CalendarDays", t: "Plan your event", d: "Your date, your place, your guests.", b: "Plan your event", go: "book", x: "Your Event Card holds your date, place and guests. FireFlair uses it to show the packages that suit your celebration." },
-      { ic: "PartyPopper", t: "Every kind of party", d: "From hen parties to intimate weddings.", b: "See occasions", go: "#ff-occasions", x: "Hen parties, birthdays, house parties, intimate weddings and more: there is a package that suits it." },
-      { ic: "ListChecks", t: "How booking works", d: "Four simple steps.", b: "See the steps", go: "#ff-how", x: "Choose your package, choose your people, choose your add-ons, and your booking is secured." },
-    ] },
-  { k: "profiles", t: "Your Party", s: "Just the way you like it", img: "t17_p12", pool: ["p12", "p18", "p20", "p15", "p08"], icon: DX_I.Contact,
-    h: "Your party, your way, every time.",
-    p: ["Save your tastes once and every booking begins with them in place: your drinks, your style and your favourite people.",
-      "Keep your favourite bartenders, book your best nights again and share your VIP Host Card with the people you hire.",
-      "Your Party is your own space on FireFlair, so every future celebration starts exactly how you like it."],
-    parts: [
-      { id: "ff-yourparty", label: "Your Party", r: () => h18(YourParty17, null) },
-    ],
-    jn: [
-      { ic: "SlidersHorizontal", t: "Set your preferences", d: "Once, for every booking.", b: "Create your Party profile", go: "profile", x: "Your preferences are saved once and travel with every booking: your kind of party, your drinks and anything your staff should know." },
-      { ic: "Heart", t: "Keep your favourites", d: "The people you want again.", b: "Find your favourites", go: "network", x: "Favourites keep the bartenders you loved at the top of your list, ready for your next party." },
-      { ic: "History", t: "Book your best nights again", d: "Every party, ready to repeat.", b: "Open Bookings", go: "bookings", x: "Past bookings stay in Your Party, so your best nights can be booked again in a few taps." },
-    ] },
-];
-
 const DX_ALIAS = { "ff-career": "ff-booktiles", "ff-training": "ff-booktiles", "ff-nx-svc-h": "ff-coming", "ff-nx-ck-h": "ff-coming", "ff-nx-svc": "ff-coming", "ff-nx-ck": "ff-coming" };
+
+/* v17.10: FF Party and FF Staff pillars use the FF Team layout; every old section id opens the pillar and scrolls to the section that now holds it. */
+const DX_ALIAS_PARTY21 = { "ff-offer": "ff-pp-find", "ff-guarantee": "ff-pp-guarantee", "ff-trust": "ff-pn-people", "ff-team": "ff-pn-people", "ff-relationships": "ff-pn-reviews", "ff-companies": "ff-pn-companies", "ff-how": "ff-pb-steps", "ff-occasions": "ff-pb-occasions", "ff-yourparty": "ff-py-prefs", "ff-career": "ff-pp-find", "ff-training": "ff-pp-find" };
+const DX_ALIAS_STAFF21 = { "ff-team": "ff-sc-featured", "ff-teams": "ff-sc-teams", "ff-relationships": "ff-sc-reviews", "ff-steps": "ff-se-steps", "ff-what": "ff-se-modern", "ff-cards": "ff-so-follow", "ff-coming": "ff-so-services", "ff-nx-svc-h": "ff-so-services", "ff-nx-ck-h": "ff-so-services", "ff-nx-svc": "ff-so-services", "ff-nx-ck": "ff-so-services", "ff-company": "ff-sb-card" };
 
 /* v17.9: FF Team pillars were rebuilt; the old section ids still scroll somewhere useful. */
 const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing", "ff-cards": "ff-pl-requests", "ff-coming": "ff-pl-own", "ff-nx-svc-h": "ff-pl-own", "ff-nx-ck-h": "ff-pl-own", "ff-nx-svc": "ff-pl-own", "ff-nx-ck": "ff-pl-own", "ff-terms": "ff-pl-terms", "ff-barshows": "ff-pl-industry", "ff-how": "ff-pl-requests", "ff-what": "ff-pl-cv", "ff-relationships": "ff-pl-reviews", "ff-team": "ff-pl-reviews", "ff-career": "ff-pl-industry", "ff-training": "ff-pl-industry" };
+
+  /* The Next button's backdrop. Pillars in the section format have pictures of their own cards as card images, which are
+     not photos: use a photo from the pillar's pool instead (the second one, so it is not the tile's photo). */
+  function nextImg21(c, n) {
+    if (!c || !c.fixedCards) return dxCard17(c, n, 0);
+    const IM = window.FF_IMG || {};
+    const pool = c.pool || [];
+    const k = pool.map((id) => "j17_" + id).find((x, i) => i > 0 && IM[x]) || (pool[0] && IM["j17_" + pool[0]] ? "j17_" + pool[0] : c.img);
+    return k;
+  }
 
   function DiscoverHub11({ cats = DX_TEAM, kind = "team" }) {
     const hire = useHireNav();
     const home = useHomeNav();
     const goSite = useGoSite();
+    const { dispatch } = useStore();
     const base = kind === "staff" ? "ff-staff" : kind === "party" ? "ff-party" : "ff-team";
     const slugs = (() => {
       const raw = cats.map((c) => c.t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""));
@@ -203,6 +158,10 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
       }
       if (go === "book") {
         hire.toEvent();
+        return;
+      }
+      if (go === "pkgs") {
+        pkgNav18(dispatch, "");
       }
     };
     React.useLayoutEffect(() => {
@@ -389,17 +348,19 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
     }, [open]);
     useEffect(() => {
       window.__ffDxReveal = (id) => {
-        const pid = (kind === "team" ? DX_ALIAS_TEAM21[id] : DX_ALIAS[id]) || id;
+        const pid = (kind === "team" ? DX_ALIAS_TEAM21[id] : kind === "party" ? DX_ALIAS_PARTY21[id] || DX_ALIAS[id] : kind === "staff" ? DX_ALIAS_STAFF21[id] || DX_ALIAS[id] : DX_ALIAS[id]) || id;
         const c = cats.find((x) => x.parts.some((p) => p.id === pid));
         if (!c)
           return false;
-        if (open === c.k && document.getElementById(id))
+        /* FF Party and FF Staff: the pillar section wins over any same-named block elsewhere on the home page. */
+        const own = kind === "team" ? id : pid;
+        if (open === c.k && document.getElementById(own))
           return false;
         grab();
         setLeaving(null);
         setOpen(c.k);
         setTimeout(() => {
-          const el = document.getElementById(id) || document.getElementById(pid);
+          const el = kind === "team" ? document.getElementById(id) || document.getElementById(pid) : document.getElementById(pid) || document.getElementById(id);
           if (el)
             el.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" });
         }, 420);
@@ -466,7 +427,7 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
     }), React.createElement("div", {
       className: "ff-dx-secs21",
       key: "s" + cur.k
-    }, cur.sections.map((x, i) => React.createElement(PillarSection21, { key: x.id, s: x, n: i + 1, run, level: "h4", link: true })))), !cur.sections && React.createElement("div", {
+    }, cur.sections.map((x, i) => React.createElement(PillarSection21, { key: x.id, s: x, n: i + 1, run, level: "h4", link: !!cur.infoLinks, locked: kind === "party" })))), !cur.sections && React.createElement("div", {
       className: "ff-dx-intro",
       key: "b" + cur.k
     }, React.createElement("h3", null, cur.h), cur.p.map((t, n) => React.createElement("p", {
@@ -506,9 +467,9 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
       onClick: () => goNext(next.k)
     }, React.createElement("span", {
       className: "ph"
-    }, IMGS[dxCard17(next, rotOf(next), 0)] ? React.createElement("img", { decoding: "async",
-      src: IMGS[dxCard17(next, rotOf(next), 0)],
-      style: fp17(dxCard17(next, rotOf(next), 0)),
+    }, IMGS[nextImg21(next, rotOf(next))] ? React.createElement("img", { decoding: "async",
+      src: IMGS[nextImg21(next, rotOf(next))],
+      style: fp17(nextImg21(next, rotOf(next))),
       alt: "",
       draggable: false
     }) : null), React.createElement("span", {

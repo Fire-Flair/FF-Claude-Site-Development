@@ -47,15 +47,23 @@
   }
 
   /* What a call to action does: the same destinations the pillars have always used. */
-  function usePillarRun21() {
+  function usePillarRun21(kind = "team") {
     const home = useHomeNav();
     const hire = useHireNav();
+    const goSite = useGoSite();
+    const { dispatch } = useStore();
     return (go) => {
-      if (go === "profile") home.goProfile();
+      if (go[0] === "#") { const el = document.getElementById(go.slice(1)); if (el) el.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" }); }
+      else if (go.indexOf("site:") === 0) goSite(go.slice(5));
+      else if (go === "profile") { if (kind === "team") home.goProfile(); else hire.toProfile(); }
       else if (go === "network") hire.toNetwork("");
       else if (go === "bookings") hire.toBookings();
+      else if (go === "book") hire.toEvent();
+      else if (go === "pkgs") pkgNav18(dispatch, "");
     };
   }
+  /* FF Party: these three actions are locked in Phase 2, so their call to action is the locked button. */
+  const P21_LOCKED_GO = ["book", "profile", "bookings"];
 
   const p21Person = (dir, id) => (dir || []).find((p) => p.id === id) || null;
 
@@ -368,13 +376,13 @@
       case "challenge": return <VisChallenge21 />;
       case "launch-party": return <VisLaunchParty21 />;
       case "events-and-support": return <VisEvents21 />;
-      default: return null;
+      default: return <SiteVisual21 k={k} dir={dir} />;
     }
   }
 
   /* ---- The section (home panel and pages) -------------------------------------------------------------------------------------- */
   /* level: "h4" inside the home panel, "h2" on a pillar page, "h1" on the section's own page. link: the title is a real link to the section page. */
-  function PillarSection21({ s, n, run, level = "h4", link = false }) {
+  function PillarSection21({ s, n, run, level = "h4", link = false, locked = false }) {
     const { dispatch } = useStore();
     const H = level;
     const title = link
@@ -390,7 +398,7 @@
           <div className="tx">{s.p.map((t, i) => <p key={i}>{t}</p>)}</div>
           <div className="vs"><Visual21 k={s.visual} /></div>
         </div>
-        <div className="ft"><button type="button" className="ff-ps21-cta" onClick={() => run(s.cta.go)}>{s.cta.label}</button></div>
+        <div className="ft">{locked && P21_LOCKED_GO.includes(s.cta.go) ? <LockedBtn17 bare className="ff-ps21-cta">{s.cta.label}</LockedBtn17> : <button type="button" className="ff-ps21-cta" onClick={() => run(s.cta.go)}>{s.cta.label}</button>}</div>
       </article>
     );
   }
