@@ -175,7 +175,7 @@ function PersonProfile() {
   const shareTag = person.id === "me" ? myTag : String(person.tag || cx17Slug(person.name || person.id) || "");
   const shareBtn = shareTag ? (
       <CardShareBtn17 title={person.id === "me" ? "My FireFlair card" : `${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${shareTag}`} fileName={"fireflair-" + cx17Slug(shareTag)} label="Share" className="wide"
-        render={() => <PlayerCard person={person} format="portrait" nameAs="div" themeKey={person.id === "me" ? state.profile.theme : (person.theme || "ivory")} />} />) : null;
+        render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={person.id === "me" ? state.profile.theme : (person.theme || "ivory")} />} />) : null;
   const shareEl = shareBtn ? <div style={{ marginTop: 8, width: "calc(50% - 4px)", marginInline: "auto" }}>{shareBtn}</div> : null;
   const actionsEl = other ? (<div className="ff-pub-acts">
         {hireSiteOf(state).party ? <FavBtn11 person={person} wide /> : (<>
@@ -415,8 +415,9 @@ function ProfTypeIn({ profs, set, ink, rule, onAdd }) {
 }
 
 
-function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "username", tier = "standard", level = 3, onPhoto }) {
+function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "username", level = 3, onPhoto }) {
   const t = THEMES[themeKey] || THEMES.onyx;
+  const tier = cardTier17({ name: draft.name, tag });
   const tr = TIERS[tier] || TIERS.standard;
   const { ink, sub, rule } = t;
   const set = (k) => (v) => setDraft({ ...draft, [k]: v });
@@ -515,6 +516,7 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
     value: draft.headline || "",
     placeholder: "Headline",
     "aria-label": "Headline",
+    maxLength: 28,
     onChange: (e) => setDraft({ ...draft, headline: e.target.value }),
     style: { color: ink, borderBottomColor: rule, marginTop: 8, textAlign: "center", fontSize: 13.5 }
   }), React.createElement("div", {
@@ -591,7 +593,7 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
     size: 12
   }), React.createElement("span", {
     style: { marginLeft: "auto", fontFamily: "var(--sans)", fontSize: 12, fontWeight: 600, color: "#EAD79C" }
-  }, CARD_DOMAIN, "/", tag)));
+  }, CARD_DOMAIN, "/", pc17Tag(tag))));
 }
 
 

@@ -6,6 +6,7 @@
   "utils/icons.js",
   "state/phase-config.js",
   "utils/language.js",
+  "utils/text17.js",
   "styles/base.js",
   "state/themes-xp.js",
   "components/shared/card-brand.jsx",

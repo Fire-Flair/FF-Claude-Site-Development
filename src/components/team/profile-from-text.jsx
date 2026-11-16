@@ -258,7 +258,7 @@ function ShareCardSheet({ open, onClose }) {
     return React.createElement(CardShareSheet17, {
       open: true, onClose, title: "My FireFlair card", url: "https://" + CARD_DOMAIN + "/" + tag, fileName: "fireflair-" + cx17Slug(tag),
       extra: React.createElement("div", { style: { marginTop: 14 } }, phoneUi)
-    }, React.createElement(PlayerCard, { person: me, format: "portrait", themeKey: state.profile.theme }));
+    }, React.createElement(PlayerCard, { person: me, format: "full", themeKey: state.profile.theme }));
   }
   return React.createElement(Sheet, {
     open: true,

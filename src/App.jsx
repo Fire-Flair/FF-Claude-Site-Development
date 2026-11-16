@@ -49,7 +49,7 @@ function FireFlair() {
           /* Saved state from before v17.6.1 carries a forced code and no kind: that code was never a real invitation. */
           if (patch.session) patch.session = patch.session.refKind ? patch.session : { ...patch.session, refTag: null, refKind: null };
           if (patch.profile) {
-            patch.profile = { ...patch.profile, records: { ...emptyRecords(), ...patch.profile.records || {} }, xp: patch.profile.xp || 0, media: patch.profile.media || [] };
+            patch.profile = { ...patch.profile, records: capRecords17({ ...emptyRecords(), ...patch.profile.records || {} }), xp: patch.profile.xp || 0, media: patch.profile.media || [] };
             if (PHASE1.xpLive && Array.isArray(patch.profile.xpLog) && patch.profile.xpLog.some((e) => e && e.xp === 0 && e.planned)) {
               const owed = patch.profile.xpLog.reduce((n, e) => n + (e && e.xp === 0 && e.planned ? e.planned : 0), 0);
               patch.profile = {

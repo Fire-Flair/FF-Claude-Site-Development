@@ -3,11 +3,17 @@ const FACE_PHOTOS = __ff_json("content/data/face-photos.json");
 
 
 
-const staff = (o) => ({
-  id: uid("stf"), tier: "standard", level: 3, rating: null, reviews: 0, hasCar: false,
-  interests: [], qualifications: [], languages: ["English"], locations: ["London"], availability: "open",
-  photo: FACE_PHOTOS[o.id] || avatarFor(o.name), theme: themeFor(o.name), ...o,
-});
+const staff = (o) => {
+  const base = {
+    id: uid("stf"), tier: cardTier17(o), level: 3, rating: null, reviews: 0, hasCar: false,
+    interests: [], qualifications: [], languages: ["English"], locations: ["London"], availability: "open",
+    photo: FACE_PHOTOS[o.id] || avatarFor(o.name), theme: themeFor(o.name), ...o,
+  };
+  /* v17.16: every entry shows with a capital on each word, whatever was saved. */
+  ["professions", "skills", "interests", "locations", "languages", "qualifications"].forEach((k) => { if (Array.isArray(base[k])) base[k] = capList17(base[k]); });
+  if (typeof base.profession === "string") base.profession = capWords17(base.profession);
+  return base;
+};
 
 
 
@@ -307,6 +313,7 @@ const REAL_MEMBERS = [
   "real": true,
   "name": "Simao",
   "tag": "SIMAO",
+  "headline": "Award-Winning Mixologist",
   "profession": "Mixologist",
   "professions": [
    "Mixologist",
@@ -402,6 +409,7 @@ const REAL_MEMBERS = [
   "real": true,
   "name": "James Allcott",
   "tag": "JAMESALL",
+  "headline": "Cocktail & Flair Specialist",
   "profession": "Cocktail Bartender",
   "professions": [
    "Cocktail Bartender",
@@ -473,7 +481,7 @@ const REAL_MEMBERS = [
  }
 ];
 
-const DIRECTORY = REAL_MEMBERS.map((o) => staff({ ...o, tier: "standard", level: null, rating: null, reviews: 0, hasCar: false,
+const DIRECTORY = REAL_MEMBERS.map((o) => staff({ ...o, tier: cardTier17(o), level: null, rating: null, reviews: 0, hasCar: false,
   photo: o.id === "stf_simao" ? ((window.FF_IMG || {}).simao_face || "") : "", media: [] }));
 
 

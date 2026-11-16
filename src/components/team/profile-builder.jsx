@@ -19,7 +19,7 @@ function CardBuilder() {
   return (
     <>
       <EditablePlayerCard draft={d} setDraft={setD} themeKey={state.profile.theme}
-        tag={state.session.tag || state.session.tagDraft || "username"} tier={state.profile.tier} level={state.profile.level}
+        tag={state.session.tag || state.session.tagDraft || "username"} level={state.profile.level}
         onPhoto={(url) => setD(x => ({ ...x, photo: url }))} />
       <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap", margin: "16px 0 4px" }}>
         {Object.entries(THEMES).filter(([, x]) => !x.directoryOnly).map(([k, th]) => (

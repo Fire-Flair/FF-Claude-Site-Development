@@ -186,9 +186,9 @@ function reducerCore17(s0, a) {
     case "SESSION":   return { ...s, session: { ...s.session, ...a.patch } };
     case "PROFILE":   return { ...s, profile: { ...s.profile, ...a.patch } };
 
-    case "REC_ADD":   return claimXP(withRecords(s, a.category, addRanked(recsOf(s.profile, a.category), [a.record])), xpTaskFor(a.category));
+    case "REC_ADD":   return claimXP(withRecords(s, a.category, addRanked(recsOf(s.profile, a.category), [capRec17(a.category, a.record)])), xpTaskFor(a.category));
     case "REC_PATCH":
-      return withRecords(s, a.category, recsOf(s.profile, a.category).map(r => r.id === a.id ? { ...r, ...a.patch } : r));
+      return withRecords(s, a.category, recsOf(s.profile, a.category).map(r => r.id === a.id ? (a.patch && a.patch.name ? capRec17(a.category, { ...r, ...a.patch }) : { ...r, ...a.patch }) : r));
     case "REC_DELETE":
       return withRecords(s, a.category, recsOf(s.profile, a.category).filter(r => r.id !== a.id));
     case "REC_ACCEPT": {
@@ -211,7 +211,7 @@ function reducerCore17(s0, a) {
       let k = 0;
       return withRecords(s, a.category, list.map(r => (r.hidden || r.proposed) ? r : { ...r, rank: cardRank(k++) }));
     }
-    case "REC_BULK":  return claimListXP(withRecords(s, a.category, a.list), a.category, a.list);
+    case "REC_BULK":  { const capped = (a.list || []).map(r => capRec17(a.category, r)); return claimListXP(withRecords(s, a.category, capped), a.category, capped); }
     /* New information joins the ONE profile — from FireFlair, a CV or a card.
        A name the profile already holds is never duplicated (the existing
        record keeps its description, media and documents). New items join
@@ -224,7 +224,7 @@ function reducerCore17(s0, a) {
         (list || []).forEach(r => {
           const name = String((r && r.name) || "").trim();
           if (!name || [...cur, ...fresh].some(x => x.name.toLowerCase() === name.toLowerCase() || sameAttr(x.name, name))) return;
-          fresh.push({ ...r, name });
+          fresh.push(capRec17(cat, { ...r, name }));
         });
         /* v1.2: new cards get a guessed tier (Primary, then Secondary, then Tertiary). */
         next[cat] = fresh.length ? addRanked(cur, fresh) : cur;
@@ -247,7 +247,7 @@ function reducerCore17(s0, a) {
               const cur = r.details || {}, add = {};
               Object.entries(v || {}).forEach(([dk, dv]) => { if (empty(cur[dk]) && !empty(dv)) add[dk] = dv; });
               out.details = { ...cur, ...add };
-            } else if (empty(r[k]) && !empty(v)) out[k] = v;
+            } else if (empty(r[k]) && !empty(v)) out[k] = k === "name" ? capWords17(v) : v;
           });
           return out;
         });
@@ -472,11 +472,11 @@ const useStore = () => useContext(Store);
    the primary records — never a second copy of them. */
 function meAsStaff(profile, session) {
   return {
-    id: "me", name: profile.name || session.tag || "Your profile", tag: session.tag || "username",
+    id: "me", name: profile.name || session.tag || "Your profile", tag: session.tag || "username", headline: profile.headline || "",
     professions: primaryNames(profile, "professions", 3),
     profession: primaryNames(profile, "professions", 1)[0] || "Professional",
     group: "Your profile",
-    tier: profile.tier, level: profile.level, years: null, rating: null, reviews: 0,
+    tier: cardTier17({ name: profile.name, tag: session.tag }), level: profile.level, years: null, rating: null, reviews: 0,
     skills: primaryNames(profile, "skills", 3),
     interests: primaryNames(profile, "interests", 3),
     languages: primaryNames(profile, "languages", 5).length ? primaryNames(profile, "languages", 5) : ["English"],

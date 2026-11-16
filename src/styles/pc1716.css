@@ -1,0 +1,50 @@
+/* v17.16 Profile Card: the large share card (lg) and the small web card (sm). 5 x 7, every size in container units. */
+.ff .ff-deck.pc.pc17{border-radius:6% / 4.29%;corner-shape:squircle}
+.ff .ff-deck.pc.pc17 .fx.wm{display:none}
+.ff .ff-deck.pc.pc17 .fx.hair{inset:1.6cqw;border-radius:4.4cqw;corner-shape:squircle;border-color:var(--pc17-hair)}
+.ff .ff-deck.pc.pc17 .fx.hair::after{display:none}
+.ff .pc17,.ff .pc17 *{font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif !important}
+.ff .pc17 .pc17-name,.ff .pc17 .pc17-brand{font-family:'Cinzel','Optima','Palatino Linotype',Georgia,serif !important}
+.pc17-in{position:absolute;inset:0 0 10cqw 0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5cqw 4.4cqw 0;box-sizing:border-box}
+.pc17.sm .pc17-in{justify-content:flex-start}
+.pc17-plate{position:absolute;top:2.9cqw;left:2.9cqw;z-index:4;display:flex;align-items:center;gap:1.5cqw;padding:1.3cqw 2.1cqw 1.3cqw 1.9cqw;font-size:2.5cqw;font-weight:800;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;line-height:1.2;background:#16130F;border:1px solid;border-radius:2.326cqw;corner-shape:squircle}
+.pc17-plate .t{margin-right:-.16em}
+.pc17-logo{position:absolute;top:2.3cqw;right:2.3cqw;z-index:4;width:12.5cqw;height:12.5cqw;display:block;filter:drop-shadow(0 .8cqw 1.2cqw rgba(0,0,0,.35))}
+.pc17-photo{flex:none;border-radius:50%;padding:1.5cqw;box-shadow:0 1.4cqw 3.6cqw rgba(0,0,0,.38),inset 0 0 0 1px rgba(255,255,255,.35)}
+.pc17-photo-in{width:100%;height:100%;border-radius:50%;overflow:hidden;border:1px solid rgba(8,8,10,.85);display:grid;place-items:center}
+.pc17-name{width:100%;max-width:100%;font-size:7.8cqw;font-weight:700;text-transform:uppercase;letter-spacing:.04em;line-height:1.08;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:clip;margin:0}
+.pc17-title{width:100%;max-width:100%;font-size:4.4cqw;font-weight:400;text-transform:uppercase;letter-spacing:.16em;line-height:1.2;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:clip}
+.pc17 .ff-pc-rule{width:86%}
+.pc17-panel{width:100%;border:1px solid;border-radius:2.4cqw;corner-shape:squircle;overflow:hidden}
+.pc17-row{padding:1cqw 4.4cqw 1.15cqw;border-bottom:1px solid}
+.pc17-row:last-child{border-bottom:0}
+.pc17-lbl{margin-left:-1.6cqw;display:flex;align-items:center;gap:1.5cqw;font-size:2.7cqw;font-weight:700;letter-spacing:.12em;text-transform:uppercase;line-height:1.2;margin-bottom:.5cqw}
+.pc17-val{min-width:0;overflow:hidden;white-space:nowrap;padding:0;font-size:3.9cqw;font-weight:600;line-height:1.2;text-align:center}
+.pc17-fit{display:block;min-width:0;overflow:hidden;white-space:nowrap;text-align:center}
+.pc17-fit .bl,.pc17-fit .bu{font-weight:400}
+.pc17-fit .bu{margin:0 .45em}
+.pc17-fit.wr{white-space:normal;line-height:1.25}
+.pc17-fit.wr .en{white-space:nowrap}
+.pc17-fit.wr .bl{margin:0 .2em 0 .45em}
+.pc17-bar{position:absolute;left:0;right:0;bottom:0;height:10cqw;display:flex;align-items:center;padding:0 5.4cqw;box-sizing:border-box;border-top:1px solid}
+.pc17-url{flex:1;min-width:0;font-size:4.3cqw;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-align:left}
+.pc17-brand{margin-left:auto;padding-left:2cqw;font-weight:700;font-size:3.3cqw;letter-spacing:.28em;color:#D9B54F;white-space:nowrap}
+.pc17-row.one{position:relative;min-height:9cqw;display:flex;align-items:center}
+.pc17-row.one .pc17-lbl{margin-bottom:0}
+.pc17-row.one .pc17-flags{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
+.pc17-flags{display:flex;gap:3cqw;align-items:center;justify-content:center;padding:0}
+.pc17-flag{display:inline-grid;place-items:center;border:0;padding:0;width:9cqw;line-height:1;font-size:5.8cqw}
+.pc17.lg .ff-pc-rule{margin:1.8cqw 0}
+.pc17.lg .pc17-title{margin-top:.7cqw}
+.pc17.lg .pc17-photo{margin-top:1cqw}
+/* small web card: icon rows, entries left, flags outside the box */
+.pc17.sm .pc17-val,.pc17.sm .pc17-fit{text-align:left}
+.pc17.sm .pc17-ico{display:grid;place-items:center;align-self:stretch;background:linear-gradient(180deg,#1C1C1F,#09090B)}
+.pc17.sm .pc17-ico>span{display:flex !important;align-items:center;justify-content:center}
+.pc17.sm .pc17-ico svg{display:block}
+.pc17.sm .pc17-flagzone{flex:1;width:100%;display:flex;align-items:center;justify-content:center}
+.pc17.sm .ff-pc-rule{margin:3cqw 0 3.6cqw}
+.pc17.sm .pc17-row{display:grid;grid-template-columns:10cqw minmax(0,1fr);align-items:center;height:11.2cqw;padding:0}
+.pc17.sm .pc17-val{padding:0 2.4cqw;font-size:4.4cqw}
+.pc17.sm .pc17-title{margin-top:1.2cqw}
+.pc17.sm .pc17-photo{margin-top:3cqw}

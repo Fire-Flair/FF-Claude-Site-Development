@@ -71,7 +71,7 @@
   /* v17.9.2: every visual sits on the right of its text (stacked under it on a phone). Buttons and ticks in the visuals are live
      but lead nowhere: they only show their pressed state. */
   /* Real FF Team members' public Profile Cards (ffteam.uk). Their data is in team-pillars.json "examples". */
-  const p21Live = (x) => ({ level: 4, rating: null, reviews: 0, hasCar: false, availability: "open", qualifications: [], tier: "standard", photo: null, ...x, photo: (x.photo && (window.FF_IMG || {})[x.photo]) || null, profession: x.professions[0], group: "Bartenders", theme: "onyx" });
+  const p21Live = (x) => ({ level: 4, rating: null, reviews: 0, hasCar: false, availability: "open", qualifications: [], photo: null, ...x, tier: cardTier17(x), photo: (x.photo && (window.FF_IMG || {})[x.photo]) || null, profession: x.professions[0], group: "Bartenders", theme: "onyx" });
   const P21_CARD = p21Live(TP21.examples.card);
   const P21_TEAM = TP21.examples.team.map(p21Live);
   const useTog21 = (init) => { const [v, setV] = useState(init || {}); return [v, (k) => setV((o) => ({ ...o, [k]: !o[k] }))]; };

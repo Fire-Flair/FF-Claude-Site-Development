@@ -13,21 +13,197 @@ function IconRow({ kinds, color }) {
 }
 
 
+const PC17_CSS = __ff_css("styles/pc1716.css");
+
+
+if (typeof document !== "undefined" && !document.getElementById("ff-pc17-css")) {
+  const st = document.createElement("style");
+  st.id = "ff-pc17-css";
+  st.textContent = PC17_CSS;
+  document.head.appendChild(st);
+}
+
+
+/* "SIMAO" is stored upper case; the address shows Simao. */
+function pc17Tag(tag) { const x = String(tag || ""); return x ? x[0].toUpperCase() + x.slice(1).toLowerCase() : ""; }
+
+
+/* Fits every row of a Profile Card into its box without ever splitting a word or showing "…":
+   entries that do not fit are dropped whole (the last first); if none fit, the shortest entry stands alone;
+   if that does not fit either, the row is hidden. The large card lets entries wrap onto a second line
+   (between whole entries) and drops entries from the longest row if the panel would run into the footer. */
+function pc17Fit(root) {
+  const px = root.getBoundingClientRect().width / 100;
+  if (!px) return;
+  const rows = Array.from(root.querySelectorAll(".pc17-row"));
+  rows.forEach((r) => { r.style.display = ""; r.style.borderBottomWidth = ""; });
+  const prep = (el) => {
+    const kids = Array.from(el.children).filter((k) => k.classList.contains("en"));
+    kids.forEach((k) => { k.style.display = ""; Array.from(k.querySelectorAll(".bl,.bu")).forEach((b) => { b.style.display = ""; }); });
+    return kids;
+  };
+  const trail = (kids, n) => kids.forEach((k, i) => { const b = k.querySelector(".bl"); if (b) b.style.display = i === n - 1 ? "none" : ""; });
+  const shortest = (el, kids, over) => {
+    kids.forEach((k) => { k.style.display = "none"; });
+    const s = kids.slice().sort((a, b) => a.textContent.length - b.textContent.length)[0];
+    if (s) { s.style.display = ""; Array.from(s.querySelectorAll(".bl,.bu")).forEach((b) => { b.style.display = "none"; }); }
+    if (!s || over()) { const r = el.closest(".pc17-row"); if (r) r.style.display = "none"; }
+  };
+  root.querySelectorAll(".pc17-fit").forEach((el) => {
+    const kids = prep(el);
+    const over = () => el.scrollWidth > el.clientWidth + 0.5;
+    if (el.classList.contains("wr")) {
+      const lh = parseFloat(getComputedStyle(el).lineHeight) || 1;
+      const bad = () => Math.round(el.getBoundingClientRect().height / lh) > 2 || over();
+      let n = kids.length;
+      trail(kids, n);
+      while (n > 1 && bad()) { n--; kids[n].style.display = "none"; trail(kids, n); }
+      if (bad()) shortest(el, kids, bad);
+    } else {
+      let n = kids.length;
+      while (n > 1 && over()) { n--; kids[n].style.display = "none"; }
+      if (over()) shortest(el, kids, over);
+    }
+  });
+  const bar = root.querySelector(".pc17-bar"), panel = root.querySelector(".pc17-panel");
+  if (bar && panel && root.classList.contains("lg")) {
+    for (let g = 0; g < 40; g++) {
+      if (panel.getBoundingClientRect().bottom <= bar.getBoundingClientRect().top - 1.6 * px) break;
+      const cand = Array.from(root.querySelectorAll(".pc17-fit.wr")).filter((el) => { const r = el.closest(".pc17-row"); return !r || r.style.display !== "none"; }).map((el) => {
+        const kids = Array.from(el.children).filter((k) => k.classList.contains("en") && k.style.display !== "none");
+        return { el, kids, lines: Math.round(el.getBoundingClientRect().height / (parseFloat(getComputedStyle(el).lineHeight) || 1)) };
+      }).filter((c) => c.lines > 1 && c.kids.length > 1);
+      if (!cand.length) break;
+      cand.sort((a, b) => b.kids.length - a.kids.length);
+      const c = cand[0];
+      c.kids[c.kids.length - 1].style.display = "none";
+      const v = c.kids.slice(0, -1);
+      v.forEach((k, i) => { const b = k.querySelector(".bl"); if (b) b.style.display = i === v.length - 1 ? "none" : ""; });
+    }
+  }
+  const shown = rows.filter((r) => r.style.display !== "none");
+  if (shown.length) shown[shown.length - 1].style.borderBottomWidth = "0";
+}
+
+
+function PcBust17({ size, color }) {
+  return <svg viewBox="0 0 24 24" width={size} height={size} fill={color} aria-hidden="true"><circle cx="12" cy="7.6" r="4.1" /><path d="M3.2 21 V18.6 C3.2 15.6 6.2 13.9 12 13.9 C17.8 13.9 20.8 15.6 20.8 18.6 V21 Z" /></svg>;
+}
+
+
+/* The Profile Card face. large = the share card (Profile Card, five boxes, FIREFLAIR in the footer);
+   otherwise the small web card (Profile, icon-only rows, flags below the box). 5 x 7, all sizes in cqw. */
+function PlayerFace17({ person, large, themeKey, tier, onClick, selected, nameAs }) {
+  const t = THEMES[themeKey] || THEMES.onyx;
+  const m = metalOf(tier);
+  const dark = t.dark;
+  const acc = t.accent || t.sub;
+  const sid = useSimpleId();
+  const rootRef = useRef(null);
+  const list = (v) => (Array.isArray(v) ? v : v ? [v] : []).filter(Boolean).map(capWords17).filter(Boolean);
+  const pros = list(person.professions || person.profession);
+  const headline = String(person.headline || "").trim() || pros[0] || "";
+  const name = String(person.name || "").trim() || person.tag || "";
+  let locs = list(person.base ? [person.base] : person.locations);
+  const countries = locs.map((l) => (l.match(/,\s*([^,]+)$/) || [])[1]);
+  if (locs.length && countries.every((c) => c && c === countries[0])) locs = locs.map((l) => l.replace(/,\s*[^,]+$/, ""));
+  const cap = large ? 6 : 3;
+  const langs = (person.languages || []).filter(Boolean).slice(0, 5);
+  const rows = [["Professions", Users, pros], ["Skills", Star, list(person.skills)], ["Interests", Heart, list(person.interests)], ["Locations", MapPin, locs]]
+    .filter((r) => r[2].length).map((r) => [r[0], r[1], r[2].slice(0, cap)]);
+  const sig = [large, themeKey, tier, name, headline, rows.map((r) => r[2].join("|")).join("/"), langs.join(","), person.hasCar, person.tag].join("~");
+  React.useLayoutEffect(() => {
+    const el = rootRef.current && rootRef.current.parentElement;
+    if (!el) return undefined;
+    const fit = () => pc17Fit(el);
+    fit();
+    let ro = null, w = el.clientWidth;
+    if (window.ResizeObserver) { ro = new ResizeObserver(() => { const nw = el.clientWidth; if (Math.abs(nw - w) > 1) { w = nw; fit(); } }); ro.observe(el); }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit).catch(() => {});
+    /* A font that arrives after the first fit (the card is drawn before Inter is ready) changes every width: fit again. */
+    if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener("loadingdone", fit);
+    const late = [setTimeout(fit, 350), setTimeout(fit, 1500)];
+    return () => { if (ro) ro.disconnect(); if (document.fonts && document.fonts.removeEventListener) document.fonts.removeEventListener("loadingdone", fit); late.forEach(clearTimeout); };
+  }, [sig]);
+  const icoC = dark ? "#E4C36A" : "#7E611D";
+  const flags = () => langs.map((l) => <span key={l} className="pc17-flag"><LangFlag lang={l} /></span>);
+  const entries = (items) => large
+    ? <span className="pc17-fit wr">{items.map((v, i) => <React.Fragment key={v + i}><span className="en">{v}<b className="bl" style={{ color: acc }}>•</b></span>{" "}</React.Fragment>)}</span>
+    : <span className="pc17-fit">{items.map((v, i) => <span className="en" key={v + i}>{i > 0 && <b className="bu" style={{ color: acc }}>•</b>}{v}</span>)}</span>;
+  const ink = t.ink;
+  return (
+    <CardFrame premium fixed tier={tier} theme={t} ratio="5 / 7" className={"pc17 " + (large ? "lg" : "sm")} onClick={onClick} selected={selected}
+      style={{ width: "100%", padding: 0, "--pc17-hair": m.hair }}>
+      <span className="pc17-plate" style={{ color: "#E4C36A", borderColor: m.edge[1] }}>
+        <span style={{ width: "3.4cqw", height: "3.4cqw", display: "block", flex: "none" }}><PcBust17 size="100%" color="#E4C36A" /></span>
+        <span className="t">{large ? "Profile Card" : "Profile"}</span>
+      </span>
+      <span className="pc17-logo"><FFLogo size="100%" tier={tier} /></span>
+      <div className="pc17-in" ref={rootRef}>
+        <div className="pc17-photo" style={{ width: large ? "32cqw" : "35cqw", height: large ? "32cqw" : "35cqw", background: metalEdge(tier, 145) }}>
+          <div className="pc17-photo-in" style={{ background: person.photo ? `url("${person.photo}") center/cover` : "radial-gradient(circle at 38% 30%,#2A2A2F,#0A0A0C)" }}>
+            {!person.photo && (
+              <svg viewBox="0 0 100 100" style={{ width: "100%", height: "100%", display: "block" }} aria-hidden="true">
+                <defs><linearGradient id={sid + "s"} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor={m.edge[0]} /><stop offset="1" stopColor={m.edge[2] || m.edge[1]} /></linearGradient></defs>
+                <circle cx="50" cy="38" r="17" fill={`url(#${sid}s)`} />
+                <path d="M12 100 V82 C12 68 28 62 50 62 C72 62 88 68 88 82 V100 Z" fill={`url(#${sid}s)`} />
+              </svg>
+            )}
+          </div>
+        </div>
+        <FitText17 as={nameAs || "div"} size={7.8} className="pc17-name" style={{ color: ink, marginTop: large ? "2.2cqw" : "3cqw", ...(nameAs ? { marginBottom: 0, marginInline: 0 } : {}) }}>{name}</FitText17>
+        <FitText17 size={4.4} className="pc17-title" style={{ color: dark ? t.accent : "#6A4F12" }}>{headline || " "}</FitText17>
+        <div className="ff-pc-rule">
+          <i style={{ background: `linear-gradient(90deg, transparent, ${t.accent})` }} />
+          <ProfessionMarks professions={pros.slice(0, 3)} hasCar={person.hasCar} full={false} color={t.accent} />
+          <i style={{ background: `linear-gradient(270deg, transparent, ${t.accent})` }} />
+        </div>
+        {rows.length > 0 && (
+          <div className="pc17-panel" style={{ borderColor: m.hair, background: dark ? "rgba(0,0,0,.28)" : "rgba(255,255,255,.6)" }}>
+            {rows.map(([k, I, items]) => (
+              <div key={k} className="pc17-row" style={{ borderColor: t.rule }}>
+                {large
+                  ? <div className="pc17-lbl" style={{ color: dark ? t.sub : "#6A5A3C" }}><span style={{ width: "3.5cqw", height: "3.5cqw", display: "block", flex: "none" }}><I size="100%" color={icoC} strokeWidth={2.25} fill="none" /></span>{k}</div>
+                  : <span className="pc17-ico"><span style={{ width: "4.6cqw", height: "4.6cqw", display: "block" }}><I size="100%" color="#E4C36A" strokeWidth={2.25} fill={k === "Skills" || k === "Interests" ? "#E4C36A" : "none"} /></span></span>}
+                <div className="pc17-val" style={{ color: ink }}>{entries(items)}</div>
+              </div>
+            ))}
+            {large && langs.length > 0 && (
+              <div className={"pc17-row" + (langs.length === 1 ? " one" : "")} style={{ borderColor: t.rule }}>
+                <div className="pc17-lbl" style={{ color: dark ? t.sub : "#6A5A3C" }}><span style={{ width: "3.5cqw", height: "3.5cqw", display: "block", flex: "none" }}><MessageSquare size="100%" color={icoC} strokeWidth={2.25} fill="none" /></span>Languages</div>
+                <div className="pc17-flags">{flags()}</div>
+              </div>
+            )}
+          </div>
+        )}
+        {!large && langs.length > 0 && <div className="pc17-flagzone"><div className="pc17-flags">{flags()}</div></div>}
+      </div>
+      <div className="pc17-bar" style={{ borderColor: t.rule, background: dark ? "rgba(0,0,0,.45)" : "#141416" }}>
+        <FitText17 as="span" size={4.3} className="pc17-url" style={{ color: "#EAD79C" }}>{`${CARD_DOMAIN}/${pc17Tag(person.tag)}`}</FitText17>
+        {large && <span className="pc17-brand">FIREFLAIR</span>}
+      </div>
+      {selected && (
+        <span style={{ position: "absolute", inset: 0, zIndex: 5, background: "rgba(201,162,39,.14)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <span style={{ background: metalEdge(tier, 140), color: "#0B0B0C", borderRadius: "50%", width: 40, height: 40, display: "grid", placeItems: "center", boxShadow: "0 3px 10px rgba(0,0,0,.5)" }}><Check size={24} /></span>
+        </span>
+      )}
+    </CardFrame>
+  );
+}
+
+
+
 function PlayerCard({ person, format = "portrait", themeKey = "onyx", selected, onClick, actions, nameAs }) {
   const t = THEMES[themeKey] || THEMES.onyx;
-  const tier = themeKey === "silver" || themeKey === "gold" ? themeKey : person.tier || "standard";
+  /* v17.16: the metal comes from the person (Alexander Gold, Bruno Silver, everyone else Bronze), never from the card theme. */
+  const tier = cardTier17(person);
   const m = metalOf(tier);
   const { sub, ink } = t;
-  const top3 = (v) => (Array.isArray(v) ? v : v ? [v] : []).filter(Boolean).slice(0, 3);
+  const top3 = (v) => (Array.isArray(v) ? v : v ? [v] : []).filter(Boolean).slice(0, 3).map(capWords17);
   const professions = top3(person.professions || person.profession);
-  const skills = top3(person.skills);
-  const interests = top3(person.interests);
-  const locations = person.base ? [person.base] : top3(person.locations);
   const langs = (person.languages || []).slice(0, 5);
-  const quals = top3(person.qualifications);
-  const morePros = professions.slice(1, 3);
   const dot = "  ·  ";
-  const address = `${CARD_DOMAIN}/${person.tag}`;
+  const address = `${CARD_DOMAIN}/${pc17Tag(person.tag)}`;
   const Emblem = ({ size }) => React.createElement("span", {
     style: { position: "absolute", top: size > 26 ? 9 : 7, right: size > 26 ? 9 : 7, zIndex: 4 }
   }, React.createElement(FFLogo, {
@@ -101,161 +277,9 @@ function PlayerCard({ person, format = "portrait", themeKey = "onyx", selected, 
       style: { marginLeft: "auto", fontFamily: "var(--sans)", fontSize: 10, fontWeight: 600, color: sub }
     }, address))));
   }
-  const acc = t.accent || sub;
-  const edge = t.edge || t.rule;
-  const panelBg = t.dark ? "rgba(0,0,0,.30)" : "rgba(255,255,255,.55)";
-  const years = person.years ? [`${person.years}+ years`] : [];
-  const experience = [...years, ...person.experience || []].slice(0, 2);
-  const full = format !== "portrait";
-  const rowDefs = full ? [
-    ["experience", "Experience", experience],
-    ["roles", "Roles", professions.length > 1 ? professions : []],
-    ["skills", "Skills", skills],
-    ["interests", "Interests", interests],
-    ["locations", person.base ? "Based in" : "Locations", locations]
-  ] : [["skills", "Skills", skills], ["interests", "Interests", interests], ["locations", person.base ? "Based in" : "Locations", locations], ...quals.length ? [["quals", "Qualifications", quals]] : [["roles", "Roles", morePros]]];
-  const rows = rowDefs.filter((r) => r[2].length);
-  const PC_ICON = { quals: Award, experience: Briefcase, roles: Users, skills: Star, interests: Heart, locations: MapPin, languages: MessageSquare };
-  const FILLED = { skills: true, interests: true };
-  const sz = full ? { pad: 4, photo: 32, name: 7.4, title: 4.2, row: 9.2, ico: 4.3, icoW: 10.5, lbl: 2.45, lblW: 21.5, val: 3.95, flag: 4.4, url: 9.4, urlF: 3.5, coin: 12.5 } : { pad: 3, photo: 35, name: 8, title: 4.9, row: 10.6, ico: 5.2, icoW: 9.5, lbl: 0, val: 5.1, flag: 6.2, url: 10.8, urlF: 4.4, coin: 14 };
-  const titleInk = t.dark ? acc : "#6A4F12";
-  const cq = (n) => `${n}cqw`;
-  const Ico = ({ kind }) => {
-    const I = PC_ICON[kind];
-    return React.createElement("span", {
-      className: "ff-pc-ico",
-      style: { width: cq(sz.icoW) }
-    }, React.createElement("span", {
-      style: { width: cq(sz.ico), height: cq(sz.ico), display: "block" }
-    }, React.createElement(I, {
-      size: "100%",
-      color: "#D9B24A",
-      strokeWidth: 1.8,
-      fill: FILLED[kind] ? "#D9B24A" : "none"
-    })));
-  };
-  const Vals = ({ items }) => React.createElement(FitList17, {
-    items,
-    accent: acc
-  });
-  const cols = full ? `${sz.icoW}cqw ${sz.lblW}cqw minmax(0,1fr)` : `${sz.icoW}cqw minmax(0,1fr)`;
-  const Row = ({ kind, label, children }) => React.createElement("div", {
-    className: "ff-pc-row",
-    style: { gridTemplateColumns: cols, height: cq(sz.row), borderColor: t.rule }
-  }, React.createElement(Ico, {
-    kind
-  }), full && React.createElement("span", {
-    className: "ff-pc-lbl",
-    style: { fontSize: cq(sz.lbl), color: t.dark ? sub : "#5C513F" }
-  }, label), React.createElement("span", {
-    className: "ff-pc-val",
-    style: { fontSize: cq(sz.val), color: ink }
-  }, children));
-  const Flags = () => langs.slice(0, 5).map((l) => React.createElement("span", {
-    key: l,
-    className: "ff-pc-flag",
-    style: { fontSize: cq(sz.flag), borderColor: edge, background: t.dark ? "rgba(255,255,255,.06)" : undefined }
-  }, React.createElement(LangFlag, {
-    lang: l
-  })));
-  const face = React.createElement(CardFrame, {
-    premium: true,
-    fixed: true,
-    tier,
-    theme: t,
-    ratio: "5 / 7",
-    onClick,
-    selected,
-    style: { width: "100%", padding: 0 }
-  }, React.createElement("span", {
-    className: "ff-pc-plate ff-pc-plate17",
-    style: { top: cq(sz.coin / 2 + 3.8 - 3.3) }
-  }, "Profile"), React.createElement("span", {
-    className: "ff-pc-coin",
-    style: { width: cq(sz.coin), height: cq(sz.coin) }
-  }, React.createElement(FFLogo, {
-    size: "100%",
-    tier
-  })), React.createElement("div", {
-    className: "ff-pc-in"
-  }, React.createElement("div", {
-    style: {
-      marginTop: cq(full ? 5 : 4),
-      width: cq(sz.photo),
-      aspectRatio: "1",
-      flex: "none",
-      borderRadius: "50%",
-      padding: cq(sz.photo * 0.04),
-      background: metalEdge(tier, 145),
-      boxShadow: "0 1.4cqw 3.6cqw rgba(0,0,0,.38), inset 0 0 0 1px rgba(255,255,255,.35)"
-    }
-  }, React.createElement("div", {
-    style: {
-      width: "100%",
-      height: "100%",
-      borderRadius: "50%",
-      overflow: "hidden",
-      position: "relative",
-      border: "1px solid rgba(8,8,10,.85)",
-      display: "grid",
-      placeItems: "center",
-      background: person.photo ? `url("${person.photo}") center/cover` : "radial-gradient(circle at 38% 30%,#26262B,#0A0A0C)"
-    }
-  }, !person.photo && React.createElement("span", {
-    style: { fontFamily: "var(--display)", color: m.ink, fontSize: cq(sz.photo * 0.3) }
-  }, (person.name || "").split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase()), React.createElement("span", {
-    style: { position: "absolute", inset: 0, borderRadius: "50%", background: "radial-gradient(64% 46% at 30% 16%, rgba(255,255,255,.18), transparent 62%)" }
-  }))), React.createElement(FitText17, {
-    as: nameAs || "div",
-    size: sz.name,
-    className: "ff-pc-name",
-    style: { color: ink, marginTop: cq(full ? 3.4 : 3.2), ...nameAs ? { marginBottom: 0, marginInline: 0 } : {} }
-  }, person.name), React.createElement(FitText17, {
-    size: sz.title,
-    className: "ff-pc-title",
-    style: { color: titleInk, marginTop: cq(full ? 1.4 : 1.1) }
-  }, professions[0] || "Professional"), React.createElement("div", {
-    className: "ff-pc-rule",
-    style: { margin: full ? "2.4cqw 0 3cqw" : "2.2cqw 0 2.6cqw" }
-  }, React.createElement(ProfessionMarks, {
-    professions,
-    hasCar: person.hasCar,
-    full,
-    color: acc
-  })), React.createElement("div", {
-    className: "ff-pc-panel",
-    style: { borderColor: edge, background: panelBg }
-  }, rows.map(([k, label, vals]) => React.createElement(Row, {
-    key: k,
-    kind: k,
-    label
-  }, React.createElement(Vals, {
-    items: vals
-  }))), full && langs.length > 0 && React.createElement(Row, {
-    kind: "languages",
-    label: "Languages"
-  }, React.createElement(Flags, null))), !full && langs.length > 0 && React.createElement("div", {
-    style: { marginTop: "2.6cqw", display: "flex", justifyContent: "center" }
-  }, React.createElement(Flags, null)), React.createElement("div", {
-    className: "ff-pc-bar",
-    style: { height: cq(sz.url), background: t.dark ? "rgba(0,0,0,.45)" : "#141416", borderTop: `1px solid ${t.rule}` }
-  }, React.createElement(FitText17, {
-    as: "span",
-    size: sz.urlF,
-    className: "ff-pc-baru"
-  }, address), React.createElement("span", {
-    style: { width: cq(sz.url - 3.4), height: cq(sz.url - 3.4), display: "block", flex: "none" }
-  }, React.createElement(FFLogo, {
-    size: "100%",
-    tier
-  })))), selected && React.createElement("span", {
-    style: { position: "absolute", inset: 0, zIndex: 5, background: "rgba(201,162,39,.14)", display: "flex", alignItems: "center", justifyContent: "center" }
-  }, React.createElement("span", {
-    style: { background: metalEdge(tier, 140), color: "#0B0B0C", borderRadius: "50%", width: 40, height: 40, display: "grid", placeItems: "center", boxShadow: "0 3px 10px rgba(0,0,0,.5)" }
-  }, React.createElement(Check, {
-    size: 24
-  }))));
-  if (!full)
+  const large = format !== "portrait";
+  const face = <PlayerFace17 person={person} large={large} themeKey={themeKey} tier={tier} onClick={onClick} selected={selected} nameAs={nameAs} />;
+  if (!large)
     return face;
   return React.createElement("div", {
     style: { maxWidth: 372, margin: "0 auto" }

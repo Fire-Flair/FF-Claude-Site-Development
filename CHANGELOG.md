@@ -1,5 +1,21 @@
 # FireFlair prototype — changelog
 
+## v17.16
+
+Artifact version 1794850484-a629.
+
+Profile Card redesign: a large share card and a small web card, Bronze for everyone (Silver and Gold for two members), the FFTeam.uk address, a 28-character Headline, and a capital on every word.
+
+- Two card formats in PlayerCard (profile-card-parts.jsx, styles/pc1716.css). format="full" is the large 5 x 7 share card (plate "Profile Card", five boxes: Professions, Skills, Interests, Locations, Languages; entries centred under a small title, wrapping onto two lines between whole entries; FIREFLAIR in the footer). format="portrait" is the small web card (plate "Profile", icon-only rows, flags centred between the box and the footer, address only). Both use the Cinzel name, Inter for everything else, one inner hairline, a metal ring round the photo, the FF logo top right only, and the address FFTeam.uk/<Tag> (first letter capital) in the footer.
+- Entries: every word capitalised, separated by "•", never "…" or "/" as a separator, never split across lines. An entry that does not fit is dropped whole (the last first); if none fit the shortest stands alone; if that does not fit the row is hidden. Locations drop a shared trailing country. Professions lists every profession, top one first. Experience, Roles, Qualifications and "years" are no longer on the card (the data stays on the profile).
+- No photo: a metal bust silhouette on a dark disc replaces the initials.
+- Spacing: the icon row sits the same distance below the headline as above the Professions box (equal margins; spare height is shared at the top and bottom of the whole column).
+- Tiers: cardTier17() in card-brand.jsx. Alexander Gagnon is Gold, Bruno Cuartero is Silver, everyone else is Bronze; "standard" is no longer drawn for people. The card theme no longer changes the metal. Explainer tiles, site coins, Shift Cards, Service Cards and company cards are unchanged.
+- Address: CARD_DOMAIN is now FFTeam.uk, so share links read https://FFTeam.uk/<TAG>. The SEO canonical and profileOrigin settings (seo.js) are unchanged.
+- Share sends the large card: the share sheets on Network, FF Party live profile, the booking peek, Send my card and the invite sheet all render format="full"; the PNG is 1080 x 1512.
+- Headline: the Profile Card editor's Headline box is limited to 28 characters; meAsStaff passes profile.headline. The card shows the headline, else the top profession. Simao and James Allcott have headlines in REAL_MEMBERS.
+- Capitals on save, site-wide: capWords17() (utils/text17.js) capitalises every lower-case word of a record name in REC_ADD, REC_PATCH (when the name changes), REC_BULK, RECORDS_MERGE and RECORDS_FILL (name only). Words with a capital already (McDonald's, WSET, UK) stay as typed; and, of, the, &, in, on, for, to, a stay lower case unless first. Contact, Media and Reviews records are not changed. Saved profiles are normalised once on load (App.jsx) and the directory members when they are built (staff()).
+
 ## v17.15
 
 Artifact version 1794846979-291b (FireFlair — Phase Two, almost final).

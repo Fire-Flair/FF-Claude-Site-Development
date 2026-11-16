@@ -1,7 +1,7 @@
 /* src/components/shared/card-brand.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
 /* flagFor now lives with LANGUAGE_MASTER (Phase 1): real flag images, 52 languages. */
 
-const CARD_DOMAIN = "ffparty.uk";
+const CARD_DOMAIN = "FFTeam.uk";
 
 
 
@@ -95,6 +95,17 @@ const METAL = {
 
 
 const metalOf = (tier) => METAL[tier] || METAL.standard;
+
+
+/* v17.16: the metal a person's card is drawn in. Alexander Gagnon is Gold, Bruno Cuartero is Silver, everyone else is Bronze. */
+function cardTier17(person) {
+  const tag = String((person && person.tag) || "").toUpperCase();
+  const name = String((person && person.name) || "").trim().toLowerCase();
+  if (tag === "ALEX424" || tag === "ALEXG" || name === "alexander gagnon") return "gold";
+  if (tag === "CUARTERO" || name === "bruno cuartero") return "silver";
+  return "bronze";
+}
+
 
 
 const metalEdge = (tier, angle = 150) => {
