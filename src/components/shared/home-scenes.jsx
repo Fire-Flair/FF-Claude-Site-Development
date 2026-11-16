@@ -63,7 +63,7 @@ function HomeCarousel({ label, children }) {
 }
 
 
-const HOME_FEATURED = ["stf_sam", "stf_pri", "stf_mia", "stf_tom", "stf_don", "stf_ava", "stf_leo", "stf_jam"];
+const HOME_FEATURED = ["stf_alex", "stf_gav", "stf_bruno", "stf_simao", "stf_dany", "stf_james"];
 
 
 function HomeFeatured() {
@@ -121,7 +121,7 @@ function HomeRelationships() {
   const { state, dispatch } = useStore();
   const directory = useDirectory();
   const by = (id) => directory.find(p => p.id === id) || (state.directory || []).find(p => p.id === id);
-  const crew = ["stf_ava", "stf_sam", "stf_leo", "stf_pri"].map(by).filter(Boolean);
+  const crew = ["stf_gav", "stf_james", "stf_simao", "stf_bruno"].map(by).filter(Boolean);
   const goNetwork = () => { dispatch({ type: "NET_QUERY", q: "" }); dispatch({ type: "TAB", tab: "network" }); window.scrollTo(0, 0); };
   return (
     <section className="ff-sect ff-rel17 ff-cv18" id="ff-relationships" aria-labelledby="ff-rel17-h">
@@ -351,8 +351,8 @@ function HomeTeams() {
   const { state, dispatch } = useStore();
   const directory = useDirectory();
   const pick = (ids) => ids.map(id => directory.find(p => p.id === id)).filter(Boolean);
-  const trio = pick(["stf_don", "stf_ava", "stf_leo"]);
-  const crew = pick(["stf_sam", "stf_pri", "stf_mia", "stf_tom"]);
+  const trio = pick(["stf_alex", "stf_gav", "stf_simao"]);
+  const crew = pick(["stf_james", "stf_bruno", "stf_dany"]);
   const mine = state.role === "team" && state.profile.live;
   const IMG = window.FF_IMG || {};
   const goProfile = () => { if (state.role !== "team") dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); };

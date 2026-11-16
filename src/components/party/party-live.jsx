@@ -53,7 +53,7 @@ function DoneProfile17({ kind }) {
   if (kind === "team") {
     const p = state.profile;
     const mine = String(p.name || "").trim() && recsOf(p, "professions").length;
-    const person = mine ? { ...meAsStaff(p, state.session), group: "Your profile" } : (["stf_pri", "stf_leo", "stf_ava"].map(id => all.find(x => x.id === id)).find(Boolean) || meAsStaff(p, state.session));
+    const person = mine ? { ...meAsStaff(p, state.session), group: "Your profile" } : (["stf_dany", "stf_simao", "stf_gav"].map(id => all.find(x => x.id === id)).find(Boolean) || meAsStaff(p, state.session));
     const card = <PlayerCard person={person} format="full" nameAs="h1" themeKey={mine ? p.theme : (person.theme || "ivory")} />;
     const dTag = state.auth.status === "signedIn" ? (state.auth.tag || state.session.tag) : "";
     const edit17 = () => { dispatch({ type: "V11_SET", patch: { ed17: "team" } }); dispatch({ type: "PE_START" }); window.scrollTo(0, 0); };

@@ -131,9 +131,6 @@ const FD_REGION = {
 
 
 const FD_PERSON_COV = {
-  stf_sam: { whole: [FD_LONDON] },
-  stf_fre: { sub: [FD_HERTS] },
-  stf_zar: { sub: ["gn:2638867", "gn:2647138"] },
 };
 
 

@@ -79,8 +79,6 @@ function ProfessionMarks({ professions, hasCar, full, color }) {
 /* Questions asked on someone's profile ("Ask a question" on Network) appear
    on that profile with who asked. Directory examples, so the idea shows: */
 const ASKED_EXAMPLES = [
-  { id: "askx_sam1", personId: "stf_sam", byId: "stf_ava", text: "Do you bring your own bar kit to events?", answer: "Yes — a full cocktail and flair kit.", askedAt: Date.UTC(2026, 9, 9) },
-  { id: "askx_don1", personId: "stf_don", byId: "stf_leo", text: "Can you run a whisky tasting for 30 guests?", answer: "Yes. I've hosted tastings for up to 60.", askedAt: Date.UTC(2026, 9, 12) },
 ];
 
 

@@ -414,15 +414,14 @@ function reducerCore17(s0, a) {
       auth: { status: "signedIn", tag: "SAM42", method: "demo" },
       profile: { ...s.profile, media: (s.profile.media || []).length ? s.profile.media : DEMO_GALLERY.Bartenders.filter(k => (window.FF_IMG || {})[k]).map(k => ({ id: "dm_me_" + k, name: "", dataUrl: window.FF_IMG[k] })), about: s.profile.about || "Freelance bartender for events across London. Cocktails, big bars and a good crowd.", name: "Sam Morgan", live: true, theme: "ivory", tier: "gold", level: 5, hasCar: true, photo: FACE_PHOTOS.demo, records: DEMO_RECORDS(), categories: {} },
       connections: [
-        { id: "stf_ava", name: "Ava Clarke", note: "Senior Bartender", onFF: true, tag: "AVA03" },
-        { id: "stf_tom", name: "Tom Beatson", note: "DJ & Music Producer", onFF: true, tag: "TOMBE" },
-        { id: "stf_mia", name: "Mia Santos", note: "Silver Service Waiter", onFF: true, tag: "MIAS1" },
-        { id: "stf_pri", name: "Priya Raman", note: "MC & Event Host", onFF: true, tag: "PRIYA" },
-        { id: "stf_idr", name: "Idris Bello", note: "Head Chef", onFF: true, tag: "IDRIS" },
+        { id: "stf_gav", name: "Alexandru Gavrilas", note: "Bartender", onFF: true, tag: "GAVRILAS" },
+        { id: "stf_bruno", name: "Bruno Cuartero", note: "Beverage / Bar Manager / Events", onFF: true, tag: "CUARTERO" },
+        { id: "stf_simao", name: "Simao", note: "Mixologist", onFF: true, tag: "SIMAO" },
+        { id: "stf_james", name: "James Allcott", note: "Cocktail Bartender", onFF: true, tag: "JAMESALL" },
       ],
       reviews: [
-        { id: "rev_1", aboutId: "me", byId: "stf_ava", byName: "Ava Clarke", rating: 5, text: "Ran the bar for our launch night without a single hiccup — fast, clean, and great with the guests.", at: Date.now() - 12 * 864e5 },
-        { id: "rev_2", aboutId: "me", byId: "stf_pri", byName: "Priya Raman", rating: 5, text: "One of the most reliable bartenders I've worked events with. Always early, always prepped.", at: Date.now() - 40 * 864e5 },
+        { id: "rev_1", aboutId: "me", byId: "demo_rv_1", byName: "Ava Clarke", rating: 5, text: "Ran the bar for our launch night without a single hiccup — fast, clean, and great with the guests.", at: Date.now() - 12 * 864e5 },
+        { id: "rev_2", aboutId: "me", byId: "demo_rv_2", byName: "Priya Raman", rating: 5, text: "One of the most reliable bartenders I've worked events with. Always early, always prepped.", at: Date.now() - 40 * 864e5 },
       ],
       };
       ["create_card", "publish_profile", "first_review"].forEach(id => { n = claimXP(n, id); });

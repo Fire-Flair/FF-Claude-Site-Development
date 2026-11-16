@@ -180,7 +180,7 @@
 
   function VisOwnPackages21({ dir }) {
     const IM = window.FF_IMG || {};
-    const jon = p21Person(dir, "stf_jon");
+    const jon = { id: "you", name: "Your name", tag: "you", tier: "standard", photo: null, profession: "Photographer", group: "Photographers" }; /* v17.12: an example service card, made by "you" */
     const ex = OWN_SERVICE_EXAMPLES.find((x) => x.id === "own_photo");
     const ck = ckAdapt17({ name: "Raspberry Mint Martini", glass: "martini", description: "Fresh raspberry and mint, shaken cold.", ingredients: ["50ml vodka", "20ml raspberry liqueur", "Fresh mint", "Garnish: raspberries"], photo: IM.cocktail_0 });
     return (

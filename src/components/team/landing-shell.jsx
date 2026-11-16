@@ -410,7 +410,7 @@ function LoginSheet({ open, onClose }) {
       <button type="button" className="ff-dev17 login" onClick={() => {
         dispatch({ type: "SIGN_OUT" });
         dispatch({ type: "ROLE", role: "team" });
-        dispatch({ type: "SESSION", patch: { refTag: "DONGE", refKind: "team" } });
+        dispatch({ type: "SESSION", patch: { refTag: "ALEX424", refKind: "team" } });
         dispatch({ type: "TAB", tab: "profile" });
         dispatch({ type: "TOAST", toast: "Join from invite loaded" });
         onClose();

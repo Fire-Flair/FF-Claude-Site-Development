@@ -247,7 +247,7 @@ function availWaiting17(state) {
 /* Team invitations sent TO you. The real ones are state.teamAsksIn17 (a join link brought you in; see src/state/invite17.js).
    Core supplies the rest in production. These two samples appear only for the DEV complete-profile login (state.devDone.team). */
 const TEAM_ASKS_DEMO17 = [
-  { id: "tia_ava", fromId: "stf_ava", name: "Ava Clarke", tag: "AVA03", note: "Worked with you before · would work with you again", at: Date.UTC(2026, 10, 8) },
+  { id: "tia_gav", fromId: "stf_gav", name: "Alexandru Gavrilas", tag: "GAVRILAS", note: "Worked with you before · would work with you again", at: Date.UTC(2026, 10, 8) },
   { id: "tia_vooshka", fromId: "co_vooshka", name: "Vooshka Cocktail Bar", company: true, note: "Wants you on their company team", at: Date.UTC(2026, 10, 9) },
 ];
 

@@ -9,13 +9,12 @@ const availQ = (iso) => ({ id: `av_${iso}`, iso, group: "availability", type: "t
 /* Answers some of the sample people have already given, so "Check
    availability" can show an instant answer. */
 const AVAIL_DEMO = {
-  stf_sam: { "2026-11-15": "Yes", "2026-12-12": "Yes", "2026-12-19": "Yes", "2026-12-24": "No", "2026-12-31": "Yes" },
-  stf_pri: { "2026-11-15": "Yes", "2026-12-12": "Maybe", "2026-12-31": "Yes" },
-  stf_mia: { "2026-11-15": "Yes", "2026-12-12": "No" },
-  stf_tom: { "2026-12-12": "Yes", "2026-12-31": "Yes" },
-  stf_ava: { "2026-11-15": "Yes", "2026-12-19": "Yes" },
-  stf_fre: { "2026-12-12": "Yes" },
-  stf_leo: { "2026-12-19": "Maybe" },
+  stf_james: { "2026-11-15": "Yes", "2026-12-12": "Yes", "2026-12-19": "Yes", "2026-12-24": "No", "2026-12-31": "Yes" },
+  stf_dany: { "2026-11-15": "Yes", "2026-12-12": "Maybe", "2026-12-31": "Yes" },
+  stf_bruno: { "2026-11-15": "Yes", "2026-12-12": "No" },
+  stf_alex: { "2026-12-12": "Yes", "2026-12-31": "Yes" },
+  stf_gav: { "2026-11-15": "Yes", "2026-12-19": "Yes" },
+  stf_simao: { "2026-12-19": "Maybe" },
 };
 
 

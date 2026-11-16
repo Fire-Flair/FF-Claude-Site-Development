@@ -1,5 +1,20 @@
 # FireFlair prototype — changelog
 
+## v17.13
+
+Artifact version 1794843150-a221 (FireFlair — Phase Two, almost final).
+
+The made-up demo profiles are gone. The directory is now the six real FF Team members with published profiles, taken from the live database: Alexander Gagnon (ALEX424), Alexandru Gavrilas (GAVRILAS), Bruno Cuartero (CUARTERO), Simao (SIMAO), Dany Gagnon (DANYG) and James Allcott (JAMESALL).
+
+- src/content/people-demo.js: REAL_MEMBERS holds each member's professions (all of them, in their order), skills, interests, locations, languages, qualifications, work history and About text as they are on FFTeam.uk. Card colours follow their own choice (oxblood shows as Burgundy, slate as Forest). Nothing is invented for them: no ratings, review counts, levels or tiers, and no gallery photos.
+- Photos: none yet, so cards show initials. Simao uses the photo already supplied. Photos from the production upload store are still to be copied into the photo library.
+- Simao's name is shown as "Simao" (was "SIMAO"), on his profile and on the FF Team home example.
+- Dany Gagnon is listed as a Sommelier, in a new Sommeliers group on Network.
+- records.js recordsForPerson: real members get every profession, their work history as Experience cards (employer, location, dates), and no filler descriptions.
+- Every place that pointed at a demo person now points at a real member: home featured people and crews, FF Staff top staff, FF Party live booking, network seed, availability answers, the FF Staff autofill example (now six people) and the other seeded shifts, and the team invitation sample. These are test data for trying the journeys; they are not the members' real bookings or answers.
+- Removed rather than moved to real people: the two seeded reviews' links to demo profiles, the two sample Q&A answers, the demo area coverage for three demo people, the demo signature cocktails' creators (now FireFlair). The photography service example in the home pillars is shown as made by "you".
+- Invite links in the prototype now come from ALEX424 (was DONGE). TAKEN_TAGS lists the real tags.
+
 ## v17.12
 
 Artifact version 1794842473-7ec3 (FireFlair — Phase Two, almost final). Brings together the three updates published on 16 Nov 2026 in the afternoon.

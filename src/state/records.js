@@ -196,6 +196,22 @@ function recordsForPerson(state, person) {
     ...makeRecord(cat, n), id: `${person.id}_${cat}_${String(n).replace(/\W+/g, "")}`,
     description: demoFiller(person.id + cat + n), primary: true, readOnly: true,
   }));
+  /* v17.12: real FF Team members — every profession, their experience, and no filler descriptions. */
+  if (person.real) {
+    const mkR = (cat, arr) => (arr || []).filter(Boolean).map((n, i) => ({
+      ...makeRecord(cat, n), id: `${person.id}_${cat}_${i}_${String(n).replace(/\W+/g, "")}`, primary: true, readOnly: true,
+    }));
+    return {
+      professions: mkR("professions", person.professions || [person.profession]),
+      skills: mkR("skills", person.skills), interests: mkR("interests", person.interests),
+      locations: mkR("locations", person.locations), languages: mkR("languages", person.languages),
+      qualifications: mkR("qualifications", person.qualifications), reviews: reviewRecordsFor(state, person.id),
+      experience: (person.workHistory || []).map((x, i) => ({ ...makeRecord("experience", x.title, {
+        details: { type: "work", ...(x.employer ? { employer: x.employer } : {}), ...(x.location ? { location: x.location } : {}), ...(x.start ? { start: x.start } : {}), ...(x.end ? { end: x.end } : {}) } }),
+        id: `${person.id}_experience_${i}`, primary: true, readOnly: true })),
+      cocktails: [],
+    };
+  }
   return {
     /* No filler on demo professions: a blank description shows the profession's default one (v17.9.5). */
     professions: mk("professions", [person.profession]).map((r, i) => ({ ...r, description: "", ...(i === 0 && person.level ? { level: person.level } : {}) })),

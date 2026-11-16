@@ -126,10 +126,10 @@ const CLASSICS = [
 
 /* Signature Cocktail Cards from the demo network: bartenders and a bar. */
 const DEMO_SIGNATURES = [
-  { id: "sig_sam_maple", by: "stf_sam", name: "Smoked Maple Old Fashioned", glass: "rocks",
-    description: "Sammy's house Old Fashioned: maple instead of sugar, finished with a wisp of oak smoke.",
+  { id: "sig_sam_maple", by: "ff", name: "Smoked Maple Old Fashioned", glass: "rocks",
+    description: "A house Old Fashioned: maple instead of sugar, finished with a wisp of oak smoke.",
     ingredients: ["50ml bourbon", "10ml maple syrup", "2 dashes Angostura bitters", "1 dash orange bitters", "Garnish: orange zest and a torched cinnamon stick"] },
-  { id: "sig_ava_garden", by: "stf_ava", name: "Garden Party Spritz", glass: "wine",
+  { id: "sig_ava_garden", by: "ff", name: "Garden Party Spritz", glass: "wine",
     description: "Elderflower, cucumber and prosecco. Ava's go-to for summer weddings.",
     ingredients: ["25ml gin", "20ml elderflower liqueur", "15ml lemon juice", "75ml prosecco", "Top soda water", "Garnish: cucumber ribbon and mint"] },
   { id: "sig_loft_caramel", by: "co_vooshka", name: "Salted Caramel Espresso Martini", glass: "coupe",

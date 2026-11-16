@@ -515,7 +515,7 @@ function StaffRosterStaff11() {
 
 
 /* Network pages (FF Team, FF Staff, FF Party): Top staff, then the map. */
-const TOP_STAFF11 = ["stf_sam", "stf_pri", "stf_mia", "stf_tom", "stf_don", "stf_ava", "stf_leo", "stf_jam"];
+const TOP_STAFF11 = ["stf_alex", "stf_gav", "stf_bruno", "stf_simao", "stf_dany", "stf_james"];
 
 
 function TopStaff11() {

@@ -202,7 +202,7 @@
   }
 
   function SvServices21({ dir }) {
-    const jon = p21Person(dir, "stf_jon");
+    const jon = { id: "you", name: "Your name", tag: "you", tier: "standard", photo: null, profession: "Photographer", group: "Photographers" }; /* v17.12: an example service card, made by "you" */
     const ex = OWN_SERVICE_EXAMPLES.find((x) => x.id === "own_photo");
     return <div className="pv pv-own" aria-hidden="true"><InertBox className="pv-sq">{jon && ex ? <OwnServiceCard item={{ ...ex, person: jon }} /> : null}</InertBox></div>;
   }
@@ -229,7 +229,7 @@
       case "party-pkgs": return <SvPackages21 />;
       case "party-guarantee": return <SvGuarantee21 />;
       case "party-people": return <SvPeople21 />;
-      case "party-featured": return <SvFeatured21 ids={["dir_sam", "stf_don", "stf_fre", "dir_kofi", "dir_maya", "dir_theo"]} />;
+      case "party-featured": return <SvFeatured21 ids={["stf_alex", "stf_gav", "stf_bruno", "stf_simao", "stf_dany", "stf_james"]} />;
       case "party-review": return <SvReview21 kind="party" />;
       case "party-companies": return <SvCompanies21 />;
       case "party-event": return <SvEvent21 title="Birthday cocktail party" when="Sat 20 Mar" where="Islington, London" photo="dream_after_dark" />;
@@ -238,7 +238,7 @@
       case "party-prefs": return <div className="pv"><SvTicks21 items={["Your preferences", "Your favourites", "Your bookings", "Shared with your staff"]} /></div>;
       case "party-favourites": return <SvPeople21 fav />;
       case "party-again": return <SvAgain21 />;
-      case "staff-featured": return <SvFeatured21 ids={["dir_sam", "dir_priya", "dir_ines", "dir_theo", "stf_don", "dir_maya", "dir_kofi", "stf_jam"]} />;
+      case "staff-featured": return <SvFeatured21 ids={["stf_alex", "stf_gav", "stf_bruno", "stf_simao", "stf_dany", "stf_james"]} />;
       case "staff-teams": return <SvTeams21 />;
       case "staff-review": return <SvReview21 kind="staff" />;
       case "staff-event": return <SvEvent21 title="Summer Festival Bar" when="Sat 12 Jun" where="Victoria Park" photo="dream_after_dark" />;

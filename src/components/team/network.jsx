@@ -293,7 +293,7 @@ function NetworkTile({ person, invited, onClick }) {
 
 
 
-const TAKEN_TAGS = ["SAM42", "DONGE", "AVA03", "LEO09", "MIAS1", "JAMEW", "ZARA7", "NIAOK", "TOMBE", "ADMIN"];
+const TAKEN_TAGS = ["SAM42", "ALEX424", "GAVRILAS", "CUARTERO", "SIMAO", "DANYG", "JAMESALL", "ADMIN"];
 
 
 
