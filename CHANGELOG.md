@@ -1,5 +1,9 @@
 # FireFlair prototype — changelog
 
+## v17.9.4
+
+- FF Team home video is now the Launch Challenge reel v3 (marketing/reels/ff-team_launch-challenge_v3.mp4 on main, copied to media/video-content/ff-team-reel/ff-team-reel.mp4 with faststart). Poster is its first frame (closed doors).
+
 ## v17.9.3
 
 - Pillar pages: the 1, 2, 3 cards have no button; the whole card is the link to its section (PillarCards21, class ff-cta17 nb).
