@@ -1,23 +1,15 @@
 # FireFlair prototype — changelog
 
-## v17.11111111
+## v17.12
 
-Artifact version 1794842473-7ec3 (FireFlair — Phase Two, almost final).
+Artifact version 1794842473-7ec3 (FireFlair — Phase Two, almost final). Brings together the three updates published on 16 Nov 2026 in the afternoon.
 
 - Create a profile, "Let's get started": Upload CV, Talk or type to GPT and Book an interview now sit inside one box, divided by thin gold lines, instead of three separate boxes (.ff-start17 in src/styles/v11.css).
 - Book an interview is a burgundy button with gold text, so it no longer reads white on white.
 - The three sections are no longer faded (an older badge rule set .ff-way17 to 78% opacity).
 
-## v17.1111111
-
-Artifact version 1794842296-2ba9 (FireFlair — Phase Two, almost final).
-
 - Profile Card colour picker is back to seven colours: Ivory, Onyx, Burgundy, Forest, Paper, Silver, Gold. Magenta, Cobalt, Saffron and Grey no longer appear on the create-a-profile page or in the Bookings card editor.
 - Those four stay as the FF Event Directory category colours (entertainment, event services, caterers, bar services), marked `directoryOnly: true` in src/state/themes-xp.js; the Profile Card pickers filter them out. The company builder's picker is unchanged.
-
-## v17.111111
-
-Artifact version 1794842092-8f66 (FireFlair — Phase Two, almost final).
 
 - Professions are open-ended: members can add any profession, as many as they want, because people describe their work in different ways. The list of professions grows as members add new ones.
 - A typed profession that isn't on the FireFlair list and that the rules can't place now asks "Which category is “…” in?" before it is added: Bar, Front of House, Management, Entertainment, Services, Chefs, Back of House or Other. Add stays disabled until one is chosen. This is on the Profile Card type-in (network.jsx ProfTypeIn) and on Pick your professions (attribute-cards.jsx ProfessionPicker). Typed professions the rules can place (for example "Head Sommelier") are added straight away as before.
