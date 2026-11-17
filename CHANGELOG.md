@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.37
+
+Profile Card icon column and commas, the FF coin as the notification count, Review Cards on every Reviews tab. Branches merged: `p2-card`, `p2-net-ladder` (coin).
+
+- Profile Card (`profile-card-parts.jsx`, `pc1716.css`): the rows box has a black column down its left edge holding the five row icons in gold, as on the live FF Team cards; entries are separated by commas instead of dots (a comma never starts a line). Small browse tiles and the builder's editable card are unchanged.
+- FF coin (`landing-shell.jsx`, `net20.css`): with one or more notifications waiting, the coin's face shows the number in gold in place of FF and the small badge is not drawn; with none it shows FF. Two digits shrink to fit; 100 or more shows 99. Phone bottom bar and desktop top bar, all three sites.
+- Reviews tab on public and finished profiles (`introductions.jsx`): now draws the Review Cards (`ReviewsTab35`); in v17.36 only the builder used them.
+- Home hero easel (`hero-easel.jsx`, `p12.css`): swipe or arrow keys move between members (tap still opens the profile); dots under the board; the shine only exists when motion is allowed; desktop keeps the full photo width and crops only top and bottom; the phone card is about 18% larger.
+- Visiting someone's profile (`network.jsx`, `introductions.jsx`, `prof21.css`): signed-out visitors see a muted-gold Join and a smaller Share, no Review button; About me sits above Professions; the Overview / Bookings / Team / Reviews tabs are boxed squircles; the company panel's shadow no longer overlaps the tabs. Branches merged: `p2-hero`, `p2-profile`.
+
 ## v17.36
 
 Bookings packages and the old chooser screen, Review Cards in the Reviews tab, Need help? on finished profiles. Branches merged: `p2-bookings` (second commit), `p2-design`.
