@@ -4388,6 +4388,10 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-vis17 button[aria-pressed="true"] { background:#16130F; color:#F4EBD6; }
 .ff .ff-vis17 button:focus-visible { outline:2px solid var(--gold,#B08D2A); outline-offset:2px; }
 .ff .ff-qa17 .ff-vis17 { justify-self:start; }
+/* The "added you to their network" and "reviewed you" notification cards: one type box with no send button, a from-line that wraps between words, gold stars. */
+.ff .ff-ndcard17.qn17 .ff-qa17 .ty.solo { grid-template-columns:minmax(0,1fr); }
+.ff .ff-ndcard17.qn17 .ff-qasker { white-space:normal; text-overflow:clip; flex-wrap:wrap; overflow-wrap:normal; word-break:keep-all; border-radius:10px; corner-shape:squircle; }
+.ff .ff-ndcard17.qn17 .ff-qasker .stars { color:var(--color-gold); letter-spacing:.06em; font-size:12px; line-height:1; }
 .ff .ff-qa-filter17 { display:flex; flex-wrap:wrap; max-width:100%; margin:0 0 12px; border-radius:22px; corner-shape:squircle; }
 .ff .ff-qa-filter17 button { white-space:nowrap; }
 .ff .ff-qedit17 { position:absolute; top:7px; right:38px; z-index:6; width:26px; height:26px; border-radius:9px; corner-shape:squircle; display:grid; place-items:center; background:rgba(255,255,255,.2); color:#fff; cursor:pointer; border:0; }

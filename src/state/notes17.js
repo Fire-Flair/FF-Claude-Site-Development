@@ -7,7 +7,7 @@
 
    state.notesDone17 = [{ id, acct, kind, title, sub, outcome, at }]
      acct   "<role>:<FF Tag>"  one list per account and site
-     kind   shift | avail | team | coinvite | corequest | question | coquestion | netadd | bkavail | bkupd
+     kind   shift | avail | team | review | coinvite | corequest | question | coquestion | netadd | bkavail | bkupd
    Production: Core keeps the same record on the notification row (status, outcome, decided_at) and drops rows 7 days
    after they were decided.
 
@@ -45,7 +45,8 @@ function notesBrief17(s, people) {
       if (sh) out.push({ id: e.id, kind: "shift", title: `${e.auto ? "Open shift" : "You've been selected"} · ${sh.role}`, sub: `${hirerOf11(s, ev)} · ${whenOf11(sh)}`, e });
     });
     availWaiting17(s).forEach(x => out.push({ id: x.id, kind: "avail", qid: `av_${x.iso}`, title: "Are you available?", sub: `${x.byName} · ${shortDay(x.iso)}`, x }));
-    teamAsksWaiting17(s).forEach(x => out.push({ id: x.id, kind: "team", title: "Team invitation", sub: x.name, x }));
+    teamAsksWaiting17(s).forEach(x => out.push({ id: x.id, kind: "team", title: x.netAdd ? `${firstName(x.name)} added you to their network` : "Team invitation", sub: x.name, x }));
+    reviewAsksWaiting17(s).forEach(r => out.push({ id: r.id, kind: "review", title: `${firstName(r.byName)} reviewed you`, sub: r.byName, r }));
     coInvites17(s).forEach(x => out.push({ id: x.id, kind: "coinvite", title: "Company team invitation", sub: x.companyName, x }));
     questionsWaiting17(s, people).forEach(q => out.push({ id: q.id, kind: "question", qid: q.id, title: "Question for you", sub: `${askerName(q, people)} · ${q.text}`, q }));
   } else if (s.role === "staff") {
@@ -82,6 +83,10 @@ function notesOutcome17(it, n) {
   if (it.kind === "team") {
     const v = (n.teamAsks17 || {})[it.id];
     return v === "accepted" ? "Accepted" : v === "declined" ? "Declined" : (n.connections || []).some(c => c.id === it.x.fromId) ? "Accepted" : null;
+  }
+  if (it.kind === "review") {
+    const d = (n.reviewAsks17 || {})[it.id];
+    return d ? (d.show ? "Shown on your profile" : "Not shown") : null;
   }
   if (it.kind === "coinvite" || it.kind === "corequest") {
     const y = (n.coTeams17 || []).find(r => r.id === it.id);
