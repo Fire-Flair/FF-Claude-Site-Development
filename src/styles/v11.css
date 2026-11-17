@@ -4016,6 +4016,8 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-rf17 .q { margin:0; font:700 17px/1.3 var(--sans); color:var(--color-text); overflow-wrap:normal; word-break:normal; hyphens:none; }
 .ff .ff-rf17 .yn { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:8px; }
 .ff .ff-rf17 .yn button { min-height:48px; border-radius:14px; corner-shape:squircle; border:1.5px solid rgba(126,97,29,.5); background:var(--color-soft); color:var(--color-text); font:700 16px/1.2 var(--sans); }
+.ff .ff-rf17 .yn button:hover { background:var(--color-cream); }
+.ff .ff-rf17 .yn button, .ff .ff-rf17 .st button { touch-action:manipulation; }
 .ff .ff-rf17 .yn button.on { background:var(--color-gold); border-color:var(--color-gold-dk); color:var(--color-ink); }
 .ff .ff-rf17 .st { display:flex; gap:2px; flex-wrap:wrap; margin-left:-6px; }
 .ff .ff-rf17 .st button { min-width:44px; min-height:44px; padding:6px; display:grid; place-items:center; border-radius:12px; corner-shape:squircle; color:var(--color-muted-dark); }
