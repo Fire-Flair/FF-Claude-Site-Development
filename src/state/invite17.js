@@ -10,7 +10,7 @@
        completedAt: the first time the profile is complete (the sender is "rewarded": Core sends 10.5, the prototype records the time).
        notNowAt / reviewOfferedAt: what the newcomer has done with the banner.
    state.teamAsksIn17 = [{ id, fromId, name, tag, note, at, viaLink: true }]
-       a team invitation that came through a join link. Decided through TEAM_ASK_REPLY (state.teamAsks17 holds the answer).
+       a team invitation that came through a join link or a shared link. Decided through TEAM_ASK_REPLY (state.teamAsks17 holds the answer).
 
    First valid code wins. Valid = a member in the directory with that tag, and not the visitor's own tag.
    An unknown code is ignored without a message: sign-up works and nobody is credited.
@@ -69,8 +69,18 @@ function inv17Ref(s, a) {
 }
 
 
+/* Where a person stands with me, in one word. Team is two way (s.connections); pending = a team invitation I sent that is
+   not answered yet (s.teamInvites); network = a one-way add (s.netAdds17); otherwise none. */
+function connStatus17(s, id) {
+  if ((s.connections || []).some(c => c.id === id)) return "team";
+  if ((s.teamInvites || []).some(i => i.personId === id && i.status === "pending")) return "pending";
+  if ((s.netAdds17 || []).includes(id)) return "network";
+  return "none";
+}
+
+
 /* Called by AUTH_SIGNED_IN with the state before and after. A new account on FF Team with a valid code records who brought it in,
-   puts the sender in the newcomer's network (one way) and, for a join link, creates one pending team invitation. */
+   puts the sender in the newcomer's network (one way) and creates one pending team invitation (join link or shared link). */
 function inv17AtSignIn(prev, next, a) {
   if (inv17SignedIn(prev) || a.login || a.method === "dev" || next.role !== "team" || (next.profile && next.profile.referredBy)) return next;
   const sender = inv17Sender(next, next.session.refTag);
@@ -82,9 +92,24 @@ function inv17AtSignIn(prev, next, a) {
     profile: { ...next.profile, referredBy: { code: inv17Code(next.session.refTag), personId: sender.id, kind, at: now } },
     netAdds17: (next.netAdds17 || []).includes(sender.id) ? next.netAdds17 : [...(next.netAdds17 || []), sender.id],
   };
-  if (kind === "team" && !(next.teamAsksIn17 || []).some(x => x.fromId === sender.id))
+  if (!(next.teamAsksIn17 || []).some(x => x.fromId === sender.id))
     out.teamAsksIn17 = [...(next.teamAsksIn17 || []), { id: "tia_" + sender.id, fromId: sender.id, name: sender.name, tag: sender.tag, note: `You have been invited to join ${sender.name}'s team`, at: now, viaLink: true }];
   return out;
+}
+
+
+/* Called by AUTH_SIGNED_IN after inv17AtSignIn. A review written while signed out (session.reviewDraft17) is posted once the
+   visitor signs up or logs in, as a pending review by "me". The DEV login clears it without posting. Nobody is credited for it. */
+function rev17AtSignIn(prev, next, a) {
+  const d = next.session && next.session.reviewDraft17;
+  if (!d) return next;
+  const session = { ...next.session, reviewDraft17: null };
+  if (a.method === "dev" || inv17SignedIn(prev)) return { ...next, session };
+  const worked = d.worked !== false;
+  const review = { id: uid("rev"), aboutId: d.aboutId, byId: "me", byName: (next.profile && String(next.profile.name || "").trim()) || "You", worked, rating: worked ? (d.rating || null) : null, text: String(d.text || ""), status: "pending", at: Date.now(), shiftId: null };
+  const out = reducerCore17({ ...next, session }, { type: "REVIEW_ADD", review });
+  const who = adminPeople17(next, next.directory || []).find(p => p && p.id === d.aboutId) || companyById(next, d.aboutId) || {};
+  return { ...out, toast: `Review sent to ${firstName(who.name)}` };
 }
 
 
