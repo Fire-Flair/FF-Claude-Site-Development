@@ -107,32 +107,23 @@ const tabLabel17 = (key, state, dflt) => {
 
 
 
-/* Training, Dream jobs and FF rewards cards: tap one and it turns over to its description. Both sites. */
-function FlipChoice17({ kind, title, img, note, on, onClick }) {
-  const [back, setBack] = useState(false);
-  const key = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setBack(b => !b); } };
-  const tick = (
-    <button type="button" className="tick" aria-pressed={on} onClick={(e) => { e.stopPropagation(); onClick(); }}>
-      {on ? <><S17I.Check size={13} strokeWidth={2.6} /> Interested</> : <><S17I.Plus size={13} /> I'm interested</>}
-    </button>
-  );
+/* Training, Dream jobs and FF Rewards cards (FF Team Bookings and FF Staff). The photo is the top half of the card and
+   only the title sits on it; the label, the description and the button are below, on the solid card.
+   `pos` is the photo's object-position (where its subject is), so a crop never cuts a head. */
+function FlipChoice17({ kind, title, img, pos, note, on, onClick }) {
   return (
-    <div className={`ff-fc17${back ? " back" : ""}`}>
-      <div className="fi">
-        <div className="ff-shine-img fr" role="button" tabIndex={back ? -1 : 0} aria-pressed={on} aria-label={`${title}: turn over`} onClick={() => setBack(true)} onKeyDown={key}>
-          {img ? <img decoding="async" src={img} alt="" loading="eager" draggable="false" /> : <HomeScene kind="bar" />}
-          <span className="shade" aria-hidden="true" />
-          <span className="k">{kind}</span>
-          <span className="tx"><span className="t">{title}</span>
-          {note && <span className="d">{note}</span>}</span>
-          {tick}
-          {on && <span className="chk" aria-hidden="true"><S17I.Check size={13} strokeWidth={3} /></span>}
-        </div>
-        <div className="bk" role="button" tabIndex={back ? 0 : -1} aria-label={`${title}: turn back`} onClick={() => setBack(false)} onKeyDown={key}>
-          <b className="bt">{title}</b>
-          <p>{note}</p>
-          {tick}
-        </div>
+    <div className={`ff-fc17${on ? " on" : ""}`}>
+      <div className="ph">
+        {img ? <img decoding="async" src={img} alt="" loading="lazy" draggable="false" style={pos ? { objectPosition: pos } : undefined} /> : <HomeScene kind="bar" />}
+        <span className="t">{title}</span>
+        {on && <span className="chk" aria-hidden="true"><S17I.Check size={13} strokeWidth={3} /></span>}
+      </div>
+      <div className="bd">
+        {kind && <span className="k">{kind}</span>}
+        {note && <p className="d">{note}</p>}
+        <button type="button" className="tick" aria-pressed={on} aria-label={`${title}: ${on ? "interested" : "I'm interested"}`} onClick={onClick}>
+          {on ? <><S17I.Check size={13} strokeWidth={2.6} /> Interested</> : <><span className="pl" aria-hidden="true"><S17I.Plus size={13} /></span> I'm interested</>}
+        </button>
       </div>
     </div>
   );
