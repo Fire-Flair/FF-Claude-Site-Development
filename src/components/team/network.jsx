@@ -183,13 +183,14 @@ function PersonProfile() {
       <Btn variant={party ? "" : "ghost"} onClick={() => setChecking(true)}><I11.CalendarCheck size={14} aria-hidden="true" /><FitLabel17>Availability</FitLabel17></Btn>
     </div>
   );
+  /* FF Team: Share sits below the other buttons, centred, half the row wide. */
+  const halfShare = (el) => el ? <div className="ff-share-half">{el}</div> : null;
   let actionsEl = null;
   if (guestOfMe || (other && !signedIn && !party)) {
-    /* A signed-out visitor (and you, previewing your profile as a guest): Join, Review, Share. */
+    /* A signed-out visitor (and you, previewing your profile as a guest): Join (muted gold), then a smaller Share below. */
     actionsEl = (<div className="ff-pub-acts ff-pub-stack">
-      <Btn variant="gold wide ff-join17" onClick={guestOfMe ? () => preview() : join}><FitLabel17>{`Join ${first}'s team`}</FitLabel17></Btn>
-      <Btn variant="ghost wide" onClick={guestOfMe ? () => preview() : () => setReviewing(true)}><Award size={14} aria-hidden="true" /><FitLabel17>Review</FitLabel17></Btn>
-      {guestOfMe ? <MyShareBtn17 person={person} onTap={() => preview()} /> : shareBtn}
+      <Btn variant="wide ff-join-mut" onClick={guestOfMe ? () => preview() : join}><FitLabel17>{`Join ${first}'s team`}</FitLabel17></Btn>
+      {halfShare(guestOfMe ? <MyShareBtn17 person={person} onTap={() => preview()} /> : shareBtn)}
     </div>);
   } else if (other && party) {
     actionsEl = (<div className="ff-pub-acts ff-pub-stack">
@@ -213,12 +214,12 @@ function PersonProfile() {
       )}
       {askRow}
       {state.role === "staff" && <Btn variant="wide" onClick={() => setReviewing(true)}><Award size={14} aria-hidden="true" /><FitLabel17>Review</FitLabel17></Btn>}
-      {shareBtn}
+      {state.role === "staff" ? shareBtn : halfShare(shareBtn)}
     </div>);
   }
   const cardEl = <PlayerCard person={person} format="full" nameAs="div" themeKey={person.id === "me" ? state.profile.theme : (person.theme || "ivory")}  />;
   return (
-    <div className={publicView ? "ff-pubpage" : undefined}>
+    <div className={publicView ? "ff-pubpage ff-pp-other" : undefined}>
       <PublicHero media={mediaOf(state, person)} card={cardEl} narrow below={<>{backBtn}{guestNote}{actionsEl}{shareEl}</>} />
       <HireCards11 person={person} />
       <PublicProfileBody person={person} />
