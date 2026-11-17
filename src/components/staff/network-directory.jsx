@@ -271,8 +271,7 @@ function NetBrowse17(props) {
         React.createElement(TopStaff11, null),
         React.createElement(ProsByType17, { onPick: props.onPick })),
       React.createElement("section", { id: "ff-net-search", style: { marginTop: 18, scrollMarginTop: 70 } }, props.search),
-      React.createElement(NetDirectory20, null),
-      React.createElement(NetVenues20, null));
+      React.createElement(NetDirectory20, null));
   }
   return React.createElement(React.Fragment, null,
     noPkg ? null : React.createElement(BigHead20, { title: "Explore our packages" }),

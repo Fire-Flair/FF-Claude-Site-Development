@@ -224,7 +224,7 @@ function FFMap({ mode = "home" }) {
     const partnerPins = mode !== "network" ? [] : companyList(state).filter((c) => !c.unclaimed && !c.mine && (c.locations || []).length).flatMap((c) => c.locations.map((l, i) => { const ll = [l.lat, l.lng]; return { id: "pt_" + c.id + "_" + i, coId: c.id, kind: "company", partner: true, name: c.name, profession: c.kind, area: l.label, ll, ldn: inLondon11(ll), cat: c.cat || "bar", x: (ll[1] + 0.4045) / 0.00525, y: (51.654 - ll[0]) / 0.002957 + 9 }; }));
     const xyOf = (ll) => ({ x: (ll[1] + 0.4045) / 0.00525, y: (51.654 - ll[0]) / 0.002957 + 9 });
     /* v17.14: venues members added from Google's business search, each at its own point (people stay at area level). */
-    const venuePins = home || p1 || mode === "network" ? publicVenues17(state).map(v => {
+    const venuePins = home || p1 ? publicVenues17(state).map(v => {
       const ll = [v.rec.place.lat, v.rec.place.lng];
       return { id: "ven_" + v.key, kind: "venue", venue: true, name: v.rec.name, vtype: venTypeLabel17(v.rec.place), area: v.rec.area.name, ll, ldn: inLondon11(ll), rec: v.rec, ...xyOf(ll) };
     }) : [];
