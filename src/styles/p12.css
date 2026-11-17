@@ -828,3 +828,35 @@
   /* the violet beams sit above the photo so they show where the picture ends */
   .ff section#ff-hero.ff-hero18::after { z-index:1; mix-blend-mode:screen; }
 }
+
+/* ======================= v17.36 — hero (Gimli task): swipeable card, dots under the easel, moving-or-absent shine, crops ======================= */
+/* the card face slides inside a clip that has the card's own shape, so a swipe stays in the board's perspective */
+.ff .ff-easel24-clip { display:block; position:relative; overflow:hidden; border-radius:inherit; corner-shape:squircle; }
+.ff .ff-easel24-slide { display:block; pointer-events:none; will-change:transform; }
+.ff .ff-easel24-slide > .ff-deck, .ff .ff-easel24-slide > :first-child { max-width:none !important; width:100% !important; margin:0 !important; aspect-ratio:757 / 994 !important; }
+.ff .ff-easel24-card:not(.refl) { touch-action:pan-y; user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; }
+/* the shine is never static: with reduced motion the element is not rendered (hero-easel.jsx); this is the backstop */
+@media (prefers-reduced-motion: reduce) { .ff .ff-easel24-sheen { display:none !important; } }
+/* dots: drawn inside the card's own transform, so they sit just under the board in the same tilt */
+.ff .ff-easel24-dots { position:absolute; left:0; right:0; top:calc(100% + 26px); display:flex; justify-content:center; gap:13px; pointer-events:none; }
+.ff .ff-easel24-dots > i { display:block; width:14px; height:14px; border-radius:50%; background:rgba(244,239,228,.5); box-shadow:0 0 0 2px rgba(11,11,12,.55); }
+.ff .ff-easel24-dots > i.on { background:#C9A227; box-shadow:0 0 0 2px rgba(11,11,12,.55), 0 0 14px 3px rgba(201,162,39,.55); }
+/* wide view: the photo keeps its full width (never cropped left or right); only the top and bottom are cropped */
+@media (min-width:900px) {
+  /* the box is at least 1800:697 (photo rows 5%–87% of its height) and grows with the words when they are taller;
+     the photo stays centred on the easel and its top and bottom edges melt into the panel */
+  .ff section#ff-hero.ff-hero18 .ff-hero18-img { aspect-ratio:auto !important; height:auto !important; align-self:stretch !important; container-type:inline-size !important;
+    -webkit-mask-image:linear-gradient(90deg, transparent 0, rgba(0,0,0,.45) 16%, #000 34%), linear-gradient(180deg, transparent 0, #000 7%, #000 93%, transparent 100%) !important;
+    mask-image:linear-gradient(90deg, transparent 0, rgba(0,0,0,.45) 16%, #000 34%), linear-gradient(180deg, transparent 0, #000 7%, #000 93%, transparent 100%) !important;
+    -webkit-mask-composite:source-in !important; mask-composite:intersect !important; }
+  .ff section#ff-hero.ff-hero18 .ff-hero18-img::before { content:""; display:block; padding-top:38.7222%; }
+  .ff section#ff-hero.ff-hero18 .ff-hero18-photo { inset:auto !important; left:0 !important; top:50% !important; width:100% !important; height:auto !important; max-width:none !important; aspect-ratio:1800 / 850 !important; transform:translateY(-46%) !important;
+    -webkit-mask-image:linear-gradient(180deg, transparent 3%, #000 12%, #000 90%, transparent 97%) !important; mask-image:linear-gradient(180deg, transparent 3%, #000 12%, #000 90%, transparent 97%) !important; }
+  .ff section#ff-hero.ff-hero18 .ff-easel24 { width:100% !important; left:0 !important; top:50% !important; transform:translateY(-46%) !important; }
+}
+/* phones: the sides are cropped a little more so the card is larger (160% wide, was 136%) */
+@media (max-width:899px) {
+  .ff .ff-hero18 .ff-hero18-img { aspect-ratio:1800 / 1080 !important; }
+  .ff .ff-hero18 .ff-hero18-photo { width:160% !important; transform:translate(-50.5%,-6%) !important; }
+  .ff .ff-hero18 .ff-easel24 { width:160% !important; transform:translate(-50.5%,-6%) !important; }
+}
