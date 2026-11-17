@@ -4019,6 +4019,13 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-qa17 .ty button { width:48px; height:48px; border-radius:50%; border:0; background:var(--gold-dk,#7E611D); color:#fff; display:grid; place-items:center; cursor:pointer; }
 .ff .ff-qa17 .ty button:disabled { opacity:.4; cursor:default; }
 .ff .ff-qa17 button:focus-visible, .ff .ff-qa17 input:focus-visible { outline:2px solid var(--gold,#B08D2A); outline-offset:2px; }
+/* v17.22 notification Question Cards ("added you to their network", "reviewed you"): the from-line wraps between words, the stars are gold,
+   the type box has no send button, and the review text wraps between words and scrolls inside the answer box instead of being cut off. */
+.ff .ff-ndcard17.ask17 .ff-qasker { white-space:normal; overflow:visible; text-overflow:clip; flex-wrap:wrap; overflow-wrap:normal; word-break:keep-all; border-radius:10px; corner-shape:squircle; }
+.ff .ff-ndcard17.ask17 .ff-askstars17 { display:inline-flex; gap:1px; color:var(--color-gold,#C9A227); }
+.ff .ff-ndcard17.ask17 .ff-qa17 .ty { grid-template-columns:minmax(0,1fr); }
+.ff .ff-ndcard17.ask17 span:has(> .ff-asksaid17) { display:block !important; -webkit-line-clamp:unset !important; overflow-y:auto !important; overflow-wrap:normal !important; word-break:keep-all; opacity:1 !important; }
+.ff .ff-ndcard17.ask17 .ff-asksaid17 { font-size:14px; font-weight:500; line-height:1.35; }
 .ff .ff-nd17 { scroll-margin-top:72px; }
 /* v17.4.6.3: FF Staff Shifts profession cards: matte forest green (FF Staff accent within FF Team). Flat fill, no sheen.
    Deepened from the card-creator green (#173B2A to #1F5A3C) so labels, the rate input and small text stay readable. */

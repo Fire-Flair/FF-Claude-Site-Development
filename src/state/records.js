@@ -169,13 +169,16 @@ const emptyRecords = () => Object.keys(BASE_CATEGORIES).reduce((m, k) => { m[k] 
    someone else's profile uses the same Information Card components. */
 /* Reviews written ABOUT a person, newest first, shaped as records so they
    render through the same Information Card as everything else. */
+/* v17.22: a declined review is never shown. A pending one is shown only to the person who wrote it (me), marked pending: true.
+   A saved review with no status counts as accepted. */
 function reviewRecordsFor(state, personId) {
   return (state.reviews || [])
-    .filter(r => r.aboutId === personId)
+    .filter(r => r.aboutId === personId && r.status !== "declined" && (r.status !== "pending" || r.byId === "me"))
     .sort((a, b) => b.at - a.at)
     .map(r => ({
-      ...makeRecord("reviews", `${r.rating}★ from ${r.byName}`),
+      ...makeRecord("reviews", r.rating == null ? `From ${r.byName}` : `${r.rating}★ from ${r.byName}`),
       id: r.id, description: r.text, rating: r.rating, primary: true, readOnly: true,
+      ...(r.status === "pending" ? { pending: true } : {}),
     }));
 }
 

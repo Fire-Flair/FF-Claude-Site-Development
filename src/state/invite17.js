@@ -10,7 +10,7 @@
        completedAt: the first time the profile is complete (the sender is "rewarded": Core sends 10.5, the prototype records the time).
        notNowAt / reviewOfferedAt: what the newcomer has done with the banner.
    state.teamAsksIn17 = [{ id, fromId, name, tag, note, at, viaLink: true }]
-       a team invitation that came through a join link. Decided through TEAM_ASK_REPLY (state.teamAsks17 holds the answer).
+       a team invitation that came through a join link or a shared card or shift link. Decided through TEAM_ASK_REPLY (state.teamAsks17 holds the answer).
 
    First valid code wins. Valid = a member in the directory with that tag, and not the visitor's own tag.
    An unknown code is ignored without a message: sign-up works and nobody is credited.
@@ -70,7 +70,7 @@ function inv17Ref(s, a) {
 
 
 /* Called by AUTH_SIGNED_IN with the state before and after. A new account on FF Team with a valid code records who brought it in,
-   puts the sender in the newcomer's network (one way) and, for a join link, creates one pending team invitation. */
+   puts the sender in the newcomer's network (one way) and creates one pending team invitation (join link or shared link). */
 function inv17AtSignIn(prev, next, a) {
   if (inv17SignedIn(prev) || a.login || a.method === "dev" || next.role !== "team" || (next.profile && next.profile.referredBy)) return next;
   const sender = inv17Sender(next, next.session.refTag);
@@ -82,9 +82,35 @@ function inv17AtSignIn(prev, next, a) {
     profile: { ...next.profile, referredBy: { code: inv17Code(next.session.refTag), personId: sender.id, kind, at: now } },
     netAdds17: (next.netAdds17 || []).includes(sender.id) ? next.netAdds17 : [...(next.netAdds17 || []), sender.id],
   };
-  if (kind === "team" && !(next.teamAsksIn17 || []).some(x => x.fromId === sender.id))
+  /* v17.22: a join link and a shared card or shift link both create the pending team invitation; referredBy.kind still says which. */
+  if (!(next.teamAsksIn17 || []).some(x => x.fromId === sender.id))
     out.teamAsksIn17 = [...(next.teamAsksIn17 || []), { id: "tia_" + sender.id, fromId: sender.id, name: sender.name, tag: sender.tag, note: `You have been invited to join ${sender.name}'s team`, at: now, viaLink: true }];
   return out;
+}
+
+
+/* Called by AUTH_SIGNED_IN after inv17AtSignIn. A review written while signed out (session.reviewDraft17) is sent once the
+   visitor signs up or logs in: it waits, pending, for the person it is about. The DEV login drops the draft unsent.
+   Nobody is credited as referrer because of a review. */
+function rev17AtSignIn(prev, next, a) {
+  const d = next.session && next.session.reviewDraft17;
+  if (!d) return next;
+  const clean = { ...next, session: { ...next.session, reviewDraft17: null } };
+  if (a.method === "dev" || !d.aboutId) return clean;
+  const worked = d.worked !== false;
+  const review = { id: uid("rev"), aboutId: d.aboutId, byId: "me", byName: String((clean.profile && clean.profile.name) || "").trim() || "You",
+    worked, rating: worked ? (Number(d.rating) || null) : null, text: String(d.text || "").trim(), status: "pending", at: Date.now(), shiftId: null };
+  const who = adminPeople17(clean, clean.directory || []).find(p => p && p.id === d.aboutId);
+  return { ...review17Add(clean, review), toast: who ? `Review sent to ${firstName(who.name)}` : "Review sent" };
+}
+
+
+/* One status for a person, from my side: on my team (two way), invited and waiting, in my network (one way), or none. */
+function connStatus17(s, id) {
+  if ((s.connections || []).some(c => c && c.id === id)) return "team";
+  if ((s.teamInvites || []).some(i => i && i.personId === id && i.status === "pending")) return "pending";
+  if ((s.netAdds17 || []).includes(id)) return "network";
+  return "none";
 }
 
 

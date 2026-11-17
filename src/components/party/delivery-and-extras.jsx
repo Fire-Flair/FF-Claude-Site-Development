@@ -245,9 +245,10 @@ function availWaiting17(state) {
 
 
 /* Team invitations sent TO you. The real ones are state.teamAsksIn17 (a join link brought you in; see src/state/invite17.js).
-   Core supplies the rest in production. These two samples appear only for the DEV complete-profile login (state.devDone.team). */
+   Core supplies the rest in production. These two samples appear only for the DEV complete-profile login (state.devDone.team).
+   netAdd: true — they added you to their network (one way); the card asks whether to put them on your team. */
 const TEAM_ASKS_DEMO17 = [
-  { id: "tia_gav", fromId: "stf_gav", name: "Alexandru Gavrilas", tag: "GAVRILAS", note: "Worked with you before · would work with you again", at: Date.UTC(2026, 10, 8) },
+  { id: "tia_gav", fromId: "stf_gav", name: "Alexandru Gavrilas", tag: "GAVRILAS", netAdd: true, at: Date.UTC(2026, 10, 8) },
   { id: "tia_vooshka", fromId: "co_vooshka", name: "Vooshka Cocktail Bar", company: true, note: "Wants you on their company team", at: Date.UTC(2026, 10, 9) },
 ];
 
@@ -257,6 +258,20 @@ function teamAsksWaiting17(state) {
   const done = state.teamAsks17 || {};
   const real = (state.teamAsksIn17 || []).filter(x => !done[x.id] && !(state.connections || []).some(c => c.id === x.fromId));
   const sample = state.devDone && state.devDone.team ? TEAM_ASKS_DEMO17.filter(x => !done[x.id] && !(state.connections || []).some(c => c.id === x.fromId) && !(x.company && (state.netAdds17 || []).includes(x.fromId))) : [];
+  return [...real, ...sample];
+}
+
+
+/* Reviews written about you that wait for your answer (FF Team). The real ones are state.reviews with status "pending".
+   The sample appears only for the DEV complete-profile login (state.devDone.team), until it is answered. */
+const REVIEW_ASKS_DEMO17 = [{ id: "rva_gav", aboutId: "me", byId: "stf_gav", byName: "Alexandru Gavrilas", worked: true, rating: 5, text: "Calm behind a busy bar and great with guests.", at: Date.UTC(2026, 10, 8) }];
+
+
+function reviewAsksWaiting17(state) {
+  if (!(state.auth && state.auth.status === "signedIn" && state.role === "team")) return [];
+  const done = state.reviewAsks17 || {};
+  const real = (state.reviews || []).filter(r => r.aboutId === "me" && r.status === "pending");
+  const sample = state.devDone && state.devDone.team ? REVIEW_ASKS_DEMO17.filter(r => !done[r.id] && !(state.reviews || []).some(x => x.id === r.id)) : [];
   return [...real, ...sample];
 }
 
@@ -309,8 +324,27 @@ const coInvites17 = (state) => ctInvitesForMe17(state);
    FF Staff and FF Party: replies to your invitations, questions from the people you asked to work, join requests.
    The badge counts what the list shows as new: every action, plus updates since the list was last opened. */
 const notifyCount17 = (state) => state.role === "vip" ? 0 : state.role === "team"
-  ? pending11(state).length + availWaiting17(state).length + teamAsksWaiting17(state).length + coInvites17(state).length + questionsWaiting17(state, state.directory || []).length
+  ? pending11(state).length + availWaiting17(state).length + teamAsksWaiting17(state).length + reviewAsksWaiting17(state).length + coInvites17(state).length + questionsWaiting17(state, state.directory || []).length
   : shiftQuestionsWaiting17(state).length + coRequests17(state).length + coQuestionsWaiting17(state).length + coNetUnseen17(state).length + bookingUpdates17(state).filter(u => u.action || u.at > (state.notesSeenAt || 0)).length;
+
+
+/* A notification drawn as a Question Card: the card face, then Yes, No and a type box below it.
+   What is typed travels with Yes or No, so the type box has no send button of its own. */
+function AskNote17({ label, asker, question, said, placeholder, onAnswer }) {
+  const [txt, setTxt] = useState("");
+  return (
+    <div className="ff-ndcard17 ask17">
+      <div className="face"><QuestionCard q={{ text: question, group: "asked" }} answer="" label={label} asker={asker} pending={said ? <span className="ff-asksaid17">{said}</span> : " "} /></div>
+      <div className="ff-qa17">
+        <div className="yn" role="group" aria-label={question}>
+          <button type="button" onClick={() => onAnswer(true, txt.trim())}>Yes</button>
+          <button type="button" onClick={() => onAnswer(false, txt.trim())}>No</button>
+        </div>
+        <div className="ty"><input aria-label={placeholder} value={txt} maxLength={400} onChange={(e) => setTxt(e.target.value)} placeholder={placeholder} /></div>
+      </div>
+    </div>
+  );
+}
 
 
 function TeamAskNote17({ x, onAccepted }) {
@@ -319,7 +353,8 @@ function TeamAskNote17({ x, onAccepted }) {
   const person = x.company ? null : all.find(p => p.id === x.fromId);
   const co = x.company ? companyById(state, x.fromId) : null;
   const first = x.company ? x.name : firstName(x.name);
-  const reply = (accept) => { dispatch({ type: "TEAM_ASK_REPLY", ask: x, accept }); dispatch({ type: "TOAST", toast: accept ? `You and ${first} are on each other's team` : "Invitation declined" }); if (accept && x.viaLink) dispatch({ type: "INV_PATCH", patch: { reviewOfferedAt: Date.now() } }); if (accept && person && onAccepted) onAccepted(person); };
+  const reply = (accept, text) => { dispatch({ type: "TEAM_ASK_REPLY", ask: x, accept, text }); dispatch({ type: "TOAST", toast: accept ? `You and ${first} are on each other's team` : x.netAdd ? "Not added" : "Invitation declined" }); if (accept && x.viaLink) dispatch({ type: "INV_PATCH", patch: { reviewOfferedAt: Date.now() } }); if (accept && person && onAccepted) onAccepted(person); };
+  if (x.netAdd) return <AskNote17 label="Network" asker={`${first} added you to their network`} question={`Add ${first} to your team?`} placeholder={`Say hello to ${first}`} onAnswer={reply} />;
   return (
     <div className="ff-ndcard17">
       <div className="face">{co ? <CompanyCardFace c={co} size="sm" /> : person ? <PlayerCard person={person} format="portrait" themeKey={person.theme || "paper"} /> : null}</div>
@@ -330,6 +365,16 @@ function TeamAskNote17({ x, onAccepted }) {
       </div>
     </div>
   );
+}
+
+
+/* A review written about you: show it on your profile or not. The review itself is never deleted. */
+function ReviewAskNote17({ r }) {
+  const { dispatch } = useStore();
+  const first = firstName(r.byName);
+  const stars = r.rating ? <span className="ff-askstars17" role="img" aria-label={`${r.rating} out of 5`}>{Array.from({ length: r.rating }, (_, i) => <I11.Star key={i} size={11} fill="currentColor" strokeWidth={1.5} />)}</span> : null;
+  const decide = (show, text) => { dispatch({ type: "REVIEW_DECIDE", id: r.id, show, text, review: r }); dispatch({ type: "TOAST", toast: show ? "Review added to your profile" : "Review not shown" }); };
+  return <AskNote17 label="Review" asker={<>{`${first} reviewed you`}{stars}</>} question="Show this review on your profile?" said={String(r.text || "").trim()} placeholder={`Reply to ${first}`} onAnswer={decide} />;
 }
 
 
@@ -426,7 +471,7 @@ function NoteDrop17({ id, open, onToggle, icon, title, sub, children }) {
 }
 
 
-const NOTE_ICON17 = { shift: "Briefcase", avail: "CalendarCheck", team: "Users", coinvite: "Users", corequest: "UserPlus", question: "MessageSquare", coquestion: "MessageSquare", netadd: "Users", bkavail: "CalendarCheck", bkupd: "Check" };
+const NOTE_ICON17 = { shift: "Briefcase", avail: "CalendarCheck", team: "Users", review: "Star", coinvite: "Users", corequest: "UserPlus", question: "MessageSquare", coquestion: "MessageSquare", netadd: "Users", bkavail: "CalendarCheck", bkupd: "Check" };
 
 
 function NotifySheet17({ open, onClose }) {
@@ -446,6 +491,7 @@ function NotifySheet17({ open, onClose }) {
     if (it.kind === "shift") { const sh = state.shifts.find(x => x.id === it.e.shiftId), ev = sh && state.events.find(x => x.id === sh.eventId); return <ShiftDelivery11 e={it.e} shift={sh} event={ev} />; }
     if (it.kind === "avail") return <QuestionNote17 q={availQ(it.x.iso)} label="Availability" asker={`Asked by ${it.x.byName}`} noVis />;
     if (it.kind === "team") return <TeamAskNote17 x={it.x} onAccepted={setReview} />;
+    if (it.kind === "review") return <ReviewAskNote17 r={it.r} />;
     if (it.kind === "coinvite" || it.kind === "corequest") return <CoTeamNote17 x={it.x} />;
     if (it.kind === "bkavail") return <BookingUpdateNote17 u={it.u} who={findPerson(people, state, it.u.e.staffId) || {}} onGo={onClose} />;
     if (it.kind === "question") return <QuestionNote17 q={it.q} asker={`Asked by ${askerName(it.q, people)}`} />;

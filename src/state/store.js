@@ -24,6 +24,10 @@ const initialState = {
   /* Feedback Question Card answers — product research, not profile data. */
   feedback: {},
   teamAsksIn17: [],
+  /* v17.22: what I typed when I answered a team invitation sent to me: { [ask id]: text }. */
+  teamAskNotes17: {},
+  /* v17.22: my answer to a review written about me: { [review id]: { show, text, at } }. Reviews are never deleted. */
+  reviewAsks17: {},
   connections: [], invitations: [], reviews: [], reviewRequests: [],
   /* Questions visitors ask on a profile ("Ask a question") — one Question
      Card each, tied to that person: { id, personId, text, askedAt, by, answer }. */
@@ -61,11 +65,10 @@ const initialState = {
   jobsInterest: null,
   cocktailMenu: null,
   partyDraft: null,       // v16.15: the quick Event Card builder's draft (not persisted)     // v16.15: cocktails chosen before an Event Card is saved — { picks, mode, count }     // v16.14: Dream jobs — { jobs: [ids], dream: [text], contact, at }
-  /* Team invitations (v16.11) — "Add to team" is two-way. Each invitation
-     carries the sender's answers and review, and stays "pending" until the
-     other person accepts on WhatsApp; only then are they connected and the
-     review goes on their profile.
-     { id, personId, name, tag, note, workedBefore, workAgain, howTo, review, at, status, acceptedAt } */
+  /* Team invitations (v16.11) — "Add to team" is two-way. An invitation stays
+     "pending" until the other person accepts; only then are they connected.
+     v17.22 shape: { id, personId, name, tag, note, at, status, acceptedAt }. Older saved
+     invitations may still carry workedBefore, workAgain, howTo, rating and review. */
   teamInvites: [],
   /* Viewing your own profile the way a guest sees it (after publishing). */
   viewingAsGuest: false,
@@ -150,6 +153,18 @@ function claimListXP(s, cat, list) {
   return claimXP(s, id);
 }
 
+
+
+/* v17.22 reviews: { id, aboutId, byId, byName, worked, rating, text, status, at, shiftId }
+   worked true | false; rating 1..5, or null when worked is false; status "pending" | "accepted" | "declined".
+   A review I write about someone else waits ("pending") until they accept it; any other review is "accepted".
+   A saved review with no status counts as accepted. One review by me per person without a shift: a new one replaces the old. */
+function review17Add(s, review) {
+  const r = { ...review, status: review.status || (review.byId === "me" && review.aboutId !== "me" ? "pending" : "accepted") };
+  const keep = (s.reviews || []).filter(x => !(r.byId === "me" && !r.shiftId && x.byId === "me" && x.aboutId === r.aboutId && !x.shiftId));
+  const next = { ...s, reviews: [...keep, r] };
+  return r.aboutId === "me" ? claimXP(next, "first_review") : next;
+}
 
 
 function reducer(s, a) {
@@ -401,20 +416,41 @@ function reducerCore17(s0, a) {
       return isAnswered(a.q.answer) ? claimXP(next, `question_${a.q.id}`, XP_VALUES.question) : next;
     }
     case "CONNECT":   return { ...s, connections: [...s.connections, ...a.people] };
-    case "REVIEW_ADD": {
-      const next = { ...s, reviews: [...s.reviews, a.review] };
-      return a.review.aboutId === "me" ? claimXP(next, "first_review") : next;
+    /* Signed-out visitors cannot post a review (REVIEW_DRAFT keeps it until they sign in). */
+    case "REVIEW_ADD": return inv17SignedIn(s) && a.review ? review17Add(s, a.review) : s;
+    case "REVIEW_DRAFT": return !inv17SignedIn(s) && a.draft ? { ...s, session: { ...s.session, reviewDraft17: { aboutId: a.draft.aboutId, worked: a.draft.worked, rating: a.draft.rating, text: a.draft.text } } } : s;
+    /* My answer to a review about me. A sample (not in state.reviews) is added only when shown. */
+    case "REVIEW_DECIDE": {
+      const now = Date.now(), asks = { ...(s.reviewAsks17 || {}), [a.id]: { show: !!a.show, text: String(a.text || ""), at: now } };
+      if ((s.reviews || []).some(r => r.id === a.id))
+        return { ...s, reviewAsks17: asks, reviews: s.reviews.map(r => r.id === a.id ? { ...r, status: a.show ? "accepted" : "declined" } : r) };
+      if (a.show && a.review) return claimXP({ ...s, reviewAsks17: asks, reviews: [...(s.reviews || []), { ...a.review, status: "accepted" }] }, "first_review");
+      return { ...s, reviewAsks17: asks };
     }
     case "REVIEW_REQUEST": return { ...s, reviewRequests: [...s.reviewRequests, a.request] };
     case "VIEW":      return { ...s, viewing: a.id, viewingAsGuest: !!(a.id && a.guest) };
-    case "TEAM_INVITE": return { ...s, teamInvites: [...(s.teamInvites || []).filter(i => i.personId !== a.invite.personId || i.status === "accepted"), a.invite] };
+    case "TEAM_INVITE": {
+      if (!inv17SignedIn(s) || !a.invite) return s;
+      const n = s.netAdds17 || [];
+      return { ...s, teamInvites: [...(s.teamInvites || []).filter(i => i.personId !== a.invite.personId || i.status === "accepted"), a.invite], netAdds17: n.includes(a.invite.personId) ? n : [...n, a.invite.personId] };
+    }
     case "TEAM_INVITE_ACCEPT": {
       const inv = (s.teamInvites || []).find(i => i.id === a.id);
       if (!inv || inv.status === "accepted") return s;
       const invites = s.teamInvites.map(i => i.id === a.id ? { ...i, status: "accepted", acceptedAt: Date.now() } : i);
       const connections = s.connections.some(c => c.id === inv.personId) ? s.connections
         : [...s.connections, { id: inv.personId, name: inv.name, note: inv.note, onFF: true, tag: inv.tag }];
-      return { ...s, teamInvites: invites, connections };
+      /* My reviews of them that were waiting are accepted with the invitation. */
+      const reviews = (s.reviews || []).map(r => r.byId === "me" && r.aboutId === inv.personId && r.status === "pending" ? { ...r, status: "accepted" } : r);
+      return { ...s, teamInvites: invites, connections, reviews };
+    }
+    /* v17.22: take someone out of my network, cancel a pending team invitation, or leave each other's team (they stay in my network). */
+    case "CONN_REMOVE": {
+      const id = a.id, n = s.netAdds17 || [], inv = s.teamInvites || [];
+      if (a.from === "network") return { ...s, netAdds17: n.filter(x => x !== id), teamInvites: inv.filter(i => !(i.personId === id && i.status === "pending")) };
+      if (a.from === "pending") return { ...s, teamInvites: inv.filter(i => !(i.personId === id && i.status === "pending")) };
+      if (a.from === "team") return { ...s, connections: (s.connections || []).filter(c => c.id !== id), teamInvites: inv.filter(i => i.personId !== id), netAdds17: n.includes(id) ? n : [...n, id] };
+      return s;
     }
     case "SEED_DEMO": {
       /* The demo profile is complete, so it carries the XP its data has earned. */
@@ -438,7 +474,7 @@ function reducerCore17(s0, a) {
       Object.keys(n.profile.records).forEach(cat => { n = claimListXP(n, cat, n.profile.records[cat]); });
       return n;
     }
-    case "AUTH_SIGNED_IN": return inv17AtSignIn(s, { ...s, auth: { status: "signedIn", tag: a.tag, method: a.method }, session: { ...s.session, tag: s.session.tag || a.tag } }, a);
+    case "AUTH_SIGNED_IN": return rev17AtSignIn(s, inv17AtSignIn(s, { ...s, auth: { status: "signedIn", tag: a.tag, method: a.method }, session: { ...s.session, tag: s.session.tag || a.tag } }, a), a);
     case "TOAST":     return { ...s, toast: a.toast };
     case "PARTY_EVENT_SAVE": return { ...s, partyEvents: [a.event, ...(s.partyEvents || [])] };
     case "TRAINING_INTEREST": return { ...s, trainingInterest: a.interest };
