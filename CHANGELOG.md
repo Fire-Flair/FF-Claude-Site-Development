@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.27
+
+Artifact version 1794945469-0318.
+
+FF Team profile builder: the Phone number box.
+
+- The Phone number box (and its WhatsApp code step, and the signed-in Phone number box) is a shiny gold box: `GoldBox21` with `className="shine"`, styles `.ff-gb21.shine` at the end of prof21.css. FF Tag and Media keep the paler gold.
+- Country code drop-down in front of the number, as on the live FFTeam.uk, showing +44 by default: `DialCode26` and the `DIAL_CODES26` list in profile-builder.jsx (a native select under a compact "+44" label, so phones use their own picker). The list in the prototype is a starter list; the live site should use its full list.
+- The number passed to `AUTH_ADAPTER.sendSignupCode` / `verifySignupCode` is the code plus the national number with any leading 0 dropped (+44 7700 900000). A number typed with its own + or 00 is passed as typed.
+
 ## v17.26
 
 Artifact version 1794945257-a2e3.

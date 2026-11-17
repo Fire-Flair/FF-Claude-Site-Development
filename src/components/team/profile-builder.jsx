@@ -376,7 +376,7 @@ function AccountSettings({ boxes = false } = {}) {
     }
   };
   if (boxes && !editing) return (<>
-    <GoldBox21 icon={<Phone size={16} strokeWidth={1.8} />} title="Phone number" desc={ACCT_DESC21.phone}>
+    <GoldBox21 icon={<Phone size={16} strokeWidth={1.8} />} title="Phone number" desc={ACCT_DESC21.phone} className="shine">
       <span className="ff-gb21-val"><Check size={15} color="var(--ok)" strokeWidth={2.6} /> {phone || "Number verified"}</span>
     </GoldBox21>
     <GoldBox21 icon={<Hash size={16} strokeWidth={1.8} />} title="FF Tag" desc={ACCT_DESC21.tag}
@@ -472,6 +472,21 @@ const ACCT_DESC21 = {
 
 
 /* v17.21: a golden account box. The name, the entry box and its button on one line, the description under them. */
+/* v17.27: country (dialling) code for the phone number. The closed control shows only the code ("+44"); the list shows
+   the country beside it. A native select sits invisibly over the label so phones use their own picker. */
+const DIAL_CODES26 = [["+44", "United Kingdom"], ["+353", "Ireland"], ["+33", "France"], ["+34", "Spain"], ["+39", "Italy"], ["+351", "Portugal"], ["+49", "Germany"], ["+31", "Netherlands"], ["+32", "Belgium"], ["+41", "Switzerland"], ["+30", "Greece"], ["+40", "Romania"], ["+48", "Poland"], ["+46", "Sweden"], ["+45", "Denmark"], ["+47", "Norway"], ["+1", "United States / Canada"], ["+61", "Australia"], ["+64", "New Zealand"], ["+27", "South Africa"], ["+971", "United Arab Emirates"], ["+91", "India"], ["+55", "Brazil"], ["+52", "Mexico"]];
+function DialCode26({ value, onChange }) {
+  return (
+    <span className="ff-dial26">
+      <span className="v" aria-hidden="true">{value}</span>
+      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+      <select aria-label="Country code" autoComplete="tel-country-code" value={value} onChange={(e) => onChange(e.target.value)}>
+        {DIAL_CODES26.map(([c, n]) => <option key={c + n} value={c}>{n} ({c})</option>)}
+      </select>
+    </span>
+  );
+}
+
 function GoldBox21({ icon, title, count, desc, note, children, line = true, id, className }) {
   return (
     <section className={"ff-gb21" + (className ? " " + className : "")} id={id} aria-label={title}>
@@ -512,7 +527,13 @@ function TagSection({ inSave = false, top = false, onSignedIn } = {}) {
   const [pwOpen, setPwOpen] = useState(false);
   const clean = AUTH_ADAPTER.cleanTag(typed === null ? suggestion : typed);
   const available = AUTH_ADAPTER.isAvailable(clean);
-  const phoneOk = phone.replace(/\D/g, "").length >= 9;
+  /* v17.27: country code drop-down in front of the number, +44 by default (as on the live FFTeam.uk). The number sent
+     to the adapter is the code plus the national number with its leading 0 dropped: +44 7700 900000. */
+  const [dial, setDial] = useState("+44");
+  const natDigits = phone.replace(/\D/g, "").replace(/^0+/, "");
+  const typedCode = /^\s*(\+|00)/.test(phone);
+  const fullPhone = typedCode ? phone.trim() : (natDigits ? `${dial} ${natDigits}` : "");
+  const phoneOk = natDigits.length >= (dial === "+44" && !typedCode ? 9 : 6);
   const run = async (fn) => {
     setBusy(true);
     setErr(null);
@@ -525,13 +546,13 @@ function TagSection({ inSave = false, top = false, onSignedIn } = {}) {
       setBusy(false);
     }
   };
-  const send = () => run(() => AUTH_ADAPTER.sendSignupCode(clean, phone)).then((r) => {
+  const send = () => run(() => AUTH_ADAPTER.sendSignupCode(clean, fullPhone)).then((r) => {
     if (r) {
       setStage("code");
       setCode("");
     }
   });
-  const verify = () => run(() => AUTH_ADAPTER.verifySignupCode(clean, phone, code)).then((r) => {
+  const verify = () => run(() => AUTH_ADAPTER.verifySignupCode(clean, fullPhone, code)).then((r) => {
     if (!r)
       return;
     dispatch({ type: "SESSION", patch: { tag: r.tag, phone: r.phone, verified: true } });
@@ -549,8 +570,9 @@ function TagSection({ inSave = false, top = false, onSignedIn } = {}) {
     return (
       <div id="ff-sec-tag" className="ff-tagsection ff-acct19 ff-acct21">
         {signedIn ? <AccountSettings boxes /> : stage === "details" ? (<>
-          <GoldBox21 icon={<Phone size={16} strokeWidth={1.8} />} title="Phone number" desc={ACCT_DESC21.phone}>
-            <input className="ff-gb21-in" type="tel" inputMode="tel" autoComplete="tel" placeholder="07700 900000" aria-label="Phone number"
+          <GoldBox21 icon={<Phone size={16} strokeWidth={1.8} />} title="Phone number" desc={ACCT_DESC21.phone} className="shine">
+            <DialCode26 value={dial} onChange={setDial} />
+            <input className="ff-gb21-in" type="tel" inputMode="tel" autoComplete="tel-national" placeholder="7700 900000" aria-label="Phone number"
               value={phone} onChange={(e) => setPhone(e.target.value)} enterKeyHint="send"
               onKeyDown={(e) => e.key === "Enter" && available && phoneOk && !busy && send()} />
             <button type="button" className="ff-gb21-btn" disabled={busy || !available || !phoneOk} onClick={send}>{busy ? <Loader2 size={14} className="ff-spin" /> : null}Verify</button>
@@ -563,7 +585,7 @@ function TagSection({ inSave = false, top = false, onSignedIn } = {}) {
             }} />
           </GoldBox21>
         </>) : (<>
-          <GoldBox21 icon={<Phone size={16} strokeWidth={1.8} />} title="WhatsApp code" desc={`Sent to ${phone} · any six digits in this preview`}
+          <GoldBox21 className="shine" icon={<Phone size={16} strokeWidth={1.8} />} title="WhatsApp code" desc={`Sent to ${fullPhone} · any six digits in this preview`}
             note={<span className="ff-gb21-links">
               <button type="button" className="ff-linkbtn" onClick={() => { setStage("details"); setCode(""); setErr(null); }}>Change number</button>
               <button type="button" className="ff-linkbtn" disabled={busy} onClick={send}>Resend code</button>
