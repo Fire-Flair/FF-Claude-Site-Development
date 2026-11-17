@@ -6,7 +6,7 @@
    It opens on the UK; the London button frames Greater London. People's pins stay area-only; v17.14: venues from Google's
    business search sit at their own point.
    v17.21: pins that would overlap are grouped into one numbered cluster (a squircle ringed in the category colours); tap a
-   cluster to zoom into it. The grouping is a plain screen-distance grouping (a dot within CLUSTER_R21 screen pixels of a group joins it) recomputed on every zoom, so hundreds of
+   cluster to zoom into it. The grouping is a plain screen-distance grouping (a dot within CLUSTER_R21 screen pixels (56 when zoomed in) of a group joins it) recomputed on every zoom, so hundreds of
    dots stay readable. To change the map style, change TILE_URL21 only.
    ========================================================================== */
 let UK_GEO11 = null;
@@ -48,7 +48,7 @@ const TILE_URL21 = "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x
 const TILE_ATTR21 = "\u00A9 <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\" rel=\"noopener\">OpenStreetMap</a> \u00A9 <a href=\"https://carto.com/attributions\" target=\"_blank\" rel=\"noopener\">CARTO</a>";
 
 
-const CLUSTER_R21 = 50;
+const CLUSTER_R21 = 76;
 
 
 const CLUSTER_Z21 = 11.5;
@@ -248,10 +248,6 @@ function FFMap({ mode = "home" }) {
         area(G.lakes, { stroke: false, fillColor: "#AAD3DF", fillOpacity: 1 }),
         line(G.rivers, { color: "#AAD3DF", opacity: 1, weight: 1 }),
       ].forEach(l => l && l.addTo(map));
-      UK_CITIES11.forEach(([nm, la, lo, big, left]) => {
-        L.marker([la, lo], { interactive: false, keyboard: false,
-          icon: L.divIcon({ className: `ff-lcity${big ? " big" : ""}${left ? " l" : ""}`, html: `<i></i><span>${nm}</span>`, iconSize: [0, 0] }) }).addTo(map);
-      });
       const tiles = L.tileLayer(TILE_URL21, { subdomains: "abcd", maxZoom: 20, maxNativeZoom: 19 }).addTo(map);
       tiles.once("tileload", () => { if (boxRef.current) boxRef.current.classList.add("tiles-ok"); });
       L.control.attribution({ prefix: false, position: "bottomright" }).addAttribution(TILE_ATTR21).addTo(map);
@@ -267,7 +263,7 @@ function FFMap({ mode = "home" }) {
         items.forEach(it => {
           if (z >= CLUSTER_Z21) { groups.push([it]); return; }
           const pt = map.project(it.ll, z);
-          let best = null, bd = CLUSTER_R21;
+          let best = null, bd = z < NEAR_Z11 ? CLUSTER_R21 : 56;
           groups.forEach(g => { const d = Math.hypot(g.x - pt.x, g.y - pt.y); if (d < bd) { bd = d; best = g; } });
           if (best) { best.push(it); best.x += (pt.x - best.x) / best.length; best.y += (pt.y - best.y) / best.length; }
           else { const g = [it]; g.x = pt.x; g.y = pt.y; groups.push(g); }
@@ -281,7 +277,7 @@ function FFMap({ mode = "home" }) {
             return;
           }
           const lat = g.reduce((a, it) => a + it.ll[0], 0) / g.length, lng = g.reduce((a, it) => a + it.ll[1], 0) / g.length;
-          const n = g.length, size = n < 10 ? 44 : n < 100 ? 48 : 54;
+          const n = g.length, wide = window.innerWidth >= 900, size = (wide ? 34 : 28) + (n >= 100 ? 4 : 0);
           const m = L.marker([lat, lng], { keyboard: true, title: n + " places. Zoom in", riseOnHover: true, zIndexOffset: 1000,
             icon: L.divIcon({ className: "ff-lcl", html: `<span class="ff-cl" style="width:${size}px;height:${size}px;background:${clusterRing21(g.map(it => it.p))}"><b>${n}</b></span>`, iconSize: [0, 0] }) }).addTo(dots);
           m.on("click", () => map.flyToBounds(L.latLngBounds(g.map(it => it.ll)), { duration: 0.8, padding: [70, 70], maxZoom: CLUSTER_Z21 + 0.75 }));

@@ -4565,10 +4565,11 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-map-seg { border-radius: 17px; corner-shape: squircle; padding: 4px; gap: 2px; }
 .ff .ff-map-seg button { min-height: 36px; min-width: 44px; padding: 0 14px; border-radius: 13px; corner-shape: squircle; }
 .ff .ff-lcl { width: 0; height: 0; overflow: visible; }
-.ff .ff-cl { position: absolute; left: 0; top: 0; transform: translate(-50%,-50%); display: grid; place-items: center; box-sizing: border-box; border-radius: 36%; corner-shape: squircle; cursor: pointer; box-shadow: 0 6px 14px -6px rgba(0,0,0,.65), 0 0 0 2px #fff; }
-.ff .ff-cl::before { content: ""; position: absolute; inset: 5px; border-radius: 34%; corner-shape: squircle; background: #16130F; }
-.ff .ff-cl b { position: relative; font: 800 13px/1 var(--sans); color: #F4EFE4; font-variant-numeric: tabular-nums; }
-.ff .ff-lcl:hover .ff-cl { box-shadow: 0 8px 18px -6px rgba(0,0,0,.7), 0 0 0 2px #E4C36A; }
+.ff .ff-cl { position: absolute; left: 0; top: 0; transform: translate(-50%,-50%); display: grid; place-items: center; box-sizing: border-box; border-radius: 36%; corner-shape: squircle; cursor: pointer; box-shadow: 0 2px 6px rgba(20,16,10,.28), 0 0 0 1.5px rgba(255,255,255,.95); }
+.ff .ff-cl::before { content: ""; position: absolute; inset: 3px; border-radius: 32%; corner-shape: squircle; background: #FFFDF8; }
+.ff .ff-cl::after { content: ""; position: absolute; inset: -9px; }
+.ff .ff-cl b { position: relative; font: 600 12.5px/1 var(--sans); color: #16130F; font-variant-numeric: tabular-nums; }
+.ff .ff-lcl:hover .ff-cl { box-shadow: 0 3px 8px rgba(20,16,10,.35), 0 0 0 1.5px #E4C36A; }
 .ff .ff-lcl:focus-visible .ff-cl { outline: 2px solid #E4C36A; outline-offset: 3px; }
 .ff .ff-lcl { outline: none; }
 .ff .ff-ml19 .ff-ml19-row label { min-height: 44px; padding: 0 14px; border-radius: 15px; corner-shape: squircle; border-color: rgba(126,97,29,.3); background: #FFFDF8; }
