@@ -107,8 +107,9 @@ function HeroEasel24() {
   }, [person && person.id]);
   if (!person) return null;
   const face = <PlayerCard person={person} format="full" nameAs="div" themeKey={person.theme || "ivory"} />;
-  /* v17.30: the card on the easel opens that member's profile (a tap, not a swipe). */
-  const open = () => dispatch({ type: "VIEW", id: person.id });
+  /* v17.30: the card on the easel opens that member's profile (a tap, not a swipe). direct: on FF Staff and FF Party
+     too it is the profile page itself (not the quick-look sheet), so the address becomes the profile's. */
+  const open = () => { dispatch({ type: "VIEW", id: person.id, direct: true }); window.scrollTo(0, 0); };
   const down = (e) => {
     if (e.button > 0) return;
     moved.current = false;
