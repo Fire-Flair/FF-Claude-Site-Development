@@ -294,29 +294,59 @@ function ProfRates17({ guest }) {
 }
 
 
-/* A bar package on FF Team Bookings, in the FF Party package card's look (.ff-pk17.rd), with FF Team's Sign up.
-   Its own markup because PkgCard17 takes its button from the site role, and a signed-out visitor here has none. */
+/* A bar package on FF Team Bookings: the package card (Alex's option 3, pkgbuild). Written for the bartender who signs up:
+   one design for every package (no tier colours), copy straight from the catalogue (PKG_BY17), Details closed by default,
+   the burgundy footer carries "You earn" and FF Team's Sign up. A long word shrinks its line instead of splitting. */
 function BkPkgCard17({ sv, on, onClick }) {
-  const Ic = sv.id === "svc_staffing" ? S17I.Users : S17I.Martini;
-  const inc = bul17(sv.includes), ideal = bul17(sv.ideal);
+  const p = PKG_BY17[sv.id] || {};
+  const ref = useRef(null);
   const pay = PAY17[sv.id];
+  React.useLayoutEffect(() => {
+    const root = ref.current; if (!root) return;
+    const fit = () => root.querySelectorAll(".fit").forEach(el => {
+      if (!el.offsetParent) return;
+      el.style.fontSize = ""; let fs = parseFloat(getComputedStyle(el).fontSize), n = 0;
+      while (el.scrollWidth > el.clientWidth + 0.5 && fs > 9 && n++ < 40) { fs -= 0.5; el.style.fontSize = fs + "px"; }
+    });
+    fit();
+    const tg = () => fit(); root.addEventListener("toggle", tg, true);
+    let ro = null; if (window.ResizeObserver) { ro = new ResizeObserver(fit); ro.observe(root); }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit).catch(() => {});
+    return () => { root.removeEventListener("toggle", tg, true); if (ro) ro.disconnect(); };
+  }, [sv.id]);
+  const rows = [[S17I.Sparkles, "Includes", p.includes], [S17I.Users, "Ideal for", p.ideal], [S17I.Clock, "Duration", p.durationLabel]].filter(r => r[2]);
   return (
-    <div className={`ff-pk17w rd ff-bkpk${on ? " sel" : ""}`} data-pk17={sv.id}>
-      <button type="button" className={`ff-lst ff-pk17 rd ${sv.tone || ""}`} onClick={onClick} aria-pressed={!!on} aria-label={`${sv.title}: ${on ? "Signed up" : "Sign up"}`}>
-        <span className="ph">
-          <span className="pl">{sv.level}</span>
-          <span className="cn"><FFLogo size={30} tier="gold" /></span>
-          <span className="ic"><Ic size={30} strokeWidth={1.4} /></span>
-          {pay != null && <span className="pr">You earn {pkgPayLabel17(sv.id)}</span>}
-        </span>
-        <span className="tx">
-          <b>{sv.title}</b>
-          {(TIME17[sv.id] || sv.time) && <span className="tm"><S17I.Clock size={13} /> {TIME17[sv.id] || sv.time}</span>}
-          {inc.length > 0 && <span className="bl"><i>Includes</i><ul>{inc.map(x => <li key={x}>{x}</li>)}</ul></span>}
-          {ideal.length > 0 && <span className="bl"><i>Ideal for</i><ul>{ideal.map(x => <li key={x}>{x}</li>)}</ul></span>}
-          <span className="go">{on ? <><S17I.Check size={13} strokeWidth={2.6} /> Signed up</> : "Sign up"}</span>
-        </span>
-      </button>
+    <div ref={ref} className={`ff-pkc${on ? " sel" : ""}`} data-pk17={sv.id}>
+      <span className="ff-pkc-rb"><S17I.Sparkles size={12} /> Package card</span>
+      <span className="ff-pkc-logo"><FFLogo size={40} tier="gold" /></span>
+      <div className="ff-pkc-hd">
+        <div className="ff-pkc-eb fit">+ {sv.level} · FF Party +</div>
+        <h5 className="ff-pkc-ti fit">{p.name || sv.title}</h5>
+        {p.tagline && <p className="ff-pkc-tg">{p.tagline}</p>}
+      </div>
+      <div className="ff-pkc-rows">
+        {rows.map(([Ic, l, v]) => (
+          <div key={l} className="ff-pkc-row">
+            <span className="ff-pkc-ico"><Ic size={18} strokeWidth={1.6} /></span>
+            <span className="v"><i>{l}</i><b className="fit">{v}</b></span>
+          </div>
+        ))}
+      </div>
+      <details className="ff-pkc-dt">
+        <summary><span>Details</span><S17I.ChevronDown size={18} strokeWidth={2} /></summary>
+        <div className="in">
+          {p.description && <p>{p.description}</p>}
+          {(p.points || []).length > 0 && <ul>{p.points.map(x => <li key={x}>{x}</li>)}</ul>}
+          {p.capability && <div><i>You bring</i><p>{p.capability}</p></div>}
+          {p.conditions && <p className="cond">{p.conditions}</p>}
+        </div>
+      </details>
+      <div className="ff-pkc-ft">
+        {pay != null && <span className="ff-pkc-earn"><i>You earn</i><b>{pkgPayLabel17(sv.id)}</b></span>}
+        <button type="button" className="ff-pkc-go" onClick={onClick} aria-pressed={!!on} aria-label={`${p.name || sv.title}: ${on ? "Signed up" : "Sign up"}`}>
+          {on ? <><S17I.Check size={13} strokeWidth={2.6} /> Signed up</> : "Sign up"}
+        </button>
+      </div>
     </div>
   );
 }
