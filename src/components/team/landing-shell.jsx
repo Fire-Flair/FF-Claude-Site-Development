@@ -8,22 +8,25 @@ function Landing() {
   const { state, dispatch } = useStore();
   if (state.tab === "network") return <NetworkScreen guest />;
   if (state.tab === "bookings") return PHASE1.bookingsLive ? <TeamBookings guest /> : <P1Bookings guest />;
-  if (state.tab && state.tab !== "home") {
-    return (
-      <div className="ff-landing">
-        <div style={{ textAlign: "center", padding: "40px 0 10px" }}>
-          <div style={{ display: "flex", justifyContent: "center", marginBottom: 14 }}><Coin size={50} tier="gold" /></div>
-          <h1 className="ff-h1" style={{ fontSize: 20 }}>This is where your Profile Card lives</h1>
-          <p className="ff-lede" style={{ marginTop: 10, maxWidth: 320, marginLeft: "auto", marginRight: "auto" }}>Choose how you'll use FireFlair.</p>
-        </div>
-        <RoleCards />
-      </div>
-    );
-  }
+  /* The old chooser screen is retired. Signed out with no role, any other tab (a TAB "profile" sent without a role, or a
+     saved state) hands over: Profile opens FF Team Profile, the same as the hero's Create your Profile Card; anything else
+     goes to the home page. */
+  if (state.tab && state.tab !== "home") return <LandingHandOver17 tab={state.tab} />;
 
   return (
     <V101.Home101 />
   );
+}
+
+
+/* Runs once, then unmounts (Profile hands over to TeamRouter, Home to the home page), so it cannot loop. */
+function LandingHandOver17({ tab }) {
+  const { dispatch } = useStore();
+  useEffect(() => {
+    if (tab === "profile") { dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); }
+    else dispatch({ type: "TAB", tab: "home" });
+  }, []);
+  return null;
 }
 
 

@@ -294,6 +294,34 @@ function ProfRates17({ guest }) {
 }
 
 
+/* A bar package on FF Team Bookings, in the FF Party package card's look (.ff-pk17.rd), with FF Team's Sign up.
+   Its own markup because PkgCard17 takes its button from the site role, and a signed-out visitor here has none. */
+function BkPkgCard17({ sv, on, onClick }) {
+  const Ic = sv.id === "svc_staffing" ? S17I.Users : S17I.Martini;
+  const inc = bul17(sv.includes), ideal = bul17(sv.ideal);
+  const pay = PAY17[sv.id];
+  return (
+    <div className={`ff-pk17w rd ff-bkpk${on ? " sel" : ""}`} data-pk17={sv.id}>
+      <button type="button" className={`ff-lst ff-pk17 rd ${sv.tone || ""}`} onClick={onClick} aria-pressed={!!on} aria-label={`${sv.title}: ${on ? "Signed up" : "Sign up"}`}>
+        <span className="ph">
+          <span className="pl">{sv.level}</span>
+          <span className="cn"><FFLogo size={30} tier="gold" /></span>
+          <span className="ic"><Ic size={30} strokeWidth={1.4} /></span>
+          {pay != null && <span className="pr">You earn {pkgPayLabel17(sv.id)}</span>}
+        </span>
+        <span className="tx">
+          <b>{sv.title}</b>
+          {(TIME17[sv.id] || sv.time) && <span className="tm"><S17I.Clock size={13} /> {TIME17[sv.id] || sv.time}</span>}
+          {inc.length > 0 && <span className="bl"><i>Includes</i><ul>{inc.map(x => <li key={x}>{x}</li>)}</ul></span>}
+          {ideal.length > 0 && <span className="bl"><i>Ideal for</i><ul>{ideal.map(x => <li key={x}>{x}</li>)}</ul></span>}
+          <span className="go">{on ? <><S17I.Check size={13} strokeWidth={2.6} /> Signed up</> : "Sign up"}</span>
+        </span>
+      </button>
+    </div>
+  );
+}
+
+
 function TeamBookings({ guest = false }) {
   const { state, dispatch } = useStore();
   const [open, setOpen] = useState(null);
@@ -334,8 +362,18 @@ function TeamBookings({ guest = false }) {
     dispatch({ type: "TOAST", toast: r.ok ? (next.length ? `Signed up for ${sv.title}` : "Withdrawn from your packages") : "That couldn't be saved. Try again." });
     if (r.ok) setSel(null);
   };
-  const ownPackage = () => { dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); let n = 0; const go = () => { const el = document.getElementById("ff-cr17-service"); if (el) el.scrollIntoView({ behavior: "auto", block: "start" }); else if (++n < 20) setTimeout(go, 60); }; setTimeout(go, 120); };
-  const pkgs = [...(hid17(state, "packages", "svc_staffing") ? [] : [STAFFING_SERVICE]), ...PARTY_SERVICES.filter(sv => sv.id !== "svc_full")];
+  /* Signed out, Create your own package goes where the hero's Create your Profile Card goes. */
+  const ownPackage = () => {
+    if (!qaAccount17(state)) { goProfile(); return; }
+    if (state.role !== "team") dispatch({ type: "ROLE", role: "team" });
+    dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0);
+    let n = 0; const go = () => { const el = document.getElementById("ff-cr17-service"); if (el) el.scrollIntoView({ behavior: "auto", block: "start" }); else if (++n < 20) setTimeout(go, 60); }; setTimeout(go, 120);
+  };
+  /* Bar packages: Masterclass first, then down the catalogue's own order to Staffing. */
+  const pkgs = [...PARTY_SERVICES.filter(sv => sv.id !== "svc_full").reverse(), ...(hid17(state, "packages", "svc_staffing") ? [] : [STAFFING_SERVICE])];
+  const [pkTab, setPkTab] = useState("bar");
+  const PK_TABS = [["bar", "Bar"], ["ent", "Entertainment"], ["svc", "Services"]];
+  const ownBtn = <button type="button" className="ff-btn gold ff-bkown17" onClick={ownPackage}><Sparkles size={16} /> Create your own package</button>;
 
   const Row = ({ x, tag, onClick }) => (
     <button type="button" className="ff-bk-row" onClick={onClick}>
@@ -383,12 +421,23 @@ function TeamBookings({ guest = false }) {
         <BigHead20 title="Packages" />
         <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-party">
           <h3>FFParty</h3>
+          <h4 className="ff-bkpk-sub">Our bar packages</h4>
           <p>You are your own boss. FireFlair sets the pay rate for each package. You deal directly with the client, and FireFlair is here to support you. Packages are advertised at a set rate, and by signing up to one you agree to that rate. The rates are strong, so we expect strong work in return.</p>
-          <HScroll label="FF Party packages" snap>
-            {pkgs.map(sv => <div key={sv.id} className="ff-tp17-cell"><PkgTile17 sv={sv} on={picked.includes(sv.id)} onClick={() => tick(sv)} /></div>)}
-            <div className="ff-tp17-cell"><button type="button" className="ff-tp17 own" onClick={ownPackage}><span className="pl"><Plus size={22} /></span><b className="tt">Create your own package</b></button></div>
-          </HScroll>
-          <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={!sel} onClick={() => { if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; } setPkgTerms(true); }}><Check size={15} /> Confirm</button>
+          <div className="ff-pr17-chips" role="tablist" aria-label="Package types">
+            {PK_TABS.map(([k, l]) => <button key={k} type="button" role="tab" className="ff-chip ff-pr17-tab" aria-selected={k === pkTab} aria-pressed={k === pkTab} onClick={() => setPkTab(k)}>{l}</button>)}
+          </div>
+          {pkTab === "bar" ? (<>
+            <HScroll label="Our bar packages" snap>
+              {pkgs.map(sv => <div key={sv.id} className="ff-bkpk-cell"><BkPkgCard17 sv={sv} on={picked.includes(sv.id)} onClick={() => tick(sv)} /></div>)}
+            </HScroll>
+            <div className="ff-bkown17-row">{ownBtn}</div>
+            <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={!sel} onClick={() => { if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; } setPkgTerms(true); }}><Check size={15} /> Confirm</button>
+          </>) : (
+            <div className="ff-bkpk-soon" role="tabpanel">
+              <span className="ff-bkpk-soon-t"><Lock size={14} strokeWidth={2} /> Coming soon</span>
+              {ownBtn}
+            </div>
+          )}
           {pkgTerms && <PkgTerms17 kind="pkg" onClose={() => setPkgTerms(false)} onAccept={confirmPkgs} />}
         </div>
 
