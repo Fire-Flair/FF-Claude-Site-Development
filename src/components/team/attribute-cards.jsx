@@ -1144,24 +1144,20 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
             </span>
           } />
         {(state.categoryVisibility.reviews === undefined ? !revOpen : state.categoryVisibility.reviews === false) ? null : (reviewList.length || (isMe && pendingCount > 0)) ? (
-          <HScroll label="Reviews & References">
-            {reviewList.map((r, i) => (
-              <InformationCard key={r.id} record={r} def={reviewDef} themeKey={shade} highlight={i < 3}
-                onClick={() => setOpenRec({ record: r, def: reviewDef, category: "reviews" })} />
-            ))}
+          <ReviewCards35 person={person} records={reviewList} onOpen={(r) => setOpenRec({ record: r, def: reviewDef, category: "reviews" })}>
             {isMe && pendingRequests.map(req => (
-              <div key={req.id} className="ff-tile" style={{ width: CARD_W.info, minHeight: 140, justifyContent: "center", alignItems: "center", textAlign: "center", gap: 6 }}>
+              <div key={req.id} className="ff-tile" style={{ justifyContent: "center", alignItems: "center", textAlign: "center", gap: 6 }}>
                 <Clock size={18} color="var(--gold-dk)" strokeWidth={1.5} />
                 <span className="ff-serif" style={{ fontSize: 13, fontStyle: "normal" }}>Waiting on {req.fromName}</span>
               </div>
             ))}
             {isMe && (
-              <button className="ff-card ff-addtile" style={{ width: CARD_W.info, minHeight: 140 }} onClick={() => setAsking(true)}>
+              <button className="ff-card ff-addtile" onClick={() => setAsking(true)}>
                 <span style={{ textAlign: "center" }}><Plus size={20} color="var(--gold-dk)" />
                   <span className="ff-label" style={{ display: "block", marginTop: 6 }}>Ask for a review</span></span>
               </button>
             )}
-          </HScroll>
+          </ReviewCards35>
         ) : isMe ? (
           <button className="ff-card ff-addtile" style={{ width: CARD_W.info, minHeight: 140 }} onClick={() => setAsking(true)}>
             <span style={{ textAlign: "center" }}><Plus size={20} color="var(--gold-dk)" />
@@ -1220,7 +1216,6 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
             </>)}
             {btab === "reviews" && (<>
               {reviewsSection}
-              <ReviewsTab17 person={person} />
             </>)}
           </div>
         </div>

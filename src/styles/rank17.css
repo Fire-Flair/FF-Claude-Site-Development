@@ -112,3 +112,35 @@
 /* the three account boxes sit on the page, not inside a gold frame */
 .ff .ff-tagsection.ff-acct19 { background: none; border: 0; box-shadow: none; padding: 0; margin: 0; border-radius: 0; }
 .ff .ff-tagsection.ff-acct19 .ff-input { border-color: #D8CCB0; }
+
+/* ---- Review Cards (option 1, Mr G): Review Cards in the Reviews tab. Dark gold landscape card, plate, FF logo, stars or words only,
+   the writer, black footer with address and date; burgundy footer while waiting to be accepted. Cards grow with their words. ---- */
+.ff .ff-rc35-list { display:grid; grid-template-columns:minmax(0,1fr); gap:16px; align-items:start; margin-top:4px; }
+@media (min-width:640px) { .ff .ff-rc35-list { grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:20px; } }
+.ff .ff-rc35 { position:relative; box-sizing:border-box; display:flex; flex-direction:column; width:100%; min-width:0; margin:0; padding:0; text-align:left; font:inherit; cursor:default;
+  border-radius:24px; corner-shape:squircle; overflow:hidden; color:#F4EBD6; background:linear-gradient(168deg,#3A3018,#14110A);
+  border:1.5px solid var(--color-gold-mid,#B08D2A); box-shadow:0 18px 30px -20px rgba(30,20,5,.7); }
+.ff button.ff-rc35 { cursor:pointer; -webkit-appearance:none; appearance:none; }
+.ff button.ff-rc35:focus-visible { outline:2px solid var(--color-gold,#C9A227); outline-offset:3px; }
+.ff .ff-rc35 .in { position:relative; display:flex; flex-direction:column; align-items:flex-start; gap:11px; padding:16px 18px 16px; }
+.ff .ff-rc35 .in::after { content:""; position:absolute; inset:6px 6px 0; border:1px solid rgba(232,199,94,.3); border-bottom:0; border-radius:18px 18px 0 0; corner-shape:squircle; pointer-events:none; }
+.ff .ff-rc35 .pl { display:inline-flex; align-items:center; padding:5px 10px; border-radius:9px; corner-shape:squircle; font:800 10.5px/1.2 var(--font-sans,Inter,sans-serif); letter-spacing:.18em; text-transform:uppercase; white-space:nowrap; color:#E4C36A; background:#16130F; border:1px solid var(--color-gold-mid,#B08D2A); }
+.ff .ff-rc35 .lg { position:absolute; top:12px; right:12px; width:30px; height:30px; }
+.ff .ff-rc35 .st { display:flex; gap:4px; margin-top:2px; }
+.ff .ff-rc35 .st svg { display:block; flex:none; }
+.ff .ff-rc35 .tx { display:block; margin:0; font:400 15px/1.5 var(--font-sans,Inter,sans-serif); color:#F4EBD6; white-space:pre-line; overflow-wrap:normal; word-break:normal; hyphens:manual; }
+.ff .ff-rc35 .by { display:flex; align-items:center; gap:10px; min-width:0; max-width:100%; }
+.ff .ff-rc35 .by b { min-width:0; font:600 16px/1.2 var(--font-display,Cinzel,serif); letter-spacing:.04em; color:#F4DC8E; overflow-wrap:normal; word-break:keep-all; hyphens:none; }
+.ff .ff-rc35 .av { flex:none; width:38px; height:38px; border-radius:12px; corner-shape:squircle; display:grid; place-items:center; overflow:hidden; font:700 14px/1 var(--font-display,Cinzel,serif); color:#E4C36A; background:linear-gradient(170deg,#1C1B1E,#0A0A0C); border:1px solid rgba(232,199,94,.55); }
+.ff .ff-rc35 .av.lg { position:static; width:auto; min-width:38px; max-width:92px; padding:0 6px; background:#16130F; }
+.ff .ff-rc35 .av img { display:block; max-width:100%; max-height:24px; object-fit:contain; }
+.ff .ff-rc35 .av.ph { padding:0; } .ff .ff-rc35 .av.ph img { width:100%; height:100%; max-height:none; object-fit:cover; object-position:50% 20%; }
+.ff .ff-rc35 .ft { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:4px 10px; padding:11px 18px; background:var(--color-ink,#0B0B0C); color:#E9D49A; font:500 14px/1.2 var(--font-sans,Inter,sans-serif); letter-spacing:.02em; }
+.ff .ff-rc35 .ft .ad { white-space:nowrap; }
+.ff .ff-rc35 .ft .dt { margin-left:auto; font-size:12px; color:#B9A673; white-space:nowrap; }
+.ff .ff-rc35 .ft.wait { justify-content:flex-start; gap:7px; background:var(--color-ox,#5C1220); color:#F4E6C8; }
+.ff .ff-rc35 .ft.wait svg { flex:none; display:block; }
+.ff .ff-rc35.pend .in { opacity:.82; }
+/* the "Waiting on" and "Ask for a review" tiles on your own profile sit in the same grid */
+.ff .ff-rc35-list > .ff-tile, .ff .ff-rc35-list > .ff-addtile { box-sizing:border-box; width:100% !important; min-height:140px; border-radius:24px; corner-shape:squircle; }
+.ff .ff-rc35-full { max-width:520px; margin:0 auto; }

@@ -45,6 +45,7 @@
   "components/shared/shift-card17.jsx",
   "components/team/profile-from-text.jsx",
   "components/team/attribute-cards.jsx",
+  "components/shared/review-card35.jsx",
   "components/team/network.jsx",
   "components/team/bookings.jsx",
   "adapters/payment-adapter.js",
