@@ -390,7 +390,7 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party, links }) {
   const sv = socialValues11(co);
   const bodyRef = useRef(null);
   useCardFit20(bodyRef, [co.name, co.kind, areas, layout, size, co.logoWide, socialsOf11(co).join(), edit].join("|"), !!edit);
-  /* v17.20: a claimed company has no plate; the FIREFLAIR logo sits top right instead (the VIP Host Card keeps its plate). */
+  /* v17.20: a claimed company has no plate; the FIREFLAIR logo sits top right instead (the VIP Host Card keeps its plate). v17.34: no FIREFLAIR word in the footer. */
   const claimed = !co.unclaimed;
   const urlText = `${CARD_DOMAIN}/${slug}`;
   const urlFs = `min(3.3cqw, ${((claimed ? 56 : 86) / Math.max(12, urlText.length * 0.62)).toFixed(2)}cqw)`;
@@ -404,7 +404,6 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party, links }) {
       </div>
       <div className="ff-cc11-foot" style={{ background: t.dark ? "rgba(0,0,0,.45)" : "#141416" }}>
         <span className="url" style={{ fontSize: urlFs }}>{urlText}</span>
-        {claimed && <Wordmark size={size ? 9 : 11} />}
       </div>
     </CardFrame>
   );

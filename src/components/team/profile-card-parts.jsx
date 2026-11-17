@@ -103,8 +103,8 @@ function PcBust17({ size, color }) {
 }
 
 
-/* The Profile Card face. large = the share card (Profile Card, five boxes, FIREFLAIR in the footer);
-   otherwise the small web card (Profile, icon-only rows, flags below the box). 5 x 7, all sizes in cqw. */
+/* The Profile Card face. large = the share card (Profile Card, five boxes, each row led by its icon; the word is for screen readers only);
+   otherwise the small web card (Profile, icon-only rows, flags below the box). Footer: the address only (the FF logo sits top right). 5 x 7, all sizes in cqw. */
 function PlayerFace17({ person, large, themeKey, tier, onClick, selected, nameAs }) {
   const t = THEMES[themeKey] || THEMES.onyx;
   const m = metalOf(tier);
@@ -175,14 +175,14 @@ function PlayerFace17({ person, large, themeKey, tier, onClick, selected, nameAs
             {rows.map(([k, I, items]) => (
               <div key={k} className="pc17-row" style={{ borderColor: t.rule }}>
                 {large
-                  ? <div className="pc17-lbl" style={{ color: dark ? t.sub : "#6A5A3C" }}><span style={{ width: "3.5cqw", height: "3.5cqw", display: "block", flex: "none" }}><I size="100%" color={icoC} strokeWidth={2.25} fill="none" /></span>{k}</div>
+                  ? <span className="pc17-lico"><span style={{ width: "3.5cqw", height: "3.5cqw", display: "block", flex: "none" }}><I size="100%" color={icoC} strokeWidth={2.25} fill="none" /></span><span className="ff-sr">{k}</span></span>
                   : <span className="pc17-ico"><span style={{ width: "4.6cqw", height: "4.6cqw", display: "block" }}><I size="100%" color="#E4C36A" strokeWidth={2.25} fill={k === "Skills" || k === "Interests" ? "#E4C36A" : "none"} /></span></span>}
                 <div className="pc17-val" style={{ color: ink }}>{entries(items)}</div>
               </div>
             ))}
             {large && langs.length > 0 && (
               <div className={"pc17-row" + (langs.length === 1 ? " one" : "")} style={{ borderColor: t.rule }}>
-                <div className="pc17-lbl" style={{ color: dark ? t.sub : "#6A5A3C" }}><span style={{ width: "3.5cqw", height: "3.5cqw", display: "block", flex: "none" }}><MessageSquare size="100%" color={icoC} strokeWidth={2.25} fill="none" /></span>Languages</div>
+                <span className="pc17-lico"><span style={{ width: "3.5cqw", height: "3.5cqw", display: "block", flex: "none" }}><MessageSquare size="100%" color={icoC} strokeWidth={2.25} fill="none" /></span><span className="ff-sr">Languages</span></span>
                 <div className="pc17-flags">{flags()}</div>
               </div>
             )}
@@ -192,8 +192,6 @@ function PlayerFace17({ person, large, themeKey, tier, onClick, selected, nameAs
       </div>
       <div className="pc17-bar" style={{ borderColor: t.rule, background: dark ? "rgba(0,0,0,.45)" : "#141416" }}>
         <FitText17 as="span" size={4.3} className="pc17-url" style={{ color: "#EAD79C" }}>{`${CARD_DOMAIN}/${pc17Tag(person.tag)}`}</FitText17>
-        {large && <span className="pc17-brand"><span className="pc17-mark"><FFLogo size="100%" tier={tier} /></span>FIREFLAIR</span>}
-        {!large && <span className="pc17-brand pc17-brand-sm">FIREFLAIR</span>}
       </div>
       {selected && (
         <span style={{ position: "absolute", inset: 0, zIndex: 5, background: "rgba(201,162,39,.14)", display: "flex", alignItems: "center", justifyContent: "center" }}>

@@ -20,7 +20,7 @@
 .ff .ff-sc17 .plate.open{color:#2A1E04;background:linear-gradient(160deg,#F6E7B4,#E0BE5C 55%,#CDA63A);border:1px solid var(--g-dk);box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
 .ff .ff-sc17 .plate.chosen{color:#F4EFE4;background:linear-gradient(160deg,#7A1830,#5C1220 60%,#4A0E1A);border:1px solid #3A0A14;box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
 .ff .ff-sc17 .plate.confirmed{color:#5C1220;background:linear-gradient(160deg,#FFFDF4,#F4EAC9);border:1px solid var(--g-dk);box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
-.ff .ff-sc17 .logo{margin-left:auto;width:12.209cqw;height:12.209cqw;border-radius:50%;flex:none;box-shadow:0 0.872cqw 2.326cqw -3px rgba(48,36,10,.6);display:block}
+.ff .ff-sc17 .logo{margin-left:auto;width:10.378cqw;height:10.378cqw;border-radius:50%;flex:none;box-shadow:0 0.872cqw 2.326cqw -3px rgba(48,36,10,.6);display:block}
 .ff .ff-sc17 .role{flex:none;margin:3.198cqw 0 3.488cqw;height:30.233cqw;padding:0}
 .ff .ff-sc17 .rin{height:100%;display:flex;flex-direction:column;justify-content:center;overflow:hidden;background:none}
 .ff .ff-sc17 .role h1{margin:0;padding:0 2.326cqw;font-family:var(--display);font-weight:700;font-size:6.6cqw;line-height:1.16;letter-spacing:.06em;text-transform:uppercase;text-wrap:balance;color:var(--ink2)}

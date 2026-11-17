@@ -4,8 +4,8 @@
 /* Plate: tucked into the top-left corner inside the inner line, as on the Profile Card. */
 .ff .ff-cc11 .ff-cc11-plate { top: 2.9cqw !important; left: 2.9cqw !important; padding: .5em .95em !important; font-size: clamp(8px, 2.6cqw, 12px) !important; font-family: var(--sans); font-weight: 800; letter-spacing: .16em; line-height: 1.2; color: #E4C36A; background: #16130F; border: 1px solid #B08D2A; border-radius: .9em; corner-shape: squircle; box-shadow: none; text-transform: uppercase; white-space: nowrap; }
 /* FIREFLAIR logo (claimed companies): top-right, the same place and size as on the Profile Card. */
-.ff .ff-cc11 .ff-cc11-coin { top: 3.1cqw; right: 3.1cqw; width: 8.4cqw; height: 8.4cqw; display: block; filter: drop-shadow(0 .8cqw 1.2cqw rgba(0,0,0,.35)); }
-/* Footer: FFTeam.uk/<slug> on the left, the FIREFLAIR word on the right (claimed only). Never cut with an ellipsis. */
+.ff .ff-cc11 .ff-cc11-coin { top: 3.1cqw; right: 3.1cqw; width: 7.14cqw; height: 7.14cqw; display: block; filter: drop-shadow(0 .8cqw 1.2cqw rgba(0,0,0,.35)); }
+/* Footer: FFTeam.uk/<slug> on the left (v17.34: no FIREFLAIR word on the right). Never cut with an ellipsis. */
 .ff .ff-cc11 .ff-cc11-foot { justify-content: space-between; gap: 3cqw; }
 .ff .ff-cc11 .ff-cc11-foot .url { margin-left: 0; max-width: none; overflow: visible; text-overflow: clip; white-space: nowrap; font-weight: 700; letter-spacing: .02em; }
 /* Words are never split; the area line wraps between words instead of ending in "…". */
