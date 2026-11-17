@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.36
+
+Bookings packages and the old chooser screen, Review Cards in the Reviews tab, Need help? on finished profiles. Branches merged: `p2-bookings` (second commit), `p2-design`.
+
+- Bookings, FFParty box (`bookings.jsx`, `bkd.css`): sub-title "Our bar packages"; packages run Masterclass, Flair, Cocktail, Bartending, Staffing (no amount changed); larger cards in the FF Party package card style; tabs Bar / Entertainment / Services, where Entertainment and Services show Coming soon with a gold Create your own package button. Sign up, Confirm and the terms step work as before.
+- The old chooser screen ("This is where your Profile Card lives") is removed (`landing-shell.jsx`). Many buttons opened Profile without setting the site first, which showed that screen to signed-out visitors; Profile now opens Create your Profile Card in that case. `RoleCards` in `shared/landing-and-sites.jsx` is now unused.
+- Review Cards (`attribute-cards.jsx` reviews section, new Review Card component, `rank17.css`): each review in a profile's Reviews tab is one Review Card (the home-page design): plate, FF logo, stars, the words, the writer, and a black footer with the writer's FFTeam.uk address and the date. No stars when the writer has not worked with the person. The writer's own waiting review shows a burgundy footer "Waiting for {First} to accept". Review Cards appear in the Reviews tab only.
+- Finished FF Team profile (`party-live.jsx`): the Need help? Book a meeting box now also closes a member's own live profile page; the Share under your own card sends your join link.
+- FF Staff shift rate cards and Shift Cards are unchanged (postponed).
+
 ## v17.35
 
 Bookings page (Task 003), the new profile buttons and review form (network ladder part 2), Profile Card polish, Need help? Book a meeting. Branches merged: `p2-bookings` (first commit), `p2-net-ladder`, `p2-card`, `p2-profile`.

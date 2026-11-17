@@ -65,6 +65,7 @@ function DoneProfile17({ kind }) {
       <div className="ff-pubpage ff-done17 team">
         <PublicHero media={mediaOf(state, person)} card={<>{card}{cardShare}</>} below={null} />
         <PublicProfileBody person={person} packagesTail={<><Creators17 kind="team" by={person.name} /><PersonalTerms17 /></>} />
+        {mine ? <NeedHelp34 /> : null}
       </div>
     );
   }
