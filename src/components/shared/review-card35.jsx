@@ -81,7 +81,7 @@ function ReviewsTab35({ person }) {
   return (<>
     {list.length
       ? <ReviewCards35 person={person} records={list} onOpen={setOpen} />
-      : <TabEmpty17 icon={<Award size={20} />}>No reviews for {first} yet.</TabEmpty17>}
+      : <TabEmpty17 icon={<Award size={20} />}>{person.id === "me" || !String(person.name || "").trim() || /^your$/i.test(first) ? "No reviews yet." : `No reviews for ${first} yet.`}</TabEmpty17>}
     <Sheet open={!!open} onClose={() => setOpen(null)} title="Review">
       {open && <div className="ff-rc35-full"><ReviewCard35 rec={open} raw={raw} writer={reviewWriter35(state, dir, raw)} about={person} /></div>}
     </Sheet>

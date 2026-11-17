@@ -346,7 +346,7 @@ function ReviewsTab17({ person, mem }) {
     {reviews.length ? (<>
       <CoverFlow items={reviews} label="Reviews" mem={m} k="reviews" half={140} onOpen={setRevOpen} render={reviewCard} />
       {reviews.length > 1 && <div className="ff-rv-all"><button type="button" className="ff-pp-all" onClick={() => setAllReviews(true)}>View all reviews <ChevronRight size={13} /></button></div>}
-    </>) : <TabEmpty17 icon={<Award size={20} />}>No reviews for {first} yet.</TabEmpty17>}
+    </>) : <TabEmpty17 icon={<Award size={20} />}>{person.id === "me" || !String(person.name || "").trim() || /^your$/i.test(first) ? "No reviews yet." : `No reviews for ${first} yet.`}</TabEmpty17>}
     <Sheet open={!!revOpen} onClose={() => setRevOpen(null)} title="Review">
       {revOpen && <div className="ff-rvfull">{reviewCard(revOpen, true)}</div>}
     </Sheet>

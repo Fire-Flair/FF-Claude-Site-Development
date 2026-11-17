@@ -564,8 +564,10 @@ function useJoin21({ inSave = false, top = false, onSignedIn } = {}) {
     if (!r)
       return;
     dispatch({ type: "SESSION", patch: { tag: r.tag, phone: r.phone, verified: true } });
+    /* A review written while signed out posts at sign-up with its own "Review sent to …" toast; keep that one. */
+    const draft = !!(state.session && state.session.reviewDraft17);
     dispatch({ type: "AUTH_SIGNED_IN", tag: r.tag, method: r.method });
-    dispatch({ type: "TOAST", toast: `${CARD_DOMAIN}/${r.tag} is yours` });
+    if (!draft) dispatch({ type: "TOAST", toast: `${CARD_DOMAIN}/${r.tag} is yours` });
     setStage("details");
     setCode("");
     if (inSave || top) {
