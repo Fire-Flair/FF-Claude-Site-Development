@@ -1131,12 +1131,6 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
                 <span className="ff-label" style={{ display: "block", marginTop: 6 }}>Add people</span></span>
             </button>
           )}
-          {isMe && (
-            <button className="ff-card ff-portrait ff-addtile" style={{ width: CARD_W.player }} onClick={() => window.dispatchEvent(new Event("ff-invite"))}>
-              <span style={{ textAlign: "center" }}><UserPlus size={20} color="var(--gold-dk)" />
-                <span className="ff-label" style={{ display: "block", marginTop: 6 }}>Invite</span></span>
-            </button>
-          )}
         </HScroll>
         )}
       </section>
@@ -1169,9 +1163,9 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
             )}
           </HScroll>
         ) : isMe ? (
-          <button className="ff-card ff-addtile" style={{ width: "100%", padding: 18 }} onClick={() => setAsking(true)}>
-            <span style={{ textAlign: "center" }}><Plus size={18} color="var(--gold-dk)" />
-              <span className="ff-label" style={{ display: "block", marginTop: 6 }}>Ask someone you've worked with for a review</span></span>
+          <button className="ff-card ff-addtile" style={{ width: CARD_W.info, minHeight: 140 }} onClick={() => setAsking(true)}>
+            <span style={{ textAlign: "center" }}><Plus size={20} color="var(--gold-dk)" />
+              <span className="ff-label" style={{ display: "block", marginTop: 6 }}>Ask for a review</span></span>
           </button>
         ) : (
           <p className="ff-body ff-muted" style={{ margin: 0 }}>No reviews yet.</p>

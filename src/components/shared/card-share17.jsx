@@ -65,7 +65,7 @@ function CardShareSheet17({ open, onClose, title, url, fileName, children, extra
   return (
     <Sheet open onClose={onClose} title={title || "Share"}>
       <div className="ff-csm-stage" ref={holder}>{children}</div>
-      <p className="ff-csm-url" aria-label="Card address">{base.replace(/^https?:\/\//, "")}</p>
+      <p className="ff-csm-url" aria-label="Card address">{base.replace(/^https?:\/\//, "").replace(/^ff([a-z])/i, (m, c) => "FF" + c.toUpperCase())}</p>
       {err ? (
         <div className="ff-cverr" role="alert"><span>{err}</span><Btn variant="sm ghost" onClick={make}><RotateCcw size={12} /> Try again</Btn></div>
       ) : busy ? (

@@ -499,7 +499,9 @@ function reviewsOf(state, person) {
   return reviewRecordsFor(state, person.id).map(rec => {
     const r = raw.find(x => x.id === rec.id) || {};
     const shift = r.shiftId ? (state.shifts || []).find(s => s.id === r.shiftId) : null;
-    return { ...rec, subline: [dt(r.at), shift ? [shift.role, shift.venue].filter(Boolean).join(" · ") : ""].filter(Boolean).join(" · ") };
+    /* v17.22: my review that waits for them to accept reads "Waiting for <First>" in place of the date. */
+    const when = rec.pending ? `Waiting for ${person.isCompany ? person.name : String(person.name || "").split(" ")[0]}` : dt(r.at);
+    return { ...rec, subline: [when, shift ? [shift.role, shift.venue].filter(Boolean).join(" · ") : ""].filter(Boolean).join(" · ") };
   });
 }
 

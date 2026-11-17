@@ -1693,7 +1693,7 @@
     const { state, dispatch } = useStore();
     const shown = CARD_CATEGORIES.reduce((n, k) => n + featuredCount(state.profile, k), 0);
     const netCount = myNetwork(state, state.directory).list.length;
-    const myReviews = (state.reviews || []).filter((r) => r.aboutId === "me").length;
+    const myReviews = reviewRecordsFor(state, "me").length;
     const first = (state.profile.name || "").trim().split(" ")[0];
     return React.createElement("div", {
       className: "ff-frame ff-welcome17",

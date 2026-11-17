@@ -229,10 +229,6 @@ function ProsByType17({ onPick }) {
             {list.length ? (
               <HScroll label={label} snap>
                 {list.map(p => <PlayerTile key={p.id} person={p} onClick={() => onPick(p)} />)}
-                <button className="ff-card ff-portrait ff-addtile" style={{ width: CARD_W.player }} onClick={() => window.dispatchEvent(new Event("ff-invite"))}>
-                  <span style={{ textAlign: "center" }}><I11.Plus size={20} color="var(--gold-dk)" />
-                    <span className="ff-label" style={{ display: "block", marginTop: 6 }}>Invite</span></span>
-                </button>
               </HScroll>
             ) : <p className="ff-body ff-muted" style={{ margin: 0 }}>No one yet.</p>}
           </Fold17>
@@ -373,8 +369,8 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   const recAreas = companyLocations(co);
   const areas = co.mine || recAreas.length ? recAreas : String(co.areas || "").split("·").map(x => x.trim()).filter(Boolean);
   const venues = co.mine ? recsOf(co, "venues").filter(r => !r.hidden).map(r => r.name) : (co.venues || []);
-  /* Reviews posted on this company's page (state.reviews, newest first) come before its own. */
-  const posted = (state.reviews || []).filter(r => r.aboutId === co.id || ck &&  (r.aboutId && r.aboutId !== "me" && coKey17(companyById(state, r.aboutId)) === ck)).slice().reverse().map(r => [null, r.rating, r.text, r.byName]);
+  /* Reviews posted on this company's page (state.reviews, newest first) come before its own. Declined ones never show; a waiting one only to its writer (as reviewRecordsFor). */
+  const posted = (state.reviews || []).filter(r => r.status !== "declined" && (r.status !== "pending" || r.byId === "me")).filter(r => r.aboutId === co.id || ck &&  (r.aboutId && r.aboutId !== "me" && coKey17(companyById(state, r.aboutId)) === ck)).slice().reverse().map(r => [null, r.rating, r.text, r.byName]);
   const reviews = [...posted, ...(co.mine ? (co.reviews || []).map(r => [null, r.rating, r.text, r.byName]) : (co.reviews || [])), ...coWebReviews17(co).map(r => [null, 0, r.description, r.name])];
   const ownQa = co.mine || co.qa ? coQa(co).filter(q => q.group !== "feedback" && (q.answer || String(q.note || "").trim())) : [];
   /* Questions asked on this page that the company answered and made public sit next to its own Q&A, newest first. */
