@@ -2,6 +2,8 @@
 
 ## v17.39
 
+Artifact version 1794958245-25a4.
+
 FF Party package cards in the FF Team Bookings page. Branch merged: `p2-pkg2`.
 
 - Dark package card with the burgundy "Package card" ribbon, the FF logo, the package name in Cinzel and its tagline.
