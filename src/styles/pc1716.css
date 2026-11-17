@@ -62,3 +62,10 @@
 .pc17.lg .pc17-lico{display:flex;align-items:center;justify-content:center;align-self:center}
 .pc17.lg .pc17-row .pc17-flags{position:static;transform:none}
 .ff .pc17-brand{display:none}
+/* Task 008 (v17.34): the top-right FF logo is about 15% smaller on every card that sizes it in the component; same corner inset. */
+.ff .ff-rvcard-coin svg,.ff .ff-tcard-coin svg,.ff .ff-c17 .face>.cn svg{width:29px;height:29px}
+.ff .ff-poster-coin svg,.ff .ff-poster-coin img{width:37px;height:37px}
+.ff .ff-evc-coin svg,.ff .ff-pk17 .ph .cn svg{width:25.5px;height:25.5px}
+.ff .ff-shc-coin svg,.ff .ff-sface .coin svg,.ff .ff-pcard11 .coin svg{width:24px;height:24px}
+.ff .ff-tc17-coin svg{width:22px;height:22px}
+.ff .ff-cardghost .coin svg{width:19px;height:19px}
