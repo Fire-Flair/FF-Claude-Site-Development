@@ -438,7 +438,7 @@ function PublicProfileBody({ person, packagesTail }) {
         {tab === "services" && <PkgExtras17 person={person} />}
         {tab === "services" && packagesTail}
         {tab === "teams" && (<><ProfileSocial11 person={person.id === "me" ? { ...person, socials: state.profile.socials } : person} /><div style={{ marginTop: 22 }}><TeamTab17 person={person} /></div></>)}
-        {tab === "reviews" && <ReviewsTab17 person={person} mem={mem} />}
+        {tab === "reviews" && <ReviewsTab35 person={person} />}
       </div>
 
       <GenericAttributeCardCreator open={!!openRec} record={openRec && openRec.record} def={openRec && openRec.def} category={openRec && openRec.category} readOnly onClose={() => setOpenRec(null)} />
