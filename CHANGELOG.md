@@ -2,6 +2,8 @@
 
 ## v17.40
 
+Artifact version 1794959527-87d7.
+
 Own-profile edit page rebuilt, hero swipe removed. Branch merged: `p2-profile3`.
 
 - Hero easel (`hero-easel.jsx`): swipe, arrow keys and dots removed; a different member's card is drawn on the easel each time the page loads, a tap opens the profile. The moving shine, desktop crop and larger phone card from v17.37 stay.
