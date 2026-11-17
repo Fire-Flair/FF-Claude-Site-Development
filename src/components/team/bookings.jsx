@@ -143,8 +143,9 @@ function BookingsSoon() {
 
 
 
-/* v17.3.80: the three interest drop-downs on the Bookings page are larger boxes:
-   a photo, the title and a short description, opening to the cards inside. */
+/* The three interest drop-downs on the Bookings page. Each is a card: the photo is the top half with only the title on it;
+   the icon, the description and the chevron sit below on the solid card. On wide screens the three cards share one row
+   (.ff-bkd-row) and an opened card's contents span the full width underneath (the box then carries its own title). */
 const BKD_CSS = __ff_css("styles/bkd.css");
 
 
@@ -158,7 +159,22 @@ function BkDrop17({ id, title, desc, icon: Icon, photo, children }) {
     return () => window.removeEventListener("ff-opendrop", h);
   }, [id]);
   const src = (window.FF_IMG || {})[photo] || "";
-  return /* @__PURE__ */ React.createElement("section", { className: `ff-bkd${open ? " open" : ""}`, id }, /* @__PURE__ */ React.createElement("button", { type: "button", className: "bkd-hd", "aria-expanded": open, onClick: () => setOpen((o) => !o) }, src ? /* @__PURE__ */ React.createElement("span", { className: "bkd-ph" }, /* @__PURE__ */ React.createElement("img", { decoding: "async", src, style: fp17(photo), alt: "", loading: "lazy" })) : null, /* @__PURE__ */ React.createElement("span", { className: "bkd-tx" }, /* @__PURE__ */ React.createElement("span", { className: "bkd-ic" }, /* @__PURE__ */ React.createElement(Icon, { size: 16 })), /* @__PURE__ */ React.createElement("b", null, title), /* @__PURE__ */ React.createElement("span", { className: "bkd-ds" }, desc), /* @__PURE__ */ React.createElement(I11.ChevronRight, { size: 18, className: "bkd-chev" }))), open && /* @__PURE__ */ React.createElement("div", { className: "bkd-bd" }, children));
+  return (
+    <section className={`ff-bkd${open ? " open" : ""}`}>
+      <button type="button" className="bkd-hd" id={id} aria-expanded={open} onClick={() => setOpen((o) => !o)}>
+        <span className={`bkd-ph${src ? "" : " none"}`}>
+          {src ? <img decoding="async" src={src} style={fp17(photo)} alt="" loading="lazy" /> : null}
+          <b>{title}</b>
+        </span>
+        <span className="bkd-tx">
+          <span className="bkd-ic"><Icon size={16} /></span>
+          <span className="bkd-ds">{desc}</span>
+          <I11.ChevronDown size={18} className="bkd-chev" />
+        </span>
+      </button>
+      {open && <div className="bkd-bd"><h3 className="bkd-bt">{title}</h3>{children}</div>}
+    </section>
+  );
 }
 
 
@@ -410,9 +426,11 @@ function TeamBookings({ guest = false }) {
       <section className="ff-bk-sec ff-bkgrow" id="ff-bk-grow">
         <BigHead20 title="Build your career" />
         <p className="ff-bk-sub">Training, dream jobs and rewards.</p>
-        <BkDrop17 id="ff-bk-training" title="Training" icon={E17I.GraduationCap} photo="bk_training" desc="Courses, qualifications and masterclasses to sharpen your craft. Register your interest and we will tell you when places open."><InterestSection kind="training" inner /></BkDrop17>
-        <BkDrop17 id="ff-bk-jobs" title="Dream jobs" icon={E17I.Plane} photo="bk_jobs" desc="Tell us where you dream of working, from festivals to yachts, and we will keep you in mind when it comes up."><InterestSection kind="jobs" inner /></BkDrop17>
-        <BkDrop17 id="ff-bk-rewards" title="FireFlair rewards" icon={E17I.Gift} photo="bk_rewards" desc="Perks for people who work with FireFlair: kit, tickets and experiences. Register your interest in the ones you want."><InterestSection kind="rewards" inner /></BkDrop17>
+        <div className="ff-bkd-row">
+          <BkDrop17 id="ff-bk-training" title="Training" icon={E17I.GraduationCap} photo="bk_training" desc="Courses, qualifications and masterclasses to sharpen your craft. Register your interest and we will tell you when places open."><InterestSection kind="training" inner /></BkDrop17>
+          <BkDrop17 id="ff-bk-jobs" title="Dream jobs" icon={E17I.Plane} photo="bk_jobs" desc="Tell us where you dream of working, from festivals to yachts, and we will keep you in mind when it comes up."><InterestSection kind="jobs" inner /></BkDrop17>
+          <BkDrop17 id="ff-bk-rewards" title="FireFlair rewards" icon={E17I.Gift} photo="bk_rewards" desc="Perks for people who work with FireFlair: kit, tickets and experiences. Register your interest in the ones you want."><InterestSection kind="rewards" inner /></BkDrop17>
+        </div>
       </section>
 
       <BookingSheet engagement={open} onClose={() => setOpen(null)} />

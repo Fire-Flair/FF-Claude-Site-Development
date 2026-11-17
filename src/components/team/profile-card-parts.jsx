@@ -33,6 +33,18 @@ function pc17Tag(tag) { const x = String(tag || ""); return x ? x[0].toUpperCase
    if that does not fit either, the row is hidden. The large card lets entries wrap onto a second line
    (between whole entries) and drops entries from the longest row if the panel would run into the footer. */
 function pc17Fit(root) {
+  /* v17.24: on the home hero easel the card sits under a perspective transform, which skews every measured box.
+     Measure with the transform off (same frame, nothing is painted in between), then put it back. */
+  const host = root.closest ? root.closest(".ff-easel24-card") : null;
+  if (host && host.style.transform && host.style.transform !== "none") {
+    const t = host.style.transform;
+    host.style.transform = "none";
+    try { pc17FitRun(root); } finally { host.style.transform = t; }
+    return;
+  }
+  pc17FitRun(root);
+}
+function pc17FitRun(root) {
   const px = root.getBoundingClientRect().width / 100;
   if (!px) return;
   const rows = Array.from(root.querySelectorAll(".pc17-row"));

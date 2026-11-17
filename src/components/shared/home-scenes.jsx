@@ -257,7 +257,14 @@ const swipeImgs = () => {
     rewards: { bar_shows: I.reward_bar_shows, training: I.reward_training_tickets, amex: I.reward_amex_card, nfc: I.reward_nfc_card, kit: I.reward_bar_kit, car: I.reward_car_rental, party: I.reward_ff_party, shoot: I.reward_photoshoot },
   };
   const own = (pre, m) => { const r = {}; for (const k in m) r[k] = F[pre + k] || m[k]; return r; };
-  return { jobs: own("in_dj_", base.jobs), training: own("in_tr_", base.training), rewards: own("in_rw_", base.rewards) };
+  /* Where each card photo's subject sits (object-position) when the photo is shown at the card's 4:3 top half:
+     heads and the drink stay in frame, above the title. Update the entry when a card's photo is swapped. */
+  const pos = {
+    jobs: { music_festivals: "50% 62%", food_festivals: "50% 78%", sports: "50% 42%", motorsport: "50% 72%", international: "50% 30%", yachts: "50% 40%", after_dark: "50% 62%", flair: "50% 52%" },
+    training: { intro_cocktails: "60% 64%", mixology: "50% 6%", wset_spirits: "38% 50%", wset_wine: "22% 50%", brand_training: "77% 72%", ff_open_class: "70% 50%", ff_open_bar: "50% 100%", ff_masterclass: "50% 42%" },
+    rewards: { shoot: "49% 58%" },
+  };
+  return { jobs: own("in_dj_", base.jobs), training: own("in_tr_", base.training), rewards: own("in_rw_", base.rewards), pos };
 };
 
 
@@ -410,21 +417,21 @@ const interestCfg = (kind) => {
   if (kind === "training") return {
     id: "ff-training-sect", boxed: true, eyebrow: "Training", title: "Learn, qualify, get booked.",
     lede: "Courses and training events for every level, from your first cocktail to an internationally recognised qualification. Qualifications you earn go on your profile, so clients can find you by them.",
-    list: TRAINING_COURSES, imgs: I.training, stateKey: "trainingInterest", action: "TRAINING_INTEREST", qid: "int.training", idsKey: "courses", ownKey: "own",
+    list: TRAINING_COURSES, imgs: I.training, pos: I.pos.training, stateKey: "trainingInterest", action: "TRAINING_INTEREST", qid: "int.training", idsKey: "courses", ownKey: "own",
     ownLabel: "Anything else you'd like to learn?", ownPh: "A course or skill…", empty: "Choose a training event above, or add your own.",
     ok: "Interest registered", follow: "We'll tell you when dates are set.", noun: "training",
   };
   if (kind === "jobs") return {
     id: "ff-jobs-sect", boxed: "dark", eyebrow: "Dream jobs", title: "The jobs you actually want.",
     lede: "FireFlair: we're here to work with you. Register your interest and we'll go out there, negotiate the best rate for you and get you the work. When you get work, we get paid too. Win-win.",
-    list: DREAM_JOBS, imgs: I.jobs, stateKey: "jobsInterest", action: "JOBS_INTEREST", qid: "int.jobs", idsKey: "jobs", ownKey: "dream",
+    list: DREAM_JOBS, imgs: I.jobs, pos: I.pos.jobs, stateKey: "jobsInterest", action: "JOBS_INTEREST", qid: "int.jobs", idsKey: "jobs", ownKey: "dream",
     ownLabel: "What's your dream hospitality job?", ownPh: "Your dream job…", empty: "Choose a job above, or tell us your dream job.",
     ok: "Interest registered. We'll find you the work.", follow: "We'll go out and find the work.", noun: "jobs",
   };
   return {
     id: "ff-rewards-sect", boxed: "dark", eyebrow: "FF Rewards", title: "Rewards for growing FireFlair.",
     lede: "Verification helps you get bookings. We're also building rewards for the people who grow FireFlair. Tell us what you'd want — the rewards with the most interest come first.",
-    list: XP_REWARDS, imgs: I.rewards, stateKey: "rewardsInterest", action: "P1_REWARDS_INTEREST", qid: "int.rewards", idsKey: "rewards", ownKey: "own",
+    list: XP_REWARDS, imgs: I.rewards, pos: I.pos.rewards, stateKey: "rewardsInterest", action: "P1_REWARDS_INTEREST", qid: "int.rewards", idsKey: "rewards", ownKey: "own",
     ownLabel: "What reward would help you most?", ownPh: "Your own reward idea…", empty: "Choose a reward above, or suggest your own.",
     ok: "Interest registered — we'll tell you when FF Rewards open", follow: "We'll tell you when FF Rewards open.", noun: "rewards",
   };
@@ -501,7 +508,7 @@ function InterestSection({ kind, inner }) {
     <Wrap id={c.id} boxed={c.boxed} eyebrow={c.eyebrow} title={c.title} lede={c.lede}>
       <div className="ff-courses ff-courses-img">
         {c.list.map(x => (
-          <FlipChoice17 key={x.id} kind={x.kind} title={x.title} note={x.note} img={c.imgs[x.id]} on={picked.includes(x.id)} onClick={() => toggle(x.id)} />
+          <FlipChoice17 key={x.id} kind={x.kind} title={x.title} note={x.note} img={c.imgs[x.id]} pos={c.pos[x.id]} on={picked.includes(x.id)} onClick={() => toggle(x.id)} />
         ))}
       </div>
       <div className={`ff-panel ff-champagne ff-ireg ${!who ? "out" : reg && !editing ? "done" : "edit"}`} style={{ marginTop: 16 }}>

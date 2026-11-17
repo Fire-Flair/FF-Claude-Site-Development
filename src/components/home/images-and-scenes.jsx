@@ -131,9 +131,9 @@
     { id: "wset_spirits", kind: "Qualification", title: "WSET Spirits", img: img("training_spirits_qualification") },
     { id: "wset_wine", kind: "Qualification", title: "WSET Wine", img: img("training_wine_qualification") },
     { id: "brand_training", kind: "Brand event", title: "Spirit brand training", img: img("training_brand_training") },
-    { id: "ff_open_class", kind: "FireFlair event", title: "FireFlair Open Class", img: img("training_ff_open_class") },
-    { id: "ff_open_bar", kind: "FireFlair event", title: "FireFlair Open Bar", img: img("training_ff_open_bar") },
-    { id: "ff_masterclass", kind: "FireFlair event", title: "FireFlair Masterclass", img: img("training_masterclass") }
+    { id: "ff_open_class", kind: "FF event", title: "FireFlair Open Class", img: img("training_ff_open_class") },
+    { id: "ff_open_bar", kind: "FF event", title: "FireFlair Open Bar", img: img("training_ff_open_bar") },
+    { id: "ff_masterclass", kind: "FF event", title: "FireFlair Masterclass", img: img("training_masterclass") }
   ];
 
   const DREAM_JOBS = [

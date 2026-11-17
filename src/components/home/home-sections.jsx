@@ -1672,7 +1672,7 @@
       decoding: "async"
     }) : React.createElement(HomeScene, {
       kind: "bar"
-    }), React.createElement("div", {
+    }), IMGS.hero ? React.createElement(HeroEasel24, null) : null, React.createElement("div", {
       className: "ff-hero18-fade",
       "aria-hidden": "true"
     })), React.createElement("div", {

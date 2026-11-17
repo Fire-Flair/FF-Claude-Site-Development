@@ -1,15 +1,35 @@
 
-.ff-bkd { padding:0 !important; margin:0 0 12px; border-radius:22px; corner-shape:squircle; background:#FFFDF8; border:1px solid rgba(126,97,29,.3); overflow:hidden; }
-.ff-bkd .bkd-hd { position:relative; margin:0; border:0; background:none; display:block; width:100%; text-align:left; color:#16130F; padding:0 !important; }
-.ff-bkd .bkd-ph { display:block; aspect-ratio:23 / 10; overflow:hidden; background:#16130F; }
-.ff-bkd .bkd-ph img { width:100%; height:100%; object-fit:cover; display:block; }
-.ff-bkd .bkd-tx { position:relative; display:grid; grid-template-columns:30px 1fr; column-gap:10px; align-items:center; padding:13px 46px 15px 14px; }
+/* Build your career drop-downs: the photo is the top half of each card and only the title sits on it;
+   the icon, the description and the chevron are below, on the solid card. */
+.ff-bkd-row { display:grid; gap:12px; }
+.ff .ff-bkd-row > .ff-bkd { display:block; margin:0; }
+.ff-bkd { padding:0 !important; margin:0; border-radius:22px; corner-shape:squircle; background:#FFFDF8; border:1px solid rgba(126,97,29,.3); overflow:hidden; }
+.ff-bkd .bkd-hd { margin:0; border:0; background:none; display:flex; flex-direction:column; width:100%; text-align:left; color:#16130F; padding:0 !important; font:inherit; cursor:pointer; }
+.ff-bkd .bkd-ph { position:relative; display:block; width:100%; aspect-ratio:23 / 10; overflow:hidden; background:#16130F; }
+.ff-bkd .bkd-ph img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+.ff-bkd .bkd-ph::after { content:""; position:absolute; left:0; right:0; bottom:0; height:58%; background:linear-gradient(0deg,rgba(11,11,12,.86) 0%,rgba(11,11,12,.5) 45%,rgba(11,11,12,0) 100%); pointer-events:none; }
+.ff-bkd .bkd-ph > b { position:absolute; left:14px; right:14px; bottom:11px; z-index:1; font-family:var(--display); font-weight:700; font-size:clamp(19px,5.4vw,23px); line-height:1.15; color:#fff; text-shadow:0 1px 8px rgba(0,0,0,.65); overflow-wrap:normal; word-break:normal; hyphens:none; }
+.ff-bkd .bkd-ph.none { aspect-ratio:auto; padding:16px 14px 12px; }
+.ff-bkd .bkd-ph.none::after { display:none; }
+.ff-bkd .bkd-ph.none > b { position:static; }
+.ff-bkd .bkd-tx { display:grid; grid-template-columns:30px minmax(0,1fr) 18px; column-gap:11px; align-items:start; padding:13px 14px 15px; flex:1; }
 .ff-bkd .bkd-ic { width:30px; height:30px; border-radius:50%; display:grid; place-items:center; color:#E4C36A; background:#16130F; }
-.ff-bkd .bkd-tx > b { font-family:var(--display); font-size:18px; }
-.ff-bkd .bkd-ds { grid-column:1 / -1; margin-top:7px; font-size:13.5px; line-height:1.45; color:#5B5346; }
-.ff-bkd .bkd-chev { position:absolute; right:14px; top:19px; color:var(--gold-dk,#7E611D); transition:transform .2s; }
-.ff-bkd.open .bkd-chev { transform:rotate(90deg); }
-.ff-bkd .bkd-bd { padding:0 12px 14px; }
+.ff-bkd .bkd-ds { font-size:13.5px; line-height:1.45; color:#4A443A; overflow-wrap:normal; word-break:normal; hyphens:none; }
+.ff-bkd .bkd-chev { margin-top:6px; color:var(--gold-dk,#7E611D); transition:transform .2s; }
+.ff-bkd.open .bkd-chev { transform:rotate(180deg); }
+.ff-bkd .bkd-hd:focus-visible { outline:2px solid var(--gold,#C9A227); outline-offset:-3px; }
+.ff-bkd .bkd-bd { padding:2px 12px 14px; }
+.ff-bkd .bkd-bt { display:none; }
+/* Wide screens: the three cards share a row; an opened card's contents span the full width below the row. */
+@media (min-width:760px) {
+  .ff-bkd-row { grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; align-items:stretch; }
+  .ff .ff-bkd-row > .ff-bkd { display:contents; }
+  .ff-bkd-row .bkd-hd { order:0; border-radius:22px; corner-shape:squircle; background:#FFFDF8; border:1px solid rgba(126,97,29,.3); overflow:hidden; transition:border-color .2s, box-shadow .2s; }
+  .ff-bkd-row .ff-bkd.open .bkd-hd { border-color:var(--gold,#C9A227); box-shadow:0 0 0 2px rgba(201,162,39,.45); }
+  .ff-bkd-row .bkd-ph > b { font-size:22px; }
+  .ff-bkd-row .bkd-bd { order:1; grid-column:1 / -1; padding:18px 16px 16px; border-radius:22px; corner-shape:squircle; background:#FFFDF8; border:1px solid rgba(126,97,29,.3); }
+  .ff-bkd-row .bkd-bt { display:block; margin:0 0 8px; font-family:var(--display); font-size:22px; line-height:1.15; color:#16130F; }
+}
 .ff-bk-sell.ff-bkpc { padding:16px 12px 14px; border-radius:24px; corner-shape:squircle; background:#FFFDF8; border:1px solid rgba(126,97,29,.32); box-shadow:0 6px 22px rgba(22,19,15,.06); }
 .ff-bk-sell.ff-bkpc .ff-bk-h { margin-top:0; }
 .ff-bkpc .ff-hscroll { margin-left:-12px; margin-right:-12px; padding-left:12px; padding-right:12px; scroll-padding-left:12px; }
@@ -21,24 +41,3 @@
 .ff-fb21-row { margin:0 0 10px; }
 .ff-fb21-row .rate { display:block; margin-top:6px; font-size:13px; color:#5B5346; }
 .ff-fb21-row .rate b { color:#16130F; }
-@media (min-width:720px) {
-  .ff-bkd .bkd-hd { display:grid; grid-template-columns:minmax(240px, 36%) 1fr; align-items:stretch; }
-  .ff-bkd .bkd-ph { position:relative; aspect-ratio:auto; min-height:170px; }
-  .ff-bkd .bkd-ph img { position:absolute; inset:0; }
-  .ff-bkd .bkd-tx { align-content:center; }
-}
-
-/* v17.11: photo is half the box; the title sits on the photo, the description beside it (never over it) */
-.ff-bkd .bkd-hd { display:grid !important; grid-template-columns:1fr 1fr; align-items:stretch; position:relative; }
-.ff-bkd .bkd-ph { position:relative; aspect-ratio:auto; min-height:176px; }
-.ff-bkd .bkd-ph img { position:absolute; inset:0; }
-.ff-bkd .bkd-ph::after { content:""; position:absolute; inset:0; background:linear-gradient(0deg,rgba(22,19,15,.78) 0%,rgba(22,19,15,0) 55%); }
-.ff-bkd .bkd-tx { position:static; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:8px; padding:14px 40px 14px 14px; }
-.ff-bkd .bkd-ic { flex:none; }
-.ff-bkd .bkd-tx > b { position:absolute; left:12px; bottom:12px; max-width:calc(50% - 20px); z-index:2; color:#fff; font-size:18px; line-height:1.15; text-shadow:0 1px 8px rgba(0,0,0,.6); overflow-wrap:normal; }
-.ff-bkd .bkd-ds { margin-top:0; font-size:13px; line-height:1.4; }
-.ff-bkd .bkd-chev { top:14px; }
-@media (min-width:720px) {
-  .ff-bkd .bkd-hd { grid-template-columns:1fr 1fr; }
-  .ff-bkd .bkd-ph { min-height:190px; }
-}
