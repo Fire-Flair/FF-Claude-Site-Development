@@ -2,6 +2,8 @@
 
 ## v17.37
 
+Artifact version 1794956507-bbaf.
+
 Profile Card icon column and commas, the FF coin as the notification count, Review Cards on every Reviews tab. Branches merged: `p2-card`, `p2-net-ladder` (coin).
 
 - Profile Card (`profile-card-parts.jsx`, `pc1716.css`): the rows box has a black column down its left edge holding the five row icons in gold, as on the live FF Team cards; entries are separated by commas instead of dots (a comma never starts a line). Small browse tiles and the builder's editable card are unchanged.
