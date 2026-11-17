@@ -16,9 +16,9 @@
 
    Live site: pick one published FF Team profile at random per page load.
    ========================================================================== */
-const HERO_EASEL24 = [[0.37895, 0.10033], [0.58947, 0.10702], [0.61510, 0.68968], [0.39202, 0.72617]];
+const HERO_EASEL24 = [[0.39263, 0.10033], [0.60316, 0.10702], [0.62878, 0.68968], [0.40571, 0.72617]];
 /* The same card mirrored in the polished bar top below the easel (same corner order, so the card comes out upside down). Only its foot shows. */
-const HERO_EASEL24_REFL = [[0.37632, 1.51979], [0.58684, 1.44621], [0.61247, 0.85541], [0.38939, 0.88980]];
+const HERO_EASEL24_REFL = [[0.39000, 1.51544], [0.60053, 1.44186], [0.62615, 0.85106], [0.40307, 0.88545]];
 
 /* CSS matrix3d that maps a w×h box (origin top-left) onto the quad q (px). */
 function heroEaselMatrix24(w, h, q) {

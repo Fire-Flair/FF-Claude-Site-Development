@@ -5,7 +5,11 @@ H0,W0=src.shape[:2]
 Q=np.float32([[720,430],[1120,436],[1169,962],[745,995]])   # board corners TL TR BR BL (source px)
 BA=0.757                                                    # board true aspect (from the square QR code)
 RH=1000; RW=int(RH*BA)
-M=cv2.getPerspectiveTransform(Q,np.float32([[0,0],[RW,0],[RW,RH],[0,RH]])); Mi=np.linalg.inv(M)
+M=cv2.getPerspectiveTransform(Q,np.float32([[0,0],[RW,0],[RW,RH],[0,RH]]))
+# v17.32: the board is moved 26px to the right so it sits centred on the easel's ledge
+SHIFT=26
+Q0=Q.copy(); Q=Q+np.float32([SHIFT,0])
+Mi=np.linalg.inv(cv2.getPerspectiveTransform(Q,np.float32([[0,0],[RW,0],[RW,RH],[0,RH]])))
 # --- 1. blank the board: remove the print, keep the board's own light falloff
 rect=cv2.warpPerspective(src,M,(RW,RH),flags=cv2.INTER_CUBIC)
 g=rect.max(axis=2)
@@ -21,6 +25,11 @@ qm=cv2.erode(qm,np.ones((5,5),np.uint8));
 ledge=np.zeros((H0,W0),np.uint8); cv2.fillConvexPoly(ledge,np.int32([[855,983],[1115,964],[1118,1000],[855,1010]]),255)
 qm[ledge>0]=0
 qmf=cv2.GaussianBlur(qm,(0,0),1.0).astype(np.float32)[...,None]/255
+oldq=np.zeros((H0,W0),np.uint8); cv2.fillConvexPoly(oldq,Q0.astype(np.int32),255); oldq=cv2.dilate(oldq,np.ones((9,9),np.uint8))
+newq=np.zeros((H0,W0),np.uint8); cv2.fillConvexPoly(newq,Q.astype(np.int32),255)
+left=((oldq>0)&(newq==0)).astype(np.uint8)*255; left[ledge>0]=0
+src=cv2.inpaint(np.clip(src,0,255).astype(np.uint8),left,11,cv2.INPAINT_NS).astype(np.float32)
+src+=(left>0)[...,None]*rng.normal(0,2.0,src.shape).astype(np.float32)
 img=src*(1-qmf)+back*qmf
 # --- 1b. the card has round corners and covers the whole board, so the board's four square corner tips are painted out
 RR=int(0.044*RW)+2

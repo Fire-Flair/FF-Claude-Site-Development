@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.32
+
+Artifact version 1794947135-8ae7.
+
+- Hero card sits centred on the easel: the board in the photo is moved right, and `HERO_EASEL24` / `HERO_EASEL24_REFL` are re-measured (scripts/hero-easel/).
+- Hero photo: colour grading reduced again, close to the photo as shot; the gold light stays on the easel.
+- Hero panel: a little burgundy in the middle; violet beams rise from the bottom-left and bottom-right corners and spread slightly as they go up (`.ff-hero18::after`).
+- Card shine: a small glint across the bottom-right corner only (`.ff-easel24-sheen`), instead of a band across the middle.
+
 ## v17.31
 
 Artifact version 1794946952-7d15.

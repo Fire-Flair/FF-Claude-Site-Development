@@ -774,3 +774,21 @@
 .ff .ff-hero18 .ff-hero18-fade { display:none !important; }
 .ff .ff-hero18 .ff-hero18-img { background:transparent !important; -webkit-mask-image:linear-gradient(180deg, #000 0, #000 84%, transparent 100%) !important; mask-image:linear-gradient(180deg, #000 0, #000 84%, transparent 100%) !important; }
 @media (min-width:900px) { .ff .ff-hero18 .ff-hero18-img { -webkit-mask-image:linear-gradient(90deg, transparent 0, rgba(0,0,0,.5) 12%, #000 26%) !important; mask-image:linear-gradient(90deg, transparent 0, rgba(0,0,0,.5) 12%, #000 26%) !important; } }
+
+/* ======================= v17.32 — hero: violet beams from the bottom corners, a small glint on the card ======================= */
+/* panel: a little burgundy in the middle; violet comes from the bottom-left and bottom-right corners, shoots upwards and spreads slightly as it rises */
+.ff .ff-hero18, .ff .ff-home .ff-hero18 { background:radial-gradient(90% 80% at 50% 55%, #4E1020 0%, #300B14 55%, #150608 100%) !important; }
+.ff .ff-hero18::after { content:""; position:absolute; inset:0; z-index:0; pointer-events:none; border-radius:inherit;
+  background:
+    conic-gradient(from 0deg at 0% 100%, rgba(128,64,196,0) 0deg, rgba(140,70,214,.85) 7deg, rgba(124,60,192,.5) 15deg, rgba(120,58,186,0) 27deg, rgba(120,58,186,0) 360deg),
+    conic-gradient(from 333deg at 100% 100%, rgba(120,58,186,0) 0deg, rgba(124,60,192,.5) 12deg, rgba(140,70,214,.85) 20deg, rgba(128,64,196,0) 27deg, rgba(128,64,196,0) 360deg);
+  -webkit-mask-image:linear-gradient(to top, #000 0%, rgba(0,0,0,.75) 30%, rgba(0,0,0,0) 88%); mask-image:linear-gradient(to top, #000 0%, rgba(0,0,0,.75) 30%, rgba(0,0,0,0) 92%); filter:blur(9px); }
+.ff .ff-hero18 > * { position:relative; z-index:1; }
+.ff .ff-hero18 .ff-hero18-in { z-index:2; }
+/* the glint: a small band of light across the card's bottom-right corner only */
+.ff .ff-easel24-sheen { inset:auto 0 0 auto !important; width:52%; height:34%; border-radius:0 0 4.4cqw 0; }
+.ff .ff-easel24-sheen::before { top:-30%; bottom:-30%; left:-70%; width:38%; transform:skewX(-32deg);
+  background:linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,240,200,.25) 35%, rgba(255,255,255,.75) 50%, rgba(255,240,200,.25) 65%, rgba(255,255,255,0) 100%);
+  animation:ff-easel-sheen32 6s cubic-bezier(.4,0,.2,1) 1.2s infinite; }
+@keyframes ff-easel-sheen32 { 0% { left:-70%; } 22%, 100% { left:150%; } }
+@media (prefers-reduced-motion: reduce) { .ff .ff-easel24-sheen::before { animation:none; left:40%; opacity:.55; } }
