@@ -1675,15 +1675,7 @@
     }), React.createElement("div", {
       className: "ff-hero18-fade",
       "aria-hidden": "true"
-    }), React.createElement("span", {
-      className: "ff-hero18-shadow",
-      "aria-hidden": "true"
-    }), React.createElement("span", {
-      className: "ff-hero18-coin refl",
-      "aria-hidden": "true"
-    }, React.createElement(SiteHeroCoin, { site: "team" })), React.createElement("span", {
-      className: "ff-hero18-coin ff-hero17-coin"
-    }, React.createElement(SiteHeroCoin, { site: "team" }))), React.createElement("div", {
+    })), React.createElement("div", {
       className: "ff-hero18-in"
     }, React.createElement("h1", {
       id: "ff-hero17-h",

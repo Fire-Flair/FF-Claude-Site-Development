@@ -110,15 +110,7 @@ const FIRE17_STILL = __ff_json("content/data/fire17-still.json");
     }), React.createElement("div", {
       className: "ff-hero18-fade",
       "aria-hidden": "true"
-    }), React.createElement("span", {
-      className: "ff-hero18-shadow",
-      "aria-hidden": "true"
-    }), React.createElement("span", {
-      className: "ff-hero18-coin refl",
-      "aria-hidden": "true"
-    }, React.createElement(SiteHeroCoin, { site: kind === "party" ? "party" : "staff" })), React.createElement("span", {
-      className: "ff-hero18-coin ff-hero17-coin"
-    }, React.createElement(SiteHeroCoin, { site: kind === "party" ? "party" : "staff" }))), React.createElement("div", {
+    })), React.createElement("div", {
       className: "ff-hero18-in"
     }, React.createElement("h1", {
       id: "ff-hero11-h",

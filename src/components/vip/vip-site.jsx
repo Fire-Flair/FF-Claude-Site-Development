@@ -296,9 +296,6 @@ function VipHero21() {
       <div className="ff-hero18-img">
         {IM.hero ? <img decoding="async" className="ff-hero18-photo" src={IM.hero} srcSet={IM.hero_sm ? `${IM.hero_sm} 900w, ${IM.hero} 1800w` : undefined} sizes="(min-width:900px) 760px, 100vw" alt="" decoding="async" /> : null}
         <div className="ff-hero18-fade" aria-hidden="true" />
-        <span className="ff-hero18-shadow" aria-hidden="true" />
-        <span className="ff-hero18-coin refl" aria-hidden="true"><SiteHeroCoin site="vip" /></span>
-        <span className="ff-hero18-coin ff-hero17-coin"><SiteHeroCoin site="vip" /></span>
       </div>
       <div className="ff-hero18-in">
         <h1 id="ff-v21-h" className="ff-hero17-h ff-hero-h101">Welcome to FF VIP</h1>

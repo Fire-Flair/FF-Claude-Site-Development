@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v17.23
+
+Artifact version 1794943438-15dd.
+
+- Home hero on FF Team, FF Staff, FF Party (and FF VIP): the FF coin, its reflection and its shadow are removed from the bar. The hero is now a real photo and a drawn coin on it no longer works. Removed from home-sections.jsx, staff-home.jsx and vip-site.jsx; the .ff-hero18-coin / .ff-hero18-shadow styles and SiteHeroCoin are now unused.
+
 ## v17.22
 
 Artifact version 1794941242-d066.
