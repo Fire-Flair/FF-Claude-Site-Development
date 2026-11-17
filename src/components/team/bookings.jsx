@@ -164,8 +164,9 @@ function BkDrop17({ id, title, desc, icon: Icon, photo, children }) {
 
 
 /* ---- FF Staff Shifts (v17.4.6): one card per profession, from the Pick your professions catalogue ----
-   Matte forest-green version of the FF Party package card (green is the FF Staff accent within FF Team). The card asks the availability question (answers kept
-   in profile.staffAvail, as before) and takes an optional preferred hourly rate: a typed Q&A answer
+   Matte forest-green version of the FF Party package card (green is the FF Staff accent within FF Team). The question ("Would you like to be contacted
+   about these roles?") is asked once above the cards; each card holds the preferred hourly rate, then Yes / No and a type box for that role (answers kept
+   in profile.staffAvail, as before: "Yes", "No" or the typed answer). The preferred hourly rate is optional: a typed Q&A answer
    rate.<profession id> in pence, visibility "ff-staff" (shown on the member's FF Staff profile only).
    Businesses set the actual shift rate on each Shift Card. */
 /* Terms shown after signing in, before packages or rates are saved. kind "pkg": FF Party packages. kind "shift": FF Staff shifts. */
@@ -189,17 +190,17 @@ function ProfRateTile17({ name, cat, guest, val, onVal, err }) {
   const v = val != null ? val : saved != null ? String(saved / 100) : "";
   const staffAvail = state.profile.staffAvail || {};
   const ans = staffAvail[name] || "";
-  const q = `Are you available for bookings as ${/^[aeiou]/i.test(name) ? "an" : "a"} ${name.toLowerCase()}?`;
+  const q = `Would you like to be contacted about ${name} roles?`;
   const login = () => window.dispatchEvent(new Event("ff-login"));
   const setAvail = (o) => { if (!account) { login(); return; } dispatch({ type: "PROFILE", patch: { staffAvail: { ...staffAvail, [name]: o } } }); };
+  const typed = ans === "Yes" || ans === "No" ? "" : ans;
+  const [txt, setTxt] = useState(typed);
+  useEffect(() => { setTxt(typed); }, [typed]);
+  const sendTxt = () => { const t = txt.trim(); if (t !== typed && (t || typed)) setAvail(t); };
   return (
-    <div className="ff-tp17 grn prof" role="group" aria-label={name}>
+    <div className="ff-tp17 grn prof ff-sr22" role="group" aria-label={name}>
       <span className="lv">{cat}</span>
       <b className="tt">{name}</b>
-      <span className="in">{q}</span>
-      <span className="yn" role="group" aria-label={q}>
-        {["Yes", "No"].map(o => <button key={o} type="button" className={ans === o ? "on" : ""} aria-pressed={ans === o} onClick={() => setAvail(o)}>{o}</button>)}
-      </span>
       <span className="pay">
         <small>Your preferred hourly rate</small>
         <span className="rt">
@@ -208,8 +209,13 @@ function ProfRateTile17({ name, cat, guest, val, onVal, err }) {
             onChange={(e) => onVal(name, e.target.value.replace(/[^\d.]/g, "").slice(0, 7))} />
           <span>/hour</span>
         </span>
-        {err ? <span className="er" role="alert">{err}</span> : <span className="vis">Shown to businesses on FF Staff only</span>}
+        {err ? <span className="er" role="alert">{err}</span> : null}
       </span>
+      <span className="yn" role="group" aria-label={q}>
+        {["Yes", "No"].map(o => <button key={o} type="button" className={ans === o ? "on" : ""} aria-pressed={ans === o} onClick={() => setAvail(o)}>{o}</button>)}
+      </span>
+      <input className="ty" type="text" value={txt} maxLength={200} aria-label={`${q} Type your answer`} placeholder="Type your answer"
+        onChange={(e) => setTxt(e.target.value)} onBlur={() => { if (account) sendTxt(); }} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); sendTxt(); } }} />
     </div>
   );
 }
@@ -264,6 +270,7 @@ function ProfRates17({ guest }) {
       </div>
       <div className="ff-pr17-panel" role="tabpanel">
         <div className="ff-pr17-ph"><I11.ChevronDown size={16} aria-hidden="true" /> <b>{cat === "Yours" ? "Your professions" : cat}</b> shifts</div>
+        <p className="ff-sr22-q">Would you like to be contacted about these roles?</p>
         <HScroll label="FF Staff Shifts" snap>
           {list.map(p => <div key={p.name} className="ff-tp17-cell"><ProfRateTile17 name={p.name} cat={p.cat} guest={guest} val={vals[p.name]} onVal={onVal} err={errs[p.name]} /></div>)}
         </HScroll>
@@ -314,8 +321,12 @@ function TeamBookings({ guest = false }) {
     dispatch({ type: "TOAST", toast: r.ok ? (next.length ? `Signed up for ${sv.title}` : "Withdrawn from your packages") : "That couldn't be saved. Try again." });
     if (r.ok) setSel(null);
   };
-  const ownPackage = () => { dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); let n = 0; const go = () => { const el = document.getElementById("ff-cr17-service"); if (el) el.scrollIntoView({ behavior: "auto", block: "start" }); else if (++n < 20) setTimeout(go, 60); }; setTimeout(go, 120); };
-  const pkgs = [...(hid17(state, "packages", "svc_staffing") ? [] : [STAFFING_SERVICE]), ...PARTY_SERVICES.filter(sv => sv.id !== "svc_full")];
+  /* Signed out (no role yet) this goes the same way as "Create your Profile Card": FF Team first, then Profile. */
+  const ownPackage = () => { if (state.role !== "team") dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); let n = 0; const go = () => { const el = document.getElementById("ff-cr17-service"); if (el) el.scrollIntoView({ behavior: "auto", block: "start" }); else if (++n < 20) setTimeout(go, 60); }; setTimeout(go, 120); };
+  /* Bar packages in the FF Party pillar order: Masterclass first, down to Staffing. */
+  const pkgs = [...PARTY_SERVICES.filter(sv => sv.id !== "svc_full").reverse(), ...(hid17(state, "packages", "svc_staffing") ? [] : [STAFFING_SERVICE])];
+  const [pkTab, setPkTab] = useState("Bar");
+  const ownBtn = <button type="button" className="ff-btn gold ff-pk22-own" onClick={ownPackage}><Plus size={16} /> Create your own package</button>;
 
   const Row = ({ x, tag, onClick }) => (
     <button type="button" className="ff-bk-row" onClick={onClick}>
@@ -354,17 +365,44 @@ function TeamBookings({ guest = false }) {
         <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-party">
           <h3>FF Party packages</h3>
           <p>You are your own boss. FireFlair sets the pay rate for each package. You deal directly with the client, and FireFlair is here to support you. Packages are advertised at a set rate, and by signing up to one you agree to that rate. The rates are strong, so we expect strong work in return.</p>
-          <HScroll label="FF Party packages" snap>
-            {pkgs.map(sv => <div key={sv.id} className="ff-tp17-cell"><PkgTile17 sv={sv} on={picked.includes(sv.id)} onClick={() => tick(sv)} /></div>)}
-            <div className="ff-tp17-cell"><button type="button" className="ff-tp17 own" onClick={ownPackage}><span className="pl"><Plus size={22} /></span><b className="tt">Create your own package</b></button></div>
-          </HScroll>
+          <h4 className="ff-pk22-h">{pkTab === "Bar" ? "Our bar packages" : pkTab === "Entertainment" ? "Our entertainment packages" : "Our service packages"}</h4>
+          <div className="ff-pr17-chips" role="tablist" aria-label="Package categories">
+            {["Bar", "Entertainment", "Services"].map(k => <button key={k} type="button" role="tab" id={`ff-pk22-t-${k}`} className="ff-chip ff-pr17-tab" aria-selected={k === pkTab} aria-pressed={k === pkTab} onClick={() => setPkTab(k)}>{k}</button>)}
+          </div>
+          <div className="ff-pr17-panel ff-pk22-panel" role="tabpanel" aria-labelledby={`ff-pk22-t-${pkTab}`}>
+            {pkTab === "Bar" ? (
+              <HScroll label="Our bar packages" snap>
+                {pkgs.map(sv => { const on = picked.includes(sv.id); return (
+                  <div key={sv.id} className="ff-pk22-cell">
+                    <V101.PosterCard tone={sv.tone} ribbon="Package Card" eyebrow={[sv.level, sv.site || "FF Party"].join(" · ")} title={sv.title} tagline={sv.tagline}
+                      price={PAY17[sv.id] != null ? <><small>You earn</small>{pkgPayLabel17(sv.id)}</> : null}
+                      rows={[
+                        { icon: <Sparkles size={17} />, label: "Includes", value: sv.includes },
+                        { icon: <Users size={17} />, label: "Ideal for", value: sv.ideal },
+                        { icon: <Clock size={17} />, label: "Duration", value: TIME17[sv.id] || sv.time },
+                      ]}
+                      footer={<>
+                        <span className="ff-poster-small" style={{ margin: 0 }}>{sv.domain || "FFParty.uk"}</span>
+                        <button type="button" className={`ff-pk22-go${on ? " on" : ""}`} aria-pressed={on} aria-label={`${sv.title}: ${on ? "Signed up" : "Sign up"}`} onClick={() => tick(sv)}>{on ? <><Check size={14} strokeWidth={2.6} /> Signed up</> : "Sign up"}</button>
+                      </>} />
+                  </div>
+                ); })}
+                <div className="ff-pk22-cell ff-pk22-owncell">{ownBtn}</div>
+              </HScroll>
+            ) : (
+              <div className="ff-pk22-soon">
+                <span>Coming soon 2027</span>
+                {ownBtn}
+              </div>
+            )}
+          </div>
           <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={!sel} onClick={() => { if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; } setPkgTerms(true); }}><Check size={15} /> Confirm</button>
           {pkgTerms && <PkgTerms17 kind="pkg" onClose={() => setPkgTerms(false)} onAccept={confirmPkgs} />}
         </div>
 
         <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-staff">
           <h3>FF Staff Shifts</h3>
-          <p>Businesses create shift cards and set their pay rates.</p>
+          <p><b>Set your rates for your jobs.</b> Shown to businesses on FF Staff only. Businesses create shift cards and set their pay rates.</p>
           <ProfRates17 guest={guest || !signedIn} />
         </div>
       </section>

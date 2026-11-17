@@ -209,20 +209,22 @@
   function RateTile21({ name, cat }) {
     const [yn, setYn] = useState("");
     const [v, setV] = useState("");
+    const [t, setT] = useState("");
+    const q = "Would you like to be contacted about " + name + " roles?";
     return (
-      <div className="ff-tp17 grn prof" role="group" aria-label={name}>
+      <div className="ff-tp17 grn prof ff-sr22" role="group" aria-label={name}>
         <span className="lv">{cat}</span>
         <b className="tt">{name}</b>
-        <span className="in">{"Are you available for bookings as " + (/^[aeiou]/i.test(name) ? "an " : "a ") + name.toLowerCase() + "?"}</span>
-        <span className="yn" role="group">
-          {["Yes", "No"].map((o) => <button key={o} type="button" className={yn === o ? "on" : ""} aria-pressed={yn === o} onClick={() => setYn(o)}>{o}</button>)}
-        </span>
         <span className="pay">
           <small>Your preferred hourly rate</small>
           <span className="rt"><span aria-hidden="true">£</span>
             <input type="text" inputMode="decimal" value={v} aria-label={"Your preferred hourly rate as " + name + ", pounds per hour"} onChange={(e) => setV(e.target.value.replace(/[^\d.]/g, "").slice(0, 7))} />
             <span>/hour</span></span>
         </span>
+        <span className="yn" role="group" aria-label={q}>
+          {["Yes", "No"].map((o) => <button key={o} type="button" className={yn === o ? "on" : ""} aria-pressed={yn === o} onClick={() => setYn(o)}>{o}</button>)}
+        </span>
+        <input className="ty" type="text" value={t} maxLength={200} aria-label={q + " Type your answer"} placeholder="Type your answer" onChange={(e) => setT(e.target.value)} />
       </div>
     );
   }
@@ -230,6 +232,7 @@
   function VisRatesStaff21() {
     return (
       <div className="pv pv-rt">
+        <p className="ff-sr22-q">Would you like to be contacted about these roles?</p>
         <div className="pv-rates"><RateTile21 name="Bartender" cat="Bar" /><RateTile21 name="DJ" cat="Music" /></div>
         <ul className="pv-routes">
           <li><b>FF Party</b><span>Private clients book set-price packages</span></li>

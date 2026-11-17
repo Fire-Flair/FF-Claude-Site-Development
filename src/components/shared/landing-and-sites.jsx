@@ -39,38 +39,6 @@ function Sect({ id, eyebrow, title, lede, children, boxed, kicker }) {
 
 
 
-function LandingRoleCard({ role, tier, plate, question, line, cta }) {
-  const { dispatch } = useStore();
-  return (
-    <CardFrame as="button" tier={tier} theme={THEMES.onyx} ratio="5 / 7" corners
-      onClick={() => { dispatch({ type: "ROLE", role }); if (role === "team") dispatch({ type: "TAB", tab: "profile" }); window.scrollTo(0, 0); }}
-      style={{ padding: "24px 11px 10px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", width: "100%" }}>
-      <span className="ff-label" style={{ position: "absolute", top: 10, left: 12, fontSize: 7, letterSpacing: ".2em", color: THEMES.onyx.sub, zIndex: 4 }}>{plate}</span>
-      <div style={{ marginTop: 10 }}><FFLogo size={42} tier={tier} /></div>
-      <div className="ff-display" style={{ color: "#F2ECE0", fontSize: 12.5, marginTop: 11, letterSpacing: ".05em", lineHeight: 1.25 }}>{question}</div>
-      <div className="ff-serif" style={{ color: "#D9BE68", fontStyle: "normal", fontSize: 12.5, marginTop: 6, lineHeight: 1.35 }}>{line}</div>
-      <div style={{ marginTop: "auto", width: "100%", borderTop: "1px solid rgba(201,162,39,.3)", paddingTop: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 5, color: "#EAD79C", fontSize: 8.5, letterSpacing: ".14em", textTransform: "uppercase" }}>
-        {cta} <ChevronRight size={11} />
-      </div>
-    </CardFrame>
-  );
-}
-
-
-
-function RoleCards() {
-  return (
-    <div className="ff-rolegrid">
-      <LandingRoleCard role="team" tier="gold" plate="FF Team"
-        question="FF Team" line="Join the Team" cta="Create your card" />
-      {p1SiteOpen("staff") && <LandingRoleCard role="staff" tier="silver" plate="FF Staff"
-        question="FF Staff" line="Hire Staff" cta="Create your profile" />}
-    </div>
-  );
-}
-
-
-
 /* Events on the Home map — demo locations only, never exact addresses. */
 const MAP_EVENTS = [
   { id: "mev_lcw", name: "London Cocktail Week", note: "3–9 October · bar takeovers", area: "Central London", event: true },

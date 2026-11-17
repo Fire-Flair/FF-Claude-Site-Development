@@ -317,8 +317,6 @@
 .ff-landing { max-width: 900px; margin: 0 auto; padding: 0 16px calc(56px + env(safe-area-inset-bottom,0px)); }
 .ff-sect { padding: 34px 0 6px; }
 .ff-sect-head { text-align:center; margin-bottom: 20px; }
-.ff-rolegrid { display:grid; grid-template-columns:1fr 1fr; gap:10px; max-width:460px; margin:0 auto; }
-@media (min-width:640px) { .ff-rolegrid { gap:18px; max-width:520px; } }
 .ff-sell { border:1px solid var(--gold-dk); background:var(--paper); padding:20px 16px; position:relative; margin-bottom:14px; }
 .ff-sell.dark { background: linear-gradient(168deg,#161618,#08080A); border-color:var(--gold-dk); }
 .ff-sell.dark .ff-body { color: rgba(242,236,224,.82); }

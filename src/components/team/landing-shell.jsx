@@ -8,22 +8,20 @@ function Landing() {
   const { state, dispatch } = useStore();
   if (state.tab === "network") return <NetworkScreen guest />;
   if (state.tab === "bookings") return PHASE1.bookingsLive ? <TeamBookings guest /> : <P1Bookings guest />;
-  if (state.tab && state.tab !== "home") {
-    return (
-      <div className="ff-landing">
-        <div style={{ textAlign: "center", padding: "40px 0 10px" }}>
-          <div style={{ display: "flex", justifyContent: "center", marginBottom: 14 }}><Coin size={50} tier="gold" /></div>
-          <h1 className="ff-h1" style={{ fontSize: 20 }}>This is where your Profile Card lives</h1>
-          <p className="ff-lede" style={{ marginTop: 10, maxWidth: 320, marginLeft: "auto", marginRight: "auto" }}>Choose how you'll use FireFlair.</p>
-        </div>
-        <RoleCards />
-      </div>
-    );
-  }
+  /* Any other tab without a role (an old saved state, for example) goes to FF Team Profile: the current Create your Profile Card flow. */
+  if (state.tab && state.tab !== "home") return <LandingToProfile17 />;
 
   return (
     <V101.Home101 />
   );
+}
+
+
+
+function LandingToProfile17() {
+  const { dispatch } = useStore();
+  useEffect(() => { dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "profile", route: "home" }); }, []);
+  return null;
 }
 
 

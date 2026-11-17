@@ -182,7 +182,10 @@ function reducerCore17(s0, a) {
     case "ROLE":      if (a.role === "staff" && !p1SiteOpen(a.site || "staff")) return { ...s, toast: `${p1SiteName(a.site || "staff")} is coming in 2027` };
                       return { ...s, viewing: null, role: a.role, site: a.role === "staff" ? (a.site || "staff") : s.site, tab: "home", route: a.role === "team" ? (s.profile.live ? "live" : "entry") : "staffHome" };
     case "GO":        return { ...s, route: a.route };
-    case "TAB":       return { ...s, viewing: null, tab: a.tab, route: a.route ?? s.route };
+    /* No role yet (signed out, FF Team public pages): only Home, Network and Bookings exist. Any other tab (Profile) opens FF Team first,
+       exactly as "Create your Profile Card" does, so the retired "Choose how you'll use FireFlair" screen can never be reached. */
+    case "TAB":       if (!s.role && a.tab && !["home", "network", "bookings"].includes(a.tab)) return { ...s, viewing: null, role: "team", tab: a.tab, route: a.route ?? (s.profile.live ? "live" : "entry") };
+                      return { ...s, viewing: null, tab: a.tab, route: a.route ?? s.route };
     case "SESSION":   return { ...s, session: { ...s.session, ...a.patch } };
     case "PROFILE":   return { ...s, profile: { ...s.profile, ...a.patch } };
 
