@@ -373,7 +373,7 @@ function AccountSettings({ boxes = false, only } = {}) {
       const r = await AUTH_ADAPTER.changeTag(tag, clean);
       dispatch({ type: "SESSION", patch: { tag: r.tag } });
       dispatch({ type: "AUTH_SIGNED_IN", tag: r.tag, method: state.auth.method });
-      dispatch({ type: "TOAST", toast: `Your FF Tag is now ${r.tag} · ${CARD_DOMAIN}/${r.tag}` });
+      dispatch({ type: "TOAST", toast: `Your FF Tag is now ${pc17Tag(r.tag)} · ${CARD_DOMAIN}/${pc17Tag(r.tag)}` });
       setEditing(false);
     } catch (e) {
       setErr(e.message);
@@ -390,7 +390,7 @@ function AccountSettings({ boxes = false, only } = {}) {
         <button type="button" className="ff-linkbtn" onClick={() => { setNext(tag); setErr(null); setEditing(true); }}>Change Tag</button>
         <button type="button" className="ff-linkbtn" onClick={() => setPwOpen(true)}>{hasPw ? "Change password" : "Add a password"}</button>
       </span>}>
-      <span className="ff-gb21-val">{CARD_DOMAIN}/{tag}</span>
+      <span className="ff-gb21-val">{CARD_DOMAIN}/{pc17Tag(tag)}</span>
       <PasswordSheet open={pwOpen} change={hasPw} onClose={() => setPwOpen(false)} />
     </GoldBox21>}
   </>);
@@ -403,7 +403,7 @@ function AccountSettings({ boxes = false, only } = {}) {
   }, React.createElement("span", {
     className: "ff-body",
     style: { fontWeight: 700, color: "var(--ink)", overflowWrap: "anywhere" }
-  }, CARD_DOMAIN, "/", tag), React.createElement("span", {
+  }, CARD_DOMAIN, "/", pc17Tag(tag)), React.createElement("span", {
     className: "ff-body ff-muted",
     style: { fontSize: 12.5, display: "flex", gap: 5, alignItems: "center" }
   }, React.createElement(Check, {
@@ -567,7 +567,7 @@ function useJoin21({ inSave = false, top = false, onSignedIn } = {}) {
     /* A review written while signed out posts at sign-up with its own "Review sent to …" toast; keep that one. */
     const draft = !!(state.session && state.session.reviewDraft17);
     dispatch({ type: "AUTH_SIGNED_IN", tag: r.tag, method: r.method });
-    if (!draft) dispatch({ type: "TOAST", toast: `${CARD_DOMAIN}/${r.tag} is yours` });
+    if (!draft) dispatch({ type: "TOAST", toast: `${CARD_DOMAIN}/${pc17Tag(r.tag)} is yours` });
     setStage("details");
     setCode("");
     if (inSave || top) {

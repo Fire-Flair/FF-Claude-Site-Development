@@ -257,7 +257,7 @@ function AskQuestionSheet({ open, person, onClose }) {
     pending: `Sent to ${first}`
   }), React.createElement(WhatsAppPreview, {
     lines: [`FireFlair · ${me} asked you a question:`, `“${sent.text}”`],
-    link: `Tap to answer · ${CARD_DOMAIN}/${person.tag || "you"}`
+    link: `Tap to answer · ${CARD_DOMAIN}/${pc17Tag(person.tag) || "you"}`
   })), React.createElement("p", {
     className: "ff-body",
     style: { fontSize: 13, margin: "12px 0" }

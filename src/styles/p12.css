@@ -262,7 +262,7 @@
 .ff .ff-about { max-width:68ch; }
 .ff .ff-about-h { margin:0 0 8px; font-family:var(--display); font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:#2A2620; font-weight:700; }
 .ff .ff-about p { margin:0; font-size:15px; line-height:1.62; color:#2A2620; white-space:pre-wrap; overflow-wrap:anywhere; }
-.ff .ff-about p.clamp { display:-webkit-box; -webkit-line-clamp:5; -webkit-box-orient:vertical; overflow:hidden; }
+.ff .ff-about p.clamp { display:block; max-height:calc(5 * 1.62em); overflow:hidden; }
 .ff .ff-pp { margin-top:24px; }
 .ff .ff-tabpanel > .ff-pp:first-child { margin-top:0; }
 .ff .ff-about + .ff-pp { margin-top:26px; }

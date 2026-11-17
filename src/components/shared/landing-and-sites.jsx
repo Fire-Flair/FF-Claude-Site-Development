@@ -58,19 +58,6 @@ function LandingRoleCard({ role, tier, plate, question, line, cta }) {
 
 
 
-function RoleCards() {
-  return (
-    <div className="ff-rolegrid">
-      <LandingRoleCard role="team" tier="gold" plate="FF Team"
-        question="FF Team" line="Join the Team" cta="Create your card" />
-      {p1SiteOpen("staff") && <LandingRoleCard role="staff" tier="silver" plate="FF Staff"
-        question="FF Staff" line="Hire Staff" cta="Create your profile" />}
-    </div>
-  );
-}
-
-
-
 /* Events on the Home map — demo locations only, never exact addresses. */
 const MAP_EVENTS = [
   { id: "mev_lcw", name: "London Cocktail Week", note: "3–9 October · bar takeovers", area: "Central London", event: true },

@@ -121,7 +121,7 @@ function MyShareBtn17({ person, onTap }) {
     <>
       <button type="button" className="ff-csm-btn wide" onClick={() => onTap ? onTap() : setOpen(true)} aria-label="Share my card"><WhatsAppIcon size={18} aria-hidden="true" /> Share</button>
       {open ? (
-        <CardShareSheet17 open onClose={() => setOpen(false)} title={join ? "Join my team on FireFlair:" : "My FireFlair card"} url={join ? inv17Link(tag) : `https://${CARD_DOMAIN}/${tag}`} noRef={join}
+        <CardShareSheet17 open onClose={() => setOpen(false)} title={join ? "Join my team on FireFlair:" : "My FireFlair card"} url={join ? inv17Link(tag) : `https://${CARD_DOMAIN}/${pc17Tag(tag)}`} noRef={join}
           fileName={(join ? "fireflair-join-" : "fireflair-") + cx17Slug(tag)}>
           <PlayerCard person={person} format="full" nameAs="div" themeKey={state.profile.theme} />
         </CardShareSheet17>
@@ -173,7 +173,7 @@ function PersonProfile() {
   const guestNote = guestOfMe ? <div className="ff-guestnote"><Eye size={16} /> This is your profile as a guest sees it.</div> : null;
   const shareTag = String(person.tag || cx17Slug(person.name || person.id) || "");
   const shareBtn = other && shareTag ? (
-      <CardShareBtn17 title={`${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${shareTag}`} fileName={"fireflair-" + cx17Slug(shareTag)} label="Share" className="wide"
+      <CardShareBtn17 title={`${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${pc17Tag(shareTag)}`} fileName={"fireflair-" + cx17Slug(shareTag)} label="Share" className="wide"
         render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={person.theme || "ivory"} />} />) : null;
   const myTag = signedIn ? (state.auth.tag || state.session.tag) : "";
   const shareEl = !other && !guestOfMe && myTag ? <div style={{ marginTop: 8, width: "calc(50% - 4px)", marginInline: "auto" }}><MyShareBtn17 person={person} /></div> : null;

@@ -122,7 +122,7 @@ function AdmPeople17({ d, act, can, dispatch }) {
           <div key={p.id} className={`ff-adm-row tall${H[p.id] ? " is-hid" : ""}`}>
             <button type="button" className="ff-adm-who" onClick={() => setOpen(open === p.id ? null : p.id)} aria-expanded={open === p.id}>
               <Portrait src={p.photo} name={p.name} size={40} tier={tierOf(p)} />
-              <span className="mn"><b>{p.name}</b><small>{[p.tag && `@${p.tag}`, p.profession, (p.locations || [])[0]].filter(Boolean).join(" · ")}</small></span>
+              <span className="mn"><b>{p.name}</b><small>{[p.tag && `@${pc17Tag(p.tag)}`, p.profession, (p.locations || [])[0]].filter(Boolean).join(" · ")}</small></span>
             </button>
             <select className="ff-adm-sel" value={tierOf(p)} disabled={!can("verify")} aria-label={`Verification for ${p.name}`}
               onChange={(e) => act({ op: "tier", kind: "people", id: p.id, value: e.target.value, label: p.name })}>
@@ -133,7 +133,7 @@ function AdmPeople17({ d, act, can, dispatch }) {
               <div className="ff-adm-more">
                 <dl>
                   <div><dt>Source</dt><dd>{p.src}</dd></div>
-                  {p.tag && <div><dt>Profile</dt><dd>{CARD_DOMAIN}/{p.tag}</dd></div>}
+                  {p.tag && <div><dt>Profile</dt><dd>{CARD_DOMAIN}/{pc17Tag(p.tag)}</dd></div>}
                   {[["Skills", p.skills], ["Qualifications", p.qualifications], ["Languages", p.languages], ["Work locations", p.locations], ["Interests", p.interests]].filter(([, v]) => v && v.length).map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{fmt17(v)}</dd></div>)}
                   {p.rating ? <div><dt>Rating</dt><dd>{p.rating} from {p.reviews || 0} reviews</dd></div> : null}
                   {p.years ? <div><dt>Experience</dt><dd>{p.years} years</dd></div> : null}
@@ -527,7 +527,7 @@ function AdmAdmins17({ d, act, can }) {
         {d.admins.map(x => (
           <div key={x.tag} className={`ff-adm-row${x.active ? "" : " is-hid"}`}>
             <span className="ff-adm-av"><A17I.Shield size={16} /></span>
-            <span className="mn"><b>{x.name || x.tag}</b><small>@{x.tag} · since {x.since ? shortDay(x.since) : "launch"}{x.active ? "" : " · Deactivated"}</small></span>
+            <span className="mn"><b>{x.name || x.tag}</b><small>@{pc17Tag(x.tag)} · since {x.since ? shortDay(x.since) : "launch"}{x.active ? "" : " · Deactivated"}</small></span>
             <select className="ff-adm-sel" value={x.role} disabled={!can("admins") || x.role === "owner"} aria-label={`Role for ${x.tag}`} onChange={(e) => act({ op: "admin_set", tag: x.tag, patch: { role: e.target.value } })}>
               {Object.entries(ADM17_ROLES).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
             </select>

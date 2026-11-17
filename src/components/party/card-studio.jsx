@@ -190,7 +190,7 @@ const PATH17 = { cocktail: "cocktails", service: "services" };
 
 /* The same base on every card, the one the Profile Card has: the coin and the owner's FF Tag address. */
 function CardBase17({ tag, url }) {
-  return <div className="base"><FFLogo size={20} tier="gold" /><em>{url || `${CARD_DOMAIN}/${tag || "yourtag"}`}</em></div>;
+  return <div className="base"><FFLogo size={20} tier="gold" /><em>{url || `${CARD_DOMAIN}/${pc17Tag(tag) || "yourtag"}`}</em></div>;
 }
 
 
@@ -587,7 +587,7 @@ function StudioPair17({ type, x, edit, set, site, by, tag, size, only }) {
 function CardPop17({ type, x, site, by, tag, onClose }) {
   const T = STUDIO17[type];
   const tone = T.tone(x);
-  const addr = `${CARD_DOMAIN}/${tag || "yourtag"}/${PATH17[type]}/${slug17(T.name(x)) || "your-card"}`;
+  const addr = `${CARD_DOMAIN}/${pc17Tag(tag) || "yourtag"}/${PATH17[type]}/${slug17(T.name(x)) || "your-card"}`;
   const nm = T.name(x) || (T.plateOf ? T.plateOf(x) : T.plate);
   return (
     <CardShareSheet17 open onClose={onClose} title={nm} url={"https://" + addr} fileName={"fireflair-" + cx17Slug(nm)}
@@ -633,7 +633,7 @@ function Studio17({ type, site, by, tag, k: listKey, seed, profile }) {
   const remove = async () => { if (busy) return; if (await commit(draft, true)) setDraft(null); };
   const edRef = useRef(null);
   const open = (x) => { setErr(""); setDraft(JSON.parse(JSON.stringify(x))); setTimeout(() => { if (edRef.current) edRef.current.scrollIntoView({ behavior: "smooth", block: "start" }); }, 60); };
-  const addr = (x) => `${CARD_DOMAIN}/${tag || "yourtag"}/${PATH17[type]}/${slug17(T.name(x)) || "your-card"}`;
+  const addr = (x) => `${CARD_DOMAIN}/${pc17Tag(tag) || "yourtag"}/${PATH17[type]}/${slug17(T.name(x)) || "your-card"}`;
   return (
     <div className="ff-st17">
       {draft ? (

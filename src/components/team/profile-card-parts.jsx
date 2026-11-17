@@ -25,7 +25,8 @@ if (typeof document !== "undefined" && !document.getElementById("ff-pc17-css")) 
 
 
 /* "SIMAO" is stored upper case; the address shows Simao. */
-function pc17Tag(tag) { const x = String(tag || ""); return x ? x[0].toUpperCase() + x.slice(1).toLowerCase() : ""; }
+/* FF Tags are always shown in lower case (the FFTeam.uk part keeps its capitals). */
+function pc17Tag(tag) { return String(tag || "").toLowerCase(); }
 
 
 /* Fits every row of a Profile Card into its box without ever splitting a word or showing "…":
@@ -548,7 +549,7 @@ function OrgCard({ org, kindLabel, onClick, width }) {
           <MapPin size={10} color={t.sub} strokeWidth={1.6} />
           <span style={{ fontSize: 9, color: t.sub, letterSpacing: ".06em" }}>{org.area}</span>
           {org.staffCount && <span style={{ fontSize: 9, color: t.sub, letterSpacing: ".06em" }}>· {org.staffCount} staff</span>}
-          <span style={{ marginLeft: "auto", fontFamily: "var(--display)", fontSize: 8.5, letterSpacing: ".1em", color: t.sub }}>{CARD_DOMAIN}/{org.tag}</span>
+          <span style={{ marginLeft: "auto", fontFamily: "var(--display)", fontSize: 8.5, letterSpacing: ".1em", color: t.sub }}>{CARD_DOMAIN}/{pc17Tag(org.tag)}</span>
         </span>
       </span>
     </CardFrame>
