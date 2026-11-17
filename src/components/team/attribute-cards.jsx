@@ -11,14 +11,12 @@ const ALL_PROFESSIONS = PROFESSION_CATEGORIES.flatMap(c => c.suggested.map(n => 
 const RANK_CSS17 = __ff_css("styles/rank17.css");
 
 
-/* v17.19: the category row is the profile's tab style; typed suggestions list the professions alone (no category beside them);
-   only a brand-new profession asks for its category. asRow: the picker is the last row of the Professions list
-   ("Add a profession" is typed straight into the row, the panel opens under it). */
-function ProfessionPicker({ selected = [], onPick, title = "Pick your professions", asRow = false }) {
+/* v17.21: the v17.15 gold "Pick your professions" box is back: a search-or-type field, the category chips in one row that
+   scrolls across (never up and down), and the suggestions. Typing a profession that isn't on the list asks for its category. */
+function ProfessionPicker({ selected = [], onPick, title = "Pick your professions" }) {
   const [cat, setCat] = useState(PROFESSION_CATEGORIES[0].key);
   const [q, setQ] = useState("");
   const [newCat, setNewCat] = useState(null);
-  const [open, setOpen] = useState(!asRow);
   const c = PROFESSION_CATEGORIES.find(x => x.key === cat);
   const has = (n) => selected.some(x => String(x).toLowerCase() === n.toLowerCase());
   const n = q.trim().toLowerCase();
@@ -30,79 +28,47 @@ function ProfessionPicker({ selected = [], onPick, title = "Pick your profession
   const custom = n && !ALL_PROFESSIONS.some(p => p.name.toLowerCase() === n) ? typed : null;
   const customCat = custom ? professionCategory(custom) : null;
   const pick = (name, category) => { onPick(name, category); setQ(""); setNewCat(null); };
-  const picked = (name) => has(name) ? { background: "#5C1220", borderColor: "#5C1220", color: "#F6E7B4" } : undefined;
-  const enter = (e) => { if (e.key === "Enter" && n) { e.preventDefault(); pick(hits[0] ? hits[0].name : typed); } };
-  const tabs = (
-    <div className="ff-ptabs ff-ptabs-cat19" role="tablist" aria-label="Profession categories">
-      {PROFESSION_CATEGORIES.map(x => (
-        <button key={x.key} type="button" role="tab" aria-selected={x.key === cat} className={x.key === cat ? "on" : ""} onClick={() => setCat(x.key)}><span className="lb">{x.key}</span></button>
-      ))}
-    </div>
-  );
-  const body = (<>
-    {tabs}
-    {n ? (
-      <div role="list" aria-label="Matching professions" style={{ marginTop: 10 }}>
-        {hits.map(p => (
-          <button key={p.name} type="button" role="listitem" className="ff-chip" onClick={() => pick(p.name)} style={picked(p.name)}>
-            {has(p.name) ? "✓ " : "+ "}{p.name}
-          </button>
-        ))}
-        {custom && customCat && (
-          <button type="button" className="ff-chip ff-chip-custom" onClick={() => pick(custom)}>
-            + Add “{custom}”<span className="ff-chipcat">{customCat}</span>
-          </button>
-        )}
-        {custom && !customCat && (
-          <div style={{ marginTop: 8 }}>
-            <div className="ff-label" style={{ marginBottom: 6 }}>Which category is “{custom}” in?</div>
-            <div>
-              {CATEGORY_ORDER.map(k => (
-                <button key={k} type="button" className="ff-chip" aria-pressed={newCat === k} onClick={() => setNewCat(k)}
-                  style={newCat === k ? { background: "#141416", color: "#EAD79C", borderColor: "#141416" } : undefined}>{k}</button>
-              ))}
-            </div>
-            <button type="button" className="ff-chip ff-chip-custom" disabled={!newCat} onClick={() => newCat && pick(custom, newCat)}
-              style={{ marginTop: 6, opacity: newCat ? 1 : 0.45, cursor: newCat ? "pointer" : "default" }}>
-              + Add “{custom}”{newCat && <span className="ff-chipcat">{newCat}</span>}
-            </button>
-          </div>
-        )}
-      </div>
-    ) : (
-      <div style={{ marginTop: 10 }}>
-        {c.suggested.map(nm => (
-          <button key={nm} type="button" className="ff-chip" onClick={() => pick(nm)} style={picked(nm)}>
-            {has(nm) ? "✓ " : "+ "}{nm}
-          </button>
-        ))}
-      </div>
-    )}
-  </>);
-  if (asRow) return (
-    <div className="ff-rl19-addwrap">
-      <style>{RANK_CSS17}</style>
-      <div className="ff-rl19-add">
-        <button type="button" className={"ff-rl19-disc add" + (open ? " on" : "")} aria-label={open ? "Close the profession list" : "Open the profession list"} aria-expanded={open} onClick={() => setOpen(v => !v)}><Plus size={16} strokeWidth={2} /></button>
-        <input type="text" value={q} autoComplete="off" spellCheck={false} placeholder="Add a profession" aria-label="Add a profession"
-          onChange={(e) => { setQ(e.target.value); setOpen(true); }} onFocus={() => setOpen(true)} onKeyDown={enter} />
-      </div>
-      {open && <div className="ff-rl19-pick"><div className="ff-label" style={{ marginBottom: 8 }}>{title}</div>{body}</div>}
-    </div>
+  const enter = (e) => { if (e.key === "Enter" && n) { e.preventDefault(); if (hits[0]) pick(hits[0].name); else if (customCat) pick(typed); } };
+  const chip = (name, onClick, extra) => (
+    <button key={name} type="button" className={"ff-pk21-chip" + (has(name) ? " on" : "")} aria-pressed={has(name)} onClick={onClick}>
+      {has(name) ? <Check size={13} strokeWidth={2.6} /> : <Plus size={13} strokeWidth={2.4} />}<span>{name}</span>{extra}
+    </button>
   );
   return (
-    <div className="ff-frame ff-goldpick" style={{ padding: 14, marginTop: 14 }}>
-      <style>{RANK_CSS17}</style>
-      <div className="ff-label" style={{ marginBottom: 8 }}>{title}</div>
-      <div style={{ position: "relative", marginBottom: 10 }}>
-        <Search size={15} color="#7A7366" style={{ position: "absolute", left: 11, top: 13 }} />
-        <input className="ff-input" type="search" value={q} style={{ paddingLeft: 34 }} autoComplete="off" spellCheck={false}
+    <div className="ff-pk21">
+      <div className="ff-pk21-h">{title}</div>
+      <div className="ff-pk21-q">
+        <Search size={16} aria-hidden="true" />
+        <input type="search" value={q} autoComplete="off" spellCheck={false} enterKeyHint="enter"
           onChange={(e) => setQ(e.target.value)} placeholder="Search or type a profession" aria-label="Search or type a profession" onKeyDown={enter} />
       </div>
-      {body}
-      <p className="ff-body ff-muted" style={{ fontSize: 11.5, margin: "6px 0 0" }}>
-        Your first three show on your card.
-      </p>
+      {n ? (
+        <div className="ff-pk21-wrap" role="list" aria-label="Matching professions">
+          {hits.map(p => chip(p.name, () => pick(p.name)))}
+          {custom && customCat && chip(`Add \u201c${custom}\u201d`, () => pick(custom))}
+          {custom && !customCat && (
+            <div className="ff-pk21-new">
+              <div className="ff-pk21-h sm">Which category is \u201c{custom}\u201d in?</div>
+              <div className="ff-pk21-cats" role="radiogroup" aria-label="Category">
+                {CATEGORY_ORDER.map(k => (
+                  <button key={k} type="button" role="radio" aria-checked={newCat === k} className={"ff-pk21-cat" + (newCat === k ? " on" : "")} onClick={() => setNewCat(k)}>{k}</button>
+                ))}
+              </div>
+              <button type="button" className="ff-pk21-chip add" disabled={!newCat} onClick={() => newCat && pick(custom, newCat)}>
+                <Plus size={13} strokeWidth={2.4} /><span>Add \u201c{custom}\u201d</span>
+              </button>
+            </div>
+          )}
+        </div>
+      ) : (<>
+        <div className="ff-pk21-cats" role="tablist" aria-label="Profession categories">
+          {PROFESSION_CATEGORIES.map(x => (
+            <button key={x.key} type="button" role="tab" aria-selected={x.key === cat} className={"ff-pk21-cat" + (x.key === cat ? " on" : "")} onClick={() => setCat(x.key)}>{x.key}</button>
+          ))}
+        </div>
+        <div className="ff-pk21-wrap">{c.suggested.map(nm => chip(nm, () => pick(nm)))}</div>
+      </>)}
+      <p className="ff-pk21-note">Your first three show on your card.</p>
     </div>
   );
 }
@@ -245,6 +211,10 @@ function HorizontalCardRanker({ items, label, renderCard, tail }) {
 const RANK_CATS19 = ["professions", "qualifications", "skills", "interests", "languages", "experience"];
 
 
+/* v17.21: builder sections with no drop-down (type boxes, the professions picker, the venue search). */
+const OPEN_CATS21 = ["professions", "qualifications", "skills", "interests", "languages", "experience", "venues"];
+
+
 function PhotoBoxes19({ media, onRemove, onAdd, max, busy }) {
   const ref = useRef(null);
   const list = (media || []).filter(m => m && (m.dataUrl || m.src));
@@ -306,19 +276,110 @@ function RankListView17({ catKey, items, extra }) {
 }
 
 
-/* Editable list. addRow: the last row (a node) — for Professions the picker; otherwise a typed row. */
-function RankList17({ catKey, def, items, addRow }) {
+const CornerDownLeft21 = lucideIcon("CornerDownLeft");
+
+
+/* While an entry is dragged with a mouse, no text on the page gets selected. */
+const noSel21 = (on) => { try { document.body.style.userSelect = on ? "none" : ""; document.body.style.webkitUserSelect = on ? "none" : ""; } catch (e) { /* no document */ } };
+
+
+/* v17.21: the one editor for an entry (Professions, Qualifications, Skills, Interests, Languages). It opens under the entry
+   when the entry is tapped: the detail text, the pictures, then one row — remove (trash), hide, and Done. */
+function EntryEditor21({ r, catKey, def, onDone }) {
+  const { dispatch } = useStore();
+  const [busy, setBusy] = useState(null);
+  const [sure, setSure] = useState(false);
+  const maxMedia = def.maxMedia || MAX_MEDIA_PER_CARD;
+  const patch = (p) => dispatch({ type: "REC_PATCH", category: catKey, id: r.id, patch: p });
+  const addPhoto = async (f) => {
+    if (!f) return;
+    if (!/^image\//.test(f.type || "")) { setBusy("Only pictures can be added here."); return; }
+    if (f.size > MAX_MEDIA_BYTES) { setBusy(`That image is ${prettyBytes(f.size)} — keep it under ${prettyBytes(MAX_MEDIA_BYTES)}.`); return; }
+    setBusy("loading");
+    try {
+      const dataUrl = await shrinkPhoto(f, 1000);
+      patch({ media: [...(r.media || []), { id: uid("med"), name: f.name, dataUrl }] });
+      setBusy(null);
+    } catch (e) { setBusy(e.message); }
+  };
+  const meta = detailsLine(r.details, "", r.name);
+  return (
+    <div className="ff-ed21" role="group" aria-label={`Details for ${r.name}`}>
+      {r.proposed && (
+        <div className="ff-ed21-acc">
+          <button type="button" className="ff-btn sm primary" onClick={() => dispatch({ type: "REC_ACCEPT", category: catKey, id: r.id })}><Check size={13} /> Accept</button>
+          <button type="button" className="ff-btn sm ghost" onClick={() => { dispatch({ type: "REC_DELETE", category: catKey, id: r.id }); onDone(); }}>Reject</button>
+        </div>
+      )}
+      {meta && <p className="meta">{meta}</p>}
+      <textarea className="ff-ed21-ta" rows={Math.max(2, Math.min(6, Math.ceil(String(r.description || "").length / 34)))} value={r.description || ""} aria-label={`Details for ${r.name}`} placeholder="Details"
+        autoFocus={FF_FINE_POINTER} onChange={(e) => patch({ description: e.target.value })} />
+      <PhotoBoxes19 media={r.media} max={maxMedia} busy={busy === "loading"} onAdd={addPhoto}
+        onRemove={(m) => patch({ media: (r.media || []).filter(x => x.id !== m.id) })} />
+      {busy && busy !== "loading" && <p className="ff-wlbox-err" role="alert">{busy}</p>}
+      {catKey === "professions" && (<>
+        <div className="ff-levels-wrap"><ProfessionLevelPicker value={r.level || null} onChange={(n) => patch({ level: n })} /></div>
+        <label className="ff-remote17 ff-rl19-chk"><input type="checkbox" checked={!!r.remote} onChange={(e) => patch({ remote: e.target.checked })} /><span>Available for remote work</span></label>
+      </>)}
+      {catKey === "languages" && (
+        <select className="ff-input ff-ed21-sel" aria-label="Level" value={r.proficiency || ""} onChange={(e) => patch({ proficiency: e.target.value })}>
+          <option value="">Level</option>
+          {PROFICIENCY.map(p => <option key={p} value={p}>{p}</option>)}
+        </select>
+      )}
+      <div className="ff-ed21-foot">
+        <button type="button" className={"ff-ed21-ic del" + (sure ? " sure" : "")} aria-label={sure ? `Yes, remove ${r.name}` : `Remove ${r.name}`} title="Remove"
+          onBlur={() => setSure(false)}
+          onClick={() => { if (!sure) { setSure(true); return; } dispatch({ type: "REC_DELETE", category: catKey, id: r.id }); dispatch({ type: "TOAST", toast: `${r.name} removed` }); onDone(); }}>
+          <Trash2 size={17} strokeWidth={1.8} aria-hidden="true" />{sure && <span>Remove</span>}
+        </button>
+        <button type="button" className="ff-ed21-ic" aria-pressed={!!r.hidden} aria-label={r.hidden ? `Show ${r.name} on your profile` : `Hide ${r.name} from your profile`} title={r.hidden ? "Show" : "Hide"}
+          onClick={() => { patch({ hidden: !r.hidden }); dispatch({ type: "TOAST", toast: r.hidden ? `${r.name} shown again` : `${r.name} hidden — still on your profile` }); }}>
+          {r.hidden ? <Eye size={17} strokeWidth={1.8} aria-hidden="true" /> : <EyeOff size={17} strokeWidth={1.8} aria-hidden="true" />}
+        </button>
+        <button type="button" className="ff-ed21-done" onClick={onDone}><Check size={15} strokeWidth={2.4} /> Done</button>
+      </div>
+    </div>
+  );
+}
+
+
+/* v17.21: the white type box at the top of a list. Type, press Enter (or the return key in the box), and the entry is added. */
+function TypeBox21({ catKey, def, rows, placeholder }) {
   const { state, dispatch } = useStore();
+  const [typed, setTyped] = useState("");
+  const one = def.singular.toLowerCase();
+  const an = /^[aeiou]/i.test(one) ? "an" : "a";
+  const add = (e) => {
+    e && e.preventDefault();
+    const nm = typed.trim();
+    if (!nm) return;
+    if (rows.some(r => String(r.name).toLowerCase() === nm.toLowerCase())) { dispatch({ type: "TOAST", toast: `${nm} is already on your profile` }); return; }
+    const taskId = xpTaskFor(catKey);
+    const fresh = XP_TASKS.some(t => t.id === taskId) && !(state.profile.xpClaimed || []).includes(taskId);
+    dispatch({ type: "REC_ADD", category: catKey, record: makeRecord(catKey, nm) });
+    dispatch({ type: "TOAST", toast: `${def.singular} added${fresh ? xpNote(XP_VALUES.task) : ""}` });
+    setTyped("");
+  };
+  return (
+    <form className={"ff-type21" + (typed.trim() ? " has" : "")} onSubmit={add}>
+      <input type="text" name={`add-${catKey}`} value={typed} autoComplete="off" spellCheck={false} enterKeyHint="enter"
+        placeholder={placeholder || `Type ${an} ${one}`} aria-label={`Add ${an} ${one}`} onChange={(e) => setTyped(e.target.value)} />
+      <button type="submit" className="ff-type21-key" aria-label={`Add ${an} ${one}`} tabIndex={-1}><span>Enter</span><CornerDownLeft21 size={15} strokeWidth={2.2} aria-hidden="true" /></button>
+    </form>
+  );
+}
+
+
+/* Editable list (Qualifications, Skills, Interests, Languages): the type box, then the numbered entries. Tap an entry to
+   open its editor under it; the three-line handle on the right drags it into place. */
+function RankList17({ catKey, def, items }) {
+  const { dispatch } = useStore();
   const rows = rankedRecords(items || []);
   const ids = rows.map(r => r.id);
   const [openId, setOpenId] = useState(null);
   const [drag, setDrag] = useState(null);
-  const [busy, setBusy] = useState(null);
-  const [typed, setTyped] = useState("");
   const rects = useRef([]);
-  const maxMedia = def.maxMedia || MAX_MEDIA_PER_CARD;
-  const one = def.singular.toLowerCase();
-  const patch = (id, p) => dispatch({ type: "REC_PATCH", category: catKey, id, patch: p });
 
   const down = (e, id) => {
     if (e.button !== undefined && e.button !== 0) return;
@@ -328,13 +389,13 @@ function RankList17({ catKey, def, items, addRow }) {
     try { e.currentTarget.setPointerCapture(e.pointerId); } catch (x) { /* older browsers */ }
     e.preventDefault();
     const from = ids.indexOf(id);
+    noSel21(true);
     setDrag({ id, y0: e.clientY, dy: 0, from, over: from });
   };
-  const move = (e) => {
-    setDrag(d => d && ({ ...d, dy: e.clientY - d.y0, over: rects.current.filter(r => r.id !== d.id && e.clientY > r.mid).length }));
-  };
+  const move = (e) => setDrag(d => d && ({ ...d, dy: e.clientY - d.y0, over: rects.current.filter(r => r.id !== d.id && e.clientY > r.mid).length }));
   const up = () => {
     const d = drag;
+    noSel21(false);
     setDrag(null);
     if (d && d.over !== d.from) dispatch({ type: "REC_MOVE", category: catKey, id: d.id, to: d.over });
   };
@@ -346,91 +407,149 @@ function RankList17({ catKey, def, items, addRow }) {
   const dropBefore = drag && drag.over !== drag.from && drag.over < others.length ? others[drag.over] : null;
   const dropAfter = drag && drag.over !== drag.from && drag.over >= others.length ? others[others.length - 1] : null;
 
-  const addPhoto = async (r, f) => {
-    if (!f) return;
-    if (!/^image\//.test(f.type || "")) { setBusy("Only pictures can be added here."); return; }
-    if (f.size > MAX_MEDIA_BYTES) { setBusy(`That image is ${prettyBytes(f.size)} — keep it under ${prettyBytes(MAX_MEDIA_BYTES)}.`); return; }
-    setBusy("loading");
-    try {
-      const dataUrl = await shrinkPhoto(f, 1000);
-      patch(r.id, { media: [...(r.media || []), { id: uid("med"), name: f.name, dataUrl }] });
-      setBusy(null);
-    } catch (e) { setBusy(e.message); }
-  };
-  const addTyped = (e) => {
-    e && e.preventDefault();
-    const nm = typed.trim();
-    if (!nm) return;
-    if (rows.some(r => String(r.name).toLowerCase() === nm.toLowerCase())) { dispatch({ type: "TOAST", toast: `${nm} is already on your profile` }); return; }
-    const taskId = xpTaskFor(catKey);
-    const fresh = XP_TASKS.some(t => t.id === taskId) && !(state.profile.xpClaimed || []).includes(taskId);
-    dispatch({ type: "REC_ADD", category: catKey, record: makeRecord(catKey, nm) });
-    dispatch({ type: "TOAST", toast: `${def.singular} added${fresh ? xpNote(XP_VALUES.task) : ""}` });
-    setTyped("");
-  };
-
   return (
-    <div className={"ff-rl19" + (drag ? " dragging" : "")} data-rl-list={catKey}>
+    <div className="ff-rl21" data-rl-list={catKey}>
       <style>{RANK_CSS17}</style>
-      {rows.map((r, i) => {
-        const open = openId === r.id;
-        const lifted = drag && drag.id === r.id;
-        return (
-          <div key={r.id} data-rl-id={r.id} className={"ff-rl19-item" + (open ? " open" : "") + (lifted ? " lifted" : "") + (dropBefore === r.id ? " before" : "") + (dropAfter === r.id ? " after" : "") + (r.hidden ? " hid" : "")}
-            style={lifted ? { transform: `translateY(${drag.dy}px)` } : undefined}>
-            <div className="ff-rl19-row">
-              <span className="ff-rl19-disc" aria-hidden="true">{i + 1}</span>
-              <span className="nm">{r.name}{r.cv ? " (CV)" : ""}{r.hidden ? <span className="hd"><EyeOff size={11} /> Hidden</span> : null}{r.proposed ? <span className="hd">Proposed</span> : null}</span>
-              <button type="button" className={"ff-rl19-pl" + (open ? " on" : "")} aria-expanded={open} aria-label={`Details for ${r.name}`} onClick={() => { setOpenId(open ? null : r.id); setBusy(null); }}><Plus size={15} strokeWidth={2} /></button>
-              <span className="ff-rl19-grip" role="button" tabIndex={0} aria-label={`Move ${r.name}. Drag, or use the up and down arrow keys`}
-                onPointerDown={(e) => down(e, r.id)} onPointerMove={(e) => drag && move(e)} onPointerUp={up} onPointerCancel={() => setDrag(null)} onKeyDown={(e) => key(e, r.id, i)}>
-                <i /><i /><i />
-              </span>
-            </div>
-            {!open && <RankDetail19 r={r} catKey={catKey} />}
-            {open && (
-              <div className="ff-rl19-panel">
-                {r.proposed && (
-                  <div className="ff-rl19-acts">
-                    <button type="button" className="ff-btn sm primary" onClick={() => dispatch({ type: "REC_ACCEPT", category: catKey, id: r.id })}><Check size={13} /> Accept</button>
-                    <button type="button" className="ff-btn sm ghost" onClick={() => dispatch({ type: "REC_DELETE", category: catKey, id: r.id })}>Reject</button>
-                  </div>
-                )}
-                {detailsLine(r.details, "", r.name) && <p className="meta">{detailsLine(r.details, "", r.name)}</p>}
-                <textarea className="ff-rl19-ta" rows={3} value={r.description || ""} aria-label={`Details for ${r.name}`} placeholder="Details"
-                  onChange={(e) => patch(r.id, { description: e.target.value })} />
-                <PhotoBoxes19 media={r.media} max={maxMedia} busy={busy === "loading"} onAdd={(f) => addPhoto(r, f)}
-                  onRemove={(m) => patch(r.id, { media: (r.media || []).filter(x => x.id !== m.id) })} />
-                {busy && busy !== "loading" && <p className="ff-wlbox-err" role="alert">{busy}</p>}
-                {catKey === "professions" && (<>
-                  <div className="ff-levels-wrap"><ProfessionLevelPicker value={r.level || null} onChange={(n) => patch(r.id, { level: n })} /></div>
-                  <label className="ff-remote17 ff-rl19-chk"><input type="checkbox" checked={!!r.remote} onChange={(e) => patch(r.id, { remote: e.target.checked })} /><span>Available for remote work</span></label>
-                </>)}
-                {catKey === "languages" && (
-                  <select className="ff-input" aria-label="Level" value={r.proficiency || ""} onChange={(e) => patch(r.id, { proficiency: e.target.value })}>
-                    <option value="">Level</option>
-                    {PROFICIENCY.map(p => <option key={p} value={p}>{p}</option>)}
-                  </select>
-                )}
-                <div className="ff-rl19-acts end">
-                  <button type="button" className="ff-btn sm ghost" onClick={() => { patch(r.id, { hidden: !r.hidden }); dispatch({ type: "TOAST", toast: r.hidden ? `${r.name} shown again` : `${r.name} hidden — still on your profile` }); }}>
-                    {r.hidden ? <><Eye size={12} /> Show</> : <><EyeOff size={12} /> Hide</>}
+      <TypeBox21 catKey={catKey} def={def} rows={rows} />
+      {rows.length > 0 && (
+        <div className={"ff-rl19 ff-rl21-list" + (drag ? " dragging" : "")}>
+          {rows.map((r, i) => {
+            const open = openId === r.id;
+            const lifted = drag && drag.id === r.id;
+            return (
+              <div key={r.id} data-rl-id={r.id} className={"ff-rl19-item" + (open ? " open" : "") + (lifted ? " lifted" : "") + (dropBefore === r.id ? " before" : "") + (dropAfter === r.id ? " after" : "") + (r.hidden ? " hid" : "")}
+                style={lifted ? { transform: `translateY(${drag.dy}px)` } : undefined}>
+                <div className="ff-rl19-row">
+                  <span className="ff-rl19-disc" aria-hidden="true">{i + 1}</span>
+                  <button type="button" className="ff-rl21-nm" aria-expanded={open} onClick={() => setOpenId(open ? null : r.id)}>
+                    <span className="nm">{r.name}{r.cv ? " (CV)" : ""}{r.hidden ? <span className="hd"><EyeOff size={11} /> Hidden</span> : null}{r.proposed ? <span className="hd">Proposed</span> : null}</span>
+                    {!open && <Pencil size={13} strokeWidth={2} className="pen" aria-hidden="true" />}
                   </button>
-                  <button type="button" className="ff-btn sm ghost" onClick={() => { dispatch({ type: "REC_DELETE", category: catKey, id: r.id }); setOpenId(null); }}><X size={12} /> Remove</button>
+                  <span className="ff-rl19-grip" role="button" tabIndex={0} aria-label={`Move ${r.name}. Drag, or use the up and down arrow keys`}
+                    onPointerDown={(e) => down(e, r.id)} onPointerMove={(e) => drag && move(e)} onPointerUp={up} onPointerCancel={() => { noSel21(false); setDrag(null); }} onKeyDown={(e) => key(e, r.id, i)}>
+                    <i /><i /><i />
+                  </span>
                 </div>
+                {open
+                  ? <div className="ff-rl21-panel"><EntryEditor21 r={r} catKey={catKey} def={def} onDone={() => setOpenId(null)} /></div>
+                  : <RankDetail19 r={r} catKey={catKey} />}
               </div>
-            )}
-          </div>
-        );
-      })}
-      {addRow || (
-        <form className="ff-rl19-add" onSubmit={addTyped}>
-          <button type="submit" className="ff-rl19-disc add" aria-label={`Add ${one}`}><Plus size={16} strokeWidth={2} /></button>
-          <input type="text" value={typed} autoComplete="off" spellCheck={false} placeholder={`Add ${/^[aeiou]/i.test(one) ? "an" : "a"} ${one}`} aria-label={`Add ${/^[aeiou]/i.test(one) ? "an" : "a"} ${one}`} onChange={(e) => setTyped(e.target.value)} />
-        </form>
+            );
+          })}
+        </div>
       )}
     </div>
   );
+}
+
+
+
+/* ==========================================================================
+   v17.21 — PROFESSION TILES (the v17.15 look): one tile per profession in a row that scrolls across only.
+   The first is gold, the second silver, the rest bronze. On the displayed profile a tap opens the profession.
+   In the builder a tap opens its editor under the row, and the three-line handle drags a tile left or right.
+   ========================================================================== */
+/* As many whole sentences as fit in max characters (at least the first). Never a cut word and never "…". */
+function wholeSentences21(text, max) {
+  const t = String(text || "").trim();
+  if (t.length <= max) return t;
+  const parts = t.match(/[^.!?]+[.!?]+(\s|$)/g) || [t];
+  let out = "";
+  for (const p of parts) { if ((out + p).trim().length > max && out) break; out += p; }
+  return out.trim();
+}
+
+
+/* Hyphenated words stay whole on one line (non-breaking hyphen). */
+const nbh21 = (t) => String(t || "").replace(/(\w)-(?=\w)/g, "$1\u2011");
+
+
+function ProfTile21({ r, i, editable, open, lifted, dx, onTap, grip, extra }) {
+  const desc = wholeSentences21(String(r.description || "").trim() || professionDefaultDesc(r.name, r.displayCategory), 150);
+  const media = (r.media || []).filter(m => m && (m.dataUrl || m.src)).slice(0, 3);
+  const lvl = r.level ? PROFESSION_LEVELS.find(l => l.n === r.level) : null;
+  return (
+    <div className={"ff-pt21-it" + (lifted ? " lifted" : "")} data-pt-id={r.id} style={lifted ? { transform: `translateX(${dx}px)` } : undefined}>
+      <button type="button" className={"ff-agrp prof ff-pt21 " + tierCls17(i) + (open ? " open" : "") + (r.hidden ? " hid" : "")}
+        aria-expanded={editable ? open : undefined} aria-label={editable ? `${r.name}. Edit` : `${r.name}. Open details`} onClick={onTap}>
+        <span className="ff-agrp-top"><span className="ff-agrp-h">{nbh21(r.name)}</span></span>
+        {r.hidden && <span className="ff-pt21-hd"><EyeOff size={11} /> Hidden</span>}
+        {extra}
+        {desc && <span className="ff-agrp-d">{nbh21(desc)}</span>}
+        {(media.length > 0 || lvl) && (
+          <span className="ff-pt21-foot">
+            {media.length > 0 && <span className="ff-pt21-ph" aria-hidden="true">{media.map((m, k) => <span key={m.id || k} style={{ backgroundImage: `url("${m.dataUrl || m.src}")` }} />)}</span>}
+            {lvl && <span className="ff-pt21-lv">{lvl.title}</span>}
+          </span>
+        )}
+      </button>
+      {grip}
+    </div>
+  );
+}
+
+
+function ProfTiles21({ items, editable, def, onOpen, extra, label = "Professions" }) {
+  const { dispatch } = useStore();
+  const rows = editable ? rankedRecords(items || []) : rankedRecords(items || []).filter(r => !r.hidden && !r.proposed);
+  const ids = rows.map(r => r.id);
+  const [openId, setOpenId] = useState(null);
+  const [drag, setDrag] = useState(null);
+  const rects = useRef([]);
+  const rowRef = useRef(null);
+  useDragScroll(rowRef);
+  const down = (e, id) => {
+    if (e.button !== undefined && e.button !== 0) return;
+    const row = rowRef.current; if (!row) return;
+    rects.current = [...row.querySelectorAll("[data-pt-id]")].map(el => { const b = el.getBoundingClientRect(); return { id: el.getAttribute("data-pt-id"), mid: b.left + b.width / 2 }; });
+    try { e.currentTarget.setPointerCapture(e.pointerId); } catch (x) { /* older browsers */ }
+    e.preventDefault(); e.stopPropagation();
+    const from = ids.indexOf(id);
+    noSel21(true);
+    setDrag({ id, x0: e.clientX, s0: row.scrollLeft, dx: 0, from, over: from });
+  };
+  const move = (e) => {
+    const row = rowRef.current;
+    if (row) { const b = row.getBoundingClientRect(); if (e.clientX > b.right - 36) row.scrollLeft += 10; else if (e.clientX < b.left + 36) row.scrollLeft -= 10; }
+    setDrag(d => {
+      if (!d) return d;
+      const ds = row ? row.scrollLeft - d.s0 : 0;
+      const x = e.clientX + ds;
+      return { ...d, dx: e.clientX - d.x0 + ds, over: rects.current.filter(r => r.id !== d.id && x > r.mid).length };
+    });
+  };
+  const up = () => { const d = drag; noSel21(false); setDrag(null); if (d && d.over !== d.from) dispatch({ type: "REC_MOVE", category: "professions", id: d.id, to: d.over }); };
+  const key = (e, id, i) => {
+    if (e.key === "ArrowLeft" && i > 0) { e.preventDefault(); dispatch({ type: "REC_MOVE", category: "professions", id, to: i - 1 }); }
+    else if (e.key === "ArrowRight" && i < rows.length - 1) { e.preventDefault(); dispatch({ type: "REC_MOVE", category: "professions", id, to: i + 1 }); }
+  };
+  const others = drag ? ids.filter(x => x !== drag.id) : [];
+  const mark = drag && drag.over !== drag.from ? (drag.over < others.length ? { id: others[drag.over], side: "l" } : { id: others[others.length - 1], side: "r" }) : null;
+  const openRec = editable ? rows.find(r => r.id === openId) : null;
+  if (!rows.length) return null;
+  return (<>
+    <div ref={rowRef} className={"ff-pt21-row" + (drag ? " dragging" : "")} role="list" aria-label={`${label}, ${rows.length}`}>
+      {rows.map((r, i) => (
+        <div role="listitem" key={r.id} className={"ff-pt21-slot" + (mark && mark.id === r.id ? " mk-" + mark.side : "")}>
+          <ProfTile21 r={r} i={i} editable={editable} open={openId === r.id} lifted={drag && drag.id === r.id} dx={drag ? drag.dx : 0}
+            extra={extra ? extra(r) : null}
+            onTap={() => editable ? setOpenId(openId === r.id ? null : r.id) : onOpen && onOpen(r)}
+            grip={editable ? (
+              <span className="ff-pt21-grip" role="button" tabIndex={0} aria-label={`Move ${r.name}. Drag, or use the left and right arrow keys`}
+                onPointerDown={(e) => down(e, r.id)} onPointerMove={(e) => drag && move(e)} onPointerUp={up} onPointerCancel={() => { noSel21(false); setDrag(null); }} onKeyDown={(e) => key(e, r.id, i)}>
+                <i /><i /><i />
+              </span>) : null} />
+        </div>
+      ))}
+      <span className="ff-acar-end" aria-hidden="true" />
+    </div>
+    {openRec && (
+      <div className="ff-pt21-ed">
+        <div className="ff-pt21-edh"><span className={"dot " + tierCls17(ids.indexOf(openRec.id))} aria-hidden="true" />{openRec.name}</div>
+        <EntryEditor21 r={openRec} catKey="professions" def={def} onDone={() => setOpenId(null)} />
+      </div>
+    )}
+  </>);
 }
 
 
@@ -514,8 +633,8 @@ function VenuesEditor19({ items, onOpen }) {
       <style>{RANK_CSS17}</style>
       <p className="ff-venedit17-line">Add the top venues you've worked at, or your favourite bars.</p>
       <div className="ff-seg19" role="radiogroup" aria-label="Kind of venue">
-        {[["worked", "Worked at"], ["favourite", "Favourites"]].map(([k, label]) => (
-          <button key={k} type="button" role="radio" aria-checked={kind === k} className={kind === k ? "on" : ""} onClick={() => setKind(k)}>{label}</button>
+        {[["worked", "Worked at", Briefcase], ["favourite", "Favourites", Heart]].map(([k, label, Ic]) => (
+          <button key={k} type="button" role="radio" aria-checked={kind === k} className={kind === k ? "on" : ""} onClick={() => setKind(k)}><Ic size={15} strokeWidth={2} aria-hidden="true" />{label}</button>
         ))}
       </div>
       <VenueSearch17 key={key} label="Search for a venue" placeholder="Search for a venue" onPick={add} />
@@ -543,7 +662,9 @@ function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd
   const editing = isMe && owner !== "company" && EDIT_CATS.includes(catKey) && (!savedOnce || !!(state.profileEdit && state.profileEdit.on));
   const ekey = `edit_${vkey}`;
   const ev = editing ? state.categoryVisibility[ekey] : undefined;
-  const open = editing ? (ev === undefined ? catKey === "professions" : ev !== false) : (v === undefined ? startOpen : v !== false);
+  /* v17.21: in the builder the type-box sections have no drop-down — they are always open. */
+  const always = editing && OPEN_CATS21.includes(catKey);
+  const open = always || (editing ? (ev === undefined ? catKey === "professions" : ev !== false) : (v === undefined ? startOpen : v !== false));
   const unresolved = isMe && catKey === "professions" ? items.find(r => !r.proposed && !r.hidden && !professionCategory(r.name, r.displayCategory)) : null;
   /* Phase 1: Professions are added from Pick your professions (typing one
      creates its card), so that section has no separate Add square. */
@@ -562,6 +683,7 @@ function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd
         action={plus ? <span className="ff-co17-acts">
           <button type="button" className="ff-co17-plus" aria-label={`Add to ${def.label}`} onClick={() => { dispatch({ type: "TOGGLE_CATEGORY", key: vkey, visible: true }); plus(); }}><Plus size={14} /></button>
           <CategoryToggle sectionKey={vkey} defaultOpen={startOpen} /></span>
+          : always ? null
           : editing
           ? <CategoryToggle sectionKey={ekey} defaultOpen={catKey === "professions"} />
           : <CategoryToggle sectionKey={vkey} defaultOpen={startOpen} />} />
@@ -574,9 +696,9 @@ function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd
               <Coin size={22} tier="gold" />
               <span className="ff-body" style={{ fontSize: 13 }}><b>FireFlair:</b> which category is “{unresolved.name}”? It decides where you appear on Network.</span>
             </div>
-            <div>
+            <div className="ff-pk21-cats wrap">
               {CATEGORY_ORDER.map(k => (
-                <button key={k} className="ff-chip" onClick={() => {
+                <button key={k} type="button" className="ff-pk21-cat" onClick={() => {
                   dispatch({ type: "REC_PATCH", category: "professions", id: unresolved.id, patch: { displayCategory: k } });
                   dispatch({ type: "TOAST", toast: `${unresolved.name} → ${k}` });
                 }}>{k}</button>
@@ -587,16 +709,18 @@ function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd
         {isMe && catKey === "locations" && <CoverageTree17 owner={owner} />}
         {catKey === "locations" ? (isMe ? null : <AreasChips17 owner={locOwner} />) : catKey === "venues" && isMe && owner !== "company" ? (
           <VenuesEditor19 items={items} onOpen={(r) => onOpen(r)} />
-        ) : isMe && owner !== "company" && RANK_CATS19.includes(catKey) ? (
-          <RankList17 catKey={catKey} def={def} items={items}
-            addRow={catKey === "professions" ? <ProfessionPicker asRow selected={items.map(r => r.name)} onPick={(n, category) => {
-              if (items.some(r => r.name.toLowerCase() === n.toLowerCase())) { dispatch({ type: "TOAST", toast: `${n} is already on your profile` }); return; }
-              /* source of the profession: "approved" = on the FireFlair list, "user" = typed by the member (kept with the category they chose). */
-              const approved = ALL_PROFESSIONS.some(p => p.name.toLowerCase() === n.toLowerCase());
-              const fresh = makeRecord("professions", n, { professionSource: approved ? "approved" : "user", ...(category ? { displayCategory: category } : {}) });
-              dispatch({ type: "RECORDS_MERGE", byCategory: { professions: [fresh] } });
-              dispatch({ type: "TOAST", toast: `${n} added` });
-            }} /> : undefined} />
+        ) : isMe && owner !== "company" && catKey === "professions" ? (<>
+          <ProfessionPicker selected={items.map(r => r.name)} onPick={(n, category) => {
+            if (items.some(r => r.name.toLowerCase() === n.toLowerCase())) { dispatch({ type: "TOAST", toast: `${n} is already on your profile` }); return; }
+            /* source of the profession: "approved" = on the FireFlair list, "user" = typed by the member (kept with the category they chose). */
+            const approved = ALL_PROFESSIONS.some(p => p.name.toLowerCase() === n.toLowerCase());
+            const fresh = makeRecord("professions", n, { professionSource: approved ? "approved" : "user", ...(category ? { displayCategory: category } : {}) });
+            dispatch({ type: "RECORDS_MERGE", byCategory: { professions: [fresh] } });
+            dispatch({ type: "TOAST", toast: `${n} added` });
+          }} />
+          <ProfTiles21 items={items} editable def={def} />
+        </>) : isMe && owner !== "company" && RANK_CATS19.includes(catKey) ? (
+          <RankList17 catKey={catKey} def={def} items={items} />
         ) : (
           pub && !isMe ? <PubGrid catKey={catKey} def={def} items={items} shade={shade} onOpen={onOpen} /> : (
           <HorizontalCardRanker items={items} label={def.label}
@@ -963,7 +1087,7 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
     const td = teamTabData17(state, all, person);
     return [
       { key: "overview", label: "Overview" },
-      { key: "services", label: "Packages", count: servicesOf(state, person).length },
+      { key: "services", label: "Bookings", count: servicesOf(state, person).length },
       { key: "teams", label: "Team", count: td.teams.length + td.tCos.length + td.tNet.length },
       { key: "reviews", label: "Reviews", count: reviewsOf(state, person).length },
     ];
@@ -1077,9 +1201,11 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
           <ProfileTabs tabs={bTabs} active={btab} onChange={setBtab} />
           <div role="tabpanel" id="ff-tabpanel" aria-labelledby={`ff-tab-${btab}`} className="ff-tabpanel" tabIndex={0}>
             {btab === "overview" && (<>
-              {order.map(renderCategorySection)}
+              {order.filter(k => k !== "locations").map(renderCategorySection)}
             </>)}
             {btab === "services" && (<>
+              {/* v17.21: Packages is now Bookings, and Work locations live here. */}
+              {order.includes("locations") && renderCategorySection("locations")}
               <section id="ff-sec-questions" style={{ marginTop: 4 }}>
                 <SectionHead icon={<MessageSquare size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Q&A"
                   action={<CategoryToggle sectionKey="questions" defaultOpen={false} />} />

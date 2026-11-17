@@ -376,17 +376,17 @@ function AccountSettings({ boxes = false } = {}) {
     }
   };
   if (boxes && !editing) return (<>
-    <AcctBox19 icon={<Phone size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Phone number">
-      <span className="ff-body" style={{ display: "flex", gap: 6, alignItems: "center", fontWeight: 600 }}><Check size={14} color="var(--ok)" strokeWidth={2.6} /> {phone || "Number verified"}</span>
-    </AcctBox19>
-    <AcctBox19 icon={<Hash size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="FF Tag">
-      <span className="ff-body" style={{ fontWeight: 700, color: "var(--ink)", overflowWrap: "anywhere" }}>{CARD_DOMAIN}/{tag}</span>
-      <div style={{ display: "flex", gap: 18, flexWrap: "wrap", marginTop: 10 }}>
+    <GoldBox21 icon={<Phone size={16} strokeWidth={1.8} />} title="Phone number" desc={ACCT_DESC21.phone}>
+      <span className="ff-gb21-val"><Check size={15} color="var(--ok)" strokeWidth={2.6} /> {phone || "Number verified"}</span>
+    </GoldBox21>
+    <GoldBox21 icon={<Hash size={16} strokeWidth={1.8} />} title="FF Tag" desc={ACCT_DESC21.tag}
+      note={<span className="ff-gb21-links">
         <button type="button" className="ff-linkbtn" onClick={() => { setNext(tag); setErr(null); setEditing(true); }}>Change Tag</button>
         <button type="button" className="ff-linkbtn" onClick={() => setPwOpen(true)}>{hasPw ? "Change password" : "Add a password"}</button>
-      </div>
+      </span>}>
+      <span className="ff-gb21-val">{CARD_DOMAIN}/{tag}</span>
       <PasswordSheet open={pwOpen} change={hasPw} onClose={() => setPwOpen(false)} />
-    </AcctBox19>
+    </GoldBox21>
   </>);
   return React.createElement("div", null, React.createElement("div", {
     style: { display: "flex", gap: 14, alignItems: "center" }
@@ -463,6 +463,30 @@ function AccountSettings({ boxes = false } = {}) {
 }
 
 
+/* v17.21: the descriptions Alex asked to keep (from v17.15), and one for Media. */
+const ACCT_DESC21 = {
+  phone: "Used to send you bookings via WhatsApp.",
+  tag: "Your personal web page, displaying all your profile information.",
+  media: "These pictures play across the top of your public profile. They are the first thing people see, and the best way to show your work.",
+};
+
+
+/* v17.21: a golden account box. The name, the entry box and its button on one line, the description under them. */
+function GoldBox21({ icon, title, count, desc, note, children, line = true, id, className }) {
+  return (
+    <section className={"ff-gb21" + (className ? " " + className : "")} id={id} aria-label={title}>
+      <div className={line ? "ff-gb21-line" : "ff-gb21-head"}>
+        <span className="ff-gb21-lb">{icon}<span>{title}</span>{count !== undefined && <span className="ff-gb21-ct">{count}</span>}</span>
+        {line ? children : null}
+      </div>
+      {desc && <p className="ff-gb21-ds">{desc}</p>}
+      {!line && children}
+      {note}
+    </section>
+  );
+}
+
+
 /* v17.19: an account box — a title row like the other sections, then its content (the same look as the Media box). */
 function AcctBox19({ icon, title, count, action, children, id }) {
   return (
@@ -519,40 +543,40 @@ function TagSection({ inSave = false, top = false, onSignedIn } = {}) {
       if (onSignedIn) onSignedIn();
     } else setPwOpen(true);
   });
-  /* v17.19: on the builder the sign-up is three boxes — Phone number, FF Tag, then Media (CreatorMedia, rendered after this). */
+  /* v17.21: Phone number and FF Tag are two golden boxes side by side (one above the other on a narrow phone). In each,
+     the name, the entry box and its button sit on one line, with the description under them. Media follows, full width. */
   if (top) {
-    const dig = phone.replace(/\D/g, "").length > 0;
     return (
-      <div id="ff-sec-tag" className="ff-tagsection ff-acct19">
+      <div id="ff-sec-tag" className="ff-tagsection ff-acct19 ff-acct21">
         {signedIn ? <AccountSettings boxes /> : stage === "details" ? (<>
-          <AcctBox19 icon={<Phone size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Phone number">
-            <input className="ff-input ff-fit19" type="tel" inputMode="tel" autoComplete="tel" placeholder="+44 7700 900000" aria-label="Phone number"
-              value={phone} style={{ width: `${Math.max(17, phone.length + 3)}ch` }} onChange={(e) => setPhone(e.target.value)}
+          <GoldBox21 icon={<Phone size={16} strokeWidth={1.8} />} title="Phone number" desc={ACCT_DESC21.phone}>
+            <input className="ff-gb21-in" type="tel" inputMode="tel" autoComplete="tel" placeholder="07700 900000" aria-label="Phone number"
+              value={phone} onChange={(e) => setPhone(e.target.value)} enterKeyHint="send"
               onKeyDown={(e) => e.key === "Enter" && available && phoneOk && !busy && send()} />
-            <div style={{ marginTop: 12 }}>
-              <Btn variant="primary" disabled={busy || !available || !phoneOk} onClick={send}>{busy ? <Loader2 size={14} className="ff-spin" /> : null}{dig ? "Verify" : "Continue"}</Btn>
-            </div>
-          </AcctBox19>
-          <AcctBox19 icon={<Hash size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="FF Tag">
-            <TagInput value={clean} fit check onChange={(v) => {
+            <button type="button" className="ff-gb21-btn" disabled={busy || !available || !phoneOk} onClick={send}>{busy ? <Loader2 size={14} className="ff-spin" /> : null}Verify</button>
+          </GoldBox21>
+          <GoldBox21 icon={<Hash size={16} strokeWidth={1.8} />} title="FF Tag" desc={ACCT_DESC21.tag} note={<TagNote clean={clean} />}>
+            <TagInput value={clean} check onChange={(v) => {
               setTyped(v);
               /* Display only: lets the Profile Card address follow the field. Never a real tag. */
               dispatch({ type: "SESSION", patch: { tagDraft: AUTH_ADAPTER.cleanTag(v) } });
             }} />
-            <TagNote clean={clean} />
-          </AcctBox19>
-        </>) : (
-          <AcctBox19 icon={<Phone size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Phone number">
-            <input className="ff-input ff-tagin ff-fit19" inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={code} style={{ width: "10ch" }}
+          </GoldBox21>
+        </>) : (<>
+          <GoldBox21 icon={<Phone size={16} strokeWidth={1.8} />} title="WhatsApp code" desc={`Sent to ${phone} · any six digits in this preview`}
+            note={<span className="ff-gb21-links">
+              <button type="button" className="ff-linkbtn" onClick={() => { setStage("details"); setCode(""); setErr(null); }}>Change number</button>
+              <button type="button" className="ff-linkbtn" disabled={busy} onClick={send}>Resend code</button>
+            </span>}>
+            <input className="ff-gb21-in code" inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={code}
               autoFocus={FF_FINE_POINTER} onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))} placeholder="000000" aria-label="Code from WhatsApp"
               onKeyDown={(e) => e.key === "Enter" && code.length === 6 && !busy && verify()} />
-            <div style={{ marginTop: 12, display: "flex", gap: 14, alignItems: "center", flexWrap: "wrap" }}>
-              <Btn variant="primary" disabled={busy || code.length < 6} onClick={verify}>{busy ? <Loader2 size={14} className="ff-spin" /> : <Check size={14} />} Create</Btn>
-              <button type="button" className="ff-linkbtn" onClick={() => { setStage("details"); setCode(""); setErr(null); }}>Change</button>
-              <button type="button" className="ff-linkbtn" disabled={busy} onClick={send}>Resend code</button>
-            </div>
-          </AcctBox19>
-        )}
+            <button type="button" className="ff-gb21-btn" disabled={busy || code.length < 6} onClick={verify}>{busy ? <Loader2 size={14} className="ff-spin" /> : <Check size={14} />} Create</button>
+          </GoldBox21>
+          <GoldBox21 icon={<Hash size={16} strokeWidth={1.8} />} title="FF Tag" desc={ACCT_DESC21.tag}>
+            <span className="ff-gb21-val">{CARD_DOMAIN}/{clean}</span>
+          </GoldBox21>
+        </>)}
         {err && <p className="ff-body" role="alert" style={{ color: "var(--bad)", fontSize: 13, margin: "10px 0 0", fontWeight: 600 }}>{err}</p>}
         <PasswordSheet open={pwOpen} onClose={() => setPwOpen(false)} />
       </div>
@@ -845,10 +869,10 @@ function ProfileBuilder() {
         <BigStepHead n={1} title="Let's get started" done={hasCV(p) || cardReady} />
         <StartBox17 />
 
-        <StepHead n={2} title="Profile Card" done={cardReady} />
+        <BigStepHead n={2} title="Your Profile Card" done={cardReady} />
         <div id="ff-sec-card"><CardBuilder /></div>
 
-        <StepHead n={3} title="Your profile" done={false} />
+        <BigStepHead n={3} title="Your Profile Page" done={false} />
         <TagSection top />
         <CreatorMedia />
         <ProfileSections person={me} isMe />

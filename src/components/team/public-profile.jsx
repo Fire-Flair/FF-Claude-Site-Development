@@ -57,6 +57,7 @@ function useDragScroll(ref) {
     let down = null, moved = false;
     const onDown = (e) => {
       if (e.pointerType === "touch" || e.button !== 0) return;
+      if (e.target && e.target.closest && e.target.closest("[data-nodrag], .ff-pt21-grip")) return;
       down = { x: e.clientX, left: el.scrollLeft }; moved = false;
     };
     const onMove = (e) => {
@@ -573,7 +574,7 @@ function AttrGroups({ items, mem, onOpen }) {
           <button key={c.key} type="button" className={"ff-agrp " + tierCls17(ci)} onClick={() => onOpen(c.g.key)}
             aria-label={`${label}: ${c.g.list.map(it => it.record.name).join(", ")}. View all attributes`}>
             <span className="ff-agrp-top"><span className="ff-agrp-h">{label}</span><span className="ff-agrp-n">{c.part.length + c.more}</span></span>
-            <span className="ff-agrp-l">{c.part.map(it => <span key={it.id}>{it.record.name}</span>)}</span>
+            <span className="ff-agrp-l">{c.part.map(it => <span key={it.id}>{nbh21(it.record.name)}</span>)}</span>
             {c.more > 0 && <span className="ff-agrp-more">{`+${c.more}`}</span>}
           </button>
         );
@@ -596,8 +597,8 @@ function AboutMeBlock({ text }) {
   useLayoutEffect(() => { const el = ref.current; if (el) setOver(more || el.scrollHeight > el.clientHeight + 2); }, [text, more]);
   if (!String(text || "").trim()) return null;
   return (
-    <section className="ff-about" aria-label="About Me" style={{ marginTop: 22 }}>
-      <SectionHead icon={<User size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="About Me" />
+    <section className="ff-about ff-pp21" aria-labelledby="ff-about-h">
+      <div className="ff-pp-head"><h2 id="ff-about-h" className="ff-about-h">About Me</h2></div>
       <p ref={ref} id="ff-about-text" className={more ? "" : "clamp"}>{text}</p>
       {(over || more) && <button type="button" className="ff-pub-more" aria-expanded={more} aria-controls="ff-about-text" onClick={() => setMore(!more)}>{more ? "Read less" : "Read more"}</button>}
     </section>

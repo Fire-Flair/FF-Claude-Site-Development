@@ -6,7 +6,6 @@ const MEDIA_MAX_ITEMS = 12;
 function CreatorMedia() {
   const { state, dispatch } = useStore();
   const items = state.profile.media || [];
-  const mOpen = state.categoryVisibility.cr_media !== false;
   const addRef = useRef(null);
   const [busy, setBusy] = useState(0);
   const [err, setErr] = useState("");
@@ -43,12 +42,11 @@ function CreatorMedia() {
       setBusy(b => b - 1);
     }
   };
-  /* v17.19: the Media box — a title row like the other sections, square squircle pictures in a row that scrolls across, a "+" box at the end. */
+  /* v17.21: the Media box — golden like Phone number and FF Tag, always open (no drop-down), with a line on why it matters;
+     square squircle pictures in a row that scrolls across, a "+" box at the end. */
   return (
-    <section id="ff-sec-media-up" className="ff-cmedia ff-box19" style={{ marginTop: 14 }} aria-label="Media">
+    <GoldBox21 id="ff-sec-media-up" className="ff-cmedia ff-gb21-media" icon={<Camera size={16} strokeWidth={1.8} />} title="Media" count={items.length} desc={ACCT_DESC21.media} line={false}>
       <style>{RANK_CSS17}</style>
-      <SectionHead icon={<Camera size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Media" count={items.length} action={<CategoryToggle sectionKey="cr_media" defaultOpen={true} />} />
-      {mOpen && (<>
       <div className={`ff-m19${drag ? " drop" : ""}`}
         onDragOver={(e) => { if (e.dataTransfer && [...(e.dataTransfer.types || [])].includes("Files")) { e.preventDefault(); setDrag(true); } }}
         onDragLeave={() => setDrag(false)}
@@ -70,8 +68,7 @@ function CreatorMedia() {
         )}
       </div>
       {err && <p className="ff-wlbox-err" role="alert" style={{ marginTop: 8 }}>{err}</p>}
-      </>)}
-    </section>
+    </GoldBox21>
   );
 }
 
@@ -110,7 +107,8 @@ function aboutFacts(state) {
 
 function CreatorAboutMe() {
   const { state, dispatch } = useStore();
-  const aOpen = state.categoryVisibility.cr_about !== false;
+  /* v17.21: no drop-down — About Me is a type box like the lists. */
+  const aOpen = true;
   const saved = state.profile.about || "";
   const [text, setText] = useState(saved);
   const last = useRef(saved);
@@ -135,7 +133,7 @@ function CreatorAboutMe() {
   const mode0 = text.trim() ? "improve" : "write";
   return (
     <section id="ff-sec-aboutme" className="ff-cabout" style={{ marginTop: 22 }} aria-label="About Me">
-      <SectionHead icon={<User size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="About Me" action={<CategoryToggle sectionKey="cr_about" defaultOpen={true} />} />
+      <SectionHead icon={<User size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="About Me" />
       {aOpen && (<>
       <textarea id="ff-am" className="ff-input ff-am-ta" rows={4} value={text} aria-describedby="ff-am-count" aria-label="About Me"
         placeholder="Introduce yourself, describe your professional experience, and tell people what makes you stand out."
