@@ -1,5 +1,18 @@
 # FireFlair prototype — changelog
 
+## v17.34
+
+Artifact version 1794952568-151a.
+
+Profile builder layout, Profile Card labels and branding, and the stored records for the new network ladder. Branches merged: `p2-profile`, `p2-card`, `p2-net-ladder`.
+
+- Profile builder (`profile-builder.jsx`, `prof21.css`): the Phone number box (same inputs, country code, Verify and code step) is now the third entry in Let's get started, in place of Book an interview. It appears once on the page. `InterviewBook17` stays in the code: FF Staff's Book a meeting uses it.
+- Profile builder, Your Profile Page: FF Tag on the left and Media on the right from 900px wide; stacked FF Tag then Media below that. About Me is its own box under them, above the tabs, and no longer repeats inside the Overview tab (`creator-media.jsx`).
+- Profile Card (`profile-card-parts.jsx`, `pc1716.css`): the written row labels (Professions, Skills, Interests, Locations, Languages) are gone from the large card; the icons stay, and the words stay for screen readers.
+- FF Cards: the top-right FF logo is about 15% smaller on every card variant. The FIREFLAIR word (and the small mark beside it) is gone from the bottom right of the Profile Card and the Company Card; the card address stays on the left.
+- Network ladder, part 1 of 3 (records only, screens follow): `connStatus17(state, id)` returns none / network / pending / team; a shared profile link (`?r=`) now creates the same pending team invitation as a join link; one review shape `{ id, aboutId, byId, byName, worked, rating, text, status, at, shiftId }` where a new review waits as `pending` until its subject accepts; signed-out review drafts post after sign-up; new actions `REVIEW_DRAFT`, `REVIEW_DECIDE`, `TEAM_INVITE`, `TEAM_INVITE_ACCEPT`, `CONN_REMOVE`; two new notification cards (added you to their network, reviewed you) shown as samples after the DEV login only.
+- Known, to be closed by part 2: three screens still read the raw review list and can show a waiting review (`public-profile.jsx`, `network-directory.jsx`, `home-sections.jsx`).
+
 ## v17.33
 
 - Hero, wide view (900px and up): the whole photo is shown, never cropped; the words sit over its left; the card stays on the easel; the violet beams rise from the photo's bottom-left and bottom-right corners (`.ff section#ff-hero` rules at the end of `p12.css`).
