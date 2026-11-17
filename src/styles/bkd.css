@@ -41,3 +41,9 @@
 .ff-fb21-row { margin:0 0 10px; }
 .ff-fb21-row .rate { display:block; margin-top:6px; font-size:13px; color:#5B5346; }
 .ff-fb21-row .rate b { color:#16130F; }
+/* Task 003 (Bookings): Your Bookings section with the WhatsApp icon beside its heading, small group labels inside it. */
+.ff .ff-bk-yh { margin:18px 0 12px; }
+.ff .ff-bk-yh .ff-wa-ico { width:34px; height:34px; }
+.ff .ff-bk-waline { margin:0 0 14px; }
+.ff .ff-bk-grp { margin-top:14px; }
+.ff .ff-bk-grp .ff-bk-hrow { margin-bottom:8px; }

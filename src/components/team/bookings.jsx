@@ -149,15 +149,18 @@ function BookingsSoon() {
 const BKD_CSS = __ff_css("styles/bkd.css");
 
 
-function BkDrop17({ id, title, desc, icon: Icon, photo, children }) {
-  const [open, setOpen] = useState(false);
+/* open / onOpen come from TeamBookings so only one of the three boxes is open at a time (onOpen(null) closes). */
+function BkDrop17({ id, title, desc, icon: Icon, photo, children, open: openP, onOpen }) {
+  const [openS, setOpenS] = useState(false);
+  const open = onOpen ? !!openP : openS;
+  const setOpen = onOpen ? (f) => onOpen((typeof f === "function" ? f(open) : f) ? id : null) : setOpenS;
   useEffect(() => {
     const h = (e) => {
       if (e.detail === id) setOpen(true);
     };
     window.addEventListener("ff-opendrop", h);
     return () => window.removeEventListener("ff-opendrop", h);
-  }, [id]);
+  }, [id, onOpen]);
   const src = (window.FF_IMG || {})[photo] || "";
   return (
     <section className={`ff-bkd${open ? " open" : ""}`}>
@@ -295,6 +298,7 @@ function TeamBookings({ guest = false }) {
   const { state, dispatch } = useStore();
   const [open, setOpen] = useState(null);
   const [showPast, setShowPast] = useState(false);
+  const [drop, setDrop] = useState(null);
   const signedIn = state.auth.status === "signedIn";
   /* Only the demo profile (SAM42) carries sample bookings. Everyone else starts clean. */
   const demo = !guest && signedIn && ["SAM42", "ALEXG"].includes(state.auth.tag);
@@ -347,28 +351,38 @@ function TeamBookings({ guest = false }) {
 
   return (
     <div className="ff-bk">
-      <BigHead20 title="FF Bookings" />
+      <BigHead20 title="Bookings" />
+      <style>{BKD_CSS}</style>
 
-      {demo && requests.length > 0 && (
-        <section className="ff-bk-sec">
-          <h2 className="ff-bk-h"><span className="ff-bk-wa"><WhatsAppIcon size={14} /></span> Invitations <i>{requests.length}</i></h2>
-          <div className="ff-sdrail11"><HScroll label="Invitations">{requests.map(x => <ShiftDelivery11 key={x.e.id} e={x.e} shift={x.shift} event={x.event} />)}</HScroll></div>
-        </section>
-      )}
+      <section className="ff-bk-sec ff-bk-yours" id="ff-bk-yours" aria-labelledby="ff-bk-yours-h">
+        <h2 className="ff-h1 ff-big20 ff-bk-yh" id="ff-bk-yours-h"><span className="ff-wa-ico"><WhatsAppIcon size={22} /></span><span className="t">Your Bookings</span></h2>
+        <div className="ff-wa ff-bk-waline">
+          <span className="ff-body" style={{ color: "#0B3D22", fontSize: 13.5 }}>
+            <b>Requests come to you on WhatsApp.</b> When companies and clients ask if you're free, each request is sent to you directly on WhatsApp and shows here. You reply in either place.
+          </span>
+        </div>
 
-      {signedIn && <section className="ff-bk-sec ff-bk-conf17">
-        <div className="ff-bk-hrow"><BigHead20 title="Confirmed" count={demo && upcoming.length > 0 ? upcoming.length : undefined} /><button type="button" className="ff-bk-hist" aria-pressed={showPast} onClick={() => setShowPast(v => !v)}><Clock size={12} /> History</button></div>
-        {upcoming.length ? <div className="ff-sdrail11"><HScroll label="Confirmed bookings">{upcoming.map(x => <ShiftDelivery11 key={x.e.id} e={x.e} shift={x.shift} event={x.event} />)}</HScroll></div>
-          : cancelledByBiz.length ? null : <p className="ff-bk-none ff-bk-none17">Your booked shifts will be shown here.</p>}
-        {cancelledByBiz.map(x => <Row key={x.e.id} x={x} onClick={() => setOpen(x.e)} tag={<span className="ff-bk-done">Cancelled by the business</span>} />)}
-        {showPast && (previous.length ? previous.map(x => <Row key={x.e.id} x={x} onClick={() => setOpen(x.e)} tag={<span className="ff-bk-done">Worked</span>} />)
-          : <p className="ff-bk-none">No past bookings yet.</p>)}
-      </section>}
+        {demo && requests.length > 0 && (
+          <div className="ff-bk-grp">
+            <h3 className="ff-bk-h">Invitations <i>{requests.length}</i></h3>
+            <div className="ff-sdrail11"><HScroll label="Invitations">{requests.map(x => <ShiftDelivery11 key={x.e.id} e={x.e} shift={x.shift} event={x.event} />)}</HScroll></div>
+          </div>
+        )}
+
+        {signedIn ? <div className="ff-bk-grp ff-bk-conf17">
+          <div className="ff-bk-hrow"><h3 className="ff-bk-h">Confirmed {demo && upcoming.length > 0 ? <i>{upcoming.length}</i> : null}</h3><button type="button" className="ff-bk-hist" aria-pressed={showPast} onClick={() => setShowPast(v => !v)}><Clock size={12} /> History</button></div>
+          {upcoming.length ? <div className="ff-sdrail11"><HScroll label="Confirmed bookings">{upcoming.map(x => <ShiftDelivery11 key={x.e.id} e={x.e} shift={x.shift} event={x.event} />)}</HScroll></div>
+            : cancelledByBiz.length ? null : <p className="ff-bk-none ff-bk-none17">Your booked shifts will be shown here.</p>}
+          {cancelledByBiz.map(x => <Row key={x.e.id} x={x} onClick={() => setOpen(x.e)} tag={<span className="ff-bk-done">Cancelled by the business</span>} />)}
+          {showPast && (previous.length ? previous.map(x => <Row key={x.e.id} x={x} onClick={() => setOpen(x.e)} tag={<span className="ff-bk-done">Worked</span>} />)
+            : <p className="ff-bk-none">No past bookings yet.</p>)}
+        </div> : <p className="ff-bk-none ff-bk-none17">Your booked shifts will be shown here.</p>}
+      </section>
 
       <section className="ff-bk-sec ff-fb21" id="ff-bk-fireflair">
-        <style>{BKD_CSS}</style>
+        <BigHead20 title="Packages" />
         <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-party">
-          <h3>FF Party packages</h3>
+          <h3>FFParty</h3>
           <p>You are your own boss. FireFlair sets the pay rate for each package. You deal directly with the client, and FireFlair is here to support you. Packages are advertised at a set rate, and by signing up to one you agree to that rate. The rates are strong, so we expect strong work in return.</p>
           <HScroll label="FF Party packages" snap>
             {pkgs.map(sv => <div key={sv.id} className="ff-tp17-cell"><PkgTile17 sv={sv} on={picked.includes(sv.id)} onClick={() => tick(sv)} /></div>)}
@@ -379,7 +393,7 @@ function TeamBookings({ guest = false }) {
         </div>
 
         <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-staff">
-          <h3>FF Staff Shifts</h3>
+          <h3>FFStaff</h3>
           <p>Businesses create shift cards and set their pay rates.</p>
           <ProfRates17 guest={guest || !signedIn} />
         </div>
@@ -389,9 +403,9 @@ function TeamBookings({ guest = false }) {
         <BigHead20 title="Build your career" />
         <p className="ff-bk-sub">Training, dream jobs and rewards.</p>
         <div className="ff-bkd-row">
-          <BkDrop17 id="ff-bk-training" title="Training" icon={E17I.GraduationCap} photo="bk_training" desc="Courses, qualifications and masterclasses to sharpen your craft. Register your interest and we will tell you when places open."><InterestSection kind="training" inner /></BkDrop17>
-          <BkDrop17 id="ff-bk-jobs" title="Dream jobs" icon={E17I.Plane} photo="bk_jobs" desc="Tell us where you dream of working, from festivals to yachts, and we will keep you in mind when it comes up."><InterestSection kind="jobs" inner /></BkDrop17>
-          <BkDrop17 id="ff-bk-rewards" title="FireFlair rewards" icon={E17I.Gift} photo="bk_rewards" desc="Perks for people who work with FireFlair: kit, tickets and experiences. Register your interest in the ones you want."><InterestSection kind="rewards" inner /></BkDrop17>
+          <BkDrop17 id="ff-bk-training" open={drop === "ff-bk-training"} onOpen={setDrop} title="Training" icon={E17I.GraduationCap} photo="bk_training" desc="Courses, qualifications and masterclasses to sharpen your craft. Register your interest and we will tell you when places open."><InterestSection kind="training" inner /></BkDrop17>
+          <BkDrop17 id="ff-bk-jobs" open={drop === "ff-bk-jobs"} onOpen={setDrop} title="Dream jobs" icon={E17I.Plane} photo="bk_jobs" desc="Tell us where you dream of working, from festivals to yachts, and we will keep you in mind when it comes up."><InterestSection kind="jobs" inner /></BkDrop17>
+          <BkDrop17 id="ff-bk-rewards" open={drop === "ff-bk-rewards"} onOpen={setDrop} title="FireFlair rewards" icon={E17I.Gift} photo="bk_rewards" desc="Perks for people who work with FireFlair: kit, tickets and experiences. Register your interest in the ones you want."><InterestSection kind="rewards" inner /></BkDrop17>
         </div>
       </section>
 
