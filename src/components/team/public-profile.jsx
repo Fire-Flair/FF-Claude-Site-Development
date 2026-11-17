@@ -115,16 +115,22 @@ function useWide(min = 900) {
 }
 
 
-function MediaCarousel({ items, onBad, start = 0, flat = false, pull = false }) {
-  const [open, setOpen] = useState(false);
+function MediaCarousel({ items, onBad, start = 0, flat = false, pull = false, open: openIn, onOpen }) {
+  const [openS, setOpenS] = useState(false);
+  const open = openIn !== undefined ? openIn : openS;
+  const setOpen = onOpen || setOpenS;
   const [at, setAt] = useState(start);
   const ref = useRef(null);
   useDragScroll(ref);
+  /* Phone: the card's own pull-down. Only touches that start on the card are
+     watched, so a touch on the photos is left entirely to the browser's
+     native sideways scroller (no JavaScript in the way of a swipe). */
   useEffect(() => {
     if (!pull || flat)
       return;
     const hero = ref.current && ref.current.closest(".ff-phero");
-    if (!hero)
+    const zone = hero && hero.querySelector(".ff-pcol");
+    if (!hero || !zone)
       return;
     const scroller = () => {
       let n = hero.parentElement;
@@ -197,7 +203,9 @@ function MediaCarousel({ items, onBad, start = 0, flat = false, pull = false }) 
       else if (e.deltaY > 12)
         setOpen(false);
     };
-    const sc = () => {
+    const sc = (e) => {
+      if (e && e.target && e.target.nodeType === 1 && hero.contains(e.target))
+        return;
       if (!atTop() && !hero.classList.contains("dragging"))
         setOpen(false);
     };
@@ -206,17 +214,17 @@ function MediaCarousel({ items, onBad, start = 0, flat = false, pull = false }) 
     root.style.overscrollBehaviorY = "none";
     body.style.overscrollBehaviorY = "none";
     const pa = { passive: true }, np = { passive: false }, cap = { passive: true, capture: true };
-    hero.addEventListener("touchstart", ts, pa);
-    hero.addEventListener("touchmove", tm, np);
-    hero.addEventListener("touchend", te, pa);
-    hero.addEventListener("touchcancel", te, pa);
+    zone.addEventListener("touchstart", ts, pa);
+    zone.addEventListener("touchmove", tm, np);
+    zone.addEventListener("touchend", te, pa);
+    zone.addEventListener("touchcancel", te, pa);
     window.addEventListener("wheel", wh, pa);
     window.addEventListener("scroll", sc, cap);
     return () => {
-      hero.removeEventListener("touchstart", ts, pa);
-      hero.removeEventListener("touchmove", tm, np);
-      hero.removeEventListener("touchend", te, pa);
-      hero.removeEventListener("touchcancel", te, pa);
+      zone.removeEventListener("touchstart", ts, pa);
+      zone.removeEventListener("touchmove", tm, np);
+      zone.removeEventListener("touchend", te, pa);
+      zone.removeEventListener("touchcancel", te, pa);
       window.removeEventListener("wheel", wh, pa);
       window.removeEventListener("scroll", sc, cap);
       root.style.overscrollBehaviorY = prev[0];
@@ -228,6 +236,55 @@ function MediaCarousel({ items, onBad, start = 0, flat = false, pull = false }) 
     if (el && start)
       el.scrollLeft = start * el.clientWidth;
   }, []);
+  /* Auto scroll: one photo every 5 seconds, looping. Waits while the photos
+     are touched, hovered or focused, for 8 seconds after a manual swipe, while
+     off screen or in a hidden tab; never runs under reduced motion. */
+  const auto = useRef({ until: 0 });
+  useEffect(() => {
+    const el = ref.current, box = el && el.parentElement;
+    if (!el || flat || items.length < 2 || prefersReducedMotion())
+      return;
+    const a = auto.current;
+    let touching = false, hover = false, focus = false, seen = true, hold = 0;
+    const now = () => Date.now();
+    const pause = (ms) => { hold = Math.max(hold, now() + ms); };
+    const tS = () => { touching = true; };
+    const tE = () => { touching = false; pause(8000); };
+    const onScroll = () => { if (now() > a.until) pause(8000); };
+    const mE = () => { hover = true; }, mL = () => { hover = false; };
+    const fI = () => { focus = true; }, fO = () => { focus = false; };
+    const io = typeof IntersectionObserver !== "undefined" ? new IntersectionObserver(([en]) => { seen = en.isIntersecting; }, { threshold: 0.4 }) : null;
+    if (io) io.observe(el);
+    const tick = setInterval(() => {
+      if (touching || hover || focus || !seen || document.hidden || now() < hold)
+        return;
+      const w = el.clientWidth || 1, n = Math.round(el.scrollLeft / w);
+      const k = n >= items.length - 1 ? 0 : n + 1;
+      a.until = now() + 1600;
+      el.scrollTo({ left: k * w, behavior: "smooth" });
+    }, 5000);
+    const pa = { passive: true };
+    el.addEventListener("touchstart", tS, pa);
+    el.addEventListener("touchend", tE, pa);
+    el.addEventListener("touchcancel", tE, pa);
+    el.addEventListener("scroll", onScroll, pa);
+    box.addEventListener("mouseenter", mE);
+    box.addEventListener("mouseleave", mL);
+    box.addEventListener("focusin", fI);
+    box.addEventListener("focusout", fO);
+    return () => {
+      clearInterval(tick);
+      if (io) io.disconnect();
+      el.removeEventListener("touchstart", tS, pa);
+      el.removeEventListener("touchend", tE, pa);
+      el.removeEventListener("touchcancel", tE, pa);
+      el.removeEventListener("scroll", onScroll, pa);
+      box.removeEventListener("mouseenter", mE);
+      box.removeEventListener("mouseleave", mL);
+      box.removeEventListener("focusin", fI);
+      box.removeEventListener("focusout", fO);
+    };
+  }, [items.length, flat]);
   const list = items;
   if (!list.length)
     return null;
@@ -236,6 +293,7 @@ function MediaCarousel({ items, onBad, start = 0, flat = false, pull = false }) 
     if (!el)
       return;
     const k = Math.max(0, Math.min(list.length - 1, i));
+    auto.current.until = 0;
     el.scrollTo({ left: k * el.clientWidth, behavior: prefersReducedMotion() ? "auto" : "smooth" });
   };
   return React.createElement("section", {
@@ -246,6 +304,7 @@ function MediaCarousel({ items, onBad, start = 0, flat = false, pull = false }) 
     className: "ff-pm-track",
     ref,
     tabIndex: 0,
+    onClick: pull && !flat ? () => setOpen(!open) : undefined,
     "aria-label": `Media, ${list.length} item${list.length === 1 ? "" : "s"}. Use the left and right arrow keys.`,
     onScroll: (e) => {
       const el = e.currentTarget;
@@ -268,6 +327,14 @@ function MediaCarousel({ items, onBad, start = 0, flat = false, pull = false }) 
     "aria-roledescription": "slide",
     "aria-label": `${i + 1} of ${list.length}`
   }, React.createElement("img", { decoding: "async",
+    className: "ff-pm-fill",
+    src: m.src,
+    alt: "",
+    "aria-hidden": "true",
+    draggable: false,
+    loading: i ? "lazy" : "eager"
+  }), React.createElement("img", { decoding: "async",
+    className: "ff-pm-img",
     src: m.src,
     alt: m.name ? `Media: ${m.name}` : `Media ${i + 1}`,
     draggable: false,
@@ -314,7 +381,8 @@ function MediaMosaic({ items, onBad }) {
     <section className={`ff-pmos n${show.length}`} aria-label={`Media, ${items.length} picture${items.length === 1 ? "" : "s"}`}>
       {show.map((m, i) => (
         <button key={m.src.slice(-40) + i} type="button" className="ff-pmos-t" aria-label={`Open picture ${i + 1} of ${items.length}`} onClick={() => setView(i)}>
-          <img decoding="async" src={m.src} alt="" draggable={false} loading={i ? "lazy" : "eager"} onError={() => onBad && onBad(m.src)} />
+          <img decoding="async" className="ff-pm-fill" src={m.src} alt="" aria-hidden="true" draggable={false} loading={i ? "lazy" : "eager"} />
+          <img decoding="async" className="ff-pm-img" src={m.src} alt="" draggable={false} loading={i ? "lazy" : "eager"} onError={() => onBad && onBad(m.src)} />
           {i === show.length - 1 && more > 0 && <span className="more" aria-hidden="true">+{more}</span>}
         </button>
       ))}
@@ -350,10 +418,14 @@ function PublicHero({ media, card, below, narrow }) {
   const list = media.filter(m => seen[m.src] === true);
   const onBad = (src) => setSeen(v => (v[src] === false ? v : { ...v, [src]: false }));
   const has = list.length > 0;
+  /* Phone: the card covers the foot of the photos; a tap on the photos or on
+     the grip at the card's top edge moves it down out of the way and back. */
+  const [open, setOpen] = useState(false);
   return (
     <div className={`ff-phero${has ? " has-media" : ""}${wide ? " wide" : ""}`}>
-      {has && (wide && list.length <= 4 ? <MediaMosaic items={list} onBad={onBad} /> : <MediaCarousel items={list} onBad={onBad} pull={!wide} />)}
+      {has && (wide && list.length <= 4 ? <MediaMosaic items={list} onBad={onBad} /> : <MediaCarousel items={list} onBad={onBad} pull={!wide} open={open} onOpen={setOpen} />)}
       <div className="ff-pcol">
+        {has && !wide && <button type="button" className="ff-ph-grip" aria-label={open ? "Cover the photos" : "Show the photos"} aria-expanded={open} onClick={() => setOpen(!open)}><span aria-hidden="true" /></button>}
         <div className="ff-ph-card">{card}</div>
         <div className={"ff-prest" + (narrow ? " narrow" : "")}>{below}</div>
       </div>

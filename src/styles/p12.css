@@ -828,3 +828,21 @@
   /* the violet beams sit above the photo so they show where the picture ends */
   .ff section#ff-hero.ff-hero18::after { z-index:1; mix-blend-mode:screen; }
 }
+/* Media (photo area) fix: whole photos, one sideways scroller, tap/grip to reveal, auto scroll. css18.css is not loaded on profile or company pages, so this block lives with the photo rules it extends. */
+.ff .ff-pm-track { overflow-y:hidden; touch-action:pan-x pan-y; overscroll-behavior-x:contain; overscroll-behavior-y:auto; }
+.ff .ff-pm-slide { position:relative; overflow:hidden; scroll-snap-align:start; scroll-snap-stop:always; background:#14110A; }
+.ff .ff-pm-slide img, .ff .ff-pmos-t img { touch-action:pan-x pan-y; pointer-events:none; }
+.ff .ff-pm-slide .ff-pm-fill, .ff .ff-pmos-t .ff-pm-fill { position:absolute; inset:-24px; width:calc(100% + 48px); height:calc(100% + 48px); object-fit:cover; filter:blur(22px) brightness(.5) saturate(1.1); transform:translateZ(0); }
+.ff .ff-pm-slide .ff-pm-img, .ff .ff-pmos-t .ff-pm-img { position:relative; width:100%; height:100%; object-fit:contain; object-position:50% 50%; }
+.ff .ff-pmos-t .ff-pm-img { position:absolute; inset:0; }
+.ff .ff-pmos-t:hover .ff-pm-img, .ff .ff-pmos-t:hover .ff-pm-fill { transform:none; }
+.ff .ff-phero:not(.wide) .ff-pm:not(.open):not(.flat) .ff-pm-img { object-position:50% 0; }
+.ff .ff-phero:not(.wide) .ff-pm:not(.flat) .ff-pm-track { cursor:pointer; }
+.ff .ff-pm-dots { padding:0 12px; }
+.ff .ff-pm-dots button { flex:0 1 22px; min-width:10px; }
+.ff .ff-phero.has-media:not(.wide) .ff-pm:not(.open):not(.flat) .ff-pm-dots { bottom:152px; }
+.ff .ff-ph-grip { position:absolute; z-index:3; top:-26px; left:50%; transform:translateX(-50%); width:64px; height:34px; padding:0; border:0; background:none; display:grid; place-items:center; cursor:pointer; -webkit-tap-highlight-color:transparent; touch-action:none; }
+.ff .ff-ph-grip span { width:44px; height:5px; border-radius:3px; corner-shape:squircle; background:rgba(244,239,228,.92); box-shadow:0 1px 4px rgba(0,0,0,.45); transition:width .2s ease; }
+.ff .ff-ph-grip:hover span, .ff .ff-ph-grip[aria-expanded="true"] span { width:56px; }
+.ff .ff-ph-grip:focus-visible { outline:2px solid var(--gold); outline-offset:-4px; border-radius:10px; }
+@media (prefers-reduced-motion: reduce) { .ff .ff-ph-grip span { transition:none; } }
