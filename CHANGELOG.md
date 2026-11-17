@@ -1,5 +1,16 @@
 # FireFlair prototype — changelog
 
+## v17.29
+
+Artifact version 1794946184-36d1.
+
+Explore our network map: London areas, the FF pin, venues off the map.
+
+- Venues are no longer drawn on this map or listed in its legend (`MAP_LAYERS19` is Companies, Professionals, FF Directory). Venues come from Google's business search, and Google's terms allow that data on a Google map only; a separate Google map for venues may follow. Venue cards and the Venues section of the page are unchanged.
+- The legend's "Directory" now reads "FF Directory".
+- London area names (`MAP_LONDON27`, 40 areas including Shoreditch, Soho and Camden) appear from the London view inwards. A name that would touch another sits to the left of its dot instead of the right; if it still touches, it waits for the next zoom in.
+- The FF pin (`MAP_FF_HOME27`, the gold FF coin) marks FireFlair in Shoreditch, above the other pins.
+
 ## v17.28
 
 Artifact version 1794945683-592c.

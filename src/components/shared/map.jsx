@@ -57,8 +57,19 @@ const MAP_TOWNS27 = [
   ["Bangor", 54.661, -5.668, 3], ["Aberystwyth", 52.416, -4.083, 3], ["Wrexham", 53.0, -3.0, 3], ["Lisburn", 54.523, -6.035, 3], ["Newry", 54.178, -6.337, 3],
   ["Ayr", 55.463, -4.634, 3], ["Dumfries", 55.07, -3.611, 3], ["Falkirk", 56.0, -3.75, 3], ["Paisley", 55.832, -4.433, 3]
 ];
+/* v17.29: London area names, drawn from the London view inwards (rank 4). */
+const MAP_LONDON27 = [["Shoreditch", 51.5265, -0.0780], ["Soho", 51.5137, -0.1337], ["Camden", 51.5390, -0.1426], ["The City", 51.5155, -0.0922], ["Mayfair", 51.5099, -0.1478],
+  ["Covent Garden", 51.5117, -0.1240], ["Kensington", 51.4990, -0.1938], ["Chelsea", 51.4875, -0.1687], ["Notting Hill", 51.5090, -0.1960], ["Canary Wharf", 51.5054, -0.0235],
+  ["Brixton", 51.4613, -0.1156], ["Clapham", 51.4620, -0.1380], ["Hackney", 51.5450, -0.0553], ["Islington", 51.5380, -0.1030], ["Greenwich", 51.4826, -0.0077],
+  ["Stratford", 51.5416, -0.0033], ["King's Cross", 51.5308, -0.1238], ["Southwark", 51.5035, -0.0900], ["Battersea", 51.4700, -0.1670], ["Hammersmith", 51.4927, -0.2229],
+  ["Fulham", 51.4740, -0.2010], ["Peckham", 51.4740, -0.0690], ["Wimbledon", 51.4214, -0.2064], ["Richmond", 51.4613, -0.3037], ["Croydon", 51.3762, -0.0982],
+  ["Wembley", 51.5520, -0.2960], ["Ealing", 51.5130, -0.3040], ["Tottenham", 51.5975, -0.0680], ["Bromley", 51.4060, 0.0140], ["Kingston", 51.4120, -0.3000],
+  ["Walthamstow", 51.5830, -0.0200], ["Hampstead", 51.5560, -0.1780], ["Barnet", 51.6500, -0.2000], ["Enfield", 51.6520, -0.0810], ["Romford", 51.5770, 0.1830],
+  ["Bexleyheath", 51.4580, 0.1400], ["Uxbridge", 51.5460, -0.4790], ["Harrow", 51.5800, -0.3340], ["Sutton", 51.3610, -0.1930], ["Ilford", 51.5590, 0.0740]].map((r) => [...r, 4]);
+/* The FF pin: FireFlair, Shoreditch. */
+const MAP_FF_HOME27 = [51.5265, -0.0780];
 /* Smallest zoom at which each rank is drawn. */
-const MAP_TOWN_Z27 = { 1: 0, 2: 6.25, 3: 7.5 };
+const MAP_TOWN_Z27 = { 1: 0, 2: 6.25, 3: 7.5, 4: 9 };
 /* The drawn map is the map: land green, sea blue. Set MAP_TILES27 to true to lay map-server tiles (TILE_URL21) over it. */
 const MAP_TILES27 = false;
 
@@ -157,7 +168,8 @@ const COMPANY_PINS11 = (() => {
 
 
 
-const MAP_LAYERS19 = [["partners", "Companies"], ["pros", "Professionals"], ["dir", "Directory"], ["venues", "Venues"]];
+/* v17.29: venues are not on this map (a separate Google map for venues may follow); the Directory layer reads "FF Directory". */
+const MAP_LAYERS19 = [["partners", "Companies"], ["pros", "Professionals"], ["dir", "FF Directory"]];
 
 
 function MapVenue20({ size = 22, on }) {
@@ -195,7 +207,7 @@ function FFMap({ mode = "home" }) {
   const { state, dispatch } = useStore();
   const directory = useDirectory();
   const [sel, setSel] = useState(null);
-  const [show, setShow] = useState({ partners: true, pros: true, dir: true, venues: true });
+  const [show, setShow] = useState({ partners: true, pros: true, dir: true });
   const [hideCat, setHideCat] = useState({});
   const home = mode === "home";
 
@@ -236,7 +248,7 @@ function FFMap({ mode = "home" }) {
       const n = (seen[p.area] = (seen[p.area] || 0) + 1) - 1;
       const ring = RING[n % RING.length];
       return { ...p, x: Math.max(4, Math.min(96, bx + ring[0])), y: Math.max(5, Math.min(95, by + ring[1])) };
-    }), ...cos, ...partnerPins, ...minePin, ...venuePins];
+    }), ...cos, ...partnerPins, ...minePin];
   }, [home, mode, directory.length, state.company, state.profile.base17, state.profile.live, state.profile.records && state.profile.records.venues]);
   const netQ = useContext(NetQ17), searching = mode === "network" && !!String(netQ || "").trim();
   const netPillar = mode === "network" && !searching ? (state.netPillar17 || "") : "";
@@ -305,6 +317,10 @@ function FFMap({ mode = "home" }) {
       });
       setHosts(h);
 
+      /* The FF pin in Shoreditch (above every other pin). */
+      L.marker(MAP_FF_HOME27, { interactive: false, keyboard: false, zIndexOffset: 1500,
+        icon: L.divIcon({ className: "ff-lffpin27", html: `<span><img alt="" src="${(window.FF_IMG || {}).coin_gold || ""}"></span>`, iconSize: [0, 0] }) }).addTo(map);
+
       /* Place names: highest rank first; a name is skipped when its box would touch one already on the map. */
       const names = L.layerGroup().addTo(map);
       const drawNames = () => {
@@ -312,14 +328,16 @@ function FFMap({ mode = "home" }) {
         const z = map.getZoom();
         if (z < WORLD_Z11) return;
         const b = map.getBounds().pad(0.05), placed = [];
-        MAP_TOWNS27.forEach(([nm, la, lo, rank]) => {
-          if (z < MAP_TOWN_Z27[rank] || !b.contains([la, lo])) return;
+        [...(z >= MAP_TOWN_Z27[4] ? MAP_LONDON27 : []), ...MAP_TOWNS27].forEach(([nm, la, lo, rank]) => {
+          if (z < MAP_TOWN_Z27[rank] || !b.contains([la, lo]) || (nm === "London" && z >= MAP_TOWN_Z27[4])) return;
           const pt = map.latLngToContainerPoint([la, lo]);
-          const w = nm.length * 7.2 + 14, box = [pt.x - 6, pt.y - 10, pt.x + w, pt.y + 10];
-          if (placed.some(q => box[0] < q[2] && box[2] > q[0] && box[1] < q[3] && box[3] > q[1])) return;
+          const w = nm.length * 7.2 + 14, hit = (bx) => placed.some(q => bx[0] < q[2] && bx[2] > q[0] && bx[1] < q[3] && bx[3] > q[1]);
+          /* the name sits to the right of its dot; if that would touch another name it sits to the left instead */
+          let box = [pt.x - 6, pt.y - 10, pt.x + w, pt.y + 10], left = false;
+          if (hit(box)) { box = [pt.x - w, pt.y - 10, pt.x + 6, pt.y + 10]; left = true; if (hit(box)) return; }
           placed.push(box);
           L.marker([la, lo], { interactive: false, keyboard: false, zIndexOffset: 2000,
-            icon: L.divIcon({ className: "ff-lcity ff-ltown27 r" + rank, html: `<i></i><span>${nm}</span>`, iconSize: [0, 0] }) }).addTo(names);
+            icon: L.divIcon({ className: "ff-lcity ff-ltown27 r" + rank + (left ? " l" : ""), html: `<i></i><span>${nm}</span>`, iconSize: [0, 0] }) }).addTo(names);
         });
       };
 
