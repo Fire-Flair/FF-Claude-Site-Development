@@ -718,3 +718,22 @@
 .ff .ff-chat .acts button { min-height:34px; padding:6px 12px; border-radius:999px; font-size:12.5px; font-weight:700; color:#2A1E04; background:#F6E8BC; border:1px solid rgba(126,97,29,.5); cursor:pointer; }
 .ff .ff-chat .acts button:hover { background:#F1DC97; }
 
+
+
+/* ======================= v17.24 — hero easel ======================= */
+/* The stage covers the hero photo exactly (same box as object-fit:cover, centred), so the four corner points in
+   HERO_EASEL24 (hero-easel.jsx) land on the photo's display board at every size. */
+.ff .ff-easel24 { position:absolute; left:50%; top:50%; width:100%; aspect-ratio:1800 / 850; transform:translate(-50%,-50%); pointer-events:none; overflow:visible; }
+@media (min-width:900px) { .ff .ff-hero18 .ff-easel24 { width:max(100cqw, 211.7647cqh); } }
+.ff .ff-easel24-card { position:absolute; left:0; top:0; width:372px; transform-origin:0 0; will-change:transform; backface-visibility:hidden; border-radius:4.4cqw; corner-shape:squircle; container-type:inline-size;
+  box-shadow:0 0 0 1px rgba(0,0,0,.6), 0 0 22px 6px rgba(255,196,110,.16); }
+.ff .ff-easel24-card > .ff-deck, .ff .ff-easel24-card > :first-child { max-width:none !important; width:100% !important; margin:0 !important; }
+/* room light on the card: the card sits in a dim violet room under one warm lamp. "shade" takes it down to the room's level
+   and darkens the foot; "key" is the lamp's pool on its upper half. */
+.ff .ff-easel24-shade, .ff .ff-easel24-key { position:absolute; inset:0; border-radius:inherit; corner-shape:squircle; pointer-events:none; }
+.ff .ff-easel24-shade { mix-blend-mode:multiply; background:linear-gradient(180deg, rgba(34,14,40,0) 52%, rgba(34,14,40,.30) 100%), radial-gradient(95% 72% at 46% 30%, #FFF0D2 0%, #F2D6AC 46%, #C9AE94 100%); }
+.ff .ff-easel24-key { mix-blend-mode:screen; background:radial-gradient(70% 50% at 46% 26%, rgba(255,206,122,.20) 0%, rgba(255,196,110,.08) 50%, rgba(255,190,110,0) 78%); }
+.ff .ff-easel24-card:not(.refl) { filter:blur(.45px) saturate(.94); }
+/* the card's mirror image in the bar top: only its foot, dim and soft */
+.ff .ff-easel24-card.refl { box-shadow:none; opacity:.24; filter:blur(5px) saturate(.8) brightness(.8);
+  -webkit-mask-image:linear-gradient(to top, #000 0%, rgba(0,0,0,.55) 12%, rgba(0,0,0,0) 30%); mask-image:linear-gradient(to top, #000 0%, rgba(0,0,0,.55) 12%, rgba(0,0,0,0) 30%); }

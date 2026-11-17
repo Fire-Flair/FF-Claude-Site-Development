@@ -1,5 +1,17 @@
 # FireFlair prototype — changelog
 
+## v17.24
+
+Artifact version 1794944686-9549.
+
+Home hero on FF Team, FF Staff, FF Party (and FF VIP): a real member's Profile Card stands on the easel in the photo, a different member on every page load, and the photo is relit.
+
+- New component `HeroEasel24` (src/components/shared/hero-easel.jsx), placed in each hero between the photo and the fade. It draws the live `PlayerCard` (format "full") onto the photo's display board with a CSS `matrix3d` worked out from four corner points (`HERO_EASEL24`, fractions of the hero image). A second, mirrored copy (`HERO_EASEL24_REFL`) is the card's faint reflection in the bar top. Nothing is baked into the image, so any member, any card theme and any future card design fit with no new artwork.
+- One member is chosen at random per page load from the directory (`state.directory`). Live site: choose one published FF Team profile at random per page load.
+- The stage `.ff-easel24` covers the photo exactly as `object-fit: cover` does (centred, 1800:850), so the card stays on the board at every size. Styles are at the end of src/styles/p12.css: `.ff-easel24-shade` (multiply) and `.ff-easel24-key` (screen) light the card to match the room.
+- Hero photo (`hero`, `hero_sm` in src/shell/ff-img.json): same photo (library rb04), cropped a little higher, the printed menu painted off the board, its reflection removed from the bar, and relit: violet room light, one warm lamp on the easel and drinks. The steps and the corner measurements are in scripts/hero-easel/. If the photo is ever replaced, the corner points must be measured again.
+- `pc17Fit` (profile-card-parts.jsx) now measures with the easel's transform switched off for that instant, so entries are dropped correctly on a card drawn in perspective. No change anywhere else.
+
 ## v17.23
 
 Artifact version 1794943438-15dd.

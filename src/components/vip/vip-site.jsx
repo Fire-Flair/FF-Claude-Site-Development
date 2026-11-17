@@ -295,6 +295,7 @@ function VipHero21() {
     <section className="ff-hero18 ff-hero11 vip" aria-labelledby="ff-v21-h" id="ff-hero">
       <div className="ff-hero18-img">
         {IM.hero ? <img decoding="async" className="ff-hero18-photo" src={IM.hero} srcSet={IM.hero_sm ? `${IM.hero_sm} 900w, ${IM.hero} 1800w` : undefined} sizes="(min-width:900px) 760px, 100vw" alt="" decoding="async" /> : null}
+        {IM.hero ? <HeroEasel24 /> : null}
         <div className="ff-hero18-fade" aria-hidden="true" />
       </div>
       <div className="ff-hero18-in">

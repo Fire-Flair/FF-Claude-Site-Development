@@ -38,6 +38,7 @@
   "adapters/speech-adapter.js",
   "utils/speech-and-media.js",
   "components/team/profile-card-parts.jsx",
+  "components/shared/hero-easel.jsx",
   "components/team/questions.jsx",
   "components/team/qa17.jsx",
   "components/shared/card-share17.jsx",
