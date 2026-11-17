@@ -44,14 +44,11 @@ function heroEaselMatrix24(w, h, q) {
   return `matrix3d(${m[0]},${m[3]},0,${m[6]},${m[1]},${m[4]},0,${m[7]},0,0,1,0,${m[2]},${m[5]},0,1)`;
 }
 
-/* v17.36: how many dots show under the easel at once (a window that follows the current member). */
-const HERO_EASEL_DOTS = 7;
-
 function HeroEasel24() {
   const { state, dispatch } = useStore();
-  /* v17.36: every member with a card can be swiped through; the first one is random per page load. */
+  /* one member with a card, picked at random per page load (no swiping: a new card on refresh). */
   const list = React.useMemo(() => (state.directory || []).filter((p) => p && p.name && p.tag), [state.directory]);
-  const [curId, setCurId] = React.useState(() => (list.length ? list[Math.floor(Math.random() * list.length)].id : null));
+  const [curId] = React.useState(() => (list.length ? list[Math.floor(Math.random() * list.length)].id : null));
   const at = Math.max(0, list.findIndex((p) => p.id === curId));
   const person = list.length ? list[at] : null;
   const stage = React.useRef(null), card = React.useRef(null);
@@ -74,22 +71,6 @@ function HeroEasel24() {
     }, 400);
     return () => clearTimeout(t);
   }, [shine]);
-  /* swipe: dx = drag offset (card px), slide = the short change-over animation */
-  const [dx, setDx] = React.useState(0);
-  const [slide, setSlide] = React.useState({ x: 0, o: 1, t: 0 });
-  const drag = React.useRef(null), moved = React.useRef(false), busy = React.useRef(false);
-  const go = (step) => {
-    if (!list.length || list.length < 2 || busy.current) return;
-    const next = list[(at + step + list.length) % list.length].id;
-    if (!shine) { setDx(0); setCurId(next); return; }
-    busy.current = true;
-    setSlide({ x: step > 0 ? -70 : 70, o: 0, t: 130 });
-    setTimeout(() => {
-      setDx(0); setCurId(next);
-      setSlide({ x: step > 0 ? 45 : -45, o: 0, t: 0 });
-      requestAnimationFrame(() => requestAnimationFrame(() => { setSlide({ x: 0, o: 1, t: 190 }); busy.current = false; }));
-    }, 130);
-  };
   React.useLayoutEffect(() => {
     const st = stage.current, c = card.current;
     if (!st || !c) return undefined;
@@ -109,60 +90,22 @@ function HeroEasel24() {
   const face = <PlayerCard person={person} format="full" nameAs="div" themeKey={person.theme || "ivory"} />;
   /* v17.30: the card on the easel opens that member's profile (a tap, not a swipe). */
   const open = () => dispatch({ type: "VIEW", id: person.id });
-  const down = (e) => {
-    if (e.button > 0) return;
-    moved.current = false;
-    const c = card.current, r = c ? c.getBoundingClientRect() : null;
-    drag.current = { x: e.clientX, y: e.clientY, k: r && r.width ? c.offsetWidth / r.width : 1, w: r ? r.width : 100, on: false };
-  };
-  const move = (e) => {
-    const d = drag.current;
-    if (!d) return;
-    const ddx = e.clientX - d.x, ddy = e.clientY - d.y;
-    if (!d.on) {
-      if (Math.abs(ddx) > 8 && Math.abs(ddx) > Math.abs(ddy)) {
-        d.on = true; moved.current = true;
-        try { e.currentTarget.setPointerCapture(e.pointerId); } catch (err) { /* capture is optional */ }
-      } else { if (Math.abs(ddy) > 10) drag.current = null; return; }
-    }
-    d.dx = ddx;
-    setDx(ddx * d.k);
-  };
-  const up = () => {
-    const d = drag.current;
-    drag.current = null;
-    if (!d || !d.on) return;
-    if (Math.abs(d.dx || 0) > Math.max(24, d.w * 0.18)) go(d.dx < 0 ? 1 : -1); else setDx(0);
-  };
-  const cancel = () => { drag.current = null; setDx(0); };
-  const dragging = !!(drag.current && drag.current.on);
-  const faceStyle = {
-    transform: `translateX(calc(${slide.x}% + ${dx}px))`, opacity: slide.o,
-    transition: dragging ? "none" : `transform ${slide.t || 180}ms cubic-bezier(.2,.8,.2,1), opacity ${slide.t || 180}ms ease`,
-  };
-  const n = list.length, win = Math.min(n, HERO_EASEL_DOTS);
-  const first = Math.min(Math.max(0, at - Math.floor(win / 2)), n - win);
-  const dots = Array.from({ length: win }, (_, i) => first + i);
   return (
     <div className="ff-easel24" ref={stage}>
       <div className="ff-easel24-card refl" aria-hidden="true" style={{ transform: mr || undefined, visibility: mr ? "visible" : "hidden" }}>
-        <span className="ff-easel24-clip"><span className="ff-easel24-slide" style={faceStyle}>{face}</span></span>
+        <span className="ff-easel24-clip"><span className="ff-easel24-slide">{face}</span></span>
       </div>
       <div className="ff-easel24-card" ref={card} role="link" tabIndex={0} aria-label={`${person.name}: open profile`}
-        onClick={() => { if (moved.current) { moved.current = false; return; } open(); }}
+        onClick={open}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
-          else if (e.key === "ArrowRight") { e.preventDefault(); go(1); }
-          else if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
         }}
-        onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={cancel}
         onDragStart={(e) => e.preventDefault()}
         style={{ transform: m || undefined, visibility: m ? "visible" : "hidden" }}>
-        <span className="ff-easel24-clip"><span className="ff-easel24-face ff-easel24-slide" aria-hidden="true" style={faceStyle}>{face}</span></span>
+        <span className="ff-easel24-clip"><span className="ff-easel24-face ff-easel24-slide" aria-hidden="true">{face}</span></span>
         <span className="ff-easel24-shade" />
         <span className="ff-easel24-key" />
         {shine ? <span className="ff-easel24-sheen" /> : null}
-        {n > 1 ? <span className="ff-easel24-dots" aria-hidden="true">{dots.map((i) => <i key={list[i].id} className={i === at ? "on" : undefined} />)}</span> : null}
       </div>
     </div>
   );
