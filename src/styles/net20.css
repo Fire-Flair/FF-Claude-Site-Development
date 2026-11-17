@@ -22,3 +22,20 @@
 .ff .ff-vt20 .by { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 0 2px; }
 .ff .ff-vt20 .by button { display: grid; place-items: center; width: 44px; height: 44px; margin: -6px; padding: 0; border: 0; background: none; cursor: pointer; border-radius: 50%; line-height: 0; }
 .ff .ff-vt20 .by button:focus-visible { outline: 2px solid var(--gold); outline-offset: 0; }
+
+/* Coin: the FF coin shows the notification count. With one or more waiting, a black face with the number in gold
+   covers the FF letters (gold rim and burgundy line stay); with none, the coin shows FF. Short fade, none under reduced motion. */
+.ff .ff-coinwrap20 { position: relative; display: block; line-height: 0; flex: none; }
+.ff .ff-coinwrap20.mob { --cs: 56px; --cf: .885; --n1: .56; --n2: .44; }
+.ff .ff-coinwrap20.desk { --cs: 30px; --cf: .8; --n1: .5; --n2: .39; }
+.ff .ff-coinnum20 {
+  position: absolute; left: 50%; top: 50%; width: calc(var(--cs) * var(--cf)); height: calc(var(--cs) * var(--cf));
+  transform: translate(-50%, -50%); border-radius: 50%; background: var(--color-ink);
+  display: grid; place-items: center; line-height: 1; white-space: nowrap;
+  font-family: var(--font-display); font-weight: 700; font-size: calc(var(--cs) * var(--n1)); letter-spacing: 0;
+  font-variant-numeric: lining-nums; color: var(--color-gold-lt);
+  opacity: 0; transition: opacity .25s ease; pointer-events: none;
+}
+.ff .ff-coinnum20.d2 { font-size: calc(var(--cs) * var(--n2)); letter-spacing: -.02em; }
+.ff .ff-coinnum20.on { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .ff .ff-coinnum20 { transition: none; } }
