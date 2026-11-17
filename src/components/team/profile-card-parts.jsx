@@ -160,11 +160,11 @@ function PlayerFace17({ person, large, themeKey, tier, onClick, selected, nameAs
     const late = [setTimeout(fit, 350), setTimeout(fit, 1500)];
     return () => { if (ro) ro.disconnect(); if (document.fonts && document.fonts.removeEventListener) document.fonts.removeEventListener("loadingdone", fit); late.forEach(clearTimeout); };
   }, [sig]);
+  const ink = t.ink;
   const flags = () => langs.map((l) => <span key={l} className="pc17-flag"><LangFlag lang={l} /></span>);
   const entries = (items) => large
-    ? <span className="pc17-fit wr">{items.map((v, i) => <React.Fragment key={v + i}><span className="en">{v}<b className="bl" style={{ color: acc }}>•</b></span>{" "}</React.Fragment>)}</span>
+    ? <span className="pc17-fit wr">{items.map((v, i) => <React.Fragment key={v + i}><span className="en">{v}<b className="bl" style={{ color: ink }}>,</b></span>{" "}</React.Fragment>)}</span>
     : <span className="pc17-fit">{items.map((v, i) => <span className="en" key={v + i}>{i > 0 && <b className="bu" style={{ color: acc }}>•</b>}{v}</span>)}</span>;
-  const ink = t.ink;
   return (
     <CardFrame premium fixed tier={tier} theme={t} ratio="5 / 7" className={"pc17 " + (large ? "lg" : "sm")} onClick={onClick} selected={selected}
       style={{ width: "100%", padding: 0, "--pc17-hair": m.hair }}>
