@@ -119,7 +119,7 @@ function MyShareBtn17({ person, onTap }) {
   const join = !!tag && profileBasics17(state);
   return (
     <>
-      <button type="button" className="ff-csm-btn wide" onClick={() => onTap ? onTap() : setOpen(true)} aria-label={join ? "Share Join my team on FireFlair:" : "Share My FireFlair card"}><WhatsAppIcon size={18} /> Share</button>
+      <button type="button" className="ff-csm-btn wide" onClick={() => onTap ? onTap() : setOpen(true)} aria-label="Share my card"><WhatsAppIcon size={18} aria-hidden="true" /> Share</button>
       {open ? (
         <CardShareSheet17 open onClose={() => setOpen(false)} title={join ? "Join my team on FireFlair:" : "My FireFlair card"} url={join ? inv17Link(tag) : `https://${CARD_DOMAIN}/${tag}`} noRef={join}
           fileName={(join ? "fireflair-join-" : "fireflair-") + cx17Slug(tag)}>
