@@ -286,3 +286,7 @@
 @media (prefers-reduced-motion: reduce) { .ff .ff-ptabs-wrap > .ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) button { transition: none; } }
 /* 5. Company page on a phone or tablet: room under the action panel so its shadow no longer falls on the tab headings. */
 .ff .ff-copub .ff-phero.has-media:not(.wide) { margin-bottom: 36px; }
+/* fixes (7): below the card's overlap with the photo, the column is cream, so no sliver of the sticky photo shows in the gap
+   or at the rounded corners of the card and the action panel. 128px = the overlap set in p12.css. */
+.ff .ff-copub .ff-phero.has-media:not(.wide) .ff-pcol { background: linear-gradient(transparent 0 128px, var(--cream) 128px); padding-bottom: 34px; margin-bottom: -34px; }
+.ff .ff-copub .ff-phero.has-media:not(.wide) .ff-pm.open ~ .ff-pcol { background: var(--cream); }
