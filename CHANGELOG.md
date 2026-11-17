@@ -1,5 +1,10 @@
 # FireFlair prototype — changelog
 
+## v17.33
+
+- Hero, wide view (900px and up): the whole photo is shown, never cropped; the words sit over its left; the card stays on the easel; the violet beams rise from the photo's bottom-left and bottom-right corners (`.ff section#ff-hero` rules at the end of `p12.css`).
+- Hero search bar is smaller on wide screens (just wider than the Create Your Profile card); placeholder shortened to "Search FireFlair…". Phones are unchanged (photo still cropped at the sides).
+
 ## v17.32
 
 Artifact version 1794947135-8ae7.

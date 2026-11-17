@@ -1639,7 +1639,7 @@
       type: "search",
       className: "ff-input ff-ai-in min-w-0 flex-1",
       "aria-label": "Search FireFlair",
-      placeholder: "Search people, skills, locations…",
+      placeholder: "Search FireFlair…",
       value: val,
       onChange: (e) => setVal(e.target.value)
     }), React.createElement("button", {

@@ -792,3 +792,17 @@
   animation:ff-easel-sheen32 6s cubic-bezier(.4,0,.2,1) 1.2s infinite; }
 @keyframes ff-easel-sheen32 { 0% { left:-70%; } 22%, 100% { left:150%; } }
 @media (prefers-reduced-motion: reduce) { .ff .ff-easel24-sheen::before { animation:none; left:40%; opacity:.55; } }
+
+/* ======================= v17.33 — hero, wide view: the whole photo is shown (never cropped); the words sit over its left; violet beams rise from the photo's bottom corners; smaller search bar ======================= */
+@media (min-width:900px) {
+  .ff section#ff-hero.ff-hero18 { grid-template-columns:minmax(0,1fr) !important; align-items:center !important; }
+  .ff section#ff-hero.ff-hero18 .ff-hero18-img { grid-area:1 / 1 !important; aspect-ratio:1800 / 850 !important; height:auto !important; width:100% !important; order:0;
+    -webkit-mask-image:linear-gradient(90deg, transparent 0, rgba(0,0,0,.45) 16%, #000 34%) !important; mask-image:linear-gradient(90deg, transparent 0, rgba(0,0,0,.45) 16%, #000 34%) !important; }
+  .ff section#ff-hero.ff-hero18 .ff-hero18-photo { object-fit:fill !important; }
+  .ff section#ff-hero.ff-hero18 .ff-easel24 { width:100% !important; }
+  .ff section#ff-hero.ff-hero18 .ff-hero18-in { grid-area:1 / 1 !important; align-self:center; justify-self:start; width:39%; min-width:0; margin:0 !important; padding:20px 0 20px clamp(24px,3.4vw,44px); }
+  .ff section#ff-hero.ff-hero18 .ff-hero17-ai { width:316px !important; max-width:100% !important; }
+  .ff section#ff-hero.ff-hero18 .ff-hero-search { padding:6px !important; }
+  /* the violet beams sit above the photo so they show where the picture ends */
+  .ff section#ff-hero.ff-hero18::after { z-index:1; mix-blend-mode:screen; }
+}
