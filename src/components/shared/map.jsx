@@ -66,8 +66,6 @@ const MAP_LONDON27 = [["Shoreditch", 51.5265, -0.0780], ["Soho", 51.5137, -0.133
   ["Wembley", 51.5520, -0.2960], ["Ealing", 51.5130, -0.3040], ["Tottenham", 51.5975, -0.0680], ["Bromley", 51.4060, 0.0140], ["Kingston", 51.4120, -0.3000],
   ["Walthamstow", 51.5830, -0.0200], ["Hampstead", 51.5560, -0.1780], ["Barnet", 51.6500, -0.2000], ["Enfield", 51.6520, -0.0810], ["Romford", 51.5770, 0.1830],
   ["Bexleyheath", 51.4580, 0.1400], ["Uxbridge", 51.5460, -0.4790], ["Harrow", 51.5800, -0.3340], ["Sutton", 51.3610, -0.1930], ["Ilford", 51.5590, 0.0740]].map((r) => [...r, 4]);
-/* The FF pin: FireFlair, Shoreditch. */
-const MAP_FF_HOME27 = [51.5265, -0.0780];
 /* Smallest zoom at which each rank is drawn. */
 const MAP_TOWN_Z27 = { 1: 0, 2: 6.25, 3: 7.5, 4: 9 };
 /* The drawn map is the map: land green, sea blue. Set MAP_TILES27 to true to lay map-server tiles (TILE_URL21) over it. */
@@ -317,10 +315,6 @@ function FFMap({ mode = "home" }) {
         h[p.kind + p.id] = m.getElement().firstChild;
       });
       setHosts(h);
-
-      /* The FF pin in Shoreditch (above every other pin). */
-      L.marker(MAP_FF_HOME27, { interactive: false, keyboard: false, zIndexOffset: 1500,
-        icon: L.divIcon({ className: "ff-lffpin27", html: `<span><img alt="" src="${(window.FF_IMG || {}).coin_gold || ""}"></span>`, iconSize: [0, 0] }) }).addTo(map);
 
       /* Place names: highest rank first; a name is skipped when its box would touch one already on the map. */
       const names = L.layerGroup().addTo(map);

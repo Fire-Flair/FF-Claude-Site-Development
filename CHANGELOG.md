@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v17.31
+
+Artifact version 1794946952-7d15.
+
+- Map: the FF pin over Shoreditch is removed (`MAP_FF_HOME27` and `.ff-lffpin27` are gone). The Shoreditch name stays.
+
 ## v17.30
 
 Artifact version 1794946920-0308.
