@@ -262,3 +262,14 @@
 /* ======================= v17.35 — Profile A1: Need help? Book a meeting, at the bottom of the profile page ======================= */
 .ff .ff-help34 { margin: 28px 0 8px; }
 .ff .ff-help34 .ff-way17-line { order: -1; font-weight: 700; color: #2A2620; }
+
+/* ======================= Profile view (Gimli): signed-out buttons, About me order, boxed tab headings, company panel shadow ======================= */
+/* 1. Join someone's team: a muted, flat gold at the same height as the other profile buttons (no shine). */
+.ff .ff-btn.ff-join-mut { min-height: 48px; background: color-mix(in srgb, var(--color-gold) 55%, var(--color-cream)); border: 1px solid var(--color-gold-mid); color: var(--color-on-action); box-shadow: none; text-shadow: none; border-radius: 14px; corner-shape: squircle; }
+.ff .ff-btn.ff-join-mut:hover { background: color-mix(in srgb, var(--color-gold) 65%, var(--color-cream)); }
+/* Share: below the other buttons, centred, half the row wide, normal height. */
+.ff .ff-share-half { width: calc(50% - 4px); justify-self: center; }
+.ff .ff-share-half > .ff-csm-btn { width: 100%; min-height: 48px; justify-content: center; border-radius: 14px; corner-shape: squircle; }
+/* 2. Someone else's profile: About Me directly above Professions. */
+.ff .ff-pp-other .ff-tabpanel:has(> .ff-about) { display: flex; flex-direction: column; }
+.ff .ff-pp-other .ff-tabpanel:has(> .ff-about) > .ff-about { order: -1; }
