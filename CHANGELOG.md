@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v17.38
+
+Photo area on profile and company pages. Branch merged: `p2-media`.
+
+- `public-profile.jsx`, `p12.css`: the card's pull-down listens only to touches that start on the card, so swipes on photos are left to the browser; the photo scroller moves sideways only, one photo per step; photos are never cropped (a blurred copy fills spare space); on phones tapping the photo or the grip on the card's top edge moves the card down and back; photos advance every 5 seconds and loop, pausing on touch, hover, focus, after a manual swipe and when off screen, and not at all with reduced motion; position dots shrink to fit.
+
 ## v17.37
 
 Artifact version 1794956507-bbaf.
