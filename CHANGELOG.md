@@ -1,5 +1,22 @@
 # FireFlair prototype — changelog
 
+## v17.21
+
+Artifact version 1794905340-a264.
+
+Design round built with the FireFlair design toolkit (repo .claude/skills): profile builder and complete profile page back to the v17.15 benchmark look, a calmer familiar Network map, and the Profile Card restored to its approved design.
+
+- Profile builder: "Your Profile Card" and "Your Profile Page" headings in the "Let's get started" style. Phone number and FF Tag are golden boxes with their descriptions ("Used to send you bookings via WhatsApp." / "Your personal web page, displaying all your profile information."), the entry box and Verify on one line (side by side on desktop and landscape; stacked on a portrait phone). Media is a golden box with a description and no drop-down.
+- Professions: the v17.15 "Pick your professions" box (search, category row that scrolls sideways, suggestion chips) and gold / silver / bronze tiles are back, in the builder and on the displayed page. Tiles reorder with the three-line handle. No "Add a profession" row.
+- Qualifications, Skills, Interests, Languages: a white type box with an ENTER key; pressing Enter adds the entry. No plus circles, "Add a…" rows or section drop-downs. Tapping an entry opens a compact editor (details, photos, hide, remove that asks once, one gold Done). No X buttons.
+- Packages tab renamed Bookings (builder and displayed profile); Work locations live in Bookings.
+- Venues editor polished in the approved Worked at | Favourites design.
+- Complete profile page: v17.15 visual weight — big profession tiles, About Me, Attributes cards (tap for full details and photos), Venues.
+- Network page: opens on "Explore Our Network" and the map. Standard Leaflet map on CARTO Voyager tiles (one constant, TILE_URL21, in shared/map.jsx), no M25 overlay, category dot colours kept, light custom clustering (small numbered squircles with a thin ring in the category colours; 44px tap area; tap to zoom). A drawn UK map shows if tiles can't load. Tile terms need checking for the live site.
+- Directory and venue tabs: one row of squircle buttons, fixed height, horizontal scroll only.
+- Company cards: no Featured badge; smaller FF logo on claimed cards; Crest layout removed (saved Crest cards fall back to Big logo).
+- Profile Card: large card restored to the approved layout (photo, name, headline and icon row were about 28px low; plate position); the card editor in the builder now matches the large card (dark plate with bust icon, headline style, footer).
+
 ## v17.20
 
 Artifact version 1794860910-0648.
