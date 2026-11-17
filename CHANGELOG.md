@@ -1,5 +1,17 @@
 # FireFlair prototype — changelog
 
+## v17.35
+
+Bookings page (Task 003), the new profile buttons and review form (network ladder part 2), Profile Card polish, Need help? Book a meeting. Branches merged: `p2-bookings` (first commit), `p2-net-ladder`, `p2-card`, `p2-profile`.
+
+- Bookings (`bookings.jsx`, `bkd.css`): the page title is "Bookings". The first section is "Your Bookings" with the WhatsApp icon and the line "Requests come to you on WhatsApp."; every invitation and confirmed card sits inside it (Invitations, Confirmed, History as before). Then "Packages", holding the two existing boxes, now titled "FFParty" and "FFStaff" (these two titles only; FF Party and FF Staff are unchanged everywhere else). Under Build your career, only one of Training, Dream jobs and FireFlair rewards can be open at a time. The FF Staff shifts cards and all Shift Cards are unchanged (that work is postponed).
+- Someone else's profile on FF Team (`network.jsx`, `profile-card-parts.jsx`, `net20.css`): a signed-out visitor sees three buttons: Join {First}'s team (large, gold), Review, Share. A signed-in member sees one relationship button that grows (Add to network, Invite to your team, Invitation sent, On your team) with a small menu for removing, then Ask and Availability, then Share. There is no Review button for signed-in members on FF Team; the review is offered straight after Add to network.
+- One review form everywhere (`profile-from-text.jsx`): "Have you worked with {First}?" Yes / No, five stars chosen by default (hidden on No), a type box, Post review. A signed-out review is kept and posted after sign-up. A new review waits until its subject accepts it; screens that list reviews now show accepted ones only.
+- Your own card's Share sends your join link (FFTeam.uk/join/<tag>) once your profile is complete; the separate Invite tiles are gone. The line "Ask someone you've worked with for a review" is replaced by the small Ask for a review tile.
+- Profile Card (`profile-card-parts.jsx`, `pc1716.css`): the rows share the spare height so the gap under the last row equals the gap above the first; the card address is in Cinzel and starts at the left edge of the rows box; the inner border line sits against the outer rim (large card, small tiles, builder card, exported image).
+- Profile builder (`profile-builder.jsx`): a "Need help?" box with Book a meeting at the bottom of the page, opening the same booking sheet as before. The FF Tag is still saved as typed; the availability check ignores capitals.
+- Still to come on these branches: the old chooser screen made unreachable and the bar packages tabs (Bookings, second commit); developer notes for the network ladder; an independent review of all of the above.
+
 ## v17.34
 
 Artifact version 1794952568-151a.
