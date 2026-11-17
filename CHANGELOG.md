@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.22
+
+Artifact version 1794941242-d066.
+
+Real photo for the home hero on FF Team, FF Staff and FF Party.
+
+- Hero image (`hero` 1800×850 and `hero_sm` 900×425 in src/shell/ff-img.json) is now a real event photo: Vooshka's bar tools, cocktail menu, old fashioneds and barrel on a curved bar (photo library rb04, IMG_8273). Cropped to the hero shape with the coin landing on clear bar in front of the drinks; colour warmed slightly toward the site's gold and burgundy. The coin is still drawn by the page, not part of the image.
+- The previous AI hero files are removed from src/assets/img.
+- Photo library: five new photos from the same event added (rb01–rb05, batch rb-wedding).
+
 ## v17.21
 
 Artifact version 1794905340-a264.
