@@ -390,7 +390,7 @@ function AccountSettings({ boxes = false, only } = {}) {
         <button type="button" className="ff-linkbtn" onClick={() => { setNext(tag); setErr(null); setEditing(true); }}>Change Tag</button>
         <button type="button" className="ff-linkbtn" onClick={() => setPwOpen(true)}>{hasPw ? "Change password" : "Add a password"}</button>
       </span>}>
-      <span className="ff-gb21-val">{CARD_DOMAIN}/{tag}</span>
+      <span className="ff-gb21-val">{CARD_DOMAIN}/{String(tag || "").toLowerCase()}</span>
       <PasswordSheet open={pwOpen} change={hasPw} onClose={() => setPwOpen(false)} />
     </GoldBox21>}
   </>);
@@ -730,6 +730,8 @@ function SaveShareCard({ onSaved }) {
   const signedIn = state.auth.status === "signedIn";
   const { share, busy, tag } = useShareCard();
   const cardReady = recsOf(p, "professions").some(r => !r.proposed);
+  /* v17.40: an existing member edits on this same page; Save takes them back to their finished profile, as the bar's Save does. */
+  const leaveLive = () => { if (p.live && state.ed17 === "team") { dispatch({ type: "V11_SET", patch: { ed17: null } }); window.scrollTo(0, 0); } };
   const save = () => {
     if (!signedIn) {
       const el = document.getElementById("ff-sec-phone") || document.getElementById("ff-sec-tag");
@@ -742,6 +744,7 @@ function SaveShareCard({ onSaved }) {
       dispatch({ type: "PROFILE", patch: { saved: true, savedAt: r.savedAt, finishedAt: p.finishedAt || r.savedAt } });
       dispatch({ type: "TOAST", toast: "Saved" });
       dispatch({ type: "PE_DONE" });
+      leaveLive();
       if (onSaved) onSaved();
     });
   };
@@ -756,6 +759,7 @@ function SaveShareCard({ onSaved }) {
       const now = Date.now();
       dispatch({ type: "PROFILE", patch: { saved: true, savedAt: r.savedAt, finishedAt: p.finishedAt || r.savedAt, published: true, publishedAt: p.publishedAt || now, introduction: r.intro || null } });
       dispatch({ type: "PE_DONE" });
+      leaveLive();
       if (!p.publishedAt) {
         dispatch({ type: "PUBLISH_XP" });
         P1_JUST_PUBLISHED.v = true;
@@ -904,6 +908,8 @@ function ProfileBuilder() {
   const cardReady = recsOf(p, "professions").some(r => !r.proposed);
   const signedIn = state.auth.status === "signedIn";
   const finished = signedIn && !!p.finishedAt;
+  /* v17.40: an existing member editing a live profile sees the same page; Welcome to the Team is only for the first save. */
+  const editingLive = !!p.live && !!(state.profileEdit && state.profileEdit.on);
   const join = useJoin21({ top: true });
   const toWelcome = () => setTimeout(() => {
     const el = document.getElementById("ff-sec-welcome");
@@ -947,8 +953,8 @@ function ProfileBuilder() {
           )}
           <SaveShareCard onSaved={toWelcome} />
         </div>
-        {!finished && <CardPreviewSoon />}
-        {finished && <WelcomeSection me={me} />}
+        {/* v17.40: no card preview here (its Share and wallet buttons went past three buttons); the finished card shows in Welcome to the Team. */}
+        {finished && !editingLive && <WelcomeSection me={me} />}
       </div>
       <NeedHelp34 />
     </div>
