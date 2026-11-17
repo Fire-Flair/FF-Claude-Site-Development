@@ -215,6 +215,11 @@ function useShareCard() {
 }
 
 
+/* v17.35 note for developers (FF Tag case): the availability check already ignores case: AUTH_ADAPTER.cleanTag
+   lowercases before isAvailable compares, and _taken lowercases the taken list, so ALEXG = alexg = taken.
+   But cleanTag also lowercases what is shown and saved, so capitals are not kept today. Mr G wants the tag saved
+   as typed (ALEXG) with the check run on the lowercase form: that change belongs in auth-adapter.js (keep a
+   display form beside the lowercase key); Core must store both and compare on the key. */
 /* Optional (the company address uses them; FF Team leaves them out): cleanWith(value) makes the text, freeCheck(text) says whether it is available, minLength and maxLength set the bounds. */
 function TagInput({ value, onChange, placeholder = "username", current, check, autoFocus, label = "FF Tag", cleanWith, freeCheck, minLength, maxLength, fit }) {
   const clean = cleanWith ? cleanWith(value) : AUTH_ADAPTER.cleanTag(value);
@@ -945,6 +950,24 @@ function ProfileBuilder() {
         {!finished && <CardPreviewSoon />}
         {finished && <WelcomeSection me={me} />}
       </div>
+      <NeedHelp34 />
+    </div>
+  );
+}
+
+
+/* v17.35: Need help? Book a meeting — the old Book an interview box (same burgundy button, same booking sheet),
+   now at the very bottom of the profile page. Self-contained so the complete-profile page can render it too. */
+function NeedHelp34() {
+  const [book, setBook] = useState(false);
+  if (!V101.support20Url()) return null;
+  return (
+    <div className="ff-start17 ff-help34">
+      <section className="ff-way17 ff-way17-int">
+        <div className="ff-way17-ctl"><Btn variant="ghost ff-bigcv17" onClick={() => setBook(true)}><Calendar size={16} /> Book a meeting</Btn></div>
+        <p className="ff-way17-line"><span>Need help?</span></p>
+      </section>
+      {book && <InterviewBook17 title="Book a meeting" onClose={() => setBook(false)} />}
     </div>
   );
 }

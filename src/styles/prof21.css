@@ -257,3 +257,8 @@
 @media (min-width: 900px) { .ff .ff-tm34 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
 /* the Phone number box, third in Let's get started: full width of the box */
 .ff .ff-way17-phone > .ff-way17-wide { grid-column: 1 / -1; }
+
+
+/* ======================= v17.35 — Profile A1: Need help? Book a meeting, at the bottom of the profile page ======================= */
+.ff .ff-help34 { margin: 28px 0 8px; }
+.ff .ff-help34 .ff-way17-line { order: -1; font-weight: 700; color: #2A2620; }
