@@ -160,7 +160,6 @@ function PlayerFace17({ person, large, themeKey, tier, onClick, selected, nameAs
     const late = [setTimeout(fit, 350), setTimeout(fit, 1500)];
     return () => { if (ro) ro.disconnect(); if (document.fonts && document.fonts.removeEventListener) document.fonts.removeEventListener("loadingdone", fit); late.forEach(clearTimeout); };
   }, [sig]);
-  const icoC = dark ? "#E4C36A" : "#7E611D";
   const flags = () => langs.map((l) => <span key={l} className="pc17-flag"><LangFlag lang={l} /></span>);
   const entries = (items) => large
     ? <span className="pc17-fit wr">{items.map((v, i) => <React.Fragment key={v + i}><span className="en">{v}<b className="bl" style={{ color: acc }}>•</b></span>{" "}</React.Fragment>)}</span>
@@ -198,14 +197,14 @@ function PlayerFace17({ person, large, themeKey, tier, onClick, selected, nameAs
             {rows.map(([k, I, items]) => (
               <div key={k} className="pc17-row" style={{ borderColor: t.rule }}>
                 {large
-                  ? <span className="pc17-lico"><span style={{ width: "3.5cqw", height: "3.5cqw", display: "block", flex: "none" }}><I size="100%" color={icoC} strokeWidth={2.25} fill="none" /></span><span className="ff-sr">{k}</span></span>
+                  ? <span className="pc17-lico"><span style={{ width: "3.5cqw", height: "3.5cqw", display: "block", flex: "none" }}><I size="100%" color="#E4C36A" strokeWidth={2.25} fill="none" /></span><span className="ff-sr">{k}</span></span>
                   : <span className="pc17-ico"><span style={{ width: "4.6cqw", height: "4.6cqw", display: "block" }}><I size="100%" color="#E4C36A" strokeWidth={2.25} fill={k === "Skills" || k === "Interests" ? "#E4C36A" : "none"} /></span></span>}
                 <div className="pc17-val" style={{ color: ink }}>{entries(items)}</div>
               </div>
             ))}
             {large && langs.length > 0 && (
               <div className={"pc17-row" + (langs.length === 1 ? " one" : "")} style={{ borderColor: t.rule }}>
-                <span className="pc17-lico"><span style={{ width: "3.5cqw", height: "3.5cqw", display: "block", flex: "none" }}><MessageSquare size="100%" color={icoC} strokeWidth={2.25} fill="none" /></span><span className="ff-sr">Languages</span></span>
+                <span className="pc17-lico"><span style={{ width: "3.5cqw", height: "3.5cqw", display: "block", flex: "none" }}><MessageSquare size="100%" color="#E4C36A" strokeWidth={2.25} fill="none" /></span><span className="ff-sr">Languages</span></span>
                 <div className="pc17-flags">{flags()}</div>
               </div>
             )}

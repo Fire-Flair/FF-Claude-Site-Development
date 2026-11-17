@@ -74,3 +74,11 @@
 .ff .ff-deck.pc:not(.pc17):has(> .pc17-plate) .fx.hair{inset:0;border-radius:calc(4.2% - 3px) / calc(3% - 3px);corner-shape:squircle}
 .ff .ff-deck.pc:not(.pc17):has(> .pc17-plate) .fx.hair::after{display:none}
 .ff .ff-deck.pc:not(.pc17):has(> .pc17-plate) > div:last-child > span:first-child{font-family:'Cinzel','Optima','Palatino Linotype',Georgia,serif !important;font-weight:600 !important;letter-spacing:.06em !important;font-size:4cqw !important}
+/* Card banner (p2-card, Mr G 22:41): the large card's rows box gets a black column down its left edge, full height,
+   holding the row icons in gold, each centred on its row (as on the live FFTeam.uk cards and the Shift Card).
+   The column is the panel's own ::before, so its outer corners follow the box's squircle corners (overflow hidden);
+   it paints over the row dividers, which therefore run across the cream part only. */
+.pc17.lg .pc17-panel{position:relative}
+.pc17.lg .pc17-panel::before{content:"";position:absolute;left:0;top:0;bottom:0;width:8.4cqw;background:linear-gradient(180deg,#1C1C1F,#0B0B0C);z-index:1;pointer-events:none}
+.pc17.lg .pc17-row{grid-template-columns:8.4cqw minmax(0,1fr);column-gap:2.4cqw;padding-left:0;padding-right:2.8cqw}
+.pc17.lg .pc17-lico{position:relative;z-index:2}
