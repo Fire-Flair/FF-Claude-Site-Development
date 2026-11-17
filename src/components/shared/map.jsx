@@ -5,7 +5,8 @@
    the page as #ff-ukgeo): it shows only while tiles have not arrived (or when they cannot load), so the map is never blank.
    It opens on the UK; the London button frames Greater London. People's pins stay area-only; v17.14: venues from Google's
    business search sit at their own point.
-   v17.21: pins that would overlap are grouped into one numbered cluster (a squircle ringed in the category colours); tap a
+   v17.28: back to one pin per place, a green drawn map and place names (MAP_TOWNS27); tiles are off (MAP_TILES27).
+   (v17.21, withdrawn) pins that would overlap were grouped into one numbered cluster (a squircle ringed in the category colours); tap a
    cluster to zoom into it. The grouping is a plain screen-distance grouping (a dot within CLUSTER_R21 screen pixels (56 when zoomed in) of a group joins it) recomputed on every zoom, so hundreds of
    dots stay readable. To change the map style, change TILE_URL21 only.
    ========================================================================== */
@@ -28,6 +29,38 @@ const UK_CITIES11 = [
   ["Edinburgh", 55.953, -3.188], ["Glasgow", 55.864, -4.252], ["Belfast", 54.597, -5.930], ["Aberdeen", 57.149, -2.094],
   ["Norwich", 52.630, 1.297], ["Dublin", 53.350, -6.260], ["Inverness", 57.478, -4.224],
 ];
+
+
+/* v17.28: place names on the drawn map, [name, lat, lng, rank]. Rank 1 shows from the UK view, 2 from the first zoom in,
+   3 closer still. Coordinates are the ones the FF Event Directory's location list uses (content/data/fd-rows.json).
+   A name is left off when it would touch one already placed, so the map never crowds; zooming in brings more out. */
+const MAP_TOWNS27 = [
+  ["London", 51.5, -0.167, 1], ["Birmingham", 52.48, -1.898, 1], ["Manchester", 53.417, -2.25, 1], ["Leeds", 53.796, -1.548, 1], ["Liverpool", 53.417, -2.917, 1],
+  ["Newcastle", 55.0, -1.667, 1], ["Bristol", 51.45, -2.6, 1], ["Cardiff", 51.5, -3.167, 1], ["Edinburgh", 55.95, -3.193, 1], ["Glasgow", 55.865, -4.258, 1],
+  ["Belfast", 54.583, -5.917, 1], ["Aberdeen", 57.144, -2.098, 1], ["Norwich", 52.628, 1.298, 1], ["Inverness", 57.479, -4.224, 1], ["Plymouth", 50.383, -4.133, 1],
+  ["Southampton", 50.917, -1.383, 1], ["Nottingham", 52.967, -1.15, 1], ["Sheffield", 53.417, -1.5, 1], ["Dublin", 53.35, -6.26, 1], ["Brighton", 50.828, -0.14, 2],
+  ["Oxford", 51.752, -1.256, 2], ["Cambridge", 52.2, 0.117, 2], ["Leicester", 52.633, -1.133, 2], ["Coventry", 52.417, -1.5, 2], ["Hull", 53.75, -0.333, 2],
+  ["York", 53.964, -1.091, 2], ["Swansea", 51.621, -3.943, 2], ["Exeter", 50.724, -3.527, 2], ["Bournemouth", 50.721, -1.879, 2], ["Portsmouth", 50.8, -1.067, 2],
+  ["Reading", 51.45, -0.967, 2], ["Milton Keynes", 52.083, -0.75, 2], ["Luton", 51.891, -0.428, 2], ["Stoke-on-Trent", 53.0, -2.167, 2], ["Derby", 52.921, -1.472, 2],
+  ["Peterborough", 52.583, -0.25, 2], ["Ipswich", 52.059, 1.155, 2], ["Dundee", 56.469, -2.975, 2], ["Carlisle", 54.895, -2.938, 2], ["Middlesbrough", 54.533, -1.2, 2],
+  ["Preston", 53.763, -2.704, 2], ["Bath", 51.375, -2.362, 2], ["Canterbury", 51.279, 1.08, 2], ["Lincoln", 53.227, -0.538, 2], ["Chester", 53.191, -2.892, 2],
+  ["Derry", 54.998, -7.309, 2], ["Perth", 56.395, -3.431, 2], ["Stirling", 56.115, -4.234, 2], ["Cork", 51.898, -8.476, 2], ["Galway", 53.271, -9.049, 2],
+  ["Limerick", 52.664, -8.623, 2], ["St Albans", 51.75, -0.333, 3], ["Watford", 51.655, -0.396, 3], ["Northampton", 52.25, -0.883, 3], ["Cheltenham", 51.9, -2.08, 3],
+  ["Gloucester", 51.866, -2.243, 3], ["Worcester", 52.189, -2.22, 3], ["Swindon", 51.583, -1.75, 3], ["Southend-on-Sea", 51.533, 0.7, 3], ["Colchester", 51.889, 0.904, 3],
+  ["Chelmsford", 51.736, 0.47, 3], ["Maidstone", 51.267, 0.517, 3], ["Guildford", 51.235, -0.574, 3], ["Slough", 51.5, -0.567, 3], ["Blackpool", 53.833, -3.033, 3],
+  ["Bolton", 53.583, -2.5, 3], ["Wolverhampton", 52.583, -2.117, 3], ["Bradford", 53.833, -1.833, 3], ["Sunderland", 54.883, -1.417, 3], ["Durham", 54.777, -1.576, 3],
+  ["Harrogate", 53.991, -1.537, 3], ["Newport", 51.588, -2.998, 3], ["Truro", 50.265, -5.054, 3], ["Lancaster", 54.047, -2.8, 3], ["Shrewsbury", 52.71, -2.752, 3],
+  ["Hereford", 52.057, -2.715, 3], ["Salisbury", 51.069, -1.796, 3], ["Winchester", 51.065, -1.319, 3], ["Wakefield", 53.681, -1.499, 3], ["Doncaster", 53.5, -1.083, 3],
+  ["Huddersfield", 53.649, -1.784, 3], ["Warrington", 53.417, -2.583, 3], ["Crawley", 51.113, -0.183, 3], ["Basingstoke", 51.263, -1.087, 3], ["Bedford", 52.188, -0.453, 3],
+  ["Stevenage", 51.902, -0.203, 3], ["Telford", 52.677, -2.449, 3], ["Taunton", 51.015, -3.103, 3], ["Torquay", 50.462, -3.525, 3], ["Hastings", 50.856, 0.58, 3],
+  ["Eastbourne", 50.769, 0.284, 3], ["Margate", 51.381, 1.386, 3], ["Dover", 51.126, 1.313, 3], ["Scarborough", 54.28, -0.404, 3], ["Kendal", 54.327, -2.748, 3],
+  ["Bangor", 54.661, -5.668, 3], ["Aberystwyth", 52.416, -4.083, 3], ["Wrexham", 53.0, -3.0, 3], ["Lisburn", 54.523, -6.035, 3], ["Newry", 54.178, -6.337, 3],
+  ["Ayr", 55.463, -4.634, 3], ["Dumfries", 55.07, -3.611, 3], ["Falkirk", 56.0, -3.75, 3], ["Paisley", 55.832, -4.433, 3]
+];
+/* Smallest zoom at which each rank is drawn. */
+const MAP_TOWN_Z27 = { 1: 0, 2: 6.25, 3: 7.5 };
+/* The drawn map is the map: land green, sea blue. Set MAP_TILES27 to true to lay map-server tiles (TILE_URL21) over it. */
+const MAP_TILES27 = false;
 
 
 const UK_BOUNDS11 = [[49.9, -8.2], [58.7, 1.8]];
@@ -242,57 +275,64 @@ function FFMap({ mode = "home" }) {
       const area = (sets, style) => sets && sets.length ? L.polygon(sets.map(p => p.map(decRing11)), { renderer: cv, interactive: false, ...style }) : null;
       const line = (sets, style) => sets && sets.length ? L.polyline(sets.map(decRing11), { renderer: cv, interactive: false, ...style }) : null;
       [
-        area(G.world, { color: "#D8D2C4", opacity: 1, weight: 0.7, fillColor: "#EBE7DE", fillOpacity: 1 }),
-        area(G.ie, { color: "#D0C9B9", opacity: 1, weight: 1, fillColor: "#EFEBE3", fillOpacity: 1 }),
-        area(G.gb, { color: "#CBC4B2", opacity: 1, weight: 1.2, fillColor: "#F2EFE9", fillOpacity: 1 }),
-        area(G.lakes, { stroke: false, fillColor: "#AAD3DF", fillOpacity: 1 }),
-        line(G.rivers, { color: "#AAD3DF", opacity: 1, weight: 1 }),
+        area(G.world, { color: "#6E9A5A", opacity: 0.55, weight: 0.7, fillColor: "#C9DDB0", fillOpacity: 1 }),
+        area(G.ie, { color: "#5E8C4A", opacity: 0.7, weight: 1, fillColor: "#B9D69B", fillOpacity: 1 }),
+        area(G.gb, { color: "#4E7F3C", opacity: 0.9, weight: 1.3, fillColor: "#9FCB7A", fillOpacity: 1 }),
+        area(G.lakes, { stroke: false, fillColor: "#8FC3E6", fillOpacity: 1 }),
+        line(G.rivers, { color: "#4F9AD3", opacity: 0.8, weight: 1 }),
       ].forEach(l => l && l.addTo(map));
-      const tiles = L.tileLayer(TILE_URL21, { subdomains: "abcd", maxZoom: 20, maxNativeZoom: 19 }).addTo(map);
-      tiles.once("tileload", () => { if (boxRef.current) boxRef.current.classList.add("tiles-ok"); });
-      L.control.attribution({ prefix: false, position: "bottomright" }).addAttribution(TILE_ATTR21).addTo(map);
+      /* Closer in: county lines, then Greater London and the Thames. */
+      const adm = area(G.adm, { color: "#3F6B33", opacity: 0.3, weight: 0.6, fill: false });
+      const ldn = area(G.ldnu, { color: "#3F6B33", opacity: 0.6, weight: 1.2, fillColor: "#86B862", fillOpacity: 0.7 });
+      const thSm = G.thames && G.thames.map(r => smooth11(decRing11(r), false, 2));
+      const thames = L.layerGroup(thSm ? [
+        L.polyline(thSm, { renderer: cv, interactive: false, color: "#2F7FC1", opacity: 0.95, weight: 4.5, lineJoin: "round", lineCap: "round" }),
+        L.polyline(thSm, { renderer: cv, interactive: false, color: "#BFE3F7", opacity: 0.9, weight: 1.6, lineJoin: "round", lineCap: "round" }),
+      ] : []);
+      if (MAP_TILES27) {
+        const tiles = L.tileLayer(TILE_URL21, { subdomains: "abcd", maxZoom: 20, maxNativeZoom: 19 }).addTo(map);
+        tiles.once("tileload", () => { if (boxRef.current) boxRef.current.classList.add("tiles-ok"); });
+        L.control.attribution({ prefix: false, position: "bottomright" }).addAttribution(TILE_ATTR21).addTo(map);
+      }
       L.control.zoom({ position: "topright" }).addTo(map);
 
-      /* The dots. Pins that would sit on top of each other (within CLUSTER_R21 screen pixels) are one cluster below CLUSTER_Z21. */
-      const items = pins.map(p => ({ p, ll: p.ll || toLL(p.x, p.y) }));
-      const dots = L.layerGroup().addTo(map);
-      let h = {};
-      const draw = () => {
-        dots.clearLayers(); h = {};
-        const z = map.getZoom(), groups = [];
-        items.forEach(it => {
-          if (z >= CLUSTER_Z21) { groups.push([it]); return; }
-          const pt = map.project(it.ll, z);
-          let best = null, bd = z < NEAR_Z11 ? CLUSTER_R21 : 56;
-          groups.forEach(g => { const d = Math.hypot(g.x - pt.x, g.y - pt.y); if (d < bd) { bd = d; best = g; } });
-          if (best) { best.push(it); best.x += (pt.x - best.x) / best.length; best.y += (pt.y - best.y) / best.length; }
-          else { const g = [it]; g.x = pt.x; g.y = pt.y; groups.push(g); }
+      /* v17.28: every place is its own pin again (no numbered clusters). */
+      const h = {};
+      pins.forEach(p => {
+        const m = L.marker(p.ll || toLL(p.x, p.y), { interactive: false, keyboard: false, zIndexOffset: p.kind === "person" ? 100 : p.kind === "company" ? 300 : 0,
+          icon: L.divIcon({ className: "ff-lpin" + (p.kind === "company" ? " ff-lco" + (p.ldn ? " ldn" : "") : ""), html: "<div></div>", iconSize: [0, 0] }) }).addTo(map);
+        h[p.kind + p.id] = m.getElement().firstChild;
+      });
+      setHosts(h);
+
+      /* Place names: highest rank first; a name is skipped when its box would touch one already on the map. */
+      const names = L.layerGroup().addTo(map);
+      const drawNames = () => {
+        names.clearLayers();
+        const z = map.getZoom();
+        if (z < WORLD_Z11) return;
+        const b = map.getBounds().pad(0.05), placed = [];
+        MAP_TOWNS27.forEach(([nm, la, lo, rank]) => {
+          if (z < MAP_TOWN_Z27[rank] || !b.contains([la, lo])) return;
+          const pt = map.latLngToContainerPoint([la, lo]);
+          const w = nm.length * 7.2 + 14, box = [pt.x - 6, pt.y - 10, pt.x + w, pt.y + 10];
+          if (placed.some(q => box[0] < q[2] && box[2] > q[0] && box[1] < q[3] && box[3] > q[1])) return;
+          placed.push(box);
+          L.marker([la, lo], { interactive: false, keyboard: false, zIndexOffset: 2000,
+            icon: L.divIcon({ className: "ff-lcity ff-ltown27 r" + rank, html: `<i></i><span>${nm}</span>`, iconSize: [0, 0] }) }).addTo(names);
         });
-        groups.forEach(g => {
-          if (g.length === 1) {
-            const { p, ll } = g[0];
-            const m = L.marker(ll, { interactive: false, keyboard: false, zIndexOffset: p.kind === "person" ? 100 : p.kind === "company" ? 300 : 0,
-              icon: L.divIcon({ className: "ff-lpin" + (p.kind === "company" ? " ff-lco" : ""), html: "<div></div>", iconSize: [0, 0] }) }).addTo(dots);
-            h[p.kind + p.id] = m.getElement().firstChild;
-            return;
-          }
-          const lat = g.reduce((a, it) => a + it.ll[0], 0) / g.length, lng = g.reduce((a, it) => a + it.ll[1], 0) / g.length;
-          const n = g.length, wide = window.innerWidth >= 900, size = (wide ? 34 : 28) + (n >= 100 ? 4 : 0);
-          const m = L.marker([lat, lng], { keyboard: true, title: n + " places. Zoom in", riseOnHover: true, zIndexOffset: 1000,
-            icon: L.divIcon({ className: "ff-lcl", html: `<span class="ff-cl" style="width:${size}px;height:${size}px;background:${clusterRing21(g.map(it => it.p))}"><b>${n}</b></span>`, iconSize: [0, 0] }) }).addTo(dots);
-          m.on("click", () => map.flyToBounds(L.latLngBounds(g.map(it => it.ll)), { duration: 0.8, padding: [70, 70], maxZoom: CLUSTER_Z21 + 0.75 }));
-          m.on("keypress", (e) => { if (e.originalEvent && (e.originalEvent.key === "Enter" || e.originalEvent.key === " ")) m.fire("click"); });
-        });
-        setHosts(h);
       };
 
       const sync = () => {
         const z = map.getZoom(), f = z < NEAR_Z11;
         if (boxRef.current) { boxRef.current.classList.toggle("far", f); boxRef.current.classList.toggle("world", z < WORLD_Z11); }
         setView(z < WORLD_Z11 ? "world" : f ? "uk" : "london");
-        draw();
+        if (z >= 6.5 && z < 8.5) { if (!map.hasLayer(adm)) adm.addTo(map); } else if (map.hasLayer(adm)) map.removeLayer(adm);
+        if (z >= 8.5) { if (!map.hasLayer(ldn)) { ldn.addTo(map); thames.addTo(map); thames.eachLayer(l => l.bringToFront()); } }
+        else if (map.hasLayer(ldn)) { map.removeLayer(ldn); map.removeLayer(thames); }
+        drawNames();
       };
-      map.on("zoomend", sync); sync();
+      map.on("zoomend", sync); map.on("moveend", drawNames); sync();
       return () => { setHosts(null); mapRef.current = null; map.remove(); };
     } catch (e) {
       if (map) map.remove();

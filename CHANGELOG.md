@@ -1,5 +1,16 @@
 # FireFlair prototype — changelog
 
+## v17.28
+
+Artifact version 1794945683-592c.
+
+Explore our network map (FF Team, FF Staff, FF Party): pins instead of numbers, green land, place names.
+
+- The numbered clusters from v17.21 are withdrawn: every place is its own pin again (shared/map.jsx). At the UK view the pins are drawn small so the country stays readable; they are full size once zoomed in.
+- The map is the drawn map again: land green, sea and rivers blue, county lines from the first zoom in, Greater London and the Thames closer in. Map-server tiles are switched off by one constant, `MAP_TILES27` (the tile code and `TILE_URL21` stay). The prototype cannot load tiles inside the preview, so what was reviewed there was never the tile map; which map system the live site uses is being decided separately.
+- Place names: `MAP_TOWNS27`, 104 towns and cities in three ranks (`MAP_TOWN_Z27` sets the zoom each rank appears at). Coordinates come from the FF Event Directory's location list (content/data/fd-rows.json). A name is left off when it would touch one already placed, and names are redrawn on every zoom and move. Styles: `.ff-ltown27` at the end of v11.css.
+- Also in this build: the Verify button in the Phone number box drops under the number when the box is narrower than 300px.
+
 ## v17.27
 
 Artifact version 1794945469-0318.

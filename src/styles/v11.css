@@ -4566,3 +4566,18 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-ml19 .ff-ml19-row label { min-height: 44px; padding: 0 14px; border-radius: 15px; corner-shape: squircle; border-color: rgba(126,97,29,.3); background: #FFFDF8; }
 @media (min-width: 900px) { .ff .ff-map-uk.ff-map-real { height: 560px !important; } }
 @media (max-width: 600px) { .ff .ff-ml19 .ff-ml19-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; } .ff .ff-ml19 .ff-ml19-row label { justify-content: flex-start; min-width: 0; padding: 0 10px; white-space: nowrap; } .ff .ff-ml19 .ff-ml19-x { margin-left: auto; } }
+
+
+/* ======================= v17.28 — map: place names on the drawn map ======================= */
+.ff .ff-map-uk-in .ff-ltown27 { display:block !important; }
+.ff .ff-map-uk-in.world .ff-ltown27 { display:none !important; }
+.ff .ff-ltown27 span { display:block !important; left:7px; top:-8px; font:600 11.5px/1.35 var(--sans); letter-spacing:.02em; text-transform:none; color:#17301A; text-shadow:0 0 2px #F4F8EC, 0 0 4px #F4F8EC, 0 0 6px #F4F8EC; }
+.ff .ff-ltown27 i { display:block !important; left:-3px; top:-3px; width:6px; height:6px; background:#24401F; }
+.ff .ff-ltown27.r1 span { font-weight:700; font-size:12.5px; }
+.ff .ff-ltown27.r3 span { font-weight:500; font-size:11px; color:#2C4A2A; }
+.ff .ff-ltown27.r3 i { left:-2px; top:-2px; width:4px; height:4px; }
+.ff .ff-map-uk-in.tiles-ok .ff-ltown27 { display:none !important; }
+/* At the UK view the pins are small so the country and its place names stay readable; they grow to full size on zooming in. */
+.ff .ff-map-uk-in.far .ff-lpin .ff-pin { transform:translate(-50%,-50%) scale(.56); }
+.ff .ff-map-uk-in.far .ff-lpin .ff-pin::after { content:""; position:absolute; inset:-14px; }
+.ff .ff-ltown27 span { text-shadow:0 0 2px #F7FAF0, 0 0 3px #F7FAF0, 0 0 5px #F7FAF0, 0 0 8px #F7FAF0; }
