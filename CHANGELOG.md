@@ -1,5 +1,16 @@
 # FireFlair prototype — changelog
 
+## v17.26
+
+Artifact version 1794945257-a2e3.
+
+Home hero easel: the Profile Card is now the board itself, and the photo is relit again.
+
+- The card covers the whole display board (no dark border round it) and rests on the easel's ledge. `HERO_EASEL24` and `HERO_EASEL24_REFL` are now the board's own four corners. In the photo the board's square corner tips are painted out, so the card's round corners end cleanly against the room.
+- On the easel the card takes the board's proportions (`aspect-ratio: 757 / 994` on `.ff-easel24-card > .ff-deck`, a little wider than 5:7) so nothing is stretched; the card lays itself out to that shape.
+- Lighting: violet light comes up from the bottom-left and bottom-right corners; one golden spotlight sits over the card, the easel and the nearest drinks. `.ff-easel24-shade` / `.ff-easel24-key` match the card to it.
+- scripts/hero-easel/ holds the updated steps and measurements.
+
 ## v17.25
 
 Artifact version 1794945024-9a74.
