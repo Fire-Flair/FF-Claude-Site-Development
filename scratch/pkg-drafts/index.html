@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SCRATCH — FF Party package card drafts</title>
+<link rel="stylesheet" href="drafts.css">
+<!-- The real catalogue: every word and amount below comes from it, unchanged. -->
+<script src="../../src/state/package-catalogue17.js"></script>
+</head><body><div id="app"></div>
+<script>
+/* SCRATCH preview for Alex's assessment (task pkgcard). Not wired into the site.
+   ?opt=1|2|3  &mode=sheet|rail|contact  &open=1 (option 3: Details opened)  &sel=<id> (shows the signed-up state) */
+const ICONS = {"Sparkles":"<path d=\"M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z\"/><path d=\"M20 3v4\"/><path d=\"M22 5h-4\"/><path d=\"M4 17v2\"/><path d=\"M5 18H3\"/>","Users":"<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\"/><circle cx=\"9\" cy=\"7\" r=\"4\"/><path d=\"M22 21v-2a4 4 0 0 0-3-3.87\"/><path d=\"M16 3.13a4 4 0 0 1 0 7.75\"/>","Clock":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><polyline points=\"12 6 12 12 16 14\"/>","Martini":"<path d=\"M8 22h8\"/><path d=\"M12 11v11\"/><path d=\"m19 3-7 8-7-8Z\"/>","BadgeCheck":"<path d=\"M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z\"/><path d=\"m9 12 2 2 4-4\"/>","ChevronDown":"<path d=\"m6 9 6 6 6-6\"/>","Check":"<path d=\"M20 6 9 17l-5-5\"/>","Wine":"<path d=\"M8 22h8\"/><path d=\"M7 10h10\"/><path d=\"M12 15v7\"/><path d=\"M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5Z\"/>"};
+const ic = (k) => '<svg viewBox="0 0 24 24" aria-hidden="true">' + ICONS[k] + '</svg>';
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const LOGO = '<svg class="logo" viewBox="77 77 926 926" aria-hidden="true"><defs><linearGradient id="LR" x1=".25" y1="0" x2=".75" y2="1"><stop offset="0" stop-color="#EDD088"/><stop offset=".5" stop-color="#E2BF70"/><stop offset="1" stop-color="#C8A158"/></linearGradient><linearGradient id="LL" gradientUnits="userSpaceOnUse" x1="0" y1="331" x2="0" y2="768"><stop offset="0" stop-color="#F1D38D"/><stop offset="1" stop-color="#D8AE5C"/></linearGradient></defs><circle cx="540" cy="540" r="463" fill="url(#LR)"/><circle cx="540" cy="540" r="462.4" fill="none" stroke="#7C6C45" stroke-width="1.6"/><circle cx="540" cy="540" r="428.5" fill="#0B0B0C"/><circle cx="540" cy="540" r="423" fill="none" stroke="#5C1220" stroke-width="6.5"/><g id="LF"><path d="M272 331 H560 L545 438 H364 L354 510 H523 L509 613 H338 L315 768 H207.5 Z" fill="#A67F3F"/><path d="M272 331 H560 L545.7 433 H364.7 L354.7 510 H523 L509.7 608 H338.7 L315.7 763 H208.2 Z" fill="url(#LL)"/></g><use href="#LF" transform="translate(322 0)"/></svg>';
+
+/* Same order as Bookings "Our bar packages" (Masterclass first, Staffing last), with Platinum Tasting added at the end of the bar set. */
+const ORDER = ["svc_masterclass", "svc_flair", "svc_mixology", "svc_bartending", "svc_full", "svc_staffing"];
+const PK = ORDER.map(id => PKG_BY17[id]);
+const LEVEL = (p) => p.kind === "consultation" ? "Platinum" : p.kind === "standalone" ? "Staffing" : "Bar";
+/* Amount: the existing "You earn" label (pkgPayLabel17, derived in the catalogue) for packages bartenders sign up to.
+   Platinum Tasting is arranged by FireFlair (no team sign-up), so it shows its role instead of an amount. */
+const signs = (p) => p.teamRegistration;
+const earn = (p) => '<span class="earn"><i>You earn</i><b>' + esc(pkgPayLabel17(p.id)) + '</b></span>';
+const youBring = (p) => p.capability || null;   /* staffing / platinum carry no capability line */
+const btn = (p, on) => signs(p) ? '<button type="button" class="signup" aria-pressed="' + on + '">' + (on ? ic("Check").replace('<svg', '<svg style="width:13px;height:13px;vertical-align:-2px;fill:none;stroke:currentColor;stroke-width:2.6"') + ' Signed up' : 'Sign up') + '</button>' : '';
+const mainIcon = (p) => p.id === "svc_staffing" ? "Users" : p.kind === "consultation" ? "Wine" : "Martini";
+
+function rows(p, withBring) {
+  const r = [];
+  if (withBring && youBring(p)) r.push(["BadgeCheck", "You bring", youBring(p)]);
+  r.push(["Sparkles", "Includes", p.includes], ["Users", "Ideal for", p.ideal], ["Clock", "Duration", p.durationLabel]);
+  return r.map(([k, l, v]) => '<div class="row"><span class="ico">' + ic(k) + '</span><span class="v"><i>' + esc(l) + '</i><b class="fit">' + esc(v) + '</b></span></div>').join("");
+}
+
+function card1(p, on) {
+  return '<div class="k o1 t-' + p.tone + (on ? ' sel' : '') + '" data-pk="' + p.id + '">' +
+    '<span><span class="ribbon">' + ic("Sparkles") + 'Package card</span></span>' + LOGO +
+    '<div class="hd"><div class="eb fit">+ ' + LEVEL(p) + ' · FF Party +</div><h3 class="ti fit">' + esc(p.name) + '</h3><p class="tg">' + esc(p.tagline) + '</p><p class="ds">' + esc(p.description) + '</p></div>' +
+    '<div class="rows">' + rows(p, true) + '</div>' +
+    '<div class="ft">' + (signs(p) ? earn(p) : '<span class="role">' + esc(p.role) + '</span>') + btn(p, on) + '</div></div>';
+}
+
+function card2(p, on) {
+  return '<div class="k o2 t-' + p.tone + (on ? ' sel' : '') + '" data-pk="' + p.id + '">' +
+    '<div class="ph"><span class="ribbon">' + ic("Sparkles") + LEVEL(p) + ' · FF Party</span>' + LOGO + '<span class="ico big">' + ic(mainIcon(p)) + '</span>' +
+    (signs(p) ? earn(p) : '<span class="role">' + esc(p.role) + '</span>') + '</div>' +
+    '<div class="bd"><h3 class="ti fit">' + esc(p.name) + '</h3><p class="tg">' + esc(p.tagline) + '</p><p class="ds">' + esc(p.description) + '</p>' +
+    '<div class="rows">' + rows(p, true) + '</div>' + btn(p, on) + '</div></div>';
+}
+
+function card3(p, on, open) {
+  const dt = [];
+  dt.push('<p>' + esc(p.description) + '</p>');
+  dt.push('<ul>' + p.points.map(x => '<li>' + esc(x) + '</li>').join("") + '</ul>');
+  if (youBring(p)) dt.push('<div><i>You bring</i><p>' + esc(youBring(p)) + '</p></div>');
+  dt.push('<p class="cond">' + esc(p.conditions) + '</p>');
+  return '<div class="k o3 t-' + p.tone + (on ? ' sel' : '') + '" data-pk="' + p.id + '">' +
+    '<span><span class="ribbon">' + ic("Sparkles") + 'Package card</span></span>' + LOGO +
+    '<div class="hd"><div class="eb fit">+ ' + LEVEL(p) + ' · FF Party +</div><h3 class="ti fit">' + esc(p.name) + '</h3><p class="tg">' + esc(p.tagline) + '</p></div>' +
+    '<div class="rows">' + rows(p, false) + '</div>' +
+    '<details' + (open ? ' open' : '') + '><summary>Details' + ic("ChevronDown") + '</summary><div class="dt">' + dt.join("") + '</div></details>' +
+    '<div class="ft">' + (signs(p) ? earn(p) : '<span class="role">' + esc(p.role) + '</span>') + btn(p, on) + '</div></div>';
+}
+
+const NAMES = { 1: "Reference card in the package's own colours", 2: "Current card with the ribbon and icon rows", 3: "Dark card, Details opens the bartender copy" };
+const q = new URLSearchParams(location.search);
+const opt = Number(q.get("opt") || 1), mode = q.get("mode") || "sheet", open = q.get("open") === "1", sel = q.get("sel") || "";
+const make = (o, p) => o === 1 ? card1(p, p.id === sel) : o === 2 ? card2(p, p.id === sel) : card3(p, p.id === sel, open);
+const app = document.getElementById("app");
+if (mode === "contact") {
+  app.innerHTML = '<div class="contact">' + [1, 2, 3].map(o => '<div class="col"><div class="num"><b>' + o + '</b><span>' + NAMES[o] + '</span></div><div class="pair">' +
+    make(o, PKG_BY17.svc_masterclass) + make(o, PKG_BY17.svc_bartending) + '</div></div>').join("") + '</div>';
+} else if (mode === "rail") {
+  const bk = PK.filter(p => p.teamRegistration);
+  app.innerHTML = '<div class="page" style="padding:16px"><div class="box"><h3>FFParty</h3><h4>Our bar packages</h4><div class="rail">' + bk.map(p => make(opt, p)).join("") + '</div><div class="pager">1 / ' + bk.length + '</div></div></div>';
+  const r = app.querySelector(".rail"), pg = app.querySelector(".pager");
+  r.addEventListener("scroll", () => { const w = r.firstElementChild.getBoundingClientRect().width + 14; pg.textContent = (Math.round(r.scrollLeft / w) + 1) + " / " + bk.length; }, { passive: true });
+} else {
+  app.innerHTML = '<div class="page"><div class="sheet-h"><span class="n">' + opt + '</span><span><div class="t">' + NAMES[opt] + '</div></span></div><div class="grid">' + PK.map(p => make(opt, p)).join("") + '</div></div>';
+}
+
+/* Never split a word: shrink any line whose longest word does not fit. */
+function fit() {
+  document.querySelectorAll(".fit").forEach(el => {
+    el.style.fontSize = ""; let fs = parseFloat(getComputedStyle(el).fontSize), n = 0;
+    while (el.scrollWidth > el.clientWidth + 0.5 && fs > 9 && n++ < 40) { fs -= 0.5; el.style.fontSize = fs + "px"; }
+  });
+  document.body.dataset.fitted = "1";
+}
+document.fonts.ready.then(fit); addEventListener("resize", fit);
+document.addEventListener("toggle", fit, true);
+</script></body></html>
