@@ -90,11 +90,11 @@ function venTabOf20(r) {
 }
 
 
-/* The tab row: the profile's tab style, icon beside the label, one line, scrolls across when it does not fit. */
+/* The tab row (17.21): squircle buttons, icon beside the label, one line, scrolls left and right only. */
 function NetTabs20({ tabs, active, onChange, label, count }) {
   return React.createElement("div", { className: "ff-ptabs ff-nt20", role: "tablist", "aria-label": label },
     tabs.map(function (t) {
-      return React.createElement("button", { key: t.k, type: "button", role: "tab", "aria-selected": active === t.k, className: active === t.k ? "on" : "", onClick: function () { onChange(t.k); } },
+      return React.createElement("button", { key: t.k, type: "button", role: "tab", "aria-selected": active === t.k, className: active === t.k ? "on" : "", onClick: function (e) { const b = e.currentTarget, row = b.parentNode, rb = row.getBoundingClientRect(), bb = b.getBoundingClientRect(); if (row.scrollTo) row.scrollTo({ left: row.scrollLeft + bb.left - rb.left - 16, behavior: "smooth" }); onChange(t.k); } },
         React.createElement("span", { className: "ic", "aria-hidden": "true" }, netIc20(t.icon, 15)),
         React.createElement("span", { className: "lb" }, t.label),
         count ? React.createElement("span", { className: "ct" }, "(" + count(t) + ")") : null);
@@ -102,7 +102,7 @@ function NetTabs20({ tabs, active, onChange, label, count }) {
 }
 
 
-/* A Directory company's tile (the Company Card, then its team). A claimed company carries the Featured tag. */
+/* A Directory company's tile (the Company Card, then its team). The FF logo on a claimed card already marks it; no Featured tag. */
 function CoTile20({ co }) {
   const { state, dispatch } = useStore();
   return React.createElement("button", {
@@ -111,7 +111,6 @@ function CoTile20({ co }) {
     "aria-label": (co.name || "Your company") + ": open their page"
   },
     React.createElement(CompanyCardFace, { c: co, size: "sm" }),
-    !co.unclaimed ? React.createElement("span", { className: "ff-ft20" }, React.createElement(I11.Star, { size: 12, strokeWidth: 2 }), "Featured") : null,
     co.team && co.team.length > 0 && React.createElement("span", { className: "ff-co11-team" }, co.team.slice(0, 4).map(function (id) {
       const p = (state.directory || []).find(function (x) { return x.id === id; });
       return p ? React.createElement(Portrait, { key: id, src: p.photo, name: p.name, size: 24, tier: p.tier }) : null;
@@ -178,10 +177,11 @@ function NetVenues20() {
       React.createElement(HScroll, { label: cur.label, key: cur.k }, shown.map(function (v) {
         return React.createElement("div", { key: v.key, className: "ff-vt20" },
           React.createElement(VenueCard19, { record: v.rec }),
+          React.createElement("span", { className: "lb" }, "Listed by"),
           React.createElement("span", { className: "by", role: "list", "aria-label": "Listed by" }, v.by.map(function (b) {
             const p = all.find(function (x) { return x.id === b.id; });
             return React.createElement("button", { key: b.id, type: "button", role: "listitem", "aria-label": b.name + ": open their profile", onClick: function () { dispatch({ type: "VIEW", id: b.id }); window.scrollTo(0, 0); } },
-              React.createElement(Portrait, { src: p && p.photo, name: b.name, size: 28, tier: p && p.tier }));
+              React.createElement(Portrait, { src: p && p.photo, name: b.name, size: 32, tier: p && p.tier }));
           }))); })))
       : React.createElement("p", { className: "ff-body ff-muted", style: { margin: 0 } }, "No venues added yet."));
 }

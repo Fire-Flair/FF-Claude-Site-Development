@@ -361,12 +361,10 @@
 .ff .leaflet-control-zoom a{display:block;width:30px;height:30px;line-height:28px;text-align:center;text-decoration:none;background:rgba(20,20,22,.92);color:var(--gold-lt);border:1px solid var(--gold-dk);font-size:16px;font-weight:600;margin-bottom:-1px}
 .ff .leaflet-control-zoom a:hover{background:rgba(201,162,39,.25)}
 .ff .leaflet-control-zoom-in span,.ff .leaflet-control-zoom-out span{font-family:var(--sans)}
-.ff .ff-map-real .leaflet-tile-pane{filter:sepia(.28) saturate(1.15) brightness(.98)}
 .ff .ff-lpin{pointer-events:auto;width:0;height:0}
 .ff .ff-lpin>div{position:absolute;left:0;top:0;width:0;height:0}
 .ff .ff-lpin>div>.ff-pin{left:0;top:0}
 .ff .ff-map-uk-in.far .ff-lpin.ff-lco{display:block}
-.ff .ff-map-uk-in.far .ff-lpin.ff-lco.ldn{display:none}
 .ff .ff-pin .ff-codot{display:block;width:16px;height:16px;border-radius:50%;background:#6E1F2F;border:2px solid #EAD79C;box-shadow:0 1px 3px rgba(0,0,0,.5)}
 .ff .ff-pin .ff-codot.dj{background:#6B3FB5}
 .ff .ff-pin .ff-codot.photo{background:#2A6BB0}

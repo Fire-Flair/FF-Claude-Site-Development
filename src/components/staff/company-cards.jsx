@@ -8,12 +8,11 @@ const CC_LAYOUTS = [
   { key: "logo", name: "Big logo" },
   { key: "centre", name: "Centred" },
   { key: "banner", name: "Banner" },
-  { key: "crest", name: "Crest" },
 ];
 
 
 /* v17.20: the text block shrinks (never wraps inside a word, never cut with "…") until it fits the card. The tagline keeps to
-   one line in the Banner and Crest layouts and only wraps, between words, when it still does not fit at the smallest size. */
+   one line in the Banner layout and only wraps, between words, when it still does not fit at the smallest size. */
 function useCardFit20(ref, sig, off) {
   useLayoutEffect(() => {
     const body = ref.current, tx = body && body.querySelector(".ff-cc11-tx");
@@ -357,7 +356,7 @@ function CompanyQA11({ c, addSignal }) {
 function CompanyCardFace({ c, edit, set, onLogo, size = "", party, links }) {
   const co = c || {};
   const t = THEMES[co.theme] || THEMES.onyx;
-  const layout = co.layout || "logo";
+  const layout = (!co.layout || co.layout === "crest") ? "logo" : co.layout;
   const slug = (co.id && !co.mine ? rt17Slug(co) : (co.slug || slugify(co.name))) || (party ? "your-name" : "your-company");
   const baseN = baseNodeOfCo17(co);
   const areas = baseN ? baseLabelOf17(baseN) : (co.areas !== undefined ? co.areas : (co.location || co.area || ""));
@@ -439,7 +438,7 @@ function EditableCompanyCard({ plain, noType }) {
       </div>
       <div className="ff-cc11-layouts" role="group" aria-label="Card layout">
         {CC_LAYOUTS.map(l => (
-          <button key={l.key} type="button" aria-label={`${l.name} layout`} title={`${l.name} layout`} aria-pressed={(c.layout || "logo") === l.key} onClick={() => set({ layout: l.key })}>
+          <button key={l.key} type="button" aria-label={`${l.name} layout`} title={`${l.name} layout`} aria-pressed={((!c.layout || c.layout === "crest") ? "logo" : c.layout) === l.key} onClick={() => set({ layout: l.key })}>
             <span className={`thumb t-${l.key}`} aria-hidden="true"><i className="lg" /><i className="a" /><i className="b" /><i className="c" /></span>
           </button>
         ))}
@@ -498,7 +497,7 @@ function CompanyJoin({ inBooking }) {
     dispatch({ type: "COMPANY_SAVE", company: {
       slug,
       theme: c.theme || "onyx",
-      layout: c.layout || "logo",
+      layout: (!c.layout || c.layout === "crest") ? "logo" : c.layout,
       phone: phoneOk ? String(phone).trim() : c.phone || "",
       email: emailOk ? String(email).trim() : c.email || "",
       joinedAt: Date.now(),

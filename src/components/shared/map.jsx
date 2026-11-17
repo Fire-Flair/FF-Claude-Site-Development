@@ -1,10 +1,13 @@
 /* src/components/shared/map.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
 /* ==========================================================================
-   THE MAP (FF Team, FF Staff, FF Party) — the FF Team coins on a real map of
-   the UK. The map is drawn from Natural Earth data (public domain) embedded in
-   the page (#ff-ukgeo), so nothing is fetched from a map server. It opens on
-   the UK; the London coin flies in to the areas. People's pins stay area-only;
-   v17.14: venues from Google's business search sit at their own point.
+   THE MAP (FF Team, FF Staff, FF Party) — a standard Leaflet map on CARTO Voyager tiles (OpenStreetMap data), the familiar
+   look of every map app. Under the tiles sits a simple drawing of the UK from Natural Earth data (public domain, embedded in
+   the page as #ff-ukgeo): it shows only while tiles have not arrived (or when they cannot load), so the map is never blank.
+   It opens on the UK; the London button frames Greater London. People's pins stay area-only; v17.14: venues from Google's
+   business search sit at their own point.
+   v17.21: pins that would overlap are grouped into one numbered cluster (a squircle ringed in the category colours); tap a
+   cluster to zoom into it. The grouping is a plain screen-distance grouping (a dot within CLUSTER_R21 screen pixels of a group joins it) recomputed on every zoom, so hundreds of
+   dots stay readable. To change the map style, change TILE_URL21 only.
    ========================================================================== */
 let UK_GEO11 = null;
 
@@ -39,13 +42,32 @@ const LDN11 = [51.5, -0.12];
 const NEAR_Z11 = 8.5;
 
 
-/* The M25 ring (hand-traced from the motorway junctions; a drawn guide, not survey data) and the frame that holds all of it. */
-const M25_11 = [[51.462, 0.262], [51.484, 0.287], [51.566, 0.256], [51.618, 0.241], [51.646, 0.100], [51.683, 0.001], [51.700, -0.080],
-  [51.699, -0.190], [51.693, -0.230], [51.722, -0.300], [51.716, -0.380], [51.708, -0.440], [51.660, -0.510], [51.640, -0.540],
-  [51.578, -0.520], [51.485, -0.513], [51.440, -0.510], [51.374, -0.500], [51.318, -0.460], [51.292, -0.340], [51.265, -0.190],
-  [51.254, -0.065], [51.280, 0.150], [51.320, 0.170], [51.400, 0.190], [51.426, 0.235]];
+const TILE_URL21 = "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
 
 
+const TILE_ATTR21 = "\u00A9 <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\" rel=\"noopener\">OpenStreetMap</a> \u00A9 <a href=\"https://carto.com/attributions\" target=\"_blank\" rel=\"noopener\">CARTO</a>";
+
+
+const CLUSTER_R21 = 50;
+
+
+const CLUSTER_Z21 = 11.5;
+
+
+const clusterColour21 = (p) => p.kind === "company" ? (MAP_COL17[p.cat || "bar"] || MAP_COL17.bar) : p.kind === "person" ? "#141416" : p.kind === "venue" ? "#C6C8CC" : "#C9A227";
+
+
+/* The ring of a cluster: its members' category colours as arcs, in proportion. */
+const clusterRing21 = (members) => {
+  const by = {};
+  members.forEach((p) => { const c = clusterColour21(p); by[c] = (by[c] || 0) + 1; });
+  let at = 0;
+  const stops = Object.entries(by).sort((a, b) => b[1] - a[1]).map(([c, n]) => { const from = at; at += n / members.length * 100; return `${c} ${from}% ${at}%`; });
+  return `conic-gradient(${stops.join(",")})`;
+};
+
+
+/* The frame of the London button (Greater London). 17.21: no M25 overlay any more. */
 const LONDON_BOUNDS11 = [[51.243, -0.545], [51.733, 0.315]];
 
 
@@ -210,54 +232,71 @@ function FFMap({ mode = "home" }) {
     try {
       map = L.map(boxRef.current, {
         zoomControl: false, attributionControl: false, scrollWheelZoom: false, dragging: !L.Browser.mobile,
-        zoomSnap: 0.25, zoomDelta: 1, minZoom: 0.5, maxZoom: 13, preferCanvas: true,
+        zoomSnap: 0.25, zoomDelta: 1, minZoom: 1, maxZoom: 16, preferCanvas: true,
         maxBounds: [[-80, -200], [86, 200]], maxBoundsViscosity: 0.9, worldCopyJump: false,
       });
       mapRef.current = map;
       map.fitBounds(UK_BOUNDS11, { padding: [8, 8] });
+      /* Under the tiles: a plain drawing of the UK in the Voyager colours (shows only until tiles arrive, or if they cannot load). */
       const cv = L.canvas({ padding: 0.4 });
       const area = (sets, style) => sets && sets.length ? L.polygon(sets.map(p => p.map(decRing11)), { renderer: cv, interactive: false, ...style }) : null;
       const line = (sets, style) => sets && sets.length ? L.polyline(sets.map(decRing11), { renderer: cv, interactive: false, ...style }) : null;
       [
-        area(G.world, { color: "#6E9A5A", opacity: 0.55, weight: 0.7, fillColor: "#C9DDB0", fillOpacity: 1 }),
-        area(G.ie, { color: "#5E8C4A", opacity: 0.7, weight: 1, fillColor: "#B9D69B", fillOpacity: 1 }),
-        area(G.gb, { color: "#4E7F3C", opacity: 0.9, weight: 1.3, fillColor: "#9FCB7A", fillOpacity: 1 }),
-        area(G.lakes, { stroke: false, fillColor: "#8FC3E6", fillOpacity: 1 }),
-        line(G.rivers, { color: "#4F9AD3", opacity: 0.8, weight: 1 }),
+        area(G.world, { color: "#D8D2C4", opacity: 1, weight: 0.7, fillColor: "#EBE7DE", fillOpacity: 1 }),
+        area(G.ie, { color: "#D0C9B9", opacity: 1, weight: 1, fillColor: "#EFEBE3", fillOpacity: 1 }),
+        area(G.gb, { color: "#CBC4B2", opacity: 1, weight: 1.2, fillColor: "#F2EFE9", fillOpacity: 1 }),
+        area(G.lakes, { stroke: false, fillColor: "#AAD3DF", fillOpacity: 1 }),
+        line(G.rivers, { color: "#AAD3DF", opacity: 1, weight: 1 }),
       ].forEach(l => l && l.addTo(map));
-      const adm = area(G.adm, { color: "#3F6B33", opacity: 0.3, weight: 0.6, fill: false });
-      const ldn = area(G.ldnu, { color: "#3F6B33", opacity: 0.6, weight: 1.2, fillColor: "#86B862", fillOpacity: 0.7 });
-      const m25 = L.polyline(smooth11(M25_11, true), { renderer: cv, interactive: false, color: "#8C1526", opacity: 0.85, weight: 1.6, dashArray: "7 6" });
-      const thSm = G.thames && G.thames.map(r => smooth11(decRing11(r), false, 2));
-      const thames = L.layerGroup(thSm ? [
-        L.polyline(thSm, { renderer: cv, interactive: false, color: "#2F7FC1", opacity: 0.95, weight: 4.5, lineJoin: "round", lineCap: "round" }),
-        L.polyline(thSm, { renderer: cv, interactive: false, color: "#BFE3F7", opacity: 0.9, weight: 1.6, lineJoin: "round", lineCap: "round" }),
-      ] : []);
-      const m25lbl = L.marker([51.7, -0.075], { interactive: false, keyboard: false,
-        icon: L.divIcon({ className: "ff-lm25", html: "<span>M25</span>", iconSize: [0, 0] }) });
-
       UK_CITIES11.forEach(([nm, la, lo, big, left]) => {
         L.marker([la, lo], { interactive: false, keyboard: false,
           icon: L.divIcon({ className: `ff-lcity${big ? " big" : ""}${left ? " l" : ""}`, html: `<i></i><span>${nm}</span>`, iconSize: [0, 0] }) }).addTo(map);
       });
-      const h = {};
-      pins.forEach(p => {
-        const m = L.marker(p.ll || toLL(p.x, p.y), { interactive: false, keyboard: false, zIndexOffset: p.kind === "person" ? 100 : p.kind === "company" ? 300 : 0,
-          icon: L.divIcon({ className: "ff-lpin" + (p.kind === "company" ? " ff-lco" + (p.ldn ? " ldn" : "") : ""), html: "<div></div>", iconSize: [0, 0] }) }).addTo(map);
-        h[p.kind + p.id] = m.getElement().firstChild;
-      });
+      const tiles = L.tileLayer(TILE_URL21, { subdomains: "abcd", maxZoom: 20, maxNativeZoom: 19 }).addTo(map);
+      tiles.once("tileload", () => { if (boxRef.current) boxRef.current.classList.add("tiles-ok"); });
+      L.control.attribution({ prefix: false, position: "bottomright" }).addAttribution(TILE_ATTR21).addTo(map);
       L.control.zoom({ position: "topright" }).addTo(map);
+
+      /* The dots. Pins that would sit on top of each other (within CLUSTER_R21 screen pixels) are one cluster below CLUSTER_Z21. */
+      const items = pins.map(p => ({ p, ll: p.ll || toLL(p.x, p.y) }));
+      const dots = L.layerGroup().addTo(map);
+      let h = {};
+      const draw = () => {
+        dots.clearLayers(); h = {};
+        const z = map.getZoom(), groups = [];
+        items.forEach(it => {
+          if (z >= CLUSTER_Z21) { groups.push([it]); return; }
+          const pt = map.project(it.ll, z);
+          let best = null, bd = CLUSTER_R21;
+          groups.forEach(g => { const d = Math.hypot(g.x - pt.x, g.y - pt.y); if (d < bd) { bd = d; best = g; } });
+          if (best) { best.push(it); best.x += (pt.x - best.x) / best.length; best.y += (pt.y - best.y) / best.length; }
+          else { const g = [it]; g.x = pt.x; g.y = pt.y; groups.push(g); }
+        });
+        groups.forEach(g => {
+          if (g.length === 1) {
+            const { p, ll } = g[0];
+            const m = L.marker(ll, { interactive: false, keyboard: false, zIndexOffset: p.kind === "person" ? 100 : p.kind === "company" ? 300 : 0,
+              icon: L.divIcon({ className: "ff-lpin" + (p.kind === "company" ? " ff-lco" : ""), html: "<div></div>", iconSize: [0, 0] }) }).addTo(dots);
+            h[p.kind + p.id] = m.getElement().firstChild;
+            return;
+          }
+          const lat = g.reduce((a, it) => a + it.ll[0], 0) / g.length, lng = g.reduce((a, it) => a + it.ll[1], 0) / g.length;
+          const n = g.length, size = n < 10 ? 44 : n < 100 ? 48 : 54;
+          const m = L.marker([lat, lng], { keyboard: true, title: n + " places. Zoom in", riseOnHover: true, zIndexOffset: 1000,
+            icon: L.divIcon({ className: "ff-lcl", html: `<span class="ff-cl" style="width:${size}px;height:${size}px;background:${clusterRing21(g.map(it => it.p))}"><b>${n}</b></span>`, iconSize: [0, 0] }) }).addTo(dots);
+          m.on("click", () => map.flyToBounds(L.latLngBounds(g.map(it => it.ll)), { duration: 0.8, padding: [70, 70], maxZoom: CLUSTER_Z21 + 0.75 }));
+          m.on("keypress", (e) => { if (e.originalEvent && (e.originalEvent.key === "Enter" || e.originalEvent.key === " ")) m.fire("click"); });
+        });
+        setHosts(h);
+      };
 
       const sync = () => {
         const z = map.getZoom(), f = z < NEAR_Z11;
         if (boxRef.current) { boxRef.current.classList.toggle("far", f); boxRef.current.classList.toggle("world", z < WORLD_Z11); }
-        if (z >= 6.5 && z < 8) { if (!map.hasLayer(adm)) adm.addTo(map); } else if (map.hasLayer(adm)) map.removeLayer(adm);
-        if (z >= 8) { if (!map.hasLayer(ldn)) { ldn.addTo(map); m25.addTo(map); m25lbl.addTo(map); thames.addTo(map); thames.eachLayer(l => l.bringToFront()); } }
-        else if (map.hasLayer(ldn)) { map.removeLayer(ldn); map.removeLayer(m25); map.removeLayer(m25lbl); map.removeLayer(thames); }
         setView(z < WORLD_Z11 ? "world" : f ? "uk" : "london");
+        draw();
       };
       map.on("zoomend", sync); sync();
-      setHosts(h);
       return () => { setHosts(null); mapRef.current = null; map.remove(); };
     } catch (e) {
       if (map) map.remove();
