@@ -1,5 +1,18 @@
 # FireFlair prototype — changelog
 
+## v17.25
+
+Artifact version 1794945024-9a74.
+
+FF Team Bookings, "Build your career": Training, Dream jobs and FireFlair rewards cards and their drop-down headers.
+
+- Cards (`FlipChoice17`, terms-and-packages.jsx; styles in v11.css `.ff-fc17`): the photo is the top half of the card and only the title sits on it, over a short dark fade. Label, description and the button sit below on the solid card. The cards no longer turn over, because the description is always on the front.
+- Drop-down headers (`BkDrop17`, bookings.jsx; styles in bkd.css): same rule, photo on top with the title on it, then icon, description and chevron. From 760px wide the three sit in one row and the opened one shows its cards full width underneath with its own title. Still closed by default. The ids ff-bk-training, ff-bk-jobs and ff-bk-rewards moved to the header button and remain the scroll targets.
+- Each card photo has a position setting (`swipeImgs().pos`, home-scenes.jsx) so heads and drinks stay in frame above the title. Update it when a photo is swapped.
+- Buttons are squircle and 44px tall; cards in a row share one height; words never split.
+- The Training label "FireFlair event" now reads "FF event".
+- No photos were changed. A picture audit of these 27 images is with Alex.
+
 ## v17.24
 
 Artifact version 1794944686-9549.
