@@ -1,5 +1,17 @@
 # FireFlair prototype — changelog
 
+## v17.39
+
+FF Party package cards in the FF Team Bookings page. Branch merged: `p2-pkg2`.
+
+- Dark package card with the burgundy "Package card" ribbon, the FF logo, the package name in Cinzel and its tagline.
+- Round burgundy icon rows for Includes, Ideal for and Duration. Includes is shown as one line, no longer split into bullets on "and".
+- A Details box, closed by default, holds the description, the points, what the bartender brings and the conditions.
+- Burgundy footer with "You earn" and Sign up (Signed up when chosen); Confirm and the terms step work as before.
+- One design for every package: no bronze, silver, gold or platinum colours or labels. Staffing shows as a package in the same design. Platinum Tasting is not on this list.
+- All wording comes unchanged from the package catalogue and is written for the bartenders who sign up. Long words shrink rather than split.
+- Files: src/components/team/bookings.jsx (BkPkgCard17), src/styles/bkd.css (cell width, new pkgbuild block).
+
 ## v17.38
 
 Artifact version 1794957357-2667.
