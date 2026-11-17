@@ -273,3 +273,18 @@
 /* 2. Someone else's profile: About Me directly above Professions. */
 .ff .ff-pp-other .ff-tabpanel:has(> .ff-about) { display: flex; flex-direction: column; }
 .ff .ff-pp-other .ff-tabpanel:has(> .ff-about) > .ff-about { order: -1; }
+/* 3. Tab headings as four small squircle boxes; the open one burgundy with cream text. */
+.ff .ff-ptabs-wrap > .ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 6px; border-bottom: 0; margin-top: 18px; }
+.ff .ff-ptabs-wrap > .ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) button { min-width: 0; min-height: 48px; padding: 6px 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; box-sizing: border-box;
+  background: var(--color-cream); border: 1px solid color-mix(in srgb, var(--color-gold) 70%, transparent); border-radius: 14px; corner-shape: squircle;
+  color: var(--color-text); font-size: clamp(11px, 3.3vw, 14px); font-weight: 700; letter-spacing: .01em; line-height: 1.15; white-space: nowrap; transition: background .18s ease, color .18s ease; }
+.ff .ff-ptabs-wrap > .ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) button::after { content: none; }
+.ff .ff-ptabs-wrap > .ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) button .ct { font-weight: 600; opacity: .75; font-variant-numeric: tabular-nums; }
+.ff .ff-ptabs-wrap > .ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) button:hover { border-color: var(--color-gold-mid); }
+.ff .ff-ptabs-wrap > .ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) button.on { background: var(--color-ox); border-color: var(--color-ox); color: var(--color-cream); font-weight: 800; }
+.ff .ff-ptabs-wrap > .ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) button.on .ct { opacity: .85; }
+.ff .ff-ptabs-wrap > .ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) button:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; border-radius: 14px; }
+@media (min-width: 600px) { .ff .ff-ptabs-wrap > .ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) button { flex-direction: row; gap: 5px; font-size: 14px; } }
+@media (prefers-reduced-motion: reduce) { .ff .ff-ptabs-wrap > .ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) button { transition: none; } }
+/* 5. Company page on a phone or tablet: room under the action panel so its shadow no longer falls on the tab headings. */
+.ff .ff-copub .ff-phero.has-media:not(.wide) { margin-bottom: 36px; }
