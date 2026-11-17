@@ -1353,7 +1353,7 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-bbtn .tx small { overflow-wrap:anywhere; }
 
 /* ==== The UK map ==== */
-.ff .ff-map-uk { border-radius:18px; background:radial-gradient(120% 90% at 50% 40%, #B6DBF2 0%, #8FC3E6 75%); }
+.ff .ff-map-uk { border-radius:22px; corner-shape:squircle; background:#AAD3DF; }
 .ff .ff-map-uk-in { background:transparent; }
 .ff .ff-map-uk .leaflet-container { background:transparent; }
 .ff .leaflet-pane > canvas, .ff .leaflet-pane > svg { position:absolute; left:0; top:0; }
@@ -1865,8 +1865,6 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-sp3.core .ff-core-ring .node .lb { border-color:rgba(201,146,47,.7); box-shadow:0 2px 8px rgba(0,0,0,.55); }
 
 /* ==== 23:30 round: London view framed on the M25, no area labels ==== */
-.ff .ff-lm25 { pointer-events:none; width:0; height:0; overflow:visible; }
-.ff .ff-lm25 span { position:absolute; left:0; top:-26px; transform:translateX(-50%); font-size:11px; font-weight:800; letter-spacing:.2em; color:#E6C766; padding:1px 7px; border-radius:99px; background:rgba(20,16,10,.85); border:1px solid rgba(230,199,102,.55); }
 
 /* ==== 23:40 round: Put yourself on the map uses snapshots of the real map ==== */
 .ff .ff-mb-vis .ff-mb-snap { display:block; width:100%; max-width:240px; aspect-ratio:4/5; object-fit:cover; object-position:50% 50%; border-radius:14px; border:1px solid rgba(201,162,39,.4); background:var(--ink,#0B0B0C); }
@@ -4555,3 +4553,25 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-c17-modrow .ff-c17-rechead .h svg { display:none; }
 .ff .ff-c17-modrow .ff-c17-size { flex:none; padding:3px; gap:3px; }
 .ff .ff-c17-modrow .ff-c17-size button { min-width:30px; padding:6px 8px; font-size:13px; }
+
+/* ==== 17.21: the familiar map (CARTO Voyager tiles), clusters, squircle controls ==== */
+.ff .ff-map-uk { border: 1px solid rgba(126,97,29,.4); box-shadow: 0 10px 28px -18px rgba(20,16,10,.6); }
+.ff .ff-map-uk .leaflet-container { font-family: var(--sans); }
+.ff .ff-map-uk .leaflet-control-attribution { background: rgba(255,255,255,.78); color: #4A4437; font-size: 10px; padding: 1px 7px; border-radius: 8px 0 0 0; corner-shape: squircle; }
+.ff .ff-map-uk .leaflet-control-attribution a { color: #4A4437; text-decoration: underline; }
+.ff .ff-map-uk-in.tiles-ok .ff-lcity { display: none; }
+.ff .ff-map-uk .leaflet-control-zoom { border: 0; box-shadow: none; display: flex; flex-direction: column; gap: 6px; }
+.ff .ff-map-uk .leaflet-control-zoom a { width: 44px; height: 44px; line-height: 42px; font-size: 20px; margin: 0; border-radius: 15px; corner-shape: squircle; border: 1px solid rgba(176,141,42,.7); box-shadow: 0 6px 14px -8px rgba(0,0,0,.6); }
+.ff .ff-map-seg { border-radius: 17px; corner-shape: squircle; padding: 4px; gap: 2px; }
+.ff .ff-map-seg button { min-height: 36px; min-width: 44px; padding: 0 14px; border-radius: 13px; corner-shape: squircle; }
+.ff .ff-lcl { width: 0; height: 0; overflow: visible; }
+.ff .ff-cl { position: absolute; left: 0; top: 0; transform: translate(-50%,-50%); display: grid; place-items: center; box-sizing: border-box; border-radius: 36%; corner-shape: squircle; cursor: pointer; box-shadow: 0 2px 6px rgba(20,16,10,.28), 0 0 0 1.5px rgba(255,255,255,.95); }
+.ff .ff-cl::before { content: ""; position: absolute; inset: 3px; border-radius: 32%; corner-shape: squircle; background: #FFFDF8; }
+.ff .ff-cl::after { content: ""; position: absolute; inset: -9px; }
+.ff .ff-cl b { position: relative; font: 600 12.5px/1 var(--sans); color: #16130F; font-variant-numeric: tabular-nums; }
+.ff .ff-lcl:hover .ff-cl { box-shadow: 0 3px 8px rgba(20,16,10,.35), 0 0 0 1.5px #E4C36A; }
+.ff .ff-lcl:focus-visible .ff-cl { outline: 2px solid #E4C36A; outline-offset: 3px; }
+.ff .ff-lcl { outline: none; }
+.ff .ff-ml19 .ff-ml19-row label { min-height: 44px; padding: 0 14px; border-radius: 15px; corner-shape: squircle; border-color: rgba(126,97,29,.3); background: #FFFDF8; }
+@media (min-width: 900px) { .ff .ff-map-uk.ff-map-real { height: 560px !important; } }
+@media (max-width: 600px) { .ff .ff-ml19 .ff-ml19-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; } .ff .ff-ml19 .ff-ml19-row label { justify-content: flex-start; min-width: 0; padding: 0 10px; white-space: nowrap; } .ff .ff-ml19 .ff-ml19-x { margin-left: auto; } }

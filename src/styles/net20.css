@@ -1,13 +1,24 @@
 /* v17.20 — FF Team Network page: Directory and Venues tabs, Featured tag, venue tile with the members who listed it. */
-.ff .ff-ptabs.ff-nt20 { margin: 2px 0 12px; overflow-x: auto; scrollbar-width: none; flex-wrap: nowrap; }
+/* 17.21 — sub-category tabs: a single row of squircle buttons. The row scrolls left and right only: fixed height, no vertical overflow,
+   touch-action pan-x, and no underline element that could add height when a tab is chosen. */
+.ff .ff-ptabs.ff-nt20 { display: flex; flex-wrap: nowrap; align-items: center; gap: 8px; height: 62px; box-sizing: border-box; margin: 0 -16px 6px; padding: 9px 16px; border: 0;
+  overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; touch-action: pan-x; scroll-snap-type: x proximity; scroll-padding-inline: 16px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
 .ff .ff-ptabs.ff-nt20::-webkit-scrollbar { display: none; }
-.ff .ff-ptabs.ff-nt20 button { flex: none; flex-direction: row; gap: 6px; padding: 10px 14px; font-size: 13.5px; white-space: nowrap; overflow-wrap: normal; word-break: normal; }
-.ff .ff-ptabs.ff-nt20 button::after { left: 14px; right: 14px; }
+.ff .ff-ptabs.ff-nt20 button { flex: none; flex-direction: row; gap: 8px; height: 44px; min-height: 44px; min-width: 44px; padding: 0 16px; box-sizing: border-box; scroll-snap-align: start;
+  font: 600 13.5px/1 var(--sans); letter-spacing: .005em; color: #3A3427; white-space: nowrap; overflow-wrap: normal; word-break: normal; hyphens: none;
+  background: #FFFDF8; border: 1px solid rgba(126,97,29,.3); border-radius: 15px; corner-shape: squircle; box-shadow: 0 1px 0 rgba(255,255,255,.7) inset, 0 4px 10px -8px rgba(40,30,10,.5);
+  transition: background .18s ease, color .18s ease, border-color .18s ease; }
+.ff .ff-ptabs.ff-nt20 button::after { content: none; }
+.ff .ff-ptabs.ff-nt20 button:hover { border-color: rgba(126,97,29,.6); }
+.ff .ff-ptabs.ff-nt20 button.on { background: #16130F; border-color: #B08D2A; color: #F4EFE4; font-weight: 700; box-shadow: 0 6px 14px -8px rgba(0,0,0,.7); }
+.ff .ff-ptabs.ff-nt20 button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 15px; }
 .ff .ff-ptabs.ff-nt20 .ic { display: inline-flex; color: var(--gold-dk, #7E611D); }
-.ff .ff-ptabs.ff-nt20 button.on .ic { color: #16130F; }
-.ff .ff-ft20 { align-self: flex-start; display: inline-flex; align-items: center; gap: 5px; margin: 0 4px; padding: 3px 9px 3px 7px; border-radius: 10px; corner-shape: squircle; background: #16130F; color: #E4C36A; border: 1px solid #B08D2A; font: 800 10.5px/1.2 var(--sans); letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
-.ff .ff-vt20 { display: flex; flex-direction: column; gap: 8px; width: 200px; }
+.ff .ff-ptabs.ff-nt20 button.on .ic { color: #E4C36A; }
+.ff .ff-ptabs.ff-nt20 .ct { font-weight: 600; font-size: 12px; opacity: .65; font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) { .ff .ff-ptabs.ff-nt20 button { transition: none; } }
+.ff .ff-vt20 { display: flex; flex-direction: column; gap: 10px; width: 236px; }
 .ff .ff-vt20 .ff-vc19 { width: 100%; }
-.ff .ff-vt20 .by { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 2px; }
-.ff .ff-vt20 .by button { padding: 0; border: 0; background: none; cursor: pointer; border-radius: 50%; line-height: 0; }
-.ff .ff-vt20 .by button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.ff .ff-vt20 .lb { margin: 0 2px; font: 800 10.5px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: #6A5E48; }
+.ff .ff-vt20 .by { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 0 2px; }
+.ff .ff-vt20 .by button { display: grid; place-items: center; width: 44px; height: 44px; margin: -6px; padding: 0; border: 0; background: none; cursor: pointer; border-radius: 50%; line-height: 0; }
+.ff .ff-vt20 .by button:focus-visible { outline: 2px solid var(--gold); outline-offset: 0; }

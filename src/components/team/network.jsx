@@ -796,17 +796,9 @@ function NetworkScreen({ guest = false }) {
   const netPeople = adds.map(id => state.directory.find(p => p.id === id)).filter(p => p && !connected.some(c => c.id === p.id));
   const netCos = adds.filter(id => String(id).startsWith("co_")).map(id => companyById(state, id)).filter(Boolean);
   const view = (p) => { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); };
-  const join = () => { dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); };
 
   return (
     <div>
-
-      {guest && !q && (
-        <div className="ff-pendingnote" style={{ marginTop: 6 }}>
-          <span>Join FF Team to build your own network. Whoever invites you is added to it automatically.</span>
-          <Btn variant="sm gold" onClick={join}><User size={12} /> Create your Profile Card</Btn>
-        </div>
-      )}
 
       {!q && !guest && <SentInvitations />}
 
