@@ -19,8 +19,7 @@ function SentInvitations() {
               <span style={{ flex: 1, minWidth: 0 }}><b>{i.name}</b><small>Team invitation · waiting for {first} to accept</small></span>
               <button type="button" className="ff-linkbtn" onClick={() => {
                 dispatch({ type: "TEAM_INVITE_ACCEPT", id: i.id });
-                if (i.workedBefore && (i.review || i.rating)) dispatch({ type: "REVIEW_ADD", review: { id: uid("rev"), aboutId: i.personId, byId: "me", shiftId: null, byName: state.profile.name || "You", rating: i.rating || 5, text: i.review || `${i.howTo} to work with.`, at: Date.now() } });
-                dispatch({ type: "TOAST", toast: `${first} accepted · now in your network` });
+                dispatch({ type: "TOAST", toast: `${first} accepted · now on your team` });
               }}>Preview: {first} accepts</button>
             </div>
           );

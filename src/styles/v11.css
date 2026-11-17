@@ -4010,6 +4010,24 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-qa17 .ty button { width:48px; height:48px; border-radius:50%; border:0; background:var(--gold-dk,#7E611D); color:#fff; display:grid; place-items:center; cursor:pointer; }
 .ff .ff-qa17 .ty button:disabled { opacity:.4; cursor:default; }
 .ff .ff-qa17 button:focus-visible, .ff .ff-qa17 input:focus-visible { outline:2px solid var(--gold,#B08D2A); outline-offset:2px; }
+/* net-ladder 2/3 (v17.22): the one review form (ReviewForm17): Question, Yes | No, five stars, type box, Post review. */
+.ff .ff-rf17 { display:grid; gap:10px; min-width:0; text-align:left; }
+.ff .ff-rf17 .lb { font:800 11px/1.2 var(--sans); letter-spacing:.16em; text-transform:uppercase; color:var(--color-gold-dk); }
+.ff .ff-rf17 .q { margin:0; font:700 17px/1.3 var(--sans); color:var(--color-text); overflow-wrap:normal; word-break:normal; hyphens:none; }
+.ff .ff-rf17 .yn { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:8px; }
+.ff .ff-rf17 .yn button { min-height:48px; border-radius:14px; corner-shape:squircle; border:1.5px solid rgba(126,97,29,.5); background:var(--color-soft); color:var(--color-text); font:700 16px/1.2 var(--sans); }
+.ff .ff-rf17 .yn button.on { background:var(--color-gold); border-color:var(--color-gold-dk); color:var(--color-ink); }
+.ff .ff-rf17 .st { display:flex; gap:2px; flex-wrap:wrap; margin-left:-6px; }
+.ff .ff-rf17 .st button { min-width:44px; min-height:44px; padding:6px; display:grid; place-items:center; border-radius:12px; corner-shape:squircle; color:var(--color-muted-dark); }
+.ff .ff-rf17 .st button.on { color:var(--color-gold); }
+.ff .ff-rf17 .st button svg { display:block; }
+.ff .ff-rf17 .st button.on svg { animation:ffRf17Pop .15s ease-out var(--d,0ms) both; }
+@keyframes ffRf17Pop { 0% { transform:scale(1); } 55% { transform:scale(1.3); } 100% { transform:scale(1); } }
+@media (prefers-reduced-motion:reduce) { .ff .ff-rf17 .st button.on svg { animation:none; } }
+.ff .ff-rf17 .ty { width:100%; box-sizing:border-box; min-height:48px; padding:12px 14px; border-radius:14px; corner-shape:squircle; border:1.5px solid rgba(126,97,29,.5); background:var(--color-soft); color:var(--color-ink); font:400 16px/1.4 var(--sans); resize:vertical; }
+.ff .ff-rf17 .ty::placeholder { color:var(--color-muted); }
+.ff .ff-rf17 .ff-btn { min-height:48px; border-radius:14px; corner-shape:squircle; }
+.ff .ff-rf17 button:focus-visible, .ff .ff-rf17 .ty:focus-visible { outline:2px solid var(--color-gold-dk); outline-offset:2px; }
 .ff .ff-nd17 { scroll-margin-top:72px; }
 /* v17.4.6.3: FF Staff Shifts profession cards: matte forest green (FF Staff accent within FF Team). Flat fill, no sheen.
    Deepened from the card-creator green (#173B2A to #1F5A3C) so labels, the rate input and small text stay readable. */

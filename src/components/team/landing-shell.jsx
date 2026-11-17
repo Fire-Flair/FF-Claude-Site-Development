@@ -334,8 +334,10 @@ function LoginSheet({ open, onClose }) {
     const tag = res.method === "otp" && mine ? state.session.tag : res.tag;
     if (res.method === "otp") dispatch({ type: "SESSION", patch: { tag, phone, verified: true } });
     else dispatch({ type: "SESSION", patch: { tag } });
+    const draft = !!(state.session && state.session.reviewDraft17);
     dispatch({ type: "AUTH_SIGNED_IN", tag, method: res.method, login: true });
-    dispatch({ type: "TOAST", toast: `Logged in as ${tag}` });
+    /* A review written while signed out posts at sign-in with its own "Review sent to …" toast; keep that one. */
+    if (!draft) dispatch({ type: "TOAST", toast: `Logged in as ${tag}` });
     onClose();
   };
   const switchTo = (m) => { setMode(m); setErr(null); setSent(false); setCode(""); };

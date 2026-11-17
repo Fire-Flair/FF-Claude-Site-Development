@@ -36,14 +36,17 @@ function InviteBanner17() {
   if (!inv || (signedIn && !ref)) return null;
   const kind = signedIn ? ref.kind : state.session.refKind;
   const first = String(inv.name || "").split(" ")[0];
-  const rec = signedIn && kind === "team" ? (state.teamAsksIn17 || []).find(x => x.fromId === inv.id) : null;
+  /* v17.22: a waiting team invitation from this person decides the banner, whatever the link kind (a shared-card sign-up creates one too).
+     An older shared-card account with no invitation record behaves as before. */
+  const rec = signedIn ? (state.teamAsksIn17 || []).find(x => x.fromId === inv.id) : null;
+  const teamish = signedIn && (kind === "team" || !!rec);
   const verdict = rec ? (state.teamAsks17 || {})[rec.id] : null;
-  const accepted = signedIn && kind === "team" && (verdict === "accepted" || (state.connections || []).some(c => c.id === inv.id));
-  const setAside = signedIn && kind === "team" && !accepted && (verdict === "declined" || !!ref.notNowAt);
-  const pending = signedIn && kind === "team" && !accepted && !setAside && !!rec;
+  const accepted = teamish && (verdict === "accepted" || (state.connections || []).some(c => c.id === inv.id));
+  const setAside = teamish && !accepted && (verdict === "declined" || !!ref.notNowAt);
+  const pending = teamish && !accepted && !setAside && !!rec;
   const complete = signedIn && (!!ref.completedAt || profileBasics17(state));
   const reviewDone = !accepted || !!ref.reviewOfferedAt;
-  const finished = signedIn && complete && (kind !== "team" || accepted || setAside || !rec) && reviewDone && !reviewing;
+  const finished = signedIn && complete && (!teamish || accepted || setAside || !rec) && reviewDone && !reviewing;
   if (finished) return null;
   const accept = () => {
     dispatch({ type: "TEAM_ASK_REPLY", ask: rec, accept: true });
@@ -52,7 +55,7 @@ function InviteBanner17() {
     setReviewing(true);
   };
   const open = () => { dispatch({ type: "VIEW", id: inv.id }); window.scrollTo(0, 0); };
-  const line1 = kind !== "team" ? `${inv.name} invited you to FireFlair` : accepted ? `You are on ${first}'s team` : `You have been invited to join ${inv.name}'s team`;
+  const line1 = (signedIn ? !teamish : kind !== "team") ? `${inv.name} invited you to FireFlair` : accepted ? `You are on ${first}'s team` : `You have been invited to join ${inv.name}'s team`;
   return (
     <div className="ff-inv17" data-inv17={kind}>
       <style>{INV17_CSS}</style>
