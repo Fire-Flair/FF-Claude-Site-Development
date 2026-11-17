@@ -270,9 +270,7 @@
 /* Share: below the other buttons, centred, half the row wide, normal height. */
 .ff .ff-share-half { width: calc(50% - 4px); justify-self: center; }
 .ff .ff-share-half > .ff-csm-btn { width: 100%; min-height: 48px; justify-content: center; border-radius: 14px; corner-shape: squircle; }
-/* 2. Someone else's profile: About Me directly above Professions. */
-.ff .ff-pp-other .ff-tabpanel:has(> .ff-about) { display: flex; flex-direction: column; }
-.ff .ff-pp-other .ff-tabpanel:has(> .ff-about) > .ff-about { order: -1; }
+/* 2. Someone else's profile: About Me directly above Professions (now in the markup order: PublicProfileBody aboutFirst). */
 /* 3. Tab headings as four small squircle boxes; the open one burgundy with cream text. */
 .ff .ff-ptabs-wrap > .ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 6px; border-bottom: 0; margin-top: 18px; }
 .ff .ff-ptabs-wrap > .ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) button { min-width: 0; min-height: 48px; padding: 6px 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; box-sizing: border-box;

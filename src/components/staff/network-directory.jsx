@@ -444,7 +444,7 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
           : <Btn variant="primary wide" onClick={addTeam}><I11.Users size={14} /> Book from their team</Btn>}
       </div>}
       {!done && (co.claimPending || co.claimRejected) && <div className="ff-copub-acts"><span style={{ display: "flex", justifyContent: "center" }}><Pill tone="warn">{co.claimRejected ? "Claim not approved" : "Claim being checked"}</Pill></span></div>}
-      {acts.length > 0 && <div className="ff-copub-grid">{acts.map(([k, el], i) => <div key={k} className={"c-" + k + (acts.length % 2 && i === acts.length - 1 ? " span" : "")}>{el}</div>)}</div>}
+      {acts.length > 0 && <div className="ff-copub-grid">{acts.map(([k, el], i) => { const last = acts.length % 2 && i === acts.length - 1; /* A Share left alone on the last row: centred, half the row wide. */ return <div key={k} className={"c-" + k + (last ? " span" : "") + (last && k === "share" ? " ff-share-half" : "")}>{el}</div>; })}</div>}
       </>} />
 
       <div className="ff-ptabs-wrap">

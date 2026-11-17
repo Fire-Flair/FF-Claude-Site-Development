@@ -183,7 +183,7 @@ function PersonProfile() {
       <Btn variant={party ? "" : "ghost"} onClick={() => setChecking(true)}><I11.CalendarCheck size={14} aria-hidden="true" /><FitLabel17>Availability</FitLabel17></Btn>
     </div>
   );
-  /* FF Team: Share sits below the other buttons, centred, half the row wide. */
+  /* All three sites: Share sits below the other buttons, centred, half the row wide. */
   const halfShare = (el) => el ? <div className="ff-share-half">{el}</div> : null;
   let actionsEl = null;
   if (guestOfMe || (other && !signedIn && !party)) {
@@ -198,7 +198,7 @@ function PersonProfile() {
       {state.role === "staff" && !person.isCompany && <LockedBtn17 variant="primary wide" icon={<Users size={14} />}>Book this person</LockedBtn17>}
       {askRow}
       <Btn variant="wide" onClick={() => setReviewing(true)}><Award size={14} aria-hidden="true" /><FitLabel17>Review</FitLabel17></Btn>
-      {shareBtn}
+      {halfShare(shareBtn)}
     </div>);
   } else if (other) {
     actionsEl = (<div className="ff-pub-acts ff-pub-stack">
@@ -214,7 +214,7 @@ function PersonProfile() {
       )}
       {askRow}
       {state.role === "staff" && <Btn variant="wide" onClick={() => setReviewing(true)}><Award size={14} aria-hidden="true" /><FitLabel17>Review</FitLabel17></Btn>}
-      {state.role === "staff" ? shareBtn : halfShare(shareBtn)}
+      {halfShare(shareBtn)}
     </div>);
   }
   const cardEl = <PlayerCard person={person} format="full" nameAs="div" themeKey={person.id === "me" ? state.profile.theme : (person.theme || "ivory")}  />;
@@ -222,7 +222,7 @@ function PersonProfile() {
     <div className={publicView ? "ff-pubpage ff-pp-other" : undefined}>
       <PublicHero media={mediaOf(state, person)} card={cardEl} narrow below={<>{backBtn}{guestNote}{actionsEl}{shareEl}</>} />
       <HireCards11 person={person} />
-      <PublicProfileBody person={person} />
+      <PublicProfileBody person={person} aboutFirst={publicView} />
       <ReviewSheet open={reviewing} person={person} onClose={() => setReviewing(false)} />
       <AskQuestionSheet open={asking} person={person} onClose={() => setAsking(false)} />
       <CheckAvailabilitySheet open={checking} person={person} onClose={() => setChecking(false)} />
