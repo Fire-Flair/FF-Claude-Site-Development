@@ -664,11 +664,7 @@ function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "", 
                   <PlayerTile key={p.id} person={p} selected={selectable && state.selection.includes(p.id)}
                     onClick={() => onPick(p)} />
                 ))}
-                {<button className="ff-card ff-portrait ff-addtile" style={{ width: CARD_W.player }}
-                  onClick={() => state.role === "team" ? window.dispatchEvent(new Event("ff-invite")) : dispatch({ type: "TOAST", toast: "Join FF Team to invite the people you work with." })}>
-                  <span style={{ textAlign: "center" }}><Plus size={20} color="var(--gold-dk)" />
-                    <span className="ff-label" style={{ display: "block", marginTop: 6 }}>Invite</span></span>
-                </button>}
+                {/* No Invite tile: inviting is part of Share (your own card sends your join link). */}
               </HScroll>
             )}
           </section>

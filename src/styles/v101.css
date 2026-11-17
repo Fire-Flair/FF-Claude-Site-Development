@@ -2421,6 +2421,8 @@ html,body{ overscroll-behavior-y: none}
 .ff .ff-home .ff-join{ margin-bottom:-78px}
 .ff .ff-home .ff-hero-h101{ font-size:clamp(32px,3.3vw,46px); margin-bottom:18px}
 .ff .ff-home .ff-hero-h101{ margin-bottom:6px; font-size:clamp(40px,4.2vw,58px)}
+/* fixes (10): "Welcome to FF Team" sits in the narrow left column of the FF Team hero: sized so it is two lines at most. */
+.ff .ff-home .ff-hero-h101#ff-hero17-h{ font-size:clamp(34px,3vw,42px)}
 .ff .ff-home .ff-hero-sub101{ margin-bottom:20px; font-size:clamp(22px,2.2vw,30px)}
 .ff .ff-home .ff-pl101 .ff-pl-list{ max-width:980px; grid-template-columns:repeat(2,minmax(0,1fr)); align-items:stretch}
 .ff .ff-home .ff-tcard{ width:340px}
