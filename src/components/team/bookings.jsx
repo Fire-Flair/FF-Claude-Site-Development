@@ -179,12 +179,39 @@ function BkDrop17({ id, title, desc, icon: Icon, photo, children }) {
 
 
 
-/* ---- FF Staff Shifts (v17.4.6): one card per profession, from the Pick your professions catalogue ----
-   Matte forest-green version of the FF Party package card (green is the FF Staff accent within FF Team). The question ("Would you like to be contacted
-   about these roles?") is asked once above the cards; each card holds the preferred hourly rate, then Yes / No and a type box for that role (answers kept
-   in profile.staffAvail, as before: "Yes", "No" or the typed answer). The preferred hourly rate is optional: a typed Q&A answer
-   rate.<profession id> in pence, visibility "ff-staff" (shown on the member's FF Staff profile only).
-   Businesses set the actual shift rate on each Shift Card. */
+/* ---- FF Staff Shifts (v17.29 card design): one card per profession, from the Pick your professions catalogue ----
+   The card takes its look from the live FFTeam.uk Bookings cards (dark onyx tile, gold corner brackets, small gold-ringed icon, gold
+   small-caps label, Cinzel title) and its Yes | No control from the live Availability cards. The content is the new one: the role, the
+   preferred hourly rate directly under it, then Yes / No and a type box. The question ("Would you like to be contacted about these
+   roles?") is asked once above the cards, never on a card. Answers are kept in profile.staffAvail ("Yes", "No" or the typed answer).
+   The preferred hourly rate is optional: a typed Q&A answer rate.<profession id> in pence, visibility "ff-staff" (shown on the
+   member's FF Staff profile only). Businesses set the actual shift rate on each Shift Card.
+   ShiftCard29 is the card on its own (no store); ProfRateTile17 wires it to the store, and the home page example reuses it. */
+const SHIFT_Q29 = "Would you like to be contacted about these roles?";
+function ShiftCard29({ name, cat, rate, onRate, ans, onAns, txt, onTxt, onTxtDone, err }) {
+  const q = `Would you like to be contacted about ${name} roles?`;
+  return (
+    <div className="ff-sh29" role="group" aria-label={name}>
+      <i className="cn tl" aria-hidden="true" /><i className="cn tr" aria-hidden="true" /><i className="cn bl" aria-hidden="true" /><i className="cn br" aria-hidden="true" />
+      <span className="hd"><span className="md" aria-hidden="true"><I11.Briefcase size={15} strokeWidth={1.8} /></span><span className="nm"><span className="ey">{cat}</span><b className="tt">{name}</b></span></span>
+      <label className="rt">
+        <small>Your preferred hourly rate</small>
+        <span className="bx">
+          <span aria-hidden="true">£</span>
+          <input type="text" inputMode="decimal" value={rate} aria-label={`Your preferred hourly rate as ${name}, pounds per hour`} aria-invalid={err ? "true" : undefined}
+            onChange={(e) => onRate(e.target.value.replace(/[^\d.]/g, "").slice(0, 7))} />
+          <span aria-hidden="true">/hour</span>
+        </span>
+      </label>
+      {err ? <span className="er" role="alert">{err}</span> : null}
+      <span className="yn" role="group" aria-label={q}>
+        {["Yes", "No"].map(o => <button key={o} type="button" aria-pressed={ans === o} onClick={() => onAns(o)}>{o}</button>)}
+      </span>
+      <input className="ty" type="text" value={txt} maxLength={200} aria-label={`${q} Type your answer`} placeholder="Type your answer"
+        onChange={(e) => onTxt(e.target.value)} onBlur={() => { if (onTxtDone) onTxtDone(false); }} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); if (onTxtDone) onTxtDone(true); } }} />
+    </div>
+  );
+}
 /* Terms shown after signing in, before packages or rates are saved. kind "pkg": FF Party packages. kind "shift": FF Staff shifts. */
 function PkgTerms17({ kind = "pkg", onClose, onAccept }) {
   const list = kind === "shift" ? STAFF_SHIFT_TERMS17 : PARTY_PKG_TERMS17;
@@ -203,37 +230,16 @@ function ProfRateTile17({ name, cat, guest, val, onVal, err }) {
   const { state, dispatch } = useStore();
   const account = qaAccount17(state);
   const saved = account ? prefRateP17(state, account, name) : null;
-  const v = val != null ? val : saved != null ? String(saved / 100) : "";
+  const v = val != null ? val : saved != null ? (saved % 100 ? (saved / 100).toFixed(2) : String(saved / 100)) : "";
   const staffAvail = state.profile.staffAvail || {};
   const ans = staffAvail[name] || "";
-  const q = `Would you like to be contacted about ${name} roles?`;
   const login = () => window.dispatchEvent(new Event("ff-login"));
   const setAvail = (o) => { if (!account) { login(); return; } dispatch({ type: "PROFILE", patch: { staffAvail: { ...staffAvail, [name]: o } } }); };
   const typed = ans === "Yes" || ans === "No" ? "" : ans;
   const [txt, setTxt] = useState(typed);
   useEffect(() => { setTxt(typed); }, [typed]);
-  const sendTxt = () => { const t = txt.trim(); if (t !== typed && (t || typed)) setAvail(t); };
-  return (
-    <div className="ff-tp17 grn prof ff-sr22" role="group" aria-label={name}>
-      <span className="lv">{cat}</span>
-      <b className="tt">{name}</b>
-      <span className="pay">
-        <small>Your preferred hourly rate</small>
-        <span className="rt">
-          <span aria-hidden="true">£</span>
-          <input type="text" inputMode="decimal" value={v} aria-label={`Your preferred hourly rate as ${name}, pounds per hour`}
-            onChange={(e) => onVal(name, e.target.value.replace(/[^\d.]/g, "").slice(0, 7))} />
-          <span>/hour</span>
-        </span>
-        {err ? <span className="er" role="alert">{err}</span> : null}
-      </span>
-      <span className="yn" role="group" aria-label={q}>
-        {["Yes", "No"].map(o => <button key={o} type="button" className={ans === o ? "on" : ""} aria-pressed={ans === o} onClick={() => setAvail(o)}>{o}</button>)}
-      </span>
-      <input className="ty" type="text" value={txt} maxLength={200} aria-label={`${q} Type your answer`} placeholder="Type your answer"
-        onChange={(e) => setTxt(e.target.value)} onBlur={() => { if (account) sendTxt(); }} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); sendTxt(); } }} />
-    </div>
-  );
+  const sendTxt = (enter) => { if (!account && !enter) return; const t = txt.trim(); if (t !== typed && (t || typed)) setAvail(t); };
+  return <ShiftCard29 name={name} cat={cat} rate={v} onRate={(x) => onVal(name, x)} ans={ans} onAns={setAvail} txt={txt} onTxt={setTxt} onTxtDone={sendTxt} err={err} />;
 }
 
 
@@ -286,9 +292,9 @@ function ProfRates17({ guest }) {
       </div>
       <div className="ff-pr17-panel" role="tabpanel">
         <div className="ff-pr17-ph"><I11.ChevronDown size={16} aria-hidden="true" /> <b>{cat === "Yours" ? "Your professions" : cat}</b> shifts</div>
-        <p className="ff-sr22-q">Would you like to be contacted about these roles?</p>
+        <p className="ff-sh29-q">{SHIFT_Q29}</p>
         <HScroll label="FF Staff Shifts" snap>
-          {list.map(p => <div key={p.name} className="ff-tp17-cell"><ProfRateTile17 name={p.name} cat={p.cat} guest={guest} val={vals[p.name]} onVal={onVal} err={errs[p.name]} /></div>)}
+          {list.map(p => <div key={p.name} className="ff-sh29-cell"><ProfRateTile17 name={p.name} cat={p.cat} guest={guest} val={vals[p.name]} onVal={onVal} err={errs[p.name]} /></div>)}
         </HScroll>
       </div>
       <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={busy || !dirty} onClick={confirm}><Check size={15} /> Save your rates</button>

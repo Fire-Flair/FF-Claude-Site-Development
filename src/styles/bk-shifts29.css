@@ -1,0 +1,56 @@
+/* v17.29 FF Team Bookings: the FF Staff Shifts cards (ShiftCard29 in components/team/bookings.jsx).
+   Used on the Bookings page (#ff-bk-staff) and by the FF Team home example (team-pillars.jsx RateTile21).
+   The look comes from the live FFTeam.uk Bookings cards: onyx tile, gold corner brackets, small gold-ringed icon, gold small-caps
+   label, Cinzel title. The joined Yes | No control comes from the live Availability cards. Colours are tokens from tokens.css. */
+
+.ff .ff-sh29-q { margin:0 2px 10px; font:700 14.5px/1.35 var(--sans); color:var(--color-ox); overflow-wrap:normal; hyphens:none; }
+.ff .pv-rt .ff-sh29-q { margin:0; text-align:center; }
+.ff .pv-rt .pv-rates { grid-template-columns:repeat(auto-fit,minmax(212px,1fr)); }
+
+.ff .ff-sh29-cell { flex:none; width:232px; display:flex; scroll-snap-align:start; }
+
+.ff .ff-sh29 { position:relative; display:flex; flex-direction:column; gap:8px; width:100%; min-width:0; box-sizing:border-box; padding:15px 13px 14px;
+  border-radius:16px; corner-shape:squircle; border:1px solid rgba(201,162,39,.4);
+  background:linear-gradient(168deg,var(--color-char),var(--color-ink)); color:var(--color-cream);
+  box-shadow:0 8px 18px -10px rgba(11,11,12,.55); text-align:left; overflow-wrap:normal; word-break:normal; hyphens:none; }
+
+/* the four gold corner brackets of the live card */
+.ff .ff-sh29 .cn { position:absolute; width:11px; height:11px; border:0 solid var(--color-gold); pointer-events:none; }
+.ff .ff-sh29 .cn.tl { top:8px; left:8px; border-top-width:1.5px; border-left-width:1.5px; border-top-left-radius:5px; }
+.ff .ff-sh29 .cn.tr { top:8px; right:8px; border-top-width:1.5px; border-right-width:1.5px; border-top-right-radius:5px; }
+.ff .ff-sh29 .cn.bl { bottom:8px; left:8px; border-bottom-width:1.5px; border-left-width:1.5px; border-bottom-left-radius:5px; }
+.ff .ff-sh29 .cn.br { bottom:8px; right:8px; border-bottom-width:1.5px; border-right-width:1.5px; border-bottom-right-radius:5px; }
+
+.ff .ff-sh29 .hd { display:flex; align-items:center; gap:9px; min-width:0; padding:0 6px; }
+.ff .ff-sh29 .md { flex:none; width:32px; height:32px; display:grid; place-items:center; border-radius:10px; corner-shape:squircle;
+  border:1px solid rgba(201,162,39,.6); background:rgba(201,162,39,.12); color:var(--color-gold-lt); }
+.ff .ff-sh29 .nm { display:grid; gap:3px; min-width:0; }
+.ff .ff-sh29 .ey { font:700 10px/1.2 var(--sans); letter-spacing:.12em; text-transform:uppercase; color:var(--color-gold-lt); }
+.ff .ff-sh29 .tt { font-family:var(--display); font-weight:600; font-size:15px; line-height:1.2; letter-spacing:.03em; color:var(--color-cream); }
+
+.ff .ff-sh29 .rt { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:8px; margin-top:auto; padding:2px 0 0 6px; cursor:text; }
+.ff .ff-sh29 .rt small { font:500 12px/1.3 var(--sans); letter-spacing:0; text-transform:none; color:var(--color-muted-dark); }
+.ff .ff-sh29 .bx { display:flex; align-items:center; gap:3px; min-height:44px; box-sizing:border-box; padding:0 7px; border-radius:12px; corner-shape:squircle;
+  border:1px solid rgba(201,162,39,.55); background:rgba(244,239,228,.07); font:600 12px/1 var(--sans); color:var(--color-gold-lt); white-space:nowrap; }
+.ff .ff-sh29 .bx input { flex:none; width:42px; min-width:0; min-height:42px; padding:0 0 0 2px; margin:0; border:0; outline:0; background:transparent; box-shadow:none;
+  font:600 16px/1 var(--sans); color:var(--color-cream); text-align:right; }
+.ff .ff-sh29 .bx:focus-within { border-color:var(--color-gold-lt); box-shadow:0 0 0 2px var(--color-gold); }
+.ff .ff-sh29 .er { padding:0 6px; font:600 12px/1.35 var(--sans); color:var(--color-action-hi); }
+
+.ff .ff-sh29 .yn { display:grid; grid-template-columns:1fr 1fr; border-radius:12px; corner-shape:squircle; overflow:hidden;
+  border:1px solid rgba(201,162,39,.55); background:rgba(244,239,228,.07); }
+.ff .ff-sh29 .yn button { min-height:44px; margin:0; padding:0 8px; border:0; border-radius:0; background:transparent; box-shadow:none; cursor:pointer;
+  font:700 14px/1 var(--sans); letter-spacing:0; text-transform:none; color:var(--color-cream); }
+.ff .ff-sh29 .yn button + button { border-left:1px solid rgba(201,162,39,.45); }
+.ff .ff-sh29 .yn button[aria-pressed=true] { background:linear-gradient(172deg,var(--color-action-hi),var(--color-action) 58%,var(--color-gold)); color:var(--color-on-action); }
+.ff .ff-sh29 .yn button:focus-visible { outline:2px solid var(--color-gold-lt); outline-offset:-3px; }
+@media (hover:hover) { .ff .ff-sh29 .yn button:not([aria-pressed=true]):hover { background:rgba(201,162,39,.16); } }
+
+.ff .ff-sh29 .ty { width:100%; min-width:0; min-height:44px; box-sizing:border-box; margin:0; padding:8px 10px; border-radius:12px; corner-shape:squircle;
+  border:1px solid rgba(201,162,39,.55); background:rgba(244,239,228,.07); box-shadow:none; font:500 16px/1.2 var(--sans); color:var(--color-cream); }
+.ff .ff-sh29 .ty:focus { border-color:var(--color-gold-lt); }
+.ff .ff-sh29 .ty::placeholder { color:var(--color-muted-dark); opacity:1; font-size:14px; }
+/* the focus ring is drawn on the whole amount box (.bx:focus-within), so the site-wide input outline is switched off inside it */
+.ff .ff-sh29 .bx input:focus, .ff .ff-sh29 .bx input:focus-visible { outline:0 !important; box-shadow:none; }
+/* the amount box grows with what is typed (a long amount is never clipped); the label beside it wraps between words */
+@supports (field-sizing:content) { .ff .ff-sh29 .bx input { field-sizing:content; width:auto; min-width:42px; max-width:66px; } }

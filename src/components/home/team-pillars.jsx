@@ -205,35 +205,19 @@
     );
   }
 
-  /* A rate tile you can tick and type in. Nothing is saved. */
+  /* The FF Staff Shifts card from Bookings (ShiftCard29), as an example you can tick and type in. Nothing is saved. */
   function RateTile21({ name, cat }) {
     const [yn, setYn] = useState("");
     const [v, setV] = useState("");
     const [t, setT] = useState("");
-    const q = "Would you like to be contacted about " + name + " roles?";
-    return (
-      <div className="ff-tp17 grn prof ff-sr22" role="group" aria-label={name}>
-        <span className="lv">{cat}</span>
-        <b className="tt">{name}</b>
-        <span className="pay">
-          <small>Your preferred hourly rate</small>
-          <span className="rt"><span aria-hidden="true">£</span>
-            <input type="text" inputMode="decimal" value={v} aria-label={"Your preferred hourly rate as " + name + ", pounds per hour"} onChange={(e) => setV(e.target.value.replace(/[^\d.]/g, "").slice(0, 7))} />
-            <span>/hour</span></span>
-        </span>
-        <span className="yn" role="group" aria-label={q}>
-          {["Yes", "No"].map((o) => <button key={o} type="button" className={yn === o ? "on" : ""} aria-pressed={yn === o} onClick={() => setYn(o)}>{o}</button>)}
-        </span>
-        <input className="ty" type="text" value={t} maxLength={200} aria-label={q + " Type your answer"} placeholder="Type your answer" onChange={(e) => setT(e.target.value)} />
-      </div>
-    );
+    return <ShiftCard29 name={name} cat={cat} rate={v} onRate={setV} ans={yn} onAns={setYn} txt={t} onTxt={setT} />;
   }
 
   function VisRatesStaff21() {
     return (
       <div className="pv pv-rt">
-        <p className="ff-sr22-q">Would you like to be contacted about these roles?</p>
-        <div className="pv-rates"><RateTile21 name="Bartender" cat="Bar" /><RateTile21 name="DJ" cat="Music" /></div>
+        <p className="ff-sh29-q">{SHIFT_Q29}</p>
+        <div className="pv-rates"><RateTile21 name="Bartender" cat="Bar" /><RateTile21 name="DJ" cat="Entertainment" /></div>
         <ul className="pv-routes">
           <li><b>FF Party</b><span>Private clients book set-price packages</span></li>
           <li><b>FF Staff</b><span>Businesses hire you at your rates</span></li>
