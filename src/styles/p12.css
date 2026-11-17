@@ -828,7 +828,6 @@
   /* the violet beams sit above the photo so they show where the picture ends */
   .ff section#ff-hero.ff-hero18::after { z-index:1; mix-blend-mode:screen; }
 }
-<<<<<<< HEAD
 
 /* ======================= v17.36 — hero (Gimli task): swipeable card, dots under the easel, moving-or-absent shine, crops ======================= */
 /* the card face slides inside a clip that has the card's own shape, so a swipe stays in the board's perspective */
@@ -861,7 +860,7 @@
   .ff .ff-hero18 .ff-hero18-photo { width:160% !important; transform:translate(-50.5%,-6%) !important; }
   .ff .ff-hero18 .ff-easel24 { width:160% !important; transform:translate(-50.5%,-6%) !important; }
 }
-=======
+
 /* Media (photo area) fix: whole photos, one sideways scroller, tap/grip to reveal, auto scroll. css18.css is not loaded on profile or company pages, so this block lives with the photo rules it extends. */
 .ff .ff-pm-track { overflow-y:hidden; touch-action:pan-x pan-y; overscroll-behavior-x:contain; overscroll-behavior-y:auto; }
 .ff .ff-pm-slide { position:relative; overflow:hidden; scroll-snap-align:start; scroll-snap-stop:always; background:#14110A; }
@@ -880,4 +879,3 @@
 .ff .ff-ph-grip:hover span, .ff .ff-ph-grip[aria-expanded="true"] span { width:56px; }
 .ff .ff-ph-grip:focus-visible { outline:2px solid var(--gold); outline-offset:-4px; border-radius:10px; }
 @media (prefers-reduced-motion: reduce) { .ff .ff-ph-grip span { transition:none; } }
->>>>>>> bcbbee0c52cd39aaff69c8e328905c9161df678e
