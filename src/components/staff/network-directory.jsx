@@ -269,7 +269,12 @@ function NetBrowse17(props) {
   if (team20) {
     return React.createElement(React.Fragment, null,
       props.after || null,
-      React.createElement("section", { id: "ff-our-pros", style: { marginTop: 18, scrollMarginTop: 70 } }, props.search),
+      /* v17.30: the whole Our professionals section is back, between the map and the search box, as it was before v17.20. */
+      React.createElement("section", { id: "ff-our-pros", style: { marginTop: 18, scrollMarginTop: 70 } },
+        React.createElement(BigHead20, { title: "Our professionals" }),
+        React.createElement(TopStaff11, null),
+        React.createElement(ProsByType17, { onPick: props.onPick })),
+      React.createElement("section", { id: "ff-net-search", style: { marginTop: 18, scrollMarginTop: 70 } }, props.search),
       React.createElement(NetDirectory20, null),
       React.createElement(NetVenues20, null));
   }

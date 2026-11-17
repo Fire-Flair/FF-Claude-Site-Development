@@ -738,3 +738,39 @@
 /* the card's mirror image in the bar top: only its foot, dim and soft */
 .ff .ff-easel24-card.refl { box-shadow:none; opacity:.24; filter:blur(5px) saturate(.8) brightness(.8);
   -webkit-mask-image:linear-gradient(to top, #000 0%, rgba(0,0,0,.55) 12%, rgba(0,0,0,0) 30%); mask-image:linear-gradient(to top, #000 0%, rgba(0,0,0,.55) 12%, rgba(0,0,0,0) 30%); }
+
+
+/* ======================= v17.30 — hero: shiny card that opens the profile, larger on phones, burgundy and violet panel ======================= */
+.ff .ff-easel24-face { display:block; pointer-events:none; }
+.ff .ff-easel24-face > .ff-deck, .ff .ff-easel24-face > :first-child { max-width:none !important; width:100% !important; margin:0 !important; aspect-ratio:757 / 994 !important; }
+.ff .ff-easel24-card:not(.refl) { pointer-events:auto; cursor:pointer; filter:blur(.3px); outline:none;
+  box-shadow:0 0 0 1px rgba(0,0,0,.6), 0 0 0 3px rgba(243,222,156,.55), 0 0 30px 10px rgba(255,205,105,.42), 0 0 90px 30px rgba(255,190,90,.22); }
+.ff .ff-easel24-card:not(.refl):focus-visible { box-shadow:0 0 0 1px rgba(0,0,0,.6), 0 0 0 6px #F3DE9C, 0 0 30px 10px rgba(255,205,105,.5); }
+/* brighter card: the shade no longer dims it, the key light is stronger */
+.ff .ff-easel24-shade { background:linear-gradient(180deg, rgba(60,24,96,0) 62%, rgba(60,24,96,.18) 100%), radial-gradient(110% 80% at 50% 26%, #FFFFFF 0%, #FFF3D6 55%, #EBD3AE 100%); }
+.ff .ff-easel24-key { background:radial-gradient(70% 50% at 50% 20%, rgba(255,214,120,.34) 0%, rgba(255,200,100,.14) 50%, rgba(255,190,96,0) 82%); }
+/* the shine: a band of light that crosses the card every few seconds */
+.ff .ff-easel24-sheen { position:absolute; inset:0; border-radius:inherit; corner-shape:squircle; overflow:hidden; pointer-events:none; mix-blend-mode:screen; }
+.ff .ff-easel24-sheen::before { content:""; position:absolute; top:-20%; bottom:-20%; left:-60%; width:46%; transform:skewX(-18deg);
+  background:linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,244,214,.20) 35%, rgba(255,255,255,.62) 50%, rgba(255,244,214,.20) 65%, rgba(255,255,255,0) 100%);
+  animation:ff-easel-sheen30 5.5s cubic-bezier(.4,0,.2,1) 1.2s infinite; }
+@keyframes ff-easel-sheen30 { 0% { left:-60%; } 32%, 100% { left:130%; } }
+@media (prefers-reduced-motion: reduce) { .ff .ff-easel24-sheen::before { animation:none; left:18%; opacity:.6; } }
+/* the panel behind the words: burgundy in the middle, violet rising from the Welcome box */
+.ff .ff-hero18, .ff .ff-home .ff-hero18 { background:radial-gradient(120% 70% at 50% 108%, rgba(112,52,170,.62) 0%, rgba(96,44,150,.28) 38%, rgba(96,44,150,0) 66%), radial-gradient(110% 85% at 50% 52%, #5C1220 0%, #3B0D17 52%, #170709 100%) !important; }
+.ff .ff-hero18-fade, .ff .ff-home .ff-hero18-fade { background:linear-gradient(180deg, rgba(40,10,18,0) 62%, rgba(70,16,30,.92) 100%) !important; }
+@media (min-width:900px) {
+  .ff .ff-hero18, .ff .ff-home .ff-hero18 { background:radial-gradient(70% 90% at 20% 112%, rgba(112,52,170,.60) 0%, rgba(96,44,150,.26) 40%, rgba(96,44,150,0) 68%), radial-gradient(90% 110% at 34% 50%, #5C1220 0%, #3B0D17 55%, #170709 100%) !important; }
+  .ff .ff-hero18-fade, .ff .ff-home .ff-hero18-fade { background:linear-gradient(90deg, rgba(74,16,30,.98) 0%, rgba(66,14,28,.55) 14%, rgba(40,10,18,0) 40%) !important; }
+}
+/* phones: the photo is cropped at the sides (never stretched) so the easel and its card are about a third larger; the foot of the photo runs under the heading */
+@media (max-width:899px) {
+  .ff .ff-hero18 .ff-hero18-img { aspect-ratio:1800 / 960 !important; }
+  .ff .ff-hero18 .ff-hero18-photo { inset:auto !important; left:50% !important; top:0 !important; width:136% !important; height:auto !important; aspect-ratio:1800 / 850 !important; object-fit:fill !important; transform:translate(-50.5%,-5%) !important; max-width:none !important; }
+  .ff .ff-hero18 .ff-easel24 { width:136% !important; top:0 !important; transform:translate(-50.5%,-5%) !important; }
+  .ff .ff-hero18 .ff-hero18-in { margin-top:-18px !important; }
+}
+/* the photo melts into the panel (a mask, so it matches any panel colour) */
+.ff .ff-hero18 .ff-hero18-fade { display:none !important; }
+.ff .ff-hero18 .ff-hero18-img { background:transparent !important; -webkit-mask-image:linear-gradient(180deg, #000 0, #000 84%, transparent 100%) !important; mask-image:linear-gradient(180deg, #000 0, #000 84%, transparent 100%) !important; }
+@media (min-width:900px) { .ff .ff-hero18 .ff-hero18-img { -webkit-mask-image:linear-gradient(90deg, transparent 0, rgba(0,0,0,.5) 12%, #000 26%) !important; mask-image:linear-gradient(90deg, transparent 0, rgba(0,0,0,.5) 12%, #000 26%) !important; } }

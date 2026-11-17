@@ -169,7 +169,8 @@ const COMPANY_PINS11 = (() => {
 
 
 /* v17.29: venues are not on this map (a separate Google map for venues may follow); the Directory layer reads "FF Directory". */
-const MAP_LAYERS19 = [["partners", "Companies"], ["pros", "Professionals"], ["dir", "FF Directory"]];
+/* v17.30: the legend lists Professionals and FF Directory only; FireFlair partner companies stay on the map and are always shown. */
+const MAP_LAYERS19 = [["pros", "Professionals"], ["dir", "FF Directory"]];
 
 
 function MapVenue20({ size = 22, on }) {

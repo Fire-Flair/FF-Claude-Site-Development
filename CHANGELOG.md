@@ -1,5 +1,19 @@
 # FireFlair prototype — changelog
 
+## v17.30
+
+Artifact version 1794946920-0308.
+
+Home hero: a shinier card that opens the member's profile, larger on phones, new panel colours. Network page: Our professionals is back.
+
+- Hero card (`HeroEasel24`): tapping or pressing Enter on the card opens that member's profile (`VIEW`). The card is brighter, has a gold glow and a band of light that crosses it every few seconds (`.ff-easel24-sheen`; still under reduced motion).
+- Hero photo: far less colour grading than v17.26, so it reads as the real photo; the gold light on the easel stays.
+- Hero panel: burgundy in the middle with violet rising from the foot of the Welcome box. The photo now melts into the panel with a mask (the coloured fade layer is hidden).
+- Phones (under 900px): the photo is cropped at the sides, never stretched, so the easel and card are about a third larger and always sit above the heading; the foot of the photo runs under the heading.
+- Network page (FF Team): the whole Our professionals section (heading, Top staff, professionals by type) is back between the map and the search box, as before v17.20.
+- Map legend: Professionals and FF Directory only. Partner companies stay on the map.
+- These hero rules are appended to p12.css with `!important` because v101.css repeats the hero selectors at the same weight; folding the two together is a tidy-up for later.
+
 ## v17.29
 
 Artifact version 1794946184-36d1.

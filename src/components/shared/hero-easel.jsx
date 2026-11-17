@@ -45,7 +45,7 @@ function heroEaselMatrix24(w, h, q) {
 }
 
 function HeroEasel24() {
-  const { state } = useStore();
+  const { state, dispatch } = useStore();
   /* One member per page load. */
   const person = React.useMemo(() => {
     const list = (state.directory || []).filter((p) => p && p.name && p.tag);
@@ -70,13 +70,18 @@ function HeroEasel24() {
   }, [person && person.id]);
   if (!person) return null;
   const face = <PlayerCard person={person} format="full" nameAs="div" themeKey={person.theme || "ivory"} />;
+  /* v17.30: the card on the easel opens that member's profile. */
+  const open = () => dispatch({ type: "VIEW", id: person.id });
   return (
-    <div className="ff-easel24" ref={stage} aria-hidden="true">
-      <div className="ff-easel24-card refl" style={{ transform: mr || undefined, visibility: mr ? "visible" : "hidden" }}>{face}</div>
-      <div className="ff-easel24-card" ref={card} style={{ transform: m || undefined, visibility: m ? "visible" : "hidden" }}>
-        {face}
+    <div className="ff-easel24" ref={stage}>
+      <div className="ff-easel24-card refl" aria-hidden="true" style={{ transform: mr || undefined, visibility: mr ? "visible" : "hidden" }}>{face}</div>
+      <div className="ff-easel24-card" ref={card} role="link" tabIndex={0} aria-label={`${person.name}: open profile`}
+        onClick={open} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } }}
+        style={{ transform: m || undefined, visibility: m ? "visible" : "hidden" }}>
+        <span className="ff-easel24-face" aria-hidden="true">{face}</span>
         <span className="ff-easel24-shade" />
         <span className="ff-easel24-key" />
+        <span className="ff-easel24-sheen" />
       </div>
     </div>
   );
