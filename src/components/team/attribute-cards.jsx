@@ -464,10 +464,42 @@ function wholeSentences21(text, max) {
 const nbh21 = (t) => String(t || "").replace(/(\w)-(?=\w)/g, "$1\u2011");
 
 
-function ProfTile21({ r, i, editable, open, lifted, dx, onTap, grip, extra }) {
-  const desc = wholeSentences21(String(r.description || "").trim() || professionDefaultDesc(r.name, r.displayCategory), 150);
+function ProfTile21({ r, i, editable, open, lifted, dx, onTap, grip, extra, catKey = "professions", compact }) {
+  const own = String(r.description || "").trim();
+  /* Professions show their default description when the member wrote none; other categories have none. */
+  const dflt = !own && catKey === "professions" ? professionDefaultDesc(r.name, r.displayCategory) : "";
+  const desc = wholeSentences21(own || dflt, compact ? 110 : 150);
   const media = (r.media || []).filter(m => m && (m.dataUrl || m.src)).slice(0, 3);
   const lvl = r.level ? PROFESSION_LEVELS.find(l => l.n === r.level) : null;
+  if (compact) {
+    /* v17.40 (proposal A): the compact dark box in the builder. Name, its text, then small marks. */
+    const meta = catKey === "languages" ? (r.proficiency || "") : "";
+    const ai = !!(r.source && r.source.origin && r.source.origin !== "manual");   /* added by FF AI (CV or FireFlair), not typed */
+    const doc = !!(r.document && r.document.name);
+    const nPh = (r.media || []).filter(m => m && (m.dataUrl || m.src)).length;
+    return (
+      <div className={"ff-pt21-it" + (lifted ? " lifted" : "")} data-pt-id={r.id} style={lifted ? { transform: `translateX(${dx}px)` } : undefined}>
+        <button type="button" className={"ff-pa40-tile" + (i === 0 ? " first" : "") + (open ? " open" : "") + (r.hidden ? " hid" : "")}
+          aria-expanded={open} aria-label={`${r.name}. Edit`} onClick={onTap}>
+          <span className="h">{i === 0 && <Star size={13} strokeWidth={2.2} className="st" aria-hidden="true" />}{nbh21(r.name)}{r.cv ? " (CV)" : ""}</span>
+          {meta && <span className="m">{meta}</span>}
+          {desc && <span className={"d" + (dflt && !own ? " dflt" : "")}>{nbh21(desc)}</span>}
+          {(dflt || ai || doc || nPh > 0 || r.hidden || r.proposed || lvl) && (
+            <span className="mk">
+              {r.proposed && <span>Proposed</span>}
+              {r.hidden && <span><EyeOff size={10} aria-hidden="true" /> Hidden</span>}
+              {dflt && !own && <span>Default</span>}
+              {ai && <span className="ai"><Sparkles size={10} aria-hidden="true" /> FF AI</span>}
+              {lvl && <span>{lvl.title}</span>}
+              {doc && <span aria-label="Document"><FileText size={10} aria-hidden="true" /></span>}
+              {nPh > 0 && <span aria-label={`${nPh} pictures`}><Camera size={10} aria-hidden="true" /> {nPh}</span>}
+            </span>
+          )}
+        </button>
+        {grip}
+      </div>
+    );
+  }
   return (
     <div className={"ff-pt21-it" + (lifted ? " lifted" : "")} data-pt-id={r.id} style={lifted ? { transform: `translateX(${dx}px)` } : undefined}>
       <button type="button" className={"ff-agrp prof ff-pt21 " + tierCls17(i) + (open ? " open" : "") + (r.hidden ? " hid" : "")}
@@ -489,7 +521,7 @@ function ProfTile21({ r, i, editable, open, lifted, dx, onTap, grip, extra }) {
 }
 
 
-function ProfTiles21({ items, editable, def, onOpen, extra, label = "Professions" }) {
+function ProfTiles21({ items, editable, def, onOpen, extra, label = "Professions", catKey = "professions", compact }) {
   const { dispatch } = useStore();
   const rows = editable ? rankedRecords(items || []) : rankedRecords(items || []).filter(r => !r.hidden && !r.proposed);
   const ids = rows.map(r => r.id);
@@ -518,20 +550,20 @@ function ProfTiles21({ items, editable, def, onOpen, extra, label = "Professions
       return { ...d, dx: e.clientX - d.x0 + ds, over: rects.current.filter(r => r.id !== d.id && x > r.mid).length };
     });
   };
-  const up = () => { const d = drag; noSel21(false); setDrag(null); if (d && d.over !== d.from) dispatch({ type: "REC_MOVE", category: "professions", id: d.id, to: d.over }); };
+  const up = () => { const d = drag; noSel21(false); setDrag(null); if (d && d.over !== d.from) dispatch({ type: "REC_MOVE", category: catKey, id: d.id, to: d.over }); };
   const key = (e, id, i) => {
-    if (e.key === "ArrowLeft" && i > 0) { e.preventDefault(); dispatch({ type: "REC_MOVE", category: "professions", id, to: i - 1 }); }
-    else if (e.key === "ArrowRight" && i < rows.length - 1) { e.preventDefault(); dispatch({ type: "REC_MOVE", category: "professions", id, to: i + 1 }); }
+    if (e.key === "ArrowLeft" && i > 0) { e.preventDefault(); dispatch({ type: "REC_MOVE", category: catKey, id, to: i - 1 }); }
+    else if (e.key === "ArrowRight" && i < rows.length - 1) { e.preventDefault(); dispatch({ type: "REC_MOVE", category: catKey, id, to: i + 1 }); }
   };
   const others = drag ? ids.filter(x => x !== drag.id) : [];
   const mark = drag && drag.over !== drag.from ? (drag.over < others.length ? { id: others[drag.over], side: "l" } : { id: others[others.length - 1], side: "r" }) : null;
   const openRec = editable ? rows.find(r => r.id === openId) : null;
   if (!rows.length) return null;
   return (<>
-    <div ref={rowRef} className={"ff-pt21-row" + (drag ? " dragging" : "")} role="list" aria-label={`${label}, ${rows.length}`}>
+    <div ref={rowRef} className={"ff-pt21-row" + (compact ? " ff-pa40-row" : "") + (drag ? " dragging" : "")} role="list" aria-label={`${label}, ${rows.length}`}>
       {rows.map((r, i) => (
         <div role="listitem" key={r.id} className={"ff-pt21-slot" + (mark && mark.id === r.id ? " mk-" + mark.side : "")}>
-          <ProfTile21 r={r} i={i} editable={editable} open={openId === r.id} lifted={drag && drag.id === r.id} dx={drag ? drag.dx : 0}
+          <ProfTile21 r={r} i={i} editable={editable} catKey={catKey} compact={compact} open={openId === r.id} lifted={drag && drag.id === r.id} dx={drag ? drag.dx : 0}
             extra={extra ? extra(r) : null}
             onTap={() => editable ? setOpenId(openId === r.id ? null : r.id) : onOpen && onOpen(r)}
             grip={editable ? (
@@ -544,9 +576,9 @@ function ProfTiles21({ items, editable, def, onOpen, extra, label = "Professions
       <span className="ff-acar-end" aria-hidden="true" />
     </div>
     {openRec && (
-      <div className="ff-pt21-ed">
-        <div className="ff-pt21-edh"><span className={"dot " + tierCls17(ids.indexOf(openRec.id))} aria-hidden="true" />{openRec.name}</div>
-        <EntryEditor21 r={openRec} catKey="professions" def={def} onDone={() => setOpenId(null)} />
+      <div className={"ff-pt21-ed" + (compact ? " ff-pa40-ed" : "")}>
+        <div className="ff-pt21-edh">{compact ? null : <span className={"dot " + tierCls17(ids.indexOf(openRec.id))} aria-hidden="true" />}{openRec.name}</div>
+        <EntryEditor21 r={openRec} catKey={catKey} def={def} onDone={() => setOpenId(null)} />
       </div>
     )}
   </>);
@@ -663,7 +695,8 @@ function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd
   const ekey = `edit_${vkey}`;
   const ev = editing ? state.categoryVisibility[ekey] : undefined;
   /* v17.21: in the builder the type-box sections have no drop-down — they are always open. */
-  const always = editing && OPEN_CATS21.includes(catKey);
+  /* v17.40: the builder's boxes are collapsible again, closed by default; Professions stays open. */
+  const always = editing && catKey === "professions";
   const open = always || (editing ? (ev === undefined ? catKey === "professions" : ev !== false) : (v === undefined ? startOpen : v !== false));
   const unresolved = isMe && catKey === "professions" ? items.find(r => !r.proposed && !r.hidden && !professionCategory(r.name, r.displayCategory)) : null;
   /* Phase 1: Professions are added from Pick your professions (typing one
@@ -718,9 +751,13 @@ function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd
             dispatch({ type: "RECORDS_MERGE", byCategory: { professions: [fresh] } });
             dispatch({ type: "TOAST", toast: `${n} added` });
           }} />
-          <ProfTiles21 items={items} editable def={def} />
+          <ProfTiles21 items={items} editable def={def} compact />
         </>) : isMe && owner !== "company" && RANK_CATS19.includes(catKey) ? (
-          <RankList17 catKey={catKey} def={def} items={items} />
+          <div className="ff-pa40-cat">
+            <style>{RANK_CSS17}</style>
+            <TypeBox21 catKey={catKey} def={def} rows={rankedRecords(items || [])} />
+            <ProfTiles21 items={items} editable def={def} catKey={catKey} label={def.label} compact />
+          </div>
         ) : (
           pub && !isMe ? <PubGrid catKey={catKey} def={def} items={items} shade={shade} onOpen={onOpen} /> : (
           <HorizontalCardRanker items={items} label={def.label}
@@ -1187,7 +1224,7 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
       {isMe ? (<>
         <div id="ff-pe-anchor" style={{ scrollMarginTop: 84 }} />
         {/* v17.18: the builder has the same four tabs as the displayed profile. */}
-        <div className="ff-ptabs-wrap">
+        <div className="ff-ptabs-wrap ff-pa40">
           <ProfileTabs tabs={bTabs} active={btab} onChange={setBtab} />
           <div role="tabpanel" id="ff-tabpanel" aria-labelledby={`ff-tab-${btab}`} className="ff-tabpanel" tabIndex={0}>
             {btab === "overview" && (<>

@@ -290,3 +290,40 @@
    or at the rounded corners of the card and the action panel. 128px = the overlap set in p12.css. */
 .ff .ff-copub .ff-phero.has-media:not(.wide) .ff-pcol { background: linear-gradient(transparent 0 128px, var(--cream) 128px); padding-bottom: 34px; margin-bottom: -34px; }
 .ff .ff-copub .ff-phero.has-media:not(.wide) .ff-pm.open ~ .ff-pcol { background: var(--cream); }
+/* ===== v17.40 profile3: the profile edit page as proposal A (one page for new and existing members) =====
+   Compact dark boxes in a row that scrolls across, tabs as a black bar with the open tab gold, more room between parts. */
+.ff .ff-journey .ff-tm34 { margin-top: 6px; }
+.ff .ff-journey #ff-sec-aboutme { margin-top: 26px; }
+.ff .ff-ptabs-wrap.ff-pa40 { margin-top: 30px; }
+.ff .ff-ptabs-wrap.ff-pa40 .ff-tabpanel > section { margin-top: 30px !important; }
+.ff .ff-ptabs-wrap.ff-pa40 > .ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) { gap: 4px; padding: 4px; margin-top: 0; background: var(--color-ink); border-radius: 18px; corner-shape: squircle; box-shadow: 0 10px 24px -14px rgba(0,0,0,.6); }
+.ff .ff-ptabs-wrap.ff-pa40 > .ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) button { min-height: 54px; background: transparent; border-color: transparent; color: #E9DFC4; font-family: var(--display, 'Cinzel', serif); font-size: clamp(11px, 3.2vw, 14px); letter-spacing: .04em; }
+.ff .ff-ptabs-wrap.ff-pa40 > .ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) button .ct { font-family: var(--sans); font-size: 11px; color: rgba(233,223,196,.7); opacity: 1; }
+.ff .ff-ptabs-wrap.ff-pa40 > .ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) button:hover { border-color: rgba(201,162,39,.45); }
+.ff .ff-ptabs-wrap.ff-pa40 > .ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) button.on { background: linear-gradient(170deg, var(--color-gold-lt), var(--color-gold) 60%, var(--color-gold-dk)); border-color: transparent; color: #2A1E04; }
+.ff .ff-ptabs-wrap.ff-pa40 > .ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) button.on .ct { color: rgba(42,30,4,.75); }
+.ff .ff-pa40-cat .ff-type21 { margin-bottom: 12px; }
+.ff .ff-pt21-row.ff-pa40-row { gap: 10px; padding: 2px 2px 10px; align-items: stretch; }
+.ff .ff-pa40-row .ff-pt21-it { display: flex; }
+.ff .ff-pa40-tile { position: relative; flex: none; width: 150px; min-height: 96px; padding: 10px 40px 11px 11px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px; text-align: left; cursor: pointer;
+  background: linear-gradient(165deg, var(--color-char), var(--color-onyx)); color: var(--color-cream); border: 1px solid rgba(201,162,39,.28); border-radius: 16px; corner-shape: squircle; box-shadow: 0 8px 18px -12px rgba(0,0,0,.7);
+  font-family: var(--sans); overflow-wrap: normal; word-break: normal; hyphens: none; }
+.ff .ff-pa40-tile.first { border: 1.5px solid var(--color-gold); }
+.ff .ff-pa40-tile.open { outline: 3px solid rgba(201,162,39,.55); outline-offset: 2px; }
+.ff .ff-pa40-tile.hid { opacity: .6; filter: grayscale(.6); }
+.ff .ff-pa40-tile:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; }
+.ff .ff-pa40-tile .h { font: 700 14px/1.2 var(--sans); color: #fff; }
+.ff .ff-pa40-tile .h .st { display: inline-block; vertical-align: -1px; margin-right: 4px; color: var(--color-gold); }
+.ff .ff-pa40-tile .m { font: 600 11.5px/1.3 var(--sans); color: var(--color-gold-lt); }
+.ff .ff-pa40-tile .d { font: 400 11.5px/1.35 var(--sans); color: rgba(244,239,228,.8); }
+.ff .ff-pa40-tile .d.dflt { color: rgba(244,239,228,.62); }
+.ff .ff-pa40-tile .mk { margin-top: auto; padding-top: 4px; display: flex; flex-wrap: wrap; gap: 4px; }
+.ff .ff-pa40-tile .mk > span { display: inline-flex; align-items: center; gap: 3px; padding: 1px 6px; border-radius: 6px; corner-shape: squircle; background: rgba(244,239,228,.12); color: rgba(244,239,228,.85); font: 700 9.5px/1.5 var(--sans); letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
+.ff .ff-pa40-tile .mk > span.ai { background: rgba(201,162,39,.25); color: var(--color-gold-lt); border: 1px solid rgba(228,195,106,.7); }
+.ff .ff-pa40-row .ff-pt21-grip { top: 4px; right: 2px; width: 40px; height: 40px; padding: 0 12px; }
+.ff .ff-pa40-row .ff-pt21-grip i { background: rgba(244,239,228,.55); }
+.ff .ff-pa40-row .ff-pt21-grip:hover { background: rgba(255,255,255,.08); }
+.ff .ff-pt21-ed.ff-pa40-ed { border: 1.5px solid var(--color-gold); background: var(--color-soft, #FFFDF8); }
+@media (min-width: 720px) { .ff .ff-pa40-tile { width: 172px; min-height: 104px; } }
+/* Verify stays plainly grey until the FF Tag and the number are ready. */
+.ff .ff-gb21.shine .ff-gb21-btn:disabled { background: #D9D6CF; border-color: #C4C0B7; color: #7D786E; }

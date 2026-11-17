@@ -689,5 +689,7 @@ function ProfilePage() {
   const { state } = useStore();
   useState(() => { resetQuestionOrder(); return 0; });   // new question order per visit
   useAutoSave();
-  return state.profile.live ? <TeamProfile /> : <ProfileBuilder />;
+  /* v17.40: one edit screen for new and existing members. A live profile reaches this only through Edit; TeamProfile
+     (bookings.jsx) is no longer shown here. */
+  return <ProfileBuilder />;
 }
