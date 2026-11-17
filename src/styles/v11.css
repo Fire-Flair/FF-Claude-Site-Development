@@ -3283,26 +3283,26 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-bk-avwrap { margin-top:14px; }
 .ff .ff-ex17 > .ff-sbox { margin-top:10px; }
 
-/* v17.3.35 — Training / Dream jobs / FF rewards cards turn over to a description. */
-.ff .ff-fc17 { perspective:1000px; aspect-ratio:4 / 5; min-width:0; }
-.ff .ff-fc17 .fi { position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .55s cubic-bezier(.2,.7,.2,1); }
-.ff .ff-fc17.back .fi { transform:rotateY(180deg); }
-.ff .ff-fc17 .fr, .ff .ff-fc17 .bk { position:absolute; inset:0; width:100%; height:100%; backface-visibility:hidden; -webkit-backface-visibility:hidden; }
-.ff .ff-fc17 .ff-shine-img.fr { aspect-ratio:auto; }
-.ff .ff-fc17 .ff-shine-img:hover { transform:none; }
-.ff .ff-fc17 .tick { font-family:inherit; cursor:pointer; width:calc(100% - 24px); }
-.ff .ff-fc17 .bk { transform:rotateY(180deg); display:flex; flex-direction:column; gap:8px; padding:16px 14px 0; border-radius:20px; background:#120A0B; color:#F7EED8; border:1.5px solid rgba(201,162,39,.55); box-shadow:var(--lift-1); cursor:pointer; overflow:hidden; text-align:left; }
-.ff .ff-fc17 .bk .bt { font:800 clamp(15px,4.2vw,17px)/1.2 var(--sans); color:#F3DE9C; }
-.ff .ff-fc17 .bk p { margin:0; flex:1; min-height:0; overflow:auto; font-size:12.5px; line-height:1.45; color:#E8DDC2; }
-.ff .ff-fc17 .bk .tick { margin:0 0 12px; width:100%; padding:8px; display:flex; align-items:center; justify-content:center; gap:6px; border-radius:999px; border:1px solid rgba(243,222,156,.6); background:rgba(8,5,5,.55); color:#F3DE9C; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; }
-.ff .ff-fc17 .bk .tick[aria-pressed="true"] { background:linear-gradient(170deg,#FBEFC4,#D9B451); color:#1A1408; border-color:var(--gold-mid,#B08D2A); }
-.ff .ff-fc17 .ff-shine-img .tick { margin:0 12px 12px; }
-.ff .ff-fc17 .bk { gap:6px; padding:12px 11px 0; }
-.ff .ff-fc17 .bk .bt { font-size:14px; }
-.ff .ff-fc17 .bk p { font-size:12px; line-height:1.35; scrollbar-width:none; }
-.ff .ff-fc17 .bk p::-webkit-scrollbar { display:none; }
-.ff .ff-fc17 .bk .tick { margin:0 0 10px; padding:6px; font-size:11px; }
-.ff .ff-fc17 .bk .tick { white-space:nowrap; letter-spacing:.05em; gap:4px; }
+/* Training / Dream jobs / FF Rewards cards (FlipChoice17): the photo is the top half and only the title sits on it;
+   the label, the description and the button are below on the solid card. Cards in a row share one height. */
+.ff .ff-courses-img { align-items:stretch; }
+.ff .ff-fc17 { display:flex; flex-direction:column; min-width:0; overflow:hidden; border-radius:20px; corner-shape:squircle; background:#120A0B; color:#F7EED8; border:1.5px solid rgba(201,162,39,.42); box-shadow:var(--lift-1); transition:border-color .25s ease, box-shadow .25s ease; }
+.ff .ff-fc17.on { border-color:#E4C36A; box-shadow:0 0 0 3px rgba(232,199,94,.5), var(--lift-2); }
+.ff .ff-fc17 .ph { position:relative; flex:none; aspect-ratio:1 / 1; overflow:hidden; background:#0B0B0C; }
+.ff .ff-fc17 .ph > img, .ff .ff-fc17 .ph > .ff-scene { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+.ff .ff-fc17 .ph .t { position:absolute; left:0; right:0; bottom:0; margin:0; padding:38px 12px 4px; background:linear-gradient(0deg,#120A0B 0%,rgba(18,10,11,.86) 38%,rgba(18,10,11,.5) 70%,rgba(18,10,11,0) 100%); font-family:var(--sans); font-weight:800; font-size:clamp(15px,4.2vw,17px); line-height:1.2; color:#FFFFFF; text-align:left; text-shadow:0 1px 6px rgba(0,0,0,.75); overflow-wrap:normal; word-break:normal; hyphens:none; }
+.ff .ff-fc17 .ph .chk { position:absolute; top:9px; right:9px; width:24px; height:24px; border-radius:50%; display:grid; place-items:center; color:#1A1408; background:linear-gradient(170deg,#FBEFC4,#D9B451); box-shadow:0 2px 6px rgba(0,0,0,.4); }
+.ff .ff-fc17 .bd { flex:1; display:flex; flex-direction:column; gap:7px; padding:8px 12px 12px; background:#120A0B; }
+.ff .ff-fc17 .bd .k { font-size:10.5px; font-weight:800; letter-spacing:.14em; line-height:1.3; text-transform:uppercase; color:#E4C36A; overflow-wrap:normal; word-break:normal; }
+.ff .ff-fc17 .bd .d { margin:0; font:500 12.5px/1.45 var(--sans); color:#F1E8D2; overflow-wrap:normal; word-break:normal; hyphens:none; }
+.ff .ff-fc17 .bd .tick { margin:auto 0 0; width:100%; min-height:44px; padding:8px 6px; display:flex; align-items:center; justify-content:center; gap:6px; white-space:nowrap; border-radius:14px; corner-shape:squircle; border:1px solid rgba(243,222,156,.65); background:transparent; color:#F3DE9C; font-family:inherit; font-size:clamp(10px,2.75vw,11px); font-weight:700; letter-spacing:.08em; line-height:1.2; text-transform:uppercase; cursor:pointer; }
+.ff .ff-fc17 .bd .tick .pl { display:flex; }
+@media (min-width:360px) and (max-width:409px) { .ff .ff-fc17 .bd .tick .pl { display:none; } .ff .ff-fc17 .bd .tick { letter-spacing:.06em; } }
+.ff .ff-fc17 .bd .tick[aria-pressed="true"] { background:linear-gradient(170deg,#FBEFC4,#D9B451); color:#1A1408; border-color:var(--gold-mid,#B08D2A); }
+.ff .ff-fc17 .bd .tick:focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
+@media (max-width:359px) { .ff .ff-courses.ff-courses-img { grid-template-columns:minmax(0,1fr); } .ff .ff-fc17 .ph { aspect-ratio:3 / 2; } }
+@media (min-width:1100px) { .ff .ff-fc17 .ph { aspect-ratio:4 / 3; } }
+@media (min-width:760px) { .ff .ff-fc17 .bd { padding:10px 14px 14px; } .ff .ff-fc17 .ph .t { padding:42px 14px 4px; font-size:17px; } .ff .ff-fc17 .bd .d { font-size:13px; } }
 
 /* v17.4 — FF Admin */
 .ff .ff-dev17.tag { position:static; display:inline-block; padding:3px 7px; font-size:11px; border-width:1.5px; border-radius:6px; white-space:nowrap; }
@@ -3922,15 +3922,6 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-bkq-hist:focus-visible { outline:2px solid var(--gold-dk); outline-offset:2px; }
 .ff .ff-bill17 { display:grid; gap:8px; justify-items:start; }
 .ff .ff-bill17 .ff-billin { max-width:100%; }
-.ff .ff-fc17 .fr .d { position:absolute; left:12px; right:12px; bottom:52px; z-index:2; font:500 11.5px/1.35 var(--sans); color:#F3E9CF; text-shadow:0 1px 3px rgba(0,0,0,.7); }
-.ff .ff-fc17 .fr .t { bottom:auto; }
-.ff .ff-fc17 { aspect-ratio:5 / 8; }
-.ff .ff-fc17 .fr .tx { position:absolute; left:12px; right:12px; bottom:54px; z-index:2; display:grid; gap:6px; }
-.ff .ff-fc17 .fr .tx .t { position:static; }
-.ff .ff-fc17 .fr .d { position:static; }
-.ff .ff-fc17 .shade { background:linear-gradient(180deg,rgba(8,5,5,0) 15%,rgba(8,5,5,.88) 62%); }
-.ff .ff-fc17 .fr .tx .t { padding:0 !important; margin:0 !important; text-align:left; }
-.ff .ff-fc17 .fr .k { white-space:normal; max-width:calc(100% - 28px); line-height:1.2; }
 .ff .ff-vk-fold { margin-top:12px; }
 .ff .ff-vk-fold * { overflow-wrap:normal; word-break:normal; hyphens:none; }
 .ff .ff-vk-fold-h { width:100%; display:flex; align-items:center; gap:10px; padding:14px 16px; border:1.5px solid rgba(176,141,42,.55); border-radius:22px; corner-shape:squircle; background:#FFFDF8; color:#2A2620; font:700 15px/1.25 var(--sans); text-align:left; cursor:pointer; }

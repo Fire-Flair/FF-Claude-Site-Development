@@ -131,9 +131,9 @@ const TRAINING_COURSES = [
   { id: "wset_spirits", kind: "Qualification", icon: Award, tone: "steel", title: "WSET Spirits", note: "Wine & Spirit Education Trust spirits qualifications, taught by an approved course provider." },
   { id: "wset_wine", kind: "Qualification", icon: Wine, tone: "violet", title: "WSET Wine", note: "Wine & Spirit Education Trust wine qualifications, taught by an approved course provider." },
   { id: "brand_training", kind: "Brand event", icon: Sparkles, tone: "emerald", title: "Spirit brand training", note: "Training events hosted by spirit brands: their spirits, their story and how to serve them." },
-  { id: "ff_open_class", kind: "FireFlair event", coin: true, tone: "onyx", title: "FireFlair Open Class", note: "Open training sessions run by FireFlair for everyone in the network." },
-  { id: "ff_open_bar", kind: "FireFlair event", coin: true, tone: "bronze", title: "FireFlair Open Bar", note: "Hands-on sessions behind the bar with other FF Team members." },
-  { id: "ff_masterclass", kind: "FireFlair event", coin: true, tone: "platinum", title: "FireFlair Masterclass", note: "Led by experienced bartenders, one technique or spirit at a time." },
+  { id: "ff_open_class", kind: "FF event", coin: true, tone: "onyx", title: "FireFlair Open Class", note: "Open training sessions run by FireFlair for everyone in the network." },
+  { id: "ff_open_bar", kind: "FF event", coin: true, tone: "bronze", title: "FireFlair Open Bar", note: "Hands-on sessions behind the bar with other FF Team members." },
+  { id: "ff_masterclass", kind: "FF event", coin: true, tone: "platinum", title: "FireFlair Masterclass", note: "Led by experienced bartenders, one technique or spirit at a time." },
 ];
 
 

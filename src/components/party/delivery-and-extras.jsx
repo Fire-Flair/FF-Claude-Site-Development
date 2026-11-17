@@ -594,7 +594,7 @@ function TeamExtras17() {
 function BizInterest17({ kind }) {
   const { state, dispatch } = useStore();
   const I = swipeImgs();
-  const list = kind === "train" ? TRAINING_COURSES : XP_REWARDS, imgs = kind === "train" ? I.training : I.rewards;
+  const list = kind === "train" ? TRAINING_COURSES : XP_REWARDS, imgs = kind === "train" ? I.training : I.rewards, pos = kind === "train" ? I.pos.training : I.pos.rewards;
   /* v17.4.6: saved as a Q&A answer for the company account (was UI state only). */
   const qid = kind === "train" ? "int.biz_training" : "int.biz_rewards";
   const account = (state.company && state.company.slug) || qaAccount17(state);
@@ -615,7 +615,7 @@ function BizInterest17({ kind }) {
   return (
     <div className="ff-bi17">
       <div className="ff-courses ff-courses-img">
-        {list.map(x => <FlipChoice17 key={x.id} kind={x.kind} title={x.title} note={x.note} img={imgs[x.id]} on={picked.includes(x.id)} onClick={() => toggle(x.id)} />)}
+        {list.map(x => <FlipChoice17 key={x.id} kind={x.kind} title={x.title} note={x.note} img={imgs[x.id]} pos={pos[x.id]} on={picked.includes(x.id)} onClick={() => toggle(x.id)} />)}
       </div>
       <div className="acts">
         <Btn variant="primary" onClick={send}>{sent ? <><S17I.Check size={14} /> Interest registered</> : "Register interest"}</Btn>
