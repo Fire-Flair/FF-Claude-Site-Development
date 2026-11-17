@@ -1,10 +1,10 @@
 /* v17.16 Profile Card: the large share card (lg) and the small web card (sm). 5 x 7, every size in container units. */
 .ff .ff-deck.pc.pc17{border-radius:6% / 4.29%;corner-shape:squircle}
 .ff .ff-deck.pc.pc17 .fx.wm{display:none}
-.ff .ff-deck.pc.pc17 .fx.hair{inset:1.6cqw;border-radius:4.4cqw;corner-shape:squircle;border-color:var(--pc17-hair)}
+.ff .ff-deck.pc.pc17 .fx.hair{inset:0;border-radius:calc(6% - 3px) / calc(4.29% - 3px);corner-shape:squircle;border-color:var(--pc17-hair)}
 .ff .ff-deck.pc.pc17 .fx.hair::after{display:none}
 .ff .pc17,.ff .pc17 *{font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif !important}
-.ff .pc17 .pc17-name,.ff .pc17 .pc17-brand{font-family:'Cinzel','Optima','Palatino Linotype',Georgia,serif !important}
+.ff .pc17 .pc17-name,.ff .pc17 .pc17-brand,.ff .pc17 .pc17-url{font-family:'Cinzel','Optima','Palatino Linotype',Georgia,serif !important}
 .pc17-in{position:absolute;inset:0 0 10cqw 0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5cqw 4.4cqw 0;box-sizing:border-box}
 .pc17.sm .pc17-in{justify-content:flex-start}
 .pc17-plate{position:absolute;top:2.9cqw;left:2.9cqw;z-index:4;display:flex;align-items:center;gap:1.5cqw;padding:1.3cqw 2.1cqw 1.3cqw 1.9cqw;font-size:2.5cqw;font-weight:800;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;line-height:1.2;background:#16130F;border:1px solid;border-radius:2.326cqw;corner-shape:squircle}
@@ -26,8 +26,8 @@
 .pc17-fit.wr{white-space:normal;line-height:1.25}
 .pc17-fit.wr .en{white-space:nowrap}
 .pc17-fit.wr .bl{margin:0 .2em 0 .45em}
-.pc17-bar{position:absolute;left:0;right:0;bottom:0;height:10cqw;display:flex;align-items:center;padding:0 5.4cqw;box-sizing:border-box;border-top:1px solid}
-.pc17-url{flex:1;min-width:0;font-size:4.3cqw;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-align:left}
+.pc17-bar{position:absolute;left:0;right:0;bottom:0;height:10cqw;display:flex;align-items:center;padding:0 5.4cqw 0 4.4cqw;box-sizing:border-box;border-top:1px solid}
+.pc17-url{flex:1;min-width:0;font-size:4cqw;font-weight:600;letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-align:left}
 .pc17-brand{margin-left:auto;padding-left:2cqw;font-weight:700;font-size:3.3cqw;letter-spacing:.28em;color:#D9B54F;white-space:nowrap;display:flex;align-items:center;gap:1.6cqw}
 .pc17-mark{display:block;width:5.6cqw;height:5.6cqw;flex:none}
 /* v17.20 small Profile Card: the FIREFLAIR word alone in the footer, right; no mark */
@@ -69,3 +69,8 @@
 .ff .ff-shc-coin svg,.ff .ff-sface .coin svg,.ff .ff-pcard11 .coin svg{width:24px;height:24px}
 .ff .ff-tc17-coin svg{width:22px;height:22px}
 .ff .ff-cardghost .coin svg{width:19px;height:19px}
+/* Card polish (p2-card, Mr G 22:17): the builder's editable Profile Card matches the card face: one hairline flush
+   against the rim (no second inner line), and the address in Cinzel. */
+.ff .ff-deck.pc:not(.pc17):has(> .pc17-plate) .fx.hair{inset:0;border-radius:calc(4.2% - 3px) / calc(3% - 3px);corner-shape:squircle}
+.ff .ff-deck.pc:not(.pc17):has(> .pc17-plate) .fx.hair::after{display:none}
+.ff .ff-deck.pc:not(.pc17):has(> .pc17-plate) > div:last-child > span:first-child{font-family:'Cinzel','Optima','Palatino Linotype',Georgia,serif !important;font-weight:600 !important;letter-spacing:.06em !important;font-size:4cqw !important}

@@ -48,7 +48,7 @@ function pc17FitRun(root) {
   const px = root.getBoundingClientRect().width / 100;
   if (!px) return;
   const rows = Array.from(root.querySelectorAll(".pc17-row"));
-  rows.forEach((r) => { r.style.display = ""; r.style.borderBottomWidth = ""; });
+  rows.forEach((r) => { r.style.display = ""; r.style.borderBottomWidth = ""; r.style.paddingTop = ""; r.style.paddingBottom = ""; });
   const prep = (el) => {
     const kids = Array.from(el.children).filter((k) => k.classList.contains("en"));
     kids.forEach((k) => { k.style.display = ""; Array.from(k.querySelectorAll(".bl,.bu")).forEach((b) => { b.style.display = ""; }); });
@@ -95,6 +95,29 @@ function pc17FitRun(root) {
   }
   const shown = rows.filter((r) => r.style.display !== "none");
   if (shown.length) shown[shown.length - 1].style.borderBottomWidth = "0";
+  /* Large card: the rows share the free height evenly, so the box runs down to the footer and the gap from the last
+     row (the flags) to the footer equals the gap from the top of the box to the first row's icon. Padding in cqw. */
+  if (bar && panel && shown.length && root.classList.contains("lg")) {
+    const ico = shown[0].querySelector(".pc17-lico > span") || shown[0];
+    const lastRow = shown[shown.length - 1];
+    const lastC = Array.from(lastRow.querySelectorAll(".pc17-flag")).concat(Array.from(lastRow.querySelectorAll(".pc17-fit")));
+    const pr = panel.getBoundingClientRect();
+    const low = lastC.length ? Math.max(...lastC.map((el) => el.getBoundingClientRect().bottom)) : lastRow.getBoundingClientRect().bottom;
+    const a = ico.getBoundingClientRect().top - pr.top;
+    const b = pr.bottom - low;
+    const free = bar.getBoundingClientRect().top - pr.bottom;
+    const add = Math.min(free, Math.max(0, free - (a - b)));
+    if (add > 0.5) {
+      const s = pr.width / (panel.offsetWidth || pr.width); /* screen px per layout px (1 unless scaled) */
+      const cq = root.clientWidth / 100; /* layout px per cqw */
+      const e = add / (2 * shown.length) / s;
+      shown.forEach((r) => {
+        const cs = getComputedStyle(r);
+        r.style.paddingTop = ((parseFloat(cs.paddingTop) + e) / cq).toFixed(3) + "cqw";
+        r.style.paddingBottom = ((parseFloat(cs.paddingBottom) + e) / cq).toFixed(3) + "cqw";
+      });
+    }
+  }
 }
 
 
@@ -191,7 +214,7 @@ function PlayerFace17({ person, large, themeKey, tier, onClick, selected, nameAs
         {!large && langs.length > 0 && <div className="pc17-flagzone"><div className="pc17-flags">{flags()}</div></div>}
       </div>
       <div className="pc17-bar" style={{ borderColor: t.rule, background: dark ? "rgba(0,0,0,.45)" : "#141416" }}>
-        <FitText17 as="span" size={4.3} className="pc17-url" style={{ color: "#EAD79C" }}>{`${CARD_DOMAIN}/${pc17Tag(person.tag)}`}</FitText17>
+        <FitText17 as="span" size={4} className="pc17-url" style={{ color: "#EAD79C" }}>{`${CARD_DOMAIN}/${pc17Tag(person.tag)}`}</FitText17>
       </div>
       {selected && (
         <span style={{ position: "absolute", inset: 0, zIndex: 5, background: "rgba(201,162,39,.14)", display: "flex", alignItems: "center", justifyContent: "center" }}>
