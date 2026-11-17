@@ -38,7 +38,7 @@
 .pc17-row.one .pc17-flags{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
 .pc17-flags{display:flex;gap:3cqw;align-items:center;justify-content:center;padding:0}
 .pc17-flag{display:inline-grid;place-items:center;border:0;padding:0;width:9cqw;line-height:1;font-size:5.8cqw}
-.pc17.lg .ff-pc-rule{margin:1.8cqw 0}
+.pc17.lg .ff-pc-rule{margin:2.8cqw 0}
 .pc17.lg .pc17-title{margin-top:.7cqw}
 .pc17.lg .pc17-photo{margin-top:1cqw}
 /* small web card: icon rows, entries left, flags outside the box */
@@ -51,4 +51,8 @@
 .pc17.sm .pc17-row{display:grid;grid-template-columns:10cqw minmax(0,1fr);align-items:center;height:11.2cqw;padding:0}
 .pc17.sm .pc17-val{padding:0 2.4cqw;font-size:4.4cqw}
 .pc17.sm .pc17-title{margin-top:1.2cqw}
+/* v17.21: the large card starts at the approved photo position (top aligned), the spare height sits under the box */
+.pc17.lg .pc17-in{justify-content:flex-start}
+.pc17.lg .pc17-lbl{font-size:2.7cqw;letter-spacing:.135em}
+.pc17.lg .pc17-plate{top:2.7cqw;left:2.7cqw}
 .pc17.sm .pc17-photo{margin-top:3cqw}

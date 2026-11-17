@@ -458,11 +458,14 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
     theme: t,
     style: { maxWidth: 340, margin: "0 auto", padding: "40px 16px 0" }
   }, React.createElement("span", {
-    className: "ff-pc-plate"
-  }, "Profile Card"), React.createElement("span", {
-    style: { position: "absolute", top: 9, right: 9, zIndex: 4 }
+    className: "pc17-plate",
+    style: { color: "#E4C36A", borderColor: (METAL[tier] || METAL.bronze).edge[1], fontFamily: "Inter,ui-sans-serif,-apple-system,sans-serif" }
+  }, React.createElement("span", {
+    style: { width: "3.4cqw", height: "3.4cqw", display: "block", flex: "none" }
+  }, React.createElement(PcBust17, { size: "100%", color: "#E4C36A" })), React.createElement("span", { className: "t" }, "Profile Card")), React.createElement("span", {
+    className: "pc17-logo"
   }, React.createElement(FFLogo, {
-    size: 32,
+    size: "100%",
     tier
   })), React.createElement("div", {
     style: { display: "flex", justifyContent: "center", marginTop: 4 }
@@ -484,7 +487,7 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
   }, React.createElement(Portrait, {
     src: draft.photo,
     name: draft.name,
-    size: 92,
+    size: 108,
     ring: tr.ring[0],
     ink: tr.ink
   }), draft.photo ? React.createElement("span", {
@@ -518,7 +521,7 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
     "aria-label": "Headline",
     maxLength: 28,
     onChange: (e) => setDraft({ ...draft, headline: e.target.value }),
-    style: { color: ink, borderBottomColor: rule, marginTop: 8, textAlign: "center", fontSize: 13.5 }
+    style: { color: t.dark ? t.accent : "#6A4F12", borderBottomColor: rule, marginTop: 8, textAlign: "center", fontSize: 13.5, textTransform: "uppercase", letterSpacing: ".14em" }
   }), React.createElement("div", {
     style: { marginTop: 8 }
   }, React.createElement("div", {
@@ -587,15 +590,11 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
   })), React.createElement("div", {
     style: { margin: "0 -16px", background: t.dark ? "rgba(0,0,0,.45)" : "#141416", borderTop: `1px solid ${rule}`, padding: "9px 16px", display: "flex", alignItems: "center", gap: 9 }
   }, React.createElement("span", {
-    style: { fontFamily: "var(--sans)", fontSize: 12, fontWeight: 600, color: "#EAD79C" }
+    style: { fontFamily: "Inter,ui-sans-serif,-apple-system,sans-serif", fontSize: "4.3cqw", letterSpacing: ".03em", fontWeight: 400, color: "#EAD79C", whiteSpace: "nowrap" }
   }, CARD_DOMAIN, "/", pc17Tag(tag)), React.createElement("span", {
-    style: { marginLeft: "auto", display: "flex", alignItems: "center", gap: 7 }
-  }, React.createElement(FFLogo, {
-    size: 20,
-    tier
-  }), React.createElement(Wordmark, {
-    size: 12
-  }))));
+    className: "pc17-brand",
+    style: { fontFamily: "'Cinzel','Optima',Georgia,serif" }
+  }, React.createElement("span", { className: "pc17-mark" }, React.createElement(FFLogo, { size: "100%", tier })), "FIREFLAIR")));
 }
 
 
