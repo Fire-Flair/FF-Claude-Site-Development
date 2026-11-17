@@ -1,111 +1,132 @@
 /* src/components/team/network.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
 /* ==========================================================================
-   ADD TO TEAM (v16.11) — adding someone to your network is two-way.
-   1. "Add to team" opens a sheet like the review box: have you worked with
-      them, would you work with them again, how are they to work with, and a
-      written review.
-   2. Add → a confirmation: the team invitation goes to them on WhatsApp.
-   3. They accept → you're connected, and the review goes on their profile.
-   Until then the invitation is "pending". In this prototype nothing is sent;
-   a "Preview: they accept" link shows what happens when they do.
+   NETWORK → REVIEW → TEAM (v17.22). On someone else's profile a signed-in member sees ONE relationship slot that grows:
+   Add to network (one tap) → the review form in place, once → Invite to your team (one tap) → Invitation sent → On your team.
+   Removing and the prototype "they accept" preview live in the small ⋯ menu beside it. A signed-out visitor sees three
+   buttons: Join <First>'s team, Review, Share. The review form is ReviewForm17 (profile-from-text.jsx).
    ========================================================================== */
-const HOW_TO_WORK = [
-  { key: "excellent", label: "Excellent", rating: 5 },
-  { key: "great", label: "Great", rating: 4 },
-  { key: "good", label: "Good", rating: 3 },
-  { key: "improve", label: "Could improve", rating: 2 },
-];
+/* A button label that wraps between words and, if one word still does not fit, gets a smaller font. Never splits a word. */
+function FitLabel17({ children }) {
+  const ref = React.useRef(null);
+  const key = typeof children === "string" ? children : React.Children.toArray(children).join("");
+  React.useLayoutEffect(() => {
+    const el = ref.current; if (!el) return;
+    const fit = () => {
+      el.style.fontSize = "";
+      let fs = parseFloat(getComputedStyle(el).fontSize), n = 0;
+      while (el.scrollWidth > el.clientWidth + 0.5 && fs > 9 && n++ < 40) { fs -= 0.5; el.style.fontSize = fs + "px"; }
+    };
+    fit();
+    let ro = null;
+    const host = el.parentElement;
+    if (window.ResizeObserver && host) { let w = host.clientWidth; ro = new ResizeObserver(() => { const nw = host.clientWidth; if (Math.abs(nw - w) > 1) { w = nw; fit(); } }); ro.observe(host); }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit).catch(() => {});
+    return () => { if (ro) ro.disconnect(); };
+  }, [key]);
+  return <span ref={ref} className="ff-fit17">{children}</span>;
+}
 
 
-const YES_NO = [{ v: true, label: "Yes" }, { v: false, label: "No" }];
+/* The small ⋯ menu beside the relationship button. Closes on an outside tap and on Escape. */
+const MoreDots17 = lucideIcon("MoreHorizontal");
 
 
-
-function TickChoice({ id, label, options, value, onChange }) {
+function RelMenu17({ items }) {
+  const [open, setOpen] = useState(false);
+  const wrap = useRef(null);
+  const btn = useRef(null);
+  useEffect(() => {
+    if (!open) return;
+    const out = (e) => { if (wrap.current && !wrap.current.contains(e.target)) setOpen(false); };
+    const key = (e) => { if (e.key === "Escape") { setOpen(false); if (btn.current) btn.current.focus(); } };
+    document.addEventListener("pointerdown", out);
+    document.addEventListener("keydown", key);
+    const first = wrap.current && wrap.current.querySelector("[role=menuitem]");
+    if (first) first.focus();
+    return () => { document.removeEventListener("pointerdown", out); document.removeEventListener("keydown", key); };
+  }, [open]);
+  if (!items.length) return null;
   return (
-    <div className="ff-tickq" role="group" aria-labelledby={id}>
-      <div className="ff-tickq-label" id={id}>{label}</div>
-      <div className="ff-tickq-opts">
-        {options.map(o => {
-          const on = value === o.v;
-          return (
-            <button key={String(o.v)} type="button" className={`ff-tick${on ? " on" : ""}`} aria-pressed={on} onClick={() => onChange(o.v)}>
-              <span className="box" aria-hidden="true">{on && <Check size={13} strokeWidth={3} />}</span>{o.label}
-            </button>
-          );
-        })}
-      </div>
+    <div className="ff-rs17-more" ref={wrap}>
+      <button ref={btn} type="button" className="ff-rs17-dots" aria-label="More" aria-haspopup="menu" aria-expanded={open} onClick={() => setOpen(o => !o)}>
+        <MoreDots17 size={20} aria-hidden="true" />
+      </button>
+      {open && (
+        <div className="ff-rs17-menu" role="menu">
+          {items.map(it => (
+            <button key={it.label} type="button" role="menuitem" onClick={() => { setOpen(false); it.go(); }}>{it.label}</button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
 
 
-
-function AddToTeamSheet({ open, person, onClose }) {
+/* The one relationship slot on someone else's profile, for a signed-in member. */
+function RelSlot17({ person, onReview }) {
   const { state, dispatch } = useStore();
-  const [worked, setWorked] = useState(null);
-  const [again, setAgain] = useState(null);
-  const [howTo, setHowTo] = useState(null);
-  const [text, setText] = useState("");
-  const [confirming, setConfirming] = useState(false);
-  useEffect(() => { if (open) { setWorked(null); setAgain(null); setHowTo(null); setText(""); setConfirming(false); } }, [open, person && person.id]);
-  if (!open || !person) return null;
-  const first = String(person.name || "").split(" ")[0] || "them";
-  const ready = worked !== null && again !== null && (worked === false || howTo);
-  const send = () => {
-    const how = HOW_TO_WORK.find(h => h.key === howTo);
-    dispatch({ type: "TEAM_INVITE", invite: {
-      id: uid("tinv"), personId: person.id, name: person.name, tag: person.tag || null, note: person.profession || "",
-      workedBefore: worked, workAgain: again, howTo: worked ? (how ? how.label : null) : null, rating: worked && how ? how.rating : null,
-      review: text.trim(), at: Date.now(), status: "pending",
-    } });
-    dispatch({ type: "TOAST", toast: `Team invitation sent to ${first}` });
-    onClose();
-  };
-
-  return (
-    <Sheet open onClose={onClose} title={confirming ? "Send team invitation" : `Add ${first} to your team`}>
-      <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 16 }}>
-        <Portrait src={person.photo} name={person.name} size={44} tier={person.tier} />
-        <div>
-          <div className="ff-display" style={{ fontSize: 15 }}>{person.name}</div>
-          <div className="ff-serif" style={{ fontSize: 12.5, color: "var(--gold-dk)", fontStyle: "normal" }}>{person.profession}</div>
-        </div>
+  const [offer, setOffer] = useState(false);
+  useEffect(() => { setOffer(false); }, [person.id]);
+  const first = reviewName17(person);
+  const status = connStatus17(state, person.id);
+  const reviewed = (state.reviews || []).some(r => r && r.byId === "me" && r.aboutId === person.id);
+  const askIn = status === "network" ? teamAsksWaiting17(state).find(x => x.fromId === person.id) : null;
+  const invite = (state.teamInvites || []).filter(i => i.personId === person.id && i.status === "pending").slice(-1)[0];
+  const toast = (t) => dispatch({ type: "TOAST", toast: t });
+  if (offer) {
+    return (
+      <div className="ff-rs17-card">
+        <button type="button" className="x" aria-label="Skip" onClick={() => setOffer(false)}><X size={18} aria-hidden="true" /></button>
+        <ReviewForm17 person={person} onDone={() => setOffer(false)} />
       </div>
+    );
+  }
+  let main;
+  if (status === "none") {
+    main = <Btn variant="gold wide" onClick={() => {
+      dispatch({ type: "NET_TOGGLE", id: person.id }); toast(`${first} added to your network`);
+      if (!reviewed) setOffer(true);
+    }}><UserPlus size={15} aria-hidden="true" /><FitLabel17>Add to network</FitLabel17></Btn>;
+  } else if (status === "network") {
+    main = askIn
+      ? <Btn variant="gold wide" onClick={() => { dispatch({ type: "TEAM_ASK_REPLY", ask: askIn, accept: true }); toast(`You and ${first} are on each other's team`); }}><Check size={15} aria-hidden="true" /><FitLabel17>Accept invitation</FitLabel17></Btn>
+      : <Btn variant="gold wide" onClick={() => {
+          dispatch({ type: "TEAM_INVITE", invite: { id: uid("tinv"), personId: person.id, name: person.name, tag: person.tag || null, note: person.profession || "", at: Date.now(), status: "pending" } });
+          toast(`Invitation sent to ${first}`);
+        }}><Users size={15} aria-hidden="true" /><FitLabel17>Invite to your team</FitLabel17></Btn>;
+  } else if (status === "pending") {
+    main = <div className="ff-rs17-quiet"><Clock size={15} aria-hidden="true" /><FitLabel17>Invitation sent</FitLabel17></div>;
+  } else {
+    main = <div className="ff-rs17-quiet"><FitLabel17>On your team</FitLabel17><Check size={15} aria-hidden="true" /></div>;
+  }
+  const items = [
+    ...(!reviewed ? [{ label: `Review ${first}`, go: onReview }] : []),
+    ...(status === "network" ? [{ label: "Remove from network", go: () => { dispatch({ type: "CONN_REMOVE", id: person.id, from: "network" }); toast(`${first} removed from your network`); } }] : []),
+    ...(status === "pending" ? [{ label: "Cancel invitation", go: () => { dispatch({ type: "CONN_REMOVE", id: person.id, from: "pending" }); toast("Invitation cancelled"); } }] : []),
+    ...(status === "team" ? [{ label: "Remove from team", go: () => { dispatch({ type: "CONN_REMOVE", id: person.id, from: "team" }); toast(`${first} removed from your team`); } }] : []),
+    ...(status === "pending" && invite ? [{ label: `Preview: ${first} accepts`, go: () => { dispatch({ type: "TEAM_INVITE_ACCEPT", id: invite.id }); toast(`${first} accepted · now on your team`); } }] : []),
+  ];
+  return <div className="ff-rs17">{main}<RelMenu17 items={items} /></div>;
+}
 
-      {!confirming ? (<>
-        <div className="ff-tickqs">
-          <TickChoice id="att-worked" label={`Have you worked with ${first} before?`} options={YES_NO} value={worked}
-            onChange={(v) => { setWorked(v); if (!v) setHowTo(null); }} />
-          <TickChoice id="att-again" label={worked === false ? `Would you like to work with ${first}?` : `Would you like to work with ${first} again?`}
-            options={YES_NO} value={again} onChange={setAgain} />
-          {worked && (
-            <TickChoice id="att-how" label={`How is ${first} to work with?`} options={HOW_TO_WORK.map(h => ({ v: h.key, label: h.label }))}
-              value={howTo} onChange={setHowTo} />
-          )}
-        </div>
-        <Field label={worked === false ? `A note for ${first}` : "Your review"}
-          hint={worked === false ? "Optional. Say why you'd like them on your team." : `Goes on ${first}'s profile once they accept your invitation.`}>
-          <textarea id="att-review" className="ff-input" rows={4} value={text} onChange={(e) => setText(e.target.value)}
-            placeholder={worked === false ? "Loved your cocktail menu at the launch night…" : "Reliable, great with guests, always on time…"} />
-        </Field>
-        <Btn variant="primary wide" disabled={!ready} onClick={() => setConfirming(true)}><Plus size={14} /> Add {first}</Btn>
-        {!ready && <p className="ff-body ff-muted" style={{ fontSize: 12, margin: "8px 0 0", textAlign: "center" }}>Answer the questions above to continue.</p>}
-      </>) : (
-        <div className="ff-confirm">
-          <span className="ff-confirm-ic"><WhatsAppIcon size={22} /></span>
-          <p className="ff-confirm-main">Your team invitation{text.trim() || (worked && howTo) ? " and review" : ""} will be sent to <b>{person.name}</b> on WhatsApp.</p>
-          <p className="ff-body" style={{ margin: 0 }}>
-            {first} will be notified that you'd like to add them to your team. You're connected once {first} accepts{worked ? `, and your review goes on ${first}'s profile then` : ""}.
-          </p>
-          <div className="ff-confirm-acts">
-            <Btn variant="primary wide" onClick={send}><Send size={14} /> Send invitation</Btn>
-            <Btn variant="ghost wide" onClick={() => setConfirming(false)}>Back</Btn>
-          </div>
-          <ProtoNote />
-        </div>
-      )}
-    </Sheet>
+
+/* Your own card's Share: once the profile is complete it sends your join link (no ?r=, the code is in it). */
+function MyShareBtn17({ person, onTap }) {
+  const { state } = useStore();
+  const [open, setOpen] = useState(false);
+  const tag = String((state.auth.status === "signedIn" && (state.auth.tag || state.session.tag)) || "");
+  const join = !!tag && profileBasics17(state);
+  return (
+    <>
+      <button type="button" className="ff-csm-btn wide" onClick={() => onTap ? onTap() : setOpen(true)} aria-label={join ? "Share Join my team on FireFlair:" : "Share My FireFlair card"}><WhatsAppIcon size={18} /> Share</button>
+      {open ? (
+        <CardShareSheet17 open onClose={() => setOpen(false)} title={join ? "Join my team on FireFlair:" : "My FireFlair card"} url={join ? inv17Link(tag) : `https://${CARD_DOMAIN}/${tag}`} noRef={join}
+          fileName={(join ? "fireflair-join-" : "fireflair-") + cx17Slug(tag)}>
+          <PlayerCard person={person} format="full" nameAs="div" themeKey={state.profile.theme} />
+        </CardShareSheet17>
+      ) : null}
+    </>
   );
 }
 
@@ -119,44 +140,23 @@ function PersonProfile() {
   const person = all.find(p => p.id === state.viewing)
     || (state.viewing === "me" ? { ...meAsStaff(state.profile, state.session), group: "Your profile" } : null);
   const guestOfMe = !!state.viewingAsGuest && state.viewing === "me";
-  const connected = state.connections.some(c => c.id === state.viewing);
-  const invite = (state.teamInvites || []).filter(i => i.personId === state.viewing).slice(-1)[0];
-  const pending = !connected && invite && invite.status === "pending";
   const [reviewing, setReviewing] = useState(false);
-  const [adding, setAdding] = useState(false);
   const [asking, setAsking] = useState(false);
   const [checking, setChecking] = useState(false);
   if (!person) return null;
   const first = String(person.name || "").split(" ")[0];
   const preview = (msg) => dispatch({ type: "TOAST", toast: msg || "This is how guests see your profile" });
-  const acts = guestOfMe ? { onBook: () => preview(), onReview: () => preview(), onJoin: () => preview() } : {
-    onBook: () => { if (!state.selection.includes(person.id)) dispatch({ type: "SELECT", id: person.id }); dispatch({ type: "TOAST", toast: `${first} added to your basket` }); },
-    onReview: () => setReviewing(true),
-    onJoin: () => {
-      if (state.auth.status === "signedIn" || person.id === "me") { dispatch({ type: "TOAST", toast: "Share this card so they can join FireFlair" }); return; }
-      /* Joining from someone's profile: they are the one who brought you in, unless a code was already recorded. */
-      dispatch({ type: "INV_REF", code: person.tag, kind: "share" });
-      const credited = !state.session.refTag || String(state.session.refTag).toUpperCase() === String(person.tag || "").toUpperCase();
-      dispatch({ type: "VIEW", id: null });
-      if (state.role !== "team") dispatch({ type: "ROLE", role: "team" });
-      dispatch({ type: "TAB", tab: "profile" });
-      if (credited) dispatch({ type: "TOAST", toast: `Joining with ${first} — your first connection` });
-      window.scrollTo(0, 0);
-    },
-  };
   const other = person.id !== "me";
   const publicView = other || guestOfMe;
-  /* Prototype only: what happens when they accept on WhatsApp. */
-  const acceptPreview = () => {
-    dispatch({ type: "TEAM_INVITE_ACCEPT", id: invite.id });
-    if (invite.workedBefore && (invite.review || invite.rating)) {
-      dispatch({ type: "REVIEW_ADD", review: {
-        id: uid("rev"), aboutId: person.id, byId: "me", shiftId: null,
-        byName: (state.role === "staff" && state.site !== "party" && state.company?.name) || state.profile.name || "You", rating: invite.rating || 5,
-        text: invite.review || `${invite.howTo} to work with.`, at: Date.now(),
-      } });
-    }
-    dispatch({ type: "TOAST", toast: `${first} accepted · now on your team` });
+  const signedIn = state.auth.status === "signedIn";
+  const party = !!hireSiteOf(state).party;
+  /* Join from someone's profile: they are the one who brought you in (their team invitation waits after sign-up), unless a code was already recorded. */
+  const join = () => {
+    dispatch({ type: "INV_REF", code: person.tag, kind: "team" });
+    dispatch({ type: "VIEW", id: null });
+    if (state.role !== "team") dispatch({ type: "ROLE", role: "team" });
+    dispatch({ type: "TAB", tab: "profile" });
+    window.scrollTo(0, 0);
   };
 
   const backBtn = (
@@ -171,72 +171,59 @@ function PersonProfile() {
     </button>
   );
   const guestNote = guestOfMe ? <div className="ff-guestnote"><Eye size={16} /> This is your profile as a guest sees it.</div> : null;
-  const myTag = state.auth.status === "signedIn" ? (state.auth.tag || state.session.tag) : "";
-  const shareTag = person.id === "me" ? myTag : String(person.tag || cx17Slug(person.name || person.id) || "");
-  const shareBtn = shareTag ? (
-      <CardShareBtn17 title={person.id === "me" ? "My FireFlair card" : `${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${shareTag}`} fileName={"fireflair-" + cx17Slug(shareTag)} label="Share" className="wide"
-        render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={person.id === "me" ? state.profile.theme : (person.theme || "ivory")} />} />) : null;
-  const shareEl = shareBtn ? <div style={{ marginTop: 8, width: "calc(50% - 4px)", marginInline: "auto" }}>{shareBtn}</div> : null;
-  const actionsEl = other ? (<div className="ff-pub-acts">
-        {hireSiteOf(state).party ? <FavBtn11 person={person} wide /> : (<>
-          {state.role === "staff" && <div style={{ marginBottom: 8 }}><FavBtn11 person={person} wide /></div>}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-            <NetBtn17 id={person.id} name={first} />
-            {connected ? (
-              <Btn variant="ghost" disabled><Check size={14} /> On your team</Btn>
-            ) : pending ? (
-              <Btn variant="ghost" onClick={() => setAdding(true)}><Clock size={14} /> Invitation sent</Btn>
-            ) : (
-              <Btn variant="gold" onClick={() => setAdding(true)}><Plus size={14} /> Add to team</Btn>
-            )}
-          </div>
-        </>)}
-        {pending && (
-          <div className="ff-pendingnote">
-            <span>Waiting for {first} to accept your team invitation on WhatsApp.</span>
-            <button type="button" className="ff-linkbtn" onClick={acceptPreview}>Preview: {first} accepts</button>
-          </div>
-        )}
-        <div style={{ marginTop: 8, display: "grid", gap: 8 }}>
-          {state.role === "staff" && state.site === "party" && !person.isCompany && (
-            <LockedBtn17 variant="primary wide" icon={<Users size={14} />}>Book this person</LockedBtn17>
-          )}
-          {state.role === "staff" && state.site !== "party" && (
-            <Btn variant={state.selection.includes(person.id) ? "ghost wide" : "primary wide"} onClick={() => {
-              dispatch({ type: "SELECT", id: person.id });
-              dispatch({ type: "TOAST", toast: state.selection.includes(person.id) ? `${person.name} removed from your booking bar` : `${person.name} added to your booking bar` });
-            }}>
-              {state.selection.includes(person.id) ? <><Check size={14} /> In your booking bar</> : <><Users size={14} /> Add to booking</>}
-            </Btn>
-          )}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-            <Btn onClick={() => setAsking(true)}><MessageSquare size={14} /> Ask a question</Btn>
-            <Btn onClick={() => setChecking(true)}><I11.CalendarCheck size={14} /> Availability</Btn>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: shareBtn ? "1fr 1fr" : "1fr", gap: 8 }}>
-            <Btn variant="wide" onClick={() => setReviewing(true)}><Award size={14} /> Review</Btn>
-            {shareBtn}
-          </div>
-        </div>
-      </div>) : null;
+  const shareTag = String(person.tag || cx17Slug(person.name || person.id) || "");
+  const shareBtn = other && shareTag ? (
+      <CardShareBtn17 title={`${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${shareTag}`} fileName={"fireflair-" + cx17Slug(shareTag)} label="Share" className="wide"
+        render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={person.theme || "ivory"} />} />) : null;
+  const myTag = signedIn ? (state.auth.tag || state.session.tag) : "";
+  const shareEl = !other && !guestOfMe && myTag ? <div style={{ marginTop: 8, width: "calc(50% - 4px)", marginInline: "auto" }}><MyShareBtn17 person={person} /></div> : null;
+  const askRow = (
+    <div className="ff-pub-two">
+      <Btn variant={party ? "" : "ghost"} onClick={() => setAsking(true)}><MessageSquare size={14} aria-hidden="true" /><FitLabel17>{party ? "Ask a question" : "Ask"}</FitLabel17></Btn>
+      <Btn variant={party ? "" : "ghost"} onClick={() => setChecking(true)}><I11.CalendarCheck size={14} aria-hidden="true" /><FitLabel17>Availability</FitLabel17></Btn>
+    </div>
+  );
+  let actionsEl = null;
+  if (guestOfMe || (other && !signedIn && !party)) {
+    /* A signed-out visitor (and you, previewing your profile as a guest): Join, Review, Share. */
+    actionsEl = (<div className="ff-pub-acts ff-pub-stack">
+      <Btn variant="gold wide ff-join17" onClick={guestOfMe ? () => preview() : join}><FitLabel17>{`Join ${first}'s team`}</FitLabel17></Btn>
+      <Btn variant="ghost wide" onClick={guestOfMe ? () => preview() : () => setReviewing(true)}><Award size={14} aria-hidden="true" /><FitLabel17>Review</FitLabel17></Btn>
+      {guestOfMe ? <MyShareBtn17 person={person} onTap={() => preview()} /> : shareBtn}
+    </div>);
+  } else if (other && party) {
+    actionsEl = (<div className="ff-pub-acts ff-pub-stack">
+      <FavBtn11 person={person} wide />
+      {state.role === "staff" && !person.isCompany && <LockedBtn17 variant="primary wide" icon={<Users size={14} />}>Book this person</LockedBtn17>}
+      {askRow}
+      <Btn variant="wide" onClick={() => setReviewing(true)}><Award size={14} aria-hidden="true" /><FitLabel17>Review</FitLabel17></Btn>
+      {shareBtn}
+    </div>);
+  } else if (other) {
+    actionsEl = (<div className="ff-pub-acts ff-pub-stack">
+      {state.role === "staff" && <FavBtn11 person={person} wide />}
+      <RelSlot17 person={person} onReview={() => setReviewing(true)} />
+      {state.role === "staff" && (
+        <Btn variant={state.selection.includes(person.id) ? "ghost wide" : "primary wide"} onClick={() => {
+          dispatch({ type: "SELECT", id: person.id });
+          dispatch({ type: "TOAST", toast: state.selection.includes(person.id) ? `${person.name} removed from your booking bar` : `${person.name} added to your booking bar` });
+        }}>
+          {state.selection.includes(person.id) ? <><Check size={14} /> In your booking bar</> : <><Users size={14} /> Add to booking</>}
+        </Btn>
+      )}
+      {askRow}
+      {shareBtn}
+    </div>);
+  }
   const cardEl = <PlayerCard person={person} format="full" nameAs="div" themeKey={person.id === "me" ? state.profile.theme : (person.theme || "ivory")}  />;
   return (
     <div className={publicView ? "ff-pubpage" : undefined}>
-      <PublicHero media={mediaOf(state, person)} card={cardEl} narrow below={<>{backBtn}{guestNote}{actionsEl}{other ? null : shareEl}</>} />
+      <PublicHero media={mediaOf(state, person)} card={cardEl} narrow below={<>{backBtn}{guestNote}{actionsEl}{shareEl}</>} />
       <HireCards11 person={person} />
       <PublicProfileBody person={person} />
       <ReviewSheet open={reviewing} person={person} onClose={() => setReviewing(false)} />
-      <AddToTeamSheet open={adding && !pending} person={person} onClose={() => setAdding(false)} />
       <AskQuestionSheet open={asking} person={person} onClose={() => setAsking(false)} />
       <CheckAvailabilitySheet open={checking} person={person} onClose={() => setChecking(false)} />
-      {adding && pending && (
-        <Sheet open onClose={() => setAdding(false)} title="Team invitation sent">
-          <p className="ff-body" style={{ marginTop: 0 }}>
-            Your team invitation went to {person.name} on WhatsApp at {timeOf(invite.at)}. You'll be connected as soon as {first} accepts.
-          </p>
-          <Btn variant="ghost wide" onClick={() => setAdding(false)}>Close</Btn>
-        </Sheet>
-      )}
     </div>
   );
 }

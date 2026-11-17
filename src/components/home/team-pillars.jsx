@@ -152,16 +152,10 @@
   }
 
   function VisReviews21() {
-    const [a, setA] = useState({ w: true, a: true, h: "excellent" });
-    const set = (k) => (v) => setA((o) => ({ ...o, [k]: v }));
     return (
       <div className="pv pv-rv">
         <InertBox className="ff-rvslide"><ReviewCardPv21 /></InertBox>
-        <div className="ff-tickqs pv-tq">
-          <TickChoice id="pv-w" label="Have you worked with Simao before?" options={YES_NO} value={a.w} onChange={set("w")} />
-          <TickChoice id="pv-a" label="Would you like to work with Simao again?" options={YES_NO} value={a.a} onChange={set("a")} />
-          <TickChoice id="pv-h" label="How is Simao to work with?" options={HOW_TO_WORK.map((h) => ({ v: h.key, label: h.label }))} value={a.h} onChange={set("h")} />
-        </div>
+        <ReviewForm17 preview person={{ id: "stf_simao", name: "Simao" }} />
       </div>
     );
   }

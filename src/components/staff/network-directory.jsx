@@ -229,10 +229,6 @@ function ProsByType17({ onPick }) {
             {list.length ? (
               <HScroll label={label} snap>
                 {list.map(p => <PlayerTile key={p.id} person={p} onClick={() => onPick(p)} />)}
-                <button className="ff-card ff-portrait ff-addtile" style={{ width: CARD_W.player }} onClick={() => window.dispatchEvent(new Event("ff-invite"))}>
-                  <span style={{ textAlign: "center" }}><I11.Plus size={20} color="var(--gold-dk)" />
-                    <span className="ff-label" style={{ display: "block", marginTop: 6 }}>Invite</span></span>
-                </button>
               </HScroll>
             ) : <p className="ff-body ff-muted" style={{ margin: 0 }}>No one yet.</p>}
           </Fold17>

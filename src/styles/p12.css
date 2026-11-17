@@ -170,6 +170,28 @@
 .ff .ff-pub-bio p.clamp { display:-webkit-box; -webkit-line-clamp:6; -webkit-box-orient:vertical; overflow:hidden; }
 .ff .ff-pub-more { margin-top:6px; background:none; border:0; color:var(--gold-dk); font-weight:700; font-size:13px; text-decoration:underline; text-underline-offset:3px; padding:4px 2px; }
 .ff .ff-pub-acts { max-width:440px; margin:16px auto 0; }
+/* v17.22 profile actions: one column; signed out = Join (largest), Review, Share; signed in = one relationship slot with a ⋯ menu,
+   Ask | Availability, Share last. Labels wrap between words and shrink if a word does not fit (FitLabel17). */
+.ff .ff-pub-stack { display:grid; gap:8px; }
+.ff .ff-pub-stack > .ff-btn, .ff .ff-pub-stack > .ff-csm-btn { width:100%; min-height:48px; justify-content:center; }
+.ff .ff-pub-two { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:8px; }
+.ff .ff-pub-two > .ff-btn { min-width:0; min-height:48px; padding-left:10px; padding-right:10px; }
+.ff .ff-pub-stack .ff-btn, .ff .ff-pub-stack .ff-csm-btn, .ff .ff-rs17-quiet { border-radius:14px; corner-shape:squircle; }
+.ff .ff-fit17 { display:block; min-width:0; max-width:100%; white-space:normal; overflow-wrap:normal; word-break:normal; hyphens:none; text-align:center; line-height:1.2; }
+.ff .ff-btn.ff-join17 { min-height:64px; padding:14px 18px; font-size:16px; letter-spacing:.08em; border-radius:16px; }
+.ff .ff-rs17 { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; align-items:stretch; }
+.ff .ff-rs17 > .ff-btn, .ff .ff-rs17 > .ff-rs17-quiet { min-width:0; min-height:48px; grid-column:1; }
+.ff .ff-rs17 > :only-child { grid-column:1 / -1; }
+.ff .ff-rs17-quiet { display:flex; align-items:center; justify-content:center; gap:8px; padding:12px 16px; font:700 12px/1.2 var(--sans); letter-spacing:.06em; text-transform:uppercase; color:#4C463C; background:var(--color-cream,#F4EFE4); border:1px solid rgba(126,97,29,.35); box-sizing:border-box; }
+.ff .ff-rs17-more { position:relative; }
+.ff .ff-rs17-dots { width:48px; height:100%; min-height:48px; display:grid; place-items:center; border-radius:14px; corner-shape:squircle; border:1px solid rgba(126,97,29,.45); background:#fff; color:#2A2318; }
+.ff .ff-rs17-dots:focus-visible, .ff .ff-rs17-menu button:focus-visible, .ff .ff-rs17-card .x:focus-visible { outline:2px solid var(--color-gold-dk,#7E611D); outline-offset:2px; }
+.ff .ff-rs17-menu { position:absolute; right:0; top:calc(100% + 6px); z-index:30; min-width:220px; max-width:min(300px,86vw); display:grid; padding:6px; border-radius:16px; corner-shape:squircle; background:#fff; border:1px solid rgba(126,97,29,.4); box-shadow:0 14px 30px -12px rgba(28,20,6,.35); }
+.ff .ff-rs17-menu button { min-height:44px; padding:10px 12px; text-align:left; border-radius:10px; corner-shape:squircle; font:600 14px/1.3 var(--sans); color:#16130F; overflow-wrap:normal; word-break:normal; hyphens:none; }
+.ff .ff-rs17-menu button:hover { background:var(--color-cream,#F4EFE4); }
+.ff .ff-rs17-card { position:relative; padding:16px; border-radius:20px; corner-shape:squircle; background:#fff; border:1px solid rgba(126,97,29,.4); box-shadow:0 10px 22px -16px rgba(60,20,8,.45); }
+.ff .ff-rs17-card .x { position:absolute; top:4px; right:4px; width:44px; height:44px; display:grid; place-items:center; border-radius:12px; corner-shape:squircle; color:#4C463C; }
+.ff .ff-rs17-card .ff-rf17 .q { padding-right:36px; }
 .ff .ff-pub .ff-hscroll { zoom:.8; }
 .ff .ff-pubgrid { display:grid; gap:10px; justify-content:center; grid-template-columns:repeat(auto-fit,minmax(var(--pmin,156px),var(--pmax,186px))); }
 .ff .ff-pubgrid > [role=listitem] { min-width:0; display:flex; }
@@ -506,7 +528,7 @@
 .ff .ff-rel17-steps .stars { font-size:26px; letter-spacing:.14em; color:var(--gold,#C9A227); }
 .ff .ff-rel17-steps b { font-family:var(--display); font-weight:600; font-size:16px; letter-spacing:.05em; color:#16130F; }
 .ff .ff-rel17-steps li > span:last-child { font-size:13.5px; line-height:1.45; color:#3A3226; }
-.ff .ff-rel17-card { max-width:380px; margin:0 auto; }
+.ff .ff-rs17-card { max-width:380px; margin:0 auto; }
 
 /* what's next */
 .ff .ff-next17 { padding-top:34px; }
