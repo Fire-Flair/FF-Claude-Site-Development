@@ -240,6 +240,8 @@ function rt17Apply(route0, state, dispatch) {
   if (r.kind === "other") { dispatch({ type: "V11_SET", patch: away }); return null; }
   if (r.kind === "root") {
     dispatch({ type: "V11_SET", patch: { ...away, fdArea: null, pkgPage: null, supportPage20: null } });
+    /* Signed out, the plain address is the FF Team home: Back from Network or Bookings shows it again. */
+    if ((state.tab || "home") !== "home") dispatch({ type: "TAB", tab: "home" });
     return null;
   }
   /* Signed out, the start page is already the FF Team home: switching role would remount it and close the open section. */

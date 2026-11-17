@@ -5,11 +5,12 @@
    two role cards). The full people wall lives on Network; Home shows four
    example Profile Cards and the FF Party search. */
 function Landing() {
-  const { state, dispatch } = useStore();
+  const { state } = useStore();
   if (state.tab === "network") return <NetworkScreen guest />;
   if (state.tab === "bookings") return PHASE1.bookingsLive ? <TeamBookings guest /> : <P1Bookings guest />;
-  /* Any other tab without a role (an old saved state, for example) goes to FF Team Profile: the current Create your Profile Card flow. */
-  if (state.tab && state.tab !== "home") return <LandingToProfile17 />;
+  /* No role and a tab that signed-out people do not have. The buttons cannot produce this (the TAB reducer opens FF Team first);
+     it is the safety net for a saved state from an older version. Nothing is drawn for it: see LandingToProfile17. */
+  if (state.tab && state.tab !== "home") return <LandingToProfile17 tab={state.tab} />;
 
   return (
     <V101.Home101 />
@@ -18,9 +19,15 @@ function Landing() {
 
 
 
-function LandingToProfile17() {
+/* Replaces the retired chooser ("This is where your Profile Card lives"). Profile opens FF Team Profile, the same place as
+   "Create your Profile Card" on the FF Team home. Any other unknown tab goes back to the FF Team home. Runs once, then unmounts
+   (Profile hands over to TeamRouter, Home to the home page), so it cannot loop. */
+function LandingToProfile17({ tab }) {
   const { dispatch } = useStore();
-  useEffect(() => { dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "profile", route: "home" }); }, []);
+  useEffect(() => {
+    if (tab === "profile") { dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "profile", route: "home" }); }
+    else dispatch({ type: "TAB", tab: "home" });
+  }, []);
   return null;
 }
 
