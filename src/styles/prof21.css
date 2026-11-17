@@ -5,7 +5,7 @@
 
 /* ---- golden account boxes ---------------------------------------------------------------------------------------- */
 .ff .ff-acct21 { display: grid; grid-template-columns: 1fr; gap: 12px; container-type: inline-size; }
-@media (min-width: 700px) { .ff .ff-acct21 { grid-template-columns: 1fr 1fr; } }
+/* v17.34: one box here now (FF Tag); Phone number moved to Let's get started. FF Tag | Media is .ff-tm34 below. */
 .ff .ff-gb21 { position: relative; isolation: isolate; container-type: inline-size; box-sizing: border-box; min-width: 0;
   padding: 16px 16px 15px; border-radius: 22px; corner-shape: squircle;
   background: radial-gradient(130% 90% at 0% 0%, rgba(255,255,255,.75), rgba(255,255,255,0) 55%),
@@ -247,3 +247,13 @@
 .ff .ff-dial26:focus-within { border-color: rgba(201,162,39,.9); box-shadow: 0 0 0 4px rgba(201,162,39,.18); }
 @container (max-width: 380px) { .ff .ff-gb21.shine .ff-gb21-in { padding: 0 8px; font-size: 15px; } .ff .ff-dial26 { padding: 0 6px 0 8px; gap: 2px; font-size: 15px; } .ff .ff-gb21.shine .ff-gb21-btn { min-width: 62px; padding: 0 8px; } }
 @container (max-width: 300px) { .ff .ff-gb21.shine .ff-gb21-btn { flex: 1 0 100%; } }
+
+
+/* ======================= v17.34 — Task 005: FF Tag | Media row, then About Me, then the tabs ======================= */
+.ff .ff-tm34 { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; align-items: stretch; margin: 0; }
+.ff .ff-tm34 > #ff-sec-tag { margin: 0; align-content: stretch; }
+.ff .ff-tm34 > #ff-sec-tag > .ff-gb21, .ff .ff-tm34 > .ff-gb21-media { height: 100%; box-sizing: border-box; }
+.ff .ff-tm34 .ff-acct21 + .ff-gb21-media { margin-top: 0; }
+@media (min-width: 900px) { .ff .ff-tm34 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+/* the Phone number box, third in Let's get started: full width of the box */
+.ff .ff-way17-phone > .ff-way17-wide { grid-column: 1 / -1; }

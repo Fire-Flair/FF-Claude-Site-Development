@@ -105,7 +105,12 @@ function aboutFacts(state) {
 
 
 
-function CreatorAboutMe() {
+/* v17.34: in the builder About Me sits above the tabs (top); the Overview tab's copy then steps aside, so it shows once. */
+function CreatorAboutMe({ top = false } = {}) {
+  if (useContext(ABOUT_TOP34) && !top) return null;
+  return <CreatorAboutMe34 />;
+}
+function CreatorAboutMe34() {
   const { state, dispatch } = useStore();
   /* v17.21: no drop-down — About Me is a type box like the lists. */
   const aOpen = true;

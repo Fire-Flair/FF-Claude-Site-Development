@@ -348,7 +348,8 @@ function PasswordSheet({ open, onClose, change }) {
 }
 
 
-function AccountSettings({ boxes = false } = {}) {
+/* only (v17.34, with boxes): "phone" or "tag" shows just that box — Phone number now sits in Let's get started. */
+function AccountSettings({ boxes = false, only } = {}) {
   const { state, dispatch } = useStore();
   const tag = state.auth.tag || state.session.tag;
   const [editing, setEditing] = useState(false);
@@ -376,17 +377,17 @@ function AccountSettings({ boxes = false } = {}) {
     }
   };
   if (boxes && !editing) return (<>
-    <GoldBox21 icon={<Phone size={16} strokeWidth={1.8} />} title="Phone number" desc={ACCT_DESC21.phone} className="shine">
+    {only !== "tag" && <GoldBox21 icon={<Phone size={16} strokeWidth={1.8} />} title="Phone number" desc={ACCT_DESC21.phone} className="shine">
       <span className="ff-gb21-val"><Check size={15} color="var(--ok)" strokeWidth={2.6} /> {phone || "Number verified"}</span>
-    </GoldBox21>
-    <GoldBox21 icon={<Hash size={16} strokeWidth={1.8} />} title="FF Tag" desc={ACCT_DESC21.tag}
+    </GoldBox21>}
+    {only !== "phone" && <GoldBox21 icon={<Hash size={16} strokeWidth={1.8} />} title="FF Tag" desc={ACCT_DESC21.tag}
       note={<span className="ff-gb21-links">
         <button type="button" className="ff-linkbtn" onClick={() => { setNext(tag); setErr(null); setEditing(true); }}>Change Tag</button>
         <button type="button" className="ff-linkbtn" onClick={() => setPwOpen(true)}>{hasPw ? "Change password" : "Add a password"}</button>
       </span>}>
       <span className="ff-gb21-val">{CARD_DOMAIN}/{tag}</span>
       <PasswordSheet open={pwOpen} change={hasPw} onClose={() => setPwOpen(false)} />
-    </GoldBox21>
+    </GoldBox21>}
   </>);
   return React.createElement("div", null, React.createElement("div", {
     style: { display: "flex", gap: 14, alignItems: "center" }
@@ -514,7 +515,9 @@ function AcctBox19({ icon, title, count, action, children, id }) {
 }
 
 
-function TagSection({ inSave = false, top = false, onSignedIn } = {}) {
+/* v17.34: the sign-up state (FF Tag, phone number, country code, WhatsApp code) in one hook, so the Phone number box
+   (third in Let's get started) and the FF Tag box (Your Profile Page) share one entry, one Verify and one code step. */
+function useJoin21({ inSave = false, top = false, onSignedIn } = {}) {
   const { state, dispatch } = useStore();
   const signedIn = state.auth.status === "signedIn" && !!(state.auth.tag || state.session.tag);
   const suggestion = useMemo(() => AUTH_ADAPTER.suggestTag(state.profile.name), [state.profile.name]);
@@ -564,42 +567,63 @@ function TagSection({ inSave = false, top = false, onSignedIn } = {}) {
       if (onSignedIn) onSignedIn();
     } else setPwOpen(true);
   });
-  /* v17.21: Phone number and FF Tag are two golden boxes side by side (one above the other on a narrow phone). In each,
-     the name, the entry box and its button sit on one line, with the description under them. Media follows, full width. */
+  const setTag = (v) => {
+    setTyped(v);
+    /* Display only: lets the Profile Card address follow the field. Never a real tag. */
+    dispatch({ type: "SESSION", patch: { tagDraft: AUTH_ADAPTER.cleanTag(v) } });
+  };
+  return { signedIn, phone, setPhone, stage, setStage, code, setCode, busy, err, setErr, pwOpen, setPwOpen, clean, available, dial, setDial, fullPhone, phoneOk, send, verify, setTag };
+}
+
+
+/* v17.34: the Phone number entry — third in Let's get started. The same gold box, country code, Verify and WhatsApp
+   code step as before; a signed-in member sees the verified number, as in AccountSettings. */
+function PhoneBox21({ join: j }) {
+  if (j.signedIn) return <AccountSettings boxes only="phone" />;
+  return (<>
+    {j.stage === "details" ? (
+      <GoldBox21 icon={<Phone size={16} strokeWidth={1.8} />} title="Phone number" desc={ACCT_DESC21.phone} className="shine">
+        <DialCode26 value={j.dial} onChange={j.setDial} />
+        <input className="ff-gb21-in" type="tel" inputMode="tel" autoComplete="tel-national" placeholder="7700 900000" aria-label="Phone number"
+          value={j.phone} onChange={(e) => j.setPhone(e.target.value)} enterKeyHint="send"
+          onKeyDown={(e) => e.key === "Enter" && j.available && j.phoneOk && !j.busy && j.send()} />
+        <button type="button" className="ff-gb21-btn" disabled={j.busy || !j.available || !j.phoneOk} onClick={j.send}>{j.busy ? <Loader2 size={14} className="ff-spin" /> : null}Verify</button>
+      </GoldBox21>
+    ) : (
+      <GoldBox21 className="shine" icon={<Phone size={16} strokeWidth={1.8} />} title="WhatsApp code" desc={`Sent to ${j.fullPhone} · any six digits in this preview`}
+        note={<span className="ff-gb21-links">
+          <button type="button" className="ff-linkbtn" onClick={() => { j.setStage("details"); j.setCode(""); j.setErr(null); }}>Change number</button>
+          <button type="button" className="ff-linkbtn" disabled={j.busy} onClick={j.send}>Resend code</button>
+        </span>}>
+        <input className="ff-gb21-in code" inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={j.code}
+          autoFocus={FF_FINE_POINTER} onChange={(e) => j.setCode(e.target.value.replace(/\D/g, ""))} placeholder="000000" aria-label="Code from WhatsApp"
+          onKeyDown={(e) => e.key === "Enter" && j.code.length === 6 && !j.busy && j.verify()} />
+        <button type="button" className="ff-gb21-btn" disabled={j.busy || j.code.length < 6} onClick={j.verify}>{j.busy ? <Loader2 size={14} className="ff-spin" /> : <Check size={14} />} Create</button>
+      </GoldBox21>
+    )}
+    {j.err && <p className="ff-body" role="alert" style={{ color: "var(--bad)", fontSize: 13, margin: "10px 0 0", fontWeight: 600 }}>{j.err}</p>}
+  </>);
+}
+
+
+function TagSection({ inSave = false, top = false, onSignedIn, join } = {}) {
+  const own = useJoin21({ inSave, top, onSignedIn });
+  const { signedIn, phone, setPhone, stage, setStage, code, setCode, busy, err, setErr, pwOpen, setPwOpen, clean, available, send, verify } = join || own;
+  /* v17.34: the FF Tag box only — the Phone number entry is now third in Let's get started (PhoneBox21). FF Tag sits
+     left of Media on desktop, above it on a phone. */
   if (top) {
+    const jt = join || own;
     return (
       <div id="ff-sec-tag" className="ff-tagsection ff-acct19 ff-acct21">
-        {signedIn ? <AccountSettings boxes /> : stage === "details" ? (<>
-          <GoldBox21 icon={<Phone size={16} strokeWidth={1.8} />} title="Phone number" desc={ACCT_DESC21.phone} className="shine">
-            <DialCode26 value={dial} onChange={setDial} />
-            <input className="ff-gb21-in" type="tel" inputMode="tel" autoComplete="tel-national" placeholder="7700 900000" aria-label="Phone number"
-              value={phone} onChange={(e) => setPhone(e.target.value)} enterKeyHint="send"
-              onKeyDown={(e) => e.key === "Enter" && available && phoneOk && !busy && send()} />
-            <button type="button" className="ff-gb21-btn" disabled={busy || !available || !phoneOk} onClick={send}>{busy ? <Loader2 size={14} className="ff-spin" /> : null}Verify</button>
-          </GoldBox21>
+        {signedIn ? <AccountSettings boxes only="tag" /> : stage === "details" ? (
           <GoldBox21 icon={<Hash size={16} strokeWidth={1.8} />} title="FF Tag" desc={ACCT_DESC21.tag} note={<TagNote clean={clean} />}>
-            <TagInput value={clean} check onChange={(v) => {
-              setTyped(v);
-              /* Display only: lets the Profile Card address follow the field. Never a real tag. */
-              dispatch({ type: "SESSION", patch: { tagDraft: AUTH_ADAPTER.cleanTag(v) } });
-            }} />
+            <TagInput value={clean} check onChange={jt.setTag} />
           </GoldBox21>
-        </>) : (<>
-          <GoldBox21 className="shine" icon={<Phone size={16} strokeWidth={1.8} />} title="WhatsApp code" desc={`Sent to ${fullPhone} · any six digits in this preview`}
-            note={<span className="ff-gb21-links">
-              <button type="button" className="ff-linkbtn" onClick={() => { setStage("details"); setCode(""); setErr(null); }}>Change number</button>
-              <button type="button" className="ff-linkbtn" disabled={busy} onClick={send}>Resend code</button>
-            </span>}>
-            <input className="ff-gb21-in code" inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={code}
-              autoFocus={FF_FINE_POINTER} onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))} placeholder="000000" aria-label="Code from WhatsApp"
-              onKeyDown={(e) => e.key === "Enter" && code.length === 6 && !busy && verify()} />
-            <button type="button" className="ff-gb21-btn" disabled={busy || code.length < 6} onClick={verify}>{busy ? <Loader2 size={14} className="ff-spin" /> : <Check size={14} />} Create</button>
-          </GoldBox21>
+        ) : (
           <GoldBox21 icon={<Hash size={16} strokeWidth={1.8} />} title="FF Tag" desc={ACCT_DESC21.tag}>
             <span className="ff-gb21-val">{CARD_DOMAIN}/{clean}</span>
           </GoldBox21>
-        </>)}
-        {err && <p className="ff-body" role="alert" style={{ color: "var(--bad)", fontSize: 13, margin: "10px 0 0", fontWeight: 600 }}>{err}</p>}
+        )}
         <PasswordSheet open={pwOpen} onClose={() => setPwOpen(false)} />
       </div>
     );
@@ -614,11 +638,7 @@ function TagSection({ inSave = false, top = false, onSignedIn } = {}) {
     hint: top ? "Your personal web page, displaying all your profile information." : undefined
   }, React.createElement(TagInput, {
     value: clean,
-    onChange: (v) => {
-      setTyped(v);
-      /* Display only: lets the Profile Card address follow the field. Never a real tag. */
-      dispatch({ type: "SESSION", patch: { tagDraft: AUTH_ADAPTER.cleanTag(v) } });
-    },
+    onChange: (join || own).setTag,
     check: true
   }), React.createElement(TagNote, {
     clean
@@ -707,9 +727,9 @@ function SaveShareCard({ onSaved }) {
   const cardReady = recsOf(p, "professions").some(r => !r.proposed);
   const save = () => {
     if (!signedIn) {
-      const el = document.getElementById("ff-sec-tag");
+      const el = document.getElementById("ff-sec-phone") || document.getElementById("ff-sec-tag");
       if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
-      setTimeout(() => { const i = document.querySelector('#ff-sec-tag input'); if (i) i.focus({ preventScroll: true }); }, 400);
+      setTimeout(() => { const i = document.querySelector('#ff-sec-phone input[type="tel"], #ff-sec-phone input, #ff-sec-tag input'); if (i) i.focus({ preventScroll: true }); }, 400);
       dispatch({ type: "TOAST", toast: "Create your FF Tag first" });
       return;
     }
@@ -836,13 +856,12 @@ function InterviewBook17({ notes, onClose, name, title = "Book an interview" }) 
 }
 
 
-/* Create a profile: one box. Upload a CV, or talk or type to GPT, or book an interview. */
-function StartBox17() {
+/* Create a profile: one box. Upload a CV, or talk or type to GPT, then the Phone number (v17.34: in place of Book an
+   interview; InterviewBook17 stays for FF Staff's Book a meeting). */
+function StartBox17({ join }) {
   const [text, setText] = useState("");
-  const [book, setBook] = useState(false);
   const ex = useExtraction({ withAnswers: true });
   const run = (v) => { if (String(v || "").trim().length < 3 || ex.busy) return; ex.start({ text: v }); };
-  const cal = V101.support20Url();
   return (
     <div id="ff-sec-ffai" className="ff-start17">
       <section className="ff-way17 ff-way17-cv">
@@ -859,16 +878,18 @@ function StartBox17() {
           </FFAI>
         </div>
       </section>
-      {cal && (
-        <section className="ff-way17 ff-way17-int">
-          <div className="ff-way17-ctl"><Btn variant="ghost ff-bigcv17" onClick={() => setBook(true)}><Calendar size={16} /> Book an interview</Btn></div>
-          <p className="ff-way17-line"><span>Meet the FireFlair team and ask us anything.</span></p>
+      {join && (
+        <section id="ff-sec-phone" className="ff-way17 ff-way17-phone">
+          <div className="ff-way17-wide"><PhoneBox21 join={join} /></div>
         </section>
       )}
-      {book && <InterviewBook17 notes={text} onClose={() => setBook(false)} />}
     </div>
   );
 }
+
+
+/* v17.34: true where the page shows About Me above the tabs (the builder), so the Overview tab leaves its copy out. */
+const ABOUT_TOP34 = createContext(false);
 
 
 function ProfileBuilder() {
@@ -878,6 +899,7 @@ function ProfileBuilder() {
   const cardReady = recsOf(p, "professions").some(r => !r.proposed);
   const signedIn = state.auth.status === "signedIn";
   const finished = signedIn && !!p.finishedAt;
+  const join = useJoin21({ top: true });
   const toWelcome = () => setTimeout(() => {
     const el = document.getElementById("ff-sec-welcome");
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -889,15 +911,21 @@ function ProfileBuilder() {
 
       <div className="ff-journey">
         <BigStepHead n={1} title="Let's get started" done={hasCV(p) || cardReady} />
-        <StartBox17 />
+        <StartBox17 join={join} />
 
         <BigStepHead n={2} title="Your Profile Card" done={cardReady} />
         <div id="ff-sec-card"><CardBuilder /></div>
 
         <BigStepHead n={3} title="Your Profile Page" done={false} />
-        <TagSection top />
-        <CreatorMedia />
-        <ProfileSections person={me} isMe />
+        {/* v17.34: FF Tag | Media (stacked on a phone), then About Me, then the tabs. */}
+        <div className="ff-tm34">
+          <TagSection top join={join} />
+          <CreatorMedia />
+        </div>
+        <ABOUT_TOP34.Provider value={true}>
+          <CreatorAboutMe top />
+          <ProfileSections person={me} isMe />
+        </ABOUT_TOP34.Provider>
         <IntroEditor17 />
       </div>
 
