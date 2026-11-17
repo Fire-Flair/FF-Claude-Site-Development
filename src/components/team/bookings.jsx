@@ -342,7 +342,7 @@ function TeamBookings({ guest = false }) {
   /* Bar packages in the FF Party pillar order: Masterclass first, down to Staffing. */
   const pkgs = [...PARTY_SERVICES.filter(sv => sv.id !== "svc_full").reverse(), ...(hid17(state, "packages", "svc_staffing") ? [] : [STAFFING_SERVICE])];
   const [pkTab, setPkTab] = useState("Bar");
-  const ownBtn = <button type="button" className="ff-btn gold ff-pk22-own" onClick={ownPackage}><Plus size={16} /> Create your own package</button>;
+  const ownBtn = <button type="button" className="ff-btn gold ff-pk29-own" onClick={ownPackage}><Plus size={18} strokeWidth={2.6} /> Create your own package</button>;
 
   const Row = ({ x, tag, onClick }) => (
     <button type="button" className="ff-bk-row" onClick={onClick}>
@@ -381,33 +381,36 @@ function TeamBookings({ guest = false }) {
         <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-party">
           <h3>FF Party packages</h3>
           <p>You are your own boss. FireFlair sets the pay rate for each package. You deal directly with the client, and FireFlair is here to support you. Packages are advertised at a set rate, and by signing up to one you agree to that rate. The rates are strong, so we expect strong work in return.</p>
-          <h4 className="ff-pk22-h">{pkTab === "Bar" ? "Our bar packages" : pkTab === "Entertainment" ? "Our entertainment packages" : "Our service packages"}</h4>
-          <div className="ff-pr17-chips" role="tablist" aria-label="Package categories">
-            {["Bar", "Entertainment", "Services"].map(k => <button key={k} type="button" role="tab" id={`ff-pk22-t-${k}`} className="ff-chip ff-pr17-tab" aria-selected={k === pkTab} aria-pressed={k === pkTab} onClick={() => setPkTab(k)}>{k}</button>)}
+          <h4 className="ff-pk29-h">{pkTab === "Bar" ? "Our bar packages" : pkTab === "Entertainment" ? "Our entertainment packages" : "Our service packages"}</h4>
+          <div className="ff-pr17-chips ff-pk29-tabs" role="tablist" aria-label="Package categories">
+            {["Bar", "Entertainment", "Services"].map(k => <button key={k} type="button" role="tab" id={`ff-pk29-t-${k}`} className="ff-chip ff-pr17-tab" aria-selected={k === pkTab} aria-pressed={k === pkTab} onClick={() => setPkTab(k)}>{k}</button>)}
           </div>
-          <div className="ff-pr17-panel ff-pk22-panel" role="tabpanel" aria-labelledby={`ff-pk22-t-${pkTab}`}>
+          <div className="ff-pr17-panel ff-pk29-panel" role="tabpanel" aria-labelledby={`ff-pk29-t-${pkTab}`}>
             {pkTab === "Bar" ? (
-              <HScroll label="Our bar packages" snap>
-                {pkgs.map(sv => { const on = picked.includes(sv.id); return (
-                  <div key={sv.id} className="ff-pk22-cell">
-                    <V101.PosterCard tone={sv.tone} ribbon="Package Card" eyebrow={[sv.level, sv.site || "FF Party"].join(" · ")} title={sv.title} tagline={sv.tagline}
-                      price={PAY17[sv.id] != null ? <><small>You earn</small>{pkgPayLabel17(sv.id)}</> : null}
-                      rows={[
-                        { icon: <Sparkles size={17} />, label: "Includes", value: sv.includes },
-                        { icon: <Users size={17} />, label: "Ideal for", value: sv.ideal },
-                        { icon: <Clock size={17} />, label: "Duration", value: TIME17[sv.id] || sv.time },
-                      ]}
-                      footer={<>
-                        <span className="ff-poster-small" style={{ margin: 0 }}>{sv.domain || "FFParty.uk"}</span>
-                        <button type="button" className={`ff-pk22-go${on ? " on" : ""}`} aria-pressed={on} aria-label={`${sv.title}: ${on ? "Signed up" : "Sign up"}`} onClick={() => tick(sv)}>{on ? <><Check size={14} strokeWidth={2.6} /> Signed up</> : "Sign up"}</button>
-                      </>} />
-                  </div>
-                ); })}
-                <div className="ff-pk22-cell ff-pk22-owncell">{ownBtn}</div>
-              </HScroll>
+              <div className="ff-pk29-row">
+                <HScroll label="Our bar packages" snap>
+                  {pkgs.map(sv => { const on = picked.includes(sv.id); return (
+                    <div key={sv.id} className="ff-pk29-cell">
+                      {/* The FF Party Package Card (V101.PosterCard, as on FF Party), with what you earn and a Sign up button in its footer. */}
+                      <V101.PosterCard tone={sv.tone} ribbon="Package Card" eyebrow={[sv.level, sv.site || "FF Party"].join(" · ")} title={sv.title} tagline={sv.tagline}
+                        price={PAY17[sv.id] != null ? <><small>You earn</small>{pkgPayLabel17(sv.id)}</> : null}
+                        rows={[
+                          { icon: <Sparkles size={17} />, label: "Includes", value: sv.includes },
+                          { icon: <Users size={17} />, label: "Ideal for", value: sv.ideal },
+                          { icon: <Clock size={17} />, label: "Duration", value: TIME17[sv.id] || sv.time },
+                        ]}
+                        footer={<>
+                          <span className="ff-poster-small" style={{ margin: 0 }}>{sv.domain || "FFParty.uk"}</span>
+                          <button type="button" className={`ff-pk29-go${on ? " on" : ""}`} aria-pressed={on} aria-label={`${sv.title}: ${on ? "Signed up" : "Sign up"}`} onClick={() => tick(sv)}>{on ? <><Check size={14} strokeWidth={2.6} /> Signed up</> : "Sign up"}</button>
+                        </>} />
+                    </div>
+                  ); })}
+                  <div className="ff-pk29-cell ff-pk29-stage">{ownBtn}</div>
+                </HScroll>
+              </div>
             ) : (
-              <div className="ff-pk22-soon">
-                <span>Coming soon 2027</span>
+              <div className="ff-pk29-stage ff-pk29-soon">
+                <span className="ff-pk29-soon-t">Coming soon 2027</span>
                 {ownBtn}
               </div>
             )}

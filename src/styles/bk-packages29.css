@@ -1,0 +1,65 @@
+/* v17.29 FF Team Bookings, "FF Party packages" box: the "Our bar packages" heading, the Bar / Entertainment / Services tabs
+   (the .ff-pr17-tab style FF Staff Shifts uses), the FF Party Package Card (V101.PosterCard) with a Sign up button in its
+   footer, and the dark "stage" that carries the gold Create your own package button.
+   Phone and tablet: one sideways row with the next card peeking. 900px and wider: the cards wrap into a grid. */
+.ff .ff-pk29-h { margin:14px 0 10px; font-family:var(--display); font-weight:600; font-size:18px; line-height:1.2; color:var(--color-text,#1A1712); }
+
+/* Three tabs, one row, never scrolling up or down. */
+.ff .ff-pk29-tabs { flex-wrap:nowrap; overflow-x:auto; overflow-y:hidden; overscroll-behavior-x:contain; touch-action:pan-x; }
+.ff .ff-pk29-tabs .ff-pr17-tab { flex:0 0 auto; min-width:48px; }
+
+.ff .ff-pk29-panel { padding:12px 10px 10px; margin-bottom:12px; overflow:hidden; }
+.ff .ff-pk29-panel:has(> .ff-pk29-row) { padding-bottom:0; }
+
+/* The row: left / right only. It reaches the panel's edges so the next card shows at the side. */
+.ff .ff-pk29-row .ff-hscroll { margin:0 -10px; padding:2px 10px 28px; gap:12px; scroll-padding-left:10px; overflow-y:hidden; overscroll-behavior-x:contain; touch-action:pan-x pinch-zoom; }
+.ff .ff-pk29-row .ff-hitem { flex:0 0 min(330px,calc(100% - 22px)); min-width:0; align-self:stretch; display:flex; }
+.ff .ff-pk29-cell { flex:1 1 auto; width:100%; min-width:0; display:flex; }
+.ff .ff-pk29-cell > .ff-poster { width:100%; min-height:0; height:auto; }
+.ff .ff-pk29-cell .ff-poster-rows { flex:1 1 auto; }
+.ff .ff-pk29-cell .ff-poster-foot { margin-top:auto; }
+.ff .ff-pk29-cell .ff-poster-price small { margin-right:8px; font-family:var(--sans); font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; }
+
+/* Sign up, in the card's footer. */
+.ff .ff-pk29-go { flex:none; display:inline-flex; align-items:center; justify-content:center; gap:5px; min-height:44px; min-width:96px; padding:0 20px; border-radius:14px; corner-shape:squircle; border:1px solid #C9A94A; background:#EAD79C; color:#3A0C16; font:800 13.5px/1 var(--sans); letter-spacing:.04em; white-space:nowrap; cursor:pointer; }
+.ff .ff-pk29-go:hover { background:#F3E3B0; }
+.ff .ff-pk29-go.on { background:#E6F3EA; border-color:#14683A; color:#14683A; }
+.ff .ff-pk29-go:focus-visible, .ff .ff-pk29-own:focus-visible { outline:2px solid var(--color-gold,#C9A227); outline-offset:3px; }
+
+/* The stage for Create your own package: black into burgundy with a gold edge, so the gold button is the brightest thing in the box. */
+.ff .ff-pk29-stage { position:relative; isolation:isolate; overflow:hidden; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; text-align:center; padding:34px 14px; border-radius:22px; corner-shape:squircle; border:1.5px solid var(--color-gold,#C9A227); background:linear-gradient(165deg,var(--color-ink,#0B0B0C) 0%,var(--color-onyx,#141416) 46%,var(--color-ox,#5C1220) 130%); box-shadow:0 0 0 1px rgba(228,195,106,.28) inset, 0 14px 28px -18px rgba(11,11,12,.7); }
+.ff .ff-pk29-stage::before { content:""; position:absolute; z-index:-1; left:50%; top:50%; width:340px; height:220px; transform:translate(-50%,-50%); background:radial-gradient(closest-side,rgba(201,162,39,.34),rgba(201,162,39,0)); pointer-events:none; }
+.ff .ff-pk29-soon { min-height:230px; }
+.ff .ff-pk29-soon-t { font-family:var(--display); font-weight:600; font-size:22px; line-height:1.2; letter-spacing:.08em; color:var(--color-gold-lt,#E4C36A); }
+.ff .ff-bk .ff-pk29-own { flex:none; min-height:56px; max-width:100%; padding:8px 22px; gap:8px; border-radius:16px; corner-shape:squircle; font-size:14.5px; line-height:1.25; letter-spacing:.06em !important; white-space:normal; text-wrap:balance; text-align:center; box-shadow:0 1px 0 rgba(255,255,255,.6) inset, 0 0 0 4px rgba(201,162,39,.18), 0 14px 30px -8px rgba(201,162,39,.6); }
+.ff .ff-pk29-own svg { flex:none; }
+@media (hover:hover) { .ff .ff-bk .ff-pk29-own { transition:transform .2s ease; } .ff .ff-bk .ff-pk29-own:hover { transform:translateY(-2px); } }
+@media (prefers-reduced-motion:reduce) { .ff .ff-bk .ff-pk29-own { transition:none; } .ff .ff-bk .ff-pk29-own:hover { transform:none; } }
+/* Phones: the label is sized to stay on one line inside the stage; on the very narrowest it wraps between words. */
+@media (min-width:480px) and (max-width:899px) { .ff .ff-pk29-cell.ff-pk29-stage { padding-left:8px; padding-right:8px; } .ff .ff-bk .ff-pk29-cell .ff-pk29-own { font-size:13.5px; padding:8px 16px; letter-spacing:.04em !important; } }
+@media (max-width:479px) { .ff .ff-pk29-stage { padding-left:8px; padding-right:8px; } .ff .ff-bk .ff-pk29-own { font-size:13px; padding:8px 14px; gap:6px; letter-spacing:.03em !important; } }
+@media (max-width:374px) { .ff .ff-bk .ff-pk29-own { font-size:12px; padding:8px 10px; letter-spacing:.01em !important; } .ff .ff-pk29-soon-t { font-size:19px; letter-spacing:.05em; } }
+
+/* Desktop: the cards wrap into a grid; nothing scrolls sideways. */
+@media (min-width:900px) {
+  .ff .ff-pk29-panel, .ff .ff-pk29-panel:has(> .ff-pk29-row) { padding:16px; }
+  .ff .ff-pk29-row .ff-hscroll { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px; margin:0; padding:0; overflow:visible; scroll-snap-type:none; touch-action:auto; }
+  .ff .ff-pk29-row .ff-hitem { flex:initial; min-width:0; }
+  .ff .ff-pk29-soon { min-height:260px; }
+}
+
+/* Narrow phones: a little less at the side, and smaller type so every word stays whole on one line. */
+@media (max-width:374px) {
+  .ff .ff-pk29-tabs { gap:6px; }
+  .ff .ff-pk29-tabs .ff-pr17-tab { padding:0 12px; }
+  .ff .ff-pk29-row .ff-hitem { flex-basis:calc(100% - 16px); }
+  .ff .ff-pk29-cell > .ff-poster { padding-left:12px; padding-right:12px; }
+  .ff .ff-pk29-cell .ff-poster-foot { margin-left:-12px; margin-right:-12px; padding-left:12px; padding-right:12px; }
+  .ff .ff-pk29-cell .ff-poster-title { font-size:19px; letter-spacing:.03em; }
+  .ff .ff-pk29-cell .ff-poster-eyebrow { font-size:11px; letter-spacing:.18em; }
+  .ff .ff-pk29-cell .ff-poster-row { gap:10px; padding:10px; }
+  .ff .ff-pk29-cell .ff-poster-medal { width:36px; height:36px; }
+  .ff .ff-pk29-cell .ff-poster-value { font-size:13px; letter-spacing:.03em; }
+}
+@media (max-width:339px) { .ff .ff-pk29-tabs { gap:5px; } .ff .ff-pk29-tabs .ff-pr17-tab { padding:0 10px; font-size:13px; } }
+@media (max-width:374px) { .ff .ff-pk29-cell .ff-poster-ribbon { font-size:10px; letter-spacing:.12em; padding-right:12px; } }
