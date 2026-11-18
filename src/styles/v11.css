@@ -4650,3 +4650,8 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-sites11 .ff-site.locked:hover { background:transparent; }
 .ff .ff-sites11 .ff-site-here, .ff .ff-sites11 .ff-site-soon { border-radius:8px; corner-shape:squircle; }
 @media (min-width:600px) { .ff .ff-sites11 { min-width:352px; } }
+
+/* v1.65 (Alex, 18 Nov 21:31): "Create your profile in <1 minute" larger. */
+.ff .ff-way17-line.ff-way17-fast { font: 600 17.5px/1.3 var(--sans); gap: 9px; color: #2A2620; white-space: nowrap; text-wrap: nowrap; }
+/* One line on a phone: the text shrinks a little to fit rather than wrapping. */
+@media (max-width: 560px) { .ff .ff-way17-line.ff-way17-fast { font-size: clamp(13px, 4.2vw, 17.5px); gap: 7px; } }

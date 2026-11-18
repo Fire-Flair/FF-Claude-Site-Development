@@ -4,6 +4,17 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.65
+
+Profile builder, Let's get started (Alex, 18 Nov 21:31). `src/components/team/profile-builder.jsx`, `src/styles/v11.css`.
+
+- CV upload progress bar moves faster between 10% and 40%: 0-10% in 4 s, 10-40% in the next 4.5 s, then 40-92% over
+  the remaining 31.5 s, so it still reaches 92% at 40 s and jumps to 100% when the extraction returns. The same bar
+  serves Talk or type. Timing is the table `CV_SIM_STEPS` ([ms, %] points) read by `cvSimPct()`.
+- "Create your profile in <1 minute" is larger (600 weight, 17.5px, larger timer icon; class `.ff-way17-fast`) and
+  stays on one line: on a phone the text shrinks slightly to fit rather than wrapping.
+- Checked: `npm run check`, `npm run build`, phone (390) and desktop (1440) screenshots; timing table checked in Node.
+
 ## v1.64
 
 Profile builder, Professions (Alex, 18 Nov 20:58 and 21:24). `src/components/team/profile-edit-p2.jsx`, `src/components/team/attribute-cards.jsx`, `src/styles/profile-edit-p2.css` (prof-edits).

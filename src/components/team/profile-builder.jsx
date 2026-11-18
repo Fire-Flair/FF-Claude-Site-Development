@@ -923,6 +923,16 @@ function ffaiSubLine17(s) {
 /* v1.20 simulated CV progress: 0% to CV_SIM_MAX over CV_SIM_MS, then 100% when the extraction returns. */
 const CV_SIM_MS = 40000;
 const CV_SIM_MAX = 92;
+/* v1.65 (Alex, 18 Nov 21:31): the bar moves faster between 10% and 40%, still reaching CV_SIM_MAX at CV_SIM_MS.
+   [milliseconds since the start, percent]: 0-10% in 4 s, 10-40% in the next 4.5 s, 40-92% over the remaining 31.5 s. */
+const CV_SIM_STEPS = [[0, 0], [4000, 10], [8500, 40], [CV_SIM_MS, CV_SIM_MAX]];
+function cvSimPct(ms) {
+  for (let i = 1; i < CV_SIM_STEPS.length; i++) {
+    const [t1, p1] = CV_SIM_STEPS[i], [t0, p0] = CV_SIM_STEPS[i - 1];
+    if (ms <= t1) return p0 + (p1 - p0) * Math.max(0, ms - t0) / (t1 - t0);
+  }
+  return CV_SIM_MAX;
+}
 
 
 /* v1.20: the extraction with the member's Edit changes applied (name, About me, item titles, answers). */
@@ -958,7 +968,7 @@ function useFfaiRun17() {
      CV_SIM_MS from the moment the run starts, holds there, and jumps to 100% when the extraction returns. */
   useEffect(() => {
     if (!busy) return;
-    const tick = () => setPct(Math.min(CV_SIM_MAX, CV_SIM_MAX * (Date.now() - t0.current) / CV_SIM_MS));
+    const tick = () => setPct(cvSimPct(Date.now() - t0.current));
     tick();
     const t = setInterval(tick, 200);
     return () => clearInterval(t);
@@ -1169,7 +1179,7 @@ function CVUpload17() {
             : <Btn variant="gold ff-bigcv17" onClick={() => fileRef.current && fileRef.current.click()}><Upload size={16} strokeWidth={2.2} /> Upload CV</Btn>}
         </div>
       </div>
-      <p className="ff-way17-line"><Timer size={16} strokeWidth={2.2} aria-hidden="true" /><span>Create your profile in &lt;1 minute</span></p>
+      <p className="ff-way17-line ff-way17-fast"><Timer size={21} strokeWidth={2.2} aria-hidden="true" /><span>Create your profile in &lt;1 minute</span></p>
       {r.st.phase === "error" && <div className="ff-way17-wide"><FfaiError17 r={r} /></div>}
       {x && <div className="ff-way17-wide"><FfaiReview17 key={r.st.at} x={x} src={r.st.src} onDone={r.reset} /></div>}
     </section>
