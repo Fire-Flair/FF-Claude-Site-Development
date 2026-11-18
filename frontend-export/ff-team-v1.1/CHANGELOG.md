@@ -4,6 +4,15 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.17
+
+- Titles (Alex, 18 Nov 14:07: one titling system, no gold dots). Every gold dot beside a heading is now the vertical gold gradient line (light to deep gold, squircle ends, as tall as the title; 5px beside section titles, 3px beside the small uppercase labels). Home, Network, Bookings, profile view and builder, person and company pages. Only `styles/titles2.css` changed. The three page titles (Explore our network, Your bookings, Your profile) keep their gold underline for now, pending Alex.
+- Network page (Alex, 18 Nov 14:07; text by Sam). Short texts under the headings:
+  - Explore our network: "Meet the event and hospitality professionals of FF Team and discover the companies behind great events. Professionals sign up from all over the world, and bookings are focused on the UK."
+  - Our professionals: "The event and hospitality professionals of FF Team, from bartenders and mixologists to managers and front of house, each with their own Profile Card."
+  - FF Event Directory: "The UK companies that make events happen, from mobile cocktail bars and DJs to caterers and event services. Each one has its own Company Card."
+  (`components/staff/network-directory.jsx`, `network-directory20.jsx`.)
+
 ## v1.16
 
 - Font (Alex, 18 Nov 14:04: "Inter everywhere"). All body and UI text is Inter. The Tailwind file `styles/v101.css` had reset `--font-sans` to the device font and `--font-serif` to Georgia; both now start with Inter. Other fixed system-font stacks switched too (attribute boxes, wallet buttons, terms page). Titles stay Cinzel.
