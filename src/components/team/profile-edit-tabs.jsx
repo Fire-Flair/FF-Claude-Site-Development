@@ -1,7 +1,7 @@
 /* src/components/team/profile-edit-tabs.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json).
    Your own profile's edit page, below Media: the tab area (Overview, Packages, Team, Reviews) laid out as the finished
    public page (PublicProfileBody in introductions.jsx). Overview is PE2Overview (profile-edit-p2.jsx); a small pencil
-   beside Work locations, Social links and FireFlair Introductions opens that section's existing editor in a sheet.
+   beside Social links and FireFlair Introductions opens that section's existing editor in a sheet.
    Everything reads and writes the same records the public page reads.
    v1.1: was aragorn-preview.jsx (approved option 1); options 2 and 3 and their localStorage switch are removed. */
 
@@ -25,19 +25,15 @@ function ProfileEditTabs({ person }) {
   const mem = useRef({});
   const all = useDirectory();
   const records = recordsForPerson(state, person);
-  const services = servicesOf(state, person);
   const { teams, tCos, tNet } = teamTabData17(state, all, person);
   const reviews = reviewsOf(state, person);
   const tabs = [
     { key: "overview", label: "Overview" },
-    { key: "services", label: "Packages", count: services.length },
+    { key: "services", label: "Packages", count: profPkgItems17(state, person).length },
     { key: "teams", label: "Team", count: teams.length + tCos.length + tNet.length },
     { key: "reviews", label: "Reviews", count: reviews.length },
   ];
   const pen = (k, label) => <EditTabPencil label={label} onClick={() => setSheet(k)} />;
-  const svcCard = (it) => it.kind === "std"
-    ? <div className="ff-svslide std"><ServicePoster svc={it.svc} price /></div>
-    : <div className="ff-svslide own"><OwnServiceCard item={it.item} /></div>;
 
   /* ---- Overview ---- */
   const overview = (<>
@@ -48,12 +44,10 @@ function ProfileEditTabs({ person }) {
   </>);
 
   /* ---- Packages ---- */
+  /* v1.57 (Alex, 18 Nov 20:51): Work locations are off this tab for now (their data and editor stay); the slider uses
+     the Bookings package cards, then the terms for the centre card and FF Staff (profile-packages.jsx). */
   const bookings = (<>
-    {records.locations && records.locations.length > 0 && BASE_CATEGORIES.locations && (
-      <section className="ff-pp ff-pp21"><EditTabHead title="Work locations" action={pen("locations", "Work locations")} />
-        <AreasChips17 owner={{ records: { locations: (records.locations || []).filter(r => !r.hidden && !r.proposed) }, coverage17: state.profile.coverage17 }} /></section>
-    )}
-    {services.length > 0 && <CoverFlow items={services} label="Packages" mem={mem} k="services" half={150} onOpen={() => {}} render={(it) => svcCard(it)} />}
+    <ProfilePackages17 person={person} own />
     <PersonalTerms17 />
   </>);
 
@@ -102,8 +96,7 @@ function ProfileEditTabs({ person }) {
       </div>
 
       {/* One sheet per section, holding the existing editor for it. */}
-      <Sheet open={!!sheet} onClose={() => setSheet(null)} title={({ locations: "Work locations", social: "Social links", intro: "FireFlair Introductions" })[sheet] || ""}>
-        {sheet === "locations" && <div className="ara-sheet"><CoverageTree17 /></div>}
+      <Sheet open={!!sheet} onClose={() => setSheet(null)} title={({ social: "Social links", intro: "FireFlair Introductions" })[sheet] || ""}>
         {sheet === "social" && <div className="ara-sheet"><SocialEdit11 noPhone value={state.profile.socials} onChange={(socials) => dispatch({ type: "PROFILE", patch: { socials } })} /></div>}
         {sheet === "intro" && <div className="ara-sheet"><IntroEditor17 /></div>}
       </Sheet>

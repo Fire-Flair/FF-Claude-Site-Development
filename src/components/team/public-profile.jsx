@@ -475,10 +475,70 @@ function MemScroll({ mem, k, className, children, label, snap = true }) {
 
 
 /* ---- 3. Cover Flow: a prominent centre card, neighbours showing ---------- */
-function CoverFlow({ items, label, mem, k, half = 150, onOpen, render }) {
+/* v1.57 (Alex, 18 Nov 20:51, "I can't swipe left on it unless it's clean"): on touch screens the slider moves itself.
+   The track has touch-action: pan-y, so the browser only ever scrolls the page up and down from it; a swipe that is
+   more sideways than up-and-down (up to about 50 degrees) holds the page still and moves the slider instead, and on
+   release it settles on the next card (or the previous one) once it has moved 30px or was flicked. Before, a swipe
+   that wasn't almost level was taken by the page (which moved slightly) and the slider stayed put, and a short swipe
+   snapped back. onIndex (optional) hears which card is in the centre. */
+function useCoverSwipe17(ref, idxRef, to) {
+  useEffect(() => {
+    const el = ref.current; if (!el) return;
+    let a = null, axis = null, moved = false, settle = 0;
+    /* the card nearest the centre right now (the state can lag behind a scroll still settling) */
+    const near = () => { const mid = el.scrollLeft + el.clientWidth / 2; let best = idxRef.current, bd = 1e9; [...el.children].forEach((c, i) => { const d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid); if (d < bd) { bd = d; best = i; } }); return best; };
+    const ts = (e) => {
+      if (e.touches.length !== 1) { a = null; return; }
+      const t = e.touches[0];
+      a = { x: t.clientX, y: t.clientY, left: el.scrollLeft, i: near(), t: Date.now(), lx: t.clientX, lt: Date.now(), v: 0 };
+      axis = null; moved = false;
+    };
+    const tm = (e) => {
+      if (!a) return;
+      if (e.touches.length !== 1) { a = null; return; }
+      const t = e.touches[0], dx = t.clientX - a.x, dy = t.clientY - a.y;
+      if (!axis) {
+        if (Math.abs(dx) >= Math.abs(dy) && e.cancelable) e.preventDefault();
+        if (Math.max(Math.abs(dx), Math.abs(dy)) < 8) return;
+        axis = Math.abs(dx) * 1.2 >= Math.abs(dy) ? "x" : "y";
+        if (axis === "y") { a = null; return; }
+        clearTimeout(settle); el.classList.add("dragging"); moved = true;
+      }
+      if (e.cancelable) e.preventDefault();
+      const now = Date.now();
+      if (now > a.lt) { a.v = (t.clientX - a.lx) / (now - a.lt); a.lx = t.clientX; a.lt = now; }
+      el.scrollLeft = a.left - dx;
+    };
+    const te = (e) => {
+      if (!a || axis !== "x") { a = null; return; }
+      const dx = (e.changedTouches && e.changedTouches[0] ? e.changedTouches[0].clientX : a.lx) - a.x;
+      const dir = dx <= -30 || a.v < -0.3 ? 1 : dx >= 30 || a.v > 0.3 ? -1 : 0;
+      const n = el.children.length;
+      to(Math.max(0, Math.min(n - 1, a.i + dir)));
+      a = null;
+      settle = setTimeout(() => el.classList.remove("dragging"), 420);
+    };
+    const clickCap = (e) => { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } };
+    const np = { passive: false }, pa = { passive: true };
+    el.addEventListener("touchstart", ts, pa);
+    el.addEventListener("touchmove", tm, np);
+    el.addEventListener("touchend", te, pa);
+    el.addEventListener("touchcancel", te, pa);
+    el.addEventListener("click", clickCap, true);
+    return () => {
+      el.removeEventListener("touchstart", ts, pa); el.removeEventListener("touchmove", tm, np);
+      el.removeEventListener("touchend", te, pa); el.removeEventListener("touchcancel", te, pa);
+      el.removeEventListener("click", clickCap, true); clearTimeout(settle);
+    };
+  }, []);
+}
+
+function CoverFlow({ items, label, mem, k, half = 150, onOpen, onIndex, render }) {
   const ref = useRef(null);
   const raf = useRef(0);
   const [idx, setIdx] = useState(Math.min(mem.current[k] || 0, Math.max(0, items.length - 1)));
+  const idxRef = useRef(idx); idxRef.current = idx;
+  useEffect(() => { if (onIndex) onIndex(idx); }, [idx]);
   useDragScroll(ref);
   const measure = () => {
     const el = ref.current; if (!el) return;
@@ -497,6 +557,8 @@ function CoverFlow({ items, label, mem, k, half = 150, onOpen, render }) {
     const el = ref.current, c = el && el.children[i]; if (!c) return;
     el.scrollTo({ left: c.offsetLeft + c.offsetWidth / 2 - el.clientWidth / 2, behavior: instant || prefersReducedMotion() ? "auto" : "smooth" });
   };
+  const toRef = useRef(to); toRef.current = to;
+  useCoverSwipe17(ref, idxRef, (i) => toRef.current(i));
   useLayoutEffect(() => { to(idx, true); measure(); }, []);
   useEffect(() => () => cancelAnimationFrame(raf.current), []);
   const pick = (i) => { if (i === idx) onOpen(items[i]); else to(i); };

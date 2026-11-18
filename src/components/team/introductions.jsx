@@ -442,12 +442,13 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
   const [ltab, setLtab] = useState("overview");
   const tab = inStore ? (state.ptab17 && state.ptab17.key === "p:" + person.id ? state.ptab17.tab : "overview") : ltab;
   const setTab = (t) => inStore ? dispatch({ type: "V11_SET", patch: { ptab17: t === "overview" ? null : { key: "p:" + person.id, tab: t } } }) : setLtab(t);
-  const [svcOpen, setSvcOpen] = useState(null);
   const mem = useRef({});
   useEffect(() => { setLtab("overview"); mem.current = {}; }, [person.id]);
   const cats = BASE_CATEGORIES;
   const first = String(person.name || "").split(" ")[0] || "them";
-  const services = servicesOf(state, person);
+  const pkgItems = profPkgItems17(state, person);
+  /* Your own page, not viewed as a guest: Create your own has type boxes and FF Staff shows your rates and terms. */
+  const own = person.id === "me" && !(state.viewingAsGuest && state.viewing === "me");
   const teamAll_ = useDirectory();
   const { teams } = teamTabData17(state, teamAll_, person);
   const reviews = reviewsOf(state, person);
@@ -466,15 +467,11 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
   const asked = person.id === "me" ? [] : [...ASKED_EXAMPLES.filter(q => q.personId === person.id), ...(state.profileQuestions || []).filter(q => q.personId === person.id)];
   const tabs = [
     { key: "overview", label: "Overview" },
-    { key: "services", label: "Packages", count: services.length },
+    { key: "services", label: "Packages", count: pkgItems.length },
     { key: "teams", label: "Team", count: teams.length },
     { key: "reviews", label: "Reviews", count: reviews.length },
   ];
   const Empty1 = ({ icon, children }) => <div className="ff-tab-empty">{icon}<p>{children}</p></div>;
-  const svcCard = (it) => it.kind === "std"
-    ? <div className="ff-svslide std"><ProfPkgCard17 svc={it.svc} /></div>
-    : it.kind === "create" ? <div className="ff-svslide std"><ProfPkgCreate17 /></div>
-    : <div className="ff-svslide own"><OwnServiceCard item={it.item} /></div>;
   return (
     <div className="ff-ptabs-wrap" style={cardTone17(cardThemeOf17(state, person))}>
       <ProfileH117 person={person} />
@@ -509,12 +506,10 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
           )}
           <FireFlairIntroductions17 person={person} />
         </>)}
-        {tab === "services" && records.locations && records.locations.length > 0 && cats.locations && (
-          <ProfileAttributeSection catKey="locations" def={cats.locations} list={records.locations} isMe={false} shade="onyx" pub onAdd={() => {}} onOpen={() => {}} />
-        )}
-        {tab === "services" && (services.length
-          ? <><style>{BKD_CSS}</style><CoverFlow items={[...services, { id: "pp-create", kind: "create" }]} label="Packages" mem={mem} k="services" half={150} onOpen={(it) => it.kind !== "create" && setSvcOpen(it)} render={(it) => svcCard(it)} /></>
-          : (person.id === "me" ? null : <Empty1 icon={<Sparkles size={20} />}>{first} hasn't added any packages yet.</Empty1>))}
+        {/* v1.57 (Alex, 18 Nov 20:51): Work locations are off the Packages tab for now; the slider has the Bookings package cards. */}
+        {tab === "services" && (pkgItems.length || own
+          ? <ProfilePackages17 person={person} own={own} />
+          : <Empty1 icon={<Sparkles size={20} />}>{first} hasn't added any packages yet.</Empty1>)}
         {tab === "services" && <PkgExtras17 person={person} />}
         {tab === "services" && packagesTail}
         {tab === "teams" && (<><ProfileSocial11 person={person.id === "me" ? { ...person, socials: state.profile.socials } : person} /><div style={{ marginTop: 22 }}><TeamTab17 person={person} /></div></>)}
@@ -532,9 +527,6 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
             <ExpandedAttrs list={rankedRecords((records[k] || []).filter(r => !r.hidden && !r.proposed))} />
           </section>
         ))}
-      </Sheet>
-      <Sheet open={!!svcOpen} onClose={() => setSvcOpen(null)} title={svcOpen ? (svcOpen.kind === "std" ? svcOpen.svc.title : svcOpen.item.title) : "Service"}>
-        {svcOpen && <div className="ff-svfull">{svcCard(svcOpen)}</div>}
       </Sheet>
     </div>
   );
