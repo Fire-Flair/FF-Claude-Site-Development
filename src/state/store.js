@@ -31,7 +31,7 @@ const initialState = {
   /* Reviews: { id, aboutId, byId, byName, worked, rating, text, status, at, shiftId }
      worked true | false; rating 1..5, or null when worked is false; status "pending" | "accepted" | "declined".
      A saved review with no status counts as accepted. A review I write about someone waits for them ("pending"). */
-  connections: [], invitations: [], reviews: [], reviewRequests: [],
+  connections: [], invitations: [], reviews: DEMO_REVIEWS_SIMAO.slice(), reviewRequests: [],
   /* Questions visitors ask on a profile ("Ask a question") — one Question
      Card each, tied to that person: { id, personId, text, askedAt, by, answer }. */
   profileQuestions: [],
@@ -466,6 +466,7 @@ function reducerCore17(s0, a) {
       reviews: [
         { id: "rev_1", aboutId: "me", byId: "demo_rv_1", byName: "Ava Clarke", rating: 5, text: "Ran the bar for our launch night without a single hiccup — fast, clean, and great with the guests.", at: Date.now() - 12 * 864e5 },
         { id: "rev_2", aboutId: "me", byId: "demo_rv_2", byName: "Priya Raman", rating: 5, text: "One of the most reliable bartenders I've worked events with. Always early, always prepped.", at: Date.now() - 40 * 864e5 },
+        ...DEMO_REVIEWS_SIMAO,
       ],
       };
       ["create_card", "publish_profile", "first_review"].forEach(id => { n = claimXP(n, id); });
@@ -500,7 +501,8 @@ function reducerCore17(s0, a) {
        no demo data, so the full sign-up flow can be walked through again.
        The invitation code from a link is cleared too: it belongs to the visit that used it. */
     case "SIGN_OUT":  return { ...initialState, toast: "Signed out", coClaims17: s.coClaims17, dirEdits17: s.dirEdits17, admin17: s.admin17, venueReview17: venueReviewKeep17(s) };
-    case "HYDRATE":   return migrate1746({ ...s, ...a.patch, _hydrated: true });
+    /* v17.56: demo reviews of Simao missing from a saved state are added back by id (demo data). */
+    case "HYDRATE":   { const h = { ...s, ...a.patch, _hydrated: true }; const have = new Set((h.reviews || []).map(r => r.id)); return migrate1746({ ...h, reviews: [...(h.reviews || []), ...DEMO_REVIEWS_SIMAO.filter(r => !have.has(r.id))] }); }
     default:          return s;
   }
 }

@@ -326,7 +326,26 @@ const REAL_MEMBERS = [
   "group": "Bartenders",
   "theme": "ivory",
   "skills": [
-   "Cocktails creation"
+   "Cocktail Creation",
+   "Signature Cocktail Menus",
+   "Classic Cocktails",
+   "Batching & Pre-Mix",
+   "Homemade Syrups & Infusions",
+   "Garnish Design",
+   "High-Volume Service",
+   "Speed & Accuracy",
+   "Bar Setup & Breakdown",
+   "Mobile Bar Operations",
+   "Stock Control",
+   "Ice Management",
+   "Spirits Knowledge",
+   "Wine & Champagne Service",
+   "Guest Interaction",
+   "Team Leadership",
+   "Training New Bartenders",
+   "Event Planning",
+   "Cocktail Masterclasses",
+   "Health, Safety & Hygiene"
   ],
   "interests": [
    "Spirits",
@@ -345,7 +364,7 @@ const REAL_MEMBERS = [
   ],
   "qualifications": [],
   "workHistory": [],
-  "about": ""
+  "about": "I started out in events, building and running bars for festivals, launches and private parties across Milan and Lugano, before moving into hospitality. Today I create cocktail menus and lead bar teams in London, bringing that event pace to every service. Fresh ingredients, a clean station and guests who leave smiling."
  },
  {
   "id": "stf_dany",
@@ -481,8 +500,27 @@ const REAL_MEMBERS = [
  }
 ];
 
+/* v17.56 demo data: five accepted Review Cards about Simao, so Review Cards and a dense profile can be tested.
+   Seeded into state.reviews (initialState, SEED_DEMO and HYDRATE in store.js). Shape as in store.js. */
+const DEMO_REVIEWS_SIMAO = [
+  { id: "rev_simao_1", aboutId: "stf_simao", byId: "co_vooshka", byName: "Vooshka", worked: true, rating: 5, status: "accepted", at: Date.now() - 9 * 864e5,
+    text: "Simao ran our main bar at a 400-guest launch and never let the queue build. His signature serve had guests coming back all night, and the bar looked spotless at close." },
+  { id: "rev_simao_2", aboutId: "stf_simao", byId: "stf_bruno", byName: "Bruno Cuartero", worked: true, rating: 5, status: "accepted", at: Date.now() - 23 * 864e5,
+    text: "I've managed bars with Simao at weddings and corporate nights. He builds a menu around the client, preps everything ahead and keeps the whole team calm when it gets busy." },
+  { id: "rev_simao_3", aboutId: "stf_simao", byId: "stf_james", byName: "James Allcott", worked: true, rating: 5, status: "accepted", at: Date.now() - 41 * 864e5,
+    text: "Shared a cocktail station with Simao at a summer garden party. Fast hands, beautiful garnishes, and he talked every guest through their drink. I learned a lot that night." },
+  { id: "rev_simao_4", aboutId: "stf_simao", byId: "stf_gav", byName: "Alexandru Gavrilas", worked: true, rating: 4, status: "accepted", at: Date.now() - 67 * 864e5,
+    text: "Great energy behind a mobile bar. Simao set up in a tight space in no time, kept stock under control and turned out consistent cocktails through a three-hour rush." },
+  { id: "rev_simao_5", aboutId: "stf_simao", byId: "stf_alex", byName: "Alexander Gagnon", worked: false, rating: null, status: "accepted", at: Date.now() - 95 * 864e5,
+    text: "I've watched Simao lead a masterclass and his knowledge of spirits and flavour is outstanding. Warm, patient and genuinely passionate about the craft." },
+];
+const DEMO_REVIEW_STATS = (id) => {
+  const rs = DEMO_REVIEWS_SIMAO.filter(r => r.aboutId === id), rated = rs.filter(r => r.rating != null);
+  return { reviews: rs.length, rating: rated.length ? Math.round(rated.reduce((a, r) => a + r.rating, 0) / rated.length * 10) / 10 : null };
+};
+
 const DIRECTORY = REAL_MEMBERS.map((o) => staff({ ...o, tier: cardTier17(o), level: null, rating: null, reviews: 0, hasCar: false,
-  photo: o.id === "stf_simao" ? ((window.FF_IMG || {}).simao_face || "") : "", media: [] }));
+  photo: o.id === "stf_simao" ? ((window.FF_IMG || {}).simao_face || "") : "", media: [], ...DEMO_REVIEW_STATS(o.id) }));
 
 
 /* Gallery photos for the signed-in demo "me" profile (SEED_DEMO). Real members get none of these. */
