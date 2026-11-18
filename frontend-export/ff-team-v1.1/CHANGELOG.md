@@ -4,6 +4,22 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.95
+
+Question Cards on the edit page / profile builder (Alex, 18 Nov 22:21). `src/components/team/profile-edit-p2.jsx`
+(`PE2QA`, new `PE2QCard`, `PE2QCreate`, `PE2QDelete`; `PE2Answer` deleted), `src/styles/prof21.css` (qa-cards block).
+
+- Each Question Card is answered on the card itself: the card's Answer area shows the answers as buttons (Yes / No, or
+  the question's own options, e.g. I drive / Public transport / Other) and a type box. Tapping an answer saves it. The
+  box that opened below the cards is gone, and there is no pop-up or bottom sheet.
+- The separate Yes / No / "Type your own question" box is removed. Instead an 11th card, "Create your own question",
+  ends the To answer row: the question is typed onto the card and answered Yes / No or by typing, which adds it as
+  "My question" (still up to 10 of your own). Your own questions carry a small "Delete question" link on the card.
+- A card answered while To answer is showing stays in place until you switch tabs, so it never jumps away mid-answer.
+- Questions with a detail answer (short-notice: "I require notice") still take the detail in the type box once that
+  option is chosen.
+- Checked: `npm run check`, `npm run build`; phone and desktop: 11 cards, the travel question answered on the card, a
+  question created and answered on the 11th card, no box below the cards.
 ## v1.97
 
 - About Me above Professions (Alex, 18 Nov 22:19): on the edit page / profile builder (`src/components/team/profile-edit-p2.jsx`:
