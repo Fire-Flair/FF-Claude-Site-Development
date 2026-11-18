@@ -4,7 +4,7 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
-## v1.72 (draft: share pop-ups)
+## v1.72
 
 The other share pop-ups get the v1.71 profile Share pop-up (Alex, 18 Nov 22:13). `src/components/shared/card-share17.jsx` (`CardShareSheet17`), `src/components/team/profile-from-text.jsx` (`ShareCardSheet`), `src/components/party/card-studio.jsx` (`CardPop17`), `src/styles/base.css`.
 
@@ -14,6 +14,7 @@ The other share pop-ups get the v1.71 profile Share pop-up (Alex, 18 Nov 22:13).
 - `CardShareSheet17`: the `extra` prop and the old `Sheet` layout behind it are gone; every caller uses `CardShareView17`. Dead CSS removed: `.ff-csm-stage`, `.ff-csm-live`.
 - Checked: `npm run check`, `npm run build`; Playwright at 360x640, 390x844, 1280x800 for `ShareCardSheet` (signed in with DEV · complete profile, opened with `ff-add`), the own-card "Share my card" button, and `CardPop17` (mounted in the page with a demo cocktail, as no page renders `CoCardRow17`, its only caller): pop-up height equals the viewport, nothing inside scrolls, page doesn't scroll on wheel, all four buttons inside the viewport and enabled once the PNG is made, Escape closes; no page errors.
 - Not published; branch `pp-sharesheet2`.
+- Published by a three-way merge onto live 1795040563-6676, which another chat published without pushing to GitHub (photo strip: swipe/compositor hints, eager loading, a 2.5s wait before hiding unloaded photos). Its change is in the live page and in `live-v1.72-index.html`, but its source is not in `src/` yet: that chat must push it. Artifact version 1795040911-d04c.
 
 ## v1.71
 
