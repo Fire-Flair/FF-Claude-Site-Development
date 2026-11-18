@@ -285,27 +285,33 @@ function PE2Overview({ records }) {
   );
 }
 
-/* Q&A above Save: every Question Card open, answered in place; the answer shows on the card at once.
-   Your own question: Yes / No, then type it and press Enter. */
-function PE2Question({ q, value, onAnswer }) {
-  const [txt, setTxt] = useState(value || "");
-  const done = isAnswered(value);
-  const c = done ? QUESTION_DONE : questionGroupColor(q.group);
-  const opts = q.type === "text" ? null : (q.options || ["Yes", "No"]);
+/* p2/pfd (Alex): Q&A above Save, in the live FF Team look (Griffy's QuestionCardsCollection): one panel, Question Cards
+   split into To answer / Answered with a colour key, a left/right row of cards. Tapping a card opens its answer box right
+   under the row (Yes / No, then a type box) instead of a sheet; the answer shows on the card at once and it moves to
+   Answered. Your own question: Yes / No, then type it and press Enter. */
+function PE2Answer({ q, value, onAnswer, onClose }) {
+  const [txt, setTxt] = useState("");
+  const opts = q.type === "text" ? ["Yes", "No"] : (q.options || ["Yes", "No"]);
+  const send = () => {
+    const t = txt.trim();
+    if (!t) return;
+    const pre = q.detail && String(value || "").startsWith(q.detail.option) ? `${q.detail.option} — ` : "";
+    onAnswer(pre + t, true);
+    setTxt("");
+  };
+  const on = (o) => value === o || (q.detail && o === q.detail.option && String(value || "").startsWith(o + " —"));
   return (
-    <div className={"pe2-q" + (done ? " done" : "")} data-qid={q.id} style={{ background: c.bg, color: c.ink, "--sub": c.sub, "--rule": c.rule }}>
-      <div className="pe2-q-t">{q.text}</div>
-      {opts ? (
-        <div className="pe2-q-opts">
-          {opts.map(o => <button key={o} type="button" className={"pe2-opt" + (value === o ? " on" : "")} aria-pressed={value === o} onClick={() => onAnswer(o)}>{o}</button>)}
-        </div>
-      ) : (
-        <form className="ff-type21 pe2-q-type" onSubmit={(e) => { e.preventDefault(); if (txt.trim()) onAnswer(txt.trim()); }}>
-          <input type="text" value={txt} placeholder={q.placeholder || "Your answer"} aria-label={q.text} onChange={(e) => setTxt(e.target.value)} />
-          <button type="submit" className="ff-type21-key" aria-label="Save answer"><span>Enter</span><CornerDownLeft21 size={15} strokeWidth={2.2} aria-hidden="true" /></button>
-        </form>
-      )}
-      {done && <div className="pe2-q-a"><span className="pe2-q-tick" aria-hidden="true"><TickGlyph size={13} /></span><span className="pe2-q-av">{String(value)}</span></div>}
+    <div className="pe2-qa-ans" data-qid={q.id}>
+      <div className="pe2-qa-ans-q">{q.text}</div>
+      <div className="pe2-q-opts" role="group" aria-label={q.text}>
+        {opts.map(o => <button key={o} type="button" className={"pe2-opt" + (on(o) ? " on" : "")} aria-pressed={!!on(o)}
+          onClick={() => onAnswer(o, !(q.detail && o === q.detail.option))}>{o}</button>)}
+      </div>
+      <form className={"ff-type21 pe2-q-type" + (txt.trim() ? " has" : "")} onSubmit={(e) => { e.preventDefault(); send(); }}>
+        <input type="text" value={txt} maxLength={400} placeholder={(q.detail && q.detail.placeholder) || q.placeholder || "Your answer"} aria-label={`${q.text} — your answer`} onChange={(e) => setTxt(e.target.value)} />
+        <button type="submit" className="ff-type21-key" aria-label="Save answer"><span>Enter</span><CornerDownLeft21 size={15} strokeWidth={2.2} aria-hidden="true" /></button>
+      </form>
+      {q.mine && <DeleteMyQuestion q={q} onClose={onClose} />}
     </div>
   );
 }
@@ -313,27 +319,63 @@ function PE2Question({ q, value, onAnswer }) {
 function PE2QA() {
   const { state, dispatch } = useStore();
   const qs = allQuestions(state);
+  const [side, setSide] = useState("todo");
+  const [openId, setOpenId] = useState(null);
   const [own, setOwn] = useState("");
   const [yn, setYn] = useState("Yes");
   const canAdd = qs.filter(q => q.mine).length < CUSTOM_QUESTION_LIMIT;
+  const isDone = (q) => isAnswered(answerOf(state, q));
+  const todo = qs.filter(q => !isDone(q));
+  const done = qs.filter(isDone);
+  const list = side === "todo" ? todo : done;
+  const present = QUESTION_GROUPS.filter(g => qs.some(q => q.group === g.key));
+  const openQ = qs.find(q => q.id === openId) || null;
+  const answer = (v, close) => {
+    dispatch({ type: "ANSWER", qid: openQ.id, value: v });
+    if (close) setOpenId(null);
+  };
   const add = () => {
     const text = own.trim();
     if (!text || !canAdd) return;
     dispatch({ type: "MY_QUESTION_ADD", question: { id: `my_${Date.now().toString(36)}`, text, type: "yesno" }, value: yn, visibility: "private" });
     setOwn("");
+    setSide("done");
   };
   return (
     <section className="ff-pp ff-pp21 pe2-qa" id="pe2-qa" aria-labelledby="pe2-qa-h">
       <style>{PE2_CSS}</style>
       <div className="ff-pp-head"><h2 id="pe2-qa-h" className="ff-about-h">Q&amp;A</h2></div>
-      <div className="pe2-qa-grid">
-        {qs.map(q => <PE2Question key={q.id} q={q} value={answerOf(state, q)} onAnswer={(v) => dispatch({ type: "ANSWER", qid: q.id, value: v })} />)}
+      <div className="ff-qa-panel pe2-qa-panel">
+        <div className="ff-qa-subh">
+          <span className="ff-qa-ic"><HelpCircle size={14} /></span>
+          <b>Question Cards</b>
+          <span className="ff-qa-meta">never on your public card</span>
+        </div>
+        <div className="ff-qa-tabs" role="tablist" aria-label="Question Cards">
+          <button type="button" role="tab" aria-selected={side === "todo"} className={side === "todo" ? "on" : ""} onClick={() => setSide("todo")}>To answer <span>{todo.length}</span></button>
+          <button type="button" role="tab" aria-selected={side === "done"} className={`done${side === "done" ? " on" : ""}`} onClick={() => setSide("done")}>Answered <span>{done.length}</span></button>
+        </div>
+        <div className="ff-qa-legend">
+          {present.map(g => <span key={g.key}><i style={{ background: questionGroupColor(g.key).bg, borderColor: questionGroupColor(g.key).sub }} />{g.label}</span>)}
+          <span><i style={{ background: QUESTION_DONE.bg, borderColor: "#39C27E" }} />Answered</span>
+        </div>
+        <HScroll label={side === "todo" ? "Question Cards to answer" : "Answered Question Cards"} snap>
+          {list.length
+            ? list.map(q => (
+                <span key={q.id} data-qid={q.id} className={"pe2-qa-cardw" + (openId === q.id ? " sel" : "")}>
+                  <QuestionCard q={q} answer={answerOf(state, q)} label={q.mine ? "My question" : undefined} pending=" "
+                    onClick={() => setOpenId(id => (id === q.id ? null : q.id))} />
+                </span>
+              ))
+            : <div className="ff-qa-slot">{side === "todo" ? "All answered — nice work." : "Answered questions move here."}</div>}
+        </HScroll>
+        {openQ && <PE2Answer key={openQ.id} q={openQ} value={answerOf(state, openQ)} onAnswer={answer} onClose={() => setOpenId(null)} />}
         {canAdd && (
-          <div className="pe2-q own">
+          <div className="pe2-qa-own">
             <div className="pe2-q-opts">
               {["Yes", "No"].map(o => <button key={o} type="button" className={"pe2-opt" + (yn === o ? " on" : "")} aria-pressed={yn === o} onClick={() => setYn(o)}>{o}</button>)}
             </div>
-            <form className="ff-type21 pe2-q-type" onSubmit={(e) => { e.preventDefault(); add(); }}>
+            <form className={"ff-type21 pe2-q-type" + (own.trim() ? " has" : "")} onSubmit={(e) => { e.preventDefault(); add(); }}>
               <input type="text" value={own} maxLength={CUSTOM_QUESTION_MAX} placeholder="Type your own question" aria-label="Your own question" onChange={(e) => setOwn(e.target.value)} />
               <button type="submit" className="ff-type21-key" aria-label="Add question"><span>Enter</span><CornerDownLeft21 size={15} strokeWidth={2.2} aria-hidden="true" /></button>
             </form>
