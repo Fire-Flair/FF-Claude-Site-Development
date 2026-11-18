@@ -1,74 +1,52 @@
-/* home-colours (Alex, 18 Nov 14:00): three options for the FF Team home.
-   The four pillars ("What is FF Team?") less black, the bookings box a colour of its own, and the hero line
-   "Get seen, get booked, get paid.". Switch: FF_HOME_COLOUR in components/home/team-home.jsx (0 = current look).
-   Each option is scoped to .ff-home-c1 / .ff-home-c2 / .ff-home-c3 on the home root. */
+/* home-colours: the FF Team home in ivory and burgundy (Alex, 18 Nov 14:53), built on option 1 "Ivory and wine".
+   Every colour on the front screen matches: ivory, burgundy, gold, champagne.
+   Switch: FF_HOME_COLOUR in components/home/team-home.jsx (4 = this look, the default; 0 = the v1.18 look).
+   Scoped to .ff-home-c4 on the home root (.ff-home.ff-hf22). Layout, wording and photos are unchanged. */
 
-/* ---------- Hero line (all options) ---------- */
-.ff .ff-hf22.ff-home-c1 .ff-hero-sub101,
-.ff .ff-hf22.ff-home-c2 .ff-hero-sub101,
-.ff .ff-hf22.ff-home-c3 .ff-hero-sub101 { text-wrap:balance; overflow-wrap:normal; word-break:normal; hyphens:none; }
+/* ---------- Hero line "Get seen, get booked, get paid." under the welcome title (option 1's place) ---------- */
+.ff .ff-hf22.ff-home-c4 .ff-hero-sub101 { font-size:clamp(17px,4.6vw,22px); text-wrap:balance; overflow-wrap:normal; word-break:normal; hyphens:none; }
 /* the line breaks only between "Get seen, get booked," and "get paid." */
 .ff .ff-hf22 .ff-hero-sub101 .ff-hl { display:inline-block; }
-/* 1: the tagline under the welcome title, where "Get seen. Get booked." was */
-.ff .ff-hf22.ff-home-c1 .ff-hero-sub101 { font-size:clamp(17px,4.6vw,22px); }
-/* 2: under the title, after a short gold rule */
-.ff .ff-hf22.ff-home-c2 .ff-hero-sub101 { font-size:clamp(17px,4.6vw,22px); }
-.ff .ff-hf22.ff-home-c2 .ff-hero-sub101::before { content:""; display:block; width:56px; height:2px; margin:2px auto 12px; border-radius:1px; background:linear-gradient(90deg,transparent,var(--color-gold,#C9A227) 20%,var(--color-gold-lt,#E4C36A) 50%,var(--color-gold,#C9A227) 80%,transparent); }
-/* 3: above the title, as a gold small-caps line */
-.ff .ff-hf22.ff-home-c3 .ff-hero18-in { display:flex; flex-direction:column; }
-.ff .ff-hf22.ff-home-c3 .ff-hero-sub101 { order:-1; margin:0 0 10px; font-size:clamp(12.5px,3.5vw,15px); font-weight:700; letter-spacing:.16em; text-transform:uppercase; line-height:1.35; }
-@media (min-width:900px) {
-  .ff .ff-hf22.ff-home-c2 .ff-hero-sub101::before { margin-left:0; }
-  .ff .ff-hf22.ff-home-c1 .ff-hero-sub101,
-  .ff .ff-hf22.ff-home-c2 .ff-hero-sub101 { font-size:clamp(19px,1.7vw,23px); }
-  .ff .ff-hf22.ff-home-c3 .ff-hero-sub101 { font-size:14px; margin-bottom:12px; }
-}
+@media (min-width:900px) { .ff .ff-hf22.ff-home-c4 .ff-hero-sub101 { font-size:clamp(19px,1.7vw,23px); } }
 
-/* ---------- Option 1: ivory pillars, wine bookings box ---------- */
-.ff .ff-hf22.ff-home-c1 .ff-dx .ff-dx-tile,
-.ff .ff-hf22.ff-home-c1 .ff-dx.is-open .ff-dx-tile.on { background:linear-gradient(160deg,var(--color-ivory,#FFFCF4) 0%,var(--color-sand,#F3EAD5) 100%); color:var(--color-text,#1A1712); box-shadow:0 14px 24px -18px rgba(92,18,32,.38) !important; }
-.ff .ff-hf22.ff-home-c1 .ff-dx .ff-dx-tile .tx b { color:var(--color-ox,#5C1220); }
-.ff .ff-hf22.ff-home-c1 .ff-dx .ff-dx-tile .tx small { color:var(--color-text-2,#4A443A); }
-.ff .ff-hf22.ff-home-c1 .ff-dx .ff-dx-tile:not(.on) .chev { color:var(--color-gold-dk,#7E611D); background:rgba(201,162,39,.14); border-color:rgba(126,97,29,.5); }
-.ff .ff-hf22.ff-home-c1 .ff-hb23-box { background:linear-gradient(150deg,var(--color-wine,#7A1F2E) 0%,var(--color-ox,#5C1220) 55%,var(--color-ox-dk,#37070F) 100%); border-color:rgba(228,195,106,.6); box-shadow:0 18px 30px -22px rgba(55,7,15,.8); }
-.ff .ff-hf22.ff-home-c1 .ff-hbc-btn:hover { background:rgba(244,239,228,.05); }
-.ff .ff-hf22.ff-home-c1 .ff-hbc-sym .av { background:var(--color-ox-dk,#37070F); }
+/* ---------- Hero lighting: champagne spotlights in place of the violet beams ----------
+   Same shape, position, blur and fade as v17.32 (p12.css): from the bottom-left and bottom-right corners, shooting
+   upwards and spreading slightly. Only the colour changes. The burgundy centre, photo, card shine and easel stay. */
+.ff .ff-hf22.ff-home-c4 .ff-hero18::after {
+  background:
+    conic-gradient(from 0deg at 0% 100%, rgba(255,246,222,0) 0deg, rgba(255,244,214,.85) 7deg, rgba(234,219,180,.5) 15deg, rgba(234,219,180,0) 27deg, rgba(234,219,180,0) 360deg),
+    conic-gradient(from 333deg at 100% 100%, rgba(234,219,180,0) 0deg, rgba(234,219,180,.5) 12deg, rgba(255,244,214,.85) 20deg, rgba(255,246,222,0) 27deg, rgba(255,246,222,0) 360deg); }
 
-/* ---------- Option 2: burgundy pillars, champagne bookings box ---------- */
-.ff .ff-hf22.ff-home-c2 .ff-dx .ff-dx-tile,
-.ff .ff-hf22.ff-home-c2 .ff-dx.is-open .ff-dx-tile.on { background:linear-gradient(160deg,var(--color-wine,#7A1F2E) 0%,var(--color-ox,#5C1220) 60%,#4A0E19 100%); color:var(--color-cream,#F4EFE4); box-shadow:0 14px 24px -18px rgba(55,7,15,.7) !important; }
-.ff .ff-hf22.ff-home-c2 .ff-dx .ff-dx-tile .tx b { color:#F4DC8E; }
-.ff .ff-hf22.ff-home-c2 .ff-dx .ff-dx-tile .tx small { color:rgba(244,239,228,.92); }
-.ff .ff-hf22.ff-home-c2 .ff-dx .ff-dx-tile:not(.on) .chev { background:rgba(55,7,15,.5); }
-.ff .ff-hf22.ff-home-c2 .ff-hb23-box { background:linear-gradient(150deg,#FBF6E9 0%,var(--color-champagne,#EADBB4) 100%); border-color:var(--color-gold-mid,#B08D2A); color:var(--color-text,#1A1712); box-shadow:0 18px 30px -22px rgba(126,97,29,.55); }
-.ff .ff-hf22.ff-home-c2 .ff-hbc-btn .ff-hb23-t { color:var(--color-ox,#5C1220); }
-.ff .ff-hf22.ff-home-c2 .ff-hbc-st .lb { color:var(--color-text,#1A1712); }
-.ff .ff-hf22.ff-home-c2 .ff-hbc-arr { color:var(--color-ox,#5C1220); }
-.ff .ff-hf22.ff-home-c2 .ff-hbc-btn:hover { background:rgba(92,18,32,.05); }
-.ff .ff-hf22.ff-home-c2 .ff-hbc-btn:focus-visible { outline-color:var(--color-ox,#5C1220); }
-.ff .ff-hf22.ff-home-c2 .ff-hb23-body .ff-label { color:var(--color-ox,#5C1220); }
-.ff .ff-hf22.ff-home-c2 .ff-hb23-body .ff-hb17-row .arr { color:var(--color-ox,#5C1220); }
-
-/* ---------- Option 3: bottle-green pillars, gold-leaf bookings box ---------- */
-.ff .ff-hf22.ff-home-c3 .ff-dx .ff-dx-tile,
-.ff .ff-hf22.ff-home-c3 .ff-dx.is-open .ff-dx-tile.on { background:linear-gradient(160deg,#25573F 0%,var(--color-bottle,#1F4A3B) 55%,var(--color-bottle-dk,#12302A) 100%); color:var(--color-cream,#F4EFE4); box-shadow:0 14px 24px -18px rgba(18,48,42,.75) !important; }
-.ff .ff-hf22.ff-home-c3 .ff-dx .ff-dx-tile .tx b { color:#F4DC8E; }
-.ff .ff-hf22.ff-home-c3 .ff-dx .ff-dx-tile .tx small { color:rgba(244,239,228,.92); }
-.ff .ff-hf22.ff-home-c3 .ff-dx .ff-dx-tile:not(.on) .chev { background:rgba(18,48,42,.55); }
-.ff .ff-hf22.ff-home-c3 .ff-hb23-box { background:linear-gradient(150deg,#F7EAC2 0%,var(--color-gold-leaf,#EDD58F) 55%,#E2C677 100%); border-color:var(--color-gold-mid,#B08D2A); color:var(--color-text,#1A1712); box-shadow:0 18px 30px -22px rgba(126,97,29,.6); }
-.ff .ff-hf22.ff-home-c3 .ff-hbc-btn .ff-hb23-t { color:var(--color-ox,#5C1220); }
-.ff .ff-hf22.ff-home-c3 .ff-hbc-btn .ff-hb23-t::before { background:radial-gradient(circle at 35% 30%,#8E2A3B,var(--color-ox,#5C1220) 60%,var(--color-ox-dk,#37070F)); box-shadow:inset 0 0 0 2px rgba(55,7,15,.5), 0 1px 2px rgba(0,0,0,.18); }
-.ff .ff-hf22.ff-home-c3 .ff-hbc-st .lb { color:var(--color-text,#1A1712); }
-.ff .ff-hf22.ff-home-c3 .ff-hbc-arr { color:var(--color-ox,#5C1220); }
-.ff .ff-hf22.ff-home-c3 .ff-hbc-btn:hover { background:rgba(92,18,32,.05); }
-.ff .ff-hf22.ff-home-c3 .ff-hbc-btn:focus-visible { outline-color:var(--color-ox,#5C1220); }
-.ff .ff-hf22.ff-home-c3 .ff-hb23-body .ff-label { color:var(--color-ox,#5C1220); }
-.ff .ff-hf22.ff-home-c3 .ff-hb23-body .ff-hb17-row .arr { color:var(--color-ox,#5C1220); }
-
-/* ---------- Wide screens: the pillar photo fades into the tile's own colour ---------- */
+/* ---------- "What is FF Team?" pillars: ivory with a burgundy border ---------- */
+.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile,
+.ff .ff-hf22.ff-home-c4 .ff-dx.is-open .ff-dx-tile.on { background:linear-gradient(160deg,var(--color-ivory,#FFFCF4) 0%,var(--color-sand,#F3EAD5) 100%); color:var(--color-text,#1A1712); }
+.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile { border:1.5px solid var(--color-ox,#5C1220) !important; box-shadow:0 14px 24px -18px rgba(92,18,32,.38) !important; }
+.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .tx b { color:var(--color-ox,#5C1220); }
+.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .tx small { color:var(--color-text-2,#4A443A); }
+.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .chev { color:var(--color-ox,#5C1220); background:var(--color-ox-tint,#F7E9EC); border-color:rgba(92,18,32,.55); }
+.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile.on .chev { color:var(--color-ivory,#FFFCF4); background:var(--color-ox,#5C1220); border-color:var(--color-ox,#5C1220); }
+/* open: the tile and its box are one burgundy outline; the box keeps its cream fill */
+.ff .ff-hf22.ff-home-c4 .ff-dx.is-open .ff-dx-tile.on { border:1.5px solid var(--color-ox,#5C1220) !important; border-bottom:0 !important; box-shadow:none !important; }
+.ff .ff-hf22.ff-home-c4 .ff-dx-panel { border-color:var(--color-ox,#5C1220) !important; }
+.ff .ff-hf22.ff-home-c4 .ff-dx-panel::before {
+  background:linear-gradient(90deg,var(--color-ox,#5C1220) 0,var(--color-ox,#5C1220) calc(var(--tx,0px) + 1.5px),transparent calc(var(--tx,0px) + 1.5px),transparent calc(var(--tx,0px) + var(--tw,0px) + 1.5px),var(--color-ox,#5C1220) calc(var(--tx,0px) + var(--tw,0px) + 1.5px)); }
+.ff .ff-hf22.ff-home-c4 .ff-dx-panel::after {
+  background:
+    radial-gradient(circle at 0 0, transparent calc(var(--fl) - 1.5px), var(--color-ox,#5C1220) calc(var(--fl) - 1.5px), var(--color-ox,#5C1220) var(--fl), #EAE0C3 calc(var(--fl) + .5px)) calc(var(--tx,0px) - var(--fl) + 1.5px) 100% / var(--fl) var(--fl) no-repeat,
+    radial-gradient(circle at 100% 0, transparent calc(var(--fq) - 1.5px), var(--color-ox,#5C1220) calc(var(--fq) - 1.5px), var(--color-ox,#5C1220) var(--fq), #EAE0C3 calc(var(--fq) + .5px)) calc(var(--tx,0px) + var(--tw,0px) + 1.5px) 100% / var(--fq) var(--fq) no-repeat; }
 @media (min-width:760px) {
-  .ff .ff-hf22.ff-home-c1 .ff-dx .ff-dx-tile .ph::after { background:linear-gradient(180deg,rgba(255,252,244,0) 32%,rgba(250,244,229,.86) 60%,var(--color-sand,#F3EAD5) 94%); }
-  .ff .ff-hf22.ff-home-c2 .ff-dx .ff-dx-tile .ph::after { background:linear-gradient(180deg,rgba(74,14,25,0) 30%,rgba(74,14,25,.62) 58%,#4A0E19 96%); }
-  .ff .ff-hf22.ff-home-c3 .ff-dx .ff-dx-tile .ph::after { background:linear-gradient(180deg,rgba(18,48,42,0) 30%,rgba(18,48,42,.62) 58%,var(--color-bottle-dk,#12302A) 96%); }
-  .ff .ff-hf22.ff-home-c1 .ff-dx .ff-dx-tile .chev { color:var(--color-gold-dk,#7E611D); background:rgba(255,252,244,.85); border-color:rgba(126,97,29,.5); }
+  /* wide screens: the photo fades into the tile's sand */
+  .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .ph::after { background:linear-gradient(180deg,rgba(255,252,244,0) 32%,rgba(250,244,229,.86) 60%,var(--color-sand,#F3EAD5) 94%); }
+  .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile:not(.on) .chev { background:rgba(255,252,244,.9); }
 }
+
+/* ---------- "FF Team is built for getting you bookings": gold leaf with a burgundy title ---------- */
+.ff .ff-hf22.ff-home-c4 .ff-hb23-box { background:linear-gradient(150deg,#F7EAC2 0%,var(--color-gold-leaf,#EDD58F) 55%,#E2C677 100%); border-color:var(--color-gold-mid,#B08D2A); color:var(--color-text,#1A1712); box-shadow:0 18px 30px -22px rgba(126,97,29,.6); }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-btn .ff-hb23-t { color:var(--color-ox,#5C1220); }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-btn .ff-hb23-t::before { background:radial-gradient(circle at 35% 30%,#8E2A3B,var(--color-ox,#5C1220) 60%,var(--color-ox-dk,#37070F)); box-shadow:inset 0 0 0 2px rgba(55,7,15,.5), 0 1px 2px rgba(0,0,0,.18); }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-st .lb { color:var(--color-text,#1A1712); }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-arr { color:var(--color-ox,#5C1220); }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-btn:hover { background:rgba(92,18,32,.05); }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-btn:focus-visible { outline-color:var(--color-ox,#5C1220); }
+.ff .ff-hf22.ff-home-c4 .ff-hb23-body .ff-label { color:var(--color-ox,#5C1220); }
+.ff .ff-hf22.ff-home-c4 .ff-hb23-body .ff-hb17-row .arr { color:var(--color-ox,#5C1220); }
