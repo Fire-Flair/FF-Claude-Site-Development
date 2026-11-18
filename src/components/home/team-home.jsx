@@ -116,12 +116,15 @@ function Home101() {
         key: "journal",
         kind: "team"
       }),
+      /* home-update (Alex, 18 Nov 14:18): a coin between FFStories and the door video, another below the door video;
+         no coin below "Can FF Team help you?". */
+      coin("v"),
       React.createElement(TwoMinutes20, { key: "twomin" }),
+      coin("w"),
       React.createElement(GuideQuestions11, {
         key: "guide",
         kind: "team"
       }),
-      coin("c"),
       React.createElement(BusinessSupport19, {
         key: "business"
       }),
