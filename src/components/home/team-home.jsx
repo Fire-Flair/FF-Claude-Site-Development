@@ -69,7 +69,7 @@ function Home101() {
     const guest = !(state.auth && state.auth.status === "signedIn");
     const root = useRef(null);
     useCoinSpin(root);
-    /* homefix: Business & Support is last (the footer); at most three coin dividers. */
+    /* homefix: coin dividers between sections. home2: the coin game (Join) comes after Business & Support. */
     const coin = (k) => React.createElement(CoinDivider, { key: `coin-${k}` });
     const sections = [
       /* Alex (18 Nov): the Launch Challenge comes first, the Discover FireFlair pillars below it. */
@@ -79,6 +79,8 @@ function Home101() {
       }),
       coin("a"),
       React.createElement(TwoMinutes20, { key: "twomin" }),
+      /* home2 (Alex, 18 Nov): a spinning coin between the video and the bookings box. */
+      coin("v"),
       React.createElement(HowBooking17, {
         key: "how",
         kind: "team"
@@ -93,11 +95,12 @@ function Home101() {
         kind: "team"
       }),
       coin("c"),
-      React.createElement(HomeJoin, {
-        key: "join"
-      }),
       React.createElement(BusinessSupport19, {
         key: "business"
+      }),
+      /* home2 (Alex, 18 Nov): the coin game sits below Business & Support. */
+      React.createElement(HomeJoin, {
+        key: "join"
       })
     ];
     return React.createElement("div", {
