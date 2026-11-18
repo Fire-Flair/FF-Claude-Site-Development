@@ -51,7 +51,7 @@
   --color-ox-hi: #6E1A2C;
   --color-ox-deep: #4A0E1A;
   --color-plum: #4E1E4A;
-  /* Palette (Alex, 18 Nov 19:21): three muted card tones kept for future use. Each has a light and a deep face for the
+  /* Sub colours (Alex, 18 Nov 19:21 and 22:11): three muted tones under the prime colours (black, gold, burgundy), kept for future use. Each has a light and a deep face for the
      card's gradient, a ring for its edge, an accent (icons, links, roles) and an ink (text). Champagne is the house
      choice (Experience cards, the Phone number box); rosé and sage are ready for other cards and boxes. */
   --tone-champagne-light: #F8F0DC; --tone-champagne-deep: #E9DAB4; --tone-champagne-ring: #C9A227; --tone-champagne-accent: #8A6A1E; --tone-champagne-ink: #2A1E04;
