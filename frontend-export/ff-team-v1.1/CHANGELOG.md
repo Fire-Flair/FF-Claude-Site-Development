@@ -23,6 +23,9 @@ Profile builder, "Let's get started" (Alex, 18 Nov 17:06). Published by a three-
   the country code, number and Verify stay on one line. Styles at the end of `src/styles/prof21.css` (v1.27 block).
 - Let's get started has a maximum width of 640px on wide screens, centred, so its boxes no longer stretch across the
   page (`.ff-start17`).
+- Checked: `npm run check`, `npm run build`, phone (390) and desktop (1440) screenshots, and a Talk or type run with a
+  stand-in extraction (progress bar, review list, Edit, Add to my profile; the edited item lands on the profile).
+  The merged page is saved as `live-v1.27-index.html`. Artifact version 1795022470-524d.
 ## v1.26
 
 FF Team home, phones only (Alex, 18 Nov 17:12, from his sketch). `styles/home-text.css`.
