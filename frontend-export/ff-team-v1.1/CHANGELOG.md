@@ -10,6 +10,7 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
 - Collapsed by default; one step open at a time (each section is long, so two open at once lose your place); the tapped header stays still on screen while the other step closes. Smooth open and close (grid rows), none with reduced motion.
 - Buttons with aria-expanded and aria-controls inside an h4; closed steps are inert, so nothing inside them can be tabbed to. Deep links and "#id" jumps (`window.__ffDxReveal`) open the pillar and the step that holds the section.
 - FF Party and FF Staff panels and the /info pages keep the card row and sections as before. `components/home/team-pillars.jsx` (PillarSteps21), `components/home/discover-hub.jsx`, `styles/team-pillars21.css`.
+- Checks: `npm run check` and `npm run build` pass; Gimli's Playwright run at 390 and 1280 passes on all four pillars (no journey-test script in this repo). Private preview artifact "FF Team 1.1 — pillar drop-downs preview", version 1795019678-3ab8.
 
 ## v1.24
 
