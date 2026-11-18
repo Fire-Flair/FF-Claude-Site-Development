@@ -1,5 +1,5 @@
-/* ==== v11-a titles (Alex, 18 Nov 10:20): option 2 "Gold mark" — a gold coin dot beside section titles, a small gold
-   dot beside profile labels — with Alex's exceptions: page titles "Explore our network", "Your bookings" and
+/* ==== v11-a titles (Alex, 18 Nov 10:20): option 2 "Gold mark"; since 18 Nov 14:07 the vertical gold line (no dots)
+   beside section titles and profile labels — with Alex's exceptions: page titles "Explore our network", "Your bookings" and
    "Your profile" keep the full gold underline; "FF Team is built for getting you bookings" in a softer gold;
    "FFStories" centred with FF in a slight italic. Loaded on every page (App style); !important only where a
    component's own later style tag would otherwise win. ==== */
@@ -9,7 +9,8 @@
 .ff h1.ff-big20 .t { display:inline-block; padding-bottom:7px; border-bottom:3px solid var(--color-gold,#C9A227); }
 .ff .ff-pg17-h { margin:6px 0 18px; }
 
-/* Section titles: Cinzel in ink with a gold coin before it. */
+/* Section titles: Cinzel in ink with the vertical gold line before it (titles agent, Alex 18 Nov 14:07: no gold dots,
+   one titling system, the gold line sized to the heading level: 5px here, 3px on profile labels). */
 .ff h2.ff-big20,
 .ff .ff-hf22 .ff-dx-h.ff-dx-q,
 .ff .ff-hf22 .ff-qg-title,
@@ -31,11 +32,10 @@
 .ff .ff-hf22 .ff-lcc-title::before,
 .ff .ff-bk-bh::before,
 .ff .ff-hf22 .ff-hbc-btn .ff-hb23-t::before {
-  content:""; flex:0 0 auto; width:14px; height:14px; border-radius:50%;
-  background:radial-gradient(circle at 35% 30%,var(--color-gold-lt,#E4C36A),var(--color-gold,#C9A227) 55%,var(--color-gold-dk,#7E611D));
-  box-shadow:inset 0 0 0 2px rgba(126,97,29,.55), 0 1px 2px rgba(0,0,0,.18);
+  content:""; flex:0 0 auto; width:5px; align-self:stretch; min-height:1em; border-radius:3px; corner-shape:squircle;
+  background:linear-gradient(180deg,var(--color-gold-lt,#E4C36A),var(--color-gold,#C9A227) 55%,var(--color-gold-dk,#7E611D));
 }
-/* the old underlines and rules of these titles give way to the coin */
+/* the old underlines and rules of these titles give way to the gold line */
 .ff h2.ff-big20 .t { padding-bottom:0; border-bottom:0; }
 .ff .ff-hf22 .ff-dx-h.ff-dx-q::after,
 .ff .ff-hf22 .ff-qg-title::after { content:none !important; display:none !important; }
@@ -57,9 +57,10 @@
   color:var(--color-gold-lt,#E4C36A); overflow-wrap:normal; word-break:keep-all; hyphens:none; text-wrap:balance;
 }
 
-/* Profile labels (Professions, About me, Attributes, Venues …): a small gold dot before the label. */
-.ff .ff-about-h { display:flex; align-items:center; gap:8px; }
-.ff .ff-about-h::before { content:""; flex:0 0 auto; width:7px; height:7px; border-radius:50%; background:var(--color-gold,#C9A227); }
+/* Profile labels (Professions, About me, Attributes, Venues …): a thin gold line before the label. */
+.ff .ff-about-h { display:flex; align-items:center; gap:10px; }
+.ff .ff-about-h::before { content:""; flex:0 0 auto; width:3px; align-self:stretch; min-height:1.1em; border-radius:2px; corner-shape:squircle;
+  background:linear-gradient(180deg,var(--color-gold-lt,#E4C36A),var(--color-gold,#C9A227) 55%,var(--color-gold-dk,#7E611D)); }
 
 /* "FFStories": centred, one word, FF in a slight italic. */
 .ff .ff-hf22 .ff-jr17-title.ff-jr5 { align-items:center !important; text-align:center !important; }
