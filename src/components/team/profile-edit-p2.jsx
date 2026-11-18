@@ -69,11 +69,10 @@ function PE2TopSlots({ profs }) {
 }
 
 
-/* The Bar ladder, entry to top: 1 Barback … 5 Mixologist, shown top down (p2/pfb: Barback first and smallest,
-   Mixologist last and largest). Every other category is alphabetical. */
+/* Bar keeps its entry-to-top order, Barback first, Mixologist last; every other category is alphabetical. */
 const PE2_LADDER = ["Barback", "Bartender", "Cocktail Bartender", "Flair Bartender", "Mixologist"];
 const PE2_CATS = PROFESSION_CATEGORIES.map(c => ({
-  key: c.key, ranked: c.key === "Bar",
+  key: c.key,
   list: c.key === "Bar" ? PE2_LADDER : [...c.suggested].sort((a, b) => a.localeCompare(b)),
 }));
 /* p2/pubprof: Languages live on the Profile Card and Experience has its own section, so neither is an Attribute here. */
@@ -114,19 +113,11 @@ const pe2Title = (t) => String(t).trim().replace(/\s+/g, " ").replace(/\b\w/g, c
 /* A typed name that matches a listed profession (any case) becomes that profession. */
 const pe2Listed = (t) => ALL_PROFESSIONS.find(p => p.name.toLowerCase() === String(t).trim().toLowerCase());
 
-function PE2StairMark({ size = 30 }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 30 30" aria-hidden="true">
-      {[0, 1, 2, 3, 4].map(i => <rect key={i} x={1 + i * 5.8} y={24 - i * 5} width={4.6} height={5 + i * 5} rx={1.4} fill="currentColor" opacity={0.45 + i * 0.13} />)}
-    </svg>
-  );
-}
-
 /* Shrink, never split: the longest word decides the size. */
 const pe2Fit = (t) => { const L = Math.max(...String(t).split(/\s+/).map(w => w.length)); return L >= 13 ? "14.5px" : L >= 11 ? "15.5px" : "17px"; };
 
-/* The category's mark: the Bar ladder's steps, Other a spark (GroupIcon gives Other the Front of House people icon). */
-const pe2CatIcon = (k, size) => k === "Bar" ? <PE2StairMark size={size + 2} /> : k === "Other" ? <Sparkles size={size} strokeWidth={1.6} /> : <GroupIcon group={k} size={size} color="currentColor" />;
+/* The category's mark: GroupIcon's (Bar a cocktail glass, Alex 18 Nov 22:16), Other a spark (GroupIcon gives Other the Front of House people icon). */
+const pe2CatIcon = (k, size) => k === "Other" ? <Sparkles size={size} strokeWidth={1.6} /> : <GroupIcon group={k} size={size} color="currentColor" />;
 
 /* FireFlair asks which category a typed profession belongs to when it can't place it (Other included). */
 function PE2Which({ P }) {
@@ -211,7 +202,7 @@ function PE2ProfCats({ P }) {
 const pe2TileFs = (t) => { const L = Math.max(...String(t).split(/\s+/).map(w => w.length)); return L >= 13 ? "clamp(9.5px,2.6vw,13.5px)" : L >= 10 ? "clamp(10.5px,2.9vw,13.5px)" : undefined; };
 
 /* prof-inline (Alex, 18 Nov 21:49): one category's professions in a panel under the grid row, no pop-up. The professions
-   are chips that wrap across the panel (the Bar ladder keeps its order); the member's own professions in this category
+   are chips that wrap across the panel (Bar keeps its order); the member's own professions in this category
    show as chosen chips; "Add your own" puts a typed profession under this category (a listed name stays that profession). */
 const PE2_GRID_COLS = 4;
 function PE2CatPanel({ P, c }) {
@@ -228,11 +219,11 @@ function PE2CatPanel({ P, c }) {
     setQ("");
   };
   return (
-    <div id="pe2-cat-panel" className={"pe2-cp" + (c.ranked ? " bar" : "")} role="region" aria-label={label}>
+    <div id="pe2-cat-panel" className="pe2-cp" role="region" aria-label={label}>
       <div className="pe2-cp-h"><span className="ic" aria-hidden="true">{pe2CatIcon(c.key, 18)}</span><span className="t" style={{ fontSize: pe2CpFs(label) }}>{label}</span></div>
       {(c.list.length > 0 || mineHere.length > 0) && (
         <div className="pe2-cp-l" role="group" aria-label={label}>
-          {c.list.map((x, i) => <PE2Chip key={x} name={x} on={P.has(x)} step={c.ranked ? i + 1 : 0} onClick={() => P.toggle(x)} />)}
+          {c.list.map(x => <PE2Chip key={x} name={x} on={P.has(x)} onClick={() => P.toggle(x)} />)}
           {mineHere.map(r => <PE2Chip key={r.id} name={r.name} on onClick={() => P.remove(r)} />)}
         </div>
       )}
@@ -248,23 +239,12 @@ function PE2CatPanel({ P, c }) {
 const pe2CpFs = (t) => { const L = Math.max(...String(t).split(/\s+/).map(w => w.length)); return L >= 13 ? "clamp(14px,4.2vw,18px)" : undefined; };
 
 /* prof-inline: a compact chip; chosen is burgundy with gold text and a tick, not chosen is white with a "+". */
-function PE2Chip({ name, on, onClick, step }) {
+function PE2Chip({ name, on, onClick }) {
   return (
     <button type="button" className={"pe2-chip" + (on ? " on" : "")} aria-pressed={on} onClick={onClick}>
-      {step ? <span className="pe2-ci-step" style={{ "--h": step }} aria-label={`Step ${step} of 5`}><i /></span> : null}
       <span className="nm">{name}</span>
       <span className="mk" aria-hidden="true">{on ? <Check size={14} strokeWidth={2.8} /> : <Plus size={14} strokeWidth={2.4} />}</span>
     </button>
-  );
-}
-
-/* p2/pfb: a profession's level, five grey diamonds filling in (the earlier system, as on the live FF Team site). */
-function PE2Level({ r }) {
-  const n = r.level || 0;
-  return (
-    <span className="ff-proflevel pe2-lv" role="img" aria-label={n ? `Level ${n} of 5, ${professionLevelTitle(n)}` : "Level not set"}>
-      {[1, 2, 3, 4, 5].map(i => <i key={i} className={i <= n ? "on" : ""} />)}
-    </span>
   );
 }
 
@@ -298,7 +278,7 @@ function PE2Overview({ records }) {
           <PE2TopSlots profs={profs} />
         )}
         {profs.length > 0 && (
-          <ProfTiles21 items={profs} def={BASE_CATEGORIES.professions} onOpen={(r) => setOpenProf(r)} extra={(r) => <PE2Level r={r} />} top={FEATURE_LIMIT}
+          <ProfTiles21 items={profs} def={BASE_CATEGORIES.professions} onOpen={(r) => setOpenProf(r)} top={FEATURE_LIMIT}
             tail={<div role="listitem" className="ff-pt21-slot"><PE2AddProf on={adding} onClick={() => setAdding(!adding)} /></div>} />
         )}
         {(adding || !profs.length) && (

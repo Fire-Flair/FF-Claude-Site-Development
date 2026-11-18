@@ -4,6 +4,19 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.99
+
+Profile page creator (`#/ff-team/profile`), profession selector (Alex, 18 Nov 22:16).
+
+- **Bar is a cocktail glass.** The Bar category tile and the Bar panel heading in the category grid now show the
+  lucide `Martini` cocktail glass (from `GroupIcon`, the same Bar icon the rest of the site already uses) instead of
+  the five rising bars. `PE2StairMark` is deleted (`src/components/team/profile-edit-p2.jsx`).
+- **Level icons removed.** The rising step bars in front of each Bar profession chip (Barback … Mixologist) and the
+  five level diamonds on the chosen profession tiles are gone (`PE2Chip` step, `PE2Level`; their CSS in
+  `src/styles/profile-edit-p2.css` and `src/styles/prof21.css`). The professions, Bar's order (Barback first,
+  Mixologist last) and the `level` field on profession records are unchanged; the level picker in a profession's own
+  editor is untouched.
+- Network page and other Bar category icons already used the cocktail glass; nothing changed there.
 ## v1.72
 
 The other share pop-ups get the v1.71 profile Share pop-up (Alex, 18 Nov 22:13). `src/components/shared/card-share17.jsx` (`CardShareSheet17`), `src/components/team/profile-from-text.jsx` (`ShareCardSheet`), `src/components/party/card-studio.jsx` (`CardPop17`), `src/styles/base.css`.
