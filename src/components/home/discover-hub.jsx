@@ -375,6 +375,9 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
         }
         grab();
         setLeaving(null);
+        /* pillar-dropdowns: a new pillar mounts with the linked step already open, so the panel's opening height includes it */
+        if (kind === "team" && open !== c.k)
+          window.__ffStep21Want = [id, pid];
         setOpen(c.k);
         setTimeout(() => {
           if (kind === "team") {

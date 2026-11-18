@@ -299,4 +299,7 @@
   .ff .ff-st21 .hh b { font-size:22px; }
   .ff .ff-st21 .ff-ps21 { padding:8px 28px 26px; }
 }
+/* deep links: the header lands below the sticky top bar; a step closed by a link snaps shut */
+.ff .ff-st21 .hh { scroll-margin-top:calc(var(--dx-top,0px) + 70px); }
+.ff .ff-st21 .it.snap .bw, .ff .ff-st21 .it.snap .bi { transition:none; }
 @media (prefers-reduced-motion:reduce) { .ff .ff-st21 .bw, .ff .ff-st21 .bi, .ff .ff-st21 .chev { transition:none; } }

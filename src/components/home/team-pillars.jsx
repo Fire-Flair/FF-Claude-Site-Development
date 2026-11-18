@@ -434,7 +434,14 @@
      (used by deep links and "#id" jumps). */
   function PillarSteps21({ pl, photo, run, link }) {
     const IM = window.FF_IMG || {};
-    const [on, setOn] = useState("");
+    /* a deep link into a closed pillar: start with its step open (set by __ffDxReveal in discover-hub.jsx) */
+    const [on, setOn] = useState(() => {
+      const w = window.__ffStep21Want;
+      window.__ffStep21Want = null;
+      return (w && w.find((id) => pl.sections.some((x) => x.id === id))) || "";
+    });
+    /* a link to another step: the open one snaps shut (no animation), so the scroll that follows lands on the right header */
+    const [snap, setSnap] = useState("");
     const list = useRef(null);
     const pin = useRef(0);
     const keep = (id) => {
@@ -449,22 +456,23 @@
       };
       pin.current = requestAnimationFrame(step);
     };
-    const toggle = (id) => { keep(id); setOn((cur) => (cur === id ? "" : id)); };
+    const toggle = (id) => { keep(id); setSnap(""); setOn((cur) => (cur === id ? "" : id)); };
     useEffect(() => {
       const open = (e) => {
         const id = e && e.detail;
         const s = pl.sections.find((x) => x.id === id || (list.current && list.current.querySelector("#st21b-" + x.id + " [id=\"" + id + "\"]")));
-        if (s) setOn(s.id);
+        if (s) { setSnap(on && on !== s.id ? on : ""); setOn(s.id); }
       };
       window.addEventListener("ff-step21", open);
-      return () => { window.removeEventListener("ff-step21", open); cancelAnimationFrame(pin.current); };
-    }, [pl]);
+      return () => window.removeEventListener("ff-step21", open);
+    }, [pl, on]);
+    useEffect(() => () => cancelAnimationFrame(pin.current), []);
     return (
       <div className="ff-st21" ref={list}>
         {pl.sections.map((s, i) => {
           const ik = photo(i), isOn = on === s.id;
           return (
-            <section key={s.id} className={"it" + (isOn ? " on" : "")}>
+            <section key={s.id} className={"it" + (isOn ? " on" : "") + (snap === s.id ? " snap" : "")}>
               <h4 className="hh">
                 <button type="button" id={"st21-" + s.id} aria-expanded={isOn} aria-controls={"st21b-" + s.id} onClick={() => toggle(s.id)}>
                   <span className="ph" aria-hidden="true">{IM[ik] ? <img decoding="async" src={IM[ik]} style={fp17(ik)} alt="" draggable={false} /> : null}<i>{i + 1}</i></span>
