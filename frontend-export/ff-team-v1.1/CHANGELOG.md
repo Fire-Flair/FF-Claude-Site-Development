@@ -4,6 +4,14 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.36
+
+FF Team home (Alex, 18 Nov 18:37). `styles/home-text.css`, `discover-hub.jsx`.
+
+- "Built for getting you bookings": no gold on phones. The box is one flat burgundy on every size, closed and open. Legolas's alignment of "How bookings work" and the hover-tint fix from v1.32 stay.
+- Intro under "Built for event and hospitality professionals" (writer agent), now a two-sentence summary of FF Team: "Made for the events industry, FF Team runs through WhatsApp. Availability requests arrive as shifts come up, with clear terms and conditions for everything you sign up to." Three lines on iPad and desktop, four on phones.
+- Published as a string patch onto the live page 1795028072-45c8 (v1.35), so every other chat's work stays; merged page saved as `live-v1.36-index.html`. Artifact version 1795028117-1329.
+
 ## v1.35
 
 Profile page, Experience cards (Alex, 18 Nov 18:49). `src/components/team/attribute-cards.jsx`, `src/styles/experience29.css` (v1.35 block).
