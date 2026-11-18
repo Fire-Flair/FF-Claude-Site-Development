@@ -160,6 +160,32 @@ function LoginSheet({ open, onClose }) {
 
         {err && <p className="ff-lg21-err" role="alert">{err}</p>}
       </div>
+      {/* TESTING ONLY (Alex, 18 Nov 12:59): DEV sign-ins so every FF Team screen can be tested. Remove before go-live. */}
+      <button type="button" className="ff-dev17 login" onClick={() => {
+        seedDemo17(state, dispatch, "team");
+        dispatch({ type: "V11_SET", patch: { devDone: { team: true } } });
+        dispatch({ type: "AUTH_SIGNED_IN", tag: "ALEXG", method: "dev" });
+        if (!state.role) dispatch({ type: "ROLE", role: "team" });
+        dispatch({ type: "TOAST", toast: "Complete profile loaded" });
+        onClose();
+      }}>DEV · complete profile</button>
+      <button type="button" className="ff-dev17 login" onClick={() => {
+        dispatch({ type: "SIGN_OUT" });
+        dispatch({ type: "ROLE", role: "team" });
+        dispatch({ type: "SESSION", patch: { refTag: "ALEX424", refKind: "team" } });
+        dispatch({ type: "TAB", tab: "profile" });
+        dispatch({ type: "TOAST", toast: "Join from invite loaded" });
+        onClose();
+        window.scrollTo(0, 0);
+      }}>DEV · join from invite</button>
+      <button type="button" className="ff-dev17 login" onClick={() => {
+        dispatch({ type: "SIGN_OUT" });
+        dispatch({ type: "ROLE", role: "team" });
+        dispatch({ type: "TAB", tab: "profile" });
+        dispatch({ type: "TOAST", toast: "New member loaded" });
+        onClose();
+        window.scrollTo(0, 0);
+      }}>DEV · new member</button>
     </Sheet>
   );
 }
