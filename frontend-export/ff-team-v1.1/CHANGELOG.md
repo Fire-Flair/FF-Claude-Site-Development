@@ -4,6 +4,13 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## Profile photos (preview, branch profile-photos; not yet a version)
+
+- Profile page photos (Alex, 18 Nov 20:10), bug fixes. Phone and iPad: the photos now end exactly on the Profile Card's icon line, which is where the card sits when the page opens, and from there the whole page scrolls as one (the photos no longer stay stuck behind the card until the Overview tabs). While the photos are open, a scroll anywhere on the page, up or down, by touch, wheel or keys, brings the card back up (before, only a long upward drag did). Opening the photos from further down the page brings them into view.
+- iPad at every size, portrait or landscape, uses the phone layout; the desktop layout needs a wide window with a mouse or trackpad.
+- Desktop: one big photo with every photo in a row below it (arrows and keys step through; the row scrolls left and right after five), in place of the mosaic that opened one photo full size. `components/team/public-profile.jsx` (DeskGallery11, PublicHero), `styles/p12.css`.
+- Company Cards (no icon line) keep the previous photo behaviour.
+
 ## v1.45
 
 - FF Team hero tagline (Alex, 18 Nov 19:56): capital first letters, "Get Seen, Get Booked, Get Paid." (`home-sections.jsx`; the share message is unchanged). Bigger on iPad: 22–27px from 560px to 759px and 26–28px from 760px to 899px (`styles/home-text.css`); desktop keeps 15–21px on one line beside the card. Merged onto the live page 1795031702-ea2c (v1.44); page saved as `live-v1.45-index.html`. Artifact version 1795032246-a1af.

@@ -881,3 +881,25 @@
 .ff .ff-ph-grip:hover span, .ff .ff-ph-grip[aria-expanded="true"] span { width:56px; }
 .ff .ff-ph-grip:focus-visible { outline:2px solid var(--gold); outline-offset:-4px; border-radius:10px; }
 @media (prefers-reduced-motion: reduce) { .ff .ff-ph-grip span { transition:none; } }
+
+/* ---------- profile-photos (Alex, 18 Nov 20:10) ----------
+   Phone and iPad: the photos end exactly on the Profile Card's icon line (--ov, measured in PublicHero) and the page
+   scrolls as one from there; nothing stays stuck behind the card. Open (.ps-open) is unchanged. */
+.ff .ff-phero.has-media.ov:not(.wide) .ff-ps:not(.open) { position:relative; top:auto; height:calc(clamp(300px,86vw,480px) - 128px + var(--ov,128px)); }
+.ff .ff-phero.has-media.ov:not(.wide):not(.ps-open) > .ff-pcol { margin-top:calc(var(--pull,0px) - var(--ov,128px)); }
+.ff .ff-phero.has-media.ov:not(.wide) .ff-ps:not(.open) .ff-ps-dots { bottom:calc(var(--ov,128px) + 34px); }
+.ff .ff-phero.has-media.ov:not(.wide) .ff-ps:not(.open) .ff-ps-arrow { top:calc((100% - var(--ov,128px)) / 2); }
+/* Desktop: one big photo, and every photo in a row below it (the row scrolls left and right after five). */
+.ff .ff-phero.wide .ff-pgal { order:2; display:flex; flex-direction:column; gap:8px; min-width:0; min-height:460px; }
+.ff .ff-pgal-big { position:relative; flex:1 1 auto; min-height:300px; border-radius:16px; corner-shape:squircle; overflow:hidden; background:#0E0B08; }
+.ff .ff-pgal-big .ff-pm-fill { position:absolute; inset:-24px; width:calc(100% + 48px); height:calc(100% + 48px); object-fit:cover; filter:blur(22px) brightness(.5) saturate(1.1); transform:translateZ(0); }
+.ff .ff-pgal-big .ff-pm-img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:50% 50%; }
+.ff .ff-pgal-big .ff-ps-arrow { top:50%; }
+.ff .ff-pgal-row { flex:none; display:flex; gap:8px; overflow-x:auto; overflow-y:hidden; overscroll-behavior-x:contain; scroll-snap-type:x proximity; scrollbar-width:none; touch-action:pan-x; }
+.ff .ff-pgal-row::-webkit-scrollbar { display:none; }
+.ff .ff-pgal-t { flex:0 0 calc((100% - 32px) / 5); aspect-ratio:4 / 3; position:relative; padding:0; margin:0; border:2px solid transparent; border-radius:12px; corner-shape:squircle; overflow:hidden; background:#14110A; cursor:pointer; scroll-snap-align:start; }
+.ff .ff-pgal-t img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; opacity:.78; transition:opacity .2s; user-select:none; -webkit-user-drag:none; }
+.ff .ff-pgal-t:hover img, .ff .ff-pgal-t.on img { opacity:1; }
+.ff .ff-pgal-t.on { border-color:var(--gold,#C9A227); }
+.ff .ff-pgal-t:focus-visible { outline:2px solid var(--gold,#C9A227); outline-offset:2px; }
+@media (prefers-reduced-motion: reduce) { .ff .ff-pgal-t img { transition:none; } }
