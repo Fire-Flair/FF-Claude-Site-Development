@@ -1,5 +1,17 @@
 # FireFlair prototype — changelog
 
+## v17.41
+
+Defect fixes and review findings. Branches merged: `p2-fixes`, `p2-fixes2`.
+
+- Reviews (`profile-from-text.jsx`, `network.jsx`, `network-directory.jsx`, `review-card35.jsx`): the "Review sent" message is no longer overwritten by the sign-up message; a signed-out review on FF Staff and FF Party logs in on the same site and waits; "Write a review" stays in the profile menu until written; a waiting company review shows "Waiting for … to accept" and is not counted; empty-state wording; the review note label.
+- Package cards (`bookings.jsx`, `bkd.css`): "Signed up" fits inside the card; hyphenated words wrap whole; the tabs are announced as tabs and move with the arrow keys; the "Our bar packages" sub-title shows on the Bar tab only.
+- Tags are shown in lowercase everywhere (cards, builder, toasts, admin, network, share links); FFTeam.uk keeps its capitals.
+- Profiles: About me ends cleanly (no "…"); About me comes first in the page markup on other people's profiles; Share is half width and centred on FF Staff and FF Party profiles; the company panel no longer shows the photo through its gap or corners.
+- Network: the Invite tiles are removed from the rows (invite is part of Share).
+- Hero: the FF Team heading takes two lines at most on wide screens; tapping the card on FF Staff and FF Party opens the profile page and sets its address.
+- Removed the unused `RoleCards`.
+
 ## v17.40
 
 Artifact version 1794959527-87d7.
