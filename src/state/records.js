@@ -170,10 +170,13 @@ const emptyRecords = () => Object.keys(BASE_CATEGORIES).reduce((m, k) => { m[k] 
 /* Reviews written ABOUT a person, newest first, shaped as records so they
    render through the same Information Card as everything else. */
 /* Reviews shown for a person. Declined ones never show. Pending ones show only to their writer ("me"), marked pending: true.
-   A saved review with no status counts as accepted. */
+   A saved review with no status counts as accepted.
+   Reviews hidden in FF Admin (admin17.hidden.reviews) never show here, so every profile, tab count and card skips them;
+   FF Admin's own Reviews list reads state.reviews directly and still lists them. */
 function reviewRecordsFor(state, personId) {
+  const hiddenRv = (state.admin17 && state.admin17.hidden && state.admin17.hidden.reviews) || {};
   return (state.reviews || [])
-    .filter(r => r.aboutId === personId && r.status !== "declined" && (r.status !== "pending" || r.byId === "me"))
+    .filter(r => r.aboutId === personId && !hiddenRv[r.id] && r.status !== "declined" && (r.status !== "pending" || r.byId === "me"))
     .sort((a, b) => b.at - a.at)
     .map(r => ({
       ...makeRecord("reviews", r.rating == null ? `From ${r.byName}` : `${r.rating}★ from ${r.byName}`),
