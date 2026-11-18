@@ -95,6 +95,7 @@
   "components/party/hire.jsx",
   "components/party/card-studio.jsx",
   "components/party/party-live.jsx",
+  "components/team/profpick-preview.jsx",
   "components/party/packages-browse.jsx",
   "components/party/special-request17.jsx",
   "components/party/delivery-and-extras.jsx",

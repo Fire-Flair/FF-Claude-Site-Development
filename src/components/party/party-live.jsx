@@ -48,6 +48,7 @@ function LiveActionBar17({ placement }) {
 
 /* The completed profile is the public page, exactly as anyone else sees it from the network. */
 function DoneProfile17({ kind }) {
+  if (kind === "team" && profpickOpt()) return <ProfPickPreview />;   /* scratch preview (p2/profpick), off unless localStorage.ffProfPick is set */
   const { state, dispatch } = useStore();
   const all = useDirectory();
   if (kind === "team") {
