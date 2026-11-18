@@ -273,6 +273,7 @@ function pkcNoBreak17(v) {
 }
 /* pkc-tone (Alex, 18 Nov 18:12): every package card in the Bookings rail is as tall as the tallest one, measured with
    Details closed, so the footers line up. Opening Details grows only that card. */
+let PKC_H17 = 0;
 function usePkcEven17(key) {
   React.useLayoutEffect(() => {
     const box = document.getElementById("ff-bk-party"); if (!box) return;
@@ -280,7 +281,9 @@ function usePkcEven17(key) {
       const cards = [...box.querySelectorAll(".ff-pkc")];
       cards.forEach(c => { c.style.minHeight = ""; });
       const shut = cards.filter(c => !c.querySelector("details[open]"));
-      const h = Math.max(0, ...shut.map(c => c.getBoundingClientRect().height));
+      let h = Math.max(0, ...shut.map(c => c.getBoundingClientRect().height));
+      /* Entertainment and Services cards take the Bar cards' height, so every tab's cards are one size and shape. */
+      if (box.querySelector(".ff-pkc[data-pk17^='svc_']")) PKC_H17 = h; else h = Math.max(h, PKC_H17);
       if (h) cards.forEach(c => { c.style.minHeight = h + "px"; });
     };
     even();
@@ -356,15 +359,66 @@ function usePkcFitAll17(ref, key) {
   }, [key]);
 }
 
-function BkPkgCard17({ sv, on, onClick }) {
+/* pkc-doc (Alex, 18 Nov 18:28): the member types what they want to earn for each package; it is saved as one typed
+   Q&A answer per package (rate.pkg_<package id>, pence) when they confirm. */
+const pkcRateQid17 = (id) => `rate.pkg_${id}`;
+PKG_CAT17.filter(x => x.teamRegistration).forEach(x => { if (!QA_Q17[pkcRateQid17(x.id)]) QA_Q17[pkcRateQid17(x.id)] = { text: `What do you want to earn for the ${x.name}?`, group: "interest" }; });
+const pkcAmtOk17 = (v) => /^\d+(\.\d{1,2})?$/.test(String(v || "").trim()) && Number(v) > 0;
+const pkcGBP17 = (v) => pkcAmtOk17(v) ? "£" + Number(v).toLocaleString("en-GB", { minimumFractionDigits: Number(v) % 1 ? 2 : 0, maximumFractionDigits: 2 }) : "";
+
+/* The Details button opens the package's Event brief and invoice: a document laid out like the real one, with the client,
+   event, package, what you earn and the five package terms. Event fields are filled in when a client books. */
+function PkgDoc17({ sv, amount, onClose }) {
+  const { state } = useStore();
+  const p = PKG_BY17[sv.id] || {};
+  const t = PKC_TEAM17[sv.id] || {};
+  const me = (qaAccount17(state) && state.profile && state.profile.name) || "";
+  const blank = (v) => v ? <dd>{v}</dd> : <dd className="nil">Added when booked</dd>;
+  const pk = [["Package", p.name || sv.title], ["Your role", p.role], ["Duration", p.durationLabel]].filter(r => r[1]);
+  const long = [["What you do", t.brief || p.description], ["Shopping list", t.shop]].filter(r => r[1]);
+  return (
+    <Sheet open onClose={onClose} title={p.name || sv.title}>
+      <article className="ff-doc17" aria-label="Event brief and invoice">
+        <header className="lh">
+          <span className="mk"><FFLogo size={40} tier="gold" /></span>
+          <span className="co"><b>FireFlair Ltd</b><span>FFParty.uk</span></span>
+          <span className="ti"><b>Event brief and invoice</b><span>No. issued when booked</span></span>
+        </header>
+        <div className="pt">
+          <div><i>Client</i><b className="nil">Client name</b></div>
+          <div><i>Professional</i>{me ? <b>{me}</b> : <b className="nil">Your name</b>}</div>
+        </div>
+        <section><h4>Event</h4><dl>{[["Event", ""], ["Date", ""], ["Venue", ""], ["Arrive", ""]].map(([k, v]) => <div key={k}><dt>{k}</dt>{blank(v)}</div>)}</dl></section>
+        <section><h4>Package</h4>
+          <dl>{pk.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}</dl>
+          {long.map(([k, v]) => <div key={k} className="lg"><i>{k}</i><p>{pkcNoBreak17(v)}</p></div>)}
+          {(t.points || []).length > 0 && <ul>{t.points.map(x => <li key={x}>{pkcNoBreak17(x)}</li>)}</ul>}
+          {(t.cond || p.conditions) && <p className="cond">{pkcNoBreak17(t.cond || p.conditions)}</p>}
+        </section>
+        <div className="tot"><span>You earn</span>{pkcGBP17(amount) ? <b>{pkcGBP17(amount)}</b> : <b className="nil">Your amount</b>}</div>
+        <section className="tc"><h4>Terms and conditions</h4>
+          <ol>{PARTY_PKG_TERMS17.map((x, i) => <li key={x.k}><span><b>{i + 1}</b>{x.label}</span><p>{x.text}</p></li>)}</ol>
+        </section>
+        <footer>FireFlair Ltd · FFParty.uk</footer>
+      </article>
+    </Sheet>
+  );
+}
+
+function BkPkgCard17({ sv, on, onClick, amount = "", onAmount }) {
   const p = PKG_BY17[sv.id] || {};
   const t = PKC_TEAM17[sv.id] || {};
   const ref = useRef(null);
-  const pay = PAY17[sv.id];
+  const inRef = useRef(null);
+  const [doc, setDoc] = useState(false);
+  const [bad, setBad] = useState(false);
   usePkcFitAll17(ref, sv.id + (on ? "1" : "0"));
   const Ico = sv.id === "svc_staffing" ? PKC_ICO17.svc : PKC_ICO17.bar;
   const rows = [[S17I.Sparkles, "You provide", t.provide || p.capability || p.includes], [S17I.Users, "Ideal for", t.ideal || p.ideal], [S17I.Clock, "Duration", p.durationLabel]].filter(r => r[2]);
-  const brief = [["Package", p.name || sv.title], ["Your role", p.role], ["Duration", p.durationLabel], ["What you do", t.brief || p.description], t.shop ? ["Shopping list", t.shop] : null].filter(r => r && r[1]);
+  const go = () => {
+    if (!on && !pkcAmtOk17(amount)) { setBad(true); if (inRef.current) inRef.current.focus(); return; }
+    onClick();
+  };
   return (
     <div ref={ref} className={`ff-pkc cmp${on ? " sel" : ""}`} data-pk17={sv.id}>
       <span className="ff-pkc-rb"><Ico size={13} strokeWidth={1.8} /> {sv.site || "FF Party"}</span>
@@ -381,28 +435,22 @@ function BkPkgCard17({ sv, on, onClick }) {
           </div>
         ))}
       </div>
-      <details className="ff-pkc-dt">
-        <summary><span>Details</span><S17I.ChevronDown size={18} strokeWidth={2} /></summary>
-        <div className="in">
-          <div className="pv-inv ff-pkc-inv" role="group" aria-label="Event brief and invoice">
-            <div className="hd"><b>Event brief and invoice</b></div>
-            <dl>{brief.map(([k, v]) => <div key={k} className={String(v).length > 40 ? "lg" : ""}><dt>{k}</dt><dd>{pkcNoBreak17(v)}</dd></div>)}</dl>
-            {(t.points || []).length > 0 && <ul>{t.points.map(x => <li key={x}>{pkcNoBreak17(x)}</li>)}</ul>}
-            {(t.cond || p.conditions) && <p className="cond">{pkcNoBreak17(t.cond || p.conditions)}</p>}
-            {pay != null && <div className="tot"><span>You earn</span><b>{pkgPayLabel17(sv.id)}</b></div>}
-          </div>
-          <div className="ff-pkc-tcs">
-            <h4>Terms and conditions</h4>
-            <ol>{PARTY_PKG_TERMS17.map((x, i) => <li key={x.k}><span><b>{i + 1}</b>{x.label}</span><p>{x.text}</p></li>)}</ol>
-          </div>
-        </div>
-      </details>
+      <button type="button" className="ff-pkc-dbtn" onClick={() => setDoc(true)} aria-haspopup="dialog">
+        <S17I.FileText size={17} strokeWidth={1.8} /><span>Details</span><S17I.ArrowRight size={17} strokeWidth={2} />
+      </button>
       <div className="ff-pkc-ft">
-        {pay != null && <span className="ff-pkc-earn"><i>You earn</i><b>{pkgPayLabel17(sv.id)}</b></span>}
-        <button type="button" className="ff-pkc-go fit" onClick={onClick} aria-pressed={!!on} aria-label={`${p.name || sv.title}: ${on ? "Signed up" : "Sign up"}`}>
+        <label className={`ff-pkc-earn in${bad ? " bad" : ""}`}>
+          <i>You earn</i><span className="cur">£</span>
+          <input ref={inRef} type="text" inputMode="decimal" autoComplete="off" value={amount} disabled={on} aria-invalid={bad}
+            aria-label={`What you want to earn for the ${p.name || sv.title}, in pounds`}
+            onChange={e => { setBad(false); onAmount && onAmount(e.target.value.replace(/[^\d.]/g, "").slice(0, 7)); }}
+            onKeyDown={e => { if (e.key === "Enter") go(); }} />
+        </label>
+        <button type="button" className="ff-pkc-go fit" onClick={go} aria-pressed={!!on} aria-label={`${p.name || sv.title}: ${on ? "Signed up" : "Sign up"}`}>
           {on ? <><S17I.Check size={13} strokeWidth={2.6} /> Signed up</> : "Sign up"}
         </button>
       </div>
+      {doc && <PkgDoc17 sv={sv} amount={amount} onClose={() => setDoc(false)} />}
     </div>
   );
 }
@@ -469,7 +517,7 @@ function BkPkgSoon17({ pk = PK_SOON17.bar[0], own = false }) {
         {rows.map(([Ic, l, v]) => (
           <div key={l} className="ff-pkc-row">
             <span className="ff-pkc-ico"><Ic size={15} strokeWidth={1.6} /></span>
-            <span className="v"><i>{l}</i><b>{v}</b></span>
+            <span className="v"><i>{l}</i><b>{pkcNoBreak17(v)}</b></span>
           </div>
         ))}
       </div>
@@ -570,6 +618,12 @@ function TeamBookings({ guest = false }) {
   const [pkgTerms, setPkgTerms] = useState(false);
   const picked = sel || svcInterest;
   const tick = (sv) => setSel(picked.includes(sv.id) ? picked.filter(x => x !== sv.id) : [...picked, sv.id]);
+  const [pkAmt, setPkAmt] = useState({});
+  const amtOf = (id) => {
+    if (pkAmt[id] != null) return pkAmt[id];
+    const acc = qaAccount17(state); const x = acc ? qaAnswer17(state, acc, pkcRateQid17(id)) : null;
+    return x && !x.withdrawnAt && x.typed ? String(x.typed.pence / 100) : "";
+  };
   /* v17.4.6: package sign-ups are one Q&A answer (int.party_package, option ids = package ids). */
   const confirmPkgs = async () => {
     setPkgTerms(false);
@@ -578,6 +632,10 @@ function TeamBookings({ guest = false }) {
     const next = picked;
     const sv = { title: next.length === 1 ? (pkgs.find(x => x.id === next[0]) || {}).title || "the package" : "your packages" };
     const mirror = { type: "PROFILE", patch: { serviceInterest: next } };
+    for (const id of next) {
+      const v = amtOf(id); if (!pkcAmtOk17(v)) continue;
+      await qaSubmit17(dispatch, { questionId: pkcRateQid17(id), account, typed: { kind: "package_gbp", pence: Math.round(Number(v) * 100), package: id }, visibility: "private", source: "FF Team Bookings · FF Party packages" });
+    }
     const r = next.length
       ? await qaSubmit17(dispatch, { questionId: "int.party_package", account, optionIds: next, visibility: "public", source: "FF Team Bookings · FF Party packages" }, mirror)
       : await qaWithdraw17(dispatch, { questionId: "int.party_package", account }, mirror);
@@ -638,7 +696,7 @@ function TeamBookings({ guest = false }) {
           </div>
           {pkTab === "bar" ? (<div role="tabpanel" id="ff-pkpanel-bar" aria-labelledby="ff-pktab-bar">
             <HScroll label="Our bar packages" snap>
-              {pkgs.map(sv => <div key={sv.id} className="ff-bkpk-cell"><BkPkgCard17 sv={sv} on={picked.includes(sv.id)} onClick={() => tick(sv)} /></div>)}
+              {pkgs.map(sv => <div key={sv.id} className="ff-bkpk-cell"><BkPkgCard17 sv={sv} on={picked.includes(sv.id)} onClick={() => tick(sv)} amount={amtOf(sv.id)} onAmount={v => setPkAmt(x => ({ ...x, [sv.id]: v }))} /></div>)}
               <div className="ff-bkpk-cell"><BkPkgSoon17 own /></div>
             </HScroll>
             <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={!sel} onClick={() => { if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; } setPkgTerms(true); }}><Check size={15} /> Confirm</button>

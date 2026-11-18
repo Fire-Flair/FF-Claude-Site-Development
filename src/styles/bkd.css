@@ -208,3 +208,48 @@
 .ff #ff-bk-party .ff-pkc-inv dl > div.lg { display:block; }
 .ff #ff-bk-party .ff-pkc-inv dl > div.lg dt { margin-bottom:3px; }
 .ff #ff-bk-party .ff-pkc-inv dl > div.lg dd { font-weight:500; }
+
+/* pkc-doc (Alex, 18 Nov 18:28): Details is a button that opens the Event brief and invoice; "You earn" is a type box. */
+.ff #ff-bk-party .ff-pkc-dbtn { all:unset; box-sizing:border-box; cursor:pointer; flex:none; display:flex; align-items:center; gap:10px; min-height:44px; margin:var(--pkc-gap) 12px var(--pkc-gap); padding:0 14px; background:#fff; border:1px solid rgba(160,124,30,.45); border-radius:18px; corner-shape:squircle; color:#8A6A14; }
+.ff #ff-bk-party .ff-pkc-dbtn span { flex:1; font:600 14px/1 var(--font-display); letter-spacing:.12em; text-transform:uppercase; }
+.ff #ff-bk-party .ff-pkc-dbtn:hover { background:#FBF6E8; }
+.ff #ff-bk-party .ff-pkc-dbtn:focus-visible { outline:2px solid #8A6A14; outline-offset:2px; }
+.ff #ff-bk-party .ff-pkc-earn.in { align-items:center; gap:4px; padding:4px 8px 4px 10px; cursor:text; flex:1 1 auto; min-width:0; max-width:150px; background:rgba(0,0,0,.18); }
+.ff #ff-bk-party .ff-pkc-earn.in i { margin-right:4px; white-space:nowrap; }
+.ff #ff-bk-party .ff-pkc-earn.in .cur { font:600 19px/1 var(--font-display); color:#FFF1C8; }
+.ff #ff-bk-party .ff-pkc-earn.in input { all:unset; box-sizing:border-box; width:100%; min-width:0; height:34px; font:600 19px/1 var(--font-display); color:#FFF1C8; caret-color:#F3DE9C; }
+.ff #ff-bk-party .ff-pkc-earn.in:focus-within { border-color:#F3DE9C; box-shadow:0 0 0 2px rgba(243,222,156,.35); }
+.ff #ff-bk-party .ff-pkc-earn.in.bad { border-color:#FF9C8A; box-shadow:0 0 0 2px rgba(255,156,138,.4); }
+.ff #ff-bk-party .ff-pkc-earn.in input:disabled { opacity:1; -webkit-text-fill-color:#FFF1C8; }
+
+.ff .ff-doc17 { background:#fff; color:#16130F; border:1px solid #D9CFB4; border-radius:16px; corner-shape:squircle; padding:20px 18px 16px; box-shadow:0 18px 36px -26px rgba(48,36,10,.6); font:400 14px/1.45 var(--font-sans); }
+.ff .ff-doc17 .lh { display:grid; grid-template-columns:auto minmax(0,1fr); grid-template-areas:"mk co" "ti ti"; gap:10px 12px; align-items:center; padding-bottom:12px; border-bottom:2px solid #16130F; }
+.ff .ff-doc17 .lh .mk { grid-area:mk; line-height:0; } .ff .ff-doc17 .lh .co { grid-area:co; display:grid; gap:2px; }
+.ff .ff-doc17 .lh .co b { font:600 16px/1.1 var(--font-display); letter-spacing:.06em; } .ff .ff-doc17 .lh .co span { font-size:12.5px; color:#6B6355; }
+.ff .ff-doc17 .lh .ti { grid-area:ti; display:flex; justify-content:space-between; align-items:baseline; gap:10px; flex-wrap:wrap; }
+.ff .ff-doc17 .lh .ti b { font:600 20px/1.15 var(--font-display); color:#4A0F1B; } .ff .ff-doc17 .lh .ti span { font-size:12.5px; color:#6B6355; white-space:nowrap; }
+.ff .ff-doc17 .pt { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:12px; padding:12px 0; border-bottom:1px solid #E6DCC3; }
+.ff .ff-doc17 i { display:block; font-style:normal; font-size:11.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#8A6A14; margin-bottom:3px; }
+.ff .ff-doc17 .pt b { font-weight:600; }
+.ff .ff-doc17 .nil { color:#9A9080 !important; font-weight:500 !important; }
+.ff .ff-doc17 section { padding:12px 0; border-bottom:1px solid #E6DCC3; }
+.ff .ff-doc17 h4 { margin:0 0 6px; font:600 13px/1 var(--font-display); letter-spacing:.14em; text-transform:uppercase; color:#4A0F1B; }
+.ff .ff-doc17 dl { margin:0; display:grid; }
+.ff .ff-doc17 dl > div { display:grid; grid-template-columns:96px minmax(0,1fr); gap:10px; padding:6px 0; border-bottom:1px solid #F1EADA; }
+.ff .ff-doc17 dt { color:#6B6355; } .ff .ff-doc17 dd { margin:0; font-weight:600; }
+.ff .ff-doc17 .lg { padding:8px 0; border-bottom:1px solid #F1EADA; } .ff .ff-doc17 .lg p { margin:0; }
+.ff .ff-doc17 ul { margin:10px 0 0; padding:0; list-style:none; display:grid; gap:6px; }
+.ff .ff-doc17 ul li { position:relative; padding-left:16px; } .ff .ff-doc17 ul li::before { content:""; position:absolute; left:2px; top:.55em; width:6px; height:6px; border-radius:50%; background:var(--color-gold); }
+.ff .ff-doc17 .cond { margin:10px 0 0; font-size:13px; color:#6B6355; }
+.ff .ff-doc17 .tot { display:flex; justify-content:space-between; align-items:baseline; gap:10px; padding:12px 0; border-bottom:2px solid #16130F; font-weight:700; }
+.ff .ff-doc17 .tot b { font:600 22px/1 var(--font-display); }
+.ff .ff-doc17 .tc ol { margin:0; padding:0; list-style:none; display:grid; gap:10px; }
+.ff .ff-doc17 .tc li span { display:flex; align-items:center; gap:8px; font-weight:700; }
+.ff .ff-doc17 .tc li span b { display:grid; place-items:center; flex:none; width:22px; height:22px; border-radius:8px; corner-shape:squircle; background:#5C1220; color:#F3DE9C; font-size:11.5px; }
+.ff .ff-doc17 .tc li p { margin:4px 0 0 30px; font-size:13px; color:#3A3030; }
+.ff .ff-doc17 footer { padding-top:12px; text-align:center; font-size:12px; letter-spacing:.08em; color:#6B6355; }
+.ff #ff-bk-party .ff-pkc-earn.in { gap:2px; }
+.ff #ff-bk-party .ff-pkc-earn.in input,
+.ff #ff-bk-party .ff-pkc-earn.in input:focus,
+.ff #ff-bk-party .ff-pkc-earn.in input:focus-visible { outline:none; border:0; box-shadow:none; background:transparent; padding:0; }
+.ff #ff-bk-party .ff-pkc-earn.in input:focus-visible { outline:none !important; }
