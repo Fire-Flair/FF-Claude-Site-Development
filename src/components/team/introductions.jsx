@@ -491,13 +491,14 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
   const asked = person.id === "me" ? [] : [...ASKED_EXAMPLES.filter(q => q.personId === person.id), ...(state.profileQuestions || []).filter(q => q.personId === person.id)];
   const tabs = [
     { key: "overview", label: "Overview" },
-    { key: "services", label: "Bookings", count: services.length },
+    { key: "services", label: "Packages", count: services.length },
     { key: "teams", label: "Team", count: teams.length },
     { key: "reviews", label: "Reviews", count: reviews.length },
   ];
   const Empty1 = ({ icon, children }) => <div className="ff-tab-empty">{icon}<p>{children}</p></div>;
   const svcCard = (it) => it.kind === "std"
-    ? <div className="ff-svslide std"><ServicePoster svc={it.svc} price /></div>
+    ? <div className="ff-svslide std"><ProfPkgCard17 svc={it.svc} /></div>
+    : it.kind === "create" ? <div className="ff-svslide std"><ProfPkgCreate17 /></div>
     : <div className="ff-svslide own"><OwnServiceCard item={it.item} /></div>;
   return (
     <div className="ff-ptabs-wrap">
@@ -537,7 +538,7 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
           <ProfileAttributeSection catKey="locations" def={cats.locations} list={records.locations} isMe={false} shade="onyx" pub onAdd={() => {}} onOpen={() => {}} />
         )}
         {tab === "services" && (services.length
-          ? <CoverFlow items={services} label="Packages" mem={mem} k="services" half={150} onOpen={setSvcOpen} render={(it) => svcCard(it)} />
+          ? <><style>{BKD_CSS}</style><CoverFlow items={[...services, { id: "pp-create", kind: "create" }]} label="Packages" mem={mem} k="services" half={150} onOpen={(it) => it.kind !== "create" && setSvcOpen(it)} render={(it) => svcCard(it)} /></>
           : (person.id === "me" ? null : <Empty1 icon={<Sparkles size={20} />}>{first} hasn't added any packages yet.</Empty1>))}
         {tab === "services" && <PkgExtras17 person={person} />}
         {tab === "services" && packagesTail}

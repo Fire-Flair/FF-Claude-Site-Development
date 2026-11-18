@@ -327,3 +327,26 @@
 @media (min-width: 720px) { .ff .ff-pa40-tile { width: 172px; min-height: 104px; } }
 /* Verify stays plainly grey until the FF Tag and the number are ready. */
 .ff .ff-gb21.shine .ff-gb21-btn:disabled { background: #D9D6CF; border-color: #C4C0B7; color: #7D786E; }
+
+/* pubbtn (Mr G 02:51): someone else's profile. Join team with the green WhatsApp Share icon beside it (a third of Join's width,
+   same height, squircle); the compact FF Party package cards on the Packages tab. */
+.ff .ff-pub-joinrow { display:grid; grid-template-columns:3fr 1fr; gap:8px; align-items:stretch; }
+.ff .ff-pub-joinrow.solo { grid-template-columns:1fr; }
+.ff .ff-pub-joinrow > .ff-btn { width:100%; min-height:48px; justify-content:center; }
+.ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-shico { width:100%; min-height:48px; padding:0; display:inline-flex; align-items:center; justify-content:center; border-radius:14px; corner-shape:squircle; }
+.ff .ff-pkc.cmp { border-radius:24px; }
+.ff .ff-pkc.cmp .ff-pkc-rb { margin-top:16px; height:26px; padding-top:0; padding-bottom:0; }
+.ff .ff-pkc.cmp .ff-pkc-logo { top:10px; right:10px; }
+.ff .ff-pkc.cmp .ff-pkc-hd { padding:10px 16px 0; }
+.ff .ff-pkc.cmp .ff-pkc-ti { margin:8px 0 6px; font-size:21px; white-space:nowrap; }
+.ff .ff-pkc.cmp .ff-pkc-tg { font-size:14px; white-space:nowrap; }
+.ff .ff-pkc.cmp .ff-pkc-rows { margin:12px 12px 0; border-radius:18px; }
+.ff .ff-pkc.cmp .ff-pkc-row { gap:10px; padding:8px 10px; }
+.ff .ff-pkc.cmp .ff-pkc-ico { width:30px; height:30px; }
+.ff .ff-pkc.cmp .ff-pkc-row .v { text-align:left; }
+.ff .ff-pkc.cmp .ff-pkc-row i { font:600 10.5px/1 var(--font-display); font-style:normal; letter-spacing:.14em; margin-bottom:4px; }
+.ff .ff-pkc.cmp .ff-pkc-row b { font:400 13px/1.35 var(--font-sans); letter-spacing:0; text-transform:none; }
+.ff .ff-pkc.cmp .ff-pkc-dt { margin:10px 12px 12px; }
+.ff .ff-pkc.cmp .ff-pkc-dt summary { min-height:44px; }
+.ff .ff-pkc.ff-pkc-own { padding-bottom:12px; }
+.ff .ff-cf-item .ff-svslide .ff-pkc.cmp summary { pointer-events:auto; }

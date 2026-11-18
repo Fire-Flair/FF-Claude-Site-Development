@@ -3,7 +3,7 @@
    NETWORK → REVIEW → TEAM (v17.22). On someone else's profile a signed-in member sees ONE relationship slot that grows:
    Add to network (one tap) → the review form in place, once → Invite to your team (one tap) → Invitation sent → On your team.
    Removing, the prototype "they accept" preview and a skipped review (Write a review) live in the small ⋯ menu beside it.
-   A signed-out visitor sees two buttons: Join <First>'s team, Share. The review form is ReviewForm17 (profile-from-text.jsx).
+   A signed-out visitor sees one row: Join team, with the green Share icon beside it. The review form is ReviewForm17 (profile-from-text.jsx).
    ========================================================================== */
 /* A button label that wraps between words and, if one word still does not fit, gets a smaller font. Never splits a word. */
 function FitLabel17({ children }) {
@@ -114,14 +114,14 @@ function RelSlot17({ person }) {
 
 
 /* Your own card's Share: once the profile is complete it sends your join link (no ?r=, the code is in it). */
-function MyShareBtn17({ person, onTap }) {
+function MyShareBtn17({ person, onTap, icon }) {
   const { state } = useStore();
   const [open, setOpen] = useState(false);
   const tag = String((state.auth.status === "signedIn" && (state.auth.tag || state.session.tag)) || "");
   const join = !!tag && profileBasics17(state);
   return (
     <>
-      <button type="button" className="ff-csm-btn wide" onClick={() => onTap ? onTap() : setOpen(true)} aria-label="Share my card"><WhatsAppIcon size={18} aria-hidden="true" /> Share</button>
+      <button type="button" className={"ff-csm-btn " + (icon ? "ff-pub-shico" : "wide")} onClick={() => onTap ? onTap() : setOpen(true)} aria-label="Share my card"><WhatsAppIcon size={icon ? 22 : 18} aria-hidden="true" />{icon ? null : " Share"}</button>
       {open ? (
         <CardShareSheet17 open onClose={() => setOpen(false)} title={join ? "Join my team on FireFlair:" : "My FireFlair card"} url={join ? inv17Link(tag) : `https://${CARD_DOMAIN}/${pc17Tag(tag)}`} noRef={join}
           fileName={(join ? "fireflair-join-" : "fireflair-") + cx17Slug(tag)}>
@@ -189,10 +189,16 @@ function PersonProfile() {
   const halfShare = (el) => el ? <div className="ff-share-half">{el}</div> : null;
   let actionsEl = null;
   if (guestOfMe || (other && !signedIn && !party)) {
-    /* A signed-out visitor (and you, previewing your profile as a guest): Join (muted gold), then a smaller Share below. */
+    /* A signed-out visitor (and you, previewing your profile as a guest): Join team (muted gold) with the green Share icon beside it
+       (pubbtn, Mr G 02:51: no name on Join; Share a third of Join's width, same height). */
+    const shareIco = guestOfMe ? <MyShareBtn17 person={person} icon onTap={() => preview()} />
+      : other && shareTag ? <CardShareBtn17 title={`${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${pc17Tag(shareTag)}`} fileName={"fireflair-" + cx17Slug(shareTag)} label="" className="ff-pub-shico"
+          render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={person.theme || "ivory"} />} /> : null;
     actionsEl = (<div className="ff-pub-acts ff-pub-stack">
-      <Btn variant="wide ff-join-mut" onClick={guestOfMe ? () => preview() : join}><FitLabel17>{`Join ${first}'s team`}</FitLabel17></Btn>
-      {halfShare(guestOfMe ? <MyShareBtn17 person={person} onTap={() => preview()} /> : shareBtn)}
+      <div className={"ff-pub-joinrow" + (shareIco ? "" : " solo")}>
+        <Btn variant="wide ff-join-mut" onClick={guestOfMe ? () => preview() : join}><FitLabel17>Join team</FitLabel17></Btn>
+        {shareIco}
+      </div>
     </div>);
   } else if (other && party) {
     actionsEl = (<div className="ff-pub-acts ff-pub-stack">
