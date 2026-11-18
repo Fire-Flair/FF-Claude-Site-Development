@@ -204,15 +204,18 @@ function PE2Sheet({ open, title, wide, onClose, children }) {
     return () => window.removeEventListener("keydown", f);
   }, [open]);
   if (!open) return null;
-  return (
+  /* On the site root, so the header and the edit bar sit under it. */
+  return ReactDOM.createPortal(
     <div className="pe1-scrim" onClick={onClose}>
+      <style>{PE2_CSS}</style>
       <div className={"pe1-sheet" + (wide ? " wide" : "")} role="dialog" aria-modal="true" aria-label={title} onClick={(e) => e.stopPropagation()}>
         <div className="pe1-grab" aria-hidden="true" />
         <h2 className="pe1-h">{title}</h2>
         <div className="pe1-body">{children}</div>
         <div className="pe1-foot"><button type="button" className="pp-done" onClick={onClose}><Check size={16} strokeWidth={2.6} /> Done</button></div>
       </div>
-    </div>
+    </div>,
+    document.querySelector(".ff") || document.body
   );
 }
 
@@ -235,7 +238,7 @@ function PE2Overview({ records }) {
         {profs.length
           ? <ProfTiles21 items={profs} def={BASE_CATEGORIES.professions} onOpen={() => setSheet("profs")} />
           : <button type="button" className="pe2-empty pe2-empty-prof" aria-label="Edit Professions" onClick={() => setSheet("profs")}>
-              <span className="pe2-empty-h">Professions</span><span className="pe2-empty-pen" aria-hidden="true"><Pencil size={18} strokeWidth={2} /></span>
+              <span className="pe2-empty-pen" aria-hidden="true"><Pencil size={18} strokeWidth={2} /></span>
             </button>}
       </section>
       <section className="ff-pp ff-pp21 pp-sec" aria-labelledby="pe2-attr-h">
