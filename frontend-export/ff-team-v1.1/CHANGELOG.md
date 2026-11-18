@@ -4,6 +4,14 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.16
+
+- Profession descriptions reviewed by Alex (18 Nov). Two wordings changed in `src/content/data/profession-descriptions.json`:
+  - Cocktail Bartender: "Can follow recipes to produce cocktails to a high standard with speed and care."
+  - Mixologist: "An expert with years of experience who can create original cocktail recipes and menus."
+- Alex has not yet read every profession description word for word. For the developers: please add profession descriptions (and their category texts and fallback) to the admin tools, so Alex can update any of them himself without a code change.
+- Review sheet: FF-Team-professions-review.pdf (profession, default description, Profile Card icon, notes), built from this branch.
+
 ## v1.15
 
 - Share message (Alex, 18 Nov 13:48–13:51). WhatsApp and Share now send:
