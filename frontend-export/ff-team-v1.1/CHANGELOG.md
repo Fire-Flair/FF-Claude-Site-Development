@@ -13,7 +13,7 @@ Profile builder, Let's get started (Alex, 18 Nov 21:31). `src/components/team/pr
   serves Talk or type. Timing is the table `CV_SIM_STEPS` ([ms, %] points) read by `cvSimPct()`.
 - "Create your profile in <1 minute" is larger (600 weight, 17.5px, larger timer icon; class `.ff-way17-fast`) and
   stays on one line: on a phone the text shrinks slightly to fit rather than wrapping.
-- Checked: `npm run check`, `npm run build`, phone (390) and desktop (1440) screenshots; timing table checked in Node.
+- Checked: `npm run check`, `npm run build`, phone (390) and desktop (1440) screenshots; timing table checked in Node. Artifact version 1795037620-f350 (published straight onto live 1795037345-3440, which matched GitHub).
 
 ## v1.64
 
