@@ -360,38 +360,38 @@ function usePkcFitAll17(ref, key) {
 }
 
 /* pkc-tabs (Alex, 18 Nov 18:48): Entertainment and Services each list three FireFlair packages (made up for now, all to
-   be confirmed) at the amounts Alex set: £350+, £250 and £150 "You earn", most first. Bar keeps the catalogue amounts.
+   be confirmed) each at the same "You earn" amount Alex set. Bar keeps the catalogue amounts.
    Every tab ends with Create your own, the same card with every line a type box. */
 const PKC_EXTRA17 = {
   ent: [
-    { id: "ent_music", earn: "£350+", name: "Live Music Package", role: "Musician", duration: "2 hours",
+    { id: "ent_music", earn: "£250+", name: "Live Music Package", role: "Musician", duration: "2 hours",
       line: "Play live and set the mood.", provide: "Your live act, your instruments and your sound system", ideal: "Weddings, receptions and drinks parties",
       brief: "You perform live music at the client's event with your own instruments and sound system, and agree your set list with the client.",
       points: ["Perform live for the client and their guests", "Agree your set list with the client", "Bring and set up your own equipment"],
       cond: "One act: you, solo or with your band. Power and space for your setup are agreed with the client." },
-    { id: "ent_dj", earn: "£250", name: "DJ Package", role: "DJ", duration: "4 hours",
+    { id: "ent_dj", earn: "£250+", name: "DJ Package", role: "DJ", duration: "4 hours",
       line: "Play the night they'll remember.", provide: "Your DJ equipment, your music and your read of the room", ideal: "Birthdays, weddings and late-night parties",
       brief: "You DJ at the client's event with your own equipment, and agree the music and any must-play requests with the client.",
       points: ["DJ the event with your own equipment", "Agree the music and requests with the client", "Keep the dance floor going"],
       cond: "One professional: you. Power and space for your setup are agreed with the client." },
-    { id: "ent_act", earn: "£150", name: "Entertainer Package", role: "Entertainer", duration: "2 hours",
+    { id: "ent_act", earn: "£250+", name: "Entertainer Package", role: "Entertainer", duration: "2 hours",
       line: "Bring a show of your own.", provide: "Your act: magic, caricatures or a performance of your own", ideal: "Family parties, corporate events and receptions",
       brief: "You entertain the client's guests with your own act, moving between groups or performing a set piece, as agreed with the client.",
       points: ["Perform your act for the client's guests", "Agree the format and timings with the client", "Bring everything your act needs"],
       cond: "One professional: you. Any space your act needs is agreed with the client." },
   ],
   svc: [
-    { id: "svc_events", earn: "£350+", name: "Event Services Package", role: "Event Coordinator", duration: "From 4 hours",
+    { id: "svc_events", earn: "£250+", name: "Event Services Package", role: "Event Coordinator", duration: "From 4 hours",
       line: "Keep the whole event running smoothly.", provide: "Event experience, organisation and a calm head on the day", ideal: "Larger parties, launches and corporate events",
       brief: "You look after the running of the client's event on the day, from timings and suppliers to guests, so the client can enjoy it.",
       points: ["Run the event to the agreed plan", "Be the contact for suppliers on the day", "Look after the client and their guests"],
       cond: "One professional: you. The plan and your hours are agreed with the client before the event." },
-    { id: "svc_photo", earn: "£250", name: "Photography Package", role: "Photographer", duration: "3 hours",
+    { id: "svc_photo", earn: "£250+", name: "Photography Package", role: "Photographer", duration: "3 hours",
       line: "Capture the moments they'll keep.", provide: "Your camera, your eye and your editing", ideal: "Weddings, birthdays and brand events",
       brief: "You photograph the client's event and deliver edited photos afterwards, as agreed with the client.",
       points: ["Photograph the event and its guests", "Edit your best shots", "Deliver the photos to the client"],
       cond: "One professional: you. The number of photos and the delivery date are agreed with the client." },
-    { id: "svc_host", earn: "£150", name: "Event Host Package", role: "Event Host", duration: "3 hours",
+    { id: "svc_host", earn: "£250+", name: "Event Host Package", role: "Event Host", duration: "3 hours",
       line: "Welcome every guest.", provide: "A warm welcome, confidence and a way with a crowd", ideal: "Corporate events, awards nights and parties",
       brief: "You welcome the client's guests, keep the event on time and make announcements, as agreed with the client.",
       points: ["Welcome guests as they arrive", "Keep the event on time", "Make the announcements"],
