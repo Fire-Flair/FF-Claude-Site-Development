@@ -2,6 +2,8 @@
 
 ## v17.51
 
+Artifact version 1794967305-ac3d.
+
 FF Team home screen (fellowship review). Branch merged: `p2-homefix`.
 
 - Launch Challenge (`discover-and-support.jsx`, `team-home.jsx`, new `home-fix22.css`): heading "Grow your Team. Win prizes." in Cinzel; Join Challenge and a squircle Rules button; the countdown kept; three equal boxes with gold icons (90 days, Rewards for the top 10, Win Athens), each opening its existing sheet; the progress bar's ladder reads Now (Profiles and teams), 100 (Bookings go live, a third of the way along), 1,000 (Launch party and nationwide campaign). The date chip, summary sentence, FFTeam.uk line and old stage labels are gone; 54 visible words.
