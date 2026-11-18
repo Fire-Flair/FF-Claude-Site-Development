@@ -1,0 +1,74 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<style>
+@font-face{font-family:Cinzel;src:url(file:///tmp/fontdl/package/files/cinzel-latin-600-normal.woff2);font-weight:600}
+@font-face{font-family:Cinzel;src:url(file:///tmp/fontdl/package/files/cinzel-latin-400-normal.woff2);font-weight:400}
+:root{--gold:#C9A227;--burg:#5C1220;--cream:#F4EFE4;--black:#0B0B0C}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);font-family:Inter,sans-serif;padding:24px 16px;hyphens:none;overflow-wrap:normal;word-break:keep-all}
+.cp{max-width:868px;margin:0 auto;border-radius:26px;corner-shape:squircle;color:var(--cream);background:linear-gradient(135deg,#0B0B0C 0%,#1C0E12 55%,var(--burg) 100%);border:1px solid rgba(201,162,39,.45);padding:22px 18px 20px}
+.eye{display:flex;align-items:center;gap:10px;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.coin{width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#3a2a12,#0B0B0C);border:1.5px solid var(--gold);display:grid;place-items:center;font-family:Cinzel;font-size:12px;color:var(--gold)}
+h2{font-family:Cinzel;font-weight:600;font-size:clamp(24px,6.4vw,34px);line-height:1.1;margin:12px 0 14px;color:#FFF6DC}
+.top{display:grid;gap:16px}
+.cd{display:flex;align-items:center;gap:8px}
+.cd .l{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-right:4px}
+.cd span.c{min-width:58px;padding:6px 8px;border:1px solid rgba(201,162,39,.55);border-radius:12px;corner-shape:squircle;text-align:center;background:rgba(11,11,12,.35)}
+.cd b{display:block;font-size:22px;line-height:1}.cd small{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(244,239,228,.75)}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:10px;margin:18px 0 16px}
+.t{border-radius:16px;corner-shape:squircle;border:1px solid rgba(201,162,39,.4);background:rgba(244,239,228,.05);padding:12px 10px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;min-height:128px}
+.t svg{width:30px;height:30px;color:var(--gold)}
+.t div{display:flex;flex-direction:column;gap:4px}
+.t b{font-size:15px;line-height:1.2;color:#FFF6DC}
+.t span{font-size:12.5px;line-height:1.3;color:rgba(244,239,228,.85)}
+.btns{display:flex;gap:10px}
+.join{flex:1;min-height:48px;border:0;border-radius:14px;corner-shape:squircle;background:linear-gradient(180deg,#E8CB6A,var(--gold) 60%,#A8851C);color:var(--black);font:700 13.5px Inter;letter-spacing:.1em;text-transform:uppercase}
+.rules{min-height:48px;padding:0 18px;border-radius:14px;corner-shape:squircle;border:1px solid rgba(201,162,39,.6);background:transparent;color:#F4DC8E;font:700 14px Inter}
+.lad{margin-top:22px;padding-top:18px;border-top:1px solid rgba(201,162,39,.25)}
+.bar{position:relative;height:8px;border-radius:6px;background:rgba(244,239,228,.14);margin:0 14px}
+.bar i{position:absolute;left:0;top:0;bottom:0;width:3%;border-radius:6px;background:linear-gradient(90deg,#E8CB6A,var(--gold))}
+.dot{position:absolute;top:50%;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;background:var(--black);border:1.5px solid rgba(201,162,39,.6);display:grid;place-items:center}
+.dot svg{width:15px;height:15px;color:rgba(244,239,228,.7)}
+.dot.on{background:var(--gold);border-color:var(--gold)}.dot.on svg{color:var(--black)}
+.n{text-align:center;font-size:13px;color:var(--gold);margin:16px 0 10px;font-weight:600}
+.stops{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.s{font-size:12.5px;line-height:1.3;color:rgba(244,239,228,.88)}
+.s b{display:block;font-size:13.5px;color:#FFF6DC;margin-bottom:2px}
+.s:nth-child(2){text-align:center}.s:nth-child(3){text-align:right}
+@media(min-width:760px){
+ .cp{padding:30px 32px 26px}
+ .top{grid-template-columns:1fr auto;align-items:end}
+ .tiles{gap:14px}.t{flex-direction:row;text-align:left;min-height:84px;padding:14px 16px;gap:14px}
+ .t div{display:flex;flex-direction:column;gap:3px}.t b{font-size:16px}.t span{font-size:14px}
+ .btns{justify-content:flex-start}.join{flex:0 0 220px}
+ .s{font-size:14px}.s b{font-size:15px}
+}
+</style></head><body>
+<section class="cp" aria-labelledby="h">
+ <div class="top">
+  <div>
+   <div class="eye"><span class="coin">FF</span>FF Team Launch Challenge</div>
+   <h2 id="h">Grow your Team. Win&nbsp;prizes.</h2>
+   <div class="btns"><button class="join">Join Challenge</button><button class="rules">Rules</button></div>
+  </div>
+  <div class="cd" role="timer"><span class="l">Starts in</span><span class="c"><b>12</b><small>days</small></span><span class="c"><b>22</b><small>hours</small></span><span class="c"><b>21</b><small>mins</small></span></div>
+ </div>
+ <div class="tiles">
+  <button class="t" style="font:inherit;color:inherit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="4"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/><text x="12" y="17.6" font-size="7" font-family="Inter" font-weight="700" fill="currentColor" stroke="none" text-anchor="middle">90</text></svg><div><b>90 days</b><span>1 Dec to 28 Feb</span></div></button>
+  <button class="t" style="font:inherit;color:inherit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="7" stroke-width=".8"/><text x="12" y="15" font-size="7.5" font-family="Cinzel" font-weight="600" fill="currentColor" stroke="none" text-anchor="middle">FF</text></svg><div><b>Top 10 go Gold</b><span>Gold membership</span></div></button>
+  <button class="t" style="font:inherit;color:inherit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg><div><b>Win Athens</b><span>Athens Bar Show trip</span></div></button>
+ </div>
+ <div class="lad">
+  <div class="bar" role="progressbar" aria-valuenow="6" aria-valuemax="1000"><i></i>
+   <span class="dot on" style="left:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-6 6.5-6s6.5 2.5 6.5 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14c2 .6 3.5 2.6 3.5 6"/></svg></span>
+   <span class="dot" style="left:50%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="4"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4M9 15l2 2 4-4"/></svg></span>
+   <span class="dot" style="left:100%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5v3a1 1 0 0 0 1 1h2l7 4.5v-14L6 9.5H4a1 1 0 0 0-1 1zM17 9a4 4 0 0 1 0 6M19.5 6.5a7.5 7.5 0 0 1 0 11"/></svg></span>
+  </div>
+  <div class="n">6 joined · 94 to go</div>
+  <div class="stops">
+   <div class="s"><b>Now</b>Profiles and Teams</div>
+   <div class="s"><b>100</b>Bookings go live</div>
+   <div class="s"><b>1,000</b>Launch party and nationwide campaign</div>
+  </div>
+ </div>
+</section>
+</body></html>
