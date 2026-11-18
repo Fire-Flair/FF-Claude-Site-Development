@@ -4,6 +4,16 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.42
+
+FF Team home (Alex, 18 Nov 19:42). `discover-hub.jsx`, `team-home.jsx`, `styles/home-text.css`, `tokens.css` (`--color-ink-warm` #16130F).
+
+- Your bookings pillar (Aragorn's option 1, as Alex chose): the pillar opens to the title "Built for getting you bookings", its intro, and the "How bookings work" box in black and gold (the four-symbol flow; its drop-down opens the four step cards). The 1-2-3 drop-downs there (Set your rates, Requests on WhatsApp, Get paid on clear terms) are no longer shown on the home page; their content stays in `team-pillars.json` and on the info pages. The separate burgundy box under the pillars is removed.
+- The 1-2-3 drop-downs in the other three pillars get the same black and gold on their header row (warm black, gold edge, gold-leaf title and chevron); the opened section stays on ivory.
+- Hero: "Get seen, get booked, get paid." is one line from 760px wide (15–21px).
+- Colour check: gold leaf on warm black and ivory on warm black are both well above 7:1.
+- Merged onto the live page 1795030434-a840 (v1.41); page saved as `live-v1.42-index.html`. Artifact version 1795031295-681c.
+
 ## v1.41
 
 Profile builder thread (18 Nov, about 19:40): Professions, Skills/Interests, Qualifications and Profile Card fitting. Merged over v1.40; nothing from other chats removed. Built from branches pb-professions, pb-typecards, pb-qualifications and pb-cardfit (all on GitHub). Published over live 1795030282-bffd (v1.40), index.html and manifest.json only (all other files kept). Artifact version 1795030434-a840. Built page saved as `live-v1.41-index.html`.

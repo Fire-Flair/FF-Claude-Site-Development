@@ -392,6 +392,9 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
       };
     }, [open, cats, kind]);
     const Ic = cur ? cur.icon : null;
+    /* home-text v1.40 (Alex, 18 Nov 19:42): on FF Team the Your bookings pillar holds the black-and-gold "How bookings work"
+       box (the flow and its four steps) in place of its 1-2-3 drop-downs; the separate box under the pillars is gone. */
+    const hbIn = kind === "team" && cur && cur.k === "events";
     /* homefix (FF Team home): pillars are full-width rows on a phone and 2x2 on a tablet; the open pillar's panel sits
        straight under its own row, so the tiles after that row follow the panel. Desktop keeps one row of four. */
     const perRow = useDxPerRow22(kind === "team");
@@ -453,9 +456,9 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
     }, cur.sections && React.createElement(React.Fragment, null, React.createElement("style", null, TP21_CSS), React.createElement("div", {
       className: "ff-dx-intro",
       key: "t" + cur.k
-    }, React.createElement("h3", null, cur.h), React.createElement("p", {
+    }, React.createElement("h3", null, hbIn ? "Built for getting you bookings" : cur.h), React.createElement("p", {
       className: "ff-dx-tl21"
-    }, cur.tldr)), kind === "team" ? React.createElement(PillarSteps21, {
+    }, cur.tldr)), hbIn ? React.createElement(HowBooking17, { key: "hb" + cur.k, kind: "team", embed: true }) : kind === "team" ? React.createElement(PillarSteps21, {
       key: "st" + cur.k,
       pl: cur,
       photo: (i) => dxCard17(cur, rotOf(cur), i),
@@ -957,7 +960,7 @@ if (k === "package") return React.createElement("div", { className: "mc sv" }, R
     }, "✓✓"));
   }
 
-  function HowBooking17({ kind = "team" }) {
+  function HowBooking17({ kind = "team", embed = false }) {
     const hire = useHireNav();
     const home = useHomeNav();
     const list = HB17[kind] || HB17.team;
@@ -980,7 +983,7 @@ if (k === "package") return React.createElement("div", { className: "mc sv" }, R
     /* chal (Alex, 18 Nov 03:13): no 1-2-3-4 and no chevron. A left-to-right flow of simple symbols (Profile Card, Shift Card,
        "Yes, I'm in" on WhatsApp, Review Card) with arrows; the whole box is the button that opens the full steps. */
     if (team) return React.createElement("section", {
-      className: "ff-sect ff-hb17 ff-hb23 ff-hbc" + (hbOpen ? " is-open" : ""),
+      className: (embed ? "ff-hbc-in ff-hbc-dark " : "ff-sect ") + "ff-hb17 ff-hb23 ff-hbc" + (hbOpen ? " is-open" : ""),
       id: "ff-how",
       ref: hbRef,
       "aria-labelledby": "ff-hb17-h"
@@ -993,7 +996,7 @@ if (k === "package") return React.createElement("div", { className: "mc sv" }, R
       "aria-controls": "ff-hb23-body",
       "aria-labelledby": "ff-hb17-h",
       onClick: () => setHbOpen((o) => !o)
-    }, React.createElement("span", { id: "ff-hb17-h", className: "ff-hb23-t" }, hbTitle),
+    }, embed ? React.createElement("span", { id: "ff-hb17-h", className: "ff-label ff-hbc-lab" }, "How bookings work") : React.createElement("span", { id: "ff-hb17-h", className: "ff-hb23-t" }, hbTitle),
     /* home-update (Alex, 18 Nov 14:18): a drop-down chevron in the top right. The flow stays visible as the summary;
        the chevron (and the whole box) opens and closes the four steps. */
     React.createElement("span", {
@@ -1009,7 +1012,7 @@ if (k === "package") return React.createElement("div", { className: "mc sv" }, R
     }, React.createElement(HbcSym, { k }), React.createElement("span", { className: "lb" }, t))))))), hbOpen && React.createElement("div", {
       id: "ff-hb23-body",
       className: "ff-hb23-body"
-    }, React.createElement("h3", {
+    }, !embed && React.createElement("h3", {
       className: "ff-label",
       style: { margin: "0 0 10px" }
     }, "How bookings work"), React.createElement(HBRow17, { list, pics }))));

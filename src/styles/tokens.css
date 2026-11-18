@@ -1,5 +1,7 @@
 :root {
   --color-ink: #0B0B0C;
+  /* the warm black used across the home (#16130F), as a token (v1.40) */
+  --color-ink-warm: #16130F;
   --color-onyx: #141416;
   --color-char: #1E1F22;
   --color-cream: #F4EFE4;

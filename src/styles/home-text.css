@@ -102,3 +102,36 @@
 @media (min-width:900px) {
   .ff .ff-hf22.ff-home-c4 section#ff-hero.ff-hero18 .ff-hero18-in { align-self:end !important; padding-bottom:clamp(26px,3vw,40px) !important; }
 }
+
+/* ================= v1.40 (Alex, 18 Nov 19:42): black and gold ================= */
+/* "How bookings work" inside the Your bookings pillar (Aragorn's option 1): the flow box in warm black with gold edges and
+   gold-leaf words; its four step cards keep their cream faces. */
+.ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hb23-box { background:var(--color-ink-warm,#16130F) !important; border:1.5px solid var(--gold,#C9A227) !important; box-shadow:0 18px 30px -22px rgba(11,11,12,.75); }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hbc-ch { color:var(--color-gold-leaf,#EDD58F) !important; background:var(--color-ink-warm,#16130F) !important; border-color:var(--gold,#C9A227) !important; }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hbc-lab,
+.ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hbc-arr,
+.ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hb23-body .ff-hb17-row .arr { color:var(--color-gold-leaf,#EDD58F) !important; }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hbc-st .lb { color:var(--color-ivory,#FFFCF4) !important; }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hbc-btn:hover { background:transparent !important; }
+.ff .ff-hf22 .ff-hbc-in { margin:16px 0 4px; }
+.ff .ff-hf22 .ff-hbc-in .ff-hb23-box { border-radius:18px; }
+.ff .ff-hf22 .ff-hbc-in .ff-hbc-btn { border-radius:18px; padding-top:16px; }
+.ff .ff-hf22 .ff-hbc-in .ff-hbc-lab { display:block; margin:0; padding-right:46px; min-height:22px; text-align:left; }
+@media (min-width:900px) { .ff .ff-hf22 .ff-hbc-in .ff-hb23-box, .ff .ff-hf22 .ff-hbc-in .ff-hbc-btn { border-radius:22px; } }
+
+/* The 1-2-3 drop-downs in the other pillars get the same black and gold on their header row; the opened section stays
+   on ivory so its text reads as before. */
+.ff .ff-hf22.ff-home-c4 .ff-st21 .it { border:1.5px solid var(--gold,#C9A227) !important; }
+.ff .ff-hf22.ff-home-c4 .ff-st21 .hh button { background:var(--color-ink-warm,#16130F) !important; border-radius:16px 16px 0 0; }
+.ff .ff-hf22.ff-home-c4 .ff-st21 .it:not(.on) .hh button { border-radius:16px; }
+.ff .ff-hf22.ff-home-c4 .ff-st21 .hh b { color:var(--color-gold-leaf,#EDD58F) !important; }
+.ff .ff-hf22.ff-home-c4 .ff-st21 .chev { color:var(--color-gold-leaf,#EDD58F) !important; background:var(--color-ink-warm,#16130F) !important; border-color:var(--gold,#C9A227) !important; }
+.ff .ff-hf22.ff-home-c4 .ff-st21 .it.on .chev { color:var(--color-ink-warm,#16130F) !important; background:var(--color-gold-leaf,#EDD58F) !important; }
+.ff .ff-hf22.ff-home-c4 .ff-dx-panel .ff-st21 .ph { background:var(--color-char,#1E1F22) !important; }
+.ff .ff-hf22.ff-home-c4 .ff-dx-panel .ff-st21 .ph img { mix-blend-mode:normal !important; }
+
+/* Hero: "Get seen, get booked, get paid." on one line from iPad width up */
+@media (min-width:760px) {
+  .ff .ff-hf22 .ff-hero-sub101 { white-space:nowrap !important; font-size:clamp(15px,1.5vw,21px) !important; }
+  .ff .ff-hf22 .ff-hero-sub101 .ff-hl { display:inline !important; }
+}
