@@ -645,8 +645,8 @@ function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "", 
      there, top-profession holders first. A search lists each person once, in the category of the profession that matched. */
   const entries = [];
   everyone.forEach(p => {
-    if (n) { const h = netSearchHit17(p, n); if (h) entries.push({ p: { ...p, profession: h.profession }, g: h.group, r: h.rank }); return; }
-    (p.groups || [{ group: p.group, profession: p.profession, rank: 0 }]).forEach(x => entries.push({ p: { ...p, profession: x.profession }, g: x.group, r: x.rank }));
+    if (n) { const h = netSearchHit17(p, n); if (h) entries.push({ p: plateAs17(p, h.profession), g: h.group, r: h.rank }); return; }
+    (p.groups || [{ group: p.group, profession: p.profession, rank: 0 }]).forEach(x => entries.push({ p: plateAs17(p, x.profession), g: x.group, r: x.rank }));
   });
   const all = only && only.length ? entries.filter(e => [].concat(only).includes(e.g)) : entries;
   if (n && !all.length && quietEmpty) return null;

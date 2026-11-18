@@ -225,7 +225,7 @@ function ProsByType17({ onPick }) {
     <>
       {PRO_TYPES17.map(([k, label, icon]) => {
         const list = everyone.map((p, i) => [p, (p.groups || [{ group: p.group, profession: p.profession, rank: 0 }]).find(x => kindOf(x.group) === k), i])
-          .filter(([, x]) => x).sort((a, b) => a[1].rank - b[1].rank || a[2] - b[2]).map(([p, x]) => ({ ...p, profession: x.profession }));
+          .filter(([, x]) => x).sort((a, b) => a[1].rank - b[1].rank || a[2] - b[2]).map(([p, x]) => plateAs17(p, x.profession));
         if (!list.length) return null;
         return (
           <Fold17 key={k} id={"ff-pros-" + k} icon={<GroupIcon group={icon} />} title={label} count={list.length} shut>

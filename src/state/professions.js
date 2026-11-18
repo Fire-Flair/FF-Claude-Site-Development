@@ -87,6 +87,14 @@ function personGroups(p, cats) {
 }
 
 
+/* The person as listed under one category: the card plate (first profession) shows the profession that put them there. */
+function plateAs17(p, prof) {
+  if (!prof) return p;
+  const k = String(prof).toLowerCase();
+  return { ...p, profession: prof, professions: [prof, ...(p.professions || []).filter(x => String(x).toLowerCase() !== k)] };
+}
+
+
 /* Network search: a person's search text with only the top 3 professions. Returns how they matched, or null:
    rank 0-2 = that profession matched (shown on the plate, listed in its category), 3 = name, skill, area and the rest. */
 function netSearchHit17(p, n) {
