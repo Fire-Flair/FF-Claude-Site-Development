@@ -6,12 +6,27 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
 
 ## Unreleased (branch profile-builder-base, not published)
 
-Merged base for the profile builder rebuild (Legolas, 18 Nov). The next publish takes the next number (v1.30) and moves these notes under it.
+Merged base for the profile builder rebuild (Legolas, 18 Nov). The next publish takes the next number (v1.32) and moves these notes under it.
 
 - From branch `professions-review` (d360380, 16:55, approved by Alex; first noted there as "v1.16" before the v1.16 number was taken): profession descriptions in `src/content/data/profession-descriptions.json`.
   - Cocktail Bartender: "Can follow recipes to produce cocktails to a high standard with speed and care."
   - Mixologist: "An expert with years of experience who can create original cocktail recipes and menus."
   - For the developers: please add profession descriptions (and their category texts and fallback) to the admin tools, so Alex can update any of them himself without a code change. Alex has not yet read every description word for word.
+
+## v1.31
+
+FF Team home, the four pillar boxes (Alex, 18 Nov 18:15). `discover-hub.jsx`, `styles/home-text.css`.
+
+- No gradient on the pillar boxes on phones: plain champagne (#EAE0C3), as on iPad and desktop.
+- The chevron is a solid burgundy button with a champagne outline and arrow on every size, open and closed.
+- Each tile shows its title only (the subtitle line, e.g. "Your CV, as your own page", is removed from the tile; the text stays in `team-pillars.json` for the pages that use it). Titles are bold (700) and bigger: 25px on phones, 27px on iPad, 24px with four tiles in a row.
+- iPad and desktop: the photo comes down to 56px above the tile's bottom edge, since there is now one line of words.
+- Merged onto the live page (v1.30); page saved as `live-v1.31-index.html`. Artifact version 1795026094-3cb5.
+
+## v1.30
+
+- FF Team home pillar boxes on iPad and desktop (Alex, 18 Nov 18:04): no fade on the photos. The photo ends cleanly above the champagne area with the words (`styles/home-text.css`); phones unchanged.
+- Merged onto the live page 1795025163-2b90 (a profile-tabs update from another chat, not on GitHub), so that work stays; page saved as `live-v1.30-index.html`. Artifact version 1795025706-b439.
 
 ## v1.29
 
