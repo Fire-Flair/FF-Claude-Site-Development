@@ -47,7 +47,7 @@
 .ff .ff-bk-waline { margin:0 0 14px; }
 .ff .ff-bk-grp { margin-top:14px; }
 .ff .ff-bk-grp .ff-bk-hrow { margin-bottom:8px; }
-/* Bookings 2/2 (P3): bar package cards in the FF Party package card look, package tabs, the gold Create your own package button. */
+/* Bookings 2/2 (P3): bar package cards in the FF Party package card look, package tabs. */
 .ff .ff-bkpk-sub { margin:0 0 6px; font-family:var(--display); font-size:17px; line-height:1.2; color:var(--ox,#5C1220); }
 .ff .ff-bkpk-cell { flex:none; width:min(300px, calc(100vw - 72px)); scroll-snap-align:start; display:flex; }
 .ff .ff-bkpk-cell > .ff-pk17w { width:100%; }
@@ -56,10 +56,6 @@
 .ff .ff-bkpk .ff-pk17 .ph .pr { font-size:13px; border-radius:10px; corner-shape:squircle; }
 .ff .ff-bkpk .ff-pk17 .tx .tm { display:inline-flex; align-items:center; gap:5px; font-size:13px; color:#5B5346; }
 .ff .ff-bkpk .ff-pk17 .tx .tm svg { color:var(--gold-mid,#B08D2A); }
-.ff .ff-bkown17-row { display:flex; justify-content:center; margin:12px 0 2px; }
-.ff .ff-btn.gold.ff-bkown17 { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:50px; padding:12px 24px; border-radius:16px; corner-shape:squircle; font-size:15.5px; font-weight:800; letter-spacing:.02em; white-space:nowrap; }
-.ff .ff-bkpk-soon { display:grid; justify-items:center; gap:14px; padding:26px 14px; margin:4px 0 2px; border-radius:20px; corner-shape:squircle; background:linear-gradient(168deg,#161618,#08080A); border:1px solid var(--gold-dk,#7E611D); }
-.ff .ff-bkpk-soon-t { display:inline-flex; align-items:center; gap:7px; font-family:var(--display); font-size:19px; color:#EAD79C; }
 .ff #ff-bk-party .ff-hscroll { align-items:stretch; }
 .ff #ff-bk-party .ff-hitem { display:flex; }
 
@@ -102,3 +98,23 @@
 .ff .ff-pkc-go { all:unset; box-sizing:border-box; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:5px; min-height:44px; text-align:center; font:800 14px/1 var(--font-sans); padding:13px 14px; border-radius:14px; corner-shape:squircle; white-space:nowrap; flex:0 1 auto; min-width:0; overflow:hidden; background:linear-gradient(180deg,#F3DE9C,var(--color-gold)); color:var(--color-on-action); }
 .ff .ff-pkc-go:focus-visible { outline:2px solid #F4DC8E; outline-offset:2px; }
 .ff .ff-pkc-go[aria-pressed="true"] { background:var(--color-cream); }
+
+/* pkg3 (FFParty box alignment + closing card): tabs, intro and rail share one left edge; tabs are full squircles on one baseline;
+   Includes / Ideal for values in sentence-case Inter, left beside the icon; labels small caps Cinzel; one "FF Party packages" closing card. */
+.ff #ff-bk-party.pkg3 .ff-pr17-chips { gap:8px; padding:0; margin:0 0 12px; align-items:flex-end; }
+.ff #ff-bk-party.pkg3 .ff-pr17-chips .ff-pr17-tab { border-radius:14px; border-bottom-color:rgba(126,97,29,.5); box-shadow:none; }
+.ff #ff-bk-party.pkg3 .ff-pr17-chips .ff-pr17-tab[aria-selected=true] { border-color:#8C7230; box-shadow:0 4px 12px -6px rgba(176,141,42,.6); }
+.ff #ff-bk-party.pkg3 .ff-hscroll { padding-top:0; }
+.ff #ff-bk-party.pkg3 .ff-pkc-rb { margin-top:18px; height:28px; padding-top:0; padding-bottom:0; }
+.ff #ff-bk-party.pkg3 .ff-pkc-logo { top:12px; }
+.ff #ff-bk-party.pkg3 .ff-pkc-row .v { text-align:left; }
+.ff #ff-bk-party.pkg3 .ff-pkc-row i { font:600 11px/1 var(--font-display); font-style:normal; letter-spacing:.14em; text-transform:uppercase; color:var(--color-gold-lt); margin-bottom:5px; }
+.ff #ff-bk-party.pkg3 .ff-pkc-row b { font:400 14px/1.4 var(--font-sans); letter-spacing:0; text-transform:none; color:#F1E8D2; }
+.ff #ff-bk-party .ff-pkc-soon { min-height:100%; }
+.ff #ff-bk-party .ff-pkc-soon .ff-pkc-ti { white-space:normal; }
+.ff #ff-bk-party .ff-pkc-emb { flex:1; display:grid; place-items:center; min-height:200px; padding:24px 0; background:radial-gradient(closest-side, rgba(122,26,44,.75), rgba(92,18,32,.25) 60%, transparent); }
+.ff #ff-bk-party .ff-pkc-emb svg { filter:drop-shadow(0 10px 24px rgba(0,0,0,.55)); }
+.ff #ff-bk-party .ff-pkc-soon .ff-pkc-ft { justify-content:center; }
+.ff #ff-bk-party .ff-pkc-soonb { display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:0 20px; border-radius:14px; corner-shape:squircle; border:1.5px solid rgba(243,222,156,.7); font:600 15px/1 var(--font-display); letter-spacing:.12em; text-transform:uppercase; color:#FFF1C8; white-space:nowrap; }
+.ff #ff-bk-party .ff-bkpk-soonp { display:flex; }
+.ff #ff-bk-party .ff-bkpk-soonp .ff-pkc-soon { min-height:520px; }
