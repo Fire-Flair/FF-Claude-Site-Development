@@ -680,7 +680,7 @@ function VenuesEditor19({ items, onOpen }) {
     <div className="ff-venedit17 ff-ven19">
       <style>{VEN_CSS17}</style>
       <style>{RANK_CSS17}</style>
-      <p className="ff-venedit17-line">Add the top venues you've worked at, or your favourite bars.</p>
+      <p className="ff-venedit17-line">List the venues you've worked at, or your favourite bars.</p>
       <div className="ff-seg19" role="radiogroup" aria-label="Kind of venue">
         {[["worked", "Worked at", Briefcase], ["favourite", "Favourites", Heart]].map(([k, label, Ic]) => (
           <button key={k} type="button" role="radio" aria-checked={kind === k} className={kind === k ? "on" : ""} onClick={() => setKind(k)}><Ic size={15} strokeWidth={2} aria-hidden="true" />{label}</button>

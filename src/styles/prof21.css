@@ -393,3 +393,10 @@
 .ff .pe2-add-ic { display: grid; place-items: center; width: 52px; height: 52px; background: var(--color-soft); border: 1px solid #D8CBA6; border-radius: 16px; corner-shape: squircle; }
 .ff .pp2-stair .pp-row { min-height: calc(46px + var(--g, 0) * 3px); }
 .ff .pp2-stair .pp-nm { font-size: calc(14px + var(--g, 0) * .5px); }
+/* ---- pfc (Alex 03:29): edit page — Attributes open their editor in the page; Venues typed in the page ---- */
+.ff .pe2-rail .ff-agrp.pe2-agrp-on { outline: 2px solid var(--gold, #C9A227); outline-offset: 2px; }
+.ff .pe2-attr-ed { margin-top: 14px; padding: 14px 14px 12px; border: 1px solid rgba(176,141,42,.45); border-radius: 18px; corner-shape: squircle; background: #FBF7EE; box-sizing: border-box; min-width: 0; }
+.ff .pe2-attr-edh { margin: 0 0 10px; font: 700 13px/1.2 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: #5A4512; }
+.ff .pe2-attr-ed .ff-pt21-row { margin-left: 0; margin-right: 0; }
+.ff .pe2-ven .ff-venedit17 { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; min-width: 0; }
+.ff .pe2-ven .ff-venedit17-line { margin: 0; }
