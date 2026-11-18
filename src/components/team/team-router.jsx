@@ -3,9 +3,10 @@
 function TeamRouter() {
   const { state } = useStore();
   const { tab } = state;
-  /* pfa (Alex 03:29, reverses v17.8.2 for FF Team): Business & Support at the bottom of every FF Team page, the same box as home. */
+  /* pfa (Alex 03:29, reverses v17.8.2 for FF Team): Business & Support at the bottom of the FF Team pages, the same box as home.
+     v1.47 (Alex 18 Nov 20:06): not on someone else's profile page. */
   const biz = (page) => <>{page}<div className="ff-biz-pfa"><V101.BusinessSupport19 /></div></>;
-  if (state.viewing) return biz(<PersonProfile />);
+  if (state.viewing) return <PersonProfile />;
   if (tab === "network") return biz(<NetworkScreen />);
   if (tab === "bookings") return biz(<TeamBookings />);
   if (tab === "profile") return biz(<ProfileGate17 kind="team" />);

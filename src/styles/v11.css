@@ -4642,3 +4642,11 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-cvok17 .yn button.on { background:var(--color-gold, #D8B24A); border-color:var(--color-gold-dk, #7E611D); color:var(--color-ink, #16130F); }
 .ff .ff-cvok17 .hv { flex:none; display:inline-flex; align-items:center; gap:4px; font:600 12px var(--sans); color:var(--ok); white-space:nowrap; }
 .ff .ff-cvok17 .nt { margin:0; padding-left:18px; font:500 12px/1.45 var(--sans); color:#5C564B; }
+
+/* v1.47: the FireFlair sites list behind the top-left FF logo and "FF Team" (no arrow). Squircle corners throughout. */
+.ff .ff-sites11 { border-radius:18px; corner-shape:squircle; }
+.ff .ff-sites11 .ff-site { padding:11px 14px; }
+.ff .ff-sites11 .ff-site:focus-visible { outline:2px solid var(--gold-lt, #EAD79C); outline-offset:-2px; }
+.ff .ff-sites11 .ff-site.locked:hover { background:transparent; }
+.ff .ff-sites11 .ff-site-here, .ff .ff-sites11 .ff-site-soon { border-radius:8px; corner-shape:squircle; }
+@media (min-width:600px) { .ff .ff-sites11 { min-width:352px; } }
