@@ -2,6 +2,8 @@
 
 ## v17.43
 
+Artifact version 1794961478-5f9f.
+
 Maps and the Network page. Branch merged: `p2-netmap`.
 
 - Maps (`map.jsx`, `vip-site.jsx`, `base.css`): one finger scrolls the page, two fingers pan and zoom; the desktop wheel scrolls the page, ctrl/cmd + wheel zooms; a mouse drag still pans. One shared gesture helper; the base style that blocked touch scrolling on maps is changed.
