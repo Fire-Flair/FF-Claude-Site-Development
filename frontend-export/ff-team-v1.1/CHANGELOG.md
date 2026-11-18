@@ -4,7 +4,16 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
-## v1.95
+## v1.73
+
+Profile page (Alex, 18 Nov 22:16–23:31). Four changes from one thread, merged onto ff-team-v1.1 (v1.72).
+
+- No zoom on text boxes (option A, Alex 23:31): `src/shell/index.html` sets the viewport to `maximum-scale=1` on iPhones
+  and iPads only (a small inline script), which stops iOS zooming the page when a text box under 16px is tapped. No
+  text box changes size. iOS still allows pinch-zoom; Android is left alone. Developers: add the same to the real
+  site's page head. Inside the claude.ai artifact frame the setting is probably ignored, so the zoom may still show in
+  the artifact; it should be gone on the real site. Not yet confirmed on a real iPhone. The alternative (16px text in
+  the 16 small boxes) is parked on branch `v11-zoom-2216` and is NOT merged.
 
 Question Cards on the edit page / profile builder (Alex, 18 Nov 22:21). `src/components/team/profile-edit-p2.jsx`
 (`PE2QA`, new `PE2QCard`, `PE2QCreate`, `PE2QDelete`; `PE2Answer` deleted), `src/styles/prof21.css` (qa-cards block).
@@ -20,15 +29,11 @@ Question Cards on the edit page / profile builder (Alex, 18 Nov 22:21). `src/com
   option is chosen.
 - Checked: `npm run check`, `npm run build`; phone and desktop: 11 cards, the travel question answered on the card, a
   question created and answered on the 11th card, no box below the cards.
-## v1.97
-
 - About Me above Professions (Alex, 18 Nov 22:19): on the edit page / profile builder (`src/components/team/profile-edit-p2.jsx`:
   `<CreatorAboutMe top />` now comes before the Professions section) and on every published profile, your own included
   (`src/components/team/introductions.jsx`: `AboutMeBlock` is first in the Overview tab; the `aboutFirst` prop is kept
   for callers but no longer changes the order). Order is now About Me > Professions > Attributes > Experience. Checked
   on phone and desktop by reading the headings' order on both pages.
-## v1.99
-
 Profile page creator (`#/ff-team/profile`), profession selector (Alex, 18 Nov 22:16).
 
 - **Bar is a cocktail glass.** The Bar category tile and the Bar panel heading in the category grid now show the
@@ -40,6 +45,7 @@ Profile page creator (`#/ff-team/profile`), profession selector (Alex, 18 Nov 22
   Mixologist last) and the `level` field on profession records are unchanged; the level picker in a profession's own
   editor is untouched.
 - Network page and other Bar category icons already used the cocktail glass; nothing changed there.
+
 ## v1.72
 
 The other share pop-ups get the v1.71 profile Share pop-up (Alex, 18 Nov 22:13). `src/components/shared/card-share17.jsx` (`CardShareSheet17`), `src/components/team/profile-from-text.jsx` (`ShareCardSheet`), `src/components/party/card-studio.jsx` (`CardPop17`), `src/styles/base.css`.

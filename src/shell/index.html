@@ -3,6 +3,10 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- no-zoom (Alex, 18 Nov 23:31): on iPhones and iPads only, maximum-scale=1 stops the page zooming in when a text box
+     is tapped. iOS still lets people pinch to zoom; Android is left alone because there it would block pinch-zoom
+     (and Android does not auto-zoom). No text box changes size. -->
+<script>(function(){var u=navigator.userAgent||"";var ios=/iPad|iPhone|iPod/.test(u)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);if(!ios)return;var m=document.querySelector('meta[name="viewport"]');if(m)m.setAttribute("content","width=device-width, initial-scale=1, maximum-scale=1");})();</script>
 <meta name="theme-color" content="#0B0B0C" />
 <title>FF Team · FireFlair</title>
 <meta name="description" content="FireFlair connects bartenders, waiters, DJs, hosts, chefs and photographers with event companies. Build your Profile Card and grow your team." />
