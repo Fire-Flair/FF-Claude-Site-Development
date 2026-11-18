@@ -4,6 +4,11 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.30
+
+- FF Team home pillar boxes on iPad and desktop (Alex, 18 Nov 18:04): no fade on the photos. The photo ends cleanly above the champagne area with the words (`styles/home-text.css`); phones unchanged.
+- Merged onto the live page 1795025163-2b90 (a profile-tabs update from another chat, not on GitHub), so that work stays; page saved as `live-v1.30-index.html`. Artifact version 1795025706-b439.
+
 ## v1.29
 
 FF Team home (Alex, 18 Nov 17:41). `styles/home-text.css`, `discover-hub.jsx`.

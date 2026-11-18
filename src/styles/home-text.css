@@ -15,7 +15,8 @@
   .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .ph { bottom:68px !important; height:auto !important; }
   .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .ph::after,
   .ff .ff-hf22.ff-home-c4 .ff-dx.is-open .ff-dx-tile.on .ph::after {
-    background:linear-gradient(180deg,rgba(234,224,195,0) 72%,rgba(234,224,195,.7) 90%,var(--color-champagne-box,#EAE0C3) 100%) !important; }
+    background:none !important; }
+  /* Alex, 18 Nov 18:04: no fade at all on iPad and desktop; the photo ends cleanly above the champagne words */
   .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile:not(.on) .chev { background:rgba(234,224,195,.92); }
 }
 
