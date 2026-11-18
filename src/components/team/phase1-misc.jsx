@@ -161,20 +161,6 @@ const P1_CSS = P12_CSS + `
 .ff .ff-sentrow small { display:block; font-size:12px; color:#6A6253; }
 .ff .ff-pill.ff-pillbtn { cursor:pointer; }
 
-/* ---- v1.1: Coming Soon cards ------------------------------------------- */
-.ff .ff-soonpanel { border-radius:26px; padding:clamp(14px,3.5vw,22px); background:#F6F0E2; border:1px solid rgba(126,97,29,.16); }
-.ff .ff-soonpanel-lede { margin:0 0 12px; font-size:14px; line-height:1.5; color:#3A3226; }
-/* at most three columns, and every column filled */
-.ff .ff-soongrid { display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(max(min(100%,230px),calc((100% - 20px) / 3)),1fr)); }
-.ff .ff-soon { display:flex; gap:12px; align-items:flex-start; padding:14px 15px; border-radius:18px; background:#fff; border:1px solid rgba(126,97,29,.16); box-shadow:var(--lift-1); min-width:0; }
-.ff .ff-soon.next { border-color:rgba(176,141,42,.55); box-shadow:0 0 0 1px rgba(201,162,39,.25), var(--lift-1); }
-.ff .ff-soon-ic { position:relative; flex:none; width:40px; height:40px; border-radius:12px; display:grid; place-items:center; background:#F7F1E3; color:var(--gold-dk); border:1px solid rgba(126,97,29,.16); }
-.ff .ff-soon-ic i { position:absolute; right:-5px; bottom:-5px; width:17px; height:17px; border-radius:50%; display:grid; place-items:center; background:#2A2622; color:#EAD79C; border:2px solid #fff; }
-.ff .ff-soon b { display:block; font-size:15px; font-weight:700; line-height:1.3; color:#1D1B18; }
-.ff .ff-soon p { margin:4px 0 0; font-size:13px; line-height:1.45; color:#5A5246; }
-.ff .ff-soon-badge { display:inline-flex; align-items:center; gap:5px; margin-top:9px; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#8A7442; }
-.ff .ff-soon.next .ff-soon-badge { color:var(--ox,#5C1220); }
-
 /* ---- v1.1: Save & Share line and the card preview ------------------------ */
 .ff .ff-s5row::before { bottom:calc(50% + 23px); }
 .ff .ff-finale:not(.open) .ff-s5row::after { content:''; position:absolute; left:-30px; top:calc(50% + 23px); bottom:0; width:2px; border-radius:2px;
@@ -253,10 +239,4 @@ const P1_CSS = P12_CSS + `
 /* ---- v1.1: the FF XP pop-up ----------------------------------------------- */
 .ff .ff-xpsec { padding:16px 0; border-top:1px solid var(--rule); }
 .ff .ff-xpsec:first-of-type { border-top:none; padding-top:0; }
-
-/* ---- v1.1: Bookings --------------------------------------------------------- */
-.ff .ff-bkpart { margin-top:26px; }
-.ff .ff-bkgroup-h { margin:34px 0 0; padding-top:18px; border-top:1px solid var(--rule); }
-.ff .ff-bkgroup-h .ff-h2 { margin-top:4px; font-size:20px; }
-
 `;

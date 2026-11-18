@@ -508,18 +508,6 @@ function GoldBox21({ icon, title, count, desc, note, children, line = true, id, 
 }
 
 
-/* v17.19: an account box — a title row like the other sections, then its content (the same look as the Media box). */
-function AcctBox19({ icon, title, count, action, children, id }) {
-  return (
-    <section className="ff-box19" id={id} style={{ marginTop: 14 }}>
-      <style>{RANK_CSS17}</style>
-      <SectionHead icon={icon} title={title} count={count} action={action} />
-      {children}
-    </section>
-  );
-}
-
-
 /* v17.34: the sign-up state (FF Tag, phone number, country code, WhatsApp code) in one hook, so the Phone number box
    (third in Let's get started) and the FF Tag box (Your Profile Page) share one entry, one Verify and one code step. */
 function useJoin21({ inSave = false, top = false, onSignedIn } = {}) {

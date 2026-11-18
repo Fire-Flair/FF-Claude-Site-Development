@@ -47,7 +47,6 @@ const PHASE1 = {
   /* FF XP · 2027 runs on the prototype's own XP and tier logic. The only
      way in is the FF coin pop-up: no XP bar, no XP page. */
   xpLive: false,   /* v1.2: XP isn't live in version 1 — the pop-up says Coming 2027 */
-  xpBar: false,
   /* Shift requests and booked shifts open with FF Staff and FF Party. The
      Bookings tab shows them as Coming 2027, beside what works now (availability,
      Service Cards, Training and Dream jobs registration). */

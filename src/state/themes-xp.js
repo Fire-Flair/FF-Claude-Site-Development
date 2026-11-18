@@ -52,35 +52,8 @@ const XP_NUMERIC_LEVELS = XP_LEVELS.filter(l => typeof l.xp === "number");
 
 
 
-function quarterAfter(year, q) { return q === 4 ? { year: year + 1, q: 1 } : { year, q: q + 1 }; }
-
-
-function quarterLabel(p) { return `${p.year} Q${p.q}`; }
-
-
-function quarterMonths(p) { return QUARTER_MONTHS[p.q - 1]; }
-
-
-
-function generateQuarters(startYear, startQ, count) {
-  const out = [];
-  let cur = { year: startYear, q: startQ };
-  for (let i = 0; i < count; i++) { out.push(cur); cur = quarterAfter(cur.year, cur.q); }
-  return out;
-}
-
-
-
-/* The single source of truth for "what quarter is it": change these two
-   numbers and the whole XP Beta timeline, labels and reset behaviour move
-   with it — nothing else in the app hardcodes a quarter. */
-const XP_BETA_START = { year: 2026, q: 4 };
-
-
+/* The single source of truth for "what quarter is it": XP periods reset with it (store.js). */
 const XP_CURRENT_PERIOD = { year: 2026, q: 4 };
-
-
-const XP_TIMELINE = generateQuarters(XP_BETA_START.year, XP_BETA_START.q, 5);
 
 
 const xpPeriodKey = (p) => `${p.year}Q${p.q}`;
