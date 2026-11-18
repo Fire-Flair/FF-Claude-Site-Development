@@ -13,6 +13,11 @@ Merged base for the profile builder rebuild (Legolas, 18 Nov). The next publish 
   - Mixologist: "An expert with years of experience who can create original cocktail recipes and menus."
   - For the developers: please add profession descriptions (and their category texts and fallback) to the admin tools, so Alex can update any of them himself without a code change. Alex has not yet read every description word for word.
 
+- Live-only code recovered into `src/` (it was published onto the artifact without its source being pushed):
+  - Photo browser and visitor button row (photo-browsing chat, 16:00–17:50, live from v1.25): `ffPvScroller11`, `PhotoStrip11`, `MediaMosaic`, `PublicHero` in `src/components/team/public-profile.jsx` (`MediaCarousel` is gone); Back | Join team | Share row and MyShareBtn17 changes in `src/components/team/network.jsx`; `shareIcon` on `CardShareBtn17` (`src/components/shared/card-share17.jsx`); photos for Bruno, Simao, Dany and James in `src/content/people-demo.js`; `.ff-ps*` and button-row styles in the head `<style>` of `src/shell/index.html`.
+  - Display-page tabs (live 1795026408-9c88, about 18:24): the open tab joins the tab page (About me box with a burgundy border), and Share goes champagne with a green WhatsApp mark. Head `<style>` of `src/shell/index.html`.
+  - Check: the `publish-build` output matches live 1795026408-9c88, apart from the professions-review wording and some redundant brackets and line breaks left by the hand patch.
+
 ## v1.31
 
 FF Team home, the four pillar boxes (Alex, 18 Nov 18:15). `discover-hub.jsx`, `styles/home-text.css`.

@@ -92,6 +92,21 @@ window.lucide || document.write('<script src="https://cdn.jsdelivr.net/npm/lucid
 .ff .ff-pub-joinrow > .ff-btn.ff-join-mut::after{display:none !important;animation:none !important}
 .ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11{gap:7px;background:#25D366;color:#fff;border:1px solid #1DA851;font:700 12px/1 Inter,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;box-shadow:0 5px 12px -8px rgba(18,140,70,.8)}
 .ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11:hover{background:#21C25C}
+
+/* tabs attach to the tab page (v1.1 tabs) */
+.ff .ff-ptabs{margin-top:22px;margin-bottom:0;align-items:end}
+.ff .ff-ptabs > button{margin-bottom:6px !important}
+.ff .ff-ptabs > button.on{margin-bottom:0 !important;padding-bottom:12px !important;border-bottom-left-radius:0 !important;border-bottom-right-radius:0 !important;position:relative;z-index:1}
+.ff #ff-tabpanel:has(> section.ff-about:first-of-type){padding-top:0 !important}
+.ff .ff-ptabs:has(+ #ff-tabpanel > section.ff-about:first-of-type){margin-bottom:-2px !important}
+.ff #ff-tabpanel > section.ff-about:first-of-type{margin-top:0;border:2px solid #5C1220;border-top-width:3px;background:#FBF7EE}
+.ff .ff-ptabs:has(> button.on:first-child) + #ff-tabpanel > section.ff-about:first-of-type{border-top-left-radius:0}
+.ff .ff-ptabs:has(> button.on:last-child) + #ff-tabpanel > section.ff-about:first-of-type{border-top-right-radius:0}
+
+/* Share: champagne with green WhatsApp mark */
+.ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11{background:#E4D0A0 !important;color:#2A1E04 !important;border:1px solid #B89B5E !important;box-shadow:0 4px 10px -8px rgba(110,80,20,.6) !important}
+.ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11 svg{color:#25D366;fill:#25D366}
+.ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11:hover{background:#EAD8AC !important}
 </style>
 </head>
 <body>
