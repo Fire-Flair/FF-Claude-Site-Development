@@ -1,17 +1,19 @@
 {
   "name": "ff-claude-site-development",
   "private": true,
-  "description": "FireFlair prototype: src/ is the source, the single-file HTML is a build output.",
+  "description": "FF Team v1.1 front-end export: src/ is the source, build/ff-team-v1.1.html is the build output.",
   "scripts": {
     "build": "node scripts/build-companies.mjs && node scripts/build.mjs && node scripts/copy-media.mjs",
     "companies": "node scripts/build-companies.mjs",
     "check-companies": "node scripts/check-companies.mjs",
     "stories": "python3 scripts/build-stories.py --src src",
-    "check": "node scripts/check-src.mjs",
-    "publish-build": "python3 scripts/split-images.py build/fireflair-v17.4.html build/release && node scripts/copy-media.mjs",
-    "locations": "python3 scripts/build-locations.py"
+    "check": "node scripts/check-src.mjs && node scripts/check-refs.mjs",
+    "publish-build": "python3 scripts/split-images.py build/ff-team-v1.1.html build/release && node scripts/copy-media.mjs",
+    "locations": "python3 scripts/build-locations.py",
+    "check-refs": "node scripts/check-refs.mjs"
   },
   "devDependencies": {
+    "@babel/standalone": "7.29.14",
     "esbuild": "0.28.2"
   }
 }
