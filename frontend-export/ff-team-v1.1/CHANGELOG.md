@@ -4,6 +4,31 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.20
+
+- FF Team home colours: ivory and burgundy (Alex, 18 Nov 14:53, from option 1 "Ivory and wine"). Every colour on the
+  front screen now comes from one set: ivory, burgundy, gold, champagne. Switch `FF_HOME_COLOUR = 4` in
+  `src/components/home/team-home.jsx` (root class `ff-home-c4`; 0 gives the v1.18 look). Styles in
+  `src/styles/home-colours.css`; the unused options 1–3 were removed from it.
+- "What is FF Team?" pillars: ivory tiles `#FFFCF4` to sand `#F3EAD5` with a burgundy `#5C1220` border; titles in
+  burgundy (Cinzel), descriptions `#4A443A`, burgundy chevron on burgundy tint `#F7E9EC` (ivory on burgundy when
+  open). Open: the tile and its box share one burgundy outline (border, top line and curved joins); the box keeps its
+  cream `#EAE0C3` content. On wide screens the photo fades into the sand.
+- "FF Team is built for getting you bookings": gold leaf `#F7EAC2` to `#EDD58F` to `#E2C677`, gold-mid `#B08D2A`
+  border, burgundy title and title marker, ink labels `#1A1712`, burgundy arrows.
+- Hero: the violet beams are now champagne spotlights, `rgba(255,244,214,.85)` peak and champagne `#EADBB4` at .5.
+  Same shape, position, blur and fade as before (bottom-left and bottom-right corners, rising and spreading
+  slightly). Burgundy centre, photo, card shine and easel are unchanged.
+- Hero line "Get seen, get booked, get paid." under the title in gold `#E4C36A` (option 1's place); it wraps only
+  between "Get seen, get booked," and "get paid.".
+- Tokens: `--color-ivory`, `--color-champagne`, `--color-gold-leaf` kept; the unused `--color-wine`,
+  `--color-bottle`, `--color-bottle-dk` removed.
+- Contrast (measured behind the text on the rendered page, 390): title `#F7EED8` 7.2:1 at the lightest pixel; hero
+  line 5.7:1 at the lightest pixel, 9.7:1 median. Pillar title 13.1:1, description 8.0:1, chevron 11.4:1 on tint;
+  bookings title 8.1:1 and labels 10.7:1 on the darkest gold leaf. At 1280 the words sit over the photo as before;
+  the lowest points there are photo highlights (unchanged from v1.18), medians 14:1 and 10:1.
+- Artifact version 1795014425-b296.
+
 ## v1.19
 
 - Gold title lines (Alex, 18 Nov 14:49): the vertical gold line beside every section title and profile label now has
