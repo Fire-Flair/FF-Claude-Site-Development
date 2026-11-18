@@ -4,6 +4,17 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.12
+
+Alex's first changes after the split (queued 18 Nov 10:20). Branches merged: `v11-a`, `v11-b`.
+
+- Titles (new `styles/titles2.css`, `css-registry.js`, `App.jsx`): option 2 "Gold mark" — a gold coin beside section titles (Our professionals, FF Event Directory, Can FF Team help you?, FFParty, FFStaff, Grow with FireFlair; small gold dot on profile labels). "Explore our network", "Your bookings" and a new "Your profile" page title share the full underline. "What is FF Team?", "FF Team is built for getting you bookings" (soft gold, in its dark box) and "FF Team Launch Challenge" use the gold mark; the coin between the welcome and "What is FF Team?" is gone. "FFStories" is one word, centred, with FF slightly slanted.
+- Home (`team-home.jsx`, `discover-and-support.jsx`, `stories-reader.jsx`, `tm20.css`): no "Life at FF Team" title; the door video is full size again; Join FF Team and the coin game are one box again, last on the page.
+- Network (`network-directory20.jsx`, `map.jsx`): FF Event Directory opens only Bar companies and Entertainment; the map pins members at the centre of the first place on their profile it knows, so the legend shows Professionals (with group counts) before FF Directory.
+- Profile builder (`profile-builder.jsx`, `prof21.css`): Let's get started runs Upload CV, Talk or type, Phone number; the phone box is a muted WhatsApp green (white text 4.8:1 or better).
+- Share sheet (`p12.css`): sits above the bottom bar on phones, so Download PNG and Copy Link can be tapped.
+- Journey tests: 48/48 at 390/768/1280.
+
 ## v1.1
 
 Artifact: "FF Team version 1.1. Final", slug a139e698-9bc3-47b1-93d6-b2e3c541732e, version 1794999824-240d (claude.ai folder "FF Team — Front-end export").
