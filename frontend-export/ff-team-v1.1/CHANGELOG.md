@@ -6,7 +6,9 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
 
 ## v1.41
 
-Profile builder thread (18 Nov, about 19:40): Professions, Skills/Interests, Qualifications and Profile Card fitting. Merged over v1.40; nothing from other chats removed. Built from branches pb-professions, pb-typecards, pb-qualifications and pb-cardfit (all on GitHub).
+Profile builder thread (18 Nov, about 19:40): Professions, Skills/Interests, Qualifications and Profile Card fitting. Merged over v1.40; nothing from other chats removed. Built from branches pb-professions, pb-typecards, pb-qualifications and pb-cardfit (all on GitHub). Published over live 1795030282-bffd (v1.40), index.html and manifest.json only (all other files kept). Artifact version 1795030434-a840. Built page saved as `live-v1.41-index.html`.
+
+Known for review: on Skills/Interests the top-three numbers mark the first three entries; with next-in-line fitting the card may show the 4th entry in place of one over the width, and that 4th entry has no number yet (pending Alex's feedback).
 
 ### pb-professions
 
