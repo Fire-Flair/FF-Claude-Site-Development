@@ -227,14 +227,12 @@ function PE2Pencil({ label, onClick }) {
 /* Professions and Attributes on the edit page, laid out as the finished profile, empty ones as placeholder cards. */
 function PE2Overview({ records }) {
   const [sheet, setSheet] = useState(null);
-  const [start, setStart] = useState(null);
+  const [attrOpen, setAttrOpen] = useState(null);
   const [openVen, setOpenVen] = useState(null);
   const profs = rankedRecords(records.professions || []).filter(r => !r.hidden && !r.proposed);
   const cats = PE2_ATTRS.filter(k => BASE_CATEGORIES[k]);
   /* Venues: venue records and the older Experience records together. */
   const venAll = [...(records.venues || []), ...(records.experience || [])];
-  const venShown = venAll.filter(r => !r.hidden && !r.proposed);
-  const openAttr = (k) => { setStart(k); setSheet("attrs"); };
   return (
     <>
       <style>{PE2_CSS}</style>
@@ -247,14 +245,15 @@ function PE2Overview({ records }) {
             </button>}
       </section>
       <section className="ff-pp ff-pp21 pp-sec" aria-labelledby="pe2-attr-h">
-        <div className="ff-pp-head"><h2 id="pe2-attr-h" className="ff-about-h">Attributes</h2><PE2Pencil label="Attributes" onClick={() => openAttr(cats[0])} /></div>
+        <div className="ff-pp-head"><h2 id="pe2-attr-h" className="ff-about-h">Attributes</h2></div>
         <div className="ff-mrow ff-acar pe2-rail" role="list" aria-label="Attributes">
           {cats.map((k, ci) => {
             const def = BASE_CATEGORIES[k];
             const shown = rankedRecords(records[k] || []).filter(r => !r.hidden && !r.proposed);
             const empty = !shown.length;
+            const on = attrOpen === k;
             return (
-              <button key={k} type="button" role="listitem" className={"ff-agrp " + (empty ? "pe2-agrp-empty" : tierCls17(ci))} aria-label={`Edit ${def.label}`} onClick={() => openAttr(k)}>
+              <button key={k} type="button" role="listitem" className={"ff-agrp " + (empty ? "pe2-agrp-empty" : tierCls17(ci)) + (on ? " pe2-agrp-on" : "")} aria-label={`Edit ${def.label}`} aria-expanded={on} aria-controls="pe2-attr-ed" onClick={() => setAttrOpen(on ? null : k)}>
                 <span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span>{!empty && <span className="ff-agrp-n">{shown.length}</span>}</span>
                 {empty ? <span className="pe2-empty-fill" aria-hidden="true" /> : <span className="ff-agrp-l">{shown.slice(0, 5).map(r => <span key={r.id}>{nbh21(r.name)}</span>)}</span>}
                 {shown.length > 5 && <span className="ff-agrp-more">{`+${shown.length - 5}`}</span>}
@@ -264,21 +263,26 @@ function PE2Overview({ records }) {
           })}
           <span className="ff-acar-end" aria-hidden="true" />
         </div>
+        {/* pfc (Alex 03:29): the tapped card opens its editor here, in the page, as on the live FF Team site: the type box,
+            then the entries as tiles; a tile opens its own editor under the row. No pop-up. */}
+        {attrOpen && BASE_CATEGORIES[attrOpen] && (
+          <div id="pe2-attr-ed" className="ff-pa40-cat pe2-attr-ed" role="region" aria-label={BASE_CATEGORIES[attrOpen].label}>
+            <style>{RANK_CSS17}</style>
+            <div className="pe2-attr-edh">{BASE_CATEGORIES[attrOpen].label}</div>
+            <TypeBox21 key={attrOpen} catKey={attrOpen} def={BASE_CATEGORIES[attrOpen]} rows={rankedRecords(records[attrOpen] || [])} />
+            <ProfTiles21 key={"t" + attrOpen} items={records[attrOpen] || []} editable def={BASE_CATEGORIES[attrOpen]} catKey={attrOpen} label={BASE_CATEGORIES[attrOpen].label} compact />
+          </div>
+        )}
       </section>
       {SHOW_VENUES_PROFILE17 && (
-        <section className="ff-pp ff-pp21 pp-sec" aria-labelledby="pe2-ven-h">
-          <div className="ff-pp-head"><h2 id="pe2-ven-h" className="ff-about-h">Venues</h2><PE2Pencil label="Venues" onClick={() => setSheet("venues")} /></div>
-          {venShown.length
-            ? <div className="ff-ven19"><style>{VEN_CSS17}</style><VenueRows19 items={venShown} /></div>
-            : <button type="button" className="pe2-empty pe2-empty-ven" aria-label="Edit Venues" onClick={() => setSheet("venues")}>
-                <span className="pe2-empty-pen" aria-hidden="true"><Pencil size={18} strokeWidth={2} /></span>
-              </button>}
+        <section className="ff-pp ff-pp21 pp-sec pe2-ven" aria-labelledby="pe2-ven-h">
+          <div className="ff-pp-head"><h2 id="pe2-ven-h" className="ff-about-h">Venues</h2></div>
+          {/* pfc: typed straight into the page (Google places search), shown as venue rows with type and area. */}
+          <VenuesEditor19 items={venAll} onOpen={(r) => setOpenVen(r)} />
         </section>
       )}
       <PE2Sheet open={!!sheet && !openVen} title={PE2_TITLES[sheet] || ""} wide={sheet === "profs"} onClose={() => setSheet(null)}>
         {sheet === "profs" && <PE2ProfEd />}
-        {sheet === "attrs" && <PE2AttrEd start={start} />}
-        {sheet === "venues" && <VenuesEditor19 items={venAll} onOpen={(r) => setOpenVen(r)} />}
       </PE2Sheet>
       <GenericAttributeCardCreator open={!!openVen} record={openVen} def={openVen && BASE_CATEGORIES[openVen.category]} category={openVen && openVen.category} onClose={() => setOpenVen(null)} />
     </>
