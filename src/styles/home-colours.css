@@ -56,3 +56,9 @@
 .ff .ff-hf22.ff-home-c4 .ff-hbc-btn:focus-visible { outline-color:var(--color-champagne,#EADBB4); }
 .ff .ff-hf22.ff-home-c4 .ff-hb23-body .ff-label { color:var(--color-champagne,#EADBB4); }
 .ff .ff-hf22.ff-home-c4 .ff-hb23-body .ff-hb17-row .arr { color:var(--color-champagne,#EADBB4); }
+
+/* ---------- Open pillar: the tile is the same cream as its box, so tile and box read as one (Alex, 18 Nov 16:04) ---------- */
+.ff .ff-hf22.ff-home-c4 .ff-dx.is-open .ff-dx-tile.on { background:#EAE0C3 !important; }
+@media (min-width:760px) {
+  .ff .ff-hf22.ff-home-c4 .ff-dx.is-open .ff-dx-tile.on .ph::after { background:linear-gradient(180deg,rgba(234,224,195,0) 32%,rgba(234,224,195,.86) 60%,#EAE0C3 94%) !important; }
+}

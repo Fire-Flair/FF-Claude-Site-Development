@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.24
+
+- Home pillars (Alex, 18 Nov 16:04): when a pillar is open, its tile is the same cream as the box below it (#EAE0C3; on wide screens the photo fades into it), so the tile and its content read as one continuous box. Closed tiles stay ivory to sand with the burgundy border. `styles/home-colours.css`.
+
 ## v1.23
 
 - Home (Alex, 18 Nov 15:56). The four "What is FF Team?" pillars go back to v1.20's ivory to sand (#FFFCF4 to #F3EAD5) with a burgundy #5C1220 border and burgundy titles; the burgundy version looked heavy on wide screens.
