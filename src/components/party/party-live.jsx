@@ -211,7 +211,10 @@ function ProfileGate17({ kind }) {
   }, [done, editing, kind, claim && claim.status, dirSlug]);
   return React.createElement("div", {
     className: `ff-pg17${done ? " done" : ""}`
-  }, done && !editing ? React.createElement(React.Fragment, null, kind === "biz" && welcome && React.createElement(CompanyWelcome, null), React.createElement(DoneProfile17, {
+  }, /* v11-a (Alex, 18 Nov 10:20): the FF Team profile page has a page title in the Explore our network style. */
+  kind === "team" && done && React.createElement("h1", {
+    className: "ff-h1 ff-big20 ff-pg17-h"
+  }, React.createElement("span", { className: "t" }, "Your profile")), done && !editing ? React.createElement(React.Fragment, null, kind === "biz" && welcome && React.createElement(CompanyWelcome, null), React.createElement(DoneProfile17, {
     kind
   }), justShared && kind === "team" && React.createElement("div", {
     className: "ff-pg17-shared"

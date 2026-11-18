@@ -1,0 +1,68 @@
+/* ==== v11-a titles (Alex, 18 Nov 10:20): option 2 "Gold mark" — a gold coin dot beside section titles, a small gold
+   dot beside profile labels — with Alex's exceptions: page titles "Explore our network", "Your bookings" and
+   "Your profile" keep the full gold underline; "FF Team is built for getting you bookings" in a softer gold;
+   "FFStories" centred with FF in a slight italic. Loaded on every page (App style); !important only where a
+   component's own later style tag would otherwise win. ==== */
+
+/* Page titles: the full-underline style of "Explore our network" (big20.css), on every page that uses it. */
+.ff h1.ff-big20 { display:flex; align-items:center; flex-wrap:wrap; gap:12px; font-family:var(--font-display,'Cinzel',serif); font-size:clamp(26px,7vw,34px); line-height:1.12; font-weight:700; letter-spacing:0; color:var(--onyx,#141416); text-align:left; justify-content:flex-start; overflow-wrap:normal; word-break:keep-all; hyphens:none; }
+.ff h1.ff-big20 .t { display:inline-block; padding-bottom:7px; border-bottom:3px solid var(--color-gold,#C9A227); }
+.ff .ff-pg17-h { margin:6px 0 18px; }
+
+/* Section titles: Cinzel in ink with a gold coin before it. */
+.ff h2.ff-big20,
+.ff .ff-hf22 .ff-dx-h.ff-dx-q,
+.ff .ff-hf22 .ff-qg-title,
+.ff .ff-hf22 .ff-lcc-title,
+.ff .ff-bk-bh {
+  display:flex !important; flex-direction:row !important; align-items:center !important; justify-content:flex-start !important; flex-wrap:nowrap !important; gap:14px !important;
+  position:static !important; padding:0 !important; border:0 !important;
+  font-family:var(--font-display,'Cinzel',serif) !important; font-weight:600 !important; letter-spacing:.02em !important; line-height:1.15 !important;
+  text-transform:none !important; text-align:left !important; text-indent:0 !important; color:var(--color-ink,#0B0B0C) !important;
+  overflow-wrap:normal; word-break:keep-all; hyphens:none; text-wrap:balance;
+}
+.ff h2.ff-big20,
+.ff .ff-hf22 .ff-dx-h.ff-dx-q,
+.ff .ff-hf22 .ff-qg-title,
+.ff .ff-hf22 .ff-lcc-title { font-size:clamp(22px,5.8vw,28px) !important; }
+.ff h2.ff-big20::before,
+.ff .ff-hf22 .ff-dx-h.ff-dx-q::before,
+.ff .ff-hf22 .ff-qg-title::before,
+.ff .ff-hf22 .ff-lcc-title::before,
+.ff .ff-bk-bh::before,
+.ff .ff-hf22 .ff-hbc-btn .ff-hb23-t::before {
+  content:""; flex:0 0 auto; width:14px; height:14px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,var(--color-gold-lt,#E4C36A),var(--color-gold,#C9A227) 55%,var(--color-gold-dk,#7E611D));
+  box-shadow:inset 0 0 0 2px rgba(126,97,29,.55), 0 1px 2px rgba(0,0,0,.18);
+}
+/* the old underlines and rules of these titles give way to the coin */
+.ff h2.ff-big20 .t { padding-bottom:0; border-bottom:0; }
+.ff .ff-hf22 .ff-dx-h.ff-dx-q::after,
+.ff .ff-hf22 .ff-qg-title::after { content:none !important; display:none !important; }
+.ff .ff-hf22 .ff-lcc-title > span { display:inline !important; white-space:normal !important; margin:0 !important; font-size:inherit !important; line-height:inherit !important; }
+.ff .ff-bk-bh { white-space:nowrap; overflow:hidden; }
+.ff .ff-bk-bh > * { min-width:0; }
+
+/* Space around section titles */
+.ff h2.ff-big20 { margin:52px 0 16px !important; }
+@media (min-width:900px) { .ff h2.ff-big20 { margin-top:64px !important; } }
+.ff .ff-hf22 .ff-dx-h.ff-dx-q,
+.ff .ff-hf22 .ff-qg-title,
+.ff .ff-hf22 .ff-lcc-title { margin:0 0 16px !important; }
+
+/* "FF Team is built for getting you bookings": the same title, in a softer gold, inside its dark box. */
+.ff .ff-hf22 .ff-hbc-btn .ff-hb23-t {
+  display:flex !important; align-items:center; justify-content:flex-start; gap:14px; text-align:left !important;
+  font-family:var(--font-display,'Cinzel',serif); font-weight:600; font-size:clamp(20px,5.2vw,26px); letter-spacing:.02em; line-height:1.15;
+  color:var(--color-gold-lt,#E4C36A); overflow-wrap:normal; word-break:keep-all; hyphens:none; text-wrap:balance;
+}
+
+/* Profile labels (Professions, About me, Attributes, Venues …): a small gold dot before the label. */
+.ff .ff-about-h { display:flex; align-items:center; gap:8px; }
+.ff .ff-about-h::before { content:""; flex:0 0 auto; width:7px; height:7px; border-radius:50%; background:var(--color-gold,#C9A227); }
+
+/* "FFStories": centred, one word, FF in a slight italic. */
+.ff .ff-hf22 .ff-jr17-title.ff-jr5 { align-items:center !important; text-align:center !important; }
+/* the site-wide "no italics" rule stays; FF gets its slight slant from a skew */
+.ff .ff-hf22 .ff-jr5 .s .ff5 { display:inline-block; transform:skewX(-7deg); transform-origin:50% 100%; padding-right:.04em; }
+.ff .ff-hf22 .ff-jr5 + .ff-jr17-rule { justify-content:center !important; margin-left:auto !important; margin-right:auto !important; }
