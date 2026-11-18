@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.70
+
+- Profile photos, three follow-ups from testing (Alex, 18 Nov). Company Card pages now behave like Profile Cards: the photos end 128px down the card (where they always met it) and the page scrolls as one, and any scroll closes the open photos. On an upright iPad the open photos are capped so the card still shows down to just past its icon line above the bottom bar (before, the bar covered it). Tapping the card after scrolling down now brings the page all the way back to the top. `components/team/public-profile.jsx`.
+
 ## v1.69
 
 Profile Packages tab, in the profile builder and on a public profile (Alex, 18 Nov 20:51). New `team/profile-packages.jsx`, `styles/profile-packages.css`; `team/profile-edit-tabs.jsx`, `team/introductions.jsx`, `team/public-profile.jsx` (CoverFlow), `styles/p12.css`, `manifest.json`.

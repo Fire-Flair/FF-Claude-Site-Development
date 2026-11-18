@@ -162,7 +162,16 @@ function PhotoStrip11({ items, onBad, open, onTap, atRef, fill, onClose, start }
   };
   const n = items.length;
   const vh = typeof window !== "undefined" ? window.innerHeight : 800;
-  const openH = w ? Math.round(Math.max(280, Math.min(w * 1.25, vh * 0.7))) : undefined;
+  let openH = w ? Math.round(Math.max(280, Math.min(w * 1.25, vh * 0.7))) : undefined;
+  /* profile-photos: on an upright iPad the open photos stop where the card still shows down to just past its icon line */
+  if (openH && w >= 700 && vh > (typeof window !== "undefined" ? window.innerWidth : 0)) {
+    const box = boxRef.current, hero = box && box.closest(".ff-phero");
+    const ov = hero ? parseFloat(getComputedStyle(hero).getPropertyValue("--ov")) || 0 : 0;
+    const nav = document.querySelector(".ff-bottomnav");
+    const navH = nav ? nav.getBoundingClientRect().height : 70;
+    const top = box ? box.getBoundingClientRect().top + (window.scrollY || 0) : 83;
+    openH = Math.round(Math.max(280, Math.min(openH, vh - Math.max(56, top) - 14 - ov - navH - 48)));
+  }
   const style = open && !fill && openH ? { height: openH + "px" } : undefined;
   return (
     <section ref={boxRef} className={`ff-ps${open ? " open" : ""}${fill ? " fill" : ""}`} style={style} aria-label={`Photos, ${n}`}>
@@ -290,11 +299,12 @@ function PublicHero({ media, card, below, narrow }) {
     const c = cardRef.current, h = heroRef.current;
     if (!strip || !c || !h) { setOv(false); return; }
     const f = () => {
-      const line = c.querySelector(".ff-pc-rule");
-      if (!line) return;
-      const r = line.getBoundingClientRect(), t = c.getBoundingClientRect();
-      if (!r.height || !t.height) return;
-      h.style.setProperty("--ov", Math.round(r.top + r.height / 2 - t.top) + "px");
+      const line = c.querySelector(".ff-pc-rule"), t = c.getBoundingClientRect();
+      if (!t.height) return;
+      /* A Company Card has no icon line: the photos end 128px down it (where they always met the card). */
+      const r = line && line.getBoundingClientRect();
+      const y = r && r.height ? r.top + r.height / 2 - t.top : Math.min(128, t.height * 0.6);
+      h.style.setProperty("--ov", Math.round(y) + "px");
       setOv(true);
     };
     f();
@@ -386,7 +396,8 @@ function PublicHero({ media, card, below, narrow }) {
     const h = heroRef.current;
     if (!h) return;
     const top = h.getBoundingClientRect().top;
-    if (top < 0) window.scrollBy({ top: top - 64, behavior: "auto" });
+    /* back to the very top when the photos start the page, as when it opens */
+    if (top < 0) { const abs = top + window.scrollY; window.scrollTo({ top: abs <= 160 ? 0 : abs - 64, behavior: "auto" }); }
   }, [open]);
   /* A tap on the card (not on one of its buttons or links) opens the strip. */
   const cardTap = (e) => {
