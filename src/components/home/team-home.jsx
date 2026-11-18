@@ -93,40 +93,49 @@ function Home101() {
     useCoinSpin(root);
     /* homefix: coin dividers between sections. home2: the coin game (Join) comes after Business & Support. */
     const coin = (k) => React.createElement(CoinDivider, { key: `coin-${k}` });
+    /* home5 (Alex, 18 Nov 03:06 and 03:13): hero (+ Welcome back), Discover, bookings 1-2-3-4, Launch Challenge,
+       FF Stories, the door video, the questions, Join / Your FireFlair, Business & Support, and the coin game last.
+       Coins above Discover, before the Challenge, before Stories, before Join and before the game. */
     const sections = [
-      /* home4 (Alex, 18 Nov 02:55): Discover FireFlair comes first, right after the hero, then its coin, then the Launch Challenge. */
+      coin("top"),
       React.createElement(DiscoverHub11, {
         key: "discover"
       }),
-      coin("d"),
-      React.createElement(TeamCompetition20, { key: "competition" }),
-      coin("a"),
-      React.createElement(TwoMinutes20, { key: "twomin" }),
-      /* home2 (Alex, 18 Nov): a spinning coin between the video and the bookings box. */
-      coin("v"),
       React.createElement(HowBooking17, {
         key: "how",
         kind: "team"
       }),
-      coin("b"),
+      coin("a"),
+      React.createElement(TeamCompetition20, { key: "competition" }),
+      coin("s"),
       React.createElement(Journal17, {
         key: "journal",
         kind: "team"
       }),
-      /* home3 (Alex, 18 Nov): a spinning coin below FF Stories (and the one below the questions, coin c). */
-      coin("s"),
+      /* home5: the door video under a short heading (Discover FireFlair heading style). */
+      React.createElement("section", {
+        key: "twomin",
+        className: "ff-sect ff-tm5",
+        "aria-labelledby": "ff-tm5-h"
+      }, React.createElement("h2", {
+        id: "ff-tm5-h",
+        className: "ff-h1 ff-dx-h"
+      }, "Life at FF Team"), React.createElement(TwoMinutes20, null)),
       React.createElement(GuideQuestions11, {
         key: "guide",
         kind: "team"
       }),
-      coin("c"),
+      coin("j"),
+      React.createElement(HomeJoin, {
+        key: "join",
+        withGame: false
+      }),
       React.createElement(BusinessSupport19, {
         key: "business"
       }),
-      /* home2 (Alex, 18 Nov): the coin game sits below Business & Support. home3: a spinning coin between them. */
-      coin("j"),
-      React.createElement(HomeJoin, {
-        key: "join"
+      coin("g"),
+      React.createElement(HomeCoinGame5, {
+        key: "game"
       })
     ];
     return React.createElement("div", {

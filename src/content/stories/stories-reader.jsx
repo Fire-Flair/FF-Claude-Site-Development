@@ -278,7 +278,10 @@ function Journal17({ kind = "team" }) {
   const jrRef = useRef(null);
   useFitLine22(jrRef, "[data-fit22]", [cat]);
   return React.createElement("section", { className: "ff-sect ff-jr17", id: "ff-journal", ref: jrRef, "aria-labelledby": "ff-jr-h" },
-    React.createElement("h2", { id: "ff-jr-h", className: "ff-h1 ff-jr17-title" }, React.createElement("span", { className: "k" }, "FireFlair"), React.createElement("span", { className: "s" }, "Stories")),
+    /* home5 (Alex, 18 Nov 03:13): on FF Team the heading is "FF Stories", FF in slate black, without the word FireFlair. */
+    kind === "team"
+      ? React.createElement("h2", { id: "ff-jr-h", className: "ff-h1 ff-jr17-title ff-jr5" }, React.createElement("span", { className: "s" }, React.createElement("span", { className: "ff5" }, "FF"), " Stories"))
+      : React.createElement("h2", { id: "ff-jr-h", className: "ff-h1 ff-jr17-title" }, React.createElement("span", { className: "k" }, "FireFlair"), React.createElement("span", { className: "s" }, "Stories")),
     React.createElement("div", { className: "ff-jr17-rule", "aria-hidden": "true" }, React.createElement("i", null),
       React.createElement("svg", { viewBox: "0 0 24 24", width: "18", height: "18" }, React.createElement("path", { d: "M12 2c1 3.5 5 5.5 5 10.5A5 5 0 0 1 7 13c0-2 1-3 2-4 .3 1.3 1 2 2 2-.5-3 0-6 1-9z", fill: "currentColor" })), React.createElement("i", null)),
     React.createElement("div", { className: "ff-jr17-cats", role: "group", "aria-label": "Story categories" },

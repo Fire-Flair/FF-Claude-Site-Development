@@ -166,3 +166,23 @@
 .ff .ff-hf22 .ff-qg-title::after { position:absolute; left:0; right:0; bottom:0; width:auto; height:2px; border-radius:2px; background:linear-gradient(90deg,var(--gold,#C9A227),#F4DC8E 45%,rgba(201,162,39,.25)); }
 /* Discover FireFlair now follows the hero: the same space above it as the Launch Challenge had there */
 .ff .ff-hf22 .ff-home17 > .ff-dx { padding-top:clamp(20px,4vw,28px); }
+
+/* ==== home5 (Alex, 18 Nov 03:06): new FF Team home order; coin above Discover; two questions side by side; the coin game on its own, last ==== */
+.ff .ff-hf22 .ff-home17 > .ff-coindiv + .ff-dx { padding-top:0; }
+@media (min-width:900px) { .ff .ff-hf22 .ff-qg-grid { grid-template-columns:repeat(2,1fr); } }
+.ff .ff-hf22 .ff-join-box.ff-cg5, .ff .ff-hf22 .ff-cg5 .ff-join-box.ff-game { height:clamp(380px,100vw,420px); }
+@media (min-width:760px) { .ff .ff-hf22 .ff-cg5 .ff-join-box.ff-game { height:400px; } }
+/* home5: modules that follow each other without a coin get the same gap as a coin's gap */
+.ff .ff-hf22 .ff-home17 > .ff-sect:has(+ .ff-sect) { padding-bottom:0; margin-bottom:0; }
+.ff .ff-hf22 .ff-home17 > .ff-sect:has(+ .ff-sect) > :last-child { margin-bottom:0; }
+.ff .ff-hf22 .ff-home17 > .ff-sect + .ff-sect { padding-top:0; margin-top:clamp(30px,6vw,48px); }
+.ff .ff-hf22 .ff-home17 > .ff-sect + .ff-sect > :not(style):first-of-type,
+.ff .ff-hf22 .ff-home17 > .ff-sect + .ff-sect > style + * { margin-top:0; }
+.ff .ff-hf22 .ff-home17 > :is(.ff-hero18,.ff-welcome17):has(+ .ff-coindiv) { margin-bottom:0; }
+/* home5: question boxes match heights only when side by side */
+@media (max-width:899px) { .ff .ff-hf22 .ff-qg-q { min-height:0 !important; } }
+/* home5: the video's heading sits in its own section; the video adds no extra space of its own */
+.ff .ff-hf22 .ff-tm5 .ff-tm20 { margin:0; padding:0; }
+/* home5 (Alex 03:13): "FF Stories" heading, FF in slate black, on one line */
+.ff .ff-hf22 .ff-jr5 .s { white-space:nowrap; font-size:clamp(40px,11vw,84px); }
+.ff .ff-hf22 .ff-jr5 .s .ff5 { background:none; color:var(--color-char,#1E1F22); -webkit-text-fill-color:var(--color-char,#1E1F22); }

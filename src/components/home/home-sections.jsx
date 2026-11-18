@@ -1110,17 +1110,18 @@
     }));
   }
 
-  function HomeJoin() {
+  /* home5 (Alex, 18 Nov 03:06): the FF Team home shows Join on its own (withGame: false) and the coin game last (HomeCoinGame5). */
+  function HomeJoin({ withGame = true } = {}) {
     const { state } = useStore();
     const nav = useHomeNav();
     const member = state.auth && state.auth.status === "signedIn";
     const box = useRef(null);
-    const game = useGameReady(box);
+    const game = useGameReady(box) && withGame;
     return React.createElement("section", {
       className: "ff-sect ff-join",
       "aria-labelledby": "ff-join-h"
     }, React.createElement("div", {
-      className: "ff-join-box ff-game",
+      className: withGame ? "ff-join-box ff-game" : "ff-join-box",
       ref: box
     }, React.createElement("div", {
       className: "ff-join-in"
@@ -1137,6 +1138,23 @@
     }, React.createElement(User, {
       size: 15
     }), " ", member ? "My Profile Card" : "Join now")), game && React.createElement(QuietBoundary, null, React.createElement(Suspense, {
+      fallback: null
+    }, React.createElement(CoinDrop, {
+      area: box
+    })))));
+  }
+
+  /* home5: the coin game on its own, at the very bottom of the FF Team home. */
+  function HomeCoinGame5() {
+    const box = useRef(null);
+    const game = useGameReady(box);
+    return React.createElement("section", {
+      className: "ff-sect ff-join ff-cg5",
+      "aria-label": "Coin game"
+    }, React.createElement("div", {
+      className: "ff-join-box ff-game",
+      ref: box
+    }, game && React.createElement(QuietBoundary, null, React.createElement(Suspense, {
       fallback: null
     }, React.createElement(CoinDrop, {
       area: box
