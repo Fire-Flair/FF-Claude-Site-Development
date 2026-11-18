@@ -4,7 +4,7 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
-## v1.30
+## v1.32
 
 Profile page (Alex, 18 Nov 17:49), two parallel branches merged: `v11-phone-1749` (phone box, Let's get started) and `v11-venues-1749` (Experience). Published by a three-way merge onto the live page, so other chats' work stays.
 
