@@ -9,7 +9,7 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
 - Home (Alex, 18 Nov 15:56). The four "What is FF Team?" pillars go back to v1.20's ivory to sand (#FFFCF4 to #F3EAD5) with a burgundy #5C1220 border and burgundy titles; the burgundy version looked heavy on wide screens.
 - The "FF Team is built for getting you bookings" box is burgundy (#6E1A2C to #5C1220 to #4A0E1A) instead of plum, with the champagne title, arrows and chevron and no line before the title.
 - FFStories: the category buttons (All, How it works, Planning and booking…) are centred under the FFStories title (`styles/home-fix22.css`).
-- The natural hero photo from v1.22 is unchanged. Journey tests 48/48.
+- The natural hero photo from v1.22 is unchanged. Journey tests 48/48. Artifact version 1795017727-c908.
 
 ## v1.22
 
