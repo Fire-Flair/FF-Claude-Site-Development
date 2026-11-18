@@ -420,3 +420,55 @@
 .ff .pe2-qa-own { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(126,97,29,.14); }
 .ff .pe2-qa-panel .ff-type21 { min-width: 0; }
 .ff .pe2-qa-panel .ff-type21 input, .ff .pe2-qa-panel .ff-type21 input:focus, .ff .pe2-qa-panel .ff-type21 input:focus-visible { outline: none !important; box-shadow: none !important; }
+/* ======================= pfa (Alex 03:29) — Let's get started, Profile Card face, Media lead, Need help, Business & Support ======================= */
+/* 1. Phone number (first in Let's get started) and the WhatsApp code step: WhatsApp green, white WhatsApp mark. */
+.ff .ff-gb21.shine.ff-wa-pfa { background: linear-gradient(118deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.22) 44%, rgba(255,255,255,0) 58%), linear-gradient(165deg, #25D366 0%, #1BAA52 45%, #128C3E 100%);
+  border-color: #168A42; box-shadow: 0 1px 0 rgba(255,255,255,.5) inset, 0 -1px 0 rgba(0,60,20,.25) inset, 0 14px 28px -16px rgba(18,110,52,.75); }
+.ff .ff-gb21.shine.ff-wa-pfa::before { border-color: rgba(255,255,255,.4); }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-lb, .ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-ds, .ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-lb svg { color: #fff; }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-ds { color: rgba(255,255,255,.95); text-shadow: 0 1px 1px rgba(0,60,20,.25); }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-val { color: #fff; }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-val svg { color: #fff; stroke: #fff; }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-in, .ff .ff-gb21.shine.ff-wa-pfa .ff-dial26 { border-color: rgba(0,70,25,.35); }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-in:focus, .ff .ff-gb21.shine.ff-wa-pfa .ff-dial26:focus-within { border-color: #fff; box-shadow: 0 0 0 4px rgba(255,255,255,.35); }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-btn { background: #0B0B0C; border-color: #0B0B0C; color: #fff; }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-btn:disabled { background: rgba(255,255,255,.28); border-color: rgba(255,255,255,.45); color: rgba(255,255,255,.85); }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-linkbtn { color: #fff; }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-btn:focus-visible { outline-color: #fff; }
+
+/* 2. Builder Profile Card face: headline close under the name, a small gap before Professions; the "+" inside the
+   photo circle; a bust silhouette (not a camera) while there is no photo. */
+.ff #ff-sec-card .ff-cardin.headline { margin-top: 0 !important; margin-bottom: 12px; }
+.ff #ff-sec-card .ff-photobtn .ff-photoplus, .ff #ff-sec-card .ff-photobtn .ff-photoadd { right: 13px; bottom: 13px; width: 26px; height: 26px; box-shadow: 0 0 0 2px rgba(11,11,12,.85), 0 3px 8px rgba(0,0,0,.4); }
+.ff #ff-sec-card .ff-photobtn .ff-photoplus svg { width: 15px; height: 15px; }
+.ff #ff-sec-card .ff-photobtn .ff-photoadd svg { width: 14px; height: 14px; }
+.ff #ff-sec-card .ff-photobtn .ff-photoempty svg { display: none !important; }
+.ff #ff-sec-card .ff-photobtn .ff-photoempty::before { content: ""; position: absolute; inset: 5px; border-radius: 50%; background: radial-gradient(circle at 38% 30%, #26262B, #0A0A0C); }
+.ff #ff-sec-card .ff-photobtn .ff-photoempty::after { content: ""; position: absolute; left: 50%; bottom: 6px; width: 74%; height: 74%; transform: translateX(-50%); background: currentColor; opacity: .85;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8.4' r='4.6'/%3E%3Cpath d='M2.6 24 V21.2 C2.6 17.4 6.2 15.2 12 15.2 C17.8 15.2 21.4 17.4 21.4 21.2 V24 Z'/%3E%3C/svg%3E") center bottom / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8.4' r='4.6'/%3E%3Cpath d='M2.6 24 V21.2 C2.6 17.4 6.2 15.2 12 15.2 C17.8 15.2 21.4 17.4 21.4 21.2 V24 Z'/%3E%3C/svg%3E") center bottom / contain no-repeat;
+  border-radius: 0 0 40% 40%; }
+.ff #ff-sec-card .ff-photobtn .ff-photoempty { overflow: hidden; border-radius: 50%; }
+.ff #ff-sec-card .ff-photobtn:hover .ff-photoempty { transform: none; }
+
+/* 3. Media: the first box is the profile photo (gold edge, a person mark), then a thin line before the rest. */
+.ff .ff-m19-t.pfa-lead { overflow: hidden; }
+.ff .ff-m19-t.pfa-lead::after { content: ""; position: absolute; inset: 0; z-index: 1; border: 3px solid #C9A227; border-radius: inherit; corner-shape: squircle; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.55); }
+.ff .ff-m19-t.add.pfa-lead { border-style: solid; border-color: transparent; }
+.ff .ff-m19-t .pfa-mark { position: absolute; top: 5px; left: 5px; z-index: 2; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 8px; corner-shape: squircle;
+  background: #C9A227; color: #0B0B0C; box-shadow: 0 2px 6px rgba(0,0,0,.3); pointer-events: none; }
+.ff .ff-m19-t.pfa-lead .b { z-index: 2; }
+.ff .ff-m19 > .pfa-sep { flex: none; align-self: stretch; width: 1px; margin: 8px 2px; background: rgba(126,97,29,.5); }
+
+/* 4. Need help?: a clear gap after Save; heading and the line; Book a meeting a small centred box, never full screen. */
+.ff .ff-help34 { margin-top: 44px; }
+.ff .ff-help34 .ff-help34-t { display: grid; gap: 4px; min-width: 0; }
+.ff .ff-help34 .ff-help34-h { margin: 0; font: 700 16px/1.25 var(--sans); color: #2A2620; }
+.ff .ff-help34 .ff-help34-t .ff-way17-line { order: 0; font-weight: 500; color: #4A4236; }
+.ff .ff-help34 .ff-way17-int > .ff-help34-t { order: -1; }
+@media (min-width: 720px) { .ff .ff-help34 .ff-way17-int > .ff-help34-t { grid-column: 1; grid-row: 1; } }
+.ff .ff-scrim.center:has(.ff-ib17) { align-items: center; padding: 16px; }
+.ff .ff-sheet.center:has(.ff-ib17) { width: 100%; max-width: 420px; height: auto; max-height: calc(100dvh - 32px); margin: 0 auto; border-radius: 22px; corner-shape: squircle; }
+
+/* 5. Business & Support at the bottom of every FF Team page (Network, Bookings, Profile, someone's profile). */
+.ff .ff-biz-pfa { margin-top: 36px; }
