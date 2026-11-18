@@ -11,7 +11,7 @@
 .ff .ff-hf22 .ff-jr17 { text-align:left; }
 .ff .ff-hf22 .ff-jr17-title { align-items:flex-start; text-align:left; }
 .ff .ff-hf22 .ff-jr17-rule { justify-content:flex-start; margin-left:0; margin-right:auto; }
-.ff .ff-hf22 .ff-jr17-cats { justify-content:flex-start; }
+.ff .ff-hf22 .ff-jr17-cats { justify-content:center; } /* centred under the FFStories title (Alex, 18 Nov 15:56) */
 
 /* Story cards: the category and date stay on one line (shrunk to fit if needed) */
 .ff .ff-hf22 .ff-jr17-card i { white-space:nowrap; letter-spacing:.1em; }
