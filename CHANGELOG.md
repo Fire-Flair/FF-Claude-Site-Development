@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.57
+
+FF Team home order (Legolas's recommendation, approved by Alex). Branch merged: `p2-home5`.
+
+- `team-home.jsx`, `home-sections.jsx`, `home-fix22.css`, `tm20.css`: order is Welcome hero (+ Welcome back), Discover, the "built for getting you bookings" box, Launch Challenge, FF Stories, the video under "Life at FF Team" (16:9 on phones), Can FF Team help you?, Join / Your FireFlair, Business & Support, then the coin game in its own box at the very bottom. Five spinning coins with equal gaps; the page is about 630px shorter on phones.
+- `growth-and-terms.jsx`: the two near-duplicate questions are one, "Do you work in events or hospitality?", with five answers.
+- `stories-reader.jsx`: the Stories heading on FF Team reads "FF Stories" with "FF" in charcoal.
+
 ## v17.56
 
 Artifact version 1794971271-687d.
