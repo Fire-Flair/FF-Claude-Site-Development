@@ -606,7 +606,23 @@ const venueIcon19 = (r) => {
 };
 
 
-function VenueCard19({ record: r, onClick }) {
+function VenueCard19({ record: r0, onClick }) {
+  /* p2/pubprof: an older Experience record shows as a venue: the employer is the venue, the role and dates its line. */
+  const xp = r0 && r0.category === "experience";
+  const xd = (xp && r0.details) || {};
+  const r = xp && xd.employer ? { ...r0, name: xd.employer, address: xd.location || "", description: [xd.start, xd.end].filter(Boolean).join(" to ") } : r0;
+  if (xp) return (
+    <div className="ff-vc19 hand" role={onClick ? "button" : "group"} tabIndex={onClick ? 0 : undefined}
+      aria-label={onClick ? `${r.name}. Open details` : undefined} onClick={onClick} onKeyDown={onClick ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onClick(); } } : undefined}>
+      <span className="ic" aria-hidden="true"><Briefcase size={22} strokeWidth={1.8} /></span>
+      <span className="bd">
+        <span className="ty">{xd.employer ? r0.name : "Experience"}</span>
+        <b>{r.name}</b>
+        {r.address && <span className="ad">{r.address}</span>}
+        {String(r.description || "").trim() && <span className="nt">{r.description}</span>}
+      </span>
+    </div>
+  );
   const hand = !r.place;
   const Icon = venueIcon19(r);
   const fav = venueKind19(r) === "favourite";

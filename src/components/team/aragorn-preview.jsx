@@ -12,7 +12,7 @@ function aragornOpt() {
 }
 
 /* The attribute categories edited as lists (the builder's RANK_CATS19 minus professions). */
-const ARA_ATTR_CATS = ["skills", "interests", "languages", "qualifications", "experience"];   /* public order (PUB_ORDER) */
+const ARA_ATTR_CATS = ["skills", "interests", "qualifications"];   /* public order (PUB_ORDER); p2/pubprof: no Languages, Experience is under Venues */
 
 /* The small squircle pencil beside a public section heading (option 1). */
 function AraPencil({ label, onClick }) {
@@ -110,12 +110,12 @@ function AragornTabs({ person, opt }) {
   const reviews = reviewsOf(state, person);
   const profsAll = rankedRecords(records.professions || []);
   const profs = profsAll.filter(r => !r.hidden && !r.proposed);
-  const venuesAll = records.venues || [];
+  const venuesAll = SHOW_VENUES_PROFILE17 ? [...(records.venues || []), ...(records.experience || [])] : (records.venues || []);
   const venues = venuesAll.filter(r => !r.hidden && !r.proposed);
-  const attrs = attributesOf(state, person, cats).filter(it => it.category !== "locations" && it.category !== "venues");
+  const attrs = attributesOf(state, person, cats).filter(it => !["locations", "venues", "experience", "languages"].includes(it.category));
   const tabs = [
     { key: "overview", label: "Overview" },
-    { key: "services", label: "Bookings", count: services.length },
+    { key: "services", label: "Packages", count: services.length },
     { key: "teams", label: "Team", count: teams.length + tCos.length + tNet.length },
     { key: "reviews", label: "Reviews", count: reviews.length },
   ];
@@ -152,7 +152,7 @@ function AragornTabs({ person, opt }) {
           : <AttrGroups items={attrs} mem={mem} onOpen={(k) => setAttrCat(k)} />}
       </section>
     )}
-    {SHOW_VENUES17 && (venues.length > 0 || opt === 3) && (
+    {SHOW_VENUES_PROFILE17 && (venues.length > 0 || opt === 3) && (
       <section className="ff-pp ff-pp21" aria-labelledby="ara-ven-h">
         <AraHead id="ara-ven-h" title="Venues" action={pen("venues", "Venues") || plus("venues", "Venues")} />
         {opt === 3 && adding === "venues"
@@ -222,7 +222,7 @@ function AragornTabs({ person, opt }) {
 
   const pub = opt !== 2 || mode === "preview";
   return (
-    <div className="ara-wrap">
+    <div className="ara-wrap" style={cardTone17(cardThemeOf17(state, person))}>
       <style>{ARAGORN_CSS}</style>
       <style>{RANK_CSS17}</style>
       {opt === 2 && (

@@ -234,7 +234,8 @@ function FireFlairIntroductions17({ person }) {
   const memo = useMemo(() => person.id === "me" ? null : { source: "preview", paragraphs: fiCompose17(fiSnapshot17(state, person)) }, [person.id]);
   const intro = fiFor17(state, person, memo);
   if (!intro || !(intro.paragraphs || []).length) return null;
-  return fiH("section", { className: "ff-pp ff-intro", "aria-labelledby": "ff-intro-h" },
+  /* p2/pubprof: its own segment, set apart from Attributes and Venues by a divider and a panel. */
+  return fiH("section", { className: "ff-pp ff-intro ff-intro-seg", "aria-labelledby": "ff-intro-h" },
     fiH("h2", { id: "ff-intro-h", className: "ff-about-h" }, FI_HEADING),
     intro.paragraphs.map((p, i) => fiH("p", { key: i }, p.text)),
     intro.source === "automatic" && !intro.edited && fiH("small", { className: "ff-intro-note" }, "AI-assisted summary of this profile."));
@@ -480,9 +481,11 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
   const reviews = reviewsOf(state, person);
   const records = recordsForPerson(state, person);
   const profs = (records.professions || []).filter(r => !r.hidden && !r.proposed);
-  const venues = SHOW_VENUES17 ? (records.venues || []).filter(r => !r.hidden && !r.proposed) : [];
-  /* Attributes: every other category as a summary card (Work locations are on Bookings; Venues have their own row). */
-  const attrs = attributesOf(state, person, cats).filter(it => it.category !== "locations" && it.category !== "venues");
+  /* p2/pubprof: Experience is now Venues: venue records and the older Experience records show together under Venues. */
+  const venues = SHOW_VENUES_PROFILE17 ? [...(records.venues || []), ...(records.experience || [])].filter(r => !r.hidden && !r.proposed) : [];
+  /* Attributes: every other category as a summary card (Work locations are on Bookings; Venues have their own section;
+     Languages are on the Profile Card, so they are not in the rail). */
+  const attrs = attributesOf(state, person, cats).filter(it => !["locations", "venues", "experience", "languages"].includes(it.category));
   const [openRec, setOpenRec] = useState(null);
   const [allAttrs, setAllAttrs] = useState(false);
   const [attrCat, setAttrCat] = useState(null);
@@ -500,14 +503,14 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
     ? <div className="ff-svslide std"><ServicePoster svc={it.svc} price /></div>
     : <div className="ff-svslide own"><OwnServiceCard item={it.item} /></div>;
   return (
-    <div className="ff-ptabs-wrap">
+    <div className="ff-ptabs-wrap" style={cardTone17(cardThemeOf17(state, person))}>
       <ProfileH117 person={person} />
       <ProfileTabs tabs={tabs} active={tab} onChange={setTab} />
       <div role="tabpanel" id="ff-tabpanel" aria-labelledby={`ff-tab-${tab}`} className="ff-tabpanel" tabIndex={0}>
         {tab === "overview" && (<>
           <style>{RANK_CSS17}</style>
           {/* v17.21: the v17.15 look is back — big profession tiles, About Me, the Attributes cards, then Venues. */}
-          {aboutFirst && <AboutMeBlock text={person.id === "me" ? state.profile.about : person.about} />}
+          {aboutFirst && <AboutMeBlock big text={person.id === "me" ? state.profile.about : person.about} />}
           {profs.length > 0 && (
             <section className="ff-pp ff-pp21" aria-labelledby="ff-profs-h">
               <div className="ff-pp-head"><h2 id="ff-profs-h" className="ff-about-h">Professions</h2></div>
@@ -515,7 +518,7 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
                 extra={onStaff ? (r) => staffRateP17(state, person.tag, r.name) != null ? <span className="ff-agrp-rate">Preferred rate {gbp17(staffRateP17(state, person.tag, r.name))}/hour</span> : null : undefined} />
             </section>
           )}
-          {!aboutFirst && <AboutMeBlock text={person.id === "me" ? state.profile.about : person.about} />}
+          {!aboutFirst && <AboutMeBlock big text={person.id === "me" ? state.profile.about : person.about} />}
           {attrs.length > 0 && (
             <section className="ff-pp ff-pp21" aria-labelledby="ff-pp-h">
               <div className="ff-pp-head">

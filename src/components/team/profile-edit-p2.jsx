@@ -22,8 +22,9 @@ const PE2_CATS = PROFESSION_CATEGORIES.map(c => ({
   key: c.key, ranked: c.key === "Bar",
   list: c.key === "Bar" ? PE2_LADDER : [...c.suggested].sort((a, b) => a.localeCompare(b)),
 }));
-const PE2_ATTRS = ["skills", "interests", "languages", "qualifications", "experience"];
-const PE2_TITLES = { profs: "Professions", attrs: "Attributes" };
+/* p2/pubprof: Languages live on the Profile Card and Experience is now under Venues, so neither is an Attribute here. */
+const PE2_ATTRS = ["skills", "interests", "qualifications"];
+const PE2_TITLES = { profs: "Professions", attrs: "Attributes", venues: "Venues" };
 
 /* The member's professions and add / remove. Removing goes by record id (never by name), so a hidden or
    renamed record with the same name can't be hit by mistake; adding a name that is already there (hidden or
@@ -168,7 +169,7 @@ function PE2ProfEd() {
 /* Attributes editor: one category at a time, its entries as chips, and the type box (type, press Enter). */
 function PE2AttrEd({ start }) {
   const { state, dispatch } = useStore();
-  const keys = PE2_ATTRS.filter(k => BASE_CATEGORIES[k] && (k !== "experience" || recsOf(state.profile, k).length));
+  const keys = PE2_ATTRS.filter(k => BASE_CATEGORIES[k]);
   const [k, setK] = useState(keys.includes(start) ? start : keys[0]);
   const def = BASE_CATEGORIES[k];
   const rows = rankedRecords(recsOf(state.profile, k)).filter(r => !r.hidden && !r.proposed);
@@ -227,8 +228,12 @@ function PE2Pencil({ label, onClick }) {
 function PE2Overview({ records }) {
   const [sheet, setSheet] = useState(null);
   const [start, setStart] = useState(null);
+  const [openVen, setOpenVen] = useState(null);
   const profs = rankedRecords(records.professions || []).filter(r => !r.hidden && !r.proposed);
-  const cats = PE2_ATTRS.filter(k => BASE_CATEGORIES[k] && (k !== "experience" || (records.experience || []).length));
+  const cats = PE2_ATTRS.filter(k => BASE_CATEGORIES[k]);
+  /* Venues: venue records and the older Experience records together. */
+  const venAll = [...(records.venues || []), ...(records.experience || [])];
+  const venShown = venAll.filter(r => !r.hidden && !r.proposed);
   const openAttr = (k) => { setStart(k); setSheet("attrs"); };
   return (
     <>
@@ -260,10 +265,22 @@ function PE2Overview({ records }) {
           <span className="ff-acar-end" aria-hidden="true" />
         </div>
       </section>
-      <PE2Sheet open={!!sheet} title={PE2_TITLES[sheet] || ""} wide={sheet === "profs"} onClose={() => setSheet(null)}>
+      {SHOW_VENUES_PROFILE17 && (
+        <section className="ff-pp ff-pp21 pp-sec" aria-labelledby="pe2-ven-h">
+          <div className="ff-pp-head"><h2 id="pe2-ven-h" className="ff-about-h">Venues</h2><PE2Pencil label="Venues" onClick={() => setSheet("venues")} /></div>
+          {venShown.length
+            ? <div className="ff-ven19"><style>{VEN_CSS17}</style><VenueRows19 items={venShown} /></div>
+            : <button type="button" className="pe2-empty pe2-empty-ven" aria-label="Edit Venues" onClick={() => setSheet("venues")}>
+                <span className="pe2-empty-pen" aria-hidden="true"><Pencil size={18} strokeWidth={2} /></span>
+              </button>}
+        </section>
+      )}
+      <PE2Sheet open={!!sheet && !openVen} title={PE2_TITLES[sheet] || ""} wide={sheet === "profs"} onClose={() => setSheet(null)}>
         {sheet === "profs" && <PE2ProfEd />}
         {sheet === "attrs" && <PE2AttrEd start={start} />}
+        {sheet === "venues" && <VenuesEditor19 items={venAll} onOpen={(r) => setOpenVen(r)} />}
       </PE2Sheet>
+      <GenericAttributeCardCreator open={!!openVen} record={openVen} def={openVen && BASE_CATEGORIES[openVen.category]} category={openVen && openVen.category} onClose={() => setOpenVen(null)} />
     </>
   );
 }
