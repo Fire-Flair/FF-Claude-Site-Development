@@ -4,6 +4,17 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.19
+
+- Gold title lines (Alex, 18 Nov 14:49): the vertical gold line beside every section title and profile label now has
+  fully squared ends (no rounded top or bottom), on every page and width (`src/styles/titles2.css`).
+- Network page: "Explore our network" drops its gold underline for a longer vertical gold line that runs down beside the
+  title and its description and fades out at the bottom. The description now sits directly under the title text, right
+  of the line, and the title sits a little lower on the page. "Our professionals" and "FF Event Directory" use the same
+  fading line with their descriptions. New `LinedHead20` in `src/components/staff/network-directory.jsx`, styles
+  `.ff-tl20` in `titles2.css`. "Your bookings" and "Your profile" keep their underline. No wording changes.
+- Artifact version 1795014110-5553.
+
 ## v1.18
 
 - CV upload now reads the CV and asks before adding anything (Alex, 18 Nov 13:58). Built from the live FF Team flow:
