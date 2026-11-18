@@ -128,17 +128,6 @@ const pe2Fit = (t) => { const L = Math.max(...String(t).split(/\s+/).map(w => w.
 /* The category's mark: the Bar ladder's steps, Other a spark (GroupIcon gives Other the Front of House people icon). */
 const pe2CatIcon = (k, size) => k === "Bar" ? <PE2StairMark size={size + 2} /> : k === "Other" ? <Sparkles size={size} strokeWidth={1.6} /> : <GroupIcon group={k} size={size} color="currentColor" />;
 
-/* One profession inside a category box. The Bar ladder shows its step as a rising bar. */
-function PE2CatItem({ name, on, onClick, step }) {
-  return (
-    <button type="button" className={"pe2-ci" + (on ? " on" : "")} aria-pressed={on} onClick={onClick}>
-      {step ? <span className="pe2-ci-step" style={{ "--h": step }} aria-label={`Step ${step} of 5`}><i /></span> : null}
-      <span className="pe2-ci-nm">{name}</span>
-      <span className="pe2-ci-mk" aria-hidden="true">{on ? <Check size={13} strokeWidth={2.8} /> : <Plus size={13} strokeWidth={2.4} />}</span>
-    </button>
-  );
-}
-
 /* FireFlair asks which category a typed profession belongs to when it can't place it (Other included). */
 function PE2Which({ P }) {
   const r = P.mine.find(x => !professionCategory(x.name, x.displayCategory));
@@ -177,6 +166,7 @@ function PE2ProfCats({ P }) {
   };
   const [openCat, setOpenCat] = useState(null);
   const cats5 = [...PE2_CATS.filter(c => c.key !== "Other"), { key: "Other", list: [] }].sort((a, b) => CATEGORY_ORDER.indexOf(a.key) - CATEGORY_ORDER.indexOf(b.key));
+  const openIdx = cats5.findIndex(c => c.key === openCat);
   return (
     <div className="pe2-pc">
       <form className={"ff-type21 pe2-pc-type" + (q.trim() ? " has" : "")} onSubmit={add}>
@@ -191,22 +181,28 @@ function PE2ProfCats({ P }) {
       )}
       <PE2Which P={P} />
       {/* prof-grid (Alex, 18 Nov 21:34, option 5): every category on screen as an icon tile (eight, four across), with how
-          many of its professions are chosen; tapping a tile opens that category in a pop-up to pick as many as you like
-          or add your own under it. */}
-      <div className="pe2-grid" role="list" aria-label="Profession categories">
-        {cats5.map(c => {
+          many of its professions are chosen.
+          prof-inline (Alex, 18 Nov 21:49): no pop-up. Tapping a tile opens its professions in a panel straight under that
+          tile's row, the full width of the grid (as an opened Grow with FireFlair card on Bookings); tapping the same tile
+          closes it, tapping another switches. */}
+      <div className="pe2-grid" role="group" aria-label="Profession categories">
+        {cats5.map((c, i) => {
           const n = c.list.filter(x => P.has(x)).length + P.ownIn(c.key).length;
+          const on = openCat === c.key;
+          const rowEnd = Math.min(cats5.length, (Math.floor(openIdx / PE2_GRID_COLS) + 1) * PE2_GRID_COLS) - 1;
           return (
-            <button key={c.key} type="button" role="listitem" className={"pe2-gt" + (n ? " has" : "")} aria-haspopup="dialog" onClick={() => setOpenCat(c.key)}
-              aria-label={`${groupLabel17(c.key)}${n ? `, ${n} chosen` : ""}`}>
-              <span className="ic" aria-hidden="true">{pe2CatIcon(c.key, 22)}</span>
-              <span className="nm" style={{ fontSize: pe2TileFs(groupLabel17(c.key)) }}>{groupLabel17(c.key)}</span>
-              {n > 0 && <span className="ct" aria-hidden="true">{n}</span>}
-            </button>
+            <React.Fragment key={c.key}>
+              <button type="button" className={"pe2-gt" + (n ? " has" : "") + (on ? " open" : "")} aria-expanded={on} aria-controls={on ? "pe2-cat-panel" : undefined}
+                  onClick={() => setOpenCat(on ? null : c.key)} aria-label={`${groupLabel17(c.key)}${n ? `, ${n} chosen` : ""}`}>
+                  <span className="ic" aria-hidden="true">{pe2CatIcon(c.key, 22)}</span>
+                  <span className="nm" style={{ fontSize: pe2TileFs(groupLabel17(c.key)) }}>{groupLabel17(c.key)}</span>
+                  {n > 0 && <span className="ct" aria-hidden="true">{n}</span>}
+              </button>
+              {openIdx >= 0 && i === rowEnd && <PE2CatPanel key={"p-" + openCat} P={P} c={cats5[openIdx]} />}
+            </React.Fragment>
           );
         })}
       </div>
-      {openCat && <PE2CatSheet P={P} c={cats5.find(c => c.key === openCat)} onClose={() => setOpenCat(null)} />}
     </div>
   );
 }
@@ -214,12 +210,15 @@ function PE2ProfCats({ P }) {
 /* prof-grid: a tile label never splits a word; the longest word sets a smaller size (Entertainment on a phone). */
 const pe2TileFs = (t) => { const L = Math.max(...String(t).split(/\s+/).map(w => w.length)); return L >= 13 ? "clamp(9.5px,2.6vw,13.5px)" : L >= 10 ? "clamp(10.5px,2.9vw,13.5px)" : undefined; };
 
-/* prof-grid: one category's professions in a pop-up. Tap to add or remove; "Add your own" puts a typed profession
-   under this category (Other included), with the same suggestions as the main type box. */
-function PE2CatSheet({ P, c, onClose }) {
+/* prof-inline (Alex, 18 Nov 21:49): one category's professions in a panel under the grid row, no pop-up. The professions
+   are chips that wrap across the panel (the Bar ladder keeps its order); the member's own professions in this category
+   show as chosen chips; "Add your own" puts a typed profession under this category (a listed name stays that profession). */
+const PE2_GRID_COLS = 4;
+function PE2CatPanel({ P, c }) {
   const [q, setQ] = useState("");
   if (!c) return null;
   const mineHere = P.ownIn(c.key);
+  const label = groupLabel17(c.key);
   const add = (e) => {
     e.preventDefault();
     const t = q.trim(); if (!t) return;
@@ -229,22 +228,33 @@ function PE2CatSheet({ P, c, onClose }) {
     setQ("");
   };
   return (
-    <Sheet open onClose={onClose} title={groupLabel17(c.key)}>
-      <div className="pe2-cs">
-        {(c.list.length > 0 || mineHere.length > 0) && (
-          <div className="pe2-cs-l" role="group" aria-label={groupLabel17(c.key)}>
-            {c.list.map((x, i) => <PE2CatItem key={x} name={x} on={P.has(x)} step={c.ranked ? i + 1 : 0} onClick={() => P.toggle(x)} />)}
-            {mineHere.map(r => <PE2CatItem key={r.id} name={r.name} on onClick={() => P.remove(r)} />)}
-          </div>
-        )}
-        <form className={"ff-type21 pe2-pc-type" + (q.trim() ? " has" : "")} onSubmit={add}>
-          <input type="text" value={q} maxLength={PROF_MAX_LEN} autoComplete="off" spellCheck={false} enterKeyHint="enter" placeholder="Add your own" aria-label={`Add your own ${groupLabel17(c.key)} profession`}
-            onChange={(e) => setQ(e.target.value)} />
-          <button type="submit" className="ff-type21-key" aria-label="Add" tabIndex={-1}><span>Enter</span><CornerDownLeft21 size={15} strokeWidth={2.2} aria-hidden="true" /></button>
-        </form>
-        <button type="button" className="ff-btn primary wide pe2-cs-done" onClick={onClose}><Check size={15} /> Done</button>
-      </div>
-    </Sheet>
+    <div id="pe2-cat-panel" className={"pe2-cp" + (c.ranked ? " bar" : "")} role="region" aria-label={label}>
+      <div className="pe2-cp-h"><span className="ic" aria-hidden="true">{pe2CatIcon(c.key, 18)}</span><span className="t" style={{ fontSize: pe2CpFs(label) }}>{label}</span></div>
+      {(c.list.length > 0 || mineHere.length > 0) && (
+        <div className="pe2-cp-l" role="group" aria-label={label}>
+          {c.list.map((x, i) => <PE2Chip key={x} name={x} on={P.has(x)} step={c.ranked ? i + 1 : 0} onClick={() => P.toggle(x)} />)}
+          {mineHere.map(r => <PE2Chip key={r.id} name={r.name} on onClick={() => P.remove(r)} />)}
+        </div>
+      )}
+      <form className={"ff-type21 pe2-pc-type pe2-cp-type" + (q.trim() ? " has" : "")} onSubmit={add}>
+        <input type="text" value={q} maxLength={PROF_MAX_LEN} autoComplete="off" spellCheck={false} enterKeyHint="enter" placeholder="Add your own" aria-label={`Add your own ${label} profession`}
+          onChange={(e) => setQ(e.target.value)} />
+        <button type="submit" className="ff-type21-key" aria-label="Add" tabIndex={-1}><span>Enter</span><CornerDownLeft21 size={15} strokeWidth={2.2} aria-hidden="true" /></button>
+      </form>
+    </div>
+  );
+}
+/* The panel title shrinks for a long word (Entertainment) instead of splitting it. */
+const pe2CpFs = (t) => { const L = Math.max(...String(t).split(/\s+/).map(w => w.length)); return L >= 13 ? "clamp(14px,4.2vw,18px)" : undefined; };
+
+/* prof-inline: a compact chip; chosen is burgundy with gold text and a tick, not chosen is white with a "+". */
+function PE2Chip({ name, on, onClick, step }) {
+  return (
+    <button type="button" className={"pe2-chip" + (on ? " on" : "")} aria-pressed={on} onClick={onClick}>
+      {step ? <span className="pe2-ci-step" style={{ "--h": step }} aria-label={`Step ${step} of 5`}><i /></span> : null}
+      <span className="nm">{name}</span>
+      <span className="mk" aria-hidden="true">{on ? <Check size={14} strokeWidth={2.8} /> : <Plus size={14} strokeWidth={2.4} />}</span>
+    </button>
   );
 }
 
