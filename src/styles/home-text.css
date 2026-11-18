@@ -30,7 +30,8 @@
 @media (min-width:760px) { .ff .ff-hf22.ff-home-c4 .ff-dx-panel { padding-top:12px !important; } .ff .ff-hf22.ff-home-c4 .ff-dx-intro { padding-top:16px !important; } }
 
 /* ---------- 1-2-3 picture wells: deeper champagne instead of rosé ---------- */
-.ff .ff-hf22.ff-home-c4 .ff-dx-panel .ff-cta17 .ph { background:var(--color-champagne-deep,#DCCB9F) !important; }
+.ff .ff-hf22.ff-home-c4 .ff-dx-panel .ff-cta17 .ph,
+.ff .ff-hf22.ff-home-c4 .ff-dx-panel .ff-st21 .ph { background:var(--color-champagne-deep,#DCCB9F) !important; }
 
 /* ---------- intro lines under section titles (home intro, Launch Challenge, FF Party Launch Event) ---------- */
 .ff .ff-hf22 .ff-dx-tag { max-width:62ch; }
