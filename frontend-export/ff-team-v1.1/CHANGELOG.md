@@ -4,6 +4,15 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.70 (draft: buttons)
+
+Buttons under the Profile Card on someone else's profile, back to the earlier layout (Alex, 18 Nov 21:56). `src/components/team/network.jsx` (`PublicProfile` actions), `src/shell/index.html` (v1.70 block at the end of the style sheet).
+
+- Signed out: Back is the full width of the Profile Card on its own row (the same `ff-pback` Back bar the signed-in view uses), then one row of Join team (left) and Share (right), equal halves, the row the card's width. The in-row Back button (`ff-pub-back11`, the "Back | Join team | Share" row) is gone.
+- Share is olive green `#5F6E33` with cream text and the WhatsApp logo in cream `#FFF8E6` (contrast 5.27:1), border `#4A5627`, hover `#56642E`. Same in the signed-in grid (Back on top, then Add to network | Share | Ask | Availability; no buttons removed).
+- Same on phone, iPad and desktop: at 390, 820 and 1280 the Back bar and the Join team | Share row line up with the card's edges; labels stay on one line.
+- Checked: `npm run check`, `npm run build`, screenshots signed out at 390, 820, 1280 and signed in (DEV · complete profile) at 390 of `#/ff-team/simao`; no console errors.
+
 ## v1.69
 
 Profile Packages tab, in the profile builder and on a public profile (Alex, 18 Nov 20:51). New `team/profile-packages.jsx`, `styles/profile-packages.css`; `team/profile-edit-tabs.jsx`, `team/introductions.jsx`, `team/public-profile.jsx` (CoverFlow), `styles/p12.css`, `manifest.json`.

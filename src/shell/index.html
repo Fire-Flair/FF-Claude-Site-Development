@@ -132,6 +132,16 @@ window.lucide || document.write('<script src="https://cdn.jsdelivr.net/npm/lucid
 @media (min-width:760px){.ff .ff-ptabs-wrap::before{height:48px;margin:26px 0 22px;background-size:44px 44px,100% 1px;background-image:url(ffasset:img/a76f52c80cd8d6b4.webp),linear-gradient(90deg,transparent 0,#CDB46C 14%,#CDB46C calc(50% - 34px),transparent calc(50% - 34px),transparent calc(50% + 34px),#CDB46C calc(50% + 34px),#CDB46C 86%,transparent 100%)}}
 .ff .ff-ptabs-wrap > #ff-tabpanel#ff-tabpanel{padding-top:24px !important}
 .ff #ff-tabpanel > section.ff-about:first-of-type{border:1px solid #E2D3A8 !important;border-radius:18px !important;corner-shape:squircle;background:#FFFCF4 !important}
+
+/* v1.70 profile buttons (Alex, 18 Nov 21:56): full-width Back on its own row above; then Join team | Share, equal halves,
+   the Profile Card's width. Share is olive (#5F6E33, cream text 5.27:1) with the WhatsApp logo, signed in and signed out. */
+.ff .ff-pp-other .ff-pub-acts{max-width:none;width:100%}
+.ff .ff-pub-joinrow:not(.solo){grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important}
+.ff .ff-pub-joinrow > .ff-btn,.ff .ff-pub-joinrow > .ff-csm-btn{min-height:48px;height:48px;border-radius:14px;corner-shape:squircle;white-space:nowrap;box-sizing:border-box}
+.ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11,.ff .ff-pub-grid11 > .ff-csm-btn.ff-pub-wa11{background:#5F6E33 !important;background-image:none !important;color:#FFF8E6 !important;border:1px solid #4A5627 !important;box-shadow:0 4px 10px -8px rgba(50,60,20,.75) !important;text-shadow:none !important}
+.ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11 svg,.ff .ff-pub-grid11 > .ff-csm-btn.ff-pub-wa11 svg{color:#FFF8E6 !important;fill:#FFF8E6 !important}
+.ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11:hover,.ff .ff-pub-grid11 > .ff-csm-btn.ff-pub-wa11:hover{background:#56642E !important}
+.ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11:focus-visible,.ff .ff-pub-grid11 > .ff-csm-btn.ff-pub-wa11:focus-visible{outline:2px solid #5C1220;outline-offset:2px}
 </style>
 </head>
 <body>
