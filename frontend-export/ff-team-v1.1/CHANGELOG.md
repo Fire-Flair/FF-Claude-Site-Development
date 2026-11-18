@@ -6,7 +6,7 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
 
 ## v1.13
 
-- Testing only (Alex, 18 Nov 12:59): the log-in sheet has DEV sign-ins again so every FF Team screen can be tested — "DEV · complete profile" (Alexander Gagnon with the demo data, notifications and asks), "DEV · join from invite" (arrives from FFTeam.uk/join/alex424) and "DEV · new member" (empty profile). They are marked in `landing-shell.jsx` and must be removed before go-live. Journey tests 48/48.
+- Testing only (Alex, 18 Nov 12:59): the log-in sheet has DEV sign-ins again so every FF Team screen can be tested — "DEV · complete profile" (Alexander Gagnon with the demo data, notifications and asks), "DEV · join from invite" (arrives from FFTeam.uk/join/alex424) and "DEV · new member" (empty profile). They are marked in `landing-shell.jsx` and must be removed before go-live. Journey tests 48/48. Artifact version 1795007371-ec41.
 
 ## v1.12
 
