@@ -2,7 +2,7 @@
    p2/pbuild (18 Nov 2026): the own-profile edit page, below Media, looks like the finished profile.
    p2/pfb: Professions have no pencil — a card opens its own editor (level, description, media).
    pb-professions: no pop-up; with no professions the category boxes are listed in the Professions area, and once there
-   are professions a "+" card at the end opens the add flow (PROF_ADD_MODE) under the row. Every Attribute card shows even when empty, as a placeholder card with a pencil; a pencil opens the
+   are professions a "+" card at the end opens the same boxes under the row. Every Attribute card shows even when empty, as a placeholder card with a pencil; a pencil opens the
    Light sheet editor (approved editor option 1).
    Q&A sits above Save, always open, answered inline. Ported from the p2/profpick drafts; reads and writes the real records. */
 
@@ -40,13 +40,10 @@ function usePE2Profs() {
   return { mine, has: (n) => !!find(n), toggle, remove, catOf, ownIn, dispatch };
 }
 
-/* pb-professions (Alex, 18 Nov 18:03 / 18:59): no pop-up. The categories are boxes the size of the Attribute boxes,
-   listed across the Professions area, each with its professions inside; tapping one adds it (tap again removes it).
-   With no professions yet the boxes show straight away; once there are professions, a "+" box after them opens the
-   add flow below the row. PROF_ADD_MODE picks which add flow the "+" opens, so Alex can choose:
-   "categories" = the same category boxes inline; "type" = a type box with suggestions, then a category picker.
-   Once Alex picks, delete the other branch (strip by deletion, never by flags). */
-const PROF_ADD_MODE = "categories";
+/* pb-professions (Alex, 18 Nov 18:03 / 18:59; variant "categories" picked 19:26): no pop-up. The categories are boxes
+   the size of the Attribute boxes, listed across the Professions area, each with its professions inside; tapping one
+   adds it (tap again removes it). With no professions yet the boxes show straight away; once there are professions,
+   a "+" box after them opens the same boxes below the row. */
 /* Typed professions: up to 60 characters on the profile (Alex 19:19; boxes wrap between words). The Profile Card's
    16-character rule only affects the card: a longer entry is left off the card whole, never cut. */
 const PROF_MAX_LEN = 60;
@@ -96,7 +93,7 @@ function PE2Which({ P }) {
   );
 }
 
-/* Variant (a), and the no-professions view: a type box, then every category as an Attribute-sized box. */
+/* The add flow: a type box, then every category as an Attribute-sized box. */
 function PE2ProfCats({ P }) {
   const [q, setQ] = useState("");
   const add = (e) => {
@@ -141,62 +138,6 @@ function PE2ProfCats({ P }) {
   );
 }
 
-/* Variant (b): a type box with suggestions; a profession that isn't listed then asks for its category. */
-function PE2ProfType({ P }) {
-  const [q, setQ] = useState("");
-  const [pending, setPending] = useState("");
-  const ref = useRef(null);
-  useEffect(() => { if (!pending && ref.current) ref.current.focus({ preventScroll: true }); }, [pending]);
-  const n = q.trim().toLowerCase();
-  const open = ALL_PROFESSIONS.filter(p => !P.has(p.name));
-  const sugs = (n
-    ? open.filter(p => p.name.toLowerCase().includes(n)).sort((a, b) => (b.name.toLowerCase().startsWith(n) ? 1 : 0) - (a.name.toLowerCase().startsWith(n) ? 1 : 0))
-    : PE2_CATS.filter(c => c.key !== "Other").map(c => open.find(p => p.cat === c.key)).filter(Boolean)).slice(0, 8);
-  const pick = (name) => { P.toggle(name); setQ(""); };
-  const enter = (e) => {
-    e.preventDefault();
-    const t = q.trim(); if (!t) return;
-    const hit = pe2Listed(t);
-    if (hit) { if (!P.has(hit.name)) pick(hit.name); else setQ(""); return; }
-    const nm = pe2Title(t);
-    if (P.has(nm)) { setQ(""); return; }
-    setPending(nm);
-  };
-  const place = (k) => { P.toggle(pending, k); setPending(""); setQ(""); };
-  const guess = pending ? professionCategory(pending) : null;
-  if (pending) return (
-    <div className="pe2-pt">
-      <div className="pe2-pt-q"><Coin size={20} tier="gold" /><span>Which category is {"“"}{pending}{"”"}?</span></div>
-      <div className="pe2-pt-cats" role="group" aria-label={`Category for ${pending}`}>
-        {PE2_CAT_KEYS.map(k => (
-          <button key={k} type="button" className={"pe2-pt-cat" + (k === guess ? " guess" : "")} style={{ "--fs": k.length >= 13 && !/\s/.test(k) ? "12.5px" : "14px" }} onClick={() => place(k)}>
-            <span className="pe2-cat-ic" aria-hidden="true">{pe2CatIcon(k, 17)}</span>
-            <span className="pe2-pt-cat-nm">{k}</span>
-          </button>
-        ))}
-      </div>
-      <button type="button" className="pe2-pt-back" onClick={() => setPending("")}><ChevronLeft size={15} strokeWidth={2.4} aria-hidden="true" /> Back</button>
-    </div>
-  );
-  return (
-    <div className="pe2-pt">
-      <form className={"ff-type21 pe2-pc-type" + (q.trim() ? " has" : "")} onSubmit={enter}>
-        <input ref={ref} type="text" value={q} maxLength={PROF_MAX_LEN} autoComplete="off" spellCheck={false} enterKeyHint="enter" placeholder="Type a profession" aria-label="Add a profession"
-          onChange={(e) => setQ(e.target.value)} />
-        <button type="submit" className="ff-type21-key" aria-label="Add a profession" tabIndex={-1}><span>Enter</span><CornerDownLeft21 size={15} strokeWidth={2.2} aria-hidden="true" /></button>
-      </form>
-      {sugs.length > 0 && (
-        <div className="pe2-pt-sugs" role="list" aria-label="Suggestions">
-          {sugs.map(p => (
-            <button key={p.name} type="button" role="listitem" className="pe2-pt-sug" onClick={() => pick(p.name)}>
-              <span className="pe2-pt-nm">{p.name}</span><span className="pe2-pt-c">{p.cat}</span><Plus size={14} strokeWidth={2.4} aria-hidden="true" />
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
 /* p2/pfb: a profession's level, five grey diamonds filling in (the earlier system, as on the live FF Team site). */
 function PE2Level({ r }) {
   const n = r.level || 0;
@@ -218,25 +159,27 @@ function PE2Overview({ records }) {
   const [openVen, setOpenVen] = useState(null);
   const [openProf, setOpenProf] = useState(null);
   const profs = rankedRecords(records.professions || []).filter(r => !r.hidden && !r.proposed);
-  /* adding: null (closed), "empty" (opened because there were no professions; stays as the category boxes while they
-     pick) or "plus" (opened from the "+" card). */
-  const [adding, setAdding] = useState(() => profs.length ? null : "empty");
-  useEffect(() => { if (!profs.length) setAdding("empty"); }, [profs.length]);
+  /* adding: the category boxes are open (always while there are no professions, so they stay open while people pick). */
+  const [adding, setAdding] = useState(() => !profs.length);
+  useEffect(() => { if (!profs.length) setAdding(true); }, [profs.length]);
+  /* The tiles row always starts at the first tile, also when the "+" opens or closes the boxes. */
+  const profsRef = useRef(null);
+  useEffect(() => { const r = profsRef.current && profsRef.current.querySelector(".ff-pt21-row"); if (r) r.scrollLeft = 0; }, [adding]);
   const cats = PE2_ATTRS.filter(k => BASE_CATEGORIES[k]);
   /* v1.29 Experience (was Venues): venue records and the older Experience records together. */
   const venAll = [...(records.venues || []), ...(records.experience || [])];
   return (
     <>
       <style>{PE2_CSS}</style>
-      <section className="ff-pp ff-pp21 pp-sec" aria-labelledby="pe2-profs-h">
+      <section ref={profsRef} className="ff-pp ff-pp21 pp-sec" aria-labelledby="pe2-profs-h">
         <div className="ff-pp-head"><h2 id="pe2-profs-h" className="ff-about-h">Professions</h2></div>
         {profs.length > 0 && (
           <ProfTiles21 items={profs} def={BASE_CATEGORIES.professions} onOpen={(r) => setOpenProf(r)} extra={(r) => <PE2Level r={r} />} reorder top={FEATURE_LIMIT}
-            tail={<div role="listitem" className="ff-pt21-slot"><PE2AddProf on={!!adding} onClick={() => setAdding(adding ? null : "plus")} /></div>} />
+            tail={<div role="listitem" className="ff-pt21-slot"><PE2AddProf on={adding} onClick={() => setAdding(!adding)} /></div>} />
         )}
         {(adding || !profs.length) && (
           <div id="pe2-prof-add" className={"pe2-prof-add" + (profs.length ? " under" : "")} role="region" aria-label="Add a profession">
-            {PROF_ADD_MODE === "type" && adding === "plus" ? <PE2ProfType P={P} /> : <PE2ProfCats P={P} />}
+            <PE2ProfCats P={P} />
           </div>
         )}
       </section>

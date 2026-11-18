@@ -14,12 +14,10 @@ Profile builder, Professions (Alex, 18 Nov 18:03, 18:59 and 19:19). Builder only
   (burgundy with a tick); tap again to remove it. Bar keeps its ranked ladder (Barback to Mixologist, a rising gold
   bar per step); other categories are alphabetical. The rail scrolls across on phones and wraps from 700 px.
   It stays open while they pick, with the chosen professions appearing as tiles above it.
-- **Professions already there:** the tiles, then a "+" box. The "+" opens the add flow under the row and turns into a
-  burgundy close (x). Which flow it opens is one constant, `PROF_ADD_MODE` in `profile-edit-p2.jsx`:
-  - `"categories"` (default): the same type box and category boxes inline.
-  - `"type"`: a type box with suggestions (each with its category); a profession that isn't listed then asks for its
-    category (all seven plus Other, FireFlair's guess outlined), with Back.
-  Once Alex picks, delete the other branch (`PE2ProfType` or the plus path into `PE2ProfCats`).
+- **Professions already there:** the tiles, then a "+" box. The "+" opens the same type box and category boxes under
+  the row and turns into a burgundy close (x). Alex picked this flow (19:26); the "type" variant (type box with
+  suggestions, then a category picker) and its `PROF_ADD_MODE` switch were deleted. The tiles row always starts at the
+  first tile, also when the "+" opens or closes the boxes.
 - **Any profession:** typed ones that FireFlair can't place still get "Which category is ...?", now with Other.
 - **Length:** typed professions up to 60 characters (`PROF_MAX_LEN`); the boxes wrap between words. The Profile Card's
   16-character rule is only for the card (an entry that doesn't fit is left off whole, never cut); not built here.

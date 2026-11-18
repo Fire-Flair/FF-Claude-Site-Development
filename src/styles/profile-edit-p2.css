@@ -39,6 +39,8 @@
    220px tall, all as tall as the tallest in the row). */
 .ff .pe2-prof-add.under { margin-top: 14px; }
 .ff .pe2-pc-type { margin: 4px 0 2px; max-width: 560px; }
+/* the box itself shows focus (ff-type21:focus-within), so the input inside drops the site-wide input ring */
+.ff .pe2-pc-type input:focus, .ff .pe2-pc-type input:focus-visible { outline: none !important; box-shadow: none !important; border: 0 !important; }
 .ff .pe2-cats { padding-top: 12px; }
 .ff .pe2-cats .ff-agrp.pe2-cat { cursor: default; gap: 8px; padding: 16px 14px 14px; }
 .ff .pe2-cats .ff-agrp.pe2-cat:hover, .ff .pe2-cats .ff-agrp.pe2-cat:active { transform: none; }
@@ -64,31 +66,6 @@
 @media (min-width: 700px) {
   .ff .pe2-cats { flex-wrap: wrap; overflow: visible; row-gap: 14px; }
 }
-
-/* ---- pb-professions variant (b): type box, suggestions, then a category picker ---- */
-.ff .pe2-pt { max-width: 760px; padding: 14px; background: linear-gradient(165deg,#FBF7EE 0%,#EFE6D3 100%); border: 1px solid rgba(176,141,42,.7);
-  border-radius: 22px; corner-shape: squircle; box-shadow: 0 10px 16px -12px rgba(40,28,6,.55), 0 1px 2px rgba(40,28,6,.12); }
-.ff .pe2-pt .pe2-pc-type { margin: 0; max-width: none; background: #fff; }
-/* the box itself shows focus (ff-type21:focus-within), so the input inside drops the site-wide input ring */
-.ff .pe2-pc-type input:focus, .ff .pe2-pc-type input:focus-visible { outline: none !important; box-shadow: none !important; border: 0 !important; }
-.ff .pe2-pt-cat-nm { min-width: 0; }
-.ff .pe2-pt-sugs { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
-.ff .pe2-pt-sug { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 10px 0 12px; cursor: pointer; white-space: nowrap;
-  font: 600 14px var(--font-sans, Inter, sans-serif); color: #2A2418; background: rgba(255,255,255,.7); border: 1px solid rgba(176,141,42,.4);
-  border-radius: 12px; corner-shape: squircle; touch-action: manipulation; }
-.ff .pe2-pt-sug svg { color: var(--color-gold-dk, #8A6A1E); }
-.ff .pe2-pt-sug:hover { border-color: var(--color-gold, #C9A227); background: #fff; }
-.ff .pe2-pt-c { font: 500 12px var(--font-sans, Inter, sans-serif); color: #7A6E58; }
-.ff .pe2-pt-q { display: flex; align-items: center; gap: 9px; font: 600 15px/1.3 var(--font-sans, Inter, sans-serif); color: var(--color-ox, #5C1220); margin: 2px 0 12px; }
-.ff .pe2-pt-cats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-@media (min-width: 700px) { .ff .pe2-pt-cats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-.ff .pe2-pt-cat { display: flex; align-items: center; gap: 9px; min-height: 52px; padding: 8px 10px; cursor: pointer; text-align: left;
-  font: 600 var(--fs, 14px)/1.2 var(--font-sans, Inter, sans-serif); color: #2A2418; background: rgba(255,255,255,.7); border: 1px solid rgba(176,141,42,.4);
-  border-radius: 14px; corner-shape: squircle; overflow-wrap: normal; word-break: normal; hyphens: none; touch-action: manipulation; }
-.ff .pe2-pt-cat:hover { border-color: var(--color-ox, #5C1220); }
-.ff .pe2-pt-cat.guess { border: 1.5px solid var(--color-ox, #5C1220); box-shadow: 0 0 0 3px rgba(92,18,32,.1); }
-.ff .pe2-pt-back { display: inline-flex; align-items: center; gap: 4px; margin-top: 12px; min-height: 36px; padding: 0 10px 0 6px; cursor: pointer;
-  font: 600 13px var(--font-sans, Inter, sans-serif); color: var(--color-gold-dk, #8A6A1E); background: transparent; border: 0; border-radius: 10px; corner-shape: squircle; }
 
 /* the "+" card while its add flow is open */
 .ff .pe2-add-prof.on { border-style: solid; border-color: var(--color-ox, #5C1220); background: #FFF8E6; }
