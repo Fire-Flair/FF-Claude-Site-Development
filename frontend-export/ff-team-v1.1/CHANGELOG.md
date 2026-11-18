@@ -15,7 +15,8 @@ Profile page, Experience cards (Alex, 18 Nov 18:49). `src/components/team/attrib
 - Pop-up: the note is typed straight onto the card (a borderless text area where the note sits, a faint line under
   it); the separate text box under the card is gone. Done, or closing the pop-up, saves; Remove stays in the pop-up.
 - Checked: `npm run check`, `npm run build`; desktop screenshots of the finished profile in all three tones; phone and
-  desktop pop-up with a note typed onto the card and saved.
+  desktop pop-up with a note typed onto the card and saved. Published by a three-way merge onto live 1795027943-0e21
+  (another chat's unpushed publish, kept). Merged page saved as `live-v1.35-index.html`. Artifact version 1795028072-45c8.
 
 ## v1.34
 
