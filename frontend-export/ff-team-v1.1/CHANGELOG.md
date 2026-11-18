@@ -4,6 +4,19 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.35
+
+Profile page, Experience cards (Alex, 18 Nov 18:49). `src/components/team/attribute-cards.jsx`, `src/styles/experience29.css` (v1.35 block).
+
+- No more black cards: the Experience cards are a muted tone that suits the finished profile page. Default
+  champagne (`#F8F0DC` > `#E9DAB4`, gold ring, dark ink `#2A1E04`, gold accents `#8A6A1E`). Two more tones are one
+  line away: `XP_TONE29 = "rose"` (dusty rosé, burgundy accents) or `"sage"` (soft sage, green accents). Each tone
+  sets the card ring too (`XP_TONES29[..].ring`), so there is no dark edge on light cards.
+- Pop-up: the note is typed straight onto the card (a borderless text area where the note sits, a faint line under
+  it); the separate text box under the card is gone. Done, or closing the pop-up, saves; Remove stays in the pop-up.
+- Checked: `npm run check`, `npm run build`; desktop screenshots of the finished profile in all three tones; phone and
+  desktop pop-up with a note typed onto the card and saved.
+
 ## v1.34
 
 Profile page, Experience (Alex, 18 Nov 18:39). `src/components/team/attribute-cards.jsx` (`ExperienceEditor29`, new
