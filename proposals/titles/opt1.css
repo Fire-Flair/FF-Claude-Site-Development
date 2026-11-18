@@ -1,0 +1,4 @@
+/* OPTION 1: gold Inter eyebrow on page titles, plain Cinzel section titles, no rules */
+.ff .tl-h1 { display:block !important; }
+.ff .tl-h1::before { content:attr(data-eb); display:block; font-family:var(--font-sans,'Inter',sans-serif); font-size:11px; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:var(--color-gold-dk,#7E611D); margin:0 0 8px; }
+.ff .tl-h1 .ff-pill { margin-left:10px; vertical-align:middle; }

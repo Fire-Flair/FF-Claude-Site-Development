@@ -1,0 +1,10 @@
+/* OPTION 3: black FF monogram tile on page titles (echoes FF Stories), hairline running right on section titles */
+.ff .tl-h1, .ff .tl-h2 { display:flex !important; align-items:center !important; gap:14px !important; flex-wrap:nowrap !important; }
+.ff .tl-h1::before { content:"FF"; flex:0 0 auto; width:44px; height:44px; display:grid; place-items:center; border-radius:12px; corner-shape:squircle;
+  background:linear-gradient(160deg,#2A2B2F,var(--color-ink,#0B0B0C)); color:var(--color-gold,#C9A227); font:700 17px/1 var(--font-display,'Cinzel',serif); letter-spacing:.02em;
+  box-shadow:inset 0 0 0 1.5px rgba(201,162,39,.55), 0 2px 6px rgba(0,0,0,.18); }
+.ff .tl-h2::after { content:""; display:block !important; flex:1 1 24px; min-width:24px; height:1.5px; position:static !important; border-radius:1px;
+  background:linear-gradient(90deg,var(--color-gold,#C9A227),rgba(201,162,39,.12)) !important; }
+.ff .tl-h2.ff-dx-h::after, .ff .tl-h2.ff-qg-title::after { display:block !important; }
+.ff .tl-p { display:flex !important; align-items:center; gap:12px; }
+.ff .tl-p::after { content:""; flex:1 1 auto; height:1px; background:linear-gradient(90deg,rgba(201,162,39,.7),rgba(201,162,39,.08)); }
