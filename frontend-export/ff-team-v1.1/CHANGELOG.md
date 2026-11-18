@@ -4,6 +4,17 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.64
+
+Profile builder, Professions (Alex, 18 Nov 20:58 and 21:24). `src/components/team/profile-edit-p2.jsx`, `src/components/team/attribute-cards.jsx`, `src/styles/profile-edit-p2.css` (prof-edits).
+
+- "Type a profession" now suggests as you type, the same search as the rest of the profile: known professions that start with the letters, then ones that contain them, each with its category; tap one or press Enter to add the first.
+- Tapping a profession that has no text of its own opens with its default description ready to edit: its own default, or its category's (a custom profession under Front of House shows the Front of House description). Nothing is saved until the member edits it; clearing the box on purpose keeps it empty. Both editors (the profession pop-up and the compact entry editor).
+- "Available for remote work" is removed from both profession editors.
+- Image uploads on professions stay as they are (Alex, 21:24).
+- Checked: `npm run check`, `npm run build`, DEV complete profile at 390: "wai" suggests Waiter; a custom "Guest Greeter" set to Front of House opens with the Front of House description; no remote work tick; no console errors.
+- Published over live 1795036897-879d (v1.63), index.html only (all other files kept). Artifact version 1795037345-3440. Built page saved as `live-v1.64-index.html`.
+
 ## v1.63
 
 Profile builder photo and About Me (Alex, 18 Nov 21:16–21:17). `src/components/team/creator-media.jsx` (`PhotoFrame17`, `ffFramePhoto17`), `src/components/team/profile-marks-qa.jsx`, `src/components/team/network.jsx`, `src/components/team/profile-builder.jsx`, `src/components/team/profile-edit-p2.jsx`, `src/styles/prof21.css` (photo-frame).
