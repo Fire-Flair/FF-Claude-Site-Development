@@ -2,6 +2,8 @@
 
 ## v17.44
 
+Artifact version 1794961863-74c2.
+
 - FF Party box, Coming soon card (`bookings.jsx`, `bkd.css`): the big FF logo is replaced by a preview of an empty package card (the Includes, Ideal for and Duration rows with placeholder lines, and a Details bar).
 
 ## v17.43
