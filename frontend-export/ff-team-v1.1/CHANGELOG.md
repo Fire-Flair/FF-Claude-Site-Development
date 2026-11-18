@@ -4,6 +4,14 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## Pillar drop-downs (preview, branch pillar-dropdowns; not yet a version)
+
+- FF Team home pillars (Alex, 18 Nov 16:07): inside an open pillar, the 1-2-3 are drop-downs. Each step is its own box with the rosé picture well (multiply), the gold number, the title and the burgundy squircle chevron; it opens to that step's full section (heading, text and visual), which used to follow below the card row. Wording and content are unchanged.
+- Collapsed by default; one step open at a time (each section is long, so two open at once lose your place); the tapped header stays still on screen while the other step closes. Smooth open and close (grid rows), none with reduced motion.
+- Buttons with aria-expanded and aria-controls inside an h4; closed steps are inert, so nothing inside them can be tabbed to. Deep links and "#id" jumps (`window.__ffDxReveal`) open the pillar and the step that holds the section.
+- FF Party and FF Staff panels and the /info pages keep the card row and sections as before. `components/home/team-pillars.jsx` (PillarSteps21), `components/home/discover-hub.jsx`, `styles/team-pillars21.css`.
+- Checks: `npm run check` and `npm run build` pass; Gimli's Playwright run at 390 and 1280 passes on all four pillars (no journey-test script in this repo). Private preview artifact "FF Team 1.1 — pillar drop-downs preview", version 1795019678-3ab8.
+
 ## v1.24
 
 - Home pillars (Alex, 18 Nov 16:04): when a pillar is open, its tile is the same cream as the box below it (#EAE0C3; on wide screens the photo fades into it), so the tile and its content read as one continuous box. Closed tiles stay ivory to sand with the burgundy border. `styles/home-colours.css`.
