@@ -28,6 +28,8 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
 - The CV file is no longer stored on the profile (it used to be kept as a Qualification card); it is read in the
   browser and dropped. Existing CV cards are left as they are.
 - Failure state: a message with Try again (when a retry can help) and dismiss; nothing is added.
+- Journey tests 48/48. Artifact version 1795013639-e2d9.
+
 ## v1.17
 
 - Titles (Alex, 18 Nov 14:07: one titling system, no gold dots). Every gold dot beside a heading is now the vertical gold gradient line (light to deep gold, squircle ends, as tall as the title; 5px beside section titles, 3px beside the small uppercase labels). Home, Network, Bookings, profile view and builder, person and company pages. Only `styles/titles2.css` changed. The three page titles (Explore our network, Your bookings, Your profile) keep their gold underline for now, pending Alex.
