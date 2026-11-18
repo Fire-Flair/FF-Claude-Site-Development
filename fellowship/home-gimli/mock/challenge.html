@@ -1,0 +1,82 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@font-face{font-family:Cinzel;src:url(cinzel-latin-600-normal.woff2) format("woff2");font-weight:600}
+@font-face{font-family:Cinzel;src:url(cinzel-latin-700-normal.woff2) format("woff2");font-weight:700}
+:root{--ink:#0B0B0C;--cream:#F4EFE4;--gold:#C9A227;--gold-lt:#E4C36A;--ox:#5C1220;--ox-dk:#37070F}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);font-family:Inter,sans-serif;padding:24px 18px;word-break:normal;overflow-wrap:normal;hyphens:none}
+.wrap{max-width:868px;margin:0 auto}
+.sq{border-radius:18px;corner-shape:squircle}
+.lc{position:relative;border-radius:30px;corner-shape:squircle;overflow:hidden;color:#F4EBD6;background:linear-gradient(150deg,var(--ink) 0%,#1C0E12 55%,#4A1220 100%);border:1px solid rgba(201,162,39,.5);padding:20px}
+.top{display:grid;gap:16px}
+.eye{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-lt);font-weight:600}
+.eye img{width:30px;height:30px}
+h2{font-family:Cinzel,serif;font-weight:700;font-size:25px;line-height:1.15;margin:10px 0 0;color:#FFF6DC}
+.cd{display:flex;align-items:center;gap:8px;margin-top:14px}
+.cd .l{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-lt);font-weight:600;margin-right:4px}
+.cd .c{display:flex;flex-direction:column;align-items:center;min-width:58px;padding:6px 8px;border:1px solid rgba(201,162,39,.55);border-radius:14px;corner-shape:squircle}
+.cd b{font-size:22px;line-height:1;font-weight:700;color:#FFF6DC}.cd small{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-lt);margin-top:3px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:108px;gap:10px}
+.t{position:relative;display:flex;flex-direction:column;justify-content:space-between;padding:12px 12px 12px 14px;border-radius:18px;corner-shape:squircle;border:1px solid rgba(201,162,39,.42);background:rgba(255,246,220,.05);color:#FFF6DC;font:600 15.5px/1.22 Inter,sans-serif;text-align:left}
+.t .ic{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;corner-shape:squircle;background:rgba(201,162,39,.14);border:1px solid rgba(201,162,39,.4);color:var(--gold-lt)}
+.t .ic img{width:34px;height:34px}
+.t .ch{position:absolute;top:12px;right:12px;width:22px;height:22px;color:rgba(228,195,106,.75)}
+.btns{display:flex;gap:10px;margin-top:16px}
+.join{flex:1;min-height:48px;border:0;border-radius:16px;corner-shape:squircle;background:linear-gradient(180deg,#F4DC8E,#D9B451 55%,#B08D2A);color:#2A1E04;font:700 14px Inter;letter-spacing:.1em;text-transform:uppercase;box-shadow:0 0 22px rgba(217,180,81,.35)}
+.rules{min-height:48px;padding:0 18px;border-radius:16px;corner-shape:squircle;border:1px solid rgba(201,162,39,.6);background:transparent;color:#F4DC8E;font:700 14px Inter}
+.lad{margin-top:22px;padding-top:4px}
+.trk{position:relative;height:8px;border-radius:6px;background:rgba(244,235,214,.16);margin:22px 12px 0}
+.fill{position:absolute;left:0;top:0;bottom:0;width:3%;border-radius:6px;background:linear-gradient(90deg,var(--gold-lt),var(--gold))}
+.dot{position:absolute;top:50%;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:#1C0E12;border:2px solid var(--gold)}
+.dot.on{background:var(--gold-lt)}
+.mi{position:absolute;bottom:16px;transform:translateX(-50%);color:var(--gold-lt)}
+.ms{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.ms div{display:flex;flex-direction:column}
+.ms div:nth-child(2){align-items:center;text-align:center}.ms div:nth-child(3){align-items:flex-end;text-align:right}
+.ms b{font-family:Cinzel,serif;font-size:22px;line-height:1.1;color:var(--gold-lt)}
+.ms span{font-size:13.5px;line-height:1.3;color:rgba(244,235,214,.92);margin-top:2px}
+@media(min-width:720px){.lc{padding:28px}.top{grid-template-columns:1.1fr 1fr;align-items:center;gap:28px}h2{font-size:30px}.tiles{grid-auto-rows:118px}.ms b{font-size:24px}.ms span{font-size:14.5px}}
+/* pillars stacked (phone) */
+.pt{margin-top:28px}.pt h3{font-family:Cinzel,serif;font-weight:700;font-size:26px;margin:0 0 6px;color:#0B0B0C}.pt hr{border:0;height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin:0 0 14px}
+.pl{display:grid;gap:10px}
+.pr{display:grid;grid-template-columns:92px 1fr 24px;gap:14px;align-items:center;padding:8px;border-radius:20px;corner-shape:squircle;background:#141416;border:1px solid rgba(201,162,39,.45);color:#FFF6DC}
+.pr img{width:92px;height:76px;object-fit:cover;object-position:center;border-radius:14px;corner-shape:squircle;display:block}
+.pr b{display:block;font-family:Cinzel,serif;font-size:18px;color:var(--gold-lt)}.pr span{display:block;font-size:13.5px;line-height:1.3;color:rgba(244,235,214,.9);margin-top:2px}
+.pr svg{color:var(--gold-lt)}
+@media(min-width:720px){.pt{display:none}}
+</style></head><body><div class="wrap">
+<section class="lc" aria-label="FF Team Launch Challenge">
+ <div class="top">
+  <div>
+   <div class="eye"><img src="coin.png" alt=""><span>FF Team Launch Challenge</span></div>
+   <h2>Build your Network. Grow your Team. Win prizes.</h2>
+   <div class="cd"><span class="l">Starts in</span><span class="c"><b>12</b><small>days</small></span><span class="c"><b>22</b><small>hours</small></span><span class="c"><b>20</b><small>mins</small></span></div>
+   <div class="btns"><button class="join">Join Challenge</button><button class="rules">Rules</button></div>
+  </div>
+  <div class="tiles">
+   <button class="t"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/><text x="12" y="19.2" font-size="7.5" font-family="Inter" font-weight="700" text-anchor="middle" fill="currentColor" stroke="none">90</text></svg></span><span>90 days</span><svg class="ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></button>
+   <button class="t"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span><span>Open worldwide</span><svg class="ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></button>
+   <button class="t"><span class="ic" style="background:none;border:0"><img src="coin.png" alt=""></span><span>Top 10 go Gold</span><svg class="ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></button>
+   <button class="t"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg></span><span>Winner flies to Athens</span><svg class="ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></button>
+  </div>
+ </div>
+ <div class="lad">
+  <div class="trk" role="progressbar" aria-valuenow="6" aria-valuemax="1000">
+   <span class="fill"></span>
+   <i class="dot on" style="left:0"></i><i class="dot" style="left:50%"></i><i class="dot" style="left:100%"></i>
+   <svg class="mi" style="left:50%" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18M8.5 16l2.5 2.5 4.5-5"/></svg>
+   <svg class="mi" style="left:100%" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3h7l-3.5 6zM7.5 9v8M5 17h5M13 3h7l-3.5 6zM16.5 9v8M14 17h5"/></svg>
+  </div>
+  <div class="ms"><div><b>6</b><span>so far</span></div><div><b>100</b><span>Bookings go live</span></div><div><b>1,000</b><span>Launch party and nationwide campaign</span></div></div>
+ </div>
+</section>
+<section class="pt" aria-label="Discover FireFlair">
+ <h3>Discover FireFlair</h3><hr>
+ <div class="pl">
+  <div class="pr"><img src="pil0.png" alt=""><div><b>Your profile</b><span>Your CV can become a page of your own</span></div><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
+  <div class="pr"><img src="pil1.png" alt=""><div><b>Our packages</b><span>We market you. You get booked.</span></div><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
+  <div class="pr"><img src="pil2.png" alt=""><div><b>Your bookings</b><span>Requests, rates and getting paid</span></div><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
+  <div class="pr"><img src="pil3.png" alt=""><div><b>Our community</b><span>Challenges, parties and industry events</span></div><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
+ </div>
+</section>
+</div></body></html>
