@@ -401,7 +401,9 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
       id: "ff-discover",
       "aria-labelledby": "ff-dx-h",
       ref: root
-    }, React.createElement("style", null, ROT17_CSS), React.createElement("h2", {
+    }, React.createElement("style", null, ROT17_CSS),
+    /* title-bars (Alex, 18 Nov 17:00): on FF Team the title and its subheading share one gold line (titles2.css, .ff-tlx). */
+    React.createElement(kind === "team" ? "div" : React.Fragment, kind === "team" ? { className: "ff-tlx" } : null, React.createElement("h2", {
       id: "ff-dx-h",
       /* chal (Alex, 18 Nov 03:13): on FF Team a quieter "What is FF Team?" so the hero's welcome leads. */
       className: kind === "team" ? "ff-dx-h ff-dx-q" : "ff-h1 ff-dx-h"
@@ -409,7 +411,7 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
        smaller subheading below it. */
     }, kind === "team" ? "Built for event and hospitality professionals" : "Discover FireFlair"), kind === "team" && React.createElement("p", {
       className: "ff-dx-tag"
-    }, "Turn your CV into a Profile Card, build a team with the people you love working with and get booked for events and hospitality work. Explore the boxes below to see everything FF Team does for you."), React.createElement("span", {
+    }, "Turn your CV into a Profile Card, build a team with the people you love working with and get booked for events and hospitality work. Explore the boxes below to see everything FF Team does for you.")), React.createElement("span", {
       className: "ff-dx-sent",
       ref: sent,
       "aria-hidden": "true"

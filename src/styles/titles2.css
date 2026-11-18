@@ -100,3 +100,28 @@
    the sections either side. FFStories keeps 14px of room under its cards for their shadows, so the coin above the video
    comes up by that much. ==== */
 .ff .ff-hf22 .ff-home17 > #ff-journal + .ff-coindiv { margin-top:calc(clamp(30px,6vw,48px) - 14px); }
+
+/* ==== title-bars (Alex, 18 Nov 17:00): "The little gold gradient bars … should extend to cover the text as well, and it
+   should fade out completely at the bottom line of the text." One line per titled block: it starts at the top of the
+   title, runs beside the title and the text under it, and fades to nothing at the bottom line of that text. Titles with
+   no text under them keep the line beside the title only (above). The Network page lines (.ff-tl20) are drawn by their
+   wrapper, so "Our professionals" and "FF Event Directory" sit where "Explore our network" does: 19px left of the title
+   text (before, their h2 was static, so the line was placed from the wrapper and sat 19px too far left). ==== */
+.ff .ff-tl20,
+.ff .ff-tlx { position:relative; }
+.ff .ff-tl20::before,
+.ff .ff-tlx::before { content:""; position:absolute; left:0; top:0; bottom:0; width:5px; border-radius:0; pointer-events:none;
+  background:linear-gradient(180deg,var(--color-gold,#C9A227) 0,#DCC48C 58%,rgba(234,219,180,0) 100%); }
+.ff .ff-tl20::before { bottom:4px; }
+.ff .ff-tl20 > .ff-big20::after { content:none; }
+/* The title's own line stays as a spacer (so the title text doesn't move); the block's line is drawn over it. */
+.ff .ff-hf22 .ff-tlx > .ff-dx-h.ff-dx-q::before,
+.ff .ff-hf22 .ff-tlx > .ff-lcc-title::before,
+.ff .ff-tlx > .ff-bk-bh::before { background:none !important; }
+/* The block ends at the bottom line of its text: the wrapper is a plain block, so the title's top margin and the text's
+   bottom margin pass through it and the line spans exactly from the title's top to the text's bottom. The home intro
+   keeps its 16px gap under the title (as the section's first paragraph its top margin was 0). */
+.ff .ff-hf22 .ff-tlx > .ff-sec-intro { margin-top:0; }
+/* Bookings: the text under the title starts where the title text does (as on the Network page), so the line runs beside
+   it rather than through it. */
+.ff .ff-tlx > .ff-bk-bh + p { padding-left:19px; }

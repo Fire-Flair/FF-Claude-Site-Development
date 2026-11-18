@@ -548,8 +548,11 @@ function TeamBookings({ guest = false }) {
 
       <section className="ff-bk-sec ff-fb21" id="ff-bk-fireflair">
         <div className="ff-bk-sell ff-bkpc ff-fb21-box pkg3" id="ff-bk-party">
+          {/* title-bars (Alex, 18 Nov 17:00): the title and its text share one gold line (titles2.css, .ff-tlx). */}
+          <div className="ff-tlx">
           <h2 className="ff-bk-bh fit">FFParty – Our bar packages</h2>
           <p>Be your own boss. FireFlair sets the pay rate for each package. You deal directly with the client, and FireFlair is here to support you. Packages are advertised at a set rate, and by signing up to one you agree to that rate. The rates are strong, so we expect strong work in return.</p>
+          </div>
           <div className="ff-pr17-chips" role="tablist" aria-label="Package types">
             {PK_TABS.map(([k, l], i) => <button key={k} id={`ff-pktab-${k}`} type="button" role="tab" className="ff-chip ff-pr17-tab" aria-selected={k === pkTab} aria-controls={`ff-pkpanel-${k}`} tabIndex={k === pkTab ? 0 : -1} onClick={() => setPkTab(k)}
               onKeyDown={e => { const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : e.key === "Home" ? -i : e.key === "End" ? PK_TABS.length - 1 - i : 0; if (!d) return; e.preventDefault(); const nk = PK_TABS[(i + d + PK_TABS.length) % PK_TABS.length][0]; setPkTab(nk); const b = document.getElementById(`ff-pktab-${nk}`); if (b) b.focus(); }}>{l}</button>)}
@@ -572,15 +575,19 @@ function TeamBookings({ guest = false }) {
         </div>
 
         <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-staff">
+          <div className="ff-tlx">
           <h2 className="ff-bk-bh fit">FFStaff – Shifts with businesses</h2>
           <p>Businesses on FF Staff hire people for shifts. They see your preferred hourly rate for each of your professions before they hire you, and set the pay on each shift card.</p>
+          </div>
           <ProfRates17 guest={guest || !signedIn} />
         </div>
       </section>
 
       <section className="ff-bk-sec ff-bkgrow" id="ff-bk-grow">
+        <div className="ff-tlx">
         <h2 className="ff-bk-bh ff-bk-gh fit">Grow with FireFlair</h2>
         <p className="ff-bk-sub">Training, dream jobs and rewards.</p>
+        </div>
         <div className="ff-bkd-row">
           <BkDrop17 id="ff-bk-training" open={drop === "ff-bk-training"} onOpen={setDrop} title="Training" icon={E17I.GraduationCap} photo="bk_training" desc="Courses, qualifications and masterclasses to sharpen your craft. Register your interest and we will tell you when places open."><InterestSection kind="training" inner /></BkDrop17>
           <BkDrop17 id="ff-bk-jobs" open={drop === "ff-bk-jobs"} onOpen={setDrop} title="Dream jobs" icon={E17I.Plane} photo="bk_jobs" desc="Tell us where you dream of working, from festivals to yachts, and we will keep you in mind when it comes up."><InterestSection kind="jobs" inner /></BkDrop17>
