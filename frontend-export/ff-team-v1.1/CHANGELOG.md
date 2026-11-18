@@ -4,6 +4,15 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.39
+
+Bookings, FF Party packages wording (Alex, 18 Nov 19:20). `src/components/team/bookings.jsx`, `src/components/party/terms-and-packages.jsx`.
+
+- Title is "FFParty – Our packages" on all three tabs (the tab already names Bar, Entertainment or Services). One title keeps the heading at one size on phones; a title per tab would shrink "entertainment" to a much smaller size.
+- Intro no longer says FireFlair sets the pay rate for each package: "Be your own boss. Sign up to the packages you want to deliver, or create your own. Every package shows what you earn before you sign up, and you deal directly with the client, with FireFlair here to support you. The rates are strong, so we expect strong work in return."
+- Term 1, How packages work: "A package is a fixed offer that clients book on FF Party. Every package shows what you earn before you sign up: FireFlair sets it on FireFlair packages, and you set it on your own. By signing up you agree to that amount."
+- Checked: `npm run check`, `npm run build`, Playwright at 390 and 1280 on all three tabs (cards unchanged: equal heights and gaps, no overflow, no console errors), terms in the Event brief and invoice.
+
 ## v1.38
 
 Bookings, FF Party package cards (Alex, 18 Nov 18:12–19:02). `src/components/team/bookings.jsx`, `src/styles/bkd.css` (pkc-team, pkc-doc and pkc-tabs blocks).

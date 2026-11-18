@@ -11,7 +11,7 @@ const MY_TERMS17 = [
 
 /* v17.5.1: the terms shown when you sign up to FF Party packages, and when you save your FF Staff shift rates. How the platform works, in five points each. */
 const PARTY_PKG_TERMS17 = [
-  { k: "how", label: "How packages work", text: "A package is a fixed offer that clients book on FF Party. FireFlair sets the pay rate for each package and shows it before you sign up. By signing up you agree to that rate." },
+  { k: "how", label: "How packages work", text: "A package is a fixed offer that clients book on FF Party. Every package shows what you earn before you sign up: FireFlair sets it on FireFlair packages, and you set it on your own. By signing up you agree to that amount." },
   { k: "boss", label: "You are your own boss", text: "You work as a self-employed freelancer. You deal directly with the client, and FireFlair is here to support you. FireFlair is not your employer." },
   { k: "book", label: "Bookings", text: "When a client books a package, FireFlair invites you on WhatsApp. The booking is yours once you accept, and not before." },
   { k: "cancel", label: "Cancelling", text: "If you cannot make a booking, tell the client and FireFlair as early as you can. Late cancellations affect your reputation on FireFlair." },

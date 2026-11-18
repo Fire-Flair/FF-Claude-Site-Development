@@ -777,8 +777,9 @@ function TeamBookings({ guest = false }) {
         <div className="ff-bk-sell ff-bkpc ff-fb21-box pkg3" id="ff-bk-party">
           {/* title-bars (Alex, 18 Nov 17:00): the title and its text share one gold line (titles2.css, .ff-tlx). */}
           <div className="ff-tlx">
-          <h2 className="ff-bk-bh fit">FFParty – Our bar packages</h2>
-          <p>Be your own boss. FireFlair sets the pay rate for each package. You deal directly with the client, and FireFlair is here to support you. Packages are advertised at a set rate, and by signing up to one you agree to that rate. The rates are strong, so we expect strong work in return.</p>
+          {/* pkc-copy (Alex, 18 Nov 19:20): one title for all three tabs (the tab names the kind), so it stays one size on phones. */}
+          <h2 className="ff-bk-bh fit">FFParty – Our packages</h2>
+          <p>Be your own boss. Sign up to the packages you want to deliver, or create your own. Every package shows what you earn before you sign up, and you deal directly with the client, with FireFlair here to support you. The rates are strong, so we expect strong work in return.</p>
           </div>
           <div className="ff-pr17-chips" role="tablist" aria-label="Package types">
             {PK_TABS.map(([k, l], i) => <button key={k} id={`ff-pktab-${k}`} type="button" role="tab" className="ff-chip ff-pr17-tab" aria-selected={k === pkTab} aria-controls={`ff-pkpanel-${k}`} tabIndex={k === pkTab ? 0 : -1} onClick={() => setPkTab(k)}
