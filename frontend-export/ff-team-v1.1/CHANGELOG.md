@@ -14,6 +14,15 @@ Bookings titles and iPad layout (Alex, 18 Nov 20:25). `src/components/team/booki
 - Grow with FireFlair on iPad: from 470px wide (iPad split view included) the three cards share one row like desktop, and an opened card's contents span the full width below. Between 470px and 899px each card is photo, title and an icon row; its description moves into the opened panel, where it has room. Phones (under 470px) and desktop are unchanged.
 - Checked: `npm run check`, `npm run build`, Playwright at 390, 490, 820 and 1280 (no console errors, no sideways scroll), Training opened at 490.
 
+Profile builder photo circle (Alex, 18 Nov: "appears to be an oval", then "the bust crop wasn't done successfully"). `shared/card-brand.jsx`, `team/network.jsx`, `styles/base.css`, `styles/prof21.css`.
+
+- Root cause: two circles were stacked. The Portrait (108px, its own gold band and dark disc) sat inside a `<button>` that kept the browser's default padding (1px 6px), so the button was 120x110 and the Portrait sat off to one side; the empty-state overlay then drew a second dark disc (`::before`, inset 5px of the button) on a different centre, so the gold band looked thicker on one side. The bust (`::after`) was clipped by the button-sized box, not by the disc, so its shoulders ended in a flat cut.
+- Fix: `.ff-photobtn` gets `padding: 0` (base.css), so the button is exactly the Portrait's size. `Portrait` takes optional `children`, drawn inside its own dark disc in place of the initials when there is no photo; the builder passes the empty-state bust there. The overlay disc (`::before`) is gone; the bust is drawn over the whole disc (head and shoulders on a 100x100 mask) and the disc's round clip shapes the shoulders, like a standard avatar. The v1.51 patch (forced 110x110, `!important`) is removed.
+- The "+" (and the camera when a photo is set) moves to right/bottom 8px so it sits centred on the gold band, bottom right.
+- Measured (360 to 1440 wide, DPR 2 and 3, page zoom 0.9 to 1.5): button = ring 108x108 (scaled with zoom), disc 98.31x98.31, gold band 4.84px on all four sides, bust box centred on the disc (offset 0, 0).
+- Checked, no change needed: the Profile Card face (`.pc17-photo`) on the live profile, Network and share card is round and its no-photo bust is already clipped by its disc. On the home easel the card is drawn in perspective (matrix3d) with a mirrored reflection, so its circle's screen box is not square by design; its layout box is 117x117.
+- Merged onto the live page 1795035296-d6d9 (v1.56; its only change was the title, renamed to "FF Team version 1.1. Final"). Artifact version 1795035610-b601.
+
 ## v1.56
 
 Profile builder, FF Tag and Media (Alex, 18 Nov 20:46). `team/creator-media.jsx`, `styles/prof21.css`.

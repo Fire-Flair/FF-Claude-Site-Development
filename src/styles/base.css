@@ -587,7 +587,7 @@
 .ff .ff-vdashes i { display:block; width:12px; height:2px; border-radius:2px; background:var(--gold-mid); opacity:.7; }
 .ff .ff-vdashes i:nth-child(2) { opacity:.5; } .ff .ff-vdashes i:nth-child(3) { opacity:.32; }
 /* Profile photo: the big circle is the photo; the small one is the button */
-.ff .ff-photobtn { position:relative; display:block; border-radius:50%; }
+.ff .ff-photobtn { position:relative; display:block; padding:0; border-radius:50%; }
 .ff .ff-photoadd { position:absolute; right:-4px; bottom:-2px; width:34px; height:34px; border-radius:50%; display:grid; place-items:center; color:var(--ink,#0B0B0C);
   box-shadow:0 0 0 3px var(--paper), 0 4px 10px rgba(0,0,0,.28); transition:transform .15s ease; }
 .ff .ff-photobtn:hover .ff-photoadd { transform:scale(1.08); }
