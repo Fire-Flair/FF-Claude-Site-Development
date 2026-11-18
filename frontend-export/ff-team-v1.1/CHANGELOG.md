@@ -4,7 +4,7 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
-## v1.57
+## v1.58
 
 Bookings titles and iPad layout (Alex, 18 Nov 20:25). `src/components/team/bookings.jsx`, `src/styles/bkd.css` (bk-titles and bk-ipad blocks).
 
@@ -13,6 +13,9 @@ Bookings titles and iPad layout (Alex, 18 Nov 20:25). `src/components/team/booki
 - The gold gradient bar is for titles outside a box: inside the FF Party and FF Staff boxes the title and its text now sit flush left with no bar. (Alex may make this a site-wide rule later.)
 - Grow with FireFlair on iPad: from 470px wide (iPad split view included) the three cards share one row like desktop, and an opened card's contents span the full width below. Between 470px and 899px each card is photo, title and an icon row; its description moves into the opened panel, where it has room. Phones (under 470px) and desktop are unchanged.
 - Checked: `npm run check`, `npm run build`, Playwright at 390, 490, 820 and 1280 (no console errors, no sideways scroll), Training opened at 490.
+- Published over live 1795035610-b601 (v1.57), index.html only (all other files kept). Artifact version 1795035813-4a04. Built page saved as `live-v1.58-index.html`.
+
+## v1.57
 
 Profile builder photo circle (Alex, 18 Nov: "appears to be an oval", then "the bust crop wasn't done successfully"). `shared/card-brand.jsx`, `team/network.jsx`, `styles/base.css`, `styles/prof21.css`.
 
