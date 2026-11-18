@@ -147,7 +147,7 @@ function companyLegend17(pins) {
 
 const COMPANIES = [
   /* Based in Luton; covers England and Wales (not Scotland or Northern Ireland). cover is read by the area pages' company lookup (fdCompanyCover). */
-  { id: "co_vooshka", name: "Vooshka Cocktail Bar", kind: "Luxury mobile cocktail bar", area: "Luton", tag: "VOOSH", tier: "gold", base17: { locId: "gn:3333168" }, cover: ["England", "Wales"], locations: [{ label: "Luton", lat: 51.8911, lng: -0.4279, approx: false }] },
+  { id: "co_vooshka", name: "Vooshka Cocktail Bar", kind: "Luxury mobile cocktail bar", area: "Luton", tag: "VOOSH", tier: "standard", base17: { locId: "gn:3333168" }, cover: ["England", "Wales"], locations: [{ label: "Luton", lat: 51.8911, lng: -0.4279, approx: false }] },
   ...REAL_COMPANIES11.filter((c) => c.slug !== "vooshka").map(realBase11),
 ];
 
