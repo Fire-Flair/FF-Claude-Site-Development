@@ -4,9 +4,62 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## Photo scroll (preview, branch profile-photos-2; not yet a version)
+
+- Phone and iPad profile photos rebuilt on the browser's own scrolling (Alex on his iPhone, 18 Nov: the open photos stopped halfway, flashed and snapped into place). Legolas, Gimli, Aragorn; reviewed by Gandalf. No gesture code is left: the photos sit at the top at one size and fit (the whole photo, top-aligned, over a blurred copy, so nothing switches or flashes) and stick while the card slides over them. The page opens scrolled to the card's icon line on the photos' bottom edge; scrolling up slides the card down to the whole photo, scrolling down slides it back to the line and the same swipe carries on down the page (the photos stop sticking exactly there, in CSS). A tap on the photos or the card glides up to the whole photo; the grip toggles. Nothing sets React state while scrolling.
+- On phones the menu bar still scrolls away (v16.10), so the photos stick at the very top; from 900px wide (iPad landscape) they stick under the menu bar.
+- Company Cards work the same, with the photos ending 128px down the card. Short pages get a minimum height so the line is always reachable. Desktop keeps the big photo and row.
+- `components/team/public-profile.jsx` (PublicHero, PhotoStrip11), `styles/p12.css` (photo-scroll block).
+
+## v1.71
+
+Profile page (Alex, 18 Nov 21:56), three agents merged onto live 1795039019-ab8d (v1.70).
+
+### Spinning coin separator
+
+Profile tabs separator coin spins (Alex, 18 Nov 21:56). `components/home/exports.js`, `components/team/profile-edit-tabs.jsx`, `components/team/introductions.jsx`, `components/team/attribute-cards.jsx`, `components/staff/network-directory.jsx`, `shell/index.html`.
+
+- The FF coin on the gold line between the Profile Card buttons and the tabs (v1.66) is now the home page's spinning coin: it turns as the page scrolls and settles face-on when scrolling stops, exactly as between FFStories and the door video.
+- No new coin: `V101` now exports `CoinDivider` and `useCoinSpin` (home-sections.jsx, unchanged), and the new `ProfileCoin17` (profile-edit-tabs.jsx) renders `V101.CoinDivider` and runs `V101.useCoinSpin` on its own box. It is the first child of every `.ff-ptabs-wrap`: public profiles (introductions.jsx), the profile builder (attribute-cards.jsx), your own profile's edit tabs (profile-edit-tabs.jsx) and company profiles (network-directory.jsx).
+- The v1.66 `.ff-ptabs-wrap::before` background coin is gone; `shell/index.html` styles `.ff-pcoin17` with the home coin's 3D rules (faces, gold edge, shadow), 52px on phones and 44px from 760px, same spacing, gold line either side.
+- The home coin has no reduced-motion handling, so neither does this one (same behaviour); add it to `useCoinSpin` if wanted and both places follow.
+- Checked: `npm run check`, `npm run build`; public profile (simao) at 390 and 1280, two frames mid-scroll at 390 show the coin turning; company profiles render the coin; no page errors. Not published.
+
+
+### Profile buttons
+
+Buttons under the Profile Card on someone else's profile, back to the earlier layout (Alex, 18 Nov 21:56). `src/components/team/network.jsx` (`PublicProfile` actions), `src/shell/index.html` (v1.70 block at the end of the style sheet).
+
+- Signed out: Back is the full width of the Profile Card on its own row (the same `ff-pback` Back bar the signed-in view uses), then one row of Join team (left) and Share (right), equal halves, the row the card's width. The in-row Back button (`ff-pub-back11`, the "Back | Join team | Share" row) is gone.
+- Share is olive green `#5F6E33` with cream text and the WhatsApp logo in cream `#FFF8E6` (contrast 5.27:1), border `#4A5627`, hover `#56642E`. Same in the signed-in grid (Back on top, then Add to network | Share | Ask | Availability; no buttons removed).
+- Same on phone, iPad and desktop: at 390, 820 and 1280 the Back bar and the Join team | Share row line up with the card's edges; labels stay on one line.
+- Checked: `npm run check`, `npm run build`, screenshots signed out at 390, 820, 1280 and signed in (DEV · complete profile) at 390 of `#/ff-team/simao`; no console errors.
+
+
+### Share pop-up
+
+Share pop-up on a profile, redesigned (Alex, 18 Nov 21:56). `src/components/shared/card-share17.jsx` (`CardShareSheet17`, new `CardShareView17`), `src/styles/base.css` (new `ff-csx-*` rules after the `ff-csm-*` block).
+
+- The pop-up never scrolls, on any device, and the page behind can't scroll while it is open (mouse wheel and touch both checked).
+- No white sheet: the page behind is blurred under a dark tint. The Profile Card sits at the top, scaled to fit the room left once the buttons have theirs; the four buttons sit straight under it, as wide as the card.
+- The same four actions as before: Share (device share sheet, square-with-up-arrow icon), WhatsApp (green, WhatsApp logo), Download PNG, Copy Link. While the image is being made the first three show a spinner in place of their icon.
+- Removed: the title bar, the address line under the card and the "Getting your image ready" line. An export error still shows as one short line with a retry button.
+- Closes on a tap on the blurred background, the small X (lined up with the card's right edge) or Escape. `role="dialog"`, `aria-modal`, focus trap and focus return kept.
+- `cardToPng17` unchanged. The PNG is made from an unscaled copy of the card kept off screen (`.ff-csx-export`, `aria-hidden`, `inert`), so the export measures and lays out the card exactly as before; the visible card is a scaled copy.
+- Sheets that pass `extra` (own card "Send my card" in `profile-from-text.jsx`, Card Studio `CardPop17`) keep the earlier sheet layout for now, minus the address and "getting ready" lines.
+- Checked: `npm run check`, `npm run build`; Simao's profile, Share in the Join row, at 360x640, 390x844, 430x932, 820x1180 and 1280x800: pop-up height equals the viewport, no scrolling element inside, page scroll unchanged after wheel/touch, all four buttons inside the viewport; also with the export error showing at 360x640. Share, WhatsApp, Download PNG (real PNG file) and Copy Link fired; background, X and Escape close it; Tab cycles inside; no console errors.
+- Not published; branch `pp-sharesheet`.
+
+- Published over live 1795039019-ab8d (v1.70), index.html only (all other files kept). Artifact version 1795039919-b498. Built page saved as `live-v1.71-index.html`.
+
 ## v1.70
 
-- Profile photos, three follow-ups from testing (Alex, 18 Nov). Company Card pages now behave like Profile Cards: the photos end 128px down the card (where they always met it) and the page scrolls as one, and any scroll closes the open photos. On an upright iPad the open photos are capped so the card still shows down to just past its icon line above the bottom bar (before, the bar covered it). Tapping the card after scrolling down now brings the page all the way back to the top. `components/team/public-profile.jsx`.
+Profile builder Professions and home bottom gap (Alex, 18 Nov 21:49). Two agent branches merged: `ag-inline` (src/components/team/profile-edit-p2.jsx, src/styles/profile-edit-p2.css) and `ag-homegap` (src/styles/home-fix22.css).
+
+- Professions: the category pop-up is gone. Tapping a category tile opens its professions in a panel directly under that tile's row, the full width of the grid; tapping the same tile closes it, another tile switches. The open tile has a gold border, a burgundy icon square and a small pointer into the panel. The panel shows the category icon and name, the professions as chips that wrap (chosen: burgundy with a gold tick; others: white with "+"; Bar keeps its ladder order; the member's own professions in that category show as chosen) and "Add your own". `PE2CatSheet` and `PE2CatItem` removed; `PE2CatPanel` and `PE2Chip` added.
+- FF Team home: the gap under the last box (Join FF Team with the coin game) is about half: phone 93px to 47px above the bottom nav, desktop 104px to 52px to the bottom of the window (negative bottom margin on that box only; other pages unchanged).
+- Checked: `npm run check`, `npm run build`, Playwright at 390 and 1280, signed in and out (Services under row 2, Bar under row 1, picks and "Drone Pilot" added, close by tapping again; no console errors, no overflow, no split words); home page scrolled to the bottom at 390, 700 and 1280.
+- Published over live 1795038385-8581 (v1.69), index.html only (all other files kept). Artifact version 1795039019-ab8d. Built page saved as `live-v1.70-index.html`.
 
 ## v1.69
 

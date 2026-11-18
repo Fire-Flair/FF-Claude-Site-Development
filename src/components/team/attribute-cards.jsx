@@ -1356,6 +1356,7 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
         <div id="ff-pe-anchor" style={{ scrollMarginTop: 84 }} />
         {/* v17.18: the builder has the same four tabs as the displayed profile. */}
         <div className="ff-ptabs-wrap ff-pa40">
+          <ProfileCoin17 />
           <ProfileTabs tabs={bTabs} active={btab} onChange={setBtab} />
           <div role="tabpanel" id="ff-tabpanel" aria-labelledby={`ff-tab-${btab}`} className="ff-tabpanel" tabIndex={0}>
             {btab === "overview" && (<>

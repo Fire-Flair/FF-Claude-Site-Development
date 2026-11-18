@@ -242,3 +242,10 @@
   .ff .ff-hf22 .ff-hbc-sym .av { width:28px; height:28px; }
 }
 @media (prefers-reduced-motion:reduce) { .ff .ff-hf22 .ff-hbc-btn { transition:none; } }
+
+/* ==== home-gap (Alex, 18 Nov 21:49): half the space between the coin game (last box on the FF Team home) and the bottom of the screen ====
+   Visible gap before: phones 93px (main 150px bottom padding less the 57px bottom nav), 521-899px 149px (+ the landing's 56px),
+   desktop 104px (landing 56px + main 48px). The last box pulls up by half of that, so nothing reaches the bottom nav. */
+.ff .ff-hf22 .ff-home17 > .ff-join:last-child { margin-bottom:-46px; }
+@media (min-width:521px) { .ff .ff-hf22 .ff-home17 > .ff-join:last-child { margin-bottom:-74px; } }
+@media (min-width:900px) { .ff .ff-hf22 .ff-home17 > .ff-join:last-child { margin-bottom:-52px; } }
