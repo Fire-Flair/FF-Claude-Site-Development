@@ -4,6 +4,40 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.22
+
+FF Team home page `#/ff-team` only (Alex, 18 Nov 15:29), with the homepage chat's `home-update` branch merged in.
+
+- From `home-update` (Alex, 18 Nov 14:18): a drop-down chevron in the top right of the bookings box (it turns when open;
+  the box stays collapsed by default with the four-symbol flow as its summary); a spinning FF coin (`CoinDivider`)
+  between FFStories and the door video and another below the video, and no coin under "Can FF Team help you?";
+  "Can FF Team help you?" is three questions with three answers each, every answer leading inside FF Team
+  (`growth-and-terms.jsx`).
+- Title (`discover-hub.jsx`): "FF Team is for event and hospitality professionals", same gold-mark title, with a small
+  Inter subheading under it: "Find out how it works" (`.ff-dx-tag`, `titles2.css`).
+- Hero, no lighting: the champagne beams (`.ff-hero18::after`) are gone, and the photo itself is the natural photo
+  again. The old hero image had violet lamps, a golden spotlight, a light cone and a vignette baked in (`grade.py`);
+  it is replaced by the same crop with only an even colour balance (`scripts/hero-easel/natural.py`; `hero` /
+  `hero_sm` in `src/shell/ff-img.json`, 1800×850 and 900×425 WebP). Card geometry is unchanged, so the Profile Card,
+  its shine, the easel position and the crops (easel above the title on phones) are as before. On wide screens a
+  soft dark fade (`rgba(24,6,11,.78)` to clear at 52% of the width) sits behind the words only. Contrast of the
+  title `#F7EED8` / line `#E4C36A` against the pixels behind them (2nd percentile): 390 wide 11.55 / 9.40;
+  1280 wide 12.21 / 8.19 (worst single pixel 9.32 / 5.97).
+- "What is FF Team?" pillars (`home-colours.css`): burgundy tiles (`#6E1A2C` → `#5C1220` → `#4A0E1A`) with champagne
+  `#EADBB4` borders, ivory `#FFFCF4` titles, champagne descriptions and chevrons (open chevron: burgundy on
+  champagne). The open box is burgundy `#5C1220` fading to `#4A0E1A` at the foot, with one champagne outline shared
+  with its tile; its heading is ivory, its text champagne; the cards inside stay ivory with champagne edges.
+  Contrast: ivory on burgundy 11.1–15.0, champagne on burgundy 8.3–11.2.
+- "FF Team is built for getting you bookings" box: plum (`#5E2759` → `#4E1E4A` → `#301230`) with a champagne edge;
+  no line before the title; title, arrows and chevron champagne, labels ivory. The 1-2-3-4 icons are unchanged.
+  Contrast: champagne on plum 8.0–12.2, ivory on plum 10.7–16.3. New tokens in `tokens.css`: `--color-ox-hi`,
+  `--color-ox-deep`, `--color-plum`, `--color-plum-hi`, `--color-plum-dk`.
+- Coins around the door video: both coins are the same distance from the video and from the sections either side
+  (the one above comes up 14px, the room FFStories keeps under its cards, `titles2.css`).
+- Checks: `npm run check` and `npm run build` pass; journeys 48/48; screenshots at 390 and 1280 (all four pillars
+  opened, the bookings box opened) with no page errors and no sideways overflow.
+- Artifact version 1795017020-b47e.
+
 ## v1.21
 
 - (v1.20 of this thread was briefly published over the home-colour v1.20; v1.21 carries both.)
