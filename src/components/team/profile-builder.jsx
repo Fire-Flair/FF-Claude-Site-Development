@@ -905,6 +905,26 @@ function ffaiSubLine17(s) {
 }
 
 
+/* v1.20 simulated CV progress: 0% to CV_SIM_MAX over CV_SIM_MS, then 100% when the extraction returns. */
+const CV_SIM_MS = 40000;
+const CV_SIM_MAX = 92;
+
+
+/* v1.20: the extraction with the member's Edit changes applied (name, About me, item titles, answers). */
+function cvWithEdits17(x, edits) {
+  const e = edits || {};
+  const has = (id) => Object.prototype.hasOwnProperty.call(e, id) && String(e[id]).trim() !== "";
+  const v = (id) => String(e[id]).trim();
+  return {
+    ...x,
+    name: x.name && has("name") ? { ...x.name, value: v("name") } : x.name,
+    about_me: x.about_me && has("about_me") ? { ...x.about_me, value: v("about_me") } : x.about_me,
+    sections: Object.fromEntries(Object.entries(x.sections || {}).map(([k, list]) => [k, (list || []).map(s => has(s.id) ? { ...s, title: v(s.id) } : s)])),
+    answers: (x.answers || []).map(a => has(a.id) ? { ...a, answer: v(a.id) } : a),
+  };
+}
+
+
 function CVUpload17() {
   const { state, dispatch } = useStore();
   const fileRef = useRef(null);
@@ -914,13 +934,21 @@ function CVUpload17() {
   const [st, setSt] = useState({ phase: "idle" });
   const [pct, setPct] = useState(0);
   const [pick, setPick] = useState({});
+  const [edits, setEdits] = useState({});
+  const [editing, setEditing] = useState(null);
+  const t0 = useRef(0);
   useEffect(() => { getSample(); return () => { if (ctl.current) ctl.current.abort(); }; }, []);
-  /* The bar keeps moving while FireFlair reads: towards 92% until the answer is in. */
+  /* v1.20 simulated progress: the extraction gives no real progress, so the bar runs from 0% to 92% over
+     CV_SIM_MS from the moment the file is chosen, holds at 92% if it is still working, and jumps to 100%
+     when the extraction comes back. */
+  const busyNow = st.phase === "reading" || st.phase === "thinking";
   useEffect(() => {
-    if (st.phase !== "reading" && st.phase !== "thinking") return;
-    const t = setInterval(() => setPct(p => Math.min(st.phase === "reading" ? 28 : 92, p + Math.max(0.4, ((st.phase === "reading" ? 30 : 94) - p) * 0.035))), 300);
+    if (!busyNow) return;
+    const tick = () => setPct(Math.min(CV_SIM_MAX, CV_SIM_MAX * (Date.now() - t0.current) / CV_SIM_MS));
+    tick();
+    const t = setInterval(tick, 200);
     return () => clearInterval(t);
-  }, [st.phase]);
+  }, [busyNow]);
 
   const run = async (file) => {
     if (ctl.current) ctl.current.abort();
@@ -928,7 +956,9 @@ function CVUpload17() {
     last.current = file;
     const problem = ffaiFileError17(file);
     if (problem) { setSt({ phase: "error", msg: problem, canRetry: false }); return; }
-    setPct(4);
+    t0.current = Date.now();
+    setPct(0);
+    setEdits({}); setEditing(null);
     setSt({ phase: "reading", file: file.name });
     let doc;
     try { doc = await CV_READER.read(file); }
@@ -938,12 +968,10 @@ function CVUpload17() {
       return;
     }
     if (c.signal.aborted) return;
-    setPct(p => Math.max(p, 30));
     setSt({ phase: "thinking", file: file.name });
     try {
       const x = await CV_ADAPTER.ffaiExtract(doc, {
         profile: sref.current.profile, signal: c.signal,
-        onProgress: (chars) => { if (!c.signal.aborted) setPct(p => Math.max(p, Math.min(92, 30 + 62 * (1 - Math.exp(-chars / 5000))))); },
       });
       if (c.signal.aborted) return;
       try { console.info("[FireFlair] FF AI CV extraction", x); } catch (e) { /* no console */ }
@@ -975,7 +1003,7 @@ function CVUpload17() {
   };
 
   const add = () => {
-    const x = st.x;
+    const x = cvWithEdits17(st.x, edits);
     const ids = Object.keys(pick).filter(id => pick[id]);
     const p = sref.current.profile;
     const out = ffaiApplyLocal17(x, ids, p, { origin: "CV", location: st.file || "CV" });
@@ -989,7 +1017,7 @@ function CVUpload17() {
     const n = out.summary.saved;
     dispatch({ type: "TOAST", toast: n ? `${n} added to your profile` : "Nothing added" });
     setSt({ phase: "idle" });
-    setPick({});
+    setPick({}); setEdits({}); setEditing(null);
     setTimeout(() => {
       const first = Object.keys(out.byCategory)[0];
       const el = document.getElementById(first ? `ff-sec-${first}` : "ff-sec-card");
@@ -997,18 +1025,37 @@ function CVUpload17() {
     }, 120);
   };
 
+  /* v1.20: Yes / No / Edit. Edit opens the value in place; anything edited is ticked Yes and added as edited. */
   const yn = (id, label) => (
     <span className="yn" role="group" aria-label={label}>
-      <button type="button" className={pick[id] ? "on" : ""} aria-pressed={!!pick[id]} onClick={() => setPick(k => ({ ...k, [id]: true }))}>Yes</button>
-      <button type="button" className={!pick[id] ? "on" : ""} aria-pressed={!pick[id]} onClick={() => setPick(k => ({ ...k, [id]: false }))}>No</button>
+      <button type="button" className={pick[id] && editing !== id ? "on" : ""} aria-pressed={!!pick[id]} onClick={() => { setPick(k => ({ ...k, [id]: true })); if (editing === id) setEditing(null); }}>Yes</button>
+      <button type="button" className={!pick[id] ? "on" : ""} aria-pressed={!pick[id]} onClick={() => { setPick(k => ({ ...k, [id]: false })); if (editing === id) setEditing(null); }}>No</button>
+      <button type="button" className={editing === id ? "on" : ""} aria-pressed={editing === id} onClick={() => { setPick(k => ({ ...k, [id]: true })); setEditing(e => e === id ? null : id); }}>Edit</button>
     </span>
   );
-  const row = (id, title, sub, opts = {}) => (
-    <div key={id} className={"it" + (opts.wide ? " wide" : "") + (opts.have ? " have" : "")}>
-      <span className="tx"><b>{title}</b>{sub ? <small>{sub}</small> : null}</span>
-      {opts.have ? <span className="hv"><Check size={14} strokeWidth={2.4} /> On your profile</span> : yn(id, title)}
-    </div>
-  );
+  /* opts.field: which line is the editable value ("title", or "sub" for About me and answers); opts.value: its raw text. */
+  const row = (id, title, sub, opts = {}) => {
+    const field = opts.field || "title";
+    const raw = opts.value != null ? opts.value : (field === "title" ? title : sub);
+    const has = Object.prototype.hasOwnProperty.call(edits, id);
+    const val = has ? edits[id] : raw;
+    const showT = field === "title" && has ? val : title;
+    const showS = field === "sub" && has ? val : sub;
+    const open = editing === id;
+    const long = opts.wide || String(raw || "").length > 60;
+    const box = open ? (long
+      ? <textarea className="ed" rows={4} autoFocus value={val} aria-label={`Edit ${title}`} onChange={(e) => setEdits(k => ({ ...k, [id]: e.target.value }))} />
+      : <input className="ed" autoFocus value={val} aria-label={`Edit ${title}`} onChange={(e) => setEdits(k => ({ ...k, [id]: e.target.value }))} onKeyDown={(e) => { if (e.key === "Enter") setEditing(null); }} />) : null;
+    return (
+      <div key={id} className={"it" + (opts.wide || open ? " wide" : "") + (opts.have ? " have" : "")}>
+        <span className="tx">
+          {open && field === "title" ? box : <b>{showT}</b>}
+          {open && field === "sub" ? box : (showS ? <small>{showS}</small> : null)}
+        </span>
+        {opts.have ? <span className="hv"><Check size={14} strokeWidth={2.4} /> On your profile</span> : yn(id, title)}
+      </div>
+    );
+  };
 
   const x = st.phase === "review" ? st.x : null;
   const chosen = x ? Object.values(pick).filter(Boolean).length : 0;
@@ -1050,7 +1097,7 @@ function CVUpload17() {
             {(x.name || x.about_me) && (
               <section className="grp">
                 {x.name && (<><h4>Name</h4>{row("name", x.name.value, x.name.current ? `Now: ${x.name.current}` : "")}</>)}
-                {x.about_me && (<><h4>About</h4>{row("about_me", "About me", x.about_me.value, { wide: true })}</>)}
+                {x.about_me && (<><h4>About</h4>{row("about_me", "About me", x.about_me.value, { wide: true, field: "sub" })}</>)}
               </section>
             )}
             {FFAI_GROUPS17.map(([sec, cat]) => {
@@ -1066,7 +1113,7 @@ function CVUpload17() {
             {x.answers.length > 0 && (
               <section className="grp">
                 <h4>Questions</h4>
-                {x.answers.map(a => row(a.id, a.question_text, a.changes_existing ? `${a.answer} (now: ${a.current_answer})` : a.answer))}
+                {x.answers.map(a => row(a.id, a.question_text, a.changes_existing ? `${a.answer} (now: ${a.current_answer})` : a.answer, { field: "sub", value: a.answer }))}
               </section>
             )}
             {(x.unreadable.length > 0 || (x.input && x.input.truncated)) && (

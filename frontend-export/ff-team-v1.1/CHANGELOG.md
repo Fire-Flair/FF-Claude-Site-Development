@@ -4,6 +4,22 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.21
+
+- (v1.20 of this thread was briefly published over the home-colour v1.20; v1.21 carries both.)
+- CV upload progress bar (Alex, 18 Nov 15:06): the bar now starts at 0% the moment a file is chosen and runs
+  steadily to 92% over 40 seconds, then holds at 92% if the extraction is still running, and jumps to 100% as soon
+  as the extraction comes back. It is a simulated (time-based) bar: OpenAI gives no real progress during the
+  extraction, so there is nothing to report from the backend. Developers: start a 40 s timer on upload
+  (`CV_SIM_MS = 40000`, `CV_SIM_MAX = 92` in `src/components/team/profile-builder.jsx`), set 100% when the
+  backend confirms the extraction is complete. The old phase-based and streamed-characters progress is removed.
+- CV approval list (Alex, 18 Nov 15:07): every item is now Yes / No / Edit. Edit opens the value in place (a text
+  box, or a larger box for About me and long items); an edited item is ticked Yes and is added to the profile as
+  edited. Name, About me, every section item and Question answers can be edited. Applied through
+  `cvWithEdits17()` before `ffaiApplyLocal17()`; styles `.ff-cvok17 .yn` (three buttons) and `.ff-cvok17 .ed`
+  in `src/styles/v11.css`.
+- Artifact version 1795014646-7617.
+
 ## v1.20
 
 - FF Team home colours: ivory and burgundy (Alex, 18 Nov 14:53, from option 1 "Ivory and wine"). Every colour on the
