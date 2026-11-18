@@ -36,6 +36,9 @@
   --color-ivory: #FFFCF4;
   --color-champagne: #EADBB4;
   --color-gold-leaf: #EDD58F;
+  /* home-text (Alex, 18 Nov 16:29): the champagne of the pillar boxes, closed and open, and a deeper one for picture wells */
+  --color-champagne-box: #EAE0C3;
+  --color-champagne-deep: #DCCB9F;
   /* home2 (Alex, 18 Nov 15:29): burgundy pillars and the plum bookings box */
   --color-ox-hi: #6E1A2C;
   --color-ox-deep: #4A0E1A;

@@ -1,0 +1,41 @@
+/* home-text (Alex, 18 Nov 16:29, from his iPad screenshots of v1.24). Loaded after home-colours.css, scoped to .ff-home-c4.
+   - Pillar boxes are champagne when closed too (the colour of the open box).
+   - No dark bar (inset shadow) at the top of an open pillar's box.
+   - Titles inside the pillars are smaller and sit higher up.
+   - The 1-2-3 picture wells are a deeper champagne, not rosé.
+   - On iPad and desktop the photo's fade starts lower, so it no longer covers the photos.
+   - New intro lines under section titles (.ff-sec-intro). */
+
+/* ---------- closed pillars: champagne ---------- */
+.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile,
+.ff .ff-hf22.ff-home-c4 .ff-dx.is-open .ff-dx-tile.on { background:var(--color-champagne-box,#EAE0C3) !important; }
+@media (min-width:760px) {
+  /* the photo stops above the words and fades into the champagne only over its last part, so the photo stays clear
+     and the words sit on plain champagne */
+  .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .ph { bottom:68px !important; height:auto !important; }
+  .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .ph::after,
+  .ff .ff-hf22.ff-home-c4 .ff-dx.is-open .ff-dx-tile.on .ph::after {
+    background:linear-gradient(180deg,rgba(234,224,195,0) 72%,rgba(234,224,195,.7) 90%,var(--color-champagne-box,#EAE0C3) 100%) !important; }
+  .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile:not(.on) .chev { background:rgba(234,224,195,.92); }
+}
+
+/* ---------- open pillar box: no dark bar at the top, one flat champagne start ---------- */
+.ff .ff-hf22.ff-home-c4 .ff-dx-panel { box-shadow:none !important; padding-top:8px !important;
+  background:linear-gradient(180deg,var(--color-champagne-box,#EAE0C3) 0,#F0E7CF 30%,#F6EEDB 100%) !important; }
+
+/* ---------- titles inside the pillars: smaller and higher ---------- */
+.ff .ff-hf22.ff-home-c4 .ff-dx-intro { padding-top:12px !important; }
+.ff .ff-hf22.ff-home-c4 .ff-dx-intro h3 { margin:0 0 8px !important; font-size:clamp(22px,5.6vw,30px) !important; line-height:1.12 !important; text-wrap:balance; }
+.ff .ff-hf22.ff-home-c4 .ff-ps21 .ttl { font-size:clamp(19px,4.8vw,25px) !important; }
+@media (min-width:760px) { .ff .ff-hf22.ff-home-c4 .ff-dx-panel { padding-top:12px !important; } .ff .ff-hf22.ff-home-c4 .ff-dx-intro { padding-top:16px !important; } }
+
+/* ---------- 1-2-3 picture wells: deeper champagne instead of rosé ---------- */
+.ff .ff-hf22.ff-home-c4 .ff-dx-panel .ff-cta17 .ph { background:var(--color-champagne-deep,#DCCB9F) !important; }
+
+/* ---------- intro lines under section titles (home intro, Launch Challenge, FF Party Launch Event) ---------- */
+.ff .ff-hf22 .ff-dx-tag { max-width:62ch; }
+.ff .ff-hf22 .ff-sec-intro { margin:-6px 0 16px; padding-left:28px; max-width:62ch; font-family:var(--font-sans,'Inter',sans-serif); font-size:clamp(14px,3.8vw,16px); font-weight:500; line-height:1.5;
+  color:var(--color-muted,#6A6253); overflow-wrap:normal; word-break:normal; hyphens:none; text-wrap:pretty; }
+.ff .ff-hf22 .ff-tm20-title { margin-top:0 !important; }
+/* four tiles in a row: two-line subtitles, so the photo stops a little higher */
+@media (min-width:1000px) { .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .ph { bottom:80px !important; } }
