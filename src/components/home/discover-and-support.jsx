@@ -375,6 +375,18 @@ function TwoMinutes20() {
 const LC22_I = { CalendarDays: lucideIcon("CalendarDays"), Users: lucideIcon("Users"), Crown: lucideIcon("Crown"), Plane: lucideIcon("Plane"), CreditCard: lucideIcon("CreditCard"),
   UserCheck: lucideIcon("UserCheck"), CalendarCheck: lucideIcon("CalendarCheck"), PartyPopper: lucideIcon("PartyPopper"), ChevronRight: lucideIcon("ChevronRight") };
 
+/* v1.50 (Alex, 18 Nov 20:26): the Top 10 tile's faint background symbol is a champagne bottle instead of a credit card,
+   drawn in the same line style as the lucide icons (24-unit box, round caps, currentColor). */
+function ChampagneBottle22({ size = 24, strokeWidth = 2 }) {
+  const h = React.createElement;
+  return h("svg", { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true" },
+    h("path", { d: "M10.5 2h3v3.2c0 1 .5 1.7 1.2 2.6 1 1.3 1.8 2.7 1.8 4.6V21a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1v-8.6c0-1.9.8-3.3 1.8-4.6.7-.9 1.2-1.6 1.2-2.6Z" }),
+    h("path", { d: "M10.5 4h3" }),
+    h("path", { d: "M7.6 13.5h8.8" }),
+    h("path", { d: "M7.5 18h9" }),
+    h("path", { d: "M18 3.5l1.2-1.2M19.5 6.5h1.7M17.8 1v1.2" }));
+}
+
 function LaunchLadder22() {
   const h = React.createElement;
   const people = useDirectory();
@@ -405,7 +417,7 @@ function TeamCompetition20() {
      chal (Alex, 18 Nov 03:13): three tiles in the style of the 90 days tile, each with a faint symbol behind. */
   const boxes = [
     [CH.boxes[0].t, "days", "90", "1 Dec to 28 Feb", LC22_I.CalendarDays, [["Dates", "The challenge runs for 90 days, from 1 December 2026 to 28 February 2027."]], LC22_I.CalendarDays, false],
-    ["Rewards for the top 10", "top", "10", "Win rewards", LC22_I.Crown, CH.rewards.filter(r => r[0] === "Top 10").map(r => [r[0], r[1]]), LC22_I.CreditCard, true],
+    ["Rewards for the top 10", "top", "10", "Win rewards", LC22_I.Crown, CH.rewards.filter(r => r[0] === "Top 10").map(r => [r[0], r[1]]), ChampagneBottle22, true],
     [CH.boxes[3].t, null, "Win a trip", "Athens Bar Show", LC22_I.Plane, CH.rewards.filter(r => r[0] === "Overall winner").map(r => [r[0], r[1]]), LC22_I.Plane, false]
   ];
   const cur = box === null ? null : [boxes[box][0], null, boxes[box][5]];
