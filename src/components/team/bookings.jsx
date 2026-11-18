@@ -403,6 +403,84 @@ function BkPkgSoon17({ pk = PK_SOON17.bar[0] }) {
   );
 }
 
+/* pubbtn (Mr G, 02:51): the Packages tab on a profile shows a compact option-3 card: FF Party ribbon, title, the short
+   one-line headline, the key rows, Details closed. No footer. The rail ends with "Create your own" (no button).
+   A line that doesn't fit shrinks (never splits a word); a tap on Details opens it in place instead of the sheet. */
+function usePkcFit17(ref, key) {
+  React.useLayoutEffect(() => {
+    const root = ref.current; if (!root) return;
+    const fit = () => root.querySelectorAll(".fit").forEach(el => {
+      if (!el.offsetParent) return;
+      el.style.fontSize = ""; let fs = parseFloat(getComputedStyle(el).fontSize), n = 0;
+      while (el.scrollWidth > el.clientWidth + 0.5 && fs > 9 && n++ < 40) { fs -= 0.5; el.style.fontSize = fs + "px"; }
+    });
+    fit();
+    let ro = null; if (window.ResizeObserver) { ro = new ResizeObserver(fit); ro.observe(root); }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit).catch(() => {});
+    return () => { if (ro) ro.disconnect(); };
+  }, [key]);
+}
+function ProfPkgCard17({ svc }) {
+  const p = PKG_BY17[svc.id] || {};
+  const ref = useRef(null);
+  usePkcFit17(ref, svc.id);
+  const eb = [svc.level === "Bar" ? "" : svc.level, svc.site || "FF Party"].filter(Boolean).join(" · ");
+  const line = p.headline || svc.tagline;
+  const rows = [[S17I.Sparkles, "Includes", p.includes || svc.includes], [S17I.Users, "Ideal for", p.ideal || svc.ideal], [S17I.Clock, "Duration", p.durationLabel || svc.time]].filter(r => r[2]);
+  return (
+    <div ref={ref} className="ff-pkc cmp" data-pk17={"pp-" + svc.id}>
+      <span className="ff-pkc-rb"><S17I.Sparkles size={12} /> {svc.site || "FF Party"}</span>
+      <span className="ff-pkc-logo"><FFLogo size={34} tier="gold" /></span>
+      <div className="ff-pkc-hd">
+        <div className="ff-pkc-eb fit">+ {eb} +</div>
+        <h5 className="ff-pkc-ti fit">{p.name || svc.title}</h5>
+        {line && <p className="ff-pkc-tg fit">{line}</p>}
+      </div>
+      <div className="ff-pkc-rows">
+        {rows.map(([Ic, l, v]) => (
+          <div key={l} className="ff-pkc-row">
+            <span className="ff-pkc-ico"><Ic size={15} strokeWidth={1.6} /></span>
+            <span className="v"><i>{l}</i><b>{pkcNoBreak17(v)}</b></span>
+          </div>
+        ))}
+      </div>
+      <details className="ff-pkc-dt" onClick={(e) => e.stopPropagation()}>
+        <summary><span>Details</span><S17I.ChevronDown size={18} strokeWidth={2} /></summary>
+        <div className="in">
+          {p.description && <p>{pkcNoBreak17(p.description)}</p>}
+          {(p.points || []).length > 0 && <ul>{p.points.map(x => <li key={x}>{pkcNoBreak17(x)}</li>)}</ul>}
+          {p.conditions && <p className="cond">{pkcNoBreak17(p.conditions)}</p>}
+        </div>
+      </details>
+    </div>
+  );
+}
+function ProfPkgCreate17() {
+  const pk = PK_SOON17.bar[0];
+  const ref = useRef(null);
+  usePkcFit17(ref, "create");
+  const rows = [[S17I.Sparkles, "Includes", pk.inc], [S17I.Users, "Ideal for", pk.ideal], [S17I.Clock, "Duration", "As long as you choose"]];
+  return (
+    <div ref={ref} className="ff-pkc cmp ff-pkc-own" data-pk17="pp-create">
+      <span className="ff-pkc-rb"><S17I.Sparkles size={12} /> FF Party</span>
+      <span className="ff-pkc-logo"><FFLogo size={34} tier="gold" /></span>
+      <div className="ff-pkc-hd">
+        <div className="ff-pkc-eb fit">+ FF Party +</div>
+        <h5 className="ff-pkc-ti fit">Create your own</h5>
+        <p className="ff-pkc-tg fit">Your skills, your package, your price.</p>
+      </div>
+      <div className="ff-pkc-rows">
+        {rows.map(([Ic, l, v]) => (
+          <div key={l} className="ff-pkc-row">
+            <span className="ff-pkc-ico"><Ic size={15} strokeWidth={1.6} /></span>
+            <span className="v"><i>{l}</i><b>{v}</b></span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function TeamBookings({ guest = false }) {
   const { state, dispatch } = useStore();
   const [open, setOpen] = useState(null);

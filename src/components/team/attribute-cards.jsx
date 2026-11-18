@@ -1124,7 +1124,7 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
     const td = teamTabData17(state, all, person);
     return [
       { key: "overview", label: "Overview" },
-      { key: "services", label: "Bookings", count: servicesOf(state, person).length },
+      { key: "services", label: "Packages", count: servicesOf(state, person).length },
       { key: "teams", label: "Team", count: td.teams.length },
       { key: "reviews", label: "Reviews", count: reviewsOf(state, person).length },
     ];
