@@ -52,8 +52,6 @@ const PHASE1 = {
      Bookings tab shows them as Coming 2027, beside what works now (availability,
      Service Cards, Training and Dream jobs registration). */
   bookingsLive: true,
-  /* "Top performers" rankings are leaderboards: not in Phase 1. */
-  leaderboards: false,
   /* The desktop "Add FF" button in the top bar is hidden for now. */
   desktopAdd: false,
 };

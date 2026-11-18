@@ -34,13 +34,9 @@
 .ff-bk-sell.ff-bkpc .ff-bk-h { margin-top:0; }
 .ff-bkpc .ff-hscroll { margin-left:-12px; margin-right:-12px; padding-left:12px; padding-right:12px; scroll-padding-left:12px; }
 .ff-bkgrow .ff-bk-sub { margin-bottom:12px; }
-.ff-bk .ff-bk-hl { font-size:clamp(23px,6.4vw,29px); line-height:1.15; }
 .ff-fb21-box { margin:0 0 14px; }
 .ff-fb21-box > h3 { margin:0 0 6px; font-family:var(--display); font-size:20px; }
 .ff-fb21-box > p { margin:0 0 12px; font-size:14px; line-height:1.5; color:#5B5346; }
-.ff-fb21-row { margin:0 0 10px; }
-.ff-fb21-row .rate { display:block; margin-top:6px; font-size:13px; color:#5B5346; }
-.ff-fb21-row .rate b { color:#16130F; }
 /* Task 003 (Bookings): Your Bookings section with the WhatsApp icon beside its heading, small group labels inside it. */
 .ff .ff-bk-yh { margin:18px 0 12px; }
 .ff .ff-bk-yh .ff-wa-ico { width:34px; height:34px; }
@@ -48,14 +44,9 @@
 .ff .ff-bk-grp { margin-top:14px; }
 .ff .ff-bk-grp .ff-bk-hrow { margin-bottom:8px; }
 /* Bookings 2/2 (P3): bar package cards in the FF Party package card look, package tabs. */
-.ff .ff-bkpk-sub { margin:0 0 6px; font-family:var(--display); font-size:17px; line-height:1.2; color:var(--ox,#5C1220); }
 .ff .ff-bkpk-cell { flex:none; width:min(300px, calc(100vw - 72px)); scroll-snap-align:start; display:flex; }
 .ff .ff-bkpk-cell > .ff-pk17w { width:100%; }
 .ff .ff-bkpk-cell .ff-pk17.rd { height:100%; min-height:420px; }
-.ff .ff-bkpk .ff-pk17 .ph { position:relative; }
-.ff .ff-bkpk .ff-pk17 .ph .pr { font-size:13px; border-radius:10px; corner-shape:squircle; }
-.ff .ff-bkpk .ff-pk17 .tx .tm { display:inline-flex; align-items:center; gap:5px; font-size:13px; color:#5B5346; }
-.ff .ff-bkpk .ff-pk17 .tx .tm svg { color:var(--gold-mid,#B08D2A); }
 .ff #ff-bk-party .ff-hscroll { align-items:stretch; }
 .ff #ff-bk-party .ff-hitem { display:flex; }
 
@@ -110,21 +101,6 @@
 .ff #ff-bk-party.pkg3 .ff-pkc-row .v { text-align:left; }
 .ff #ff-bk-party.pkg3 .ff-pkc-row i { font:600 11px/1 var(--font-display); font-style:normal; letter-spacing:.14em; text-transform:uppercase; color:var(--color-gold-lt); margin-bottom:5px; }
 .ff #ff-bk-party.pkg3 .ff-pkc-row b { font:400 14px/1.4 var(--font-sans); letter-spacing:0; text-transform:none; color:#F1E8D2; }
-.ff #ff-bk-party .ff-pkc-soon { min-height:100%; }
-.ff #ff-bk-party .ff-pkc-soon .ff-pkc-ti { white-space:normal; }
-.ff #ff-bk-party .ff-pkc-emb { flex:1; display:grid; place-items:center; min-height:200px; padding:24px 0; background:radial-gradient(closest-side, rgba(122,26,44,.75), rgba(92,18,32,.25) 60%, transparent); }
-.ff #ff-bk-party .ff-pkc-emb svg { filter:drop-shadow(0 10px 24px rgba(0,0,0,.55)); }
-.ff #ff-bk-party .ff-pkc-soon .ff-pkc-ft { justify-content:center; }
-.ff #ff-bk-party .ff-pkc-soonb { display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:0 20px; border-radius:14px; corner-shape:squircle; border:1.5px solid rgba(243,222,156,.7); font:600 15px/1 var(--font-display); letter-spacing:.12em; text-transform:uppercase; color:#FFF1C8; white-space:nowrap; }
-.ff #ff-bk-party .ff-bkpk-soonp { display:flex; }
-.ff #ff-bk-party .ff-bkpk-soonp .ff-pkc-soon { min-height:520px; }
-
-/* v17.44: the Coming soon card previews an empty package card (rows with placeholder lines) instead of a big FF logo. */
-.ff #ff-bk-party .ff-pkc-pv { flex:none; }
-.ff #ff-bk-party .ff-pkc-soon .ff-pkc-ft { margin-top:auto; }
-
-.ff #ff-bk-party .ff-pkc-pv .ff-pkc-ico { opacity:.75; }
-.ff #ff-bk-party .ff-pkc-pvdt { display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:44px; margin:12px 16px 16px; padding:0 16px; border:1px solid rgba(201,162,39,.35); border-radius:18px; corner-shape:squircle; background:rgba(201,162,39,.05); font:600 14px/1 var(--font-display); letter-spacing:.12em; text-transform:uppercase; color:rgba(243,222,156,.6); }
 
 /* bk5 (Mr G 03:03, Bookings): one page title; WhatsApp icon inside a larger green box; FFParty / FFStaff headings on one
    line; FF Party package cards 5:7 portrait, compact, with Register interest; locations line; FF Staff professions and

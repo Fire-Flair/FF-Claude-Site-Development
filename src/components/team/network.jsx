@@ -693,47 +693,6 @@ function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "", 
 
 
 
-/* Ranking categories — a config array, not one component per ranking, so a
-   new category is a data entry. Each sorts the SAME directory using data
-   that already exists on people; nothing here is invented. */
-const RANKINGS = [
-  { key: "top", label: "Top Performers This Week", sort: (a, b) => (b.rating || 0) - (a.rating || 0) || (b.reviews || 0) - (a.reviews || 0) },
-  { key: "reviewed", label: "Most Reviewed", sort: (a, b) => (b.reviews || 0) - (a.reviews || 0) },
-  { key: "level", label: "Rising Star", sort: (a, b) => (b.level || 0) - (a.level || 0) },
-];
-
-
-
-function Rankings() {
-  const { state, dispatch } = useStore();
-  const all = adminPeople17(state, state.directory);
-  return (
-    <>
-      {RANKINGS.map(r => {
-        const ranked = [...all].sort(r.sort).slice(0, 8);
-        const key = `rank_${r.key}`;
-        const visible = state.categoryVisibility[key] === undefined ? state.role !== "staff" : state.categoryVisibility[key] !== false;
-        return (
-          <section key={r.key} style={{ marginTop: 22 }}>
-            <SectionHead icon={<Award size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={r.label} count={ranked.length}
-              action={<CategoryToggle sectionKey={key} />} />
-            {visible && (
-              <HScroll label={r.label} snap>
-                {ranked.map(p => <PlayerTile key={p.id} person={p} onClick={() => dispatch({ type: "VIEW", id: p.id })} />)}
-              </HScroll>
-            )}
-          </section>
-        );
-      })}
-      <p className="ff-body ff-muted" style={{ fontSize: 11.5, marginTop: 4 }}>
-        More rankings — Largest Network, Most Booked, Most Active — arrive as that activity data builds up.
-      </p>
-    </>
-  );
-}
-
-
-
 /* A collapsed drop-down under Your team: Companies, Network. Both count towards the team number. */
 function NetDrop17({ title, count, children }) {
   const [open, setOpen] = useState(false);
@@ -805,7 +764,6 @@ function NetworkScreen({ guest = false }) {
       <NetBrowse17 query={q} onPick={view} after={<NetMap20 />} search={<FFAI query={q} onQuery={setQ} title="Search people, skills or places" searchBox
         placeholder="Search people, skills or places" />} />
       {!q && (<>
-        {PHASE1.leaderboards && <Rankings />}
         <Divider />
       </>)}
       <ReviewSheet open={!!reviewing} person={reviewing} onClose={() => setReviewing(null)} />

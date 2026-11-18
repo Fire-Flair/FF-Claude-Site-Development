@@ -126,23 +126,6 @@ function WhatsAppIcon({ size = 20 }) {
 
 
 
-/* The "Your bookings" panel on FF Team Bookings, as on ffteam.uk: requests arrive on WhatsApp, with the three things that open with FF Staff and FF Party. */
-function BookingsSoon() {
-  return (
-    <div className="ff-soonpanel">
-      <div className="ff-wa" style={{ marginBottom: 12 }}>
-        <span className="ff-wa-ico"><WhatsAppIcon size={22} /></span>
-        <span className="ff-body" style={{ color: "#0B3D22", fontSize: 13.5 }}>
-          <b>Requests come to you on WhatsApp.</b> When companies and clients ask if you're free, each request is sent to you directly on WhatsApp and shows here. You reply in either place.
-        </span>
-      </div>
-      <p className="ff-soonpanel-lede">Your booked shifts will be shown here.</p>
-    </div>
-  );
-}
-
-
-
 /* The three interest drop-downs on the Bookings page. Each is a card: the photo is the top half with only the title on it;
    the icon, the description and the chevron sit below on the solid card. On wide screens the three cards share one row
    (.ff-bkd-row) and an opened card's contents span the full width underneath (the box then carries its own title). */
@@ -182,54 +165,15 @@ function BkDrop17({ id, title, desc, icon: Icon, photo, children, open: openP, o
 
 
 
-/* ---- FF Staff Shifts (v17.4.6): one card per profession, from the Pick your professions catalogue ----
-   Matte forest-green version of the FF Party package card (green is the FF Staff accent within FF Team). The card asks the availability question (answers kept
-   in profile.staffAvail, as before) and takes an optional preferred hourly rate: a typed Q&A answer
-   rate.<profession id> in pence, visibility "ff-staff" (shown on the member's FF Staff profile only).
-   Businesses set the actual shift rate on each Shift Card. */
-/* Terms shown after signing in, before packages or rates are saved. kind "pkg": FF Party packages. kind "shift": FF Staff shifts. */
-function PkgTerms17({ kind = "pkg", onClose, onAccept }) {
-  const list = kind === "shift" ? STAFF_SHIFT_TERMS17 : PARTY_PKG_TERMS17;
+/* FF Party package terms, shown after signing in, before packages are saved. */
+function PkgTerms17({ onClose, onAccept }) {
   return (
-    <Sheet open onClose={onClose} title={kind === "shift" ? "FF Staff shift terms" : "FF Party package terms"}>
+    <Sheet open onClose={onClose} title="FF Party package terms">
       <div className="ff-tc5">
-        {list.map((t, i) => <div key={t.k} className="ff-tc5-read"><span><b>{i + 1}</b>{t.label}</span><p>{t.text}</p></div>)}
+        {PARTY_PKG_TERMS17.map((t, i) => <div key={t.k} className="ff-tc5-read"><span><b>{i + 1}</b>{t.label}</span><p>{t.text}</p></div>)}
       </div>
       <div className="ff-bsec-acts" style={{ marginTop: 10 }}><Btn variant="primary wide" onClick={onAccept}><Check size={14} /> Accept and confirm</Btn></div>
     </Sheet>
-  );
-}
-
-
-function ProfRateTile17({ name, cat, guest, val, onVal, err }) {
-  const { state, dispatch } = useStore();
-  const account = qaAccount17(state);
-  const saved = account ? prefRateP17(state, account, name) : null;
-  const v = val != null ? val : saved != null ? String(saved / 100) : "";
-  const staffAvail = state.profile.staffAvail || {};
-  const ans = staffAvail[name] || "";
-  const q = `Are you available for bookings as ${/^[aeiou]/i.test(name) ? "an" : "a"} ${name.toLowerCase()}?`;
-  const login = () => window.dispatchEvent(new Event("ff-login"));
-  const setAvail = (o) => { if (!account) { login(); return; } dispatch({ type: "PROFILE", patch: { staffAvail: { ...staffAvail, [name]: o } } }); };
-  return (
-    <div className="ff-tp17 grn prof" role="group" aria-label={name}>
-      <span className="lv">{cat}</span>
-      <b className="tt">{name}</b>
-      <span className="in">{q}</span>
-      <span className="yn" role="group" aria-label={q}>
-        {["Yes", "No"].map(o => <button key={o} type="button" className={ans === o ? "on" : ""} aria-pressed={ans === o} onClick={() => setAvail(o)}>{o}</button>)}
-      </span>
-      <span className="pay">
-        <small>Your preferred hourly rate</small>
-        <span className="rt">
-          <span aria-hidden="true">£</span>
-          <input type="text" inputMode="decimal" value={v} aria-label={`Your preferred hourly rate as ${name}, pounds per hour`}
-            onChange={(e) => onVal(name, e.target.value.replace(/[^\d.]/g, "").slice(0, 7))} />
-          <span>/hour</span>
-        </span>
-        {err ? <span className="er" role="alert">{err}</span> : <span className="vis">Shown to businesses on FF Staff only</span>}
-      </span>
-    </div>
   );
 }
 
@@ -673,7 +617,7 @@ function TeamBookings({ guest = false }) {
             </div>
           )}
           <p className="ff-bk-locs">Packages are offered where you work: <a href="#/ff-team/profile" onClick={goAreas}>your areas</a> are on your profile.</p>
-          {pkgTerms && <PkgTerms17 kind="pkg" onClose={() => setPkgTerms(false)} onAccept={confirmPkgs} />}
+          {pkgTerms && <PkgTerms17 onClose={() => setPkgTerms(false)} onAccept={confirmPkgs} />}
         </div>
 
         <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-staff">
@@ -707,92 +651,6 @@ function draftFromProfile(state) {
     skills: names("skills"), interests: names("interests"),
     locations: names("locations"), languages: names("languages"),
   };
-}
-
-
-
-function TeamProfile() {
-  const { state, dispatch } = useStore();
-  const [editing0, setEditing] = useState(false);
-  const barEdit = !!(state.profileEdit && state.profileEdit.on);
-  const editing = editing0 || barEdit;
-  const [d, setD] = useState(() => draftFromProfile(state));
-  const [th, setTh] = useState(state.profile.theme);
-  const { share: shareCard, busy: sharing } = useShareCard();
-  /* The booking bar's Edit opens the card editor straight away; its Save applies the card. */
-  useEffect(() => { if (barEdit) { setD(draftFromProfile(state)); setTh(state.profile.theme); } }, [barEdit]);
-  useEffect(() => {
-    if (!barEdit) return;
-    const h = () => {
-      syncCardRecords(state, dispatch, d, ["professions", "skills", "interests", "languages"]);
-      dispatch({ type: "PROFILE", patch: { name: d.name.trim() || state.profile.name, photo: d.photo, theme: pvBase17(th) } });
-    };
-    window.addEventListener("ff-save", h);
-    return () => window.removeEventListener("ff-save", h);
-  });
-
-  if (!state.profile.live) return <Empty icon={<User size={26} />} title="Finish creating your profile and your card appears here."
-    action={<Btn variant="primary" onClick={() => dispatch({ type: "TAB", tab: "home" })}>Continue setting up</Btn>} />;
-
-  const me = meAsStaff(state.profile, state.session);
-  const startEdit = () => { setD(draftFromProfile(state)); setEditing(true); };
-
-  /* Editing the card edits NAMES only. Descriptions, media and documents
-     live on the records and are never clobbered by a card edit: existing
-     records are matched by name and kept whole. */
-  const save = () => {
-    syncCardRecords(state, dispatch, d, ["professions", "skills", "interests", "languages"]);
-    dispatch({ type: "PROFILE", patch: { name: d.name.trim() || state.profile.name, photo: d.photo, theme: pvBase17(th) } });
-    setEditing(false);
-    dispatch({ type: "TOAST", toast: "Card updated" });
-  };
-
-  return (
-    <div>
-      <div className="ff-eyebrow">FF Team · Profile</div>
-      <h1 className="ff-h1" style={{ marginTop: 4, marginBottom: 14 }}>{editing ? "Edit your Profile Card" : `Welcome back${String(state.profile.name || "").trim() ? `, ${String(state.profile.name).trim().split(" ")[0]}` : ""}`}</h1>
-
-      <div id="ff-sec-card" />
-      {editing ? (
-        <>
-          <EditablePlayerCard draft={d} setDraft={setD} themeKey={th}
-            tag={state.session.tag} tier={state.profile.tier} level={state.profile.level}
-            onPhoto={(url) => setD(x => ({ ...x, photo: url }))} />
-          <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap", margin: "16px 0 4px" }}>
-            {Object.entries(THEMES).filter(([, x]) => !x.directoryOnly).map(([k, t]) => (
-              <button key={k} type="button" className={t.locked ? "ff-swatch-lock" : undefined} onClick={() => { if (t.locked) previewTheme17(k, th, setTh); else { clearPv17(); setTh(k); } }} aria-label={`${t.name} card`} title={t.name}
-                style={{ width: 30, height: 30, borderRadius: "50%", background: t.swatch, border: th === k ? "2px solid var(--gold)" : "1px solid var(--rule)" }}>{t.locked ? <I11.Lock size={13} /> : null}</button>
-            ))}
-          </div>
-          {!barEdit && <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 14 }}>
-            <Btn variant="primary" onClick={() => { save(); }}><Check size={14} /> Save card</Btn>
-            <Btn variant="ghost" onClick={() => setEditing(false)}>Cancel</Btn>
-          </div>}
-        </>
-      ) : (
-        <>
-          {/* v1.2: Book · Review · Join are for visitors, not on your own page.
-              Edit card sits under the card; Share is with the wallets below. */}
-          <PlayerCard person={me} format="full" themeKey={state.profile.theme} />
-          <div style={{ maxWidth: 372, margin: "14px auto 0" }}>
-            <Btn variant="primary wide" onClick={startEdit}><Pencil size={13} /> Edit card</Btn>
-          </div>
-        </>
-      )}
-
-      <OwnEditTools />
-
-      <ProfileSections person={me} isMe />
-        <IntroEditor17 />
-      <P1SaveWhileEditing />
-
-      <div className="ff-frame" style={{ padding: 12, marginTop: 22, display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
-        <Pill tone="gold"><Hash size={11} /> {state.session.tag}</Pill>
-        <Pill tone="ok"><ShieldCheck size={11} /> Verified</Pill>
-        <MyVerificationPill />
-      </div>
-    </div>
-  );
 }
 
 
