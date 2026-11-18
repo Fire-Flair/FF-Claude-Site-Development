@@ -293,9 +293,6 @@ const PROMO_CSS20 = ".ff-cp20{position:relative;margin:22px 0;border-radius:26px
     + ".ff-cp20r .tbc{display:inline-block;margin:0 6px 6px 0;padding:4px 10px;border-radius:12px;border:1px dashed var(--gold-dk,#A5802F);font-size:12.5px}"
     + ".ff-vip20-ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px}.ff-vip20-ul li{padding:7px 10px;border-radius:14px;border:1px solid rgba(201,162,75,.4);font-size:12px;line-height:1.3;color:#F4EBD6}";
 
-/* v17.9: a little more contrast, spacing and size for the FF Team Launch Challenge box (FF Staff and VIP boxes keep the shared look). */
-const TEAM_CP21_CSS = ".ff-cp20.t21 p{font-size:16px;line-height:1.55;color:rgba(244,235,214,.96)}.ff-cp20.t21 .ff-cp20-boxes{gap:12px}.ff-cp20.t21 .ff-cp20-box b{font-size:16px;line-height:1.25;color:#FFF6DC}.ff-cp20.t21 .ff-cp20-box span{font-size:14.5px;line-height:1.4;color:rgba(244,235,214,.94)}.ff-cp20.t21 .ff-cp20-date{font-size:14px}.ff-cp20.t21 .ff-cp20-rules{padding:10px 16px;min-height:44px;border-radius:99px;corner-shape:squircle;border:1px solid rgba(201,162,75,.6);background:transparent;color:#F4DC8E;font-weight:700;font-size:14px;font-family:inherit;cursor:pointer}@media(max-width:640px){.ff-cp20.t21 p{font-size:17px}.ff-cp20.t21 .ff-cp20-box span{font-size:15px}.ff-cp20.t21 .ff-cp20-in{gap:22px}}";
-
 const PROMO_BOX_CSS20 = __ff_css("styles/promo-box-20.css");
 
 const FF_CHALLENGE20 = { start: Date.UTC(2026, 11, 1), days: 90, staffAt: 100, partyAt: 1e3 };
@@ -316,25 +313,6 @@ function Countdown20() {
     { className: "ff-cd20", role: "timer", "aria-label": before ? "Time until the challenge starts" : "Time left in the challenge" },
     React.createElement("span", { className: "ff-cd20-l" }, done ? "Challenge complete" : before ? "Starts in" : "Ends in"),
     done ? null : [cell(d, "days"), cell(hr, "hours"), cell(mn, "mins")]
-  );
-}
-
-function LaunchBar20() {
-  const people = useDirectory();
-  const c = FF_CHALLENGE20, n = people.length;
-  const pct = n <= c.staffAt ? n / c.staffAt * 50 : 50 + (Math.min(n, c.partyAt) - c.staffAt) / (c.partyAt - c.staffAt) * 50;
-  const stops = [["FF Team", "Launch", "Professionals build their profile and network", 0], ["FF Staff", "At " + c.staffAt.toLocaleString("en-GB") + " professionals", "Allows companies to hire you", 50], ["FF Party", "At " + c.partyAt.toLocaleString("en-GB") + " professionals", "Direct to client bookings", 100]];
-  return React.createElement(
-    "div",
-    { className: "ff-lb20" },
-    React.createElement(
-      "div",
-      { className: "ff-lb20-t", role: "progressbar", "aria-valuemin": 0, "aria-valuemax": c.partyAt, "aria-valuenow": n, "aria-label": "Professionals joined" },
-      React.createElement("span", { className: "ff-lb20-f", style: { width: pct + "%" } }),
-      stops.map((s) => React.createElement("i", { key: s[0], className: "ff-lb20-d" + (pct >= s[3] ? " on" : ""), style: { left: s[3] + "%" } }))
-    ),
-    React.createElement("div", { className: "ff-lb20-n" }, n.toLocaleString("en-GB") + " professionals so far"),
-    React.createElement("div", { className: "ff-lb20-s" }, stops.map((s, i) => React.createElement("div", { key: s[0], className: "ff-lb20-x p" + i }, React.createElement("b", null, s[0]), React.createElement("em", null, s[1]), React.createElement("span", null, s[2]))))
   );
 }
 

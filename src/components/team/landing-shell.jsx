@@ -7,7 +7,7 @@
 function Landing() {
   const { state, dispatch } = useStore();
   if (state.tab === "network") return <NetworkScreen guest />;
-  if (state.tab === "bookings") return PHASE1.bookingsLive ? <TeamBookings guest /> : <P1Bookings guest />;
+  if (state.tab === "bookings") return <TeamBookings guest />;
   /* The old chooser screen is retired. Signed out with no role, any other tab (a TAB "profile" sent without a role, or a
      saved state) hands over: Profile opens FF Team Profile, the same as the hero's Create your Profile Card; anything else
      goes to the home page. */
@@ -38,202 +38,6 @@ const NAV = [
   { key: "bookings", label: "Bookings", mark: "bookings" },
   { key: "profile", label: "Profile", mark: "profile" },
 ];
-
-
-
-/* XP bar — same footprint as the basket bar, filling as the person earns XP
-   toward their next FireFlair tier. The reward on the right is the same Coin
-   used everywhere else, in that tier's metal, so "reaching Bronze" always
-   looks like the same coin the rest of the app already shows for Bronze. */
-/* ==========================================================================
-   XP AREA — opened by the central FireFlair coin.
-   Today it holds XP, level and tasks. It is deliberately the person's whole
-   progression/account area, so Wallet, earnings and rewards can be added as
-   further blocks here without touching the navigation.
-   ========================================================================== */
-/* XP Beta timeline — the current and next quarterly period, generated from
-   XP_TIMELINE rather than hand-written, so a future quarter is a data change
-   to XP_CURRENT_PERIOD/XP_TIMELINE, not a UI rewrite. */
-function XPTimeline() {
-  const idx = XP_TIMELINE.findIndex(p => p.year === XP_CURRENT_PERIOD.year && p.q === XP_CURRENT_PERIOD.q);
-  const visible = XP_TIMELINE.slice(Math.max(0, idx), idx + 2);
-  return (
-    <div style={{ marginBottom: 16 }}>
-      <div style={{ textAlign: "center", marginBottom: 8 }}>
-        <span className="ff-eyebrow" style={{ fontSize: 10 }}>FF XP Beta</span>
-      </div>
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        {visible.map((p, i) => {
-          const isCurrent = p.year === XP_CURRENT_PERIOD.year && p.q === XP_CURRENT_PERIOD.q;
-          return (
-            <React.Fragment key={xpPeriodKey(p)}>
-              <div style={{ textAlign: "center", flex: "none" }}>
-                <div className="ff-display" style={{
-                  fontSize: isCurrent ? 15 : 12, color: isCurrent ? "var(--ink)" : "#8C857A",
-                  letterSpacing: ".06em",
-                }}>{quarterLabel(p)}</div>
-                <div className="ff-body ff-muted" style={{ fontSize: 9, marginTop: 2 }}>
-                  {isCurrent ? "Current" : "Next"}
-                </div>
-              </div>
-              {i < visible.length - 1 && (
-                <div style={{ flex: 1, height: 2, background: "linear-gradient(90deg, var(--gold), rgba(201,162,39,.15))" }} />
-              )}
-            </React.Fragment>
-          );
-        })}
-      </div>
-      <p className="ff-body ff-muted" style={{ fontSize: 10.5, textAlign: "center", marginTop: 8, marginBottom: 0 }}>
-        FireFlair XP runs in quarterly performance periods. Your progress resets each quarter — nothing you've earned is lost.
-      </p>
-    </div>
-  );
-}
-
-
-
-/* THE FF COIN — "What do I need to do next?"
-   The existing XP tasks, incomplete first, each one a shortcut into the part
-   of Profile where it gets done. XP and tiers sit underneath as the reward. */
-function XPSheet({ open, onClose }) {
-  const { state, dispatch } = useStore();
-  if (!open) return null;
-  const info = xpProgress(state.profile.xp);
-  const claimed = state.profile.xpClaimed || [];
-  const qsAll = allQuestions(state);
-  const answered = qsAll.filter(q => isAnswered(answerOf(state, q))).length;
-  const live = !!state.profile.live;
-
-  const tasks = [
-    ...XP_TASKS.map(t => ({ ...t, done: claimed.includes(t.id), reward: `+${t.xp} XP` })),
-    {
-      id: "questions", label: "Answer Question Cards", hint: `${answered} of ${qsAll.length} answered`,
-      done: answered >= qsAll.length, reward: `+${XP_VALUES.question} XP each`,
-    },
-  ];
-  const todo = tasks.filter(t => !t.done);
-  const done = tasks.filter(t => t.done);
-
-  /* Send the person to where the task is done. Reuses the Profile routes:
-     card editor, review screen (all categories + Question Cards), tag,
-     verification, and — once live — the profile's own sections. */
-  const goTask = (id) => {
-    onClose();
-    let focus = null;
-    if (id === "create_card") focus = "card";
-    else if (id === "publish_profile") focus = live ? "card" : "share";
-    else if (id === "first_review") {
-      if (live) focus = "reviews";
-      else { focus = "share"; dispatch({ type: "TOAST", toast: "Share your Profile Card first — then ask people you've worked with for a review." }); }
-    }
-    else if (id === "questions") focus = "questions";
-    else if (id.startsWith("add_")) focus = id.slice(4);
-    if (state.role !== "team") dispatch({ type: "ROLE", role: "team" });
-    dispatch({ type: "TAB", tab: "profile", route: "home" });
-    if (focus) dispatch({ type: "FOCUS", focus: { target: focus } });
-    else window.scrollTo(0, 0);
-  };
-
-  const Task = ({ t }) => {
-    const body = (<>
-      <span className="dot">{t.done && <Check size={13} strokeWidth={2.6} />}</span>
-      <span style={{ flex: 1, minWidth: 0 }}>
-        <span className="ff-serif" style={{ fontSize: 15.5, display: "block", color: "#1D1B18", lineHeight: 1.2, textDecoration: t.done ? "line-through" : "none", textDecorationColor: "rgba(126,97,29,.5)" }}>{t.label}</span>
-        <span className="ff-body ff-muted" style={{ fontSize: 11.5 }}>{t.hint}</span>
-      </span>
-      {t.done ? <Pill tone="ok">Earned</Pill> : <Pill tone="gold">{t.reward}</Pill>}
-      {!t.done && <ChevronRight size={16} color="var(--gold-dk)" style={{ flex: "none" }} />}
-    </>);
-    return t.done
-      ? <div className="ff-task done">{body}</div>
-      : <button className="ff-task" onClick={() => goTask(t.id)}>{body}</button>;
-  };
-
-  return (
-    <Sheet open onClose={onClose} title="Your FireFlair">
-      {/* XP summary — compact, the reward behind the list */}
-      <div className="ff-frame ff-lattice" style={{ padding: "14px 14px 12px", marginBottom: 18, display: "flex", gap: 14, alignItems: "center" }}>
-        <Corners />
-        <Coin size={52} tier={info.currentTier} />
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
-            <span className="ff-display" style={{ fontSize: 24 }}>{info.xp} XP</span>
-            <span className="ff-label">{TIERS[info.currentTier].name}</span>
-          </div>
-          <div className="ff-xptrack" style={{ margin: "8px 0 6px", background: "rgba(20,20,22,.12)" }}>
-            <div className="ff-xpfill" style={{ width: `${info.pct}%` }} />
-          </div>
-          <div className="ff-body ff-muted" style={{ fontSize: 11.5 }}>
-            {info.next ? `${info.nextXp - info.xp} XP to ${info.next.label}` : "Top numbered tier reached"} · {state.profile.xpPeriod || 0} XP this quarter
-          </div>
-        </div>
-      </div>
-
-      <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 10 }}>
-        <h3 className="ff-h2" style={{ fontSize: 16, flex: 1 }}>{todo.length ? "Next steps" : "All done"}</h3>
-        <span className="ff-label">{done.length} of {tasks.length} done</span>
-      </div>
-      {todo.length === 0 && <p className="ff-body ff-muted" style={{ marginTop: 0 }}>Every task is complete. New ones arrive as FireFlair grows.</p>}
-      {todo.map(t => <Task key={t.id} t={t} />)}
-      {done.length > 0 && <>
-        <div className="ff-label" style={{ margin: "16px 0 8px", opacity: .8 }}>Completed</div>
-        {done.map(t => <Task key={t.id} t={t} />)}
-      </>}
-
-      <Divider />
-      <XPTimeline />
-      <div className="ff-label" style={{ marginBottom: 8 }}>Levels</div>
-      {XP_LEVELS.map(l => {
-        const isGold = l.tier === "gold";
-        const reached = isGold ? false : info.xp >= l.xp;
-        return (
-          <div key={l.tier} className="ff-frame" style={{ padding: 12, marginBottom: 8, display: "flex", gap: 11, alignItems: "center", opacity: reached ? 1 : .62 }}>
-            <Coin size={30} tier={l.tier} />
-            <span style={{ flex: 1, minWidth: 0 }}>
-              <span className="ff-display" style={{ fontSize: 13, display: "block" }}>
-                {l.label} · {isGold ? `Top performers — ${quarterLabel(XP_CURRENT_PERIOD)}` : `${l.xp} XP`}
-              </span>
-              <span className="ff-body ff-muted" style={{ fontSize: 11.5 }}>{l.unlocks}</span>
-            </span>
-            {isGold ? <Pill tone="warn">Quarterly</Pill> : reached ? <Pill tone="ok"><Check size={10} /> Unlocked</Pill> : <Pill>Locked</Pill>}
-          </div>
-        );
-      })}
-      <p className="ff-body ff-muted" style={{ fontSize: 11.5, margin: "12px 0 0" }}>
-        Wallet, earnings and rewards will live here too — this is your FireFlair account area.
-      </p>
-    </Sheet>
-  );
-}
-
-
-
-function XPBar({ info }) {
-  const { dispatch } = useStore();
-  const atMax = !info.next;
-  return (
-    <div className="ff-xpbar">
-      <div style={{ display: "flex", alignItems: "center", gap: 10, maxWidth: 560, margin: "0 auto" }}>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 5 }}>
-            <span style={{ fontSize: 10, letterSpacing: ".12em", textTransform: "uppercase", color: "#EAD79C" }}>
-              {atMax ? "Top tier reached" : `${info.xp} / ${info.nextXp} XP`}
-            </span>
-            {!atMax && <span style={{ fontSize: 9, color: "rgba(244,239,228,.55)" }}>Next: {info.next.label}</span>}
-          </div>
-          <div className="ff-xptrack">
-            <div className="ff-xpfill" style={{ width: `${info.pct}%` }} />
-          </div>
-        </div>
-        <button onClick={() => dispatch({ type: "TOAST", toast: atMax ? "You're at the top FireFlair tier." : `${info.nextXp - info.xp} XP to ${info.next.label}` })}
-          aria-label="Your FireFlair tier" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
-          <Coin size={30} tier={info.currentTier} />
-          <span style={{ fontSize: 7, letterSpacing: ".1em", textTransform: "uppercase", color: "#D9BE68" }}>{TIERS[info.currentTier].name}</span>
-        </button>
-      </div>
-    </div>
-  );
-}
 
 
 
@@ -357,23 +161,6 @@ function LoginSheet({ open, onClose }) {
         {err && <p className="ff-lg21-err" role="alert">{err}</p>}
         <p className="ff-lg21-note">{AUTH_ADAPTER.note}</p>
       </div>
-      <button type="button" className="ff-dev17 login" onClick={() => {
-        seedDemo17(state, dispatch, "team");
-        dispatch({ type: "V11_SET", patch: { devDone: { team: true } } });
-        dispatch({ type: "AUTH_SIGNED_IN", tag: "ALEXG", method: "dev" });
-        if (!state.role) dispatch({ type: "ROLE", role: "team" });
-        dispatch({ type: "TOAST", toast: "Complete profile loaded" });
-        onClose();
-      }}>DEV · complete profile</button>
-      <button type="button" className="ff-dev17 login" onClick={() => {
-        dispatch({ type: "SIGN_OUT" });
-        dispatch({ type: "ROLE", role: "team" });
-        dispatch({ type: "SESSION", patch: { refTag: "ALEX424", refKind: "team" } });
-        dispatch({ type: "TAB", tab: "profile" });
-        dispatch({ type: "TOAST", toast: "Join from invite loaded" });
-        onClose();
-        window.scrollTo(0, 0);
-      }}>DEV · join from invite</button>
     </Sheet>
   );
 }
@@ -411,20 +198,6 @@ function Shell({ children }) {
     return () => clearTimeout(t);
   }, [state.toast, dispatch]);
 
-  /* Phase 1: no XP bar (PHASE1.xpBar) — the FF coin pop-up is the way into XP. */
-  const xpInfo = PHASE1.xpBar && isTeam && state.profile.live ? xpProgress(state.profile.xp) : null;
-  /* Desktop: once the page is scrolled down, the XP row under the menu bar
-     hides and only the menu bar stays. Hide past 120px, show again above
-     20px; the gap stops it flickering as the row collapses. */
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const on = () => setScrolled(was => (was ? window.scrollY > 20 : window.scrollY > 120));
-    on();
-    window.addEventListener("scroll", on, { passive: true });
-    return () => window.removeEventListener("scroll", on);
-  }, []);
-  const xpRow = xpInfo && !scrolled;
-  const bottomBarUp = xpInfo;
 
   return (
     <div className="ff-shell">
@@ -461,34 +234,14 @@ function Shell({ children }) {
             </button>
           </div>
         </div>
-        {/* Desktop companion row: XP + booking status, same information as the
-            mobile bottom bars, laid out for the header instead of floating
-            fixed at the bottom of a wide viewport. */}
-        {xpRow && (
-          <div className="ff-topbar-extras">
-            {xpRow && (
-              <button onClick={() => setXpOpen(true)} style={{ display: "flex", alignItems: "center", gap: 10, flex: 1, minWidth: 0 }} aria-label="Your FireFlair XP">
-                <Coin size={24} tier={xpInfo.currentTier} />
-                <span style={{ flex: 1, minWidth: 0 }}>
-                  <span style={{ display: "flex", justifyContent: "space-between", fontSize: 10, letterSpacing: ".1em", textTransform: "uppercase", color: "#EAD79C", marginBottom: 3 }}>
-                    <span>{xpInfo.xp} XP</span>
-                    <span style={{ color: "rgba(244,239,228,.55)" }}>{xpInfo.next ? `Next: ${xpInfo.next.label}` : "Top tier"}</span>
-                  </span>
-                  <span className="ff-xptrack" style={{ height: 5 }}><span className="ff-xpfill" style={{ width: `${xpInfo.pct}%` }} /></span>
-                </span>
-              </button>
-            )}
-          </div>
-        )}
         <LiveActionBar17 placement="top" />
       </header>
 
-      <main id="ff-main" tabIndex={-1} className="ff-main" style={{ paddingBottom: bottomBarUp ? 190 : undefined }}>{children}</main>
+      <main id="ff-main" tabIndex={-1} className="ff-main">{children}</main>
 
-      {xpInfo && <XPBar info={xpInfo} />}
 
       {state.toast && (
-        <div style={{ position: "fixed", left: 14, right: 14, bottom: bottomBarUp ? 150 : 90, zIndex: 55, display: "flex", justifyContent: "center" }}>
+        <div style={{ position: "fixed", left: 14, right: 14, bottom: 90, zIndex: 55, display: "flex", justifyContent: "center" }}>
           <span style={{ background: "#141416", color: "#EAD79C", border: "1px solid var(--gold-dk)", padding: "10px 16px", fontSize: 12, letterSpacing: ".06em", maxWidth: 420, textAlign: "center" }}>{state.toast}</span>
         </div>
       )}
@@ -511,7 +264,7 @@ function Shell({ children }) {
         </div>
       </nav>
 
-      {PHASE1.xpBar ? <XPSheet open={xpOpen} onClose={() => setXpOpen(false)} /> : <XPPopup open={xpOpen} onClose={() => setXpOpen(false)} />}
+      <XPPopup open={xpOpen} onClose={() => setXpOpen(false)} />
       <NotifySheet17 open={notifyOpen} onClose={() => setNotifyOpen(false)} onNext={() => { setNotifyOpen(false); setXpOpen(true); }} />
       <ShareCardSheet open={shareOpen} onClose={() => setShareOpen(false)} />
       <LoginSheet open={loginOpen} onClose={() => setLoginOpen(false)} />

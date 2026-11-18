@@ -1,0 +1,14 @@
+/* profile-edit-tabs.css — the own-profile edit page tab area (profile-edit-tabs.jsx): section pencils, introductions, reviews waiting, sheets. FireFlair tokens, squircle corners. */
+.ff .ara-wrap { margin-top: 26px; }
+.ff .ara-wrap .ff-pp-head { align-items: center; }
+.ff .ara-pen { flex: none; display: inline-grid; place-items: center; width: 34px; height: 34px; min-width: 34px; border-radius: 11px; corner-shape: squircle;
+  border: 1px solid rgba(126,97,29,.55); background: #FFFDF8; color: var(--gold-dk, #7E611D); box-shadow: 0 4px 10px -8px rgba(40,28,6,.6); cursor: pointer; }
+.ff .ara-pen:hover { border-color: var(--gold, #C9A227); background: #FBF3DC; }
+.ff .ara-pen:focus-visible { outline: 2px solid var(--gold, #C9A227); outline-offset: 2px; }
+.ff .ara-introwrap { position: relative; }
+.ff .ara-introPen { position: absolute; right: 0; top: 22px; z-index: 1; }
+.ff .ara-sheet { padding-bottom: 10px; }
+/* Reviews waiting for the member's decision. */
+.ff .ara-waitcard { display: flex; flex-direction: column; gap: 8px; }
+.ff .ara-waitacts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ff .ara-ask { max-width: 360px; margin: 14px auto 0; }

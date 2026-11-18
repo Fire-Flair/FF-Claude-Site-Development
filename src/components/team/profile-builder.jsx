@@ -508,18 +508,6 @@ function GoldBox21({ icon, title, count, desc, note, children, line = true, id, 
 }
 
 
-/* v17.19: an account box — a title row like the other sections, then its content (the same look as the Media box). */
-function AcctBox19({ icon, title, count, action, children, id }) {
-  return (
-    <section className="ff-box19" id={id} style={{ marginTop: 14 }}>
-      <style>{RANK_CSS17}</style>
-      <SectionHead icon={icon} title={title} count={count} action={action} />
-      {children}
-    </section>
-  );
-}
-
-
 /* v17.34: the sign-up state (FF Tag, phone number, country code, WhatsApp code) in one hook, so the Phone number box
    (third in Let's get started) and the FF Tag box (Your Profile Page) share one entry, one Verify and one code step. */
 function useJoin21({ inSave = false, top = false, onSignedIn } = {}) {
@@ -938,10 +926,10 @@ function ProfileBuilder() {
         </div>
         <ABOUT_TOP34.Provider value={true}>
           <CreatorAboutMe top />
-          {aragornOpt() ? <AragornTabs person={me} opt={aragornOpt()} /> : <ProfileSections person={me} isMe />}
+          <ProfileEditTabs person={me} />
         </ABOUT_TOP34.Provider>
         <IntroEditor17 />
-        {aragornOpt() === 1 && <PE2QA />}
+        <PE2QA />
       </div>
 
       {/* Section 4 → Save & Share → Section 5. v16.11: everything stays on the

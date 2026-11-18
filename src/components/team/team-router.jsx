@@ -7,7 +7,7 @@ function TeamRouter() {
   const biz = (page) => <>{page}<div className="ff-biz-pfa"><V101.BusinessSupport19 /></div></>;
   if (state.viewing) return biz(<PersonProfile />);
   if (tab === "network") return biz(<NetworkScreen />);
-  if (tab === "bookings") return biz(PHASE1.bookingsLive ? <TeamBookings /> : <P1Bookings />);
+  if (tab === "bookings") return biz(<TeamBookings />);
   if (tab === "profile") return biz(<ProfileGate17 kind="team" />);
   return <TeamHomeV17 />;
 }

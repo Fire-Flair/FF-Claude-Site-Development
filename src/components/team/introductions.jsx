@@ -433,34 +433,6 @@ function TeamTab17({ person }) {
 }
 
 
-function ReviewsTab17({ person, mem }) {
-  const { state } = useStore();
-  const local = useRef({});
-  const m = mem || local;
-  const [revOpen, setRevOpen] = useState(null);
-  const [allReviews, setAllReviews] = useState(false);
-  const first = String(person.name || "").split(" ")[0] || "them";
-  const reviews = reviewsOf(state, person);
-  const def = BASE_CATEGORIES.reviews;
-  const reviewCard = (r, active) => (
-    <div className="ff-rvslide"><InformationCard record={r} def={def} themeKey="onyx" pub="r" highlight={active} rank={active ? "primary" : "secondary"} /></div>
-  );
-  return (<>
-    {reviews.length ? (<>
-      <CoverFlow items={reviews} label="Reviews" mem={m} k="reviews" half={140} onOpen={setRevOpen} render={reviewCard} />
-      {reviews.length > 1 && <div className="ff-rv-all"><button type="button" className="ff-pp-all" onClick={() => setAllReviews(true)}>View all reviews <ChevronRight size={13} /></button></div>}
-    </>) : <TabEmpty17 icon={<Award size={20} />}>{person.id === "me" || !String(person.name || "").trim() || /^your$/i.test(first) ? "No reviews yet." : `No reviews for ${first} yet.`}</TabEmpty17>}
-    <Sheet open={!!revOpen} onClose={() => setRevOpen(null)} title="Review">
-      {revOpen && <div className="ff-rvfull">{reviewCard(revOpen, true)}</div>}
-    </Sheet>
-    <Sheet open={allReviews} onClose={() => setAllReviews(false)} title={`Reviews (${reviews.length})`}>
-      <div className="ff-rvlist">{reviews.map(r => <div key={r.id}>{reviewCard(r, false)}</div>)}</div>
-    </Sheet>
-  </>);
-}
-
-
-
 /* packagesTail: shown in the Bookings tab (was Packages) below the Q&A (the signed-in member's own page puts Build your packages, Service Cards and Terms and conditions here). */
 /* aboutFirst: someone else's profile (and yours viewed as a guest) shows About Me first, above Professions. */
 function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
