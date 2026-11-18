@@ -4,6 +4,7 @@
    provider  (value)
    async available()
    async extract(doc, { signal, onProgress } = {})
+   async ffaiExtract(doc, { profile, signal, onProgress } = {})   (v1.16, the CV upload on the profile builder)
    Nothing outside this file talks to a backend: the rest of the app calls CV_ADAPTER only. */
 const CV_ADAPTER = {
   provider: "Claude, through this page's FireFlair connection",
@@ -90,5 +91,53 @@ const CV_ADAPTER = {
       out.calls.push({ part: c.part, ok: true, ms: c.ms, items: v.items.length, rejected: v.rejected.length, pictures: c.pictures, note: c.note });
     }
     return out;
+  },
+
+  /* v1.16 — FF AI CV reading, the live FF Team contract (src/utils/ffai-cv.js holds the ported prompt,
+     schema and suggestion rules).
+     REAL ENDPOINT: POST /api/user/ffai/extract  (multipart: `file` = the CV, optional `text`; optionalAuthenticate,
+       fireflair-backend/src/user-api/routes/ffai.routes.js) -> { success, data: FfaiExtraction }.
+       Approving: POST /api/user/ffai/extractions/:extractionId/apply  { items: [{ id }] } -> { results[], summary }.
+       The live server stores a signed-in member's CV privately under cvs/<profileId>/; the prototype stores nothing.
+     PROTOTYPE: the CV is read in the browser (CV_READER), and the same instructions + schema go to Claude through
+       this page's `sample` capability (declared as { sample: { images: true } }). A scanned CV or photo with no
+       text goes as page pictures when the viewer allows images, as the live server sends the file to the model.
+     doc (from CV_READER) -> the live FfaiExtraction shape:
+       { name, about_me, sections: { profession[], qualification[], skill[], interest[], location[], language[], experience[] },
+         answers[], unreadable[], summary, input: { cv: { file_name, kind }, truncated } } */
+  async ffaiExtract(doc, { profile, signal, onProgress } = {}) {
+    const sample = await getSample();
+    if (!sample) throw cvxError("unavailable", "FireFlair can't read CVs in this view.");
+    const lim = await sample.limits().catch(() => null);
+    const imgCap = lim && lim.images;
+    const realText = String(doc.text || "").replace(/\s/g, "");
+    const scanned = realText.length < FFAI_SCAN_TEXT_THRESHOLD17;
+    let images = [];
+    if (scanned && imgCap) {
+      const types = imgCap.mediaTypes || [];
+      const fits = (b) => b && (!types.length || types.includes(b.type)) && (!imgCap.maxInputBytes || b.size <= imgCap.maxInputBytes);
+      images = doc.pageImages.filter(p => fits(p.blob)).slice(0, Math.max(1, imgCap.maxCount || 1)).map(p => p.blob);
+    }
+    if (!realText.length && !images.length) {
+      throw cvxError("unreadable", doc.pageImages.length
+        ? "This CV is a picture and can't be read here. Upload a PDF or Word version."
+        : "No text was found in this CV.");
+    }
+    const ref = ffaiReference17();
+    const { input, truncated } = ffaiPrompt17({ ref, profile: profile || { records: {} }, doc, pictures: images.length > 0 });
+    let raw;
+    try {
+      raw = await sample.json(input, {
+        modelTier: CVX.MODEL_TIER.cv, signal, ...(images.length ? { images } : {}),
+        onText: ({ text }) => onProgress && onProgress(String(text || "").length),
+      });
+    } catch (e) {
+      const code = (e && e.code) || "upstream_error";
+      if (code === "cancelled" || (signal && signal.aborted)) throw cvxError("cancelled", "Stopped.");
+      if (CVX_UNAVAILABLE.includes(code)) throw cvxError("unavailable", "FireFlair can't read CVs in this view.", { cause: code });
+      throw cvxError(code, cvxCopy(code));
+    }
+    const built = ffaiBuildSuggestions17(raw, profile || { records: {} }, ref);
+    return { ...built, input: { cv: { file_name: doc.fileName, kind: doc.kind }, truncated } };
   },
 };

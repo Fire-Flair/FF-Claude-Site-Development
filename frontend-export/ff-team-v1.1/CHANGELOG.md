@@ -4,6 +4,30 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.18
+
+- CV upload now reads the CV and asks before adding anything (Alex, 18 Nov 13:58). Built from the live FF Team flow:
+  fireflair-frontend `CVPanel.tsx` / `useFfai.ts` / `FfaiReview.tsx` / `utils/ffaiLocal.ts` and fireflair-backend
+  `services/ffai/prompt.js`, `suggestions.js`, `documentReader.js`. Ported in `src/utils/ffai-cv.js`.
+- "Let's get started" box order: 1 Phone number, 2 Talk or type to GPT (unchanged), 3 CV upload.
+- No "Read my CV" or "Replace" buttons. Choosing a file swaps the Upload CV button for a progress bar while the
+  file is read and extracted; then the box extends with the approval list: Name, About, Professions,
+  Qualifications, Skills, Interests, Work locations, Languages, Experience, Questions. Each item is Yes / No
+  (new items start on Yes; items already on the profile show as on your profile); one "Add to my profile" button
+  adds the approved ones. The builder then shows them in its sections (same follow-up as Talk or type).
+- Extraction uses the live backend's prompt and strict output schema (full_name, about_me, professions,
+  qualifications, skills, interests, work_locations, languages, experience, answers, unreadable) with the
+  prototype's own lists (professions, categories, languages, Question Card questions), and the live suggestion
+  rules (no phone numbers, emails or street addresses in evidence; region-only work locations; About copied word
+  for word; capitalised names title-cased; already-on-profile checks).
+- Model call: `CV_ADAPTER.ffaiExtract(doc)` in `src/adapters/cv-adapter.js`, through the artifact's `sample`
+  capability (`{ sample: { images: true } }`). The real endpoints are noted there: POST /api/user/ffai/extract
+  and POST /api/user/ffai/extractions/:extractionId/apply. Scanned CVs and photos go as page pictures.
+- Apply: `ffaiApplyLocal17` (the live on-device apply) maps onto the existing records via RECORDS_MERGE, the
+  PROFILE patch (name, about) and ANSWER (Question Card answers). Experience keeps the "Employer — Role" title.
+- The CV file is no longer stored on the profile (it used to be kept as a Qualification card); it is read in the
+  browser and dropped. Existing CV cards are left as they are.
+- Failure state: a message with Try again (when a retry can help) and dismiss; nothing is added.
 ## v1.17
 
 - Titles (Alex, 18 Nov 14:07: one titling system, no gold dots). Every gold dot beside a heading is now the vertical gold gradient line (light to deep gold, squircle ends, as tall as the title; 5px beside section titles, 3px beside the small uppercase labels). Home, Network, Bookings, profile view and builder, person and company pages. Only `styles/titles2.css` changed. The three page titles (Explore our network, Your bookings, Your profile) keep their gold underline for now, pending Alex.

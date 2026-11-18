@@ -29,6 +29,7 @@
   "utils/cv-reader.js",
   "adapters/cv-adapter.js",
   "utils/cv-extraction.js",
+  "utils/ffai-cv.js",
   "adapters/wallet-adapter.js",
   "adapters/auth-adapter.js",
   "adapters/profile-adapter.js",
