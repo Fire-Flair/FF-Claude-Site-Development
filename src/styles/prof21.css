@@ -421,9 +421,10 @@
 .ff .pe2-qa-panel .ff-type21 { min-width: 0; }
 .ff .pe2-qa-panel .ff-type21 input, .ff .pe2-qa-panel .ff-type21 input:focus, .ff .pe2-qa-panel .ff-type21 input:focus-visible { outline: none !important; box-shadow: none !important; }
 /* ======================= pfa (Alex 03:29) — Let's get started, Profile Card face, Media lead, Need help, Business & Support ======================= */
-/* 1. Phone number (first in Let's get started) and the WhatsApp code step: WhatsApp green, white WhatsApp mark. */
-.ff .ff-gb21.shine.ff-wa-pfa { background: linear-gradient(118deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.22) 44%, rgba(255,255,255,0) 58%), linear-gradient(165deg, #25D366 0%, #1BAA52 45%, #128C3E 100%);
-  border-color: #168A42; box-shadow: 0 1px 0 rgba(255,255,255,.5) inset, 0 -1px 0 rgba(0,60,20,.25) inset, 0 14px 28px -16px rgba(18,110,52,.75); }
+/* 1. Phone number (third in Let's get started) and the WhatsApp code step: a muted WhatsApp green (v11-b, Alex 10:20;
+   white text >= 4.8:1 at the lightest stop), white WhatsApp mark. */
+.ff .ff-gb21.shine.ff-wa-pfa { background: linear-gradient(118deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.16) 44%, rgba(255,255,255,0) 58%), linear-gradient(165deg, #2F8059 0%, #2A7A52 45%, #22633F 100%);
+  border-color: #25684A; box-shadow: 0 1px 0 rgba(255,255,255,.4) inset, 0 -1px 0 rgba(0,50,25,.22) inset, 0 14px 28px -16px rgba(30,90,60,.7); }
 .ff .ff-gb21.shine.ff-wa-pfa::before { border-color: rgba(255,255,255,.4); }
 .ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-lb, .ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-ds, .ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-lb svg { color: #fff; }
 .ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-ds { color: rgba(255,255,255,.95); text-shadow: 0 1px 1px rgba(0,60,20,.25); }

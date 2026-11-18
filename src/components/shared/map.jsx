@@ -238,7 +238,10 @@ function FFMap({ mode = "home" }) {
   const pins0 = useMemo(() => {
     /* v17.6: a person with a base is plotted at the centre of their public base place (p.basePin, never the postcode point);
        everyone else keeps the area pin from their work areas. */
-    const people = directory.map(p => ({ ...p, kind: "person", area: p.basePin ? p.basePin.label : (p.locations || []).find(l => MAP_AREAS[l]) })).filter(p => p.area);
+    /* v11-b: a member whose work locations are real place names ("London, UK", "St Albans") and not one of the six
+       MAP_AREAS regions is plotted at the centre of the first one the FF Event Directory's place list knows. */
+    const placePin = (p) => { for (const l of (p.locations || [])) { const s = String(l || ""); const n = fdTickNode19(s) || fdTickNode19(s.split(",")[0]); if (n && n.lat != null && n.lng != null) return { lat: n.lat, lng: n.lng, label: n.name }; } return null; };
+    const people = directory.map(p => { const area = p.basePin ? p.basePin.label : (p.locations || []).find(l => MAP_AREAS[l]); const pin = !area ? placePin(p) : null; return { ...p, kind: "person", ...(pin ? { basePin: pin } : {}), area: area || (pin ? pin.label : undefined) }; }).filter(p => p.area);
     const p1 = mode === "phase1";
     const all = home || p1
       ? [...people, ...(p1 ? [] : MAP_BUSINESSES.map(b => ({ ...b, kind: "business" }))), ...(p1 ? [] : MAP_EVENTS.map(e => ({ ...e, kind: "event" })))]

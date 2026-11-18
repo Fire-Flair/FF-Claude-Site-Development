@@ -140,8 +140,8 @@ function NetDirectory20() {
     NET_CO_TYPES17.map(function (t) {
       const inCat = every.filter(function (c) { return (c.cat || "bar") === t[0]; });
       const list = inCat.filter(function (c) { return !c.unclaimed; }).concat(inCat.filter(function (c) { return c.unclaimed; }));
-      /* Netmap: a category shows once it has a company, and every Directory box is open by default (Alex's exception). */
-      return list.length ? React.createElement(DirSection20, { key: t[0], cat: t[0], title: t[1], list: list, open: true }) : null;
+      /* A category shows once it has a company. v11-b (Alex 10:20): only Bar companies and Entertainment open by default. */
+      return list.length ? React.createElement(DirSection20, { key: t[0], cat: t[0], title: t[1], list: list, open: t[0] === "bar" || t[0] === "dj" }) : null;
     }));
 }
 

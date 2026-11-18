@@ -340,6 +340,8 @@
 .ff .ff-pubpage { max-width:1180px; }
 .ff .ff-phero { position:relative; }
 .ff .ff-pcol { position:relative; z-index:2; }
+/* v11-b: a sheet opened from inside the card column (Share my card) sits above the bottom bar and "Your profile is live". */
+.ff .ff-pcol:has(.ff-scrim) { z-index:61; }
 .ff .ff-prest { padding-top:14px; }
 .ff .ff-pm + .ff-ph-card { margin-top:0; }
 .ff .ff-phero:not(.wide) .ff-pm { position:sticky; top:56px; z-index:1; height:clamp(300px,86vw,480px); border-radius:16px; }

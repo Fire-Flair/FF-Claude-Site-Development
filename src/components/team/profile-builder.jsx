@@ -863,12 +863,7 @@ function StartBox17({ join }) {
   const run = (v) => { if (String(v || "").trim().length < 3 || ex.busy) return; ex.start({ text: v }); };
   return (
     <div id="ff-sec-ffai" className="ff-start17">
-      {/* pfa (Alex 03:29): Phone number first, above Upload CV. */}
-      {join && (
-        <section id="ff-sec-phone" className="ff-way17 ff-way17-phone">
-          <div className="ff-way17-wide"><PhoneBox21 join={join} /></div>
-        </section>
-      )}
+      {/* v11-b (Alex 10:20): Upload CV first, Talk or type second, Phone number third. */}
       <section className="ff-way17 ff-way17-cv">
         <div className="ff-way17-ctl"><CVPanel inline /></div>
         <p className="ff-way17-line"><Timer size={16} strokeWidth={2.2} aria-hidden="true" /><span>Create your profile in &lt;1 minute</span></p>
@@ -883,6 +878,11 @@ function StartBox17({ join }) {
           </FFAI>
         </div>
       </section>
+      {join && (
+        <section id="ff-sec-phone" className="ff-way17 ff-way17-phone">
+          <div className="ff-way17-wide"><PhoneBox21 join={join} /></div>
+        </section>
+      )}
     </div>
   );
 }
