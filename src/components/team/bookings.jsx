@@ -176,6 +176,27 @@ function PkgTerms17({ onClose, onAccept }) {
    another), then Your preferred hourly rate for each chosen profession, typed by the member (no default value), then Save.
    No terms step. Signed out: same layout, Save opens sign-in. Rates stay the typed Q&A answer rate.<profession id>
    (pence, visibility "ff-staff"); a profession taken off the list has its saved rate withdrawn on Save. */
+/* v1.46 bookings (Alex, 18 Nov 20:06): signed out, FF Staff shifts show what a member does here in three steps, with no
+   example professions and no confirm step. Get started opens sign-in; once signed in ProfRates17 shows their own
+   professions. "Preferred terms" is a placeholder step for now: the terms screen is still to be built (developers). */
+const FS_STEPS17 = [[lucideIcon("Briefcase"), "Choose your profession"], [lucideIcon("PoundSterling"), "Set your preferred rates"], [lucideIcon("FileText"), "Set your preferred terms"]];
+function FsSteps17() {
+  return (
+    <div className="ff-fs6">
+      <ol className="ff-fs6-steps">
+        {FS_STEPS17.map(([Ic, t], i) => (
+          <li key={t}>
+            <span className="n" aria-hidden="true">{i + 1}</span>
+            <span className="ic" aria-hidden="true"><Ic size={20} strokeWidth={1.7} /></span>
+            <span className="t">{t}</span>
+          </li>
+        ))}
+      </ol>
+      <button type="button" className="ff-btn primary wide ff-bkconfirm17" onClick={() => window.dispatchEvent(new Event("ff-login"))}>Get started</button>
+    </div>
+  );
+}
+
 function ProfRates17({ guest }) {
   const { state, dispatch } = useStore();
   const account = guest ? null : qaAccount17(state);
@@ -381,21 +402,23 @@ const PKC_EXTRA17 = {
       cond: "One professional: you. Any space your act needs is agreed with the client." },
   ],
   svc: [
-    { id: "svc_events", earn: "£250+", name: "Event Services Package", role: "Event Coordinator", duration: "From 4 hours",
-      line: "Keep the whole event running smoothly.", provide: "Event experience, organisation and a calm head on the day", ideal: "Larger parties, launches and corporate events",
-      brief: "You look after the running of the client's event on the day, from timings and suppliers to guests, so the client can enjoy it.",
-      points: ["Run the event to the agreed plan", "Be the contact for suppliers on the day", "Look after the client and their guests"],
-      cond: "One professional: you. The plan and your hours are agreed with the client before the event." },
+    /* v1.46 bookings (Alex, 18 Nov 20:06): Event Host first, at the amount Alex gave (written "+" like the other cards, so Sign up keeps its size); Photography stays second; "Event
+       Services" is now "Event Management" (same id, svc_events, so saved sign-ups still match). */
+    { id: "svc_host", earn: "£150+", name: "Event Host Package", role: "Event Host", duration: "3 hours",
+      line: "Welcome every guest.", provide: "A warm welcome, confidence and a way with a crowd", ideal: "Corporate events, awards nights and parties",
+      brief: "You welcome the client's guests, keep the event on time and make announcements, as agreed with the client.",
+      points: ["Welcome guests as they arrive", "Keep the event on time", "Make the announcements"],
+      cond: "One professional: you. The running order is agreed with the client before the event." },
     { id: "svc_photo", earn: "£250+", name: "Photography Package", role: "Photographer", duration: "3 hours",
       line: "Capture the moments they'll keep.", provide: "Your camera, your eye and your editing", ideal: "Weddings, birthdays and brand events",
       brief: "You photograph the client's event and deliver edited photos afterwards, as agreed with the client.",
       points: ["Photograph the event and its guests", "Edit your best shots", "Deliver the photos to the client"],
       cond: "One professional: you. The number of photos and the delivery date are agreed with the client." },
-    { id: "svc_host", earn: "£250+", name: "Event Host Package", role: "Event Host", duration: "3 hours",
-      line: "Welcome every guest.", provide: "A warm welcome, confidence and a way with a crowd", ideal: "Corporate events, awards nights and parties",
-      brief: "You welcome the client's guests, keep the event on time and make announcements, as agreed with the client.",
-      points: ["Welcome guests as they arrive", "Keep the event on time", "Make the announcements"],
-      cond: "One professional: you. The running order is agreed with the client before the event." },
+    { id: "svc_events", earn: "£250+", name: "Event Management Package", role: "Event Manager", duration: "From 4 hours",
+      line: "Keep the whole event running smoothly.", provide: "Event experience, organisation and a calm head on the day", ideal: "Larger parties, launches and corporate events",
+      brief: "You look after the running of the client's event on the day, from timings and suppliers to guests, so the client can enjoy it.",
+      points: ["Run the event to the agreed plan", "Be the contact for suppliers on the day", "Look after the client and their guests"],
+      cond: "One professional: you. The plan and your hours are agreed with the client before the event." },
   ],
 };
 const PKC_EXTRA_BY17 = Object.fromEntries([...PKC_EXTRA17.ent, ...PKC_EXTRA17.svc].map(x => [x.id, x]));
@@ -707,6 +730,54 @@ function ProfPkgCreate17() {
   );
 }
 
+/* v1.46 bookings (Alex, 18 Nov 20:06): "Are you happy to receive bookings via WhatsApp?" under the WhatsApp box, one
+   Yes button with a short tick animation, then it stays answered.
+   FOR THE DEVELOPERS: this is a Yes/No Question Card on the member's profile Q&A. It is saved through the Q&A adapter
+   (qaSubmit17, question id "pref.whatsapp_bookings", option id "yes", visibility private) and mirrored into the profile's
+   Question Cards (ANSWER, same id, listed in QUESTIONS in state/seed-data.js), so the profile shows it as answered and a
+   "No" given there reads here as unanswered. Live API: PUT /api/user/questions/pref.whatsapp_bookings/answer.
+   Signed out, the answer is kept as a guest Q&A answer (like the other guest questions) and filed to the account the
+   next time this page is open signed in. */
+const WA_BOOK_QID17 = "pref.whatsapp_bookings";
+const WA_BOOK_Q17 = "Are you happy to receive bookings via WhatsApp?";
+if (!QA_Q17[WA_BOOK_QID17]) QA_Q17[WA_BOOK_QID17] = { text: WA_BOOK_Q17, group: "about", multi: false, guest: true, contactOptional: true };
+const waGuestAns17 = (state) => Object.values(((state.qa17 || {}).answers) || {}).find(x => x && !x.account && x.questionId === WA_BOOK_QID17 && !x.withdrawnAt && (x.optionIds || []).includes("yes")) || null;
+
+function WaBookQ17() {
+  const { state, dispatch } = useStore();
+  const account = qaAccount17(state);
+  const prof = ((state.profile && state.profile.answers) || {})[WA_BOOK_QID17];
+  const saved = account ? (prof ? prof === "Yes" : !!qaAnswer17(state, account, WA_BOOK_QID17)) : !!waGuestAns17(state);
+  const [anim, setAnim] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const on = saved || anim;
+  const save = async (acct) => qaSubmit17(dispatch, { questionId: WA_BOOK_QID17, account: acct, optionIds: ["yes"], visibility: "private", source: "FF Team Bookings · WhatsApp" },
+    acct ? { type: "ANSWER", qid: WA_BOOK_QID17, value: "Yes", visibility: "private" } : null);
+  /* A Yes given signed out joins the account's Q&A once they are signed in. */
+  useEffect(() => {
+    if (!account || prof !== undefined || qaAnswer17(state, account, WA_BOOK_QID17) || !waGuestAns17(state)) return;
+    save(account);
+  }, [account]);
+  const go = async () => {
+    if (on || busy) return;
+    setAnim(true); setBusy(true);
+    const r = await save(account);
+    setBusy(false);
+    if (!r.ok) { setAnim(false); dispatch({ type: "TOAST", toast: "That couldn't be saved. Try again." }); }
+  };
+  return (
+    <span className="ff-bk-waq">
+      <span className="q" id="ff-bk-waq-q">{WA_BOOK_Q17}</span>
+      <button type="button" className={`ff-bk-wayes${on ? " on" : ""}${anim ? " pop" : ""}`} aria-pressed={on} aria-describedby="ff-bk-waq-q" onClick={go}>
+        <span className="tk" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22"><circle className="c" cx="12" cy="12" r="10.5" /><path className="p" d="M7 12.4l3.2 3.1L17.2 8.6" /></svg>
+        </span>
+        <span className="l">Yes</span>
+      </button>
+    </span>
+  );
+}
+
 function TeamBookings({ guest = false }) {
   const { state, dispatch } = useStore();
   const [drop, setDrop] = useState(null);
@@ -769,6 +840,7 @@ function TeamBookings({ guest = false }) {
           <span className="ff-body ff-bk-watx">
             <b>Requests come to you on WhatsApp.</b> When companies and clients ask if you're free, each request is sent to you directly on WhatsApp and shows here. You reply in either place.
             <span className="ff-bk-wasel">When you're selected for a booking, it will be shown here.</span>
+            <WaBookQ17 />
           </span>
         </div>
       </section>
@@ -810,7 +882,8 @@ function TeamBookings({ guest = false }) {
           <h2 className="ff-bk-bh fit">FFStaff – Shifts with businesses</h2>
           <p>Businesses on FF Staff hire people for shifts. They see your preferred hourly rate for each of your professions before they hire you, and set the pay on each shift card.</p>
           </div>
-          <ProfRates17 guest={guest || !signedIn} />
+          {/* v1.46 bookings (Alex, 18 Nov 20:06): signed out, the three steps; signed in, their own professions and rates. */}
+          {guest || !signedIn ? <FsSteps17 /> : <ProfRates17 />}
         </div>
       </section>
 

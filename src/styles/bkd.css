@@ -277,3 +277,48 @@
 .ff #ff-bk-party .ff-bk-tbc { margin:10px 2px 0; font-size:12.5px; color:#6B6355; }
 .ff #ff-bk-party textarea.ff-pkc-tin.ti, .ff #ff-bk-party textarea.ff-pkc-tin.tg { min-height:0; overflow:hidden; }
 .ff #ff-bk-party textarea.ff-pkc-tin { overflow:hidden; }
+
+/* v1.46 bookings (Alex, 18 Nov 20:06): Staffing keeps its place at the end of the Bar rail, on a platinum face so it reads
+   as different (it is an FF Staff role, not an FF Party package). Text keeps the cream card's colours: burgundy title
+   #4A0F1B on the darkest platinum is about 11:1, the gold-brown labels on the white rows about 5:1. */
+.ff #ff-bk-party .ff-pkc.cmp[data-pk17="svc_staffing"] {
+  background:linear-gradient(150deg,var(--color-platinum-hi) 0%,var(--color-platinum) 38%,var(--color-platinum-hi) 55%,var(--color-platinum) 78%,var(--color-platinum-hi) 100%);
+  border-color:var(--color-platinum-edge); }
+.ff #ff-bk-party .ff-pkc.cmp[data-pk17="svc_staffing"] .ff-pkc-tg { color:#2E2A2B; }
+.ff #ff-bk-party .ff-pkc.cmp[data-pk17="svc_staffing"] .ff-pkc-rows,
+.ff #ff-bk-party .ff-pkc.cmp[data-pk17="svc_staffing"] .ff-pkc-dbtn { border-color:rgba(142,148,156,.6); }
+.ff #ff-bk-party .ff-pkc.cmp[data-pk17="svc_staffing"] .ff-pkc-row + .ff-pkc-row { border-top-color:rgba(142,148,156,.35); }
+
+/* v1.46 bookings (Alex, 18 Nov 20:06): the WhatsApp bookings question under "When you're selected…". One Yes button;
+   on tap the circle fills and the tick draws in, then it stays answered. No motion with prefers-reduced-motion. */
+.ff .ff-bk-waq { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px 14px; margin-top:10px; padding-top:10px; border-top:1px solid rgba(11,61,34,.18); }
+.ff .ff-bk-waq .q { flex:1 1 220px; min-width:0; font-weight:600; }
+.ff .ff-bk-wayes { flex:none; display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:0 18px 0 12px; border:1.5px solid var(--color-wa-deep); border-radius:14px; corner-shape:squircle; background:#fff; color:#0B3D22; font:700 15px/1 var(--font-sans); cursor:pointer; transition:background-color .25s ease, color .25s ease; }
+.ff .ff-bk-wayes:hover { background:#F1FBF5; }
+.ff .ff-bk-wayes:focus-visible { outline:2px solid var(--color-wa-deep); outline-offset:2px; }
+.ff .ff-bk-wayes .tk { display:grid; place-items:center; width:22px; height:22px; }
+.ff .ff-bk-wayes svg { display:block; overflow:visible; }
+.ff .ff-bk-wayes .c { fill:transparent; stroke:var(--color-wa-deep); stroke-width:1.6; transition:fill .25s ease, stroke .25s ease; }
+.ff .ff-bk-wayes .p { fill:none; stroke:var(--color-wa-deep); stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:16; stroke-dashoffset:16; opacity:.0; }
+.ff .ff-bk-wayes.on { background:var(--color-wa-deep); color:#fff; cursor:default; }
+.ff .ff-bk-wayes.on .c { fill:#fff; stroke:#fff; }
+.ff .ff-bk-wayes.on .p { stroke:var(--color-wa-deep); stroke-dashoffset:0; opacity:1; }
+.ff .ff-bk-wayes.pop { animation:ffWaPop .45s cubic-bezier(.3,1.6,.5,1) both; }
+.ff .ff-bk-wayes.pop .tk { animation:ffWaRing .6s ease-out both; border-radius:50%; }
+.ff .ff-bk-wayes.pop .p { animation:ffWaTick .4s .12s ease-out both; }
+@keyframes ffWaPop { 0% { transform:scale(1); } 40% { transform:scale(1.07); } 100% { transform:scale(1); } }
+@keyframes ffWaRing { 0% { box-shadow:0 0 0 0 rgba(255,255,255,.75); } 100% { box-shadow:0 0 0 12px rgba(255,255,255,0); } }
+@keyframes ffWaTick { from { stroke-dashoffset:16; opacity:1; } to { stroke-dashoffset:0; opacity:1; } }
+@media (prefers-reduced-motion: reduce) {
+  .ff .ff-bk-wayes, .ff .ff-bk-wayes .c { transition:none; }
+  .ff .ff-bk-wayes.pop, .ff .ff-bk-wayes.pop .tk, .ff .ff-bk-wayes.pop .p { animation:none; }
+}
+
+/* v1.46 bookings: FF Staff shifts, signed out: three steps in a row from 600px, stacked below. */
+.ff .ff-fs6-steps { list-style:none; margin:12px 0 0; padding:0; display:grid; gap:10px; }
+@media (min-width:600px) { .ff .ff-fs6-steps { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+.ff .ff-fs6-steps li { position:relative; display:flex; align-items:center; gap:12px; min-height:64px; padding:12px 14px; background:#fff; border:1px solid rgba(160,124,30,.45); border-radius:18px; corner-shape:squircle; }
+.ff .ff-fs6-steps .n { flex:none; display:grid; place-items:center; width:26px; height:26px; border-radius:9px; corner-shape:squircle; background:var(--color-ox,#5C1220); color:var(--color-gold-leaf,#EDD58F); font:700 13px/1 var(--font-sans); }
+.ff .ff-fs6-steps .ic { flex:none; display:grid; place-items:center; width:36px; height:36px; border-radius:12px; corner-shape:squircle; background:var(--color-sand,#F3EAD5); color:var(--color-gold-dk,#7E611D); }
+.ff .ff-fs6-steps .t { min-width:0; font:600 15px/1.3 var(--display); color:#16130F; overflow-wrap:normal; word-break:normal; hyphens:none; }
+.ff .ff-fs6 .ff-bkconfirm17 { margin-top:14px; }

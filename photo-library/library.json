@@ -687,10 +687,6 @@
     {
      "key": "jr_cards",
      "where": "Story: Why everything on FireFlair is a card"
-    },
-    {
-     "key": "bk_rewards",
-     "where": "Bookings: FireFlair rewards drop-down photo (FF Team Bookings, Build your career)"
     }
    ]
   },
@@ -5678,7 +5674,12 @@
     1
    ],
    "near_duplicate_of": null,
-   "used_in": []
+   "used_in": [
+    {
+     "key": "bk_rewards",
+     "where": "Bookings: FireFlair rewards drop-down photo (FF Team Bookings, Grow with FireFlair), v1.46; wall widened to the tile's shape"
+    }
+   ]
   },
   {
    "id": "vkc11",
