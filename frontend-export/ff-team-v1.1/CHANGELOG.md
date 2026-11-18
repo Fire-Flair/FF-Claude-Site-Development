@@ -4,7 +4,7 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
-## v1.42
+## v1.43
 
 Bookings, FF Party packages wording (Alex, 18 Nov 19:20). `src/components/team/bookings.jsx`, `src/components/party/terms-and-packages.jsx`.
 
@@ -12,6 +12,16 @@ Bookings, FF Party packages wording (Alex, 18 Nov 19:20). `src/components/team/b
 - Intro no longer says FireFlair sets the pay rate for each package: "Be your own boss. Sign up to the packages you want to deliver, or create your own. Every package shows what you earn before you sign up, and you deal directly with the client, with FireFlair here to support you. The rates are strong, so we expect strong work in return."
 - Term 1, How packages work: "A package is a fixed offer that clients book on FF Party. Every package shows what you earn before you sign up: FireFlair sets it on FireFlair packages, and you set it on your own. By signing up you agree to that amount."
 - Checked: `npm run check`, `npm run build`, Playwright at 390 and 1280 on all three tabs (cards unchanged: equal heights and gaps, no overflow, no console errors), terms in the Event brief and invoice.
+
+## v1.42
+
+FF Team home (Alex, 18 Nov 19:42). `discover-hub.jsx`, `team-home.jsx`, `styles/home-text.css`, `tokens.css` (`--color-ink-warm` #16130F).
+
+- Your bookings pillar (Aragorn's option 1, as Alex chose): the pillar opens to the title "Built for getting you bookings", its intro, and the "How bookings work" box in black and gold (the four-symbol flow; its drop-down opens the four step cards). The 1-2-3 drop-downs there (Set your rates, Requests on WhatsApp, Get paid on clear terms) are no longer shown on the home page; their content stays in `team-pillars.json` and on the info pages. The separate burgundy box under the pillars is removed.
+- The 1-2-3 drop-downs in the other three pillars get the same black and gold on their header row (warm black, gold edge, gold-leaf title and chevron); the opened section stays on ivory.
+- Hero: "Get seen, get booked, get paid." is one line from 760px wide (15–21px).
+- Colour check: gold leaf on warm black and ivory on warm black are both well above 7:1.
+- Merged onto the live page 1795030434-a840 (v1.41); page saved as `live-v1.42-index.html`. Artifact version 1795031295-681c.
 
 ## v1.41
 

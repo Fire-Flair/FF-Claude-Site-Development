@@ -105,10 +105,7 @@ function Home101() {
       React.createElement(DiscoverHub11, {
         key: "discover"
       }),
-      React.createElement(HowBooking17, {
-        key: "how",
-        kind: "team"
-      }),
+      /* v1.40 (Alex, 18 Nov 19:42): the bookings box now lives inside the Your bookings pillar (discover-hub.jsx). */
       coin("a"),
       React.createElement(TeamCompetition20, { key: "competition" }),
       coin("s"),
