@@ -18,7 +18,8 @@ Profile page, Experience (Alex, 18 Nov 18:39). `src/components/team/attribute-ca
   saves. Older Experience records open the same way; removing one hides it (nothing is deleted).
 - Developers: both callers still pass `onOpen`, which the editor now ignores (it opens its own pop-up).
 - Checked: `npm run check`, `npm run build`, phone (390) and desktop (1440) screenshots of the editor, the search
-  drop-down and the pop-up; adding a venue and saving a note tested in the page.
+  drop-down and the pop-up; adding a venue and saving a note tested in the page. Published by a three-way merge onto
+  live 1795026837-609e (the page label now reads 1.34). Merged page saved as `live-v1.34-index.html`. Artifact version 1795027509-b304.
 
 ## v1.33
 
