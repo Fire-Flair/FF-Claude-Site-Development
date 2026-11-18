@@ -4,6 +4,22 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.34
+
+Profile page, Experience (Alex, 18 Nov 18:39). `src/components/team/attribute-cards.jsx` (`ExperienceEditor29`, new
+`ExperienceSheet29`), `src/styles/experience29.css` (v1.34 block).
+
+- One Google search box for Experience: it finds real businesses, and "Add … as a venue" adds one Google doesn't know.
+  The numbered rows (1, 2, 3, 4) with an X on the right are gone.
+- Every venue shows as an Experience card below. Real businesses carry "View on Google Maps →"; hand-added ones say
+  "Added by hand". The card design is kept from v1.33 (colours to be revisited later).
+- Tapping a card opens it in a pop-up at its real shape and size, with a text box for what they did there (saved to
+  the venue's description and shown on the card as you type). Remove is in the pop-up; closing the pop-up or Done
+  saves. Older Experience records open the same way; removing one hides it (nothing is deleted).
+- Developers: both callers still pass `onOpen`, which the editor now ignores (it opens its own pop-up).
+- Checked: `npm run check`, `npm run build`, phone (390) and desktop (1440) screenshots of the editor, the search
+  drop-down and the pop-up; adding a venue and saving a note tested in the page.
+
 ## v1.33
 
 Profile page (Alex, 18 Nov 17:49), two parallel branches merged: `v11-phone-1749` (phone box, Let's get started) and `v11-venues-1749` (Experience). Published by a three-way merge onto the live page 1795026796-63b5 (homepage v1.32 and other chats' unpushed work stay). The page's version label still reads 1.32 (the homepage chat's number, taken while this was publishing); the next publish corrects it. Merged page saved as `live-v1.33-index.html`. Artifact version 1795026837-609e.

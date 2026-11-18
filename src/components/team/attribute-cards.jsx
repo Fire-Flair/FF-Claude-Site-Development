@@ -730,60 +730,65 @@ function ExperienceCards29({ items, onOpen }) {
 }
 
 
-/* Editing: a search bar per venue, an empty one to add the next, then the cards. */
-function ExperienceEditor29({ items, onOpen }) {
+/* v1.34 (Alex, 18 Nov 18:39): Experience editing is one Google search box (real businesses, or "Add … as a venue"
+   for one Google doesn't know), then the Experience cards. No numbered rows, no X buttons. Tapping a card opens it in
+   a pop-up at its real shape and size, with a text box for what they did there; Remove lives in the pop-up. */
+function ExperienceSheet29({ record, onClose }) {
+  const { dispatch } = useStore();
+  const [note, setNote] = useState(String((record && record.description) || ""));
+  if (!record) return null;
+  const v = xpView29(record);
+  const save = () => {
+    const t = note.trim();
+    if (t !== String(record.description || "").trim()) dispatch({ type: "REC_PATCH", category: record.category, id: record.id, patch: { description: t } });
+    onClose();
+  };
+  const remove = () => {
+    if (record.category === "experience") dispatch({ type: "REC_PATCH", category: "experience", id: record.id, patch: { hidden: true } });
+    else dispatch({ type: "REC_DELETE", category: "venues", id: record.id });
+    dispatch({ type: "TOAST", toast: `${v.name} removed` });
+    onClose();
+  };
+  return (
+    <Sheet open center title="Experience" onClose={save}>
+      <style>{xpCSS29}</style>
+      <div className="ff-xs29">
+        <div className="ff-xs29-card"><ExperienceCard29 record={{ ...record, description: note }} /></div>
+        <textarea className="ff-input ff-xs29-tx" rows={4} value={note} onChange={(e) => setNote(e.target.value)}
+          aria-label={`What you did at ${v.name}`} placeholder="What I did there" />
+        <div className="ff-xs29-act">
+          <button type="button" className="ff-linkbtn ff-xs29-rm" onClick={remove}>Remove</button>
+          <Btn variant="gold" onClick={save}><Check size={15} strokeWidth={2.4} /> Done</Btn>
+        </div>
+      </div>
+    </Sheet>
+  );
+}
+
+
+function ExperienceEditor29({ items }) {
   const { dispatch } = useStore();
   const [key, setKey] = useState(0);
+  const [openId, setOpenId] = useState(null);
   const rows = (items || []).filter(r => xpShown29(r) && !r.hidden && !r.proposed);
   const venues = (items || []).filter(r => r.category !== "experience");
   const same = (r, p) => (r.place && p.place && r.place.id === p.place.id) || String(r.name).toLowerCase() === String(p.name).toLowerCase();
-  const taken = (p, except) => venues.some(r => r.id !== except && !r.hidden && same(r, p));
+  const taken = (p) => venues.some(r => !r.hidden && same(r, p));
   const add = (p) => {
+    setKey(k => k + 1);
     if (!p || !p.name) return;
-    if (taken(p)) { dispatch({ type: "TOAST", toast: `${p.name} is already on your profile` }); setKey(k => k + 1); return; }
+    if (taken(p)) { dispatch({ type: "TOAST", toast: `${p.name} is already on your profile` }); return; }
     dispatch({ type: "REC_ADD", category: "venues", record: makeRecord("venues", p.name, { ...p, details: { kind: "worked" } }) });
     dispatch({ type: "TOAST", toast: `${p.name} added` });
-    setKey(k => k + 1);
   };
-  /* Picking a different place for a row: a venue takes the new place and keeps its note; an older Experience entry
-     becomes a venue (role and dates kept as its note) and the old entry is hidden, never deleted. */
-  const change = (r, p) => {
-    if (!p || !p.name) return;
-    if (r.category === "experience") {
-      if (taken(p)) { dispatch({ type: "TOAST", toast: `${p.name} is already on your profile` }); return; }
-      const v = xpView29(r);
-      const note = [v.role, v.dates].filter(Boolean).join(", ") + (v.note ? (v.role || v.dates ? ". " : "") + v.note : "");
-      dispatch({ type: "REC_ADD", category: "venues", record: makeRecord("venues", p.name, { ...p, description: note, details: { kind: "worked", fromExperience: r.id } }) });
-      dispatch({ type: "REC_PATCH", category: "experience", id: r.id, patch: { hidden: true } });
-      return;
-    }
-    if (taken(p, r.id)) { dispatch({ type: "TOAST", toast: `${p.name} is already on your profile` }); return; }
-    dispatch({ type: "REC_PATCH", category: "venues", id: r.id, patch: p });
-  };
-  const remove = (r) => {
-    if (r.category === "experience") dispatch({ type: "REC_PATCH", category: "experience", id: r.id, patch: { hidden: true } });
-    else dispatch({ type: "REC_DELETE", category: "venues", id: r.id });
-    dispatch({ type: "TOAST", toast: `${xpView29(r).name} removed` });
-  };
+  const openRec = rows.find(r => r.id === openId) || null;
   return (
     <div className="ff-xe29">
       <style>{VEN_CSS17}</style>
       <style>{xpCSS29}</style>
-      <ol className="ff-xe29-list" aria-label="Venues you've worked at">
-        {rows.map((r, i) => (
-          <li key={r.id} className="ff-xe29-row">
-            <span className="n" aria-hidden="true">{i + 1}</span>
-            <VenueSearch17 value={xpView29(r).name} label={`Venue ${i + 1}`} placeholder="Search for a venue" onPick={(p) => change(r, p)} />
-            <button type="button" className="x" aria-label={`Remove ${xpView29(r).name}`} onClick={() => remove(r)}><X size={14} strokeWidth={2.4} /></button>
-          </li>
-        ))}
-        <li className="ff-xe29-row add">
-          <span className="n" aria-hidden="true"><Plus size={15} strokeWidth={2.4} /></span>
-          <VenueSearch17 key={key} label="Add a venue" placeholder="Search for a venue" onPick={add} />
-          <span className="x-sp" aria-hidden="true" />
-        </li>
-      </ol>
-      <ExperienceCards29 items={rows} onOpen={onOpen} />
+      <div className="ff-xe29-one"><VenueSearch17 key={key} label="Add a venue" placeholder="Search for a venue" onPick={add} /></div>
+      <ExperienceCards29 items={rows} onOpen={(r) => setOpenId(r.id)} />
+      {openRec && <ExperienceSheet29 key={openRec.id} record={openRec} onClose={() => setOpenId(null)} />}
     </div>
   );
 }
