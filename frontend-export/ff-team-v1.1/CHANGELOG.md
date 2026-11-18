@@ -12,7 +12,7 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
   FFTeam.uk/<tag>"
   The share sheet title is "Check out my profile page".
 - One address everywhere: the share link is the member's profile page, FFTeam.uk/<tag>, the same address printed on the Profile Card. Visitors join from the Join team button on the profile. Old /join/<tag> links still open. (`state/invite17.js` holds the link, title and message; `utils/card-export17.js` puts the link on its own line.)
-- Journey tests 48/48.
+- Journey tests 48/48. Artifact version 1795010275-f98e.
 
 ## v1.14
 
