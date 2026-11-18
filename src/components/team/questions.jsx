@@ -75,7 +75,7 @@ const SPARKS = [[-62, -40], [58, -46], [-70, 18], [66, 22], [-24, -70], [30, 66]
 
 
 
-function QuestionCard({ q, answer, onClick, label, pending, celebrate, asker }) {
+function QuestionCard({ q, answer, onClick, label, pending, celebrate, asker, slotLabel = "Answer" }) {
   const answered = isAnswered(answer);
   const c = answered ? QUESTION_DONE : questionGroupColor(q.group);
   const groupLabel = label || (QUESTION_GROUPS.find(g => g.key === q.group) || {}).label || q.group;
@@ -105,7 +105,7 @@ function QuestionCard({ q, answer, onClick, label, pending, celebrate, asker }) 
 
       <div style={{ flex: "1 1 0", minHeight: 0, display: "flex", flexDirection: "column", padding: "9px 10px 8px", borderRadius: 9,
         border: `1px solid ${c.rule}`, background: "rgba(255,255,255,.08)" }}>
-        <span style={{ fontSize: 9, letterSpacing: ".14em", textTransform: "uppercase", fontWeight: 700, color: c.sub }}>Answer</span>
+        <span style={{ fontSize: 9, letterSpacing: ".14em", textTransform: "uppercase", fontWeight: 700, color: c.sub }}>{slotLabel}</span>
         <span style={{ flex: 1, minHeight: 0, marginTop: 5, fontFamily: "var(--sans)", color: c.ink, fontSize: answered ? 17 : 15, fontWeight: answered ? 700 : 500,
           opacity: answered ? 1 : .78, lineHeight: 1.25, display: "-webkit-box", WebkitLineClamp: 4, WebkitBoxOrient: "vertical", overflow: "hidden", overflowWrap: "anywhere" }}>
           {answered ? shown : (pending || "Tap to answer")}

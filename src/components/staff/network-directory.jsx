@@ -369,7 +369,7 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   const areas = co.mine || recAreas.length ? recAreas : String(co.areas || "").split("·").map(x => x.trim()).filter(Boolean);
   const venues = co.mine ? recsOf(co, "venues").filter(r => !r.hidden).map(r => r.name) : (co.venues || []);
   /* Reviews posted on this company's page (state.reviews, newest first) come before its own. Declined ones never show; a waiting one only to its writer (as reviewRecordsFor). */
-  const posted = (state.reviews || []).filter(r => r.status !== "declined" && (r.status !== "pending" || r.byId === "me")).filter(r => r.aboutId === co.id || ck &&  (r.aboutId && r.aboutId !== "me" && coKey17(companyById(state, r.aboutId)) === ck)).slice().reverse().map(r => [null, r.rating, r.text, r.byName]);
+  const posted = (state.reviews || []).filter(r => r.status !== "declined" && (r.status !== "pending" || r.byId === "me")).filter(r => r.aboutId === co.id || ck &&  (r.aboutId && r.aboutId !== "me" && coKey17(companyById(state, r.aboutId)) === ck)).slice().reverse().map(r => [null, r.rating, r.text, r.byName, r.status === "pending"]);
   const reviews = [...posted, ...(co.mine ? (co.reviews || []).map(r => [null, r.rating, r.text, r.byName]) : (co.reviews || [])), ...coWebReviews17(co).map(r => [null, 0, r.description, r.name])];
   const ownQa = co.mine || co.qa ? coQa(co).filter(q => q.group !== "feedback" && (q.answer || String(q.note || "").trim())) : [];
   /* Questions asked on this page that the company answered and made public sit next to its own Q&A, newest first. */
@@ -402,7 +402,7 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
     dispatch({ type: "TAB", tab: "profile" });
     window.scrollTo(0, 0);
   };
-  const tabs = [{ key: "overview", label: "Overview" }, { key: "qa", label: "Packages", count: services.length + cocktails.length }, { key: "team", label: "Team", count: team.length }, { key: "reviews", label: "Reviews", count: reviews.length }];
+  const tabs = [{ key: "overview", label: "Overview" }, { key: "qa", label: "Packages", count: services.length + cocktails.length }, { key: "team", label: "Team", count: team.length }, { key: "reviews", label: "Reviews", count: reviews.filter(x => !x[4]).length }];
   const cIcon = (k) => /mail/i.test(k) ? I11.Mail : /phone/i.test(k) ? I11.Phone : /web/i.test(k) ? I11.Globe : I11.MessageCircle;
   const addTeam = () => {
     const ids = team.map(p => p.id).filter(id => !state.selection.includes(id));
@@ -467,9 +467,10 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
               </div>); }} />
           </section>}
           {tab === "reviews" && <section className="ff-copub-sec">
-            {reviews.length ? <div className="ff-copub-revs">{reviews.map(([by, rating, text, byName], i) => { const p = by && all.find(x => x.id === by); return (
+            {reviews.length ? <div className="ff-copub-revs">{reviews.map(([by, rating, text, byName, waiting], i) => { const p = by && all.find(x => x.id === by); return (
               <figure key={i} className="ff-copub-rev">{rating > 0 && <span className="st" aria-label={`${rating} out of 5`}>{"★".repeat(rating)}{"☆".repeat(5 - rating)}</span>}<blockquote>"{text}"</blockquote>
-                <figcaption>{p && <Portrait src={p.photo} name={p.name} size={26} tier={p.tier} />}{p ? p.name : byName}{p ? ` · ${p.profession}` : ""}</figcaption></figure>); })}</div>
+                <figcaption>{p && <Portrait src={p.photo} name={p.name} size={26} tier={p.tier} />}{p ? p.name : byName}{p ? ` · ${p.profession}` : ""}</figcaption>
+                {waiting && <p className="ff-copub-wait"><I11.Clock size={15} strokeWidth={2} aria-hidden="true" /><span>Waiting for {co.name || "the company"} to accept</span></p>}</figure>); })}</div>
               : <p className="ff-body ff-muted" style={{ margin: 0 }}>No reviews yet.</p>}</section>}
         </div>
       </div>

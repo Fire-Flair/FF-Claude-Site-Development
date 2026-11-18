@@ -334,8 +334,9 @@ function ReviewForm17({ person, shiftId, onDone, preview }) {
     if (state.auth.status !== "signedIn") {
       dispatch({ type: "REVIEW_DRAFT", draft: { aboutId: person.id, worked, rating: r, text: typed } });
       if (onDone) onDone();
+      /* Fixes2: on FF Staff and FF Party the visitor logs in on the same site; the draft waits and posts at sign-in. */
+      if (state.role !== "team") { window.dispatchEvent(new CustomEvent("ff-login")); return; }
       dispatch({ type: "VIEW", id: null });
-      if (state.role !== "team") dispatch({ type: "ROLE", role: "team" });
       dispatch({ type: "TAB", tab: "profile" });
       window.scrollTo(0, 0);
       return;

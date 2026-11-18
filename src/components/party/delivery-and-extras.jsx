@@ -374,7 +374,7 @@ function ReviewAskNote17({ r }) {
   const asker = <>{`${first} reviewed you`}{n ? <span className="stars" role="img" aria-label={`${n} out of 5 stars`}>{"★".repeat(n)}</span> : null}</>;
   return (
     <div className="ff-ndcard17 qn17">
-      <div className="face"><QuestionCard q={{ text: "Show this review on your profile?", group: "asked" }} answer="" label="Review" asker={asker} pending={String(r.text || "").trim() || " "} /></div>
+      <div className="face"><QuestionCard q={{ text: "Show this review on your profile?", group: "asked" }} answer="" label="Review" slotLabel="Review" asker={asker} pending={String(r.text || "").trim() || " "} /></div>
       <YesNoSay17 placeholder={`Reply to ${first}`} onAnswer={answer} />
     </div>
   );

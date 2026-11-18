@@ -297,6 +297,11 @@ function ProfRates17({ guest }) {
 /* A bar package on FF Team Bookings: the package card (Alex's option 3, pkgbuild). Written for the bartender who signs up:
    one design for every package (no tier colours), copy straight from the catalogue (PKG_BY17), Details closed by default,
    the burgundy footer carries "You earn" and FF Team's Sign up. A long word shrinks its line instead of splitting. */
+/* Fixes2: a hyphenated word ("flair-performing") never breaks at its hyphen on a package card. */
+function pkcNoBreak17(v) {
+  if (typeof v !== "string" || !/\w-\w/.test(v)) return v;
+  return v.split(/(\S*\w-\w\S*)/).map((t, i) => i % 2 ? <span key={i} style={{ whiteSpace: "nowrap" }}>{t}</span> : t);
+}
 function BkPkgCard17({ sv, on, onClick }) {
   const p = PKG_BY17[sv.id] || {};
   const ref = useRef(null);
@@ -313,7 +318,7 @@ function BkPkgCard17({ sv, on, onClick }) {
     let ro = null; if (window.ResizeObserver) { ro = new ResizeObserver(fit); ro.observe(root); }
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit).catch(() => {});
     return () => { root.removeEventListener("toggle", tg, true); if (ro) ro.disconnect(); };
-  }, [sv.id]);
+  }, [sv.id, on]);
   const rows = [[S17I.Sparkles, "Includes", p.includes], [S17I.Users, "Ideal for", p.ideal], [S17I.Clock, "Duration", p.durationLabel]].filter(r => r[2]);
   return (
     <div ref={ref} className={`ff-pkc${on ? " sel" : ""}`} data-pk17={sv.id}>
@@ -322,28 +327,28 @@ function BkPkgCard17({ sv, on, onClick }) {
       <div className="ff-pkc-hd">
         <div className="ff-pkc-eb fit">+ {sv.level} · FF Party +</div>
         <h5 className="ff-pkc-ti fit">{p.name || sv.title}</h5>
-        {p.tagline && <p className="ff-pkc-tg">{p.tagline}</p>}
+        {p.tagline && <p className="ff-pkc-tg">{pkcNoBreak17(p.tagline)}</p>}
       </div>
       <div className="ff-pkc-rows">
         {rows.map(([Ic, l, v]) => (
           <div key={l} className="ff-pkc-row">
             <span className="ff-pkc-ico"><Ic size={18} strokeWidth={1.6} /></span>
-            <span className="v"><i>{l}</i><b className="fit">{v}</b></span>
+            <span className="v"><i>{l}</i><b className="fit">{pkcNoBreak17(v)}</b></span>
           </div>
         ))}
       </div>
       <details className="ff-pkc-dt">
         <summary><span>Details</span><S17I.ChevronDown size={18} strokeWidth={2} /></summary>
         <div className="in">
-          {p.description && <p>{p.description}</p>}
-          {(p.points || []).length > 0 && <ul>{p.points.map(x => <li key={x}>{x}</li>)}</ul>}
-          {p.capability && <div><i>You bring</i><p>{p.capability}</p></div>}
-          {p.conditions && <p className="cond">{p.conditions}</p>}
+          {p.description && <p>{pkcNoBreak17(p.description)}</p>}
+          {(p.points || []).length > 0 && <ul>{p.points.map(x => <li key={x}>{pkcNoBreak17(x)}</li>)}</ul>}
+          {p.capability && <div><i>You bring</i><p>{pkcNoBreak17(p.capability)}</p></div>}
+          {p.conditions && <p className="cond">{pkcNoBreak17(p.conditions)}</p>}
         </div>
       </details>
       <div className="ff-pkc-ft">
         {pay != null && <span className="ff-pkc-earn"><i>You earn</i><b>{pkgPayLabel17(sv.id)}</b></span>}
-        <button type="button" className="ff-pkc-go" onClick={onClick} aria-pressed={!!on} aria-label={`${p.name || sv.title}: ${on ? "Signed up" : "Sign up"}`}>
+        <button type="button" className="ff-pkc-go fit" onClick={onClick} aria-pressed={!!on} aria-label={`${p.name || sv.title}: ${on ? "Signed up" : "Sign up"}`}>
           {on ? <><S17I.Check size={13} strokeWidth={2.6} /> Signed up</> : "Sign up"}
         </button>
       </div>
@@ -451,19 +456,20 @@ function TeamBookings({ guest = false }) {
         <BigHead20 title="Packages" />
         <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-party">
           <h3>FFParty</h3>
-          <h4 className="ff-bkpk-sub">Our bar packages</h4>
+          {pkTab === "bar" && <h4 className="ff-bkpk-sub">Our bar packages</h4>}
           <p>You are your own boss. FireFlair sets the pay rate for each package. You deal directly with the client, and FireFlair is here to support you. Packages are advertised at a set rate, and by signing up to one you agree to that rate. The rates are strong, so we expect strong work in return.</p>
           <div className="ff-pr17-chips" role="tablist" aria-label="Package types">
-            {PK_TABS.map(([k, l]) => <button key={k} type="button" role="tab" className="ff-chip ff-pr17-tab" aria-selected={k === pkTab} aria-pressed={k === pkTab} onClick={() => setPkTab(k)}>{l}</button>)}
+            {PK_TABS.map(([k, l], i) => <button key={k} id={`ff-pktab-${k}`} type="button" role="tab" className="ff-chip ff-pr17-tab" aria-selected={k === pkTab} aria-controls={`ff-pkpanel-${k}`} tabIndex={k === pkTab ? 0 : -1} onClick={() => setPkTab(k)}
+              onKeyDown={e => { const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : e.key === "Home" ? -i : e.key === "End" ? PK_TABS.length - 1 - i : 0; if (!d) return; e.preventDefault(); const nk = PK_TABS[(i + d + PK_TABS.length) % PK_TABS.length][0]; setPkTab(nk); const b = document.getElementById(`ff-pktab-${nk}`); if (b) b.focus(); }}>{l}</button>)}
           </div>
-          {pkTab === "bar" ? (<>
+          {pkTab === "bar" ? (<div role="tabpanel" id="ff-pkpanel-bar" aria-labelledby="ff-pktab-bar">
             <HScroll label="Our bar packages" snap>
               {pkgs.map(sv => <div key={sv.id} className="ff-bkpk-cell"><BkPkgCard17 sv={sv} on={picked.includes(sv.id)} onClick={() => tick(sv)} /></div>)}
             </HScroll>
             <div className="ff-bkown17-row">{ownBtn}</div>
             <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={!sel} onClick={() => { if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; } setPkgTerms(true); }}><Check size={15} /> Confirm</button>
-          </>) : (
-            <div className="ff-bkpk-soon" role="tabpanel">
+          </div>) : (
+            <div className="ff-bkpk-soon" role="tabpanel" id={`ff-pkpanel-${pkTab}`} aria-labelledby={`ff-pktab-${pkTab}`}>
               <span className="ff-bkpk-soon-t"><Lock size={14} strokeWidth={2} /> Coming soon</span>
               {ownBtn}
             </div>
