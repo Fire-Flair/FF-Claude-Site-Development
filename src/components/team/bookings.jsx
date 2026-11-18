@@ -356,21 +356,41 @@ function BkPkgCard17({ sv, on, onClick }) {
   );
 }
 
-/* pkg3: the closing card of the FF Party package rail (and the Entertainment / Services tabs): same card family, no button. */
-function BkPkgSoon17() {
+/* pkg3 / v17.46: Coming soon package cards. The Bar rail ends with the custom-package card; the Entertainment and
+   Services tabs each preview three packages to come. Copy speaks to the professional who will create them. */
+const PK_SOON17 = {
+  bar: [{ id: "custom", eb: "FF Party", ti: "FF Party packages", tg: "Create custom packages. Your skills, your package, your price.",
+    inc: "Your signature serves, your kit, your style", ideal: "The events you love working" }],
+  ent: [
+    { id: "dj", eb: "Entertainment · FF Party", ti: "DJ Package", tg: "Your sound, your package, your price.",
+      inc: "Your sets, your kit, your sound", ideal: "Weddings, birthdays and late-night parties" },
+    { id: "music", eb: "Entertainment · FF Party", ti: "Live Music Package", tg: "Your music, your package, your price.",
+      inc: "Your act, your repertoire, your setup", ideal: "Ceremonies, receptions and drinks receptions" },
+    { id: "act", eb: "Entertainment · FF Party", ti: "Entertainer Package", tg: "Your act, your package, your price.",
+      inc: "Magic, caricatures or a show of your own", ideal: "Family parties, corporate events and receptions" },
+  ],
+  svc: [
+    { id: "photo", eb: "Services · FF Party", ti: "Photographer Package", tg: "Your eye, your package, your price.",
+      inc: "Your camera, your style, your edit", ideal: "Weddings, parties and brand events" },
+    { id: "video", eb: "Services · FF Party", ti: "Videographer Package", tg: "Your story, your package, your price.",
+      inc: "Your filming, your edit, your highlights reel", ideal: "Weddings, launches and celebrations" },
+    { id: "host", eb: "Services · FF Party", ti: "Event Host Package", tg: "Your welcome, your package, your price.",
+      inc: "Your welcome, your timing, your way with a crowd", ideal: "Corporate events, awards nights and parties" },
+  ],
+};
+function BkPkgSoon17({ pk = PK_SOON17.bar[0] }) {
+  const rows = [[S17I.Sparkles, "Includes", pk.inc], [S17I.Users, "Ideal for", pk.ideal], [S17I.Clock, "Duration", "As long as you choose"], [S17I.Star, "Price", "You set it"]];
   return (
-    <div className="ff-pkc ff-pkc-soon" data-pk17="soon">
+    <div className="ff-pkc ff-pkc-soon" data-pk17={"soon-" + pk.id}>
       <span className="ff-pkc-rb"><S17I.Sparkles size={12} /> Package card</span>
       <span className="ff-pkc-logo"><FFLogo size={40} tier="gold" /></span>
       <div className="ff-pkc-hd">
-        <div className="ff-pkc-eb">+ FF Party +</div>
-        <h5 className="ff-pkc-ti">FF Party packages</h5>
-        <p className="ff-pkc-tg">Create custom packages. Your skills, your package, your price.</p>
+        <div className="ff-pkc-eb">+ {pk.eb} +</div>
+        <h5 className="ff-pkc-ti">{pk.ti}</h5>
+        <p className="ff-pkc-tg">{pk.tg}</p>
       </div>
-      {/* Alex 00:28 / 00:31: a preview of a custom package card, its rows filled with what the bartender will decide. */}
-      <div className="ff-pkc-rows ff-pkc-pv" aria-label="Custom package preview">
-        {[[S17I.Sparkles, "Includes", "Your signature serves, your kit, your style"], [S17I.Users, "Ideal for", "The events you love working"],
-          [S17I.Clock, "Duration", "As long as you choose"], [S17I.Star, "Price", "You set it"]].map(([Ic, l, v]) => (
+      <div className="ff-pkc-rows ff-pkc-pv" aria-label={`${pk.ti} preview`}>
+        {rows.map(([Ic, l, v]) => (
           <div key={l} className="ff-pkc-row">
             <span className="ff-pkc-ico"><Ic size={18} strokeWidth={1.6} /></span>
             <span className="v"><i>{l}</i><b>{v}</b></span>
@@ -487,8 +507,10 @@ function TeamBookings({ guest = false }) {
             </HScroll>
             <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={!sel} onClick={() => { if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; } setPkgTerms(true); }}><Check size={15} /> Confirm</button>
           </div>) : (
-            <div className="ff-bkpk-soonp" role="tabpanel" id={`ff-pkpanel-${pkTab}`} aria-labelledby={`ff-pktab-${pkTab}`}>
-              <div className="ff-bkpk-cell"><BkPkgSoon17 /></div>
+            <div role="tabpanel" id={`ff-pkpanel-${pkTab}`} aria-labelledby={`ff-pktab-${pkTab}`}>
+              <HScroll label="Packages coming soon" snap>
+                {(PK_SOON17[pkTab] || PK_SOON17.bar).map(pk => <div key={pk.id} className="ff-bkpk-cell"><BkPkgSoon17 pk={pk} /></div>)}
+              </HScroll>
             </div>
           )}
           {pkgTerms && <PkgTerms17 kind="pkg" onClose={() => setPkgTerms(false)} onAccept={confirmPkgs} />}
