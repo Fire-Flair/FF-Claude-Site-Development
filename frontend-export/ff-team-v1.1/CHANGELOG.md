@@ -4,7 +4,7 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
-## v1.39
+## v1.39 (homepage)
 
 FF Team home on iPad and desktop (Alex, 18 Nov 19:16). `styles/home-text.css`.
 
