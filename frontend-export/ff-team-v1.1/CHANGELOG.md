@@ -4,6 +4,15 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.70
+
+Profile builder Professions and home bottom gap (Alex, 18 Nov 21:49). Two agent branches merged: `ag-inline` (src/components/team/profile-edit-p2.jsx, src/styles/profile-edit-p2.css) and `ag-homegap` (src/styles/home-fix22.css).
+
+- Professions: the category pop-up is gone. Tapping a category tile opens its professions in a panel directly under that tile's row, the full width of the grid; tapping the same tile closes it, another tile switches. The open tile has a gold border, a burgundy icon square and a small pointer into the panel. The panel shows the category icon and name, the professions as chips that wrap (chosen: burgundy with a gold tick; others: white with "+"; Bar keeps its ladder order; the member's own professions in that category show as chosen) and "Add your own". `PE2CatSheet` and `PE2CatItem` removed; `PE2CatPanel` and `PE2Chip` added.
+- FF Team home: the gap under the last box (Join FF Team with the coin game) is about half: phone 93px to 47px above the bottom nav, desktop 104px to 52px to the bottom of the window (negative bottom margin on that box only; other pages unchanged).
+- Checked: `npm run check`, `npm run build`, Playwright at 390 and 1280, signed in and out (Services under row 2, Bar under row 1, picks and "Drone Pilot" added, close by tapping again; no console errors, no overflow, no split words); home page scrolled to the bottom at 390, 700 and 1280.
+- Published over live 1795038385-8581 (v1.69), index.html only (all other files kept). Artifact version 1795039019-ab8d. Built page saved as `live-v1.70-index.html`.
+
 ## v1.69
 
 Profile Packages tab, in the profile builder and on a public profile (Alex, 18 Nov 20:51). New `team/profile-packages.jsx`, `styles/profile-packages.css`; `team/profile-edit-tabs.jsx`, `team/introductions.jsx`, `team/public-profile.jsx` (CoverFlow), `styles/p12.css`, `manifest.json`.
