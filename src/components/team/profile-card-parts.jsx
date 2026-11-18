@@ -29,10 +29,13 @@ if (typeof document !== "undefined" && !document.getElementById("ff-pc17-css")) 
 function pc17Tag(tag) { return String(tag || "").toLowerCase(); }
 
 
-/* Fits every row of a Profile Card into its box without ever splitting a word or showing "…":
-   entries that do not fit are dropped whole (the last first); if none fit, the shortest entry stands alone;
-   if that does not fit either, the row is hidden. The large card lets entries wrap onto a second line
-   (between whole entries) and drops entries from the longest row if the panel would run into the footer. */
+/* Fits every row of a Profile Card into its box without ever splitting a word or showing "…".
+   pb-cardfit: each row gets the member's entries in their order (their "top three" first) and walks them: an entry that
+   fits is shown, one that does not is left out whole and the next one in line is tried, until PC17_PER_ROW are shown.
+   The large card lets a row run to two lines (wrapping between whole entries); the small card keeps one line.
+   If the large card's box would run into the footer, the row with the most entries on two lines is walked again
+   on one line (repeat until it fits). A row with nothing that fits is hidden. */
+const PC17_PER_ROW = 3;
 function pc17Fit(root) {
   /* v17.24: on the home hero easel the card sits under a perspective transform, which skews every measured box.
      Measure with the transform off (same frame, nothing is painted in between), then put it back. */
@@ -50,48 +53,44 @@ function pc17FitRun(root) {
   if (!px) return;
   const rows = Array.from(root.querySelectorAll(".pc17-row"));
   rows.forEach((r) => { r.style.display = ""; r.style.borderBottomWidth = ""; r.style.paddingTop = ""; r.style.paddingBottom = ""; });
-  const prep = (el) => {
-    const kids = Array.from(el.children).filter((k) => k.classList.contains("en"));
-    kids.forEach((k) => { k.style.display = ""; Array.from(k.querySelectorAll(".bl,.bu")).forEach((b) => { b.style.display = ""; }); });
-    return kids;
-  };
-  const trail = (kids, n) => kids.forEach((k, i) => { const b = k.querySelector(".bl"); if (b) b.style.display = i === n - 1 ? "none" : ""; });
-  const shortest = (el, kids, over) => {
-    kids.forEach((k) => { k.style.display = "none"; });
-    const s = kids.slice().sort((a, b) => a.textContent.length - b.textContent.length)[0];
-    if (s) { s.style.display = ""; Array.from(s.querySelectorAll(".bl,.bu")).forEach((b) => { b.style.display = "none"; }); }
-    if (!s || over()) { const r = el.closest(".pc17-row"); if (r) r.style.display = "none"; }
-  };
-  root.querySelectorAll(".pc17-fit").forEach((el) => {
-    const kids = prep(el);
-    const over = () => el.scrollWidth > el.clientWidth + 0.5;
-    if (el.classList.contains("wr")) {
-      const lh = parseFloat(getComputedStyle(el).lineHeight) || 1;
-      const bad = () => Math.round(el.getBoundingClientRect().height / lh) > 2 || over();
-      let n = kids.length;
-      trail(kids, n);
-      while (n > 1 && bad()) { n--; kids[n].style.display = "none"; trail(kids, n); }
-      if (bad()) shortest(el, kids, bad);
-    } else {
-      let n = kids.length;
-      while (n > 1 && over()) { n--; kids[n].style.display = "none"; }
-      if (over()) shortest(el, kids, over);
-    }
+  const kidsOf = (el) => Array.from(el.children).filter((k) => k.classList.contains("en"));
+  const linesOf = (el) => Math.round(el.getBoundingClientRect().height / (parseFloat(getComputedStyle(el).lineHeight) || 1));
+  /* Separators follow what is shown: no comma after the last entry (large), no bullet before the first (small). */
+  const seps = (shown) => shown.forEach((k, i) => {
+    const bl = k.querySelector(".bl"), bu = k.querySelector(".bu");
+    if (bl) bl.style.display = i === shown.length - 1 ? "none" : "";
+    if (bu) bu.style.display = i === 0 ? "none" : "";
   });
+  /* Walk one row: entries in order, keep each that still fits, skip (whole) each that does not. */
+  const walk = (el, maxLines) => {
+    const kids = kidsOf(el);
+    const over = () => el.scrollWidth > el.clientWidth + 0.5;
+    const ok = el.classList.contains("wr") ? () => !over() && linesOf(el) <= maxLines : () => !over();
+    const shown = [];
+    kids.forEach((k) => { k.style.display = "none"; });
+    for (const k of kids) {
+      if (shown.length >= PC17_PER_ROW) break;
+      k.style.display = "";
+      shown.push(k);
+      seps(shown);
+      if (!ok()) { k.style.display = "none"; shown.pop(); seps(shown); }
+    }
+    const r = el.closest(".pc17-row");
+    if (r) r.style.display = shown.length ? "" : "none";
+    return shown;
+  };
+  const fits = Array.from(root.querySelectorAll(".pc17-fit"));
+  fits.forEach((el) => walk(el, el.classList.contains("wr") ? 2 : 1));
   const bar = root.querySelector(".pc17-bar"), panel = root.querySelector(".pc17-panel");
   if (bar && panel && root.classList.contains("lg")) {
-    for (let g = 0; g < 40; g++) {
+    for (let g = 0; g < 8; g++) {
       if (panel.getBoundingClientRect().bottom <= bar.getBoundingClientRect().top - 1.6 * px) break;
-      const cand = Array.from(root.querySelectorAll(".pc17-fit.wr")).filter((el) => { const r = el.closest(".pc17-row"); return !r || r.style.display !== "none"; }).map((el) => {
-        const kids = Array.from(el.children).filter((k) => k.classList.contains("en") && k.style.display !== "none");
-        return { el, kids, lines: Math.round(el.getBoundingClientRect().height / (parseFloat(getComputedStyle(el).lineHeight) || 1)) };
-      }).filter((c) => c.lines > 1 && c.kids.length > 1);
+      const cand = fits.filter((el) => el.classList.contains("wr")).filter((el) => { const r = el.closest(".pc17-row"); return !r || r.style.display !== "none"; })
+        .map((el) => ({ el, n: kidsOf(el).filter((k) => k.style.display !== "none").length, lines: linesOf(el) }))
+        .filter((c) => c.lines > 1);
       if (!cand.length) break;
-      cand.sort((a, b) => b.kids.length - a.kids.length);
-      const c = cand[0];
-      c.kids[c.kids.length - 1].style.display = "none";
-      const v = c.kids.slice(0, -1);
-      v.forEach((k, i) => { const b = k.querySelector(".bl"); if (b) b.style.display = i === v.length - 1 ? "none" : ""; });
+      cand.sort((a, b) => b.n - a.n);
+      walk(cand[0].el, 1);
     }
   }
   const shown = rows.filter((r) => r.style.display !== "none");
@@ -140,13 +139,16 @@ function PlayerFace17({ person, large, themeKey, tier, onClick, selected, nameAs
   const pros = list(person.professions || person.profession);
   const headline = String(person.headline || "").trim() || pros[0] || "";
   const name = String(person.name || "").trim() || person.tag || "";
-  let locs = list(person.base ? [person.base] : person.locations);
-  const countries = locs.map((l) => (l.match(/,\s*([^,]+)$/) || [])[1]);
-  if (locs.length && countries.every((c) => c && c === countries[0])) locs = locs.map((l) => l.replace(/,\s*[^,]+$/, ""));
-  const cap = large ? 6 : 3;
+  /* pb-cardfit: town or city only, each once ("St Albans, UK" + "London, UK" -> St Albans, London). */
+  const locs = cardPlaces17(list(person.base ? [person.base] : person.locations));
+  /* Every row gets the member's ordered entries (person.cardLists, when given, holds more than the top three), and pc17Fit
+     shows up to PC17_PER_ROW of them: a top-three entry too long for the card gives its place to the next one that fits. */
+  const more = person.cardLists || {};
+  const pool = (k, v) => { const all = list(more[k]); return all.length ? all : v; };
+  const POOL = 12;
   const langs = (person.languages || []).filter(Boolean).slice(0, 5);
-  const rows = [["Professions", Users, pros], ["Skills", Star, list(person.skills)], ["Interests", Heart, list(person.interests)], ["Locations", MapPin, locs]]
-    .filter((r) => r[2].length).map((r) => [r[0], r[1], r[2].slice(0, cap)]);
+  const rows = [["Professions", Users, pool("professions", pros)], ["Skills", Star, pool("skills", list(person.skills))], ["Interests", Heart, pool("interests", list(person.interests))], ["Locations", MapPin, locs]]
+    .filter((r) => r[2].length).map((r) => [r[0], r[1], r[2].filter((v, i, a) => a.findIndex((x) => x.toLowerCase() === v.toLowerCase()) === i).slice(0, POOL)]);
   const sig = [large, themeKey, tier, name, headline, rows.map((r) => r[2].join("|")).join("/"), langs.join(","), person.hasCar, person.tag].join("~");
   React.useLayoutEffect(() => {
     const el = rootRef.current && rootRef.current.parentElement;
@@ -165,7 +167,7 @@ function PlayerFace17({ person, large, themeKey, tier, onClick, selected, nameAs
   const flags = () => langs.map((l) => <span key={l} className="pc17-flag"><LangFlag lang={l} /></span>);
   const entries = (items) => large
     ? <span className="pc17-fit wr">{items.map((v, i) => <React.Fragment key={v + i}><span className="en">{v}<b className="bl" style={{ color: ink }}>,</b></span>{" "}</React.Fragment>)}</span>
-    : <span className="pc17-fit">{items.map((v, i) => <span className="en" key={v + i}>{i > 0 && <b className="bu" style={{ color: acc }}>•</b>}{v}</span>)}</span>;
+    : <span className="pc17-fit">{items.map((v, i) => <span className="en" key={v + i}><b className="bu" style={{ color: acc }}>•</b>{v}</span>)}</span>;
   return (
     <CardFrame premium fixed tier={tier} theme={t} ratio="5 / 7" className={"pc17 " + (large ? "lg" : "sm")} onClick={onClick} selected={selected}
       style={{ width: "100%", padding: 0, "--pc17-hair": m.hair }}>
