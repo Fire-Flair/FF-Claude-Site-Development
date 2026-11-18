@@ -17,6 +17,7 @@ Branch `home-update` (from ff-team-v1.1 at v1.15), for the main session to merge
   3. Would you like to win the FF Team Launch Challenge? Yes, I'm in (See the Launch Challenge, scrolls to the challenge) / How do I enter? (Create your Profile Card) / I'd like to see the stories first (Read FFStories, scrolls to FFStories).
   The team answers no longer use `useGoSite`; FF Staff and FF Party question sets are unchanged.
 - Checks: `npm run check` and `npm run build` pass; screenshots at 390 and 1280 with no page errors; the answer buttons tested.
+- Preview artifact (private, not the release): "FF Team 1.1 — homepage preview", version 1795012160-340b.
 
 ## v1.15
 
