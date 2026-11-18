@@ -4,6 +4,14 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.61
+
+Profile page top (Alex, 18 Nov 21:10). `src/components/team/profile-builder.jsx`, `src/styles/titles2.css` (prof-top).
+
+- The "FF Team · Profile" eyebrow at the top left is gone; the page opens straight on "1 Let's get started", 22px under the top bar (as Your bookings and Explore our network).
+- Checked: `npm run check`, `npm run build`, profile page at 390 and 1280 (no console errors).
+- Published over live 1795036260-d6d7 (v1.60), index.html only (all other files kept). Artifact version 1795036430-22ae. Built page saved as `live-v1.61-index.html`.
+
 ## v1.60
 
 Bookings, FFParty – Our packages (Alex, 18 Nov 20:51). `team/bookings.jsx`, `styles/bkd.css`.
