@@ -2,6 +2,8 @@
 
 ## v17.55
 
+Artifact version 1794970310-849c.
+
 FF Team home round 3. Branch merged: `p2-home3`.
 
 - Launch Challenge (`discover-and-support.jsx`, `team-home.jsx`, `home-fix22.css`): the box is back to the normal page width; the "FF Team Launch Challenge" eyebrow sizes itself to fill the box width on one line; "Grow your Team." and "Win prizes." sit on separate lines.
