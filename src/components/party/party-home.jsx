@@ -245,8 +245,10 @@ function PartyLoginSheet17({ onClose }) {
       const tag = "HOST" + phone.replace(/\D/g, "").slice(-4);
       const res = await AUTH_ADAPTER.loginWithPassword(tag, pw);
       dispatch({ type: "SESSION", patch: { tag: res.tag, phone, verified: true } });
+      const draft = !!(state.session && state.session.reviewDraft17);
       dispatch({ type: "AUTH_SIGNED_IN", tag: res.tag, method: res.method });
-      dispatch({ type: "TOAST", toast: "Logged in" }); onClose();
+      /* Fixes2: a review written while signed out posts at sign-in with its own "Review sent to …" toast; keep that one. */
+      if (!draft) dispatch({ type: "TOAST", toast: "Logged in" }); onClose();
     } catch (e) { setErr("That phone number and password do not match."); } finally { setBusy(false); }
   };
   return (
