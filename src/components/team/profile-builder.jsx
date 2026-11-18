@@ -382,7 +382,7 @@ function AccountSettings({ boxes = false, only } = {}) {
     }
   };
   if (boxes && !editing) return (<>
-    {only !== "tag" && <GoldBox21 icon={<Phone size={16} strokeWidth={1.8} />} title="Phone number" desc={ACCT_DESC21.phone} className="shine">
+    {only !== "tag" && <GoldBox21 icon={<WhatsAppIcon size={17} />} title="Phone number" desc={ACCT_DESC21.phone} className="shine ff-wa-pfa">
       <span className="ff-gb21-val"><Check size={15} color="var(--ok)" strokeWidth={2.6} /> {phone || "Number verified"}</span>
     </GoldBox21>}
     {only !== "phone" && <GoldBox21 icon={<Hash size={16} strokeWidth={1.8} />} title="FF Tag" desc={ACCT_DESC21.tag}
@@ -473,7 +473,7 @@ function AccountSettings({ boxes = false, only } = {}) {
 const ACCT_DESC21 = {
   phone: "Used to send you bookings via WhatsApp.",
   tag: "Your personal web page, displaying all your profile information.",
-  media: "These pictures play across the top of your public profile. They are the first thing people see, and the best way to show your work.",
+  media: "Your first picture is your profile photo. The rest play across the top of your public profile, the best way to show your work.",
 };
 
 
@@ -589,7 +589,7 @@ function PhoneBox21({ join: j }) {
   if (j.signedIn) return <AccountSettings boxes only="phone" />;
   return (<>
     {j.stage === "details" ? (
-      <GoldBox21 icon={<Phone size={16} strokeWidth={1.8} />} title="Phone number" desc={ACCT_DESC21.phone} className="shine">
+      <GoldBox21 icon={<WhatsAppIcon size={17} />} title="Phone number" desc={ACCT_DESC21.phone} className="shine ff-wa-pfa">
         <DialCode26 value={j.dial} onChange={j.setDial} />
         <input className="ff-gb21-in" type="tel" inputMode="tel" autoComplete="tel-national" placeholder="7700 900000" aria-label="Phone number"
           value={j.phone} onChange={(e) => j.setPhone(e.target.value)} enterKeyHint="send"
@@ -597,7 +597,7 @@ function PhoneBox21({ join: j }) {
         <button type="button" className="ff-gb21-btn" disabled={j.busy || !j.available || !j.phoneOk} onClick={j.send}>{j.busy ? <Loader2 size={14} className="ff-spin" /> : null}Verify</button>
       </GoldBox21>
     ) : (
-      <GoldBox21 className="shine" icon={<Phone size={16} strokeWidth={1.8} />} title="WhatsApp code" desc={`Sent to ${j.fullPhone} · any six digits in this preview`}
+      <GoldBox21 className="shine ff-wa-pfa" icon={<WhatsAppIcon size={17} />} title="WhatsApp code" desc={`Sent to ${j.fullPhone} · any six digits in this preview`}
         note={<span className="ff-gb21-links">
           <button type="button" className="ff-linkbtn" onClick={() => { j.setStage("details"); j.setCode(""); j.setErr(null); }}>Change number</button>
           <button type="button" className="ff-linkbtn" disabled={j.busy} onClick={j.send}>Resend code</button>
@@ -857,7 +857,7 @@ function InterviewBook17({ notes, onClose, name, title = "Book an interview" }) 
     setTimeout(onClose, 150);
   };
   return (
-    <Sheet open onClose={onClose} title={title}>
+    <Sheet open center onClose={onClose} title={title}>
       <div className="ff-ib17">
         <Field label="Phone number"><input className="ff-input" type="tel" inputMode="tel" autoComplete="tel" placeholder="+44 7700 900000" value={phone} onChange={(e) => setPhone(e.target.value)} /></Field>
         <a className={"ff-btn gold ff-bigcv17" + (ok ? "" : " off")} href={ok ? href : undefined} aria-disabled={!ok} target="_blank" rel="noopener noreferrer" onClick={go}><Calendar size={16} /> Choose a time</a>
@@ -875,6 +875,12 @@ function StartBox17({ join }) {
   const run = (v) => { if (String(v || "").trim().length < 3 || ex.busy) return; ex.start({ text: v }); };
   return (
     <div id="ff-sec-ffai" className="ff-start17">
+      {/* pfa (Alex 03:29): Phone number first, above Upload CV. */}
+      {join && (
+        <section id="ff-sec-phone" className="ff-way17 ff-way17-phone">
+          <div className="ff-way17-wide"><PhoneBox21 join={join} /></div>
+        </section>
+      )}
       <section className="ff-way17 ff-way17-cv">
         <div className="ff-way17-ctl"><CVPanel inline /></div>
         <p className="ff-way17-line"><Timer size={16} strokeWidth={2.2} aria-hidden="true" /><span>Create your profile in &lt;1 minute</span></p>
@@ -889,11 +895,6 @@ function StartBox17({ join }) {
           </FFAI>
         </div>
       </section>
-      {join && (
-        <section id="ff-sec-phone" className="ff-way17 ff-way17-phone">
-          <div className="ff-way17-wide"><PhoneBox21 join={join} /></div>
-        </section>
-      )}
     </div>
   );
 }
@@ -974,7 +975,8 @@ function NeedHelp34() {
     <div className="ff-start17 ff-help34">
       <section className="ff-way17 ff-way17-int">
         <div className="ff-way17-ctl"><Btn variant="ghost ff-bigcv17" onClick={() => setBook(true)}><Calendar size={16} /> Book a meeting</Btn></div>
-        <p className="ff-way17-line"><span>Need help?</span></p>
+        {/* pfa (Alex 03:29): the earlier Book an interview wording, under the heading Need help? */}
+        <div className="ff-help34-t"><h3 className="ff-help34-h">Need help?</h3><p className="ff-way17-line"><span>Meet the FireFlair team and ask us anything.</span></p></div>
       </section>
       {book && <InterviewBook17 title="Book a meeting" onClose={() => setBook(false)} />}
     </div>

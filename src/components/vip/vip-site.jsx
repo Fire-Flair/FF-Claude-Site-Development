@@ -1078,10 +1078,12 @@ function VipRouter21() {
 function TeamRouter() {
   const { state } = useStore();
   const { tab } = state;
-  if (state.viewing) return <PersonProfile />;
-  if (tab === "network") return <NetworkScreen />;
-  if (tab === "bookings") return PHASE1.bookingsLive ? <TeamBookings /> : <P1Bookings />;
-  if (tab === "profile") return <ProfileGate17 kind="team" />;
+  /* pfa (Alex 03:29, reverses v17.8.2 for FF Team): Business & Support at the bottom of every FF Team page, the same box as home. */
+  const biz = (page) => <>{page}<div className="ff-biz-pfa"><V101.BusinessSupport19 /></div></>;
+  if (state.viewing) return biz(<PersonProfile />);
+  if (tab === "network") return biz(<NetworkScreen />);
+  if (tab === "bookings") return biz(PHASE1.bookingsLive ? <TeamBookings /> : <P1Bookings />);
+  if (tab === "profile") return biz(<ProfileGate17 kind="team" />);
   return <TeamHomeV17 />;
 }
 
