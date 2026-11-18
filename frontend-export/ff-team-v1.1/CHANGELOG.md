@@ -6,6 +6,8 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
 
 ## v1.12
 
+Artifact version 1795001443-0407.
+
 Alex's first changes after the split (queued 18 Nov 10:20). Branches merged: `v11-a`, `v11-b`.
 
 - Titles (new `styles/titles2.css`, `css-registry.js`, `App.jsx`): option 2 "Gold mark" — a gold coin beside section titles (Our professionals, FF Event Directory, Can FF Team help you?, FFParty, FFStaff, Grow with FireFlair; small gold dot on profile labels). "Explore our network", "Your bookings" and a new "Your profile" page title share the full underline. "What is FF Team?", "FF Team is built for getting you bookings" (soft gold, in its dark box) and "FF Team Launch Challenge" use the gold mark; the coin between the welcome and "What is FF Team?" is gone. "FFStories" is one word, centred, with FF slightly slanted.
