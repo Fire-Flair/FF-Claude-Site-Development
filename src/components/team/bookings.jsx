@@ -365,14 +365,15 @@ function BkPkgSoon17() {
       <div className="ff-pkc-hd">
         <div className="ff-pkc-eb">+ FF Party +</div>
         <h5 className="ff-pkc-ti">FF Party packages</h5>
-        <p className="ff-pkc-tg">Create custom packages</p>
+        <p className="ff-pkc-tg">Create custom packages. Your skills, your package, your price.</p>
       </div>
-      {/* Alex 00:28: a preview of how a custom package card will look (its rows, empty), not a big FF logo. */}
-      <div className="ff-pkc-rows ff-pkc-pv" aria-hidden="true">
-        {[[S17I.Sparkles, "Includes", [88, 64]], [S17I.Users, "Ideal for", [76, 52]], [S17I.Clock, "Duration", [40]]].map(([Ic, l, w]) => (
+      {/* Alex 00:28 / 00:31: a preview of a custom package card, its rows filled with what the bartender will decide. */}
+      <div className="ff-pkc-rows ff-pkc-pv" aria-label="Custom package preview">
+        {[[S17I.Sparkles, "Includes", "Your signature serves, your kit, your style"], [S17I.Users, "Ideal for", "The events you love working"],
+          [S17I.Clock, "Duration", "As long as you choose"], [S17I.Star, "Price", "You set it"]].map(([Ic, l, v]) => (
           <div key={l} className="ff-pkc-row">
             <span className="ff-pkc-ico"><Ic size={18} strokeWidth={1.6} /></span>
-            <span className="v"><i>{l}</i>{w.map((x, i) => <s key={i} style={{ width: x + "%" }} />)}</span>
+            <span className="v"><i>{l}</i><b>{v}</b></span>
           </div>
         ))}
       </div>

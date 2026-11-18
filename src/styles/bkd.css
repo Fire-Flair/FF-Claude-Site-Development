@@ -122,6 +122,6 @@
 /* v17.44: the Coming soon card previews an empty package card (rows with placeholder lines) instead of a big FF logo. */
 .ff #ff-bk-party .ff-pkc-pv { flex:none; }
 .ff #ff-bk-party .ff-pkc-soon .ff-pkc-ft { margin-top:auto; }
-.ff #ff-bk-party .ff-pkc-pv .v s { display:block; height:9px; margin-top:8px; border-radius:5px; corner-shape:squircle; background:linear-gradient(90deg, rgba(201,162,39,.38), rgba(201,162,39,.14)); text-decoration:none; }
+
 .ff #ff-bk-party .ff-pkc-pv .ff-pkc-ico { opacity:.75; }
 .ff #ff-bk-party .ff-pkc-pvdt { display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:44px; margin:12px 16px 16px; padding:0 16px; border:1px solid rgba(201,162,39,.35); border-radius:18px; corner-shape:squircle; background:rgba(201,162,39,.05); font:600 14px/1 var(--font-display); letter-spacing:.12em; text-transform:uppercase; color:rgba(243,222,156,.6); }

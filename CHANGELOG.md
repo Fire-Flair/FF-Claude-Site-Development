@@ -1,5 +1,9 @@
 # FireFlair prototype — changelog
 
+## v17.45
+
+- FF Party box, Coming soon card (`bookings.jsx`, `bkd.css`): the preview rows now carry aspirational copy for the bartender (Includes, Ideal for, Duration, and a Price row saying they set it); sub-title "Create custom packages. Your skills, your package, your price."
+
 ## v17.44
 
 Artifact version 1794961863-74c2.
