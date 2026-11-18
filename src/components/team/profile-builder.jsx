@@ -855,19 +855,19 @@ function InterviewBook17({ notes, onClose, name, title = "Book an interview" }) 
 }
 
 
-/* Create a profile: one box. Upload a CV, or talk or type to GPT, then the Phone number (v17.34: in place of Book an
-   interview; InterviewBook17 stays for FF Staff's Book a meeting). */
+/* Create a profile: one box. v1.16 (Alex, 18 Nov 13:58): Phone number first, Talk or type to GPT second, the CV third.
+   (v17.34: the Phone number took Book an interview's place; InterviewBook17 stays for FF Staff's Book a meeting.) */
 function StartBox17({ join }) {
   const [text, setText] = useState("");
   const ex = useExtraction({ withAnswers: true });
   const run = (v) => { if (String(v || "").trim().length < 3 || ex.busy) return; ex.start({ text: v }); };
   return (
     <div id="ff-sec-ffai" className="ff-start17">
-      {/* v11-b (Alex 10:20): Upload CV first, Talk or type second, Phone number third. */}
-      <section className="ff-way17 ff-way17-cv">
-        <div className="ff-way17-ctl"><CVPanel inline /></div>
-        <p className="ff-way17-line"><Timer size={16} strokeWidth={2.2} aria-hidden="true" /><span>Create your profile in &lt;1 minute</span></p>
-      </section>
+      {join && (
+        <section id="ff-sec-phone" className="ff-way17 ff-way17-phone">
+          <div className="ff-way17-wide"><PhoneBox21 join={join} /></div>
+        </section>
+      )}
       <section className="ff-way17 ff-way17-gpt">
         <h3 className="ff-way17-ctl"><GptLogo17 size={18} /> Talk or type to GPT</h3>
         <p className="ff-way17-line"><span>Tell us about yourself and we'll build the profile for you.</span></p>
@@ -878,12 +878,208 @@ function StartBox17({ join }) {
           </FFAI>
         </div>
       </section>
-      {join && (
-        <section id="ff-sec-phone" className="ff-way17 ff-way17-phone">
-          <div className="ff-way17-wide"><PhoneBox21 join={join} /></div>
-        </section>
-      )}
+      <CVUpload17 />
     </div>
+  );
+}
+
+
+/* v1.16 CV upload, built from the live FF Team flow (CVPanel.tsx -> useFfai -> FfaiReview.tsx; the backend's
+   ffai prompt and suggestions, ported in src/utils/ffai-cv.js). Choose a file -> a progress bar while it is read
+   and extracted -> the box extends with what was found, by section, each item Yes / No -> Add to my profile.
+   The CV itself is never stored: the file is read in the browser and dropped (the live site keeps a signed-in
+   member's CV privately; that is the backend's job, through CV_ADAPTER). */
+const FFAI_GROUPS17 = [
+  ["profession", "professions"], ["qualification", "qualifications"], ["skill", "skills"], ["interest", "interests"],
+  ["location", "locations"], ["language", "languages"], ["experience", "experience"],
+];
+
+
+function ffaiSubLine17(s) {
+  const d = s.details || {};
+  if (s.section === "experience") return [d.employer, d.location, [d.start, d.end].filter(Boolean).join(" – ")].filter(Boolean).join(" · ");
+  if (s.section === "qualification") return [d.issuer, d.year].filter(Boolean).join(" · ");
+  if (s.section === "language") return s.proficiency || "";
+  if (s.section === "profession") return [s.level ? professionLevelTitle(s.level) : "", s.description].filter(Boolean).join(" · ");
+  return "";
+}
+
+
+function CVUpload17() {
+  const { state, dispatch } = useStore();
+  const fileRef = useRef(null);
+  const ctl = useRef(null);
+  const last = useRef(null);
+  const sref = useRef(state); sref.current = state;
+  const [st, setSt] = useState({ phase: "idle" });
+  const [pct, setPct] = useState(0);
+  const [pick, setPick] = useState({});
+  useEffect(() => { getSample(); return () => { if (ctl.current) ctl.current.abort(); }; }, []);
+  /* The bar keeps moving while FireFlair reads: towards 92% until the answer is in. */
+  useEffect(() => {
+    if (st.phase !== "reading" && st.phase !== "thinking") return;
+    const t = setInterval(() => setPct(p => Math.min(st.phase === "reading" ? 28 : 92, p + Math.max(0.4, ((st.phase === "reading" ? 30 : 94) - p) * 0.035))), 300);
+    return () => clearInterval(t);
+  }, [st.phase]);
+
+  const run = async (file) => {
+    if (ctl.current) ctl.current.abort();
+    const c = ctl.current = new AbortController();
+    last.current = file;
+    const problem = ffaiFileError17(file);
+    if (problem) { setSt({ phase: "error", msg: problem, canRetry: false }); return; }
+    setPct(4);
+    setSt({ phase: "reading", file: file.name });
+    let doc;
+    try { doc = await CV_READER.read(file); }
+    catch (e) {
+      if (c.signal.aborted) return;
+      setSt({ phase: "error", msg: e.code ? e.message : "This file couldn't be read. Save it again as a PDF or Word file and upload that.", canRetry: false });
+      return;
+    }
+    if (c.signal.aborted) return;
+    setPct(p => Math.max(p, 30));
+    setSt({ phase: "thinking", file: file.name });
+    try {
+      const x = await CV_ADAPTER.ffaiExtract(doc, {
+        profile: sref.current.profile, signal: c.signal,
+        onProgress: (chars) => { if (!c.signal.aborted) setPct(p => Math.max(p, Math.min(92, 30 + 62 * (1 - Math.exp(-chars / 5000))))); },
+      });
+      if (c.signal.aborted) return;
+      try { console.info("[FireFlair] FF AI CV extraction", x); } catch (e) { /* no console */ }
+      const ids = [
+        ...(x.name ? ["name"] : []), ...(x.about_me ? ["about_me"] : []),
+        ...Object.values(x.sections).flat().filter(s => !s.already_on_profile).map(s => s.id),
+        ...x.answers.map(a => a.id),
+      ];
+      if (!ids.length) {
+        setSt({ phase: "idle" });
+        dispatch({ type: "TOAST", toast: "Nothing new found in your CV" });
+        return;
+      }
+      /* As on the live review: everything new starts ticked (Yes). */
+      setPick(Object.fromEntries(ids.map(id => [id, true])));
+      setPct(100);
+      setTimeout(() => { if (!c.signal.aborted) setSt({ phase: "review", file: file.name, x }); }, 280);
+    } catch (e) {
+      if (c.signal.aborted || e.code === "cancelled") return;
+      const retry = !["unreadable", "unavailable", "refused", "not_granted", "prompt_too_large"].includes(e.code);
+      setSt({ phase: "error", msg: e.message || cvxCopy(e.code), canRetry: retry });
+    }
+  };
+
+  const onFile = (e) => {
+    const f = e.target.files && e.target.files[0];
+    e.target.value = "";
+    if (f) run(f);
+  };
+
+  const add = () => {
+    const x = st.x;
+    const ids = Object.keys(pick).filter(id => pick[id]);
+    const p = sref.current.profile;
+    const out = ffaiApplyLocal17(x, ids, p, { origin: "CV", location: st.file || "CV" });
+    Object.values(out.byCategory).forEach(list => list.forEach(r => { r.verified = false; }));
+    if (Object.keys(out.byCategory).length) dispatch({ type: "RECORDS_MERGE", byCategory: out.byCategory });
+    if (Object.keys(out.patch).length) dispatch({ type: "PROFILE", patch: out.patch });
+    out.answers.forEach(a => dispatch({ type: "ANSWER", qid: a.qid, value: a.value }));
+    /* Then as the Talk or type import does (ImportToEdit): the sections open with the new cards in them. */
+    dispatch({ type: "PE_START" });
+    Object.keys(out.byCategory).forEach(cat => dispatch({ type: "TOGGLE_CATEGORY", key: `edit_attr_${cat}`, visible: true }));
+    const n = out.summary.saved;
+    dispatch({ type: "TOAST", toast: n ? `${n} added to your profile` : "Nothing added" });
+    setSt({ phase: "idle" });
+    setPick({});
+    setTimeout(() => {
+      const first = Object.keys(out.byCategory)[0];
+      const el = document.getElementById(first ? `ff-sec-${first}` : "ff-sec-card");
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 120);
+  };
+
+  const yn = (id, label) => (
+    <span className="yn" role="group" aria-label={label}>
+      <button type="button" className={pick[id] ? "on" : ""} aria-pressed={!!pick[id]} onClick={() => setPick(k => ({ ...k, [id]: true }))}>Yes</button>
+      <button type="button" className={!pick[id] ? "on" : ""} aria-pressed={!pick[id]} onClick={() => setPick(k => ({ ...k, [id]: false }))}>No</button>
+    </span>
+  );
+  const row = (id, title, sub, opts = {}) => (
+    <div key={id} className={"it" + (opts.wide ? " wide" : "") + (opts.have ? " have" : "")}>
+      <span className="tx"><b>{title}</b>{sub ? <small>{sub}</small> : null}</span>
+      {opts.have ? <span className="hv"><Check size={14} strokeWidth={2.4} /> On your profile</span> : yn(id, title)}
+    </div>
+  );
+
+  const x = st.phase === "review" ? st.x : null;
+  const chosen = x ? Object.values(pick).filter(Boolean).length : 0;
+  const busy = st.phase === "reading" || st.phase === "thinking";
+  return (
+    <section className={"ff-way17 ff-way17-cv" + (x ? " open" : "")}>
+      <input ref={fileRef} type="file" accept={FFAI_FILE_ACCEPT17} onChange={onFile} style={{ display: "none" }} />
+      <div className="ff-way17-ctl">
+        <div className="ff-cvinl17">
+          {busy ? (
+            <div className="ff-cvbar17" role="progressbar" aria-label={`Reading ${st.file}`} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(pct)}>
+              <span className="hd"><FileText size={15} aria-hidden="true" /><span className="nm">{st.file}</span><span className="pc">{Math.round(pct)}%</span></span>
+              <span className="tr"><i style={{ width: `${pct}%` }} /></span>
+            </div>
+          ) : x ? (
+            <div className="ff-cvbar17 done">
+              <span className="hd"><FileText size={15} aria-hidden="true" /><span className="nm">{st.file}</span><span className="pc"><Check size={14} strokeWidth={2.4} /></span></span>
+              <span className="tr"><i style={{ width: "100%" }} /></span>
+            </div>
+          ) : (
+            <Btn variant="gold ff-bigcv17" onClick={() => fileRef.current && fileRef.current.click()}><Upload size={16} strokeWidth={2.2} /> Upload CV</Btn>
+          )}
+        </div>
+      </div>
+      <p className="ff-way17-line"><Timer size={16} strokeWidth={2.2} aria-hidden="true" /><span>Create your profile in &lt;1 minute</span></p>
+      {st.phase === "error" && (
+        <div className="ff-way17-wide">
+          <div className="ff-cverr" role="alert">
+            <AlertCircle size={17} style={{ flex: "none", marginTop: 1 }} />
+            <span style={{ flex: 1, minWidth: 0 }}>{st.msg}</span>
+            {st.canRetry && last.current && <Btn variant="sm ghost" onClick={() => run(last.current)}><RotateCcw size={12} /> Try again</Btn>}
+            <button className="ff-cverr-x" aria-label="Dismiss" onClick={() => setSt({ phase: "idle" })}><X size={15} /></button>
+          </div>
+        </div>
+      )}
+      {x && (
+        <div className="ff-way17-wide">
+          <div className="ff-cvok17">
+            {(x.name || x.about_me) && (
+              <section className="grp">
+                {x.name && (<><h4>Name</h4>{row("name", x.name.value, x.name.current ? `Now: ${x.name.current}` : "")}</>)}
+                {x.about_me && (<><h4>About</h4>{row("about_me", "About me", x.about_me.value, { wide: true })}</>)}
+              </section>
+            )}
+            {FFAI_GROUPS17.map(([sec, cat]) => {
+              const list = x.sections[sec] || [];
+              if (!list.length) return null;
+              return (
+                <section key={sec} className="grp">
+                  <h4>{BASE_CATEGORIES[cat].label}</h4>
+                  {list.map(s => row(s.id, s.title, ffaiSubLine17(s), { have: s.already_on_profile }))}
+                </section>
+              );
+            })}
+            {x.answers.length > 0 && (
+              <section className="grp">
+                <h4>Questions</h4>
+                {x.answers.map(a => row(a.id, a.question_text, a.changes_existing ? `${a.answer} (now: ${a.current_answer})` : a.answer))}
+              </section>
+            )}
+            {(x.unreadable.length > 0 || (x.input && x.input.truncated)) && (
+              <ul className="nt">
+                {x.input && x.input.truncated && <li>Only the first part of this CV was read.</li>}
+                {x.unreadable.map(u => <li key={u}>{u}</li>)}
+              </ul>
+            )}
+            <Btn variant="gold wide" disabled={!chosen} onClick={add}><Check size={15} strokeWidth={2.4} /> Add to my profile{chosen ? ` (${chosen})` : ""}</Btn>
+          </div>
+        </div>
+      )}
+    </section>
   );
 }
 
