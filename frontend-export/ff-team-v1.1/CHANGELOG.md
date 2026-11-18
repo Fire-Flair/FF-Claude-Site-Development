@@ -12,6 +12,7 @@ Profile builder, Professions picker (Alex, 18 Nov 21:34, option 5 of six mock-up
 - Tapping a tile opens that category in a pop-up: tap professions to add or remove as many as you like, "Add your own" puts a typed profession under that category (Other included), Done closes it. Replaces the sideways row of category boxes.
 - Top three slots: a new profession fills an empty slot automatically, unless the member emptied that slot on purpose.
 - Checked: `npm run check`, `npm run build`, new member at 390 and 1280: Services opened, Photographer picked, "Drone Pilot" added, tile shows 2, slots 1 and 2 filled; labels fit; no console errors.
+- Published over live 1795037897-f382 (v1.67), index.html only (all other files kept). Artifact version 1795037978-eab3. Built page saved as `live-v1.68-index.html`.
 
 ## v1.67
 
