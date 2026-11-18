@@ -4,6 +4,16 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.70 (draft: coin)
+
+Profile tabs separator coin spins (Alex, 18 Nov 21:56). `components/home/exports.js`, `components/team/profile-edit-tabs.jsx`, `components/team/introductions.jsx`, `components/team/attribute-cards.jsx`, `components/staff/network-directory.jsx`, `shell/index.html`.
+
+- The FF coin on the gold line between the Profile Card buttons and the tabs (v1.66) is now the home page's spinning coin: it turns as the page scrolls and settles face-on when scrolling stops, exactly as between FFStories and the door video.
+- No new coin: `V101` now exports `CoinDivider` and `useCoinSpin` (home-sections.jsx, unchanged), and the new `ProfileCoin17` (profile-edit-tabs.jsx) renders `V101.CoinDivider` and runs `V101.useCoinSpin` on its own box. It is the first child of every `.ff-ptabs-wrap`: public profiles (introductions.jsx), the profile builder (attribute-cards.jsx), your own profile's edit tabs (profile-edit-tabs.jsx) and company profiles (network-directory.jsx).
+- The v1.66 `.ff-ptabs-wrap::before` background coin is gone; `shell/index.html` styles `.ff-pcoin17` with the home coin's 3D rules (faces, gold edge, shadow), 52px on phones and 44px from 760px, same spacing, gold line either side.
+- The home coin has no reduced-motion handling, so neither does this one (same behaviour); add it to `useCoinSpin` if wanted and both places follow.
+- Checked: `npm run check`, `npm run build`; public profile (simao) at 390 and 1280, two frames mid-scroll at 390 show the coin turning; company profiles render the coin; no page errors. Not published.
+
 ## v1.69
 
 Profile Packages tab, in the profile builder and on a public profile (Alex, 18 Nov 20:51). New `team/profile-packages.jsx`, `styles/profile-packages.css`; `team/profile-edit-tabs.jsx`, `team/introductions.jsx`, `team/public-profile.jsx` (CoverFlow), `styles/p12.css`, `manifest.json`.
