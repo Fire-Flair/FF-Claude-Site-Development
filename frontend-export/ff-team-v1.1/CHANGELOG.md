@@ -88,6 +88,34 @@ Profile builder, Professions (Alex, 18 Nov 18:03, 18:59 and 19:19). Builder only
 - The Profile Card editor's Skills / Interests chips: 60-character limit, Title Case on add, neutral placeholders
   ("Skill", "Interest") in place of instruction text.
 - The public profile is unchanged: it already shows 5 per card and never an empty card.
+## Unreleased (pb-qualifications)
+
+Qualifications in Attributes, on the left (Alex, 18 Nov 18:59 and 19:19). No version bump.
+
+- **Builder:** Qualifications is the first (left-hand) Attributes card (`PE2_ATTRS` order). The card is typed onto: one
+  line at its foot, Enter adds the entry (`QUAL_MAX_CHARS = 60`; names wrap between words, never split). Tapping an
+  entry opens its editor under the rail (no pop-up): details, up to 4 pictures (`record.media`) and one document
+  (`record.document`). The document slot is new in `EntryEditor21` for any category whose def has `"document"` (only
+  Qualifications today); it reuses the existing record shape and file rules from `GenericAttributeCardCreator`.
+  Empty cards still show on the builder so people can type onto them.
+- **CV = a qualification:** uploading a CV in Let's get started (`CVUpload17`) now also saves it as the Qualification
+  record `{ name: "CV", cv: true, document }` (`pbqSaveCV`, same record `CVPanel` makes; a new upload replaces it).
+  Deleting the CV entry (trash in its editor) takes it off the public profile.
+- **Public profile:** empty cards are never shown. Qualifications is the left-hand card and shows only with at least one
+  entry; the CV counts. Anyone can open the CV from the card (and from View all) while `SHOW_CV_PUBLIC = true`
+  (src/components/team/pb-qualifications.jsx); set it false to keep the CV off public profiles. Entries with a document or
+  pictures show small marks after the name. Certificates are not openable by visitors (file name in View all only).
+- The CV is left out of the FF AI introduction and About-me facts (it is a file, not a qualification name).
+- Qualifications are not on the Profile Card (unchanged).
+- **Back end (Griffy):** each entry is card-section data (`POST|PATCH|DELETE /api/user/card/sections/:sectionId/data`).
+  Needed per entry: `name` (<= 60), `description`, `media[]` (<= 4 images, S3), `document` (one file: name, size, type,
+  url), `cv: boolean`, `hidden`. The repo does not document the per-entry media field; the prototype stores data URLs.
+  The CV file must be served to visitors at a public URL (`document.url`; the front end prefers it over `dataUrl`), and
+  removed from storage when the member deletes the CV entry.
+- Files: new `src/components/team/pb-qualifications.jsx`, `src/styles/pb-qualifications.css` (manifest after
+  profile-edit-p2.jsx); small edits in profile-edit-p2.jsx, attribute-cards.jsx (one line in `EntryEditor21`),
+  public-profile.jsx (`attributesOf` order and CV filter, `AttrGroups`, `ExpandedAttrs`), introductions.jsx,
+  creator-media.jsx, profile-builder.jsx (`CVUpload17`).
 
 ## v1.37
 

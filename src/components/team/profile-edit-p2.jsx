@@ -16,7 +16,8 @@ const PE2_CATS = PROFESSION_CATEGORIES.map(c => ({
   list: c.key === "Bar" ? PE2_LADDER : [...c.suggested].sort((a, b) => a.localeCompare(b)),
 }));
 /* p2/pubprof: Languages live on the Profile Card and Experience has its own section, so neither is an Attribute here. */
-const PE2_ATTRS = ["skills", "interests", "qualifications"];
+/* pb-qualifications (Alex 18:59): Qualifications first, on the left. */
+const PE2_ATTRS = ["qualifications", "skills", "interests"];
 
 /* The member's professions and add / remove. Removing goes by record id (never by name), so a hidden or
    renamed record with the same name can't be hit by mistake; adding a name that is already there (hidden or
@@ -156,6 +157,7 @@ function PE2AddProf({ on, onClick }) {
 function PE2Overview({ records }) {
   const P = usePE2Profs();
   const [attrOpen, setAttrOpen] = useState(null);
+  const [qualOpen, setQualOpen] = useState(null);
   const [openVen, setOpenVen] = useState(null);
   const [openProf, setOpenProf] = useState(null);
   const profs = rankedRecords(records.professions || []).filter(r => !r.hidden && !r.proposed);
@@ -187,6 +189,7 @@ function PE2Overview({ records }) {
         <div className="ff-pp-head"><h2 id="pe2-attr-h" className="ff-about-h">Attributes</h2></div>
         <div className="ff-mrow ff-acar pe2-rail" role="list" aria-label="Attributes">
           {cats.map((k, ci) => {
+            if (k === "qualifications") return <PE2QualCard key={k} records={records.qualifications} openId={qualOpen} onOpen={(id) => { setQualOpen(id); if (id) setAttrOpen(null); }} />;
             /* pb-typecards: Skills and Interests are typed straight onto their cards (type-cards.jsx). */
             if (TYPECARD_CATS.includes(k)) return <TypeCards26 key={k} catKey={k} records={records[k] || []} tone={tierCls17(ci)} />;
             const def = BASE_CATEGORIES[k];
@@ -194,7 +197,7 @@ function PE2Overview({ records }) {
             const empty = !shown.length;
             const on = attrOpen === k;
             return (
-              <button key={k} type="button" role="listitem" className={"ff-agrp " + (empty ? "pe2-agrp-empty" : tierCls17(ci)) + (on ? " pe2-agrp-on" : "")} aria-label={`Edit ${def.label}`} aria-expanded={on} aria-controls="pe2-attr-ed" onClick={() => setAttrOpen(on ? null : k)}>
+              <button key={k} type="button" role="listitem" className={"ff-agrp " + (empty ? "pe2-agrp-empty" : tierCls17(ci)) + (on ? " pe2-agrp-on" : "")} aria-label={`Edit ${def.label}`} aria-expanded={on} aria-controls="pe2-attr-ed" onClick={() => { setAttrOpen(on ? null : k); setQualOpen(null); }}>
                 <span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span>{!empty && <span className="ff-agrp-n">{shown.length}</span>}</span>
                 {empty ? <span className="pe2-empty-fill" aria-hidden="true" /> : <span className="ff-agrp-l">{shown.slice(0, 5).map(r => <span key={r.id}>{nbh21(r.name)}</span>)}</span>}
                 {shown.length > 5 && <span className="ff-agrp-more">{`+${shown.length - 5}`}</span>}
@@ -204,6 +207,7 @@ function PE2Overview({ records }) {
           })}
           <span className="ff-acar-end" aria-hidden="true" />
         </div>
+        {qualOpen && <PE2QualEditor records={records.qualifications} id={qualOpen} onDone={() => setQualOpen(null)} />}
         {/* pfc (Alex 03:29): the tapped card opens its editor here, in the page, as on the live FF Team site: the type box,
             then the entries as tiles; a tile opens its own editor under the row. No pop-up. */}
         {attrOpen && BASE_CATEGORIES[attrOpen] && (
