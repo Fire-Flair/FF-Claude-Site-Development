@@ -48,7 +48,8 @@
 .ff .ff-hf22 .ff-lc22 { position:relative; overflow:hidden; isolation:isolate; display:grid; gap:18px; padding:20px 18px 22px; border-radius:26px; corner-shape:squircle;
   color:var(--color-cream,#F4EFE4); background:linear-gradient(150deg,var(--color-ink,#0B0B0C) 0%,#1C0E12 55%,var(--color-ox,#5C1220) 130%); border:1px solid rgba(201,162,39,.45); }
 .ff .ff-hf22 .ff-lc22-top { display:grid; gap:14px; }
-.ff .ff-hf22 .ff-lc22-eye { display:flex; align-items:center; gap:10px; font-size:12px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--color-gold-lt,#E4C36A); }
+.ff .ff-hf22 .ff-lc22-eye { display:flex; align-items:center; min-width:0; font-family:var(--font-display,'Cinzel',serif); font-size:clamp(15px,4.3vw,20px); font-weight:700; line-height:1.2; letter-spacing:.12em; text-transform:uppercase; color:var(--color-gold-lt,#E4C36A); }
+.ff .ff-hf22 .ff-lc22-eye > span { display:block; max-width:100%; white-space:nowrap; }
 .ff .ff-hf22 .ff-lc22 h2 { margin:10px 0 0; font-family:var(--font-display,'Cinzel',serif); font-weight:600; font-size:clamp(26px,7vw,38px); line-height:1.12; letter-spacing:.01em; color:var(--color-cream,#F4EFE4); }
 .ff .ff-hf22 .ff-lc22-go { display:grid; gap:14px; }
 .ff .ff-hf22 .ff-lc22 .ff-cd20 { justify-content:flex-start; padding:0; }
@@ -92,3 +93,36 @@
   .ff .ff-hf22 .ff-lc22-box { padding:58px 14px 14px; }
   .ff .ff-hf22 .ff-lc22-st span { font-size:13.5px; }
 }
+
+/* ==== home2 (Alex, 18 Nov): Launch Challenge edge to edge on a phone, the 90 days tile, the bookings drop-down, centred coins ==== */
+@media (max-width:759px) {
+  .ff .ff-hf22 .ff-lc22 { margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw); padding-left:16px; padding-right:16px; }
+}
+/* 90 days: big gold numeral, "days" small, a calendar flourish behind */
+.ff .ff-hf22 .ff-lc22-box.is-days { overflow:hidden; background:radial-gradient(120% 90% at 100% 100%,rgba(201,162,39,.2),transparent 60%),rgba(244,239,228,.05); }
+.ff .ff-hf22 .ff-lc22-box .fl { position:absolute; right:-14px; bottom:-16px; color:rgba(228,195,106,.13); transform:rotate(-12deg); pointer-events:none; display:grid; }
+.ff .ff-hf22 .ff-lc22-box b.num { position:relative; display:flex; align-items:baseline; gap:5px; line-height:1; }
+.ff .ff-hf22 .ff-lc22-box b.num .n { font-family:var(--font-display,'Cinzel',serif); font-weight:700; font-size:clamp(40px,11vw,54px); line-height:.9; letter-spacing:-.01em; font-variant-numeric:lining-nums;
+  background:linear-gradient(180deg,#F6E3A2 0%,var(--color-gold-lt,#E4C36A) 45%,var(--color-gold,#C9A227) 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 2px 6px rgba(0,0,0,.45)); }
+.ff .ff-hf22 .ff-lc22-box b.num small { font-family:var(--font-display,'Cinzel',serif); font-size:13px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--color-gold-lt,#E4C36A); }
+.ff .ff-hf22 .ff-lc22-box.is-days .t { position:relative; }
+@media (min-width:900px) { .ff .ff-hf22 .ff-lc22-box b.num .n { font-size:58px; } }
+
+/* "FF Team is built for getting you bookings": dark and gold drop-down */
+.ff .ff-hf22 .ff-hb23 { padding-top:0; padding-bottom:0; }
+.ff .ff-hf22 .ff-hb23-box { border-radius:24px; corner-shape:squircle; border:1px solid rgba(201,162,39,.55); color:var(--color-cream,#F4EFE4);
+  background:linear-gradient(150deg,var(--color-ink,#0B0B0C) 0%,#1C0E12 60%,var(--color-ox,#5C1220) 140%); box-shadow:0 18px 30px -24px rgba(48,36,10,.7); overflow:hidden; }
+.ff .ff-hf22 .ff-hb23-h { margin:0; font:inherit; }
+.ff .ff-hf22 .ff-hb23-btn { display:flex; align-items:center; gap:14px; width:100%; min-height:64px; padding:16px 18px; border:0; background:transparent; color:inherit; font:inherit; text-align:left; cursor:pointer; }
+.ff .ff-hf22 .ff-hb23-btn:focus-visible { outline:2px solid var(--color-gold-lt,#E4C36A); outline-offset:-4px; border-radius:24px; corner-shape:squircle; }
+.ff .ff-hf22 .ff-hb23-t { flex:1; min-width:0; font-family:var(--font-display,'Cinzel',serif); font-weight:700; font-size:clamp(18px,4.6vw,26px); line-height:1.2; letter-spacing:.01em; color:var(--color-cream,#F4EFE4); overflow-wrap:normal; word-break:normal; hyphens:none; }
+.ff .ff-hf22 .ff-hb23-ch { flex:none; width:38px; height:38px; display:grid; place-items:center; border-radius:12px; corner-shape:squircle; color:var(--color-gold-lt,#E4C36A); background:rgba(201,162,39,.12); border:1px solid rgba(201,162,39,.5); transition:transform .2s ease; }
+.ff .ff-hf22 .ff-hb23.is-open .ff-hb23-ch { transform:rotate(180deg); }
+.ff .ff-hf22 .ff-hb23-body { padding:0 18px 18px; }
+.ff .ff-hf22 .ff-hb23-body .ff-label { color:var(--color-gold-lt,#E4C36A); }
+.ff .ff-hf22 .ff-hb23-body .ff-hb17-row .arr { color:var(--color-gold-lt,#E4C36A); }
+@media (min-width:900px) { .ff .ff-hf22 .ff-hb23-btn { padding:20px 26px; } .ff .ff-hf22 .ff-hb23-body { padding:0 26px 26px; } }
+@media (prefers-reduced-motion:reduce) { .ff .ff-hf22 .ff-hb23-ch { transition:none; } }
+
+/* Coins sit exactly midway: the video section adds no space of its own, so the coin's margin is the gap on both sides */
+.ff .ff-hf22 .ff-tm20 { margin:0; padding-top:0; padding-bottom:0; }

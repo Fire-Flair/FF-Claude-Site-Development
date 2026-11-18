@@ -915,19 +915,59 @@ if (k === "package") return React.createElement("div", { className: "mc sv" }, R
     const pics = HBM17[kind] || HBM17.team;
     /* homefix: the four step boxes are the same height. */
     const hbRef = useRef(null);
-    useEqualH22(hbRef, ".ff-hb17-row > .card", null, [kind]);
+    /* home2 (Alex, 18 Nov): on FF Team the section is a drop-down, collapsed by default (dark and gold box, Cinzel title, chevron). */
+    const team = kind === "team";
+    const [hbOpen, setHbOpen] = useState(false);
+    useEqualH22(hbRef, ".ff-hb17-row > .card", null, [kind, hbOpen]);
+    const hbTitle = team ? "FF Team is built for getting you bookings" : "How a booking works";
+    const hbHead = team ? React.createElement("h2", {
+      id: "ff-hb17-h",
+      className: "ff-hb23-h"
+    }, React.createElement("button", {
+      type: "button",
+      className: "ff-hb23-btn",
+      "aria-expanded": hbOpen,
+      "aria-controls": "ff-hb23-body",
+      onClick: () => setHbOpen((o) => !o)
+    }, React.createElement("span", { className: "ff-hb23-t" }, hbTitle), React.createElement("span", {
+      className: "ff-hb23-ch",
+      "aria-hidden": "true"
+    }, React.createElement(DX_I.ChevronDown, { size: 20, strokeWidth: 2 })))) : React.createElement("h2", {
+      id: "ff-hb17-h",
+      className: "ff-h1"
+    }, hbTitle);
+    if (team) return React.createElement("section", {
+      className: "ff-sect ff-hb17 ff-hb23" + (hbOpen ? " is-open" : ""),
+      id: "ff-how",
+      ref: hbRef,
+      "aria-labelledby": "ff-hb17-h"
+    }, React.createElement("div", { className: "ff-hb23-box" }, hbHead, hbOpen && React.createElement("div", {
+      id: "ff-hb23-body",
+      className: "ff-hb23-body"
+    }, React.createElement("h3", {
+      className: "ff-label",
+      style: { margin: "0 0 10px" }
+    }, "How bookings work"), React.createElement(HBRow17, { list, pics }))));
     return React.createElement("section", {
       className: "ff-sect ff-hb17",
       id: "ff-how",
       ref: hbRef,
       "aria-labelledby": "ff-hb17-h"
-    }, React.createElement("h2", {
-      id: "ff-hb17-h",
-      className: "ff-h1"
-    }, kind === "team" ? "FF Team is built for getting you bookings" : "How a booking works"), kind === "team" && React.createElement("h3", {
-      className: "ff-label",
-      style: { margin: "0 0 10px" }
-    }, "How bookings work"), React.createElement("ol", {
+    }, hbHead, React.createElement(HBRow17, { list, pics }), React.createElement("div", {
+      className: "ff-hb17-cta"
+    }, kind === "party" ? React.createElement(LockedBtn17, {
+      shine: true,
+      icon: React.createElement(Popper11, { size: 15 })
+    }, "Plan your event") : React.createElement(ShineButton, {
+      onClick: hire.toEvent
+    }, React.createElement(Popper11, {
+      size: 15
+    }), " Plan your event")));
+  }
+
+  /* home2: the four steps, shared by the FF Team drop-down and the FF Staff and FF Party sections. */
+  function HBRow17({ list, pics }) {
+    return React.createElement("ol", {
       className: "ff-hb17-row"
     }, list.map(([Ic, t, x], i) => React.createElement(React.Fragment, {
       key: t
@@ -955,16 +995,7 @@ if (k === "package") return React.createElement("div", { className: "mc sv" }, R
       strokeWidth: 1.7
     })), React.createElement("b", null, t), React.createElement("span", {
       className: "t"
-    }, x)))))), kind !== "team" && React.createElement("div", {
-      className: "ff-hb17-cta"
-    }, kind === "party" ? React.createElement(LockedBtn17, {
-      shine: true,
-      icon: React.createElement(Popper11, { size: 15 })
-    }, "Plan your event") : React.createElement(ShineButton, {
-      onClick: hire.toEvent
-    }, React.createElement(Popper11, {
-      size: 15
-    }), " Plan your event")));
+    }, x))))));
   }
 
   function withCoins(list) {

@@ -271,12 +271,11 @@
    Join goes to the existing profile journey (useHomeNav.goProfile). The rules open in the shared Sheet. No scoring, leaderboard or sign-up form is built here. */
 const COMP_RULES20 = [
   ["Challenge dates", "The challenge runs for 90 days, from 1 December 2026 to 28 February 2027."],
-  ["Eligibility", "Open to any hospitality professional, and anyone who wants to get into hospitality and is willing and available to undertake suitable freelance hospitality work. Previous hospitality experience is not mandatory. Hospitality professionals can sign up from anywhere in the world."],
-  ["Entry", "Everyone who creates a profile during the challenge is entered automatically."],
-  ["Winning", "At the end of the challenge, the ten members with the largest and best Teams become FireFlair Gold members. The overall winner receives the Athens Bar Show trip. Runners-up choose from rewards suggested by members."]
+  ["Eligibility", "Open to hospitality and event professionals, anywhere in the world."],
+  ["Entry", "Everyone who creates a profile during the challenge is entered automatically."]
 ];
 
-const COMP_TBC20 = ["Scoring calculation", "Tie-break procedure", "Prize values", "Winner verification", "Fulfilment conditions", "Promoter details"];
+
 
 const PROMO_CSS20 = ".ff-cp20{position:relative;margin:22px 0;border-radius:26px;overflow:hidden;color:#F4EBD6;background:linear-gradient(135deg,#0B0A09 0%,#1C0E12 55%,#4A1220 100%);border:1px solid rgba(201,162,75,.45);isolation:isolate}"
     + ".ff-cp20:before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(115deg,transparent 58%,rgba(201,162,75,.16) 58.2%,rgba(201,162,75,.16) 60%,transparent 60.2%)}"
@@ -442,7 +441,7 @@ function TeamCompetition20() {
         h(
           "div",
           { className: "ff-lc22-head" },
-          h("div", { className: "ff-lc22-eye" }, h(Coin, { size: 30, tier: "gold" }), h("span", null, "FF Team Launch Challenge")),
+          h("div", { className: "ff-lc22-eye" }, h("span", { "data-fit22": "" }, "FF Team Launch Challenge")),
           h("h2", { id: "ff-cp20-h" }, "Grow your Team. Win prizes.")
         ),
         h(
@@ -457,10 +456,12 @@ function TeamCompetition20() {
           )
         )
       ),
-      h("div", { className: "ff-lc22-boxes" }, boxes.map((b, i) => h("button", { key: b[1], type: "button", className: "ff-lc22-box", onClick: () => pick(i), "aria-haspopup": "dialog" },
+      h("div", { className: "ff-lc22-boxes" }, boxes.map((b, i) => h("button", { key: b[1], type: "button", className: "ff-lc22-box" + (i === 0 ? " is-days" : ""), onClick: () => pick(i), "aria-haspopup": "dialog", "aria-label": i === 0 ? "90 days, " + b[2] : undefined },
+        /* home2 (Alex, 18 Nov): the 90 days tile is a big gold 90 with "days" small and a calendar flourish. */
+        i === 0 && h("span", { className: "fl", "aria-hidden": "true" }, h(b[3], { size: 96, strokeWidth: 1 })),
         h("span", { className: "ic", "aria-hidden": "true" }, h(b[3], { size: 18, strokeWidth: 1.7 })),
         h("span", { className: "ch", "aria-hidden": "true" }, h(LC22_I.ChevronRight, { size: 16, strokeWidth: 2 })),
-        h("b", { "data-fit22": "" }, b[1]),
+        i === 0 ? h("b", { className: "num", "aria-hidden": "true" }, h("span", { className: "n" }, "90"), h("small", null, "days")) : h("b", { "data-fit22": "" }, b[1]),
         h("span", { className: "t", "data-fit22": "" }, b[2])))),
       h(LaunchLadder22, null)
     ),
@@ -475,6 +476,10 @@ function TeamCompetition20() {
       h(
         "div",
         { className: "ff-cp20r" },
+        /* home2 (Alex, 18 Nov): rewards first (the overall winner, then the top 10); hospitality and event professionals; no XP or levels; no final-terms list. */
+        sec("Rewards", h("ul", null,
+          h("li", null, h("b", null, "Overall winner: "), "a trip to the Athens Bar Show, with flights, accommodation and a ticket to the show."),
+          h("li", null, h("b", null, "Top 10: "), "The top 10 go Gold and receive their choice of rewards, including an American Express business expense card, professional equipment or a professional photo shoot."))),
         sec("To enter", h(
           "ol",
           null,
@@ -487,16 +492,13 @@ function TeamCompetition20() {
         sec("To win", h(
           "ol",
           null,
-          h("li", null, "Invite hospitality professionals you have worked with, would like to work with, or believe are great."),
+          h("li", null, "Invite hospitality and event professionals you have worked with, would like to work with, or believe are great."),
           h("li", null, "Build genuine Network and Team connections."),
           h("li", null, "Have the largest and best Team at the end of the challenge.")
         )),
         h("p", { style: { marginTop: 8 } }, "Network and Team are separate features. Team connections need mutual acceptance."),
         COMP_RULES20.map((r) => sec(r[0], h("p", null, r[1]))),
-        sec("Rewards", h("ul", null, CH.rewards.map((r) => h("li", { key: r[0] }, h("b", null, r[0] + ": "), r[1])))),
-        h("p", { style: { marginTop: 8 } }, "Challenge results are separate from XP levels."),
-        sec("Fair participation", h("p", null, "Only genuine accounts and authentic professional connections qualify. Duplicate, fabricated or manipulated activity may be disqualified following review.")),
-        sec("Final terms", h("div", null, h("p", null, "To be confirmed before the challenge opens:"), COMP_TBC20.map((t) => h("span", { key: t, className: "tbc" }, t + ": to be confirmed"))))
+        sec("Fair participation", h("p", null, "Only genuine accounts and authentic professional connections qualify. Duplicate, fabricated or manipulated activity may be disqualified following review."))
       )
     )
   );
