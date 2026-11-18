@@ -2,6 +2,8 @@
 
 ## v17.50
 
+Artifact version 1794966831-ddca.
+
 Profile edit page (Alex's top priority). Branch merged: `p2-pbuild`.
 
 - Own profile edit page (new `profile-edit-p2.jsx`, `profile-edit-p2.css`; `aragorn-preview.jsx`, `profile-builder.jsx`): below Media the page looks like the finished profile. Professions and Attribute cards (Skills, Interests, Languages, Qualifications) show even when empty, each with a pencil. A pencil opens a light sheet; the Professions pencil opens the Tiles picker with every category, Bar as a ladder (1 Barback, 2 Bartender, 3 Cocktail Bartender, 4 Flair Bartender, 5 Mixologist), the rest alphabetical. Profession removal goes by record id.
