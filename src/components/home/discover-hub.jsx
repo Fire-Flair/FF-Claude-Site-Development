@@ -785,6 +785,9 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
 
 HBM17.party = ["package", "profiles", "service", "chat"];
 
+  /* home4: the short labels of the FF Team 1-2-3-4 row (the full steps stay in HB17.team). */
+  const HB4_SHORT = ["Profile Card", "Booking request", "Confirm via WhatsApp", "Review Card"];
+
 function HBMini17({ k }) {
 if (k === "package") return React.createElement("div", { className: "mc sv" }, React.createElement("span", { className: "lab" }, "Package Card"), React.createElement("span", { className: "sp" }, React.createElement(Sparkles, { size: 22, strokeWidth: 1.5 })), React.createElement("span", { className: "ln w1" }), React.createElement("span", { className: "tiers" }, React.createElement("i", { className: "b" }), React.createElement("i", { className: "s" }), React.createElement("i", { className: "g" })));
     const stars = React.createElement("span", {
@@ -920,19 +923,12 @@ if (k === "package") return React.createElement("div", { className: "mc sv" }, R
     const [hbOpen, setHbOpen] = useState(false);
     useEqualH22(hbRef, ".ff-hb17-row > .card", null, [kind, hbOpen]);
     const hbTitle = team ? "FF Team is built for getting you bookings" : "How a booking works";
+    /* home4 (Alex, 18 Nov 02:55): FF Team shows a simple 1-2-3-4 row in the box, and a chevron below it opens the full steps. */
+    useFitLine22(hbRef, ".ff-hb4-st b", [kind]);
     const hbHead = team ? React.createElement("h2", {
       id: "ff-hb17-h",
-      className: "ff-hb23-h"
-    }, React.createElement("button", {
-      type: "button",
-      className: "ff-hb23-btn",
-      "aria-expanded": hbOpen,
-      "aria-controls": "ff-hb23-body",
-      onClick: () => setHbOpen((o) => !o)
-    }, React.createElement("span", { className: "ff-hb23-t" }, hbTitle), React.createElement("span", {
-      className: "ff-hb23-ch",
-      "aria-hidden": "true"
-    }, React.createElement(DX_I.ChevronDown, { size: 20, strokeWidth: 2 })))) : React.createElement("h2", {
+      className: "ff-hb23-h ff-hb4-h"
+    }, React.createElement("span", { className: "ff-hb23-t" }, hbTitle)) : React.createElement("h2", {
       id: "ff-hb17-h",
       className: "ff-h1"
     }, hbTitle);
@@ -941,7 +937,25 @@ if (k === "package") return React.createElement("div", { className: "mc sv" }, R
       id: "ff-how",
       ref: hbRef,
       "aria-labelledby": "ff-hb17-h"
-    }, React.createElement("div", { className: "ff-hb23-box" }, hbHead, hbOpen && React.createElement("div", {
+    }, React.createElement("div", { className: "ff-hb23-box" }, hbHead, React.createElement("ol", {
+      className: "ff-hb4-row"
+    }, list.map(([Ic, t], i) => React.createElement("li", {
+      key: t,
+      className: "ff-hb4-st"
+    }, React.createElement("span", { className: "top", "aria-hidden": "true" }, React.createElement("span", { className: "n" }, i + 1), React.createElement("span", { className: "ic" }, React.createElement(Ic, {
+      size: 15,
+      strokeWidth: 1.8
+    }))), React.createElement("b", null, HB4_SHORT[i] || t)))), React.createElement("button", {
+      type: "button",
+      className: "ff-hb4-more",
+      "aria-expanded": hbOpen,
+      "aria-controls": "ff-hb23-body",
+      "aria-label": hbOpen ? "Hide how bookings work" : "Show how bookings work",
+      onClick: () => setHbOpen((o) => !o)
+    }, React.createElement("span", {
+      className: "ff-hb23-ch",
+      "aria-hidden": "true"
+    }, React.createElement(DX_I.ChevronDown, { size: 20, strokeWidth: 2 }))), hbOpen && React.createElement("div", {
       id: "ff-hb23-body",
       className: "ff-hb23-body"
     }, React.createElement("h3", {

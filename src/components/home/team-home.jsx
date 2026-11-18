@@ -94,13 +94,12 @@ function Home101() {
     /* homefix: coin dividers between sections. home2: the coin game (Join) comes after Business & Support. */
     const coin = (k) => React.createElement(CoinDivider, { key: `coin-${k}` });
     const sections = [
-      /* Alex (18 Nov): the Launch Challenge comes first, the Discover FireFlair pillars below it. */
-      React.createElement(TeamCompetition20, { key: "competition" }),
-      /* home3 (Alex, 18 Nov): a spinning coin above Discover FireFlair. */
-      coin("d"),
+      /* home4 (Alex, 18 Nov 02:55): Discover FireFlair comes first, right after the hero, then its coin, then the Launch Challenge. */
       React.createElement(DiscoverHub11, {
         key: "discover"
       }),
+      coin("d"),
+      React.createElement(TeamCompetition20, { key: "competition" }),
       coin("a"),
       React.createElement(TwoMinutes20, { key: "twomin" }),
       /* home2 (Alex, 18 Nov): a spinning coin between the video and the bookings box. */
