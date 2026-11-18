@@ -427,6 +427,61 @@
     );
   }
 
+  /* pillar-dropdowns (Alex, 18 Nov 16:07): on the FF Team home panel the 1-2-3 are drop-downs inside the pillar. Each step is
+     its own box (picture, number, title, chevron) that opens to its full section. Collapsed by default; one step open at a
+     time, because each section is long and two open at once lose your place. The header that was tapped stays where it is on
+     screen while the other step closes. window "ff-step21" (detail: a section id) opens the step that holds that id
+     (used by deep links and "#id" jumps). */
+  function PillarSteps21({ pl, photo, run, link }) {
+    const IM = window.FF_IMG || {};
+    const [on, setOn] = useState("");
+    const list = useRef(null);
+    const pin = useRef(0);
+    const keep = (id) => {
+      const h = document.getElementById("st21-" + id);
+      if (!h) return;
+      const top = h.getBoundingClientRect().top, until = Date.now() + 520;
+      cancelAnimationFrame(pin.current);
+      const step = () => {
+        const d = h.getBoundingClientRect().top - top;
+        if (Math.abs(d) > 0.5) window.scrollBy(0, d);
+        if (Date.now() < until) pin.current = requestAnimationFrame(step);
+      };
+      pin.current = requestAnimationFrame(step);
+    };
+    const toggle = (id) => { keep(id); setOn((cur) => (cur === id ? "" : id)); };
+    useEffect(() => {
+      const open = (e) => {
+        const id = e && e.detail;
+        const s = pl.sections.find((x) => x.id === id || (list.current && list.current.querySelector("#st21b-" + x.id + " [id=\"" + id + "\"]")));
+        if (s) setOn(s.id);
+      };
+      window.addEventListener("ff-step21", open);
+      return () => { window.removeEventListener("ff-step21", open); cancelAnimationFrame(pin.current); };
+    }, [pl]);
+    return (
+      <div className="ff-st21" ref={list}>
+        {pl.sections.map((s, i) => {
+          const ik = photo(i), isOn = on === s.id;
+          return (
+            <section key={s.id} className={"it" + (isOn ? " on" : "")}>
+              <h4 className="hh">
+                <button type="button" id={"st21-" + s.id} aria-expanded={isOn} aria-controls={"st21b-" + s.id} onClick={() => toggle(s.id)}>
+                  <span className="ph" aria-hidden="true">{IM[ik] ? <img decoding="async" src={IM[ik]} style={fp17(ik)} alt="" draggable={false} /> : null}<i>{i + 1}</i></span>
+                  <b>{s.card.t}</b>
+                  <span className="chev" aria-hidden="true"><P21I.ChevronDown size={16} strokeWidth={2.6} /></span>
+                </button>
+              </h4>
+              <div className="bw" id={"st21b-" + s.id} role="region" aria-labelledby={"st21-" + s.id} inert={isOn ? undefined : ""}>
+                <div className="bi"><PillarSection21 s={s} n={i + 1} run={run} level="h5" link={link} /></div>
+              </div>
+            </section>
+          );
+        })}
+      </div>
+    );
+  }
+
   /* ---- The pages ---------------------------------------------------------------------------------------------------------------- */
   function TeamInfoPage21() {
     const { state, dispatch } = useStore();
