@@ -391,7 +391,8 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party, links }) {
   const bodyRef = useRef(null);
   useCardFit20(bodyRef, [co.name, co.kind, areas, layout, size, co.logoWide, socialsOf11(co).join(), edit].join("|"), !!edit);
   /* v17.20: a claimed company has no plate; the FIREFLAIR logo sits top right instead (the VIP Host Card keeps its plate). v17.34: no FIREFLAIR word in the footer. */
-  const claimed = !co.unclaimed;
+  /* v1.45 (Alex, 18 Nov 20:12): a company whose card data sets plate (Vooshka for now) shows the Company Card plate and no FF logo, like the directory. */
+  const claimed = !co.unclaimed && !co.plate;
   const urlText = `${CARD_DOMAIN}/${slug}`;
   const urlFs = `min(3.3cqw, ${((claimed ? 56 : 86) / Math.max(12, urlText.length * 0.62)).toFixed(2)}cqw)`;
   return (

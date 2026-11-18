@@ -22,7 +22,8 @@
       "additionalProperties": false,
       "properties": {
         "theme": { "type": "string", "description": "The Company Card colour, as the builder names it (for example onyx)." },
-        "layout": { "enum": ["classic", "logo", "centre"], "description": "The Company Card layout." }
+        "layout": { "enum": ["classic", "logo", "centre"], "description": "The Company Card layout." },
+        "plate": { "type": "boolean", "description": "Show the Company Card plate top left and no FF logo, as directory cards do, even though the company has signed up." }
       },
       "description": "How the Company Card looks. Set by the company or by us; the agent leaves it out."
     },

@@ -14,7 +14,8 @@
   "logoWide": true,
   "card": {
     "theme": "onyx",
-    "layout": "classic"
+    "layout": "classic",
+    "plate": true
   },
   "description": "Vooshka is a luxury mobile cocktail bar bringing exquisite drinks and elevated hospitality to events across the UK. Bespoke bars, exceptional cocktails and complete drinks service for weddings, private celebrations and corporate events nationwide.\n\nA great bar brings people together. At Vooshka, distinctive design, expertly made drinks and a warm welcome create a natural gathering place at the heart of your celebration. From intimate gatherings to grand receptions, we work with you to find the right look, menu and style of service.",
   "aboutSource": {
