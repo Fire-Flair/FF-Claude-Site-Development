@@ -329,7 +329,7 @@
             <small>Flights, accommodation and a ticket</small>
           </li>
           <li>
-            <b>Runners-up: your choice</b>
+            <b>Top 10 go Gold: your choice of rewards</b>
             <button type="button" className="pv-sug" onClick={() => setAsk(true)}><P21I.Lightbulb size={14} /> Suggest a reward</button>
           </li>
         </ul>

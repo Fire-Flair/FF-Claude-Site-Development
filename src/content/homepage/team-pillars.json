@@ -291,8 +291,8 @@
           "h": "The 90-day Launch Challenge",
           "p": [
             "From 1 December 2026 you have 90 days to build the best team on FireFlair. Create your profile, share your card and invite the people you work with. Everyone who creates a profile during the challenge is entered.",
-            "The ten members who build the best teams become FireFlair Gold members. Gold members receive the American Express business expense card and are first in line for FF Party bookings.",
-            "The overall winner flies to the Athens Bar Show with flights, accommodation and a ticket to the show. The runners-up choose from rewards suggested by the community, so tell us what you would love to win."
+            "The overall winner flies to the Athens Bar Show with flights, accommodation and a ticket to the show.",
+            "The top 10 go Gold and receive their choice of rewards, including an American Express business expense card, professional equipment or a professional photo shoot."
           ],
           "visual": "challenge",
           "cta": {
@@ -403,16 +403,12 @@
     ],
     "rewards": [
       [
-        "Top 10",
-        "The top 10 go Gold and receive their choice of rewards, including an American Express business expense card, professional equipment or a professional photo shoot."
-      ],
-      [
         "Overall winner",
         "The overall winner receives a trip to the Athens Bar Show: flights, accommodation and a ticket to the show."
       ],
       [
-        "Runners-up",
-        "Runners-up choose from rewards suggested by the community. Tell us what you would love to win."
+        "Top 10",
+        "The top 10 go Gold and receive their choice of rewards, including an American Express business expense card, professional equipment or a professional photo shoot."
       ]
     ],
     "suggestQuestion": "Is there a reward you would love to win in the Launch Challenge?"

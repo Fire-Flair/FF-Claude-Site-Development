@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.52
+
+FF Team home round 2 and Network tidy. Branches merged: `p2-home2`, `p2-net2`.
+
+- Launch Challenge (`discover-and-support.jsx`, `home-fix22.css`): no coin in the eyebrow; larger "FF Team Launch Challenge" title in gold Cinzel; the box runs edge to edge on phones; the 90 days tile shows a big gold "90" with "DAYS" small. Rules sheet (`team-pillars.json`): opens with Rewards (overall winner: Athens Bar Show trip; then "The top 10 go Gold and receive their choice of rewards, including an American Express business expense card, professional equipment or a professional photo shoot."); "hospitality and event professionals" throughout; no XP or levels; the "final terms to be confirmed" section hidden. The Our community pillar's challenge text and rewards list use the same wording; the old "rewards suggested by the community" lines are gone.
+- Home (`team-home.jsx`, `discover-hub.jsx`): "FF Team is built for getting you bookings" is a collapsed drop-down in a dark and gold box, with a spinning coin between the video and the box; the coin between Our community and the video is centred to the pixel; the coin game sits below Business & Support.
+- Network (`network-directory.jsx`, `network-directory20.jsx`, `network.jsx`, `profile-card-parts.jsx`): "Explore our network" is the page heading and sits higher on FF Team; the search box has no FF logo and no microphone, a magnifying-glass button and the placeholder "Search people, skills or places"; FF Team's Our professionals gets its own Management category.
+
 ## v17.51
 
 Artifact version 1794967305-ac3d.
