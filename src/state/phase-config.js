@@ -30,7 +30,7 @@ const SHOW_VENUES_PROFILE17 = true;
 
 
 const PHASE1 = {
-  name: "FireFlair prototype",
+  name: "FF Team",
   version: __ff_changelog_version(),   /* the newest CHANGELOG.md entry, filled in by scripts/build.mjs */
   status: "In development",
   /* The top-left selector, in this order. FF Team, FF Staff and FF Party

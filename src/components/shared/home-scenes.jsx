@@ -589,8 +589,8 @@ function ffaiIntent(raw) {
 function ffaiReply(it, raw) {
   const q = String(raw || "").trim();
   const R = {
-    capabilities: { text: "I'm the FireFlair prototype. In the live version I'll be able to:", bullets: ["Search the network for people by name, profession, skill or area", "Fill in your Profile Card from a few sentences", "Point you to Training, Dream jobs and Rewards", "Answer questions about FireFlair, here and on WhatsApp"], actions: [{ label: "Search the network", go: "network" }, { label: "Create your Profile Card", go: "profile" }] },
-    greet: { text: "Hello! I'm the FireFlair prototype. Try asking “What can you do?”", actions: [{ label: FFAI_ASK, ask: FFAI_ASK }] },
+    capabilities: { text: "I'm FF AI. I can help you:", bullets: ["Search the network for people by name, profession, skill or area", "Fill in your Profile Card from a few sentences", "Point you to Training, Dream jobs and Rewards", "Answer questions about FireFlair, here and on WhatsApp"], actions: [{ label: "Search the network", go: "network" }, { label: "Create your Profile Card", go: "profile" }] },
+    greet: { text: "Hello! I'm FF AI. Try asking “What can you do?”", actions: [{ label: FFAI_ASK, ask: FFAI_ASK }] },
     thanks: { text: "You're welcome." },
     whatsapp: { text: "FireFlair will eventually be powered by the same assistant you can message on WhatsApp. It isn't connected here yet; this is a placeholder.", actions: [{ label: FFAI_ASK, ask: FFAI_ASK }] },
     training: { text: "Training is on the Booking screen. Log in there to register your interest.", actions: [{ label: "Open Training", go: "booking", id: "ff-training" }] },
