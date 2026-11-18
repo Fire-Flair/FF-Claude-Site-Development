@@ -433,6 +433,8 @@ function OwnEditTools() {
 
 
 /* ---- 2. Tabs ------------------------------------------------------------- */
+/* tabs-mock (scratch branch): icons shown only by option 6 (window.FF_TABS_OPT). */
+const TABS_MOCK_IC = { overview: User, services: Briefcase, teams: Users, team: Users, reviews: Star, qa: Briefcase };
 function ProfileTabs({ tabs, active, onChange }) {
   const refs = useRef({});
   const key = (e, i) => {
@@ -450,7 +452,7 @@ function ProfileTabs({ tabs, active, onChange }) {
       {tabs.map((t, i) => (
         <button key={t.key} ref={(el) => { refs.current[t.key] = el; }} type="button" role="tab" id={`ff-tab-${t.key}`} aria-selected={active === t.key} aria-controls="ff-tabpanel"
           tabIndex={active === t.key ? 0 : -1} className={active === t.key ? "on" : ""} onClick={() => onChange(t.key)} onKeyDown={(e) => key(e, i)}>
-          <span className="lb">{t.label}</span>{t.count !== undefined && <span className="ct">({t.count})</span>}
+          <span className="ic tm" aria-hidden="true">{React.createElement(TABS_MOCK_IC[t.key] || User, { size: 17 })}</span><span className="lb">{t.label}</span>{t.count !== undefined && <span className="ct">({t.count})</span>}
         </button>
       ))}
     </div>
