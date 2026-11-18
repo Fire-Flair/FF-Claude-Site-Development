@@ -10,6 +10,7 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
 - iPad at every size, portrait or landscape, uses the phone layout; the desktop layout needs a wide window with a mouse or trackpad.
 - Desktop: one big photo with every photo in a row below it (arrows and keys step through; the row scrolls left and right after five), in place of the mosaic that opened one photo full size. `components/team/public-profile.jsx` (DeskGallery11, PublicHero), `styles/p12.css`.
 - Company Cards (no icon line) keep the previous photo behaviour.
+
 ## v1.46
 
 Network, Vooshka Company Card (Alex, 18 Nov 20:12). `data/companies/profiles/vooshka.json`, `data/companies/company-profile.schema.json`, `src/content/companies.js`, `src/components/staff/company-shape.jsx`, `src/components/staff/company-cards.jsx`, `src/content/companies/real-companies.json` (rebuilt with `npm run companies`).
