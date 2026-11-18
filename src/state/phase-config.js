@@ -17,6 +17,14 @@
    Everything else stays in this file for later releases, but is shown as
    Coming Soon and can't start a booking, payment or anything consequential.
    ========================================================================== */
+/* v17.47: Venues are switched off for now (Alex: "we can drop the venues for now"), as the live frontend's
+   SHOW_VENUES = false. Members no longer see or edit Venues on FF Team, FF Staff or FF Party; saved venue
+   records stay untouched and FF Admin keeps its Venues view. Set true to bring every Venues surface back. */
+const SHOW_VENUES17 = false;
+/* Keeps a profile category key unless it is Venues and Venues are off. */
+const venuesOn17 = (k) => SHOW_VENUES17 || k !== "venues";
+
+
 const PHASE1 = {
   name: "FireFlair prototype",
   version: "17.8",
@@ -31,7 +39,7 @@ const PHASE1 = {
   /* v17.14: Venues replace Experience. Experience stays in the order only so entries already saved still show;
      nobody can add a new one, and the section is left out when it is empty. */
   /* v17.18: the same order as the Profile Card (Professions, Skills, Interests, Locations, Languages), then Venues, Qualifications and the rest. */
-  profileOrder: ["professions", "skills", "interests", "locations", "languages", "venues", "qualifications", "experience", "media", "reviews"],
+  profileOrder: ["professions", "skills", "interests", "locations", "languages", "venues", "qualifications", "experience", "media", "reviews"].filter(venuesOn17),
   /* FF XP · 2027 runs on the prototype's own XP and tier logic. The only
      way in is the FF coin pop-up: no XP bar, no XP page. */
   xpLive: false,   /* v1.2: XP isn't live in version 1 — the pop-up says Coming 2027 */

@@ -164,7 +164,7 @@ const XP_TASKS = [
   { id: "add_qualifications", label: "Add a qualification",      hint: "Licences and certificates" },
   { id: "add_venues",         label: "Add venues",               hint: "Where you've worked" },
   { id: "first_review",       label: "Receive a review",         hint: "Ask someone you've worked with" },
-].map(t => ({ ...t, xp: XP_VALUES.task }));
+].filter(t => SHOW_VENUES17 || t.id !== "add_venues").map(t => ({ ...t, xp: XP_VALUES.task }));
 
 
 

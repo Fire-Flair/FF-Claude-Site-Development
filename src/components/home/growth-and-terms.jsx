@@ -160,7 +160,7 @@
           { l: "No, I'm here for something else", r: "If you are planning a party of your own, FF Party is the place to start.", c: A.party }
         ] },
         { q: "Do you work events, or would you like to?", a: [
-          { l: "Yes, I work events", r: "Put your event experience and the venues you work at on your profile, and ask the people you work with for reviews.", c: A.profile },
+          { l: "Yes, I work events", r: SHOW_VENUES17 ? "Put your event experience and the venues you work at on your profile, and ask the people you work with for reviews." : "Put your event experience on your profile, and ask the people you work with for reviews.", c: A.profile },
           { l: "I'm full time, but could pick up a shift now and then", r: "Make a Profile Card and answer availability for the dates you can do. Businesses can book you around your main job.", c: A.profile },
           { l: "I run a hospitality business", r: "FF Staff is where companies hire staff and advertise their services for free.", c: A.biz }
         ] },

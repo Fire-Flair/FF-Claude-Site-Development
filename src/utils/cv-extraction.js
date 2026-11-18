@@ -161,6 +161,7 @@ function buildSuggestions(x, profile) {
   let merged = 0;
   (x.items || []).forEach(it => {
     const def = CVX_CATEGORIES[it.category] || CVX_CATEGORIES.other;
+    if (!venuesOn17(def.to)) return;   /* v17.47: Venues are off, so a CV venue is not suggested anywhere. */
     const keep = CVX_KEEP_DETAILS[it.category];
     const details = {};
     Object.entries(it.details || {}).forEach(([dk, dv]) => { if (!keep || keep.includes(dk)) details[dk] = dv; });

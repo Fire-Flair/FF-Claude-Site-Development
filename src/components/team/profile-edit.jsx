@@ -37,7 +37,7 @@ const RANK_NAME = { primary: "Primary", secondary: "Secondary", tertiary: "Extra
 
 
 /* Sections that Edit Profile manages (Reviews and Q&A aren't cards you rank). */
-const EDIT_CATS = ["professions", "qualifications", "skills", "venues", "experience", "languages", "interests", "media"];
+const EDIT_CATS = ["professions", "qualifications", "skills", "venues", "experience", "languages", "interests", "media"].filter(venuesOn17);
 
 
 

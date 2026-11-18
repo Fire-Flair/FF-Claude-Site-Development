@@ -378,7 +378,7 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
   const reviews = reviewsOf(state, person);
   const records = recordsForPerson(state, person);
   const profs = (records.professions || []).filter(r => !r.hidden && !r.proposed);
-  const venues = (records.venues || []).filter(r => !r.hidden && !r.proposed);
+  const venues = SHOW_VENUES17 ? (records.venues || []).filter(r => !r.hidden && !r.proposed) : [];
   /* Attributes: every other category as a summary card (Work locations are on Bookings; Venues have their own row). */
   const attrs = attributesOf(state, person, cats).filter(it => it.category !== "locations" && it.category !== "venues");
   const [openRec, setOpenRec] = useState(null);

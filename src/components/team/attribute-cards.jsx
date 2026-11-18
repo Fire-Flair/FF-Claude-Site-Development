@@ -801,7 +801,7 @@ function RecordDetailsField({ details, readOnly, onChange }) {
   if (readOnly) return (
     <Field label="Details">
       <div className="ff-serif" style={{ fontSize: 15 }}>{detailsLine(d) || "—"}</div>
-      {d.venues && d.venues.length > 0 && <div className="ff-body" style={{ fontSize: 13.5, marginTop: 4 }}>Venues: {d.venues.join(", ")}</div>}
+      {SHOW_VENUES17 && d.venues && d.venues.length > 0 && <div className="ff-body" style={{ fontSize: 13.5, marginTop: 4 }}>Venues: {d.venues.join(", ")}</div>}
     </Field>
   );
   return (
@@ -813,7 +813,7 @@ function RecordDetailsField({ details, readOnly, onChange }) {
             <input className="ff-input" value={d[k] || ""} onChange={(e) => onChange({ ...d, [k]: e.target.value })} /></label>
         ))}
       </div>
-      {d.venues !== undefined && (
+      {SHOW_VENUES17 && d.venues !== undefined && (
         <label style={{ display: "block", marginTop: 8 }}><span className="ff-label" style={{ fontSize: 9 }}>Venues</span>
           <input className="ff-input" value={venues} onChange={(e) => setVenues(e.target.value)}
             onBlur={() => onChange({ ...d, venues: venues.split(",").map(x => x.trim()).filter(Boolean) })} /></label>

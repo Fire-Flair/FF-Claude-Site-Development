@@ -369,7 +369,7 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   /* One rule for every company: the areas come from the location records when the page has them; the free-text areas line is only for directory drafts without records. */
   const recAreas = companyLocations(co);
   const areas = co.mine || recAreas.length ? recAreas : String(co.areas || "").split("·").map(x => x.trim()).filter(Boolean);
-  const venues = co.mine ? recsOf(co, "venues").filter(r => !r.hidden).map(r => r.name) : (co.venues || []);
+  const venues = !SHOW_VENUES17 ? [] : co.mine ? recsOf(co, "venues").filter(r => !r.hidden).map(r => r.name) : (co.venues || []);
   /* Reviews posted on this company's page (state.reviews, newest first) come before its own. Declined ones never show; a waiting one only to its writer (as reviewRecordsFor). */
   const posted = (state.reviews || []).filter(r => r.status !== "declined" && (r.status !== "pending" || r.byId === "me")).filter(r => r.aboutId === co.id || ck &&  (r.aboutId && r.aboutId !== "me" && coKey17(companyById(state, r.aboutId)) === ck)).slice().reverse().map(r => [null, r.rating, r.text, r.byName, r.status === "pending"]);
   const reviews = [...posted, ...(co.mine ? (co.reviews || []).map(r => [null, r.rating, r.text, r.byName]) : (co.reviews || [])), ...coWebReviews17(co).map(r => [null, 0, r.description, r.name])];

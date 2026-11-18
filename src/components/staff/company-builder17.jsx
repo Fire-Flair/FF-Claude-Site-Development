@@ -432,7 +432,7 @@ function CompanySections() {
   const termsRecs = [{ ...makeRecord("terms", "T&Cs"), id: "co_tcs", description: "Your five terms, sent with every Service Card. Tap to view or edit." }];
   const termsDef = { label: "Terms and conditions", singular: "Terms", icon: "qualification", fields: ["description"] };
   const qa = coQa(c).filter((q) => q.group !== "feedback" && (q.answer || String(q.note || "").trim()));
-  const hasVenues = coRecsOf17(c, "venues").length > 0;
+  const hasVenues = SHOW_VENUES17 && coRecsOf17(c, "venues").length > 0;
   const recSection = (k) => (
     <ProfileAttributeSection key={k} catKey={k} def={COMPANY_CATEGORIES[k]} list={recsOf(c, k)} isMe shade="onyx" owner="company" hideZero
       quiet={k === "locations" ? coQuiet17(companyLocations(c).join(" · "), 110) : coTitles17(recsOf(c, k))}

@@ -19,7 +19,7 @@ const PUB_KIND = { professions: "m", experience: "x", qualifications: "d", skill
 
 
 /* v17.18: the Profile Card's order (Skills, Interests, Locations, Languages), then Venues, Qualifications and the rest. */
-const PUB_ORDER = ["professions", "media", "skills", "interests", "locations", "languages", "venues", "qualifications", "experience"];
+const PUB_ORDER = ["professions", "media", "skills", "interests", "locations", "languages", "venues", "qualifications", "experience"].filter(venuesOn17);
 
 
 
@@ -91,7 +91,7 @@ function useDragScroll(ref) {
 function mediaOf(state, person) {
   const recs = recordsForPerson(state, person);
   const own = person.id === "me" ? (state.profile.media || []) : (person.media || []);
-  const order = [...PUB_ORDER, ...Object.keys(recs).filter(k => !PUB_ORDER.includes(k))];
+  const order = [...PUB_ORDER, ...Object.keys(recs).filter(k => !PUB_ORDER.includes(k) && venuesOn17(k))];
   const onCards = order.flatMap(k => (recs[k] || []).filter(r => !r.hidden && !r.proposed).flatMap(r => r.media || []));
   const seen = new Set();
   return [...own, ...onCards]

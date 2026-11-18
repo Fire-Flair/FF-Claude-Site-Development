@@ -132,6 +132,7 @@ const venuePlaced17 = (r) => !!(r && r.place && r.place.lat != null && r.area &&
 
 /* Placed venues, one per Google place, with everyone who listed it. */
 function publicVenues17(state) {
+  if (!SHOW_VENUES17) return [];
   const by = {};
   venueEntries17(state, false).filter(x => venuePlaced17(x.rec)).forEach(x => {
     const k = x.rec.place.id;

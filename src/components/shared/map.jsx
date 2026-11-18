@@ -440,9 +440,9 @@ function FFMap({ mode = "home" }) {
           {home && <span className="ff-body ff-muted" style={{ fontSize: 11, display: "flex", gap: 6, alignItems: "center" }}>
             <span style={{ width: 14, height: 14, borderRadius: "50%", border: "1px solid rgba(140,21,38,.9)", background: "rgba(92,18,32,.5)", display: "block" }} /> Hospitality businesses
           </span>}
-          <span className="ff-body ff-muted" style={{ fontSize: 11, display: "flex", gap: 6, alignItems: "center" }}>
+          {SHOW_VENUES17 && <span className="ff-body ff-muted" style={{ fontSize: 11, display: "flex", gap: 6, alignItems: "center" }}>
             <span style={{ width: 11, height: 11, borderRadius: 2, background: MAP_LAYER.venue.color, border: "1px solid #141416", display: "block" }} /> Venues
-          </span>
+          </span>}
           {home && <span className="ff-body ff-muted" style={{ fontSize: 11, display: "flex", gap: 6, alignItems: "center" }}>
             <span style={{ width: 10, height: 10, transform: "rotate(45deg)", background: MAP_LAYER.event.color, display: "block" }} /> Events
           </span>}
