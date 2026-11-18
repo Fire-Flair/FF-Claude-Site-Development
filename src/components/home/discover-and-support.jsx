@@ -347,7 +347,7 @@ function TwoMinutes20() {
     h("style", null, TM20_CSS),
     /* home-text (Alex, 18 Nov 16:26): a title and a few lines above the video: what happens when the 90-day challenge ends (Bilbo). */
     h("h2", { id: "ff-tm20-h", className: "ff-lc22-eye ff-lcc-title ff-tm20-title" }, h("span", null, "FF Party Launch Event")),
-    h("p", { className: "ff-sec-intro" }, "When the 90-day challenge ends, our marketing campaign begins. It kicks off with our training, a cocktail training competition and the FF Party launch event. Then our UK-wide marketing gets to work, bringing jobs and bookings to you and your team."),
+    h("p", { className: "ff-sec-intro" }, "When the 90-day challenge ends, our marketing campaign begins. It kicks off with our training, a cocktail training competition and the FF Party launch event. Then our UK‑wide marketing gets to work, bringing jobs and bookings to you and your team."),
     h(
       "div",
       { className: "ff-tm20-st", style: poster ? { "--tm-poster": "url(" + poster + ")" } : undefined },
