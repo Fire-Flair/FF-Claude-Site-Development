@@ -131,7 +131,7 @@ function ffPvScroller11(n) {
   return document.scrollingElement || document.documentElement;
 }
 
-function PhotoStrip11({ items, onBad, open, onTap, atRef, fill, onClose, start }) {
+function PhotoStrip11({ items, onBad, open, onTap, atRef, fill, onClose, start, stick }) {
   const ref = useRef(null), boxRef = useRef(null);
   const [at, setAt] = useState(start || 0);
   const [w, setW] = useState(0);
@@ -161,20 +161,9 @@ function PhotoStrip11({ items, onBad, open, onTap, atRef, fill, onClose, start }
     el.scrollTo({ left: k * el.clientWidth, behavior: prefersReducedMotion() ? "auto" : "smooth" });
   };
   const n = items.length;
-  const vh = typeof window !== "undefined" ? window.innerHeight : 800;
-  let openH = w ? Math.round(Math.max(280, Math.min(w * 1.25, vh * 0.7))) : undefined;
-  /* profile-photos: on an upright iPad the open photos stop where the card still shows down to just past its icon line */
-  if (openH && w >= 700 && vh > (typeof window !== "undefined" ? window.innerWidth : 0)) {
-    const box = boxRef.current, hero = box && box.closest(".ff-phero");
-    const ov = hero ? parseFloat(getComputedStyle(hero).getPropertyValue("--ov")) || 0 : 0;
-    const nav = document.querySelector(".ff-bottomnav");
-    const navH = nav ? nav.getBoundingClientRect().height : 70;
-    const top = box ? box.getBoundingClientRect().top + (window.scrollY || 0) : 83;
-    openH = Math.round(Math.max(280, Math.min(openH, vh - Math.max(56, top) - 14 - ov - navH - 48)));
-  }
-  const style = open && !fill && openH ? { height: openH + "px" } : undefined;
+  const shown = open || stick;
   return (
-    <section ref={boxRef} className={`ff-ps${open ? " open" : ""}${fill ? " fill" : ""}`} style={style} aria-label={`Photos, ${n}`}>
+    <section ref={boxRef} className={`ff-ps${open ? " open" : ""}${fill ? " fill" : ""}${stick ? " stick" : ""}`} aria-label={`Photos, ${n}`}>
       <div className="ff-ps-track" ref={ref} onScroll={(e) => {
         const el = e.currentTarget;
         const k = Math.round(el.scrollLeft / Math.max(1, el.clientWidth));
@@ -182,15 +171,16 @@ function PhotoStrip11({ items, onBad, open, onTap, atRef, fill, onClose, start }
         if (k !== at) setAt(k);
       }}>
         {items.map((m, i) => (
-          <button key={m.src.slice(-40) + i} type="button" className="ff-ps-slide" aria-label={open ? `Photo ${i + 1} of ${n}` : `Show photo ${i + 1} of ${n}`} aria-expanded={!!open} onClick={() => onTap(i)}>
-            <img className="ff-ps-img" src={m.src} alt={open ? (m.name ? `Photo: ${m.name}` : `Photo ${i + 1}`) : ""} draggable={false} decoding="async" loading={i ? "lazy" : "eager"} onError={() => onBad && onBad(m.src)} />
+          <button key={m.src.slice(-40) + i} type="button" className="ff-ps-slide" aria-label={shown ? `Photo ${i + 1} of ${n}` : `Show photo ${i + 1} of ${n}`} onClick={() => onTap(i)}>
+            {stick && Math.abs(i - at) <= 1 && <img className="ff-ps-fill" src={m.src} alt="" aria-hidden="true" draggable={false} decoding="async" />}
+            <img className="ff-ps-img" src={m.src} alt={shown ? (m.name ? `Photo: ${m.name}` : `Photo ${i + 1}`) : ""} draggable={false} decoding="async" loading={i ? "lazy" : "eager"} onError={() => onBad && onBad(m.src)} />
           </button>
         ))}
       </div>
       {fill && onClose && <button type="button" className="ff-ps-x" aria-label="Back to all photos" onClick={onClose}><X size={18} /></button>}
       {n > 1 && (
         <>
-          {open && <span className="ff-ps-n" aria-live="polite">{`${at + 1} / ${n}`}</span>}
+          {shown && <span className="ff-ps-n" aria-live="polite">{`${at + 1} / ${n}`}</span>}
           <button type="button" className="ff-ps-arrow l" aria-label="Previous photo" disabled={at === 0} onClick={() => go(at - 1)}><ChevronLeft size={18} /></button>
           <button type="button" className="ff-ps-arrow r" aria-label="Next photo" disabled={at >= n - 1} onClick={() => go(at + 1)}><ChevronRight size={18} /></button>
           <div className="ff-ps-dots" aria-hidden="true">{items.map((m, i) => <span key={i} className={i === at ? "on" : ""} />)}</div>
@@ -268,11 +258,9 @@ function PublicHero({ media, card, below, narrow }) {
   const list = media.filter(m => seen[m.src] === true);
   const onBad = (src) => setSeen(v => (v[src] === false ? v : { ...v, [src]: false }));
   const has = list.length > 0;
-  const [open, setOpen] = useState(false);
   const atRef = useRef(0);
-  const colRef = useRef(null), heroRef = useRef(null), cardRef = useRef(null);
+  const colRef = useRef(null), heroRef = useRef(null), cardRef = useRef(null), wrapRef = useRef(null), gripRef = useRef(null);
   const strip = has && !wide;
-  useEffect(() => { setOpen(false); }, [wide]);
   /* The column under the card (Back, actions) is as wide as the card itself: --ff-cardw. */
   useEffect(() => {
     const c = cardRef.current, h = heroRef.current;
@@ -292,129 +280,105 @@ function PublicHero({ media, card, below, narrow }) {
     window.addEventListener("resize", f);
     return () => { if (ro) ro.disconnect(); if (mo) mo.disconnect(); window.removeEventListener("resize", f); };
   }, []);
-  /* profile-photos: the photos end exactly on the card's icon line, and the page scrolls as one from there
-     (no sticky photos): --ov is the distance from the card's top to the middle of that line. */
+  /* photo-scroll (Aragorn and Gandalf, 18 Nov): phone and iPad use the browser's own scrolling, no gesture code.
+     The photos sit at the top at one size (they never switch size or fit, so nothing jumps or flashes) and stick under
+     the top bar while the card slides over them. The page opens scrolled down to "closed": the card's icon line on the
+     photos' bottom edge. Scrolling up slides the card down to show the whole photo ("open"); scrolling down slides it
+     back up to the line and the same swipe carries on down the page, because the photos stop sticking exactly there.
+     --ov is the distance from the card's top to its icon line (.ff-pc-rule; 128px on a Company Card, which has none).
+     The release point is CSS: the strip's box is (photo height + --ov + 14px) tall and the card column starts -(--ov)
+     below it. Nothing here sets React state while scrolling. */
+  /* The photos stick just under the menu bar when it stays on screen (900px and wider), else at the very top: on
+     phones the menu bar scrolls away (v16.10). */
+  const stickTop = () => {
+    const tb = document.querySelector(".ff-topbar");
+    return tb && getComputedStyle(tb).position === "sticky" ? Math.round(tb.getBoundingClientRect().height) : 0;
+  };
   const [ov, setOv] = useState(false);
+  const pinned = useRef(null);
+  const closedY = () => {
+    const w = wrapRef.current, h = heroRef.current;
+    if (!w || !h) return 0;
+    const o = parseFloat(getComputedStyle(h).getPropertyValue("--ov")) || 0;
+    return Math.max(0, Math.round(w.getBoundingClientRect().top + window.scrollY + o + 14 - stickTop()));
+  };
+  const openY = () => {
+    const w = wrapRef.current;
+    if (!w) return 0;
+    const top = w.getBoundingClientRect().top + window.scrollY;
+    return top <= 160 ? 0 : Math.max(0, Math.round(top - stickTop() - 16));
+  };
+  /* Keep "closed" reachable on a short page, and keep the card on the line when the card or window changes size. */
+  const pin = (first) => {
+    const y = closedY();
+    if (!y) return;
+    document.body.style.minHeight = `calc(${y}px + 100vh)`;
+    const cur = window.scrollY || 0;
+    if (first) { if (cur < y) window.scrollTo(0, y); }
+    else if (pinned.current !== null && Math.abs(cur - pinned.current) <= 2 && Math.abs(y - cur) > 1) window.scrollTo(0, y);
+    pinned.current = y;
+  };
   useLayoutEffect(() => {
     const c = cardRef.current, h = heroRef.current;
     if (!strip || !c || !h) { setOv(false); return; }
+    let first = true, raf = 0;
     const f = () => {
       const line = c.querySelector(".ff-pc-rule"), t = c.getBoundingClientRect();
       if (!t.height) return;
-      /* A Company Card has no icon line: the photos end 128px down it (where they always met the card). */
       const r = line && line.getBoundingClientRect();
       const y = r && r.height ? r.top + r.height / 2 - t.top : Math.min(128, t.height * 0.6);
       h.style.setProperty("--ov", Math.round(y) + "px");
+      h.style.setProperty("--psTop", stickTop() + "px");
       setOv(true);
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => { pin(first); first = false; });
     };
     f();
     const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(f) : null;
     if (ro) ro.observe(c);
     window.addEventListener("resize", f);
-    return () => { if (ro) ro.disconnect(); window.removeEventListener("resize", f); };
+    return () => { if (ro) ro.disconnect(); window.removeEventListener("resize", f); cancelAnimationFrame(raf); document.body.style.minHeight = ""; pinned.current = null; };
   }, [strip]);
-  /* Phone: pull the card down to open the strip, push up to close; the wheel does the same on a narrow desktop window. */
+  /* aria-expanded on the grip follows the scroll, written straight to the button (no re-render). */
   useEffect(() => {
-    const zone = colRef.current, hero = heroRef.current;
-    if (!strip || !zone || !hero) return;
-    const atTop = () => (ffPvScroller11(zone).scrollTop || 0) <= 2;
-    const setPull = (v) => hero.style.setProperty("--pull", v + "px");
-    let a = null, mode = null, d = 0, moved = 0;
-    const ts = (e) => {
-      if (e.touches.length !== 1) { a = null; return; }
-      const t = e.target;
-      if (!open && !(t && zone.contains(t))) { a = null; return; }
-      a = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-      mode = null;
-      d = 0;
-      moved = 0;
-    };
-    const tm = (e) => {
-      if (!a) return;
-      const dx = e.touches[0].clientX - a.x, dy = e.touches[0].clientY - a.y;
-      if (!mode) {
-        if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
-        if (Math.abs(dx) > Math.abs(dy)) { a = null; return; }
-        if (!open && dy > 0 && atTop()) mode = "open";
-        /* profile-photos: while the photos are open, a scroll anywhere, either way, brings the card back up */
-        else if (open) mode = "close";
-        else { a = null; return; }
-        hero.classList.add("dragging");
+    if (!strip) return;
+    let raf = 0;
+    const f = () => {
+      raf = 0;
+      const g = gripRef.current;
+      if (!g) return;
+      const isOpen = (window.scrollY || 0) < closedY() - 24;
+      const v = isOpen ? "true" : "false";
+      if (g.getAttribute("aria-expanded") !== v) {
+        g.setAttribute("aria-expanded", v);
+        g.setAttribute("aria-label", isOpen ? "Cover the photos" : "Show the photos");
       }
-      if (e.cancelable) e.preventDefault();
-      d = mode === "open" ? Math.max(0, Math.min(170, dy)) : Math.max(-170, Math.min(0, dy));
-      if (mode === "close") moved = Math.max(moved, Math.abs(dy));
-      setPull(d);
     };
-    const te = () => {
-      if (mode) {
-        const go = mode === "close" ? moved > 12 : Math.abs(d) > 45;
-        hero.classList.remove("dragging");
-        setPull(0);
-        if (go) setOpen(mode === "open");
-      }
-      a = null;
-      mode = null;
-      d = 0;
-    };
-    let wt = 0;
-    const wh = (e) => {
-      const now = Date.now();
-      if (now < wt) return;
-      if (open && Math.abs(e.deltaY) > 4) { if (e.cancelable) e.preventDefault(); wt = now + 500; setOpen(false); }
-      else if (!open && e.deltaY < -12 && atTop() && hero.contains(e.target)) { wt = now + 500; setOpen(true); }
-    };
-    /* any other scroll (keys, scroll bar, a fling already under way) also closes the open photos */
-    const sc = ffPvScroller11(zone);
-    const sTarget = sc === document.scrollingElement || sc === document.documentElement ? window : sc;
-    const pos = () => (sTarget === window ? window.scrollY : sc.scrollTop) || 0;
-    let base = pos(), armed = !open;
-    const arm = open ? setTimeout(() => { base = pos(); armed = true; }, 450) : 0;
-    const onScroll = () => { if (open && armed && Math.abs(pos() - base) > 8) { armed = false; setOpen(false); } };
-    const pa = { passive: true }, np = { passive: false };
-    sTarget.addEventListener("scroll", onScroll, pa);
-    document.addEventListener("touchstart", ts, pa);
-    document.addEventListener("touchmove", tm, np);
-    document.addEventListener("touchend", te, pa);
-    document.addEventListener("touchcancel", te, pa);
-    window.addEventListener("wheel", wh, np);
-    return () => {
-      document.removeEventListener("touchstart", ts, pa);
-      document.removeEventListener("touchmove", tm, np);
-      document.removeEventListener("touchend", te, pa);
-      document.removeEventListener("touchcancel", te, pa);
-      window.removeEventListener("wheel", wh, np);
-      sTarget.removeEventListener("scroll", onScroll, pa);
-      clearTimeout(arm);
-      hero.classList.remove("dragging");
-      setPull(0);
-    };
-  }, [strip, open]);
-  /* profile-photos: opening while scrolled down brings the photos into view first */
-  useEffect(() => {
-    if (!open || !strip) return;
-    const h = heroRef.current;
-    if (!h) return;
-    const top = h.getBoundingClientRect().top;
-    /* back to the very top when the photos start the page, as when it opens */
-    if (top < 0) { const abs = top + window.scrollY; window.scrollTo({ top: abs <= 160 ? 0 : abs - 64, behavior: "auto" }); }
-  }, [open]);
-  /* A tap on the card (not on one of its buttons or links) opens the strip. */
+    const sc = () => { if (!raf) raf = requestAnimationFrame(f); };
+    window.addEventListener("scroll", sc, { passive: true });
+    f();
+    return () => { window.removeEventListener("scroll", sc); cancelAnimationFrame(raf); };
+  }, [strip, ov]);
+  const smooth = prefersReducedMotion() ? "auto" : "smooth";
+  const isOpenNow = () => (window.scrollY || 0) < closedY() - 24;
+  const showPhotos = () => window.scrollTo({ top: openY(), behavior: smooth });
+  const coverPhotos = () => window.scrollTo({ top: closedY(), behavior: smooth });
+  /* A tap on the photos or on the card (not on one of its buttons or links) shows the photos; a second tap does nothing. */
   const cardTap = (e) => {
-    if (!strip || open) return;
+    if (!strip || isOpenNow()) return;
     const t = e.target;
     if (t && t.closest && t.closest('button,a,input,textarea,select,label,summary,[contenteditable="true"],[role="button"],[role="link"]')) return;
-    setOpen(true);
+    showPhotos();
   };
   const media2 = !has ? null
     : wide ? <DeskGallery11 items={list} onBad={onBad} />
-    : <PhotoStrip11 items={list} onBad={onBad} open={open} atRef={atRef} onTap={() => { if (!open) setOpen(true); }} />;
+    : <div className="ff-ps-wrap" ref={wrapRef}><PhotoStrip11 items={list} onBad={onBad} stick atRef={atRef} onTap={() => { if (!isOpenNow()) showPhotos(); }} /></div>;
   return (
-    <div ref={heroRef} className={`ff-phero${has ? " has-media" : ""}${wide ? " wide" : ""}${strip && open ? " ps-open" : ""}${strip && ov ? " ov" : ""}`}>
+    <div ref={heroRef} className={`ff-phero${has ? " has-media" : ""}${wide ? " wide" : ""}${strip && ov ? " ov ns" : ""}`}>
       {media2}
       <div className="ff-pcol" ref={colRef}>
-        {strip && <button type="button" className="ff-ph-grip" aria-label={open ? "Cover the photos" : "Show the photos"} aria-expanded={open} onClick={() => setOpen(!open)}><span aria-hidden="true" /></button>}
-        <div ref={cardRef} className={"ff-ph-card" + (strip && !open ? " tap" : "")} onClick={cardTap}>{card}</div>
+        {strip && <button type="button" ref={gripRef} className="ff-ph-grip" aria-label="Show the photos" aria-expanded="false" onClick={() => (isOpenNow() ? coverPhotos() : showPhotos())}><span aria-hidden="true" /></button>}
+        <div ref={cardRef} className={"ff-ph-card" + (strip ? " tap" : "")} onClick={cardTap}>{card}</div>
         <div className={"ff-prest" + (narrow ? " narrow" : "")}>{below}</div>
       </div>
     </div>

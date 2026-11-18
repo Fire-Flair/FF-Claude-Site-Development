@@ -883,13 +883,19 @@
 .ff .ff-ph-grip:focus-visible { outline:2px solid var(--gold); outline-offset:-4px; border-radius:10px; }
 @media (prefers-reduced-motion: reduce) { .ff .ff-ph-grip span { transition:none; } }
 
-/* ---------- profile-photos (Alex, 18 Nov 20:10) ----------
-   Phone and iPad: the photos end exactly on the Profile Card's icon line (--ov, measured in PublicHero) and the page
-   scrolls as one from there; nothing stays stuck behind the card. Open (.ps-open) is unchanged. */
-.ff .ff-phero.has-media.ov:not(.wide) .ff-ps:not(.open) { position:relative; top:auto; height:calc(clamp(300px,86vw,480px) - 128px + var(--ov,128px)); }
-.ff .ff-phero.has-media.ov:not(.wide):not(.ps-open) > .ff-pcol { margin-top:calc(var(--pull,0px) - var(--ov,128px)); }
-.ff .ff-phero.has-media.ov:not(.wide) .ff-ps:not(.open) .ff-ps-dots { bottom:calc(var(--ov,128px) + 34px); }
-.ff .ff-phero.has-media.ov:not(.wide) .ff-ps:not(.open) .ff-ps-arrow { top:calc((100% - var(--ov,128px)) / 2); }
+/* ---------- photo-scroll (Aragorn and Gandalf, 18 Nov): phone and iPad photos move with the page's own scrolling ----------
+   --psH is the photo height (the same size as before, ending on the card's icon line); the strip sticks at the top
+   (under the menu bar where that stays on screen, --psTop) inside a box (--psH + --ov + 14px) tall, so it stops sticking exactly when the icon line reaches its bottom edge.
+   One size, one fit (whole photo, top-aligned, over a blurred copy): nothing switches, so nothing flashes. */
+.ff .ff-phero.has-media.ns:not(.wide) { --psH:calc(clamp(300px,86vw,480px) - 128px + var(--ov,128px)); }
+.ff .ff-phero.has-media.ns:not(.wide) .ff-ps-wrap { position:relative; height:calc(var(--psH) + var(--ov,128px) + 14px); }
+.ff .ff-phero.has-media.ns:not(.wide) .ff-ps { position:sticky; top:var(--psTop,0px); z-index:1; height:var(--psH); transition:none; }
+.ff .ff-phero.has-media.ns.ov:not(.wide) > .ff-pcol { margin-top:calc(-1 * var(--ov,128px)) !important; transition:none !important; }
+.ff .ff-phero.ns .ff-ps-slide { position:relative; overflow:hidden; }
+.ff .ff-phero.ns .ff-ps-fill { position:absolute; inset:-24px; width:calc(100% + 48px); height:calc(100% + 48px); object-fit:cover; filter:blur(22px) brightness(.5) saturate(1.1); transform:translateZ(0); pointer-events:none; user-select:none; -webkit-user-drag:none; }
+.ff .ff-phero.ns .ff-ps-img { position:relative; object-fit:contain; object-position:50% 0; }
+.ff .ff-phero.ns .ff-ps-dots { top:16px; bottom:auto; }
+.ff .ff-phero.ns .ff-ps-arrow { top:calc((100% - var(--ov,128px)) / 2); }
 /* Desktop: one big photo, and every photo in a row below it (the row scrolls left and right after five). */
 .ff .ff-phero.wide .ff-pgal { order:2; display:flex; flex-direction:column; gap:8px; min-width:0; min-height:460px; }
 .ff .ff-pgal-big { position:relative; flex:1 1 auto; min-height:300px; border-radius:16px; corner-shape:squircle; overflow:hidden; background:#0E0B08; }
