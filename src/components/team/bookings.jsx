@@ -152,7 +152,7 @@ function BkDrop17({ id, title, desc, icon: Icon, photo, children, open: openP, o
           <I11.ChevronDown size={18} className="bkd-chev" />
         </span>
       </button>
-      {open && <div className="bkd-bd"><h3 className="bkd-bt">{title}</h3>{children}</div>}
+      {open && <div className="bkd-bd"><h3 className="bkd-bt">{title}</h3><p className="bkd-bds">{desc}</p>{children}</div>}
     </section>
   );
 }
@@ -774,6 +774,8 @@ function TeamBookings({ guest = false }) {
       </section>
 
       <section className="ff-bk-sec ff-fb21" id="ff-bk-fireflair">
+        {/* bk-titles: the FF Party and FF Staff boxes sit under one page title, like Your bookings. */}
+        <h1 className="ff-h1 ff-big20 ff-bk-yh" id="ff-bk-get-h"><span className="t">Get booked</span></h1>
         <div className="ff-bk-sell ff-bkpc ff-fb21-box pkg3" id="ff-bk-party">
           {/* title-bars (Alex, 18 Nov 17:00): the title and its text share one gold line (titles2.css, .ff-tlx). */}
           <div className="ff-tlx">
@@ -815,10 +817,8 @@ function TeamBookings({ guest = false }) {
       </section>
 
       <section className="ff-bk-sec ff-bkgrow" id="ff-bk-grow">
-        <div className="ff-tlx">
-        <h2 className="ff-bk-bh ff-bk-gh fit">Grow with FireFlair</h2>
-        <p className="ff-bk-sub">Training, dream jobs and rewards.</p>
-        </div>
+        {/* bk-titles (Alex, 18 Nov 20:25): a page title like Your bookings (gold underline); the cards below already say Training, Dream jobs and Rewards. */}
+        <h1 className="ff-h1 ff-big20 ff-bk-yh" id="ff-bk-grow-h"><span className="t">Grow with FireFlair</span></h1>
         <div className="ff-bkd-row">
           <BkDrop17 id="ff-bk-training" open={drop === "ff-bk-training"} onOpen={setDrop} title="Training" icon={E17I.GraduationCap} photo="bk_training" desc="Courses, qualifications and masterclasses to sharpen your craft. Register your interest and we will tell you when places open."><InterestSection kind="training" inner /></BkDrop17>
           <BkDrop17 id="ff-bk-jobs" open={drop === "ff-bk-jobs"} onOpen={setDrop} title="Dream jobs" icon={E17I.Plane} photo="bk_jobs" desc="Tell us where you dream of working, from festivals to yachts, and we will keep you in mind when it comes up."><InterestSection kind="jobs" inner /></BkDrop17>
