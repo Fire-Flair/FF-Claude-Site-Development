@@ -405,7 +405,11 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
       id: "ff-dx-h",
       /* chal (Alex, 18 Nov 03:13): on FF Team a quieter "What is FF Team?" so the hero's welcome leads. */
       className: kind === "team" ? "ff-dx-h ff-dx-q" : "ff-h1 ff-dx-h"
-    }, kind === "team" ? "What is FF Team?" : "Discover FireFlair"), React.createElement("span", {
+    /* home-update (Alex, 18 Nov 14:18): the title is "FF Team is built for event and hospitality professionals", with a
+       smaller tagline below it. */
+    }, kind === "team" ? "FF Team is built for event and hospitality professionals" : "Discover FireFlair"), kind === "team" && React.createElement("p", {
+      className: "ff-dx-tag"
+    }, "Look below and see how it all works."), React.createElement("span", {
       className: "ff-dx-sent",
       ref: sent,
       "aria-hidden": "true"
@@ -958,7 +962,13 @@ if (k === "package") return React.createElement("div", { className: "mc sv" }, R
       "aria-controls": "ff-hb23-body",
       "aria-labelledby": "ff-hb17-h",
       onClick: () => setHbOpen((o) => !o)
-    }, React.createElement("span", { id: "ff-hb17-h", className: "ff-hb23-t" }, hbTitle), React.createElement("span", {
+    }, React.createElement("span", { id: "ff-hb17-h", className: "ff-hb23-t" }, hbTitle),
+    /* home-update (Alex, 18 Nov 14:18): a drop-down chevron in the top right. The flow stays visible as the summary;
+       the chevron (and the whole box) opens and closes the four steps. */
+    React.createElement("span", {
+      className: "ff-hb23-ch ff-hbc-ch",
+      "aria-hidden": "true"
+    }, React.createElement(DX_I.ChevronDown, { size: 18, strokeWidth: 2.4 })), React.createElement("span", {
       className: "ff-hbc-flow",
       "aria-hidden": "true"
     }, HBC_FLOW.map(([k, t], i) => React.createElement(React.Fragment, { key: k }, i > 0 && React.createElement("span", {

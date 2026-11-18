@@ -66,3 +66,14 @@
 /* the site-wide "no italics" rule stays; FF gets its slight slant from a skew */
 .ff .ff-hf22 .ff-jr5 .s .ff5 { display:inline-block; transform:skewX(-7deg); transform-origin:50% 100%; padding-right:.04em; }
 .ff .ff-hf22 .ff-jr5 + .ff-jr17-rule { justify-content:center !important; margin-left:auto !important; margin-right:auto !important; }
+
+/* ==== home-update (Alex, 18 Nov 14:18) ==== */
+/* "FF Team is built for event and hospitality professionals": the gold-mark title, with a smaller tagline under it,
+   lined up with the title text (after the coin). */
+.ff .ff-hf22 .ff-dx-h.ff-dx-q:has(+ .ff-dx-tag) { margin-bottom:6px !important; }
+.ff .ff-hf22 .ff-dx-tag { margin:0 0 18px; padding-left:28px; font-family:var(--font-sans,'Inter',sans-serif); font-size:clamp(14px,3.8vw,16px); font-weight:500; line-height:1.4; color:var(--color-muted,#6A6253); overflow-wrap:normal; word-break:keep-all; hyphens:none; text-wrap:balance; }
+/* The bookings box: a drop-down chevron in its top right (the box's own gold squircle chevron), turning when open. */
+.ff .ff-hf22 .ff-hbc-btn { position:relative; }
+.ff .ff-hf22 .ff-hbc-btn .ff-hb23-t { padding-right:46px; }
+.ff .ff-hf22 .ff-hbc-ch { position:absolute; top:14px; right:14px; width:34px; height:34px; }
+@media (min-width:900px) { .ff .ff-hf22 .ff-hbc-ch { top:20px; right:22px; width:38px; height:38px; } }

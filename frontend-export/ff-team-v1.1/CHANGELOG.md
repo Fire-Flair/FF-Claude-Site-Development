@@ -4,6 +4,20 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## home-update
+
+Branch `home-update` (from ff-team-v1.1 at v1.15), for the main session to merge. Alex's homepage changes, 18 Nov 14:18. Home page `#/ff-team` only.
+
+- Title (`discover-hub.jsx`, `titles2.css`): "What is FF Team?" is now "FF Team is built for event and hospitality professionals", same gold-mark title style. A smaller Inter tagline sits under it, lined up with the title text: "Look below and see how it all works." (`.ff-dx-tag`).
+- Bookings box (`discover-hub.jsx`, `titles2.css`): a drop-down chevron in its top right (the box's gold squircle chevron, `.ff-hb23-ch`, the same size and look as the pillar chevrons). It turns when open. The box stays collapsed by default and the four-symbol flow (Profile Card, Shift Card, Confirm via WhatsApp, Review Card) stays visible as the summary, as decided on 18 Nov 03:13; the chevron and the whole box open and close "How bookings work".
+- Coins (`team-home.jsx`): a spinning FF coin (`CoinDivider`) between FFStories and the door video, and another below the door video. The coin below "Can FF Team help you?" is gone.
+- "Can FF Team help you?" (`growth-and-terms.jsx`): three questions with three answers each. No links to the other sites; every answer leads inside FF Team:
+  1. Do you work in events or hospitality? Yes, it's my career / I'd like shifts around my main job (both: Create your Profile Card) / Not yet, but I'd like to (See events and support, the Our community pillar).
+  2. What would help you most right now? Getting booked (See your bookings) / Building my team (Explore the network) / Collecting reviews (See how reviews work, the Your profile pillar).
+  3. Would you like to win the FF Team Launch Challenge? Yes, I'm in (See the Launch Challenge, scrolls to the challenge) / How do I enter? (Create your Profile Card) / I'd like to see the stories first (Read FFStories, scrolls to FFStories).
+  The team answers no longer use `useGoSite`; FF Staff and FF Party question sets are unchanged.
+- Checks: `npm run check` and `npm run build` pass; screenshots at 390 and 1280 with no page errors; the answer buttons tested.
+
 ## v1.15
 
 - Share message (Alex, 18 Nov 13:48–13:51). WhatsApp and Share now send:

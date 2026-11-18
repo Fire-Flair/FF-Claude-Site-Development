@@ -128,13 +128,18 @@
     const goSite = useGoSite();
     const [pick, setPick] = useState({});
     const sec = (id) => () => scrollToSection(id);
+    /* home-update: straight to a home section (not through the pillar reveal). */
+    const jump = (id) => () => { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); };
     const A = {
+      /* home-update (Alex, 18 Nov 14:18): every FF Team answer leads somewhere inside FF Team (no links to the other sites). */
       team: {
         profile: ["Create your Profile Card", () => nav.goProfile()],
         network: ["Explore the network", () => nav.goNetwork()],
-        career: ["See training and support", sec("ff-pl-industry")],
-        party: ["Visit FF Party", () => goSite("party")],
-        biz: ["Visit FF Staff", () => goSite("staff")]
+        bookings: ["See your bookings", () => nav.goBookings()],
+        reviews: ["See how reviews work", sec("ff-pl-reviews")],
+        support: ["See events and support", sec("ff-pl-industry")],
+        challenge: ["See the Launch Challenge", jump("ff-competition")],
+        stories: ["Read FFStories", jump("ff-journal")]
       },
       staff: {
         company: ["Create your Company Card", () => hire.toProfile()],
@@ -153,19 +158,22 @@
       }
     }[kind];
     const Q = {
+      /* home-update (Alex, 18 Nov 14:18): three questions, three answers each. */
       team: [
-        /* home5 (Alex, 18 Nov): "Do you work in events or hospitality?" and "Do you work events, or would you like to?" are one question. */
         { q: "Do you work in events or hospitality?", a: [
-          { l: "Yes, it's my career", r: "Then FireFlair is built for you. Make a Profile Card with your skills, experience and reviews, and businesses can find you and book you.", c: A.profile },
-          { l: "I'm full time, but could pick up a shift now and then", r: "Make a Profile Card and answer availability for the dates you can do. Businesses can book you around your main job.", c: A.profile },
-          { l: "Not yet, but I'd like to", r: "Start with Career Support. Training, Dream Jobs and rewards will help you take your first steps.", c: A.career },
-          { l: "I run a hospitality business", r: "FF Staff is where companies hire staff and advertise their services for free.", c: A.biz },
-          { l: "No, I'm here for something else", r: "If you are planning a party of your own, FF Party is the place to start.", c: A.party }
+          { l: "Yes, it's my career", r: "Then FF Team is built for you. Turn your CV into a Profile Card and a page of your own, so event companies can find you and book you.", c: A.profile },
+          { l: "I'd like shifts around my main job", r: "Make your Profile Card and say yes to the dates that suit you. Every request comes to you on WhatsApp.", c: A.profile },
+          { l: "Not yet, but I'd like to", r: "Start with the FF Team community: bar shows, training and people who will help you take your first steps.", c: A.support }
         ] },
         { q: "What would help you most right now?", a: [
-          { l: "Getting booked", r: "Share your Profile Card and answer availability, so businesses can book you in a tap.", c: A.profile },
-          { l: "Growing my network", r: "Add the people you work with. They become your team, and every review they give you counts.", c: A.network },
-          { l: "Learning new skills", r: "Career Support brings training and standards together in one place.", c: A.career }
+          { l: "Getting booked", r: "We put your Profile Card in front of the event companies who book. Requests arrive on WhatsApp and you answer with one tap.", c: A.bookings },
+          { l: "Building my team", r: "Add the people you work with. They join your team, show on your profile and get booked with you.", c: A.network },
+          { l: "Collecting reviews", r: "Everyone you work with can review you after a shift, and every review adds to your profile.", c: A.reviews }
+        ] },
+        { q: "Would you like to win the FF Team Launch Challenge?", a: [
+          { l: "Yes, I'm in", r: "From 1 December you have 90 days to build the best team. The top 10 go Gold and the winner flies to the Athens Bar Show.", c: A.challenge },
+          { l: "How do I enter?", r: "Create your profile during the challenge and you are entered. Then share your card and invite the people you work with.", c: A.profile },
+          { l: "I'd like to see the stories first", r: "FFStories are about the people and the events behind FF Team.", c: A.stories }
         ] }
       ],
       staff: [
