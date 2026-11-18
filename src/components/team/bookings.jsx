@@ -159,15 +159,45 @@ function BkDrop17({ id, title, desc, icon: Icon, photo, children, open: openP, o
 
 
 
+/* bkpop (v1.57, Alex 18 Nov 20:51): the package pop-ups (Event brief and invoice, package terms) render at the app
+   root, not inside the package slider. On iPad Safari a fixed pop-up inside the slider's scroll box was clipped to the
+   slider, so it sat under the tab row with the page and the Confirm bar showing through. While a pop-up is open the
+   page behind it does not scroll: touch moves outside the pop-up are held, and the page keeps its scroll position. */
+let PKPOP_N17 = 0;
+let PKPOP_PREV17 = null;
+const pkPopHold17 = (e) => { const t = e.target; if (!(t && t.closest && t.closest(".ff-sheet"))) e.preventDefault(); };
+function usePkPopLock17() {
+  React.useLayoutEffect(() => {
+    const h = document.documentElement, b = document.body;
+    if (PKPOP_N17++ === 0) {
+      PKPOP_PREV17 = [h.style.overflow, b.style.overflow, h.style.scrollbarGutter];
+      if (window.innerWidth - h.clientWidth > 0) h.style.scrollbarGutter = "stable";
+      h.style.overflow = "hidden"; b.style.overflow = "hidden";
+      document.addEventListener("touchmove", pkPopHold17, { passive: false });
+    }
+    return () => {
+      if (--PKPOP_N17 > 0) return;
+      const pv = PKPOP_PREV17 || ["", "", ""];
+      h.style.overflow = pv[0]; b.style.overflow = pv[1]; h.style.scrollbarGutter = pv[2];
+      document.removeEventListener("touchmove", pkPopHold17, { passive: false });
+    };
+  }, []);
+}
+function PkPop17({ children }) {
+  usePkPopLock17();
+  const host = document.querySelector("#root > .ff") || document.querySelector(".ff") || document.body;
+  return ReactDOM.createPortal(children, host);
+}
+
 /* FF Party package terms, shown after signing in, before packages are saved. */
 function PkgTerms17({ onClose, onAccept }) {
   return (
-    <Sheet open onClose={onClose} title="FF Party package terms">
-      <div className="ff-tc5">
+    <PkPop17><Sheet open onClose={onClose} title="FF Party package terms">
+      <div className="ff-tc5 ff-bkterms17">
         {PARTY_PKG_TERMS17.map((t, i) => <div key={t.k} className="ff-tc5-read"><span><b>{i + 1}</b>{t.label}</span><p>{t.text}</p></div>)}
       </div>
       <div className="ff-bsec-acts" style={{ marginTop: 10 }}><Btn variant="primary wide" onClick={onAccept}><Check size={14} /> Accept and confirm</Btn></div>
-    </Sheet>
+    </Sheet></PkPop17>
   );
 }
 
@@ -449,7 +479,7 @@ function PkgDoc17({ d, onClose }) {
   const pk = [["Package", d.name], ["Your role", d.role], ["Duration", d.duration]].filter(r => r[1] || r[0] !== "Your role");
   const long = [["What you do", d.brief], ["Shopping list", d.shop]].filter(r => r[1]);
   return (
-    <Sheet open onClose={onClose} title={d.name || "Your package"}>
+    <PkPop17><Sheet open onClose={onClose} title={d.name || "Your package"}>
       <article className="ff-doc17" aria-label="Event brief and invoice">
         <header className="lh">
           <span className="mk"><FFLogo size={40} tier="gold" /></span>
@@ -474,7 +504,7 @@ function PkgDoc17({ d, onClose }) {
         </section>
         <footer>FireFlair Ltd · FFParty.uk</footer>
       </article>
-    </Sheet>
+    </Sheet></PkPop17>
   );
 }
 
@@ -734,7 +764,6 @@ function TeamBookings({ guest = false }) {
   const { state, dispatch } = useStore();
   const [drop, setDrop] = useState(null);
   const signedIn = state.auth.status === "signedIn";
-  const goProfile = () => { dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); };
   const svcInterest = state.profile.serviceInterest || [];
   const [sel, setSel] = useState(null);
   const [pkgTerms, setPkgTerms] = useState(false);
@@ -760,26 +789,9 @@ function TeamBookings({ guest = false }) {
   const [pkTab, setPkTab] = useState("bar");
   usePkcEven17(pkTab);
   const PK_TABS = [["bar", "Bar"], ["ent", "Entertainment"], ["svc", "Services"]];
-  /* bk5: section headings stay on one line (shrink, never split). "your areas" opens the profile editor's Packages tab at Work locations. */
+  /* bk5: section headings stay on one line (shrink, never split). */
   const partyRef = useRef(null);
   usePkcFit17(partyRef, "party");
-  const goAreas = (e) => {
-    e.preventDefault();
-    if (!signedIn) { window.dispatchEvent(new Event("ff-login")); return; }
-    goProfile();
-    dispatch({ type: "V11_SET", patch: { ed17: "team" } });
-    dispatch({ type: "PE_START" });
-    let n = 0;
-    const go = () => {
-      const t = document.getElementById("ff-tab-services");
-      const hd = [...document.querySelectorAll("#ff-tabpanel h2")].find(h => /^Work locations/.test(h.textContent.trim()));
-      const el = document.getElementById("ff-sec-locations") || (hd && hd.closest("section"));
-      if (el) { el.scrollIntoView({ behavior: "auto", block: "start" }); return; }
-      if (t && t.getAttribute("aria-selected") !== "true") t.click();
-      if (++n < 30) setTimeout(go, 60);
-    };
-    setTimeout(go, 80);
-  };
 
   return (
     <div className="ff-bk" ref={partyRef}>
@@ -810,7 +822,7 @@ function TeamBookings({ guest = false }) {
           <div className="ff-tlx">
           {/* pkc-copy (Alex, 18 Nov 19:20): one title for all three tabs (the tab names the kind), so it stays one size on phones. */}
           <h2 className="ff-bk-bh fit">FFParty – Our packages</h2>
-          <p>Be your own boss. Sign up to the packages you want to deliver, or create your own. Every package shows what you earn before you sign up, and you deal directly with the client, with FireFlair here to support you. The rates are strong, so we expect strong work in return.</p>
+          <p>Be your own boss. Sign up to the packages you want to deliver, or create your own, and we find you work close to home. Every package shows what you earn before you sign up, and you deal directly with the client, with FireFlair here to support you. The rates are strong, so we expect strong work in return.</p>
           </div>
           <div className="ff-pr17-chips" role="tablist" aria-label="Package types">
             {PK_TABS.map(([k, l], i) => <button key={k} id={`ff-pktab-${k}`} type="button" role="tab" className="ff-chip ff-pr17-tab" aria-selected={k === pkTab} aria-controls={`ff-pkpanel-${k}`} tabIndex={k === pkTab ? 0 : -1} onClick={() => setPkTab(k)}
@@ -832,7 +844,6 @@ function TeamBookings({ guest = false }) {
               <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={!sel} onClick={() => { if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; } setPkgTerms(true); }}><Check size={15} /> Confirm</button>
             </div>
           )}
-          <p className="ff-bk-locs">Packages are offered where you work: <a href="#/ff-team/profile" onClick={goAreas}>your areas</a> are on your profile.</p>
           {pkgTerms && <PkgTerms17 onClose={() => setPkgTerms(false)} onAccept={confirmPkgs} />}
         </div>
 
