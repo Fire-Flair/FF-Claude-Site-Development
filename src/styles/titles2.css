@@ -32,7 +32,7 @@
 .ff .ff-hf22 .ff-lcc-title::before,
 .ff .ff-bk-bh::before,
 .ff .ff-hf22 .ff-hbc-btn .ff-hb23-t::before {
-  content:""; flex:0 0 auto; width:5px; align-self:stretch; min-height:1em; border-radius:3px; corner-shape:squircle;
+  content:""; flex:0 0 auto; width:5px; align-self:stretch; min-height:1em; border-radius:0;
   background:linear-gradient(180deg,var(--color-gold-lt,#E4C36A),var(--color-gold,#C9A227) 55%,var(--color-gold-dk,#7E611D));
 }
 /* the old underlines and rules of these titles give way to the gold line */
@@ -50,6 +50,19 @@
 .ff .ff-hf22 .ff-qg-title,
 .ff .ff-hf22 .ff-lcc-title { margin:0 0 16px !important; }
 
+/* Network page (Alex, 18 Nov 14:49): the gold line ends are fully squared (above); "Explore our network", "Our professionals"
+   and "FF Event Directory" carry a longer gold line that runs down beside the title and its description, fading out at the
+   bottom. The description sits directly under the title text, right of the line. The page title comes down a little. */
+.ff .ff-tl20 { position:relative; padding-left:19px; margin:52px 0 16px; }
+@media (min-width:900px) { .ff .ff-tl20 { margin-top:64px; } }
+.ff .ff-tl20.ff-tl20-pg { margin:22px 0 16px; }
+.ff .ff-tl20::before { content:""; position:absolute; left:0; top:0; bottom:0; width:5px; border-radius:0;
+  background:linear-gradient(180deg,var(--color-gold-lt,#E4C36A) 0,var(--color-gold,#C9A227) 28%,var(--color-gold-dk,#7E611D) 58%,transparent 100%); }
+.ff .ff-tl20 > .ff-big20 { margin:0 0 10px !important; }
+.ff .ff-tl20 > .ff-big20::before { display:none !important; }
+.ff .ff-tl20 > h1.ff-big20 .t { padding-bottom:0; border-bottom:0; }
+.ff .ff-tl20 > .ff-netlead20 { margin:0 !important; padding-bottom:4px; }
+
 /* "FF Team is built for getting you bookings": the same title, in a softer gold, inside its dark box. */
 .ff .ff-hf22 .ff-hbc-btn .ff-hb23-t {
   display:flex !important; align-items:center; justify-content:flex-start; gap:14px; text-align:left !important;
@@ -59,7 +72,7 @@
 
 /* Profile labels (Professions, About me, Attributes, Venues …): a thin gold line before the label. */
 .ff .ff-about-h { display:flex; align-items:center; gap:10px; }
-.ff .ff-about-h::before { content:""; flex:0 0 auto; width:3px; align-self:stretch; min-height:1.1em; border-radius:2px; corner-shape:squircle;
+.ff .ff-about-h::before { content:""; flex:0 0 auto; width:3px; align-self:stretch; min-height:1.1em; border-radius:0;
   background:linear-gradient(180deg,var(--color-gold-lt,#E4C36A),var(--color-gold,#C9A227) 55%,var(--color-gold-dk,#7E611D)); }
 
 /* "FFStories": centred, one word, FF in a slight italic. */

@@ -15,6 +15,11 @@ const NET_LEAD20 = {
   pros: "The event and hospitality professionals of FF\u00a0Team, from bartenders and mixologists to managers and front of house, each with their own Profile Card.",
   dir: "The UK companies that make events happen, from mobile cocktail bars and DJs to caterers and event services. Each one has its own Company Card."
 };
+/* A Network page heading with its description beside the longer, fading gold line (Alex, 18 Nov 14:49). */
+function LinedHead20({ tag, title, k }) {
+  return React.createElement("div", { className: "ff-tl20" + (tag === "h1" ? " ff-tl20-pg" : "") },
+    React.createElement(BigHead20, { tag: tag, title: title }), React.createElement(NetLead20, { k: k }));
+}
 function NetLead20({ k }) {
   return React.createElement("p", { className: "ff-body ff-netlead20", style: { margin: "-2px 0 14px", maxWidth: 680, overflowWrap: "normal", wordBreak: "normal", hyphens: "manual" } }, NET_LEAD20[k]);
 }
@@ -283,8 +288,7 @@ function NetBrowse17(props) {
       /* Netmap: search at the top (under the page heading, above the map), then the map, Our professionals and the Directory. */
       netMapWithSearch20(props),
       React.createElement("section", { id: "ff-our-pros", style: { marginTop: 18, scrollMarginTop: 70 } },
-        React.createElement(BigHead20, { title: "Our professionals" }),
-        React.createElement(NetLead20, { k: "pros" }),
+        React.createElement(LinedHead20, { title: "Our professionals", k: "pros" }),
         React.createElement(TopStaff11, null),
         React.createElement(ProsByType17, { onPick: props.onPick })),
       React.createElement(NetDirectory20, null));
