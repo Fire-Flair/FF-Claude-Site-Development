@@ -4,6 +4,17 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.29
+
+FF Team home (Alex, 18 Nov 17:41). `styles/home-text.css`, `discover-hub.jsx`.
+
+- Intro under "Built for event and hospitality professionals" (writer agent): "Bartenders, mixologists, waiters, hosts, DJs and photographers: get seen by clients, confirm bookings on WhatsApp, get paid per shift." It says what the hero's "Get seen, get booked, get paid." means; the CV line and "Explore the boxes below" are gone (the CV is in Your profile). Three lines on phones from 360px (font 12.5–14.5px there, `text-wrap:pretty`); two on iPad and desktop.
+- "Built for getting you bookings": one flat burgundy #5C1220 on every size, closed and open, so the box, its chevron button and its inside are the same shade. On phones the gold wedge moved to the top right corner (behind the chevron), as a fixed 150px layer at the top, so it stays put when the box opens and never reaches the labels; the "Review Card" label is ivory again.
+- Pillar boxes on phones: the burgundy wedge sits at the top right and fades out completely by the bottom right corner, so nothing sits behind the drop-down's bottom edge; the open tile ends in plain champagne.
+- iPad and desktop: no gradients on the pillar boxes or the bookings box.
+- The bookings box's chevron button is the same flat burgundy on every size.
+- Colour check at 360, 390 and 430 px: pillar words on champagne, bookings title and labels on burgundy. Merged onto the live page (v1.28), page saved as `live-v1.29-index.html`. Artifact version 1795025052-bb9f.
+
 ## v1.28
 
 Merged after Alex's approval (18 Nov 17:29): the title lines (branch `title-bars`, Gimli) and the 1-2-3 pillar drop-downs (branch `pillar-dropdowns`, Gimli and Legolas). Applied onto v1.27 and published by a three-way merge onto the live page so the photo-browsing chat's unpushed work stays.

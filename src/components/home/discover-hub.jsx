@@ -432,7 +432,7 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
        smaller subheading below it. */
     }, kind === "team" ? "Built for event and hospitality professionals" : "Discover FireFlair"), kind === "team" && React.createElement("p", {
       className: "ff-dx-tag"
-    }, "Turn your CV into a Profile Card, build a team with the people you love working with and get booked for events and hospitality work. Explore the boxes below to see everything FF Team does for you.")), React.createElement("span", {
+    }, "Bartenders, mixologists, waiters, hosts, DJs and photographers: get seen by clients, confirm bookings on WhatsApp, get paid per shift.")), React.createElement("span", {
       className: "ff-dx-sent",
       ref: sent,
       "aria-hidden": "true"

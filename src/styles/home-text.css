@@ -34,34 +34,39 @@
 .ff .ff-hf22.ff-home-c4 .ff-dx-panel .ff-st21 .ph { background:var(--color-champagne-deep,#DCCB9F) !important; }
 
 /* ---------- intro lines under section titles (home intro, Launch Challenge, FF Party Launch Event) ---------- */
-.ff .ff-hf22 .ff-dx-tag { max-width:62ch; }
+.ff .ff-hf22 .ff-dx-tag { max-width:62ch; text-wrap:pretty !important; }
+/* the intro fits in three lines on phones (Alex, 18 Nov 17:41) */
+@media (max-width:759px) { .ff .ff-hf22 .ff-dx-tag { font-size:clamp(12.5px,3.45vw,14.5px) !important; } }
 .ff .ff-hf22 .ff-sec-intro { margin:-6px 0 16px; padding-left:28px; max-width:62ch; font-family:var(--font-sans,'Inter',sans-serif); font-size:clamp(14px,3.8vw,16px); font-weight:500; line-height:1.5;
   color:var(--color-muted,#6A6253); overflow-wrap:normal; word-break:normal; hyphens:none; text-wrap:pretty; }
 .ff .ff-hf22 .ff-tm20-title { margin-top:0 !important; }
 /* four tiles in a row: two-line subtitles, so the photo stops a little higher */
 @media (min-width:1000px) { .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .ph { bottom:80px !important; } }
 
-/* ---------- phones: diagonal gradients (Alex, 18 Nov 16:59, diagonal 17:12) ----------
-   Pillar boxes: champagne behind the photo and words, with a burgundy wedge on the right whose edge runs diagonally
-   (wider at the top, narrower at the bottom), behind the chevron. The open tile fades back to champagne at its bottom
-   edge so it still joins its box.
-   "Built for getting you bookings": the same diagonal, but gold, coming in from the bottom right, and a bit larger. */
+/* ---------- bookings box: one flat burgundy (Alex, 18 Nov 17:41) ----------
+   The box, the chevron button and everything inside are the same burgundy #5C1220, closed and open, on every size. */
+.ff .ff-hf22.ff-home-c4 .ff-hb23-box { background:var(--color-ox,#5C1220) !important; }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-ch { background:var(--color-ox,#5C1220) !important; }
+
+/* ---------- phones only: diagonal gradients (Alex, 18 Nov 16:59, diagonal 17:12, 17:41). Desktop and iPad have none. ----------
+   Pillar boxes: champagne behind the photo and words, with a burgundy wedge at the top right on a diagonal edge, which
+   fades away completely by the bottom right corner (nothing behind the drop-down's bottom edge). The open tile ends in
+   plain champagne at its bottom edge, so it joins its box.
+   "Built for getting you bookings": a gold wedge on the same diagonal in the top right corner (behind the chevron). It is
+   a fixed-height layer at the top, so it stays put when the box opens and never reaches the labels. */
 @media (max-width:759px) {
-  .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile {
-    background:linear-gradient(56deg,#F2EAD2 0%,var(--color-champagne-box,#EAE0C3) 80%,#B98A7C 86%,var(--color-ox-hi,#6E1A2C) 91%,var(--color-ox,#5C1220) 100%) !important; }
+  .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile,
   .ff .ff-hf22.ff-home-c4 .ff-dx.is-open .ff-dx-tile.on {
     background:
-      linear-gradient(180deg,rgba(234,224,195,0) 45%,var(--color-champagne-box,#EAE0C3) 100%),
+      linear-gradient(180deg,rgba(234,224,195,0) 30%,rgba(234,224,195,.75) 70%,var(--color-champagne-box,#EAE0C3) 100%),
       linear-gradient(56deg,#F2EAD2 0%,var(--color-champagne-box,#EAE0C3) 80%,#B98A7C 86%,var(--color-ox-hi,#6E1A2C) 91%,var(--color-ox,#5C1220) 100%) !important; }
   /* the chevron sits on the diagonal edge: a solid burgundy button with a champagne outline and arrow */
   .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .chev { color:var(--color-champagne,#EADBB4) !important; background:var(--color-ox,#5C1220) !important; border-color:rgba(234,219,180,.75) !important; }
   .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile.on .chev { color:var(--color-ox,#5C1220) !important; background:var(--color-champagne,#EADBB4) !important; border-color:var(--color-champagne,#EADBB4) !important; }
 
-  /* bookings box: burgundy, with a larger gold wedge from the bottom right on the same diagonal */
   .ff .ff-hf22.ff-home-c4 .ff-hb23-box {
-    background:linear-gradient(122deg,var(--color-ox-deep,#4A0E1A) 0%,var(--color-ox,#5C1220) 40%,var(--color-ox-hi,#6E1A2C) 64%,#9A5A38 72%,var(--gold,#C9A227) 81%,var(--color-gold-leaf,#EDD58F) 100%) !important; }
+    background:
+      linear-gradient(236deg,var(--color-gold-leaf,#EDD58F) 0%,var(--gold,#C9A227) 9%,#9A5A38 16%,rgba(92,18,32,0) 24%) top right / 100% 150px no-repeat,
+      var(--color-ox,#5C1220) !important; }
   .ff .ff-hf22.ff-home-c4 .ff-hbc-ch { color:var(--color-champagne,#EADBB4) !important; background:var(--color-ox,#5C1220) !important; border-color:var(--color-champagne,#EADBB4) !important; }
-  /* closed, the last label sits on the gold, so it turns burgundy; open, the box is taller and the gold moves to the
-     bottom corner, so the label stays ivory */
-  .ff .ff-hf22.ff-home-c4 .ff-hbc:not(.is-open) .ff-hbc-flow > .ff-hbc-st:last-child .lb { color:var(--color-ox-deep,#4A0E1A) !important; }
 }
