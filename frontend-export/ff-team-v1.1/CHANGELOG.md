@@ -4,6 +4,15 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.47 (shell)
+
+Top left and member profile pages (Alex, 18 Nov 20:06). `src/components/team/landing-shell.jsx`, `src/components/team/team-router.jsx`, `src/styles/v11.css`.
+
+- The FF logo and "FF Team" in the top left now open the FireFlair sites list (no drop-down arrow): FF Team marked "You're here" (its row opens the FF Team home), then FF Staff, FF Party and FF VIP marked "Coming soon", each with its line and address (FFStaff.uk, FFParty.uk, FFVip.uk). The Coming soon rows do nothing. Reuses the prototype's site-menu styles (`ff-acct-menu`, `ff-site`, `SiteMark`) with squircle corners. Closes on a tap outside, Escape or a second tap; button has `aria-haspopup`/`aria-expanded`, the list is a `menu` with arrow-key focus and focus back to the button on Escape.
+- The label reads "FF Team" on every route checked (home, Network, Bookings, Profile, a member profile, a company page, an info page, a story address, the invite address), signed in and out, at 390, 844 and 1180.
+- Business & Support is no longer at the bottom of someone else's profile page (deleted from the `state.viewing` branch of the FF Team router). It stays on Home, Network, Bookings and your own Profile as before; company pages never had it.
+- Checked: `npm run check`, `npm run build`, Playwright at 390 and 1180 (menu open/close, keyboard, outside tap, profile bottom). Not published.
+
 ## v1.46
 
 Network, Vooshka Company Card (Alex, 18 Nov 20:12). `data/companies/profiles/vooshka.json`, `data/companies/company-profile.schema.json`, `src/content/companies.js`, `src/components/staff/company-shape.jsx`, `src/components/staff/company-cards.jsx`, `src/content/companies/real-companies.json` (rebuilt with `npm run companies`).
