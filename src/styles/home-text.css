@@ -135,3 +135,7 @@
   .ff .ff-hf22 .ff-hero-sub101 { white-space:nowrap !important; font-size:clamp(15px,1.5vw,21px) !important; }
   .ff .ff-hf22 .ff-hero-sub101 .ff-hl { display:inline !important; }
 }
+/* iPad (760–899px, the hero stacks with the words under the photo): the one-line tagline is bigger (Alex, 18 Nov 19:56) */
+@media (min-width:760px) and (max-width:899px) { .ff .ff-hf22 .ff-hero-sub101 { font-size:clamp(26px,3.2vw,28px) !important; } }
+/* iPad in a split or narrower window (560–759px, the phone layout): the tagline is bigger too (Alex, 18 Nov 19:56) */
+@media (min-width:560px) and (max-width:759px) { .ff .ff-hf22.ff-home-c4 .ff-hero-sub101 { font-size:clamp(22px,3.9vw,27px) !important; } }

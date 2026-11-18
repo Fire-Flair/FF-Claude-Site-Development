@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.45
+
+- FF Team hero tagline (Alex, 18 Nov 19:56): capital first letters, "Get Seen, Get Booked, Get Paid." (`home-sections.jsx`; the share message is unchanged). Bigger on iPad: 22–27px from 560px to 759px and 26–28px from 760px to 899px (`styles/home-text.css`); desktop keeps 15–21px on one line beside the card. Merged onto the live page 1795031702-ea2c (v1.44); page saved as `live-v1.45-index.html`. Artifact version 1795032246-a1af.
+
 ## v1.44
 
 Network, FF Event Directory (Alex, 18 Nov 19:50). `data/companies/profiles/vooshka.json`, `src/content/companies.js`, `src/content/companies/real-companies.json` (rebuilt with `npm run companies`).
