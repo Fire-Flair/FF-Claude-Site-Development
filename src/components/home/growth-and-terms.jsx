@@ -160,20 +160,20 @@
     const Q = {
       /* home-update (Alex, 18 Nov 14:18): three questions, three answers each. */
       team: [
-        { q: "Do you work in events or hospitality?", a: [
+        /* questions (Alex, 18 Nov): back to his original v16.66 questions, events first, then hospitality; the third stays.
+           "No, I'm here for something else" is left out: it only led to FF Party (every FF Team answer stays inside FF Team). */
+        { q: "Do you work events, or would you like to?", a: [
+          { l: "Yes, I work events", r: "Put your event experience and the venues you work at on your profile, and ask the people you work with for reviews.", c: A.profile },
+          { l: "I'd like to", r: "See who is already doing it. Browse the network and follow the people whose work you like.", c: A.network }
+        ] },
+        { q: "Do you work in hospitality?", a: [
           { l: "Yes, it's my career", r: "Then FF Team is built for you. Turn your CV into a Profile Card and a page of your own, so event companies can find you and book you.", c: A.profile },
-          { l: "I'd like shifts around my main job", r: "Make your Profile Card and say yes to the dates that suit you. Every request comes to you on WhatsApp.", c: A.profile },
           { l: "Not yet, but I'd like to", r: "Start with the FF Team community: bar shows, training and people who will help you take your first steps.", c: A.support }
         ] },
         { q: "What would help you most right now?", a: [
           { l: "Getting booked", r: "We put your Profile Card in front of the event companies who book. Requests arrive on WhatsApp and you answer with one tap.", c: A.bookings },
           { l: "Building my team", r: "Add the people you work with. They join your team, show on your profile and get booked with you.", c: A.network },
           { l: "Collecting reviews", r: "Everyone you work with can review you after a shift, and every review adds to your profile.", c: A.reviews }
-        ] },
-        { q: "Would you like to win the FF Team Launch Challenge?", a: [
-          { l: "Yes, I'm in", r: "From 1 December you have 90 days to build the best team. The top 10 go Gold and the winner flies to the Athens Bar Show.", c: A.challenge },
-          { l: "How do I enter?", r: "Create your profile during the challenge and you are entered. Then share your card and invite the people you work with.", c: A.profile },
-          { l: "I'd like to see the stories first", r: "FFStories are about the people and the events behind FF Team.", c: A.stories }
         ] }
       ],
       staff: [
