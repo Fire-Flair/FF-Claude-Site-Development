@@ -10,6 +10,14 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
 - iPad at every size, portrait or landscape, uses the phone layout; the desktop layout needs a wide window with a mouse or trackpad.
 - Desktop: one big photo with every photo in a row below it (arrows and keys step through; the row scrolls left and right after five), in place of the mosaic that opened one photo full size. `components/team/public-profile.jsx` (DeskGallery11, PublicHero), `styles/p12.css`.
 - Company Cards (no icon line) keep the previous photo behaviour.
+## v1.46
+
+Network, Vooshka Company Card (Alex, 18 Nov 20:12). `data/companies/profiles/vooshka.json`, `data/companies/company-profile.schema.json`, `src/content/companies.js`, `src/components/staff/company-shape.jsx`, `src/components/staff/company-cards.jsx`, `src/content/companies/real-companies.json` (rebuilt with `npm run companies`).
+
+- The Vooshka card gets the "Company Card" plate back and loses the FF logo, so it matches the directory cards exactly. Its logo and everything on its page stay as they are.
+- New card field `card.plate` (format 2 schema): a signed-up company with `plate: true` shows the plate and no FF logo (`claimed = !co.unclaimed && !co.plate` in `CompanyCardFace`). Only Vooshka sets it.
+- Checked: `npm run companies`, `npm run check`, `npm run build`, Network page screenshot of the Mobile cocktail bars row.
+- Published over live 1795032246-a1af (v1.45), index.html only (all other files kept). Artifact version 1795032854-05d4. Built page saved as `live-v1.46-index.html`.
 
 ## v1.45
 

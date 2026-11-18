@@ -84,7 +84,7 @@ function coFromProfile17(slug) {
   const co = {
     name: page.name, kind: page.kind, areas: places.join(" and "), slug: page.slug,
     ...(base && base.base17 ? { base17: { ...base.base17, at: 0 } } : {}),
-    socials: { ...(page.socials || {}) }, theme: page.theme, layout: page.layout, logoWide: !!page.logoWide,
+    socials: { ...(page.socials || {}) }, theme: page.theme, layout: page.layout, plate: !!page.plate, logoWide: !!page.logoWide,
     description: page.description, aboutSource: page.aboutSource, logo: page.logo, media: (page.media || []).map((m) => ({ ...m })),
     info: (page.info || []).map((x) => ({ ...x })),
     records: { ...(page.records || {}) },
