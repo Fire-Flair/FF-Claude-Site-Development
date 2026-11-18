@@ -326,6 +326,7 @@ function TeamTab17({ person }) {
   const all = useDirectory();
   const first = String(person.name || "").split(" ")[0] || "them";
   const { teams, tCos, tNet } = teamTabData17(state, all, person);
+  const tpo = teamsOpt17(); if (tpo) return <TeamsPreview17 person={person} opt={tpo} />;   /* p2/teams scratch preview */
   return <TeamParts17 team={teams} companies={tCos} network={tNet} teamEmpty={person.id === "me" ? "No one on your team yet." : `${first} hasn't added anyone to their team yet.`} />;
 }
 
@@ -390,7 +391,7 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
   const tabs = [
     { key: "overview", label: "Overview" },
     { key: "services", label: "Bookings", count: services.length },
-    { key: "teams", label: "Team", count: teams.length + tCos.length + tNet.length },
+    { key: "teams", label: "Team", count: teamsOpt17() ? tpTeamCount17() : teams.length + tCos.length + tNet.length },
     { key: "reviews", label: "Reviews", count: reviews.length },
   ];
   const Empty1 = ({ icon, children }) => <div className="ff-tab-empty">{icon}<p>{children}</p></div>;
