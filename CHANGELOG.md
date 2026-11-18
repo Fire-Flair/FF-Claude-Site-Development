@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.50
+
+Profile edit page (Alex's top priority). Branch merged: `p2-pbuild`.
+
+- Own profile edit page (new `profile-edit-p2.jsx`, `profile-edit-p2.css`; `aragorn-preview.jsx`, `profile-builder.jsx`): below Media the page looks like the finished profile. Professions and Attribute cards (Skills, Interests, Languages, Qualifications) show even when empty, each with a pencil. A pencil opens a light sheet; the Professions pencil opens the Tiles picker with every category, Bar as a ladder (1 Barback, 2 Bartender, 3 Cocktail Bartender, 4 Flair Bartender, 5 Mixologist), the rest alphabetical. Profession removal goes by record id.
+- Q&A sits below the tabs and above Save, always open, answered inline and shown at once (as on the live FF Team site); own questions are Yes/No plus a type box and save for real. Q&A is gone from the Bookings tab on the edit page.
+- Edit bar (`party-live.jsx`, FF Team only): Save, then a small X in a circle that closes edit (everything is already saved). New members see Save only. Venues stay off; About Me stays above the tabs.
+
 ## v17.49
 
 Artifact version 1794966229-5133.
