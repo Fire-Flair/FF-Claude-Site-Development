@@ -136,8 +136,6 @@
 .ff #ff-bk-party .ff-pkc-new .ff-pkc-ft { justify-content:center; }
 .ff #ff-bk-party .ff-pkc-new .ff-pkc-ri { flex:1 1 auto; }
 .ff #ff-bk-party .ff-pkc-new .ff-pkc-ri:disabled { opacity:.7; cursor:default; }
-.ff .ff-bk-locs { margin:12px 0 0; font-size:14px; line-height:1.5; color:#5B5346; }
-.ff .ff-bk-locs a { color:var(--ox,#5C1220); font-weight:600; text-decoration:underline; text-underline-offset:3px; }
 .ff .ff-fs5-h { margin:14px 0 8px; font:600 15px/1.25 var(--display); color:#16130F; }
 .ff .ff-fs5-chips { display:flex; flex-wrap:wrap; gap:8px; }
 .ff .ff-fs5-chip { display:inline-flex; align-items:center; gap:6px; min-height:40px; padding:0 14px; border-radius:12px; corner-shape:squircle; white-space:nowrap; }
@@ -324,3 +322,12 @@
   .ff-bkd-row .bkd-chev { margin-top:0; justify-self:end; }
   .ff-bkd-row .bkd-bds { display:block; margin:0 0 10px; font-size:14px; line-height:1.5; color:#4A443A; }
 }
+/* bkpop (v1.60): package pop-ups scroll inside themselves only (the page behind stays put), the terms pop-up keeps
+   Accept and confirm in view at its foot, and the package slider keeps a sideways swipe to itself. */
+.ff .ff-sheet:has(.ff-doc17), .ff .ff-sheet:has(.ff-bkterms17) { overscroll-behavior:contain; -webkit-overflow-scrolling:touch; touch-action:pan-y; }
+.ff .ff-scrim:has(.ff-doc17), .ff .ff-scrim:has(.ff-bkterms17) { z-index:200; overscroll-behavior:contain; }
+.ff .ff-scrim:has(.ff-bkterms17) { align-items:center; padding:14px 10px calc(28px + env(safe-area-inset-bottom,0px)); }
+.ff .ff-sheet:has(.ff-bkterms17) { max-height:calc(100dvh - 60px); border:1px solid var(--gold-dk); border-radius:24px; corner-shape:squircle; padding-bottom:0; box-shadow:0 24px 60px rgba(0,0,0,.35); }
+.ff .ff-sheet:has(.ff-bkterms17) .ff-sheet-head { border-radius:24px 24px 0 0; }
+.ff .ff-sheet:has(.ff-bkterms17) .ff-bsec-acts { position:sticky; bottom:0; z-index:2; margin:10px -16px -16px !important; padding:12px 16px calc(14px + env(safe-area-inset-bottom,0px)); background:var(--paper); border-top:1px solid var(--rule); }
+.ff #ff-bk-party .ff-hscroll { overscroll-behavior-x:contain; touch-action:pan-x pan-y; }
