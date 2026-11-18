@@ -495,7 +495,8 @@ function DialCode26({ value, onChange }) {
 
 /* v1.29 (Alex, 18 Nov 17:49): the Phone number box's tone, one line to switch — "ff-wa-sage" (light sage-champagne),
    "ff-wa-olive" (olive champagne-gold) or "ff-wa-moss" (deep muted green, champagne text). Colours in prof21.css. */
-const PHONE_TONE21 = "ff-wa-sage";
+/* v1.32 (Alex, 18 Nov 18:22): champagne box, green WhatsApp logo ("ff-wa-champ"). */
+const PHONE_TONE21 = "ff-wa-champ";
 const PHONE_BOX21 = "shine ff-wa-pfa " + PHONE_TONE21;
 
 function GoldBox21({ icon, title, count, desc, note, children, line = true, id, className }) {

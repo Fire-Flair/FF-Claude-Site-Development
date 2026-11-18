@@ -9,6 +9,7 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
 Profile page (Alex, 18 Nov 17:49), two parallel branches merged: `v11-phone-1749` (phone box, Let's get started) and `v11-venues-1749` (Experience). Published by a three-way merge onto the live page, so other chats' work stays.
 
 ### Phone number box and Let's get started
+- **Final colour (Alex, 18 Nov 18:22): champagne box with a green WhatsApp logo** — new default tone `ff-wa-champ` (`PHONE_TONE21`): champagne `#F5ECD3` > `#EADBB4` > `#DCCB9F`, text `#2A1E04`, WhatsApp mark `#1A9E4B`, gold edge. The sage / olive / moss tones below stay available as one-line switches.
 Alex, 18 Nov 17:49: the WhatsApp-green phone box was too intense; and on desktop the Let's get started box sits on the left under its heading. Profile builder page (`#/ff-team/profile`) only.
 
 - Phone number box (`.ff-gb21.shine.ff-wa-pfa`), everywhere it appears (Let's get started, the WhatsApp code step, a signed-in member's verified number): the flat `#25D366` with its dark text is replaced by a muted sage / champagne-gold gradient. Three tones, each one class, in `src/styles/prof21.css` (v1.27 block, now driven by CSS custom properties `--wa-bg`, `--wa-ink`, `--wa-mark` …):
