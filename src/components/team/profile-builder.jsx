@@ -937,7 +937,7 @@ function ProfileBuilder() {
         </div>
         <ABOUT_TOP34.Provider value={true}>
           <CreatorAboutMe top />
-          <ProfileSections person={me} isMe />
+          {aragornOpt() ? <AragornTabs person={me} opt={aragornOpt()} /> : <ProfileSections person={me} isMe />}
         </ABOUT_TOP34.Provider>
         <IntroEditor17 />
       </div>
