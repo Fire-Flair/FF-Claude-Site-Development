@@ -169,7 +169,7 @@ Every photo supplied for the FireFlair sites, in one place, so any image on the 
 | vkc07 | Classic cocktail: Aperol Spritz | photo, landscape | - | - | library only |
 | vkc08 | Classic cocktail: Old Fashioned | photo, landscape | - | - | library only |
 | vkc09 | Classic cocktail: Negroni | photo, landscape | - | - | library only |
-| vkc10 | Classic cocktail: Moscow Mule | photo, landscape | - | - | library only |
+| vkc10 | Classic cocktail: Moscow Mule | photo, landscape | - | - | Bookings (FireFlair rewards) |
 | vkc11 | Classic cocktail: Tom Collins | photo, landscape | - | - | library only |
 | vkc12 | Classic cocktail: Whisky Sour | photo, landscape | - | - | library only |
 | vkc13 | Classic cocktail: Bramble | photo, square | - | - | library only |

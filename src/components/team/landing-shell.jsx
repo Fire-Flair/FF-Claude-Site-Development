@@ -192,6 +192,72 @@ function LoginSheet({ open, onClose }) {
 
 
 
+/* The FireFlair sites list behind the top-left FF logo and "FF Team" (v1.47, Alex 18 Nov 20:06: "if you tap the FF
+   icon in the top left, then you can see the other sites in the coming soon"). No drop-down arrow. FF Team is the site
+   you're on (its row opens the FF Team home); FF Staff, FF Party and FF VIP are shown as Coming soon and do nothing. */
+const SITE_MENU11 = ["team", "staff", "party", "vip"];
+const siteDomain11 = (d) => "FF" + String(d || "").replace(/^ff/i, "").replace(/^./, (c) => c.toUpperCase());
+
+function SiteMenu11({ onHome }) {
+  const [open, setOpen] = useState(false);
+  const wrap = useRef(null), btn = useRef(null), items = useRef([]);
+  const sites = SITE_MENU11.map((k) => FF_SITES.find((x) => x.key === k)).filter(Boolean);
+  const close = (refocus) => { setOpen(false); if (refocus && btn.current) btn.current.focus(); };
+  useEffect(() => {
+    if (!open) return;
+    const t = setTimeout(() => { const f = items.current[0]; if (f) f.focus(); }, 0);
+    const down = (e) => { if (wrap.current && !wrap.current.contains(e.target)) setOpen(false); };
+    const key = (e) => { if (e.key === "Escape") { e.preventDefault(); close(true); } };
+    document.addEventListener("pointerdown", down);
+    document.addEventListener("keydown", key);
+    return () => { clearTimeout(t); document.removeEventListener("pointerdown", down); document.removeEventListener("keydown", key); };
+  }, [open]);
+  const move = (e) => {
+    const list = items.current.filter(Boolean), i = list.indexOf(document.activeElement);
+    const go = (n) => { e.preventDefault(); list[(n + list.length) % list.length].focus(); };
+    if (e.key === "ArrowDown") go(i + 1);
+    else if (e.key === "ArrowUp") go(i - 1);
+    else if (e.key === "Home") go(0);
+    else if (e.key === "End") go(list.length - 1);
+    else if (e.key === "Tab") setOpen(false);
+  };
+  return (
+    <div className="ff-acct" ref={wrap}>
+      <button type="button" ref={btn} className="ff-acct-btn" aria-haspopup="menu" aria-expanded={open} aria-controls="ff-sites11"
+        aria-label="FF Team, FireFlair sites" onClick={() => setOpen((o) => !o)}>
+        <img decoding="async" className="ff-acct-logo" src={FF_SITE_BRAND.team.icon} width={30} height={30} alt="" draggable={false} />
+        <span className="ff-display" style={{ fontSize: 15, lineHeight: 1.1, letterSpacing: ".06em", color: "#EAD79C", whiteSpace: "nowrap" }}>FF Team</span>
+      </button>
+      {open && (
+        <div id="ff-sites11" className="ff-acct-menu ff-sites11" role="menu" aria-label="FireFlair sites" onKeyDown={move}>
+          <div className="ff-acct-sect" aria-hidden="true">FireFlair sites</div>
+          {sites.map((s, n) => {
+            const here = s.key === "team";
+            const body = (
+              <>
+                <SiteMark site={{ ...s, locked: !here }} size={30} />
+                <span style={{ minWidth: 0 }}>
+                  <span className="ff-site-name">{s.name}</span>
+                  <span className="ff-site-line">{s.line}</span>
+                  <span className="ff-site-dom">{siteDomain11(s.domain)}</span>
+                </span>
+                {here ? <span className="ff-site-here">You're here</span> : <span className="ff-site-soon">{LOCKED_LABEL17}</span>}
+              </>
+            );
+            return here ? (
+              <button key={s.key} type="button" role="menuitem" tabIndex={-1} ref={(el) => { items.current[n] = el; }} className="ff-site" aria-current="page"
+                onClick={() => { close(true); onHome(); }}>{body}</button>
+            ) : (
+              <div key={s.key} role="menuitem" tabIndex={-1} aria-disabled="true" ref={(el) => { items.current[n] = el; }} className="ff-site locked">{body}</div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+
 function Shell({ children }) {
   const { state, dispatch } = useStore();
   const [xpOpen, setXpOpen] = useState(false);
@@ -229,13 +295,8 @@ function Shell({ children }) {
       <a className="ff-skip" href="#ff-main" onClick={(e) => { e.preventDefault(); const m = document.getElementById("ff-main"); if (m) m.focus(); }}>Skip to content</a>
       <header className="ff-topbar ff-lattice">
         <div className="ff-topbar-in">
-          {/* Top left (v1.1): the FF logo and "FF Team". It opens the FF Team home; there is no site list. */}
-          <div className="ff-acct">
-            <button type="button" className="ff-acct-btn" aria-label="FF Team home" onClick={() => goTab("home")}>
-              <img decoding="async" className="ff-acct-logo" src={FF_SITE_BRAND.team.icon} width={30} height={30} alt="" draggable={false} />
-              <span className="ff-display" style={{ fontSize: 15, lineHeight: 1.1, letterSpacing: ".06em", color: "#EAD79C", whiteSpace: "nowrap" }}>FF Team</span>
-            </button>
-          </div>
+          {/* Top left (v1.47, Alex 18 Nov 20:06): the FF logo and "FF Team" open the FireFlair sites list (no arrow). */}
+          <SiteMenu11 onHome={() => goTab("home")} />
           {/* Home, Network, Bookings, Profile — centred in the bar on desktop. */}
           <nav className="ff-desknav" aria-label="Main">
             {/* v1.3: the FF coin sits to the right of Profile. */}
