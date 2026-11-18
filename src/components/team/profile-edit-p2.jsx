@@ -168,36 +168,6 @@ function PE2ProfEd() {
   );
 }
 
-/* Attributes editor: one category at a time, its entries as chips, and the type box (type, press Enter). */
-function PE2AttrEd({ start }) {
-  const { state, dispatch } = useStore();
-  const keys = PE2_ATTRS.filter(k => BASE_CATEGORIES[k]);
-  const [k, setK] = useState(keys.includes(start) ? start : keys[0]);
-  const def = BASE_CATEGORIES[k];
-  const rows = rankedRecords(recsOf(state.profile, k)).filter(r => !r.hidden && !r.proposed);
-  return (
-    <div className="pp-attr">
-      <div className="pp-seg" role="tablist" aria-label="Attributes">
-        {keys.map(x => {
-          const n = recsOf(state.profile, x).filter(r => !r.hidden && !r.proposed).length;
-          return <button key={x} type="button" role="tab" aria-selected={x === k} className={"pp-seg-b" + (x === k ? " on" : "")} onClick={() => setK(x)}>{BASE_CATEGORIES[x].label}<span className="n">{n}</span></button>;
-        })}
-      </div>
-      {rows.length > 0 && (
-        <div className="pp-chips">
-          {rows.map((r, i) => (
-            <span key={r.id} className={"pp-chip" + (i < 3 ? " top" : "")}>
-              {nbh21(r.name)}
-              <button type="button" className="rm" aria-label={`Remove ${r.name}`} onClick={() => dispatch({ type: "REC_DELETE", category: k, id: r.id })}><Trash2 size={13} /></button>
-            </span>
-          ))}
-        </div>
-      )}
-      <TypeBox21 catKey={k} def={def} rows={rows} />
-    </div>
-  );
-}
-
 /* The Light sheet: one title, the editor, one Done (everything saves as you go). */
 function PE2Sheet({ open, title, wide, onClose, children }) {
   useEffect(() => {
@@ -234,10 +204,6 @@ function PE2Level({ r }) {
 
 function PE2AddProf({ onClick }) {
   return <button type="button" className="pe2-add-prof" aria-label="Add a profession" onClick={onClick}><span className="pe2-add-ic" aria-hidden="true"><Plus size={26} strokeWidth={2.2} /></span></button>;
-}
-
-function PE2Pencil({ label, onClick }) {
-  return <button type="button" className="pp-pen" aria-label={`Edit ${label}`} title={`Edit ${label}`} onClick={onClick}><Pencil size={15} strokeWidth={2} aria-hidden="true" /></button>;
 }
 
 /* Professions and Attributes on the edit page, laid out as the finished profile, empty ones as placeholder cards. */

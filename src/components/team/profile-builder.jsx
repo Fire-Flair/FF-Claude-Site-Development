@@ -938,10 +938,10 @@ function ProfileBuilder() {
         </div>
         <ABOUT_TOP34.Provider value={true}>
           <CreatorAboutMe top />
-          {aragornOpt() ? <AragornTabs person={me} opt={aragornOpt()} /> : <ProfileSections person={me} isMe />}
+          <ProfileEditTabs person={me} />
         </ABOUT_TOP34.Provider>
         <IntroEditor17 />
-        {aragornOpt() === 1 && <PE2QA />}
+        <PE2QA />
       </div>
 
       {/* Section 4 → Save & Share → Section 5. v16.11: everything stays on the
