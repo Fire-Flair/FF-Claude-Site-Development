@@ -2,6 +2,8 @@
 
 ## v17.54
 
+Artifact version 1794969481-3618.
+
 Fix: the prototype loads again. Branch merged: `p2-cats`.
 
 - `discover-and-support.jsx`: v17.52 cut the Launch Challenge rewards list to two entries but the challenge boxes still read a third, so the whole app failed to load (blank page on v17.52 and v17.53). The boxes now pick their reward text by label ("Top 10", "Overall winner").
