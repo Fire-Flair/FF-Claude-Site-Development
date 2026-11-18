@@ -692,7 +692,7 @@ function FFAI({ query, onQuery, onSubmit, onEvent, onShift, placeholder, context
   const canSend = !!val.trim() && !listening;
   const sendLabel = searchBox ? "Search" : submitLabel === "Go" ? "Send" : submitLabel;
   const taRef = useRef(null);
-  useEffect(() => { const el = taRef.current; if (!el) return; if (!val) { el.style.height = ""; return; } el.style.height = "auto"; el.style.height = Math.min(el.scrollHeight, 140) + "px"; }, [val]);
+  /* grow-boxes: the global hook (primitives.jsx) sizes this box to its text or placeholder; no cap, no inner scroll. */
   return (
     <div className={`ff-frame ff-ai ${tint ? "ff-ffai-tint" : "ff-lattice"}${hero ? " hero" : ""}${compact ? " compact" : ""}${isBare ? " bare" : ""}${plain ? " plain" : ""}${chatMsgs.length ? " chatting" : ""}`}>
       {!plain && <Corners />}

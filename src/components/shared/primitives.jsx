@@ -81,3 +81,43 @@ function Empty({ icon, title, action }) {
     </div>
   );
 }
+
+
+/* grow-boxes (Alex, 18 Nov 21:15): no text box on the site scrolls inside itself. Every textarea grows with its text
+   (typed, pasted, or filled in by speech to text or GPT) and, when empty, is tall enough for its whole placeholder.
+   One global hook: the value setter React uses, input events, new textareas appearing, and width changes. */
+(function ffGrowBoxes() {
+  if (typeof window === "undefined" || window.__ffGrow) return;
+  window.__ffGrow = true;
+  const proto = HTMLTextAreaElement.prototype;
+  const desc = Object.getOwnPropertyDescriptor(proto, "value");
+  const size = (el) => {
+    if (!el || !el.isConnected || el.dataset.noGrow != null) return;
+    const cs = getComputedStyle(el);
+    if (cs.display === "none") return;
+    const edge = cs.boxSizing === "border-box" ? (parseFloat(cs.borderTopWidth) || 0) + (parseFloat(cs.borderBottomWidth) || 0) : -((parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0));
+    const v = desc.get.call(el);
+    const usePh = !v && el.placeholder;
+    if (usePh) desc.set.call(el, el.placeholder);
+    el.style.height = "auto";
+    const h = el.scrollHeight + edge;
+    if (usePh) desc.set.call(el, "");
+    el.style.height = h + "px";
+  };
+  Object.defineProperty(proto, "value", {
+    configurable: true, enumerable: desc.enumerable,
+    get() { return desc.get.call(this); },
+    set(x) { desc.set.call(this, x); const el = this; requestAnimationFrame(() => size(el)); },
+  });
+  const all = () => document.querySelectorAll("textarea").forEach(size);
+  document.addEventListener("input", (e) => { if (e.target && e.target.tagName === "TEXTAREA") size(e.target); }, true);
+  let t = 0;
+  const later = () => { if (t) return; t = requestAnimationFrame(() => { t = 0; all(); }); };
+  new MutationObserver((ms) => { if (ms.some((m) => [...m.addedNodes].some((n) => n.nodeType === 1 && (n.tagName === "TEXTAREA" || (n.querySelector && n.querySelector("textarea")))))) later(); })
+    .observe(document.documentElement, { childList: true, subtree: true });
+  window.addEventListener("resize", later);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(later).catch(() => {});
+  const st = document.createElement("style");
+  st.textContent = ".ff textarea{overflow-y:hidden!important;max-height:none!important;resize:none}";
+  document.head.appendChild(st);
+})();
