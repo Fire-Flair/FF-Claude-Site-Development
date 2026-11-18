@@ -331,3 +331,23 @@
 .ff .ff-sheet:has(.ff-bkterms17) .ff-sheet-head { border-radius:24px 24px 0 0; }
 .ff .ff-sheet:has(.ff-bkterms17) .ff-bsec-acts { position:sticky; bottom:0; z-index:2; margin:10px -16px -16px !important; padding:12px 16px calc(14px + env(safe-area-inset-bottom,0px)); background:var(--paper); border-top:1px solid var(--rule); }
 .ff #ff-bk-party .ff-hscroll { overscroll-behavior-x:contain; touch-action:pan-x pan-y; }
+
+/* bk-hybrid (Alex, 18 Nov 21:33): Your bookings takes the live FFTeam.uk design with the v1.52 content.
+   One cream panel; the WhatsApp banner (pale green, softer body text); then white cards, each with a cream icon
+   tile, a small black lock badge when the feature is still to come, a bold title, a grey line and a gold status. */
+.ff .ff-bkh-panel { display:grid; gap:14px; padding:16px; background:var(--color-sand,#F3EAD5); border:1px solid rgba(160,124,30,.28); border-radius:26px; corner-shape:squircle; }
+.ff .ff-bkh-wa { align-items:center; gap:16px; margin:0; padding:18px 18px; border-radius:20px; corner-shape:squircle; background:#EAF6EE; border:1px solid #A9DDBB; }
+.ff .ff-bkh-wa .ff-wa-ico { width:48px; height:48px; background:#4CC46F; }
+.ff .ff-bkh-watx { min-width:0; color:#1F3A2A; font-size:15px; line-height:1.5; }
+.ff .ff-bkh-watx b { color:#0B3D22; font-weight:700; }
+.ff .ff-bkh-list { list-style:none; margin:0; padding:0; display:grid; gap:12px; }
+@media (min-width:760px) { .ff .ff-bkh-list { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+.ff .ff-bkh-card { display:flex; align-items:flex-start; gap:16px; min-width:0; padding:18px 18px 18px 16px; background:#fff; border:1px solid rgba(160,124,30,.16); border-radius:22px; corner-shape:squircle; box-shadow:0 1px 2px rgba(22,19,15,.05), 0 6px 18px rgba(22,19,15,.05); }
+.ff .ff-bkh-tile { position:relative; flex:none; display:grid; place-items:center; width:52px; height:52px; border-radius:16px; corner-shape:squircle; background:#F6EFDD; border:1px solid rgba(160,124,30,.35); color:var(--color-gold-dk,#7E611D); }
+.ff .ff-bkh-tile-ff { background:var(--color-ink-warm,#16130F); border-color:var(--color-ink-warm,#16130F); }
+.ff .ff-bkh-lock { position:absolute; right:-6px; bottom:-6px; display:grid; place-items:center; width:22px; height:22px; border-radius:50%; background:#16130F; color:#EAD79C; border:2px solid #fff; }
+.ff .ff-bkh-tx { display:flex; flex-direction:column; gap:4px; min-width:0; padding-top:2px; }
+.ff .ff-bkh-ti { font:700 17px/1.25 var(--font-sans); color:#16130F; }
+.ff .ff-bkh-ds { font:400 15px/1.45 var(--font-sans); color:#6E6558; }
+.ff .ff-bkh-st { display:inline-flex; align-items:center; gap:6px; margin-top:8px; font:700 11.5px/1 var(--font-sans); letter-spacing:.14em; text-transform:uppercase; color:#8A6A1E; }
+@media (max-width:520px) { .ff .ff-bkh-panel { padding:12px; gap:12px; border-radius:24px; } .ff .ff-bkh-wa { gap:14px; padding:16px 14px; } .ff .ff-bkh-wa .ff-wa-ico { width:44px; height:44px; } .ff .ff-bkh-card { gap:14px; padding:16px 14px; } }

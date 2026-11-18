@@ -391,6 +391,7 @@ const PKC_TEAM17 = {
     cond: "Your role and hours are agreed and confirmed before the booking." },
 };
 /* The ribbon icon follows the tab: a cocktail glass for Bar, music for Entertainment, a concierge bell for Services. */
+const BKH_CAL17 = lucideIcon("CalendarDays");
 const PKC_ICO17 = { bar: lucideIcon("Martini"), ent: lucideIcon("Music"), svc: lucideIcon("ConciergeBell") };
 
 /* The face's text never splits a word: a line that doesn't fit shrinks. */
@@ -799,20 +800,33 @@ function TeamBookings({ guest = false }) {
 
       <section className="ff-bk-sec ff-bk-yours" id="ff-bk-yours" aria-labelledby="ff-bk-yours-h">
         <h1 className="ff-h1 ff-big20 ff-bk-yh" id="ff-bk-yours-h"><span className="t">Your bookings</span></h1>
-        {/* v1.52 (Alex, 18 Nov 20:35): the WhatsApp question is gone; a second row with the Add FireFlair mark says
-            notifications show here too. */}
-        <div className="ff-wa ff-bk-waline ff-bk-wabox ff-bk-wabox2">
-          <span className="ff-bk-warow">
+        {/* bk-hybrid (Alex, 18 Nov 21:33): a hybrid of live FFTeam.uk and v1.66. The live site's design (one cream panel,
+            the WhatsApp banner, then white cards with an icon tile, a lock badge and a gold status line) holding the
+            v1.52 content (requests on WhatsApp, selected bookings shown here, notifications shown here). */}
+        <div className="ff-bkh-panel">
+          <div className="ff-wa ff-bkh-wa">
             <span className="ff-wa-ico"><WhatsAppIcon size={26} /></span>
-            <span className="ff-body ff-bk-watx">
+            <span className="ff-body ff-bkh-watx">
               <b>Requests come to you on WhatsApp.</b> When companies and clients ask if you're free, each request is sent to you directly on WhatsApp and shows here. You reply in either place.
-              <span className="ff-bk-wasel">When you're selected for a booking, it will be shown here.</span>
             </span>
-          </span>
-          <span className="ff-bk-warow ff-bk-ffrow">
-            <span className="ff-bk-ffico"><AddFireFlairMark size={30} /></span>
-            <span className="ff-body ff-bk-watx"><b>Notifications will also be shown here.</b></span>
-          </span>
+          </div>
+          <ul className="ff-bkh-list">
+            <li className="ff-bkh-card">
+              <span className="ff-bkh-tile"><BKH_CAL17 size={24} strokeWidth={1.6} /><span className="ff-bkh-lock" aria-hidden="true"><Lock size={11} strokeWidth={2.2} /></span></span>
+              <span className="ff-bkh-tx">
+                <b className="ff-bkh-ti">Confirmed bookings</b>
+                <span className="ff-bkh-ds">When you're selected for a booking, it will be shown here.</span>
+                <span className="ff-bkh-st"><Lock size={13} strokeWidth={2} /> Coming soon</span>
+              </span>
+            </li>
+            <li className="ff-bkh-card">
+              <span className="ff-bkh-tile ff-bkh-tile-ff"><AddFireFlairMark size={30} /></span>
+              <span className="ff-bkh-tx">
+                <b className="ff-bkh-ti">Notifications</b>
+                <span className="ff-bkh-ds">Notifications will also be shown here.</span>
+              </span>
+            </li>
+          </ul>
         </div>
       </section>
 

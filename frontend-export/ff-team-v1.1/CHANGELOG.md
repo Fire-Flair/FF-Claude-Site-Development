@@ -4,7 +4,7 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
-## v1.67
+## v1.68
 
 Profile builder, Professions picker (Alex, 18 Nov 21:34, option 5 of six mock-ups). `src/components/team/profile-edit-p2.jsx` (`PE2ProfCats`, `PE2CatSheet`, `PE2TopSlots`), `src/styles/profile-edit-p2.css` (prof-grid).
 
@@ -12,6 +12,19 @@ Profile builder, Professions picker (Alex, 18 Nov 21:34, option 5 of six mock-up
 - Tapping a tile opens that category in a pop-up: tap professions to add or remove as many as you like, "Add your own" puts a typed profession under that category (Other included), Done closes it. Replaces the sideways row of category boxes.
 - Top three slots: a new profession fills an empty slot automatically, unless the member emptied that slot on purpose.
 - Checked: `npm run check`, `npm run build`, new member at 390 and 1280: Services opened, Photographer picked, "Drone Pilot" added, tile shows 2, slots 1 and 2 filled; labels fit; no console errors.
+
+## v1.67
+
+Bookings, Your bookings (Alex, 18 Nov 21:33: a hybrid of the live FFTeam.uk Bookings screen and v1.66). `src/components/team/bookings.jsx`, `src/styles/bkd.css` (bk-hybrid).
+
+- Design from live FFTeam.uk, content from v1.66: the section now sits in one cream squircle panel. Inside it, the WhatsApp banner (paler green, softer body text, as live) holds only the WhatsApp line.
+- Below the banner, white cards in the live style: a cream icon tile with a small black lock badge when the feature is still to come, a bold title, a grey line and a gold uppercase status.
+  - Confirmed bookings: "When you're selected for a booking, it will be shown here." Coming soon.
+  - Notifications (FF mark tile): "Notifications will also be shown here."
+- No split by site (no "Coming with FF Staff / FF Party" labels) and no Booking passes card, as agreed on 17 Nov. The page title keeps the agreed underline title system.
+- Cards stack on phones and sit two across from 760px.
+- Checked: `npm run check`, `npm run build`, Bookings at 390 and 1180, no console errors.
+- Merged onto the live page 1795037719-8da7 (v1.66), index.html only (all other files kept). Artifact version 1795037897-f382. Built page saved as `live-v1.67-index.html`.
 
 ## v1.66
 
