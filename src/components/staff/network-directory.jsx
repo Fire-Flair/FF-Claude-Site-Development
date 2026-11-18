@@ -218,11 +218,14 @@ const PRO_TYPES17 = [["bar", "Bar", "Bar"], ["ent", "Entertainment", "Entertainm
 function ProsByType17({ onPick }) {
   const { state, dispatch } = useStore();
   const everyone = useDirectory();
-  const kindOf = (p) => PILLAR_OF_GROUP17[p.group] || "other";
+  /* v17.48: a person is listed once in every type their top 3 professions cover, the plate showing the best-ranked
+     profession of that type; top-profession holders first, then 2nd, then 3rd, then the existing order. */
+  const kindOf = (g) => PILLAR_OF_GROUP17[g] || "other";
   return (
     <>
       {PRO_TYPES17.map(([k, label, icon]) => {
-        const list = everyone.filter(p => kindOf(p) === k);
+        const list = everyone.map((p, i) => [p, (p.groups || [{ group: p.group, profession: p.profession, rank: 0 }]).find(x => kindOf(x.group) === k), i])
+          .filter(([, x]) => x).sort((a, b) => a[1].rank - b[1].rank || a[2] - b[2]).map(([p, x]) => ({ ...p, profession: x.profession }));
         if (!list.length) return null;
         return (
           <Fold17 key={k} id={"ff-pros-" + k} icon={<GroupIcon group={icon} />} title={label} count={list.length} shut>

@@ -115,15 +115,3 @@ function PeekHire11({ p }) {
 
 
 
-/* A person's team is everyone they have added to their network (teams as groups belong to Company Cards). */
-function networkOf11(state, all, person) {
-  if (!person) return [];
-  if (person.id === "me") return (state.connections || []).map(c => all.find(x => x.id === c.id)).filter(Boolean);
-  const hash = (t) => { let h = 7; for (const ch of t) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return h; };
-  const mine = (state.connections || []).some(c => c.id === person.id);
-  const pool = all.filter(x => x.id !== person.id && x.id !== "me" && !x.isCompany);
-  const near = pool.filter(x => x.group === person.group);
-  const rest = pool.filter(x => x.group !== person.group);
-  const pick = [...near, ...rest].sort((a, b) => hash(person.id + a.id) - hash(person.id + b.id)).slice(0, 6);
-  return mine ? [...pick] : pick;
-}

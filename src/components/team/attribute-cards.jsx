@@ -1125,7 +1125,7 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
     return [
       { key: "overview", label: "Overview" },
       { key: "services", label: "Bookings", count: servicesOf(state, person).length },
-      { key: "teams", label: "Team", count: td.teams.length + td.tCos.length + td.tNet.length },
+      { key: "teams", label: "Team", count: td.teams.length },
       { key: "reviews", label: "Reviews", count: reviewsOf(state, person).length },
     ];
   })() : [];
@@ -1248,7 +1248,6 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
             </>)}
             {btab === "teams" && (<>
               <ProfileSocial11 isMe />
-              {networkSection}
               <div style={{ marginTop: 22 }}><TeamTab17 person={person} /></div>
             </>)}
             {btab === "reviews" && (<>
