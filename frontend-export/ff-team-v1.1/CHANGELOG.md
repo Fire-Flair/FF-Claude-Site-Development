@@ -14,6 +14,8 @@ FF Team home page `#/ff-team` (Alex's homepage thread, 18 Nov 16:26–16:59). Ne
 - Open pillar: no dark inset bar at the top of the box; "Build, share, grow" and the section titles inside the pillars are smaller and sit higher.
 - 1-2-3 picture wells: deeper champagne (#DCCB9F) instead of rosé (also covers the coming drop-down steps, `.ff-st21 .ph`).
 - Phones (under 760px): pillar boxes run champagne into burgundy (burgundy behind the chevron; chevrons switched to champagne on burgundy); the open tile fades back to champagne at its bottom edge so it joins its box. The bookings box runs the other way: burgundy with champagne glowing in from the top-right corner behind the chevron. Colour check (360/390/430 px): all pillar and bookings text sits on its own colour field (champagne behind the pillar words, burgundy behind every bookings label and the title).
+- Published by a three-way merge onto the live page (live 1795020546-7c3f, published by the photo-browsing chat without pushing its code), so the live photo-browser work stays. Its source is not in `src/` yet: that chat still has to push it. The merged page is saved as `frontend-export/ff-team-v1.1/live-v1.25-index.html` for reference.
+- Artifact version 1795021775-72c9.
 
 ## v1.24
 
