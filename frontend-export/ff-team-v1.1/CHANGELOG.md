@@ -15,7 +15,7 @@ Fixes from the fellowship review of v1.13 (Aragorn, Legolas, Gimli, Sam, Frodo; 
 - "Skip to content" moves focus to the page without changing the address (a reload had sent people to Home).
 - Company headings read "… across the UK" instead of "… in UK-wide"; a DJ is "a DJ", not "a dj"; the home pop-up close button reads "Close" (it read "Close your profile").
 - Checked: the Profile Card PNG keeps uploaded photos. Only the drawn demo avatar drops out of the PNG.
-- Journey tests 48/48.
+- Journey tests 48/48. Artifact version 1795009266-00ea.
 
 ## v1.13
 
