@@ -479,18 +479,32 @@
 
 /* ======================= v1.27 (Alex, 18 Nov 17:06) — Phone number box and Let's get started ======================= */
 /* Phone number box, everywhere it appears (Let's get started, the WhatsApp code step, a signed-in member's number):
-   flat WhatsApp green, no white inner border line, no shine; dark text on the green for contrast. */
-.ff .ff-gb21.shine.ff-wa-pfa { background: #25D366; border: 0; box-shadow: none; }
+   no white inner border line, no shine streak. v1.29 (Alex, 18 Nov 17:49): the flat #25D366 was too intense; the box
+   is a muted, champagne-gold green. Three tones, one class each; the JSX constant PHONE_TONE21 (profile-builder.jsx)
+   picks one. ff-wa-sage is the default (also the fallback below, if no tone class is set).
+     ff-wa-sage  — light sage-champagne, dark text  (#D9DFBD > #C6CFA3 > #B0BC8B, text #1F2A14, mark #24573A)
+     ff-wa-olive — olive champagne-gold, dark text  (#D3C990 > #BDB57B > #A3A56A, text #1E1F0E, mark #1F4A30)
+     ff-wa-moss  — deep muted WhatsApp green, champagne text (#466F52 > #3B6347 > #2F5139, text #F4EACB, mark #EADBB4) */
+.ff .ff-gb21.shine.ff-wa-pfa, .ff .ff-gb21.shine.ff-wa-pfa.ff-wa-sage {
+  --wa-bg: linear-gradient(165deg, #D9DFBD 0%, #C6CFA3 50%, #B0BC8B 100%); --wa-edge: rgba(74,92,46,.28); --wa-shadow: rgba(60,78,36,.45);
+  --wa-ink: #1F2A14; --wa-mark: #24573A; --wa-ring: rgba(31,42,20,.22); --wa-off-bg: rgba(31,42,20,.12); --wa-off-ink: rgba(31,42,20,.62); }
+.ff .ff-gb21.shine.ff-wa-pfa.ff-wa-olive {
+  --wa-bg: linear-gradient(165deg, #D3C990 0%, #BDB57B 50%, #A3A56A 100%); --wa-edge: rgba(92,86,36,.3); --wa-shadow: rgba(84,78,30,.45);
+  --wa-ink: #1E1F0E; --wa-mark: #1F4A30; --wa-ring: rgba(30,31,14,.22); --wa-off-bg: rgba(30,31,14,.12); --wa-off-ink: rgba(30,31,14,.62); }
+.ff .ff-gb21.shine.ff-wa-pfa.ff-wa-moss {
+  --wa-bg: linear-gradient(165deg, #466F52 0%, #3B6347 50%, #2F5139 100%); --wa-edge: rgba(20,44,28,.5); --wa-shadow: rgba(20,44,28,.6);
+  --wa-ink: #F4EACB; --wa-mark: #EADBB4; --wa-ring: rgba(244,234,203,.35); --wa-off-bg: rgba(244,234,203,.16); --wa-off-ink: rgba(244,234,203,.72); }
+.ff .ff-gb21.shine.ff-wa-pfa { background: var(--wa-bg); border: 0; box-shadow: inset 0 0 0 1px var(--wa-edge), 0 12px 24px -18px var(--wa-shadow); }
 .ff .ff-gb21.shine.ff-wa-pfa::before { content: none; }
-.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-lb, .ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-val { color: #0B1F12; }
-.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-lb svg { color: #fff; }
-.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-ds { color: #0B1F12; text-shadow: none; }
-.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-val svg { color: #0B1F12; stroke: #0B1F12; }
-.ff .ff-gb21.shine.ff-wa-pfa .ff-linkbtn { color: #0B1F12; }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-lb, .ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-val { color: var(--wa-ink); }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-lb svg { color: var(--wa-mark); }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-ds { color: var(--wa-ink); text-shadow: none; }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-val svg { color: var(--wa-mark); stroke: var(--wa-mark); }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-linkbtn { color: var(--wa-ink); }
 .ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-in, .ff .ff-gb21.shine.ff-wa-pfa .ff-dial26 { border-color: transparent; }
-.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-in:focus, .ff .ff-gb21.shine.ff-wa-pfa .ff-dial26:focus-within { border-color: #0B1F12; box-shadow: 0 0 0 3px rgba(11,31,18,.25); }
-.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-btn:disabled { background: rgba(11,31,18,.14); border-color: transparent; color: rgba(11,31,18,.6); }
-.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-btn:focus-visible { outline-color: #0B1F12; }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-in:focus, .ff .ff-gb21.shine.ff-wa-pfa .ff-dial26:focus-within { border-color: var(--wa-mark); box-shadow: 0 0 0 3px var(--wa-ring); }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-btn:disabled { background: var(--wa-off-bg); border-color: transparent; color: var(--wa-off-ink); }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-btn:focus-visible { outline-color: var(--wa-ink); }
 /* "Phone number" always sits on its own line above the entry, at every width. */
 .ff .ff-gb21.ff-wa-pfa .ff-gb21-line { flex-wrap: wrap; row-gap: 10px; }
 .ff .ff-gb21.ff-wa-pfa .ff-gb21-line > .ff-gb21-lb { flex: 1 0 100%; }
@@ -502,3 +516,7 @@
 .ff .ff-gb21.ff-wa-pfa .ff-gb21-line > .ff-dial26 { flex: none; }
 /* Let's get started: a maximum width on wide screens, centred, so its boxes no longer stretch across the page. */
 .ff .ff-start17 { max-width: 640px; margin-left: auto; margin-right: auto; box-sizing: border-box; width: 100%; }
+/* v1.29 (Alex, 18 Nov 17:49): on desktop the Let's get started box sits on the left, under its heading (its left edge
+   lines up with the "Let's get started" title); the Profile Card stays in the middle. Need help? and Book a meeting
+   keep the centred rule above. */
+.ff .ff-journey > #ff-sec-ffai.ff-start17 { margin-left: 0; margin-right: auto; }
