@@ -160,6 +160,8 @@ const QUESTIONS = [
   { id: "g_notice",    group: "generic", type: "choice", text: "Are you available for short-notice work?", options: ["Yes", "No", "I require notice"],
     detail: { option: "I require notice", label: "How much notice do you need?", placeholder: "e.g. 48 hours" } },
   { id: "g_events",    group: "generic", type: "choice", text: "Do you have event experience?", options: ["Yes", "No"] },
+  /* v1.46 bookings: also answered on FF Team Bookings (WaBookQ17 in bookings.jsx); the same id in the Q&A adapter. */
+  { id: "pref.whatsapp_bookings", group: "generic", type: "choice", text: "Are you happy to receive bookings via WhatsApp?", options: ["Yes", "No"] },
 
   { id: "f_ease",      group: "feedback", type: "choice", text: "How easy was it to create your FF Team profile?", options: ["Very easy", "Easy", "Okay", "Difficult", "Very difficult"] },
   { id: "f_confusing", group: "feedback", type: "choice", text: "Was anything confusing when creating your profile?", options: ["Yes", "No"],

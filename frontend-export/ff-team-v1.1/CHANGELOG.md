@@ -4,6 +4,18 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.46 (bookings)
+
+Bookings and Network titles (Alex, 18 Nov 20:06). Branch bk-1206. `src/components/team/bookings.jsx`, `src/state/seed-data.js`, `src/styles/bkd.css`, `src/styles/titles2.css`, `src/styles/tokens.css` (`--color-platinum-hi`, `--color-platinum`, `--color-platinum-edge`, `--color-wa-deep`), `src/content/data/photos17.json`, `photo-library/library.json`, `photo-library/README.md`, one new image in `src/assets/img/`.
+
+- Titles higher: "Your bookings" and "Explore our network" sit 22px under the top bar instead of 40px, on phone, iPad and desktop. Nothing else on either page moves.
+- WhatsApp box: under "When you're selected for a booking, it will be shown here." the question "Are you happy to receive bookings via WhatsApp?" with one Yes button. On tap the circle fills and a tick draws in (no motion with reduced motion on), and it stays answered. For the developers: a Yes/No Question Card, id `pref.whatsapp_bookings` (option `yes`, private), saved through the Q&A adapter and mirrored into the profile's Question Cards (listed in `QUESTIONS`). Signed out it is kept as a guest Q&A answer and filed to the account the next time Bookings is open signed in.
+- FF Party packages, Services tab: Event Host is first, with the amount Alex gave; Photography stays second; "Event Services Package" is now "Event Management Package" (role Event Manager; id `svc_events` unchanged, so sign-ups still match).
+- Bar tab: Staffing keeps its place and has a platinum face so it reads as different. Text contrast stays well above 4.5:1.
+- FF Staff, Shifts with businesses, signed out: three steps (Choose your profession, Set your preferred rates, Set your preferred terms) and Get started, which opens sign-in. No example professions, no confirm step. Signed in is unchanged (it had no confirm step).
+- Grow with FireFlair: the FireFlair rewards photo is now the copper-mug Moscow Mule (library vkc10, not used elsewhere on FF Team; its wall is widened to the tile's shape). The pink photo (p14) stays in the library and on FF Party.
+- Checked: `npm run check`, `npm run build`, `scripts/check-team-photos.py`, Playwright at 390, 820 and 1180 signed out and with DEV sign-in (WhatsApp tap signed out and carried over on sign-in, all three package tabs, FF Staff both states), no page errors. Not published.
+
 ## v1.45
 
 - FF Team hero tagline (Alex, 18 Nov 19:56): capital first letters, "Get Seen, Get Booked, Get Paid." (`home-sections.jsx`; the share message is unchanged). Bigger on iPad: 22–27px from 560px to 759px and 26–28px from 760px to 899px (`styles/home-text.css`); desktop keeps 15–21px on one line beside the card. Merged onto the live page 1795031702-ea2c (v1.44); page saved as `live-v1.45-index.html`. Artifact version 1795032246-a1af.
