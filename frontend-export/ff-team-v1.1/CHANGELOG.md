@@ -4,6 +4,15 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.62
+
+Text boxes (Alex, 18 Nov 21:15). `src/components/shared/primitives.jsx` (grow-boxes), `src/components/team/profile-card-parts.jsx` (FFAI box).
+
+- No text box on the site scrolls inside itself any more. Every textarea grows with its text, whether typed, pasted, or filled in by speech to text or GPT, and when empty it is tall enough for its whole placeholder. One global hook sizes them: the value setter React uses, input events, new text boxes appearing and width changes. The "Talk or type to GPT" box on the profile page lost its 140px cap.
+- A text box that must keep a fixed height can opt out with `data-no-grow`.
+- Checked: `npm run check`, `npm run build`, profile GPT box empty and with a long answer at 390 and 1280, Bookings Create your own boxes (no inner scroll, no console errors).
+- Published over live 1795036430-22ae (v1.61), index.html only (all other files kept). Artifact version 1795036642-f29e. Built page saved as `live-v1.62-index.html`.
+
 ## v1.61
 
 Profile page top (Alex, 18 Nov 21:10). `src/components/team/profile-builder.jsx`, `src/styles/titles2.css` (prof-top).
