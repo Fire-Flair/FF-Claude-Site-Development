@@ -400,3 +400,23 @@
 .ff .pe2-attr-ed .ff-pt21-row { margin-left: 0; margin-right: 0; }
 .ff .pe2-ven .ff-venedit17 { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; min-width: 0; }
 .ff .pe2-ven .ff-venedit17-line { margin: 0; }
+/* ---- p2/pfd (Alex): edit-page Q&A in the live FF Team look (QuestionCardsCollection), answered inline ----
+   Tabs as squircles (no pills); the chosen card gets a gold ring; its answer box sits under the row. */
+.ff .pe2-qa-panel { --pe2-pad: clamp(12px, 3.5vw, 18px); padding: var(--pe2-pad); border-radius: 24px; corner-shape: squircle; }
+.ff .pe2-qa-panel .ff-qa-meta { overflow-wrap: normal; word-break: normal; }
+.ff .pe2-qa-panel .ff-qa-tabs { border-radius: 14px; corner-shape: squircle; }
+.ff .pe2-qa-panel .ff-qa-tabs button { border-radius: 11px; corner-shape: squircle; cursor: pointer; border: 0; font-family: var(--font-sans); background: transparent; }
+.ff .pe2-qa-panel .ff-qa-tabs button.on { background: #fff; }
+.ff .pe2-qa-panel .ff-qa-tabs button span { border-radius: 7px; corner-shape: squircle; }
+.ff .pe2-qa-panel .ff-hscroll { margin: 0 calc(-1 * var(--pe2-pad)) -14px; padding: 4px var(--pe2-pad) 20px; scroll-padding-inline: var(--pe2-pad); }
+.ff .pe2-qa-panel .ff-qa-slot { border-radius: 22px; corner-shape: squircle; }
+.ff .pe2-qa-cardw { display: block; position: relative; border-radius: 22px; corner-shape: squircle; }
+.ff .pe2-qa-cardw.sel { box-shadow: 0 0 0 3px var(--color-gold); }
+.ff .pe2-qa-ans { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; margin-top: 12px; padding: 14px; box-sizing: border-box; background: #fff; border: 1px solid rgba(176,141,42,.55); border-radius: 18px; corner-shape: squircle; }
+.ff .pe2-qa-ans-q { font: 600 16px/1.35 var(--font-sans); color: var(--color-text); overflow-wrap: normal; word-break: normal; hyphens: manual; }
+.ff .pe2-qa-ans .pe2-opt, .ff .pe2-qa-own .pe2-opt { background: #fff; border-color: #E2D6B6; color: var(--color-text); }
+.ff .pe2-qa-ans .pe2-opt.on, .ff .pe2-qa-own .pe2-opt.on { background: var(--color-gold); color: var(--color-ink); border-color: var(--color-gold-dk); }
+.ff .pe2-qa-ans .ff-btn { border-radius: 12px; corner-shape: squircle; }
+.ff .pe2-qa-own { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(126,97,29,.14); }
+.ff .pe2-qa-panel .ff-type21 { min-width: 0; }
+.ff .pe2-qa-panel .ff-type21 input, .ff .pe2-qa-panel .ff-type21 input:focus, .ff .pe2-qa-panel .ff-type21 input:focus-visible { outline: none !important; box-shadow: none !important; }
