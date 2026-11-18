@@ -240,6 +240,12 @@ const REAL_MEMBERS = [
  {
   "id": "stf_bruno",
   "real": true,
+  "media": [
+   {"id": "stf_bruno_m0", "src": "ffasset:img/ca382273154efdcf.webp", "name": "dream_music_festivals"},
+   {"id": "stf_bruno_m1", "src": "ffasset:img/b2aa565c9722a10f.webp", "name": "teams"},
+   {"id": "stf_bruno_m2", "src": "ffasset:img/4c2cee57f2e0dc75.webp", "name": "dream_sports_events"},
+   {"id": "stf_bruno_m3", "src": "ffasset:img/dcff9aa9415a65a8.webp", "name": "training_brand_training"}
+  ],
   "name": "Bruno Cuartero",
   "tag": "CUARTERO",
   "profession": "Beverage / Bar Manager / Events",
@@ -311,6 +317,13 @@ const REAL_MEMBERS = [
  {
   "id": "stf_simao",
   "real": true,
+  "media": [
+   {"id": "stf_simao_m0", "src": "ffasset:img/b9acc4957bbbeac3.webp", "name": "cocktail_0"},
+   {"id": "stf_simao_m1", "src": "ffasset:img/59b7baedaeef239d.webp", "name": "training_masterclass"},
+   {"id": "stf_simao_m2", "src": "ffasset:img/04e054b3ca762afb.webp", "name": "dream_international_events"},
+   {"id": "stf_simao_m3", "src": "ffasset:img/9de94a9852c1a75c.webp", "name": "training_spirits_qualification"},
+   {"id": "stf_simao_m4", "src": "ffasset:img/c06812bf1b814a61.webp", "name": "cocktail_1"}
+  ],
   "name": "Simao",
   "tag": "SIMAO",
   "headline": "Award-Winning Mixologist",
@@ -369,6 +382,11 @@ const REAL_MEMBERS = [
  {
   "id": "stf_dany",
   "real": true,
+  "media": [
+   {"id": "stf_dany_m0", "src": "ffasset:img/1534edb6356a42b0.webp", "name": "training_wine_qualification"},
+   {"id": "stf_dany_m1", "src": "ffasset:img/cd7d79191cd16980.webp", "name": "dream_yacht_jobs"},
+   {"id": "stf_dany_m2", "src": "ffasset:img/069c662ab9c3d963.webp", "name": "dream_food_festivals_markets"}
+  ],
   "name": "Dany Gagnon",
   "tag": "DANYG",
   "profession": "Sommelier",
@@ -426,6 +444,12 @@ const REAL_MEMBERS = [
  {
   "id": "stf_james",
   "real": true,
+  "media": [
+   {"id": "stf_james_m0", "src": "ffasset:img/572b29bf5a0dddbd.webp", "name": "dream_motorsport"},
+   {"id": "stf_james_m1", "src": "ffasset:img/12f0604fdc9aff72.webp", "name": "cocktail_2"},
+   {"id": "stf_james_m2", "src": "ffasset:img/4ec2da6457683b59.webp", "name": "reward_photoshoot"},
+   {"id": "stf_james_m3", "src": "ffasset:img/af3812ca8dd9d85d.webp", "name": "training_ff_open_class"}
+  ],
   "name": "James Allcott",
   "tag": "JAMESALL",
   "headline": "Cocktail & Flair Specialist",
@@ -520,7 +544,7 @@ const DEMO_REVIEW_STATS = (id) => {
 };
 
 const DIRECTORY = REAL_MEMBERS.map((o) => staff({ ...o, tier: cardTier17(o), level: null, rating: null, reviews: 0, hasCar: false,
-  photo: o.id === "stf_simao" ? ((window.FF_IMG || {}).simao_face || "") : "", media: [], ...DEMO_REVIEW_STATS(o.id) }));
+  photo: o.id === "stf_simao" ? ((window.FF_IMG || {}).simao_face || "") : "", media: o.media || [], ...DEMO_REVIEW_STATS(o.id) }));
 
 
 /* Gallery photos for the signed-in demo "me" profile (SEED_DEMO). Real members get none of these. */

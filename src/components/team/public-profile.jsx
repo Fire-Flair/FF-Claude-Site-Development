@@ -115,280 +115,95 @@ function useWide(min = 900) {
 }
 
 
-function MediaCarousel({ items, onBad, start = 0, flat = false, pull = false, open: openIn, onOpen }) {
-  const [openS, setOpenS] = useState(false);
-  const open = openIn !== undefined ? openIn : openS;
-  const setOpen = onOpen || setOpenS;
-  const [at, setAt] = useState(start);
-  const ref = useRef(null);
+/* Photo browser (photo-browsing chat, 18 Nov 16:00-17:50). It was published straight onto the live artifact without
+   its source; ported back here from the live page (v1.29, 1795025052-bb9f) by Legolas, same behaviour.
+   Phone: a strip of photos at the top; the Profile Card covers its foot. Pull the card down (or tap the photos, the
+   card or the grip) to open the strip to a taller size; push up to close. Desktop: a mosaic beside the card; a tap
+   opens that photo full size in the same space (PhotoStrip11 with fill), with X back to the mosaic.
+   Styles: .ff-ps* in src/shell/index.html (head <style>). */
+function ffPvScroller11(n) {
+  while (n && n !== document.body) {
+    const o = getComputedStyle(n).overflowY;
+    if ((o === "auto" || o === "scroll") && n.scrollHeight > n.clientHeight) return n;
+    n = n.parentElement;
+  }
+  return document.scrollingElement || document.documentElement;
+}
+
+function PhotoStrip11({ items, onBad, open, onTap, atRef, fill, onClose, start }) {
+  const ref = useRef(null), boxRef = useRef(null);
+  const [at, setAt] = useState(start || 0);
+  const [w, setW] = useState(0);
   useDragScroll(ref);
-  /* Phone: the card's own pull-down. Only touches that start on the card are
-     watched, so a touch on the photos is left entirely to the browser's
-     native sideways scroller (no JavaScript in the way of a swipe). */
-  useEffect(() => {
-    if (!pull || flat)
-      return;
-    const hero = ref.current && ref.current.closest(".ff-phero");
-    const zone = hero && hero.querySelector(".ff-pcol");
-    if (!hero || !zone)
-      return;
-    const scroller = () => {
-      let n = hero.parentElement;
-      while (n && n !== document.body) {
-        const o = getComputedStyle(n).overflowY;
-        if ((o === "auto" || o === "scroll") && n.scrollHeight > n.clientHeight)
-          return n;
-        n = n.parentElement;
-      }
-      return document.scrollingElement || document.documentElement;
-    };
-    const atTop = () => (scroller().scrollTop || 0) <= 2;
-    const TRAVEL = 142;
-    const setPull = (v) => hero.style.setProperty("--pull", v + "px");
-    let x0 = null, y0 = null, mode = null, was = false, d = 0;
-    const ts = (e) => {
-      if (e.touches.length !== 1) {
-        y0 = null;
-        return;
-      }
-      x0 = e.touches[0].clientX;
-      y0 = e.touches[0].clientY;
-      mode = null;
-      d = 0;
-      was = !!(ref.current && ref.current.classList.contains("open"));
-    };
-    const tm = (e) => {
-      if (y0 == null)
-        return;
-      const dx = e.touches[0].clientX - x0, dy = e.touches[0].clientY - y0;
-      if (!mode) {
-        if (Math.abs(dx) < 6 && Math.abs(dy) < 6)
-          return;
-        if (Math.abs(dx) > Math.abs(dy) || !atTop()) {
-          y0 = null;
-          return;
-        }
-        if (!was && dy > 0)
-          mode = "open";
-        else if (was && dy < 0)
-          mode = "close";
-        else {
-          y0 = null;
-          return;
-        }
-        hero.classList.add("dragging");
-      }
-      if (e.cancelable)
-        e.preventDefault();
-      d = mode === "open" ? Math.max(0, Math.min(TRAVEL, dy)) : Math.max(-TRAVEL, Math.min(0, dy));
-      setPull(d);
-    };
-    const te = () => {
-      if (mode) {
-        const go = Math.abs(d) > TRAVEL * 0.3;
-        const next = go ? mode === "open" : was;
-        if (ref.current)
-          ref.current.classList.toggle("open", next);
-        hero.classList.remove("dragging");
-        setPull(0);
-        setOpen(next);
-      }
-      y0 = null;
-      mode = null;
-      d = 0;
-    };
-    const wh = (e) => {
-      if (e.deltaY < -12 && atTop())
-        setOpen(true);
-      else if (e.deltaY > 12)
-        setOpen(false);
-    };
-    const sc = (e) => {
-      if (e && e.target && e.target.nodeType === 1 && hero.contains(e.target))
-        return;
-      if (!atTop() && !hero.classList.contains("dragging"))
-        setOpen(false);
-    };
-    const { documentElement: root, body } = document;
-    const prev = [root.style.overscrollBehaviorY, body.style.overscrollBehaviorY];
-    root.style.overscrollBehaviorY = "none";
-    body.style.overscrollBehaviorY = "none";
-    const pa = { passive: true }, np = { passive: false }, cap = { passive: true, capture: true };
-    zone.addEventListener("touchstart", ts, pa);
-    zone.addEventListener("touchmove", tm, np);
-    zone.addEventListener("touchend", te, pa);
-    zone.addEventListener("touchcancel", te, pa);
-    window.addEventListener("wheel", wh, pa);
-    window.addEventListener("scroll", sc, cap);
-    return () => {
-      zone.removeEventListener("touchstart", ts, pa);
-      zone.removeEventListener("touchmove", tm, np);
-      zone.removeEventListener("touchend", te, pa);
-      zone.removeEventListener("touchcancel", te, pa);
-      window.removeEventListener("wheel", wh, pa);
-      window.removeEventListener("scroll", sc, cap);
-      root.style.overscrollBehaviorY = prev[0];
-      body.style.overscrollBehaviorY = prev[1];
-    };
-  }, [pull, flat]);
   useLayoutEffect(() => {
     const el = ref.current;
-    if (el && start)
-      el.scrollLeft = start * el.clientWidth;
+    if (el && start) el.scrollLeft = start * el.clientWidth;
   }, []);
-  /* Auto scroll: one photo every 5 seconds, looping. Waits while the photos
-     are touched, hovered or focused, for 8 seconds after a manual swipe, while
-     off screen or in a hidden tab; never runs under reduced motion. */
-  const auto = useRef({ until: 0 });
+  /* Keep the photo in view when the strip changes size (opening, closing, rotating). */
   useEffect(() => {
-    const el = ref.current, box = el && el.parentElement;
-    if (!el || flat || items.length < 2 || prefersReducedMotion())
-      return;
-    const a = auto.current;
-    let touching = false, hover = false, focus = false, seen = true, hold = 0;
-    const now = () => Date.now();
-    const pause = (ms) => { hold = Math.max(hold, now() + ms); };
-    const tS = () => { touching = true; };
-    const tE = () => { touching = false; pause(8000); };
-    const onScroll = () => { if (now() > a.until) pause(8000); };
-    const mE = () => { hover = true; }, mL = () => { hover = false; };
-    const fI = () => { focus = true; }, fO = () => { focus = false; };
-    const io = typeof IntersectionObserver !== "undefined" ? new IntersectionObserver(([en]) => { seen = en.isIntersecting; }, { threshold: 0.4 }) : null;
-    if (io) io.observe(el);
-    const tick = setInterval(() => {
-      if (touching || hover || focus || !seen || document.hidden || now() < hold)
-        return;
-      const w = el.clientWidth || 1, n = Math.round(el.scrollLeft / w);
-      const k = n >= items.length - 1 ? 0 : n + 1;
-      a.until = now() + 1600;
-      el.scrollTo({ left: k * w, behavior: "smooth" });
-    }, 5000);
-    const pa = { passive: true };
-    el.addEventListener("touchstart", tS, pa);
-    el.addEventListener("touchend", tE, pa);
-    el.addEventListener("touchcancel", tE, pa);
-    el.addEventListener("scroll", onScroll, pa);
-    box.addEventListener("mouseenter", mE);
-    box.addEventListener("mouseleave", mL);
-    box.addEventListener("focusin", fI);
-    box.addEventListener("focusout", fO);
-    return () => {
-      clearInterval(tick);
-      if (io) io.disconnect();
-      el.removeEventListener("touchstart", tS, pa);
-      el.removeEventListener("touchend", tE, pa);
-      el.removeEventListener("touchcancel", tE, pa);
-      el.removeEventListener("scroll", onScroll, pa);
-      box.removeEventListener("mouseenter", mE);
-      box.removeEventListener("mouseleave", mL);
-      box.removeEventListener("focusin", fI);
-      box.removeEventListener("focusout", fO);
+    const box = boxRef.current;
+    if (!box) return;
+    const f = () => {
+      setW(box.clientWidth);
+      const el = ref.current;
+      if (el) el.scrollLeft = (atRef.current || 0) * el.clientWidth;
     };
-  }, [items.length, flat]);
-  const list = items;
-  if (!list.length)
-    return null;
+    f();
+    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(f) : null;
+    if (ro) ro.observe(box); else window.addEventListener("resize", f);
+    return () => { if (ro) ro.disconnect(); else window.removeEventListener("resize", f); };
+  }, []);
   const go = (i) => {
     const el = ref.current;
-    if (!el)
-      return;
-    const k = Math.max(0, Math.min(list.length - 1, i));
-    auto.current.until = 0;
+    if (!el) return;
+    const k = Math.max(0, Math.min(items.length - 1, i));
     el.scrollTo({ left: k * el.clientWidth, behavior: prefersReducedMotion() ? "auto" : "smooth" });
   };
-  return React.createElement("section", {
-    className: `ff-pm${open ? " open" : ""}${flat ? " flat" : ""}`,
-    "aria-roledescription": "carousel",
-    "aria-label": "Media"
-  }, React.createElement("div", {
-    className: "ff-pm-track",
-    ref,
-    tabIndex: 0,
-    onClick: pull && !flat ? () => setOpen(!open) : undefined,
-    "aria-label": `Media, ${list.length} item${list.length === 1 ? "" : "s"}. Use the left and right arrow keys.`,
-    onScroll: (e) => {
-      const el = e.currentTarget;
-      setAt(Math.round(el.scrollLeft / Math.max(1, el.clientWidth)));
-    },
-    onKeyDown: (e) => {
-      if (e.key === "ArrowRight") {
-        e.preventDefault();
-        go(at + 1);
-      }
-      if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        go(at - 1);
-      }
-    }
-  }, list.map((m, i) => React.createElement("div", {
-    key: m.src.slice(-40) + i,
-    className: "ff-pm-slide",
-    role: "group",
-    "aria-roledescription": "slide",
-    "aria-label": `${i + 1} of ${list.length}`
-  }, React.createElement("img", { decoding: "async",
-    className: "ff-pm-fill",
-    src: m.src,
-    alt: "",
-    "aria-hidden": "true",
-    draggable: false,
-    loading: i ? "lazy" : "eager"
-  }), React.createElement("img", { decoding: "async",
-    className: "ff-pm-img",
-    src: m.src,
-    alt: m.name ? `Media: ${m.name}` : `Media ${i + 1}`,
-    draggable: false,
-    loading: i ? "lazy" : "eager",
-    onError: () => onBad && onBad(m.src)
-  })))), React.createElement("span", {
-    className: "ff-pm-shade",
-    "aria-hidden": "true"
-  }), list.length > 1 && React.createElement(React.Fragment, null, React.createElement("button", {
-    type: "button",
-    className: "ff-pm-arrow l",
-    "aria-label": "Previous media",
-    disabled: at === 0,
-    onClick: () => go(at - 1)
-  }, React.createElement(ChevronLeft, {
-    size: 18
-  })), React.createElement("button", {
-    type: "button",
-    className: "ff-pm-arrow r",
-    "aria-label": "Next media",
-    disabled: at >= list.length - 1,
-    onClick: () => go(at + 1)
-  }, React.createElement(ChevronRight, {
-    size: 18
-  })), React.createElement("div", {
-    className: "ff-pm-dots"
-  }, list.map((m, i) => React.createElement("button", {
-    key: i,
-    type: "button",
-    className: i === at ? "on" : "",
-    "aria-label": `Show media ${i + 1} of ${list.length}`,
-    "aria-current": i === at,
-    onClick: () => go(i)
-  })))));
+  const n = items.length;
+  const vh = typeof window !== "undefined" ? window.innerHeight : 800;
+  const openH = w ? Math.round(Math.max(280, Math.min(w * 1.25, vh * 0.7))) : undefined;
+  const style = open && !fill && openH ? { height: openH + "px" } : undefined;
+  return (
+    <section ref={boxRef} className={`ff-ps${open ? " open" : ""}${fill ? " fill" : ""}`} style={style} aria-label={`Photos, ${n}`}>
+      <div className="ff-ps-track" ref={ref} onScroll={(e) => {
+        const el = e.currentTarget;
+        const k = Math.round(el.scrollLeft / Math.max(1, el.clientWidth));
+        atRef.current = k;
+        if (k !== at) setAt(k);
+      }}>
+        {items.map((m, i) => (
+          <button key={m.src.slice(-40) + i} type="button" className="ff-ps-slide" aria-label={open ? `Photo ${i + 1} of ${n}` : `Show photo ${i + 1} of ${n}`} aria-expanded={!!open} onClick={() => onTap(i)}>
+            <img className="ff-ps-img" src={m.src} alt={open ? (m.name ? `Photo: ${m.name}` : `Photo ${i + 1}`) : ""} draggable={false} decoding="async" loading={i ? "lazy" : "eager"} onError={() => onBad && onBad(m.src)} />
+          </button>
+        ))}
+      </div>
+      {fill && onClose && <button type="button" className="ff-ps-x" aria-label="Back to all photos" onClick={onClose}><X size={18} /></button>}
+      {n > 1 && (
+        <>
+          {open && <span className="ff-ps-n" aria-live="polite">{`${at + 1} / ${n}`}</span>}
+          <button type="button" className="ff-ps-arrow l" aria-label="Previous photo" disabled={at === 0} onClick={() => go(at - 1)}><ChevronLeft size={18} /></button>
+          <button type="button" className="ff-ps-arrow r" aria-label="Next photo" disabled={at >= n - 1} onClick={() => go(at + 1)}><ChevronRight size={18} /></button>
+          <div className="ff-ps-dots" aria-hidden="true">{items.map((m, i) => <span key={i} className={i === at ? "on" : ""} />)}</div>
+        </>
+      )}
+    </section>
+  );
 }
 
 
 
-/* Desktop: every picture at once, filling the space beside the card. */
-function MediaMosaic({ items, onBad }) {
-  const [view, setView] = useState(null);
+/* Desktop: every picture at once, filling the space beside the card; a tap opens it in PublicHero (onOpen). */
+function MediaMosaic({ items, onBad, onOpen }) {
   const show = items.slice(0, 5), more = items.length - show.length;
   return (
-    <section className={`ff-pmos n${show.length}`} aria-label={`Media, ${items.length} picture${items.length === 1 ? "" : "s"}`}>
+    <section className={`ff-pmos n${show.length}`} aria-label={`Photos, ${items.length}`}>
       {show.map((m, i) => (
-        <button key={m.src.slice(-40) + i} type="button" className="ff-pmos-t" aria-label={`Open picture ${i + 1} of ${items.length}`} onClick={() => setView(i)}>
+        <button key={m.src.slice(-40) + i} type="button" className="ff-pmos-t" aria-label={`Open photo ${i + 1} of ${items.length}`} onClick={() => onOpen(i)}>
           <img decoding="async" className="ff-pm-fill" src={m.src} alt="" aria-hidden="true" draggable={false} loading={i ? "lazy" : "eager"} />
           <img decoding="async" className="ff-pm-img" src={m.src} alt="" draggable={false} loading={i ? "lazy" : "eager"} onError={() => onBad && onBad(m.src)} />
           {i === show.length - 1 && more > 0 && <span className="more" aria-hidden="true">+{more}</span>}
         </button>
       ))}
-      <Sheet open={view !== null} onClose={() => setView(null)} title="Media">
-        {view !== null && <MediaCarousel items={items} start={view} flat />}
-      </Sheet>
     </section>
   );
 }
@@ -396,8 +211,8 @@ function MediaMosaic({ items, onBad }) {
 
 
 /* The top of a visitor's page: the pictures, then the Profile Card, then
-   Back and the actions. Phone: pictures stay in place and the card slides over
-   them. Desktop: card on the left, pictures taking the rest. */
+   Back and the actions. Phone: the photo strip, with the card over its foot (pull down to open the strip).
+   Desktop: card on the left, the mosaic taking the rest; a tap opens one photo full size there. */
 function PublicHero({ media, card, below, narrow }) {
   const wide = useWide();
   const [seen, setSeen] = useState({});
@@ -418,15 +233,113 @@ function PublicHero({ media, card, below, narrow }) {
   const list = media.filter(m => seen[m.src] === true);
   const onBad = (src) => setSeen(v => (v[src] === false ? v : { ...v, [src]: false }));
   const has = list.length > 0;
-  /* Phone: the card covers the foot of the photos; a tap on the photos or on
-     the grip at the card's top edge moves it down out of the way and back. */
   const [open, setOpen] = useState(false);
+  const [desk, setDesk] = useState(null);
+  const atRef = useRef(0);
+  const colRef = useRef(null), heroRef = useRef(null), cardRef = useRef(null);
+  const strip = has && !wide;
+  useEffect(() => { setOpen(false); setDesk(null); }, [wide]);
+  /* The column under the card (Back, actions) is as wide as the card itself: --ff-cardw. */
+  useEffect(() => {
+    const c = cardRef.current, h = heroRef.current;
+    if (!c || !h) return;
+    let obs = null;
+    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(() => f()) : null;
+    const f = () => {
+      const el = c.querySelector(".ff-deck") || c.firstElementChild;
+      if (!el) return;
+      if (ro && obs !== el) { if (obs) ro.unobserve(obs); ro.observe(el); obs = el; }
+      const cw = el.getBoundingClientRect().width;
+      if (cw) h.style.setProperty("--ff-cardw", Math.round(cw) + "px");
+    };
+    const mo = typeof MutationObserver !== "undefined" ? new MutationObserver(f) : null;
+    if (mo) mo.observe(c, { childList: true, subtree: true });
+    f();
+    window.addEventListener("resize", f);
+    return () => { if (ro) ro.disconnect(); if (mo) mo.disconnect(); window.removeEventListener("resize", f); };
+  }, []);
+  /* Phone: pull the card down to open the strip, push up to close; the wheel does the same on a narrow desktop window. */
+  useEffect(() => {
+    const zone = colRef.current, hero = heroRef.current;
+    if (!strip || !zone || !hero) return;
+    const atTop = () => (ffPvScroller11(zone).scrollTop || 0) <= 2;
+    const setPull = (v) => hero.style.setProperty("--pull", v + "px");
+    let a = null, mode = null, d = 0;
+    const ts = (e) => {
+      if (e.touches.length !== 1) { a = null; return; }
+      const t = e.target;
+      if (!open && !(t && zone.contains(t))) { a = null; return; }
+      a = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      mode = null;
+      d = 0;
+    };
+    const tm = (e) => {
+      if (!a) return;
+      const dx = e.touches[0].clientX - a.x, dy = e.touches[0].clientY - a.y;
+      if (!mode) {
+        if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+        if (Math.abs(dx) > Math.abs(dy)) { a = null; return; }
+        if (!open && dy > 0 && atTop()) mode = "open";
+        else if (open && dy < 0) mode = "close";
+        else { a = null; return; }
+        hero.classList.add("dragging");
+      }
+      if (e.cancelable) e.preventDefault();
+      d = mode === "open" ? Math.max(0, Math.min(170, dy)) : Math.max(-170, Math.min(0, dy));
+      setPull(d);
+    };
+    const te = () => {
+      if (mode) {
+        const go = Math.abs(d) > 45;
+        hero.classList.remove("dragging");
+        setPull(0);
+        if (go) setOpen(mode === "open");
+      }
+      a = null;
+      mode = null;
+      d = 0;
+    };
+    let wt = 0;
+    const wh = (e) => {
+      const now = Date.now();
+      if (now < wt) return;
+      if (open && e.deltaY > 12) { if (e.cancelable) e.preventDefault(); wt = now + 500; setOpen(false); }
+      else if (!open && e.deltaY < -12 && atTop() && hero.contains(e.target)) { wt = now + 500; setOpen(true); }
+    };
+    const pa = { passive: true }, np = { passive: false };
+    document.addEventListener("touchstart", ts, pa);
+    document.addEventListener("touchmove", tm, np);
+    document.addEventListener("touchend", te, pa);
+    document.addEventListener("touchcancel", te, pa);
+    window.addEventListener("wheel", wh, np);
+    return () => {
+      document.removeEventListener("touchstart", ts, pa);
+      document.removeEventListener("touchmove", tm, np);
+      document.removeEventListener("touchend", te, pa);
+      document.removeEventListener("touchcancel", te, pa);
+      window.removeEventListener("wheel", wh, np);
+      hero.classList.remove("dragging");
+      setPull(0);
+    };
+  }, [strip, open]);
+  /* A tap on the card (not on one of its buttons or links) opens the strip. */
+  const cardTap = (e) => {
+    if (!strip || open) return;
+    const t = e.target;
+    if (t && t.closest && t.closest('button,a,input,textarea,select,label,summary,[contenteditable="true"],[role="button"],[role="link"]')) return;
+    setOpen(true);
+  };
+  const media2 = !has ? null
+    : wide ? (desk !== null
+      ? <PhotoStrip11 key="desk" items={list} onBad={onBad} open fill start={desk} atRef={atRef} onTap={() => {}} onClose={() => setDesk(null)} />
+      : <MediaMosaic items={list} onBad={onBad} onOpen={(i) => { atRef.current = i; setDesk(i); }} />)
+    : <PhotoStrip11 items={list} onBad={onBad} open={open} atRef={atRef} onTap={() => { if (!open) setOpen(true); }} />;
   return (
-    <div className={`ff-phero${has ? " has-media" : ""}${wide ? " wide" : ""}`}>
-      {has && (wide && list.length <= 4 ? <MediaMosaic items={list} onBad={onBad} /> : <MediaCarousel items={list} onBad={onBad} pull={!wide} open={open} onOpen={setOpen} />)}
-      <div className="ff-pcol">
-        {has && !wide && <button type="button" className="ff-ph-grip" aria-label={open ? "Cover the photos" : "Show the photos"} aria-expanded={open} onClick={() => setOpen(!open)}><span aria-hidden="true" /></button>}
-        <div className="ff-ph-card">{card}</div>
+    <div ref={heroRef} className={`ff-phero${has ? " has-media" : ""}${wide ? " wide" : ""}${strip && open ? " ps-open" : ""}`}>
+      {media2}
+      <div className="ff-pcol" ref={colRef}>
+        {strip && <button type="button" className="ff-ph-grip" aria-label={open ? "Cover the photos" : "Show the photos"} aria-expanded={open} onClick={() => setOpen(!open)}><span aria-hidden="true" /></button>}
+        <div ref={cardRef} className={"ff-ph-card" + (strip && !open ? " tap" : "")} onClick={cardTap}>{card}</div>
         <div className={"ff-prest" + (narrow ? " narrow" : "")}>{below}</div>
       </div>
     </div>
