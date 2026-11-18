@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.43
+
+Maps and the Network page. Branch merged: `p2-netmap`.
+
+- Maps (`map.jsx`, `vip-site.jsx`, `base.css`): one finger scrolls the page, two fingers pan and zoom; the desktop wheel scrolls the page, ctrl/cmd + wheel zooms; a mouse drag still pans. One shared gesture helper; the base style that blocked touch scrolling on maps is changed.
+- Network search (`network.jsx`, `network-directory.jsx`): at the top of the page, above the map, on FF Team (under "Explore our network") and FF Staff; placeholder "Search the network".
+- Empty categories are hidden: profession groups, FF Event Directory categories and map legend layers show only when they have someone in them.
+- FF Directory (`network-directory20.jsx`, `companies.js`, `themes-xp.js`): every box open by default; category icons, map dots and directory Company Card faces use muted FireFlair shades (text contrast 4.5:1 or more).
+
 ## v17.42
 
 Artifact version 1794961397-8c5b.
