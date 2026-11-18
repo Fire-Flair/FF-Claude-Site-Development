@@ -37,7 +37,7 @@ function join(entries) {
     : `${e.open}\n${join(e.files)}\n${e.close}`).join('\n');
 }
 const code = resolveAssets(resolveDirectives(join(manifest.order)));
-const js = transformSync(code, {loader: 'jsx', target: 'es2020', legalComments: 'none', logLevel: 'error'}).code;
+const js = transformSync(code, {loader: 'jsx', target: 'es2020', legalComments: 'none', logLevel: 'error', minifyWhitespace: true}).code;  /* v17.60: whitespace minified to stay under the artifact's 5 MiB page limit; src/ stays readable */
 
 const shell = read('shell/index.html')
   .replace('<!--FF:IMG-->', () => JSON.stringify(JSON.parse(resolveAssets(read('shell/ff-img.json')))))
