@@ -2,6 +2,8 @@
 
 ## v17.46
 
+Artifact version 1794962439-de2f.
+
 - FF Party box (`bookings.jsx`): the Coming soon cards are per tab. Bar keeps the custom-package card; Entertainment previews DJ, Live Music and Entertainer packages; Services previews Photographer, Videographer and Event Host packages. Each card's Includes and Ideal for wording fits its trade; Duration "As long as you choose" and Price "You set it" on all. Entertainment and Services show their cards in a swipeable rail.
 
 ## v17.45
