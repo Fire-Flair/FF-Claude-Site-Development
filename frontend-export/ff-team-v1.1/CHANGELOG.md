@@ -4,6 +4,17 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.72 (draft: share pop-ups)
+
+The other share pop-ups get the v1.71 profile Share pop-up (Alex, 18 Nov 22:13). `src/components/shared/card-share17.jsx` (`CardShareSheet17`), `src/components/team/profile-from-text.jsx` (`ShareCardSheet`), `src/components/party/card-studio.jsx` (`CardPop17`), `src/styles/base.css`.
+
+- Your own card's Share (`ShareCardSheet`, opened by the `ff-add` event: the desktop top-bar button and the profile builder's Share/publish) and Card Studio's `CardPop17` now open the same pop-up as a profile's Share: page behind blurred under a dark tint and not scrollable, the card at the top scaled to fit, the four buttons (Share, WhatsApp, Download PNG, Copy Link) two by two under it as wide as the card, small X on the card's right edge, background tap and Escape close it, focus trap and `aria-modal` kept. `cardToPng17` unchanged.
+- Removed from `ShareCardSheet`: the phone-number box under the buttons (the "Type someone's phone number…" line, the Phone number field, "Send my card", and the "Sent to …" / "Share with someone else" step that followed it). `PROFILE_ADAPTER.shareTo` is left in the adapter but nothing in the page calls it now. The signed-out "Create your FF Tag first" sheet is unchanged.
+- Removed from `CardPop17`: the card's back (Recipe / Details) shown below the buttons. The pop-up shows the front only.
+- `CardShareSheet17`: the `extra` prop and the old `Sheet` layout behind it are gone; every caller uses `CardShareView17`. Dead CSS removed: `.ff-csm-stage`, `.ff-csm-live`.
+- Checked: `npm run check`, `npm run build`; Playwright at 360x640, 390x844, 1280x800 for `ShareCardSheet` (signed in with DEV · complete profile, opened with `ff-add`), the own-card "Share my card" button, and `CardPop17` (mounted in the page with a demo cocktail, as no page renders `CoCardRow17`, its only caller): pop-up height equals the viewport, nothing inside scrolls, page doesn't scroll on wheel, all four buttons inside the viewport and enabled once the PNG is made, Escape closes; no page errors.
+- Not published; branch `pp-sharesheet2`.
+
 ## v1.71
 
 Profile page (Alex, 18 Nov 21:56), three agents merged onto live 1795039019-ab8d (v1.70).

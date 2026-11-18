@@ -561,15 +561,14 @@ function StudioPair17({ type, x, edit, set, site, by, tag, size, only }) {
 }
 
 
-/* The card in a pop-up: the fixed front, then the back with everything on it, one above the other. */
+/* The card in a pop-up (v1.72): the same Share pop-up as a profile's (CardShareView17), the card's front on top, the four buttons under it. */
 function CardPop17({ type, x, site, by, tag, onClose }) {
   const T = STUDIO17[type];
   const tone = T.tone(x);
   const addr = `${CARD_DOMAIN}/${pc17Tag(tag) || "yourtag"}/${PATH17[type]}/${slug17(T.name(x)) || "your-card"}`;
   const nm = T.name(x) || (T.plateOf ? T.plateOf(x) : T.plate);
   return (
-    <CardShareSheet17 open onClose={onClose} title={nm} url={"https://" + addr} fileName={"fireflair-" + cx17Slug(nm)}
-      extra={<div className="ff-pop17" style={{ marginTop: 14 }}><Card17 kind={type} tone={tone} plate={T.back} tag={tag} size="auto lg"><T.Back x={x} /></Card17></div>}>
+    <CardShareSheet17 open onClose={onClose} title={nm} url={"https://" + addr} fileName={"fireflair-" + cx17Slug(nm)}>
       <Card17 kind={type} tone={tone} plate={T.plateOf ? T.plateOf(x) : T.plate} tag={tag} url={addr} size="lg"><T.Front x={x} site={site} by={by} /></Card17>
     </CardShareSheet17>
   );

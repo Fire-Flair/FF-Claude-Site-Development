@@ -6,7 +6,9 @@
    The PNG is made as soon as the sheet opens so the Share tap still counts as a direct tap on iPhone
    (a share started after a wait can be refused). Uses cardToPng17 from utils/card-export17.js.
    Props: open, onClose, title (share message), url (the card's FireFlair address, https://…), fileName,
-          children (the card element, rendered exactly as on the page), extra (optional content below the menu).
+          children (the card element, rendered exactly as on the page).
+   v1.72: every Share pop-up (profile, own card, Card Studio, invite) uses CardShareView17; the old Sheet layout and its
+          `extra` slot are gone.
    ========================================================================== */
 /* The sharer's code: their tag. Every link the Share sheet produces carries it as ?r=<code> (v17.5.5). */
 const shareCode17 = (state) => String((state.auth && state.auth.status === "signedIn" && (state.auth.tag || state.session.tag)) || "").toLowerCase();
@@ -16,7 +18,7 @@ const withRef17 = (url, code) => {
 };
 
 
-function CardShareSheet17({ open, onClose, title, message, url, fileName, children, extra, noRef }) {
+function CardShareSheet17({ open, onClose, title, message, url, fileName, children, noRef }) {
   const { state, dispatch } = useStore();
   const holder = useRef(null);
   const [png, setPng] = useState(null);
@@ -64,23 +66,6 @@ function CardShareSheet17({ open, onClose, title, message, url, fileName, childr
     </button>
   );
   const name = String(title || "Share").replace(/:\s*$/, "");
-  /* A sheet with extra content below the menu (own-card send, Card Studio back) keeps the earlier layout. */
-  if (extra) return (
-    <Sheet open onClose={onClose} title={name}>
-      <div className="ff-csm-stage" ref={holder}>{children}</div>
-      {err ? (
-        <div className="ff-cverr" role="alert"><span>{err}</span><Btn variant="sm ghost" onClick={make}><RotateCcw size={12} /> Try again</Btn></div>
-      ) : null}
-      <div className="ff-csm-menu" role="group" aria-label="Share options">
-        {opt("Share", doShare, <ShareUp17 size={16} />, !ready)}
-        {opt("WhatsApp", doWhatsApp, <WhatsAppIcon size={16} />, !ready, "wa")}
-        {opt("Download PNG", doDownload, <Download size={16} />, !ready)}
-        {opt("Copy Link", doCopy, <Link2 size={16} />, false)}
-      </div>
-      <div className="ff-csm-live" aria-live="polite">{note}</div>
-      {extra}
-    </Sheet>
-  );
   const wait = (ic) => busy ? <Loader2 size={18} className="ff-spin" aria-hidden="true" /> : ic;
   return (
     <CardShareView17 name={name} onClose={onClose} holder={holder} card={children} note={note}
