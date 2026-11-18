@@ -1,5 +1,15 @@
 # FireFlair prototype — changelog
 
+## v17.56
+
+Public profile and FF Team home round 4. Branches merged: `p2-demo`, `p2-pubbtn`, `p2-pubprof`, `p2-home4`.
+
+- Someone else's profile (`network.jsx`): "Join team" (no name) with a green WhatsApp share icon beside it, a third of its width. The Bookings tab is renamed Packages (public and own pages).
+- Package cards on a profile (`bookings.jsx`, `introductions.jsx`, `prof21.css`): compact cards (about half the height), "FF Party" ribbon, no "Bar", no "Coming 2027", Details closed; a fourth "Create your own" card ends the rail.
+- Profile sections (`introductions.jsx`, `public-profile.jsx`, `attribute-cards.jsx`, `profile-edit-p2.jsx`, `aragorn-preview.jsx`, `prof21.css`): profession and attribute cards drop bronze/silver/gold and take a muted version of the person's Profile Card theme; FireFlair Introductions sits in its own section; About Me is larger; Languages leave the Attributes rail; Experience is renamed Venues and Venues sit below Attributes on the public page and the edit page (new `SHOW_VENUES_PROFILE17` in `phase-config.js`; map, home legend, area pages, company chips and CV suggestions stay off).
+- Demo data (`people-demo.js`, `store.js`): Simao has 5 accepted reviews, 20 skills and an About Me, for testing Review Cards and dense profiles.
+- FF Team home (`team-home.jsx`, `discover-hub.jsx`, `home-fix22.css`): Discover FireFlair now sits right after the hero, then the Launch Challenge; "FF Team is built for getting you bookings" is a medium box with a 1-2-3-4 row (Profile Card, Booking request, Confirm via WhatsApp, Review Card) and a chevron opening the full steps; "Can FF Team help you?" has a full-width rule like the other headings.
+
 ## v17.55
 
 Artifact version 1794970310-849c.
