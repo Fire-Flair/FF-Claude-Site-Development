@@ -4,6 +4,15 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.16
+
+- Font (Alex, 18 Nov 14:04: "Inter everywhere"). All body and UI text is Inter. The Tailwind file `styles/v101.css` had reset `--font-sans` to the device font and `--font-serif` to Georgia; both now start with Inter. Other fixed system-font stacks switched too (attribute boxes, wallet buttons, terms page). Titles stay Cinzel.
+- Inter is built into the page (`src/assets/font/inter-latin-wght-normal.woff2`, variable 100–900, SIL OFL licence alongside), so it loads even where Google Fonts is blocked. `scripts/build.mjs` inlines `ffasset:font/*.woff2`; Google Fonts now loads Cinzel only. Release page +65 KB, no extra files.
+- The Profile Card PNG waits for Inter before it is drawn.
+- Share message: "Help me win the FF Team Launch Challenge." now has its own line:
+  "Check out my profile page and join my team. / Help me win the FF Team Launch Challenge. / Get seen, get booked, get paid. / FFTeam.uk/<tag>"
+- Audit at 390 and 1280: text not in Inter or Cinzel went from 968 elements to 0 (apart from the testing-only DEV buttons).
+
 ## v1.15
 
 - Share message (Alex, 18 Nov 13:48–13:51). WhatsApp and Share now send:
