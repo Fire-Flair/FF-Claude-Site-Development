@@ -391,8 +391,6 @@
 .ff .pe2-add-prof:hover { border-color: var(--color-gold); background: #FFF8E6; }
 .ff .pe2-add-prof:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
 .ff .pe2-add-ic { display: grid; place-items: center; width: 52px; height: 52px; background: var(--color-soft); border: 1px solid #D8CBA6; border-radius: 16px; corner-shape: squircle; }
-.ff .pp2-stair .pp-row { min-height: calc(46px + var(--g, 0) * 3px); }
-.ff .pp2-stair .pp-nm { font-size: calc(14px + var(--g, 0) * .5px); }
 /* ---- pfc (Alex 03:29): edit page — Attributes open their editor in the page; Venues typed in the page ---- */
 .ff .pe2-rail .ff-agrp.pe2-agrp-on { outline: 2px solid var(--gold, #C9A227); outline-offset: 2px; }
 .ff .pe2-attr-ed { margin-top: 14px; padding: 14px 14px 12px; border: 1px solid rgba(176,141,42,.45); border-radius: 18px; corner-shape: squircle; background: #FBF7EE; box-sizing: border-box; min-width: 0; }
@@ -524,3 +522,13 @@
    lines up with the "Let's get started" title); the Profile Card stays in the middle. Need help? and Book a meeting
    keep the centred rule above. */
 .ff .ff-journey > #ff-sec-ffai.ff-start17 { margin-left: 0; margin-right: auto; }
+
+/* ---- pb-professions (Alex 19:19): the "top three", the first three entries that go onto the Profile Card ----
+   Shared marking: .ff-top3 on the entry's wrapper (position: relative) and a .ff-top3-n number tab on its top edge. */
+.ff .ff-top3 > .ff-top3-n { position: absolute; top: -10px; left: 16px; z-index: 4; display: grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px; box-sizing: border-box;
+  font: 800 12px/1 var(--font-sans, Inter, sans-serif); font-variant-numeric: tabular-nums; color: #2A1E04; background: linear-gradient(172deg, #F6E8B8, #D7B85F);
+  border: 1px solid #8C7230; border-radius: 8px; corner-shape: squircle; box-shadow: 0 2px 4px rgba(40,28,6,.22); pointer-events: none; }
+.ff .ff-pt21-slot.ff-top3 .ff-agrp { border-color: #B08D2A; box-shadow: 0 0 0 1px rgba(176,141,42,.55), 0 10px 16px -12px rgba(40,28,6,.55); }
+/* builder Professions: room for the tabs above the row; the drag handle sits bottom right (the level is top right) */
+.ff .pp-sec .ff-pt21-row { padding-top: 16px; }
+.ff .pp-sec .ff-pt21-grip { top: auto; bottom: 10px; right: 8px; }

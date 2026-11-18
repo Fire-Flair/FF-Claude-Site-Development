@@ -4,6 +4,33 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## Unreleased (pb-professions)
+
+Profile builder, Professions (Alex, 18 Nov 18:03, 18:59 and 19:19). Builder only; the display page is unchanged.
+
+- **No pop-up.** The Professions sheet is gone (`PE2Sheet`, `PE2ProfEd`, `PE2Picker`, `PE2Item` and their CSS deleted).
+- **No professions yet** (no CV, or a CV that gave none): a type box, then every category as a box the size of the
+  Attribute boxes (`.ff-agrp t-card` in the same `.ff-acar` rail), each listing its professions. Tap one to add it
+  (burgundy with a tick); tap again to remove it. Bar keeps its ranked ladder (Barback to Mixologist, a rising gold
+  bar per step); other categories are alphabetical. The rail scrolls across on phones and wraps from 700 px.
+  It stays open while they pick, with the chosen professions appearing as tiles above it.
+- **Professions already there:** the tiles, then a "+" box. The "+" opens the add flow under the row and turns into a
+  burgundy close (x). Which flow it opens is one constant, `PROF_ADD_MODE` in `profile-edit-p2.jsx`:
+  - `"categories"` (default): the same type box and category boxes inline.
+  - `"type"`: a type box with suggestions (each with its category); a profession that isn't listed then asks for its
+    category (all seven plus Other, FireFlair's guess outlined), with Back.
+  Once Alex picks, delete the other branch (`PE2ProfType` or the plus path into `PE2ProfCats`).
+- **Any profession:** typed ones that FireFlair can't place still get "Which category is ...?", now with Other.
+- **Length:** typed professions up to 60 characters (`PROF_MAX_LEN`); the boxes wrap between words. The Profile Card's
+  16-character rule is only for the card (an entry that doesn't fit is left off whole, never cut); not built here.
+- **Top three** (Alex 19:19): the first three professions (`FEATURE_LIMIT`) go onto the Profile Card, so the builder
+  marks them with a gold number tab (1, 2, 3) on the tile's top edge and a stronger gold border. The tiles can now be
+  dragged into order (handle bottom right; arrow keys work too). Shared marking for other sections: `.ff-top3` on
+  the entry's wrapper plus a `.ff-top3-n` child holding the number (CSS at the end of `src/styles/prof21.css`).
+  `ProfTiles21` takes new `reorder` and `top` props; the display page passes neither.
+- Files: `src/components/team/profile-edit-p2.jsx`, `src/components/team/attribute-cards.jsx` (`ProfTiles21` props
+  only), `src/styles/profile-edit-p2.css`, `src/styles/prof21.css`.
+
 ## v1.37
 
 Profile builder thread (Legolas merge, 18 Nov 19:00). No new features: this release puts the missing source on GitHub so
