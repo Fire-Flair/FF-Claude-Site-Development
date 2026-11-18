@@ -84,3 +84,28 @@
 @media (min-width:860px) { .ff .ff-hf22.ff-home-c4 .ff-hb23-body .ff-hb17-row { grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr); } }
 /* open on iPad and desktop the tint would stop at the button's edge too */
 .ff .ff-hf22.ff-home-c4 .ff-hb23.is-open .ff-hbc-btn:hover { background:transparent; }
+
+/* ================= aragorn-bookings (MOCK for Alex, scratch branch only) =================
+   The bookings box without burgundy. .ff-hbc-dark: black and gold (existing tokens). .ff-hbc-light: ivory and gold.
+   .ff-hbc-in: the box sits inside the Your bookings pillar panel, with a small label where the big title was. */
+.ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hb23-box { background:var(--color-ink-warm,#16130F) !important; border-color:var(--color-gold,#C9A227); box-shadow:0 18px 30px -22px rgba(11,11,12,.75); }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hbc-ch { color:var(--color-gold-leaf,#EDD58F) !important; background:var(--color-ink-warm,#16130F) !important; border-color:var(--color-gold,#C9A227) !important; }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hbc-btn .ff-hb23-t,
+.ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hbc-lab,
+.ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hbc-arr,
+.ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hb23-body .ff-label,
+.ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hb23-body .ff-hb17-row .arr { color:var(--color-gold-leaf,#EDD58F); }
+
+.ff .ff-hf22.ff-home-c4 .ff-hbc-light .ff-hb23-box { background:var(--color-ivory,#FFFCF4) !important; border:1.5px solid var(--color-gold,#C9A227); color:var(--color-ink-warm,#16130F); box-shadow:0 14px 24px -20px rgba(48,36,10,.6); }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-light .ff-hbc-ch { color:var(--color-ink-warm,#16130F) !important; background:var(--color-gold-leaf,#EDD58F) !important; border-color:var(--color-gold,#C9A227) !important; }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-light .ff-hbc-st .lb { color:var(--color-ink-warm,#16130F); }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-light .ff-hbc-lab { color:var(--color-gold-dk,#7E611D); }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-light .ff-hbc-arr,
+.ff .ff-hf22.ff-home-c4 .ff-hbc-light .ff-hb23-body .ff-hb17-row .arr { color:var(--color-gold-mid,#B08D2A); }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-light .ff-hb17-row .card { background:var(--color-champagne-box,#EAE0C3); }
+
+.ff .ff-hf22 .ff-hbc-in { margin:14px 0 0; }
+.ff .ff-hf22 .ff-hbc-in .ff-hb23-box { border-radius:18px; }
+.ff .ff-hf22 .ff-hbc-in .ff-hbc-btn { border-radius:18px; padding-top:16px; }
+.ff .ff-hf22 .ff-hbc-in .ff-hbc-lab { display:block; margin:0; padding-right:46px; min-height:22px; text-align:left; }
+@media (min-width:900px) { .ff .ff-hf22 .ff-hbc-in .ff-hb23-box, .ff .ff-hf22 .ff-hbc-in .ff-hbc-btn { border-radius:22px; } }

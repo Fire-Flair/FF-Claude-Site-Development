@@ -432,7 +432,7 @@
      time, because each section is long and two open at once lose your place. The header that was tapped stays where it is on
      screen while the other step closes. window "ff-step21" (detail: a section id) opens the step that holds that id
      (used by deep links and "#id" jumps). */
-  function PillarSteps21({ pl, photo, run, link }) {
+  function PillarSteps21({ pl, photo, run, link, plain = false }) {
     const IM = window.FF_IMG || {};
     const [on, setOn] = useState("");
     const list = useRef(null);
@@ -467,7 +467,7 @@
             <section key={s.id} className={"it" + (isOn ? " on" : "")}>
               <h4 className="hh">
                 <button type="button" id={"st21-" + s.id} aria-expanded={isOn} aria-controls={"st21b-" + s.id} onClick={() => toggle(s.id)}>
-                  <span className="ph" aria-hidden="true">{IM[ik] ? <img decoding="async" src={IM[ik]} style={fp17(ik)} alt="" draggable={false} /> : null}<i>{i + 1}</i></span>
+                  <span className="ph" aria-hidden="true">{IM[ik] ? <img decoding="async" src={IM[ik]} style={fp17(ik)} alt="" draggable={false} /> : null}{plain ? null : <i>{i + 1}</i>}</span>
                   <b>{s.card.t}</b>
                   <span className="chev" aria-hidden="true"><P21I.ChevronDown size={16} strokeWidth={2.6} /></span>
                 </button>

@@ -105,9 +105,11 @@ function Home101() {
       React.createElement(DiscoverHub11, {
         key: "discover"
       }),
-      React.createElement(HowBooking17, {
+      /* aragorn-bookings (MOCK): options 1 and 2 move this box into the Your bookings pillar; option 3 recolours it here. */
+      !(+window.FF_AR_OPT === 1 || +window.FF_AR_OPT === 2) && React.createElement(HowBooking17, {
         key: "how",
-        kind: "team"
+        kind: "team",
+        tone: +window.FF_AR_OPT === 3 ? "dark" : ""
       }),
       coin("a"),
       React.createElement(TeamCompetition20, { key: "competition" }),
