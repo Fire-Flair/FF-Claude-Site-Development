@@ -141,3 +141,28 @@
 .ff .ff-hf22 .ff-home17 > .ff-coindiv + .ff-sect > style + * { margin-top:0; }
 .ff .ff-hf22 .ff-home17 > .ff-sect:has(+ .ff-coindiv) { padding-bottom:0; margin-bottom:0; }
 .ff .ff-hf22 .ff-home17 > .ff-sect:has(+ .ff-coindiv) > :last-child { margin-bottom:0; }
+
+/* ==== home4 (Alex, 18 Nov 02:55): bookings box with a 1-2-3-4 row and a chevron below; "Can FF Team help you?" heading rule ==== */
+.ff .ff-hf22 .ff-hb4-h { padding:18px 18px 4px; }
+.ff .ff-hf22 .ff-hb4-h .ff-hb23-t { display:block; text-align:center; }
+.ff .ff-hf22 .ff-hb4-row { list-style:none; margin:0; padding:14px 10px 4px; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); }
+.ff .ff-hf22 .ff-hb4-st { position:relative; display:flex; flex-direction:column; align-items:center; gap:8px; min-width:0; padding:0 4px; text-align:center; }
+.ff .ff-hf22 .ff-hb4-st + .ff-hb4-st::before { content:""; position:absolute; left:0; top:4px; bottom:4px; width:1px; background:linear-gradient(180deg,transparent,rgba(201,162,39,.45),transparent); }
+.ff .ff-hf22 .ff-hb4-st .top { display:flex; align-items:center; justify-content:center; gap:5px; }
+.ff .ff-hf22 .ff-hb4-st .n { font-family:var(--font-display,'Cinzel',serif); font-weight:700; font-size:clamp(22px,6vw,30px); line-height:1; font-variant-numeric:lining-nums; color:var(--color-gold-lt,#E4C36A); }
+.ff .ff-hf22 .ff-hb4-st .ic { width:26px; height:26px; display:grid; place-items:center; border-radius:8px; corner-shape:squircle; color:var(--color-gold-lt,#E4C36A); background:rgba(201,162,39,.12); border:1px solid rgba(201,162,39,.45); }
+.ff .ff-hf22 .ff-hb4-st b { display:block; max-width:100%; font-size:clamp(11.5px,3.2vw,15px); line-height:1.25; font-weight:600; color:var(--color-cream,#F4EFE4); overflow-wrap:normal; word-break:normal; hyphens:none; }
+.ff .ff-hf22 .ff-hb4-more { display:flex; justify-content:center; width:100%; padding:10px 0 16px; border:0; background:transparent; color:inherit; cursor:pointer; }
+.ff .ff-hf22 .ff-hb4-more:focus-visible { outline:none; }
+.ff .ff-hf22 .ff-hb4-more:focus-visible .ff-hb23-ch { outline:2px solid var(--color-gold-lt,#E4C36A); outline-offset:2px; }
+.ff .ff-hf22 .ff-hb4-more:hover .ff-hb23-ch { background:rgba(201,162,39,.22); }
+@media (min-width:900px) {
+  .ff .ff-hf22 .ff-hb4-h { padding:24px 26px 6px; }
+  .ff .ff-hf22 .ff-hb4-row { padding:18px 26px 6px; }
+  .ff .ff-hf22 .ff-hb4-st .ic { width:30px; height:30px; }
+}
+/* "Can FF Team help you?": the same full-width gold rule as Discover FireFlair, in place of the short stub */
+.ff .ff-hf22 .ff-qg-title { display:block; position:relative; font-size:clamp(26px,6vw,38px); margin:6px 0 16px; padding-bottom:10px; }
+.ff .ff-hf22 .ff-qg-title::after { position:absolute; left:0; right:0; bottom:0; width:auto; height:2px; border-radius:2px; background:linear-gradient(90deg,var(--gold,#C9A227),#F4DC8E 45%,rgba(201,162,39,.25)); }
+/* Discover FireFlair now follows the hero: the same space above it as the Launch Challenge had there */
+.ff .ff-hf22 .ff-home17 > .ff-dx { padding-top:clamp(20px,4vw,28px); }
