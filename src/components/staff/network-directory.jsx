@@ -341,6 +341,143 @@ function CoCardRow17({ type, list, by, tag }) {
   );
 }
 
+/* p2/copage (Alex 03:18): the company page in the same format as a person's page. Sections are Cinzel small-caps heads
+   (ff-pp21), cards are the person page's theme cards (ff-agrp t-card, coloured by the company's card theme through cardTone17)
+   in rails. Tapping a card opens its photos, full text and PDF (CoCardPop17), as before. */
+const CO_PAGE_CSS21 = `
+/* ---- p2/copage: company page in the person-page format ---- */
+.ff .ff-copub .ff-co21 + .ff-co21 { margin-top: 26px; }
+.ff .ff-copub .ff-co21.ff-about + .ff-co21 { margin-top: 26px; }
+.ff .ff-copub .ff-tabpanel > .ff-co21:first-child { margin-top: 4px; }
+.ff .ff-co21-n { font: 600 13px var(--font-sans, Inter, sans-serif); color: var(--color-gold-dk, #7E611D); font-variant-numeric: tabular-nums; }
+.ff .ff-co21-lead { margin: 0 0 8px; font: 600 16px/1.4 var(--font-sans, Inter, sans-serif); color: #1E1A12; overflow-wrap: normal; word-break: normal; hyphens: none; }
+.ff .ff-co21-p { margin: 0 0 10px; font-size: 15px; line-height: 1.6; color: #2A2620; overflow-wrap: normal; word-break: normal; hyphens: none; }
+.ff .ff-co21-quote { margin: 12px 0 0; padding: 14px 16px; border-radius: 18px; corner-shape: squircle; border: 1px solid var(--tc-line, rgba(176,141,42,.7));
+  background: var(--tc-bg, #FBF7EE); color: var(--tc-ink, #1E1A12); font-size: 15px; line-height: 1.55; }
+.ff .ff-agrp.t-card.ff-co21-card { aspect-ratio: auto; min-height: clamp(220px, 60vw, 270px); gap: 8px; padding: 14px 14px 16px; }
+.ff .ff-agrp.t-card.ff-co21-card.ph { width: clamp(196px, 56vw, 236px); }
+.ff .ff-co21-card .im { display: block; width: 100%; aspect-ratio: 4 / 3; border-radius: 14px; corner-shape: squircle; overflow: hidden; background: rgba(0,0,0,.08); flex: none; }
+.ff .ff-co21-card .im img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block; }
+.ff .ff-co21-card .ff-agrp-top { padding-bottom: 8px; }
+.ff .ff-co21-card .ff-agrp-h { font-size: 16.5px; overflow-wrap: normal; word-break: normal; hyphens: none; }
+.ff .ff-co21-card .ff-agrp-d { display: block; overflow: visible; -webkit-line-clamp: none; font-size: 14px; line-height: 1.45; white-space: pre-line; overflow-wrap: normal; word-break: normal; hyphens: none; }
+.ff .ff-co21-card .ff-co21-more { margin-top: auto; display: inline-flex; align-items: center; gap: 4px; font-size: 12.5px; font-weight: 600; color: var(--tc-acc, #8A6A1E); }
+.ff .ff-co21 .ff-copub-chips { margin-top: 2px; }
+.ff .ff-co21-team .ff-ct17-m { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.ff .ff-co21-team .ff-ct17-m .ff-btn { width: 100%; }
+`;
+
+
+/* The company's About: the person page's About box, headed "About". */
+function CoAbout21({ text }) {
+  const [more, setMore] = useState(false);
+  const ref = useRef(null);
+  const [over, setOver] = useState(false);
+  useLayoutEffect(() => { const el = ref.current; if (el) setOver(more || el.scrollHeight > el.clientHeight + 2); }, [text, more]);
+  if (!String(text || "").trim()) return null;
+  return (
+    <section className="ff-about ff-pp21 ff-about-big ff-co21" aria-labelledby="ff-co21-about-h">
+      <div className="ff-pp-head"><h2 id="ff-co21-about-h" className="ff-about-h">About</h2></div>
+      <p ref={ref} id="ff-co21-about-text" className={more ? "" : "clamp"}>{text}</p>
+      {(over || more) && <button type="button" className="ff-pub-more" aria-expanded={more} aria-controls="ff-co21-about-text" onClick={() => setMore(!more)}>{more ? "Read less" : "Read more"}</button>}
+    </section>
+  );
+}
+
+
+/* A heading in the person-page style, then the section's content. */
+function CoSec21({ id, title, count, children }) {
+  return (
+    <section className="ff-pp ff-pp21 ff-co21" aria-labelledby={id}>
+      <div className="ff-pp-head"><h2 id={id} className="ff-about-h">{title}</h2>{count ? <span className="ff-co21-n">{count}</span> : null}</div>
+      {children}
+    </section>
+  );
+}
+
+
+/* A section's cards as theme cards in a rail; a tap opens the card. */
+function CoRail21({ cards, label, numbered, mem, k }) {
+  const [pop, setPop] = useState(null);
+  const local = useRef({});
+  const m = mem || local;
+  if (!cards.length) return null;
+  const anyPh = cards.some(r => coPhotos17(r).length);
+  return (
+    <>
+      <MemScroll mem={m} k={k || label} label={`${label}, ${cards.length} card${cards.length === 1 ? "" : "s"}`} className="ff-acar">
+        {cards.map((r, i) => {
+          const ph = coPhotos17(r);
+          const extra = ph.length > 1 || (r.document && r.document.name);
+          return (
+            <button key={r.id} type="button" className={"ff-agrp t-card ff-co21-card" + (anyPh ? " ph" : "")} onClick={() => setPop(r)} aria-label={`Open ${r.name || label}`}>
+              {ph[0] ? <span className="im"><img decoding="async" src={ph[0]} alt="" loading="lazy" referrerPolicy="no-referrer" onError={(e) => { e.currentTarget.style.visibility = "hidden"; }} /></span> : null}
+              {(r.name || numbered) ? <span className="ff-agrp-top"><span className="ff-agrp-h">{r.name}</span>{numbered ? <span className="ff-agrp-n">{String(i + 1).padStart(2, "0")}</span> : null}</span> : null}
+              {String(r.description || "").trim() ? <span className="ff-agrp-d">{r.description}</span> : null}
+              {extra ? <span className="ff-co21-more">{ph.length > 1 ? <><I11.Images size={13} aria-hidden="true" /> {ph.length}</> : <><I11.FileText size={13} aria-hidden="true" /> PDF</>}</span> : null}
+            </button>
+          );
+        })}
+      </MemScroll>
+      <CoCardPop17 card={pop} onClose={() => setPop(null)} />
+    </>
+  );
+}
+
+
+/* The company's own "More information" sections (the one company shape), each a headed section with its cards in a rail. */
+function CoInfo21({ co, mem }) {
+  return coSections17(co).map((sec, si) => {
+    const cards = coShownCards17(coSecAll17(co, sec));
+    const paras = String(sec.text || "").split(/\n\s*\n/).map((x) => x.trim()).filter(Boolean);
+    const chips = (sec.chips || []).filter(Boolean);
+    if (!cards.length && !paras.length && !sec.lead && !sec.quote && !chips.length) return null;
+    return (
+      <CoSec21 key={sec.id || si} id={"ff-co21-s" + si} title={sec.title}>
+        {sec.lead ? <p className="ff-co21-lead">{sec.lead}</p> : null}
+        {paras.map((p, i) => <p key={"p" + i} className="ff-co21-p">{p}</p>)}
+        {chips.length ? <div className="ff-copub-chips">{chips.map((x) => <span key={x}>{x}</span>)}</div> : null}
+        <CoRail21 cards={cards} label={sec.title} numbered={!!sec.numbered} mem={mem} k={"s" + si} />
+        {sec.quote ? <p className="ff-co21-quote">{sec.quote}</p> : null}
+      </CoSec21>
+    );
+  });
+}
+
+
+/* The company's Team tab, laid out like a person's: the team grouped by profession, then Companies, then Network. */
+function CoTeamTab21({ co, team, companies, network, renderTeam }) {
+  const { dispatch } = useStore();
+  const view = (p) => { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); };
+  const none = (t) => <p className="ff-body ff-muted" style={{ margin: 0 }}>{t}</p>;
+  const groups = CATEGORY_ORDER.map(g => [g, team.filter(p => (p.group || "Other") === g)]).filter(([, l]) => l.length);
+  const rest = team.filter(p => !CATEGORY_ORDER.includes(p.group || "Other"));
+  if (rest.length) groups.push(["Other", rest]);
+  const key = coKey17(co) || co.id;
+  return (
+    <div className="ff-tt17 ff-co21-team">
+      <style>{TEAM_TAB_CSS17}</style>
+      <Fold17 id={"co21_team_" + key} icon={<I11.Users size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={`${co.name || "Company"} team`} count={team.length}>
+        {!team.length ? none("No team yet.") : groups.map(([g, l]) => (
+          <div key={g} className="ff-tt17-group">
+            <div className="ff-tt17-gh">{g} <i>{l.length}</i></div>
+            <div className="ff-tt17-grid">{l.map(p => renderTeam(p, () => view(p)))}</div>
+          </div>
+        ))}
+      </Fold17>
+      <Fold17 id={"co21_cos_" + key} icon={<I11.Briefcase size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Companies" count={companies.length}>
+        {companies.length ? <CoTiles17 list={companies} label="Companies" /> : none("No companies yet.")}
+      </Fold17>
+      {co.mine ? (
+        <Fold17 id={"co21_net_" + key} icon={<TtNet17 size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Network" count={network.length} shut>
+          {network.length ? <div className="ff-tt17-grid">{network.map(p => <TeamTile17 key={p.id} p={p} onClick={() => view(p)} />)}</div> : none("No one yet.")}
+        </Fold17>
+      ) : null}
+    </div>
+  );
+}
+
+
 /* A company's page, as anyone sees it. */
 function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   const { state, dispatch } = useStore();
@@ -348,6 +485,8 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   const co = coIn || companyById(state, state.viewingCompany);
   const [asking, setAsking] = useState(false);
   const [reviewing, setReviewing] = useState(false);
+  const [revOpen, setRevOpen] = useState(null);
+  const railMem = useRef({});
   /* On a public company page the tab is kept in the store so it is part of the address; the owner's preview keeps its own. */
   const [ltab, setLtab] = useState("overview");
   const inStore = !coIn && !!state.viewingCompany;
@@ -378,17 +517,24 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   /* Reviews posted on this company's page (state.reviews, newest first) come before its own. Declined ones never show; a waiting one only to its writer (as reviewRecordsFor). */
   const hiddenRv = (state.admin17 && state.admin17.hidden && state.admin17.hidden.reviews) || {};
   const posted = (state.reviews || []).filter(r => !hiddenRv[r.id] && r.status !== "declined" && (r.status !== "pending" || r.byId === "me")).filter(r => r.aboutId === co.id || ck &&  (r.aboutId && r.aboutId !== "me" && coKey17(companyById(state, r.aboutId)) === ck)).slice().reverse().map(r => [null, r.rating, r.text, r.byName, r.status === "pending"]);
+  /* p2/copage: the same reviews as Review Cards (posted ones keep their own record: date, writer, worked together). */
+  const revCards = [
+    ...(state.reviews || []).filter(r => !hiddenRv[r.id] && r.status !== "declined" && (r.status !== "pending" || r.byId === "me")).filter(r => r.aboutId === co.id || ck && (r.aboutId && r.aboutId !== "me" && coKey17(companyById(state, r.aboutId)) === ck)).slice().reverse()
+      .map(r => ({ rec: { id: r.id, rating: r.rating, description: r.text, pending: r.status === "pending" }, raw: r })),
+    ...(co.mine ? (co.reviews || []).map(r => [null, r.rating, r.text, r.byName, false, r.at]) : (co.reviews || [])).map((r, i) => ({ rec: { id: "cor" + i, rating: r[1] || null, description: r[2] }, raw: { rating: r[1] || null, text: r[2], byName: r[3], at: r[5] } })),
+    ...coWebReviews17(co).map((r, i) => ({ rec: { id: "cow" + i, rating: null, description: r.description }, raw: { rating: null, text: r.description, byName: r.name } })),
+  ];
   const reviews = [...posted, ...(co.mine ? (co.reviews || []).map(r => [null, r.rating, r.text, r.byName]) : (co.reviews || [])), ...coWebReviews17(co).map(r => [null, 0, r.description, r.name])];
   const ownQa = co.mine || co.qa ? coQa(co).filter(q => q.group !== "feedback" && (q.answer || String(q.note || "").trim())) : [];
   /* Questions asked on this page that the company answered and made public sit next to its own Q&A, newest first. */
   const askedQa = (state.profileQuestions || []).filter(q => q.companyKey && q.companyKey === ck && q.visibility === "public" && isAnswered(q.answer)).slice().reverse().map(q => ({ id: q.id, text: q.text, answer: q.answer, note: "", group: "business" }));
   const pubQa = [...askedQa, ...ownQa];
   const services = coPackages17(co), cocktails = coCocktails17(co);
-  const pkgBlock = (services.length > 0 || cocktails.length > 0 || pubQa.length > 0) ? <section className="ff-copub-sec ff-copub-pk">
-    {services.length > 0 && <VkFold17 title="Packages" count={services.length}><CoSimpleRow17 cards={services} label="Packages" /></VkFold17>}
-    {cocktails.length > 0 && <VkFold17 title="Cocktails" count={cocktails.length}><CoSimpleRow17 cards={cocktails} label="Cocktails" /></VkFold17>}
-    {pubQa.length > 0 && <VkFold17 title="Q&A" count={pubQa.length}><CoQA17 list={pubQa} name={co.name} /></VkFold17>}
-  </section> : <section className="ff-copub-sec ff-copub-pk"><p className="ff-body ff-muted" style={{ margin: 0 }}>No packages yet.</p></section>;
+  const pkgBlock = (services.length > 0 || cocktails.length > 0 || pubQa.length > 0) ? <>
+    {services.length > 0 && <CoSec21 id="ff-co21-pk" title="Packages" count={services.length}><CoRail21 cards={services} label="Packages" mem={railMem} k="pk" /></CoSec21>}
+    {cocktails.length > 0 && <CoSec21 id="ff-co21-ck" title="Cocktails" count={cocktails.length}><CoRail21 cards={cocktails} label="Cocktails" mem={railMem} k="ck" /></CoSec21>}
+    {pubQa.length > 0 && <CoSec21 id="ff-co21-qa" title="Q&A" count={pubQa.length}><CoQA17 list={pubQa} name={co.name} /></CoSec21>}
+  </> : <TabEmpty17 icon={<I11.Sparkles size={20} />}>No packages yet.</TabEmpty17>;
   const isParty = isStaff && hireSiteOf(state).party;
   /* Claim this profile: a directory company nobody has claimed, on FF Staff, for a visitor who is not already claiming one. */
   const mineClaim = coClaimMine17(state);
@@ -454,34 +600,34 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
       {acts.length > 0 && <div className="ff-copub-grid">{acts.map(([k, el], i) => { const last = acts.length % 2 && i === acts.length - 1; /* A Share left alone on the last row: centred, half the row wide. */ return <div key={k} className={"c-" + k + (last ? " span" : "") + (last && k === "share" ? " ff-share-half" : "")}>{el}</div>; })}</div>}
       </>} />
 
-      <div className="ff-ptabs-wrap">
+      <div className="ff-ptabs-wrap" style={cardTone17(co.theme || "onyx")}>
+        <style>{CO_PAGE_CSS21}</style>
+        <ProfileH117 person={{ name: co.name, profession: [].concat(co.kind || [])[0], locations: [co.area || areas[0]].filter(Boolean) }} />
         {!co.unclaimed && <ProfileTabs tabs={tabs} active={tab} onChange={setTab} />}
         <div role="tabpanel" id="ff-tabpanel" aria-labelledby={`ff-tab-${tab}`} className="ff-tabpanel" tabIndex={0}>
           {tab === "overview" && (<>
-            {about.length > 0 && <section className="ff-copub-sec"><SectionHead icon={<I11.Briefcase size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="About" />
-              {about.map((p, i) => <p key={i} className="ff-body" style={{ margin: i ? "12px 0 0" : 0, fontSize: 15, lineHeight: 1.55, color: "#2A2620" }}>{p}</p>)}</section>}
-            {contact.length > 0 && <section className="ff-copub-sec"><SectionHead icon={<I11.MessageCircle size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Contact" />
-              <ul className="ff-copub-contact">{contact.map(([k, v]) => { const href = coContactHref17(k, v); return <li key={k + v}><a href={href} target={/^https?:/.test(href) ? "_blank" : undefined} rel="noopener noreferrer"><span className="ic"><CoKindIcon17 kind={k} size={15} /></span><span><small>{k}</small><b>{v}</b></span></a></li>; })}</ul></section>}
-            {(areas.length > 0 || venues.length > 0) && <section className="ff-copub-sec"><SectionHead icon={<I11.MapPinned size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Areas covered" />
-              <div className="ff-copub-chips">{areas.map(a => <span key={a}><I11.MapPin size={12} /> {a}</span>)}{venues.map(v => <span key={v} className="ven"><I11.Star size={12} /> {v}</span>)}</div></section>}
-            {co.info && co.info.length > 0 && <CoInfo17 co={co} />}
+            <style>{RANK_CSS17}</style>
+            {about.length > 0 && <CoAbout21 text={about.join("\n\n")} />}
+            {contact.length > 0 && <CoSec21 id="ff-co21-contact" title="Contact">
+              <ul className="ff-copub-contact">{contact.map(([k, v]) => { const href = coContactHref17(k, v); return <li key={k + v}><a href={href} target={/^https?:/.test(href) ? "_blank" : undefined} rel="noopener noreferrer"><span className="ic"><CoKindIcon17 kind={k} size={15} /></span><span><small>{k}</small><b>{v}</b></span></a></li>; })}</ul></CoSec21>}
+            {(areas.length > 0 || venues.length > 0) && <CoSec21 id="ff-co21-areas" title="Areas covered">
+              <div className="ff-copub-chips">{areas.map(a => <span key={a}><I11.MapPin size={12} /> {a}</span>)}{venues.map(v => <span key={v} className="ven"><I11.Star size={12} /> {v}</span>)}</div></CoSec21>}
+            {co.info && co.info.length > 0 && <CoInfo21 co={co} mem={railMem} />}
             {co.unclaimed && (services.length > 0 || cocktails.length > 0 || pubQa.length > 0) && pkgBlock}
           </>)}
-          {tab === "qa" && pkgBlock}
-          {tab === "team" && <section className="ff-copub-sec">
-            <TeamParts17 team={team} companies={coCos} network={coNet} teamEmpty="No team yet." renderTeam={(p) => { const on = state.selection.includes(p.id); return (
-              <div key={p.id} className="ff-ct17-m"><PlayerTile person={p} selected={on} onClick={() => { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); }} />
-                {isStaff && !isParty && !co.mine && <Btn variant={on ? "sm" : "sm primary"} onClick={() => { dispatch({ type: on ? "SELECT" : "SELECT_ADD", id: p.id }); dispatch({ type: "TOAST", toast: on ? `${firstName(p.name)} removed from your booking bar` : `${firstName(p.name)} added to your booking bar` }); }}>{on ? <><I11.Check size={13} /> In your booking</> : <><I11.Plus size={13} /> Add to booking</>}</Btn>}
-              </div>); }} />
-          </section>}
-          {tab === "reviews" && <section className="ff-copub-sec">
-            {reviews.length ? <div className="ff-copub-revs">{reviews.map(([by, rating, text, byName, waiting], i) => { const p = by && all.find(x => x.id === by); return (
-              <figure key={i} className="ff-copub-rev">{rating > 0 && <span className="st" aria-label={`${rating} out of 5`}>{"★".repeat(rating)}{"☆".repeat(5 - rating)}</span>}<blockquote>"{text}"</blockquote>
-                <figcaption>{p && <Portrait src={p.photo} name={p.name} size={26} tier={p.tier} />}{p ? p.name : byName}{p ? ` · ${p.profession}` : ""}</figcaption>
-                {waiting && <p className="ff-copub-wait"><I11.Clock size={15} strokeWidth={2} aria-hidden="true" /><span>Waiting for {co.name || "the company"} to accept</span></p>}</figure>); })}</div>
-              : <p className="ff-body ff-muted" style={{ margin: 0 }}>No reviews yet.</p>}</section>}
+          {tab === "qa" && <><style>{RANK_CSS17}</style>{pkgBlock}</>}
+          {tab === "team" && <CoTeamTab21 co={co} team={team} companies={coCos} network={coNet} renderTeam={(p, open) => { const on = state.selection.includes(p.id); return (
+            <div key={p.id} className="ff-ct17-m"><TeamTile17 p={p} onClick={open} />
+              {isStaff && !isParty && !co.mine && <Btn variant={on ? "sm" : "sm primary"} onClick={() => { dispatch({ type: on ? "SELECT" : "SELECT_ADD", id: p.id }); dispatch({ type: "TOAST", toast: on ? `${firstName(p.name)} removed from your booking bar` : `${firstName(p.name)} added to your booking bar` }); }}>{on ? <><I11.Check size={13} /> In your booking</> : <><I11.Plus size={13} /> Add to booking</>}</Btn>}
+            </div>); }} />}
+          {tab === "reviews" && (revCards.length
+            ? <div className="ff-rc35-list"><style>{RANK_CSS17}</style>{revCards.map(x => <ReviewCard35 key={x.rec.id} rec={x.rec} raw={x.raw} writer={reviewWriter35(state, all, x.raw)} about={asPerson} onOpen={() => setRevOpen(x)} />)}</div>
+            : <TabEmpty17 icon={<I11.Award size={20} />}>No reviews yet.</TabEmpty17>)}
         </div>
       </div>
+      <Sheet open={!!revOpen} onClose={() => setRevOpen(null)} title="Review">
+        {revOpen && <div className="ff-rc35-full"><ReviewCard35 rec={revOpen.rec} raw={revOpen.raw} writer={reviewWriter35(state, all, revOpen.raw)} about={asPerson} /></div>}
+      </Sheet>
       {slot}
       <AskQuestionSheet open={asking} person={asPerson} onClose={() => setAsking(false)} />
       <ReviewSheet open={reviewing} person={asPerson} onClose={() => setReviewing(false)} />
