@@ -15,7 +15,8 @@
   .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .ph { bottom:68px !important; height:auto !important; }
   .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .ph::after,
   .ff .ff-hf22.ff-home-c4 .ff-dx.is-open .ff-dx-tile.on .ph::after {
-    background:linear-gradient(180deg,rgba(234,224,195,0) 72%,rgba(234,224,195,.7) 90%,var(--color-champagne-box,#EAE0C3) 100%) !important; }
+    background:none !important; }
+  /* Alex, 18 Nov 18:04: no fade at all on iPad and desktop; the photo ends cleanly above the champagne words */
   .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile:not(.on) .chev { background:rgba(234,224,195,.92); }
 }
 
@@ -48,25 +49,38 @@
 .ff .ff-hf22.ff-home-c4 .ff-hb23-box { background:var(--color-ox,#5C1220) !important; }
 .ff .ff-hf22.ff-home-c4 .ff-hbc-ch { background:var(--color-ox,#5C1220) !important; }
 
-/* ---------- phones only: diagonal gradients (Alex, 18 Nov 16:59, diagonal 17:12, 17:41). Desktop and iPad have none. ----------
+/* ---------- phones only (history: diagonal gradients 18 Nov 16:59–17:41, all removed by 18:37) ----------
    Pillar boxes: champagne behind the photo and words, with a burgundy wedge at the top right on a diagonal edge, which
    fades away completely by the bottom right corner (nothing behind the drop-down's bottom edge). The open tile ends in
    plain champagne at its bottom edge, so it joins its box.
-   "Built for getting you bookings": a gold wedge on the same diagonal in the top right corner (behind the chevron). It is
-   a fixed-height layer at the top, so it stays put when the box opens and never reaches the labels. */
+   "Built for getting you bookings": flat burgundy on every size (the gold was removed, Alex 18 Nov 18:37). */
 @media (max-width:759px) {
-  .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile,
-  .ff .ff-hf22.ff-home-c4 .ff-dx.is-open .ff-dx-tile.on {
-    background:
-      linear-gradient(180deg,rgba(234,224,195,0) 30%,rgba(234,224,195,.75) 70%,var(--color-champagne-box,#EAE0C3) 100%),
-      linear-gradient(56deg,#F2EAD2 0%,var(--color-champagne-box,#EAE0C3) 80%,#B98A7C 86%,var(--color-ox-hi,#6E1A2C) 91%,var(--color-ox,#5C1220) 100%) !important; }
-  /* the chevron sits on the diagonal edge: a solid burgundy button with a champagne outline and arrow */
+  /* Alex, 18 Nov 18:15: the pillar boxes are plain champagne again (no gradient); the chevron stays a solid burgundy button */
+  /* the chevron: a solid burgundy button with a champagne outline and arrow */
   .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .chev { color:var(--color-champagne,#EADBB4) !important; background:var(--color-ox,#5C1220) !important; border-color:rgba(234,219,180,.75) !important; }
   .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile.on .chev { color:var(--color-ox,#5C1220) !important; background:var(--color-champagne,#EADBB4) !important; border-color:var(--color-champagne,#EADBB4) !important; }
 
-  .ff .ff-hf22.ff-home-c4 .ff-hb23-box {
-    background:
-      linear-gradient(236deg,var(--color-gold-leaf,#EDD58F) 0%,var(--gold,#C9A227) 9%,#9A5A38 16%,rgba(92,18,32,0) 24%) top right / 100% 150px no-repeat,
-      var(--color-ox,#5C1220) !important; }
+  /* Alex, 18 Nov 18:37: no gold on the bookings box; it is flat burgundy on phones too (rule above the media query) */
   .ff .ff-hf22.ff-home-c4 .ff-hbc-ch { color:var(--color-champagne,#EADBB4) !important; background:var(--color-ox,#5C1220) !important; border-color:var(--color-champagne,#EADBB4) !important; }
+  /* a tap leaves :hover on, and its tint was a lighter band ending at the button's bottom edge */
+  .ff .ff-hf22.ff-home-c4 .ff-hbc-btn:hover { background:transparent !important; }
 }
+
+/* ---------- pillar tiles: title only, bigger and bold, every size (Alex, 18 Nov 18:15) ---------- */
+.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .tx b { font-weight:700 !important; font-size:25px !important; line-height:1.1 !important; }
+@media (min-width:760px) { .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .tx b { font-size:27px !important; } }
+@media (min-width:1000px) { .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .tx b { font-size:24px !important; } }
+/* with one line of words, the photo can come down closer to the title on iPad and desktop */
+@media (min-width:760px) { .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .ph { bottom:56px !important; } }
+/* the pillar chevron is a solid burgundy button on every size, open and closed (Alex, 18 Nov 18:15) */
+.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .chev,
+.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile:not(.on) .chev,
+.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile.on .chev { color:var(--color-champagne,#EADBB4) !important; background:var(--color-ox,#5C1220) !important; border-color:rgba(234,219,180,.75) !important; }
+/* "How bookings work" and the step cards share the title's left and right edges (the button's padding), on every size */
+.ff .ff-hf22.ff-home-c4 .ff-hb23-body { padding:0 14px 18px; }
+@media (min-width:900px) { .ff .ff-hf22.ff-home-c4 .ff-hb23-body { padding:0 30px 26px; } }
+.ff .ff-hf22.ff-home-c4 .ff-hb23-body .ff-hb17-row { grid-template-columns:minmax(0,1fr); }
+.ff .ff-hf22.ff-home-c4 .ff-hb23-body .ff-hb17-row .card { min-width:0; }
+@media (min-width:860px) { .ff .ff-hf22.ff-home-c4 .ff-hb23-body .ff-hb17-row { grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr); } }
+/* open on iPad and desktop the tint would stop at the button's edge too */
+.ff .ff-hf22.ff-home-c4 .ff-hb23.is-open .ff-hbc-btn:hover { background:transparent; }

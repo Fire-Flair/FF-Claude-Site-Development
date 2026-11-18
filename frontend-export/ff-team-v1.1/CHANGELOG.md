@@ -4,6 +4,101 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.36
+
+FF Team home (Alex, 18 Nov 18:37). `styles/home-text.css`, `discover-hub.jsx`.
+
+- "Built for getting you bookings": no gold on phones. The box is one flat burgundy on every size, closed and open. Legolas's alignment of "How bookings work" and the hover-tint fix from v1.32 stay.
+- Intro under "Built for event and hospitality professionals" (writer agent), now a two-sentence summary of FF Team: "Made for the events industry, FF Team runs through WhatsApp. Availability requests arrive as shifts come up, with clear terms and conditions for everything you sign up to." Three lines on iPad and desktop, four on phones.
+- Published as a string patch onto the live page 1795028072-45c8 (v1.35), so every other chat's work stays; merged page saved as `live-v1.36-index.html`. Artifact version 1795028117-1329.
+
+## v1.35
+
+Profile page, Experience cards (Alex, 18 Nov 18:49). `src/components/team/attribute-cards.jsx`, `src/styles/experience29.css` (v1.35 block).
+
+- No more black cards: the Experience cards are a muted tone that suits the finished profile page. Default
+  champagne (`#F8F0DC` > `#E9DAB4`, gold ring, dark ink `#2A1E04`, gold accents `#8A6A1E`). Two more tones are one
+  line away: `XP_TONE29 = "rose"` (dusty rosé, burgundy accents) or `"sage"` (soft sage, green accents). Each tone
+  sets the card ring too (`XP_TONES29[..].ring`), so there is no dark edge on light cards.
+- Pop-up: the note is typed straight onto the card (a borderless text area where the note sits, a faint line under
+  it); the separate text box under the card is gone. Done, or closing the pop-up, saves; Remove stays in the pop-up.
+- Checked: `npm run check`, `npm run build`; desktop screenshots of the finished profile in all three tones; phone and
+  desktop pop-up with a note typed onto the card and saved. Published by a three-way merge onto live 1795027943-0e21
+  (another chat's unpushed publish, kept). Merged page saved as `live-v1.35-index.html`. Artifact version 1795028072-45c8.
+
+## v1.34
+
+Profile page, Experience (Alex, 18 Nov 18:39). `src/components/team/attribute-cards.jsx` (`ExperienceEditor29`, new
+`ExperienceSheet29`), `src/styles/experience29.css` (v1.34 block).
+
+- One Google search box for Experience: it finds real businesses, and "Add … as a venue" adds one Google doesn't know.
+  The numbered rows (1, 2, 3, 4) with an X on the right are gone.
+- Every venue shows as an Experience card below. Real businesses carry "View on Google Maps →"; hand-added ones say
+  "Added by hand". The card design is kept from v1.33 (colours to be revisited later).
+- Tapping a card opens it in a pop-up at its real shape and size, with a text box for what they did there (saved to
+  the venue's description and shown on the card as you type). Remove is in the pop-up; closing the pop-up or Done
+  saves. Older Experience records open the same way; removing one hides it (nothing is deleted).
+- Developers: both callers still pass `onOpen`, which the editor now ignores (it opens its own pop-up).
+- Checked: `npm run check`, `npm run build`, phone (390) and desktop (1440) screenshots of the editor, the search
+  drop-down and the pop-up; adding a venue and saving a note tested in the page. Published by a three-way merge onto
+  live 1795026837-609e (the page label now reads 1.34). Merged page saved as `live-v1.34-index.html`. Artifact version 1795027509-b304.
+
+## v1.33
+
+Profile page (Alex, 18 Nov 17:49), two parallel branches merged: `v11-phone-1749` (phone box, Let's get started) and `v11-venues-1749` (Experience). Published by a three-way merge onto the live page 1795026796-63b5 (homepage v1.32 and other chats' unpushed work stay). The page's version label still reads 1.32 (the homepage chat's number, taken while this was publishing); the next publish corrects it. Merged page saved as `live-v1.33-index.html`. Artifact version 1795026837-609e.
+
+### Phone number box and Let's get started
+- **Final colour (Alex, 18 Nov 18:22): champagne box with a green WhatsApp logo** — new default tone `ff-wa-champ` (`PHONE_TONE21`): champagne `#F5ECD3` > `#EADBB4` > `#DCCB9F`, text `#2A1E04`, WhatsApp mark `#1A9E4B`, gold edge. The sage / olive / moss tones below stay available as one-line switches.
+Alex, 18 Nov 17:49: the WhatsApp-green phone box was too intense; and on desktop the Let's get started box sits on the left under its heading. Profile builder page (`#/ff-team/profile`) only.
+
+- Phone number box (`.ff-gb21.shine.ff-wa-pfa`), everywhere it appears (Let's get started, the WhatsApp code step, a signed-in member's verified number): the flat `#25D366` with its dark text is replaced by a muted sage / champagne-gold gradient. Three tones, each one class, in `src/styles/prof21.css` (v1.27 block, now driven by CSS custom properties `--wa-bg`, `--wa-ink`, `--wa-mark` …):
+  - `ff-wa-sage` (default): light sage-champagne `#D9DFBD` > `#C6CFA3` > `#B0BC8B`, text `#1F2A14` (contrast 7.4:1 or more), WhatsApp mark `#24573A`.
+  - `ff-wa-olive`: olive champagne-gold `#D3C990` > `#BDB57B` > `#A3A56A`, text `#1E1F0E` (6.5:1 or more), mark `#1F4A30`.
+  - `ff-wa-moss`: deep muted WhatsApp green `#466F52` > `#3B6347` > `#2F5139`, champagne text `#F4EACB` (4.8:1 or more), mark `#EADBB4`.
+  - Switching is one line: `PHONE_TONE21` in `src/components/team/profile-builder.jsx` (the three `GoldBox21` phone boxes use `PHONE_BOX21` = `"shine ff-wa-pfa " + PHONE_TONE21`). Plain `.ff-wa-pfa` with no tone class falls back to sage.
+  - The edge is a 1px inset shadow (not a border), so the box keeps v1.27's inner width and the number placeholder still fits on a 390px phone. Kept from v1.27: no white inner border line (`::before` off), no shine streak, "Phone number" on its own line, fixed-size white number box (max 220px, code box 180px), country code + number + Verify on one line on a phone. Verify stays black with champagne text when enabled; disabled Verify, focus ring and links follow the tone.
+- Let's get started on desktop (`prof21.css`, new rule `.ff .ff-journey > #ff-sec-ffai.ff-start17 { margin-left: 0 }`): the box keeps its 640px maximum width but sits on the left, its left edge in line with the "Let's get started" title. The Profile Card stays centred. Need help? and Book a meeting (other `.ff-start17` boxes) keep the centred rule. Phone layout unchanged.
+
+### Experience (was Venues)
+Profile page and profile builder, Experience (Alex, 18 Nov 17:49): "Remove the Favourite bars, and instead of saying Venues, it's going to say Experience … each venue will have the search bar … boxes below."
+
+- **Venues is now Experience** wherever members see it: the section heading on your profile edit page / builder (`profile-edit-p2.jsx`, `PE2_TITLES`), on a visitor's view of a profile and your own live profile (`introductions.jsx`), and the venues category label (`state/records.js`, `BASE_CATEGORIES.venues.label`; the record key stays `venues`).
+- **Favourites removed.** The "Worked at / Favourites" switch, the Favourites row and the line "List the venues you've worked at, or your favourite bars." are gone (`VenuesEditor19` and `VenueRows19` deleted from `attribute-cards.jsx`). Only venues you've worked at show.
+- **A search bar per venue** (`ExperienceEditor29`, `attribute-cards.jsx`): one numbered row per venue, each with its own Google business search (`VenueSearch17`, the same Places search as before), prefilled with the venue's name, and a small X in a circle to remove it. An empty row with a + at the end adds the next venue. Picking a different place on a row updates that venue (`REC_PATCH`, its note is kept).
+- **Experience boxes below** (`ExperienceCard29` / `ExperienceCards29`, new `styles/experience29.css`): full-size onyx landscape cards (260 to 320px wide) replacing the small blue/slate tiles (`.ff-vc19`). Each shows the kind of place (Hotel, Bar, Event venue …, or Employer / Experience), the name in large Inter, a gold map pin with street and area, a gold-ringed icon, the role and dates in gold (older Experience records), the note, and a footer rule with the area and "View on Google Maps →". Venues typed by hand (not on Google) show "Added by hand" and no map link. Squircle corners on the card, its gold hairline and the icon. They scroll across on phones and wrap into a grid from 760px. Tapping a card on the edit page opens its details sheet, as before.
+- **Where the design came from:** the onyx venue card `VenueLandscapeCard` from v16 to v17.14 (first in `fireflair-v16.1.html`, commit 9ac5212; last full-size version in `src/components/team/attribute-cards.jsx` at commit 69b680f, "v17.14: Venues replace Experience"): `CardFrame` with the onyx theme and gold hairline, "VENUE" kicker, name, pin and address, a rule and "View on Google Maps →", plus the "Type · Area" footer v17.14 added. Replaced in v17.15 (41de882) by the small blue `.ff-venmini17` cards and in v17.19 (349ae9f) by the `.ff-vc19` tiles. Those two were the other candidates; the v16/v17.14 card was the most finished, so it was ported and brought up to the current rules (squircle corners, Inter, no split words).
+- **Older Experience records** (employer, role, dates, from CVs and the real members' work history) still show under Experience, as cards (employer = venue name, role and dates on the card, Google Maps search on employer and location) and as rows in the editor. Picking a Google place on such a row adds a venue record with the role and dates as its note (`details.fromExperience` = the old record's id) and hides the old record (`hidden: true`); removing such a row hides it too. Nothing is deleted.
+- Checked: `npm run check`, `npm run build`; screenshots at 390 and 1440 of the edit page (rows, the search open, a venue added, the cards), your own live profile, two real members' profiles, and the old v17.4.5 venue cards for comparison.
+
+Developer notes:
+- Data: a venue record with `details.kind === "favourite"` is kept untouched in the data but never shown or edited (`xpShown29`). Do not migrate or delete those records; new venues are saved with `details: { kind: "worked" }` as before.
+- `VenueCard19` (the small tile) stays only for the Network page's Venues section, which is switched off (`SHOW_VENUES17 = false`). The old `.ff-ven19` / `.ff-seg19` / `.ff-vc19` rules in `prof21.css` and `rank17.css` are left in place (another chat edits `prof21.css`); they can be deleted when the Network venues code goes.
+- The new styles are in `src/styles/experience29.css`, loaded by the Experience components themselves.
+
+## v1.32
+
+"Built for getting you bookings" box, phones (Alex, 18 Nov 18:15; Legolas, branch `bookings-box`). `styles/home-text.css`.
+
+- The gold now runs from behind the chevron down the right side to the bottom right, closed and open, with no line: a 16px gold strip down the whole right edge (grows with the box, narrows to nothing at the bottom right) over a 72×200px wedge behind the chevron, each fully faded before its own edges. The line was the old 150px layer ending in colour, plus the button's hover tint left after a tap; the tint is off on phones, and off on iPad/desktop while the box is open.
+- "How bookings work" and the step cards share the title's left and right edges (14px on phones, 30px from 900px); the step row can shrink, so at 360px the cards no longer overflow.
+- Contrast (360–430 and 1180, closed and open): title 8.1:1 or better, flow labels 12.8:1 or better, "How bookings work" 9.8:1. iPad and desktop stay flat burgundy.
+- Merged onto the live page 1795026408-9c88 (a Share-button update from another chat, not on GitHub), so that work stays; page saved as `live-v1.32-index.html`. Artifact version 1795026796-63b5.
+
+## v1.31
+
+FF Team home, the four pillar boxes (Alex, 18 Nov 18:15). `discover-hub.jsx`, `styles/home-text.css`.
+
+- No gradient on the pillar boxes on phones: plain champagne (#EAE0C3), as on iPad and desktop.
+- The chevron is a solid burgundy button with a champagne outline and arrow on every size, open and closed.
+- Each tile shows its title only (the subtitle line, e.g. "Your CV, as your own page", is removed from the tile; the text stays in `team-pillars.json` for the pages that use it). Titles are bold (700) and bigger: 25px on phones, 27px on iPad, 24px with four tiles in a row.
+- iPad and desktop: the photo comes down to 56px above the tile's bottom edge, since there is now one line of words.
+- Merged onto the live page (v1.30); page saved as `live-v1.31-index.html`. Artifact version 1795026094-3cb5.
+
+## v1.30
+
+- FF Team home pillar boxes on iPad and desktop (Alex, 18 Nov 18:04): no fade on the photos. The photo ends cleanly above the champagne area with the words (`styles/home-text.css`); phones unchanged.
+- Merged onto the live page 1795025163-2b90 (a profile-tabs update from another chat, not on GitHub), so that work stays; page saved as `live-v1.30-index.html`. Artifact version 1795025706-b439.
+
 ## v1.29
 
 FF Team home (Alex, 18 Nov 17:41). `styles/home-text.css`, `discover-hub.jsx`.

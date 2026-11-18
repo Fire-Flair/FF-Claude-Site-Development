@@ -1,0 +1,94 @@
+/* v1.29 — Experience (was Venues): a search bar per venue, then the onyx landscape venue cards.
+   The card is the v16 VenueLandscapeCard (CardFrame, onyx theme, gold hairline, "View on Google Maps →" footer),
+   at full size with squircle corners. */
+
+/* ---- The editor: one row per venue ---- */
+.ff .ff-xe29 { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.ff .ff-xe29-list { max-width: 760px; list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.ff .ff-xe29-row { display: grid; grid-template-columns: 32px minmax(0, 1fr) 34px; align-items: center; gap: 10px; margin: 0; }
+.ff .ff-xe29-row .n { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 11px; corner-shape: squircle;
+  background: linear-gradient(168deg, #1A1A1D, #0C0C0E); color: #EAD79C; font: 700 14px var(--sans);
+  box-shadow: inset 0 0 0 1px rgba(201,162,39,.45); }
+.ff .ff-xe29-row.add .n { background: #FFFDF7; color: var(--gold-dk, #7E611D); box-shadow: inset 0 0 0 1.5px rgba(126,97,29,.45); }
+.ff .ff-xe29-row .ff-ven17 { min-width: 0; }
+.ff .ff-xe29-row .ff-input { width: 100%; box-sizing: border-box; border-radius: 14px; corner-shape: squircle; }
+.ff .ff-xe29-row .x { width: 30px; height: 30px; padding: 0; display: grid; place-items: center; justify-self: center; border-radius: 50%;
+  border: 1.5px solid rgba(90,80,64,.35); background: #FFFDF7; color: #5A5040; cursor: pointer; }
+.ff .ff-xe29-row .x:hover { border-color: #8E2A3A; color: #8E2A3A; }
+.ff .ff-xe29-row .x:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* ---- The cards, scrolling across ---- */
+.ff .ff-xr29 { display: flex; gap: 14px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; scroll-snap-type: x proximity;
+  padding: 4px 12px 30px; margin: 0 -12px -20px; scroll-padding-inline: 12px; align-items: stretch; touch-action: pan-x pan-y; overscroll-behavior-x: contain; }
+.ff .ff-xr29::-webkit-scrollbar { display: none; }
+.ff .ff-xr29-it { flex: none; display: flex; scroll-snap-align: start; }
+.ff .ff-xr29-end { flex: none; width: 1px; }
+
+.ff .ff-xc29 { box-sizing: border-box; min-height: 200px; display: flex; text-align: left; color: #F2F0EA;
+  border-radius: 22px; corner-shape: squircle; font-family: var(--sans); }
+.ff .ff-xc29 .fx { border-radius: 22px; corner-shape: squircle; }
+.ff .ff-xc29 .fx.hair { inset: 5px; border-radius: 18px; corner-shape: squircle; }
+.ff .ff-xc29 .fx.hair::after { border-radius: 16px; corner-shape: squircle; }
+.ff .ff-xc29-in { flex: 1; min-width: 0; display: flex; flex-direction: column; padding: 16px 18px 13px; border-radius: 22px; corner-shape: squircle; outline: none; }
+.ff .ff-xc29-in[role="button"] { cursor: pointer; }
+.ff .ff-xc29-in:focus-visible { box-shadow: inset 0 0 0 2px var(--gold, #C9A227); }
+.ff .ff-xc29 .k { font: 700 9.5px var(--sans); letter-spacing: .16em; text-transform: uppercase; color: #B9B6AE; white-space: nowrap; }
+.ff .ff-xc29 .top { display: flex; gap: 12px; align-items: flex-start; margin-top: 7px; margin-bottom: 12px; }
+.ff .ff-xc29 .nm { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+.ff .ff-xc29 .nm b { font: 700 18px/1.22 var(--sans); color: #F7F4EC; overflow-wrap: normal; word-break: normal; hyphens: none; }
+.ff .ff-xc29 .ad { display: flex; gap: 5px; align-items: flex-start; font: 600 12.5px/1.35 var(--sans); color: #B9B6AE; overflow-wrap: normal; word-break: normal; hyphens: none; }
+.ff .ff-xc29 .ad svg { flex: none; margin-top: 2px; color: #D9BE68; }
+.ff .ff-xc29 .ic { flex: none; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 13px; corner-shape: squircle;
+  background: rgba(217,190,104,.1); box-shadow: inset 0 0 0 1px rgba(217,190,104,.35); color: #EAD79C; }
+.ff .ff-xc29 .role { margin-bottom: 4px; display: flex; flex-wrap: wrap; column-gap: 8px; row-gap: 2px; margin-top: 11px; font: 500 13px/1.35 var(--sans); color: #CFCBC1; }
+.ff .ff-xc29 .role b { font-weight: 700; color: #EAD79C; overflow-wrap: normal; word-break: normal; hyphens: none; }
+.ff .ff-xc29 .role span { white-space: nowrap; }
+.ff .ff-xc29 .nt { margin-top: 9px; margin-bottom: 12px; font: 400 13.5px/1.42 var(--sans); color: rgba(242,240,234,.84); overflow-wrap: normal; word-break: normal; hyphens: none;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.ff .ff-xc29 .ft { display: flex; align-items: center; gap: 10px; margin-top: auto; padding-top: 9px; position: relative; top: 0; border-top: 1px solid rgba(240,238,232,.22); min-height: 16px; }
+.ff .ff-xc29 .ar { min-width: 0; font: 500 11.5px var(--sans); color: #B9B6AE; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ff .ff-xc29.hand .ar { font-weight: 700; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+.ff .ff-xc29 .gm { margin-left: auto; flex: none; font: 700 9.5px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: #EAD79C; text-decoration: none; white-space: nowrap; }
+.ff .ff-xc29 .gm:hover { text-decoration: underline; }
+.ff .ff-xc29 .gm:focus-visible { outline: 2px solid var(--gold, #C9A227); outline-offset: 3px; border-radius: 4px; }
+@media (min-width: 760px) {
+  .ff .ff-xr29 { flex-wrap: wrap; overflow: visible; margin-bottom: 0; padding-bottom: 6px; }
+  .ff .ff-xr29-end { display: none; }
+}
+.ff .ff-xr29 .ff-xc29 { box-shadow: 0 8px 18px rgba(0,0,0,.26), 0 2px 5px rgba(0,0,0,.22); }
+
+/* ---- v1.34: one search box, and the Experience card pop-up ---- */
+.ff .ff-xe29-one { max-width: 640px; min-width: 0; }
+.ff .ff-xs29 { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; justify-items: center; }
+.ff .ff-xs29-card { display: flex; justify-content: center; width: 100%; min-width: 0; }
+.ff .ff-xs29-card > * { max-width: 100%; }
+.ff .ff-xs29-tx { width: 100%; box-sizing: border-box; min-height: 104px; resize: vertical; border-radius: 14px; corner-shape: squircle; font: 500 15px/1.45 var(--sans); }
+.ff .ff-xs29-act { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.ff .ff-xs29-rm { color: var(--bad, #9B2C2C); font-weight: 600; }
+
+/* ---- v1.35 (Alex, 18 Nov 18:49): muted card tones instead of black; type straight onto the card in the pop-up ---- */
+.ff .ff-xc29.t-champagne { --x-ink: #2A1E04; --x-sub: #6A5A3A; --x-acc: #8A6A1E; --x-rule: rgba(126,97,29,.26); --x-ic-bg: rgba(176,141,42,.12); --x-ic-ring: rgba(138,106,30,.35); --x-shadow: rgba(126,97,29,.32); }
+.ff .ff-xc29.t-rose { --x-ink: #3A1820; --x-sub: #6E4E52; --x-acc: #7E2E3C; --x-rule: rgba(126,46,60,.24); --x-ic-bg: rgba(126,46,60,.08); --x-ic-ring: rgba(126,46,60,.3); --x-shadow: rgba(110,50,60,.3); }
+.ff .ff-xc29.t-sage { --x-ink: #1F2A14; --x-sub: #4F5A3C; --x-acc: #4E6A34; --x-rule: rgba(78,106,52,.26); --x-ic-bg: rgba(78,106,52,.08); --x-ic-ring: rgba(78,106,52,.32); --x-shadow: rgba(70,90,50,.3); }
+.ff .ff-xc29[class*=" t-"] { color: var(--x-ink); }
+.ff .ff-xc29[class*=" t-"] .k, .ff .ff-xc29[class*=" t-"] .ad, .ff .ff-xc29[class*=" t-"] .ar { color: var(--x-sub); }
+.ff .ff-xc29[class*=" t-"] .nm b { color: var(--x-ink); }
+.ff .ff-xc29[class*=" t-"] .ad svg { color: var(--x-acc); }
+.ff .ff-xc29[class*=" t-"] .ic { background: var(--x-ic-bg); box-shadow: inset 0 0 0 1px var(--x-ic-ring); color: var(--x-acc); }
+.ff .ff-xc29[class*=" t-"] .role { color: var(--x-sub); }
+.ff .ff-xc29[class*=" t-"] .role b { color: var(--x-acc); }
+.ff .ff-xc29[class*=" t-"] .nt { color: var(--x-ink); }
+.ff .ff-xc29[class*=" t-"] .ft { border-top-color: var(--x-rule); }
+.ff .ff-xc29[class*=" t-"] .gm { color: var(--x-acc); }
+.ff .ff-xr29 .ff-xc29[class*=" t-"] { box-shadow: 0 8px 18px -6px var(--x-shadow), 0 2px 5px rgba(60,40,10,.12); }
+.ff .ff-xs29-card .ff-xc29[class*=" t-"] { box-shadow: 0 10px 22px -8px var(--x-shadow); }
+/* The note, typed straight onto the card: no box of its own, just a faint line under the text. */
+.ff .ff-xc29 .ff-xc29-tx { display: block; width: 100%; box-sizing: border-box; margin: 9px 0 12px; padding: 4px 0 6px; min-height: 66px; resize: none;
+  background: transparent; border: 0; border-bottom: 1px dashed var(--x-rule, rgba(240,238,232,.3)); border-radius: 0; outline: none;
+  font: 400 14px/1.42 var(--sans); color: var(--x-ink, #F2F0EA); }
+.ff .ff-xc29 .ff-xc29-tx::placeholder { color: var(--x-sub, #B9B6AE); opacity: .8; }
+.ff .ff-xc29 .ff-xc29-tx:focus { border-bottom-style: solid; border-bottom-color: var(--x-acc, #D9BE68); }
+.ff .ff-xc29 textarea.ff-xc29-tx, .ff .ff-xc29 textarea.ff-xc29-tx:focus, .ff .ff-xc29 textarea.ff-xc29-tx:focus-visible {
+  outline: none !important; box-shadow: none !important; border: 0 !important; background: transparent !important;
+  border-bottom: 1px dashed var(--x-rule, rgba(240,238,232,.3)) !important; border-radius: 0 !important; padding: 4px 0 6px !important; }
+.ff .ff-xc29 textarea.ff-xc29-tx:focus, .ff .ff-xc29 textarea.ff-xc29-tx:focus-visible { border-bottom: 1.5px solid var(--x-acc, #D9BE68) !important; }

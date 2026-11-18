@@ -415,7 +415,8 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
         strokeWidth: 2.4
       })), React.createElement("span", {
         className: "tx"
-      }, React.createElement("b", { "data-fit22": "" }, c.t), React.createElement("small", null, c.s)));
+      }, React.createElement("b", { "data-fit22": "" }, c.t)));
+      /* home-text (Alex, 18 Nov 18:15): the tiles show the title only, bigger and bold (no subtitle line). */
     };
     return React.createElement("section", {
       className: `ff-sect ff-dx${cur ? " is-open" : ""}`,
@@ -432,7 +433,7 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
        smaller subheading below it. */
     }, kind === "team" ? "Built for event and hospitality professionals" : "Discover FireFlair"), kind === "team" && React.createElement("p", {
       className: "ff-dx-tag"
-    }, "Bartenders, mixologists, waiters, hosts, DJs and photographers: get seen by clients, confirm bookings on WhatsApp, get paid per shift.")), React.createElement("span", {
+    }, "Made for the events industry, FF Team runs through WhatsApp. Availability requests arrive as shifts come up, with clear terms and conditions for everything you sign up to.")), React.createElement("span", {
       className: "ff-dx-sent",
       ref: sent,
       "aria-hidden": "true"
