@@ -789,7 +789,7 @@ function NetworkScreen({ guest = false }) {
       {!q && !guest && <SentInvitations />}
 
       <NetBrowse17 query={q} onPick={view} after={<NetMap20 />} search={<FFAI query={q} onQuery={setQ} title="Search the network"
-        placeholder="Search the network. Describe who you're looking for." />} />
+        placeholder="Search the network" />} />
       {!q && (<>
         {PHASE1.leaderboards && <Rankings />}
         <Divider />

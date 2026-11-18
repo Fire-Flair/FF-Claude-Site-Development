@@ -166,6 +166,26 @@ const COMPANY_PINS11 = (() => {
 
 
 
+/* Map gestures (every Leaflet map): on a touch screen one finger scrolls the page and two fingers pan and zoom (Leaflet's
+   touchZoom pans with the pinch); a mouse press turns dragging back on, a touch turns it off again. The wheel scrolls the
+   page; ctrl/cmd + wheel (and a trackpad pinch) zooms. Returns a clean-up function. */
+function ffMapGestures17(map, el) {
+  const touchy = (navigator.maxTouchPoints || 0) > 0 || "ontouchstart" in window;
+  const drag = (on) => { if (!map.dragging) return; if (on && !map.dragging.enabled()) map.dragging.enable(); if (!on && map.dragging.enabled()) map.dragging.disable(); };
+  drag(!touchy);
+  const down = (e) => drag(e.pointerType === "mouse");
+  const wheel = (e) => {
+    if (!(e.ctrlKey || e.metaKey)) return;
+    e.preventDefault();
+    const step = Math.max(-1, Math.min(1, -e.deltaY / (e.deltaMode ? 3 : 100)));
+    map.setZoomAround(map.mouseEventToContainerPoint(e), map.getZoom() + step, { animate: false });
+  };
+  el.addEventListener("pointerdown", down, true);
+  el.addEventListener("wheel", wheel, { passive: false });
+  return () => { el.removeEventListener("pointerdown", down, true); el.removeEventListener("wheel", wheel); };
+}
+
+
 /* v17.29: venues are not on this map (a separate Google map for venues may follow); the Directory layer reads "FF Directory". */
 /* v17.30: the legend lists Professionals and FF Directory only; FireFlair partner companies stay on the map and are always shown. */
 const MAP_LAYERS19 = [["pros", "Professionals"], ["dir", "FF Directory"]];
@@ -195,7 +215,7 @@ function MapLegend19({ pins, show, setShow, hide, setHide }) {
   const icon = { partners: h(Coin, { size: 17 }), pros: h(MapPerson17, { size: 18 }), dir: h(MapDot17, { cat: "bar", size: 18 }), venues: h(MapVenue20, { size: 18 }) };
   return h("div", { className: "ff-ml19", role: "group", "aria-label": "Map layers" },
     h("style", null, ".ff .ff-ml19 { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:10px 0 14px; } .ff .ff-ml19 label { display:flex; align-items:center; gap:7px; font-size:12px; cursor:pointer; padding:6px 11px; border:1px solid var(--rule); border-radius:12px; corner-shape:squircle; background:#fff; color:var(--ink); } .ff .ff-ml19 input { accent-color:#7E611D; width:15px; height:15px; margin:0; } .ff .ff-ml19-row { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; width:100%; } .ff .ff-ml19-x { border:0; background:none; cursor:pointer; padding:0 0 0 4px; font-size:12px; color:inherit; } .ff .ff-ml19-list { width:100%; max-height:190px; overflow:auto; border:1px solid var(--rule, #d8d2c6); border-radius:16px; background:var(--card, #fff); padding:6px; display:flex; flex-direction:column; } .ff .ff-ml19-list button { text-align:left; border:0; background:none; cursor:pointer; padding:7px 10px; border-radius:10px; font-size:12px; color:inherit; } .ff .ff-ml19-list button:hover { background:rgba(0,0,0,.05); } .ff .ff-ml19-row { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; width:100%; } .ff .ff-ml19-x { border:0; background:none; cursor:pointer; padding:0 0 0 4px; font-size:12px; color:inherit; } .ff .ff-ml19-list { width:100%; max-height:220px; overflow:auto; border:1px solid var(--rule, #d8d2c6); border-radius:16px; background:var(--card, #fff); padding:6px; display:flex; flex-direction:column; } .ff .ff-ml19-list label { display:flex; align-items:center; gap:8px; border:0; border-radius:10px; padding:7px 10px; font-size:12px; cursor:pointer; background:none; } .ff .ff-ml19-list label:hover { background:rgba(0,0,0,.05); } .ff .ff-ml19-list label span { margin-left:auto; opacity:.6; }"),
-    h("div", { className: "ff-ml19-row" }, MAP_LAYERS19.map(([k, label]) => h("label", { key: k }, h("input", { type: "checkbox", checked: !!show[k], onChange: () => setShow({ ...show, [k]: !show[k] }) }), icon[k], label + (count[k] ? " (" + count[k] + ")" : ""),
+    h("div", { className: "ff-ml19-row" }, MAP_LAYERS19.filter(([k]) => count[k] > 0).map(([k, label]) => h("label", { key: k }, h("input", { type: "checkbox", checked: !!show[k], onChange: () => setShow({ ...show, [k]: !show[k] }) }), icon[k], label + (count[k] ? " (" + count[k] + ")" : ""),
       count[k] ? h("button", { type: "button", className: "ff-ml19-x", "aria-expanded": openK === k, "aria-label": label + " categories", onClick: (e) => { e.preventDefault(); e.stopPropagation(); setOpenK(openK === k ? "" : k); } }, openK === k ? "\u25B4" : "\u25BE") : null))),
     openK ? h("div", { className: "ff-ml19-list" }, cats(openK).map(([c, n]) => h("label", { key: c }, h("input", { type: "checkbox", checked: !hide[openK + ":" + c], onChange: () => setHide({ ...hide, [openK + ":" + c]: !hide[openK + ":" + c] }) }), c, h("span", null, n)))) : null);
 }
@@ -275,11 +295,13 @@ function FFMap({ mode = "home" }) {
     let map;
     try {
       map = L.map(boxRef.current, {
-        zoomControl: false, attributionControl: false, scrollWheelZoom: false, dragging: !L.Browser.mobile,
+        zoomControl: false, attributionControl: false, scrollWheelZoom: false, dragging: true, touchZoom: true,
         zoomSnap: 0.25, zoomDelta: 1, minZoom: 1, maxZoom: 16, preferCanvas: true,
         maxBounds: [[-80, -200], [86, 200]], maxBoundsViscosity: 0.9, worldCopyJump: false,
       });
       mapRef.current = map;
+      const unGest = ffMapGestures17(map, boxRef.current);
+      map.on("unload", unGest);
       map.fitBounds(UK_BOUNDS11, { padding: [8, 8] });
       /* Under the tiles: a plain drawing of the UK in the Voyager colours (shows only until tiles arrive, or if they cannot load). */
       const cv = L.canvas({ padding: 0.4 });
