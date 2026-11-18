@@ -499,18 +499,16 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
     size: 108,
     ring: tr.ring[0],
     ink: tr.ink
-  }), draft.photo ? React.createElement("span", {
+  }, draft.photo ? null : React.createElement("span", {
+    className: "ff-photoempty",
+    style: { color: tr.ring[0] },
+    "aria-hidden": "true"
+  })), draft.photo ? React.createElement("span", {
     className: "ff-photoadd",
     style: { background: tr.ring[0] }
   }, React.createElement(CameraPlusGlyph, {
     size: 17
   })) : React.createElement(React.Fragment, null, React.createElement("span", {
-    className: "ff-photoempty",
-    style: { color: tr.ring[0] },
-    "aria-hidden": "true"
-  }, React.createElement(CameraPlusGlyph, {
-    size: 34
-  })), React.createElement("span", {
     className: "ff-photoplus",
     style: { background: tr.ring[0] },
     "aria-hidden": "true"

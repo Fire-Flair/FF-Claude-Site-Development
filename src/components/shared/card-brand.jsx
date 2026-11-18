@@ -417,7 +417,7 @@ function CardFrame({ tier = "standard", theme, ratio, selected, onClick, style, 
 
 
 
-function Portrait({ src, name, size = 92, ring = "#C9A227", ink = "#EAD79C", tier }) {
+function Portrait({ src, name, size = 92, ring = "#C9A227", ink = "#EAD79C", tier, children }) {
   const initials = (name || "").split(" ").map(w => w[0]).slice(0, 2).join("").toUpperCase();
   const band = size * 0.032 + 1.4;
   return (
@@ -433,7 +433,8 @@ function Portrait({ src, name, size = 92, ring = "#C9A227", ink = "#EAD79C", tie
         display: "flex", alignItems: "center", justifyContent: "center",
         boxShadow: "inset 0 2px 9px rgba(0,0,0,.6)",
       }}>
-        {!src && <span style={{ fontFamily: "var(--display)", color: ink, fontSize: size * 0.3, letterSpacing: ".05em", opacity: .85 }}>{initials}</span>}
+        {!src && !children && <span style={{ fontFamily: "var(--display)", color: ink, fontSize: size * 0.3, letterSpacing: ".05em", opacity: .85 }}>{initials}</span>}
+        {!src && children}
         <span style={{ position: "absolute", inset: 0, borderRadius: "50%", background: "radial-gradient(64% 46% at 30% 16%, rgba(255,255,255,.20), transparent 62%)" }} />
       </div>
     </div>

@@ -438,16 +438,15 @@
 /* 2. Builder Profile Card face: headline close under the name, a small gap before Professions; the "+" inside the
    photo circle; a bust silhouette (not a camera) while there is no photo. */
 .ff #ff-sec-card .ff-cardin.headline { margin-top: 0 !important; margin-bottom: 12px; }
-.ff #ff-sec-card .ff-photobtn .ff-photoplus, .ff #ff-sec-card .ff-photobtn .ff-photoadd { right: 13px; bottom: 13px; width: 26px; height: 26px; box-shadow: 0 0 0 2px rgba(11,11,12,.85), 0 3px 8px rgba(0,0,0,.4); }
+.ff #ff-sec-card .ff-photobtn .ff-photoplus, .ff #ff-sec-card .ff-photobtn .ff-photoadd { right: 8px; bottom: 8px; width: 26px; height: 26px; box-shadow: 0 0 0 2px rgba(11,11,12,.85), 0 3px 8px rgba(0,0,0,.4); }
 .ff #ff-sec-card .ff-photobtn .ff-photoplus svg { width: 15px; height: 15px; }
 .ff #ff-sec-card .ff-photobtn .ff-photoadd svg { width: 14px; height: 14px; }
-.ff #ff-sec-card .ff-photobtn .ff-photoempty svg { display: none !important; }
-.ff #ff-sec-card .ff-photobtn .ff-photoempty::before { content: ""; position: absolute; inset: 5px; border-radius: 50%; background: radial-gradient(circle at 38% 30%, #26262B, #0A0A0C); }
-.ff #ff-sec-card .ff-photobtn .ff-photoempty::after { content: ""; position: absolute; left: 50%; bottom: 6px; width: 74%; height: 74%; transform: translateX(-50%); background: currentColor; opacity: .85;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8.4' r='4.6'/%3E%3Cpath d='M2.6 24 V21.2 C2.6 17.4 6.2 15.2 12 15.2 C17.8 15.2 21.4 17.4 21.4 21.2 V24 Z'/%3E%3C/svg%3E") center bottom / contain no-repeat;
-          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8.4' r='4.6'/%3E%3Cpath d='M2.6 24 V21.2 C2.6 17.4 6.2 15.2 12 15.2 C17.8 15.2 21.4 17.4 21.4 21.2 V24 Z'/%3E%3C/svg%3E") center bottom / contain no-repeat;
-  border-radius: 0 0 40% 40%; }
-.ff #ff-sec-card .ff-photobtn .ff-photoempty { overflow: hidden; border-radius: 50%; }
+/* v1.53 (bust): the bust sits inside the Portrait's own dark disc (a child of it), so ring, disc and bust share one
+   centre; the disc's round clip shapes the shoulders. The button has no padding, so it is exactly the Portrait's size. */
+.ff #ff-sec-card .ff-photobtn .ff-photoempty { position: absolute; inset: 0; border-radius: 50%; overflow: hidden; }
+.ff #ff-sec-card .ff-photobtn .ff-photoempty::after { content: ""; position: absolute; inset: 0; background: currentColor; opacity: .85;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='39' r='18'/%3E%3Cpath d='M12 100 C12 75 29 63.5 50 63.5 C71 63.5 88 75 88 100 Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='39' r='18'/%3E%3Cpath d='M12 100 C12 75 29 63.5 50 63.5 C71 63.5 88 75 88 100 Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
 .ff #ff-sec-card .ff-photobtn:hover .ff-photoempty { transform: none; }
 
 /* 3. Media: the first box is the profile photo (gold edge, a person mark), then a thin line before the rest. */
@@ -532,8 +531,3 @@
 /* builder Professions: room for the tabs above the row; the drag handle sits bottom right (the level is top right) */
 .ff .pp-sec .ff-pt21-row { padding-top: 16px; }
 .ff .pp-sec .ff-pt21-grip { top: auto; bottom: 10px; right: 8px; }
-
-/* v1.51 (Alex, 18 Nov 20:31): the builder's photo circle was 120x110 (an oval) because of the button's side padding; it is
-   now a true circle at every size, and the empty bust fills the same circle. */
-.ff #ff-sec-card .ff-photobtn { width: 110px !important; height: 110px !important; aspect-ratio: 1 / 1; padding: 0 !important; }
-.ff #ff-sec-card .ff-photobtn .ff-photoempty { width: 100% !important; height: 100% !important; aspect-ratio: 1 / 1; }
