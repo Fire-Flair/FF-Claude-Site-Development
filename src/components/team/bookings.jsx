@@ -271,6 +271,26 @@ function pkcNoBreak17(v) {
   if (typeof v !== "string" || !/\w-\w/.test(v)) return v;
   return v.split(/(\S*\w-\w\S*)/).map((t, i) => i % 2 ? <span key={i} style={{ whiteSpace: "nowrap" }}>{t}</span> : t);
 }
+/* pkc-tone (Alex, 18 Nov 18:12): every package card in the Bookings rail is as tall as the tallest one, measured with
+   Details closed, so the footers line up. Opening Details grows only that card. */
+function usePkcEven17(key) {
+  React.useLayoutEffect(() => {
+    const box = document.getElementById("ff-bk-party"); if (!box) return;
+    const even = () => {
+      const cards = [...box.querySelectorAll(".ff-pkc")];
+      cards.forEach(c => { c.style.minHeight = ""; });
+      const shut = cards.filter(c => !c.querySelector("details[open]"));
+      const h = Math.max(0, ...shut.map(c => c.getBoundingClientRect().height));
+      if (h) cards.forEach(c => { c.style.minHeight = h + "px"; });
+    };
+    even();
+    const tg = () => even(); box.addEventListener("toggle", tg, true);
+    let ro = null; if (window.ResizeObserver) { ro = new ResizeObserver(() => requestAnimationFrame(even)); ro.observe(box); }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(even).catch(() => {});
+    return () => { box.removeEventListener("toggle", tg, true); if (ro) ro.disconnect(); };
+  }, [key]);
+}
+
 function BkPkgCard17({ sv, on, onClick }) {
   const p = PKG_BY17[sv.id] || {};
   const ref = useRef(null);
@@ -288,16 +308,15 @@ function BkPkgCard17({ sv, on, onClick }) {
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit).catch(() => {});
     return () => { root.removeEventListener("toggle", tg, true); if (ro) ro.disconnect(); };
   }, [sv.id, on]);
-  const rows = [[S17I.Sparkles, "Includes", p.includes], [S17I.Users, "Ideal for", p.ideal], [S17I.Clock, "Duration", p.durationLabel]].filter(r => r[2]);
+  /* pkc-tone (Alex, 18 Nov 18:12): the bartender reads what they provide (the package's capability), not what the client gets. */
+  const rows = [[S17I.Sparkles, "You provide", p.capability || p.includes], [S17I.Users, "Ideal for", p.ideal], [S17I.Clock, "Duration", p.durationLabel]].filter(r => r[2]);
   /* bk5 (Mr G 03:03): same face as the profile Packages tab (FF Party ribbon, no "Bar"), compact, 5:7 portrait. */
-  const eb = [sv.level === "Bar" ? "" : sv.level, sv.site || "FF Party"].filter(Boolean).join(" · ");
   const line = p.headline || p.tagline || sv.tagline;
   return (
     <div ref={ref} className={`ff-pkc cmp${on ? " sel" : ""}`} data-pk17={sv.id}>
       <span className="ff-pkc-rb"><S17I.Sparkles size={12} /> {sv.site || "FF Party"}</span>
       <span className="ff-pkc-logo"><FFLogo size={34} tier="gold" /></span>
       <div className="ff-pkc-hd">
-        <div className="ff-pkc-eb fit">+ {eb} +</div>
         <h5 className="ff-pkc-ti fit">{p.name || sv.title}</h5>
         {line && <p className="ff-pkc-tg fit">{line}</p>}
       </div>
@@ -314,7 +333,7 @@ function BkPkgCard17({ sv, on, onClick }) {
         <div className="in">
           {p.description && <p>{pkcNoBreak17(p.description)}</p>}
           {(p.points || []).length > 0 && <ul>{p.points.map(x => <li key={x}>{pkcNoBreak17(x)}</li>)}</ul>}
-          {p.capability && <div><i>You bring</i><p>{pkcNoBreak17(p.capability)}</p></div>}
+          {p.capability && p.includes && <div><i>The client gets</i><p>{pkcNoBreak17(p.includes)}</p></div>}
           {p.conditions && <p className="cond">{pkcNoBreak17(p.conditions)}</p>}
         </div>
       </details>
@@ -366,7 +385,7 @@ function BkPkgSoon17({ pk = PK_SOON17.bar[0], own = false }) {
   const ids = ans && !ans.withdrawnAt ? (ans.optionIds || []) : [];
   const on = ids.includes(pk.id);
   const title = own ? "Create your own" : pk.ti;
-  const rows = [[S17I.Sparkles, "Includes", pk.inc], [S17I.Users, "Ideal for", pk.ideal], [S17I.Clock, "Duration", "As long as you choose"]];
+  const rows = [[S17I.Sparkles, "You provide", pk.inc], [S17I.Users, "Ideal for", pk.ideal], [S17I.Clock, "Duration", "As long as you choose"]];
   const go = async () => {
     if (!account) { window.dispatchEvent(new Event("ff-login")); return; }
     if (busy) return;
@@ -383,7 +402,6 @@ function BkPkgSoon17({ pk = PK_SOON17.bar[0], own = false }) {
       <span className="ff-pkc-rb"><S17I.Sparkles size={12} /> FF Party</span>
       <span className="ff-pkc-logo"><FFLogo size={34} tier="gold" /></span>
       <div className="ff-pkc-hd">
-        <div className="ff-pkc-eb fit">+ {own ? "FF Party" : pk.eb} +</div>
         <h5 className="ff-pkc-ti fit">{title}</h5>
         <p className="ff-pkc-tg fit">{own ? "Your skills, your package, your price." : pk.tg}</p>
       </div>
@@ -509,6 +527,7 @@ function TeamBookings({ guest = false }) {
   /* Bar packages: Masterclass first, then down the catalogue's own order to Staffing. */
   const pkgs = [...PARTY_SERVICES.filter(sv => sv.id !== "svc_full").reverse(), ...(hid17(state, "packages", "svc_staffing") ? [] : [STAFFING_SERVICE])];
   const [pkTab, setPkTab] = useState("bar");
+  usePkcEven17(pkTab);
   const PK_TABS = [["bar", "Bar"], ["ent", "Entertainment"], ["svc", "Services"]];
   /* bk5: section headings stay on one line (shrink, never split). "your areas" opens the profile editor's Packages tab at Work locations. */
   const partyRef = useRef(null);

@@ -159,3 +159,28 @@
   .ff-bkd .bkd-ph { flex:1; aspect-ratio:auto; min-height:0; }
   .ff-bkd .bkd-tx { flex:none; }
 }
+
+/* pkc-tone (Alex, 18 Nov 18:12): the black face was too intense. Default (A) is a warm burgundy-black face;
+   B is a deep burgundy face; C is a cream face. Every card in the rail is the same height, footer on the bottom line. */
+.ff #ff-bk-party .ff-pkc.cmp { aspect-ratio:auto; height:auto; background:linear-gradient(180deg,#3B1C24 0%,#2A161B 60%,#24141A 100%); }
+.ff #ff-bk-party .ff-pkc.cmp .ff-pkc-hd { padding-top:14px; }
+.ff #ff-bk-party .ff-pkc.cmp .ff-pkc-rows { background:rgba(0,0,0,.14); }
+.ff #ff-bk-party .ff-pkc.cmp .ff-pkc-dt { background:rgba(0,0,0,.14); }
+
+.ff #ff-bk-party[data-pkt="b"] .ff-pkc.cmp { background:linear-gradient(180deg,#6A1727 0%,#4E1220 60%,#3F0E1A 100%); }
+.ff #ff-bk-party[data-pkt="b"] .ff-pkc.cmp .ff-pkc-rb { background:linear-gradient(90deg,#2A0A12,#3A0E18); }
+.ff #ff-bk-party[data-pkt="b"] .ff-pkc.cmp .ff-pkc-ico { background:radial-gradient(circle at 35% 30%,#3E0F1A,#2A0A12 70%); }
+.ff #ff-bk-party[data-pkt="b"] .ff-pkc.cmp .ff-pkc-ft { background:linear-gradient(135deg,#2E0B14,#22080F); }
+
+.ff #ff-bk-party[data-pkt="c"] .ff-pkc.cmp { background:linear-gradient(180deg,#FBF7EE 0%,#F4EFE4 100%); color:var(--color-ink); }
+.ff #ff-bk-party[data-pkt="c"] .ff-pkc.cmp .ff-pkc-ti { color:#4A0F1B; }
+.ff #ff-bk-party[data-pkt="c"] .ff-pkc.cmp .ff-pkc-tg { color:#3A3030; }
+.ff #ff-bk-party[data-pkt="c"] .ff-pkc.cmp .ff-pkc-rows,
+.ff #ff-bk-party[data-pkt="c"] .ff-pkc.cmp .ff-pkc-dt { background:#fff; border-color:rgba(160,124,30,.45); }
+.ff #ff-bk-party[data-pkt="c"] .ff-pkc.cmp .ff-pkc-row + .ff-pkc-row { border-top-color:rgba(160,124,30,.28); }
+.ff #ff-bk-party[data-pkt="c"] .ff-pkc.cmp .ff-pkc-row i,
+.ff #ff-bk-party[data-pkt="c"] .ff-pkc.cmp .ff-pkc-dt i,
+.ff #ff-bk-party[data-pkt="c"] .ff-pkc.cmp .ff-pkc-dt summary { color:#8A6A14; }
+.ff #ff-bk-party[data-pkt="c"] .ff-pkc.cmp .ff-pkc-row b { color:#2A2224; }
+.ff #ff-bk-party[data-pkt="c"] .ff-pkc.cmp .ff-pkc-dt p,
+.ff #ff-bk-party[data-pkt="c"] .ff-pkc.cmp .ff-pkc-dt li { color:#3A3030; }
