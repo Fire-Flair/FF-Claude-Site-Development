@@ -359,25 +359,74 @@ function usePkcFitAll17(ref, key) {
   }, [key]);
 }
 
-/* pkc-doc (Alex, 18 Nov 18:28): the member types what they want to earn for each package; it is saved as one typed
-   Q&A answer per package (rate.pkg_<package id>, pence) when they confirm. */
-const pkcRateQid17 = (id) => `rate.pkg_${id}`;
-PKG_CAT17.filter(x => x.teamRegistration).forEach(x => { if (!QA_Q17[pkcRateQid17(x.id)]) QA_Q17[pkcRateQid17(x.id)] = { text: `What do you want to earn for the ${x.name}?`, group: "interest" }; });
+/* pkc-tabs (Alex, 18 Nov 18:48): Entertainment and Services each list three FireFlair packages (made up for now, all to
+   be confirmed) at the amounts Alex set: £350+, £250 and £150 "You earn", most first. Bar keeps the catalogue amounts.
+   Every tab ends with Create your own, the same card with every line a type box. */
+const PKC_EXTRA17 = {
+  ent: [
+    { id: "ent_music", earn: "£350+", name: "Live Music Package", role: "Musician", duration: "2 hours",
+      line: "Play live and set the mood.", provide: "Your live act, your instruments and your sound system", ideal: "Weddings, receptions and drinks parties",
+      brief: "You perform live music at the client's event with your own instruments and sound system, and agree your set list with the client.",
+      points: ["Perform live for the client and their guests", "Agree your set list with the client", "Bring and set up your own equipment"],
+      cond: "One act: you, solo or with your band. Power and space for your setup are agreed with the client." },
+    { id: "ent_dj", earn: "£250", name: "DJ Package", role: "DJ", duration: "4 hours",
+      line: "Play the night they'll remember.", provide: "Your DJ equipment, your music and your read of the room", ideal: "Birthdays, weddings and late-night parties",
+      brief: "You DJ at the client's event with your own equipment, and agree the music and any must-play requests with the client.",
+      points: ["DJ the event with your own equipment", "Agree the music and requests with the client", "Keep the dance floor going"],
+      cond: "One professional: you. Power and space for your setup are agreed with the client." },
+    { id: "ent_act", earn: "£150", name: "Entertainer Package", role: "Entertainer", duration: "2 hours",
+      line: "Bring a show of your own.", provide: "Your act: magic, caricatures or a performance of your own", ideal: "Family parties, corporate events and receptions",
+      brief: "You entertain the client's guests with your own act, moving between groups or performing a set piece, as agreed with the client.",
+      points: ["Perform your act for the client's guests", "Agree the format and timings with the client", "Bring everything your act needs"],
+      cond: "One professional: you. Any space your act needs is agreed with the client." },
+  ],
+  svc: [
+    { id: "svc_events", earn: "£350+", name: "Event Services Package", role: "Event Coordinator", duration: "From 4 hours",
+      line: "Keep the whole event running smoothly.", provide: "Event experience, organisation and a calm head on the day", ideal: "Larger parties, launches and corporate events",
+      brief: "You look after the running of the client's event on the day, from timings and suppliers to guests, so the client can enjoy it.",
+      points: ["Run the event to the agreed plan", "Be the contact for suppliers on the day", "Look after the client and their guests"],
+      cond: "One professional: you. The plan and your hours are agreed with the client before the event." },
+    { id: "svc_photo", earn: "£250", name: "Photography Package", role: "Photographer", duration: "3 hours",
+      line: "Capture the moments they'll keep.", provide: "Your camera, your eye and your editing", ideal: "Weddings, birthdays and brand events",
+      brief: "You photograph the client's event and deliver edited photos afterwards, as agreed with the client.",
+      points: ["Photograph the event and its guests", "Edit your best shots", "Deliver the photos to the client"],
+      cond: "One professional: you. The number of photos and the delivery date are agreed with the client." },
+    { id: "svc_host", earn: "£150", name: "Event Host Package", role: "Event Host", duration: "3 hours",
+      line: "Welcome every guest.", provide: "A warm welcome, confidence and a way with a crowd", ideal: "Corporate events, awards nights and parties",
+      brief: "You welcome the client's guests, keep the event on time and make announcements, as agreed with the client.",
+      points: ["Welcome guests as they arrive", "Keep the event on time", "Make the announcements"],
+      cond: "One professional: you. The running order is agreed with the client before the event." },
+  ],
+};
+const PKC_EXTRA_BY17 = Object.fromEntries([...PKC_EXTRA17.ent, ...PKC_EXTRA17.svc].map(x => [x.id, x]));
+const PKC_TBC17 = "Entertainment and services packages are to be confirmed.";
+
+/* One shape for every card and its Event brief and invoice. */
+function pkcData17(sv, tab) {
+  const x = PKC_EXTRA_BY17[sv.id];
+  if (x) return { ...x, tab, site: "FF Party", tbc: true };
+  const p = PKG_BY17[sv.id] || {}, t = PKC_TEAM17[sv.id] || {};
+  return { id: sv.id, tab: sv.id === "svc_staffing" ? "svc" : "bar", site: sv.site || "FF Party", name: p.name || sv.title, role: p.role, duration: p.durationLabel,
+    line: t.line || p.headline, provide: t.provide || p.capability || p.includes, ideal: t.ideal || p.ideal, brief: t.brief || p.description,
+    shop: t.shop, points: t.points || [], cond: t.cond || p.conditions, earn: PAY17[sv.id] != null ? pkgPayLabel17(sv.id) : "" };
+}
+
+/* Create your own: every line is a type box; saved as one typed Q&A answer per tab. */
+const pkcOwnQid17 = (tab) => `int.party_package_own_${tab}`;
+["bar", "ent", "svc"].forEach(tab => { if (!QA_Q17[pkcOwnQid17(tab)]) QA_Q17[pkcOwnQid17(tab)] = { text: "Your own FF Party package", group: "interest" }; });
 const pkcAmtOk17 = (v) => /^\d+(\.\d{1,2})?$/.test(String(v || "").trim()) && Number(v) > 0;
 const pkcGBP17 = (v) => pkcAmtOk17(v) ? "£" + Number(v).toLocaleString("en-GB", { minimumFractionDigits: Number(v) % 1 ? 2 : 0, maximumFractionDigits: 2 }) : "";
 
-/* The Details button opens the package's Event brief and invoice: a document laid out like the real one, with the client,
+/* The Details button opens the package's Event brief and invoice: laid out like the real document, with the client,
    event, package, what you earn and the five package terms. Event fields are filled in when a client books. */
-function PkgDoc17({ sv, amount, onClose }) {
+function PkgDoc17({ d, onClose }) {
   const { state } = useStore();
-  const p = PKG_BY17[sv.id] || {};
-  const t = PKC_TEAM17[sv.id] || {};
   const me = (qaAccount17(state) && state.profile && state.profile.name) || "";
-  const blank = (v) => v ? <dd>{v}</dd> : <dd className="nil">Added when booked</dd>;
-  const pk = [["Package", p.name || sv.title], ["Your role", p.role], ["Duration", p.durationLabel]].filter(r => r[1]);
-  const long = [["What you do", t.brief || p.description], ["Shopping list", t.shop]].filter(r => r[1]);
+  const nil = (s) => <dd className="nil">{s}</dd>;
+  const pk = [["Package", d.name], ["Your role", d.role], ["Duration", d.duration]].filter(r => r[1] || r[0] !== "Your role");
+  const long = [["What you do", d.brief], ["Shopping list", d.shop]].filter(r => r[1]);
   return (
-    <Sheet open onClose={onClose} title={p.name || sv.title}>
+    <Sheet open onClose={onClose} title={d.name || "Your package"}>
       <article className="ff-doc17" aria-label="Event brief and invoice">
         <header className="lh">
           <span className="mk"><FFLogo size={40} tier="gold" /></span>
@@ -388,14 +437,15 @@ function PkgDoc17({ sv, amount, onClose }) {
           <div><i>Client</i><b className="nil">Client name</b></div>
           <div><i>Professional</i>{me ? <b>{me}</b> : <b className="nil">Your name</b>}</div>
         </div>
-        <section><h4>Event</h4><dl>{[["Event", ""], ["Date", ""], ["Venue", ""], ["Arrive", ""]].map(([k, v]) => <div key={k}><dt>{k}</dt>{blank(v)}</div>)}</dl></section>
+        <section><h4>Event</h4><dl>{["Event", "Date", "Venue", "Arrive"].map(k => <div key={k}><dt>{k}</dt>{nil("Added when booked")}</div>)}</dl></section>
         <section><h4>Package</h4>
-          <dl>{pk.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}</dl>
+          <dl>{pk.map(([k, v]) => <div key={k}><dt>{k}</dt>{v ? <dd>{v}</dd> : nil("—")}</div>)}</dl>
           {long.map(([k, v]) => <div key={k} className="lg"><i>{k}</i><p>{pkcNoBreak17(v)}</p></div>)}
-          {(t.points || []).length > 0 && <ul>{t.points.map(x => <li key={x}>{pkcNoBreak17(x)}</li>)}</ul>}
-          {(t.cond || p.conditions) && <p className="cond">{pkcNoBreak17(t.cond || p.conditions)}</p>}
+          {(d.points || []).length > 0 && <ul>{d.points.map(x => <li key={x}>{pkcNoBreak17(x)}</li>)}</ul>}
+          {d.cond && <p className="cond">{pkcNoBreak17(d.cond)}</p>}
+          {d.tbc && <p className="cond">{PKC_TBC17}</p>}
         </section>
-        <div className="tot"><span>You earn</span>{pkcGBP17(amount) ? <b>{pkcGBP17(amount)}</b> : <b className="nil">Your amount</b>}</div>
+        <div className="tot"><span>You earn</span>{d.earn ? <b>{d.earn}</b> : <b className="nil">Your amount</b>}</div>
         <section className="tc"><h4>Terms and conditions</h4>
           <ol>{PARTY_PKG_TERMS17.map((x, i) => <li key={x.k}><span><b>{i + 1}</b>{x.label}</span><p>{x.text}</p></li>)}</ol>
         </section>
@@ -405,53 +455,102 @@ function PkgDoc17({ sv, amount, onClose }) {
   );
 }
 
-function BkPkgCard17({ sv, on, onClick, amount = "", onAmount }) {
-  const p = PKG_BY17[sv.id] || {};
-  const t = PKC_TEAM17[sv.id] || {};
-  const ref = useRef(null);
-  const inRef = useRef(null);
+/* The card face shared by every package: ribbon with the tab's icon, title, line, the three rows, Details, footer. */
+function PkgFace17({ d, rows, title, line, foot, refEl, cls = "", dataId }) {
   const [doc, setDoc] = useState(false);
-  const [bad, setBad] = useState(false);
-  usePkcFitAll17(ref, sv.id + (on ? "1" : "0"));
-  const Ico = sv.id === "svc_staffing" ? PKC_ICO17.svc : PKC_ICO17.bar;
-  const rows = [[S17I.Sparkles, "You provide", t.provide || p.capability || p.includes], [S17I.Users, "Ideal for", t.ideal || p.ideal], [S17I.Clock, "Duration", p.durationLabel]].filter(r => r[2]);
-  const go = () => {
-    if (!on && !pkcAmtOk17(amount)) { setBad(true); if (inRef.current) inRef.current.focus(); return; }
-    onClick();
-  };
+  const Ico = PKC_ICO17[d.tab] || PKC_ICO17.bar;
   return (
-    <div ref={ref} className={`ff-pkc cmp${on ? " sel" : ""}`} data-pk17={sv.id}>
-      <span className="ff-pkc-rb"><Ico size={13} strokeWidth={1.8} /> {sv.site || "FF Party"}</span>
+    <div ref={refEl} className={`ff-pkc cmp${cls}`} data-pk17={dataId || d.id}>
+      <span className="ff-pkc-rb"><Ico size={13} strokeWidth={1.8} /> {d.site || "FF Party"}</span>
       <span className="ff-pkc-logo"><FFLogo size={34} tier="gold" /></span>
-      <div className="ff-pkc-hd">
-        <h5 className="ff-pkc-ti fit">{p.name || sv.title}</h5>
-        {(t.line || p.headline) && <p className="ff-pkc-tg fit">{t.line || p.headline}</p>}
-      </div>
+      <div className="ff-pkc-hd">{title}{line}</div>
       <div className="ff-pkc-rows">
         {rows.map(([Ic, l, v]) => (
           <div key={l} className="ff-pkc-row">
             <span className="ff-pkc-ico"><Ic size={15} strokeWidth={1.6} /></span>
-            <span className="v"><i>{l}</i><b>{pkcNoBreak17(v)}</b></span>
+            <span className="v"><i>{l}</i>{v}</span>
           </div>
         ))}
       </div>
       <button type="button" className="ff-pkc-dbtn" onClick={() => setDoc(true)} aria-haspopup="dialog">
         <S17I.FileText size={17} strokeWidth={1.8} /><span>Details</span><S17I.ArrowRight size={17} strokeWidth={2} />
       </button>
-      <div className="ff-pkc-ft">
-        <label className={`ff-pkc-earn in${bad ? " bad" : ""}`}>
-          <i>You earn</i><span className="cur">£</span>
-          <input ref={inRef} type="text" inputMode="decimal" autoComplete="off" value={amount} disabled={on} aria-invalid={bad}
-            aria-label={`What you want to earn for the ${p.name || sv.title}, in pounds`}
-            onChange={e => { setBad(false); onAmount && onAmount(e.target.value.replace(/[^\d.]/g, "").slice(0, 7)); }}
-            onKeyDown={e => { if (e.key === "Enter") go(); }} />
-        </label>
-        <button type="button" className="ff-pkc-go fit" onClick={go} aria-pressed={!!on} aria-label={`${p.name || sv.title}: ${on ? "Signed up" : "Sign up"}`}>
+      <div className="ff-pkc-ft">{foot}</div>
+      {doc && <PkgDoc17 d={d} onClose={() => setDoc(false)} />}
+    </div>
+  );
+}
+
+function BkPkgCard17({ sv, tab = "bar", on, onClick }) {
+  const d = pkcData17(sv, tab);
+  const ref = useRef(null);
+  usePkcFitAll17(ref, sv.id + (on ? "1" : "0"));
+  const rows = [[S17I.Sparkles, "You provide", d.provide], [S17I.Users, "Ideal for", d.ideal], [S17I.Clock, "Duration", d.duration]]
+    .filter(r => r[2]).map(([a, b, c]) => [a, b, <b>{pkcNoBreak17(c)}</b>]);
+  return (
+    <PkgFace17 d={d} refEl={ref} cls={on ? " sel" : ""} rows={rows}
+      title={<h5 className="ff-pkc-ti fit">{d.name}</h5>}
+      line={d.line ? <p className="ff-pkc-tg fit">{d.line}</p> : null}
+      foot={<>
+        {d.earn && <span className="ff-pkc-earn"><i>You earn</i><b>{d.earn}</b></span>}
+        <button type="button" className="ff-pkc-go fit" onClick={onClick} aria-pressed={!!on} aria-label={`${d.name}: ${on ? "Signed up" : "Sign up"}`}>
           {on ? <><S17I.Check size={13} strokeWidth={2.6} /> Signed up</> : "Sign up"}
         </button>
-      </div>
-      {doc && <PkgDoc17 sv={sv} amount={amount} onClose={() => setDoc(false)} />}
-    </div>
+      </>} />
+  );
+}
+
+/* Create your own: the same card, every line typed by the professional, including You earn. */
+function BkPkgOwn17({ tab }) {
+  const { state, dispatch } = useStore();
+  const ref = useRef(null);
+  const qid = pkcOwnQid17(tab);
+  const account = qaAccount17(state);
+  const saved = account ? qaAnswer17(state, account, qid) : null;
+  const sv0 = saved && !saved.withdrawnAt && saved.typed ? saved.typed : null;
+  const [f, setF] = useState(() => sv0 ? { name: sv0.name || "", line: sv0.line || "", provide: sv0.provide || "", ideal: sv0.ideal || "", duration: sv0.duration || "", earn: sv0.pence ? String(sv0.pence / 100) : "" } : { name: "", line: "", provide: "", ideal: "", duration: "", earn: "" });
+  const [bad, setBad] = useState({});
+  const [busy, setBusy] = useState(false);
+  const on = !!sv0;
+  const nameRef = useRef(null), earnRef = useRef(null);
+  const set = (k) => (e) => { const v = k === "earn" ? e.target.value.replace(/[^\d.]/g, "").slice(0, 7) : e.target.value.slice(0, k === "name" ? 40 : 120); setF(x => ({ ...x, [k]: v })); setBad(b => ({ ...b, [k]: false })); };
+  const go = async () => {
+    if (!account) { window.dispatchEvent(new Event("ff-login")); return; }
+    if (busy) return;
+    if (on) {
+      setBusy(true); const r = await qaWithdraw17(dispatch, { questionId: qid, account }); setBusy(false);
+      dispatch({ type: "TOAST", toast: r.ok ? "Your package is withdrawn" : "That couldn't be saved. Try again." }); return;
+    }
+    const miss = { name: !f.name.trim(), earn: !pkcAmtOk17(f.earn) };
+    if (miss.name || miss.earn) { setBad(miss); (miss.name ? nameRef : earnRef).current?.focus(); return; }
+    setBusy(true);
+    const r = await qaSubmit17(dispatch, { questionId: qid, account, typed: { kind: "own_package", tab, name: f.name.trim(), line: f.line.trim(), provide: f.provide.trim(), ideal: f.ideal.trim(), duration: f.duration.trim(), pence: Math.round(Number(f.earn) * 100) }, visibility: "public", source: "FF Team Bookings · FF Party packages" });
+    setBusy(false);
+    dispatch({ type: "TOAST", toast: r.ok ? `Signed up: ${f.name.trim()}` : "That couldn't be saved. Try again." });
+  };
+  const d = { id: "own-" + tab, tab, site: "FF Party", name: f.name.trim(), line: f.line.trim(), provide: f.provide.trim(), ideal: f.ideal.trim(), duration: f.duration.trim(), earn: pkcGBP17(f.earn), points: [], brief: f.provide.trim() };
+  const inp = (k, ph, el = "input") => React.createElement(el === "area" ? "textarea" : "input", {
+    className: `ff-pkc-tin${bad[k] ? " bad" : ""}`, value: f[k], onChange: set(k), placeholder: ph, disabled: on, "aria-label": ph, rows: el === "area" ? 2 : undefined, type: el === "area" ? undefined : "text" });
+  /* Every type box grows with its text, so a word is never cut or split. */
+  React.useLayoutEffect(() => {
+    const root = ref.current; if (!root) return;
+    const fit = () => root.querySelectorAll("textarea.ff-pkc-tin").forEach(el => { el.style.height = "auto"; el.style.height = el.scrollHeight + "px"; });
+    fit(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit).catch(() => {});
+  });
+  const rows = [[S17I.Sparkles, "You provide", inp("provide", "What you bring", "area")], [S17I.Users, "Ideal for", inp("ideal", "The events it suits", "area")], [S17I.Clock, "Duration", inp("duration", "How long")]];
+  return (
+    <PkgFace17 d={d} refEl={ref} cls={` ff-pkc-own2${on ? " sel" : ""}`} dataId={"create-" + tab} rows={rows}
+      title={<textarea ref={nameRef} rows={1} className={`ff-pkc-tin ti${bad.name ? " bad" : ""}`} value={f.name} onChange={set("name")} onKeyDown={e => { if (e.key === "Enter") e.preventDefault(); }} placeholder="Create your own" aria-label="Package name" disabled={on} />}
+      line={<textarea rows={1} className="ff-pkc-tin tg" value={f.line} onChange={set("line")} onKeyDown={e => { if (e.key === "Enter") e.preventDefault(); }} placeholder="Your skills, your package, your price." aria-label="Package line" disabled={on} />}
+      foot={<>
+        <label className={`ff-pkc-earn in${bad.earn ? " bad" : ""}`}>
+          <i>You earn</i><span className="cur">£</span>
+          <input ref={earnRef} type="text" inputMode="decimal" autoComplete="off" value={f.earn} onChange={set("earn")} disabled={on} aria-invalid={!!bad.earn} aria-label="What you want to earn, in pounds" onKeyDown={e => { if (e.key === "Enter") go(); }} />
+        </label>
+        <button type="button" className="ff-pkc-go fit" onClick={go} disabled={busy} aria-pressed={on} aria-label={`Your package: ${on ? "Signed up" : "Sign up"}`}>
+          {on ? <><S17I.Check size={13} strokeWidth={2.6} /> Signed up</> : "Sign up"}
+        </button>
+      </>} />
   );
 }
 
@@ -618,24 +717,15 @@ function TeamBookings({ guest = false }) {
   const [pkgTerms, setPkgTerms] = useState(false);
   const picked = sel || svcInterest;
   const tick = (sv) => setSel(picked.includes(sv.id) ? picked.filter(x => x !== sv.id) : [...picked, sv.id]);
-  const [pkAmt, setPkAmt] = useState({});
-  const amtOf = (id) => {
-    if (pkAmt[id] != null) return pkAmt[id];
-    const acc = qaAccount17(state); const x = acc ? qaAnswer17(state, acc, pkcRateQid17(id)) : null;
-    return x && !x.withdrawnAt && x.typed ? String(x.typed.pence / 100) : "";
-  };
+
   /* v17.4.6: package sign-ups are one Q&A answer (int.party_package, option ids = package ids). */
   const confirmPkgs = async () => {
     setPkgTerms(false);
     const account = qaAccount17(state);
     if (!account) { window.dispatchEvent(new Event("ff-login")); return; }
     const next = picked;
-    const sv = { title: next.length === 1 ? (pkgs.find(x => x.id === next[0]) || {}).title || "the package" : "your packages" };
+    const sv = { title: next.length === 1 ? ((pkgs.find(x => x.id === next[0]) || {}).title || (PKC_EXTRA_BY17[next[0]] || {}).name || "the package") : "your packages" };
     const mirror = { type: "PROFILE", patch: { serviceInterest: next } };
-    for (const id of next) {
-      const v = amtOf(id); if (!pkcAmtOk17(v)) continue;
-      await qaSubmit17(dispatch, { questionId: pkcRateQid17(id), account, typed: { kind: "package_gbp", pence: Math.round(Number(v) * 100), package: id }, visibility: "private", source: "FF Team Bookings · FF Party packages" });
-    }
     const r = next.length
       ? await qaSubmit17(dispatch, { questionId: "int.party_package", account, optionIds: next, visibility: "public", source: "FF Team Bookings · FF Party packages" }, mirror)
       : await qaWithdraw17(dispatch, { questionId: "int.party_package", account }, mirror);
@@ -696,15 +786,18 @@ function TeamBookings({ guest = false }) {
           </div>
           {pkTab === "bar" ? (<div role="tabpanel" id="ff-pkpanel-bar" aria-labelledby="ff-pktab-bar">
             <HScroll label="Our bar packages" snap>
-              {pkgs.map(sv => <div key={sv.id} className="ff-bkpk-cell"><BkPkgCard17 sv={sv} on={picked.includes(sv.id)} onClick={() => tick(sv)} amount={amtOf(sv.id)} onAmount={v => setPkAmt(x => ({ ...x, [sv.id]: v }))} /></div>)}
-              <div className="ff-bkpk-cell"><BkPkgSoon17 own /></div>
+              {pkgs.map(sv => <div key={sv.id} className="ff-bkpk-cell"><BkPkgCard17 sv={sv} on={picked.includes(sv.id)} onClick={() => tick(sv)} /></div>)}
+              <div className="ff-bkpk-cell"><BkPkgOwn17 tab="bar" /></div>
             </HScroll>
             <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={!sel} onClick={() => { if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; } setPkgTerms(true); }}><Check size={15} /> Confirm</button>
           </div>) : (
             <div role="tabpanel" id={`ff-pkpanel-${pkTab}`} aria-labelledby={`ff-pktab-${pkTab}`}>
               <HScroll label={pkTab === "ent" ? "Entertainment packages" : "Services packages"} snap>
-                {(PK_SOON17[pkTab] || PK_SOON17.bar).map(pk => <div key={pk.id} className="ff-bkpk-cell"><BkPkgSoon17 pk={pk} /></div>)}
+                {(PKC_EXTRA17[pkTab] || []).map(x => <div key={x.id} className="ff-bkpk-cell"><BkPkgCard17 sv={{ id: x.id, title: x.name }} tab={pkTab} on={picked.includes(x.id)} onClick={() => tick({ id: x.id })} /></div>)}
+                <div className="ff-bkpk-cell"><BkPkgOwn17 key={pkTab} tab={pkTab} /></div>
               </HScroll>
+              <p className="ff-bk-tbc">{PKC_TBC17}</p>
+              <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={!sel} onClick={() => { if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; } setPkgTerms(true); }}><Check size={15} /> Confirm</button>
             </div>
           )}
           <p className="ff-bk-locs">Packages are offered where you work: <a href="#/ff-team/profile" onClick={goAreas}>your areas</a> are on your profile.</p>

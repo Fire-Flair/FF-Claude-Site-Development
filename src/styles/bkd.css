@@ -253,3 +253,27 @@
 .ff #ff-bk-party .ff-pkc-earn.in input:focus,
 .ff #ff-bk-party .ff-pkc-earn.in input:focus-visible { outline:none; border:0; box-shadow:none; background:transparent; padding:0; }
 .ff #ff-bk-party .ff-pkc-earn.in input:focus-visible { outline:none !important; }
+
+/* pkc-tabs (Alex, 18 Nov 18:44): the Event brief and invoice opens as a floating panel the width of the screen,
+   rounded all round, with a gap below it; it fades in rather than rising from the bottom edge. */
+.ff .ff-scrim:has(.ff-doc17) { align-items:center; padding:14px 10px calc(28px + env(safe-area-inset-bottom,0px)); }
+.ff .ff-sheet:has(.ff-doc17) { width:100%; max-width:760px; max-height:calc(100dvh - 60px); border:1px solid var(--gold-dk); border-radius:24px; corner-shape:squircle; padding-bottom:14px; box-shadow:0 24px 60px rgba(0,0,0,.35); animation:ffdocin .2s ease-out; }
+.ff .ff-sheet:has(.ff-doc17) .ff-sheet-head { border-radius:24px 24px 0 0; }
+.ff .ff-sheet:has(.ff-doc17) .ff-doc17 { margin:14px 12px 0; }
+@keyframes ffdocin { from { opacity:0; transform:scale(.98); } to { opacity:1; transform:none; } }
+@media (prefers-reduced-motion:reduce) { .ff .ff-sheet:has(.ff-doc17) { animation:none; } }
+
+/* Create your own: type boxes styled as the card's own lines. */
+.ff #ff-bk-party .ff-pkc-tin { all:unset; box-sizing:border-box; display:block; width:100%; font:400 14px/1.4 var(--font-sans); color:#2A2224; border-bottom:1.5px dashed rgba(160,124,30,.55); padding:2px 0; resize:none; }
+.ff #ff-bk-party textarea.ff-pkc-tin { min-height:2.9em; }
+.ff #ff-bk-party .ff-pkc-tin::placeholder { color:#A29884; opacity:1; }
+.ff #ff-bk-party .ff-pkc-tin:focus { border-bottom-color:#8A6A14; }
+.ff #ff-bk-party .ff-pkc-tin:focus-visible { outline:none !important; }
+.ff #ff-bk-party .ff-pkc-tin.bad { border-bottom-color:#C0392B; }
+.ff #ff-bk-party .ff-pkc-tin:disabled { border-bottom-color:transparent; -webkit-text-fill-color:currentColor; opacity:1; }
+.ff #ff-bk-party .ff-pkc-tin.ti { margin:0 auto 6px; text-align:center; font:600 21px/1.2 var(--font-display); letter-spacing:.04em; text-transform:uppercase; color:#4A0F1B; max-width:92%; }
+.ff #ff-bk-party .ff-pkc-tin.ti::placeholder { color:#4A0F1B; opacity:.5; }
+.ff #ff-bk-party .ff-pkc-tin.tg { margin:0 auto; text-align:center; font-size:14px; color:#3A3030; max-width:92%; }
+.ff #ff-bk-party .ff-bk-tbc { margin:10px 2px 0; font-size:12.5px; color:#6B6355; }
+.ff #ff-bk-party textarea.ff-pkc-tin.ti, .ff #ff-bk-party textarea.ff-pkc-tin.tg { min-height:0; overflow:hidden; }
+.ff #ff-bk-party textarea.ff-pkc-tin { overflow:hidden; }
