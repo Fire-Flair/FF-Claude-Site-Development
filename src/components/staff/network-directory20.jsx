@@ -137,6 +137,7 @@ function NetDirectory20() {
   return React.createElement("section", { id: "ff-directory", style: { marginTop: 30, scrollMarginTop: 70 } },
     React.createElement("style", null, NET20_CSS),
     React.createElement(BigHead20, { title: "FF Event Directory" }),
+    React.createElement(NetLead20, { k: "dir" }),
     NET_CO_TYPES17.map(function (t) {
       const inCat = every.filter(function (c) { return (c.cat || "bar") === t[0]; });
       const list = inCat.filter(function (c) { return !c.unclaimed; }).concat(inCat.filter(function (c) { return c.unclaimed; }));
@@ -151,6 +152,7 @@ function NetMap20(props) {
   const search = props && props.search;
   return React.createElement("section", { id: "ff-netmap", style: { marginTop: 0, scrollMarginTop: 70 } },
     React.createElement(BigHead20, { tag: "h1", title: "Explore our network" }),
+    React.createElement(NetLead20, { k: "page" }),
     search ? React.createElement("div", { id: "ff-net-search", className: "ff-netsrch20", style: { margin: "0 0 14px", scrollMarginTop: 70 } }, search) : null,
     React.createElement(FFMap, { mode: "network" }));
 }
