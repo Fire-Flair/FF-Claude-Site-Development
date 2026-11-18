@@ -403,8 +403,9 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
       ref: root
     }, React.createElement("style", null, ROT17_CSS), React.createElement("h2", {
       id: "ff-dx-h",
-      className: "ff-h1 ff-dx-h"
-    }, "Discover FireFlair"), React.createElement("span", {
+      /* chal (Alex, 18 Nov 03:13): on FF Team a quieter "What is FF Team?" so the hero's welcome leads. */
+      className: kind === "team" ? "ff-dx-h ff-dx-q" : "ff-h1 ff-dx-h"
+    }, kind === "team" ? "What is FF Team?" : "Discover FireFlair"), React.createElement("span", {
       className: "ff-dx-sent",
       ref: sent,
       "aria-hidden": "true"
@@ -788,6 +789,16 @@ HBM17.party = ["package", "profiles", "service", "chat"];
   /* home4: the short labels of the FF Team 1-2-3-4 row (the full steps stay in HB17.team). */
   const HB4_SHORT = ["Profile Card", "Booking request", "Confirm via WhatsApp", "Review Card"];
 
+/* chal: the FF Team bookings flow, and its simple symbols (styles: home-fix22.css, chal block). */
+const HBC_FLOW = [["profile", "Profile Card"], ["shift", "Shift Card"], ["yes", "Confirm via WhatsApp"], ["review", "Review Card"]];
+function HbcSym({ k }) {
+  const e = React.createElement;
+  if (k === "profile") return e("span", { className: "ff-hbc-sym cd" }, e("span", { className: "av" }, e(User, { size: 14, strokeWidth: 1.8 })), e("i", { className: "l1" }), e("i", { className: "l2" }));
+  if (k === "shift") return e("span", { className: "ff-hbc-sym cd sh" }, e("span", { className: "dt" }, "14"), e("i", { className: "l1" }), e("span", { className: "y" }, "Yes"));
+  if (k === "yes") return e("span", { className: "ff-hbc-sym yes" }, e("span", { className: "bub" }, "Yes, I'm in"), e("span", { className: "wa" }, e(WhatsAppIcon, { size: 14 })));
+  return e("span", { className: "ff-hbc-sym cd rv" }, e("span", { className: "st" }, "★★★"), e("i", { className: "l1" }), e("i", { className: "l2" }));
+}
+
 function HBMini17({ k }) {
 if (k === "package") return React.createElement("div", { className: "mc sv" }, React.createElement("span", { className: "lab" }, "Package Card"), React.createElement("span", { className: "sp" }, React.createElement(Sparkles, { size: 22, strokeWidth: 1.5 })), React.createElement("span", { className: "ln w1" }), React.createElement("span", { className: "tiers" }, React.createElement("i", { className: "b" }), React.createElement("i", { className: "s" }), React.createElement("i", { className: "g" })));
     const stars = React.createElement("span", {
@@ -923,8 +934,7 @@ if (k === "package") return React.createElement("div", { className: "mc sv" }, R
     const [hbOpen, setHbOpen] = useState(false);
     useEqualH22(hbRef, ".ff-hb17-row > .card", null, [kind, hbOpen]);
     const hbTitle = team ? "FF Team is built for getting you bookings" : "How a booking works";
-    /* home4 (Alex, 18 Nov 02:55): FF Team shows a simple 1-2-3-4 row in the box, and a chevron below it opens the full steps. */
-    useFitLine22(hbRef, ".ff-hb4-st b", [kind]);
+    useFitLine22(hbRef, ".ff-hbc-st .lb", [kind]);
     const hbHead = team ? React.createElement("h2", {
       id: "ff-hb17-h",
       className: "ff-hb23-h ff-hb4-h"
@@ -932,30 +942,30 @@ if (k === "package") return React.createElement("div", { className: "mc sv" }, R
       id: "ff-hb17-h",
       className: "ff-h1"
     }, hbTitle);
+    /* chal (Alex, 18 Nov 03:13): no 1-2-3-4 and no chevron. A left-to-right flow of simple symbols (Profile Card, Shift Card,
+       "Yes, I'm in" on WhatsApp, Review Card) with arrows; the whole box is the button that opens the full steps. */
     if (team) return React.createElement("section", {
-      className: "ff-sect ff-hb17 ff-hb23" + (hbOpen ? " is-open" : ""),
+      className: "ff-sect ff-hb17 ff-hb23 ff-hbc" + (hbOpen ? " is-open" : ""),
       id: "ff-how",
       ref: hbRef,
       "aria-labelledby": "ff-hb17-h"
-    }, React.createElement("div", { className: "ff-hb23-box" }, hbHead, React.createElement("ol", {
-      className: "ff-hb4-row"
-    }, list.map(([Ic, t], i) => React.createElement("li", {
-      key: t,
-      className: "ff-hb4-st"
-    }, React.createElement("span", { className: "top", "aria-hidden": "true" }, React.createElement("span", { className: "n" }, i + 1), React.createElement("span", { className: "ic" }, React.createElement(Ic, {
-      size: 15,
-      strokeWidth: 1.8
-    }))), React.createElement("b", null, HB4_SHORT[i] || t)))), React.createElement("button", {
+    }, React.createElement("div", { className: "ff-hb23-box" }, React.createElement("h2", {
+      className: "ff-hb23-h"
+    }, React.createElement("button", {
       type: "button",
-      className: "ff-hb4-more",
+      className: "ff-hbc-btn",
       "aria-expanded": hbOpen,
       "aria-controls": "ff-hb23-body",
-      "aria-label": hbOpen ? "Hide how bookings work" : "Show how bookings work",
+      "aria-labelledby": "ff-hb17-h",
       onClick: () => setHbOpen((o) => !o)
-    }, React.createElement("span", {
-      className: "ff-hb23-ch",
+    }, React.createElement("span", { id: "ff-hb17-h", className: "ff-hb23-t" }, hbTitle), React.createElement("span", {
+      className: "ff-hbc-flow",
       "aria-hidden": "true"
-    }, React.createElement(DX_I.ChevronDown, { size: 20, strokeWidth: 2 }))), hbOpen && React.createElement("div", {
+    }, HBC_FLOW.map(([k, t], i) => React.createElement(React.Fragment, { key: k }, i > 0 && React.createElement("span", {
+      className: "ff-hbc-arr"
+    }, React.createElement(ArrowRight, { size: 16, strokeWidth: 2.2 })), React.createElement("span", {
+      className: "ff-hbc-st"
+    }, React.createElement(HbcSym, { k }), React.createElement("span", { className: "lb" }, t))))))), hbOpen && React.createElement("div", {
       id: "ff-hb23-body",
       className: "ff-hb23-body"
     }, React.createElement("h3", {

@@ -388,7 +388,7 @@ function TwoMinutes20() {
 
 /* homefix: the FF Team Launch Challenge, short form. Four equal boxes (each opens its existing detail sheet), the countdown,
    and the ladder: live count, 100 (bookings go live), 1,000 (launch party and nationwide campaign). Styles: styles/home-fix22.css. */
-const LC22_I = { CalendarDays: lucideIcon("CalendarDays"), Users: lucideIcon("Users"), Crown: lucideIcon("Crown"), Plane: lucideIcon("Plane"),
+const LC22_I = { CalendarDays: lucideIcon("CalendarDays"), Users: lucideIcon("Users"), Crown: lucideIcon("Crown"), Plane: lucideIcon("Plane"), CreditCard: lucideIcon("CreditCard"),
   UserCheck: lucideIcon("UserCheck"), CalendarCheck: lucideIcon("CalendarCheck"), PartyPopper: lucideIcon("PartyPopper"), ChevronRight: lucideIcon("ChevronRight") };
 
 function LaunchLadder22() {
@@ -399,9 +399,9 @@ function LaunchLadder22() {
   const AT = 100 / 3;
   const pct = n <= c.staffAt ? n / c.staffAt * AT : AT + (Math.min(n, c.partyAt) - c.staffAt) / (c.partyAt - c.staffAt) * (100 - AT);
   const stops = [
-    [LC22_I.UserCheck, "Now", "Profiles and teams", 0],
+    [LC22_I.UserCheck, "Launch", "Profiles and teams", 0],
     [LC22_I.CalendarCheck, c.staffAt.toLocaleString("en-GB"), "Bookings go live", AT],
-    [LC22_I.PartyPopper, c.partyAt.toLocaleString("en-GB"), "Launch party and nationwide campaign", 100]
+    [LC22_I.PartyPopper, c.partyAt.toLocaleString("en-GB"), "Launch party and nationwide marketing campaign", 100]
   ];
   return h("div", { className: "ff-lc22-lad" },
     h("div", { className: "ff-lc22-ic" }, stops.map((s, i) => h("span", { key: i, className: "p" + i, style: { left: s[3] + "%" }, "aria-hidden": "true" }, h(s[0], { size: 16, strokeWidth: 1.8 })))),
@@ -417,13 +417,14 @@ function TeamCompetition20() {
   const [rules, setRules] = useState(false);
   const [box, setBox] = useState(null);
   const CH = TP21.challenge;
-  /* [sheet title, face label, face line, icon, sheet sections]. Alex (18 Nov): three boxes; who can enter stays in the Rules. */
+  /* [sheet title, small word, big word, face line, small icon, sheet sections, faint background icon, small word first].
+     chal (Alex, 18 Nov 03:13): three tiles in the style of the 90 days tile, each with a faint symbol behind. */
   const boxes = [
-    [CH.boxes[0].t, "90 days", "1 Dec to 28 Feb", LC22_I.CalendarDays, [["Dates", "The challenge runs for 90 days, from 1 December 2026 to 28 February 2027."]]],
-    ["Rewards for the top 10", "Rewards for the top 10", "Gold membership", LC22_I.Crown, CH.rewards.filter(r => r[0] === "Top 10").map(r => [r[0], r[1]])],
-    [CH.boxes[3].t, "Win Athens", "Athens Bar Show trip", LC22_I.Plane, CH.rewards.filter(r => r[0] === "Overall winner").map(r => [r[0], r[1]])]
+    [CH.boxes[0].t, "days", "90", "1 Dec to 28 Feb", LC22_I.CalendarDays, [["Dates", "The challenge runs for 90 days, from 1 December 2026 to 28 February 2027."]], LC22_I.CalendarDays, false],
+    ["Rewards for the top 10", "top", "10", "Win rewards", LC22_I.Crown, CH.rewards.filter(r => r[0] === "Top 10").map(r => [r[0], r[1]]), LC22_I.CreditCard, true],
+    [CH.boxes[3].t, null, "Win a trip", "Athens Bar Show", LC22_I.Plane, CH.rewards.filter(r => r[0] === "Overall winner").map(r => [r[0], r[1]]), LC22_I.Plane, false]
   ];
-  const cur = box === null ? null : [boxes[box][0], null, boxes[box][4]];
+  const cur = box === null ? null : [boxes[box][0], null, boxes[box][5]];
   const sec = (t, body) => h("div", { key: t }, h("h3", { className: "ff-label" }, t), body);
   const pick = (i) => setBox(i);
   const lcRef = useRef(null);
@@ -434,38 +435,31 @@ function TeamCompetition20() {
     "section",
     { className: "ff-sect ff-lc22-sect", id: "ff-competition", ref: lcRef, "aria-labelledby": "ff-cp20-h" },
     h("style", null, PROMO_CSS20 + LB20_CSS),
+    /* chal (Alex, 18 Nov 03:13): the title sits above the box, full width; inside, a three-line heading, the three tiles,
+       then the countdown, then the timeline. */
+    h("h2", { id: "ff-cp20-h", className: "ff-lc22-eye ff-lcc-title" }, h("span", { "data-fitw22": "" }, "FF Team Launch Challenge")),
     h(
       "div",
-      { className: "ff-lc22" },
+      { className: "ff-lc22 ff-lcc" },
       h(
         "div",
-        { className: "ff-lc22-top" },
+        { className: "ff-lcc-top" },
+        h("p", { className: "ff-lcc-hd" }, h("span", null, "Grow your team."), " ", h("span", null, "Win prizes."), " ", h("span", null, "Work with friends.")),
         h(
           "div",
-          { className: "ff-lc22-head" },
-          h("div", { className: "ff-lc22-eye" }, h("span", { "data-fitw22": "" }, "FF Team Launch Challenge")),
-          /* home3 (Alex, 18 Nov): one line each. */
-          h("h2", { id: "ff-cp20-h" }, h("span", null, "Grow your Team."), " ", h("span", null, "Win prizes."))
-        ),
-        h(
-          "div",
-          { className: "ff-lc22-go" },
-          h(Countdown20, null),
-          h(
-            "div",
-            { className: "ff-lc22-btns" },
-            h(ShineButton, { onClick: nav.goProfile }, "Join Challenge"),
-            h("button", { type: "button", className: "ff-lc22-rules", onClick: () => setRules(true) }, "Rules")
-          )
+          { className: "ff-lc22-btns" },
+          h(ShineButton, { onClick: nav.goProfile }, "Join Challenge"),
+          h("button", { type: "button", className: "ff-lc22-rules", onClick: () => setRules(true) }, "Rules")
         )
       ),
-      h("div", { className: "ff-lc22-boxes" }, boxes.map((b, i) => h("button", { key: b[1], type: "button", className: "ff-lc22-box" + (i === 0 ? " is-days" : ""), onClick: () => pick(i), "aria-haspopup": "dialog", "aria-label": i === 0 ? "90 days, " + b[2] : undefined },
-        /* home2 (Alex, 18 Nov): the 90 days tile is a big gold 90 with "days" small and a calendar flourish. */
-        i === 0 && h("span", { className: "fl", "aria-hidden": "true" }, h(b[3], { size: 96, strokeWidth: 1 })),
-        h("span", { className: "ic", "aria-hidden": "true" }, h(b[3], { size: 18, strokeWidth: 1.7 })),
+      h("div", { className: "ff-lc22-boxes" }, boxes.map((b, i) => h("button", { key: b[0], type: "button", className: "ff-lc22-box is-days ff-lcc-box", onClick: () => pick(i), "aria-haspopup": "dialog", "aria-label": [b[7] ? b[1] : null, b[2], b[7] ? null : b[1], b[3]].filter(Boolean).join(" ") },
+        h("span", { className: "fl", "aria-hidden": "true" }, h(b[6], { size: 96, strokeWidth: 1 })),
+        h("span", { className: "ic", "aria-hidden": "true" }, h(b[4], { size: 18, strokeWidth: 1.7 })),
         h("span", { className: "ch", "aria-hidden": "true" }, h(LC22_I.ChevronRight, { size: 16, strokeWidth: 2 })),
-        i === 0 ? h("b", { className: "num", "aria-hidden": "true" }, h("span", { className: "n" }, "90"), h("small", null, "days")) : h("b", { "data-fit22": "" }, b[1]),
-        h("span", { className: "t", "data-fit22": "" }, b[2])))),
+        b[1] ? h("b", { className: "num" + (b[7] ? " pre" : ""), "aria-hidden": "true" }, b[7] && h("small", null, b[1]), h("span", { className: "n" }, b[2]), !b[7] && h("small", null, b[1]))
+          : h("b", { className: "num wd", "aria-hidden": "true" }, h("span", { className: "n", "data-fit22": "" }, b[2])),
+        h("span", { className: "t", "data-fit22": "", "aria-hidden": "true" }, b[3])))),
+      h("div", { className: "ff-lcc-cd" }, h(Countdown20, null)),
       h(LaunchLadder22, null)
     ),
     h(
