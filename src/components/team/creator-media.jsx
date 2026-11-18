@@ -19,7 +19,7 @@ function CreatorMedia() {
       const g = c.getContext("2d"), grad = g.createLinearGradient(0, 0, 1600, 900);
       grad.addColorStop(0, a); grad.addColorStop(1, b); g.fillStyle = grad; g.fillRect(0, 0, 1600, 900);
       g.fillStyle = "rgba(255,255,255,.16)"; for (let i = 0; i < 9; i++) { g.beginPath(); g.arc(200 + i * 170, 450 + Math.sin(i) * 160, 90 + (i % 3) * 30, 0, 7); g.fill(); }
-      g.fillStyle = "rgba(255,255,255,.85)"; g.font = "600 56px sans-serif"; g.textAlign = "center"; g.fillText(label, 800, 470);
+      g.fillStyle = "rgba(255,255,255,.85)"; g.font = "600 56px Inter, sans-serif"; g.textAlign = "center"; g.fillText(label, 800, 470);
       return c.toDataURL("image/jpeg", 0.82);
     };
     [["#2C3E66", "#5B7DB8", "Sample picture 1"], ["#6B2A3E", "#B05A7E", "Sample picture 2"], ["#2D5A44", "#5FA883", "Sample picture 3"]].slice(0, Math.max(0, room)).forEach(([a, b, l]) =>

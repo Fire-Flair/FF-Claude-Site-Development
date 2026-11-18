@@ -375,7 +375,7 @@
 @media (prefers-reduced-motion: reduce) { .ff .ff-phero.has-media:not(.wide) .ff-pcol { transition:none; } }
 .ff .ff-phero.wide .ff-pm-track { position:absolute; inset:0; height:auto; }
 .ff .ff-agrp { position:relative; flex:none; width:clamp(164px,45vw,196px); aspect-ratio:5/7; display:flex; flex-direction:column; gap:10px; padding:18px 18px 16px; text-align:left; cursor:pointer; border-radius:22px; corner-shape:squircle; overflow:visible; isolation:isolate;
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",Inter,system-ui,sans-serif; color:#F7F2E7; border:1px solid rgba(201,162,39,.55);
+  font-family:var(--font-sans,Inter,sans-serif); color:#F7F2E7; border:1px solid rgba(201,162,39,.55);
   background:radial-gradient(120% 60% at 0% 0%,rgba(228,195,106,.13),transparent 55%),linear-gradient(165deg,#2A292E 0%,#151417 58%,#0B0B0D 100%);
   box-shadow:0 10px 24px rgba(0,0,0,.24),0 1px 3px rgba(0,0,0,.18); transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .2s; -webkit-tap-highlight-color:transparent; }
 .ff .ff-agrp::before, .ff .ff-xatt-box::before { content:""; position:absolute; inset:5px; z-index:-1; border-radius:17px; border:1px solid rgba(201,162,39,.3); box-shadow:inset 0 0 0 2px rgba(255,255,255,.03); pointer-events:none; }
@@ -408,7 +408,7 @@
 @keyframes ffpop { from { transform:scale(.96); opacity:0 } to { transform:none; opacity:1 } }
 .ff .ff-xatt { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:12px; padding:16px; align-items:start; }
 .ff .ff-xatt-box { position:relative; isolation:isolate; padding:18px 18px 16px; border-radius:22px; color:#F7F2E7; border:1px solid rgba(201,162,39,.55);
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",Inter,system-ui,sans-serif;
+  font-family:var(--font-sans,Inter,sans-serif);
   background:radial-gradient(120% 60% at 0% 0%,rgba(228,195,106,.13),transparent 55%),linear-gradient(165deg,#2A292E 0%,#151417 58%,#0B0B0D 100%); box-shadow:0 8px 20px rgba(0,0,0,.2); }
 .ff .ff-xatt-box h3 { margin:0 0 10px; padding-bottom:10px; font-size:17px; font-weight:600; letter-spacing:-.015em; color:#fff; background:linear-gradient(90deg,rgba(228,195,106,.55),rgba(228,195,106,0)) left bottom/100% 1px no-repeat; }
 .ff .ff-xatt-box p { margin:0; font-size:14px; line-height:1.5; color:rgba(247,242,231,.86); white-space:pre-wrap; }

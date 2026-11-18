@@ -1132,7 +1132,7 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 
 /* Terms and conditions: a full page */
 .ff-noscroll { overflow:hidden; }
-.ff-termspage { position:fixed; inset:0; z-index:9998; display:flex; flex-direction:column; background:#FBF6E9; color:#16130F; font-family:system-ui,sans-serif; }
+.ff-termspage { position:fixed; inset:0; z-index:9998; display:flex; flex-direction:column; background:#FBF6E9; color:#16130F; font-family:var(--font-sans,Inter,sans-serif); }
 .ff-termspage header { flex:none; display:flex; align-items:center; gap:10px; padding:12px 14px; border-bottom:1px solid rgba(126,97,29,.3); background:#FFFDF8; }
 .ff-termspage header h2 { flex:1; margin:0; font-family:var(--display, Georgia, serif); font-size:20px; text-align:center; }
 .ff-termspage header .bk { display:inline-flex; align-items:center; gap:2px; padding:6px 4px; font-weight:700; font-size:14px; color:#16130F; }

@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap');
 
 .ff * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 .ff {
@@ -482,7 +482,7 @@
   box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 10px 26px rgba(201,162,39,.28); }
 .ff .ff-publish-btn:disabled { opacity:.45; cursor:not-allowed; }
 .ff .ff-walletbtn { display:inline-flex; align-items:center; justify-content:center; gap:10px; height:50px; min-width:210px; padding:0 18px;
-  background:#000; color:#fff; border:1px solid #4a4a4a; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  background:#000; color:#fff; border:1px solid #4a4a4a; font-family:var(--sans);
   text-transform:none; letter-spacing:0; text-align:left; line-height:1.1; }
 .ff .ff-walletbtn.apple { border-radius:10px; }
 .ff .ff-walletbtn.google { border-radius:999px; background:#1F1F1F; border-color:#747775; }

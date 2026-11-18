@@ -27,7 +27,7 @@ for (const f of all.filter((x) => /\.(js|jsx|css|json|html)$/.test(x) && !x.star
   const t = fs.readFileSync(path.join(SRC, f), 'utf8');
   for (const m of t.matchAll(/__ff_css\(([^)]*)\)|__ff_json\("([^"]+)"\)/g))
     for (const r of (m[1] ? [...m[1].matchAll(/"([^"]+)"/g)].map((x) => x[1]) : [m[2]])) { used.add(r); if (!fs.existsSync(path.join(SRC, r))) fail.push(`${f}: directive target missing: ${r}`); }
-  for (const m of t.matchAll(/ffasset:((?:img|story)\/[A-Za-z0-9._-]+)/g)) {
+  for (const m of t.matchAll(/ffasset:((?:img|story|font)\/[A-Za-z0-9._-]+)/g)) {
     const p = m[1].startsWith('story/') ? path.join(ROOT, 'stories', 'images', m[1].slice(6)) : path.join(SRC, 'assets', m[1]);
     if (!fs.existsSync(p)) fail.push(`${f}: asset missing: ${m[1]}`);
   }

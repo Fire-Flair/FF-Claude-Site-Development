@@ -126,7 +126,7 @@ async function cardToPng17(node, opts) {
   const [W, H] = fixed ? [CX17.fixed[0] - 2 * CX17.mat[0], CX17.fixed[1] - 2 * CX17.mat[1]] : cx17Size(rect.width, rect.height);
   const k = W / rect.width;
   const lib = await cx17Lib();
-  try { if (document.fonts && document.fonts.ready) await document.fonts.ready; } catch (e) { /* fonts API missing: carry on */ }
+  try { if (document.fonts && document.fonts.load) await Promise.all(["400 16px Inter", "700 16px Inter"].map((f) => document.fonts.load(f))); if (document.fonts && document.fonts.ready) await document.fonts.ready; } catch (e) { /* fonts API missing: carry on */ }
   await cx17CheckPictures(node);
   const render = () => lib.toBlob(node, {
     width: W, height: H, pixelRatio: 1, cacheBust: false,

@@ -21,15 +21,15 @@ const OUT = path.resolve(opt('--out', path.join(ROOT, 'build')));
 const NAME = opt('--name', 'ff-team-v1.1.html');
 const LEGACY = argv.includes('--name') ? null : `fireflair-${manifest.version}.html`;
 const read = (p) => fs.readFileSync(path.join(SRC, p), 'utf8');
-const MIME = {webp: 'image/webp', png: 'image/png', jpg: 'image/jpeg', gif: 'image/gif', svg: 'image/svg+xml'};
+const MIME = {webp: 'image/webp', png: 'image/png', jpg: 'image/jpeg', gif: 'image/gif', svg: 'image/svg+xml', woff2: 'font/woff2'};
 
-function assetBytes(rel) {  // 'img/<hash>.webp' lives in src/assets; 'story/<slug>.webp' in stories/images
+function assetBytes(rel) {  // 'img/<hash>.webp' and 'font/<name>.woff2' live in src/assets; 'story/<slug>.webp' in stories/images
   const p = rel.startsWith('story/') ? path.join(ROOT, 'stories', 'images', rel.slice(6)) : path.join(SRC, 'assets', rel);
   if (!fs.existsSync(p)) throw new Error('missing asset: ' + rel);
   return fs.readFileSync(p);
 }
 const dataUri = (rel) => `data:${MIME[rel.split('.').pop()]};base64,${assetBytes(rel).toString('base64')}`;
-const resolveAssets = (t) => t.replace(/ffasset:((?:img|story)\/[A-Za-z0-9._-]+\.(?:webp|png|jpg|gif|svg))/g, (m, rel) => dataUri(rel));
+const resolveAssets = (t) => t.replace(/ffasset:((?:img|story|font)\/[A-Za-z0-9._-]+\.(?:webp|png|jpg|gif|svg|woff2))/g, (m, rel) => dataUri(rel));
 /* The page's version is the newest entry of its changelog ("## v1.1" -> "1.1"): frontend-export/ff-team-v1.1/CHANGELOG.md
    on this line, else the prototype's CHANGELOG.md ("## v17.49" -> "17.49"). PHASE1.version reads it. */
 const CL_FILE = [path.join(ROOT, 'frontend-export', 'ff-team-v1.1', 'CHANGELOG.md'), path.join(ROOT, 'CHANGELOG.md')].find((f) => fs.existsSync(f));
