@@ -1519,6 +1519,36 @@
 .ff .ff-csm-opt.wa { background:#25D366; border-color:#1EA952; color:#fff; }
 .ff .ff-csm-opt.wa svg { color:#fff; fill:currentColor; }
 
+/* v1.70 share-sheet (Alex, 18 Nov 21:56): the Share pop-up never scrolls. Blurred, darkened page behind, no white panel;
+   the card at the top scaled to fit (CardShareView17 sets the scale), the four buttons under it. */
+.ff .ff-scrim.ff-csx { z-index:200; align-items:stretch; justify-content:center; height:100vh; height:100dvh; overflow:hidden;
+  overscroll-behavior:contain; touch-action:none; background:rgba(10,9,8,.52); backdrop-filter:blur(16px) saturate(.85); -webkit-backdrop-filter:blur(16px) saturate(.85); animation:ffCsxIn .18s ease-out; }
+@keyframes ffCsxIn { from { opacity:0 } to { opacity:1 } }
+@media (prefers-reduced-motion: reduce) { .ff .ff-scrim.ff-csx { animation:none; } }
+.ff .ff-csx-dlg { position:relative; display:flex; flex-direction:column; align-items:center; gap:12px; width:100%; max-width:600px; height:100%; min-height:0; box-sizing:border-box;
+  padding:calc(8px + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px)); outline:none; }
+.ff .ff-csx-x { flex:none; align-self:flex-end; display:inline-grid; place-items:center; width:36px; height:36px; padding:0; border-radius:12px; corner-shape:squircle;
+  border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.14); color:#fff; cursor:pointer; }
+.ff .ff-csx-x:hover { background:rgba(255,255,255,.24); }
+.ff .ff-csx-x:focus-visible, .ff .ff-csx-menu .ff-csm-opt:focus-visible { outline:2px solid #F3D27A; outline-offset:2px; }
+.ff .ff-csx-stage { flex:none; min-height:0; width:100%; display:flex; align-items:flex-start; justify-content:center; margin-top:-4px; }
+.ff .ff-csx-card { position:relative; flex:none; filter:drop-shadow(0 18px 34px rgba(0,0,0,.45)); }
+.ff .ff-csx-inner { position:absolute; top:0; left:0; width:340px; transform-origin:top left; }
+.ff .ff-csx-inner > *, .ff .ff-csx-export > * { width:100%; }
+.ff .ff-csx-export { position:fixed; left:-10000px; top:0; width:340px; pointer-events:none; }
+.ff .ff-csx-menu { position:relative; z-index:1; flex:none; width:min(100%,440px); max-width:100%; margin:0; gap:10px; }
+.ff .ff-csx-menu .ff-csm-opt { min-height:52px; min-width:0; padding:10px 12px; border-radius:16px; corner-shape:squircle; background:var(--paper,#FBF7EE); border-color:var(--gold-dk,#8A6A18); color:#2A2318; font-size:15px; cursor:pointer;
+  box-shadow:0 8px 20px rgba(0,0,0,.28); }
+.ff .ff-csx-menu .ff-csm-opt > svg { flex:none; }
+.ff .ff-csx-menu .ff-csm-opt > span { min-width:0; overflow:hidden; white-space:nowrap; word-break:keep-all; hyphens:none; }
+.ff .ff-csx-menu .ff-csm-opt.wa { background:#25D366; border-color:#1EA952; color:#fff; }
+.ff .ff-csx-menu .ff-csm-opt:disabled { opacity:.62; cursor:default; }
+.ff .ff-csx-err { position:relative; z-index:1; flex:none; display:flex; align-items:center; gap:10px; width:min(100%,440px); box-sizing:border-box; padding:8px 8px 8px 14px; border-radius:14px; corner-shape:squircle;
+  background:rgba(255,244,242,.96); color:#5C1220; font:600 13px/1.3 var(--sans); }
+.ff .ff-csx-err > span { flex:1; min-width:0; overflow-wrap:normal; word-break:normal; hyphens:none; }
+.ff .ff-csx-err > button { flex:none; display:inline-grid; place-items:center; width:36px; height:36px; padding:0; border-radius:12px; corner-shape:squircle; border:1px solid currentColor; background:transparent; color:inherit; cursor:pointer; }
+.ff .ff-csx-live { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap; }
+
 /* v1.53 (Alex, 18 Nov 20:40): desktop bar links (Home, Network, Bookings, Profile) spaced further apart and drawn as quiet
    buttons: a faint gold-edged squircle that warms on hover; the current page gets a soft gold fill and gold-leaf text.
    No dividers between them. */

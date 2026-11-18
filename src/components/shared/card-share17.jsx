@@ -2,6 +2,7 @@
 /* ==========================================================================
    CARD SHARE MENU (v17.4.6.4) — one sheet for every shareable card.
    Shows the real card, then: Share (device share sheet), WhatsApp, Download PNG, Copy Link.
+   v1.70: no scrolling, blurred page behind, card on top scaled to fit (CardShareView17).
    The PNG is made as soon as the sheet opens so the Share tap still counts as a direct tap on iPhone
    (a share started after a wait can be refused). Uses cardToPng17 from utils/card-export17.js.
    Props: open, onClose, title (share message), url (the card's FireFlair address, https://…), fileName,
@@ -62,14 +63,13 @@ function CardShareSheet17({ open, onClose, title, message, url, fileName, childr
       {icon}<span>{label}</span>
     </button>
   );
-  return (
-    <Sheet open onClose={onClose} title={String(title || "Share").replace(/:\s*$/, "")}>
+  const name = String(title || "Share").replace(/:\s*$/, "");
+  /* A sheet with extra content below the menu (own-card send, Card Studio back) keeps the earlier layout. */
+  if (extra) return (
+    <Sheet open onClose={onClose} title={name}>
       <div className="ff-csm-stage" ref={holder}>{children}</div>
-      <p className="ff-csm-url" aria-label="Card address">{base.replace(/^https?:\/\//, "").replace(/^ff([a-z])/i, (m, c) => "FF" + c.toUpperCase())}</p>
       {err ? (
         <div className="ff-cverr" role="alert"><span>{err}</span><Btn variant="sm ghost" onClick={make}><RotateCcw size={12} /> Try again</Btn></div>
-      ) : busy ? (
-        <p className="ff-body ff-csm-busy" role="status"><Loader2 size={14} className="ff-spin" /> Getting your image ready</p>
       ) : null}
       <div className="ff-csm-menu" role="group" aria-label="Share options">
         {opt("Share", doShare, <ShareUp17 size={16} />, !ready)}
@@ -80,6 +80,104 @@ function CardShareSheet17({ open, onClose, title, message, url, fileName, childr
       <div className="ff-csm-live" aria-live="polite">{note}</div>
       {extra}
     </Sheet>
+  );
+  const wait = (ic) => busy ? <Loader2 size={18} className="ff-spin" aria-hidden="true" /> : ic;
+  return (
+    <CardShareView17 name={name} onClose={onClose} holder={holder} card={children} note={note}
+      err={err ? <div className="ff-csx-err" role="alert"><span>{err}</span><button type="button" onClick={make} aria-label="Try again"><RotateCcw size={16} aria-hidden="true" /></button></div> : null}>
+      {opt("Share", doShare, wait(<ShareUp17 size={18} aria-hidden="true" />), !ready)}
+      {opt("WhatsApp", doWhatsApp, wait(<WhatsAppIcon size={18} />), !ready, "wa")}
+      {opt("Download PNG", doDownload, wait(<Download size={18} aria-hidden="true" />), !ready)}
+      {opt("Copy Link", doCopy, <Link2 size={18} aria-hidden="true" />, false)}
+    </CardShareView17>
+  );
+}
+
+
+/* share-sheet (Alex, 18 Nov 21:56): the Share pop-up never scrolls. The page behind is blurred under a dark tint; the card sits
+   at the top, scaled to fit what's left once the four buttons have their room; the buttons sit under it. Tap the blurred
+   background or the X to close, Escape on a keyboard. Focus stays inside while it's open.
+   The visible card is a scaled copy; the PNG is made from an unscaled copy kept off screen (holder), so cardToPng17 measures
+   and lays out the card exactly as before. */
+function CardShareView17({ name, onClose, holder, card, err, note, children }) {
+  const dlg = useRef(null);
+  const stage = useRef(null);
+  const inner = useRef(null);
+  const menu = useRef(null);
+  const closeRef = useRef(onClose); closeRef.current = onClose;
+  const [fit, setFit] = useState(null);
+  React.useLayoutEffect(() => {
+    const measure = () => {
+      const d = dlg.current, st = stage.current, el = inner.current;
+      if (!d || !st || !el) return;
+      /* Room for the card: the pop-up's height less the X, the buttons (and any error line) and the gaps between them. */
+      const cs = getComputedStyle(d), gap = parseFloat(cs.rowGap) || 0;
+      const rest = [...d.children].filter((n) => n !== st && getComputedStyle(n).position !== "absolute");
+      const used = rest.reduce((t, n) => t + n.offsetHeight, 0) + gap * rest.length;
+      const cw = el.offsetWidth, ch = el.offsetHeight;
+      const aw = d.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      const ah = d.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - used;
+      if (!cw || !ch || !aw || !ah) return;
+      const s = Math.max(0.3, Math.min(aw / cw, ah / ch, 1.5));
+      setFit((f) => (f && Math.abs(f.s - s) < 0.002 && f.w === cw && f.h === ch && Math.abs(f.aw - aw) < 1) ? f : { s, w: cw, h: ch, aw });
+      /* A label that doesn't fit its button shrinks; it never splits. */
+      if (menu.current) menu.current.querySelectorAll(".ff-csm-opt > span").forEach((sp) => {
+        sp.style.fontSize = "";
+        let fs = parseFloat(getComputedStyle(sp).fontSize), n = 0;
+        while (sp.scrollWidth > sp.clientWidth + 0.5 && fs > 10 && n++ < 30) { fs -= 0.5; sp.style.fontSize = fs + "px"; }
+      });
+    };
+    measure();
+    let ro = null;
+    if (window.ResizeObserver) { ro = new ResizeObserver(measure); [dlg.current, inner.current, ...(dlg.current ? dlg.current.children : [])].forEach((n) => n && ro.observe(n)); }
+    window.addEventListener("resize", measure);
+    const imgs = inner.current ? [...inner.current.querySelectorAll("img")] : [];
+    imgs.forEach((i) => i.addEventListener("load", measure));
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure).catch(() => {});
+    return () => { if (ro) ro.disconnect(); window.removeEventListener("resize", measure); imgs.forEach((i) => i.removeEventListener("load", measure)); };
+  }, [!!err]);
+  useEffect(() => {
+    /* Nothing behind scrolls while the pop-up is open. */
+    const de = document.documentElement, b = document.body;
+    const was = [de.style.overflow, b.style.overflow, de.style.overscrollBehavior];
+    de.style.overflow = "hidden"; b.style.overflow = "hidden"; de.style.overscrollBehavior = "none";
+    const prev = document.activeElement;
+    const k = (e) => {
+      if (e.key === "Escape") { e.preventDefault(); closeRef.current(); return; }
+      if (e.key !== "Tab" || !dlg.current) return;
+      const f = [...dlg.current.querySelectorAll('a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])')].filter((el) => el.offsetParent !== null && !el.closest("[inert]"));
+      if (!f.length) { e.preventDefault(); return; }
+      const first = f[0], last = f[f.length - 1], at = document.activeElement;
+      if (e.shiftKey && (at === first || at === dlg.current)) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && at === last) { e.preventDefault(); first.focus(); }
+      else if (!dlg.current.contains(at)) { e.preventDefault(); first.focus(); }
+    };
+    window.addEventListener("keydown", k);
+    if (dlg.current) dlg.current.focus({ preventScroll: true });
+    return () => {
+      window.removeEventListener("keydown", k);
+      de.style.overflow = was[0]; b.style.overflow = was[1]; de.style.overscrollBehavior = was[2];
+      if (prev && prev.focus && document.contains(prev)) { try { prev.focus({ preventScroll: true }); } catch (e) {} }
+    };
+  }, []);
+  /* Taps on the card or the buttons stay; a tap anywhere else is a tap on the background. */
+  const back = (e) => { if (!e.target.closest(".ff-csx-card, .ff-csm-opt, .ff-csx-err, .ff-csx-x")) onClose(); };
+  const s = fit ? fit.s : 1;
+  return (
+    <div className="ff-scrim ff-csx" onClick={back} onTouchMove={(e) => { if (!e.target.closest(".ff-csx-card")) e.preventDefault(); }}>
+      <div className="ff-csx-dlg" ref={dlg} tabIndex={-1} role="dialog" aria-modal="true" aria-label={name}>
+        <button type="button" className="ff-csx-x" onClick={onClose} aria-label="Close" style={fit ? { marginRight: Math.max(0, Math.floor((fit.aw - fit.w * s) / 2)) } : null}><X size={18} aria-hidden="true" /></button>
+        <div className="ff-csx-stage" ref={stage} style={fit ? { height: Math.ceil(fit.h * s) } : null}>
+          <div className="ff-csx-card" style={fit ? { width: fit.w * s, height: fit.h * s } : { visibility: "hidden" }}>
+            <div className="ff-csx-inner" ref={inner} style={{ transform: `scale(${s})` }}>{card}</div>
+          </div>
+        </div>
+        {err}
+        <div className="ff-csm-menu ff-csx-menu" ref={menu} role="group" aria-label="Share options" style={fit ? { width: `max(min(100%, 320px), ${Math.round(fit.w * s)}px)` } : null}>{children}</div>
+        <div className="ff-csx-live" aria-live="polite">{note}</div>
+      </div>
+      <div className="ff-csx-export" ref={holder} aria-hidden="true" inert="">{card}</div>
+    </div>
   );
 }
 
