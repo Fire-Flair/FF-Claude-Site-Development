@@ -66,6 +66,7 @@
   "components/team/public-profile.jsx",
   "components/team/introductions.jsx",
   "components/team/aragorn-preview.jsx",
+  "components/team/profile-edit-p2.jsx",
   "components/team/creator-media.jsx",
   "components/shared/home-scenes.jsx",
   "components/team/work-location-guide.jsx",

@@ -34,7 +34,8 @@ function LiveActionBar17({ placement }) {
             <b>{c.label}</b>{c.onRemove && <button type="button" aria-label={`Remove ${c.label}`} onClick={c.onRemove}><S17I.X size={11} strokeWidth={2.6} /></button>}</span>))}</span>}
         <span className="acts">
           {bar.actions.map(a => (
-            a.coin ? <button key={a.key} type="button" className="lb coin" disabled={a.disabled} onClick={a.onClick} aria-label={a.label} title={a.label}><S17I.ArrowRight size={20} strokeWidth={2.6} /></button>
+            a.xc ? <button key={a.key} type="button" className="lb xc" onClick={a.onClick} aria-label={a.label} title={a.label}><S17I.X size={16} strokeWidth={2.4} /></button>
+            : a.coin ? <button key={a.key} type="button" className="lb coin" disabled={a.disabled} onClick={a.onClick} aria-label={a.label} title={a.label}><S17I.ArrowRight size={20} strokeWidth={2.6} /></button>
             : <button key={a.key} type="button" className={`lb ${a.primary ? "pri" : "out"}`} onClick={a.onClick} aria-label={a.label}>
               {a.icon}<span className={a.primary ? undefined : "lab"}>{a.label}</span>
             </button>
@@ -259,7 +260,9 @@ function ProfileGate17({ kind }) {
   };
   useLiveAction17({
     status: kind === "party" ? "" : done ? editing ? (dirSlug ? "Editing for FireFlair" : "Editing your profile") : claim && claim.status === "pending" ? "Claim being checked" : claim && claim.status === "rejected" ? "Claim not approved" : "Your profile is live" : claim && claim.status === "rejected" ? "Claim not approved" : "Building your profile",
-    actions: kind === "party" ? [] : done ? editing ? [{ key: "cancel", label: "Cancel", icon: React.createElement(S17I.X, {
+    actions: kind === "party" ? [] : done ? editing ? kind === "team" && !dirSlug ? [{ key: "save", label: "Save", icon: React.createElement(S17I.Check, {
+      size: 14
+    }), onClick: save, primary: true }, { key: "close", label: "Close", xc: true, onClick: close }] : [{ key: "cancel", label: "Cancel", icon: React.createElement(S17I.X, {
       size: 14
     }), onClick: cancel }, { key: "save", label: "Save", icon: React.createElement(S17I.Check, {
       size: 14

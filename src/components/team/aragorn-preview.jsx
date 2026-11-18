@@ -175,7 +175,7 @@ function AragornTabs({ person, opt }) {
   const bookings = (edit) => (<>
     {locSection(edit)}
     {services.length > 0 && <CoverFlow items={services} label="Packages" mem={mem} k="services" half={150} onOpen={() => {}} render={(it) => svcCard(it)} />}
-    {edit
+    {opt === 1 ? null : edit
       ? <section className="ff-pp ff-pp21"><AraHead title="Q&A" /><QuestionCardsCollection /></section>
       : <div className="ara-qawrap">{opt === 1 && <span className="ara-qaPen">{pen("qa", "Q&A")}</span>}{opt === 3 && <span className="ara-qaPen">{plus("qa", "Q&A")}</span>}
           {opt === 3 && adding === "qa" ? <section className="ff-pp ff-pp21"><AraHead title="Q&A" /><QuestionCardsCollection /></section> : <PublicQA person={person} />}</div>}
@@ -235,7 +235,9 @@ function AragornTabs({ person, opt }) {
       <div className="ff-ptabs-wrap">
         <ProfileTabs tabs={tabs} active={tab} onChange={setTab} />
         <div role="tabpanel" id="ff-tabpanel" aria-labelledby={`ff-tab-${tab}`} className={"ff-tabpanel" + (opt === 2 && mode === "edit" ? " ara-editpanel" : "")} tabIndex={0}>
-          {tab === "overview" && (pub ? overviewPublic : overviewEdit)}
+          {tab === "overview" && (opt === 1 ? <><PE2Overview records={records} />{state.profile.introduction
+            ? <div className="ara-introwrap"><span className="ara-introPen">{pen("intro", "FireFlair Introductions")}</span><FireFlairIntroductions17 person={person} /></div>
+            : <FireFlairIntroductions17 person={person} />}</> : pub ? overviewPublic : overviewEdit)}
           {tab === "services" && bookings(editing)}
           {tab === "teams" && team(editing)}
           {tab === "reviews" && reviewsTab(editing)}
