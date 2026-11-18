@@ -2,6 +2,8 @@
 
 ## v17.53
 
+Artifact version 1794968621-773a.
+
 Reviews hidden in FF Admin. Branch merged: `p2-revhide`.
 
 - `records.js` (`reviewRecordsFor`): reviews hidden in FF Admin are left out in the one shared review reader, so every profile, Reviews tab, review card and count skips them; FF Admin's own Reviews list still shows them marked Hidden. Company pages (`network-directory.jsx`) apply the same rule.
