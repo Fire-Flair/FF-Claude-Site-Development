@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.58
+
+Bookings page, Launch Challenge redesign, company pages, Grow with FireFlair pictures. Branches merged: `p2-chal`, `p2-pics`, `p2-bk5`, `p2-copage`.
+
+- FF Team home (`discover-hub.jsx`, `discover-and-support.jsx`, `home-fix22.css`): "What is FF Team?" replaces "Discover FireFlair" (small burgundy eyebrow, no rule; the four pillar boxes get a thin gold outline). Launch Challenge: title above the box; "Grow your team. / Win prizes. / Work with friends."; three equal tiles in the 90 days style (90 days; Top 10, Win rewards, card symbol; Win a trip, Athens Bar Show, plane symbol); countdown below the tiles and above the timeline; timeline reads Launch, 100 Bookings go live, 1,000 Launch party and nationwide marketing campaign. The bookings box is a left-to-right picture flow (Profile Card → Shift Card → "Yes, I'm in" with WhatsApp → Review Card) and the whole box expands when tapped.
+- Bookings page (`bookings.jsx`, `bkd.css`): one title, "Your bookings"; WhatsApp icon inside a larger green box with "When you're selected for a booking, it will be shown here."; "FFParty – Our bar packages", "Be your own boss."; FF Party cards at 5:7 with the FF Party ribbon and no "Coming soon"; "Create your own" always last with Register interest (saved as a Q&A answer); Entertainment and Services preview cards with Register interest; a locations line linking to Work locations; FF Staff redesigned as "FFStaff – Shifts with businesses" with a short explanation, Choose your professions (your own when signed in) and Your preferred hourly rate per profession (empty box, member-set), Save with no terms step; "Build your career" renamed "Grow with FireFlair" with square boxes on mobile.
+- Grow with FireFlair pictures (`photos17.json`, `home-scenes.jsx`, `photo-library/library.json`, 14 new webp files): 14 tiles move from AI images or duplicates to real library photos; the training photo with three women stays; no photo repeats on FF Team.
+- Company pages (`network-directory.jsx`): Vooshka and FF Directory companies use the person-page layout: boxed About, small-caps section headings, theme cards in rails in the company's own colours, Packages/Cocktails/Q&A rails, Review Cards, and a Team tab grouped like the person Team tab.
+
 ## v17.57
 
 Artifact version 1794972321-59f1.
