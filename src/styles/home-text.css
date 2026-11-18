@@ -40,3 +40,17 @@
 .ff .ff-hf22 .ff-tm20-title { margin-top:0 !important; }
 /* four tiles in a row: two-line subtitles, so the photo stops a little higher */
 @media (min-width:1000px) { .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .ph { bottom:80px !important; } }
+
+/* ---------- phones: the champagne boxes get a gradient (Alex, 18 Nov 16:57) ----------
+   Closed: a soft light-to-deep champagne sweep with a faint sheen top left. Open: the same light start, settling into the
+   box's champagne at the bottom edge so the tile and the box below still read as one. */
+@media (max-width:759px) {
+  .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile {
+    background:
+      radial-gradient(120% 90% at 0% 0%, rgba(255,252,244,.75) 0%, rgba(255,252,244,0) 55%),
+      linear-gradient(115deg,#F3EBD3 0%,var(--color-champagne-box,#EAE0C3) 42%,var(--color-champagne-deep,#DCCB9F) 100%) !important; }
+  .ff .ff-hf22.ff-home-c4 .ff-dx.is-open .ff-dx-tile.on {
+    background:
+      radial-gradient(120% 90% at 0% 0%, rgba(255,252,244,.75) 0%, rgba(255,252,244,0) 55%),
+      linear-gradient(180deg,#F1E8CE 0%,var(--color-champagne-box,#EAE0C3) 100%) !important; }
+}
