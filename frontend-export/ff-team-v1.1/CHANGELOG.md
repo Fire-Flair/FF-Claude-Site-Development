@@ -4,6 +4,17 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.63
+
+Profile builder photo and About Me (Alex, 18 Nov 21:16–21:17). `src/components/team/creator-media.jsx` (`PhotoFrame17`, `ffFramePhoto17`), `src/components/team/profile-marks-qa.jsx`, `src/components/team/network.jsx`, `src/components/team/profile-builder.jsx`, `src/components/team/profile-edit-p2.jsx`, `src/styles/prof21.css` (photo-frame).
+
+- Choosing a profile photo (Media box, the Profile Card photo circle, or the "no profile picture yet" prompt) now opens a framing pop-up first: the picture under a circular window the size of the card's circle, dragged to line up, zoomed with the slider, a pinch or the mouse wheel. "Use photo" saves the square around the circle (800px JPEG), so the card shows exactly what was framed; the X or Escape cancels.
+- Media box: the profile photo is a circle (as on the Profile Card); the Page pictures stay squares.
+- About Me moves from above the tabs into the Overview tab, between Professions and Attributes, where it sits on the published profile.
+- Text boxes can no longer be resized by hand (the grow-boxes rule now overrides resize handles too).
+- Checked: `npm run check`, `npm run build`, DEV complete profile at 390: photo picked, dragged, zoomed, used (round tile, no console errors); About Me in Overview signed in and signed out.
+- Published over live 1795036642-f29e (v1.62), index.html only (all other files kept). Artifact version 1795036897-879d. Built page saved as `live-v1.63-index.html`.
+
 ## v1.62
 
 Text boxes (Alex, 18 Nov 21:15). `src/components/shared/primitives.jsx` (grow-boxes), `src/components/team/profile-card-parts.jsx` (FFAI box).
