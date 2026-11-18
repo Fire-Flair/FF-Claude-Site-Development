@@ -23,6 +23,14 @@ Profile builder, "Let's get started" (Alex, 18 Nov 17:06). Published by a three-
   the country code, number and Verify stay on one line. Styles at the end of `src/styles/prof21.css` (v1.27 block).
 - Let's get started has a maximum width of 640px on wide screens, centred, so its boxes no longer stretch across the
   page (`.ff-start17`).
+## v1.26
+
+FF Team home, phones only (Alex, 18 Nov 17:12, from his sketch). `styles/home-text.css`.
+
+- Pillar boxes: the champagne-to-burgundy edge now runs diagonally (burgundy wider at the top right, narrowing to the bottom right), as drawn; the chevron is a solid burgundy button with a champagne outline, so it reads on either side of the edge.
+- "Built for getting you bookings": the same diagonal, larger, in gold, coming in from the bottom right (burgundy into gold #C9A227 into gold leaf #EDD58F). The last label ("Review Card") sits on the gold, so it is burgundy. The champagne top-right glow from v1.25 is gone.
+- Colour check at 360, 390 and 430 px: every pillar word stays on champagne and every bookings label on its own colour (ivory on burgundy, burgundy on gold).
+- Published as a string patch onto the live page (1795022040-46b2, published by another chat after v1.25 without pushing), so its work stays; the merged page is saved as `live-v1.26-index.html`. Artifact version 1795022225-c9ef.
 
 ## v1.25
 
