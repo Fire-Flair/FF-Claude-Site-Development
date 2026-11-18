@@ -93,7 +93,6 @@ function PkgPick17({ edit, multi, value = [], opts, onChange, cols = 3 }) {
 const BNOUN17 = { svc_supplier: ["bar company", "bar companies"], svc_bartending: ["bartender", "bartenders"], svc_mixology: ["cocktail bartender", "cocktail bartenders"], svc_masterclass: ["mixologist", "mixologists"], svc_flair: ["flair bartender", "flair bartenders"], svc_full: ["bar company", "bar companies"], svc_staffing: ["event staff member", "event staff"] };
 
 
-
 /* ---- Classic cocktail menu (launch scroller; the full 52 will live at ffparty.uk/menu) ------------------- */
 /* Simple generated drink pictures until real photos are added: a glass, the liquid, a garnish. */
 function drinkImg17(glass, a) {
@@ -188,7 +187,6 @@ const scaleAmt17 = (i, qty) => { const a = parseFloat(i.amt); if (!a) return "â€
 
 
 const CLASSIC_URL17 = CARD_DOMAIN + "/menu/classics";
-
 
 
 /* A section that opens and closes, headed like Featured people. Closed until opened. */
@@ -290,7 +288,6 @@ function TipRequest17({ ev, attach }) {
 }
 
 
-
 /* The basket on FF Party browse: packages, extras and classic cocktails, kept until the event is made. */
 /* The confirm spin button: the spinning FF coin from the booking pages, used wherever something is confirmed or saved. */
 function ConfirmSpin17({ lines, onClick, disabled, label, done, note }) {
@@ -387,7 +384,6 @@ const BIMG17 = { bar: "px_bar", ent: "dream_music_festivals", svc: "reward_photo
 const BTEXT17 = { bar: "Bar packages", ent: "Music and performers", svc: "Photo and more", food: "Catering" };
 
 
-
 /* The pillar boxes: four tiles and one panel joined by a single outline. The same markup, classes and outline as the homepage pillars. */
 function PillarBox17({ items, open, onPick, label, children }) {
   const [shape, setShape] = useState(null);
@@ -446,58 +442,3 @@ function PillarBox17({ items, open, onPick, label, children }) {
     </section>);
 }
 
-
-function PartyBrowse17() {
-  const { state, dispatch } = useStore();
-  const all = useDirectory();
-  const [q, setQ] = useState(() => state.netQuery || "");
-  useEffect(() => { if (state.netQuery) dispatch({ type: "NET_QUERY", q: "" }); }, []);
-  const br = state.br17 || {};
-  const qual = br.q || "";
-  const [pop, setPop] = useState(null);
-  const cos = companyList(state).filter(c => !c.mine && !c.unclaimed);
-  const feat = TOP_STAFF11.map(id => all.find(p => p.id === id)).filter(Boolean);
-  const bk = bkOf17(state);
-  const pkgs = pkgsOf17(state);
-  const band = br.band || "";
-  const items = [...bk.pk.map(id => { const x = pkgs.find(y => y.id === id); const Ic = x && (PKICON17[x.cat] || S17I.Sparkles); return x && { key: id, label: x.id === "svc_supplier" ? "Supplier" : x.title, icon: <Ic size={20} strokeWidth={1.5} />, rm: () => ({ ...bk, pk: bk.pk.filter(y => y !== id) }) }; }),
-    ...bk.ck.map(id => { const x = ALLCK17.find(y => y.id === id); return x && { key: id, label: x.name, thumb: x.photo, rm: () => ({ ...bk, ck: bk.ck.filter(y => y !== id) }) }; }),
-    ...bk.pp.map(id => { if (id.startsWith("auto:")) return { key: id, label: "Auto match", icon: <Coin size={30} tier="gold" />, rm: () => ({ ...bk, pp: bk.pp.filter(y => y !== id) }) };
-      const x = all.find(y => y.id === id); return x && { key: id, label: firstName(x.name), thumb: x.photo, rm: () => ({ ...bk, pp: bk.pp.filter(y => y !== id) }) }; }),
-    ...bk.ex.map(id => { const x = ALLAX17.find(y => y.id === id); return x && { key: id, label: x.title + (x.sz ? " Â· " + x.sz : ""), icon: <x.Ic size={20} strokeWidth={1.5} />, rm: () => ({ ...bk, ex: bk.ex.filter(y => y !== id) }) }; })].filter(Boolean);
-  const cont = () => {
-    const label = (PARTY_BANDS11.find(b => b.k === band) || {}).guests || "";
-    let ev = state.events.find(e => e.id === state.activeEventId);
-    let evId = ev && ev.id;
-    if (!evId) {
-      evId = uid("evt");
-      dispatch({ type: "EVENT_ADD", event: { id: evId, ...eventData11({ ...eventDraft11(null), band, aud: "", guests: label }), band, audience: "", site: "party", phone: state.bookPhone || "", email: state.bookEmail || "", questionIds: [] } });
-      dispatch({ type: "ACTIVE_EVENT", id: evId });
-    } else if (band && !ev.band) dispatch({ type: "EVENT_PATCH", id: evId, patch: { band, guests: label } });
-    if (qual) dispatch({ type: "EVENT_PATCH", id: evId, patch: { quality: qual } });
-    bk.pk.forEach(id => {
-      const svc = pkgs.find(y => y.id === id); if (!svc) return;
-      const who = all.filter(p => (bk.pp || []).includes(p.id) && signedUp11(p, svc.id === "svc_full" ? "svc_bartending" : svc.id)).map(p => p.id), auto = (bk.pp || []).includes("auto:" + svc.id);
-      const had = state.shifts.find(x => x.eventId === evId && x.svcId === svc.id);
-      if (had) { if (who.length) dispatch({ type: "SHIFT_STAFF", id: had.id, staffIds: [...new Set([...(had.staffIds || []), ...who])] }); return; }
-      dispatch({ type: "SHIFT_ADD", shift: { id: uid("shf"), eventId: evId, staffIds: who, staffId: who[0] || "", skills: [], ...(auto || svc.special ? { route: "auto" } : {}), ...(svc.special ? { special: true } : {}), qty: 1, dress: "", notes: "", tcs: "company", rate: "", total: "", hoursM: "", pay: svc.price || "",
-        role: svc.title, matchRole: svc.role || SVC_ROLE[svc.id] || svc.title, svcId: svc.id, svcPrice: svc.price || "", svcTime: svc.time, svcLevel: svc.level, provider: svc.by || "",
-        time: svcTimeFor(svc, (ev && ev.start) || ""), date: (ev && ev.date) || "", iso: (ev && ev.iso) || "", venue: (ev && ev.venue) || "" } });
-    });
-    const ao = state.addons17 || {}, sel = { ...(ao[evId] || {}) };
-    bk.ck.forEach(id => { if (!sel[id]) sel[id] = 20; });
-    dispatch({ type: "V11_SET", patch: { addons17: { ...ao, [evId]: sel }, xa17: { ...(state.xa17 || {}), [evId]: bk.ex }, bkView: { eventId: evId } } });
-    dispatch({ type: "TAB", tab: "bookings" }); window.scrollTo(0, 0);
-  };
-  useLiveAction17({
-    status: items.length ? "Your basket" : "",
-    chips: items.map(i => ({ key: i.key, label: i.label, thumb: i.thumb, icon: i.icon, onRemove: () => dispatch({ type: "V11_SET", patch: { bk17: i.rm() } }) })),
-    actions: items.length ? [{ key: "go", label: bk.pk.length ? "Continue to your event" : "Add a service to continue", coin: true, disabled: !bk.pk.length, onClick: cont }] : [],
-  }, [JSON.stringify(bk), band, qual, state.activeEventId, state.events.length, state.shifts.length]);
-  return React.createElement("div", { className: "ff-pn ff-br17" },
-    React.createElement(BigHead20, { tag: "h1", title: "Our network" }),
-    React.createElement(FFAI, { query: q, onQuery: setQ, title: "Search for your team", context: "FF Party", purpose: "Find the right people for your event: search by name, profession, skill or area.", placeholder: "Name, profession, skill or area\u2026" }),
-    pop && React.createElement(PkgSheet17, { svc: pop, qual: qual, onClose: function () { setPop(null); } }),
-    state.netBrief && React.createElement(BookingBrief, { brief: state.netBrief }),
-    !state.netBrief && React.createElement(NetBrowse17, { query: q, onPick: function (p) { dispatch({ type: "VIEW", id: p.id }); }, scope: "staff_", after: React.createElement(NetMap11, null) }));
-}

@@ -31,45 +31,6 @@ function LandingHandOver17({ tab }) {
 
 
 
-function ActionSheet({ open, onClose }) {
-  const { state, dispatch } = useStore();
-  if (isPartySite17(state)) return null;
-  const go = (fn) => () => { onClose(); fn(); };
-  const item = (Icon, label, note, onClick) => (
-    <button onClick={onClick} className="ff-frame" style={{ width: "100%", textAlign: "left", padding: 14, marginBottom: 8, display: "flex", gap: 12, alignItems: "center" }}>
-      <span style={{ width: 34, height: 34, borderRadius: "50%", background: "#5C1220", display: "grid", placeItems: "center", flex: "none" }}>
-        <Icon size={16} color="#EAD79C" strokeWidth={1.6} />
-      </span>
-      <span style={{ flex: 1 }}>
-        <span className="ff-display" style={{ fontSize: 14, display: "block" }}>{label}</span>
-        <span className="ff-body ff-muted" style={{ fontSize: 12 }}>{note}</span>
-      </span>
-      <ChevronRight size={16} color="#B0A895" />
-    </button>
-  );
-  return (
-    <Sheet open={open} onClose={onClose} title={state.role === "team" ? "Add to your profile" : "Start a booking"}>
-      {state.role === "team" ? (
-        <>
-          {item(FileText, "Send a CV", "We read it and propose your cards", go(() => { dispatch({ type: "TAB", tab: "profile", route: "home" }); dispatch({ type: "FOCUS", focus: { target: "cv" } }); }))}
-          {item(Plus, "Add information cards", "Professions, skills, interests, qualifications", go(() => { dispatch({ type: "TAB", tab: "profile", route: "home" }); dispatch({ type: "FOCUS", focus: { target: "professions" } }); }))}
-          {item(Users, "Invite people you work with", "They accept before anything connects", go(() => window.dispatchEvent(new Event("ff-invite"))))}
-          {item(ShareUp17, "Share my card", `${CARD_DOMAIN}/${pc17Tag(state.session.tag) || "username"}`, go(() => dispatch({ type: "TOAST", toast: "Link copied" })))}
-        </>
-      ) : (
-        <>
-          {item(Calendar, "Create Event Card", "Date, venue, guests and team size", go(() => dispatch({ type: "TAB", tab: "home", route: "eventNew" })))}
-          {state.activeEventId && item(Clock, "Open your Event Card", "Service Cards, credits and responses", go(() => dispatch({ type: "TAB", tab: "home", route: "eventPage" })))}
-          {item(Search, "Find staff", "Fill your basket from any profile", go(() => dispatch({ type: "TAB", tab: "home", route: "staffHome" })))}
-          {item(Briefcase, state.company && state.company.name ? "Your company profile" : "Create your company profile", "Company Card, T&Cs, documents and hiring questions", go(() => dispatch({ type: "TAB", tab: "profile", route: "staffHome" })))}
-        </>
-      )}
-    </Sheet>
-  );
-}
-
-
-
 const NAV = [
   { key: "home", label: "Home", mark: "home" },
   { key: "network", label: "Network", mark: "network" },
@@ -320,7 +281,6 @@ function LoginSheet({ open, onClose }) {
   const [err, setErr] = useState(null);
   useEffect(() => { if (open) { setMode("otp"); setPw(""); setShowPw(false); setCode(""); setSent(false); setErr(null); setBusy(false); } }, [open]);
   if (!open) return null;
-  if (hireSiteOf(state).party) return <PartyLoginSheet17 onClose={onClose} />;
 
   const clean = AUTH_ADAPTER.cleanTag(user);
   const tagOk = AUTH_ADAPTER.tagOk(clean);
@@ -398,17 +358,10 @@ function LoginSheet({ open, onClose }) {
         <p className="ff-lg21-note">{AUTH_ADAPTER.note}</p>
       </div>
       <button type="button" className="ff-dev17 login" onClick={() => {
-        ["team", "biz", "party"].forEach(k => seedDemo17(state, dispatch, k));
-        dispatch({ type: "V11_SET", patch: { devDone: { team: true, biz: true, party: true } } });
+        seedDemo17(state, dispatch, "team");
+        dispatch({ type: "V11_SET", patch: { devDone: { team: true } } });
         dispatch({ type: "AUTH_SIGNED_IN", tag: "ALEXG", method: "dev" });
         if (!state.role) dispatch({ type: "ROLE", role: "team" });
-        if (state.role === "staff") {
-          const party = state.site === "party";
-          dispatch({ type: "COMPANY_SAVE", company: party
-            ? { name: "Jennifer Aniston", kind: "Host", location: "London", description: "Hosts private dinners, birthdays and garden parties across London.", saved: true, cardSavedAt: Date.now(), finishedAt: Date.now(), joinedAt: Date.now() }
-            : { ...coFromProfile17("vooshka"), phone: "+44 7814 904355", saved: true, cardSavedAt: Date.now(), finishedAt: Date.now(), joinedAt: Date.now() } });
-          dispatch({ type: "COMPANY_SIGNED_IN", slug: party ? "jenniferaniston" : "vooshka" });
-        }
         dispatch({ type: "TOAST", toast: "Complete profile loaded" });
         onClose();
       }}>DEV · complete profile</button>
@@ -421,26 +374,6 @@ function LoginSheet({ open, onClose }) {
         onClose();
         window.scrollTo(0, 0);
       }}>DEV · join from invite</button>
-      <button type="button" className="ff-dev17 login" onClick={() => {
-        /* FireFlair's own staff: the admin site opens on the Claims list. Claims and edits made so far stay. */
-        dispatch({ type: "SIGN_OUT" });
-        dispatch({ type: "AUTH_SIGNED_IN", tag: "ALEXG", method: "dev" });
-        dispatch({ type: "ROLE", role: "staff", site: "staff" });
-        dispatch({ type: "V11_SET", patch: { adminMode17: true, adminOpen17: true, adminSite20: "staff", adminSec17: "claims" } });
-        dispatch({ type: "TOAST", toast: "FireFlair admin loaded" });
-        onClose();
-        window.scrollTo(0, 0);
-      }}>DEV · FireFlair admin</button>
-      <button type="button" className="ff-dev17 login" onClick={() => {
-        /* A visitor on FF Staff looking at a directory company they could claim. */
-        const row = REAL_COMPANIES11.find((c) => c.unclaimed && c.slug !== "vooshka");
-        dispatch({ type: "SIGN_OUT" });
-        dispatch({ type: "ROLE", role: "staff", site: "staff" });
-        dispatch({ type: "VIEW_COMPANY", id: row ? "co_" + row.slug : null });
-        dispatch({ type: "TOAST", toast: "Company to claim loaded" });
-        onClose();
-        window.scrollTo(0, 0);
-      }}>DEV · claim a company</button>
     </Sheet>
   );
 }
@@ -449,46 +382,27 @@ function LoginSheet({ open, onClose }) {
 
 function Shell({ children }) {
   const { state, dispatch } = useStore();
-  const [act, setAct] = useState(false);
   const [xpOpen, setXpOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const [fbOpen, setFbOpen] = useState(false);
   const [notifyOpen, setNotifyOpen] = useState(false);
-  const pend11 = pending11(state);
   useEffect(() => { const h = () => setFbOpen(true); window.addEventListener("ff-feedback", h); return () => window.removeEventListener("ff-feedback", h); }, []);
-  const [acctOpen, setAcctOpen] = useState(false);
   useEffect(() => { const h = () => setLoginOpen(true); window.addEventListener("ff-login", h); return () => window.removeEventListener("ff-login", h); }, []);
   useEffect(() => { const h = () => setShareOpen(true); window.addEventListener("ff-add", h); return () => window.removeEventListener("ff-add", h); }, []);
   /* Anything can open the FF XP pop-up with an "ff-xp" event. */
   useEffect(() => { const h = () => setXpOpen(true); window.addEventListener("ff-xp", h); return () => window.removeEventListener("ff-xp", h); }, []);
   const authed = !!state.auth && state.auth.status === "signedIn";
   const logout = async () => {
-    setMenuOpen(false);
     try { await AUTH_ADAPTER.logout(); } catch (e) { /* signed out locally either way */ }
     dispatch({ type: "SIGN_OUT" });
     window.scrollTo(0, 0);
   };
   const isTeam = state.role === "team";
-  const isStaff = state.role === "staff";
-  const isParty = isStaff && state.site === "party";
-  const partyLocked = isParty;
-  const isVip = state.role === "vip";
-  const goSite = useGoSite();
-  const currentSite = isVip ? "vip" : isParty ? "party" : isStaff ? "staff" : isTeam ? "team" : null;
-  useEffect(() => {
-    if (!menuOpen) return;
-    const h = (e) => { if (e.key === "Escape") setMenuOpen(false); };
-    window.addEventListener("keydown", h);
-    return () => window.removeEventListener("keydown", h);
-  }, [menuOpen]);
   const goTab = (tab) => {
-    if (partyLocked && PARTY_LOCKED_TABS17.includes(tab)) return;
     if (!state.role && tab === "profile") { dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "profile" }); return; }
     if (!state.role) { dispatch({ type: "TAB", tab }); return; }
-    if (isTeam) dispatch({ type: "TAB", tab, route: state.profile.live ? "home" : state.route });
-    else dispatch({ type: "TAB", tab, route: tab === "home" ? "staffHome" : state.route });
+    dispatch({ type: "TAB", tab, route: state.profile.live ? "home" : state.route });
   };
 
   useEffect(() => {
@@ -497,15 +411,6 @@ function Shell({ children }) {
     return () => clearTimeout(t);
   }, [state.toast, dispatch]);
 
-  /* The basket is FireFlair-wide: people can be added from any profile, in
-     either role, and it persists until they're on an Event Card. */
-  /* v16.12: the basket is now the booking bar. It shows when there are
-     people in it, when a hirer has an Event Card, or while a card is being
-     dragged on FF Staff. */
-  const [dragging, setDragging] = useState(false);
-  useEffect(() => { const h = (e) => setDragging(!!e.detail); window.addEventListener("ff-drag", h); return () => window.removeEventListener("ff-drag", h); }, []);
-  const hasEvent = isStaff && !!state.events.find(e => e.id === state.activeEventId);
-  const basket = false && !!state.role && !(isStaff && state.tab === "bookings") && (state.selection.length > 0 || hasEvent || (isStaff && dragging));
   /* Phase 1: no XP bar (PHASE1.xpBar) — the FF coin pop-up is the way into XP. */
   const xpInfo = PHASE1.xpBar && isTeam && state.profile.live ? xpProgress(state.profile.xp) : null;
   /* Desktop: once the page is scrolled down, the XP row under the menu bar
@@ -519,77 +424,24 @@ function Shell({ children }) {
     return () => window.removeEventListener("scroll", on);
   }, []);
   const xpRow = xpInfo && !scrolled;
-  const bottomBarUp = basket || xpInfo;
-  const bothBars = basket && xpInfo;
+  const bottomBarUp = xpInfo;
 
   return (
     <div className="ff-shell">
       <a className="ff-skip" href="#ff-main">Skip to content</a>
       <header className="ff-topbar ff-lattice">
         <div className="ff-topbar-in">
-          {/* Top left, on every FireFlair site: the FireFlair button opens the
-              list of FireFlair sites (and, when signed in, the account items). */}
+          {/* Top left (v1.1): the FF logo and "FF Team". It opens the FF Team home; there is no site list. */}
           <div className="ff-acct">
-            <button type="button" className="ff-acct-btn"
-              aria-haspopup="menu" aria-expanded={menuOpen} aria-label="FireFlair sites and account"
-              onClick={() => setMenuOpen(o => !o)}>
-              <img decoding="async" className="ff-acct-logo" src={FF_SITE_BRAND[isVip ? "vip" : isParty ? "party" : isStaff ? "staff" : "team"].icon} width={30} height={30} alt="" draggable={false} />
-              <span style={{ lineHeight: 1.1, textAlign: "left" }}>
-                <Wordmark size={13} />
-                <span style={{ display: "block", fontSize: 9, letterSpacing: ".2em", color: "rgba(234,215,156,.7)", textTransform: "uppercase" }}>
-                  {isVip ? "VIP" : isParty ? "Party" : isStaff ? "Staff" : "Team"}
-                </span>
-              </span>
-              <span aria-hidden="true" className="ff-acct-caret">
-                <svg width="14" height="9" viewBox="0 0 14 9" style={{ display: "block" }}><path d="M1 1.2h12L7 8.2z" fill="currentColor" /></svg>
-              </span>
+            <button type="button" className="ff-acct-btn" aria-label="FF Team home" onClick={() => goTab("home")}>
+              <img decoding="async" className="ff-acct-logo" src={FF_SITE_BRAND.team.icon} width={30} height={30} alt="" draggable={false} />
+              <span className="ff-display" style={{ fontSize: 15, lineHeight: 1.1, letterSpacing: ".06em", color: "#EAD79C", whiteSpace: "nowrap" }}>FF Team</span>
             </button>
-            {menuOpen && (
-              <>
-                <button type="button" className="ff-acct-scrim" aria-label="Close menu" onClick={() => setMenuOpen(false)} />
-                <div className="ff-acct-menu" role="menu" aria-label="FireFlair sites">
-                  {state.role && (
-                    <div className="ff-acct-who">
-                      <div className="ff-acct-name">{isVip ? (((state.vip21 || {}).card || {}).name || "FF VIP") : isTeam ? (state.profile.name || state.session.tag || "Your profile") : ((state.company && state.company.name) || (isParty ? "FF Party" : "FF Staff"))}</div>
-                      <div className="ff-acct-sub">
-                        {isVip ? "FF VIP" : isTeam ? "FF Team" : isParty ? "FF Party" : "FF Staff"}{isVip ? (state.session.tag ? ` · ${state.session.tag}` : "") : isTeam ? (state.session.tag ? ` · ${state.session.tag}` : "") : (state.company && state.company.slug ? ` · ${CARD_DOMAIN}/${state.company.slug}` : "")}
-                      </div>
-                    </div>
-                  )}
-                  <div className="ff-acct-sect">FireFlair sites</div>
-                  {FF_SITES.filter(s => PHASE1.sitesShown.includes(s.key)).sort((a, b) => { const o = SITE_ORDER17[currentSite || "team"] || SITE_ORDER17.team; return o.indexOf(a.key) - o.indexOf(b.key); })
-                  .map(s => (
-                    <button key={s.key} type="button" role="menuitem" className={`ff-site${s.locked ? " locked" : ""}`} data-href={s.url}
-                      aria-current={currentSite === s.key ? "page" : undefined} aria-disabled={s.locked || undefined}
-                      onClick={() => { setMenuOpen(false); goSite(s.key); }}>
-                      <SiteMark site={s} size={30} />
-                      <span style={{ minWidth: 0 }}>
-                        <span className="ff-site-name">{s.name}</span>
-                        <span className="ff-site-line">{s.line}</span>
-                        {s.domain ? <span className="ff-site-dom">{s.domain}</span> : null}
-                      </span>
-                      {currentSite === s.key ? <span className="ff-site-here">You're here</span>
-                        : s.locked ? <span className="ff-site-soon"><Lock size={10} /> Coming 2027</span>
-                        : <ChevronRight size={15} color="rgba(234,215,156,.7)" />}
-                    </button>
-                  ))}
-                  {authed && state.session.tag && (
-                    <div className="ff-acct-foot">
-                      <button type="button" role="menuitem" className="ff-acct-item" onClick={() => { setMenuOpen(false); setAcctOpen(true); }}>
-                        FF Tag &amp; sign-in
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </>
-            )}
           </div>
           {/* Home, Network, Bookings, Profile — centred in the bar on desktop. */}
           <nav className="ff-desknav" aria-label="Main">
             {/* v1.3: the FF coin sits to the right of Profile. */}
-            {NAV.filter(n => n.key !== "__ff").map(n => partyLocked && PARTY_LOCKED_TABS17.includes(n.key) ? (
-              <button key={n.key} type="button" className="ff-navlocked17" aria-disabled="true" aria-label={`${tabLabel17(n.key, state, n.label)}. ${LOCKED_LABEL17}`} title={LOCKED_LABEL17} onClick={(e) => e.preventDefault()}>{tabLabel17(n.key, state, n.label)}<Lock size={9} className="ff-locked17-ic" aria-hidden="true" /></button>
-            ) : (
+            {NAV.filter(n => n.key !== "__ff").map(n => (
               <button key={n.key} className={state.tab === n.key ? "on" : ""} aria-current={state.tab === n.key ? "page" : undefined} onClick={() => goTab(n.key)}>{tabLabel17(n.key, state, n.label)}</button>
             ))}
             <button key="__ff" type="button" className="ff-topcoin ff-navcoin" style={{ position: "relative" }} onClick={() => setNotifyOpen(true)} aria-label={notifyCount17(state) > 0 ? `Notifications, ${notifyCount17(state)} waiting` : "Notifications"}>
@@ -599,8 +451,8 @@ function Shell({ children }) {
           </nav>
           <div className="ff-topbar-right">
             {PHASE1.desktopAdd && state.role && (
-              <button type="button" className="ff-topadd ff-deskonly" onClick={() => isTeam ? setShareOpen(true) : setAct(true)}
-                aria-label={isTeam ? "Share your FireFlair card" : "Add FireFlair"}>
+              <button type="button" className="ff-topadd ff-deskonly" onClick={() => setShareOpen(true)}
+                aria-label="Share your FireFlair card">
                 Add <AddFireFlairMark size={16} />
               </button>
             )}
@@ -612,7 +464,7 @@ function Shell({ children }) {
         {/* Desktop companion row: XP + booking status, same information as the
             mobile bottom bars, laid out for the header instead of floating
             fixed at the bottom of a wide viewport. */}
-        {(xpRow || basket) && (
+        {xpRow && (
           <div className="ff-topbar-extras">
             {xpRow && (
               <button onClick={() => setXpOpen(true)} style={{ display: "flex", alignItems: "center", gap: 10, flex: 1, minWidth: 0 }} aria-label="Your FireFlair XP">
@@ -626,20 +478,17 @@ function Shell({ children }) {
                 </span>
               </button>
             )}
-            {basket && <BookingBar placement="top" dragging={dragging} />}
           </div>
         )}
         <LiveActionBar17 placement="top" />
       </header>
 
-      <main id="ff-main" tabIndex={-1} className="ff-main" style={{ paddingBottom: bothBars ? 240 : bottomBarUp ? 190 : undefined }}>{children}<Phase1Footer /></main>
-
-      {basket && <BookingBar placement="bottom" dragging={dragging} style={bothBars ? { bottom: "calc(var(--ff-navh, 64px) + 52px)" } : undefined} />}
+      <main id="ff-main" tabIndex={-1} className="ff-main" style={{ paddingBottom: bottomBarUp ? 190 : undefined }}>{children}</main>
 
       {xpInfo && <XPBar info={xpInfo} />}
 
       {state.toast && (
-        <div style={{ position: "fixed", left: 14, right: 14, bottom: bothBars ? 200 : bottomBarUp ? 150 : 90, zIndex: 55, display: "flex", justifyContent: "center" }}>
+        <div style={{ position: "fixed", left: 14, right: 14, bottom: bottomBarUp ? 150 : 90, zIndex: 55, display: "flex", justifyContent: "center" }}>
           <span style={{ background: "#141416", color: "#EAD79C", border: "1px solid var(--gold-dk)", padding: "10px 16px", fontSize: 12, letterSpacing: ".06em", maxWidth: 420, textAlign: "center" }}>{state.toast}</span>
         </div>
       )}
@@ -653,10 +502,6 @@ function Shell({ children }) {
                 <span className="ff-coinwrap20 mob"><style>{NET20_CSS}</style><FFLogo size={56} tier={isTeam ? xpProgress(state.profile.xp).currentTier : "gold"} /><span className={`ff-coinnum20${notifyCount17(state) > 0 ? " on" : ""}${notifyCount17(state) > 9 ? " d2" : ""}`} aria-hidden="true">{notifyCount17(state) > 0 ? Math.min(notifyCount17(state), 99) : ""}</span></span>
               </button>
             </div>
-          ) : partyLocked && PARTY_LOCKED_TABS17.includes(n.key) ? (
-            <button key={n.key} type="button" className="ff-navbtn ff-navlocked17" aria-disabled="true" aria-label={`${tabLabel17(n.key, state, n.label)}. ${LOCKED_LABEL17}`} title={LOCKED_LABEL17} onClick={(e) => e.preventDefault()}>
-              <NavMark shape={n.mark} size={23} tone="#D8D6D0" /><Lock size={9} className="ff-locked17-ic" aria-hidden="true" />
-            </button>
           ) : (
             <button key={n.key} className={`ff-navbtn ${state.tab === n.key ? "on" : ""}`}
               onClick={() => goTab(n.key)} aria-label={tabLabel17(n.key, state, n.label)} aria-current={state.tab === n.key ? "page" : undefined} title={tabLabel17(n.key, state, n.label)}>
@@ -666,15 +511,11 @@ function Shell({ children }) {
         </div>
       </nav>
 
-      <ActionSheet open={act} onClose={() => setAct(false)} />
-      {state.role === "staff" ? <StaffGuideSheet open={xpOpen} onClose={() => setXpOpen(false)} /> : PHASE1.xpBar ? <XPSheet open={xpOpen} onClose={() => setXpOpen(false)} /> : <XPPopup open={xpOpen} onClose={() => setXpOpen(false)} />}
+      {PHASE1.xpBar ? <XPSheet open={xpOpen} onClose={() => setXpOpen(false)} /> : <XPPopup open={xpOpen} onClose={() => setXpOpen(false)} />}
       <NotifySheet17 open={notifyOpen} onClose={() => setNotifyOpen(false)} onNext={() => { setNotifyOpen(false); setXpOpen(true); }} />
       <ShareCardSheet open={shareOpen} onClose={() => setShareOpen(false)} />
       <LoginSheet open={loginOpen} onClose={() => setLoginOpen(false)} />
       <FeedbackSheet open={fbOpen} onClose={() => setFbOpen(false)} />
-      <Sheet open={acctOpen} onClose={() => setAcctOpen(false)} title="FF Tag & sign-in">
-        <AccountSettings />
-      </Sheet>
     </div>
   );
 }

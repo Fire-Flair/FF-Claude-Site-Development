@@ -95,7 +95,6 @@ function TermsRow17() {
 }
 
 
-
 /* Tab names, by site: FF Party is Home, Browse, Book, Party. FF Staff is Home, Our people, Your bookings, Your business. */
 const tabLabel17 = (key, state, dflt) => {
   const staff = state.role === "staff", party = staff && state.site === "party";
@@ -104,7 +103,6 @@ const tabLabel17 = (key, state, dflt) => {
   if (staff) return ({ network: "Our people", bookings: "Your bookings", profile: "Your business" })[key] || dflt;
   return key === "profile" ? "Profile" : dflt;
 };
-
 
 
 /* Training, Dream jobs and FF Rewards cards (FF Team Bookings and FF Staff). The photo is the top half of the card and
@@ -128,7 +126,6 @@ function FlipChoice17({ kind, title, img, pos, note, on, onClick }) {
     </div>
   );
 }
-
 
 
 /* ---- v17.3.37: FireFlair package cards, the size of a featured company card, and the pop-up that books one ---- */
@@ -282,25 +279,6 @@ function PkgSheet17({ svc, qual, onClose }) {
 }
 
 
-
-/* ---- v17.3.57: Confirm your booking. The basket in two layers, the Event Card, the invoice and the confirm spin button. ---- */
-function HostDrop17() {
-  const { state, dispatch } = useStore();
-  const c = state.company || {};
-  const [open, setOpen] = useState(false);
-  const save = () => { dispatch({ type: "COMPANY_SAVE", company: { cardSavedAt: Date.now(), joinedAt: c.joinedAt || Date.now() } }); dispatch({ type: "TOAST", toast: "VIP Host Card saved" }); setOpen(false); };
-  return (
-    <div className="ff-hc17">
-      <button type="button" className="h" aria-expanded={open} onClick={() => setOpen(v => !v)}>
-        <span className="cn"><Coin size={34} tier="gold" /></span>
-        <span className="t"><b>Host info</b><small>We recommend you create a VIP Host Card to share your details.</small></span>
-        <S17I.ChevronDown size={18} className="cv" />
-      </button>
-      {open && <div className="b"><PartyCard11 edit /><ConfirmSpin17 lines={["Save"]} label="Save VIP Host Card" onClick={save} /></div>}
-    </div>);
-}
-
-
 function CbCard17({ icon, thumb, title, onX, sent, gold }) {
   return (
     <div className={`ff-mc has ff-cb17-c${gold ? " tbf" : ""}`} role="listitem">
@@ -355,110 +333,3 @@ function EventHelp21({ d, ev }) {
     </div>);
 }
 
-
-function ConfirmBooking17({ ev, setView, bkey }) {
-  const { state, dispatch } = useStore();
-  const all = useDirectory();
-  const info = flowInfo(state, ev);
-  const shifts = info.shifts;
-  const [d, setD] = useState(() => ({ ...eventDraft11(ev), band: bandOf11(ev), aud: (ev && ev.audience) || "" }));
-  const set = (x) => setD(v => ({ ...v, ...x }));
-  useEffect(() => {
-    const any = d.iso || d.venue.trim() || d.title.trim() || d.kind || d.start || d.band || d.aud;
-    if (!any) return;
-    const t = setTimeout(() => {
-      const ci = cleanIso11(d.iso);
-      const data = { ...eventData11({ ...d, iso: ci.past ? ((ev && ev.iso) || "") : ci.iso }), band: "", audience: "", site: "party" };
-      if (ev) {
-        if (["title", "kind", "iso", "start", "venue", "guests", "band", "audience"].every(k => String(ev[k] || "") === String(data[k] || ""))) return;
-        dispatch({ type: "EVENT_PATCH", id: ev.id, patch: data });
-        shifts.forEach(sh => dispatch({ type: "SHIFT_PATCH", id: sh.id, patch: { iso: data.iso, date: data.date, venue: data.venue, ...(sh.svcId && sh.svcTime ? { time: svcTimeFor({ time: sh.svcTime }, data.start) } : {}) } }));
-      } else {
-        const id = uid("evt");
-        dispatch({ type: "EVENT_ADD", event: { id, ...data, phone: state.bookPhone || "", email: state.bookEmail || "", questionIds: [] } });
-        dispatch({ type: "ACTIVE_EVENT", id });
-        if ((state.req17 || {}).draft) dispatch({ type: "V11_SET", patch: { req17: { ...state.req17, [id]: state.req17.draft } } });
-        setView({ eventId: id, keep: bkey });
-      }
-    }, 350);
-    return () => clearTimeout(t);
-  }, [d]);
-  const pkgs = pkgsOf17(state);
-  const evId = ev ? ev.id : "";
-  const ck = Object.keys(((state.addons17 || {})[evId]) || {}).map(id => ALLCK17.find(y => y.id === id)).filter(Boolean);
-  const xa = (((state.xa17 || {})[evId]) || []).map(id => ALLAX17.find(y => y.id === id)).filter(Boolean);
-  const goBack = () => { dispatch({ type: "TAB", tab: "network" }); window.scrollTo(0, 0); };
-  const drop = (sh) => { dispatch({ type: "SHIFT_DELETE", id: sh.id }); const bk = bkOf17(state); dispatch({ type: "V11_SET", patch: { bk17: { ...bk, pk: bk.pk.filter(x => x !== sh.svcId) } } }); };
-  const dropCk = (id) => { const ao = state.addons17 || {}, cur = { ...(ao[evId] || {}) }; delete cur[id]; dispatch({ type: "V11_SET", patch: { addons17: { ...ao, [evId]: cur } } }); };
-  const dropXa = (id) => { const xs = state.xa17 || {}; dispatch({ type: "V11_SET", patch: { xa17: { ...xs, [evId]: (xs[evId] || []).filter(x => x !== id) } } }); };
-  const dropPerson = (sh, pid) => dispatch({ type: "SHIFT_STAFF", id: sh.id, staffIds: staffOf(sh).filter(x => x !== pid) });
-  const sent = info.sent || (ev && paid17(state, ev.id));
-  const [stripe, setStripe] = useState(false);
-  const [open, setOpen] = useState({ s: true, p: true, e: true, r: true, i: true, f: true });
-  const tg = (k) => setOpen(o => ({ ...o, [k]: !o[k] }));
-  const missing = [];
-  if (!shifts.length) missing.push({ t: "Choose your package first", go: goBack });
-  else if (!shifts.every(staffPlanned)) missing.push({ t: "Choose who delivers it", go: goBack });
-  if (!d.iso || !d.venue.trim()) missing.push({ t: "Add the date and location", go: () => focusSec("ff-cb17-event") });
-  if (!String(contactOf11(state, ev)).trim()) missing.push({ t: "Add your phone number", go: () => { const el = document.getElementById("ff-bill-phone"); if (el) { el.scrollIntoView({ behavior: "smooth", block: "center" }); el.focus(); } } });
-  const nSend = new Set(shifts.flatMap(staffOf)).size + shifts.filter(sh => sh.route === "auto").length;
-  const confirm = () => {
-    if (missing.length) { dispatch({ type: "TOAST", toast: missing[0].t }); missing[0].go(); return; }
-    setStripe(true); /* Stripe pay window; the requests go out only once it reports paid */
-  };
-  const afterPay = () => {
-    setStripe(false);
-    dispatch({ type: "BOOK_SEND", eventId: ev.id, questions: [] });
-    dispatch({ type: "TOAST", toast: `Booking confirmed. Availability requests sent to ${nSend} ${nSend === 1 ? "person" : "people"} on WhatsApp` });
-  };
-  const gev = ev || { id: "draft", ...eventData11({ ...d }), phone: "", email: "", questionIds: [] };
-  const no = "FF-" + (String(gev.id || "").replace(/\D/g, "").slice(-5) || "00001");
-  const today = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-  const box = (k, n, id, title, count, children, cls) => (
-    <div className={`ff-bsec ${cls} ff-cb17-box`} id={id} key={k}>
-      <button type="button" className="ff-bsec-h tap" aria-expanded={open[k]} onClick={() => tg(k)}><span className="n">{n}</span><b>{title}</b>{count ? <em>{count}</em> : null}<span className="dd"><S17I.ChevronDown size={18} className="cv" /></span></button>
-      {open[k] && <div className="ff-cb17-in">{children}</div>}
-    </div>);
-  const sub = (k, Ic, title, children) => (
-    <div className="ff-cb17-sub" key={k}>
-      <button type="button" className="h" aria-expanded={open[k]} onClick={() => tg(k)}><span className="ic"><Ic size={16} strokeWidth={1.8} /></span><b>{title}</b><S17I.ChevronDown size={18} className="cv" /></button>
-      {open[k] && <div className="b">{children}</div>}
-    </div>);
-  const arrow = (j) => <div className={`ff-barrow j${j}`} aria-hidden="true"><S17I.ChevronDown size={20} strokeWidth={2.4} /></div>;
-  const nSvc = shifts.length + ck.length + xa.length, nPeople = new Set(shifts.flatMap(staffOf)).size + shifts.filter(sh => sh.route === "auto").length;
-  const payments = ["Apple Pay", "Google Pay", "Card"];
-  return (
-    <section className="ff-bbox ff-pb ff-cb17" aria-label="Confirm your booking">
-      {box("e", 1, "ff-cb17-event", "Event Card", "", <div className="ff-evwrap"><EventCard11 ev={d} edit onPatch={(x) => set(x)} /></div>, "s3")}
-      <EventHelp21 d={d} ev={ev} />
-      {arrow(1)}
-      {box("s", 2, "ff-cb17-svc", "Services", nSvc ? `${nSvc} chosen` : "", <>
-        <div className="ff-mbasket ff-cb17-bar"><div className="ff-mc-row" role="list" aria-label="Services">
-          {shifts.map(sh => { const svc = pkgs.find(y => y.id === sh.svcId); const Ic = (svc && PKICON17[svc.cat]) || S17I.Sparkles; return <CbCard17 sent={sent} key={sh.id} icon={<Ic size={24} strokeWidth={1.5} />} title={sh.role} gold={!!sh.special} onX={() => drop(sh)} />; })}
-          {ck.map(x => <CbCard17 sent={sent} key={x.id} thumb={x.photo} icon={<S17I.Martini size={24} strokeWidth={1.5} />} title={x.name} onX={() => dropCk(x.id)} />)}
-          {xa.map(x => <CbCard17 sent={sent} key={x.id} icon={<x.Ic size={24} strokeWidth={1.5} />} title={x.title} onX={() => dropXa(x.id)} />)}
-          {!sent && <button type="button" role="listitem" className="ff-mc add" onClick={goBack} aria-label="Add a package"><span className="faces"><span className="empty"><S17I.Plus size={18} strokeWidth={2.4} /></span></span><b>Add</b></button>}
-        </div></div></>, "s1")}
-      {arrow(2)}
-      {box("p", 3, "ff-cb17-people", "People", nPeople ? `${nPeople} chosen` : "", <>
-        <div className="ff-mbasket ff-cb17-bar"><div className="ff-mc-row" role="list" aria-label="People">
-          {shifts.flatMap(sh => [
-            ...staffOf(sh).map(pid => { const p = findPerson(all, state, pid); return p && <CbCard17 sent={sent} key={sh.id + pid} thumb={p.photo} icon={<S17I.Users size={24} />} title={firstName(p.name)} onX={engFor(state, sh.id, pid) ? null : () => dropPerson(sh, pid)} />; }),
-            sh.route === "auto" && <CbCard17 sent={sent} key={sh.id + "auto"} icon={<Coin size={34} tier="gold" />} title={sh.special ? "To be found" : "Auto match"} gold={!!sh.special} onX={sh.special ? undefined : () => dispatch({ type: "SHIFT_PATCH", id: sh.id, patch: { route: "" } })} />,
-          ]).filter(Boolean)}
-          {!sent && <button type="button" role="listitem" className="ff-mc add" onClick={goBack} aria-label="Choose people"><span className="faces"><span className="empty"><S17I.Plus size={18} strokeWidth={2.4} /></span></span><b>Add</b></button>}
-        </div></div></>, "s2")}
-      {arrow(3)}
-      {box("r", 4, "ff-cb17-review", "Review your order", "", sent && ev ? <ConfirmPanel ev={ev} shifts={shifts} missing={missing} onClose={() => {}} /> : <>
-        {sub("i", S17I.FileText, "Invoice and event guide", <EventGuide ev={gev} shifts={shifts} stamp="Preview" />)}
-        {sub("f", S17I.Receipt, "FireFlair invoice", <FFInvoice11 shifts={shifts} no={no} today={today} contact={contactOf11(state, ev)} />)}
-      </>, "s4")}
-      {!sent && <>
-        {arrow(3)}
-        <div className="ff-cb17-cf">
-          <ConfirmSpin17 lines={["Confirm", "booking"]} onClick={confirm} />
-          {stripe && <StripePay17 total={partyDeposit17(state, shifts)} reference={ev ? ev.id : "draft"} onClose={() => setStripe(false)} onPaid={afterPay} />}
-        </div></>}
-      <HostDrop17 />
-    </section>);
-}

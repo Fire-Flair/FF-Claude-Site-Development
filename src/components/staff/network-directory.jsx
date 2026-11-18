@@ -35,7 +35,6 @@ function CompaniesSection({ title = "Companies", note, list: listIn, fold, icon,
 }
 
 
-
 /* Browse under the map: the four pillars sort the people and companies, and the map follows. */
 const NET_CO_TYPES17 = [["bar", "Bar companies"], ["dj", "Entertainment"], ["photo", "Event services"], ["catering", "Caterers"], ["svc", "Bar services"]];
 /* Netmap: muted FireFlair palette tints (black, burgundy, dark gold, burgundy tint, warm grey), no category rainbow. */
@@ -296,7 +295,6 @@ function NetBrowse17(props) {
 }
 
 
-
 /* A company's public Q&A: a search, then Question Cards that open in a pop-up. */
 function CoQA17({ list, name }) {
   const [q, setQ] = useState("");
@@ -545,17 +543,6 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
     dispatch({ type: "TAB", tab: "profile" });
     window.scrollTo(0, 0);
   };
-  /* FireFlair Edit: only in an admin session that may edit. */
-  const A17 = adm17(state), myAdmin = A17.admins.find(x => x.tag === String((state.auth && state.auth.tag) || "").toUpperCase() && x.active);
-  const adminRole = A17.viewAs || (myAdmin ? myAdmin.role : "owner");
-  const canEditDir = !done && !co.mine && isAdmin17(state) && (ADM17_ROLES[adminRole] || ADM17_ROLES.gold).can.includes("edit") && String(co.id).startsWith("co_");
-  const editDir = () => {
-    dispatch({ type: "DIR_EDIT17_START", slug: co.slug });
-    dispatch({ type: "VIEW_COMPANY", id: null });
-    dispatch({ type: "ROLE", role: "staff", site: "staff" });
-    dispatch({ type: "TAB", tab: "profile" });
-    window.scrollTo(0, 0);
-  };
   const tabs = [{ key: "overview", label: "Overview" }, { key: "qa", label: "Packages", count: services.length + cocktails.length }, { key: "team", label: "Team", count: team.length }, { key: "reviews", label: "Reviews", count: reviews.filter(x => !x[4]).length }];
   const cIcon = (k) => /mail/i.test(k) ? I11.Mail : /phone/i.test(k) ? I11.Phone : /web/i.test(k) ? I11.Globe : I11.MessageCircle;
   const addTeam = () => {
@@ -577,7 +564,6 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
     !co.mine && !isParty && ["net", <NetBtn17 id={co.id} name={co.name} wide />],
     !co.unclaimed && !co.mine && ["rev", <Btn variant="wide" onClick={() => setReviewing(true)}><I11.Award size={14} /> Review</Btn>],
     canClaim && ["claim", <Btn variant="wide primary" onClick={claimIt}><I11.BadgeCheck size={14} /> Claim this profile</Btn>],
-    canEditDir && ["edit", <Btn variant="wide" onClick={editDir}><I11.Pencil size={14} /> Edit</Btn>],
     shareBtn && ["share", shareBtn],
   ].filter(Boolean);
   const about = String(co.description || "").split(/\n\s*\n/).map(x => x.trim()).filter(Boolean);
@@ -648,35 +634,6 @@ function CoTiles17({ list, label = "Companies" }) {
     </HScroll>
   );
 }
-
-
-
-/* FF Staff Network (v1.1): search, the people you rebook, Companies, then
-   everyone by profession. */
-function StaffRoster() {
-  const { state } = useStore();
-  return hireSiteOf(state).party ? <PartyBrowse17 /> : <StaffRosterStaff11 />;
-}
-
-
-function StaffRosterStaff11() {
-  const { state, dispatch } = useStore();
-  const all = useDirectory();
-  const [q, setQ] = useState(() => state.netQuery || "");
-  useEffect(() => { if (state.netQuery) dispatch({ type: "NET_QUERY", q: "" }); }, []);
-  return (
-    <div>
-      <BigHead20 tag="h1" title="Explore our network" />
-      <p className="ff-body ff-muted" style={{ marginBottom: 4 }}>Find the people to book, and the companies they work with.</p>
-      {state.netBrief && <BookingBrief brief={state.netBrief} />}
-      <NetBrowse17 query={q} onPick={(p) => dispatch({ type: "VIEW", id: p.id })} scope="staff_" noPackages
-        search={<FFAI query={q} onQuery={setQ} title="Search people, skills or places" context="FF Staff" searchBox
-          purpose="Find people to hire — search by name, profession, skill or area. Tap a card to see their profile."
-          placeholder="Search people, skills or places" />} after={!state.netBrief ? <NetMap11 bare /> : null} teamSlot={myCoKey17(state) ? <CompanyTeam17 /> : null} />
-    </div>
-  );
-}
-
 
 
 /* Network pages (FF Team, FF Staff, FF Party): Top staff, then the map. */

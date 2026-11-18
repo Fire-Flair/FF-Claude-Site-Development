@@ -1,4 +1,5 @@
 /* src/components/staff/network-directory20.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
+/* v1.1 (FF Team only): trimmed to the parts FF Team uses; the FF Staff / FF Party / VIP / admin code that was here is deleted. */
 /* ==========================================================================
    v17.20 — FF Team Network page: the FF Event Directory in sub-category tabs (rule of five) and the Venues section.
 
@@ -10,6 +11,8 @@
    listed services. min: how many different matches are needed. A tab nobody lands in is not shown.
    ========================================================================== */
 const NET20_CSS = __ff_css("styles/net20.css");
+
+
 
 
 const NET_DIR_TABS20 = {
@@ -46,21 +49,17 @@ const NET_DIR_TABS20 = {
 };
 
 
-/* Venues, five tabs by Google type. A venue typed by hand (no type) goes under Event venues. */
-const NET_VEN_TABS20 = [
-  { k: "bars", label: "Cocktail bars", icon: "Martini", types: ["cocktail_bar", "bar", "pub", "wine_bar"] },
-  { k: "hotels", label: "Hotels", icon: "Building2", types: ["hotel", "lodging"] },
-  { k: "food", label: "Restaurants", icon: "UtensilsCrossed", types: ["restaurant", "cafe", "food"] },
-  { k: "events", label: "Event venues", icon: "PartyPopper", types: ["event_venue", "wedding_venue", "banquet_hall"] },
-  { k: "clubs", label: "Clubs & late bars", icon: "Music", types: ["night_club"] },
-];
 
 
 const NET_ICONS20 = {};
+
+
 function netIc20(name, size) {
   const C = NET_ICONS20[name] || (NET_ICONS20[name] = lucideIcon(name));
   return React.createElement(C, { size: size || 15, strokeWidth: 1.8 });
 }
+
+
 
 
 /* Which tab of its category a Directory company is in. */
@@ -79,15 +78,6 @@ function dirTabOf20(c, cat) {
 }
 
 
-function venTabOf20(r) {
-  const p = r && r.place;
-  const list = p ? [p.primaryType].concat(p.types || []).filter(Boolean) : [];
-  for (let i = 0; i < list.length; i++) {
-    const t = NET_VEN_TABS20.find(function (x) { return x.types.includes(list[i]); });
-    if (t) return t.k;
-  }
-  return "events";
-}
 
 
 /* The tab row (17.21): squircle buttons, icon beside the label, one line, scrolls left and right only. */
@@ -100,6 +90,8 @@ function NetTabs20({ tabs, active, onChange, label, count }) {
         count ? React.createElement("span", { className: "ct" }, "(" + count(t) + ")") : null);
     }));
 }
+
+
 
 
 /* A Directory company's tile (the Company Card, then its team). The FF logo on a claimed card already marks it; no Featured tag. */
@@ -118,6 +110,8 @@ function CoTile20({ co }) {
 }
 
 
+
+
 /* One category of the FF Event Directory: a heading with its sub-category tabs, the companies of the open tab across. */
 function DirSection20({ cat, title, list, open }) {
   const d = NET_DIR_TABS20[cat] || NET_DIR_TABS20.bar;
@@ -134,6 +128,8 @@ function DirSection20({ cat, title, list, open }) {
 }
 
 
+
+
 /* The FF Event Directory on the FF Team Network page: no Featured section; a claimed company comes first in its category. */
 function NetDirectory20() {
   const state = useStore().state;
@@ -147,44 +143,6 @@ function NetDirectory20() {
       /* Netmap: a category shows once it has a company, and every Directory box is open by default (Alex's exception). */
       return list.length ? React.createElement(DirSection20, { key: t[0], cat: t[0], title: t[1], list: list, open: true }) : null;
     }));
-}
-
-
-/* Every venue the members listed, once each, with the members who listed it. */
-function netVenues20(state) {
-  const by = {};
-  venueEntries17(state, false).filter(function (x) { return x.by.kind === "person"; }).forEach(function (x) {
-    const k = x.rec.place && x.rec.place.id ? x.rec.place.id : "n:" + String(x.rec.name).trim().toLowerCase();
-    const v = by[k] || (by[k] = { key: k, rec: x.rec, by: [] });
-    if (!v.by.some(function (b) { return b.id === x.by.id; })) v.by.push(x.by);
-  });
-  return Object.values(by).sort(function (a, b) { return a.rec.name.localeCompare(b.rec.name); });
-}
-
-
-function NetVenues20() {
-  const { state, dispatch } = useStore();
-  const all = useDirectory();
-  const list = netVenues20(state);
-  const [tab, setTab] = useState("");
-  const tabs = NET_VEN_TABS20.filter(function (t) { return list.some(function (v) { return venTabOf20(v.rec) === t.k; }); });
-  const cur = tabs.find(function (t) { return t.k === tab; }) || tabs[0];
-  const shown = cur ? list.filter(function (v) { return venTabOf20(v.rec) === cur.k; }) : [];
-  return React.createElement("section", { id: "ff-venues", style: { marginTop: 30, scrollMarginTop: 70 } },
-    React.createElement("style", null, NET20_CSS), React.createElement("style", null, RANK_CSS17),
-    React.createElement(BigHead20, { title: "Venues" }),
-    list.length ? React.createElement(React.Fragment, null,
-      tabs.length > 1 ? React.createElement(NetTabs20, { tabs: tabs, active: cur.k, onChange: setTab, label: "Venue types", count: function (t) { return list.filter(function (v) { return venTabOf20(v.rec) === t.k; }).length; } }) : null,
-      React.createElement(HScroll, { label: cur.label, key: cur.k }, shown.map(function (v) {
-        return React.createElement("div", { key: v.key, className: "ff-vt20" },
-          React.createElement(VenueCard19, { record: v.rec }),
-          React.createElement("span", { className: "lb" }, "Listed by"),
-          React.createElement("span", { className: "by", role: "list", "aria-label": "Listed by" }, v.by.map(function (b) {
-            const p = all.find(function (x) { return x.id === b.id; });
-            return React.createElement("button", { key: b.id, type: "button", role: "listitem", "aria-label": b.name + ": open their profile", onClick: function () { dispatch({ type: "VIEW", id: b.id }); window.scrollTo(0, 0); } },
-              React.createElement(Portrait, { src: p && p.photo, name: b.name, size: 32, tier: p && p.tier }));
-          }))); })))
-      : React.createElement("p", { className: "ff-body ff-muted", style: { margin: 0 } }, "No venues added yet."));
 }
 
 

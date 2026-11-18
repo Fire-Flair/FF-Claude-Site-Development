@@ -179,7 +179,6 @@ function AragornTabs({ person, opt }) {
       ? <section className="ff-pp ff-pp21"><AraHead title="Q&A" /><QuestionCardsCollection /></section>
       : <div className="ara-qawrap">{opt === 1 && <span className="ara-qaPen">{pen("qa", "Q&A")}</span>}{opt === 3 && <span className="ara-qaPen">{plus("qa", "Q&A")}</span>}
           {opt === 3 && adding === "qa" ? <section className="ff-pp ff-pp21"><AraHead title="Q&A" /><QuestionCardsCollection /></section> : <PublicQA person={person} />}</div>}
-    <Creators17 kind="team" by={person.name} />
     <PersonalTerms17 />
   </>);
 

@@ -133,7 +133,6 @@ function MyShareBtn17({ person, onTap, icon }) {
 }
 
 
-
 function PersonProfile() {
   const { state, dispatch } = useStore();
   const all = useDirectory();
@@ -239,8 +238,6 @@ function PersonProfile() {
 }
 
 
-
-
 /* ==========================================================================
    6. FF TEAM
    ========================================================================== */
@@ -289,9 +286,7 @@ function NetworkTile({ person, invited, onClick }) {
 }
 
 
-
 const TAKEN_TAGS = ["SAM42", "ALEX424", "GAVRILAS", "CUARTERO", "SIMAO", "DANYG", "JAMESALL", "ADMIN"];
-
 
 
 function ChipEdit({ values, onChange, placeholder, flags, ink, rule, leadFirst }) {
@@ -315,7 +310,6 @@ function ChipEdit({ values, onChange, placeholder, flags, ink, rule, leadFirst }
     </div>
   );
 }
-
 
 
 /* v17.3.25: text that shrinks to fit (name, profession, tag) and lists that keep only the items that fit. */
@@ -360,7 +354,6 @@ function FitList17({ items, accent }) {
   }, [key]);
   return <span ref={ref} className="ff-pc-fit">{items.map((v, i) => <span key={v + i} className="ff-pc-fi">{i > 0 && <b style={{ color: accent }}>•</b>}{v}</span>)}</span>;
 }
-
 
 
 /* v17.3.77: type a profession straight into the card (as on the live ffteam.uk site):
@@ -595,7 +588,6 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
 }
 
 
-
 /* Consume a FF-sheet focus request: scroll to #ff-sec-<target> and run the
    matching handler (e.g. open the Add sheet). One consumer is mounted at a
    time — whichever Profile screen is showing. */
@@ -614,7 +606,6 @@ function useProfileFocus(handlers, enabled = true) {
     dispatch({ type: "FOCUS", focus: null });
   }, [state.focus, enabled]);
 }
-
 
 
 /* Write the card editor's draft into the real profile records — the one
@@ -640,7 +631,6 @@ function syncCardRecords(state, dispatch, d, cats = ["professions", "skills", "i
     dispatch({ type: "REC_BULK", category: cat, list: [...front, ...rest] });
   });
 }
-
 
 
 function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "", shut = false, insertAfter = "", insert = null, quietEmpty = false }) {
@@ -692,7 +682,6 @@ function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "", 
 }
 
 
-
 /* Ranking categories — a config array, not one component per ranking, so a
    new category is a data entry. Each sorts the SAME directory using data
    that already exists on people; nothing here is invented. */
@@ -701,7 +690,6 @@ const RANKINGS = [
   { key: "reviewed", label: "Most Reviewed", sort: (a, b) => (b.reviews || 0) - (a.reviews || 0) },
   { key: "level", label: "Rising Star", sort: (a, b) => (b.level || 0) - (a.level || 0) },
 ];
-
 
 
 function Rankings() {
@@ -731,7 +719,6 @@ function Rankings() {
     </>
   );
 }
-
 
 
 /* A collapsed drop-down under Your team: Companies, Network. Both count towards the team number. */
@@ -782,7 +769,6 @@ function TeamParts17({ team, companies, network, teamEmpty, renderTeam }) {
 }
 
 
-
 /* NETWORK — the bartending network, for everyone. Signed-out visitors see
    the same people a member does; joining happens on Home and Profile. */
 function NetworkScreen({ guest = false }) {
@@ -813,37 +799,3 @@ function NetworkScreen({ guest = false }) {
   );
 }
 
-
-
-/* --- FF Team: home, bookings, profile ------------------------------------ */
-
-
-
-
-function BookingSheet({ engagement, onClose }) {
-  const { state, dispatch } = useStore();
-  if (!engagement) return null;
-  const shift = state.shifts.find(s2 => s2.id === engagement.shiftId);
-  const event = state.events.find(v => v.id === shift?.eventId);
-  const e = engagement;
-  if (!shift) return null;
-  const act = (st) => { dispatch({ type: "ENG_STATE", id: e.id, state: st }); onClose(); };
-
-  return (
-    <Sheet open onClose={onClose} title={shift.role}>
-      <ShiftDelivery11 e={e} shift={shift} event={event} onDone={onClose} onMore={onClose} />
-      <div style={{ padding: "0 2px 6px" }}>
-        {e.state === "requested" && e.expiresAt && <p className="ff-body ff-muted" style={{ margin: "0 0 8px", fontSize: 12 }}>{timeLeft(e.expiresAt)}</p>}
-        {e.state === "confirmed" && (
-          <div>
-            {e.revised && <ProOffer17 e={e} shift={shift} onDone={onClose} />}
-            <WalletButton kind="booking" wide dark={false} payload={{ shiftId: shift.id, role: shift.role, date: shift.date, venue: shift.venue }} />
-          </div>
-        )}
-        {e.state === "completed" && <Btn variant="primary wide" onClick={() => act("signed_off")}><PenLine size={14} /> Sign off this shift</Btn>}
-        {e.state === "signed_off" && <p className="ff-body ff-muted" style={{ margin: 0 }}>Signed off. The hirer pays you directly, as agreed on the Service Card.</p>}
-        {e.state === "paid" && <p className="ff-body" style={{ margin: 0 }}>This shift is closed.</p>}
-      </div>
-    </Sheet>
-  );
-}

@@ -3,8 +3,12 @@
    ADDRESSES — one router for the pages people can open and share.
 
    The artifact is one file, so the prototype address is a hash route
-   (#/ff-party/sammy). The live sites use real paths (ffparty.uk/sammy).
+   (#/ff-team/sammy). The live site uses real paths (FFTeam.uk/sammy).
    docs/URLS.md lists every address in both forms.
+
+   v1.1: FF Team is the only site. Every #/ff-staff/... and #/ff-party/...
+   address, and the old /fx/, /areas/ and /packages addresses, open the
+   FF Team home and the address is rewritten to #/ff-team.
 
    This module owns:
      rt17Parse(hash)       hash -> route
@@ -15,16 +19,13 @@
                            writes the address when the visible screen changes
 
    Left to their own routers (this one ignores their addresses):
-     #/<site>/areas/...    FdRoute11   (find-directory.jsx)
-     #/ff-party/packages   PkgRoute18  (package-pages.jsx)
      /support/book-a-call  SupportRoute20
-     #/<site>/home/<pillar> DiscoverHub11 (open section on a home page)
+     #/ff-team/home/<pillar> DiscoverHub11 (open section on the home page)
    #/ff-team/info/<slug> is routed here (kind "info", state.infoPage21) and drawn by TeamInfoPage21 (team-pillars.jsx).
    Stories open in the reader (Journal17) and use #/<site>/stories/<slug>
    through rt17Parse and rt17Go.
    ========================================================================== */
-const RT17_SITE_BY_PREFIX = { "ff-party": "party", "ff-team": "team", "ff-staff": "staff" };
-const RT17_PREFIX = { party: "ff-party", team: "ff-team", staff: "ff-staff" };
+const RT17_PREFIX = { team: "ff-team" };
 /* First segments that can never be a tag or a company slug. */
 const RT17_RESERVED = ["network", "browse", "bookings", "book", "profile", "party", "areas", "packages", "stories", "vip", "team", "staff", "admin", "login", "home", "fx", "join", "info"];
 const RT17_TAB_WORD = { browse: "network", network: "network", book: "bookings", bookings: "bookings", party: "profile", profile: "profile" };
@@ -34,7 +35,7 @@ const RT17_SUB_COMPANY = { packages: "qa", team: "team", reviews: "reviews" };
 const RT17_WORD_PERSON = { services: "packages", teams: "team", reviews: "reviews" };
 const RT17_WORD_COMPANY = { qa: "packages", team: "team", reviews: "reviews" };
 
-const RT17_SITE_OF_KIND = (k) => (k === "party" || k === "staff" ? k : "team");
+const RT17_SITE_OF_KIND = () => "team";   /* v1.1: every story opens under FF Team */
 const rt17Reserved = (w) => RT17_RESERVED.includes(String(w || "").toLowerCase());
 
 /* Every company, claimed or in the FF Event Directory, has one stable address word. A Directory entry uses its own slug
@@ -103,16 +104,14 @@ function rt17Parse(hash) {
   if (h === "" || h === "#" || h === "#/") return { kind: "root" };
   const m = /^#\/(ff-party|ff-team|ff-staff)(?:\/(.*))?$/i.exec(h);
   if (!m) return { kind: "foreign" };
-  const site = RT17_SITE_BY_PREFIX[m[1].toLowerCase()];
+  /* v1.1: FF Staff and FF Party addresses open the FF Team home. */
+  if (m[1].toLowerCase() !== "ff-team") return { kind: "home", site: "team" };
+  const site = "team";
   let segs = [];
   try { segs = String(m[2] || "").split("/").filter(Boolean).map(s => decodeURIComponent(s)); } catch (e) { return { kind: "home", site }; }
   if (!segs.length) return { kind: "home", site };
   const s0 = segs[0].toLowerCase(), s1 = (segs[1] || "").toLowerCase();
-  if (s0 === "areas") return { kind: "other", site };
-  if (s0 === "packages") return site === "party" ? { kind: "other", site } : { kind: "home", site };
   if (s0 === "home") return { kind: "pillar", site };
-  /* /fx/<code>: the shift brief. FF Team shows the professional's brief, FF Staff opens the hirer's booking, FF Party is reserved (home for now). */
-  if (s0 === "fx") return site !== "party" && /^[a-z0-9]{4,5}$/i.test(s1) ? { kind: "fx", site, code: s1.toUpperCase() } : { kind: "home", site };
   /* /join/<code>: a team invitation link (FF Team only). The code is checked when it is opened; an unknown one lands on Profile without a banner. */
   if (s0 === "join") return site === "team" ? { kind: "join", site, code: s1.toUpperCase() } : { kind: "home", site };
   /* /info/<slug>: an FF Team pillar or section page (FF Team only). An unknown slug lands on the FF Team home. */
@@ -131,7 +130,6 @@ function rt17Href(r) {
   if (r.kind === "tab") return base + "/" + r.tab;
   if (r.kind === "stories") return base + "/stories/" + r.slug;
   if (r.kind === "info") return base + "/info/" + r.slug;
-  if (r.kind === "fx") return base + "/fx/" + r.code;
   if (r.kind === "join") return base + "/join/" + String(r.code || "").toLowerCase();
   if (r.kind === "person" || r.kind === "company") return base + "/" + r.key + (r.sub ? "/" + r.sub : "");
   return base;
@@ -140,9 +138,7 @@ function rt17Href(r) {
 
 /* ---- state -> address ---------------------------------------------------- */
 function rt17SiteOf(state) {
-  if (state.role === "team") return "team";
-  if (state.role === "staff") return state.site === "party" ? "party" : "staff";
-  return "team";        /* signed-out Home and the guest Network are the FF Team public pages */
+  return "team";        /* v1.1: FF Team is the only site (signed-out Home and the guest Network are its public pages) */
 }
 
 
@@ -165,12 +161,9 @@ function rt17Companies(state) {
 
 /* The address for what is on screen: a hash string, or null when another router owns the screen. */
 function rt17Target(state) {
-  if (state.supportPage20 || state.pkgPage || state.fdArea) return null;
-  if (state.role === "vip") return "";
+  if (state.supportPage20) return null;
   const site = rt17SiteOf(state);
-  if (state.infoPage21 && site === "team") return rt17Href({ kind: "info", site: "team", slug: state.infoPage21.slug });
-  if (state.fxPage17 && site !== "party") return rt17Href({ kind: "fx", site, code: state.fxPage17 });
-  if (site === "staff" && state.fxStaff17 && state.activeEventId === state.fxStaff17.eventId && state.route === "eventPage" && state.tab === "home") return rt17Href({ kind: "fx", site, code: state.fxStaff17.code });
+  if (state.infoPage21) return rt17Href({ kind: "info", site: "team", slug: state.infoPage21.slug });
   if (state.viewingCompany) {
     const co = companyById(state, state.viewingCompany);
     if (!co) return null;
@@ -188,7 +181,6 @@ function rt17Target(state) {
   }
   const tab = state.tab || "home";
   if (!state.role && tab === "home") return "";
-  if (site === "party" && PARTY_LOCKED_TABS17.includes(tab)) return rt17Href({ kind: "home", site });
   if (tab === "network" || tab === "bookings" || tab === "profile") return rt17Href({ kind: "tab", site, tab });
   return rt17Href({ kind: "home", site });
 }
@@ -229,52 +221,33 @@ function rt17Apply(route0, state, dispatch) {
   }
   if (r.kind === "foreign") return null;
   if (r.kind === "root" && state.role) r = { kind: "home", site: rt17SiteOf(state) };
-  if (r.kind === "tab" && r.site === "party" && PARTY_LOCKED_TABS17.includes(r.tab)) r = { kind: "home", site: "party" };
   if (r.kind === "info" && !(typeof V101 !== "undefined" && V101.infoKnown21 && V101.infoKnown21(r.slug))) r = { kind: "home", site: "team" };
   if (r.kind === "stories" && !(typeof V101 !== "undefined" && V101.storyKnown17 && V101.storyKnown17(r.slug))) r = { kind: "home", site: r.site };
   /* A story or an open home section keeps the address it was given; the screen underneath is that site's home. */
   const homeLike = r.kind === "stories" || r.kind === "pillar";
-  const expect = r.kind === "other" ? null : homeLike ? rt17Href({ kind: "home", site: r.site }) : rt17Href(r);
-  if (r.kind !== "other" && r.kind !== "pillar") rt17Replace(rt17Href(r));
-  const away = { infoPage21: null, viewing: null, viewingAsGuest: false, viewingCompany: null, peek: null, ptab17: null, fxPage17: null, fxStaff17: null };
-  if (r.kind === "other") { dispatch({ type: "V11_SET", patch: away }); return null; }
+  const expect = homeLike ? rt17Href({ kind: "home", site: r.site }) : rt17Href(r);
+  if (r.kind !== "pillar") rt17Replace(rt17Href(r));
+  const away = { infoPage21: null, viewing: null, viewingAsGuest: false, viewingCompany: null, peek: null, ptab17: null };
   if (r.kind === "root") {
-    dispatch({ type: "V11_SET", patch: { ...away, fdArea: null, pkgPage: null, supportPage20: null } });
+    dispatch({ type: "V11_SET", patch: { ...away, supportPage20: null } });
     return null;
   }
   /* Signed out, the start page is already the FF Team home: switching role would remount it and close the open section. */
   if (r.kind === "pillar" && !state.role && r.site === "team") { if (state.infoPage21) dispatch({ type: "V11_SET", patch: { infoPage21: null } }); return null; }
-  const here = state.role === "vip" ? "" : state.role ? rt17SiteOf(state) : "";
-  if (here !== r.site && !(r.kind === "info" && !state.role)) {
-    if (!p1SiteOpen(r.site)) return null;
-    dispatch(r.site === "team" ? { type: "ROLE", role: "team" } : { type: "ROLE", role: "staff", site: r.site });
-  }
-  const clear = { ...away, fdArea: null, fdPreview: false, pkgPage: null, supportPage20: null };
+  const here = state.role ? rt17SiteOf(state) : "";
+  if (here !== r.site && !(r.kind === "info" && !state.role)) dispatch({ type: "ROLE", role: "team" });
+  const clear = { ...away, supportPage20: null };
   if (r.kind === "info") {
     dispatch({ type: "V11_SET", patch: { ...clear, infoPage21: { slug: r.slug } } });
-  } else if (r.kind === "fx") {
-    const hit = fxFind17(state, r.code);
-    if (r.site === "staff" && hit) {
-      /* FF Staff: the hirer's booking for that event. */
-      dispatch({ type: "V11_SET", patch: { ...clear, fxStaff17: { code: r.code, eventId: hit.event.id }, activeEventId: hit.event.id } });
-      dispatch({ type: "TAB", tab: "home", route: "eventPage" });
-      /* TAB clears the marker; set it again once the booking is open. */
-      dispatch({ type: "V11_SET", patch: { fxStaff17: { code: r.code, eventId: hit.event.id } } });
-    } else if (r.site === "staff") {
-      dispatch({ type: "V11_SET", patch: clear });
-    } else {
-      dispatch({ type: "V11_SET", patch: { ...clear, fxPage17: r.code } });
-    }
   } else if (r.kind === "person") {
     dispatch({ type: "V11_SET", patch: { ...clear, viewing: r.id, viewingAsGuest: r.id === "me", ptab17: r.sub ? { key: "p:" + r.id, tab: RT17_SUB_PERSON[r.sub] } : null } });
   } else if (r.kind === "company") {
     dispatch({ type: "V11_SET", patch: { ...clear, viewingCompany: r.id, ptab17: r.sub ? { key: "c:" + r.id, tab: RT17_SUB_COMPANY[r.sub] } : null } });
   } else {
     const tab = r.kind === "tab" ? r.tab : "home";
-    const isTeam = r.site === "team";
     dispatch({ type: "V11_SET", patch: clear });
     if (here !== r.site || (state.tab || "home") !== tab)
-      dispatch({ type: "TAB", tab, route: isTeam ? (state.profile && state.profile.live ? "home" : undefined) : (tab === "home" ? "staffHome" : undefined) });
+      dispatch({ type: "TAB", tab, route: state.profile && state.profile.live ? "home" : undefined });
   }
   return expect;
 }
@@ -313,15 +286,10 @@ function Routes17() {
     window.addEventListener("popstate", pop);
     return () => window.removeEventListener("popstate", pop);
   }, []);
-  /* Someone who tapped Available on a brief without a profile comes back to it once signed in (the code was carried through Join). */
-  const fxBack = state.session && state.session.fxReturn17, fxIn = !!(state.auth && state.auth.status === "signedIn");
-  useEffect(() => {
-    if (fxBack && fxIn) { dispatch({ type: "SESSION", patch: { fxReturn17: null } }); openBrief17(dispatch, fxBack); }
-  }, [fxBack, fxIn]);
-  /* 2. Opening a profile or company from an area, package or support page closes that page. */
+  /* 2. Opening a profile or company from the support page closes that page. */
   const s = state;
   useEffect(() => {
-    if ((s.viewing || s.viewingCompany) && (s.fdArea || s.pkgPage || s.supportPage20)) dispatch({ type: "V11_SET", patch: { fdArea: null, fdPreview: false, pkgPage: null, supportPage20: null } });
+    if ((s.viewing || s.viewingCompany) && s.supportPage20) dispatch({ type: "V11_SET", patch: { supportPage20: null } });
   }, [s.viewing, s.viewingCompany]);
   useEffect(() => {
     if (!s.viewing && !s.viewingCompany && s.ptab17) dispatch({ type: "V11_SET", patch: { ptab17: null } });

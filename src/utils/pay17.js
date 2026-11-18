@@ -1,4 +1,5 @@
 /* src/utils/pay17.js — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
+/* v1.1 (FF Team only): trimmed to the parts FF Team uses; the FF Staff / FF Party / VIP / admin code that was here is deleted. */
 /* ==========================================================================
    PAY AND DURATION (v17.4.6) — one calculation for every Shift Card.
    Money is whole pence, time is whole minutes. Nothing here invents an
@@ -81,10 +82,6 @@ function payOf17(sh) {
 
 /* £22, £22.50 */
 const gbp17 = (p) => p == null || !isFinite(p) ? "" : `£${(p / 100).toFixed(p % 100 === 0 ? 0 : 2)}`;
-
-
-/* 4 hrs, 4 hrs 30 min */
-const minsText17 = (m) => { if (!m) return ""; const h = Math.floor(m / 60), r = m % 60; return `${h ? `${h} hr${h === 1 ? "" : "s"}` : ""}${h && r ? " " : ""}${r ? `${r} min` : ""}`; };
 
 
 /* ==========================================================================

@@ -1,4 +1,5 @@
 /* src/components/shared/venues17.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
+/* v1.1 (FF Team only): trimmed to the parts FF Team uses; the FF Staff / FF Party / VIP / admin code that was here is deleted. */
 /* ==========================================================================
    VENUES (v17.14) — the places someone has worked, picked from Google's business search.
 
@@ -143,10 +144,6 @@ function publicVenues17(state) {
 }
 
 
-/* Venues at or under an area page's place. */
-const venuesIn17 = (state, node) => publicVenues17(state).filter(v => fdUnder(FD_BY_ID[v.rec.area.id], node.id));
-
-
 /* FF Admin: everything FireFlair still has to place. In production this is a server-side queue; the prototype keeps
    what was waiting when someone signs out (state.venueReview17, like claims), so FF Admin can still show it. */
 const venueReviewSlim17 = (x) => ({ rec: { id: x.rec.id, name: x.rec.name, address: x.rec.address || "", place: x.rec.place ? { id: x.rec.place.id } : null, review: !!x.rec.review }, by: x.by });
@@ -221,60 +218,5 @@ function VenueSearch17({ value, onPick, autoFocus, label, placeholder }) {
         </ul>
       )}
     </div>
-  );
-}
-
-
-/* ---- Editing: one search box, then the venue cards ----------------------------------------------------- */
-/* A venue is added by typing its name and picking it. Nothing else is asked for. */
-function VenuesEditor17({ items, onOpen }) {
-  const { dispatch } = useStore();
-  const [key, setKey] = useState(0);
-  const same = (r, p) => (r.place && p.place && r.place.id === p.place.id) || String(r.name).toLowerCase() === String(p.name).toLowerCase();
-  const add = (p) => {
-    if (!p || !p.name) return;
-    if (items.some(r => same(r, p))) { dispatch({ type: "TOAST", toast: `${p.name} is already on your profile` }); setKey(k => k + 1); return; }
-    dispatch({ type: "REC_ADD", category: "venues", record: makeRecord("venues", p.name, p) });
-    dispatch({ type: "TOAST", toast: `${p.name} added` });
-    setKey(k => k + 1);
-  };
-  return (
-    <div className="ff-venedit17">
-      <style>{VEN_CSS17}</style>
-      <p className="ff-venedit17-line">Add the top venues you've worked at, or your favourite bars.</p>
-      <VenueSearch17 key={key} label="Search for a venue" placeholder="Search for a venue" onPick={add} />
-      {items.length > 0 && (
-        <div className="ff-venedit17-cards">
-          {items.map(r => <VenueLandscapeCard key={r.id} record={r} onClick={onOpen ? () => onOpen(r) : undefined} onRemove={() => dispatch({ type: "REC_DELETE", category: "venues", id: r.id })} />)}
-        </div>
-      )}
-    </div>
-  );
-}
-
-
-/* ---- Area pages: the venues in this place ------------------------------------------------------------ */
-function AreaVenues17({ node }) {
-  const { state, dispatch } = useStore();
-  const list = useMemo(() => venuesIn17(state, node), [state.profile, state.company, node.id]);
-  if (!list.length) return null;
-  const openBy = (b) => dispatch(b.kind === "company" ? { type: "VIEW_COMPANY", id: b.id } : { type: "VIEW", id: b.id });
-  return (
-    <section id="ff-fd-venues" aria-labelledby="fd-ven-h" style={{ marginTop: 26, scrollMarginTop: 70 }}>
-      <style>{VEN_CSS17}</style>
-      <h2 id="fd-ven-h" className="ff-h2">Venues in {fdLabel(node)}</h2>
-      <HScroll label={`Venues in ${fdLabel(node)}`} snap>
-        {list.map(v => (
-          <div key={v.key} className="ff-ven17-tile">
-            <a href={venueMapsUrl17(v.rec)} target="_blank" rel="noopener noreferrer" aria-label={`${v.rec.name}, ${v.rec.address}: view on Google Maps`}>
-              <VenueLandscapeCard record={v.rec} noLink />
-            </a>
-            <p className="ff-ven17-who">{v.by.map(b => (
-              <button key={b.kind + b.id} type="button" onClick={() => openBy(b)}>{b.kind === "company" ? <Building2 size={12} /> : <User size={12} />} {b.name}</button>
-            ))}</p>
-          </div>
-        ))}
-      </HScroll>
-    </section>
   );
 }

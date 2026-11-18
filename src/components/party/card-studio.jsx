@@ -1,4 +1,5 @@
 /* src/components/party/card-studio.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
+/* v1.1 (FF Team only): trimmed to the parts FF Team uses; the FF Staff / FF Party / VIP / admin code that was here is deleted. */
 /* ==== v17.3.7 The completed profile, and the card studio ===================================
    After someone has made their profile, the Profile tab shows it the way other people see it,
    with the things they keep adding underneath: Cocktail Cards, Service Cards and Blog posts.
@@ -21,9 +22,6 @@ const S17I = {
 
 
 const img17 = (k) => (window.FF_IMG || {})[k] || (typeof IMGS !== "undefined" && IMGS[k]) || "";
-
-
-const today17 = () => new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
 
 
 
@@ -505,26 +503,6 @@ const TERMS17 = [
 const termsFor17 = (s, shared) => { const base = { ...Object.fromEntries(TERMS17.map(t => [t.k, t.text])), ...(shared || {}) }; return s.ownTerms ? { ...base, ...(s.terms || {}) } : base; };
 
 
-function TermsBox17({ s, set }) {
-  const { state, dispatch } = useStore();
-  const [open, setOpen] = useState(false);
-  const own = !!s.ownTerms;
-  const cur = termsFor17(s, state.svcTerms17);
-  const put = (k, v) => own ? set({ terms: { ...cur, [k]: v } }) : dispatch({ type: "V11_SET", patch: { svcTerms17: { ...Object.fromEntries(TERMS17.map(t => [t.k, cur[t.k]])), [k]: v } } });
-  return (
-    <div className="ff-tc17">
-      <button type="button" className="hd" aria-expanded={open} onClick={() => setOpen(o => !o)}><S17I.Layers size={15} /><span>Define your terms and conditions</span><S17I.ChevronDown size={16} className={open ? "up" : ""} /></button>
-      {open && <div className="bd">
-        <div className="ff-c17-tabs" role="tablist" aria-label="Which cards these terms are for">
-          {[[false, "All my service cards"], [true, "This card only"]].map(([v, l]) => <button key={l} type="button" role="tab" aria-selected={own === v} className={own === v ? "on" : ""} onClick={() => set(v ? { ownTerms: true, terms: s.terms && Object.keys(s.terms).length ? s.terms : cur } : { ownTerms: false })}>{l}</button>)}
-        </div>
-        {TERMS17.map(t => <label key={t.k} className="tc"><small>{t.label}</small><Grow17 value={cur[t.k]} onChange={(v) => put(t.k, v)} max={500} label={t.label} rows={2} /></label>)}
-      </div>}
-    </div>
-  );
-}
-
-
 function ServiceBack17({ s, edit, set }) {
   const { state } = useStore();
   const terms = termsFor17(s, state.svcTerms17);
@@ -598,174 +576,9 @@ function CardPop17({ type, x, site, by, tag, onClose }) {
 }
 
 
-/* v17.4.6: one studio per card type. The editor sits inline and is open from the start (a fresh card
-   when there is none), with one plus card for a new entry; Classic or Signature is chosen inside the card.
-   FF Team (profile): entries live in profile.content and Save goes through PROFILE_ADAPTER.saveContent;
-   saving is the only publication step. FF Staff (company): the company lists, as before. */
-function Studio17({ type, site, by, tag, k: listKey, seed, profile }) {
-  const { state, dispatch } = useStore();
-  const T = STUDIO17[type];
-  const sk = listKey || T.key;
-  const kind = PC17_KINDS[type];
-  const list = profile ? myContent17(state, kind) : (state[sk] || seed || []);
-  const [draft, setDraft] = useState(() => (list.length ? null : T.make()));
-  const [busy, setBusy] = useState(false);
-  const [err, setErr] = useState("");
-  const isNew = draft && !list.some(x => x.id === draft.id);
-  const account = qaAccount17(state) || state.session.tag || "";
-  const commit = async (entry, remove) => {
-    if (!profile) {
-      dispatch({ type: "V11_SET", patch: { [sk]: remove ? list.filter(x => x.id !== entry.id) : isNew ? [entry, ...list] : list.map(x => x.id === entry.id ? entry : x) } });
-      return true;
-    }
-    const cur = pcOf17(state.profile);
-    setBusy(true); setErr("");
-    const r = await PROFILE_ADAPTER.saveContent(account, { ...pcWith17(cur, kind, entry, remove), owner: account });
-    setBusy(false);
-    if (!r.ok) { setErr(r.reason === "not-owner" ? "Sign in to save." : r.reason === "name-required" ? "Add a name first." : r.reason === "bad-image" ? "That photo can't be used." : r.reason === "too-many" ? "You've reached the limit for these cards." : "That couldn't be saved."); return false; }
-    dispatch({ type: "PC_SAVE", content: r.content });
-    return true;
-  };
-  const done = async () => {
-    if (!draft || !T.ok(draft) || busy) return;
-    if (await commit(draft, false)) { dispatch({ type: "TOAST", toast: `${T.plateOf ? T.plateOf(draft) : T.plate} saved` }); setDraft(null); }
-  };
-  const remove = async () => { if (busy) return; if (await commit(draft, true)) setDraft(null); };
-  const edRef = useRef(null);
-  const open = (x) => { setErr(""); setDraft(JSON.parse(JSON.stringify(x))); setTimeout(() => { if (edRef.current) edRef.current.scrollIntoView({ behavior: "smooth", block: "start" }); }, 60); };
-  const addr = (x) => `${CARD_DOMAIN}/${pc17Tag(tag) || "yourtag"}/${PATH17[type]}/${slug17(T.name(x)) || "your-card"}`;
-  return (
-    <div className="ff-st17">
-      {draft ? (
-        <div className="ff-st17-ed" ref={edRef}>
-          <StudioPair17 key={draft.id} type={type} x={draft} edit set={(p) => setDraft(d => ({ ...d, ...p }))} site={site} by={by} tag={tag} />
-          <div className="ff-c17-addr"><S17I.Link2 size={13} /><span>{addr(draft)}</span></div>
-          {type === "service" && <TermsBox17 s={draft} set={(p) => setDraft(d => ({ ...d, ...p }))} />}
-          {err && <p className="ff-st17-err" role="alert">{err}</p>}
-          <div className="acts">
-            <Btn variant="primary" onClick={done} disabled={!T.ok(draft) || busy}><S17I.Check size={14} /> {busy ? "Saving…" : "Save"}</Btn>
-            {(list.length > 0 || !isNew) && <Btn variant="ghost" onClick={() => { setErr(""); setDraft(null); }}>Cancel</Btn>}
-            {!isNew && <button type="button" className="del" onClick={remove} disabled={busy}><S17I.Trash2 size={14} /> Delete</button>}
-          </div>
-        </div>
-      ) : null}
-      {(list.length > 0 || !draft) && (
-        <HScroll label={T.title}>
-          {list.map(x => (
-            <div className="ff-st17-item" key={x.id}>
-              <div className="ff-st17-tap" role="button" tabIndex={0} aria-label={`Edit ${T.name(x) || (T.plateOf ? T.plateOf(x) : T.plate)}`} onClick={() => open(x)} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(x); } }}>
-                <StudioPair17 type={type} x={x} site={site} by={by} tag={tag} size="sm" only />
-              </div>
-              <span className="ff-c17-addr"><S17I.Link2 size={12} /><span>{addr(x)}</span></span>
-            </div>))}
-          <div className="ff-st17-item"><button type="button" className="ff-st17-plus" aria-label={T.add} onClick={() => open(T.make())}><S17I.Plus size={34} strokeWidth={1.5} /></button></div>
-        </HScroll>
-      )}
-    </div>
-  );
-}
-
-
-/* Phase 2: the card builders work and save, but are marked Coming soon: a very small lock beside the section title. */
-function SoonTitle17({ children }) {
-  return <span className="ff-soon17-t">{children}<span className="ff-soon17"><Lock size={9} aria-hidden="true" /> {LOCKED_LABEL17}</span></span>;
-}
-
-
-function Sec17({ icon, title, count, children, id, first }) {
-  /* v17.18: every collapsible box starts collapsed. */
-  const [open, setOpen] = useState(false);
-  return <StaffBox id={id} icon={icon} title={title} count={count} open={open} onToggle={() => setOpen(o => !o)}>{children}</StaffBox>;
-}
-
-
-const BULK17 = {
-  cocktail: { label: "Cocktail menu", icon: S17I.Martini, ph: "Upload a menu photo, or paste your drinks" },
-  service: { label: "Service packages", icon: S17I.Sparkles, ph: "Upload your packages, or describe them" },
-};
-
-
-/* FireFlair makes many cards at once. Coming 2027: it needs the back end. */
-function BulkAI17() {
-  const [k, setK] = useState("cocktail");
-  const T = BULK17[k];
-  return (
-    <div className="ff-bulk17" role="group" aria-label="Many cards at once">
-      <div className="top"><span className="tag" aria-hidden="true"><Coin size={20} tier="gold" /></span><em>Coming{" "}soon</em></div>
-      <div className="kinds" role="tablist" aria-label="What to create">
-        {Object.entries(BULK17).map(([key, v]) => <button key={key} type="button" role="tab" aria-selected={k === key} className={k === key ? "on" : ""} onClick={() => setK(key)}><v.icon size={14} /> {v.label}</button>)}
-      </div>
-      <div className="row"><input disabled placeholder={T.ph} aria-label={T.ph} /><button type="button" disabled aria-label="Upload a photo or file"><S17I.Camera size={16} /></button></div>
-    </div>
-  );
-}
-
-
-function Creators17({ kind, by: byIn }) {
-  const { state } = useStore();
-  const team = kind === "team";
-  const site = team ? "FF Team" : "FF Staff";
-  const by = byIn || (team ? (String(state.profile.name || "").trim() || "You") : (String((state.company || {}).name || "").trim() || "You"));
-  const demoCo = !team && !(state.company || {}).slug && !String((state.company || {}).name || "").trim() ? COMPANY_PAGES.co_vooshka : null;
-  const tag = team ? (state.auth.tag || state.session.tag || "yourtag") : ((state.company || {}).slug || (demoCo && demoCo.slug) || "yourbusiness");
-  const bizKeys = team ? {} : { cocktail: "coCocktails17", service: "coServices17" };
-  const seeds = team ? {} : coSeeds17(state);
-  const types = ["cocktail", "service"];
-  const count = (t) => team ? myContent17(state, PC17_KINDS[t]).length : (state[bizKeys[t] || STUDIO17[t].key] || seeds[t] || []).length;
-  return (
-    <section className="ff-cr17" aria-labelledby="ff-cr17-h">
-      <h2 id="ff-cr17-h" className="ff-done17-h">Build your packages</h2>
-      {types.map((t, i) => { const T = STUDIO17[t]; return (
-        <Sec17 key={t} first={i === 0} id={`ff-cr17-${t}`} icon={T.icon} title={<SoonTitle17>{t === "cocktail" ? "Signature cocktails" : T.title}</SoonTitle17>} count={count(t)}><Studio17 type={t} site={site} by={by} tag={tag} k={bizKeys[t]} seed={seeds[t]} profile={team} /></Sec17>); })}
-    </section>
-  );
-}
-
-
 
 /* The Packages tab on a profile: the Q&A. In Phase 2 what a person saves in the card builders (Signature cocktails, Service Cards)
    is kept on their profile editor only and is not shown on any public view. */
 function PkgExtras17({ person }) {
   return <PublicQA person={person} />;
-}
-
-
-
-/* ---- FF Party: favourite cocktails, shown as cards ------------------------------------------------- */
-function FavCocktails17({ demo }) {
-  const { state, dispatch } = useStore();
-  const all = useDirectory();
-  const own = state.favCocktails || [];
-  const demoIds = !own.length && demo ? String(demo).split(/[·,]/).map(n => n.trim().toLowerCase()).map(n => (CLASSICS.find(c => c.name.toLowerCase() === n) || {}).id).filter(Boolean) : [];
-  const ids = own.concat(demoIds);
-  const [pick, setPick] = useState(false);
-  const [q, setQ] = useState("");
-  const [detail, setDetail] = useState(null);
-  const toggle = (id) => dispatch({ type: "V11_SET", patch: { favCocktails: own.includes(id) ? own.filter(x => x !== id) : [...own, id] } });
-  const items = ids.map(id => cocktailById(state, id, all)).filter(Boolean);
-  const pool = [...CLASSICS, ...allSignatures(state, all)].filter(x => !q.trim() || `${x.name} ${x.base || ""}`.toLowerCase().includes(q.trim().toLowerCase()));
-  return (
-    <div className="ff-fav17">
-      {items.length > 0 && (
-        <HScroll label="Favourite cocktails">
-          {items.map(x => x.suit
-            ? <CocktailPlayingCard key={x.id} c={x} on={false} onOpen={() => setDetail(x)} />
-            : <SignatureCocktailCard key={x.id} s={x} on={false} onOpen={() => setDetail(x)} />)}
-        </HScroll>)}
-      <button type="button" className="ff-st17-new" onClick={() => setPick(true)}><S17I.Heart size={15} /> {items.length ? "Change favourites" : "Choose your favourite cocktails"}</button>
-      <Sheet open={pick} onClose={() => setPick(false)} title="Favourite cocktails" center>
-        <div className="ff-fav17-pick">
-          <label className="srch"><S17I.Search size={14} /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search cocktails" aria-label="Search cocktails" /></label>
-          <ul>
-            {pool.map(x => { const on = ids.includes(x.id); return (
-              <li key={x.id}><button type="button" className={on ? "on" : ""} aria-pressed={on} onClick={() => toggle(x.id)}>
-                <GlassIcon glass={x.glass} size={22} /><span><b>{x.name}</b><small>{x.base || (x.creator ? `By ${x.creator.name}` : "")}</small></span>
-                <S17I.Heart size={17} fill={on ? "currentColor" : "none"} />
-              </button></li>); })}
-          </ul>
-        </div>
-      </Sheet>
-      <CocktailDetailSheet item={detail} on={false} onClose={() => setDetail(null)} />
-    </div>
-  );
 }

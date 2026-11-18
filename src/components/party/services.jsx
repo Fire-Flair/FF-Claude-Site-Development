@@ -1,4 +1,5 @@
 /* src/components/party/services.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
+/* v1.1 (FF Team only): trimmed to the parts FF Team uses; the FF Staff / FF Party / VIP / admin code that was here is deleted. */
 /* --- Service Cards (v16.13) --------------------------------------------------
    FireFlair's standard Service Cards carry from prices (Alex's figures). The
    Staffing Service is FF Staff's, and stays white. FireFlair users, both
@@ -161,33 +162,3 @@ const DREAM_JOBS = [
 
 
 function JobsSection() { return <InterestSection kind="jobs" />; }
-
-
-
-/* --- Review Cards (v16.14: "Verified by your community") -------------------
-   Review any bartender you've worked with, or one you'd like to work with.
-   The card goes to them on WhatsApp; nothing shows until they accept. Same
-   questions as the Add to team sheet (v16.11). */
-function ReviewCardSample({ from, to, worked, how, text, status, done }) {
-  const first = (p) => String(p.name || "").split(" ")[0];
-  return (
-    <article className="ff-rvcard" aria-label={`Example Review Card from ${from.name} to ${to.name}`}>
-      <div className="ff-rvcard-ribbon"><Star size={11} fill="currentColor" /> Review Card</div>
-      <span className="ff-rvcard-coin"><FFLogo size={34} tier="gold" /></span>
-      <div className="ff-rvcard-who">
-        <span className="p"><Portrait src={from.photo} name={from.name} size={54} tier={from.tier} /><b>{first(from)}</b><small>{from.profession}</small></span>
-        <span className="arrow" aria-hidden="true"><ArrowRight size={18} /></span>
-        <span className="p"><Portrait src={to.photo} name={to.name} size={54} tier={to.tier} /><b>{first(to)}</b><small>{to.profession}</small></span>
-      </div>
-      <div className="ff-rvcard-kind">{worked ? "Worked together" : "Would love to work together"}</div>
-      {worked && <div className="ff-rvcard-stars" aria-label="Five out of five">★★★★★</div>}
-      <div className="ff-rvcard-rows">
-        <div><span>Worked with {first(to)} before?</span><b className={worked ? "yes" : "soon"}>{worked ? "Yes" : "Not yet"}</b></div>
-        <div><span>{worked ? "Work together again?" : `Want to work with ${first(to)}?`}</span><b className="yes">Yes</b></div>
-        {how && <div><span>How is {first(to)} to work with?</span><b className="yes">{how}</b></div>}
-      </div>
-      <p className="ff-rvcard-quote">“{text}”</p>
-      <div className={`ff-rvcard-foot${done ? " done" : ""}`}>{done ? <Check size={14} strokeWidth={2.6} /> : <WhatsAppIcon size={15} />} {status}</div>
-    </article>
-  );
-}

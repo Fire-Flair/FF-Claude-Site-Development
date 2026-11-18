@@ -77,7 +77,6 @@ const fdDesc = (n, acc) => { acc = acc || []; n.kids.forEach(i => { acc.push(FD_
 const fdUnder = (n, id) => fdAnc(n).some(a => a.id === id);
 
 
-
 const FD_SITES = {
   party: { key: "party", slug: "ff-party", name: "FF Party", domain: "ffparty.uk", origin: "https://ffparty.uk" },
   team:  { key: "team",  slug: "ff-team",  name: "FF Team",  domain: "ffteam.uk",  origin: "https://ffteam.uk" },
@@ -97,7 +96,6 @@ const fdHref = (siteKey, path) => "#/" + FD_SITES[siteKey].slug + path;
 const fdUrl = (siteKey, path) => FD_SITES[siteKey].origin + path;
 
 
-
 /* Roles come from the real profession taxonomy (see DIRECTORY / professionCategory). */
 const FD_ROLES = [
   { id: "bartender", label: "Bartender", re: /bartend|mixolog|flair/i, cat: "bar" },
@@ -110,7 +108,6 @@ const FD_ROLES = [
 
 
 const FD_ROLE_LABEL = Object.fromEntries(FD_ROLES.map(r => [r.id, r.label]));
-
 
 
 /* ---- Provider coverage ------------------------------------------------------------------------------
@@ -200,7 +197,6 @@ const fdServesWithin = (cov, node) => (cov.whole || []).concat(cov.sub || []).so
   || (!!(cov.exc || []).length && (cov.whole || []).some(id => fdUnder(node, id)) && fdCovers(cov, node));
 
 
-
 function fdProviders(state, people, roleId) {
   const role = FD_ROLES.find(r => r.id === roleId);
   const out = [];
@@ -253,7 +249,6 @@ function fdResults(state, node, people, roleId) {
 }
 
 
-
 /* ---- State: pages, markets, requests -------------------------------------------------------------- */
 const FD_DEFAULT_PUBLISHED = new Set(["country:GB", "gn:6269131", "gn:2638360", "gn:2634895", "gn:3333122", "worldwide", "continent:EU", "country:FR", FD_LONDON, FD_HERTS, "gn:3333125", "gn:2655858", "gn:2647138", "gn:2638867"]);
 
@@ -292,7 +287,6 @@ const fdMarket = (fd, siteKey, n) => {
 
 
 const fdSourcingOn = (fd, siteKey, mode) => siteKey !== "team" && (mode === "recruiting" || mode === "operational") && fd.sourcing[siteKey] !== false;
-
 
 
 /* ---- Copy: one template, three intents ---------------------------------------------------------------- */
@@ -359,7 +353,6 @@ function fdCopyBase20(siteKey, node, ctx) {
 }
 
 
-
 /* Head metadata for an area page: self-canonical per site, robots from the (site, location) state. */
 function fdSeo(state, people) {
   const a = state.fdArea; if (!a) return null;
@@ -381,7 +374,6 @@ function fdSeo(state, people) {
   /* No JobPosting markup anywhere: FF Team pages are profile sign-up pages, not vacancies. */
   return { page: "area", title: ffSeoClip(copy.title, FF_SEO.title.max), description: ffSeoClip(copy.desc, FF_SEO.description.max), canonical: fdUrl(siteKey, node.path), robots, type: "website", jsonLd: ld };
 }
-
 
 
 /* ---- Navigation ---------------------------------------------------------------------------------------- */
@@ -435,7 +427,6 @@ function fdSearch(q) {
 
 
 const fdToday = () => { try { return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/London" }).format(new Date()); } catch (e) { return new Date().toISOString().slice(0, 10); } };
-
 
 
 /* ---- "Ask us to find people" ---------------------------------------------------------------------------- */
@@ -541,7 +532,6 @@ function FdAsk11({ siteKey, node, kind, company, onDone }) {
 }
 
 
-
 /* ---- Explore by area (compact; sits above the map, separate from it) ------------------------------------ */
 /* ---- Explore by area (v17.3.113): a short path under the map -----------------------------------------------
    UK > England > Greater London, or Worldwide > continent > country, then a slider of the people listed there.
@@ -628,133 +618,6 @@ function FdResultTile11({ x, scope, onAsk }) {
   const c = x.c;
   return React.createElement("div", { className: "ff-fd-res" }, React.createElement("button", { type: "button", className: "ff-co11-tile", onClick: () => dispatch({ type: "VIEW_COMPANY", id: c.id }) }, React.createElement(CompanyCardFace, { c, size: "sm" })), React.createElement("p", { className: "ff-fd-unc" }, c.unclaimed ? "FF Event Directory" : "FireFlair Partner"), cov);
 }
-
-
-function AreaPage11() {
-  const { state, dispatch } = useStore();
-  const a = state.fdArea || {}, siteKey = a.site || "party", site = FD_SITES[siteKey];
-  const fd = fdOf(state);
-  const people = useDirectory();
-  const [role, setRole] = useState("");
-  const [showAll, setShowAll] = useState(false);
-  const [askCo, setAskCo] = useState(null);
-  const askRef = useRef(null);
-  const go19 = () => { fdClose(dispatch); if (siteKey === "team") { if (state.role === "team") dispatch({ type: "TAB", tab: "profile" }); else dispatch({ type: "ROLE", role: "team" }); } else { dispatch({ type: "V11_SET", patch: { bkView: siteKey === "party" ? { mode: "new" } : { mode: "new", open: "event" } } }); dispatch({ type: "TAB", tab: "bookings" }); try { window.scrollTo(0, 0); } catch (e) { /* ignore */ } } };
-  const node = FD_BY_PATH[a.path];
-  /* A valid alternate route is redirected once. */
-  useEffect(() => {
-    const to = FD_PATH_ALIASES[a.path];
-    if (to) { try { window.history.replaceState({ ff: "area" }, "", fdHref(siteKey, to)); } catch (e) { /* ignore */ } dispatch({ type: "V11_SET", patch: { fdArea: { site: siteKey, path: to } } }); }
-  }, [a.path]);
-  useEffect(() => { setRole(""); setShowAll(false); setAskCo(null); }, [a.path, siteKey]);
-  const res = useMemo(() => node ? fdResults(state, node, people, role) : null, [state.directory, state.admin17, state.company, a.path, role, people.length]);
-  const back = <button type="button" className="ff-fd-back" onClick={() => rt17Back(() => fdClose(dispatch))}>← Back</button>;
-  if (FD_PATH_ALIASES[a.path]) return <div className="ff-fd-page"><p>Redirecting…</p></div>;
-  if (!node) {
-    return (
-      <main className="ff-fd-page" aria-labelledby="fd-h1">{back}
-        <h1 id="fd-h1" className="ff-h1">We can't find that place</h1>
-        <p>There's no {site.name} page at <code>{a.path}</code>. Real address checking returns a 404 for unknown places.</p>
-        <Btn onClick={() => fdNav(dispatch, siteKey, "/areas/uk")}>Explore the UK</Btn>
-      </main>);
-  }
-  const ps = fdPageState(fd, siteKey, node), mode = fdMarket(fd, siteKey, node), sourcing = fdSourcingOn(fd, siteKey, mode);
-  const anc = fdAnc(node).reverse();
-  const livePub = (n) => fdPageState(fd, siteKey, n).pub !== "prepared";
-  const crumb = anc.filter(n => n.k !== "r" || livePub(n));
-  if (ps.pub === "prepared" && !state.fdPreview) {
-    return (
-      <main className="ff-fd-page" aria-labelledby="fd-h1">{back}
-        <h1 id="fd-h1" className="ff-h1">{fdLabel(node)}</h1>
-        <p>{site.name} doesn't have a page for {fdLabel(node)} yet.</p>
-        <Btn variant="gold" onClick={go19}>{siteKey === "team" ? "Create your Profile Card" : siteKey === "staff" ? "Hire staff" : "Plan your event"}</Btn>
-        {fdParent(node) && livePub(fdParent(node)) && <p style={{ marginTop: 16 }}>Or look at <a href={fdHref(siteKey, fdParent(node).path)} onClick={(e) => { e.preventDefault(); fdNav(dispatch, siteKey, fdParent(node).path); }}>{fdLabel(fdParent(node))}</a>.</p>}
-      </main>);
-  }
-  const hasUnclaimed = res.dir.length > 0;
-  const nExact = res.exactPeople.length;
-  const copy = fdCopy(siteKey, node, { mode, sourcing, nExact, hasUnclaimed, ov: (adm17(state).copy || {})[siteKey + ":" + node.id] });
-  const scrollAsk = () => { setAskCo(null); try { askRef.current && askRef.current.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) { /* ignore */ } };
-  const goAsk = (c) => { setAskCo(c); try { askRef.current && askRef.current.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) { /* ignore */ } };
-  const signup = () => { fdClose(dispatch); if (state.role === "team") dispatch({ type: "TAB", tab: "profile" }); else dispatch({ type: "ROLE", role: "team" }); };
-  const cta = () => { if (copy.ctaKind === "signup") signup(); else if (copy.ctaKind === "results") { const el = document.getElementById("ff-fd-results"); el && el.scrollIntoView({ behavior: "smooth", block: "start" }); } else go19(); };
-  /* Packages someone listed here offers (their profession decides, as on their profile), and who. */
-  const pkgHere = (() => {
-    const by = {};
-    [...res.exact, ...res.within].filter(x => x.kind === "person").forEach(x => { servicesOf(state, x.p).filter(sv => sv.kind === "std").forEach(sv => { (by[sv.id] = by[sv.id] || []).push(x.p); }); });
-    return { by, ids: Object.keys(by) };
-  })();
-  const kidsLive = node.kids.map(i => FD_NODES[i]).filter(livePub);
-  const sibs = fdParent(node) ? fdParent(node).kids.map(i => FD_NODES[i]).filter(n => n.id !== node.id && livePub(n)) : [];
-  const CAP = 12;
-  const list = (l) => (showAll ? l : l.slice(0, CAP));
-  const hasAny = res.exact.length || res.within.length || res.wider.length || res.dir.length;
-  const exactLabel = nExact || res.exactCos.length ? `${siteKey === "team" ? "Professionals who work in" : "Covering"} ${fdLabel(node)}` : "";
-  const lk = (n, t) => <a href={fdHref(siteKey, n.path)} onClick={(e) => { e.preventDefault(); fdNav(dispatch, siteKey, n.path); }}>{t || fdLabel(n)}</a>;
-  return (
-    <main className="ff-fd-page" aria-labelledby="fd-h1">
-      {back}
-      {ps.pub === "prepared" && <div className="ff-fd-banner" role="note">Admin preview. This page isn't public yet: it has no advertised route and is excluded from the sitemap.</div>}
-      <nav aria-label="Breadcrumb" className="ff-fd-crumb"><ol>{crumb.map((n, i) => <li key={n.id}>{i === crumb.length - 1 ? <span aria-current="page">{n.name}</span> : livePub(n) ? lk(n, n.name) : <span>{n.name}</span>}</li>)}</ol></nav>
-      <div className="ff-eyebrow">{site.name}</div>
-      <h1 id="fd-h1" className="ff-h1">{copy.h1}</h1>
-      {copy.intro.map((t, i) => <p key={i} className="ff-fd-intro">{t}</p>)}
-      {!copy.ctaAfterFaq && (copy.cta || copy.cta2 || siteKey === "staff") && <div className="ff-fd-cta">{copy.cta && <Btn variant="gold" onClick={cta}>{copy.cta}</Btn>}
-        {copy.cta2 && <button type="button" className="ff-fd-link" onClick={go19}>{copy.cta2}</button>}
-        {siteKey === "staff" && <button type="button" className="ff-fd-link" onClick={() => dispatch({ type: "ROLE", role: "staff", site: "staff" })}>Create a company profile</button>}</div>}
-
-      <section id="ff-fd-results" aria-labelledby="fd-res-h" style={{ marginTop: 26, scrollMarginTop: 70 }}>
-        <div className="ff-fd-rhead"><h2 id="fd-res-h" className="ff-h2">{siteKey === "team" ? "Who works here" : "Professionals and companies"}</h2>
-          <div className="ff-fd-chips" role="group" aria-label="Filter by profession (doesn't change the web address)">
-            <button type="button" className={!role ? "on" : ""} aria-pressed={!role} onClick={() => setRole("")}>All</button>
-            {FD_ROLES.map(r => <button type="button" key={r.id} className={role === r.id ? "on" : ""} aria-pressed={role === r.id} onClick={() => setRole(role === r.id ? "" : r.id)}>{r.label}</button>)}</div></div>
-        {res.exact.length > 0 && <>
-          <h3 className="ff-fd-h3">{exactLabel}</h3>
-          <p className="ff-fd-sub">Each has said they work here. The event date still needs confirming.</p>
-          <HScroll label={exactLabel} snap>{list(res.exact).map(x => <FdResultTile11 key={x.key} x={x} onAsk={goAsk} />)}</HScroll></>}
-        {res.within.length > 0 && <>
-          <h3 className="ff-fd-h3">Serving places within {fdLabel(node)}</h3>
-          <p className="ff-fd-sub">This is an overview of people who work in parts of {fdLabel(node)}. Their cover is shown on each card; one place isn't the same as another.</p>
-          <HScroll label={`Serving places within ${fdLabel(node)}`} snap>{list(res.within).map(x => <FdResultTile11 key={x.key} x={x} scope onAsk={goAsk} />)}</HScroll></>}
-        {res.wider.length > 0 && <>
-          <div className="ff-fd-wider" role="note"><b>Explore professionals across {fdLabel(res.scope)}</b>
-            <p>Nobody lists {fdLabel(node)} as somewhere they work, so here are people who cover other places in {fdLabel(res.scope)}. This isn't a distance match. Whether they can work in {fdLabel(node)} needs checking{siteKey === "team" ? "" : ", and your request stays for " + fdLabel(node)}.</p></div>
-          <HScroll label={`Professionals across ${fdLabel(res.scope)}`} snap>{list(res.wider).slice(0, 8).map(x => <FdResultTile11 key={x.key} x={x} scope onAsk={goAsk} />)}</HScroll></>}
-        {(res.exact.length + res.within.length > CAP || res.wider.length > CAP) && !showAll && <button type="button" className="ff-fd-more" onClick={() => setShowAll(true)}>Show more</button>}
-        {!hasAny && <div className="ff-fd-empty">
-          <b>{role ? `No ${FD_ROLE_LABEL[role].toLowerCase()} lists ${fdLabel(node)} yet.` : `Nobody lists ${fdLabel(node)} yet.`}</b>
-          <p>{siteKey === "team" ? `You could be the first. Create a Profile Card and choose ${fdLabel(node)} as a place you work.` : "Start an Event Card with your date and place, and FireFlair shows the packages and people that suit it."}</p></div>}
-      </section>
-
-      {pkgHere.ids.length > 0 && window.PartyPackages18 && <section id="ff-fd-pkgs" aria-label={`Available packages in ${fdLabel(node)}`} style={{ marginTop: 26, scrollMarginTop: 70 }}>
-        {React.createElement(window.PartyPackages18, { ids: pkgHere.ids, peopleOf: (id) => pkgHere.by[id] || [], place: fdLabel(node), title: "Available packages" })}
-      </section>}
-
-      <AreaVenues17 node={node} />
-
-      {res.dir.length > 0 && <section id="ff-fd-dir" aria-labelledby="fd-dir-h" style={{ marginTop: 26, scrollMarginTop: 70 }}>
-        <h2 id="fd-dir-h" className="ff-h2">FF Event Directory</h2>
-        <p className="ff-fd-sub">{res.dirScope ? `No companies are listed in ${fdLabel(node)} yet, so these serve ${fdLabel(res.dirScope)}. ` : ""}Companies listed from their public contact details. FF companies are the companies that have joined and can be booked through FireFlair.</p>
-        <HScroll label={`FF Event Directory in ${fdLabel(node)}`} snap>{res.dir.slice(0, showAll ? 60 : 24).map(x => <FdResultTile11 key={x.key} x={x} />)}</HScroll>
-      </section>}
-      {copy.ask && <section id="ff-fd-ask" ref={askRef} className="ff-fd-card" aria-labelledby="fd-ask-h" style={{ scrollMarginTop: 70 }}>
-        <h2 id="fd-ask-h" className="ff-h2">{sourcing ? (siteKey === "staff" ? `Need staff in ${fdLabel(node)}?` : `Need people for an event in ${fdLabel(node)}?`) : `Interested in ${fdLabel(node)}?`}</h2>
-        <p className="ff-fd-sub">{sourcing ? `Tell us the date and the kind of professional you need. Our team will look for suitable people and contact you about the options.` : siteKey === "team" ? `Tell us where you work and what you do and we'll contact you if FF Team starts recruiting here.` : `FireFlair isn't taking requests here yet. Tell us what you'd need and we'll contact you if that changes.`}</p>
-        <FdAsk11 key={siteKey + node.id + (askCo ? askCo.id : "")} siteKey={siteKey} node={node} company={askCo} />
-      </section>}
-      <section aria-labelledby="fd-how-h" style={{ marginTop: 26 }}><h2 id="fd-how-h" className="ff-h2">Questions</h2>
-        {copy.faq.map(f => <details key={f.q} className="ff-fd-faq"><summary>{f.q}</summary><p>{f.a}</p></details>)}</section>
-      {copy.ctaAfterFaq && <div className="ff-fd-cta" style={{ marginTop: 16 }}><Btn variant="gold" onClick={cta}>{copy.cta}</Btn></div>}
-
-      {(kidsLive.length > 0 || sibs.length > 0) && <nav aria-label="Other places" className="ff-fd-links">
-        {kidsLive.length > 0 && <><h2 className="ff-h2">Places in {fdLabel(node)}</h2><ul>{kidsLive.slice(0, 24).map(n => <li key={n.id}>{lk(n)}</li>)}</ul>{kidsLive.length > 24 && <p className="ff-fd-fine">and {kidsLive.length - 24} more</p>}</>}
-        {sibs.length > 0 && fdParent(node) && <><h2 className="ff-h2">Other places in {fdLabel(fdParent(node))}</h2><ul>{sibs.slice(0, 12).map(n => <li key={n.id}>{lk(n)}</li>)}</ul></>}
-      </nav>}
-      <p className="ff-fd-dev"><span className="ff-dev17 tag">DEV · {site.name}</span> {ps.pub === "approved" ? "Approved for search" : ps.pub === "published" ? "Published for use: noindex, not in the sitemap" : "Prepared: preview only"} · market {FD_MODES.find(m => m[0] === mode)[1]} · canonical {fdUrl(siteKey, node.path)}{FF_SEO.demoData ? " · demo data, so the prototype emits noindex regardless" : ""}</p>
-    </main>
-  );
-}
-
 
 
 /* ---- FF Admin: requests queue, page review / publish / index, markets, sitemap preview ------------------- */
@@ -975,9 +838,7 @@ function FdAbout11({ fd }) {
 }
 
 
-
 const FD_CSS = __ff_css("styles/fd.css");
-
 
 
 function NetMap11(props) {

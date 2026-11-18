@@ -15,7 +15,6 @@ const POSTER_TONES = {
 };
 
 
-
 function PosterCard({ tone = "dark", ribbon, eyebrow, title, subtitle, tagline, rows = [], footer, onClick }) {
   const t = POSTER_TONES[tone] || POSTER_TONES.dark;
   return (
@@ -47,9 +46,7 @@ function PosterCard({ tone = "dark", ribbon, eyebrow, title, subtitle, tagline, 
 }
 
 
-
 const PAST_STATES = ["completed", "signed_off", "paid"];
-
 
 
 /* Peak dates: the busiest nights of the year. Saying yes puts the person
@@ -68,7 +65,6 @@ const WEEKDAY = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 
 const chipDate = (iso) => { const d = new Date(iso + "T12:00:00"); return { wd: WEEKDAY[d.getDay()], day: d.getDate(), mon: MONTHS[d.getMonth()].slice(0, 3) }; };
-
 
 
 function PeakAvailability() {
@@ -112,8 +108,6 @@ function PeakAvailability() {
 }
 
 
-
-
 /* WhatsApp mark (lucide has no brand icons). */
 function WhatsAppIcon({ size = 20 }) {
   return (
@@ -122,8 +116,6 @@ function WhatsAppIcon({ size = 20 }) {
     </svg>
   );
 }
-
-
 
 
 /* The "Your bookings" panel on FF Team Bookings, as on ffteam.uk: requests arrive on WhatsApp, with the three things that open with FF Staff and FF Party. */
@@ -140,7 +132,6 @@ function BookingsSoon() {
     </div>
   );
 }
-
 
 
 /* The three interest drop-downs on the Bookings page. Each is a card: the photo is the top half with only the title on it;
@@ -179,7 +170,6 @@ function BkDrop17({ id, title, desc, icon: Icon, photo, children, open: openP, o
     </section>
   );
 }
-
 
 
 /* ---- FF Staff Shifts (v17.4.6): one card per profession, from the Pick your professions catalogue ----
@@ -546,25 +536,9 @@ function ProfPkgCreate17() {
 
 function TeamBookings({ guest = false }) {
   const { state, dispatch } = useStore();
-  const [open, setOpen] = useState(null);
-  const [showPast, setShowPast] = useState(false);
   const [drop, setDrop] = useState(null);
   const signedIn = state.auth.status === "signedIn";
-  /* Only the demo profile (SAM42) carries sample bookings. Everyone else starts clean. */
-  const demo = !guest && signedIn && ["SAM42", "ALEXG"].includes(state.auth.tag);
-  const all = !demo ? [] : state.engagements.filter(e => e.staffId === "me")
-    .map(e => { const shift = state.shifts.find(s2 => s2.id === e.shiftId); return { e, shift, event: shift && state.events.find(v => v.id === shift.eventId) }; })
-    .filter(x => x.shift).map(x => ({ ...x, iso: x.shift.iso }));
-  const byIso = (a, b) => String(a.iso).localeCompare(String(b.iso));
-  const requests = all.filter(x => ["requested", "discuss", "available"].includes(x.e.state)).filter(x => { const t = startMs17(x.shift); return !(t && t <= now17(state)); }).sort(byIso);
-  const upcoming = all.filter(x => ["confirmed"].includes(x.e.state)).sort(byIso);
-  const cancelledByBiz = all.filter(x => x.e.state === "cancelled_biz").sort(byIso);
-  const previous = all.filter(x => PAST_STATES.includes(x.e.state)).sort((a, b) => byIso(b, a));
   const goProfile = () => { dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); };
-  const respond = (x, st) => {
-    dispatch({ type: "ENG_STATE", id: x.e.id, state: st });
-    dispatch({ type: "TOAST", toast: st === "confirmed" ? `Confirmed: ${x.shift.role}, ${x.shift.date}. It's now in your bookings.` : "Declined. The company has been told." });
-  };
   const svcInterest = state.profile.serviceInterest || [];
   const [sel, setSel] = useState(null);
   const [pkgTerms, setPkgTerms] = useState(false);
@@ -609,18 +583,6 @@ function TeamBookings({ guest = false }) {
     setTimeout(go, 80);
   };
 
-  const Row = ({ x, tag, onClick }) => (
-    <button type="button" className="ff-bk-row" onClick={onClick}>
-      <span className="ff-bk-date"><b>{Number(x.iso.slice(8, 10))}</b><small>{MONTHS[Number(x.iso.slice(5, 7)) - 1].slice(0, 3)}</small></span>
-      <span className="ff-bk-main">
-        <b>{x.event ? x.event.title : x.shift.role}</b>
-        <small>{x.shift.role} · {x.shift.time}</small>
-        <small>{x.shift.venue}</small>
-      </span>
-      {tag}
-    </button>
-  );
-
   return (
     <div className="ff-bk" ref={partyRef}>
       <style>{BKD_CSS}</style>
@@ -634,21 +596,6 @@ function TeamBookings({ guest = false }) {
             <span className="ff-bk-wasel">When you're selected for a booking, it will be shown here.</span>
           </span>
         </div>
-
-        {demo && requests.length > 0 && (
-          <div className="ff-bk-grp">
-            <h3 className="ff-bk-h">Invitations <i>{requests.length}</i></h3>
-            <div className="ff-sdrail11"><HScroll label="Invitations">{requests.map(x => <ShiftDelivery11 key={x.e.id} e={x.e} shift={x.shift} event={x.event} />)}</HScroll></div>
-          </div>
-        )}
-
-        {signedIn ? <div className="ff-bk-grp ff-bk-conf17">
-          <div className="ff-bk-hrow"><h3 className="ff-bk-h">Confirmed {demo && upcoming.length > 0 ? <i>{upcoming.length}</i> : null}</h3><button type="button" className="ff-bk-hist" aria-pressed={showPast} onClick={() => setShowPast(v => !v)}><Clock size={12} /> History</button></div>
-          {upcoming.length ? <div className="ff-sdrail11"><HScroll label="Confirmed bookings">{upcoming.map(x => <ShiftDelivery11 key={x.e.id} e={x.e} shift={x.shift} event={x.event} />)}</HScroll></div> : null}
-          {cancelledByBiz.map(x => <Row key={x.e.id} x={x} onClick={() => setOpen(x.e)} tag={<span className="ff-bk-done">Cancelled by the business</span>} />)}
-          {showPast && (previous.length ? previous.map(x => <Row key={x.e.id} x={x} onClick={() => setOpen(x.e)} tag={<span className="ff-bk-done">Worked</span>} />)
-            : <p className="ff-bk-none">No past bookings yet.</p>)}
-        </div> : null}
       </section>
 
       <section className="ff-bk-sec ff-fb21" id="ff-bk-fireflair">
@@ -693,11 +640,9 @@ function TeamBookings({ guest = false }) {
         </div>
       </section>
 
-      <BookingSheet engagement={open} onClose={() => setOpen(null)} />
     </div>
   );
 }
-
 
 
 function draftFromProfile(state) {
@@ -708,7 +653,6 @@ function draftFromProfile(state) {
     locations: names("locations"), languages: names("languages"),
   };
 }
-
 
 
 function TeamProfile() {
@@ -796,7 +740,6 @@ function TeamProfile() {
 }
 
 
-
 /* ==========================================================================
    7. FF STAFF
    ========================================================================== */
@@ -825,7 +768,6 @@ function ComingSoonTile({ item, width }) {
 }
 
 
-
 function ComingSoonRow({ ids, title = "Coming 2027" }) {
   const items = (ids ? ids.map(roadmapItem) : ROADMAP).filter(Boolean);
   return (
@@ -837,7 +779,6 @@ function ComingSoonRow({ ids, title = "Coming 2027" }) {
     </section>
   );
 }
-
 
 
 /* Numbered step heading for the vertical Event Card journey. */
@@ -853,7 +794,6 @@ function StepHead({ n, title, note, done }) {
     </div>
   );
 }
-
 
 
 /* Helpers shared by the FF Staff screens. */
@@ -887,21 +827,11 @@ function canSend(state, shift) {
 const splitTime = (t) => { const [a = "", b = ""] = String(t || "").split(/\s*[—–-]\s*/); return [a.trim(), b.trim()]; };
 
 
-
-
-
 const secDay = (iso) => {
   if (!iso) return null;
   const d = new Date(iso + "T12:00:00");
   return isNaN(d) ? null : { date: d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }), day: d.toLocaleDateString("en-GB", { weekday: "long" }) };
 };
-
-
-
-
-
-
-
 
 
 /* ---------------------------------------------------------------------------
@@ -975,8 +905,6 @@ function BookingBar({ placement = "bottom", dragging = false, style }) {
 }
 
 
-
-
 /* ---------------------------------------------------------------------------
    PICK PERSON — fill or replace the person on a Service Card. The basket comes
    first; suggestions follow. The hirer always chooses.
@@ -1020,7 +948,6 @@ function PickPersonSheet({ open, shift, event, onClose }) {
     </Sheet>
   );
 }
-
 
 
 /* ---------------------------------------------------------------------------
@@ -1083,271 +1010,3 @@ function InvoiceCard({ event, rows, company }) {
 }
 
 
-
-/* ---------------------------------------------------------------------------
-   EVENT CARD PAGE — the control page for a booking. One vertical, guided
-   journey: event → team and Service Cards → questions and T&Cs → credits and
-   send → responses → invoice → reviews.
-   --------------------------------------------------------------------------- */
-function EventPage() {
-  const { state, dispatch } = useStore();
-  const all = useDirectory();
-  const event = state.events.find(e => e.id === state.activeEventId);
-  const [editing, setEditing] = useState(null);      // shift object or {} for new
-  const [picking, setPicking] = useState(null);
-  const [reviewing, setReviewing] = useState(null);  // { person, shiftId }
-  const [offerCompany, setOfferCompany] = useState(false);
-  const [buying, setBuying] = useState(false);
-  const [, tick] = useState(0);
-  useEffect(() => {
-    const t = setInterval(() => { dispatch({ type: "EXPIRE_DUE" }); tick(n => n + 1); }, 30000);
-    dispatch({ type: "EXPIRE_DUE" });
-    return () => clearInterval(t);
-  }, []);
-
-  if (!event) return <Empty icon={<Calendar size={26} />} title="No Event Card open. Create one to start a booking."
-    action={<Btn variant="primary" onClick={() => dispatch({ type: "GO", route: "staffHome" })}>Create Event Card</Btn>} />;
-
-  const person = (id) => findPerson(all, state, id);
-  const shifts = state.shifts.filter(s2 => s2.eventId === event.id);
-  const assigned = shifts.filter(x => x.staffId);
-  const assignedIds = assigned.map(x => x.staffId);
-  const unassignedBasket = state.selection.filter(id => !assignedIds.includes(id)).map(person).filter(Boolean);
-  const ready = shifts.filter(x => canSend(state, x));
-  const free = freeCredits(state);
-  const short = Math.max(0, ready.length - free);
-  const company = state.company;
-  const questions = (company?.questions || []).filter(q2 => (event.questionIds || []).includes(q2.id));
-  const engs = shifts.map(sh => ({ sh, e: latestEng(state, sh.id) })).filter(x => x.e);
-  const confirmedRows = engs.filter(x => ["confirmed", "completed", "signed_off", "paid"].includes(x.e.state))
-    .map(x => ({ shift: x.sh, person: person(x.e.staffId) }));
-  const reviewable = engs.filter(x => ["completed", "signed_off", "paid"].includes(x.e.state));
-  const teamTarget = Number(event.team) || 0;
-
-  const giveShift = (p) => {
-    const last = shifts[shifts.length - 1];
-    const sh = {
-      id: uid("shf"), eventId: event.id, staffId: p ? p.id : "",
-      role: p ? p.profession : (last?.role || ""), time: last?.time || "",
-      skills: last ? [...(last.skills || [])] : [], pay: last?.pay || "", dress: last?.dress || "", notes: "",
-      date: event.date || "", iso: event.iso || "", venue: event.venue || "",
-    };
-    setEditing(sh);
-  };
-  const toggleQ = (id) => {
-    const cur = event.questionIds || [];
-    dispatch({ type: "EVENT_PATCH", id: event.id, patch: { questionIds: cur.includes(id) ? cur.filter(x => x !== id) : [...cur, id] } });
-  };
-  const send = () => {
-    dispatch({ type: "SEND_REQUESTS", shiftIds: ready.map(x => x.id), questions: questions.map(q2 => q2.id) });
-    dispatch({ type: "TOAST", toast: `${ready.length} Availability Card${ready.length === 1 ? "" : "s"} sent on WhatsApp` });
-  };
-
-  return (
-    <div>
-      <button className="ff-btn sm ghost" style={{ marginBottom: 14 }} onClick={() => dispatch({ type: "TAB", tab: "bookings", route: "staffHome" })}><ChevronLeft size={13} /> All bookings</button>
-      <div className="ff-eyebrow">{hireSiteOf(state).name} · Event Card</div>
-
-      {/* 1 — the event */}
-      <StepHead n={1} title="The event" note="Shared by every Service Card on this event." done />
-      <div style={{ maxWidth: 460, margin: "0 auto" }}>
-        {event.poster
-          ? <EventPoster card={posterFromEvent(event)} people={assigned.map(x => all.find(p => p.id === x.staffId)).filter(Boolean)} saved />
-          : <EventCard11 ev={event} people={eventPeople(state, all, event)} />}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", marginTop: 10 }}>
-          <Pill tone="gold"><Users size={11} /> {assigned.length}{teamTarget ? ` of ${teamTarget}` : ""} assigned</Pill>
-          {company && company.name && <Pill tone="gold"><Briefcase size={11} /> {company.name}</Pill>}
-          <button className="ff-btn sm ghost" style={{ marginLeft: "auto" }} onClick={() => { dispatch({ type: "GO", route: "staffHome" }); setTimeout(() => scrollToSection(hireSiteOf(state).anchor), 140); }}><Pencil size={12} /> Edit</button>
-        </div>
-        {(event.site === "party" || (event.cocktails && event.cocktails.picks && event.cocktails.picks.length > 0)) && <EventCocktails event={event} />}
-      </div>
-
-      {/* 2 — team and Service Cards */}
-      <StepHead n={2} title="Team and Service Cards" done={teamTarget ? assigned.length >= teamTarget : assigned.length > 0}
-        note="One Service Card per person. Duplicate a card to set up similar shifts quickly." />
-      {shifts.map(sh => {
-        const p = person(sh.staffId);
-        const e = latestEng(state, sh.id);
-        const locked = e && e.staffId === sh.staffId && !["unavailable", "expired"].includes(e.state);
-        return (
-          <div key={sh.id} className="ff-shiftrow">
-            <div style={{ display: "flex", gap: 11, alignItems: "center" }}>
-              {p ? <Portrait src={p.photo} name={p.name} size={40} tier={p.tier} />
-                : <span className="ff-emptyface"><User size={18} color="var(--gold-dk)" strokeWidth={1.4} /></span>}
-              <span style={{ flex: 1, minWidth: 0 }}>
-                <span className="ff-display" style={{ fontSize: 13.5, display: "block" }}>{p ? p.name : "Not assigned yet"}</span>
-                <span className="ff-body ff-muted" style={{ fontSize: 12 }}>{sh.role || "Role to set"} · {sh.time || "Times to set"}</span>
-                <span className="ff-body" style={{ fontSize: 12, display: "block", color: "#6A6253" }}>Uniform: {sh.dress || <i>not set</i>}</span>
-              </span>
-              {e && e.staffId === sh.staffId ? <Pill tone={ENG_TONE[e.state]}>{ENG_LABEL[e.state]}</Pill>
-                : sh.staffId ? <Pill>Not sent</Pill> : null}
-            </div>
-            <div className="ff-shiftacts">
-              <button onClick={() => setEditing(sh)} disabled={locked}><Pencil size={12} /> Edit</button>
-              <button onClick={() => dispatch({ type: "SHIFT_DUPLICATE", id: sh.id })}><Copy size={12} /> Duplicate</button>
-              <button onClick={() => setPicking(sh)} disabled={locked}><Users size={12} /> {p ? "Change" : "Assign"}</button>
-              {!e && <button onClick={() => dispatch({ type: "SHIFT_DELETE", id: sh.id })}><Trash2 size={12} /> Remove</button>}
-            </div>
-          </div>
-        );
-      })}
-      {unassignedBasket.length > 0 && (
-        <div className="ff-frame" style={{ padding: 12, marginTop: 6 }}>
-          <div className="ff-label" style={{ marginBottom: 8 }}>In your basket — give each a Service Card</div>
-          {unassignedBasket.map(p => (
-            <div key={p.id} style={{ display: "flex", gap: 10, alignItems: "center", padding: "6px 0" }}>
-              <Portrait src={p.photo} name={p.name} size={30} tier={p.tier} />
-              <span style={{ flex: 1, minWidth: 0 }} className="ff-body">{p.name} <span className="ff-muted">· {p.profession}</span></span>
-              <Btn variant="sm" onClick={() => giveShift(p)}><Plus size={12} /> Service Card</Btn>
-            </div>
-          ))}
-        </div>
-      )}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 10 }}>
-        <Btn onClick={() => giveShift(null)}><Plus size={14} /> Add Service Card</Btn>
-        <Btn variant="ghost" onClick={() => dispatch({ type: "GO", route: "staffHome" })}><Search size={14} /> Find people</Btn>
-      </div>
-
-      {/* 3 — questions, T&Cs and documents */}
-      <StepHead n={3} title="Questions, T&Cs and documents" note="Sent with each Availability Card, from your Company Card." done={!!company} />
-      {company ? (
-        <div className="ff-frame" style={{ padding: 14 }}>
-          <div className="ff-label" style={{ marginBottom: 6 }}>Hiring questions</div>
-          {(company.questions || []).length ? company.questions.map(q2 => (
-            <label key={q2.id} className="ff-check">
-              <input type="checkbox" checked={(event.questionIds || []).includes(q2.id)} onChange={() => toggleQ(q2.id)} />
-              <span><span className="ff-body" style={{ display: "block" }}>{q2.text}</span>
-                <span className="ff-body ff-muted" style={{ fontSize: 11.5 }}>{q2.options.join(" · ")}</span></span>
-            </label>
-          )) : <p className="ff-body ff-muted" style={{ margin: 0, fontSize: 12.5 }}>No hiring questions yet.</p>}
-          <hr className="ff-rule" style={{ margin: "12px 0" }} />
-          <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-            <Pill tone="ok"><FileText size={11} /> T&Cs · 5 terms</Pill>
-            <Pill><FileText size={11} /> {companyDocs(company).length} document{companyDocs(company).length === 1 ? "" : "s"}</Pill>
-            <button className="ff-btn sm ghost" style={{ marginLeft: "auto" }} onClick={() => dispatch({ type: "TAB", tab: "profile", route: "staffHome" })}>Edit</button>
-          </div>
-        </div>
-      ) : (
-        <div className="ff-sell dark" style={{ marginBottom: 0 }}>
-          <Corners />
-          <span className="ff-label">Company Card</span>
-          <h3 className="ff-h2" style={{ margin: "6px 0" }}>Save your T&Cs, documents and questions once.</h3>
-          <p className="ff-body" style={{ marginTop: 0 }}>Until then, the FireFlair five-section T&Cs template goes with each Availability Card.</p>
-          <Btn variant="onDark" onClick={() => dispatch({ type: "TAB", tab: "profile", route: "staffHome" })}><Briefcase size={14} /> Create Company Card</Btn>
-        </div>
-      )}
-
-      {/* 4 — credits and send */}
-      <StepHead n={4} title="Credits and availability" done={ready.length === 0 && engs.length > 0}
-        note={`One FireFlair credit (${CREDIT_FEE}) per Service Card sent. A credit is only used when that person confirms.`} />
-      <div className="ff-frame" style={{ padding: 14 }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 12 }}>
-          {[["Ready to send", ready.length], ["Credits free", free], ["Reserved", reservedCredits(state)]].map(([l, v]) => (
-            <div key={l} style={{ textAlign: "center" }}>
-              <div className="ff-display" style={{ fontSize: 20 }}>{v}</div>
-              <div className="ff-label" style={{ fontSize: 8.5 }}>{l}</div>
-            </div>
-          ))}
-        </div>
-        {ready.length === 0 ? (
-          <p className="ff-body ff-muted" style={{ margin: 0, fontSize: 12.5, textAlign: "center" }}>
-            {shifts.length ? "Every assigned Service Card has been sent." : "Add a Service Card and assign someone to send availability."}
-          </p>
-        ) : short > 0 ? (
-          <Btn variant="primary wide" onClick={() => setBuying(true)}><CreditCard size={15} /> Buy {short} credit{short === 1 ? "" : "s"}</Btn>
-        ) : (
-          <Btn variant="primary wide" onClick={send}><Send size={15} /> Send {ready.length} Availability Card{ready.length === 1 ? "" : "s"} on WhatsApp</Btn>
-        )}
-        <p className="ff-body ff-muted" style={{ fontSize: 11, margin: "10px 0 0", textAlign: "center" }}>
-          No reply or a decline? The credit isn't used. Unused credits are non-refundable but stay yours for future bookings.
-        </p>
-      </div>
-
-      {/* 5 — responses */}
-      {engs.length > 0 && <>
-        <StepHead n={5} title="Responses" note={`Each person has ${RESPONSE_HOURS} hours to confirm.`}
-          done={engs.every(x => !["requested", "unavailable", "expired"].includes(x.e.state))} />
-        {engs.map(({ sh, e }) => {
-          const p = person(e.staffId);
-          const first = (p?.name || "They").split(" ")[0];
-          return (
-            <div key={e.id} className="ff-shiftrow">
-              <div style={{ display: "flex", gap: 11, alignItems: "center" }}>
-                <Portrait src={p?.photo} name={p?.name || "Staff"} size={34} tier={p?.tier} />
-                <span style={{ flex: 1, minWidth: 0 }}>
-                  <span className="ff-display" style={{ fontSize: 13, display: "block" }}>{p?.name || "Staff"}</span>
-                  <span className="ff-body ff-muted" style={{ fontSize: 12 }}>{sh.role}{e.state === "requested" && e.expiresAt ? ` · ${timeLeft(e.expiresAt)}` : ""}</span>
-                </span>
-                <Pill tone={ENG_TONE[e.state]}><span className="ff-dot" /> {ENG_LABEL[e.state]}</Pill>
-              </div>
-              {e.state === "requested" && (
-                <div className="ff-preview">
-                  <span className="ff-label" style={{ fontSize: 8.5 }}>Prototype preview</span>
-                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-                    <button onClick={() => { dispatch({ type: "ENG_STATE", id: e.id, state: "confirmed" }); dispatch({ type: "TOAST", toast: `${first} confirmed${e.credit ? " · 1 credit used" : ""}` }); }}>{first} confirms</button>
-                    <button onClick={() => dispatch({ type: "ENG_STATE", id: e.id, state: "unavailable" })}>{first} declines</button>
-                    <button onClick={() => dispatch({ type: "ENG_STATE", id: e.id, state: "expired" })}>No reply in {RESPONSE_HOURS}h</button>
-                  </div>
-                </div>
-              )}
-              {["unavailable", "expired"].includes(e.state) && e.staffId === sh.staffId && (
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 10 }}>
-                  <Btn variant="sm" onClick={() => setPicking(sh)}><RotateCcw size={12} /> Replace</Btn>
-                  <Btn variant="sm ghost" onClick={() => setPicking(sh)}><Sparkles size={12} /> Take a suggestion</Btn>
-                </div>
-              )}
-              {["unavailable", "expired"].includes(e.state) && e.staffId !== sh.staffId && (
-                <p className="ff-body ff-muted" style={{ fontSize: 12, margin: "8px 0 0" }}>Replaced by {person(sh.staffId)?.name || "someone new"} — send their Availability Card in step 4.</p>
-              )}
-              {e.state === "confirmed" && (
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 10 }}>
-                  <WalletButton kind="booking" dark={false} payload={{ shiftId: sh.id, role: sh.role, date: event.date, venue: event.venue }} />
-                  <Btn variant="sm" onClick={() => dispatch({ type: "ENG_STATE", id: e.id, state: "completed" })}><Check size={12} /> Shift worked</Btn>
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </>}
-
-      {/* 6 — invoice */}
-      {confirmedRows.length > 0 && <>
-        <StepHead n={6} title="Invoice" note="Generated from the confirmed Service Cards." done />
-        <InvoiceCard event={event} rows={confirmedRows} company={company} />
-      </>}
-
-      {/* 7 — reviews, one per Service Card */}
-      {reviewable.length > 0 && <>
-        <StepHead n={7} title="Reviews" note="One review per Service Card." done={reviewable.every(x => state.reviews.some(r => r.shiftId === x.sh.id))} />
-        {reviewable.map(({ sh, e }) => {
-          const p = person(e.staffId);
-          const done = state.reviews.some(r => r.shiftId === sh.id);
-          return (
-            <div key={sh.id} className="ff-shiftrow" style={{ display: "flex", gap: 11, alignItems: "center" }}>
-              <Portrait src={p?.photo} name={p?.name || "Staff"} size={34} tier={p?.tier} />
-              <span style={{ flex: 1, minWidth: 0 }} className="ff-body">{p?.name || "Staff"} <span className="ff-muted">· {sh.role}</span></span>
-              {done ? <Pill tone="ok"><Check size={10} /> Reviewed</Pill>
-                : <Btn variant="sm" onClick={() => p && setReviewing({ person: p, shiftId: sh.id })}><Award size={12} /> Review</Btn>}
-            </div>
-          );
-        })}
-      </>}
-
-      <ComingSoonRow ids={["auto", "gmaps", "party"]} title="Coming to Event Cards" />
-
-      <ShiftSheet open={!!editing} shift={editing} event={event} onClose={() => setEditing(null)} onSaved={() => { if (!company) setOfferCompany(true); }} />
-      <PickPersonSheet open={!!picking} shift={picking} event={event} onClose={() => setPicking(null)} />
-      <ReviewSheet open={!!reviewing} person={reviewing?.person} shiftId={reviewing?.shiftId} onClose={() => setReviewing(null)} />
-      <BuyCreditsSheet open={buying} need={short} onClose={() => setBuying(false)} />
-      <Sheet open={offerCompany} onClose={() => setOfferCompany(false)} title="Create your Company Card?">
-        <p className="ff-body" style={{ marginTop: 0 }}>
-          Your Company Card keeps your business details, T&Cs, documents and hiring questions, and sends them with every Event Card — so you only set them up once.
-        </p>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-          <Btn variant="primary" onClick={() => { setOfferCompany(false); dispatch({ type: "TAB", tab: "profile", route: "staffHome" }); }}><Briefcase size={14} /> Create it</Btn>
-          <Btn variant="ghost" onClick={() => setOfferCompany(false)}>Later</Btn>
-        </div>
-      </Sheet>
-    </div>
-  );
-}

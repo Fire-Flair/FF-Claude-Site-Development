@@ -1,4 +1,5 @@
 /* src/components/staff/questions-and-dates.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
+/* v1.1 (FF Team only): trimmed to the parts FF Team uses; the FF Staff / FF Party / VIP / admin code that was here is deleted. */
 /* ==== v1.01: Create your own question ========================================
    A card at the start of the Question Cards row. You write the question and
    answer it Yes or No, or type an answer. It joins your Question Cards, already
@@ -134,13 +135,7 @@ const I11 = {
 
 /* ---- State: one small reducer in front of the main one ------------------- */
 function v11Reducer(s, a) {
-  /* Phase 2: FF Party is display only. Book and Party (the host profile) cannot be opened, whatever asks for them. */
-  if (isPartySite17(s) && a.type === "TAB" && PARTY_LOCKED_TABS17.includes(a.tab)) return s;
-  if (isPartySite17(s) && a.type === "TAB" && PARTY_LOCKED_ROUTES17.includes(a.route)) return v11Reducer(s, { ...a, route: undefined });
-  if (isPartySite17(s) && a.type === "GO" && PARTY_LOCKED_ROUTES17.includes(a.route)) return s;
-  const booked = v11BookReducer(s, a); if (booked) return booked;
   switch (a.type) {
-    case "ADMIN17": return admin17Reduce(s, a);
     case "V11_SET": return { ...s, ...a.patch };
     /* FF Party: favourite staff (a heart on someone's card or profile). */
     case "FAV_TOGGLE": { const f = s.favs || []; return { ...s, favs: f.includes(a.id) ? f.filter(x => x !== a.id) : [...f, a.id] }; }
@@ -174,10 +169,7 @@ function v11Reducer(s, a) {
       if (a.ask.company) { const co = companyById(s, a.ask.fromId) || { name: a.ask.name }; return ct17Reducer({ ...s, teamAsks17: done, netAdds17: (s.netAdds17 || []).includes(a.ask.fromId) ? s.netAdds17 : [...(s.netAdds17 || []), a.ask.fromId] }, { type: "CT_ACCEPTED", companyKey: coKey17(co), companyName: co.name || a.ask.name, personId: "me", tag: (s.auth && s.auth.tag) || "", name: (s.profile && s.profile.name) || "", ref: a.ask.id }); }
       return { ...s, teamAsks17: done, connections: s.connections.some(c => c.id === a.ask.fromId) ? s.connections : [...s.connections, { id: a.ask.fromId, name: a.ask.name, onFF: true, tag: a.ask.tag }] };
     }
-    /* On FF Staff, tapping someone's card enlarges it first (CardPeek):
-       Add to your event, or View profile (which sends direct: true). */
     case "VIEW":
-      if (a.id && !a.direct && a.id !== "me" && s.role === "staff") return { ...s, peek: a.id };
       if (s.viewingCompany || s.peek) return reducer({ ...s, viewingCompany: null, peek: null }, a);
       return null;
     case "TAB": case "ROLE": case "ACTIVE_EVENT": {
@@ -185,7 +177,6 @@ function v11Reducer(s, a) {
       const base = (a.type === "TAB" && a.tab !== "network" && s.netBrief) ? { ...s, netBrief: null } : s;
       if ((a.type === "TAB" || a.type === "ROLE") && base.infoPage21) return reducer({ ...base, infoPage21: null }, a);
       if (a.type === "TAB" && base.supportPage20) return reducer({ ...base, supportPage20: null }, a);
-      if (a.type === "TAB" && (base.fxPage17 || base.fxStaff17)) return reducer({ ...base, fxPage17: null, fxStaff17: null }, a);
       if (base.viewingCompany || base.peek) return reducer({ ...base, viewingCompany: null, peek: null }, a);
       return base !== s ? reducer(base, a) : null;
     }
@@ -214,16 +205,4 @@ const startOf = (ev) => (ev && (ev.start || splitTime(ev.time)[0])) || "";
 const isPast = (iso) => !!iso && iso < TODAY_ISO;
 
 
-/* What a Service Card is called: "Shift details" on FF Staff, "Service Card" on FF Party. */
-function svcWords(state) {
-  const party = hireSiteOf(state).party;
-  return party
-    ? { party, T: "Service Card", Ts: "Service Cards", lc: "Service Card", lcs: "Service Cards", a: "a Service Card", n: (k) => `${k} Service Card${k === 1 ? "" : "s"}`, plate: "Service Card", each: "Service Card", goes: "a Service Card goes" }
-    : { party, T: "Shift details", Ts: "Shift details", lc: "shift details", lcs: "shift details", a: "shift details", n: (k) => `${k} shift${k === 1 ? "" : "s"}`, plate: "Shift card", each: "shift", goes: "shift details go" };
-}
-
-
 const firstName = (n) => String(n || "").trim().split(" ")[0] || "them";
-
-
-QUESTION_GROUP_COLOR.availability = { bg: "linear-gradient(165deg,#103A33,#06191A)", ink: "#ECFAF5", sub: "#8FD9C4", rule: "rgba(143,217,196,.32)" };

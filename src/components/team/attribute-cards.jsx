@@ -1260,7 +1260,6 @@ function ProfileSections({ person, isMe, hideQuestions, doneSlot }) {
                   <QuestionCardsCollection />
                 </>)}
               </section>
-              <Creators17 kind="team" by={person.name} />
               <TermsRow17 />
             </>)}
             {btab === "teams" && (<>

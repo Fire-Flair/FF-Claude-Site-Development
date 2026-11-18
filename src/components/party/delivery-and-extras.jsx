@@ -1,29 +1,5 @@
 /* src/components/party/delivery-and-extras.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
-/* The FF coin is the notification centre on every site. Next steps (and XP, later) sit under the notifications. */
-/* ==== v1.1 Shift delivery ====================================================================
-   One Shift card for the person being booked, in two flavours that share the same layout:
-     selected   the business chose you (engagement.exclusive). Reply Yes, No or Ask a question.
-     autofill   one of up to 10 invited (engagement.auto). Yes means "available": the business then chooses.
-   Every action is the same record the WhatsApp buttons change (AF_RESPOND). WhatsApp allows at most three
-   buttons, so the card has three too: Yes, No, Ask a question. Confirmed bookings keep a quiet
-   "Can't make it?" link: refer someone, invite someone new, or a hard cancel (back to Autofill).
-   Cream background, burgundy and black only. PROTOTYPE: the WhatsApp text is shown, not sent. */
-const SD11_CSS = __ff_css("styles/sd11.css");
-
-
-if (typeof document !== "undefined" && !document.getElementById("ff-sd11-css")) {
-  const st11 = document.createElement("style");
-  st11.id = "ff-sd11-css";
-  st11.textContent = SD11_CSS;
-  document.head.appendChild(st11);
-}
-
-
-/* Reply buttons for a Shift Card, the same on the website and in the WhatsApp templates (docs/whatsapp-templates.md).
-   WhatsApp allows three quick-reply buttons: Available, Unavailable, More info (the brief at /fx/<code>). */
-const WA_BTN17 = { exclusive: ["Available", "Unavailable", "More info"], auto: ["Available", "Unavailable", "More info"] };
-
-
+/* v1.1 (FF Team only): trimmed to the parts FF Team uses; the FF Staff / FF Party / VIP / admin code that was here is deleted. */
 const hirerOf11 = (state, ev) => (ev && ev.hirer) || (state.company && (state.company.name || state.company.title)) || "The host";
 
 
@@ -37,42 +13,10 @@ function eventSource17(state, ev) {
 }
 
 
-const SRC17_LABEL = { staff: "FF Staff shift", party: "FF Party package" };
-
-
-/* The plate at the top left of a Shift Card says where it came from. */
-const PLATE17 = { staff: "FF Staff shift card", party: "FF Party card" };
-
-
 const whenOf11 = (sh) => `${shortDay(sh.iso) || sh.date || ""}${sh.time ? ` · ${sh.time}` : ""}`;
 
 
-/* The WhatsApp message that goes with a Shift card. Selected and Autofill read differently; the card is the same. */
-const waMsg11 = (state, e, sh, ev) => {
-  const h = hirerOf11(state, ev), when = whenOf11(sh), place = sh.venue || (ev && ev.venue) || "";
-  return e.auto
-    ? `${h} needs a ${sh.role} on ${when}${place ? ` at ${place}` : ""}.\nYou're one of ${e.batchSize || 10} people invited. If you're free, tap Available and ${h} will choose from everyone available. This doesn't confirm the shift.`
-    : `${h} has chosen you as ${sh.role} on ${when}${place ? ` at ${place}` : ""}.\nThe shift is held for you until ${dt17(e.expiresAt)}. Tap Available to confirm it.`;
-};
-
-
 const pending11 = (state) => !(state.auth && state.auth.status === "signedIn" && ["SAM42", "ALEXG"].includes(state.auth.tag) && state.role === "team") ? [] : (state.engagements || []).filter(e => e.staffId === "me" && ["requested", "discuss"].includes(e.state) && (e.auto || e.exclusive)).filter(e => { const sh = state.shifts.find(x => x.id === e.shiftId); const st = sh && startMs17(sh); return sh && !(st && st <= now17(state)) && !(e.expiresAt && e.expiresAt <= now17(state)); });
-
-
-
-function ShiftDelivery11({ e, shift, event, onDone, onMore, viewer }) {
-  const { state } = useStore();
-  if (!shift) return null;
-  const src = eventSource17(state, event);
-  const hv = viewer === "hirer";
-  const conf = e.state === "confirmed";
-  return (<div className="ff-sdw">
-    <ShiftCard17 shift={shift} event={event} source={src} status={statusOf17(e)} />
-    {hv && <div className="ff-sd11 acts"><p className="ok">{engText(e) || "Not sent yet"}{conf ? ` · Ref ${e.ref || ref17(e)}` : ""}</p></div>}
-    {!hv && <ShiftReplyBar17 e={e} shift={shift} event={event} mode="card" onMore={onMore} onDone={onDone} />}
-  </div>);
-}
-
 
 
 /* Who the shift is for: a Company Card for a business, a VIP Host Card for a person. */
@@ -87,73 +31,6 @@ function hirerCard11(state, ev) {
     return { party: true, c: { ...DEMO_HOST17, name: nm && nm !== "The host" ? nm : DEMO_HOST17.name, photo: (window.FF_IMG || {}).face_you || "" } };
   return { party: false, c: { name: nm, kind: (ev && ev.kind) || "", slug: slugify(nm) } };
 }
-
-
-
-/* The Event brief, as a team member sees it. The hirer's Company Card or VIP Host Card sits underneath. */
-function EventBrief11({ ev, shift, e, onClose }) {
-  const { state } = useStore();
-  if (!ev || !shift) return null;
-  const h = hirerCard11(state, ev);
-  return (
-    <Sheet open onClose={onClose} title="Event brief">
-      <div className="ff-brief11">
-        <EventGuide ev={ev} shifts={[shift]} viewer="pro" stamp={e.state === "confirmed" ? "Confirmed" : "Brief"} />
-        <section className="hc" aria-label={h.party ? "VIP Host Card" : "Company Card"}>
-          <h4>{h.party ? "Your host" : "Your client"}</h4>
-          <HScroll label={h.party ? "VIP Host Card" : "Company Card"}>
-            <div className="hc-i">{h.party ? <PartyCard11 demo={h.c} /> : <CompanyCardFace c={h.c} />}</div>
-          </HScroll>
-        </section>
-        <section className="tc" aria-label="Terms and conditions">
-          <h4>Terms and conditions</h4>
-          <ol>{termsOf(h.c).map((t) => <li key={t.k}><b>{t.label}</b><span>{t.text}</span></li>)}</ol>
-        </section>
-      </div>
-    </Sheet>
-  );
-}
-
-
-
-/* Referral, hard cancel and handover. Returns the new state, or null for any other action. */
-function ship11Reduce(s, a) {
-  const now = now17(s);
-  if (a.type === "TEAM11_TOGGLE") { const t = s.myTeam11 || []; return { ...s, myTeam11: t.includes(a.id) ? t.filter(x => x !== a.id) : [...t, a.id] }; }
-  /* A signed-in member answers the open brief at /fx/<code> without having been invited: Available puts them on the list. */
-  if (a.type === "SHIFT_APPLY17") {
-    const sh = s.shifts.find(x => x.id === a.shiftId); if (!sh) return null;
-    if (s.engagements.some(x => x.shiftId === sh.id && x.staffId === "me" && !["expired", "withdrawn", "cancelled_pro"].includes(x.state))) return s;
-    const st = a.as === "unavailable" ? "unavailable" : "available";
-    const e = { id: uid("eng"), shiftId: sh.id, staffId: "me", state: st, auto: true, offer: false, batch: 0, batchSize: 1, sentAt: now, expiresAt: now + 36e5 * 24, selectBy: selectBy17(s, sh, now), thread: [], history: [{ state: st, at: now }], ...st === "available" ? { availableAt: now } : {} };
-    return audit17({ ...s, engagements: [...s.engagements, e] }, "Professional", `${st === "available" ? "Available" : "Unavailable"} from the brief: ${sh.role}`);
-  }
-  if (a.type === "SHIFT_HARD_CANCEL") {
-    const e = s.engagements.find(x => x.id === a.id); if (!e || e.state !== "confirmed") return null;
-    const n = auto17Reduce(s, { type: "PRO_CANCEL", id: a.id });
-    return { ...n, rep11: [...(n.rep11 || []), { at: now, kind: "hard_cancel", shiftId: e.shiftId, staffId: e.staffId }] };
-  }
-  if (a.type === "SHIFT_REFER") {
-    const e = s.engagements.find(x => x.id === a.id); if (!e || e.state !== "confirmed" || e.handover) return null;
-    const sh = s.shifts.find(x => x.id === e.shiftId); if (!sh) return null;
-    const nid = uid("eng"), who = a.personId || uid("inv");
-    const t = { id: nid, shiftId: e.shiftId, staffId: who, invitedName: a.name || "", invitedPhone: a.phone || "", state: "requested", exclusive: true, referredBy: e.staffId, thread: [], sentAt: now, expiresAt: now + 48 * 36e5, history: [{ state: "requested", at: now }] };
-    let n = { ...s, engagements: [...s.engagements.map(x => x.id === e.id ? { ...x, handover: { to: nid, name: a.name || "", at: now } } : x), t] };
-    n = note17(n, { to: "pro", staffId: who, eventId: sh.eventId, shiftId: sh.id, text: `You've been asked to take over ${sh.role} on ${whenOf11(sh)}. Tap Yes to confirm it.` });
-    n = note17(n, { to: "booker", eventId: sh.eventId, shiftId: sh.id, text: `${sh.role}: your professional has offered the shift to someone else. They stay booked until the new person confirms.` });
-    return audit17(n, "Professional", `Handover offered for ${ref17(e)} (${sh.role})`);
-  }
-  if (a.type === "SHIFT_REFER_ACCEPT") {
-    const t = s.engagements.find(x => x.id === a.id); const m = t && s.engagements.find(x => x.handover && x.handover.to === t.id); if (!m) return null;
-    const sh = s.shifts.find(x => x.id === t.shiftId);
-    let n = { ...s, engagements: s.engagements.map(x => x.id === m.id ? mark17(x, "cancelled_pro", now, { handedOver: true, repKept: true, handover: { ...x.handover, done: true } }) : x), shifts: s.shifts.map(x => x.id === sh.id ? { ...x, staffIds: staffOf(x).filter(p => p !== m.staffId), staffId: staffOf(x).filter(p => p !== m.staffId)[0] || "" } : x) };
-    n = confirm17(n, { ...t });
-    n = note17(n, { to: "booker", eventId: sh.eventId, shiftId: sh.id, text: `${sh.role}: the new person has confirmed. Your booking is unchanged.` });
-    return { ...n, rep11: [...(n.rep11 || []), { at: now, kind: "handover", shiftId: sh.id, staffId: m.staffId }] };
-  }
-  return null;
-}
-
 
 
 /* FF Team next steps: nothing about Event Cards, which belong to FF Staff and FF Party. */
@@ -189,47 +66,6 @@ function TeamSteps11({ onClose }) {
       ))}
     </div>
   );
-}
-
-
-
-/* FF VIP: the same Next steps list. Steps that need the VIP card or booking show a lock until FF VIP opens. */
-function VipSteps21({ onClose }) {
-  const { state, dispatch } = useStore();
-  const v = state.vip21 || {};
-  const cardDone = vipCardDone21(v), joined = !!v.guest, booked = (v.bookings || []).length > 0;
-  const go = (tab) => {
-    onClose();
-    if (state.role !== "vip") dispatch({ type: "ROLE", role: "vip" });
-    dispatch({ type: "TAB", tab });
-    window.scrollTo(0, 0);
-  };
-  const steps = [
-    { id: "card", label: "Create your VIP card", hint: "Your drinks, what you eat and where you like to sit", done: cardDone, lock: true, onClick: () => go("profile") },
-    { id: "guest", label: "Join the guest list", hint: "Your card is your invitation to the launch party", done: joined, lock: true, onClick: () => go("profile") },
-    { id: "exp", label: "Explore experiences", hint: "Venues, spa days and private tables, chosen for you", done: false, lock: false, onClick: () => go("network") },
-    { id: "book", label: "Book a VIP table", hint: "Send your card to the venue with your drinks ready", done: booked, lock: true, onClick: () => go("bookings") },
-  ];
-  return (
-    <div className="ff-xpsec">
-      {steps.map(t => (
-        <button key={t.id} type="button" className={`ff-task${t.done ? " done" : ""}`} onClick={t.onClick} aria-label={t.label + (VIP_LOCKED21 && t.lock && !t.done ? ". " + VIP_LOCK_LABEL21 : "")}>
-          <span className="dot">{t.done && <Check size={13} strokeWidth={2.6} />}</span>
-          <span style={{ flex: 1, minWidth: 0 }}>
-            <span className="ff-serif" style={{ fontSize: 15.5, display: "block", color: "#1D1B18", lineHeight: 1.2 }}>{t.label}</span>
-            <span className="ff-body ff-muted" style={{ fontSize: 11.5 }}>{t.hint}</span>
-          </span>
-          {t.done ? <Pill tone="ok">Done</Pill> : (VIP_LOCKED21 && t.lock ? <Lock size={15} color="var(--gold-dk)" style={{ flex: "none" }} aria-hidden="true" /> : <ChevronRight size={16} color="var(--gold-dk)" style={{ flex: "none" }} />)}
-        </button>
-      ))}
-    </div>
-  );
-}
-
-function notifySite17(state) {
-  if (state.role === "vip") return "vip";
-  if (state.role === "staff") return state.site === "party" ? "party" : "staff";
-  return "team";
 }
 
 
@@ -283,14 +119,6 @@ function questionsWaiting17(state, people) {
 }
 
 
-/* Booker side (FF Staff, FF Party): a question someone asked on a Shift Card you sent, not yet answered. */
-function shiftQuestionsWaiting17(state) {
-  if (!(state.auth && state.auth.status === "signedIn" && state.role === "staff")) return [];
-  return (state.engagements || []).filter(e => e.staffId !== "me" && ["requested", "discuss", "available", "confirmed"].includes(e.state)
-    && (e.thread || []).length > 0 && e.thread[e.thread.length - 1].from === "pro" && state.shifts.some(x => x.id === e.shiftId));
-}
-
-
 /* Booker side (v17.4.6.1): replies to the invitations you sent, read from the same engagement records that drive the
    Event Card. One update per invitation and state, so retries and reloads never duplicate. Scoped to the site the
    booking was made on. "available" is an action (choose them) until it lapses; the others are updates. */
@@ -323,9 +151,8 @@ const coInvites17 = (state) => ctInvitesForMe17(state);
 /* One list per site. FF Team: cards sent to you, team invitations, questions on your profile.
    FF Staff and FF Party: replies to your invitations, questions from the people you asked to work, join requests.
    The badge counts what the list shows as new: every action, plus updates since the list was last opened. */
-const notifyCount17 = (state) => state.role === "vip" ? 0 : state.role === "team"
-  ? pending11(state).length + availWaiting17(state).length + teamAsksWaiting17(state).length + reviewAsksWaiting17(state).length + coInvites17(state).length + questionsWaiting17(state, state.directory || []).length
-  : shiftQuestionsWaiting17(state).length + coRequests17(state).length + coQuestionsWaiting17(state).length + coNetUnseen17(state).length + bookingUpdates17(state).filter(u => u.action || u.at > (state.notesSeenAt || 0)).length;
+const notifyCount17 = (state) => state.role !== "team" ? 0
+  : pending11(state).length + availWaiting17(state).length + teamAsksWaiting17(state).length + reviewAsksWaiting17(state).length + coInvites17(state).length + questionsWaiting17(state, state.directory || []).length;
 
 
 /* Yes, No and a type box below, in the .ff-qa17 look. No send button: what is typed travels with Yes or No. */
@@ -464,21 +291,6 @@ function CoQuestionNote17({ q }) {
 }
 
 
-function ShiftQuestionNote17({ e }) {
-  const { state, dispatch } = useStore();
-  const [txt, setTxt] = useState("");
-  const sh = state.shifts.find(x => x.id === e.shiftId), ev = sh && state.events.find(x => x.id === sh.eventId);
-  const send = () => { if (!txt.trim()) return; dispatch({ type: "AF_REPLY", id: e.id, text: txt.trim() }); dispatch({ type: "TOAST", toast: "Reply sent" }); };
-  return (
-    <div className="ff-ndcard17">
-      <ShiftDelivery11 e={e} shift={sh} event={ev} viewer="hirer" />
-      <div className="reply"><textarea aria-label="Your reply" rows={2} value={txt} onChange={(x) => setTxt(x.target.value.slice(0, 300))} placeholder="Your reply" />
-        <button type="button" className="yes" disabled={!txt.trim()} onClick={send}>Send reply</button></div>
-    </div>
-  );
-}
-
-
 function NoteDrop17({ id, open, onToggle, icon, title, sub, children }) {
   const ref = useRef(null);
   useEffect(() => { if (open && ref.current) ref.current.scrollIntoView({ block: "start", behavior: prefersReducedMotion() ? "auto" : "smooth" }); }, [open]);
@@ -509,10 +321,9 @@ function NotifySheet17({ open, onClose }) {
   was.current = open;
   useEffect(() => { if (open) { dispatch({ type: "NOTES_SEEN" }); setAt(null); } }, [open]);
   if (!open) return null;
-  const lastQ = (e) => e.thread[e.thread.length - 1].text;
   const ic = (k, size = 18) => { const C = I11[NOTE_ICON17[k]] || I11.Users; return <C size={size} />; };
   const bodyOf = (it) => {
-    if (it.kind === "shift") { const sh = state.shifts.find(x => x.id === it.e.shiftId), ev = sh && state.events.find(x => x.id === sh.eventId); return <ShiftDelivery11 e={it.e} shift={sh} event={ev} />; }
+    if (it.kind === "shift") return null;   /* v1.1: Shift Cards come back with FF Staff */
     if (it.kind === "avail") return <QuestionNote17 q={availQ(it.x.iso)} label="Availability" asker={`Asked by ${it.x.byName}`} noVis />;
     if (it.kind === "team") return <TeamAskNote17 x={it.x} onAccepted={setReview} />;
     if (it.kind === "review") return <ReviewAskNote17 r={it.r} />;
@@ -522,22 +333,9 @@ function NotifySheet17({ open, onClose }) {
     return <CoQuestionNote17 q={it.q} />;
   };
   const brief = notesBrief17(state, people).map(it => ({ id: it.id, icon: ic(it.kind), title: it.title, sub: it.sub, body: bodyOf(it) }));
-  const staffRows = state.role === "staff" ? [
-    ...shiftQuestionsWaiting17(state).map(e => {
-      const sh = state.shifts.find(x => x.id === e.shiftId), who = findPerson(people, state, e.staffId) || {};
-      return { id: e.id, icon: <I11.MessageSquare size={18} />, title: `Question from ${firstName(who.name || "") || "your team"}`, sub: `${sh.role} · ${lastQ(e)}`, body: <ShiftQuestionNote17 e={e} /> };
-    }),
-    ...bookingUpdates17(state).filter(u => !u.action && u.at > since.current).map(u => {
-      const who = findPerson(people, state, u.e.staffId) || {}, fn = firstName(who.name || "") || "Someone";
-      const title = { confirmed: `${fn} confirmed`, unavailable: `${fn} is unavailable`, available: `${fn} is available`, noreply: `${fn} didn't reply` }[u.kind];
-      const icon = { confirmed: <I11.Check size={18} />, unavailable: <I11.X size={18} />, available: <I11.CalendarCheck size={18} />, noreply: <I11.Clock size={18} /> }[u.kind];
-      return { id: u.id, icon, title, sub: `${u.sh.role} · ${eventTitle(u.ev)} · ${whenOf11(u.sh)}`, body: <BookingUpdateNote17 u={u} who={who} onGo={onClose} /> };
-    }),
-    ...coNetUnseen17(state).map(x => ({ id: x.id, icon: ic("netadd"), title: `${x.fromName} added you to their network`, sub: "Network", body: <div className="ff-ndcard17"><p className="nt">{x.fromName} added you to their network.</p></div> })),
-  ] : [];
-  const rows = state.role === "vip" ? [] : [...brief, ...staffRows];
+  const rows = brief;
   const ids = new Set(rows.map(r => r.id));
-  const done = state.role === "vip" ? [] : notesDoneFor17(state).filter(d => !ids.has(d.id));
+  const done = notesDoneFor17(state).filter(d => !ids.has(d.id));
   return (
     <Sheet open onClose={onClose} title="Notifications">
       <div className="ff-ntf17">
@@ -557,16 +355,15 @@ function NotifySheet17({ open, onClose }) {
               </li>))}
           </ul>)}
         {done.length > 0 && <div className="ff-ntf-clear17"><button type="button" onClick={() => dispatch({ type: "NOTES_CLEAR" })}>Clear</button></div>}
-        {!isPartySite17(state) && <section className="ff-ntf-next17" aria-labelledby="ff-ntf-next-h">
+        <section className="ff-ntf-next17" aria-labelledby="ff-ntf-next-h">
           <h3 id="ff-ntf-next-h">Next steps</h3>
-          {{ team: <TeamSteps11 onClose={onClose} />, vip: <VipSteps21 onClose={onClose} /> }[notifySite17(state)] || <StaffGuideSheet open bare onClose={onClose} />}
-        </section>}
+          <TeamSteps11 onClose={onClose} />
+        </section>
       </div>
       <ReviewSheet open={!!review} person={review} onClose={() => setReview(null)} />
     </Sheet>
   );
 }
-
 
 
 /* ======================================================================================================
@@ -575,27 +372,11 @@ function NotifySheet17({ open, onClose }) {
 const E17I = { GraduationCap: lucideIcon("GraduationCap"), Plane: lucideIcon("Plane"), Gift: lucideIcon("Gift"), Layers: lucideIcon("Layers"), ChevronLeft: lucideIcon("ChevronLeft"), ChevronRight: lucideIcon("ChevronRight") };
 
 
-
-/* A dropdown box. Collapsed by default. It opens itself when the page is sent to it, or to anything inside it. */
-function Drop17({ id, title, icon, kids = [], children }) {
-  const [open, setOpen] = useState(false);
-  const key = kids.join("|");
-  useEffect(() => {
-    const h = (e) => { const d = e.detail; if (d === id || kids.includes(d)) setOpen(true); };
-    window.addEventListener("ff-opendrop", h);
-    return () => window.removeEventListener("ff-opendrop", h);
-  }, [id, key]);
-  return <StaffBox id={id} icon={icon} title={title} open={open} onToggle={() => setOpen(o => !o)}>{children}</StaffBox>;
-}
-
-
-
 /* What an FF Team member earns per package, and the shortest booking. */
 const PAY17 = PKG_CAT17.filter(x => x.teamRegistration).reduce((m, x) => { m[x.id] = pkgPayPence17(x.id) / 100; return m; }, {});
 
 
 const TIME17 = PKG_CAT17.reduce((m, x) => { m[x.id] = x.durationLabel; return m; }, {});
-
 
 
 function PkgTile17({ sv, on, onClick }) {
@@ -610,92 +391,4 @@ function PkgTile17({ sv, on, onClick }) {
       <em className="go">{on ? <><S17I.Check size={13} strokeWidth={2.6} /> Signed up</> : "Sign up"}</em>
     </button>
   );
-}
-
-
-
-/* This month and next: everyone starts as available; untick the days you can't work. */
-function AvailMonths17() {
-  const { state, dispatch } = useStore();
-  const signedIn = state.auth.status === "signedIn";
-  const off = state.profile.unavail17 || [];
-  const now = new Date();
-  const pad = (n) => String(n).padStart(2, "0");
-  const today = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
-  const flip = (k) => {
-    if (!signedIn) { dispatch({ type: "TOAST", toast: "Create your Profile Card first" }); return; }
-    dispatch({ type: "PROFILE", patch: { unavail17: off.includes(k) ? off.filter(x => x !== k) : [...off, k] } });
-  };
-  return (
-    <div className="ff-av17">
-      {[0, 1].map(i => {
-        const d0 = new Date(now.getFullYear(), now.getMonth() + i, 1);
-        const y = d0.getFullYear(), m = d0.getMonth(), n = new Date(y, m + 1, 0).getDate(), lead = (d0.getDay() + 6) % 7;
-        return (
-          <div className="mo" key={i}>
-            <h3>{MONTHS[m]} {y}</h3>
-            <div className="wk" aria-hidden="true">{["M", "T", "W", "T", "F", "S", "S"].map((w, j) => <span key={j}>{w}</span>)}</div>
-            <div className="dy">
-              {Array.from({ length: lead }, (_, j) => <span key={"b" + j} />)}
-              {Array.from({ length: n }, (_, j) => {
-                const k = `${y}-${pad(m + 1)}-${pad(j + 1)}`, past = k < today, no = off.includes(k);
-                return <button key={k} type="button" disabled={past} aria-pressed={!no && !past} aria-label={`${j + 1} ${MONTHS[m]}: ${no ? "not available" : "available"}`}
-                  className={past ? "past" : no ? "no" : "yes"} onClick={() => flip(k)}>{j + 1}</button>;
-              })}
-            </div>
-          </div>
-        );
-      })}
-      <p className="nt">Availability is about priority. Mark a day as available and we put your profile first for it. You are always asked before any shift, and we never assume you can work.</p>
-    </div>
-  );
-}
-
-
-
-/* The training, dream jobs and FF rewards a team member can register for. All dropdowns. */
-function TeamExtras17() {
-  return null;
-}
-
-
-
-/* FF Staff: train and reward the people who work for you. */
-function BizInterest17({ kind }) {
-  const { state, dispatch } = useStore();
-  const I = swipeImgs();
-  const list = kind === "train" ? TRAINING_COURSES : XP_REWARDS, imgs = kind === "train" ? I.training : I.rewards, pos = kind === "train" ? I.pos.training : I.pos.rewards;
-  /* v17.4.6: saved as a Q&A answer for the company account (was UI state only). */
-  const qid = kind === "train" ? "int.biz_training" : "int.biz_rewards";
-  const account = (state.company && state.company.slug) || qaAccount17(state);
-  const savedAns = account ? qaAnswer17(state, account, qid) : null;
-  const [picked, setPicked] = useState(() => (savedAns ? savedAns.optionIds : []));
-  const [sent, setSent] = useState(!!savedAns);
-  const [busy, setBusy] = useState(false);
-  const toggle = (id) => { setSent(false); setPicked(p => p.includes(id) ? p.filter(x => x !== id) : [...p, id]); };
-  const send = async () => {
-    if (!picked.length || busy) return;
-    if (!account) { window.dispatchEvent(new Event("ff-login")); return; }
-    setBusy(true);
-    const r = await qaSubmit17(dispatch, { questionId: qid, account, optionIds: picked, visibility: "private", source: kind === "train" ? "FF Staff · Train your staff" : "FF Staff · Reward your staff" });
-    setBusy(false);
-    if (!r.ok) { dispatch({ type: "TOAST", toast: "That couldn't be saved. Try again." }); return; }
-    setSent(true); dispatch({ type: "TOAST", toast: "Interest registered. We'll tell you when a date is available." });
-  };
-  return (
-    <div className="ff-bi17">
-      <div className="ff-courses ff-courses-img">
-        {list.map(x => <FlipChoice17 key={x.id} kind={x.kind} title={x.title} note={x.note} img={imgs[x.id]} pos={pos[x.id]} on={picked.includes(x.id)} onClick={() => toggle(x.id)} />)}
-      </div>
-      <div className="acts">
-        <Btn variant="primary" onClick={send}>{sent ? <><S17I.Check size={14} /> Interest registered</> : "Register interest"}</Btn>
-        {picked.length > 0 && <span>{picked.length} selected</span>}
-      </div>
-    </div>
-  );
-}
-
-
-function FFEvents17() {
-  return null;
 }

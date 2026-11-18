@@ -65,58 +65,13 @@ function DoneProfile17({ kind }) {
     return (
       <div className="ff-pubpage ff-done17 team">
         <PublicHero media={mediaOf(state, person)} card={<>{card}{cardShare}</>} below={null} />
-        <PublicProfileBody person={person} packagesTail={<><Creators17 kind="team" by={person.name} /><PersonalTerms17 /></>} />
+        <PublicProfileBody person={person} packagesTail={<PersonalTerms17 />} />
         {mine ? <NeedHelp34 /> : null}
       </div>
     );
   }
-  if (kind === "biz") {
-    const cos = companyList(state);
-    const co = cos.find(c => c.mine && String(c.name || "").trim()) || cos.find(c => !c.mine);
-    return <CompanyPublic co={co} done slot={<>{co && co.mine && state.auth && state.auth.status === "signedIn" && <div className="ff-pubpage-fav17"><CompanyFavs17 /></div>}<Creators17 kind="biz" by={co && co.name} /></>} />;
-  }
-  return <PartyDone17 />;
+  return null;
 }
-
-
-
-function PartyDone17() {
-  const { state, dispatch } = useStore();
-  const all = useDirectory();
-  const [tab, setTab] = useState("overview");
-  const real = state.company || {};
-  const c = String(real.name || "").trim() ? real : { ...DEMO_HOST17, tier: undefined, photo: (window.FF_IMG || {}).face_you || "" };
-  const favs = favsOf(state, all);
-  const PREFS = [["about", "About me"], ["partyStyle", "My kind of event"], ["usualArea", "Where I usually host"], ["staffPrefs", "How I like my staff"],
-    ["drinkNotes", "Drinks and dietary notes"], ["staffKnow", "Anything my staff should know"], ["drinks", "Favourite drinks"]];
-  const interests = String(c.interests || "").split(/[·,\n]/).map(x => x.trim()).filter(Boolean);
-  const pics = (c.media || []).map(m => ({ id: m.id, src: m.src || m.dataUrl, name: m.name || "" })).filter(m => m.src);
-  const prefs = PREFS.filter(([k]) => String(c[k] || "").trim());
-  const reviews = c.reviews || [];
-  const nBook = (state.events || []).filter(e => e.iso || e.venue).length;
-  const tabs = [{ key: "overview", label: "Overview" }, { key: "parties", label: "Events", count: nBook }, { key: "favs", label: "Favourites", count: favs.length }, { key: "reviews", label: "Reviews", count: reviews.length }];
-  const none = (t) => <p className="ff-body ff-muted" style={{ margin: 0 }}>{t}</p>;
-  return (
-    <div className="ff-pubpage ff-done17 party">
-      <PublicHero media={pics} card={<PartyCard11 demo={c === real ? null : c} />} below={null} />
-      <div className="ff-ptabs-wrap">
-        <ProfileTabs tabs={tabs} active={tab} onChange={setTab} />
-        <div role="tabpanel" id="ff-tabpanel" aria-labelledby={`ff-tab-${tab}`} className="ff-tabpanel" tabIndex={0}>
-          {tab === "overview" && (<>
-            <section className="ff-copub-sec ff-ov17"><h3 className="ff-ov17-h"><S17I.Martini size={15} /> Favourite cocktails</h3><FavCocktails17 demo={c !== real ? c.cocktails : ""} /></section>
-            {interests.length > 0 && <section className="ff-copub-sec ff-ov17"><h3 className="ff-ov17-h"><S17I.Heart size={15} /> Interests</h3>
-              <HScroll label="Interests">{interests.map(n => <InformationCard key={n} record={makeRecord("interests", n)} def={BASE_CATEGORIES.interests} themeKey="onyx" />)}</HScroll></section>}
-            <section className="ff-copub-sec">{prefs.length ? <dl className="ff-done17-dl">{prefs.map(([k, l]) => <div key={k}><dt>{l}</dt><dd>{c[k]}</dd></div>)}</dl> : none("Nothing saved yet.")}</section>
-          </>)}
-          {tab === "parties" && <section className="ff-copub-sec"><BookingsList11 onOpen={(e) => { dispatch({ type: "V11_SET", patch: { bkView: { eventId: e.id } } }); dispatch({ type: "TAB", tab: "bookings" }); window.scrollTo(0, 0); }} /></section>}
-          {tab === "favs" && <section className="ff-copub-sec">{favs.length ? <HScroll label="Favourites">{favs.map(f => <PlayerTile key={f.id} person={f} onClick={() => { dispatch({ type: "VIEW", id: f.id }); window.scrollTo(0, 0); }} />)}</HScroll> : none("No favourites yet.")}</section>}
-          {tab === "reviews" && <section className="ff-copub-sec">{reviews.length ? <ul className="ff-done17-rev">{reviews.map(r => <li key={r.id}><span>{"★".repeat(r.rating || 5)}</span><p>{r.text}</p><small>{r.byName}</small></li>)}</ul> : none("No reviews yet.")}</section>}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 
 
 /* ---- Examples, so the completed profile can be reviewed straight away ---------------------------- */
@@ -143,7 +98,6 @@ function seedDemo17(state, dispatch, kind) {
 }
 
 
-
 /* ---- The Profile tab: building screen or completed profile -------------------------------------
    TEMPORARY: the "DEV" button shows the completed profile without signing in, for review. */
 /* Silver and Gold are locked, but can be previewed: the card shows the colour for three seconds, then goes back. */
@@ -164,23 +118,6 @@ function previewTheme17(k, cur, apply) {
   if (PV17) clearTimeout(PV17.t);
   PV17 = { base, apply, t: setTimeout(() => { PV17 = null; apply(base); }, 3000) };
   apply(k);
-}
-
-
-function StaffEdit17({ kind }) {
-  const { state } = useStore();
-  const party = kind === "party";
-  const site = hireSiteOf(state);
-  return React.createElement("div", null, React.createElement("div", {
-    className: "ff-eyebrow"
-  }, site.name, " · ", party ? "Your Party" : "Your Business"), React.createElement("h1", {
-    className: "ff-h1",
-    style: { marginTop: 4, marginBottom: 14 }
-  }, party ? "Edit your VIP Host Card" : "Edit your company profile"), React.createElement("div", {
-    id: "ff-co-card"
-  }, party ? React.createElement(PartyCard11, {
-    edit: true
-  }) : React.createElement(EditableCompanyCard, { noType: true })), party ? React.createElement(PartySections11, null) : React.createElement(CompanySections, null));
 }
 
 
@@ -274,15 +211,12 @@ function ProfileGate17({ kind }) {
   }, [done, editing, kind, claim && claim.status, dirSlug]);
   return React.createElement("div", {
     className: `ff-pg17${done ? " done" : ""}`
-  }, kind === "party" ? React.createElement(HostPage17, null) : done && !editing ? React.createElement(React.Fragment, null, kind === "biz" && welcome && React.createElement(CompanyWelcome, null), React.createElement(DoneProfile17, {
+  }, done && !editing ? React.createElement(React.Fragment, null, kind === "biz" && welcome && React.createElement(CompanyWelcome, null), React.createElement(DoneProfile17, {
     kind
   }), justShared && kind === "team" && React.createElement("div", {
     className: "ff-pg17-shared"
-  }, React.createElement(PublishedPanel, null))) : done ? React.createElement(React.Fragment, null, kind === "team" ? React.createElement(ProfilePage, null) : React.createElement(StaffEdit17, {
-    kind
-  }), kind === "team" ? React.createElement(BulkAI17, null) : null) : kind === "team" ? React.createElement(ProfilePage, null) : React.createElement(StaffProfile, null));
+  }, React.createElement(PublishedPanel, null))) : React.createElement(ProfilePage, null));
 }
-
 
 
 /* ==== FF Party: Browse ===========================================================================
