@@ -62,3 +62,9 @@
 @media (min-width:760px) {
   .ff .ff-hf22.ff-home-c4 .ff-dx.is-open .ff-dx-tile.on .ph::after { background:linear-gradient(180deg,rgba(234,224,195,0) 32%,rgba(234,224,195,.86) 60%,#EAE0C3 94%) !important; }
 }
+
+/* ---------- 1-2-3 cards inside the pillars: the picture backgrounds no longer match the cream box (Alex, 18 Nov 16:07) ----------
+   The pictures are screenshots on cream, so the well is a soft rosé and the picture is multiplied onto it:
+   the cream turns rosé, dark parts stay dark. */
+.ff .ff-hf22.ff-home-c4 .ff-dx-panel .ff-cta17 .ph { background:#E8CCD0; isolation:isolate; }
+.ff .ff-hf22.ff-home-c4 .ff-dx-panel .ff-cta17 .ph img { mix-blend-mode:multiply; }

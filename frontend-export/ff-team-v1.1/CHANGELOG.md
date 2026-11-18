@@ -7,6 +7,9 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
 ## v1.24
 
 - Home pillars (Alex, 18 Nov 16:04): when a pillar is open, its tile is the same cream as the box below it (#EAE0C3; on wide screens the photo fades into it), so the tile and its content read as one continuous box. Closed tiles stay ivory to sand with the burgundy border. `styles/home-colours.css`.
+- The 1-2-3 cards inside the pillars (Alex, 18 Nov 16:07): their pictures are screenshots on cream, which matched the cream box. The picture well is now a soft rosé (#E8CCD0) and the picture is multiplied onto it, so the cream turns rosé and dark parts stay dark.
+- Title line, site-wide (Alex, 18 Nov 16:05): no dark gold. Gold (#C9A227) fades into champagne (#DCC48C) and then fades away, beside every section title, profile label and page title. On the Network page the line only runs beside the title and the first two lines of the description (`styles/titles2.css`).
+- Journey tests 48/48.
 
 ## v1.23
 

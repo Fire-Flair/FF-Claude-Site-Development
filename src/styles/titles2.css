@@ -33,7 +33,7 @@
 .ff .ff-bk-bh::before,
 .ff .ff-hf22 .ff-hbc-btn .ff-hb23-t::before {
   content:""; flex:0 0 auto; width:5px; align-self:stretch; min-height:1em; border-radius:0;
-  background:linear-gradient(180deg,var(--color-gold-lt,#E4C36A),var(--color-gold,#C9A227) 55%,var(--color-gold-dk,#7E611D));
+  background:linear-gradient(180deg,var(--color-gold,#C9A227) 0,#DCC48C 58%,rgba(234,219,180,0) 100%);
 }
 /* the old underlines and rules of these titles give way to the gold line */
 .ff h2.ff-big20 .t { padding-bottom:0; border-bottom:0; }
@@ -56,8 +56,12 @@
 .ff .ff-tl20 { position:relative; padding-left:19px; margin:52px 0 16px; }
 @media (min-width:900px) { .ff .ff-tl20 { margin-top:64px; } }
 .ff .ff-tl20.ff-tl20-pg { margin:22px 0 16px; }
-.ff .ff-tl20::before { content:""; position:absolute; left:0; top:0; bottom:0; width:5px; border-radius:0;
-  background:linear-gradient(180deg,var(--color-gold-lt,#E4C36A) 0,var(--color-gold,#C9A227) 28%,var(--color-gold-dk,#7E611D) 58%,transparent 100%); }
+/* v1.24 (Alex, 18 Nov 15:58–16:05): no dark gold. Gold fades into champagne, then fades away; the line runs beside the
+   title and only the first two lines of the description. */
+.ff .ff-tl20::before { content:none; }
+.ff .ff-tl20 > .ff-big20 { position:relative; }
+.ff .ff-tl20 > .ff-big20::after { content:""; position:absolute; left:-19px; top:0; width:5px; height:calc(100% + 10px + 3rem); border-radius:0; pointer-events:none;
+  background:linear-gradient(180deg,var(--color-gold,#C9A227) 0,#DCC48C 58%,rgba(234,219,180,0) 100%); }
 .ff .ff-tl20 > .ff-big20 { margin:0 0 10px !important; }
 .ff .ff-tl20 > .ff-big20::before { display:none !important; }
 .ff .ff-tl20 > h1.ff-big20 .t { padding-bottom:0; border-bottom:0; }
@@ -73,7 +77,7 @@
 /* Profile labels (Professions, About me, Attributes, Venues …): a thin gold line before the label. */
 .ff .ff-about-h { display:flex; align-items:center; gap:10px; }
 .ff .ff-about-h::before { content:""; flex:0 0 auto; width:3px; align-self:stretch; min-height:1.1em; border-radius:0;
-  background:linear-gradient(180deg,var(--color-gold-lt,#E4C36A),var(--color-gold,#C9A227) 55%,var(--color-gold-dk,#7E611D)); }
+  background:linear-gradient(180deg,var(--color-gold,#C9A227) 0,#DCC48C 58%,rgba(234,219,180,0) 100%); }
 
 /* "FFStories": centred, one word, FF in a slight italic. */
 .ff .ff-hf22 .ff-jr17-title.ff-jr5 { align-items:center !important; text-align:center !important; }
