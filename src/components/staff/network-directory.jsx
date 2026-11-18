@@ -9,6 +9,17 @@ function BigHead20({ tag, title, count, id }) {
 }
 
 
+/* v1.16 (Alex, 18 Nov 14:07): a short description under each Network page heading, in the page's body style. */
+const NET_LEAD20 = {
+  page: "Meet the event and hospitality professionals of FF\u00a0Team and discover the companies behind great events. Professionals sign up from all over the world, and bookings are focused on the UK.",
+  pros: "The event and hospitality professionals of FF\u00a0Team, from bartenders and mixologists to managers and front of house, each with their own Profile Card.",
+  dir: "The UK companies that make events happen, from mobile cocktail bars and DJs to caterers and event services. Each one has its own Company Card."
+};
+function NetLead20({ k }) {
+  return React.createElement("p", { className: "ff-body ff-netlead20", style: { margin: "-2px 0 14px", maxWidth: 680, overflowWrap: "normal", wordBreak: "normal", hyphens: "manual" } }, NET_LEAD20[k]);
+}
+
+
 function CompaniesSection({ title = "Companies", note, list: listIn, fold, icon, open }) {
   const { state, dispatch } = useStore();
   const list = listIn || companyList(state);
@@ -273,6 +284,7 @@ function NetBrowse17(props) {
       netMapWithSearch20(props),
       React.createElement("section", { id: "ff-our-pros", style: { marginTop: 18, scrollMarginTop: 70 } },
         React.createElement(BigHead20, { title: "Our professionals" }),
+        React.createElement(NetLead20, { k: "pros" }),
         React.createElement(TopStaff11, null),
         React.createElement(ProsByType17, { onPick: props.onPick })),
       React.createElement(NetDirectory20, null));
