@@ -24,9 +24,9 @@ const PE2_CATS = PROFESSION_CATEGORIES.map(c => ({
   key: c.key, ranked: c.key === "Bar",
   list: c.key === "Bar" ? PE2_LADDER : [...c.suggested].sort((a, b) => a.localeCompare(b)),
 }));
-/* p2/pubprof: Languages live on the Profile Card and Experience is now under Venues, so neither is an Attribute here. */
+/* p2/pubprof: Languages live on the Profile Card and Experience has its own section, so neither is an Attribute here. */
 const PE2_ATTRS = ["skills", "interests", "qualifications"];
-const PE2_TITLES = { profs: "Professions", attrs: "Attributes", venues: "Venues" };
+const PE2_TITLES = { profs: "Professions", attrs: "Attributes", venues: "Experience" };
 
 /* The member's professions and add / remove. Removing goes by record id (never by name), so a hidden or
    renamed record with the same name can't be hit by mistake; adding a name that is already there (hidden or
@@ -214,7 +214,7 @@ function PE2Overview({ records }) {
   const [openProf, setOpenProf] = useState(null);
   const profs = rankedRecords(records.professions || []).filter(r => !r.hidden && !r.proposed);
   const cats = PE2_ATTRS.filter(k => BASE_CATEGORIES[k]);
-  /* Venues: venue records and the older Experience records together. */
+  /* v1.29 Experience (was Venues): venue records and the older Experience records together. */
   const venAll = [...(records.venues || []), ...(records.experience || [])];
   return (
     <>
@@ -258,9 +258,9 @@ function PE2Overview({ records }) {
       </section>
       {SHOW_VENUES_PROFILE17 && (
         <section className="ff-pp ff-pp21 pp-sec pe2-ven" aria-labelledby="pe2-ven-h">
-          <div className="ff-pp-head"><h2 id="pe2-ven-h" className="ff-about-h">Venues</h2></div>
-          {/* pfc: typed straight into the page (Google places search), shown as venue rows with type and area. */}
-          <VenuesEditor19 items={venAll} onOpen={(r) => setOpenVen(r)} />
+          <div className="ff-pp-head"><h2 id="pe2-ven-h" className="ff-about-h">Experience</h2></div>
+          {/* v1.29: a Google business search per venue, then the Experience cards. */}
+          <ExperienceEditor29 items={venAll} onOpen={(r) => setOpenVen(r)} />
         </section>
       )}
       <PE2Sheet open={!!sheet && !openVen && !openProf} title={PE2_TITLES[sheet] || ""} wide={sheet === "profs"} onClose={() => setSheet(null)}>

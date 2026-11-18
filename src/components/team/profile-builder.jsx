@@ -382,7 +382,7 @@ function AccountSettings({ boxes = false, only } = {}) {
     }
   };
   if (boxes && !editing) return (<>
-    {only !== "tag" && <GoldBox21 icon={<WhatsAppIcon size={17} />} title="Phone number" desc={ACCT_DESC21.phone} className="shine ff-wa-pfa">
+    {only !== "tag" && <GoldBox21 icon={<WhatsAppIcon size={17} />} title="Phone number" desc={ACCT_DESC21.phone} className={PHONE_BOX21}>
       <span className="ff-gb21-val"><Check size={15} color="var(--ok)" strokeWidth={2.6} /> {phone || "Number verified"}</span>
     </GoldBox21>}
     {only !== "phone" && <GoldBox21 icon={<Hash size={16} strokeWidth={1.8} />} title="FF Tag" desc={ACCT_DESC21.tag}
@@ -493,6 +493,12 @@ function DialCode26({ value, onChange }) {
   );
 }
 
+/* v1.29 (Alex, 18 Nov 17:49): the Phone number box's tone, one line to switch — "ff-wa-sage" (light sage-champagne),
+   "ff-wa-olive" (olive champagne-gold) or "ff-wa-moss" (deep muted green, champagne text). Colours in prof21.css. */
+/* v1.33 (Alex, 18 Nov 18:22): champagne box, green WhatsApp logo ("ff-wa-champ"). */
+const PHONE_TONE21 = "ff-wa-champ";
+const PHONE_BOX21 = "shine ff-wa-pfa " + PHONE_TONE21;
+
 function GoldBox21({ icon, title, count, desc, note, children, line = true, id, className }) {
   return (
     <section className={"ff-gb21" + (className ? " " + className : "")} id={id} aria-label={title}>
@@ -577,7 +583,7 @@ function PhoneBox21({ join: j }) {
   if (j.signedIn) return <AccountSettings boxes only="phone" />;
   return (<>
     {j.stage === "details" ? (
-      <GoldBox21 icon={<WhatsAppIcon size={17} />} title="Phone number" desc={ACCT_DESC21.phone} className="shine ff-wa-pfa">
+      <GoldBox21 icon={<WhatsAppIcon size={17} />} title="Phone number" desc={ACCT_DESC21.phone} className={PHONE_BOX21}>
         <DialCode26 value={j.dial} onChange={j.setDial} />
         <input className="ff-gb21-in" type="tel" inputMode="tel" autoComplete="tel-national" placeholder="7700 900000" aria-label="Phone number"
           value={j.phone} onChange={(e) => j.setPhone(e.target.value)} enterKeyHint="send"
@@ -585,7 +591,7 @@ function PhoneBox21({ join: j }) {
         <button type="button" className="ff-gb21-btn" disabled={j.busy || !j.available || !j.phoneOk} onClick={j.send}>{j.busy ? <Loader2 size={14} className="ff-spin" /> : null}Verify</button>
       </GoldBox21>
     ) : (
-      <GoldBox21 className="shine ff-wa-pfa" icon={<WhatsAppIcon size={17} />} title="WhatsApp code" desc={`Sent to ${j.fullPhone} · any six digits in this preview`}
+      <GoldBox21 className={PHONE_BOX21} icon={<WhatsAppIcon size={17} />} title="WhatsApp code" desc={`Sent to ${j.fullPhone} · any six digits in this preview`}
         note={<span className="ff-gb21-links">
           <button type="button" className="ff-linkbtn" onClick={() => { j.setStage("details"); j.setCode(""); j.setErr(null); }}>Change number</button>
           <button type="button" className="ff-linkbtn" disabled={j.busy} onClick={j.send}>Resend code</button>

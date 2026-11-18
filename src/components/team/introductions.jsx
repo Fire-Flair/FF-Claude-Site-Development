@@ -453,9 +453,9 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
   const reviews = reviewsOf(state, person);
   const records = recordsForPerson(state, person);
   const profs = (records.professions || []).filter(r => !r.hidden && !r.proposed);
-  /* p2/pubprof: Experience is now Venues: venue records and the older Experience records show together under Venues. */
-  const venues = SHOW_VENUES_PROFILE17 ? [...(records.venues || []), ...(records.experience || [])].filter(r => !r.hidden && !r.proposed) : [];
-  /* Attributes: every other category as a summary card (Work locations are on Bookings; Venues have their own section;
+  /* v1.29: Experience (was Venues): the venues worked at and the older Experience records together. Favourites are not shown. */
+  const venues = SHOW_VENUES_PROFILE17 ? [...(records.venues || []), ...(records.experience || [])].filter(r => !r.hidden && !r.proposed && xpShown29(r)) : [];
+  /* Attributes: every other category as a summary card (Work locations are on Bookings; Experience has its own section;
      Languages are on the Profile Card, so they are not in the rail). */
   const attrs = attributesOf(state, person, cats).filter(it => !["locations", "venues", "experience", "languages"].includes(it.category));
   const [openRec, setOpenRec] = useState(null);
@@ -482,7 +482,7 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
       <div role="tabpanel" id="ff-tabpanel" aria-labelledby={`ff-tab-${tab}`} className="ff-tabpanel" tabIndex={0}>
         {tab === "overview" && (<>
           <style>{RANK_CSS17}</style>
-          {/* v17.21: the v17.15 look is back — big profession tiles, About Me, the Attributes cards, then Venues. */}
+          {/* v17.21: the v17.15 look is back — big profession tiles, About Me, the Attributes cards, then Experience. */}
           {aboutFirst && <AboutMeBlock big text={person.id === "me" ? state.profile.about : person.about} />}
           {profs.length > 0 && (
             <section className="ff-pp ff-pp21" aria-labelledby="ff-profs-h">
@@ -503,8 +503,8 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
           )}
           {venues.length > 0 && (
             <section className="ff-pp ff-pp21" aria-labelledby="ff-ven-h">
-              <div className="ff-pp-head"><h2 id="ff-ven-h" className="ff-about-h">Venues</h2></div>
-              <div className="ff-ven19"><VenueRows19 items={venues} /></div>
+              <div className="ff-pp-head"><h2 id="ff-ven-h" className="ff-about-h">Experience</h2></div>
+              <ExperienceCards29 items={venues} />
             </section>
           )}
           <FireFlairIntroductions17 person={person} />

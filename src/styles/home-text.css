@@ -61,11 +61,21 @@
   .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .chev { color:var(--color-champagne,#EADBB4) !important; background:var(--color-ox,#5C1220) !important; border-color:rgba(234,219,180,.75) !important; }
   .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile.on .chev { color:var(--color-ox,#5C1220) !important; background:var(--color-champagne,#EADBB4) !important; border-color:var(--color-champagne,#EADBB4) !important; }
 
+  /* v1.31 (Alex, 18 Nov 18:15): the gold carries on from the top right down to the bottom right, with no line.
+     Two layers of the same gold, each drawn "to bottom left", so each one's 50% line is the diagonal from its top-left
+     corner to its bottom-right corner and everything past it is clear, including the layer's bottom edge:
+     1. a 16px rim down the whole right side, as tall as the box, which narrows to nothing at the bottom right and grows
+        with the box when it opens (drawn on top, so the colour down the edge runs evenly);
+     2. the wedge behind the chevron, 72px wide and 200px tall (about the closed box), fully faded by its bottom.
+     The title, the four labels and "How bookings work" stay on burgundy, closed and open. */
   .ff .ff-hf22.ff-home-c4 .ff-hb23-box {
     background:
-      linear-gradient(236deg,var(--color-gold-leaf,#EDD58F) 0%,var(--gold,#C9A227) 9%,#9A5A38 16%,rgba(92,18,32,0) 24%) top right / 100% 150px no-repeat,
+      linear-gradient(to bottom left,var(--color-gold-leaf,#EDD58F) 0%,var(--gold,#C9A227) 16%,#9A5A38 32%,rgba(92,18,32,0) 50%) top right / 16px 100% no-repeat,
+      linear-gradient(to bottom left,var(--color-gold-leaf,#EDD58F) 0%,var(--gold,#C9A227) 16%,#9A5A38 32%,rgba(92,18,32,0) 50%) top right / 72px 200px no-repeat,
       var(--color-ox,#5C1220) !important; }
   .ff .ff-hf22.ff-home-c4 .ff-hbc-ch { color:var(--color-champagne,#EADBB4) !important; background:var(--color-ox,#5C1220) !important; border-color:var(--color-champagne,#EADBB4) !important; }
+  /* a tap leaves :hover on, and its tint was a lighter band ending at the button's bottom edge */
+  .ff .ff-hf22.ff-home-c4 .ff-hbc-btn:hover { background:transparent !important; }
 }
 
 /* ---------- pillar tiles: title only, bigger and bold, every size (Alex, 18 Nov 18:15) ---------- */
@@ -78,3 +88,11 @@
 .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .chev,
 .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile:not(.on) .chev,
 .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile.on .chev { color:var(--color-champagne,#EADBB4) !important; background:var(--color-ox,#5C1220) !important; border-color:rgba(234,219,180,.75) !important; }
+/* "How bookings work" and the step cards share the title's left and right edges (the button's padding), on every size */
+.ff .ff-hf22.ff-home-c4 .ff-hb23-body { padding:0 14px 18px; }
+@media (min-width:900px) { .ff .ff-hf22.ff-home-c4 .ff-hb23-body { padding:0 30px 26px; } }
+.ff .ff-hf22.ff-home-c4 .ff-hb23-body .ff-hb17-row { grid-template-columns:minmax(0,1fr); }
+.ff .ff-hf22.ff-home-c4 .ff-hb23-body .ff-hb17-row .card { min-width:0; }
+@media (min-width:860px) { .ff .ff-hf22.ff-home-c4 .ff-hb23-body .ff-hb17-row { grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr); } }
+/* open on iPad and desktop the tint would stop at the button's edge too */
+.ff .ff-hf22.ff-home-c4 .ff-hb23.is-open .ff-hbc-btn:hover { background:transparent; }
