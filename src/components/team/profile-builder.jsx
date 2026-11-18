@@ -934,7 +934,7 @@ function cvWithEdits17(x, edits) {
 }
 
 
-/* v1.25 (Alex, 18 Nov 17:06): Talk or type works exactly like the CV upload. One runner (useFfaiRun17: read ->
+/* v1.27 (Alex, 18 Nov 17:06): Talk or type works exactly like the CV upload. One runner (useFfaiRun17: read ->
    the live FF AI extraction -> the simulated progress bar), one progress bar (FfaiBar17) and one approval list
    (FfaiReview17: Yes / No / Edit per item, Add to my profile) serve both. Typed text goes through the same
    CV_ADAPTER.ffaiExtract as a CV (CV_READER.fromText makes it a one-page document). */

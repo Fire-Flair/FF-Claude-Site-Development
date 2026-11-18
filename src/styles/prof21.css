@@ -477,7 +477,7 @@
 /* v1.14 (Gimli M3): the phone box sits inside .ff-way17, which a chip rule elsewhere sets to nowrap. Let its text wrap between words. */
 .ff .ff-way17-phone .ff-gb21-ds, .ff .ff-way17-phone .ff-gb21-links { white-space: normal; }
 
-/* ======================= v1.25 (Alex, 18 Nov 17:06) — Phone number box and Let's get started ======================= */
+/* ======================= v1.27 (Alex, 18 Nov 17:06) — Phone number box and Let's get started ======================= */
 /* Phone number box, everywhere it appears (Let's get started, the WhatsApp code step, a signed-in member's number):
    flat WhatsApp green, no white inner border line, no shine; dark text on the green for contrast. */
 .ff .ff-gb21.shine.ff-wa-pfa { background: #25D366; border: 0; box-shadow: none; }

@@ -4,6 +4,26 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.27
+
+Profile builder, "Let's get started" (Alex, 18 Nov 17:06). Published by a three-way merge onto the live page
+(live 1795022225-c9ef), so the photo-browsing chat's unpushed work and the homepage v1.25/v1.26 all stay.
+
+- Talk or type to GPT now works exactly like the CV upload: the same FF AI extraction (`CV_ADAPTER.ffaiExtract`, with
+  the typed text as a one-page document via `CV_READER.fromText`), the same simulated progress bar (0% to 92% over
+  40 s, then 100%), and the same approval list with Yes / No / Edit per item and one "Add to my profile" button.
+  Before, Talk or type added everything straight onto the profile with no review. Shared code in
+  `src/components/team/profile-builder.jsx`: `useFfaiRun17` (runner and progress), `FfaiBar17` (bar), `FfaiError17`,
+  `FfaiReview17` (approval list); `CVUpload17` and `StartBox17` both use them. Records from Talk or type carry
+  source `{ origin: "FireFlair", location: "Talk or type" }`; from a CV `{ origin: "CV", location: <file name> }`.
+- Phone number box, everywhere it appears (Let's get started, the WhatsApp code step, a signed-in member's number):
+  flat WhatsApp green #25D366, no white inner border line, no shine; text in dark ink #0B1F12 on the green for
+  readability; the WhatsApp mark stays white. "Phone number" always sits on its own line above the entry. The white
+  number box is a fixed size (up to 220px, the code box up to 180px) and no longer stretches on desktop; on a phone
+  the country code, number and Verify stay on one line. Styles at the end of `src/styles/prof21.css` (v1.27 block).
+- Let's get started has a maximum width of 640px on wide screens, centred, so its boxes no longer stretch across the
+  page (`.ff-start17`).
+
 ## v1.25
 
 FF Team home page `#/ff-team` (Alex's homepage thread, 18 Nov 16:26–16:59). New file `styles/home-text.css`, loaded after `home-colours.css`; two tokens in `tokens.css` (`--color-champagne-box`, `--color-champagne-deep`).
