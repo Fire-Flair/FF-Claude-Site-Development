@@ -375,7 +375,7 @@
 /* FireFlair Introductions: its own segment, divided from Attributes and Venues. */
 .ff .ff-intro.ff-intro-seg { margin-top: 36px; padding: 26px 22px 18px; position: relative; border: 1px solid rgba(176,141,42,.4); border-radius: 22px; corner-shape: squircle; background: #F4EFE4; box-sizing: border-box; }
 .ff .ff-intro.ff-intro-seg::before { content: ""; position: absolute; left: 22px; right: 22px; top: -19px; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,162,39,.7), transparent); }
-.ff .ff-intro.ff-intro-seg .ff-about-h { margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid rgba(176,141,42,.35); }
+.ff .ff-intro.ff-intro-seg .ff-about-h { margin-bottom: 12px; }
 .ff .ff-intro.ff-intro-seg p { color: #1E1A12; }
 
 /* ==== p2/pfb: Professions on the edit page ==================================
