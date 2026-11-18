@@ -4,6 +4,14 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.44
+
+Network, FF Event Directory (Alex, 18 Nov 19:50). `data/companies/profiles/vooshka.json`, `src/content/companies.js`, `src/content/companies/real-companies.json` (rebuilt with `npm run companies`).
+
+- The Vooshka Company Card now matches every other company card: Classic layout (logo left, words right) instead of Centred, and the standard frame instead of the gold one. As a claimed company it keeps the FF logo top right in place of the "Company Card" plate (the existing rule for claimed companies).
+- Checked: `npm run check`, `npm run build`, Network page screenshot of the Mobile cocktail bars row.
+- Published over live 1795031374-236e (v1.43), index.html only (all other files kept). Artifact version 1795031702-ea2c. Built page saved as `live-v1.44-index.html`.
+
 ## v1.43
 
 Bookings, FF Party packages wording (Alex, 18 Nov 19:20). `src/components/team/bookings.jsx`, `src/components/party/terms-and-packages.jsx`.
