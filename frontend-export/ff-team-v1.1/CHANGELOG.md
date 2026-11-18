@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.40
+
+- Home questions ("Can FF Team help you?", Alex 18 Nov): back to Alex's original questions from v16.66, in a new order. 1 "Do you work events, or would you like to?" (Yes, I work events / I'd like to), 2 "Do you work in hospitality?" (Yes, it's my career / Not yet, but I'd like to), 3 "What would help you most right now?" unchanged. The Launch Challenge question and "I'd like shifts around my main job" are no longer in the box; "No, I'm here for something else" is left out because it only led to FF Party (Alex chose to drop it). `components/home/growth-and-terms.jsx`.
+
 ## v1.39 (homepage)
 
 FF Team home on iPad and desktop (Alex, 18 Nov 19:16). `styles/home-text.css`.
