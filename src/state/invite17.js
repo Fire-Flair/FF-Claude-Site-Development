@@ -42,7 +42,7 @@ function profileBasics17(s) {
 
 
 /* The address a member's join link has: https://ffteam.uk/join/<tag in lower case>. */
-const inv17Link = (tag) => "https://ffteam.uk/join/" + String(tag || "").toLowerCase();
+const inv17Link = (tag) => "https://FFTeam.uk/join/" + String(tag || "").toLowerCase();
 
 
 /* Read once when the app starts: a shared link carries the sharer's code as ?r=<code>. */

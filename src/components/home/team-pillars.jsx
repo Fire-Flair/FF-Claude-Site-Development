@@ -207,7 +207,7 @@
       <div className="ff-tp17 grn prof" role="group" aria-label={name}>
         <span className="lv">{cat}</span>
         <b className="tt">{name}</b>
-        <span className="in">{"Are you available for bookings as " + (/^[aeiou]/i.test(name) ? "an " : "a ") + name.toLowerCase() + "?"}</span>
+        <span className="in">{"Are you available for bookings as " + (/^[aeiou]/i.test(name) ? "an " : "a ") + (/^[A-Z]{2,}$/.test(name) ? name : name.toLowerCase()) + "?"}</span>
         <span className="yn" role="group">
           {["Yes", "No"].map((o) => <button key={o} type="button" className={yn === o ? "on" : ""} aria-pressed={yn === o} onClick={() => setYn(o)}>{o}</button>)}
         </span>

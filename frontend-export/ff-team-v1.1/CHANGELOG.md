@@ -4,6 +4,19 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.14
+
+Fixes from the fellowship review of v1.13 (Aragorn, Legolas, Gimli, Sam, Frodo; reports in the Tolkien AI plans folder).
+- Page head: title, canonical address, link-preview address and site data now say FF Team and FFTeam.uk (they still said "FireFlair Phase 2" and the FF Party address, which WhatsApp previews read).
+- Profile builder: FireFlair Introductions showed twice after the first Save (a card with a pencil and a second block with its own edit button). The second block is gone; the pencil opens the editor.
+- Q&A "Asked by …" labels wrap instead of cutting off with "…".
+- The WhatsApp code line in the phone box wraps inside its box instead of running off the screen.
+- Share sheet: WhatsApp is the green WhatsApp button; the sheet title has no trailing colon. Join links are shown as FFTeam.uk/join/<tag>.
+- "Skip to content" moves focus to the page without changing the address (a reload had sent people to Home).
+- Company headings read "… across the UK" instead of "… in UK-wide"; a DJ is "a DJ", not "a dj"; the home pop-up close button reads "Close" (it read "Close your profile").
+- Checked: the Profile Card PNG keeps uploaded photos. Only the drawn demo avatar drops out of the PNG.
+- Journey tests 48/48.
+
 ## v1.13
 
 - Testing only (Alex, 18 Nov 12:59): the log-in sheet has DEV sign-ins again so every FF Team screen can be tested — "DEV · complete profile" (Alexander Gagnon with the demo data, notifications and asks), "DEV · join from invite" (arrives from FFTeam.uk/join/alex424) and "DEV · new member" (empty profile). They are marked in `landing-shell.jsx` and must be removed before go-live. Journey tests 48/48. Artifact version 1795007371-ec41.

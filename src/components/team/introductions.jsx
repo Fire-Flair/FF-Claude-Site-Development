@@ -247,7 +247,7 @@ function ProfileH117({ person }) {
   const name = fiClean17(person.name);
   if (!name) return null;
   const role = fiClean17(person.profession || (person.professions || [])[0]), area = fiClean17((person.locations || [])[0]);
-  return fiH("h1", { className: "ff-pp-h1" }, name + (role ? " — " + role : "") + (area ? " in " + area : ""));
+  return fiH("h1", { className: "ff-pp-h1" }, name + (role ? " — " + role : "") + (area ? (/^uk-?wide$/i.test(area) ? " across the UK" : " in " + area) : ""));
 }
 
 

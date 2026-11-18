@@ -57,13 +57,13 @@ function CardShareSheet17({ open, onClose, title, url, fileName, children, extra
   const doDownload = () => { if (!png) return; cx17Download(png.blob, fileName); say("Image downloaded"); };
   const doCopy = async () => { const ok = await cx17Copy(full); say(ok ? "Link copied" : "Copy didn't work. Long-press the link to copy it."); };
   const ready = !!png && !busy;
-  const opt = (label, onClick, icon, dis) => (
-    <button type="button" className="ff-csm-opt" onClick={onClick} disabled={dis} aria-label={label}>
+  const opt = (label, onClick, icon, dis, cls) => (
+    <button type="button" className={"ff-csm-opt" + (cls ? " " + cls : "")} onClick={onClick} disabled={dis} aria-label={label}>
       {icon}<span>{label}</span>
     </button>
   );
   return (
-    <Sheet open onClose={onClose} title={title || "Share"}>
+    <Sheet open onClose={onClose} title={String(title || "Share").replace(/:\s*$/, "")}>
       <div className="ff-csm-stage" ref={holder}>{children}</div>
       <p className="ff-csm-url" aria-label="Card address">{base.replace(/^https?:\/\//, "").replace(/^ff([a-z])/i, (m, c) => "FF" + c.toUpperCase())}</p>
       {err ? (
@@ -73,7 +73,7 @@ function CardShareSheet17({ open, onClose, title, url, fileName, children, extra
       ) : null}
       <div className="ff-csm-menu" role="group" aria-label="Share options">
         {opt("Share", doShare, <ShareUp17 size={16} />, !ready)}
-        {opt("WhatsApp", doWhatsApp, <MessageCircle size={16} />, !ready)}
+        {opt("WhatsApp", doWhatsApp, <WhatsAppIcon size={16} />, !ready, "wa")}
         {opt("Download PNG", doDownload, <Download size={16} />, !ready)}
         {opt("Copy Link", doCopy, <Link2 size={16} />, false)}
       </div>

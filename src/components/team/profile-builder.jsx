@@ -928,7 +928,6 @@ function ProfileBuilder() {
           <CreatorAboutMe top />
           <ProfileEditTabs person={me} />
         </ABOUT_TOP34.Provider>
-        <IntroEditor17 />
         <PE2QA />
       </div>
 

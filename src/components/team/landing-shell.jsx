@@ -226,7 +226,7 @@ function Shell({ children }) {
 
   return (
     <div className="ff-shell">
-      <a className="ff-skip" href="#ff-main">Skip to content</a>
+      <a className="ff-skip" href="#ff-main" onClick={(e) => { e.preventDefault(); const m = document.getElementById("ff-main"); if (m) m.focus(); }}>Skip to content</a>
       <header className="ff-topbar ff-lattice">
         <div className="ff-topbar-in">
           {/* Top left (v1.1): the FF logo and "FF Team". It opens the FF Team home; there is no site list. */}

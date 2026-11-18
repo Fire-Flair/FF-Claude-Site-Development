@@ -489,7 +489,7 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
       onClick: close
     }, React.createElement(DX_I.ChevronUp, {
       size: 16
-    }), " Close ", cur.t))), rowEnd < cats.length && React.createElement("div", {
+    }), " Close"))), rowEnd < cats.length && React.createElement("div", {
       className: "ff-dx-bar ff-dx-bar2"
     }, cats.slice(rowEnd).map(tile)), cur && shape && React.createElement("svg", {
       className: "ff-dx-svg",

@@ -473,3 +473,6 @@
 
 /* 5. Business & Support at the bottom of every FF Team page (Network, Bookings, Profile, someone's profile). */
 .ff .ff-biz-pfa { margin-top: 36px; }
+
+/* v1.14 (Gimli M3): the phone box sits inside .ff-way17, which a chip rule elsewhere sets to nowrap. Let its text wrap between words. */
+.ff .ff-way17-phone .ff-gb21-ds, .ff .ff-way17-phone .ff-gb21-links { white-space: normal; }
