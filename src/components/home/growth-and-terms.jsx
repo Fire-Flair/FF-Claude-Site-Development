@@ -160,20 +160,23 @@
     const Q = {
       /* home-update (Alex, 18 Nov 14:18): three questions, three answers each. */
       team: [
-        /* questions (Alex, 18 Nov): back to his original v16.66 questions, events first, then hospitality; the third stays.
-           "No, I'm here for something else" is left out: it only led to FF Party (every FF Team answer stays inside FF Team). */
-        { q: "Do you work events, or would you like to?", a: [
-          { l: "Yes, I work events", r: "Put your event experience and the venues you work at on your profile, and ask the people you work with for reviews.", c: A.profile },
-          { l: "I'd like to", r: "See who is already doing it. Browse the network and follow the people whose work you like.", c: A.network }
+        /* home-questions (Alex, 18 Nov 20:21): events, then freelancing, then what helps most; three answers each.
+           "Are you a freelancer?" replaces "Do you work in hospitality?"; "Training events" and "A support network"
+           replace "Building my team" and "Collecting reviews"; "Getting booked" leads to the Profile Card. */
+        { q: "Do you work in events?", a: [
+          { l: "Yes", r: "Then FF Team is built for you. Put your event experience on your Profile Card, so event companies can find you and book you.", c: A.profile },
+          { l: "No, but I'd like to", r: "See who is already doing it. Browse the network and follow the people whose work you like.", c: A.network },
+          { l: "What kind of events?", r: "Private parties, weddings, corporate events, festivals, launches and much more. Every one is a chance to do what you love.", c: A.support }
         ] },
-        { q: "Do you work in hospitality?", a: [
-          { l: "Yes, it's my career", r: "Then FF Team is built for you. Turn your CV into a Profile Card and a page of your own, so event companies can find you and book you.", c: A.profile },
-          { l: "Not yet, but I'd like to", r: "Start with the FF Team community: bar shows, training and people who will help you take your first steps.", c: A.support }
+        { q: "Are you a freelancer?", a: [
+          { l: "Yes", r: "Your Profile Card works for you: your skills, experience and reviews in one place, ready for every new client.", c: A.profile },
+          { l: "No, but I'd like to be", r: "Start with the FF Team community: training, events and people who will help you take your first steps.", c: A.support },
+          { l: "What is a freelancer?", r: "A freelancer is self-employed. You choose your work and your rates, work for different clients and look after your own tax.", c: A.stories }
         ] },
         { q: "What would help you most right now?", a: [
-          { l: "Getting booked", r: "We put your Profile Card in front of the event companies who book. Requests arrive on WhatsApp and you answer with one tap.", c: A.bookings },
-          { l: "Building my team", r: "Add the people you work with. They join your team, show on your profile and get booked with you.", c: A.network },
-          { l: "Collecting reviews", r: "Everyone you work with can review you after a shift, and every review adds to your profile.", c: A.reviews }
+          { l: "Getting booked", r: "We put your Profile Card in front of the event companies who book. Requests arrive on WhatsApp and you answer with one tap.", c: A.profile },
+          { l: "Training events", r: "Bar shows, training and events with the FF Team community, so you keep learning and keep growing.", c: A.support },
+          { l: "A support network", r: "Meet people who do what you do. Share tips, make friends in the trade and grow together with the FF Team network.", c: A.network }
         ] }
       ],
       staff: [
