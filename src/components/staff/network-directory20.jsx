@@ -144,7 +144,8 @@ function NetDirectory20() {
     NET_CO_TYPES17.map(function (t) {
       const inCat = every.filter(function (c) { return (c.cat || "bar") === t[0]; });
       const list = inCat.filter(function (c) { return !c.unclaimed; }).concat(inCat.filter(function (c) { return c.unclaimed; }));
-      return React.createElement(DirSection20, { key: t[0], cat: t[0], title: t[1], list: list, open: t[0] === "bar" });
+      /* Netmap: a category shows once it has a company, and every Directory box is open by default (Alex's exception). */
+      return list.length ? React.createElement(DirSection20, { key: t[0], cat: t[0], title: t[1], list: list, open: true }) : null;
     }));
 }
 
@@ -188,7 +189,18 @@ function NetVenues20() {
 
 
 /* The map on its own (the Explore by area drop-downs stay on the other pages). */
-function NetMap20() {
+function NetMap20(props) {
+  const search = props && props.search;
   return React.createElement("section", { id: "ff-netmap", style: { marginTop: 22, scrollMarginTop: 70 } },
-    React.createElement(BigHead20, { title: "Explore our network" }), React.createElement(FFMap, { mode: "network" }));
+    React.createElement(BigHead20, { title: "Explore our network" }),
+    search ? React.createElement("div", { id: "ff-net-search", className: "ff-netsrch20", style: { margin: "0 0 14px", scrollMarginTop: 70 } }, search) : null,
+    React.createElement(FFMap, { mode: "network" }));
+}
+
+
+/* Netmap: FF Team's map section with the network search placed under its heading (the search is at the top of the page). */
+function netMapWithSearch20(props) {
+  const after = props.after;
+  if (!after) return props.search ? React.createElement("section", { id: "ff-net-search", style: { marginTop: 18 } }, props.search) : null;
+  return after.type === NetMap20 ? React.cloneElement(after, { search: props.search }) : React.createElement(React.Fragment, null, props.search, after);
 }

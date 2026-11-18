@@ -886,8 +886,9 @@ function VipMap21() {
     const L = window.L, G = ukGeo11();
     let map;
     try {
-      map = L.map(boxRef.current, { zoomControl: false, attributionControl: false, scrollWheelZoom: false, dragging: !L.Browser.mobile, zoomSnap: 0.25, zoomDelta: 1, minZoom: 5, maxZoom: 13, preferCanvas: true });
+      map = L.map(boxRef.current, { zoomControl: false, attributionControl: false, scrollWheelZoom: false, dragging: true, touchZoom: true, zoomSnap: 0.25, zoomDelta: 1, minZoom: 5, maxZoom: 13, preferCanvas: true });
       mapRef.current = map;
+      map.on("unload", ffMapGestures17(map, boxRef.current));
       const cv = L.canvas({ padding: 0.4 });
       const area = (sets, style) => sets && sets.length ? L.polygon(sets.map(p => p.map(decRing11)), { renderer: cv, interactive: false, ...style }) : null;
       const line = (sets, style) => sets && sets.length ? L.polyline(sets.map(decRing11), { renderer: cv, interactive: false, ...style }) : null;

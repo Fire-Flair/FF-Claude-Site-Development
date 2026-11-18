@@ -109,7 +109,8 @@ const MAP_GLYPH17 = {
 MAP_GLYPH17.svc = MAP_GLYPH17.photo;
 
 
-const MAP_COL17 = { bar: "#6E1F2F", dj: "#6B3FB5", photo: "#2A6BB0", svc: "#2A6BB0", catering: "#D2762B" };
+/* Netmap: FF Directory map dots in muted FireFlair palette tints (burgundy, dark gold, warm grey, burgundy tint). */
+const MAP_COL17 = { bar: "#5C1220", dj: "#7E611D", photo: "#4A443A", svc: "#4A443A", catering: "#8A4A55" };
 
 
 function MapGlyph17(props) {
@@ -129,7 +130,7 @@ function MapPerson17(props) {
 }
 
 
-const COMPANY_CATS17 = [["bar", "Bar companies", "#6E1F2F"], ["dj", "Entertainment", "#6B3FB5"], ["photo", "Event services", "#2A6BB0"], ["catering", "Caterers", "#D2762B"]];
+const COMPANY_CATS17 = [["bar", "Bar companies", "#5C1220"], ["dj", "Entertainment", "#7E611D"], ["photo", "Event services", "#4A443A"], ["catering", "Caterers", "#8A4A55"]];
 
 
 function companyLegend17(pins) {

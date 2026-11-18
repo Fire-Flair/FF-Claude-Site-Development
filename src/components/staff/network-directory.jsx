@@ -9,10 +9,10 @@ function BigHead20({ tag, title, count, id }) {
 }
 
 
-function CompaniesSection({ title = "Companies", note, list: listIn, fold, icon }) {
+function CompaniesSection({ title = "Companies", note, list: listIn, fold, icon, open }) {
   const { state, dispatch } = useStore();
   const list = listIn || companyList(state);
-  const Wrap = fold ? ({ children }) => React.createElement(Fold17, { shut: true, id: fold, icon: icon || React.createElement(I11.Briefcase, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title, count: list.length }, children) : ({ children }) => React.createElement("section", { className: "ff-co11-sect", style: { marginTop: 22 } }, React.createElement(SectionHead, { icon: icon || React.createElement(I11.Briefcase, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title, count: list.length }), children);
+  const Wrap = fold ? ({ children }) => React.createElement(Fold17, { shut: !open, id: fold, icon: icon || React.createElement(I11.Briefcase, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title, count: list.length }, children) : ({ children }) => React.createElement("section", { className: "ff-co11-sect", style: { marginTop: 22 } }, React.createElement(SectionHead, { icon: icon || React.createElement(I11.Briefcase, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title, count: list.length }), children);
   return React.createElement(Wrap, null, note && React.createElement("p", { className: "ff-body", style: { margin: "-2px 0 8px", fontSize: 13.5 } }, note), React.createElement(HScroll, { label: title }, list.map((co) => React.createElement(
     "button",
     {
@@ -38,7 +38,8 @@ function CompaniesSection({ title = "Companies", note, list: listIn, fold, icon 
 
 /* Browse under the map: the four pillars sort the people and companies, and the map follows. */
 const NET_CO_TYPES17 = [["bar", "Bar companies"], ["dj", "Entertainment"], ["photo", "Event services"], ["catering", "Caterers"], ["svc", "Bar services"]];
-const NET_CAT_VIEW17 = { bar: ["Martini", "#16130F"], dj: ["Music", "#964991"], photo: ["PartyPopper", "#467DB9"], catering: ["UtensilsCrossed", "#4E8A3A"], svc: ["Wine", "#7E8186"] };
+/* Netmap: muted FireFlair palette tints (black, burgundy, dark gold, burgundy tint, warm grey), no category rainbow. */
+const NET_CAT_VIEW17 = { bar: ["Martini", "#16130F"], dj: ["Music", "#5C1220"], photo: ["PartyPopper", "#7E611D"], catering: ["UtensilsCrossed", "#8A4A55"], svc: ["Wine", "#4A443A"] };
 function catIcon17(k) { const v = NET_CAT_VIEW17[k] || ["Briefcase", "var(--gold-dk)"]; return React.createElement(I11[v[0]] || I11.Briefcase, { size: 15, color: v[1], strokeWidth: 1.8 }); }
 
 
@@ -70,15 +71,13 @@ function NetDirectory19(props) {
   const top = every.filter(function (c) { return !c.unclaimed && !(ownKey && !c.mine && coKey17(c) === ownKey) && (!open || PILLAR_OF_CAT17[c.cat || "bar"] === open); });
   const secs = NET_CO_TYPES17.filter(function (t) { return !open || PILLAR_OF_CAT17[t[0]] === open; })
     .map(function (t) { return [t, all.filter(function (c) { return (c.cat || "bar") === t[0]; })]; })
-;
+    .filter(function (x) { return x[1].length; });
   return h("section", { id: "ff-directory", style: { marginTop: 30, scrollMarginTop: 70 } },
     h(BigHead20, { title: "FF Event Directory" }),
     top.length ? h(CompaniesSection, { title: "Featured companies", list: top, icon: React.createElement(I11.Star, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.8 }) }) : null,
+    /* Netmap: a category shows once it has a company; every Directory box is open by default (Alex's exception). */
     secs.map(function (x) {
-      return x[1].length
-        ? h(CompaniesSection, { key: "dir" + x[0][0], title: x[0][1], list: x[1], fold: "ff-dir-" + x[0][0], icon: catIcon17(x[0][0]) })
-        : h(Fold17, { key: "dir" + x[0][0], shut: true, id: "ff-dir-" + x[0][0], icon: catIcon17(x[0][0]), title: x[0][1], count: 0 },
-            h("p", { className: "ff-body ff-muted", style: { margin: 0 } }, "No companies listed yet."));
+      return h(CompaniesSection, { key: "dir" + x[0][0], title: x[0][1], list: x[1], fold: "ff-dir-" + x[0][0], icon: catIcon17(x[0][0]), open: true });
     }));
 }
 
@@ -224,6 +223,7 @@ function ProsByType17({ onPick }) {
     <>
       {PRO_TYPES17.map(([k, label, icon]) => {
         const list = everyone.filter(p => kindOf(p) === k);
+        if (!list.length) return null;
         return (
           <Fold17 key={k} id={"ff-pros-" + k} icon={<GroupIcon group={icon} />} title={label} count={list.length} shut>
             {list.length ? (
@@ -248,10 +248,11 @@ function NetBrowse17(props) {
   if (query.trim()) {
     const found = netSearch17(state, query);
     const anyCo = found.cos.length + found.dir.length > 0;
+    /* Netmap: the search sits at the top of the Network page, above the map (FF Team: under the page heading). */
     return React.createElement(NetQ17.Provider, { value: query },
-      team20 ? (props.after || null) : null,
-      props.search ? React.createElement("section", { id: "ff-our-pros", style: { marginTop: team20 ? 18 : 4, scrollMarginTop: 70 } }, team20 ? null : React.createElement(BigHead20, { title: "Our professionals" }), props.search) : null,
-      team20 ? null : (props.after || null),
+      team20 ? netMapWithSearch20(props) : React.createElement(React.Fragment, null,
+        props.search ? React.createElement("section", { id: "ff-net-search", style: { marginTop: 4, scrollMarginTop: 70 } }, props.search) : null,
+        props.after || null),
       React.createElement(GroupedPeople, { query: query, onPick: props.onPick, scope: props.scope, quietEmpty: anyCo }),
       found.cos.length ? React.createElement(CompaniesSection, { title: "Companies", list: found.cos }) : null,
       found.dir.length ? React.createElement(CompaniesSection, { title: "FF Event Directory", list: found.dir }) : null);
@@ -264,22 +265,23 @@ function NetBrowse17(props) {
   const noPkg = teamSite || !!props.noPackages;
   if (team20) {
     return React.createElement(React.Fragment, null,
-      props.after || null,
-      /* v17.30: the whole Our professionals section is back, between the map and the search box, as it was before v17.20. */
+      /* Netmap: search at the top (under the page heading, above the map), then the map, Our professionals and the Directory. */
+      netMapWithSearch20(props),
       React.createElement("section", { id: "ff-our-pros", style: { marginTop: 18, scrollMarginTop: 70 } },
         React.createElement(BigHead20, { title: "Our professionals" }),
         React.createElement(TopStaff11, null),
         React.createElement(ProsByType17, { onPick: props.onPick })),
-      React.createElement("section", { id: "ff-net-search", style: { marginTop: 18, scrollMarginTop: 70 } }, props.search),
       React.createElement(NetDirectory20, null));
   }
   return React.createElement(React.Fragment, null,
     noPkg ? null : React.createElement(BigHead20, { title: "Explore our packages" }),
     noPkg ? null : React.createElement(PillarBox17, { label: "Explore our packages", open: open, items: items, onPick: function (k) { dispatch({ type: "V11_SET", patch: { netPillar17: k } }); } }, open ? React.createElement(NetPackages20, { pillar: open }) : null),
+    /* Netmap: the search sits at the top, above the map. */
+    !teamSite && props.search ? React.createElement("section", { id: "ff-net-search", style: { marginTop: 4, scrollMarginTop: 70 } }, props.search) : null,
     teamSite ? null : (props.after || null),
-    React.createElement("section", { id: "ff-our-pros", style: { marginTop: noPkg ? 4 : 30, scrollMarginTop: 70 } },
+    React.createElement("section", { id: "ff-our-pros", style: { marginTop: noPkg ? 18 : 30, scrollMarginTop: 70 } },
       React.createElement(BigHead20, { title: "Our professionals" }),
-      props.search || null,
+      teamSite ? (props.search || null) : null,
       teamSite ? (props.after || null) : null,
       React.createElement(TopStaff11, null),
       teamSite
@@ -518,7 +520,7 @@ function StaffRosterStaff11() {
       <NetBrowse17 query={q} onPick={(p) => dispatch({ type: "VIEW", id: p.id })} scope="staff_" noPackages
         search={<FFAI query={q} onQuery={setQ} title="Search the network" context="FF Staff"
           purpose="Find people to hire — search by name, profession, skill or area. Tap a card to see their profile."
-          placeholder="Name, profession, skill or area…" />} after={!state.netBrief ? <NetMap11 bare /> : null} teamSlot={myCoKey17(state) ? <CompanyTeam17 /> : null} />
+          placeholder="Search the network" />} after={!state.netBrief ? <NetMap11 bare /> : null} teamSlot={myCoKey17(state) ? <CompanyTeam17 /> : null} />
     </div>
   );
 }
