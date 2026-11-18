@@ -23,6 +23,7 @@ Profile builder, FF Tag and Media (Alex, 18 Nov 20:46). `team/creator-media.jsx`
 - Media shows two labelled groups with dotted empty boxes: "Profile" (the profile photo) and, after a thin line, "Page" (the pictures across the top of the public profile). While Page is empty a faint second box shows there is room for more.
 - The Profile box is the same picture as the Profile Card's photo circle (`profile.photo`): a photo added on the card shows here, and one added here shows on the card (shrunk to 800px; X removes it). Page pictures are unchanged (`profile.media`, up to 12, reorder and remove).
 - Merged onto the live page (v1.55). Artifact version 1795035122-bd5c.
+- Artifact title restored to "FF Team version 1.1. Final" (title-only publish, no code change). Artifact version 1795035296-d6d9.
 
 ## v1.55
 
