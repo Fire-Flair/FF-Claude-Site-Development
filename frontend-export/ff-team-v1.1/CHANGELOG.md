@@ -10,6 +10,7 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
 - iPad at every size, portrait or landscape, uses the phone layout; the desktop layout needs a wide window with a mouse or trackpad.
 - Desktop: one big photo with every photo in a row below it (arrows and keys step through; the row scrolls left and right after five), in place of the mosaic that opened one photo full size. `components/team/public-profile.jsx` (DeskGallery11, PublicHero), `styles/p12.css`.
 - Company Cards (no icon line) keep the previous photo behaviour.
+- Checked: `npm run check`, `npm run build`, touch simulations at 390, 820 and 1180 (photos end on the icon line at every scroll position; open photos close on any scroll), desktop at 1280; no console errors. Published over live 1795034255-f8d9 (v1.52), index.html, manifest and one new image. Artifact version 1795034370-98d9.
 
 ## v1.52
 
