@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.51
+
+FF Team home screen (fellowship review). Branch merged: `p2-homefix`.
+
+- Launch Challenge (`discover-and-support.jsx`, `team-home.jsx`, new `home-fix22.css`): heading "Grow your Team. Win prizes." in Cinzel; Join Challenge and a squircle Rules button; the countdown kept; three equal boxes with gold icons (90 days, Rewards for the top 10, Win Athens), each opening its existing sheet; the progress bar's ladder reads Now (Profiles and teams), 100 (Bookings go live, a third of the way along), 1,000 (Launch party and nationwide campaign). The date chip, summary sentence, FFTeam.uk line and old stage labels are gone; 54 visible words.
+- Discover FireFlair pillars (`discover-hub.jsx`, `team-pillars.json`) now sit below the Launch Challenge: full-width rows on phone, 2x2 on tablet, four across on desktop; titles shrink instead of splitting; new one-liners.
+- Rest of the home: Business & Support after Join FF Team; three coin dividers instead of seven, smaller gaps; the middle Create your Profile Card button and the "Answer three quick questions" line removed; equal-height question boxes and How bookings steps; headings left-aligned; Stories chips squircle, excerpts as whole sentences, dates on one line (`stories-reader.jsx`); smaller empty band in the Join card; the footer version now comes from the newest CHANGELOG entry at build time (`scripts/build.mjs`).
+
 ## v17.50
 
 Artifact version 1794966831-ddca.
