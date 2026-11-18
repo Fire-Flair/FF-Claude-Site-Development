@@ -476,3 +476,29 @@
 
 /* v1.14 (Gimli M3): the phone box sits inside .ff-way17, which a chip rule elsewhere sets to nowrap. Let its text wrap between words. */
 .ff .ff-way17-phone .ff-gb21-ds, .ff .ff-way17-phone .ff-gb21-links { white-space: normal; }
+
+/* ======================= v1.25 (Alex, 18 Nov 17:06) — Phone number box and Let's get started ======================= */
+/* Phone number box, everywhere it appears (Let's get started, the WhatsApp code step, a signed-in member's number):
+   flat WhatsApp green, no white inner border line, no shine; dark text on the green for contrast. */
+.ff .ff-gb21.shine.ff-wa-pfa { background: #25D366; border: 0; box-shadow: none; }
+.ff .ff-gb21.shine.ff-wa-pfa::before { content: none; }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-lb, .ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-val { color: #0B1F12; }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-lb svg { color: #fff; }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-ds { color: #0B1F12; text-shadow: none; }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-val svg { color: #0B1F12; stroke: #0B1F12; }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-linkbtn { color: #0B1F12; }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-in, .ff .ff-gb21.shine.ff-wa-pfa .ff-dial26 { border-color: transparent; }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-in:focus, .ff .ff-gb21.shine.ff-wa-pfa .ff-dial26:focus-within { border-color: #0B1F12; box-shadow: 0 0 0 3px rgba(11,31,18,.25); }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-btn:disabled { background: rgba(11,31,18,.14); border-color: transparent; color: rgba(11,31,18,.6); }
+.ff .ff-gb21.shine.ff-wa-pfa .ff-gb21-btn:focus-visible { outline-color: #0B1F12; }
+/* "Phone number" always sits on its own line above the entry, at every width. */
+.ff .ff-gb21.ff-wa-pfa .ff-gb21-line { flex-wrap: wrap; row-gap: 10px; }
+.ff .ff-gb21.ff-wa-pfa .ff-gb21-line > .ff-gb21-lb { flex: 1 0 100%; }
+/* The white entry box is a fixed size: it no longer stretches on wide screens (it can still shrink on a narrow phone). */
+.ff .ff-gb21.ff-wa-pfa .ff-gb21-line { flex-wrap: wrap; }
+.ff .ff-gb21.ff-wa-pfa .ff-gb21-line > .ff-gb21-in { flex: 1 1 0; width: auto; max-width: 220px; min-width: 0; }
+.ff .ff-gb21.ff-wa-pfa .ff-gb21-line > .ff-gb21-in.code { max-width: 180px; }
+.ff .ff-gb21.ff-wa-pfa .ff-gb21-line > .ff-gb21-btn { flex: none; }
+.ff .ff-gb21.ff-wa-pfa .ff-gb21-line > .ff-dial26 { flex: none; }
+/* Let's get started: a maximum width on wide screens, centred, so its boxes no longer stretch across the page. */
+.ff .ff-start17 { max-width: 640px; margin-left: auto; margin-right: auto; box-sizing: border-box; width: 100%; }
