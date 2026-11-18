@@ -687,13 +687,26 @@ function xpView29(r) {
 }
 
 
-function ExperienceCard29({ record, onClick }) {
+/* v1.35 (Alex, 18 Nov 18:49): no black — a muted card that suits the finished profile page. One line to switch:
+   XP_TONE29 = "champagne" | "rose" | "sage". Colours in experience29.css (.ff-xc29.t-<tone>). */
+const XP_TONE29 = "champagne";
+const XP_TONES29 = {
+  champagne: { bg: "linear-gradient(168deg,#F8F0DC,#E9DAB4)", ring: "linear-gradient(160deg,#EBD58F,#C9A227 50%,#E2C46A)", dark: false },
+  rose: { bg: "linear-gradient(168deg,#F1E3DF,#DDC5BE)", ring: "linear-gradient(160deg,#E2C4BE,#A86A72 50%,#D9B3AC)", dark: false },
+  sage: { bg: "linear-gradient(168deg,#ECEEDC,#D3D8BB)", ring: "linear-gradient(160deg,#D8DDBE,#8C9A6A 50%,#C9D0A8)", dark: false },
+};
+
+
+/* note / onNote (v1.35): in the pop-up the note is typed straight onto the card. */
+function ExperienceCard29({ record, onClick, note, onNote, tone }) {
   const v = xpView29(record);
+  const tn = XP_TONES29[tone || XP_TONE29] ? (tone || XP_TONE29) : "champagne";
+  const typing = typeof onNote === "function";
   const Icon = v.Icon;
   const key = (e) => { if (onClick && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); onClick(); } };
   return (
-    <CardFrame as="div" theme={THEMES.onyx} className={"ff-xc29" + (v.hand ? " hand" : "")} onClick={onClick}
-      style={{ width: CARD_W.venue }}>
+    <CardFrame as="div" theme={XP_TONES29[tn]} className={"ff-xc29 t-" + tn + (v.hand ? " hand" : "") + (typing ? " typing" : "")} onClick={onClick}
+      style={{ width: CARD_W.venue, backgroundImage: `${XP_TONES29[tn].bg}, ${XP_TONES29[tn].ring}` }}>
       <div className="ff-xc29-in" role={onClick ? "button" : undefined} tabIndex={onClick ? 0 : undefined}
         aria-label={onClick ? `${v.name}. Open details` : undefined} onKeyDown={onClick ? key : undefined}>
         <span className="k">{v.kicker}</span>
@@ -705,7 +718,10 @@ function ExperienceCard29({ record, onClick }) {
           <span className="ic" aria-hidden="true"><Icon size={20} strokeWidth={1.7} /></span>
         </span>
         {(v.role || v.dates) && <span className="role">{v.role && <b>{v.role}</b>}{v.dates && <span>{v.dates}</span>}</span>}
-        {v.note && <span className="nt">{v.note}</span>}
+        {typing
+          ? <textarea className="nt ff-xc29-tx" rows={3} autoFocus value={note || ""} onChange={(e) => onNote(e.target.value)}
+              aria-label={`What you did at ${v.name}`} placeholder="What I did there" />
+          : v.note && <span className="nt">{v.note}</span>}
         <span className="ft">
           {v.foot ? <span className="ar">{v.foot}</span> : v.hand ? <span className="ar">Added by hand</span> : <span />}
           {v.maps && <a className="gm" href={v.maps} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>View on Google Maps →</a>}
@@ -753,9 +769,7 @@ function ExperienceSheet29({ record, onClose }) {
     <Sheet open center title="Experience" onClose={save}>
       <style>{xpCSS29}</style>
       <div className="ff-xs29">
-        <div className="ff-xs29-card"><ExperienceCard29 record={{ ...record, description: note }} /></div>
-        <textarea className="ff-input ff-xs29-tx" rows={4} value={note} onChange={(e) => setNote(e.target.value)}
-          aria-label={`What you did at ${v.name}`} placeholder="What I did there" />
+        <div className="ff-xs29-card"><ExperienceCard29 record={record} note={note} onNote={setNote} /></div>
         <div className="ff-xs29-act">
           <button type="button" className="ff-linkbtn ff-xs29-rm" onClick={remove}>Remove</button>
           <Btn variant="gold" onClick={save}><Check size={15} strokeWidth={2.4} /> Done</Btn>

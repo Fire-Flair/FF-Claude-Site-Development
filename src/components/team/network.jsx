@@ -215,9 +215,20 @@ function PersonProfile() {
       {halfShare(shareBtn)}
     </div>);
   } else if (other) {
+    /* v1.35/1.36 live patch (another chat, recovered into source): signed-in member view of someone else's profile =
+       Back on top, then four equal buttons in a 2-column grid (relationship button, Share, Ask, Availability). */
+    const staff11 = state.role === "staff";
+    const share11 = other && shareTag ? (
+      <CardShareBtn17 title={`${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${pc17Tag(shareTag)}`}
+        fileName={"fireflair-" + cx17Slug(shareTag)} label="Share" className="ff-pub-wa11 ff-g11-btn"
+        render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={person.theme || "ivory"} />} />
+    ) : null;
+    /* createElement so the Ask/Availability buttons are spread in as separate grid cells (as on the live page). */
+    const grid11 = staff11 ? null : React.createElement("div", { className: "ff-pub-grid11" },
+      <div className="ff-g11-rel"><RelSlot17 person={person} /></div>, share11, ...[].concat(askRow.props.children));
     actionsEl = (<div className="ff-pub-acts ff-pub-stack">
       {state.role === "staff" && <FavBtn11 person={person} wide />}
-      <RelSlot17 person={person} />
+      {staff11 ? <RelSlot17 person={person} /> : null}
       {state.role === "staff" && (
         <Btn variant={state.selection.includes(person.id) ? "ghost wide" : "primary wide"} onClick={() => {
           dispatch({ type: "SELECT", id: person.id });
@@ -226,9 +237,9 @@ function PersonProfile() {
           {state.selection.includes(person.id) ? <><Check size={14} /> In your booking bar</> : <><Users size={14} /> Add to booking</>}
         </Btn>
       )}
-      {askRow}
+      {staff11 ? askRow : null}
       {state.role === "staff" && <Btn variant="wide" onClick={() => setReviewing(true)}><Award size={14} aria-hidden="true" /><FitLabel17>Review</FitLabel17></Btn>}
-      {halfShare(shareBtn)}
+      {staff11 ? halfShare(shareBtn) : grid11}
     </div>);
   }
   const cardEl = <PlayerCard person={person} format="full" nameAs="div" themeKey={person.id === "me" ? state.profile.theme : (person.theme || "ivory")}  />;

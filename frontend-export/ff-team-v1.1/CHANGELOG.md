@@ -4,19 +4,49 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
-## Unreleased (branch profile-builder-base, not published)
+## v1.37
 
-Merged base for the profile builder rebuild (Legolas, 18 Nov). The next publish takes the next number (v1.35) and moves these notes under it.
+Profile builder thread (Legolas merge, 18 Nov 19:00). No new features: this release puts the missing source on GitHub so
+every chat builds from complete code.
 
-- From branch `professions-review` (d360380, 16:55, approved by Alex; first noted there as "v1.16" before the v1.16 number was taken): profession descriptions in `src/content/data/profession-descriptions.json`.
-  - Cocktail Bartender: "Can follow recipes to produce cocktails to a high standard with speed and care."
-  - Mixologist: "An expert with years of experience who can create original cocktail recipes and menus."
-  - For the developers: please add profession descriptions (and their category texts and fallback) to the admin tools, so Alex can update any of them himself without a code change. Alex has not yet read every description word for word.
+- Live-only code recovered into `src/` (it had been published onto the artifact by hand without its source being pushed):
+  - Photo browser and visitor button row (photo-browsing chat, 16:00–17:50): `ffPvScroller11`, `PhotoStrip11`,
+    `MediaMosaic`, `PublicHero` in `src/components/team/public-profile.jsx`; Back | Join team | Share row and
+    MyShareBtn17 in `src/components/team/network.jsx`; `shareIcon` on `CardShareBtn17`
+    (`src/components/shared/card-share17.jsx`); photos for Bruno, Simao, Dany and James in `src/content/people-demo.js`;
+    `.ff-ps*` and button-row styles in the head `<style>` of `src/shell/index.html`.
+  - Display-page tabs: the open tab joins the tab page, Share champagne with a green WhatsApp mark.
+- From branch `professions-review` (approved by Alex): Cocktail Bartender and Mixologist descriptions in
+  `src/content/data/profession-descriptions.json`. For the developers: please add profession descriptions to the admin
+  tools so Alex can edit them without a code change.
+- Merged with v1.36 (Experience, phone box, bookings box, home blurb); nothing from any other chat removed.
+- Published over live 1795028117-1329 (v1.36), index.html and manifest.json only (all other files kept). Artifact version 1795028595-33d7. Built page saved as `live-v1.37-index.html`.
+- Also recovered into source: the signed-in member button grid on someone else's profile (Back on top, then Add to network | Share | Ask | Availability), which had been patched onto the live page in v1.35/v1.36: `grid11` in `src/components/team/network.jsx`, `.ff-pub-grid11` styles in `src/shell/index.html`.
+- Other chats: please merge `ff-team-v1.1` before your next publish; the photo browser now lives in `src/`, so building
+  from source no longer drops it.
 
-- Live-only code recovered into `src/` (it was published onto the artifact without its source being pushed):
-  - Photo browser and visitor button row (photo-browsing chat, 16:00–17:50, live from v1.25): `ffPvScroller11`, `PhotoStrip11`, `MediaMosaic`, `PublicHero` in `src/components/team/public-profile.jsx` (`MediaCarousel` is gone); Back | Join team | Share row and MyShareBtn17 changes in `src/components/team/network.jsx`; `shareIcon` on `CardShareBtn17` (`src/components/shared/card-share17.jsx`); photos for Bruno, Simao, Dany and James in `src/content/people-demo.js`; `.ff-ps*` and button-row styles in the head `<style>` of `src/shell/index.html`.
-  - Display-page tabs (live 1795026408-9c88, about 18:24): the open tab joins the tab page (About me box with a burgundy border), and Share goes champagne with a green WhatsApp mark. Head `<style>` of `src/shell/index.html`.
-  - Check: the `publish-build` output matches live 1795026408-9c88, apart from the professions-review wording and some redundant brackets and line breaks left by the hand patch.
+## v1.36
+
+FF Team home (Alex, 18 Nov 18:37). `styles/home-text.css`, `discover-hub.jsx`.
+
+- "Built for getting you bookings": no gold on phones. The box is one flat burgundy on every size, closed and open. Legolas's alignment of "How bookings work" and the hover-tint fix from v1.32 stay.
+- Intro under "Built for event and hospitality professionals" (writer agent), now a two-sentence summary of FF Team: "Made for the events industry, FF Team runs through WhatsApp. Availability requests arrive as shifts come up, with clear terms and conditions for everything you sign up to." Three lines on iPad and desktop, four on phones.
+- Published as a string patch onto the live page 1795028072-45c8 (v1.35), so every other chat's work stays; merged page saved as `live-v1.36-index.html`. Artifact version 1795028117-1329.
+
+## v1.35
+
+Profile page, Experience cards (Alex, 18 Nov 18:49). `src/components/team/attribute-cards.jsx`, `src/styles/experience29.css` (v1.35 block).
+
+- No more black cards: the Experience cards are a muted tone that suits the finished profile page. Default
+  champagne (`#F8F0DC` > `#E9DAB4`, gold ring, dark ink `#2A1E04`, gold accents `#8A6A1E`). Two more tones are one
+  line away: `XP_TONE29 = "rose"` (dusty rosé, burgundy accents) or `"sage"` (soft sage, green accents). Each tone
+  sets the card ring too (`XP_TONES29[..].ring`), so there is no dark edge on light cards.
+- Pop-up: the note is typed straight onto the card (a borderless text area where the note sits, a faint line under
+  it); the separate text box under the card is gone. Done, or closing the pop-up, saves; Remove stays in the pop-up.
+- Checked: `npm run check`, `npm run build`; desktop screenshots of the finished profile in all three tones; phone and
+  desktop pop-up with a note typed onto the card and saved. Published by a three-way merge onto live 1795027943-0e21
+  (another chat's unpushed publish, kept). Merged page saved as `live-v1.35-index.html`. Artifact version 1795028072-45c8.
+
 ## v1.34
 
 Profile page, Experience (Alex, 18 Nov 18:39). `src/components/team/attribute-cards.jsx` (`ExperienceEditor29`, new

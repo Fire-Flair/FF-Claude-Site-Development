@@ -49,30 +49,18 @@
 .ff .ff-hf22.ff-home-c4 .ff-hb23-box { background:var(--color-ox,#5C1220) !important; }
 .ff .ff-hf22.ff-home-c4 .ff-hbc-ch { background:var(--color-ox,#5C1220) !important; }
 
-/* ---------- phones only: diagonal gradients (Alex, 18 Nov 16:59, diagonal 17:12, 17:41). Desktop and iPad have none. ----------
+/* ---------- phones only (history: diagonal gradients 18 Nov 16:59–17:41, all removed by 18:37) ----------
    Pillar boxes: champagne behind the photo and words, with a burgundy wedge at the top right on a diagonal edge, which
    fades away completely by the bottom right corner (nothing behind the drop-down's bottom edge). The open tile ends in
    plain champagne at its bottom edge, so it joins its box.
-   "Built for getting you bookings": a gold wedge on the same diagonal in the top right corner (behind the chevron). It is
-   a fixed-height layer at the top, so it stays put when the box opens and never reaches the labels. */
+   "Built for getting you bookings": flat burgundy on every size (the gold was removed, Alex 18 Nov 18:37). */
 @media (max-width:759px) {
   /* Alex, 18 Nov 18:15: the pillar boxes are plain champagne again (no gradient); the chevron stays a solid burgundy button */
   /* the chevron: a solid burgundy button with a champagne outline and arrow */
   .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .chev { color:var(--color-champagne,#EADBB4) !important; background:var(--color-ox,#5C1220) !important; border-color:rgba(234,219,180,.75) !important; }
   .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile.on .chev { color:var(--color-ox,#5C1220) !important; background:var(--color-champagne,#EADBB4) !important; border-color:var(--color-champagne,#EADBB4) !important; }
 
-  /* v1.31 (Alex, 18 Nov 18:15): the gold carries on from the top right down to the bottom right, with no line.
-     Two layers of the same gold, each drawn "to bottom left", so each one's 50% line is the diagonal from its top-left
-     corner to its bottom-right corner and everything past it is clear, including the layer's bottom edge:
-     1. a 16px rim down the whole right side, as tall as the box, which narrows to nothing at the bottom right and grows
-        with the box when it opens (drawn on top, so the colour down the edge runs evenly);
-     2. the wedge behind the chevron, 72px wide and 200px tall (about the closed box), fully faded by its bottom.
-     The title, the four labels and "How bookings work" stay on burgundy, closed and open. */
-  .ff .ff-hf22.ff-home-c4 .ff-hb23-box {
-    background:
-      linear-gradient(to bottom left,var(--color-gold-leaf,#EDD58F) 0%,var(--gold,#C9A227) 16%,#9A5A38 32%,rgba(92,18,32,0) 50%) top right / 16px 100% no-repeat,
-      linear-gradient(to bottom left,var(--color-gold-leaf,#EDD58F) 0%,var(--gold,#C9A227) 16%,#9A5A38 32%,rgba(92,18,32,0) 50%) top right / 72px 200px no-repeat,
-      var(--color-ox,#5C1220) !important; }
+  /* Alex, 18 Nov 18:37: no gold on the bookings box; it is flat burgundy on phones too (rule above the media query) */
   .ff .ff-hf22.ff-home-c4 .ff-hbc-ch { color:var(--color-champagne,#EADBB4) !important; background:var(--color-ox,#5C1220) !important; border-color:var(--color-champagne,#EADBB4) !important; }
   /* a tap leaves :hover on, and its tint was a lighter band ending at the button's bottom edge */
   .ff .ff-hf22.ff-home-c4 .ff-hbc-btn:hover { background:transparent !important; }
