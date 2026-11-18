@@ -234,36 +234,45 @@ function ProfRateTile17({ name, cat, guest, val, onVal, err }) {
 }
 
 
+/* bk5 (Mr G 03:03): FF Staff redesigned. Choose your professions (signed in: only your own, all chosen; a type box adds
+   another), then Your preferred hourly rate for each chosen profession, typed by the member (no default value), then Save.
+   No terms step. Signed out: same layout, Save opens sign-in. Rates stay the typed Q&A answer rate.<profession id>
+   (pence, visibility "ff-staff"); a profession taken off the list has its saved rate withdrawn on Save. */
 function ProfRates17({ guest }) {
   const { state, dispatch } = useStore();
-  const account = qaAccount17(state);
-  const mine = recsOf(state.profile, "professions").filter(r => !r.proposed).map(r => r.name);
-  const answered = [...Object.keys(state.profile.staffAvail || {}), ...ALL_PROFESSIONS.map(p => p.name).filter(n => account && prefRateP17(state, account, n) != null)];
-  const yours = [...new Set([...mine, ...answered])];
-  const [cat, setCat] = useState(() => (!guest && yours.length ? "Yours" : PROFESSION_CATEGORIES[0].key));
+  const account = guest ? null : qaAccount17(state);
+  const mine = guest ? [] : recsOf(state.profile, "professions").filter(r => !r.proposed).map(r => r.name);
+  const rated = account ? ALL_PROFESSIONS.map(p => p.name).filter(n => prefRateP17(state, account, n) != null) : [];
+  const base = [...new Set([...mine, ...rated])];
+  const [extra, setExtra] = useState([]);
+  const [off, setOff] = useState([]);
+  const [add, setAdd] = useState("");
   const [vals, setVals] = useState({});
   const [errs, setErrs] = useState({});
   const [busy, setBusy] = useState(false);
-  const list = cat === "Yours" ? yours.map(n => ({ name: n, cat: professionCategory(n) || "Other" })) : ALL_PROFESSIONS.filter(p => p.cat === cat).map(p => ({ name: p.name, cat: p.cat }));
-  const chips = [...(!guest && yours.length ? ["Yours"] : []), ...PROFESSION_CATEGORIES.map(c => c.key)];
-  const onVal = (n, v) => { setVals(x => ({ ...x, [n]: v })); setErrs(x => ({ ...x, [n]: "" })); };
-  const dirty = Object.keys(vals).length > 0;
-  const [terms, setTerms] = useState(false);
-  const confirm = () => {
-    if (busy || !dirty) return;
-    const bad = {};
-    Object.entries(vals).forEach(([n, t0]) => { const t = String(t0).trim(); if (t && (!isFinite(Number(t)) || Number(t) <= 0 || !/^\d+(\.\d{1,2})?$/.test(t))) bad[n] = "Enter an amount in pounds, like 18 or 18.50."; });
-    if (Object.keys(bad).length) { setErrs(bad); return; }
-    if (!account) { window.dispatchEvent(new Event("ff-login")); return; }
-    setTerms(true);
+  const shown = [...new Set([...base, ...extra])];
+  const chosen = shown.filter(n => !off.includes(n));
+  const toggle = (n) => setOff(o => o.includes(n) ? o.filter(x => x !== n) : [...o, n]);
+  const addOne = () => {
+    const t = add.trim().slice(0, 60); if (!t) return;
+    const hit = ALL_PROFESSIONS.find(p => p.name.toLowerCase() === t.toLowerCase());
+    const n = hit ? hit.name : t;
+    if (!shown.includes(n)) setExtra(x => [...x, n]);
+    setOff(o => o.filter(x => x !== n)); setAdd("");
   };
+  const onVal = (n, v) => { setVals(x => ({ ...x, [n]: v })); setErrs(x => ({ ...x, [n]: "" })); };
+  const savedOf = (n) => account ? prefRateP17(state, account, n) : null;
   const save = async () => {
-    setTerms(false);
+    if (busy) return;
+    if (!account) { window.dispatchEvent(new Event("ff-login")); return; }
+    const bad = {};
+    chosen.forEach(n => { const t = String(vals[n] != null ? vals[n] : "").trim(); if (t && (!isFinite(Number(t)) || Number(t) <= 0 || !/^\d+(\.\d{1,2})?$/.test(t))) bad[n] = "Enter an amount in pounds, like 18 or 18.50."; });
+    if (Object.keys(bad).length) { setErrs(bad); return; }
     setBusy(true);
     let okAll = true;
-    for (const [n, t0] of Object.entries(vals)) {
-      const t = String(t0).trim();
-      const saved = prefRateP17(state, account, n);
+    for (const n of shown) {
+      const saved = savedOf(n);
+      const t = chosen.includes(n) ? String(vals[n] != null ? vals[n] : (saved != null ? saved / 100 : "")).trim() : "";
       if (!t) {
         if (saved != null) { const r2 = await qaWithdraw17(dispatch, { account, questionId: qaRateQid17(n) }); if (!r2.ok) okAll = false; }
         continue;
@@ -277,19 +286,41 @@ function ProfRates17({ guest }) {
     if (okAll) { setVals({}); dispatch({ type: "TOAST", toast: "Your rates are saved" }); }
   };
   return (
-    <>
-      <div className="ff-pr17-chips" role="tablist" aria-label="Profession categories">
-        {chips.map(k => <button key={k} type="button" role="tab" className="ff-chip ff-pr17-tab" aria-selected={k === cat} aria-pressed={k === cat} onClick={() => setCat(k)}>{k === "Yours" ? "Your professions" : k}</button>)}
+    <div className="ff-fs5">
+      <h4 className="ff-fs5-h">Choose your professions</h4>
+      <div className="ff-fs5-chips" role="group" aria-label="Your professions">
+        {shown.map(n => <button key={n} type="button" className="ff-chip ff-fs5-chip" aria-pressed={!off.includes(n)} onClick={() => toggle(n)}>{!off.includes(n) && <Check size={13} strokeWidth={2.6} aria-hidden="true" />}{n}</button>)}
       </div>
-      <div className="ff-pr17-panel" role="tabpanel">
-        <div className="ff-pr17-ph"><I11.ChevronDown size={16} aria-hidden="true" /> <b>{cat === "Yours" ? "Your professions" : cat}</b> shifts</div>
-        <HScroll label="FF Staff Shifts" snap>
-          {list.map(p => <div key={p.name} className="ff-tp17-cell"><ProfRateTile17 name={p.name} cat={p.cat} guest={guest} val={vals[p.name]} onVal={onVal} err={errs[p.name]} /></div>)}
-        </HScroll>
+      <div className="ff-fs5-add">
+        <input type="text" list="ff-fs5-profs" value={add} placeholder="Add a profession" aria-label="Add a profession" onChange={(e) => setAdd(e.target.value)}
+          onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addOne(); } }} />
+        <button type="button" className="ff-fs5-plus" aria-label="Add" disabled={!add.trim()} onClick={addOne}><Plus size={18} /></button>
+        <datalist id="ff-fs5-profs">{ALL_PROFESSIONS.filter(p => !shown.includes(p.name)).map(p => <option key={p.name} value={p.name} />)}</datalist>
       </div>
-      <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={busy || !dirty} onClick={confirm}><Check size={15} /> Save your rates</button>
-      {terms && <PkgTerms17 kind="shift" onClose={() => setTerms(false)} onAccept={save} />}
-    </>
+      {chosen.length > 0 && <>
+        <h4 className="ff-fs5-h">Your preferred hourly rate</h4>
+        <div className="ff-fs5-rates">
+          {chosen.map(n => {
+            const saved = savedOf(n);
+            const v = vals[n] != null ? vals[n] : saved != null ? String(saved / 100) : "";
+            return (
+              <label key={n} className="ff-fs5-rate">
+                <span className="nm">{n}</span>
+                <span className="rt">
+                  <span aria-hidden="true">£</span>
+                  <input type="text" inputMode="decimal" value={v} aria-label={`Your preferred hourly rate as ${n}, pounds per hour`}
+                    onChange={(e) => onVal(n, e.target.value.replace(/[^\d.]/g, "").slice(0, 7))} />
+                  <span aria-hidden="true">/hour</span>
+                </span>
+                {errs[n] && <span className="er" role="alert">{errs[n]}</span>}
+              </label>
+            );
+          })}
+        </div>
+        <p className="ff-fs5-vis">Shown to businesses on FF Staff only</p>
+      </>}
+      <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={busy} onClick={save}><Check size={15} /> Save</button>
+    </div>
   );
 }
 
@@ -320,20 +351,23 @@ function BkPkgCard17({ sv, on, onClick }) {
     return () => { root.removeEventListener("toggle", tg, true); if (ro) ro.disconnect(); };
   }, [sv.id, on]);
   const rows = [[S17I.Sparkles, "Includes", p.includes], [S17I.Users, "Ideal for", p.ideal], [S17I.Clock, "Duration", p.durationLabel]].filter(r => r[2]);
+  /* bk5 (Mr G 03:03): same face as the profile Packages tab (FF Party ribbon, no "Bar"), compact, 5:7 portrait. */
+  const eb = [sv.level === "Bar" ? "" : sv.level, sv.site || "FF Party"].filter(Boolean).join(" · ");
+  const line = p.headline || p.tagline || sv.tagline;
   return (
-    <div ref={ref} className={`ff-pkc${on ? " sel" : ""}`} data-pk17={sv.id}>
-      <span className="ff-pkc-rb"><S17I.Sparkles size={12} /> Package card</span>
-      <span className="ff-pkc-logo"><FFLogo size={40} tier="gold" /></span>
+    <div ref={ref} className={`ff-pkc cmp${on ? " sel" : ""}`} data-pk17={sv.id}>
+      <span className="ff-pkc-rb"><S17I.Sparkles size={12} /> {sv.site || "FF Party"}</span>
+      <span className="ff-pkc-logo"><FFLogo size={34} tier="gold" /></span>
       <div className="ff-pkc-hd">
-        <div className="ff-pkc-eb fit">+ {sv.level} · FF Party +</div>
+        <div className="ff-pkc-eb fit">+ {eb} +</div>
         <h5 className="ff-pkc-ti fit">{p.name || sv.title}</h5>
-        {p.tagline && <p className="ff-pkc-tg">{pkcNoBreak17(p.tagline)}</p>}
+        {line && <p className="ff-pkc-tg fit">{line}</p>}
       </div>
       <div className="ff-pkc-rows">
         {rows.map(([Ic, l, v]) => (
           <div key={l} className="ff-pkc-row">
-            <span className="ff-pkc-ico"><Ic size={18} strokeWidth={1.6} /></span>
-            <span className="v"><i>{l}</i><b className="fit">{pkcNoBreak17(v)}</b></span>
+            <span className="ff-pkc-ico"><Ic size={15} strokeWidth={1.6} /></span>
+            <span className="v"><i>{l}</i><b>{pkcNoBreak17(v)}</b></span>
           </div>
         ))}
       </div>
@@ -378,27 +412,56 @@ const PK_SOON17 = {
       inc: "Your welcome, your timing, your way with a crowd", ideal: "Corporate events, awards nights and parties" },
   ],
 };
-function BkPkgSoon17({ pk = PK_SOON17.bar[0] }) {
-  const rows = [[S17I.Sparkles, "Includes", pk.inc], [S17I.Users, "Ideal for", pk.ideal], [S17I.Clock, "Duration", "As long as you choose"], [S17I.Star, "Price", "You set it"]];
+/* bk5 (Mr G 03:03): no "Coming soon". The Bar rail always ends with "Create your own"; the Entertainment and Services
+   previews keep their cards. Each has "Register interest": one Q&A answer (int.party_package_new, option ids = the ids
+   above). Signed out, the button opens sign-in. The question is registered here because the Q&A catalogue has no
+   entry for packages still to come (QA_Q17 is a shared object, defined earlier in the manifest). */
+if (!QA_Q17["int.party_package_new"]) QA_Q17["int.party_package_new"] = { text: "Are you interested in creating these FF Party packages?", group: "interest", multi: true };
+function BkPkgSoon17({ pk = PK_SOON17.bar[0], own = false }) {
+  const { state, dispatch } = useStore();
+  const ref = useRef(null);
+  usePkcFit17(ref, pk.id);
+  const [busy, setBusy] = useState(false);
+  const account = qaAccount17(state);
+  const qid = "int.party_package_new";
+  const ans = account ? qaAnswer17(state, account, qid) : null;
+  const ids = ans && !ans.withdrawnAt ? (ans.optionIds || []) : [];
+  const on = ids.includes(pk.id);
+  const title = own ? "Create your own" : pk.ti;
+  const rows = [[S17I.Sparkles, "Includes", pk.inc], [S17I.Users, "Ideal for", pk.ideal], [S17I.Clock, "Duration", "As long as you choose"]];
+  const go = async () => {
+    if (!account) { window.dispatchEvent(new Event("ff-login")); return; }
+    if (busy) return;
+    setBusy(true);
+    const next = on ? ids.filter(x => x !== pk.id) : [...ids, pk.id];
+    const r = next.length
+      ? await qaSubmit17(dispatch, { questionId: qid, account, optionIds: next, visibility: "public", source: "FF Team Bookings · FF Party packages" })
+      : await qaWithdraw17(dispatch, { questionId: qid, account });
+    setBusy(false);
+    dispatch({ type: "TOAST", toast: r.ok ? (on ? "Interest withdrawn" : `Interest registered: ${title}`) : "That couldn't be saved. Try again." });
+  };
   return (
-    <div className="ff-pkc ff-pkc-soon" data-pk17={"soon-" + pk.id}>
-      <span className="ff-pkc-rb"><S17I.Sparkles size={12} /> Package card</span>
-      <span className="ff-pkc-logo"><FFLogo size={40} tier="gold" /></span>
+    <div ref={ref} className={`ff-pkc cmp ff-pkc-new${on ? " sel" : ""}`} data-pk17={(own ? "create-" : "new-") + pk.id}>
+      <span className="ff-pkc-rb"><S17I.Sparkles size={12} /> FF Party</span>
+      <span className="ff-pkc-logo"><FFLogo size={34} tier="gold" /></span>
       <div className="ff-pkc-hd">
-        <div className="ff-pkc-eb">+ {pk.eb} +</div>
-        <h5 className="ff-pkc-ti">{pk.ti}</h5>
-        <p className="ff-pkc-tg">{pk.tg}</p>
+        <div className="ff-pkc-eb fit">+ {own ? "FF Party" : pk.eb} +</div>
+        <h5 className="ff-pkc-ti fit">{title}</h5>
+        <p className="ff-pkc-tg fit">{own ? "Your skills, your package, your price." : pk.tg}</p>
       </div>
-      <div className="ff-pkc-rows ff-pkc-pv" aria-label={`${pk.ti} preview`}>
+      <div className="ff-pkc-rows">
         {rows.map(([Ic, l, v]) => (
           <div key={l} className="ff-pkc-row">
-            <span className="ff-pkc-ico"><Ic size={18} strokeWidth={1.6} /></span>
+            <span className="ff-pkc-ico"><Ic size={15} strokeWidth={1.6} /></span>
             <span className="v"><i>{l}</i><b>{v}</b></span>
           </div>
         ))}
       </div>
-      <div className="ff-pkc-pvdt" aria-hidden="true"><span>Details</span><S17I.ChevronDown size={18} strokeWidth={2} /></div>
-      <div className="ff-pkc-ft"><span className="ff-pkc-soonb"><S17I.Clock size={14} strokeWidth={2} /> Coming soon</span></div>
+      <div className="ff-pkc-ft">
+        <button type="button" className="ff-pkc-go ff-pkc-ri" onClick={go} disabled={busy} aria-pressed={on} aria-label={`${title}: ${on ? "Interest registered" : "Register interest"}`}>
+          {on ? <><S17I.Check size={13} strokeWidth={2.6} /> Interest registered</> : "Register interest"}
+        </button>
+      </div>
     </div>
   );
 }
@@ -525,6 +588,26 @@ function TeamBookings({ guest = false }) {
   const pkgs = [...PARTY_SERVICES.filter(sv => sv.id !== "svc_full").reverse(), ...(hid17(state, "packages", "svc_staffing") ? [] : [STAFFING_SERVICE])];
   const [pkTab, setPkTab] = useState("bar");
   const PK_TABS = [["bar", "Bar"], ["ent", "Entertainment"], ["svc", "Services"]];
+  /* bk5: section headings stay on one line (shrink, never split). "your areas" opens the profile editor's Packages tab at Work locations. */
+  const partyRef = useRef(null);
+  usePkcFit17(partyRef, "party");
+  const goAreas = (e) => {
+    e.preventDefault();
+    if (!signedIn) { window.dispatchEvent(new Event("ff-login")); return; }
+    goProfile();
+    dispatch({ type: "V11_SET", patch: { ed17: "team" } });
+    dispatch({ type: "PE_START" });
+    let n = 0;
+    const go = () => {
+      const t = document.getElementById("ff-tab-services");
+      const hd = [...document.querySelectorAll("#ff-tabpanel h2")].find(h => /^Work locations/.test(h.textContent.trim()));
+      const el = document.getElementById("ff-sec-locations") || (hd && hd.closest("section"));
+      if (el) { el.scrollIntoView({ behavior: "auto", block: "start" }); return; }
+      if (t && t.getAttribute("aria-selected") !== "true") t.click();
+      if (++n < 30) setTimeout(go, 60);
+    };
+    setTimeout(go, 80);
+  };
 
   const Row = ({ x, tag, onClick }) => (
     <button type="button" className="ff-bk-row" onClick={onClick}>
@@ -539,15 +622,16 @@ function TeamBookings({ guest = false }) {
   );
 
   return (
-    <div className="ff-bk">
-      <BigHead20 title="Bookings" />
+    <div className="ff-bk" ref={partyRef}>
       <style>{BKD_CSS}</style>
 
       <section className="ff-bk-sec ff-bk-yours" id="ff-bk-yours" aria-labelledby="ff-bk-yours-h">
-        <h2 className="ff-h1 ff-big20 ff-bk-yh" id="ff-bk-yours-h"><span className="ff-wa-ico"><WhatsAppIcon size={22} /></span><span className="t">Your Bookings</span></h2>
-        <div className="ff-wa ff-bk-waline">
-          <span className="ff-body" style={{ color: "#0B3D22", fontSize: 13.5 }}>
+        <h1 className="ff-h1 ff-big20 ff-bk-yh" id="ff-bk-yours-h"><span className="t">Your bookings</span></h1>
+        <div className="ff-wa ff-bk-waline ff-bk-wabox">
+          <span className="ff-wa-ico"><WhatsAppIcon size={26} /></span>
+          <span className="ff-body ff-bk-watx">
             <b>Requests come to you on WhatsApp.</b> When companies and clients ask if you're free, each request is sent to you directly on WhatsApp and shows here. You reply in either place.
+            <span className="ff-bk-wasel">When you're selected for a booking, it will be shown here.</span>
           </span>
         </div>
 
@@ -560,20 +644,17 @@ function TeamBookings({ guest = false }) {
 
         {signedIn ? <div className="ff-bk-grp ff-bk-conf17">
           <div className="ff-bk-hrow"><h3 className="ff-bk-h">Confirmed {demo && upcoming.length > 0 ? <i>{upcoming.length}</i> : null}</h3><button type="button" className="ff-bk-hist" aria-pressed={showPast} onClick={() => setShowPast(v => !v)}><Clock size={12} /> History</button></div>
-          {upcoming.length ? <div className="ff-sdrail11"><HScroll label="Confirmed bookings">{upcoming.map(x => <ShiftDelivery11 key={x.e.id} e={x.e} shift={x.shift} event={x.event} />)}</HScroll></div>
-            : cancelledByBiz.length ? null : <p className="ff-bk-none ff-bk-none17">Your booked shifts will be shown here.</p>}
+          {upcoming.length ? <div className="ff-sdrail11"><HScroll label="Confirmed bookings">{upcoming.map(x => <ShiftDelivery11 key={x.e.id} e={x.e} shift={x.shift} event={x.event} />)}</HScroll></div> : null}
           {cancelledByBiz.map(x => <Row key={x.e.id} x={x} onClick={() => setOpen(x.e)} tag={<span className="ff-bk-done">Cancelled by the business</span>} />)}
           {showPast && (previous.length ? previous.map(x => <Row key={x.e.id} x={x} onClick={() => setOpen(x.e)} tag={<span className="ff-bk-done">Worked</span>} />)
             : <p className="ff-bk-none">No past bookings yet.</p>)}
-        </div> : <p className="ff-bk-none ff-bk-none17">Your booked shifts will be shown here.</p>}
+        </div> : null}
       </section>
 
       <section className="ff-bk-sec ff-fb21" id="ff-bk-fireflair">
-        <BigHead20 title="Packages" />
         <div className="ff-bk-sell ff-bkpc ff-fb21-box pkg3" id="ff-bk-party">
-          <h3>FFParty</h3>
-          {pkTab === "bar" && <h4 className="ff-bkpk-sub">Our bar packages</h4>}
-          <p>You are your own boss. FireFlair sets the pay rate for each package. You deal directly with the client, and FireFlair is here to support you. Packages are advertised at a set rate, and by signing up to one you agree to that rate. The rates are strong, so we expect strong work in return.</p>
+          <h2 className="ff-bk-bh fit">FFParty – Our bar packages</h2>
+          <p>Be your own boss. FireFlair sets the pay rate for each package. You deal directly with the client, and FireFlair is here to support you. Packages are advertised at a set rate, and by signing up to one you agree to that rate. The rates are strong, so we expect strong work in return.</p>
           <div className="ff-pr17-chips" role="tablist" aria-label="Package types">
             {PK_TABS.map(([k, l], i) => <button key={k} id={`ff-pktab-${k}`} type="button" role="tab" className="ff-chip ff-pr17-tab" aria-selected={k === pkTab} aria-controls={`ff-pkpanel-${k}`} tabIndex={k === pkTab ? 0 : -1} onClick={() => setPkTab(k)}
               onKeyDown={e => { const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : e.key === "Home" ? -i : e.key === "End" ? PK_TABS.length - 1 - i : 0; if (!d) return; e.preventDefault(); const nk = PK_TABS[(i + d + PK_TABS.length) % PK_TABS.length][0]; setPkTab(nk); const b = document.getElementById(`ff-pktab-${nk}`); if (b) b.focus(); }}>{l}</button>)}
@@ -581,28 +662,29 @@ function TeamBookings({ guest = false }) {
           {pkTab === "bar" ? (<div role="tabpanel" id="ff-pkpanel-bar" aria-labelledby="ff-pktab-bar">
             <HScroll label="Our bar packages" snap>
               {pkgs.map(sv => <div key={sv.id} className="ff-bkpk-cell"><BkPkgCard17 sv={sv} on={picked.includes(sv.id)} onClick={() => tick(sv)} /></div>)}
-              <div className="ff-bkpk-cell"><BkPkgSoon17 /></div>
+              <div className="ff-bkpk-cell"><BkPkgSoon17 own /></div>
             </HScroll>
             <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={!sel} onClick={() => { if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; } setPkgTerms(true); }}><Check size={15} /> Confirm</button>
           </div>) : (
             <div role="tabpanel" id={`ff-pkpanel-${pkTab}`} aria-labelledby={`ff-pktab-${pkTab}`}>
-              <HScroll label="Packages coming soon" snap>
+              <HScroll label={pkTab === "ent" ? "Entertainment packages" : "Services packages"} snap>
                 {(PK_SOON17[pkTab] || PK_SOON17.bar).map(pk => <div key={pk.id} className="ff-bkpk-cell"><BkPkgSoon17 pk={pk} /></div>)}
               </HScroll>
             </div>
           )}
+          <p className="ff-bk-locs">Packages are offered where you work: <a href="#/ff-team/profile" onClick={goAreas}>your areas</a> are on your profile.</p>
           {pkgTerms && <PkgTerms17 kind="pkg" onClose={() => setPkgTerms(false)} onAccept={confirmPkgs} />}
         </div>
 
         <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-staff">
-          <h3>FFStaff</h3>
-          <p>Businesses create shift cards and set their pay rates.</p>
+          <h2 className="ff-bk-bh fit">FFStaff – Shifts with businesses</h2>
+          <p>Businesses on FF Staff hire people for shifts. They see your preferred hourly rate for each of your professions before they hire you, and set the pay on each shift card.</p>
           <ProfRates17 guest={guest || !signedIn} />
         </div>
       </section>
 
       <section className="ff-bk-sec ff-bkgrow" id="ff-bk-grow">
-        <BigHead20 title="Build your career" />
+        <h2 className="ff-bk-bh ff-bk-gh fit">Grow with FireFlair</h2>
         <p className="ff-bk-sub">Training, dream jobs and rewards.</p>
         <div className="ff-bkd-row">
           <BkDrop17 id="ff-bk-training" open={drop === "ff-bk-training"} onOpen={setDrop} title="Training" icon={E17I.GraduationCap} photo="bk_training" desc="Courses, qualifications and masterclasses to sharpen your craft. Register your interest and we will tell you when places open."><InterestSection kind="training" inner /></BkDrop17>
