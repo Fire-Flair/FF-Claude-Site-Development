@@ -8,6 +8,64 @@
 
 const PE2_CSS = __ff_css("styles/profile-edit-p2.css");
 
+/* top-slots (Alex, 18 Nov 21:02): choosing the top three without dragging. Three slots, 1 to 3, are the three on the
+   Profile Card. Tapping a filled slot empties it; while a slot is empty, the other professions show underneath and tapping
+   one fills the next empty slot. The order is saved as before (REC_MOVE), so the card, the public page and the network all
+   follow it. An emptied profession goes to the end of the list, so the card shows the next one in line until it is refilled. */
+function PE2TopSlots({ profs }) {
+  const { dispatch } = useStore();
+  const ids = profs.map(r => r.id);
+  const nameOf = (id) => (profs.find(r => r.id === id) || {}).name || "";
+  const [slots, setSlots] = useState(() => [0, 1, 2].map(i => ids[i] || null));
+  /* Keep the slots in step with the list (a profession added, removed or renamed elsewhere). */
+  useEffect(() => {
+    setSlots(cur => {
+      const kept = cur.map(id => (id && ids.includes(id)) ? id : null);
+      const used = new Set(kept.filter(Boolean));
+      const free = ids.filter(id => !used.has(id));
+      /* An empty slot the member left stays empty; a slot left over from a removed profession takes the next one. */
+      return kept.map((id, i) => id || (cur[i] && !ids.includes(cur[i]) ? (free.shift() || null) : null));
+    });
+  }, [ids.join("|")]);
+  const save = (next) => {
+    const top = next.filter(Boolean);
+    top.forEach((id, i) => dispatch({ type: "REC_MOVE", category: "professions", id, to: i }));
+  };
+  const empty = (i) => {
+    const id = slots[i]; if (!id) return;
+    const next = slots.map((x, k) => k === i ? null : x);
+    setSlots(next);
+    dispatch({ type: "REC_MOVE", category: "professions", id, to: ids.length - 1 });
+    save(next);
+  };
+  const fill = (id) => {
+    const at = slots.indexOf(null); if (at < 0) return;
+    const next = slots.map((x, k) => k === at ? id : x);
+    setSlots(next); save(next);
+  };
+  const rest = ids.filter(id => !slots.includes(id));
+  const open = slots.includes(null) && rest.length > 0;
+  return (
+    <div className="pe2-top3" role="group" aria-label="Your top three professions, shown on your Profile Card">
+      <div className="pe2-top3-slots">
+        {slots.map((id, i) => (
+          <button key={i} type="button" className={"pe2-top3-slot" + (id ? " on" : "")} onClick={() => empty(i)} disabled={!id}
+            aria-label={id ? `Number ${i + 1}: ${nameOf(id)}. Remove from your top three` : `Number ${i + 1}: empty`}>
+            <span className="n">{i + 1}</span>
+            <span className="t">{id ? nameOf(id) : ""}</span>
+          </button>
+        ))}
+      </div>
+      {open && (
+        <div className="pe2-top3-pick" role="group" aria-label="Choose a profession for your top three">
+          {rest.map(id => <button key={id} type="button" className="pe2-top3-chip" onClick={() => fill(id)}>{nameOf(id)}</button>)}
+        </div>
+      )}
+    </div>
+  );
+}
+
+
 /* The Bar ladder, entry to top: 1 Barback … 5 Mixologist, shown top down (p2/pfb: Barback first and smallest,
    Mixologist last and largest). Every other category is alphabetical. */
 const PE2_LADDER = ["Barback", "Bartender", "Cocktail Bartender", "Flair Bartender", "Mixologist"];
@@ -176,7 +234,10 @@ function PE2Overview({ records }) {
       <section ref={profsRef} className="ff-pp ff-pp21 pp-sec" aria-labelledby="pe2-profs-h">
         <div className="ff-pp-head"><h2 id="pe2-profs-h" className="ff-about-h">Professions</h2></div>
         {profs.length > 0 && (
-          <ProfTiles21 items={profs} def={BASE_CATEGORIES.professions} onOpen={(r) => setOpenProf(r)} extra={(r) => <PE2Level r={r} />} reorder top={FEATURE_LIMIT}
+          <PE2TopSlots profs={profs} />
+        )}
+        {profs.length > 0 && (
+          <ProfTiles21 items={profs} def={BASE_CATEGORIES.professions} onOpen={(r) => setOpenProf(r)} extra={(r) => <PE2Level r={r} />} top={FEATURE_LIMIT}
             tail={<div role="listitem" className="ff-pt21-slot"><PE2AddProf on={adding} onClick={() => setAdding(!adding)} /></div>} />
         )}
         {(adding || !profs.length) && (
