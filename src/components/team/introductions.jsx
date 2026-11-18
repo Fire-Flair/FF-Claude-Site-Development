@@ -53,7 +53,7 @@ function fiFacts17(state, person) {
   const name = fiClean17(person.name);
   if (name) facts.push({ field_id: "name", category: "name", value: name, detail: "", verification: "owner-declared" });
   ["professions", "experience", "qualifications", "skills", "languages", "interests", "locations"].forEach((cat) => {
-    (cat === "locations" ? covRecsFor17(state, person, recs[cat]) : (recs[cat] || []).filter((r) => r && !r.hidden && !r.proposed)).forEach((r) => {
+    (cat === "locations" ? covRecsFor17(state, person, recs[cat]) : (recs[cat] || []).filter((r) => r && !r.hidden && !r.proposed && !r.cv)).forEach((r) => {
       const v = fiClean17(r.name); if (!v) return;
       const emp = r.details && r.details.employer ? fiClean17(r.details.employer) : "";
       facts.push({ field_id: cat + ":" + (r.id || v), category: cat, value: v, detail: fiClean17([r.description, emp].filter(Boolean).join(" · ")).slice(0, 240), verification: r.verified ? "verified" : "owner-declared" });
@@ -523,7 +523,7 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
 
       <GenericAttributeCardCreator open={!!openRec} record={openRec && openRec.record} def={openRec && openRec.def} category={openRec && openRec.category} readOnly onClose={() => setOpenRec(null)} />
       <Sheet center open={!!attrCat} onClose={() => setAttrCat(null)} title={attrCat && cats[attrCat] ? cats[attrCat].label : ""}>
-        {attrCat && cats[attrCat] && <ExpandedAttrs list={rankedRecords((records[attrCat] || []).filter(r => !r.hidden && !r.proposed))} />}
+        {attrCat && cats[attrCat] && <ExpandedAttrs list={rankedRecords((records[attrCat] || []).filter(attrCat === "qualifications" ? pubQualOk : (r => !r.hidden && !r.proposed)))} />}
       </Sheet>
       <Sheet open={allAttrs} onClose={() => setAllAttrs(false)} title="All attributes">
         {[...new Set(attrs.map(it => it.category))].map(k => (

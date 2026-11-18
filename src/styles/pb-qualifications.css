@@ -1,0 +1,54 @@
+/* pb-qualifications: the Qualifications card typed onto in the builder rail, its document box, and the marks after a name. */
+.ff .pe2-rail .ff-agrp.pbq-card { cursor: default; }
+.ff .pe2-rail .ff-agrp.pbq-card:hover, .ff .pe2-rail .ff-agrp.pbq-card:active { transform: none; }
+.ff .pe2-rail .pbq-card .ff-agrp-l.pbq-list { padding-right: 0; }
+.ff .pbq-card .ff-agrp-l > .pbq-it { position: relative; display: flex; align-items: center; gap: 6px; width: 100%; min-height: 34px; padding: 7px 0 7px 12px; margin: 0;
+  border: 0; border-top: .5px solid var(--tc-rule, rgba(30,26,18,.12)); background: none; font: inherit; text-align: left; color: var(--tc-sub, #5E5646); cursor: pointer;
+  border-radius: 0; -webkit-tap-highlight-color: transparent; }
+.ff .pbq-card .ff-agrp-l > .pbq-it:first-child { border-top: 0; }
+.ff .pbq-card .ff-agrp-l > .pbq-it::before { content: ""; position: absolute; left: 0; top: 50%; width: 4px; height: 4px; margin-top: -2px; border-radius: 50%; background: var(--tc-acc, #8A6A1E); }
+.ff .pbq-it .nm { flex: 1 1 auto; min-width: 0; white-space: normal; overflow-wrap: normal; word-break: normal; hyphens: none; }
+.ff .pbq-it.on .nm { color: var(--tc-ink, #1E1A12); font-weight: 600; }
+.ff .pbq-it.hid { opacity: .55; }
+.ff .pbq-it:focus-visible { outline: 2px solid var(--gold, #C9A227); outline-offset: 1px; border-radius: 8px; corner-shape: squircle; }
+.ff .pbq-mk { flex: none; display: inline-flex; align-items: center; gap: 5px; margin-left: 6px; color: var(--tc-acc, #8A6A1E); vertical-align: -1px; }
+.ff .pbq-mk > span { display: inline-flex; align-items: center; gap: 2px; font: 600 11px var(--font-sans, Inter, sans-serif); }
+.ff .pbq-more { align-self: flex-start; margin-top: 0; padding: 4px 0; border: 0; background: none; cursor: pointer; font-family: inherit; }
+
+/* The type line at the foot of the card: part of the card, not a box on it. */
+.ff .pbq-type { margin-top: auto; display: flex; align-items: center; gap: 6px; min-height: 40px; padding: 4px 4px 4px 12px; box-sizing: border-box;
+  border-radius: 12px; corner-shape: squircle; border: 1px dashed rgba(126,97,29,.45); background: rgba(255,255,255,.55); }
+.ff .pbq-card.t-card .pbq-type { border-color: var(--tc-line, rgba(176,141,42,.7)); background: rgba(255,255,255,.12); }
+.ff .pbq-type:focus-within { border-style: solid; border-color: #C9A227; box-shadow: 0 0 0 3px rgba(201,162,39,.18); }
+.ff .pbq-type input { flex: 1; min-width: 0; height: 30px; padding: 0; border: 0; outline: none; background: transparent; font: 500 14px var(--font-sans, Inter, sans-serif); color: var(--tc-ink, #1E1A12); }
+.ff .pbq-card.pe2-agrp-empty .pbq-type input { color: #16130F; }
+.ff .pbq-type input::placeholder { color: var(--tc-sub, #8A7B5A); opacity: .75; font-size: 13px; }
+.ff .pbq-key { flex: none; display: grid; place-items: center; width: 30px; height: 30px; padding: 0; border-radius: 9px; corner-shape: squircle; cursor: pointer;
+  border: 1px solid rgba(126,97,29,.35); background: transparent; color: var(--tc-acc, #8A6A1E); opacity: .55; touch-action: manipulation; }
+.ff .pbq-type.has .pbq-key { opacity: 1; background: linear-gradient(172deg,#F6E8B8,#D7B85F); border-color: #8C7230; color: #2A1E04; }
+.ff .pe2-rail .pbq-card.pe2-agrp-empty .pe2-empty-fill { display: none; }
+
+/* The open entry's editor under the rail. */
+.ff .pbq-ed-nm { display: flex; align-items: center; gap: 4px; margin: 0 0 10px; font: 700 16px/1.25 var(--font-sans, Inter, sans-serif); color: #16130F; overflow-wrap: normal; word-break: normal; hyphens: none; }
+.ff .pbq-ed-nm .pbq-mk { color: #8A6A1E; }
+
+/* One document per entry, beside the pictures. */
+.ff .pbq-doc { display: flex; flex-direction: column; gap: 6px; }
+.ff .pbq-doc-add { width: 56px; height: 56px; border-radius: 13px; }
+.ff .pbq-doc-row { display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 6px 6px 6px 8px; box-sizing: border-box; border: 1px solid #E1D5BA; background: #fff;
+  border-radius: 13px; corner-shape: squircle; }
+.ff .pbq-doc-row .ic { flex: none; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 10px; corner-shape: squircle; background: #5C1220; color: #EAD79C; }
+.ff .pbq-doc-row .nm { flex: 1; min-width: 0; display: flex; flex-direction: column; font-family: var(--font-sans, Inter, sans-serif); }
+.ff .pbq-doc-row .nm b { font-size: 13.5px; font-weight: 600; line-height: 1.3; color: #16130F; overflow: hidden; white-space: normal; overflow-wrap: normal; word-break: normal; hyphens: none; }
+.ff .pbq-doc-row .nm small { font-size: 11.5px; color: #8A7B5A; }
+.ff .pbq-doc-b { flex: none; display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border-radius: 11px; corner-shape: squircle; border: 1px solid #E1D5BA; background: #FBF7EE;
+  color: #6A5E48; cursor: pointer; text-decoration: none; touch-action: manipulation; }
+.ff .pbq-doc-b:focus-visible, .ff .pbq-doc-add:focus-visible { outline: 2px solid #5C1220; outline-offset: 2px; }
+
+/* Public: the card opens View all through a cover button; the CV link sits above it. */
+.ff .ff-agrp.pbq-pub { cursor: pointer; }
+.ff .pbq-pub .pbq-cover { position: absolute; inset: 0; z-index: 0; margin: 0; padding: 0; border: 0; background: transparent; border-radius: inherit; cursor: pointer; }
+.ff .pbq-pub .pbq-cover:focus-visible { outline: 2px solid var(--gold, #C9A227); outline-offset: 3px; }
+.ff .pbq-pub .ff-agrp-top, .ff .pbq-pub .ff-agrp-l, .ff .pbq-pub .ff-agrp-more { position: relative; z-index: 1; pointer-events: none; }
+.ff .pbq-pub .pbq-cvlink { pointer-events: auto; color: inherit; text-decoration: underline; text-decoration-color: var(--tc-line, rgba(176,141,42,.7)); text-underline-offset: 3px; }
+.ff .pbq-pub .pbq-cvlink:focus-visible { outline: 2px solid var(--gold, #C9A227); outline-offset: 2px; border-radius: 6px; }

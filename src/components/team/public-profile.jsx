@@ -501,8 +501,10 @@ const completeness = (r) => {
 function attributesOf(state, person, cats) {
   const recs = recordsForPerson(state, person);
   const order = categoryOrder().filter(k => !cats[k].system && k !== "professions");
-  const keys = [...PUB_ORDER.filter(k => order.includes(k)), ...order.filter(k => !PUB_ORDER.includes(k))];
-  const flat = keys.flatMap((k, ki) => (k === "locations" ? covRecsFor17(state, person, (recs[k] || []).filter(r => !r.hidden && !r.proposed)).map(r => ({ r, rank: "tertiary" })) : withRanks((recs[k] || []).filter(r => !r.hidden && !r.proposed))).map(({ r, rank }, i) => ({ id: `${k}:${r.id}`, record: r, def: cats[k], category: k, rank, score: completeness(r), at: ki * 1000 + i })));
+  const keys0 = [...PUB_ORDER.filter(k => order.includes(k)), ...order.filter(k => !PUB_ORDER.includes(k))];
+  /* pb-qualifications: Qualifications are the left-hand Attributes card; the CV counts as one while SHOW_CV_PUBLIC is on. */
+  const keys = [...keys0.filter(k => k === "qualifications"), ...keys0.filter(k => k !== "qualifications")];
+  const flat = keys.flatMap((k, ki) => (k === "locations" ? covRecsFor17(state, person, (recs[k] || []).filter(r => !r.hidden && !r.proposed)).map(r => ({ r, rank: "tertiary" })) : withRanks((recs[k] || []).filter(k === "qualifications" ? pubQualOk : (r => !r.hidden && !r.proposed)))).map(({ r, rank }, i) => ({ id: `${k}:${r.id}`, record: r, def: cats[k], category: k, rank, score: completeness(r), at: ki * 1000 + i })));
   return flat.sort((a, b) => b.score - a.score || a.at - b.at);
 }
 
@@ -526,7 +528,9 @@ function ExpandedAttrs({ list }) {
             {String(r.description || "").trim() && <p>{r.description}</p>}
             {det.length > 0 && <dl>{det.map(([k, v]) => <div key={k}><dt>{cap(k)}</dt><dd>{String(v)}</dd></div>)}</dl>}
             {media.length > 0 && <div className="ff-xatt-media">{media.map((m, i) => <img decoding="async" key={i} src={m.dataUrl || m.src} alt={m.name || ""} loading="eager" />)}</div>}
-            {r.document && r.document.name && <div className="ff-xatt-note">Document: {r.document.name}</div>}
+            {r.document && r.document.name && (pubCvHref(r)
+              ? <div className="ff-xatt-note"><a href={pubCvHref(r)} target="_blank" rel="noopener noreferrer" download={r.document.name} style={{ color: "inherit" }}><FileText size={12} aria-hidden="true" /> Open CV</a></div>
+              : <div className="ff-xatt-note">Document: {r.document.name}</div>)}
             {r.verified === true && <div className="ff-xatt-note">Verified</div>}
           </article>
         );
@@ -557,11 +561,12 @@ function AttrGroups({ items, mem, onOpen }) {
     <MemScroll mem={mem} k="overview" label={`Attributes, ${cards.length} card${cards.length === 1 ? "" : "s"}`} className="ff-acar">
       {cards.map((c, ci) => {
         const label = (c.g.def && c.g.def.label) || c.g.key;
+        if (c.g.key === "qualifications") return <PubQualCard key={c.key} label={label} part={c.part} more={c.more} total={c.part.length + c.more} cls={tierCls17(ci)} onOpen={() => onOpen(c.g.key)} />;
         return (
           <button key={c.key} type="button" className={"ff-agrp " + tierCls17(ci)} onClick={() => onOpen(c.g.key)}
             aria-label={`${label}: ${c.g.list.map(it => it.record.name).join(", ")}. View all attributes`}>
             <span className="ff-agrp-top"><span className="ff-agrp-h">{label}</span><span className="ff-agrp-n">{c.part.length + c.more}</span></span>
-            <span className="ff-agrp-l">{c.part.map(it => <span key={it.id}>{nbh21(it.record.name)}</span>)}</span>
+            <span className="ff-agrp-l">{c.part.map(it => <span key={it.id}>{it.category === "qualifications" ? <QualNm r={it.record} /> : nbh21(it.record.name)}</span>)}</span>
             {c.more > 0 && <span className="ff-agrp-more">{`+${c.more}`}</span>}
           </button>
         );

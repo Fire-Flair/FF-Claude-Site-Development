@@ -316,6 +316,7 @@ function EntryEditor21({ r, catKey, def, onDone }) {
         autoFocus={FF_FINE_POINTER} onChange={(e) => patch({ description: e.target.value })} />
       <PhotoBoxes19 media={r.media} max={maxMedia} busy={busy === "loading"} onAdd={addPhoto}
         onRemove={(m) => patch({ media: (r.media || []).filter(x => x.id !== m.id) })} />
+      {catHas(def, "document") && <EntryDocBox r={r} patch={patch} />}
       {busy && busy !== "loading" && <p className="ff-wlbox-err" role="alert">{busy}</p>}
       {catKey === "professions" && (<>
         <div className="ff-levels-wrap"><ProfessionLevelPicker value={r.level || null} onChange={(n) => patch({ level: n })} /></div>

@@ -1141,6 +1141,7 @@ function FfaiReview17({ x, src, onDone }) {
 
 
 function CVUpload17() {
+  const { state, dispatch } = useStore();
   const fileRef = useRef(null);
   const r = useFfaiRun17();
   const onFile = (e) => {
@@ -1149,6 +1150,7 @@ function CVUpload17() {
     if (!f) return;
     const problem = ffaiFileError17(f);
     if (problem) { r.fail(problem); return; }
+    pbqSaveCV(f, state.profile, dispatch);   /* pb-qualifications: the CV counts as a Qualification */
     r.run({
       label: f.name, src: { origin: "CV", location: f.name || "CV" }, none: "Nothing new found in your CV",
       read: () => CV_READER.read(f),
