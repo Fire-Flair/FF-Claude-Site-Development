@@ -11,7 +11,7 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
 - Buttons with aria-expanded and aria-controls inside an h4; closed steps are inert, so nothing inside them can be tabbed to. Deep links and "#id" jumps (`window.__ffDxReveal`) open the pillar and the step that holds the section.
 - FF Party and FF Staff panels and the /info pages keep the card row and sections as before. `components/home/team-pillars.jsx` (PillarSteps21), `components/home/discover-hub.jsx`, `styles/team-pillars21.css`.
 - Round 2 (Gimli): links to a section now land on its step's header below the top bar. Opening a closed pillar from a link starts with that step open (the panel's opening height includes it); a link to another step in an open pillar snaps the open one shut first, so the page no longer scrolls past the target or stops short. Before, links landed up to 700px off.
-- Checks: `npm run check` and `npm run build` pass; Gimli's Playwright run at 390 and 1280 passes on all four pillars (no journey-test script in this repo). Private preview artifact "FF Team 1.1 — pillar drop-downs preview", version 1795019678-3ab8.
+- Checks: `npm run check` and `npm run build` pass; Gimli's Playwright run at 390 and 1280 passes on all four pillars (no journey-test script in this repo). Private preview artifact "FF Team 1.1 — pillar drop-downs preview", version 1795019678-3ab8; round 2 version 1795020359-77f2.
 
 ## v1.24
 
