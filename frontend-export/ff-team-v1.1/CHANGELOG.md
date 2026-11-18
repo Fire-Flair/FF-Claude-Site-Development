@@ -12,6 +12,7 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
   - Our professionals: "The event and hospitality professionals of FF Team, from bartenders and mixologists to managers and front of house, each with their own Profile Card."
   - FF Event Directory: "The UK companies that make events happen, from mobile cocktail bars and DJs to caterers and event services. Each one has its own Company Card."
   (`components/staff/network-directory.jsx`, `network-directory20.jsx`.)
+- Journey tests 48/48. Artifact version 1795013227-d4ff.
 
 ## v1.16
 
