@@ -15,6 +15,24 @@ Bookings, FF Party package cards (Alex, 18 Nov 18:12–19:02). `src/components/t
 - Bar packages keep their existing amounts from the catalogue (unchanged). Entertainment and Services each list three FireFlair packages (`PKC_EXTRA17`: Live Music, DJ, Entertainer; Event Services, Photography, Event Host), all at the same "You earn" amount Alex set, with a small "to be confirmed" line under the rail and in each brief. Both tabs have their own Confirm.
 - Create your own (`BkPkgOwn17`) ends all three tabs and looks like the other cards: name, line, You provide, Ideal for, Duration and You earn are type boxes that grow with their text. Sign up saves one typed Q&A answer per tab (`int.party_package_own_<tab>`, kind `own_package`); name and amount are needed, and a missing one gets a red outline. Signed out, Sign up opens sign-in.
 - Checked: `npm run check`, `npm run build`, Playwright at 390 and 1280 on all three tabs (equal heights and gaps on all 14 cards, no overflow or split words, no console errors), Details pop-ups, Create your own filled in.
+Profile builder thread (Legolas merge, 18 Nov 19:00). No new features: this release puts the missing source on GitHub so
+every chat builds from complete code.
+
+- Live-only code recovered into `src/` (it had been published onto the artifact by hand without its source being pushed):
+  - Photo browser and visitor button row (photo-browsing chat, 16:00–17:50): `ffPvScroller11`, `PhotoStrip11`,
+    `MediaMosaic`, `PublicHero` in `src/components/team/public-profile.jsx`; Back | Join team | Share row and
+    MyShareBtn17 in `src/components/team/network.jsx`; `shareIcon` on `CardShareBtn17`
+    (`src/components/shared/card-share17.jsx`); photos for Bruno, Simao, Dany and James in `src/content/people-demo.js`;
+    `.ff-ps*` and button-row styles in the head `<style>` of `src/shell/index.html`.
+  - Display-page tabs: the open tab joins the tab page, Share champagne with a green WhatsApp mark.
+- From branch `professions-review` (approved by Alex): Cocktail Bartender and Mixologist descriptions in
+  `src/content/data/profession-descriptions.json`. For the developers: please add profession descriptions to the admin
+  tools so Alex can edit them without a code change.
+- Merged with v1.36 (Experience, phone box, bookings box, home blurb); nothing from any other chat removed.
+- Published over live 1795028117-1329 (v1.36), index.html and manifest.json only (all other files kept). Artifact version 1795028595-33d7. Built page saved as `live-v1.37-index.html`.
+- Also recovered into source: the signed-in member button grid on someone else's profile (Back on top, then Add to network | Share | Ask | Availability), which had been patched onto the live page in v1.35/v1.36: `grid11` in `src/components/team/network.jsx`, `.ff-pub-grid11` styles in `src/shell/index.html`.
+- Other chats: please merge `ff-team-v1.1` before your next publish; the photo browser now lives in `src/`, so building
+  from source no longer drops it.
 
 ## v1.36
 

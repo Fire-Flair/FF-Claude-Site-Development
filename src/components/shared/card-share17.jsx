@@ -84,12 +84,13 @@ function CardShareSheet17({ open, onClose, title, message, url, fileName, childr
 }
 
 
-/* A Share button that opens the menu over any card. render() returns the card exactly as it appears on the page. */
-function CardShareBtn17({ title, url, fileName, render, label = "Share", className = "" }) {
+/* A Share button that opens the menu over any card. render() returns the card exactly as it appears on the page.
+   shareIcon: the square-with-arrow share icon in place of the WhatsApp mark (ported from the live page, v1.29). */
+function CardShareBtn17({ title, url, fileName, render, label = "Share", className = "", shareIcon = false }) {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <button type="button" className={"ff-csm-btn " + className} onClick={() => setOpen(true)} aria-label={`${label || "Share"} ${title}`}><WhatsAppIcon size={label ? 18 : 22} />{label ? " " + label : null}</button>
+      <button type="button" className={"ff-csm-btn " + className} onClick={() => setOpen(true)} aria-label={`${label || "Share"} ${title}`}>{shareIcon ? <Share2 size={18} aria-hidden="true" /> : <WhatsAppIcon size={label ? 18 : 22} />}{label ? " " + label : null}</button>
       {open ? <CardShareSheet17 open onClose={() => setOpen(false)} title={title} url={url} fileName={fileName}>{render()}</CardShareSheet17> : null}
     </>
   );

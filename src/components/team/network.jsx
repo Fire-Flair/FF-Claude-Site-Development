@@ -121,7 +121,7 @@ function MyShareBtn17({ person, onTap, icon }) {
   const join = !!tag && profileBasics17(state);
   return (
     <>
-      <button type="button" className={"ff-csm-btn " + (icon ? "ff-pub-shico" : "wide")} onClick={() => onTap ? onTap() : setOpen(true)} aria-label="Share my card"><WhatsAppIcon size={icon ? 22 : 18} aria-hidden="true" />{icon ? null : " Share"}</button>
+      <button type="button" className={"ff-csm-btn " + (icon ? "ff-pub-shico ff-pub-wa11" : "wide")} onClick={() => onTap ? onTap() : setOpen(true)} aria-label="Share my card"><WhatsAppIcon size={18} aria-hidden="true" />{" Share"}</button>
       {open ? (
         <CardShareSheet17 open onClose={() => setOpen(false)} title={SHARE_TITLE17} message={SHARE_MSG17} url={join ? inv17Link(tag) : `https://${CARD_DOMAIN}/${pc17Tag(tag)}`} noRef={join}
           fileName={(join ? "fireflair-join-" : "fireflair-") + cx17Slug(tag)}>
@@ -191,10 +191,17 @@ function PersonProfile() {
     /* A signed-out visitor (and you, previewing your profile as a guest): Join team (muted gold) with the green Share icon beside it
        (pubbtn, Mr G 02:51: no name on Join; Share a third of Join's width, same height). */
     const shareIco = guestOfMe ? <MyShareBtn17 person={person} icon onTap={() => preview()} />
-      : other && shareTag ? <CardShareBtn17 title={`${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${pc17Tag(shareTag)}`} fileName={"fireflair-" + cx17Slug(shareTag)} label="" className="ff-pub-shico"
+      : other && shareTag ? <CardShareBtn17 title={`${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${pc17Tag(shareTag)}`} fileName={"fireflair-" + cx17Slug(shareTag)} label="Share" className="ff-pub-shico ff-pub-wa11"
           render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={person.theme || "ivory"} />} /> : null;
+    /* Photo-browsing chat (18 Nov, 16:00-17:50, live only until ported here): a signed-out visitor gets one row,
+       Back | Join team | Share (WhatsApp green, with the word), and no separate Back bar above it. */
+    const rowBack = !guestOfMe ? (
+      <button type="button" className="ff-pub-back11" aria-label="Back" onClick={backBtn.props.onClick}>
+        <ChevronLeft size={18} strokeWidth={2.2} aria-hidden="true" /><span>Back</span>
+      </button>) : null;
     actionsEl = (<div className="ff-pub-acts ff-pub-stack">
-      <div className={"ff-pub-joinrow" + (shareIco ? "" : " solo")}>
+      <div className={"ff-pub-joinrow" + (rowBack ? " three" : "") + (shareIco ? "" : " solo")}>
+        {rowBack}
         <Btn variant="wide ff-join-mut" onClick={guestOfMe ? () => preview() : join}><FitLabel17>Join team</FitLabel17></Btn>
         {shareIco}
       </div>
@@ -208,9 +215,20 @@ function PersonProfile() {
       {halfShare(shareBtn)}
     </div>);
   } else if (other) {
+    /* v1.35/1.36 live patch (another chat, recovered into source): signed-in member view of someone else's profile =
+       Back on top, then four equal buttons in a 2-column grid (relationship button, Share, Ask, Availability). */
+    const staff11 = state.role === "staff";
+    const share11 = other && shareTag ? (
+      <CardShareBtn17 title={`${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${pc17Tag(shareTag)}`}
+        fileName={"fireflair-" + cx17Slug(shareTag)} label="Share" className="ff-pub-wa11 ff-g11-btn"
+        render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={person.theme || "ivory"} />} />
+    ) : null;
+    /* createElement so the Ask/Availability buttons are spread in as separate grid cells (as on the live page). */
+    const grid11 = staff11 ? null : React.createElement("div", { className: "ff-pub-grid11" },
+      <div className="ff-g11-rel"><RelSlot17 person={person} /></div>, share11, ...[].concat(askRow.props.children));
     actionsEl = (<div className="ff-pub-acts ff-pub-stack">
       {state.role === "staff" && <FavBtn11 person={person} wide />}
-      <RelSlot17 person={person} />
+      {staff11 ? <RelSlot17 person={person} /> : null}
       {state.role === "staff" && (
         <Btn variant={state.selection.includes(person.id) ? "ghost wide" : "primary wide"} onClick={() => {
           dispatch({ type: "SELECT", id: person.id });
@@ -219,15 +237,15 @@ function PersonProfile() {
           {state.selection.includes(person.id) ? <><Check size={14} /> In your booking bar</> : <><Users size={14} /> Add to booking</>}
         </Btn>
       )}
-      {askRow}
+      {staff11 ? askRow : null}
       {state.role === "staff" && <Btn variant="wide" onClick={() => setReviewing(true)}><Award size={14} aria-hidden="true" /><FitLabel17>Review</FitLabel17></Btn>}
-      {halfShare(shareBtn)}
+      {staff11 ? halfShare(shareBtn) : grid11}
     </div>);
   }
   const cardEl = <PlayerCard person={person} format="full" nameAs="div" themeKey={person.id === "me" ? state.profile.theme : (person.theme || "ivory")}  />;
   return (
     <div className={publicView ? "ff-pubpage ff-pp-other" : undefined}>
-      <PublicHero media={mediaOf(state, person)} card={cardEl} narrow below={<>{backBtn}{guestNote}{actionsEl}{shareEl}</>} />
+      <PublicHero media={mediaOf(state, person)} card={cardEl} narrow below={<>{(other && !signedIn && !party && !guestOfMe) ? null : backBtn}{guestNote}{actionsEl}{shareEl}</>} />
       <HireCards11 person={person} />
       <PublicProfileBody person={person} aboutFirst={publicView} />
       <ReviewSheet open={reviewing} person={person} onClose={() => setReviewing(false)} />
