@@ -4,6 +4,14 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.52
+
+Bookings and the bar (Alex, 18 Nov 20:35). `team/bookings.jsx`, `styles/bkd.css`, `team/landing-shell.jsx`, `state/seed-data.js`.
+
+- Bookings: the "Are you happy to receive bookings via WhatsApp?" question and its Yes button from v1.49 are removed (component, styles and the `pref.whatsapp_bookings` Question Card deleted). In their place the WhatsApp box has a second row: the Add FireFlair mark (FF in a speech bubble, `AddFireFlairMark`) on a black circle, with "Notifications will also be shown here."
+- Mobile bottom bar: the centre FF coin is a mark, not a button (it no longer opens the notification pop-up). Desktop top bar: the FF coin button after Profile is removed. Notifications are to show on Bookings.
+- Merged onto the live page (v1.51). Artifact version 1795034255-f8d9.
+
 ## v1.51
 
 - Profile builder, Profile Card face (Alex, 18 Nov 20:31): the empty photo with the bust was an oval (120×110, from the photo button's side padding). It is now a true 110px circle on every size (`styles/prof21.css`). Merged onto the live page (v1.50). Artifact version 1795034109-a91a.

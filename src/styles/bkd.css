@@ -289,30 +289,12 @@
 .ff #ff-bk-party .ff-pkc.cmp[data-pk17="svc_staffing"] .ff-pkc-dbtn { border-color:rgba(142,148,156,.6); }
 .ff #ff-bk-party .ff-pkc.cmp[data-pk17="svc_staffing"] .ff-pkc-row + .ff-pkc-row { border-top-color:rgba(142,148,156,.35); }
 
-/* v1.46 bookings (Alex, 18 Nov 20:06): the WhatsApp bookings question under "When you're selected…". One Yes button;
-   on tap the circle fills and the tick draws in, then it stays answered. No motion with prefers-reduced-motion. */
-.ff .ff-bk-waq { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px 14px; margin-top:10px; padding-top:10px; border-top:1px solid rgba(11,61,34,.18); }
-.ff .ff-bk-waq .q { flex:1 1 220px; min-width:0; font-weight:600; }
-.ff .ff-bk-wayes { flex:none; display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:0 18px 0 12px; border:1.5px solid var(--color-wa-deep); border-radius:14px; corner-shape:squircle; background:#fff; color:#0B3D22; font:700 15px/1 var(--font-sans); cursor:pointer; transition:background-color .25s ease, color .25s ease; }
-.ff .ff-bk-wayes:hover { background:#F1FBF5; }
-.ff .ff-bk-wayes:focus-visible { outline:2px solid var(--color-wa-deep); outline-offset:2px; }
-.ff .ff-bk-wayes .tk { display:grid; place-items:center; width:22px; height:22px; }
-.ff .ff-bk-wayes svg { display:block; overflow:visible; }
-.ff .ff-bk-wayes .c { fill:transparent; stroke:var(--color-wa-deep); stroke-width:1.6; transition:fill .25s ease, stroke .25s ease; }
-.ff .ff-bk-wayes .p { fill:none; stroke:var(--color-wa-deep); stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:16; stroke-dashoffset:16; opacity:.0; }
-.ff .ff-bk-wayes.on { background:var(--color-wa-deep); color:#fff; cursor:default; }
-.ff .ff-bk-wayes.on .c { fill:#fff; stroke:#fff; }
-.ff .ff-bk-wayes.on .p { stroke:var(--color-wa-deep); stroke-dashoffset:0; opacity:1; }
-.ff .ff-bk-wayes.pop { animation:ffWaPop .45s cubic-bezier(.3,1.6,.5,1) both; }
-.ff .ff-bk-wayes.pop .tk { animation:ffWaRing .6s ease-out both; border-radius:50%; }
-.ff .ff-bk-wayes.pop .p { animation:ffWaTick .4s .12s ease-out both; }
-@keyframes ffWaPop { 0% { transform:scale(1); } 40% { transform:scale(1.07); } 100% { transform:scale(1); } }
-@keyframes ffWaRing { 0% { box-shadow:0 0 0 0 rgba(255,255,255,.75); } 100% { box-shadow:0 0 0 12px rgba(255,255,255,0); } }
-@keyframes ffWaTick { from { stroke-dashoffset:16; opacity:1; } to { stroke-dashoffset:0; opacity:1; } }
-@media (prefers-reduced-motion: reduce) {
-  .ff .ff-bk-wayes, .ff .ff-bk-wayes .c { transition:none; }
-  .ff .ff-bk-wayes.pop, .ff .ff-bk-wayes.pop .tk, .ff .ff-bk-wayes.pop .p { animation:none; }
-}
+/* v1.52 (Alex, 18 Nov 20:35): the WhatsApp box has two rows: the WhatsApp line, then the Add FireFlair mark with
+   "Notifications will also be shown here." The mark sits in the same 46px slot as the WhatsApp icon. */
+.ff .ff-bk-wabox2 { flex-direction:column; align-items:stretch; gap:14px; }
+.ff .ff-bk-warow { display:flex; align-items:flex-start; gap:14px; min-width:0; }
+.ff .ff-bk-ffrow { align-items:center; padding-top:14px; border-top:1px solid rgba(18,140,126,.22); }
+.ff .ff-bk-ffico { flex:none; display:grid; place-items:center; width:46px; height:46px; border-radius:50%; background:var(--color-ink-warm,#16130F); }
 
 /* v1.46 bookings: FF Staff shifts, signed out: three steps in a row from 600px, stacked below. */
 .ff .ff-fs6-steps { list-style:none; margin:12px 0 0; padding:0; display:grid; gap:10px; }
