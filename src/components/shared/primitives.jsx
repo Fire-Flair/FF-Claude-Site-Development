@@ -118,6 +118,6 @@ function Empty({ icon, title, action }) {
   window.addEventListener("resize", later);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(later).catch(() => {});
   const st = document.createElement("style");
-  st.textContent = ".ff textarea{overflow-y:hidden!important;max-height:none!important;resize:none}";
+  st.textContent = ".ff textarea{overflow-y:hidden!important;max-height:none!important;resize:none!important}";
   document.head.appendChild(st);
 })();

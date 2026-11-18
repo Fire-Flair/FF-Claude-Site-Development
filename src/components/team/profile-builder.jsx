@@ -1214,7 +1214,7 @@ function ProfileBuilder() {
           <CreatorMedia />
         </div>
         <ABOUT_TOP34.Provider value={true}>
-          <CreatorAboutMe top />
+          {/* about-overview (Alex, 18 Nov 21:17): About Me now sits in the Overview tab (under Professions), where it is on the published profile. */}
           <ProfileEditTabs person={me} />
         </ABOUT_TOP34.Provider>
         <PE2QA />

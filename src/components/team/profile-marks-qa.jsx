@@ -380,9 +380,8 @@ function P1PhotoPrompt() {
     if (!f) return;
     setBusy(true);
     try {
-      const photo = await shrinkPhoto(f);
-      dispatch({ type: "PROFILE", patch: { photo } });
-      dispatch({ type: "TOAST", toast: "Profile picture added" });
+      const photo = await ffFramePhoto17(f);
+      if (photo) { dispatch({ type: "PROFILE", patch: { photo } }); dispatch({ type: "TOAST", toast: "Profile picture added" }); }
     } catch (err) { dispatch({ type: "TOAST", toast: err.message }); }
     finally { setBusy(false); }
   };

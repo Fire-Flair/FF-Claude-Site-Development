@@ -537,3 +537,22 @@
 .ff .ff-m19-g .cap { padding-left: 2px; font: 600 12px/1.2 var(--font-sans, Inter, sans-serif); letter-spacing: .04em; color: #6A5A36; }
 .ff .ff-gb21-media .ff-m19-t.ghost { background: transparent; border: 1.5px dashed rgba(126,97,29,.25); box-shadow: none; opacity: .7; }
 .ff .ff-m19 > .pfa-sep { align-self: stretch; margin: 8px 2px 26px; }
+
+/* photo-frame (Alex, 18 Nov 21:17): in the Media box the profile photo is a circle, as on the Profile Card; the Page
+   pictures stay squares. */
+.ff .ff-gb21-media .ff-m19-t.pf { border-radius:50%; corner-shape:round; }
+.ff .ff-gb21-media .ff-m19-t.pf .b.x { top:6px; right:6px; border-radius:50%; corner-shape:round; }
+
+/* photo-frame: the framing pop-up. The circle is the Profile Card's photo circle; outside it the picture is dimmed. */
+.ff.ff-pf17-scrim { position:fixed; inset:0; z-index:9999; background:rgba(8,8,10,.66); display:flex; align-items:center; justify-content:center; padding:16px; }
+.ff .ff-pf17 { width:min(400px,100%); background:#FFFDF8; border:1px solid var(--color-gold-dk,#7E611D); border-radius:24px; corner-shape:squircle; padding:14px 16px 16px; box-shadow:0 24px 60px rgba(0,0,0,.4); display:flex; flex-direction:column; align-items:center; gap:14px; }
+.ff .ff-pf17-h { align-self:stretch; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.ff .ff-pf17-h b { font:600 18px/1.2 var(--font-display,'Cinzel',serif); color:#16130F; }
+.ff .ff-pf17-h .x { all:unset; cursor:pointer; display:grid; place-items:center; width:44px; height:44px; border-radius:50%; color:#16130F; }
+.ff .ff-pf17-h .x:focus-visible { outline:2px solid #8A6A14; }
+.ff .ff-pf17-stage { position:relative; overflow:hidden; border-radius:18px; corner-shape:squircle; background:#16130F; touch-action:none; cursor:grab; user-select:none; }
+.ff .ff-pf17-stage:active { cursor:grabbing; }
+.ff .ff-pf17-stage img { position:absolute; left:0; top:0; max-width:none; pointer-events:none; }
+.ff .ff-pf17-stage .ring { position:absolute; inset:0; border-radius:50%; box-shadow:0 0 0 9999px rgba(11,11,12,.55); outline:3px solid var(--color-gold,#C9A227); outline-offset:-3px; pointer-events:none; }
+.ff .ff-pf17-zoom { width:100%; accent-color:var(--color-gold,#C9A227); min-height:32px; }
+.ff .ff-pf17-go { width:100%; }

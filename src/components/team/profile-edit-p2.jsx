@@ -246,6 +246,8 @@ function PE2Overview({ records }) {
           </div>
         )}
       </section>
+      {/* about-overview (Alex, 18 Nov 21:17): About Me between Professions and Attributes, as on the published profile. */}
+      <CreatorAboutMe top />
       <section className="ff-pp ff-pp21 pp-sec" aria-labelledby="pe2-attr-h">
         <div className="ff-pp-head"><h2 id="pe2-attr-h" className="ff-about-h">Attributes</h2></div>
         <div className="ff-mrow ff-acar pe2-rail" role="list" aria-label="Attributes">

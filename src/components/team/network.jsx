@@ -485,8 +485,10 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
     style: { display: "none" },
     onChange: (e) => {
       const f = e.target.files?.[0];
+      e.target.value = "";
+      /* photo-frame: line the photo up in the card's circle first. */
       if (f)
-        onPhoto(URL.createObjectURL(f));
+        ffFramePhoto17(f).then((v) => { if (v) onPhoto(v); });
     }
   }), React.createElement("button", {
     onClick: () => photoRef.current?.click(),

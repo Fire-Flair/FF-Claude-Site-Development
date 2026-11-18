@@ -16,7 +16,7 @@ function CreatorMedia() {
     if (!f) return; setErr("");
     if (!f.type || !f.type.startsWith("image/")) { setErr(`${f.name}: only pictures can be a profile photo.`); return; }
     if (f.size > MAX_MEDIA_BYTES) { setErr(`${f.name} is ${prettyBytes(f.size)} — keep it under ${prettyBytes(MAX_MEDIA_BYTES)}.`); return; }
-    try { dispatch({ type: "PROFILE", patch: { photo: await shrinkPhoto(f, 800) } }); } catch (e) { setErr("That picture couldn't be added."); }
+    try { const framed = await ffFramePhoto17(f); if (framed) dispatch({ type: "PROFILE", patch: { photo: framed } }); } catch (e) { setErr("That picture couldn't be added."); }
   };
   /* Prototype helper: three plain, clearly marked pictures so the carousel can
      be tried without uploading. The live site replaces this with real uploads. */
@@ -64,12 +64,12 @@ function CreatorMedia() {
         <span className="ff-m19-g">
           <span className="ff-m19-row">
             {photo ? (
-              <div className="ff-m19-t">
+              <div className="ff-m19-t pf">
                 <img decoding="async" src={photo} alt="Profile photo" draggable={false} />
                 <button type="button" className="b x" aria-label="Remove profile photo" onClick={() => dispatch({ type: "PROFILE", patch: { photo: null } })}><X size={12} strokeWidth={2.4} /></button>
               </div>
             ) : (
-              <label className="ff-m19-t add">
+              <label className="ff-m19-t add pf">
                 <input type="file" accept="image/*" className="ff-sr" aria-label="Add profile photo" onChange={(e) => { addPhoto(e.target.files && e.target.files[0]); e.target.value = ""; }} />
                 <Plus size={22} strokeWidth={1.8} aria-hidden="true" />
               </label>
@@ -223,4 +223,66 @@ function goBookingSection(dispatch, id) {
   let tries = 0;
   const go = () => { window.dispatchEvent(new CustomEvent("ff-opendrop", { detail: id })); const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: "auto", block: "start" }); else if (++tries < 20) setTimeout(go, 50); };
   setTimeout(go, 60);
+}
+
+
+/* photo-frame (Alex, 18 Nov 21:16): the Profile Card shows the photo in a circle, so picking a profile photo opens a
+   framing step first: the picture under a circular window, dragged to line up and zoomed with the slider (or a pinch /
+   the mouse wheel). "Use photo" saves the square around the circle (800px), so the card's circle shows exactly what was
+   framed. ffFramePhoto17(file) resolves with a JPEG data URL, or null when cancelled. */
+function PhotoFrame17({ src, onDone }) {
+  const STAGE = Math.min(340, Math.round(window.innerWidth * 0.82));
+  const [nat, setNat] = useState(null);
+  const [z, setZ] = useState(1);
+  const [off, setOff] = useState({ x: 0, y: 0 });
+  const drag = useRef(null), pts = useRef(new Map());
+  useEffect(() => { const im = new Image(); im.onload = () => setNat({ w: im.naturalWidth, h: im.naturalHeight, im }); im.src = src; }, [src]);
+  useEffect(() => { const k = (e) => { if (e.key === "Escape") onDone(null); }; window.addEventListener("keydown", k); return () => window.removeEventListener("keydown", k); }, []);
+  const base = nat ? STAGE / Math.min(nat.w, nat.h) : 1;
+  const w = nat ? nat.w * base * z : STAGE, h = nat ? nat.h * base * z : STAGE;
+  const clamp = (o, zz = z) => { const ww = nat ? nat.w * base * zz : STAGE, hh = nat ? nat.h * base * zz : STAGE; const mx = (ww - STAGE) / 2, my = (hh - STAGE) / 2; return { x: Math.max(-mx, Math.min(mx, o.x)), y: Math.max(-my, Math.min(my, o.y)) }; };
+  const setZoom = (v) => { const zz = Math.max(1, Math.min(4, v)); setZ(zz); setOff(o => clamp(o, zz)); };
+  const down = (e) => { e.currentTarget.setPointerCapture(e.pointerId); pts.current.set(e.pointerId, { x: e.clientX, y: e.clientY }); drag.current = { x: e.clientX, y: e.clientY, o: off, z, d: null }; };
+  const move = (e) => {
+    if (!pts.current.has(e.pointerId) || !drag.current) return;
+    pts.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    const p = [...pts.current.values()];
+    if (p.length > 1) { const d = Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y); if (!drag.current.d) drag.current.d = d; setZoom(drag.current.z * d / drag.current.d); return; }
+    setOff(clamp({ x: drag.current.o.x + e.clientX - drag.current.x, y: drag.current.o.y + e.clientY - drag.current.y }));
+  };
+  const up = (e) => { pts.current.delete(e.pointerId); if (!pts.current.size) drag.current = null; else drag.current = { ...drag.current, d: null, z, o: off }; };
+  const save = () => {
+    if (!nat) return;
+    const OUT = 800, c = document.createElement("canvas"); c.width = OUT; c.height = OUT;
+    const k = OUT / STAGE, g = c.getContext("2d");
+    g.fillStyle = "#fff"; g.fillRect(0, 0, OUT, OUT);
+    g.drawImage(nat.im, ((STAGE - w) / 2 + off.x) * k, ((STAGE - h) / 2 + off.y) * k, w * k, h * k);
+    onDone(c.toDataURL("image/jpeg", 0.88));
+  };
+  return (
+    <div className="ff ff-pf17-scrim" role="dialog" aria-modal="true" aria-label="Your profile photo" onClick={() => onDone(null)}>
+      <div className="ff-pf17" onClick={(e) => e.stopPropagation()}>
+        <div className="ff-pf17-h"><b>Your profile photo</b><button type="button" className="x" aria-label="Cancel" onClick={() => onDone(null)}><X size={18} /></button></div>
+        <div className="ff-pf17-stage" style={{ width: STAGE, height: STAGE }} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up}
+          onWheel={(e) => { e.preventDefault(); setZoom(z * (e.deltaY < 0 ? 1.06 : 0.94)); }}>
+          {nat && <img src={src} alt="" draggable={false} style={{ width: w, height: h, transform: `translate(${(STAGE - w) / 2 + off.x}px, ${(STAGE - h) / 2 + off.y}px)` }} />}
+          <span className="ring" aria-hidden="true" />
+        </div>
+        <input className="ff-pf17-zoom" type="range" min="1" max="4" step="0.01" value={z} aria-label="Zoom" onChange={(e) => setZoom(Number(e.target.value))} />
+        <button type="button" className="ff-btn primary wide ff-pf17-go" disabled={!nat} onClick={save}><Check size={15} /> Use photo</button>
+      </div>
+    </div>
+  );
+}
+
+function ffFramePhoto17(file) {
+  return new Promise((resolve) => {
+    if (!file || !file.type || !file.type.startsWith("image/")) { resolve(null); return; }
+    const url = URL.createObjectURL(file);
+    const host = document.createElement("div");
+    document.body.appendChild(host);
+    const root = ReactDOM.createRoot(host);
+    const done = (v) => { try { root.unmount(); } catch (e) { /* already gone */ } host.remove(); URL.revokeObjectURL(url); resolve(v); };
+    root.render(<PhotoFrame17 src={url} onDone={done} />);
+  });
 }
