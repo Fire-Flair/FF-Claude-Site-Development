@@ -1,5 +1,19 @@
 # FireFlair prototype — changelog
 
+## v17.59
+
+Profile edit page (Alex's top priority). Branches merged: `p2-pfa`, `p2-pfb`, `p2-pfc`, `p2-pfd`.
+
+- Let's get started (`profile-builder.jsx`): Phone number first, above Upload CV, in WhatsApp green with the WhatsApp icon.
+- Profile Card face: the headline sits right under the name with a small gap before Professions; the "+" sits inside the photo circle; an empty photo shows a bust silhouette.
+- Media (`creator-media.jsx`): the first box is the profile photo (gold edge, person mark), then a thin line before the other photos; text: "Your first picture is your profile photo. The rest play across the top of your public profile, the best way to show your work."
+- Need help?: "Meet the FireFlair team and ask us anything."; a larger gap after Save; Book a meeting opens as a small centred box (max 420px), never full screen.
+- Business & Support at the bottom of Network, Bookings, Profile and someone's profile on FF Team (`vip-site.jsx` TeamRouter, `App.jsx`).
+- Professions (`profile-edit-p2.jsx`, `attribute-cards.jsx`): same width as a Skills box; the Bar ladder runs Barback (top, smallest) to Mixologist (bottom, largest); each profession card shows its level as five diamonds and opens its own editor (level 1–5, description, images) when tapped; a blank "+" card at the end opens the picker (no pencil).
+- Attributes: tapping a card opens the in-page editor (type box, entry tiles, entry details with Remove, Hide, Done), like the live FF Team site; no pop-up.
+- Venues: typed straight onto the page with the Google places search, under "List the venues you've worked at, or your favourite bars."; shown as dark rows under Worked at and Favourites.
+- Q&A: looks and works like the live FF Team Question Cards panel (header, To answer / Answered tabs with counts, colour key, card rail); answered in place under the row (options or Yes/No, then a type box); own questions are Yes/No then typed; stays above Save.
+
 ## v17.58
 
 Artifact version 1794973072-c272. The artifact holds at most 512 files, so the release now inlines the smallest images into index.html (`/home/claude/scripts/inline-small.py`, limit 510 files); developers can ignore this, it only affects the artifact upload.
