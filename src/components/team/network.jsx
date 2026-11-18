@@ -307,9 +307,10 @@ function NetworkTile({ person, invited, onClick }) {
 const TAKEN_TAGS = ["SAM42", "ALEX424", "GAVRILAS", "CUARTERO", "SIMAO", "DANYG", "JAMESALL", "ADMIN"];
 
 
-function ChipEdit({ values, onChange, placeholder, flags, ink, rule, leadFirst }) {
+function ChipEdit({ values, onChange, placeholder, flags, ink, rule, leadFirst, max }) {
   const [t, setT] = useState("");
-  const add = () => { const v = t.trim().replace(/,$/, ""); if (!v) return; if (!values.includes(v)) onChange([...values, v]); setT(""); };
+  /* pb-typecards: with max (Skills, Interests) an entry is at most max characters, cut while typing, and saved in Title Case. */
+  const add = () => { const v0 = t.trim().replace(/,$/, "").trim(); if (!v0) return; const v = max ? capWords17(v0) : v0; if (!values.some(x => x.toLowerCase() === v.toLowerCase())) onChange([...values, v]); setT(""); };
   return (
     <div>
       {values.length > 0 && (
@@ -322,8 +323,8 @@ function ChipEdit({ values, onChange, placeholder, flags, ink, rule, leadFirst }
           ))}
         </div>
       )}
-      <input className="ff-cardin ff-cardin-row" value={t} placeholder={placeholder} style={{ color: ink }}
-        onChange={(e) => setT(e.target.value)} onBlur={add}
+      <input className="ff-cardin ff-cardin-row" value={t} placeholder={placeholder} style={{ color: ink }} maxLength={max || undefined}
+        onChange={(e) => setT(max ? e.target.value.slice(0, max) : e.target.value)} onBlur={add}
         onKeyDown={(e) => { if (e.key === "Enter" || e.key === ",") { e.preventDefault(); add(); } }} />
     </div>
   );
@@ -570,7 +571,8 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
   }, React.createElement(ChipEdit, {
     values: draft.skills,
     onChange: set("skills"),
-    placeholder: "Add a skill, then Enter",
+    placeholder: "Skill",
+    max: TYPECARD_CHARS,
     ink,
     rule
   })), React.createElement(Row, {
@@ -579,7 +581,8 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
   }, React.createElement(ChipEdit, {
     values: draft.interests,
     onChange: set("interests"),
-    placeholder: "Add an interest",
+    placeholder: "Interest",
+    max: TYPECARD_CHARS,
     ink,
     rule
   })), React.createElement(Row, {

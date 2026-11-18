@@ -4,6 +4,26 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## Unreleased (pb-typecards)
+
+- **Skills and Interests are typed straight onto their cards** in the profile builder's Attributes rail (new
+  `src/components/team/type-cards.jsx`, `TypeCards26`; CSS `src/styles/type-cards.css`). The old tap-to-open editor
+  (TypeBox21 + tiles) is no longer used for these two; Qualifications is unchanged.
+- A card holds 5 entries. The last card has the type line; when it fills, a new empty card appears and the cursor moves onto it.
+  Enter or a comma adds an entry (pasting a comma list adds each one); Backspace in an empty line removes the last entry;
+  tapping an entry opens it to edit, with earlier / later / remove buttons. Mouse and pen can drag entries to reorder.
+- **Top three:** the first 3 entries in order go on the Profile Card; they carry a small gold number. A top-three entry over
+  16 characters shows its number hollow with a dashed edge (it can't go on the card).
+- Profile entries may be up to 60 characters (wrap between words; one long word shrinks). The Profile Card
+  (`PlayerFace17`) leaves out a Skill or Interest over 16 characters whole, never cut and not replaced.
+- Data shape unchanged: ordered records in `profile.records.skills` / `.interests`. Order is `rankedRecords()` (rank, then
+  list order); moves dispatch `REC_MOVE { id, to }`, which rewrites ranks from positions. New entries join the end.
+  CV imports fill the cards 5 at a time (no cap).
+- Title Case: `CAP_SMALL17` now also keeps an, or, at, by, upon and with lower case.
+- The Profile Card editor's Skills / Interests chips: 60-character limit, Title Case on add, neutral placeholders
+  ("Skill", "Interest") in place of instruction text.
+- The public profile is unchanged: it already shows 5 per card and never an empty card.
+
 ## v1.37
 
 Profile builder thread (Legolas merge, 18 Nov 19:00). No new features: this release puts the missing source on GitHub so

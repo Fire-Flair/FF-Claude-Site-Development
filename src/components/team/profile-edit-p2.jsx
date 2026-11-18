@@ -230,6 +230,8 @@ function PE2Overview({ records }) {
         <div className="ff-pp-head"><h2 id="pe2-attr-h" className="ff-about-h">Attributes</h2></div>
         <div className="ff-mrow ff-acar pe2-rail" role="list" aria-label="Attributes">
           {cats.map((k, ci) => {
+            /* pb-typecards: Skills and Interests are typed straight onto their cards (type-cards.jsx). */
+            if (TYPECARD_CATS.includes(k)) return <TypeCards26 key={k} catKey={k} records={records[k] || []} tone={tierCls17(ci)} />;
             const def = BASE_CATEGORIES[k];
             const shown = rankedRecords(records[k] || []).filter(r => !r.hidden && !r.proposed);
             const empty = !shown.length;

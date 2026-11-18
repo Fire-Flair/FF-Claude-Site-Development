@@ -1,7 +1,7 @@
 /* src/utils/text17.js — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
 /* v17.16: every word of a saved name starts with a capital. A word typed with any capital in it (McDonald's, WSET, UK) is left
-   as typed; small joining words (and, of, the, &, in, on, for, to, a) stay lower case unless first. */
-const CAP_SMALL17 = /^(and|of|the|&|in|on|for|to|a)$/;
+   as typed; small joining words (and, of, the, &, in, on, for, to, a, an, or, at, by, upon, with — pb-typecards added the last six) stay lower case unless first. */
+const CAP_SMALL17 = /^(and|of|the|&|in|on|for|to|a|an|or|at|by|upon|with)$/;
 
 
 function capWords17(s) {
