@@ -2,9 +2,12 @@
 
 ## v17.40
 
+Artifact version 1794959527-87d7.
+
 Own-profile edit page rebuilt, hero swipe removed. Branch merged: `p2-profile3`.
 
 - Hero easel (`hero-easel.jsx`): swipe, arrow keys and dots removed; a different member's card is drawn on the easel each time the page loads, a tap opens the profile. The moving shine, desktop crop and larger phone card from v17.37 stay.
+- Home (`home-sections.jsx`): the search bar and FF icon under the FF Team hero are gone (the Network page has the search). Network page (`network-directory.jsx`, `map.jsx`): the Venues section and venue pins are removed.
 - Own profile (`attribute-cards.jsx`, `profile-builder.jsx`, `prof21.css`, `landing-shell.jsx`): one edit page for new and existing members; compact dark category boxes, collapsed by default (Professions open); Verify stays grey while the FF Tag is empty or taken; three buttons at most; Need help? at the bottom.
 
 ## v17.39

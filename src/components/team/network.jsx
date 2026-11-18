@@ -2,8 +2,8 @@
 /* ==========================================================================
    NETWORK → REVIEW → TEAM (v17.22). On someone else's profile a signed-in member sees ONE relationship slot that grows:
    Add to network (one tap) → the review form in place, once → Invite to your team (one tap) → Invitation sent → On your team.
-   Removing and the prototype "they accept" preview live in the small ⋯ menu beside it. A signed-out visitor sees three
-   buttons: Join <First>'s team, Review, Share. The review form is ReviewForm17 (profile-from-text.jsx).
+   Removing, the prototype "they accept" preview and a skipped review (Write a review) live in the small ⋯ menu beside it.
+   A signed-out visitor sees two buttons: Join <First>'s team, Share. The review form is ReviewForm17 (profile-from-text.jsx).
    ========================================================================== */
 /* A button label that wraps between words and, if one word still does not fit, gets a smaller font. Never splits a word. */
 function FitLabel17({ children }) {
@@ -100,8 +100,10 @@ function RelSlot17({ person }) {
   } else {
     main = <div className="ff-rs17-quiet"><FitLabel17>On your team</FitLabel17><Check size={15} aria-hidden="true" /></div>;
   }
-  /* Mr G, 17 Nov: no separate Review entry for a signed-in member; the review is offered in place as they add to network or team. */
+  /* Mr G, 17 Nov: no separate Review entry for a signed-in member; the review is offered in place as they add to network or team.
+     Fixes2 (Fable): a skipped review stays reachable from the ⋯ menu until it is written. */
   const items = [
+    ...(status !== "none" && !reviewed ? [{ label: "Write a review", go: () => setOffer(true) }] : []),
     ...(status === "network" ? [{ label: "Remove from network", go: () => { dispatch({ type: "CONN_REMOVE", id: person.id, from: "network" }); toast(`${first} removed from your network`); } }] : []),
     ...(status === "pending" ? [{ label: "Cancel invitation", go: () => { dispatch({ type: "CONN_REMOVE", id: person.id, from: "pending" }); toast("Invitation cancelled"); } }] : []),
     ...(status === "team" ? [{ label: "Remove from team", go: () => { dispatch({ type: "CONN_REMOVE", id: person.id, from: "team" }); toast(`${first} removed from your team`); } }] : []),

@@ -1611,48 +1611,6 @@
     })));
   }
 
-  function HomeSearch() {
-    const { dispatch } = useStore();
-    const nav = useHomeNav();
-    const [val, setVal] = useState("");
-    const submit = () => {
-      dispatch({ type: "NET_QUERY", q: val.trim() });
-      nav.goNetwork();
-    };
-    return React.createElement("form", {
-      className: "ff-frame ff-ai ff-ffai-tint hero bare ff-hero-search",
-      role: "search",
-      onSubmit: (e) => {
-        e.preventDefault();
-        submit();
-      }
-    }, React.createElement("div", {
-      className: "ff-ai-row",
-      style: { alignItems: "center" }
-    }, React.createElement("span", {
-      className: "ff-ai-tag",
-      "aria-hidden": "true"
-    }, React.createElement(Coin, {
-      size: 20,
-      tier: "gold"
-    })), React.createElement("input", {
-      type: "search",
-      className: "ff-input ff-ai-in min-w-0 flex-1",
-      "aria-label": "Search FireFlair",
-      placeholder: "Search FireFlair…",
-      value: val,
-      onChange: (e) => setVal(e.target.value)
-    }), React.createElement("button", {
-      type: "submit",
-      className: "ff-ai-send",
-      "aria-label": "Search",
-      title: "Search"
-    }, React.createElement(Search, {
-      size: 16,
-      strokeWidth: 2
-    }))));
-  }
-
   function HomeHero101() {
     const { state } = useStore();
     const nav = useHomeNav();
@@ -1684,9 +1642,7 @@
       className: "ff-hero-sub101"
     }, "Get seen. Get booked."), React.createElement("div", {
       className: "ff-hero17-cta"
-    }, mine ? React.createElement(ShineButton, { onClick: nav.goNetwork }, React.createElement(Users, { size: 15 }), " Build your network") : React.createElement(ShineButton, { onClick: nav.goProfile }, React.createElement(User, { size: 15 }), " Create your Profile Card")), React.createElement("div", {
-      className: "ff-hero17-ai"
-    }, React.createElement(HomeSearch, null))));
+    }, mine ? React.createElement(ShineButton, { onClick: nav.goNetwork }, React.createElement(Users, { size: 15 }), " Build your network") : React.createElement(ShineButton, { onClick: nav.goProfile }, React.createElement(User, { size: 15 }), " Create your Profile Card"))));
   }
 
   function WelcomeBack101() {
