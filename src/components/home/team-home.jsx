@@ -72,10 +72,11 @@ function Home101() {
     /* homefix: Business & Support is last (the footer); at most three coin dividers. */
     const coin = (k) => React.createElement(CoinDivider, { key: `coin-${k}` });
     const sections = [
+      /* Alex (18 Nov): the Launch Challenge comes first, the Discover FireFlair pillars below it. */
+      React.createElement(TeamCompetition20, { key: "competition" }),
       React.createElement(DiscoverHub11, {
         key: "discover"
       }),
-      React.createElement(TeamCompetition20, { key: "competition" }),
       coin("a"),
       React.createElement(TwoMinutes20, { key: "twomin" }),
       React.createElement(HowBooking17, {

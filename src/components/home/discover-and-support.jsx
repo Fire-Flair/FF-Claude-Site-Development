@@ -396,14 +396,16 @@ function LaunchLadder22() {
   const h = React.createElement;
   const people = useDirectory();
   const c = FF_CHALLENGE20, n = people.length;
-  const pct = n <= c.staffAt ? n / c.staffAt * 50 : 50 + (Math.min(n, c.partyAt) - c.staffAt) / (c.partyAt - c.staffAt) * 50;
+  /* Alex (18 Nov): no live count on the ladder; the 100 stop sits a third of the way along. */
+  const AT = 100 / 3;
+  const pct = n <= c.staffAt ? n / c.staffAt * AT : AT + (Math.min(n, c.partyAt) - c.staffAt) / (c.partyAt - c.staffAt) * (100 - AT);
   const stops = [
-    [LC22_I.UserCheck, n.toLocaleString("en-GB"), "Joined", 0],
-    [LC22_I.CalendarCheck, c.staffAt.toLocaleString("en-GB"), "Bookings go live", 50],
+    [LC22_I.UserCheck, "Now", "Profiles and teams", 0],
+    [LC22_I.CalendarCheck, c.staffAt.toLocaleString("en-GB"), "Bookings go live", AT],
     [LC22_I.PartyPopper, c.partyAt.toLocaleString("en-GB"), "Launch party and nationwide campaign", 100]
   ];
   return h("div", { className: "ff-lc22-lad" },
-    h("div", { className: "ff-lc22-ic" }, stops.map((s, i) => h("span", { key: i, className: "p" + i, "aria-hidden": "true" }, h(s[0], { size: 16, strokeWidth: 1.8 })))),
+    h("div", { className: "ff-lc22-ic" }, stops.map((s, i) => h("span", { key: i, className: "p" + i, style: { left: s[3] + "%" }, "aria-hidden": "true" }, h(s[0], { size: 16, strokeWidth: 1.8 })))),
     h("div", { className: "ff-lc22-tr", role: "progressbar", "aria-valuemin": 0, "aria-valuemax": c.partyAt, "aria-valuenow": n, "aria-label": "Professionals joined" },
       h("span", { className: "f", style: { width: pct + "%" } }),
       stops.map((s, i) => h("i", { key: i, className: "d" + (pct >= s[3] ? " on" : ""), style: { left: s[3] + "%" } }))),
@@ -416,19 +418,20 @@ function TeamCompetition20() {
   const [rules, setRules] = useState(false);
   const [box, setBox] = useState(null);
   const CH = TP21.challenge;
-  /* [sheet title, face label, face line, icon, sheet sections] */
+  /* [sheet title, face label, face line, icon, sheet sections]. Alex (18 Nov): three boxes; who can enter stays in the Rules. */
   const boxes = [
     [CH.boxes[0].t, "90 days", "1 Dec to 28 Feb", LC22_I.CalendarDays, [["Dates", "The challenge runs for 90 days, from 1 December 2026 to 28 February 2027."]]],
-    [CH.boxes[1].t, "Open to all", "Anyone in hospitality", LC22_I.Users, [["Who can enter", "Any hospitality professional, and anyone who wants to get into hospitality and is willing and available to undertake suitable freelance hospitality work."], ["Experience", "Previous hospitality experience is not mandatory."], ["Where", "Hospitality professionals can sign up from anywhere in the world."]]],
-    [CH.boxes[2].t, "Top 10 go Gold", "Gold membership", LC22_I.Crown, [[CH.rewards[0][0], CH.rewards[0][1]]]],
+    ["Rewards for the top 10", "Rewards for the top 10", "Gold membership", LC22_I.Crown, [[CH.rewards[0][0], CH.rewards[0][1]]]],
     [CH.boxes[3].t, "Win Athens", "Athens Bar Show trip", LC22_I.Plane, [[CH.rewards[1][0], CH.rewards[1][1]], [CH.rewards[2][0], CH.rewards[2][1]]]]
   ];
   const cur = box === null ? null : [boxes[box][0], null, boxes[box][4]];
   const sec = (t, body) => h("div", { key: t }, h("h3", { className: "ff-label" }, t), body);
   const pick = (i) => setBox(i);
+  const lcRef = useRef(null);
+  useFitLine22(lcRef, "[data-fit22]", []);
   return h(
     "section",
-    { className: "ff-sect ff-lc22-sect", id: "ff-competition", "aria-labelledby": "ff-cp20-h" },
+    { className: "ff-sect ff-lc22-sect", id: "ff-competition", ref: lcRef, "aria-labelledby": "ff-cp20-h" },
     h("style", null, PROMO_CSS20 + LB20_CSS),
     h(
       "div",
@@ -457,8 +460,8 @@ function TeamCompetition20() {
       h("div", { className: "ff-lc22-boxes" }, boxes.map((b, i) => h("button", { key: b[1], type: "button", className: "ff-lc22-box", onClick: () => pick(i), "aria-haspopup": "dialog" },
         h("span", { className: "ic", "aria-hidden": "true" }, h(b[3], { size: 18, strokeWidth: 1.7 })),
         h("span", { className: "ch", "aria-hidden": "true" }, h(LC22_I.ChevronRight, { size: 16, strokeWidth: 2 })),
-        h("b", null, b[1]),
-        h("span", { className: "t" }, b[2])))),
+        h("b", { "data-fit22": "" }, b[1]),
+        h("span", { className: "t", "data-fit22": "" }, b[2])))),
       h(LaunchLadder22, null)
     ),
     h(
