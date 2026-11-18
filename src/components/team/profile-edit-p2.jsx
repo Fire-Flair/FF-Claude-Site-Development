@@ -292,6 +292,8 @@ function PE2Overview({ records }) {
   return (
     <>
       <style>{PE2_CSS}</style>
+      {/* about-first (Alex, 18 Nov 22:19): About Me sits above Professions, on the edit page and the published profile. */}
+      <CreatorAboutMe top />
       <section ref={profsRef} className="ff-pp ff-pp21 pp-sec" aria-labelledby="pe2-profs-h">
         <div className="ff-pp-head"><h2 id="pe2-profs-h" className="ff-about-h">Professions</h2></div>
         {profs.length > 0 && (
@@ -307,8 +309,6 @@ function PE2Overview({ records }) {
           </div>
         )}
       </section>
-      {/* about-overview (Alex, 18 Nov 21:17): About Me between Professions and Attributes, as on the published profile. */}
-      <CreatorAboutMe top />
       <section className="ff-pp ff-pp21 pp-sec" aria-labelledby="pe2-attr-h">
         <div className="ff-pp-head"><h2 id="pe2-attr-h" className="ff-about-h">Attributes</h2></div>
         <div className="ff-mrow ff-acar pe2-rail" role="list" aria-label="Attributes">

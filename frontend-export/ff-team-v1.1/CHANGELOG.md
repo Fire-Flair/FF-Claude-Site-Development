@@ -4,6 +4,14 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.97
+
+- About Me above Professions (Alex, 18 Nov 22:19): on the edit page / profile builder (`src/components/team/profile-edit-p2.jsx`:
+  `<CreatorAboutMe top />` now comes before the Professions section) and on every published profile, your own included
+  (`src/components/team/introductions.jsx`: `AboutMeBlock` is first in the Overview tab; the `aboutFirst` prop is kept
+  for callers but no longer changes the order). Order is now About Me > Professions > Attributes > Experience. Checked
+  on phone and desktop by reading the headings' order on both pages.
+
 ## v1.71
 
 Profile page (Alex, 18 Nov 21:56), three agents merged onto live 1795039019-ab8d (v1.70).
