@@ -130,3 +130,5 @@
 .ff .ff-bk > section.ff-bk-yours { margin-top:4px; }
 .ff .ff-bk > section.ff-bk-yours > .ff-bk-yh { margin-top:0; }
 .ff #ff-netmap > .ff-tl20.ff-tl20-pg { margin-top:4px; }
+/* prof-top (Alex, 18 Nov 21:10): the profile page opens on "1 Let's get started", 22px under the top bar like Your bookings. */
+.ff .ff-pb-root > .ff-journey:first-of-type > .ff-stephead:first-of-type { margin-top:4px !important; }

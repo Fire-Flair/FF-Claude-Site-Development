@@ -1196,9 +1196,9 @@ function ProfileBuilder() {
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   }, 80);
   return (
-    <div>
+    <div className="ff-pb-root">
       <InviteBanner17 />
-      <div className="ff-eyebrow">FF Team · Profile</div>
+      {/* prof-top (Alex, 18 Nov 21:10): no "FF Team · Profile" eyebrow; the page opens on 1, Let's get started. */}
 
       <div className="ff-journey">
         <BigStepHead n={1} title="Let's get started" done={hasCV(p) || cardReady} />
