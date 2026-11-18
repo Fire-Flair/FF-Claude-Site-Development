@@ -1,6 +1,6 @@
 /* src/components/home/team-home.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
 /* homefix: FF Team home layout fixes (pillar rows, Launch Challenge, spacing, equal boxes). Styles scoped under .ff-hf22. */
-const HF22_CSS = __ff_css("styles/home-fix22.css", "styles/home-colours.css");
+const HF22_CSS = __ff_css("styles/home-fix22.css", "styles/home-colours.css", "styles/home-text.css");
 /* home-colours (Alex, 18 Nov 14:53): 4 = ivory and burgundy (ivory pillars with a burgundy border, gold-leaf bookings box,
    champagne hero lighting, hero line "Get seen, get booked, get paid."), the applied look; 0 = the v1.18 look. */
 const FF_HOME_COLOUR = 4;

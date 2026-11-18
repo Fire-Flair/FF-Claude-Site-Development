@@ -343,8 +343,11 @@ function TwoMinutes20() {
   useEffect(() => { if (src && ref.current) { const p = ref.current.play(); if (p && p.catch) p.catch(() => {}); } }, [src]);
   return h(
     "section",
-    { className: "ff-sect ff-tm20", id: "ff-two-minutes", "aria-label": V.label },
+    { className: "ff-sect ff-tm20", id: "ff-two-minutes", "aria-labelledby": "ff-tm20-h" },
     h("style", null, TM20_CSS),
+    /* home-text (Alex, 18 Nov 16:26): a title and a few lines above the video: what happens when the 90-day challenge ends (Bilbo). */
+    h("h2", { id: "ff-tm20-h", className: "ff-lc22-eye ff-lcc-title ff-tm20-title" }, h("span", null, "FF Party Launch Event")),
+    h("p", { className: "ff-sec-intro" }, "When the 90-day challenge ends, our marketing campaign begins. It kicks off with our training, a cocktail training competition and the FF Party launch event. Then our UK‑wide marketing gets to work, bringing jobs and bookings to you and your team."),
     h(
       "div",
       { className: "ff-tm20-st", style: poster ? { "--tm-poster": "url(" + poster + ")" } : undefined },
@@ -417,6 +420,8 @@ function TeamCompetition20() {
        then the countdown, then the timeline. */
     /* v11-a (Alex, 18 Nov 10:20): the option 2 "Gold mark" section title (titles2.css), so no longer stretched to the box width. */
     h("h2", { id: "ff-cp20-h", className: "ff-lc22-eye ff-lcc-title" }, h("span", null, "FF Team Launch Challenge")),
+    /* home-text (Alex, 18 Nov 16:26): a few lines under the title saying what the challenge is, in real words (Bilbo). */
+    h("p", { className: "ff-sec-intro" }, "For 90 days from 1 December, create your Profile Card and grow your team by inviting the people you work with. The biggest and best teams rise to the top. The top 10 win rewards, and the overall winner is off to the Athens Bar Show."),
     h(
       "div",
       { className: "ff-lc22 ff-lcc" },

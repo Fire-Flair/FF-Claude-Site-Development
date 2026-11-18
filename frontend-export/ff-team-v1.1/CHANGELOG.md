@@ -4,6 +4,17 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.25
+
+FF Team home page `#/ff-team` (Alex's homepage thread, 18 Nov 16:26–16:59). New file `styles/home-text.css`, loaded after `home-colours.css`; two tokens in `tokens.css` (`--color-champagne-box`, `--color-champagne-deep`).
+
+- Titles (`discover-hub.jsx`): "Built for event and hospitality professionals" (was "FF Team is for…"), with a two-to-three line intro in place of "Find out how it works"; the bookings box title is "Built for getting you bookings".
+- New intro lines (`discover-and-support.jsx`, class `.ff-sec-intro`): under "FF Team Launch Challenge" (what the challenge is, in plain words) and a new "FF Party Launch Event" title with a few lines above the door video (what happens when the 90 days end). Copy by the writer agent; "UK‑wide" uses a non-breaking hyphen.
+- Pillar boxes are champagne (#EAE0C3) when closed as well as open. On iPad and desktop the photo stops above the words and only fades over its last part, so the fade no longer covers the photos.
+- Open pillar: no dark inset bar at the top of the box; "Build, share, grow" and the section titles inside the pillars are smaller and sit higher.
+- 1-2-3 picture wells: deeper champagne (#DCCB9F) instead of rosé (also covers the coming drop-down steps, `.ff-st21 .ph`).
+- Phones (under 760px): pillar boxes run champagne into burgundy (burgundy behind the chevron; chevrons switched to champagne on burgundy); the open tile fades back to champagne at its bottom edge so it joins its box. The bookings box runs the other way: burgundy with champagne glowing in from the top-right corner behind the chevron. Colour check (360/390/430 px): all pillar and bookings text sits on its own colour field (champagne behind the pillar words, burgundy behind every bookings label and the title).
+
 ## v1.24
 
 - Home pillars (Alex, 18 Nov 16:04): when a pillar is open, its tile is the same cream as the box below it (#EAE0C3; on wide screens the photo fades into it), so the tile and its content read as one continuous box. Closed tiles stay ivory to sand with the burgundy border. `styles/home-colours.css`.

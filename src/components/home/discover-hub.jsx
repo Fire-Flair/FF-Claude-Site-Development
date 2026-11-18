@@ -407,9 +407,9 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
       className: kind === "team" ? "ff-dx-h ff-dx-q" : "ff-h1 ff-dx-h"
     /* home-update / home2 (Alex, 18 Nov 15:29): the title is "FF Team is for event and hospitality professionals", with a
        smaller subheading below it. */
-    }, kind === "team" ? "FF Team is for event and hospitality professionals" : "Discover FireFlair"), kind === "team" && React.createElement("p", {
+    }, kind === "team" ? "Built for event and hospitality professionals" : "Discover FireFlair"), kind === "team" && React.createElement("p", {
       className: "ff-dx-tag"
-    }, "Find out how it works"), React.createElement("span", {
+    }, "Turn your CV into a Profile Card, build a team with the people you love working with and get booked for events and hospitality work. Explore the boxes below to see everything FF Team does for you."), React.createElement("span", {
       className: "ff-dx-sent",
       ref: sent,
       "aria-hidden": "true"
@@ -937,7 +937,7 @@ if (k === "package") return React.createElement("div", { className: "mc sv" }, R
     const team = kind === "team";
     const [hbOpen, setHbOpen] = useState(false);
     useEqualH22(hbRef, ".ff-hb17-row > .card", null, [kind, hbOpen]);
-    const hbTitle = team ? "FF Team is built for getting you bookings" : "How a booking works";
+    const hbTitle = team ? "Built for getting you bookings" : "How a booking works";
     useFitLine22(hbRef, ".ff-hbc-st .lb", [kind]);
     const hbHead = team ? React.createElement("h2", {
       id: "ff-hb17-h",
