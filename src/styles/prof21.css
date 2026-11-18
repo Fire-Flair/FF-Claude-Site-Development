@@ -450,13 +450,7 @@
 .ff #ff-sec-card .ff-photobtn .ff-photoempty { overflow: hidden; border-radius: 50%; }
 .ff #ff-sec-card .ff-photobtn:hover .ff-photoempty { transform: none; }
 
-/* 3. Media: the first box is the profile photo (gold edge, a person mark), then a thin line before the rest. */
-.ff .ff-m19-t.pfa-lead { overflow: hidden; }
-.ff .ff-m19-t.pfa-lead::after { content: ""; position: absolute; inset: 0; z-index: 1; border: 3px solid #C9A227; border-radius: inherit; corner-shape: squircle; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.55); }
-.ff .ff-m19-t.add.pfa-lead { border-style: solid; border-color: transparent; }
-.ff .ff-m19-t .pfa-mark { position: absolute; top: 5px; left: 5px; z-index: 2; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 8px; corner-shape: squircle;
-  background: #C9A227; color: #0B0B0C; box-shadow: 0 2px 6px rgba(0,0,0,.3); pointer-events: none; }
-.ff .ff-m19-t.pfa-lead .b { z-index: 2; }
+/* 3. Media: a thin line after the first photo (the profile photo). v1.53 (Alex, 18 Nov 20:40): no gold edge or bust mark on it. */
 .ff .ff-m19 > .pfa-sep { flex: none; align-self: stretch; width: 1px; margin: 8px 2px; background: rgba(126,97,29,.5); }
 
 /* 4. Need help?: a clear gap after Save; heading and the line; Book a meeting a small centred box, never full screen. */

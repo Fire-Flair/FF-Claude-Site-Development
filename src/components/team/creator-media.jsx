@@ -53,8 +53,7 @@ function CreatorMedia() {
         onDrop={(e) => { e.preventDefault(); setDrag(false); if (e.dataTransfer && e.dataTransfer.files) addMany(e.dataTransfer.files); }}>
         {/* pfa (Alex 03:29): the first box is the profile photo — gold edge and a person mark, then a thin line before the rest. */}
         {items.map((m, i) => (<React.Fragment key={m.id}>
-          <div className={"ff-m19-t" + (i === 0 ? " pfa-lead" : "")}>
-            {i === 0 && <span className="pfa-mark" aria-hidden="true"><PcBust17 size={12} color="currentColor" /></span>}
+          <div className="ff-m19-t">
             <img decoding="async" src={m.dataUrl} alt={`Media ${i + 1}${m.name ? `: ${m.name}` : ""}`} draggable={false} />
             <button type="button" className="b x" aria-label={`Remove media ${i + 1}`} onClick={() => dispatch({ type: "MEDIA_DELETE", id: m.id })}><X size={12} strokeWidth={2.4} /></button>
             <button type="button" className="b l" aria-label={`Move media ${i + 1} earlier`} disabled={i === 0} onClick={() => dispatch({ type: "P1_MEDIA_MOVE", id: m.id, dir: -1 })}><ChevronLeft size={13} /></button>
@@ -64,8 +63,7 @@ function CreatorMedia() {
         </React.Fragment>))}
         {Array.from({ length: busy }).map((_, i) => <div key={"b" + i} className="ff-m19-t busy" role="status" aria-label="Uploading"><Loader2 size={20} className="ff-spin" /></div>)}
         {room - busy > 0 && (
-          <label className={"ff-m19-t add" + (items.length ? "" : " pfa-lead")}>
-            {!items.length && <span className="pfa-mark" aria-hidden="true"><PcBust17 size={12} color="currentColor" /></span>}
+          <label className="ff-m19-t add">
             <input ref={addRef} type="file" accept="image/*" multiple className="ff-sr" aria-label={items.length ? "Add more pictures" : "Add pictures"} onChange={(e) => { addMany(e.target.files); e.target.value = ""; }} />
             <Plus size={22} strokeWidth={1.8} aria-hidden="true" />
           </label>

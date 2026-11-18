@@ -4,6 +4,14 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.54
+
+Alex, 18 Nov 20:40. `team/creator-media.jsx`, `styles/prof21.css`, `styles/base.css`.
+
+- Profile builder, Media: the first photo box no longer has the gold edge or the small bust mark in its corner (markup and styles deleted); the thin line after the first photo stays.
+- Desktop top bar: Home, Network, Bookings and Profile sit further apart (10px gaps, no dividers) and read as quiet buttons — a faint gold-edged squircle that warms on hover, and a soft gold fill with gold-leaf text on the current page. Visible focus ring for keyboard users.
+- Merged onto the live page 1795034370-98d9 (v1.53). Artifact version 1795034546-d40c.
+
 ## v1.53
 
 - Profile page photos (Alex, 18 Nov 20:10), bug fixes. Phone and iPad: the photos now end exactly on the Profile Card's icon line, which is where the card sits when the page opens, and from there the whole page scrolls as one (the photos no longer stay stuck behind the card until the Overview tabs). While the photos are open, a scroll anywhere on the page, up or down, by touch, wheel or keys, brings the card back up (before, only a long upward drag did). Opening the photos from further down the page brings them into view.
