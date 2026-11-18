@@ -1,5 +1,34 @@
 /* src/components/shared/shift-card17.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
 /* v1.1 (FF Team only): trimmed to the parts FF Team uses; the FF Staff / FF Party / VIP / admin code that was here is deleted. */
+
+
+
+/* src/components/shared/shift-card17.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
+/* ==========================================================================
+   SHIFT CARD (v17.5.5) — the one Shift Card, and the shift brief page at /fx/<code>.
+
+   ShiftCard17({ shift, event, source, status, company })
+     5 x 7, drawn in container units so it is the same at any width and at 1080 x 1512.
+     Top row: site plate (FF Staff | FF Party), status plate (Open shift | Chosen for you | Confirmed), FF logo.
+     Headline: the event name. Rows: Role, When, Time, Where, Pay, and Company on FF Staff shifts.
+     Footer: logo and the site address on the left (WhatsApp prints the time over the bottom right of an image).
+     Not on the face: dress code, notes, operational details. They live in the brief.
+   Pay comes only from payLine17(shift) (utils/pay17.js).
+
+   Shift codes (the address of the brief): five characters from an alphabet without lookalikes (no 0, 1, I, L, O),
+   not case sensitive. The first four identify the event, the fifth the shift within it: 7K2Q is the event,
+   7K2QA and 7K2QB its shifts. The prototype derives stable codes from the demo ids (fxCodeOf17); production issues
+   them from Core and keeps them unique.
+   ========================================================================== */
+const SC17_CSS = __ff_css("styles/shift17.css");
+
+
+if (typeof document !== "undefined" && !document.getElementById("ff-sc17-css")) {
+  const st17 = document.createElement("style");
+  st17.id = "ff-sc17-css";
+  st17.textContent = SC17_CSS;
+  document.head.appendChild(st17);
+}
 const SC17_ADDR = "ffteam.uk";
 const SC17_STATUS = { open: "Open shift", chosen: "Chosen for you", confirmed: "Confirmed" };
 const SC17I = { Martini: lucideIcon("Martini"), CalendarDays: lucideIcon("CalendarDays"), Clock: lucideIcon("Clock"), MapPin: lucideIcon("MapPin"), Banknote: lucideIcon("Banknote"), Briefcase: lucideIcon("Briefcase"), CalendarPlus: lucideIcon("CalendarPlus") };

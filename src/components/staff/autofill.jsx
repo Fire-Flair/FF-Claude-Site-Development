@@ -32,10 +32,6 @@ const startMs17 = (sh) => {
 };
 
 
-/* Payment is on record for an Event Card once its first invitations went out. */
-const paid17 = (s, eventId) => !!(s.paid17 || {})[eventId] || s.engagements.some(e => (s.shifts.find(x => x.id === e.shiftId) || {}).eventId === eventId);
-
-
 /* FF Staff launch (Be first in line for Gold): a company is recorded once, at its first confirmed hire on an FF Staff
    booking. The list is the prototype's stand-in for the server-side count; nothing is enrolled automatically. */
 const goldKey17 = (s) => {
@@ -44,7 +40,6 @@ const goldKey17 = (s) => {
   if (nm) return "co:" + slugify(nm);
   return s && s.auth && s.auth.status === "signedIn" && s.role === "staff" && s.site !== "party" && s.auth.tag ? "tag:" + String(s.auth.tag).toLowerCase() : "";
 };
-
 
 
 /* Words are never split across lines: a long word makes its text smaller instead. Several words may wrap. */
@@ -67,7 +62,6 @@ function FitWords17() {
   }, []);
   return null;
 }
-
 
 
 /* Hold a card for half a second and it pops up, anywhere on FF Party: people, packages, drinks and companies. */

@@ -21,7 +21,6 @@ const GLASSES = [
 const glassLabel = (k) => (GLASSES.find(g => g.key === k) || {}).label || "";
 
 
-
 /* Drawn glass shapes, so the glass reads at a glance. */
 function GlassIcon({ glass = "rocks", size = 24, color = "currentColor", strokeWidth = 1.5 }) {
   const P = { fill: "none", stroke: color, strokeWidth, strokeLinecap: "round", strokeLinejoin: "round" };
@@ -41,7 +40,6 @@ function GlassIcon({ glass = "rocks", size = 24, color = "currentColor", strokeW
 }
 
 
-
 const SUITS = {
   S: { sym: "♠", name: "Spades", label: "Whisky & Brandy", red: false },
   H: { sym: "♥", name: "Hearts", label: "Gin", red: true },
@@ -57,7 +55,6 @@ const cslug = (s) => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g
 
 
 const deal = (suit, list) => list.map(([name, base, glass, desc, ing], i) => ({ id: `cl_${cslug(name)}`, suit, rank: RANKS[i], name, base, glass, desc, ing }));
-
 
 
 const CLASSICS = [
@@ -124,7 +121,6 @@ const CLASSICS = [
 ];
 
 
-
 /* Signature Cocktail Cards from the demo network: bartenders and a bar. */
 const DEMO_SIGNATURES = [
   { id: "sig_sam_maple", by: "ff", name: "Smoked Maple Old Fashioned", glass: "rocks",
@@ -139,7 +135,6 @@ const DEMO_SIGNATURES = [
 ];
 
 
-
 const ingredientsOf = (x) => Array.isArray(x && x.ing) ? x.ing
   : Array.isArray(x && x.ingredients) ? x.ingredients
   : String((x && x.ingredients) || "").split("\n").map(s => s.trim()).filter(Boolean);
@@ -149,7 +144,6 @@ const ingredientsOf = (x) => Array.isArray(x && x.ing) ? x.ing
 const keyIngredients = (x, n = 3) => ingredientsOf(x).filter(s => !/^garnish/i.test(s))
   .map(s => s.replace(/^(\d+\s+dash(es)?( of)?|dash( of)?|\d[\d.,½¼¾/]*\s*(ml|cl|tsp|tbsp)?|top|splash of|pinch of|half a|handful of)\s*/i, "").replace(/,.*$/, ""))
   .map(s => s.charAt(0).toUpperCase() + s.slice(1)).slice(0, n);
-
 
 
 /* Every Signature Cocktail Card the page can offer: the demo network's,
@@ -176,16 +170,10 @@ function allSignatures(state, directory) {
 const cocktailById = (state, id, directory) => CLASSICS.find(c => c.id === id) || allSignatures(state, directory).find(s => s.id === id) || null;
 
 
-
-/* The cocktail menu: on the open Event Card, or a draft until one is saved. */
-const emptyMenu = () => ({ picks: [], mode: "start", count: "" });
-
-
 const menuLine = (menu) => {
   const n = parseInt(menu && menu.count, 10);
   return `${n ? `${n} cocktails` : "Cocktails"} · ${menu && menu.mode === "whole" ? "the whole event" : "to get started"}`;
 };
-
 
 
 /* Every cocktail card is the same card: black, gold rim, the banner at the top (Card17 + CocktailFront17).
@@ -203,7 +191,6 @@ function ckAdapt17(x) {
     photo: x.photo || (base && base.photo) || drinkImg17(g, { c: "#8A4B2A", ice: g !== "martini" }),
   };
 }
-
 
 
 function RecipeList({ items }) {

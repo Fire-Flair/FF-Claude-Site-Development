@@ -19,11 +19,6 @@ const EVENT_THEMES = [
 const eventThemeOf = (card) => EVENT_THEMES.find(t => t.key === (card && card.theme)) || EVENT_THEMES[0];
 
 
-
-const emptyEventCard = () => ({ theme: "onyx", occasion: "Wedding", title: "", subtitle: "", note: "", guests: "", venue: "", area: "", iso: "", start: "", end: "", host: "", roles: ["Bartender"] });
-
-
-
 /* One search text per person, shared by the Network search and the FF Party
    search: name, tag, professions, skills, interests, qualifications,
    languages and areas. */
@@ -31,8 +26,6 @@ function personSearchText(p) {
   return [p.name, p.tag, p.profession, ...(p.professions || []), ...(p.skills || []), ...(p.interests || []),
     ...(p.qualifications || []), ...(p.languages || []), ...(p.locations || [])].join(" ").toLowerCase();
 }
-
-
 
 
 /* ==========================================================================

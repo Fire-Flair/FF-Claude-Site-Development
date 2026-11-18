@@ -46,6 +46,12 @@ const h18 = React.createElement;
 /* v17.4.7: headline, description and the extra lines come from the package catalogue (state/package-catalogue17.js). */
 const PKG18 = {};
 
+[["bartending", "svc_bartending"], ["mixology", "svc_mixology"], ["masterclass", "svc_masterclass"], ["flair", "svc_flair"], ["tasting", "svc_full"], ["staffing", "svc_staffing"]].forEach(([slug, id]) => {
+  const c = PKG_BY17[id];
+  PKG18[slug] = { id, head: c.headline, desc: c.description, more: c.points.slice(), cond: c.conditions };
+});
+
+
 function pkg18(slug) {
   const m = PKG18[slug];
   if (!m) return null;

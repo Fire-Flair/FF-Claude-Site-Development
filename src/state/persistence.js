@@ -2,12 +2,13 @@
 /* ==========================================================================
    ROOT — persistence via the `db` capability.
    Each viewer's own state (role, session, profile, connections, invitations,
-   events, shifts, engagements, selection) lives under their private
+   selection) lives under their private
    data/users/{self} subtree, so a reload or a later visit picks up where
    they left off. Demo directory/venues/services stay static — not persisted.
+   v1.1: FF Team only. FF Staff, FF Party, VIP and admin keys are no longer saved.
    ========================================================================== */
 
-const PERSIST_KEYS = ["admin17", "coClaims17", "dirEdits17", "venueReview17", "vip21", "vipClaims", "feedback", "profileQuestions", "auth", "role", "route", "tab", "session", "profile", "connections", "invitations", "reviews", "reviewRequests", "events", "shifts", "engagements", "categoryVisibility", "credits", "company", "activeEventId", "site", "partyEvents", "trainingInterest", "jobsInterest", "cocktailMenu", "vipInterest", "teamInvites", "joinedPeople", "profileEdit", "staffNotify", "rewardsInterest", "workPostcode", "availabilityAsks", "notesSeenAt", "favs", "netAdds17", "teamAsks17", "myCocktails", "myServices", "myPosts", "devDone", "admin17", "myTerms17", "svcTerms17", "fd", "qa17", "goldClaims17", "coTeams17", "specialReq17", "notesDone17", "coNetNotes17", "sampleOff17", "teamAsksIn17", "teamAskNotes17", "reviewAsks17"];
+const PERSIST_KEYS = ["coClaims17", "venueReview17", "feedback", "profileQuestions", "auth", "role", "route", "tab", "session", "profile", "connections", "invitations", "reviews", "reviewRequests", "categoryVisibility", "trainingInterest", "jobsInterest", "teamInvites", "joinedPeople", "profileEdit", "staffNotify", "rewardsInterest", "workPostcode", "availabilityAsks", "notesSeenAt", "netAdds17", "teamAsks17", "myCocktails", "myServices", "myPosts", "devDone", "myTerms17", "svcTerms17", "qa17", "goldClaims17", "coTeams17", "notesDone17", "coNetNotes17", "sampleOff17", "teamAsksIn17", "teamAskNotes17", "reviewAsks17"];
 
 
 

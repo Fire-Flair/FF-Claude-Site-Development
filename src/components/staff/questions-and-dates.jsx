@@ -132,7 +132,6 @@ const I11 = {
 };
 
 
-
 /* ---- State: one small reducer in front of the main one ------------------- */
 function v11Reducer(s, a) {
   switch (a.type) {
@@ -185,7 +184,6 @@ function v11Reducer(s, a) {
 }
 
 
-
 /* ---- Dates --------------------------------------------------------------- */
 const TODAY_ISO = (() => { const d = new Date(); return new Date(d.getTime() - d.getTimezoneOffset() * 6e4).toISOString().slice(0, 10); })();
 
@@ -199,10 +197,12 @@ const shortDay = (iso) => { const d = dayOf(iso); return d ? d.toLocaleDateStrin
 const longDay = (iso) => { const d = dayOf(iso); return d ? d.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" }) : ""; };
 
 
-const startOf = (ev) => (ev && (ev.start || splitTime(ev.time)[0])) || "";
-
-
 const isPast = (iso) => !!iso && iso < TODAY_ISO;
 
 
 const firstName = (n) => String(n || "").trim().split(" ")[0] || "them";
+
+
+
+
+QUESTION_GROUP_COLOR.availability = { bg: "linear-gradient(165deg,#103A33,#06191A)", ink: "#ECFAF5", sub: "#8FD9C4", rule: "rgba(143,217,196,.32)" };

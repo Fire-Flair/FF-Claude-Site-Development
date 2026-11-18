@@ -23,10 +23,6 @@ function suggestLocations(place) {
 }
 
 
-
-
-
-
 /* Coming Soon — every agreed future feature, locked, with its planned
    version. Target dates are added once agreed with the development team. */
 const ROADMAP = [
@@ -46,53 +42,7 @@ const ROADMAP = [
 const roadmapItem = (id) => ROADMAP.find(r => r.id === id);
 
 
-const DEMO_EVENTS = [
-  { id: "evt_autumn", source: "staff", title: "Autumn Cocktail Party", iso: "2026-09-02", date: "2 September 2026", venue: "The Loft Lounge, Enfield", guests: "60", team: "2", notes: "Two-hour reception, then open bar." },
-  { id: "evt_members", source: "staff", title: "Members' Night", iso: "2026-09-08", date: "8 September 2026", venue: "Mayfair Rooms", guests: "150", team: "1", notes: "" },
-  { id: "evt_lunch", source: "staff", title: "Riverside Seated Lunch", iso: "2026-09-14", date: "14 September 2026", venue: "Riverside Pavilion", guests: "90", team: "1", notes: "" },
-  { id: "evt_charl", source: "staff", title: "Charlotte House Reception", iso: "2026-09-21", date: "21 September 2026", venue: "Charlotte House", guests: "70", team: "1", notes: "" },
-  { id: "evt_dryden", source: "party", title: "Private Party — Enfield", iso: "2026-09-29", date: "29 September 2026", venue: "8 Dryden Road, Enfield", guests: "40", team: "2", notes: "" },
-  { id: "evt_launch", source: "staff", title: "Brand Launch — Hackney", iso: "2026-10-11", date: "11 October 2026", venue: "Hackney Depot", guests: "180", team: "5", notes: "Press arrive at 18:00." },
-  { id: "evt_wedding", source: "party", title: "Rowntree Wedding", iso: "2026-11-15", date: "15 November 2026", venue: "Charlotte House", guests: "120", team: "3", notes: "Reception drinks then dinner service." },
-  { id: "evt_xmas", source: "staff", title: "Loft Christmas Party", kind: "Christmas party", iso: "2026-12-12", date: "12 December 2026", start: "19:00", time: "19:00", venue: "The Loft Lounge, Enfield", guests: "90", team: "3", notes: "" },
-  { id: "evt_nye", source: "staff", title: "New Year's Eve Gala", kind: "Private party", iso: "2026-12-31", date: "31 December 2026", start: "20:00", time: "20:00", venue: "Mayfair Rooms", guests: "200", team: "4", notes: "" },
-  { id: "evt_vgala", source: "staff", title: "Vooshka Winter Gala", hirer: "Vooshka Cocktail Bar", kind: "Corporate event", iso: "2026-12-05", date: "5 December 2026", start: "18:00", time: "18:00", venue: "The Loft Lounge, Enfield", guests: "140", team: "1", notes: "Black tie. Champagne reception, then the signature menu." },
-  { id: "evt_vdin", source: "staff", title: "Vooshka Private Dinner", hirer: "Vooshka Cocktail Bar", kind: "Private party", iso: "2026-12-19", date: "19 December 2026", start: "19:00", time: "19:00", venue: "Charlotte House, London", guests: "60", team: "1", notes: "Welcome cocktails, then a pairing menu." }
-];
-
-
-const DEMO_SHIFTS = __ff_json("content/data/demo-shifts.json");
-
-
-const DEMO_ENGAGEMENTS = [
-  { id: "eng_1", shiftId: "shf_1", staffId: "me", state: "paid" },
-  { id: "eng_2", shiftId: "shf_2", staffId: "stf_bruno", state: "paid" },
-  { id: "eng_3", shiftId: "shf_3", staffId: "stf_dany", state: "signed_off" },
-  { id: "eng_4", shiftId: "shf_4", staffId: "me", state: "completed" },
-  { id: "eng_5", shiftId: "shf_5", staffId: "me", state: "confirmed" },
-  { id: "eng_6", shiftId: "shf_5b", staffId: "stf_alex", state: "confirmed" },
-  { id: "eng_x1", shiftId: "shf_x1", staffId: "stf_james", state: "confirmed" },
-  { id: "eng_x2", shiftId: "shf_x2", staffId: "stf_simao", state: "requested", credit: true, sentAt: Date.now() - 6 * 3600000, expiresAt: Date.now() + 42 * 3600000 },
-  { id: "eng_n1", shiftId: "shf_n1", staffId: "stf_gav", state: "confirmed" },
-  { id: "eng_7", shiftId: "shf_6", staffId: "me", state: "requested", exclusive: true },
-  { id: "eng_8", shiftId: "shf_6b", staffId: "stf_gav", state: "confirmed" },
-  { id: "eng_9", shiftId: "shf_7", staffId: "stf_dany", state: "confirmed" },
-  { id: "eng_10", shiftId: "shf_9", staffId: "me", state: "requested", auto: true, batch: 1, batchSize: 6 },
-  { id: "eng_v1", shiftId: "shf_v1", staffId: "me", state: "requested", exclusive: true },
-  { id: "eng_v2", shiftId: "shf_v2", staffId: "me", state: "requested", auto: true, batch: 1, batchSize: 6 },
-  { id: "eng_v3", shiftId: "shf_v2", staffId: "stf_james", state: "available", auto: true, batch: 1, batchSize: 6 },
-  { id: "eng_v4", shiftId: "shf_v2", staffId: "stf_alex", state: "available", auto: true, batch: 1, batchSize: 6 },
-  { id: "eng_v5", shiftId: "shf_v2", staffId: "stf_gav", state: "available", auto: true, batch: 1, batchSize: 6 },
-  { id: "eng_v7", shiftId: "shf_v2", staffId: "stf_simao", state: "requested", auto: true, batch: 1, batchSize: 6 },
-  { id: "eng_v9", shiftId: "shf_v2", staffId: "stf_dany", state: "unavailable", auto: true, batch: 1, batchSize: 6 },
-  { id: "eng_v11", shiftId: "shf_v2", staffId: "stf_bruno", state: "requested", auto: true, batch: 1, batchSize: 6 }
-].map((e) => ({ ...e, sentAt: Date.now() - 6 * 3600000, expiresAt: Date.now() + RESPONSE_MS - 6 * 3600000, ...e.auto ? { selectBy: Date.now() + 7 * 86400000 - 6 * 3600000, thread: [] } : { thread: [] }, history: [{ state: e.state, at: Date.now() }] })).map((e) => e.id === "eng_x2" ? { ...e, state: "discuss", thread: [{ from: "pro", text: "Is parking available at the venue?", at: Date.now() - 2 * 3600000 }] } : e);
-
-
-
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-
 
 
 /* A worked demo profile: multiple professions (more than the three the card
@@ -141,7 +91,6 @@ const DEMO_RECORDS = () => {
 };
 
 
-
 /* ==========================================================================
    XP — configurable, not hardcoded behaviour.
    Every standard task is worth XP_VALUES.task; answering a Question Card is
@@ -150,7 +99,6 @@ const DEMO_RECORDS = () => {
    every award is written to profile.xpLog, so nothing can be claimed twice.
    ========================================================================== */
 const XP_VALUES = { task: 10, question: 1 };
-
 
 
 const XP_TASKS = [
@@ -167,9 +115,7 @@ const XP_TASKS = [
 ].filter(t => SHOW_VENUES17 || t.id !== "add_venues").map(t => ({ ...t, xp: XP_VALUES.task }));
 
 
-
 const xpTaskFor = (category) => `add_${category}`;
-
 
 
 /* ==========================================================================
@@ -193,7 +139,6 @@ const QUESTION_GROUPS = [
 ];
 
 
-
 const QUESTION_GROUP_COLOR = {
   generic:  { bg: "linear-gradient(165deg,#132435,#080F18)", ink: "#EAF2FA", sub: "#8FB9DE", rule: "rgba(143,185,222,.32)" }, // cool blue
   feedback: { bg: "linear-gradient(165deg,#241533,#0F0919)", ink: "#F3EDFA", sub: "#C4A3E8", rule: "rgba(196,163,232,.32)" }, // purple
@@ -206,7 +151,6 @@ const QUESTION_GROUP_COLOR = {
 
 
 const questionGroupColor = (key) => QUESTION_GROUP_COLOR[key] || QUESTION_GROUP_COLOR.personal;
-
 
 
 const QUESTIONS = [
@@ -224,7 +168,6 @@ const QUESTIONS = [
   { id: "f_cv",        group: "feedback", type: "choice", text: "Would you use your FF Team profile as your professional CV?", options: ["Yes", "Maybe", "No"] },
   { id: "f_improve",   group: "feedback", type: "text", text: "What could FireFlair do to make your FF Team profile more useful?", placeholder: "Anything at all" },
 ].map(q => ({ ...q, public: false, xp: XP_VALUES.question }));
-
 
 
 /* Every Question Card this person has: the launch set plus FireFlair's. */

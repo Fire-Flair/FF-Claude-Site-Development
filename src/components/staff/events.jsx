@@ -3,7 +3,6 @@
 const eventTitle = (ev) => (ev && String(ev.title || "").trim()) || (ev && ev.kind ? ev.kind : "Your event");
 
 
-
 /* ---- Job roles, grouped the way the FF Team profile groups professions -------------------
    A row of categories (Bar, Front of House, Chefs …), the roles in the chosen category, and a box
    for any other role. Used on the Staff step (tap a role to add a person) and on the shift details
@@ -71,7 +70,6 @@ function Spin3D11({ half = 8, inset = 0, back, className = "", children }) {
 }
 
 
-
 /* FF Party favourites. */
 const favsOf = (state, all) => (state.favs || []).map(id => all.find(p => p.id === id)).filter(p => p && !p.isCompany);
 
@@ -87,29 +85,3 @@ function FavBtn11({ person, wide }) {
 }
 
 
-
-const eventDraft11 = (ev) => ev ? { title: ev.title || "", kind: ev.kind || "", iso: ev.iso || "", start: startOf(ev), venue: ev.venue || "", guests: ev.guests || "", details: ev.details || "" }
-  : { title: "", kind: "", iso: "", start: "", venue: "", guests: "", details: "" };
-
-
-/* A typed two-digit year ("26") arrives as 0026: read it as 2026. Returns the date, and whether it has passed. */
-function cleanIso11(iso) {
-  const m = /^(\d{1,4})-(\d{2})-(\d{2})$/.exec(iso || "");
-  if (!m) return { iso: iso || "", past: false };
-  const y = +m[1] < 100 ? 2000 + +m[1] : +m[1];
-  const fixed = `${String(y).padStart(4, "0")}-${m[2]}-${m[3]}`;
-  return { iso: fixed, past: fixed < TODAY_ISO };
-}
-
-
-const eventData11 = (d) => ({
-  title: d.title.trim() || [d.kind || "Event", d.iso ? shortDay(d.iso) : ""].filter(Boolean).join(" · "),
-  kind: d.kind, iso: d.iso, start: d.start, venue: d.venue.trim(), guests: d.guests, details: (d.details || "").trim(),
-  date: longDate(d.iso) || "", time: d.start || "",
-});
-
-
-
-/* People on an event, from its Service Cards. */
-const eventPeople = (state, all, ev) => [...new Set(state.shifts.filter(x => x.eventId === ev.id && x.staffId).map(x => x.staffId))]
-  .map(id => findPerson(all, state, id)).filter(Boolean);

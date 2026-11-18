@@ -10,6 +10,135 @@ const IMG11 = window.FF_IMG || {};
 const VK_CK17 = __ff_json("content/data/vk-ck17.json");
 
 
+
+
+const PX17 = {"px_team_com": "", "px_team_pk": "", "px_team_ev": "", "px_biz_com": "", "px_biz_ev": "", "px_biz_sv": "", "px_biz_pf": "", "px_pty_com": "", "px_pty_pk": "", "px_pty_ev": "", "px_pty_pf": "", "px_bar": ""};
+
+
+if (window.FF_IMG)
+  Object.assign(window.FF_IMG, PX17);
+
+
+window.FF_IMG_AI = Object.assign({}, window.FF_IMG || {});
+
+
+const PHOTOS17 = __ff_json("content/data/photos17.json");
+
+
+/* Where the faces are in each crop, for any place a photo is shown at another shape
+   (desktop tiles, the "Next" strip, story headers, the Bookings photos on desktop). */
+const FOCUS17 = {
+ "t17_p35": "50% 52%",
+ "t17_vke01": "39% 14%",
+ "t17_vke06": "59% 62%",
+ "t17_aiIntl": "50% 50%",
+ "t17_vke10": "50% 60%",
+ "j17_p45": "50% 6%",
+ "j17_p13": "50% 1%",
+ "j17_vkg15": "50% 100%",
+ "t17_p01": "54% 35%",
+ "t17_vke02": "50% 65%",
+ "t17_vkg14": "41% 45%",
+ "t17_vke12": "50% 79%",
+ "t17_p30": "46% 50%",
+ "j17_v01": "50% 37%",
+ "j17_p05": "50% 45%",
+ "j17_vkg02": "50% 60%",
+ "t17_aiMusic": "50% 50%",
+ "t17_vkg11": "50% 58%",
+ "t17_vkg09": "50% 50%",
+ "t17_vke05": "50% 65%",
+ "t17_vke11": "50% 79%",
+ "j17_p23": "58% 2%",
+ "j17_p32": "45% 48%",
+ "j17_vkg05": "50% 50%",
+ "t17_vke04": "70% 28%",
+ "t17_vke09": "62% 34%",
+ "t17_p11": "53% 24%",
+ "t17_vke07": "55% 19%",
+ "j17_p27": "33% 6%",
+ "j17_p04": "45% 6%",
+ "j17_p10": "20% 6%",
+ "t17_p45": "31% 4%",
+ "j17_aiIntl": "50% 80%",
+ "j17_vke06": "60% 6%",
+ "j17_p35": "54% 42%",
+ "j17_aiMusic": "50% 80%",
+ "t17_p23": "50% 0%",
+ "t17_p46": "50% 34%",
+ "t17_p24": "60% 27%",
+ "t17_p31": "50% 10%",
+ "j17_p46": "52% 13%",
+ "j17_p24": "60% 6%",
+ "j17_p31": "50% 6%",
+ "t17_p06": "49% 40%",
+ "t17_v01": "50% 43%",
+ "t17_p13": "50% 0%",
+ "j17_p06": "50% 66%",
+ "j17_p30": "45% 59%",
+ "j17_p01": "55% 55%",
+ "t17_p27": "33% 19%",
+ "t17_p05": "50% 45%",
+ "t17_p04": "46% 14%",
+ "j17_p11": "53% 19%",
+ "j17_vke04": "70% 6%",
+ "t17_p14": "50% 35%",
+ "j17_p14": "50% 75%",
+ "j17_vke02": "50% 100%",
+ "t17_p32": "41% 45%",
+ "t17_p12": "54% 4%",
+ "t17_p18": "49% 30%",
+ "t17_p20": "50% 50%",
+ "t17_p15": "51% 35%",
+ "t17_p08": "50% 50%",
+ "j17_p12": "55% 6%",
+ "j17_p18": "50% 61%",
+ "j17_p20": "50% 59%",
+ "j17_p15": "50% 55%",
+ "j17_p08": "30% 52%",
+ "tm_live": "50% 50%",
+ "cocktail_0": "42% 60%",
+ "cocktail_1": "48% 45%",
+ "cocktail_2": "47% 45%",
+ "jr_whyteam": "46% 10%",
+ "jr_sidehustle": "50% 58%",
+ "jr_workteam": "50% 6%",
+ "jr_profile": "48% 6%",
+ "jr_shifts": "35% 42%",
+ "jr_sites": "45% 37%",
+ "jr_cards": "50% 65%",
+ "jr_menuteam": "50% 49%",
+ "jr_cardsteam": "55% 6%",
+ "bk_training": "60% 18%",
+ "bk_jobs": "52% 6%",
+ "bk_rewards": "50% 50%",
+ "in_tr_intro_cocktails": "60% 44%",
+ "in_tr_mixology": "50% 30%",
+ "in_tr_brand_training": "77% 53%",
+ "in_tr_ff_open_bar": "50% 60%",
+ "in_tr_ff_masterclass": "50% 50%",
+ "in_dj_food_festivals": "50% 50%",
+ "in_rw_shoot": "49% 42%",
+ "j17_vke07": "55% 50%",
+ "j17_vke09": "62% 50%",
+ "t17_hp02": "40% 38%",
+ "j17_hp02": "40% 50%",
+ "j17_vke12": "50% 50%",
+ "t17_hp03": "55% 44%",
+ "j17_hp03": "55% 50%",
+ "t17_hp01": "30% 51%",
+ "j17_hp01": "30% 50%",
+ "t17_p44": "50% 62%",
+ "j17_p37": "60% 50%",
+ "t17_vkg15": "50% 30%",
+ "j17_hp04": "40% 55%",
+ "j17_p43": "60% 50%"
+};
+
+
+window.FF_FOCUS = Object.assign(window.FF_FOCUS || {}, FOCUS17);
+
+
 function fp17(k) { const f = (window.FF_FOCUS || {})[k]; return f ? { objectPosition: f } : undefined; }
 
 
@@ -52,6 +181,11 @@ function DxPh17({ c, n }) {
 
 
 const ROT17_CSS = __ff_css("styles/rot17.css");
+
+
+
+
+if (window.FF_IMG) Object.assign(window.FF_IMG, PHOTOS17);
 
 
 function VkFold17({ title, count, children }) {

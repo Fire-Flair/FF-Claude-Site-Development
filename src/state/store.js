@@ -7,7 +7,6 @@ const initialState = {
   /* Authentication — real app state, written only by AUTH_ADAPTER results.
      The nav reads auth.status and nothing else. */
   auth: { status: "signedOut", tag: null, method: null },
-  vipClaims: [],
   profile: {
     name: "", photo: null, theme: "ivory", tier: "standard", level: 3,
     hasCar: false, live: false, cardShade: "slate",
@@ -37,20 +36,13 @@ const initialState = {
   profileQuestions: [],
   /* Section show/hide state — one map, reused by every horizontal card
      section (profession groups, feed sections, rankings, etc). A key that
-     isn't present defaults to visible; FF Staff seeds a few keys hidden here
-     rather than deleting those categories anywhere. */
-  categoryVisibility: {
-    staff_Chefs: false, staff_Services: false, "staff_Back of House": false,
-  },
+     isn't present defaults to visible. */
+  categoryVisibility: {},
   directory: DIRECTORY,
   selection: [],
-  events: DEMO_EVENTS, shifts: DEMO_SHIFTS, engagements: DEMO_ENGAGEMENTS, af17: { shf_v2: { id: "af_v2", shiftId: "shf_v2", eventId: "evt_vdin", status: "matching", replacement: false, needBatch: false, exhausted: false, startedAt: Date.now() - 6 * 3600000, batches: [{ n: 1, at: Date.now() - 6 * 3600000, size: 10, respondBy: Date.now() + 18 * 3600000, selectBy: Date.now() + 7 * 86400000 - 6 * 3600000 }] }, shf_9: { id: "af_demo", shiftId: "shf_9", eventId: "evt_wedding", status: "matching", replacement: false, needBatch: false, exhausted: false, startedAt: Date.now() - 6 * 36e5, batches: [{ n: 1, at: Date.now() - 6 * 36e5, size: 10, respondBy: Date.now() + 18 * 36e5, selectBy: Date.now() + 7 * 864e5 - 6 * 36e5 }] } },
-  /* FireFlair credits — bought before availability is sent, used only when a
-     Service Card is confirmed. balance never includes money for anyone's pay. */
-  credits: { balance: 0, log: [] },
+  /* v1.1: FF Staff bookings are not in FF Team. The lists stay (empty) because FF Team code still reads them. */
+  events: [], shifts: [], engagements: [],
   company: null,
-  activeEventId: null,
-  site: "staff",          // v16.13: which hirer site, "staff" (FF Staff) or "party" (FF Party)
   viewing: null,
   toast: null,
   /* Where the FF sheet just sent the person — { target } — consumed once by
@@ -58,16 +50,9 @@ const initialState = {
   focus: null,
   /* Network search text — shared so Home's FireFlair can hand a search over. */
   netQuery: "",
-  /* Home early access (v16.8): FF Party Event Cards saved as leads, and the
-     training events someone registered interest in. Contact numbers are
-     stored masked here; Core holds the real number. */
-  partyEvents: [],
+  /* Training and Dream jobs interest (Grow with FireFlair). */
   trainingInterest: null,
-  /* FF VIP list (v16.9) — same shape as trainingInterest. */
-  vipInterest: null,
   jobsInterest: null,
-  cocktailMenu: null,
-  partyDraft: null,       // v16.15: the quick Event Card builder's draft (not persisted)     // v16.15: cocktails chosen before an Event Card is saved — { picks, mode, count }     // v16.14: Dream jobs — { jobs: [ids], dream: [text], contact, at }
   /* Team invitations (v16.11) — "Add to team" is two-way. Each invitation
      stays "pending" until the other person accepts; only then are they connected and
      my pending reviews of them are accepted. Sending one also adds them to my network.
@@ -170,23 +155,13 @@ function reducerCore17(s0, a) {
   if (a.type === "PROFILE" && a.patch && typeof a.patch.about === "string") a = { ...a, patch: { ...a.patch, about: a.patch.about.slice(0, BIO_MAX) } };
   /* v1.2: Edit Profile actions (PE_*) */
   if (a.type && (a.type.startsWith("PE_") || a.type.startsWith("P1_"))) { const r = p1EditReducer(s, a); if (r) return r; }
-  /* v16.12: a Company Card's information uses the same card records as an
-     FF Team profile. REC_* actions with owner "company" run the normal
-     record logic against company.records (no FF Team XP is awarded). */
-  if (a && a.owner === "company" && /^REC_/.test(a.type)) {
-    const c = s.company || {};
-    const out = reducerCore17({ ...s, profile: { ...s.profile, records: c.records || {} } }, { ...a, owner: undefined });
-    /* The contact cards and the Company Card's social icons stay in step. */
-    const rec = out.profile.records;
-    return { ...s, company: { ...c, records: rec, ...(a.category === "contact" ? { socials: coSocialsFromContacts17(c, (rec || {}).contact) } : {}) } };
-  }
   { const r11 = v11Reducer(s, a); if (r11) return r11; }
   { const rq = claim17Reducer(s, a) || inv17Reducer(s, a) || qa17Reducer(s, a) || pc17Reducer(s, a) || cov17Reducer(s, a) || ct17Reducer(s, a) || base17Reducer(s, a) || notes17Reducer(s, a); if (rq) return rq; }
   switch (a.type) {
     case "FOCUS":     return { ...s, focus: a.focus };
     case "NET_QUERY": return { ...s, netQuery: a.q || "" };
-    case "ROLE":      if (a.role === "staff" && !p1SiteOpen(a.site || "staff")) return { ...s, toast: `${p1SiteName(a.site || "staff")} is coming in 2027` };
-                      return { ...s, viewing: null, role: a.role, site: a.role === "staff" ? (a.site || "staff") : s.site, tab: "home", route: a.role === "team" ? (s.profile.live ? "live" : "entry") : "staffHome" };
+    /* v1.1: FF Team is the only role. */
+    case "ROLE":      return a.role === "team" ? { ...s, viewing: null, role: "team", tab: "home", route: s.profile.live ? "live" : "entry" } : s;
     case "GO":        return { ...s, route: a.route };
     case "TAB":       return { ...s, viewing: null, tab: a.tab, route: a.route ?? s.route };
     case "SESSION":   return { ...s, session: { ...s.session, ...a.patch } };
@@ -282,80 +257,10 @@ function reducerCore17(s0, a) {
     case "MEDIA_ADD":    return { ...s, profile: { ...s.profile, media: [...(s.profile.media || []), a.item] } };
     case "MEDIA_DELETE": return { ...s, profile: { ...s.profile, media: (s.profile.media || []).filter(m => m.id !== a.id) } };
 
-    case "EVENT_ADD":  return { ...s, events: [...s.events, a.event], activeEventId: a.event.id };
-    case "EVENT_PATCH": return { ...s, events: s.events.map(e => e.id === a.id ? { ...e, ...a.patch } : e) };
-    case "ACTIVE_EVENT": return { ...s, activeEventId: a.id, viewing: null };
-    case "SHIFT_ADD":  return { ...s, shifts: [...s.shifts, a.shift] };
-    case "SHIFT_PATCH": return { ...s, shifts: s.shifts.map(x => x.id === a.id ? { ...x, ...a.patch } : x) };
-    case "SHIFT_DELETE": return { ...s, shifts: s.shifts.filter(x => x.id !== a.id) };
-    case "SHIFT_DUPLICATE": {
-      const src = s.shifts.find(x => x.id === a.id);
-      if (!src) return s;
-      const copy = { ...src, id: uid("shf"), staffId: a.staffId || "", skills: [...(src.skills || [])] };
-      const i = s.shifts.findIndex(x => x.id === a.id);
-      const shifts = [...s.shifts]; shifts.splice(i + 1, 0, copy);
-      return { ...s, shifts, toast: "Service Card duplicated — amend it and assign someone" };
-    }
-
-    case "CREDITS_BUY": return {
-      ...s, credits: {
-        balance: (s.credits?.balance || 0) + a.n,
-        log: [...(s.credits?.log || []), { kind: "bought", n: a.n, at: Date.now() }],
-      },
-    };
-
-    /* Send one Availability Card per Service Card, each to the person assigned
-       to it. Each request reserves a credit; nothing is used until they confirm. */
-    case "SEND_REQUESTS": {
-      const now = Date.now();
-      const made = a.shiftIds.map(id => {
-        const sh = s.shifts.find(x => x.id === id);
-        return {
-          id: uid("eng"), shiftId: id, staffId: sh.staffId, state: "requested", credit: true,
-          sentAt: now, expiresAt: now + RESPONSE_MS, questions: a.questions || [],
-          history: [{ state: "requested", at: now }],
-        };
-      });
-      const sentStaff = made.map(m => m.staffId);
-      return { ...s, engagements: [...s.engagements, ...made], selection: s.selection.filter(x => !sentStaff.includes(x)) };
-    }
-    case "REQUESTS": {
-      const made = a.staffIds.map(sid => ({
-        id: uid("eng"), shiftId: a.shiftId, staffId: sid,
-        state: "requested", history: [{ state: "requested", at: Date.now() }],
-      }));
-      return { ...s, engagements: [...s.engagements, ...made], selection: [] };
-    }
-    case "ENG_STATE": {
-      let credits = s.credits || { balance: 0, log: [] };
-      const engagements = s.engagements.map(e => {
-        if (e.id !== a.id) return e;
-        let next = { ...e, state: a.state, history: [...e.history, { state: a.state, at: Date.now() }] };
-        /* A credit is used only on a confirmed response, and only once. */
-        if (a.state === "confirmed" && e.credit && !e.creditUsed) {
-          next.creditUsed = true;
-          credits = { balance: Math.max(0, credits.balance - 1), log: [...credits.log, { kind: "used", n: 1, shiftId: e.shiftId, at: Date.now() }] };
-        }
-        return next;
-      });
-      return { ...s, engagements, credits };
-    }
-    /* Requests with no reply inside the response window expire; their
-       credit is released back for a replacement or a future booking. */
-    case "EXPIRE_DUE": {
-      const now = Date.now();
-      const due = s.engagements.some(e => e.state === "requested" && e.credit && e.expiresAt && e.expiresAt <= now);
-      if (!due) return s;
-      return {
-        ...s, engagements: s.engagements.map(e => e.state === "requested" && e.credit && e.expiresAt && e.expiresAt <= now
-          ? { ...e, state: "expired", history: [...e.history, { state: "expired", at: now }] } : e),
-      };
-    }
     case "COMPANY_SAVE": return V101.vipClaim20({ ...s, company: { ...(s.company || {}), ...a.company } }, a.company);
     /* A business signs in with its company name (its page address) and a
        verified phone number: the business equivalent of an FF Tag. */
     case "COMPANY_SIGNED_IN": return { ...s, auth: { status: "signedIn", tag: a.slug, method: "company" }, company: { ...(s.company || {}), verified: true } };
-    case "COMPANY_REVIEW_ADD": return { ...s, company: { ...s.company, reviews: [a.review, ...((s.company && s.company.reviews) || [])] } };
 
     case "PUBLISH_XP": return claimXP(s.profile.name ? claimXP(s, "create_card") : s, "publish_profile");
     case "CARD_CREATED_XP": return claimXP(s, "create_card");
@@ -478,29 +383,13 @@ function reducerCore17(s0, a) {
       return rev17AtSignIn(s, inv17AtSignIn(s, next, a), a);
     }
     case "TOAST":     return { ...s, toast: a.toast };
-    case "PARTY_EVENT_SAVE": return { ...s, partyEvents: [a.event, ...(s.partyEvents || [])] };
     case "TRAINING_INTEREST": return { ...s, trainingInterest: a.interest };
-    case "VIP_INTEREST": return { ...s, vipInterest: a.interest };
     case "JOBS_INTEREST": return { ...s, jobsInterest: a.interest };
-    case "COCKTAIL_MENU": return { ...s, cocktailMenu: a.menu };
     /* The cocktail menu: on the open Event Card, or a draft until one is saved. */
-    case "COCKTAILS_PATCH": {
-      const ev = s.events.find(e => e.id === s.activeEventId);
-      if (ev) return { ...s, events: s.events.map(e => e.id === ev.id ? { ...e, cocktails: { ...emptyMenu(), ...(e.cocktails || {}), ...a.patch } } : e) };
-      return { ...s, cocktailMenu: { ...emptyMenu(), ...(s.cocktailMenu || {}), ...a.patch } };
-    }
-    /* The quick Event Card builder's draft lives in the store, so leaving
-       for the Cocktails page and coming back keeps everything. */
-    case "PARTY_DRAFT": return { ...s, partyDraft: a.draft };
-    case "PARTY_DRAFT_PATCH": {
-      const cur = s.partyDraft || { mode: "new", card: { ...emptyEventCard(), occasion: "", host: (s.company && s.company.name) || "" } };
-      return { ...s, partyDraft: { ...cur, card: { ...cur.card, ...a.patch } } };
-    }
-    case "RESET":     return { ...initialState, role: s.role, route: s.role === "team" ? "entry" : "staffHome" };
     /* Sign out: back to the signed-out home page with no role, no profile and
        no demo data, so the full sign-up flow can be walked through again.
        The invitation code from a link is cleared too: it belongs to the visit that used it. */
-    case "SIGN_OUT":  return { ...initialState, toast: "Signed out", coClaims17: s.coClaims17, dirEdits17: s.dirEdits17, admin17: s.admin17, venueReview17: venueReviewKeep17(s) };
+    case "SIGN_OUT":  return { ...initialState, toast: "Signed out", coClaims17: s.coClaims17, dirEdits17: s.dirEdits17, venueReview17: venueReviewKeep17(s) };
     /* v17.56: demo reviews of Simao missing from a saved state are added back by id (demo data). */
     case "HYDRATE":   { const h = { ...s, ...a.patch, _hydrated: true }; const have = new Set((h.reviews || []).map(r => r.id)); return migrate1746({ ...h, reviews: [...(h.reviews || []), ...DEMO_REVIEWS_SIMAO.filter(r => !have.has(r.id))] }); }
     default:          return s;
