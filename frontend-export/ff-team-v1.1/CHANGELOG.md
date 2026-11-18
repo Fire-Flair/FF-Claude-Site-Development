@@ -11,7 +11,7 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
 - The Profile Card PNG waits for Inter before it is drawn.
 - Share message: "Help me win the FF Team Launch Challenge." now has its own line:
   "Check out my profile page and join my team. / Help me win the FF Team Launch Challenge. / Get seen, get booked, get paid. / FFTeam.uk/<tag>"
-- Audit at 390 and 1280: text not in Inter or Cinzel went from 968 elements to 0 (apart from the testing-only DEV buttons).
+- Audit at 390 and 1280: text not in Inter or Cinzel went from 968 elements to 0 (apart from the testing-only DEV buttons). Artifact version 1795012571-37ae.
 
 ## v1.15
 
