@@ -588,7 +588,8 @@ function ProfTiles21({ items, editable, def, onOpen, extra, tail, label = "Profe
 
 
 /* ==========================================================================
-   v17.19 — VENUES: Worked at and Favourites, two rows that scroll across.
+   v17.19 — VENUES: the venue tile (VenueCard19), still used by the Network page's Venues section (switched off).
+   Profiles use the Experience cards below (v1.29).
    record.details.kind "worked" | "favourite"; a venue with no kind (every CV import) is "worked".
    ========================================================================== */
 const venueKind19 = (r) => (r && r.details && r.details.kind === "favourite" ? "favourite" : "worked");
@@ -648,46 +649,141 @@ function VenueCard19({ record: r0, onClick }) {
 }
 
 
-function VenueRows19({ items, onOpen }) {
-  const list = (items || []).filter(r => onOpen || (!r.hidden && !r.proposed));
-  const rows = [["worked", "Worked at"], ["favourite", "Favourites"]].map(([k, label]) => [k, label, list.filter(r => venueKind19(r) === k)]).filter(x => x[2].length);
-  return (<>
-    {rows.map(([k, label, group]) => (
-      <div key={k} className="ff-vr19">
-        <div className="ff-vr19-h">{label} · {group.length}</div>
-        <div className="ff-vr19-row" role="list" aria-label={label}>
-          {group.map(r => <div key={r.id} role="listitem" className="ff-vr19-it"><VenueCard19 record={r} onClick={onOpen ? () => onOpen(r) : undefined} /></div>)}
-        </div>
-      </div>
-    ))}
-  </>);
+/* ==========================================================================
+   v1.29 — EXPERIENCE (was Venues; Alex 18 Nov 17:49): the venues you've worked at.
+   Favourites are gone: a record with details.kind "favourite" is kept in the data but never shown or edited.
+   Editing: one row per venue, each with its own Google business search (VenueSearch17); an empty row at the end
+   adds the next one. Below: one Experience card per venue, the onyx landscape venue card first designed in
+   v16 (VenueLandscapeCard, fireflair-v16.1.html to v17.14, src/components/team/attribute-cards.jsx at 69b680f),
+   brought back at full size with squircle corners.
+   An older Experience record (employer, role, dates) shows the same way: the employer is the venue.
+   ========================================================================== */
+const xpShown29 = (r) => !!r && venueKind19(r) !== "favourite";
+const xpCSS29 = __ff_css("styles/experience29.css");
+
+
+/* One record (a venue, or an older Experience entry) -> what its card shows. */
+function xpView29(r) {
+  if (r.category === "experience") {
+    const d = r.details || {};
+    const dates = [d.start, d.end].filter(Boolean).join(" to ");
+    const name = d.employer || r.name;
+    const where = d.location || "";
+    return {
+      kicker: d.employer ? "Employer" : "Experience", name, where, Icon: Briefcase,
+      role: d.employer ? r.name : "", dates, note: String(r.description || "").trim(),
+      foot: "", maps: d.employer ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([name, where].filter(Boolean).join(", "))}` : "",
+      hand: false,
+    };
+  }
+  const hand = !r.place;
+  const street = String(r.address || "").split(",")[0].trim();
+  const where = hand ? (r.address || "") : ([street, r.area && r.area.name].filter(Boolean).join(", ") || r.address || "");
+  return {
+    kicker: hand ? "Venue" : venTypeLabel17(r.place), name: r.name, where, Icon: venueIcon19(r),
+    role: "", dates: "", note: String(r.description || "").trim(),
+    foot: !hand && r.area ? r.area.name : "", maps: hand ? "" : venueMapsUrl17(r), hand,
+  };
 }
 
 
-function VenuesEditor19({ items, onOpen }) {
+function ExperienceCard29({ record, onClick }) {
+  const v = xpView29(record);
+  const Icon = v.Icon;
+  const key = (e) => { if (onClick && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); onClick(); } };
+  return (
+    <CardFrame as="div" theme={THEMES.onyx} className={"ff-xc29" + (v.hand ? " hand" : "")} onClick={onClick}
+      style={{ width: CARD_W.venue }}>
+      <div className="ff-xc29-in" role={onClick ? "button" : undefined} tabIndex={onClick ? 0 : undefined}
+        aria-label={onClick ? `${v.name}. Open details` : undefined} onKeyDown={onClick ? key : undefined}>
+        <span className="k">{v.kicker}</span>
+        <span className="top">
+          <span className="nm">
+            <b>{v.name}</b>
+            {v.where && <span className="ad"><MapPin size={12} strokeWidth={1.8} aria-hidden="true" />{v.where}</span>}
+          </span>
+          <span className="ic" aria-hidden="true"><Icon size={20} strokeWidth={1.7} /></span>
+        </span>
+        {(v.role || v.dates) && <span className="role">{v.role && <b>{v.role}</b>}{v.dates && <span>{v.dates}</span>}</span>}
+        {v.note && <span className="nt">{v.note}</span>}
+        <span className="ft">
+          {v.foot ? <span className="ar">{v.foot}</span> : v.hand ? <span className="ar">Added by hand</span> : <span />}
+          {v.maps && <a className="gm" href={v.maps} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>View on Google Maps →</a>}
+        </span>
+      </div>
+    </CardFrame>
+  );
+}
+
+
+/* The Experience cards, scrolling across. */
+function ExperienceCards29({ items, onOpen }) {
+  const list = (items || []).filter(r => xpShown29(r) && !r.hidden && (onOpen || !r.proposed));
+  if (!list.length) return null;
+  return (
+    <div className="ff-xr29" role="list" aria-label={`Experience, ${list.length}`}>
+      <style>{xpCSS29}</style>
+      {list.map(r => <div key={r.id} role="listitem" className="ff-xr29-it"><ExperienceCard29 record={r} onClick={onOpen ? () => onOpen(r) : undefined} /></div>)}
+      <span className="ff-xr29-end" aria-hidden="true" />
+    </div>
+  );
+}
+
+
+/* Editing: a search bar per venue, an empty one to add the next, then the cards. */
+function ExperienceEditor29({ items, onOpen }) {
   const { dispatch } = useStore();
-  const [kind, setKind] = useState("worked");
   const [key, setKey] = useState(0);
+  const rows = (items || []).filter(r => xpShown29(r) && !r.hidden && !r.proposed);
+  const venues = (items || []).filter(r => r.category !== "experience");
   const same = (r, p) => (r.place && p.place && r.place.id === p.place.id) || String(r.name).toLowerCase() === String(p.name).toLowerCase();
+  const taken = (p, except) => venues.some(r => r.id !== except && !r.hidden && same(r, p));
   const add = (p) => {
     if (!p || !p.name) return;
-    if (items.some(r => same(r, p))) { dispatch({ type: "TOAST", toast: `${p.name} is already on your profile` }); setKey(k => k + 1); return; }
-    dispatch({ type: "REC_ADD", category: "venues", record: makeRecord("venues", p.name, { ...p, details: { kind } }) });
+    if (taken(p)) { dispatch({ type: "TOAST", toast: `${p.name} is already on your profile` }); setKey(k => k + 1); return; }
+    dispatch({ type: "REC_ADD", category: "venues", record: makeRecord("venues", p.name, { ...p, details: { kind: "worked" } }) });
     dispatch({ type: "TOAST", toast: `${p.name} added` });
     setKey(k => k + 1);
   };
+  /* Picking a different place for a row: a venue takes the new place and keeps its note; an older Experience entry
+     becomes a venue (role and dates kept as its note) and the old entry is hidden, never deleted. */
+  const change = (r, p) => {
+    if (!p || !p.name) return;
+    if (r.category === "experience") {
+      if (taken(p)) { dispatch({ type: "TOAST", toast: `${p.name} is already on your profile` }); return; }
+      const v = xpView29(r);
+      const note = [v.role, v.dates].filter(Boolean).join(", ") + (v.note ? (v.role || v.dates ? ". " : "") + v.note : "");
+      dispatch({ type: "REC_ADD", category: "venues", record: makeRecord("venues", p.name, { ...p, description: note, details: { kind: "worked", fromExperience: r.id } }) });
+      dispatch({ type: "REC_PATCH", category: "experience", id: r.id, patch: { hidden: true } });
+      return;
+    }
+    if (taken(p, r.id)) { dispatch({ type: "TOAST", toast: `${p.name} is already on your profile` }); return; }
+    dispatch({ type: "REC_PATCH", category: "venues", id: r.id, patch: p });
+  };
+  const remove = (r) => {
+    if (r.category === "experience") dispatch({ type: "REC_PATCH", category: "experience", id: r.id, patch: { hidden: true } });
+    else dispatch({ type: "REC_DELETE", category: "venues", id: r.id });
+    dispatch({ type: "TOAST", toast: `${xpView29(r).name} removed` });
+  };
   return (
-    <div className="ff-venedit17 ff-ven19">
+    <div className="ff-xe29">
       <style>{VEN_CSS17}</style>
-      <style>{RANK_CSS17}</style>
-      <p className="ff-venedit17-line">List the venues you've worked at, or your favourite bars.</p>
-      <div className="ff-seg19" role="radiogroup" aria-label="Kind of venue">
-        {[["worked", "Worked at", Briefcase], ["favourite", "Favourites", Heart]].map(([k, label, Ic]) => (
-          <button key={k} type="button" role="radio" aria-checked={kind === k} className={kind === k ? "on" : ""} onClick={() => setKind(k)}><Ic size={15} strokeWidth={2} aria-hidden="true" />{label}</button>
+      <style>{xpCSS29}</style>
+      <ol className="ff-xe29-list" aria-label="Venues you've worked at">
+        {rows.map((r, i) => (
+          <li key={r.id} className="ff-xe29-row">
+            <span className="n" aria-hidden="true">{i + 1}</span>
+            <VenueSearch17 value={xpView29(r).name} label={`Venue ${i + 1}`} placeholder="Search for a venue" onPick={(p) => change(r, p)} />
+            <button type="button" className="x" aria-label={`Remove ${xpView29(r).name}`} onClick={() => remove(r)}><X size={14} strokeWidth={2.4} /></button>
+          </li>
         ))}
-      </div>
-      <VenueSearch17 key={key} label="Search for a venue" placeholder="Search for a venue" onPick={add} />
-      <VenueRows19 items={items} onOpen={onOpen} />
+        <li className="ff-xe29-row add">
+          <span className="n" aria-hidden="true"><Plus size={15} strokeWidth={2.4} /></span>
+          <VenueSearch17 key={key} label="Add a venue" placeholder="Search for a venue" onPick={add} />
+          <span className="x-sp" aria-hidden="true" />
+        </li>
+      </ol>
+      <ExperienceCards29 items={rows} onOpen={onOpen} />
     </div>
   );
 }
@@ -758,7 +854,7 @@ function ProfileAttributeSection({ catKey, def, list, isMe, shade, onOpen, onAdd
         )}
         {isMe && catKey === "locations" && <CoverageTree17 owner={owner} />}
         {catKey === "locations" ? (isMe ? null : <AreasChips17 owner={locOwner} />) : catKey === "venues" && isMe && owner !== "company" ? (
-          <VenuesEditor19 items={items} onOpen={(r) => onOpen(r)} />
+          <ExperienceEditor29 items={items} onOpen={(r) => onOpen(r)} />
         ) : isMe && owner !== "company" && catKey === "professions" ? (<>
           <ProfessionPicker selected={items.map(r => r.name)} onPick={(n, category) => {
             if (items.some(r => r.name.toLowerCase() === n.toLowerCase())) { dispatch({ type: "TOAST", toast: `${n} is already on your profile` }); return; }

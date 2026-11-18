@@ -4,6 +4,23 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.29
+
+Profile page and profile builder, Experience (Alex, 18 Nov 17:49): "Remove the Favourite bars, and instead of saying Venues, it's going to say Experience … each venue will have the search bar … boxes below."
+
+- **Venues is now Experience** wherever members see it: the section heading on your profile edit page / builder (`profile-edit-p2.jsx`, `PE2_TITLES`), on a visitor's view of a profile and your own live profile (`introductions.jsx`), and the venues category label (`state/records.js`, `BASE_CATEGORIES.venues.label`; the record key stays `venues`).
+- **Favourites removed.** The "Worked at / Favourites" switch, the Favourites row and the line "List the venues you've worked at, or your favourite bars." are gone (`VenuesEditor19` and `VenueRows19` deleted from `attribute-cards.jsx`). Only venues you've worked at show.
+- **A search bar per venue** (`ExperienceEditor29`, `attribute-cards.jsx`): one numbered row per venue, each with its own Google business search (`VenueSearch17`, the same Places search as before), prefilled with the venue's name, and a small X in a circle to remove it. An empty row with a + at the end adds the next venue. Picking a different place on a row updates that venue (`REC_PATCH`, its note is kept).
+- **Experience boxes below** (`ExperienceCard29` / `ExperienceCards29`, new `styles/experience29.css`): full-size onyx landscape cards (260 to 320px wide) replacing the small blue/slate tiles (`.ff-vc19`). Each shows the kind of place (Hotel, Bar, Event venue …, or Employer / Experience), the name in large Inter, a gold map pin with street and area, a gold-ringed icon, the role and dates in gold (older Experience records), the note, and a footer rule with the area and "View on Google Maps →". Venues typed by hand (not on Google) show "Added by hand" and no map link. Squircle corners on the card, its gold hairline and the icon. They scroll across on phones and wrap into a grid from 760px. Tapping a card on the edit page opens its details sheet, as before.
+- **Where the design came from:** the onyx venue card `VenueLandscapeCard` from v16 to v17.14 (first in `fireflair-v16.1.html`, commit 9ac5212; last full-size version in `src/components/team/attribute-cards.jsx` at commit 69b680f, "v17.14: Venues replace Experience"): `CardFrame` with the onyx theme and gold hairline, "VENUE" kicker, name, pin and address, a rule and "View on Google Maps →", plus the "Type · Area" footer v17.14 added. Replaced in v17.15 (41de882) by the small blue `.ff-venmini17` cards and in v17.19 (349ae9f) by the `.ff-vc19` tiles. Those two were the other candidates; the v16/v17.14 card was the most finished, so it was ported and brought up to the current rules (squircle corners, Inter, no split words).
+- **Older Experience records** (employer, role, dates, from CVs and the real members' work history) still show under Experience, as cards (employer = venue name, role and dates on the card, Google Maps search on employer and location) and as rows in the editor. Picking a Google place on such a row adds a venue record with the role and dates as its note (`details.fromExperience` = the old record's id) and hides the old record (`hidden: true`); removing such a row hides it too. Nothing is deleted.
+- Checked: `npm run check`, `npm run build`; screenshots at 390 and 1440 of the edit page (rows, the search open, a venue added, the cards), your own live profile, two real members' profiles, and the old v17.4.5 venue cards for comparison.
+
+Developer notes:
+- Data: a venue record with `details.kind === "favourite"` is kept untouched in the data but never shown or edited (`xpShown29`). Do not migrate or delete those records; new venues are saved with `details: { kind: "worked" }` as before.
+- `VenueCard19` (the small tile) stays only for the Network page's Venues section, which is switched off (`SHOW_VENUES17 = false`). The old `.ff-ven19` / `.ff-seg19` / `.ff-vc19` rules in `prof21.css` and `rank17.css` are left in place (another chat edits `prof21.css`); they can be deleted when the Network venues code goes.
+- The new styles are in `src/styles/experience29.css`, loaded by the Experience components themselves.
+
 ## v1.28
 
 Merged after Alex's approval (18 Nov 17:29): the title lines (branch `title-bars`, Gimli) and the 1-2-3 pillar drop-downs (branch `pillar-dropdowns`, Gimli and Legolas). Applied onto v1.27 and published by a three-way merge onto the live page so the photo-browsing chat's unpushed work stays.
