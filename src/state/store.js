@@ -380,6 +380,8 @@ function meAsStaff(profile, session) {
     tier: cardTier17({ name: profile.name, tag: session.tag }), level: profile.level, years: null, rating: null, reviews: 0,
     skills: primaryNames(profile, "skills", 3),
     interests: primaryNames(profile, "interests", 3),
+    /* pb-cardfit: the Profile Card's pool, every visible entry in the member's order (the card shows up to three that fit). */
+    cardLists: { professions: visibleRecs(profile, "professions").map(r => r.name).filter(Boolean), skills: visibleRecs(profile, "skills").map(r => r.name).filter(Boolean), interests: visibleRecs(profile, "interests").map(r => r.name).filter(Boolean) },
     languages: primaryNames(profile, "languages", 5).length ? primaryNames(profile, "languages", 5) : ["English"],
     /* v17.6.1: no ranked "primary location". The base town (public label) stands in; with no base, the first ticked place in the tree's order; with neither, London as before. */
     locations: baseLabelOfOwner17(profile) ? [baseLabelOfOwner17(profile)] : (covPlaces17(profile)[0] ? [covPlaces17(profile)[0].name] : ["London"]),

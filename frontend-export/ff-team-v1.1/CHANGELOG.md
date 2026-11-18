@@ -4,6 +4,20 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+
+## Unreleased (pb-cardfit)
+
+- Profile Card (large share card and small site card): every row now shows the member's "top three" (Professions, Skills,
+  Interests, Locations). If a top-three entry doesn't fit, it is left out whole and the next entry in the member's order that fits
+  takes its place, so the row still shows up to three. `pc17Fit` walks each row's ordered list (`PC17_PER_ROW = 3`); large card
+  rows may run to two lines, the small card stays one line. If the large card's box would reach the footer, the row with the
+  most entries on two lines is re-walked on one line. Never truncates, never splits a word.
+- `meAsStaff` gives the card a `cardLists` pool (all visible professions/skills/interests in order); `professions`/`skills`/`interests` stay top three for everything else.
+- Locations on the card: town or city only, each once (`cardPlaces17` in src/utils/text17.js): "Montreal, Quebec, Canada" -> Montreal;
+  "St Albans, UK" + "London, UK" -> St Albans, London. A name with no comma (UK, Scotland, International) stays as it is.
+  Card only for now; the profile page is unchanged.
+- Capitals: "upon", "under", "le", "la", "de", "du", "en", "sur" stay lower case inside names ("Newcastle upon Tyne").
+
 ## v1.39 (homepage)
 
 FF Team home on iPad and desktop (Alex, 18 Nov 19:16). `styles/home-text.css`.
