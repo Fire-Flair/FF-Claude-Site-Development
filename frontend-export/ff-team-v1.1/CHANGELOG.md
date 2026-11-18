@@ -4,6 +4,16 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.59
+
+Profile builder, top three professions (Alex, 18 Nov 21:02, option 1 for testing). `src/components/team/profile-edit-p2.jsx` (`PE2TopSlots`), `src/styles/profile-edit-p2.css` (top-slots block).
+
+- Drag and drop and the grip are gone from the Professions tiles in the profile builder. Above the tiles, three slots numbered 1 to 3 are the three on the Profile Card.
+- Tapping a filled slot empties it (dashed outline). While a slot is empty, the other professions show underneath as buttons; tapping one fills the next empty slot.
+- The order is still saved with `REC_MOVE`, so the Profile Card, public profile and Network follow it. An emptied profession moves to the end of the list, so the card shows the next one in line until the slot is refilled.
+- Checked: `npm run check`, `npm run build`, DEV complete profile at 390 and 1280: empty slot 2, pick a profession, slot filled (no console errors).
+- Published over live 1795035813-4a04 (v1.58), index.html only (all other files kept). Artifact version 1795036085-feac. Built page saved as `live-v1.59-index.html`.
+
 ## v1.58
 
 Bookings titles and iPad layout (Alex, 18 Nov 20:25). `src/components/team/bookings.jsx`, `src/styles/bkd.css` (bk-titles and bk-ipad blocks).
