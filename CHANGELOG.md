@@ -1,5 +1,11 @@
 # FireFlair prototype — changelog
 
+## v17.47
+
+Venues switched off. Branch merged: `p2-novenues`.
+
+- One switch, `SHOW_VENUES17 = false` with `venuesOn17(k)` in `src/state/phase-config.js` (mirrors the live frontend's `SHOW_VENUES = false`). Hidden: the Venues section in the profile order (builder, own, public, attribute summaries), the edit page editor, the public profile and its media carousel, the other-profile Venues row, "Venues in …" on area pages and the venue map pins, the home map legend entry, FF Staff company page chips and company builder section, CV / FF AI suggestions into Venues and the CV details venue line, the "Add venues" checklist task, and the FF Team home sentence about venues. Stored venue records are untouched; FF Admin keeps its review view.
+
 ## v17.46
 
 Artifact version 1794962439-de2f.
