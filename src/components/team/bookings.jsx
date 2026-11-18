@@ -367,7 +367,16 @@ function BkPkgSoon17() {
         <h5 className="ff-pkc-ti">FF Party packages</h5>
         <p className="ff-pkc-tg">Create custom packages</p>
       </div>
-      <div className="ff-pkc-emb" aria-hidden="true"><FFLogo size={112} tier="gold" /></div>
+      {/* Alex 00:28: a preview of how a custom package card will look (its rows, empty), not a big FF logo. */}
+      <div className="ff-pkc-rows ff-pkc-pv" aria-hidden="true">
+        {[[S17I.Sparkles, "Includes", [88, 64]], [S17I.Users, "Ideal for", [76, 52]], [S17I.Clock, "Duration", [40]]].map(([Ic, l, w]) => (
+          <div key={l} className="ff-pkc-row">
+            <span className="ff-pkc-ico"><Ic size={18} strokeWidth={1.6} /></span>
+            <span className="v"><i>{l}</i>{w.map((x, i) => <s key={i} style={{ width: x + "%" }} />)}</span>
+          </div>
+        ))}
+      </div>
+      <div className="ff-pkc-pvdt" aria-hidden="true"><span>Details</span><S17I.ChevronDown size={18} strokeWidth={2} /></div>
       <div className="ff-pkc-ft"><span className="ff-pkc-soonb"><S17I.Clock size={14} strokeWidth={2} /> Coming soon</span></div>
     </div>
   );

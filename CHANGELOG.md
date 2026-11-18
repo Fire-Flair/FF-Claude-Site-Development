@@ -1,5 +1,9 @@
 # FireFlair prototype — changelog
 
+## v17.44
+
+- FF Party box, Coming soon card (`bookings.jsx`, `bkd.css`): the big FF logo is replaced by a preview of an empty package card (the Includes, Ideal for and Duration rows with placeholder lines, and a Details bar).
+
 ## v17.43
 
 Artifact version 1794961478-5f9f.
