@@ -27,7 +27,7 @@ const venuesOn17 = (k) => SHOW_VENUES17 || k !== "venues";
 
 const PHASE1 = {
   name: "FireFlair prototype",
-  version: "17.8",
+  version: __ff_changelog_version(),   /* the newest CHANGELOG.md entry, filled in by scripts/build.mjs */
   status: "In development",
   /* The top-left selector, in this order. FF Team, FF Staff and FF Party
      are open in this prototype (FF VIP opens with its launch party in early 2027). */

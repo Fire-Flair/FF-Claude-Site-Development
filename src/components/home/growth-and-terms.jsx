@@ -204,14 +204,18 @@
         ] }
       ]
     }[kind];
+    /* homefix: the three question boxes are the same height (an answer shown under one grows only that box). */
+    const qgRef = useRef(null);
+    useEqualH22(qgRef, ".ff-qg-q", ".res", [kind, JSON.stringify(pick)]);
     return React.createElement("section", {
       className: "ff-sect ff-qg",
       id: "ff-guide",
+      ref: qgRef,
       "aria-labelledby": "ff-qg-h"
     }, React.createElement("h2", {
       id: "ff-qg-h",
       className: "ff-h1 ff-qg-title"
-    }, React.createElement("span", null, "Can FireFlair help you?")), React.createElement("p", {
+    }, React.createElement("span", null, "Can FireFlair help you?")), kind !== "team" && React.createElement("p", {
       className: "ff-qg-lede"
     }, "Answer three quick questions and we'll point you to the right place."), React.createElement("div", {
       className: "ff-qg-grid"

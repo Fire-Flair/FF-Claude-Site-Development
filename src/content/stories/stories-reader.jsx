@@ -181,6 +181,18 @@ function storyCat17(c) {
 }
 
 
+/* homefix: a story card shows whole sentences, never a "..." cut-off. A blurb that was cut short is replaced by the
+   intro's opening sentences (about 150 characters, always at least one whole sentence). */
+function storyLine22(p) {
+  const b = String(p.blurb || "").trim();
+  if (b && !/(\.\.\.|\u2026)$/.test(b)) return b;
+  const src = String(p.intro || b).replace(/(\.\.\.|\u2026)$/, "").trim();
+  const ss = src.match(/[^.!?]+[.!?]+["\u201D\u2019)]*(?=\s|$)/g) || [src];
+  let out = "";
+  for (const x of ss) { const t = (out + " " + x.trim()).trim(); if (out && t.length > 150) break; out = t; }
+  return out;
+}
+
 function Journal17({ kind = "team" }) {
   const [open, setOpen] = useState(null);
   const [cat, setCat] = useState("All");
@@ -263,7 +275,9 @@ function Journal17({ kind = "team" }) {
   const ctaLocked = !!o && o.site !== "ffteam.uk" && !/packages/i.test((o && o.to) || "") && kind === "party";
   const more = o && o.related ? o.related.map((r) => ST18_IDS[r]).filter((s) => s && JR17[s] && JR17[s].site === o.site) : [];
 
-  return React.createElement("section", { className: "ff-sect ff-jr17", id: "ff-journal", "aria-labelledby": "ff-jr-h" },
+  const jrRef = useRef(null);
+  useFitLine22(jrRef, "[data-fit22]", [cat]);
+  return React.createElement("section", { className: "ff-sect ff-jr17", id: "ff-journal", ref: jrRef, "aria-labelledby": "ff-jr-h" },
     React.createElement("h2", { id: "ff-jr-h", className: "ff-h1 ff-jr17-title" }, React.createElement("span", { className: "k" }, "FireFlair"), React.createElement("span", { className: "s" }, "Stories")),
     React.createElement("div", { className: "ff-jr17-rule", "aria-hidden": "true" }, React.createElement("i", null),
       React.createElement("svg", { viewBox: "0 0 24 24", width: "18", height: "18" }, React.createElement("path", { d: "M12 2c1 3.5 5 5.5 5 10.5A5 5 0 0 1 7 13c0-2 1-3 2-4 .3 1.3 1 2 2 2-.5-3 0-6 1-9z", fill: "currentColor" })), React.createElement("i", null)),
@@ -276,7 +290,7 @@ function Journal17({ kind = "team" }) {
         onClick: (e) => { if (e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey) { e.preventDefault(); openStory(id, e.currentTarget); } }
       },
         React.createElement("span", { className: "ph" + (src ? "" : " txt") }, src ? React.createElement("img", { src, style: fpos(p.img), alt: p.alt || "", loading: "lazy", draggable: false }) : React.createElement("span", null, storyCat17(p.cat))),
-        React.createElement("span", { className: "tx" }, React.createElement("i", null, storyCat17(p.cat) + " · " + p.date), React.createElement("b", null, p.title), React.createElement("small", null, p.blurb || p.intro)));
+        React.createElement("span", { className: "tx" }, React.createElement("i", { "data-fit22": "" }, storyCat17(p.cat) + " · " + p.date), React.createElement("b", null, p.title), React.createElement("small", null, storyLine22(p))));
     })),
     React.createElement(Sheet, { open: !!o, onClose: closeStory, title: o ? storyCat17(o.cat) : "", center: true },
       o && React.createElement("article", { className: "ff-jr17-pop ff-jr17-art" },

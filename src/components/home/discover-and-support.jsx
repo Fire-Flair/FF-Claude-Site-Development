@@ -387,55 +387,82 @@ function TwoMinutes20() {
   );
 }
 
+/* homefix: the FF Team Launch Challenge, short form. Four equal boxes (each opens its existing detail sheet), the countdown,
+   and the ladder: live count, 100 (bookings go live), 1,000 (launch party and nationwide campaign). Styles: styles/home-fix22.css. */
+const LC22_I = { CalendarDays: lucideIcon("CalendarDays"), Users: lucideIcon("Users"), Crown: lucideIcon("Crown"), Plane: lucideIcon("Plane"),
+  UserCheck: lucideIcon("UserCheck"), CalendarCheck: lucideIcon("CalendarCheck"), PartyPopper: lucideIcon("PartyPopper"), ChevronRight: lucideIcon("ChevronRight") };
+
+function LaunchLadder22() {
+  const h = React.createElement;
+  const people = useDirectory();
+  const c = FF_CHALLENGE20, n = people.length;
+  /* Alex (18 Nov): no live count on the ladder; the 100 stop sits a third of the way along. */
+  const AT = 100 / 3;
+  const pct = n <= c.staffAt ? n / c.staffAt * AT : AT + (Math.min(n, c.partyAt) - c.staffAt) / (c.partyAt - c.staffAt) * (100 - AT);
+  const stops = [
+    [LC22_I.UserCheck, "Now", "Profiles and teams", 0],
+    [LC22_I.CalendarCheck, c.staffAt.toLocaleString("en-GB"), "Bookings go live", AT],
+    [LC22_I.PartyPopper, c.partyAt.toLocaleString("en-GB"), "Launch party and nationwide campaign", 100]
+  ];
+  return h("div", { className: "ff-lc22-lad" },
+    h("div", { className: "ff-lc22-ic" }, stops.map((s, i) => h("span", { key: i, className: "p" + i, style: { left: s[3] + "%" }, "aria-hidden": "true" }, h(s[0], { size: 16, strokeWidth: 1.8 })))),
+    h("div", { className: "ff-lc22-tr", role: "progressbar", "aria-valuemin": 0, "aria-valuemax": c.partyAt, "aria-valuenow": n, "aria-label": "Professionals joined" },
+      h("span", { className: "f", style: { width: pct + "%" } }),
+      stops.map((s, i) => h("i", { key: i, className: "d" + (pct >= s[3] ? " on" : ""), style: { left: s[3] + "%" } }))),
+    h("div", { className: "ff-lc22-st" }, stops.map((s, i) => h("div", { key: i, className: "p" + i }, h("b", null, s[1]), h("span", null, s[2])))));
+}
+
 function TeamCompetition20() {
   const h = React.createElement;
   const nav = useHomeNav();
   const [rules, setRules] = useState(false);
   const [box, setBox] = useState(null);
   const CH = TP21.challenge;
+  /* [sheet title, face label, face line, icon, sheet sections]. Alex (18 Nov): three boxes; who can enter stays in the Rules. */
   const boxes = [
-    [CH.boxes[0].t, CH.boxes[0].s, [["Dates", "The challenge runs for 90 days, from 1 December 2026 to 28 February 2027."]]],
-    [CH.boxes[1].t, CH.boxes[1].s, [["Who can enter", "Any hospitality professional, and anyone who wants to get into hospitality and is willing and available to undertake suitable freelance hospitality work."], ["Experience", "Previous hospitality experience is not mandatory."], ["Where", "Hospitality professionals can sign up from anywhere in the world."]]],
-    [CH.boxes[2].t, CH.boxes[2].s, [[CH.rewards[0][0], CH.rewards[0][1]]]],
-    [CH.boxes[3].t, CH.boxes[3].s, [[CH.rewards[1][0], CH.rewards[1][1]], [CH.rewards[2][0], CH.rewards[2][1]]]]
+    [CH.boxes[0].t, "90 days", "1 Dec to 28 Feb", LC22_I.CalendarDays, [["Dates", "The challenge runs for 90 days, from 1 December 2026 to 28 February 2027."]]],
+    ["Rewards for the top 10", "Rewards for the top 10", "Gold membership", LC22_I.Crown, [[CH.rewards[0][0], CH.rewards[0][1]]]],
+    [CH.boxes[3].t, "Win Athens", "Athens Bar Show trip", LC22_I.Plane, [[CH.rewards[1][0], CH.rewards[1][1]], [CH.rewards[2][0], CH.rewards[2][1]]]]
   ];
-  const cur = box === null ? null : boxes[box];
-  const css = PROMO_CSS20 + PROMO_BOX_CSS20 + LB20_CSS + TEAM_CP21_CSS;
+  const cur = box === null ? null : [boxes[box][0], null, boxes[box][4]];
   const sec = (t, body) => h("div", { key: t }, h("h3", { className: "ff-label" }, t), body);
   const pick = (i) => setBox(i);
+  const lcRef = useRef(null);
+  useFitLine22(lcRef, "[data-fit22]", []);
   return h(
     "section",
-    { className: "ff-sect", id: "ff-competition", "aria-labelledby": "ff-cp20-h" },
-    h("style", null, css),
+    { className: "ff-sect ff-lc22-sect", id: "ff-competition", ref: lcRef, "aria-labelledby": "ff-cp20-h" },
+    h("style", null, PROMO_CSS20 + LB20_CSS),
     h(
       "div",
-      { className: "ff-cp20 t21" },
+      { className: "ff-lc22" },
       h(
         "div",
-        { className: "ff-cp20-in" },
+        { className: "ff-lc22-top" },
         h(
           "div",
-          null,
-          h("div", { className: "ff-cp20-eye" }, h(Coin, { size: 34, tier: "gold" }), h("span", null, "FF Team Launch Challenge")),
-          h("h2", { id: "ff-cp20-h" }, "Build your Network. Grow your Team. Win prizes."),
-          h("span", { className: "ff-cp20-date" }, "90 day challenge \xB7 starting 1 December 2026"),
-          h("p", null, CH.boxes[2].t + ". " + CH.boxes[3].t + "."),
-          h(
-            "div",
-            { className: "ff-cp20-btns" },
-            h(ShineButton, { onClick: nav.goProfile }, "Join Challenge"),
-            h("button", { type: "button", className: "ff-cp20-rules", onClick: () => setRules(true) }, "Competition rules")
-          )
+          { className: "ff-lc22-head" },
+          h("div", { className: "ff-lc22-eye" }, h(Coin, { size: 30, tier: "gold" }), h("span", null, "FF Team Launch Challenge")),
+          h("h2", { id: "ff-cp20-h" }, "Grow your Team. Win prizes.")
         ),
         h(
           "div",
-          null,
-          h("div", { className: "ff-cp20-boxes" }, boxes.map((b, i) => h("button", { key: b[0], type: "button", className: "ff-cp20-box", onClick: () => pick(i), "aria-haspopup": "dialog" }, h("b", null, b[0]), h("span", null, b[1])))),
-          h("div", { className: "ff-cp20-url" }, "FFTeam.uk")
+          { className: "ff-lc22-go" },
+          h(Countdown20, null),
+          h(
+            "div",
+            { className: "ff-lc22-btns" },
+            h(ShineButton, { onClick: nav.goProfile }, "Join Challenge"),
+            h("button", { type: "button", className: "ff-lc22-rules", onClick: () => setRules(true) }, "Rules")
+          )
         )
       ),
-      h(Countdown20, null),
-      h(LaunchBar20, null)
+      h("div", { className: "ff-lc22-boxes" }, boxes.map((b, i) => h("button", { key: b[1], type: "button", className: "ff-lc22-box", onClick: () => pick(i), "aria-haspopup": "dialog" },
+        h("span", { className: "ic", "aria-hidden": "true" }, h(b[3], { size: 18, strokeWidth: 1.7 })),
+        h("span", { className: "ch", "aria-hidden": "true" }, h(LC22_I.ChevronRight, { size: 16, strokeWidth: 2 })),
+        h("b", { "data-fit22": "" }, b[1]),
+        h("span", { className: "t", "data-fit22": "" }, b[2])))),
+      h(LaunchLadder22, null)
     ),
     h(
       Sheet,

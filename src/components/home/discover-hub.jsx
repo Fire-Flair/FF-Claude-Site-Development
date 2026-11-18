@@ -371,6 +371,31 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
       };
     }, [open, cats, kind]);
     const Ic = cur ? cur.icon : null;
+    /* homefix (FF Team home): pillars are full-width rows on a phone and 2x2 on a tablet; the open pillar's panel sits
+       straight under its own row, so the tiles after that row follow the panel. Desktop keeps one row of four. */
+    const perRow = useDxPerRow22(kind === "team");
+    useFitLine22(root, "[data-fit22]", [perRow, shownK]);
+    const rowEnd = cur && perRow ? Math.min(cats.length, (Math.floor(idx / perRow) + 1) * perRow) : cats.length;
+    const tile = (c) => {
+      const on = shownK === c.k;
+      return React.createElement("button", {
+        key: c.k,
+        type: "button",
+        "data-k": c.k,
+        className: `ff-dx-tile${on ? " on" : ""}`,
+        "aria-expanded": on,
+        "aria-controls": "ff-dx-panel",
+        onClick: () => pick(c.k)
+      }, React.createElement(DxPh17, { c, n: rotOf(c) }), React.createElement("span", {
+        className: "chev",
+        "aria-hidden": "true"
+      }, React.createElement(DX_I.ChevronDown, {
+        size: 14,
+        strokeWidth: 2.4
+      })), React.createElement("span", {
+        className: "tx"
+      }, React.createElement("b", { "data-fit22": "" }, c.t), React.createElement("small", null, c.s)));
+    };
     return React.createElement("section", {
       className: `ff-sect ff-dx${cur ? " is-open" : ""}`,
       id: "ff-discover",
@@ -389,26 +414,7 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
     }, React.createElement("div", {
       className: "ff-dx-bar",
       ref: bar
-    }, cats.map((c) => {
-      const on = shownK === c.k;
-      return React.createElement("button", {
-        key: c.k,
-        type: "button",
-        "data-k": c.k,
-        className: `ff-dx-tile${on ? " on" : ""}`,
-        "aria-expanded": on,
-        "aria-controls": "ff-dx-panel",
-        onClick: () => pick(c.k)
-      }, React.createElement(DxPh17, { c, n: rotOf(c) }), React.createElement("span", {
-        className: "chev",
-        "aria-hidden": "true"
-      }, React.createElement(DX_I.ChevronDown, {
-        size: 14,
-        strokeWidth: 2.4
-      })), React.createElement("span", {
-        className: "tx"
-      }, React.createElement("b", null, c.t), React.createElement("small", null, c.s)));
-    })), cur && React.createElement("div", {
+    }, cats.slice(0, rowEnd).map(tile)), cur && React.createElement("div", {
       id: "ff-dx-panel",
       ref: panel,
       className: "ff-dx-panel",
@@ -482,7 +488,9 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
       onClick: close
     }, React.createElement(DX_I.ChevronUp, {
       size: 16
-    }), " Close ", cur.t))), cur && shape && React.createElement("svg", {
+    }), " Close ", cur.t))), rowEnd < cats.length && React.createElement("div", {
+      className: "ff-dx-bar ff-dx-bar2"
+    }, cats.slice(rowEnd).map(tile)), cur && shape && React.createElement("svg", {
       className: "ff-dx-svg",
       width: shape.w,
       height: shape.h,
@@ -905,9 +913,13 @@ if (k === "package") return React.createElement("div", { className: "mc sv" }, R
     const home = useHomeNav();
     const list = HB17[kind] || HB17.team;
     const pics = HBM17[kind] || HBM17.team;
+    /* homefix: the four step boxes are the same height. */
+    const hbRef = useRef(null);
+    useEqualH22(hbRef, ".ff-hb17-row > .card", null, [kind]);
     return React.createElement("section", {
       className: "ff-sect ff-hb17",
       id: "ff-how",
+      ref: hbRef,
       "aria-labelledby": "ff-hb17-h"
     }, React.createElement("h2", {
       id: "ff-hb17-h",
@@ -943,14 +955,9 @@ if (k === "package") return React.createElement("div", { className: "mc sv" }, R
       strokeWidth: 1.7
     })), React.createElement("b", null, t), React.createElement("span", {
       className: "t"
-    }, x)))))), React.createElement("div", {
+    }, x)))))), kind !== "team" && React.createElement("div", {
       className: "ff-hb17-cta"
-    }, kind === "team" ? React.createElement(Button, {
-      variant: "gold",
-      onClick: home.goProfile
-    }, React.createElement(User, {
-      size: 14
-    }), " Create your Profile Card") : kind === "party" ? React.createElement(LockedBtn17, {
+    }, kind === "party" ? React.createElement(LockedBtn17, {
       shine: true,
       icon: React.createElement(Popper11, { size: 15 })
     }, "Plan your event") : React.createElement(ShineButton, {
