@@ -6,6 +6,8 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
 
 ## v1.1
 
+Artifact: "FF Team version 1.1. Final", slug a139e698-9bc3-47b1-93d6-b2e3c541732e, version 1794999824-240d (claude.ai folder "FF Team — Front-end export").
+
 FF Team only, stripped by deletion from the prototype. FF Directory and company pages stay (read-only).
 
 ### Build and tooling
