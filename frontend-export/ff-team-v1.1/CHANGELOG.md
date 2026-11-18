@@ -4,6 +4,20 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.70 (draft: share)
+
+Share pop-up on a profile, redesigned (Alex, 18 Nov 21:56). `src/components/shared/card-share17.jsx` (`CardShareSheet17`, new `CardShareView17`), `src/styles/base.css` (new `ff-csx-*` rules after the `ff-csm-*` block).
+
+- The pop-up never scrolls, on any device, and the page behind can't scroll while it is open (mouse wheel and touch both checked).
+- No white sheet: the page behind is blurred under a dark tint. The Profile Card sits at the top, scaled to fit the room left once the buttons have theirs; the four buttons sit straight under it, as wide as the card.
+- The same four actions as before: Share (device share sheet, square-with-up-arrow icon), WhatsApp (green, WhatsApp logo), Download PNG, Copy Link. While the image is being made the first three show a spinner in place of their icon.
+- Removed: the title bar, the address line under the card and the "Getting your image ready" line. An export error still shows as one short line with a retry button.
+- Closes on a tap on the blurred background, the small X (lined up with the card's right edge) or Escape. `role="dialog"`, `aria-modal`, focus trap and focus return kept.
+- `cardToPng17` unchanged. The PNG is made from an unscaled copy of the card kept off screen (`.ff-csx-export`, `aria-hidden`, `inert`), so the export measures and lays out the card exactly as before; the visible card is a scaled copy.
+- Sheets that pass `extra` (own card "Send my card" in `profile-from-text.jsx`, Card Studio `CardPop17`) keep the earlier sheet layout for now, minus the address and "getting ready" lines.
+- Checked: `npm run check`, `npm run build`; Simao's profile, Share in the Join row, at 360x640, 390x844, 430x932, 820x1180 and 1280x800: pop-up height equals the viewport, no scrolling element inside, page scroll unchanged after wheel/touch, all four buttons inside the viewport; also with the export error showing at 360x640. Share, WhatsApp, Download PNG (real PNG file) and Copy Link fired; background, X and Escape close it; Tab cycles inside; no console errors.
+- Not published; branch `pp-sharesheet`.
+
 ## v1.69
 
 Profile Packages tab, in the profile builder and on a public profile (Alex, 18 Nov 20:51). New `team/profile-packages.jsx`, `styles/profile-packages.css`; `team/profile-edit-tabs.jsx`, `team/introductions.jsx`, `team/public-profile.jsx` (CoverFlow), `styles/p12.css`, `manifest.json`.
