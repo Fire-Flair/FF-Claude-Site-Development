@@ -11,6 +11,13 @@ function CreatorMedia() {
   const [err, setErr] = useState("");
   const [drag, setDrag] = useState(false);
   const room = MEDIA_MAX_ITEMS - items.length;
+  const photo = state.profile.photo || null;
+  const addPhoto = async (f) => {
+    if (!f) return; setErr("");
+    if (!f.type || !f.type.startsWith("image/")) { setErr(`${f.name}: only pictures can be a profile photo.`); return; }
+    if (f.size > MAX_MEDIA_BYTES) { setErr(`${f.name} is ${prettyBytes(f.size)} — keep it under ${prettyBytes(MAX_MEDIA_BYTES)}.`); return; }
+    try { dispatch({ type: "PROFILE", patch: { photo: await shrinkPhoto(f, 800) } }); } catch (e) { setErr("That picture couldn't be added."); }
+  };
   /* Prototype helper: three plain, clearly marked pictures so the carousel can
      be tried without uploading. The live site replaces this with real uploads. */
   const addSamples = () => {
@@ -51,25 +58,47 @@ function CreatorMedia() {
         onDragOver={(e) => { if (e.dataTransfer && [...(e.dataTransfer.types || [])].includes("Files")) { e.preventDefault(); setDrag(true); } }}
         onDragLeave={() => setDrag(false)}
         onDrop={(e) => { e.preventDefault(); setDrag(false); if (e.dataTransfer && e.dataTransfer.files) addMany(e.dataTransfer.files); }}>
-        {/* pfa (Alex 03:29): the first box is the profile photo — gold edge and a person mark, then a thin line before the rest. */}
-        {items.map((m, i) => (<React.Fragment key={m.id}>
-          <div className={"ff-m19-t" + (i === 0 ? " pfa-lead" : "")}>
-            {i === 0 && <span className="pfa-mark" aria-hidden="true"><PcBust17 size={12} color="currentColor" /></span>}
-            <img decoding="async" src={m.dataUrl} alt={`Media ${i + 1}${m.name ? `: ${m.name}` : ""}`} draggable={false} />
-            <button type="button" className="b x" aria-label={`Remove media ${i + 1}`} onClick={() => dispatch({ type: "MEDIA_DELETE", id: m.id })}><X size={12} strokeWidth={2.4} /></button>
-            <button type="button" className="b l" aria-label={`Move media ${i + 1} earlier`} disabled={i === 0} onClick={() => dispatch({ type: "P1_MEDIA_MOVE", id: m.id, dir: -1 })}><ChevronLeft size={13} /></button>
-            <button type="button" className="b r" aria-label={`Move media ${i + 1} later`} disabled={i === items.length - 1} onClick={() => dispatch({ type: "P1_MEDIA_MOVE", id: m.id, dir: 1 })}><ChevronRight size={13} /></button>
-          </div>
-          {i === 0 && <span className="pfa-sep" aria-hidden="true" />}
-        </React.Fragment>))}
-        {Array.from({ length: busy }).map((_, i) => <div key={"b" + i} className="ff-m19-t busy" role="status" aria-label="Uploading"><Loader2 size={20} className="ff-spin" /></div>)}
-        {room - busy > 0 && (
-          <label className={"ff-m19-t add" + (items.length ? "" : " pfa-lead")}>
-            {!items.length && <span className="pfa-mark" aria-hidden="true"><PcBust17 size={12} color="currentColor" /></span>}
-            <input ref={addRef} type="file" accept="image/*" multiple className="ff-sr" aria-label={items.length ? "Add more pictures" : "Add pictures"} onChange={(e) => { addMany(e.target.files); e.target.value = ""; }} />
-            <Plus size={22} strokeWidth={1.8} aria-hidden="true" />
-          </label>
-        )}
+        {/* v1.56 (Alex, 18 Nov 20:46): two groups. "Profile" is the profile photo (the same picture as the Profile Card's photo
+            circle: upload here or on the card and it shows in both). "Page" is the pictures that play across the top of the
+            public profile. Empty boxes are dotted; with no page pictures yet, a faint second box shows there is room for more. */}
+        <span className="ff-m19-g">
+          <span className="ff-m19-row">
+            {photo ? (
+              <div className="ff-m19-t">
+                <img decoding="async" src={photo} alt="Profile photo" draggable={false} />
+                <button type="button" className="b x" aria-label="Remove profile photo" onClick={() => dispatch({ type: "PROFILE", patch: { photo: null } })}><X size={12} strokeWidth={2.4} /></button>
+              </div>
+            ) : (
+              <label className="ff-m19-t add">
+                <input type="file" accept="image/*" className="ff-sr" aria-label="Add profile photo" onChange={(e) => { addPhoto(e.target.files && e.target.files[0]); e.target.value = ""; }} />
+                <Plus size={22} strokeWidth={1.8} aria-hidden="true" />
+              </label>
+            )}
+          </span>
+          <span className="cap">Profile</span>
+        </span>
+        <span className="pfa-sep" aria-hidden="true" />
+        <span className="ff-m19-g">
+          <span className="ff-m19-row">
+            {items.map((m, i) => (
+              <div key={m.id} className="ff-m19-t">
+                <img decoding="async" src={m.dataUrl} alt={`Media ${i + 1}${m.name ? `: ${m.name}` : ""}`} draggable={false} />
+                <button type="button" className="b x" aria-label={`Remove media ${i + 1}`} onClick={() => dispatch({ type: "MEDIA_DELETE", id: m.id })}><X size={12} strokeWidth={2.4} /></button>
+                <button type="button" className="b l" aria-label={`Move media ${i + 1} earlier`} disabled={i === 0} onClick={() => dispatch({ type: "P1_MEDIA_MOVE", id: m.id, dir: -1 })}><ChevronLeft size={13} /></button>
+                <button type="button" className="b r" aria-label={`Move media ${i + 1} later`} disabled={i === items.length - 1} onClick={() => dispatch({ type: "P1_MEDIA_MOVE", id: m.id, dir: 1 })}><ChevronRight size={13} /></button>
+              </div>
+            ))}
+            {Array.from({ length: busy }).map((_, i) => <div key={"b" + i} className="ff-m19-t busy" role="status" aria-label="Uploading"><Loader2 size={20} className="ff-spin" /></div>)}
+            {room - busy > 0 && (
+              <label className="ff-m19-t add">
+                <input ref={addRef} type="file" accept="image/*" multiple className="ff-sr" aria-label={items.length ? "Add more pictures" : "Add pictures"} onChange={(e) => { addMany(e.target.files); e.target.value = ""; }} />
+                <Plus size={22} strokeWidth={1.8} aria-hidden="true" />
+              </label>
+            )}
+            {!items.length && !busy && <span className="ff-m19-t ghost" aria-hidden="true" />}
+          </span>
+          <span className="cap">Page</span>
+        </span>
       </div>
       {err && <p className="ff-wlbox-err" role="alert" style={{ marginTop: 8 }}>{err}</p>}
     </GoldBox21>

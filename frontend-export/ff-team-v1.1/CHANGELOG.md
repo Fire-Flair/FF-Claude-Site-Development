@@ -4,7 +4,7 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
-## v1.50
+## v1.57
 
 Bookings titles and iPad layout (Alex, 18 Nov 20:25). `src/components/team/bookings.jsx`, `src/styles/bkd.css` (bk-titles and bk-ipad blocks).
 
@@ -13,6 +13,51 @@ Bookings titles and iPad layout (Alex, 18 Nov 20:25). `src/components/team/booki
 - The gold gradient bar is for titles outside a box: inside the FF Party and FF Staff boxes the title and its text now sit flush left with no bar. (Alex may make this a site-wide rule later.)
 - Grow with FireFlair on iPad: from 470px wide (iPad split view included) the three cards share one row like desktop, and an opened card's contents span the full width below. Between 470px and 899px each card is photo, title and an icon row; its description moves into the opened panel, where it has room. Phones (under 470px) and desktop are unchanged.
 - Checked: `npm run check`, `npm run build`, Playwright at 390, 490, 820 and 1280 (no console errors, no sideways scroll), Training opened at 490.
+
+## v1.56
+
+Profile builder, FF Tag and Media (Alex, 18 Nov 20:46). `team/creator-media.jsx`, `styles/prof21.css`.
+
+- Media always sits below FF Tag, on every size (they were side by side from 900px); FF Tag is only as tall as its contents.
+- Media shows two labelled groups with dotted empty boxes: "Profile" (the profile photo) and, after a thin line, "Page" (the pictures across the top of the public profile). While Page is empty a faint second box shows there is room for more.
+- The Profile box is the same picture as the Profile Card's photo circle (`profile.photo`): a photo added on the card shows here, and one added here shows on the card (shrunk to 800px; X removes it). Page pictures are unchanged (`profile.media`, up to 12, reorder and remove).
+- Merged onto the live page (v1.55). Artifact version 1795035122-bd5c.
+
+## v1.55
+
+- Profile builder (Alex, 18 Nov 20:43): the Let's get started box is centred again on desktop (max 640px, under the Profile Card); it was left-aligned under its heading since v1.29 (`styles/prof21.css`). Merged onto the live page (v1.54). Artifact version 1795034708-9a3c.
+
+## v1.54
+
+Alex, 18 Nov 20:40. `team/creator-media.jsx`, `styles/prof21.css`, `styles/base.css`.
+
+- Profile builder, Media: the first photo box no longer has the gold edge or the small bust mark in its corner (markup and styles deleted); the thin line after the first photo stays.
+- Desktop top bar: Home, Network, Bookings and Profile sit further apart (10px gaps, no dividers) and read as quiet buttons — a faint gold-edged squircle that warms on hover, and a soft gold fill with gold-leaf text on the current page. Visible focus ring for keyboard users.
+- Merged onto the live page 1795034370-98d9 (v1.53). Artifact version 1795034546-d40c.
+
+## v1.53
+
+- Profile page photos (Alex, 18 Nov 20:10), bug fixes. Phone and iPad: the photos now end exactly on the Profile Card's icon line, which is where the card sits when the page opens, and from there the whole page scrolls as one (the photos no longer stay stuck behind the card until the Overview tabs). While the photos are open, a scroll anywhere on the page, up or down, by touch, wheel or keys, brings the card back up (before, only a long upward drag did). Opening the photos from further down the page brings them into view.
+- iPad at every size, portrait or landscape, uses the phone layout; the desktop layout needs a wide window with a mouse or trackpad.
+- Desktop: one big photo with every photo in a row below it (arrows and keys step through; the row scrolls left and right after five), in place of the mosaic that opened one photo full size. `components/team/public-profile.jsx` (DeskGallery11, PublicHero), `styles/p12.css`.
+- Company Cards (no icon line) keep the previous photo behaviour.
+- Checked: `npm run check`, `npm run build`, touch simulations at 390, 820 and 1180 (photos end on the icon line at every scroll position; open photos close on any scroll), desktop at 1280; no console errors. Published over live 1795034255-f8d9 (v1.52), index.html, manifest and one new image. Artifact version 1795034370-98d9.
+
+## v1.52
+
+Bookings and the bar (Alex, 18 Nov 20:35). `team/bookings.jsx`, `styles/bkd.css`, `team/landing-shell.jsx`, `state/seed-data.js`.
+
+- Bookings: the "Are you happy to receive bookings via WhatsApp?" question and its Yes button from v1.49 are removed (component, styles and the `pref.whatsapp_bookings` Question Card deleted). In their place the WhatsApp box has a second row: the Add FireFlair mark (FF in a speech bubble, `AddFireFlairMark`) on a black circle, with "Notifications will also be shown here."
+- Mobile bottom bar: the centre FF coin is a mark, not a button (it no longer opens the notification pop-up). Desktop top bar: the FF coin button after Profile is removed. Notifications are to show on Bookings.
+- Merged onto the live page (v1.51). Artifact version 1795034255-f8d9.
+
+## v1.51
+
+- Profile builder, Profile Card face (Alex, 18 Nov 20:31): the empty photo with the bust was an oval (120×110, from the photo button's side padding). It is now a true 110px circle on every size (`styles/prof21.css`). Merged onto the live page (v1.50). Artifact version 1795034109-a91a.
+
+## v1.50
+
+- FF Team home, Launch Challenge (Alex, 18 Nov 20:26): the Top 10 rewards tile's faint background symbol is a champagne bottle instead of a credit card (`ChampagneBottle22` in `discover-and-support.jsx`, drawn in the lucide line style). Merged onto the live page (v1.49). Artifact version 1795033808-5463.
 
 ## v1.49
 

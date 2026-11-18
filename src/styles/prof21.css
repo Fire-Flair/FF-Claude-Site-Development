@@ -254,7 +254,7 @@
 .ff .ff-tm34 > #ff-sec-tag { margin: 0; align-content: stretch; }
 .ff .ff-tm34 > #ff-sec-tag > .ff-gb21, .ff .ff-tm34 > .ff-gb21-media { height: 100%; box-sizing: border-box; }
 .ff .ff-tm34 .ff-acct21 + .ff-gb21-media { margin-top: 0; }
-@media (min-width: 900px) { .ff .ff-tm34 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+/* v1.56 (Alex, 18 Nov 20:46): Media always sits below FF Tag, on every size (was side by side from 900px). */
 /* the Phone number box, third in Let's get started: full width of the box */
 .ff .ff-way17-phone > .ff-way17-wide { grid-column: 1 / -1; }
 
@@ -450,13 +450,7 @@
 .ff #ff-sec-card .ff-photobtn .ff-photoempty { overflow: hidden; border-radius: 50%; }
 .ff #ff-sec-card .ff-photobtn:hover .ff-photoempty { transform: none; }
 
-/* 3. Media: the first box is the profile photo (gold edge, a person mark), then a thin line before the rest. */
-.ff .ff-m19-t.pfa-lead { overflow: hidden; }
-.ff .ff-m19-t.pfa-lead::after { content: ""; position: absolute; inset: 0; z-index: 1; border: 3px solid #C9A227; border-radius: inherit; corner-shape: squircle; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.55); }
-.ff .ff-m19-t.add.pfa-lead { border-style: solid; border-color: transparent; }
-.ff .ff-m19-t .pfa-mark { position: absolute; top: 5px; left: 5px; z-index: 2; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 8px; corner-shape: squircle;
-  background: #C9A227; color: #0B0B0C; box-shadow: 0 2px 6px rgba(0,0,0,.3); pointer-events: none; }
-.ff .ff-m19-t.pfa-lead .b { z-index: 2; }
+/* 3. Media: a thin line after the first photo (the profile photo). v1.53 (Alex, 18 Nov 20:40): no gold edge or bust mark on it. */
 .ff .ff-m19 > .pfa-sep { flex: none; align-self: stretch; width: 1px; margin: 8px 2px; background: rgba(126,97,29,.5); }
 
 /* 4. Need help?: a clear gap after Save; heading and the line; Book a meeting a small centred box, never full screen. */
@@ -521,7 +515,8 @@
 /* v1.29 (Alex, 18 Nov 17:49): on desktop the Let's get started box sits on the left, under its heading (its left edge
    lines up with the "Let's get started" title); the Profile Card stays in the middle. Need help? and Book a meeting
    keep the centred rule above. */
-.ff .ff-journey > #ff-sec-ffai.ff-start17 { margin-left: 0; margin-right: auto; }
+/* v1.55 (Alex, 18 Nov 20:43): back in the centre, under the Profile Card, on every size (replaces the left alignment above). */
+.ff .ff-journey > #ff-sec-ffai.ff-start17 { margin-left: auto; margin-right: auto; }
 
 /* ---- pb-professions (Alex 19:19): the "top three", the first three entries that go onto the Profile Card ----
    Shared marking: .ff-top3 on the entry's wrapper (position: relative) and a .ff-top3-n number tab on its top edge. */
@@ -532,3 +527,20 @@
 /* builder Professions: room for the tabs above the row; the drag handle sits bottom right (the level is top right) */
 .ff .pp-sec .ff-pt21-row { padding-top: 16px; }
 .ff .pp-sec .ff-pt21-grip { top: auto; bottom: 10px; right: 8px; }
+
+/* v1.51 (Alex, 18 Nov 20:31): the builder's photo circle was 120x110 (an oval) because of the button's side padding; it is
+   now a true circle at every size, and the empty bust fills the same circle. */
+.ff #ff-sec-card .ff-photobtn { width: 110px !important; height: 110px !important; aspect-ratio: 1 / 1; padding: 0 !important; }
+.ff #ff-sec-card .ff-photobtn .ff-photoempty { width: 100% !important; height: 100% !important; aspect-ratio: 1 / 1; }
+
+/* v1.56 (Alex, 18 Nov 20:46): FF Tag and Media stacked; FF Tag only as tall as its contents. Media shows two labelled groups,
+   "Profile" (the profile photo) and "Page" (the pictures across the top of the public profile), with dotted empty boxes and a
+   faint second box while Page is empty. */
+.ff .ff-tm34 > #ff-sec-tag > .ff-gb21, .ff .ff-tm34 > .ff-gb21-media { height: auto !important; }
+.ff .ff-tm34 { align-items: start; }
+.ff .ff-gb21-media .ff-m19 { align-items: flex-start; }
+.ff .ff-m19-g { flex: none; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.ff .ff-m19-row { display: flex; gap: 10px; }
+.ff .ff-m19-g .cap { padding-left: 2px; font: 600 12px/1.2 var(--font-sans, Inter, sans-serif); letter-spacing: .04em; color: #6A5A36; }
+.ff .ff-gb21-media .ff-m19-t.ghost { background: transparent; border: 1.5px dashed rgba(126,97,29,.25); box-shadow: none; opacity: .7; }
+.ff .ff-m19 > .pfa-sep { align-self: stretch; margin: 8px 2px 26px; }

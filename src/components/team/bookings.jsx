@@ -730,54 +730,6 @@ function ProfPkgCreate17() {
   );
 }
 
-/* v1.46 bookings (Alex, 18 Nov 20:06): "Are you happy to receive bookings via WhatsApp?" under the WhatsApp box, one
-   Yes button with a short tick animation, then it stays answered.
-   FOR THE DEVELOPERS: this is a Yes/No Question Card on the member's profile Q&A. It is saved through the Q&A adapter
-   (qaSubmit17, question id "pref.whatsapp_bookings", option id "yes", visibility private) and mirrored into the profile's
-   Question Cards (ANSWER, same id, listed in QUESTIONS in state/seed-data.js), so the profile shows it as answered and a
-   "No" given there reads here as unanswered. Live API: PUT /api/user/questions/pref.whatsapp_bookings/answer.
-   Signed out, the answer is kept as a guest Q&A answer (like the other guest questions) and filed to the account the
-   next time this page is open signed in. */
-const WA_BOOK_QID17 = "pref.whatsapp_bookings";
-const WA_BOOK_Q17 = "Are you happy to receive bookings via WhatsApp?";
-if (!QA_Q17[WA_BOOK_QID17]) QA_Q17[WA_BOOK_QID17] = { text: WA_BOOK_Q17, group: "about", multi: false, guest: true, contactOptional: true };
-const waGuestAns17 = (state) => Object.values(((state.qa17 || {}).answers) || {}).find(x => x && !x.account && x.questionId === WA_BOOK_QID17 && !x.withdrawnAt && (x.optionIds || []).includes("yes")) || null;
-
-function WaBookQ17() {
-  const { state, dispatch } = useStore();
-  const account = qaAccount17(state);
-  const prof = ((state.profile && state.profile.answers) || {})[WA_BOOK_QID17];
-  const saved = account ? (prof ? prof === "Yes" : !!qaAnswer17(state, account, WA_BOOK_QID17)) : !!waGuestAns17(state);
-  const [anim, setAnim] = useState(false);
-  const [busy, setBusy] = useState(false);
-  const on = saved || anim;
-  const save = async (acct) => qaSubmit17(dispatch, { questionId: WA_BOOK_QID17, account: acct, optionIds: ["yes"], visibility: "private", source: "FF Team Bookings · WhatsApp" },
-    acct ? { type: "ANSWER", qid: WA_BOOK_QID17, value: "Yes", visibility: "private" } : null);
-  /* A Yes given signed out joins the account's Q&A once they are signed in. */
-  useEffect(() => {
-    if (!account || prof !== undefined || qaAnswer17(state, account, WA_BOOK_QID17) || !waGuestAns17(state)) return;
-    save(account);
-  }, [account]);
-  const go = async () => {
-    if (on || busy) return;
-    setAnim(true); setBusy(true);
-    const r = await save(account);
-    setBusy(false);
-    if (!r.ok) { setAnim(false); dispatch({ type: "TOAST", toast: "That couldn't be saved. Try again." }); }
-  };
-  return (
-    <span className="ff-bk-waq">
-      <span className="q" id="ff-bk-waq-q">{WA_BOOK_Q17}</span>
-      <button type="button" className={`ff-bk-wayes${on ? " on" : ""}${anim ? " pop" : ""}`} aria-pressed={on} aria-describedby="ff-bk-waq-q" onClick={go}>
-        <span className="tk" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="22" height="22"><circle className="c" cx="12" cy="12" r="10.5" /><path className="p" d="M7 12.4l3.2 3.1L17.2 8.6" /></svg>
-        </span>
-        <span className="l">Yes</span>
-      </button>
-    </span>
-  );
-}
-
 function TeamBookings({ guest = false }) {
   const { state, dispatch } = useStore();
   const [drop, setDrop] = useState(null);
@@ -835,12 +787,19 @@ function TeamBookings({ guest = false }) {
 
       <section className="ff-bk-sec ff-bk-yours" id="ff-bk-yours" aria-labelledby="ff-bk-yours-h">
         <h1 className="ff-h1 ff-big20 ff-bk-yh" id="ff-bk-yours-h"><span className="t">Your bookings</span></h1>
-        <div className="ff-wa ff-bk-waline ff-bk-wabox">
-          <span className="ff-wa-ico"><WhatsAppIcon size={26} /></span>
-          <span className="ff-body ff-bk-watx">
-            <b>Requests come to you on WhatsApp.</b> When companies and clients ask if you're free, each request is sent to you directly on WhatsApp and shows here. You reply in either place.
-            <span className="ff-bk-wasel">When you're selected for a booking, it will be shown here.</span>
-            <WaBookQ17 />
+        {/* v1.52 (Alex, 18 Nov 20:35): the WhatsApp question is gone; a second row with the Add FireFlair mark says
+            notifications show here too. */}
+        <div className="ff-wa ff-bk-waline ff-bk-wabox ff-bk-wabox2">
+          <span className="ff-bk-warow">
+            <span className="ff-wa-ico"><WhatsAppIcon size={26} /></span>
+            <span className="ff-body ff-bk-watx">
+              <b>Requests come to you on WhatsApp.</b> When companies and clients ask if you're free, each request is sent to you directly on WhatsApp and shows here. You reply in either place.
+              <span className="ff-bk-wasel">When you're selected for a booking, it will be shown here.</span>
+            </span>
+          </span>
+          <span className="ff-bk-warow ff-bk-ffrow">
+            <span className="ff-bk-ffico"><AddFireFlairMark size={30} /></span>
+            <span className="ff-body ff-bk-watx"><b>Notifications will also be shown here.</b></span>
           </span>
         </div>
       </section>
