@@ -6,6 +6,14 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
 
 ## v1.39
 
+FF Team home on iPad and desktop (Alex, 18 Nov 19:16). `styles/home-text.css`.
+
+- Pillar tiles: the chevron moves to the bottom right, beside the title. The photo is shorter and ends above a champagne band with room for the title, so the words never sit on the photo (titles were wrapping onto the photo with four tiles in a row). With four tiles in a row (from 1024px) the band is 84px and fits a two-line title; the title size there is 18–23px. iPad (760–1023px) keeps one-line titles with a 60px band.
+- Hero (900px and wider): the welcome title, "Get seen, get booked, get paid." and Create your profile card sit in the bottom left of the photo instead of the middle.
+- Published as a patch onto the live page 1795028903-26df (v1.38), so every other chat's work stays; merged page saved as `live-v1.39-index.html`. Artifact version 1795029777-6437.
+
+## v1.39
+
 - Palette (Alex, 18 Nov 19:21): champagne, rosé and sage are added to the FireFlair colour palette for future use, as
   tokens in `src/styles/tokens.css` (`--tone-champagne-*`, `--tone-rose-*`, `--tone-sage-*`: light, deep, ring,
   accent, ink). Champagne is the house choice: the Experience cards (`XP_TONE29 = "champagne"`) and the Phone number
