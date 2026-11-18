@@ -4,6 +4,15 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.67
+
+Profile builder, Professions picker (Alex, 18 Nov 21:34, option 5 of six mock-ups). `src/components/team/profile-edit-p2.jsx` (`PE2ProfCats`, `PE2CatSheet`, `PE2TopSlots`), `src/styles/profile-edit-p2.css` (prof-grid).
+
+- Under "Type a profession" all eight categories are on screen as icon tiles, four across (Bar, Front of House, Management, Back of House, Entertainment, Services, Food, Other), each showing how many of its professions are chosen. A long label shrinks, never splits.
+- Tapping a tile opens that category in a pop-up: tap professions to add or remove as many as you like, "Add your own" puts a typed profession under that category (Other included), Done closes it. Replaces the sideways row of category boxes.
+- Top three slots: a new profession fills an empty slot automatically, unless the member emptied that slot on purpose.
+- Checked: `npm run check`, `npm run build`, new member at 390 and 1280: Services opened, Photographer picked, "Drone Pilot" added, tile shows 2, slots 1 and 2 filled; labels fit; no console errors.
+
 ## v1.66
 
 Profile tabs (Alex, 18 Nov 21:13: "I like number 5", from the six mock-ups on branch `tabs-mock`). `shell/index.html`.
