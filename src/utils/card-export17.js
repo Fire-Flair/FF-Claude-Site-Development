@@ -181,7 +181,7 @@ function cx17CanShareFiles() {
 
 /* The device's share sheet with the image and the link as text. Resolves "shared", "cancelled" or throws. */
 async function cx17Share(file, title, url) {
-  const text = `${title} ${url}`.trim();
+  const text = cx17Msg17(title, url);
   try { await navigator.share({ files: [file], title, text }); return "shared"; }
   catch (e) { if (e && e.name === "AbortError") return "cancelled"; throw e; }
 }
@@ -195,7 +195,8 @@ function cx17Download(blob, name, ext) {
 }
 
 
-const cx17WaLink = (title, url) => "https://wa.me/?text=" + encodeURIComponent(`${title} ${url}`.trim());
+const cx17Msg17 = (title, url) => [title, String(url || "").replace(/^https?:\/\//, "")].filter(Boolean).join("\n").trim();
+const cx17WaLink = (title, url) => "https://wa.me/?text=" + encodeURIComponent(cx17Msg17(title, url));
 
 
 async function cx17Copy(text) {

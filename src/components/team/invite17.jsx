@@ -99,7 +99,7 @@ function InviteHost17() {
   const tag = String(state.auth.tag || state.session.tag || "");
   const me = { ...meAsStaff(state.profile, state.session), group: "Your profile" };
   return (
-    <CardShareSheet17 open onClose={() => setOpen(false)} title="Join my team on FireFlair:" url={inv17Link(tag)} noRef fileName={"fireflair-join-" + cx17Slug(tag)}>
+    <CardShareSheet17 open onClose={() => setOpen(false)} title={SHARE_TITLE17} message={SHARE_MSG17} url={inv17Link(tag)} noRef fileName={"fireflair-join-" + cx17Slug(tag)}>
       <PlayerCard person={me} format="full" nameAs="div" themeKey={state.profile.theme} />
     </CardShareSheet17>
   );

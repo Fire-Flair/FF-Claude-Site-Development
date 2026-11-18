@@ -258,7 +258,7 @@ function ShareCardSheet({ open, onClose }) {
     /* v17.22: once the profile is complete, your own card's Share sends your join link (the code is already in it: no ?r=). */
     const join = profileBasics17(state);
     return React.createElement(CardShareSheet17, {
-      open: true, onClose, title: join ? "Join my team on FireFlair:" : "My FireFlair card", url: join ? inv17Link(tag) : "https://" + CARD_DOMAIN + "/" + tag,
+      open: true, onClose, title: SHARE_TITLE17, message: SHARE_MSG17, url: inv17Link(tag),
       noRef: join, fileName: (join ? "fireflair-join-" : "fireflair-") + cx17Slug(tag),
       extra: React.createElement("div", { style: { marginTop: 14 } }, phoneUi)
     }, React.createElement(PlayerCard, { person: me, format: "full", themeKey: state.profile.theme }));

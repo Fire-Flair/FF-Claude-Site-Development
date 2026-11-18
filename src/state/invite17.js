@@ -41,8 +41,12 @@ function profileBasics17(s) {
 }
 
 
-/* The address a member's join link has: https://ffteam.uk/join/<tag in lower case>. */
-const inv17Link = (tag) => "https://FFTeam.uk/join/" + String(tag || "").toLowerCase();
+/* v1.15 (Alex, 18 Nov): one address everywhere. The share link is the member's profile page, FFTeam.uk/<tag in lower case>;
+   visitors join from the Join team button on the profile. (/join/<tag> links still open, for old shares.) */
+const inv17Link = (tag) => "https://FFTeam.uk/" + String(tag || "").toLowerCase();
+/* v1.15 (Alex, 18 Nov): the WhatsApp / Share message. The link goes on its own line after it. */
+const SHARE_TITLE17 = "Check out my profile page";
+const SHARE_MSG17 = "Check out my profile page and join my team. Help me win the FF Team Launch Challenge.\nGet seen, get booked, get paid.";
 
 
 /* Read once when the app starts: a shared link carries the sharer's code as ?r=<code>. */

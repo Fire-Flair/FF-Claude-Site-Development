@@ -4,6 +4,16 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.15
+
+- Share message (Alex, 18 Nov 13:48–13:51). WhatsApp and Share now send:
+  "Check out my profile page and join my team. Help me win the FF Team Launch Challenge.
+  Get seen, get booked, get paid.
+  FFTeam.uk/<tag>"
+  The share sheet title is "Check out my profile page".
+- One address everywhere: the share link is the member's profile page, FFTeam.uk/<tag>, the same address printed on the Profile Card. Visitors join from the Join team button on the profile. Old /join/<tag> links still open. (`state/invite17.js` holds the link, title and message; `utils/card-export17.js` puts the link on its own line.)
+- Journey tests 48/48.
+
 ## v1.14
 
 Fixes from the fellowship review of v1.13 (Aragorn, Legolas, Gimli, Sam, Frodo; reports in the Tolkien AI plans folder).

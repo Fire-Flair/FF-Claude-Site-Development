@@ -15,7 +15,7 @@ const withRef17 = (url, code) => {
 };
 
 
-function CardShareSheet17({ open, onClose, title, url, fileName, children, extra, noRef }) {
+function CardShareSheet17({ open, onClose, title, message, url, fileName, children, extra, noRef }) {
   const { state, dispatch } = useStore();
   const holder = useRef(null);
   const [png, setPng] = useState(null);
@@ -42,16 +42,16 @@ function CardShareSheet17({ open, onClose, title, url, fileName, children, extra
   const doShare = async () => {
     if (!png) return;
     if (!cx17CanShareFiles()) { cx17Download(png.blob, fileName); say("Image downloaded. Your browser can't open the share sheet from here."); return; }
-    try { const r = await cx17Share(file, title, full); if (r === "shared") say("Shared"); }
+    try { const r = await cx17Share(file, message || title, full); if (r === "shared") say("Shared"); }
     catch (e) { cx17Download(png.blob, fileName); say("Sharing wasn't available, so the image was downloaded."); }
   };
   const doWhatsApp = async () => {
     if (!png) return;
     if (cx17CanShareFiles()) {
-      try { const r = await cx17Share(file, title, full); if (r === "shared") say("Shared"); return; } catch (e) { /* fall back below */ }
+      try { const r = await cx17Share(file, message || title, full); if (r === "shared") say("Shared"); return; } catch (e) { /* fall back below */ }
     }
     cx17Download(png.blob, fileName);
-    window.open(cx17WaLink(title, full), "_blank", "noopener");
+    window.open(cx17WaLink(message || title, full), "_blank", "noopener");
     say("WhatsApp opened with your link. Add the downloaded image there.");
   };
   const doDownload = () => { if (!png) return; cx17Download(png.blob, fileName); say("Image downloaded"); };

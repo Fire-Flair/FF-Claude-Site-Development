@@ -123,7 +123,7 @@ function MyShareBtn17({ person, onTap, icon }) {
     <>
       <button type="button" className={"ff-csm-btn " + (icon ? "ff-pub-shico" : "wide")} onClick={() => onTap ? onTap() : setOpen(true)} aria-label="Share my card"><WhatsAppIcon size={icon ? 22 : 18} aria-hidden="true" />{icon ? null : " Share"}</button>
       {open ? (
-        <CardShareSheet17 open onClose={() => setOpen(false)} title={join ? "Join my team on FireFlair:" : "My FireFlair card"} url={join ? inv17Link(tag) : `https://${CARD_DOMAIN}/${pc17Tag(tag)}`} noRef={join}
+        <CardShareSheet17 open onClose={() => setOpen(false)} title={SHARE_TITLE17} message={SHARE_MSG17} url={join ? inv17Link(tag) : `https://${CARD_DOMAIN}/${pc17Tag(tag)}`} noRef={join}
           fileName={(join ? "fireflair-join-" : "fireflair-") + cx17Slug(tag)}>
           <PlayerCard person={person} format="full" nameAs="div" themeKey={state.profile.theme} />
         </CardShareSheet17>
