@@ -4,6 +4,16 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.31
+
+FF Team home, the four pillar boxes (Alex, 18 Nov 18:15). `discover-hub.jsx`, `styles/home-text.css`.
+
+- No gradient on the pillar boxes on phones: plain champagne (#EAE0C3), as on iPad and desktop.
+- The chevron is a solid burgundy button with a champagne outline and arrow on every size, open and closed.
+- Each tile shows its title only (the subtitle line, e.g. "Your CV, as your own page", is removed from the tile; the text stays in `team-pillars.json` for the pages that use it). Titles are bold (700) and bigger: 25px on phones, 27px on iPad, 24px with four tiles in a row.
+- iPad and desktop: the photo comes down to 56px above the tile's bottom edge, since there is now one line of words.
+- Merged onto the live page (v1.30); page saved as `live-v1.31-index.html`. Artifact version 1795026094-3cb5.
+
 ## v1.30
 
 - FF Team home pillar boxes on iPad and desktop (Alex, 18 Nov 18:04): no fade on the photos. The photo ends cleanly above the champagne area with the words (`styles/home-text.css`); phones unchanged.
