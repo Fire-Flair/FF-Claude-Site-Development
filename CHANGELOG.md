@@ -1,5 +1,20 @@
 # FireFlair prototype — changelog
 
+## v17.61
+
+Artifact version 1794996474-281f.
+
+- Reverted the v17.60 section-title change (option 3): Alex had not chosen it. Titles are back to their v17.59 look; `src/styles/titles3.css` is removed. The section titles will be redesigned after the FF Team v1.1 split, from the three options in the titles proposal (branch `p2-titles`). The smaller published page from v17.60 stays.
+
+## v17.60
+
+Artifact version 1794995892-14df.
+
+Section titles (option 3, chosen by Alex) and a smaller published page. Branch merged: `titles3`.
+
+- New `src/styles/titles3.css` (loaded through `css-registry.js`): page titles get a black FF monogram tile beside them ("Explore our network", "Your bookings"); section titles get a gold hairline running right ("Our professionals", "FF Event Directory", "Life at FF Team", "Can FF Team help you?", "What is FF Team?" keeps its quiet label with the hairline). The old underlines are removed (`big20.css`, `v11.css`, `home-fix22.css`). Profile labels are one size (13px, .18em) with a hairline after each, and 40px (48px on wide screens) above each section. FF Stories, titles inside dark boxes and Business & Support are unchanged.
+- `scripts/build.mjs`: the built page's JavaScript is whitespace-minified, taking the published page from about 5.24 MB to 4.66 MB, under the artifact's 5 MiB limit. `src/` is unchanged.
+
 ## v17.59
 
 Artifact version 1794994701-82b2.
