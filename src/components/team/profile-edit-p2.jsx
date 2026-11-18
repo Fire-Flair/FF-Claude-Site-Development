@@ -1,8 +1,9 @@
 /* src/components/team/profile-edit-p2.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json).
    p2/pbuild (18 Nov 2026): the own-profile edit page, below Media, looks like the finished profile.
-   p2/pfb: Professions have no pencil — a card opens its own editor (level, description, media) and a blank "+" card
-   at the end opens the Tiles picker. Every Attribute card shows even when empty, as a placeholder card with a pencil; a pencil opens the
-   Light sheet editor (approved editor option 1); the Professions editor holds the Tiles picker (approved picker option 2).
+   p2/pfb: Professions have no pencil — a card opens its own editor (level, description, media).
+   pb-professions: no pop-up; with no professions the category boxes are listed in the Professions area, and once there
+   are professions a "+" card at the end opens the same boxes under the row. Every Attribute card shows even when empty, as a placeholder card with a pencil; a pencil opens the
+   Light sheet editor (approved editor option 1).
    Q&A sits above Save, always open, answered inline. Ported from the p2/profpick drafts; reads and writes the real records. */
 
 const PE2_CSS = __ff_css("styles/profile-edit-p2.css");
@@ -10,23 +11,13 @@ const PE2_CSS = __ff_css("styles/profile-edit-p2.css");
 /* The Bar ladder, entry to top: 1 Barback … 5 Mixologist, shown top down (p2/pfb: Barback first and smallest,
    Mixologist last and largest). Every other category is alphabetical. */
 const PE2_LADDER = ["Barback", "Bartender", "Cocktail Bartender", "Flair Bartender", "Mixologist"];
-const PE2_LINE = {
-  Bar: "From first shift to signature menus",
-  "Front of House": "Hosts, waiters and sommeliers",
-  Management: "Managers and planners",
-  Entertainment: "DJs, musicians and performers",
-  Services: "Photo, video and styling",
-  Chefs: "Private, event and kitchen chefs",
-  "Back of House": "Stock, kitchen and logistics",
-  Other: "Your own profession",
-};
 const PE2_CATS = PROFESSION_CATEGORIES.map(c => ({
   key: c.key, ranked: c.key === "Bar",
   list: c.key === "Bar" ? PE2_LADDER : [...c.suggested].sort((a, b) => a.localeCompare(b)),
 }));
 /* p2/pubprof: Languages live on the Profile Card and Experience has its own section, so neither is an Attribute here. */
-const PE2_ATTRS = ["skills", "interests", "qualifications"];
-const PE2_TITLES = { profs: "Professions", attrs: "Attributes", venues: "Experience" };
+/* pb-qualifications (Alex 18:59): Qualifications first, on the left. */
+const PE2_ATTRS = ["qualifications", "skills", "interests"];
 
 /* The member's professions and add / remove. Removing goes by record id (never by name), so a hidden or
    renamed record with the same name can't be hit by mistake; adding a name that is already there (hidden or
@@ -50,15 +41,17 @@ function usePE2Profs() {
   return { mine, has: (n) => !!find(n), toggle, remove, catOf, ownIn, dispatch };
 }
 
-function PE2Item({ name, on, onClick, step }) {
-  return (
-    <button type="button" className={"pp-row" + (on ? " on" : "")} aria-pressed={on} onClick={onClick}>
-      {step ? <span className="pp-step">{step}</span> : null}
-      <span className="pp-nm">{name}</span>
-      <span className="pp-mk" aria-hidden="true">{on ? <Check size={14} strokeWidth={2.6} /> : <Plus size={14} strokeWidth={2.4} />}</span>
-    </button>
-  );
-}
+/* pb-professions (Alex, 18 Nov 18:03 / 18:59; variant "categories" picked 19:26): no pop-up. The categories are boxes
+   the size of the Attribute boxes, listed across the Professions area, each with its professions inside; tapping one
+   adds it (tap again removes it). With no professions yet the boxes show straight away; once there are professions,
+   a "+" box after them opens the same boxes below the row. */
+/* Typed professions: up to 60 characters on the profile (Alex 19:19; boxes wrap between words). The Profile Card's
+   16-character rule only affects the card: a longer entry is left off the card whole, never cut. */
+const PROF_MAX_LEN = 60;
+const PE2_CAT_KEYS = [...PROFESSION_CATEGORIES.map(c => c.key), "Other"];
+const pe2Title = (t) => String(t).trim().replace(/\s+/g, " ").replace(/\b\w/g, c => c.toUpperCase()).slice(0, PROF_MAX_LEN);
+/* A typed name that matches a listed profession (any case) becomes that profession. */
+const pe2Listed = (t) => ALL_PROFESSIONS.find(p => p.name.toLowerCase() === String(t).trim().toLowerCase());
 
 function PE2StairMark({ size = 30 }) {
   return (
@@ -69,9 +62,23 @@ function PE2StairMark({ size = 30 }) {
 }
 
 /* Shrink, never split: the longest word decides the size. */
-const pe2Fit = (t, wide) => { const L = Math.max(...String(t).split(/\s+/).map(w => w.length)); return wide ? "15px" : L >= 13 ? "12px" : L >= 11 ? "13px" : "15px"; };
+const pe2Fit = (t) => { const L = Math.max(...String(t).split(/\s+/).map(w => w.length)); return L >= 13 ? "14.5px" : L >= 11 ? "15.5px" : "17px"; };
 
-/* FireFlair asks which category a typed profession belongs to when it can't place it. */
+/* The category's mark: the Bar ladder's steps, Other a spark (GroupIcon gives Other the Front of House people icon). */
+const pe2CatIcon = (k, size) => k === "Bar" ? <PE2StairMark size={size + 2} /> : k === "Other" ? <Sparkles size={size} strokeWidth={1.6} /> : <GroupIcon group={k} size={size} color="currentColor" />;
+
+/* One profession inside a category box. The Bar ladder shows its step as a rising bar. */
+function PE2CatItem({ name, on, onClick, step }) {
+  return (
+    <button type="button" className={"pe2-ci" + (on ? " on" : "")} aria-pressed={on} onClick={onClick}>
+      {step ? <span className="pe2-ci-step" style={{ "--h": step }} aria-label={`Step ${step} of 5`}><i /></span> : null}
+      <span className="pe2-ci-nm">{name}</span>
+      <span className="pe2-ci-mk" aria-hidden="true">{on ? <Check size={13} strokeWidth={2.8} /> : <Plus size={13} strokeWidth={2.4} />}</span>
+    </button>
+  );
+}
+
+/* FireFlair asks which category a typed profession belongs to when it can't place it (Other included). */
 function PE2Which({ P }) {
   const r = P.mine.find(x => !professionCategory(x.name, x.displayCategory));
   if (!r) return null;
@@ -79,116 +86,56 @@ function PE2Which({ P }) {
     <div className="pp-which">
       <div className="pp-which-q"><Coin size={20} tier="gold" /><span>Which category is {"“"}{r.name}{"”"}?</span></div>
       <div className="pp-which-row">
-        {PROFESSION_CATEGORIES.map(c => (
-          <button key={c.key} type="button" className="pp-cat-b" onClick={() => P.dispatch({ type: "REC_PATCH", category: "professions", id: r.id, patch: { displayCategory: c.key } })}>{c.key}</button>
+        {PE2_CAT_KEYS.map(k => (
+          <button key={k} type="button" className="pp-cat-b" onClick={() => P.dispatch({ type: "REC_PATCH", category: "professions", id: r.id, patch: { displayCategory: k } })}>{k}</button>
         ))}
       </div>
     </div>
   );
 }
 
-/* The Tiles picker: every category as an equal tile; one opens its list under its row. */
-function PE2Picker({ P }) {
+/* The add flow: a type box, then every category as an Attribute-sized box. */
+function PE2ProfCats({ P }) {
   const [q, setQ] = useState("");
-  const [open, setOpen] = useState("");
-  const [wide, setWide] = useState(() => typeof window !== "undefined" && window.innerWidth >= 900);
-  useEffect(() => { const f = () => setWide(window.innerWidth >= 900); window.addEventListener("resize", f); return () => window.removeEventListener("resize", f); }, []);
-  const n = q.trim().toLowerCase();
-  const ok = (name) => !n || name.toLowerCase().includes(n);
-  const enter = () => {
+  const add = (e) => {
+    e.preventDefault();
     const t = q.trim(); if (!t) return;
-    const hit = ALL_PROFESSIONS.find(p => p.name.toLowerCase().startsWith(t.toLowerCase()));
-    P.toggle(hit ? hit.name : t.replace(/\s+/g, " ").replace(/\b\w/g, c => c.toUpperCase()));
+    const hit = pe2Listed(t);
+    const nm = hit ? hit.name : pe2Title(t);
+    if (!P.has(nm)) P.toggle(nm);
     setQ("");
   };
-  const cats = [...PE2_CATS, ...(P.ownIn("Other").length && !PE2_CATS.some(c => c.key === "Other") ? [{ key: "Other", list: [] }] : [])];
-  const items = (c) => [...c.list.filter(ok).map(x => ({ n: x, on: P.has(x) })), ...P.ownIn(c.key).filter(r => ok(r.name)).map(r => ({ n: r.name, on: true }))];
-  const chosen = (c) => items(c).filter(x => x.on).length;
-  const cols = wide ? 4 : 2;
-  const openIdx = cats.findIndex(c => c.key === open);
-  const rowEnd = openIdx < 0 ? -1 : Math.min(cats.length - 1, Math.floor(openIdx / cols) * cols + cols - 1);
-  const panel = (c) => (
-    <div key="panel" className={"pp2-panel" + (c.ranked ? " ladder" : "")} role="region" aria-label={c.key}>
-      {c.ranked ? (
-        <div className="pp2-stairs">
-          {c.list.map((x, i) => ({ x, i })).filter(o => ok(o.x)).map(({ x, i }) => (
-            <div key={x} className="pp2-stair" style={{ "--s": c.list.length - 1 - i, "--g": i }}><PE2Item name={x} on={P.has(x)} onClick={() => P.toggle(x)} step={i + 1} /></div>
-          ))}
-          {P.ownIn(c.key).map(r => <div key={r.id} className="pp2-own"><PE2Item name={r.name} on onClick={() => P.remove(r)} /></div>)}
-        </div>
-      ) : (
-        <div className="pp2-list">{items(c).map(x => <PE2Item key={x.n} name={x.n} on={x.on} onClick={() => P.toggle(x.n, c.key === "Other" ? undefined : c.key)} />)}</div>
-      )}
-    </div>
-  );
+  const own = P.ownIn("Other");
+  const cats = [...PE2_CATS.filter(c => c.key !== "Other"), ...(own.length ? [{ key: "Other", list: [] }] : [])];
   return (
-    <div className="pp-pick pp2">
-      <label className="pp-q">
-        <Search size={17} aria-hidden="true" />
-        <input type="search" value={q} autoComplete="off" spellCheck={false} enterKeyHint="enter" placeholder="Search or type a profession" aria-label="Search or type a profession"
-          onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); enter(); } }} />
-      </label>
+    <div className="pe2-pc">
+      <form className={"ff-type21 pe2-pc-type" + (q.trim() ? " has" : "")} onSubmit={add}>
+        <input type="text" value={q} maxLength={PROF_MAX_LEN} autoComplete="off" spellCheck={false} enterKeyHint="enter" placeholder="Type a profession" aria-label="Add a profession"
+          onChange={(e) => setQ(e.target.value)} />
+        <button type="submit" className="ff-type21-key" aria-label="Add a profession" tabIndex={-1}><span>Enter</span><CornerDownLeft21 size={15} strokeWidth={2.2} aria-hidden="true" /></button>
+      </form>
       <PE2Which P={P} />
-      <div className="pp2-grid" style={{ "--cols": cols }}>
-        {cats.map((c, i) => (
-          <React.Fragment key={c.key}>
-            <button type="button" className={"pp2-tile" + (c.key === open ? " on" : "") + (c.ranked ? " bar" : "")} aria-expanded={c.key === open} onClick={() => setOpen(c.key === open ? "" : c.key)}>
-              <span className="pp2-ic">{c.ranked ? <PE2StairMark size={30} /> : <GroupIcon group={c.key} size={28} color="currentColor" />}</span>
-              <span className="pp2-nm" style={{ "--fs": pe2Fit(c.key, wide) }}>{c.key}</span>
-              <span className="pp2-sub">{PE2_LINE[c.key] || ""}</span>
-              {chosen(c) > 0 && <span className="pp-cnt"><Check size={11} strokeWidth={3} />{chosen(c)}</span>}
-            </button>
-            {i === rowEnd && panel(cats[openIdx])}
-          </React.Fragment>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* Professions editor: your professions in order (the first is the headline), then the Tiles picker. */
-function PE2ProfEd() {
-  const P = usePE2Profs();
-  return (
-    <div className="pp-profed">
-      {P.mine.length > 0 && (
-        <div className="pp-rank" role="list">
-          {P.mine.map((r, i) => (
-            <div key={r.id} role="listitem" className={"pp-rank-r" + (i === 0 ? " first" : "")}>
-              <span className="pp-rank-n">{i === 0 ? <Star size={12} fill="currentColor" strokeWidth={0} /> : i + 1}</span>
-              <span className="pp-rank-nm">{r.name}</span>
-              <span className="pp-rank-c">{P.catOf(r)}</span>
-              <button type="button" className="rm" aria-label={`Remove ${r.name}`} onClick={() => P.remove(r)}><Trash2 size={14} /></button>
+      <div className="ff-mrow ff-acar pe2-rail pe2-cats" role="list" aria-label="Profession categories">
+        {cats.map(c => {
+          const mineHere = P.ownIn(c.key);
+          const n = c.list.filter(x => P.has(x)).length + mineHere.length;
+          return (
+            <div key={c.key} role="listitem" className={"ff-agrp t-card pe2-cat" + (c.ranked ? " bar" : "") + (n ? " has" : "")}>
+              <span className="ff-agrp-top">
+                <span className="pe2-cat-ic" aria-hidden="true">{pe2CatIcon(c.key, 18)}</span>
+                <span className="ff-agrp-h" style={{ "--fs": pe2Fit(c.key) }}>{c.key}</span>
+                {n > 0 && <span className="ff-agrp-n">{n}</span>}
+              </span>
+              <span className="pe2-cat-l" role="group" aria-label={c.key}>
+                {c.list.map((x, i) => <PE2CatItem key={x} name={x} on={P.has(x)} step={c.ranked ? i + 1 : 0} onClick={() => P.toggle(x)} />)}
+                {mineHere.map(r => <PE2CatItem key={r.id} name={r.name} on onClick={() => P.remove(r)} />)}
+              </span>
             </div>
-          ))}
-        </div>
-      )}
-      <PE2Picker P={P} />
-    </div>
-  );
-}
-
-/* The Light sheet: one title, the editor, one Done (everything saves as you go). */
-function PE2Sheet({ open, title, wide, onClose, children }) {
-  useEffect(() => {
-    if (!open) return;
-    const f = (e) => { if (e.key === "Escape") onClose(); };
-    window.addEventListener("keydown", f);
-    return () => window.removeEventListener("keydown", f);
-  }, [open]);
-  if (!open) return null;
-  /* On the site root, so the header and the edit bar sit under it. */
-  return ReactDOM.createPortal(
-    <div className="pe1-scrim" onClick={onClose}>
-      <style>{PE2_CSS}</style>
-      <div className={"pe1-sheet" + (wide ? " wide" : "")} role="dialog" aria-modal="true" aria-label={title} onClick={(e) => e.stopPropagation()}>
-        <div className="pe1-grab" aria-hidden="true" />
-        <h2 className="pe1-h">{title}</h2>
-        <div className="pe1-body">{children}</div>
-        <div className="pe1-foot"><button type="button" className="pp-done" onClick={onClose}><Check size={16} strokeWidth={2.6} /> Done</button></div>
+          );
+        })}
+        <span className="ff-acar-end" aria-hidden="true" />
       </div>
-    </div>,
-    document.querySelector(".ff") || document.body
+    </div>
   );
 }
 
@@ -202,40 +149,55 @@ function PE2Level({ r }) {
   );
 }
 
-function PE2AddProf({ onClick }) {
-  return <button type="button" className="pe2-add-prof" aria-label="Add a profession" onClick={onClick}><span className="pe2-add-ic" aria-hidden="true"><Plus size={26} strokeWidth={2.2} /></span></button>;
+function PE2AddProf({ on, onClick }) {
+  return <button type="button" className={"pe2-add-prof" + (on ? " on" : "")} aria-label="Add a profession" aria-expanded={on} aria-controls="pe2-prof-add" onClick={onClick}><span className="pe2-add-ic" aria-hidden="true"><Plus size={26} strokeWidth={2.2} /></span></button>;
 }
 
 /* Professions and Attributes on the edit page, laid out as the finished profile, empty ones as placeholder cards. */
 function PE2Overview({ records }) {
-  const [sheet, setSheet] = useState(null);
+  const P = usePE2Profs();
   const [attrOpen, setAttrOpen] = useState(null);
+  const [qualOpen, setQualOpen] = useState(null);
   const [openVen, setOpenVen] = useState(null);
   const [openProf, setOpenProf] = useState(null);
   const profs = rankedRecords(records.professions || []).filter(r => !r.hidden && !r.proposed);
+  /* adding: the category boxes are open (always while there are no professions, so they stay open while people pick). */
+  const [adding, setAdding] = useState(() => !profs.length);
+  useEffect(() => { if (!profs.length) setAdding(true); }, [profs.length]);
+  /* The tiles row always starts at the first tile, also when the "+" opens or closes the boxes. */
+  const profsRef = useRef(null);
+  useEffect(() => { const r = profsRef.current && profsRef.current.querySelector(".ff-pt21-row"); if (r) r.scrollLeft = 0; }, [adding]);
   const cats = PE2_ATTRS.filter(k => BASE_CATEGORIES[k]);
   /* v1.29 Experience (was Venues): venue records and the older Experience records together. */
   const venAll = [...(records.venues || []), ...(records.experience || [])];
   return (
     <>
       <style>{PE2_CSS}</style>
-      <section className="ff-pp ff-pp21 pp-sec" aria-labelledby="pe2-profs-h">
+      <section ref={profsRef} className="ff-pp ff-pp21 pp-sec" aria-labelledby="pe2-profs-h">
         <div className="ff-pp-head"><h2 id="pe2-profs-h" className="ff-about-h">Professions</h2></div>
-        {profs.length
-          ? <ProfTiles21 items={profs} def={BASE_CATEGORIES.professions} onOpen={(r) => setOpenProf(r)} extra={(r) => <PE2Level r={r} />}
-              tail={<div role="listitem" className="ff-pt21-slot"><PE2AddProf onClick={() => setSheet("profs")} /></div>} />
-          : <div className="ff-pt21-row" role="list" aria-label="Professions"><div role="listitem" className="ff-pt21-slot"><PE2AddProf onClick={() => setSheet("profs")} /></div></div>}
+        {profs.length > 0 && (
+          <ProfTiles21 items={profs} def={BASE_CATEGORIES.professions} onOpen={(r) => setOpenProf(r)} extra={(r) => <PE2Level r={r} />} reorder top={FEATURE_LIMIT}
+            tail={<div role="listitem" className="ff-pt21-slot"><PE2AddProf on={adding} onClick={() => setAdding(!adding)} /></div>} />
+        )}
+        {(adding || !profs.length) && (
+          <div id="pe2-prof-add" className={"pe2-prof-add" + (profs.length ? " under" : "")} role="region" aria-label="Add a profession">
+            <PE2ProfCats P={P} />
+          </div>
+        )}
       </section>
       <section className="ff-pp ff-pp21 pp-sec" aria-labelledby="pe2-attr-h">
         <div className="ff-pp-head"><h2 id="pe2-attr-h" className="ff-about-h">Attributes</h2></div>
         <div className="ff-mrow ff-acar pe2-rail" role="list" aria-label="Attributes">
           {cats.map((k, ci) => {
+            if (k === "qualifications") return <PE2QualCard key={k} records={records.qualifications} openId={qualOpen} onOpen={(id) => { setQualOpen(id); if (id) setAttrOpen(null); }} />;
+            /* pb-typecards: Skills and Interests are typed straight onto their cards (type-cards.jsx). */
+            if (TYPECARD_CATS.includes(k)) return <TypeCards26 key={k} catKey={k} records={records[k] || []} tone={tierCls17(ci)} />;
             const def = BASE_CATEGORIES[k];
             const shown = rankedRecords(records[k] || []).filter(r => !r.hidden && !r.proposed);
             const empty = !shown.length;
             const on = attrOpen === k;
             return (
-              <button key={k} type="button" role="listitem" className={"ff-agrp " + (empty ? "pe2-agrp-empty" : tierCls17(ci)) + (on ? " pe2-agrp-on" : "")} aria-label={`Edit ${def.label}`} aria-expanded={on} aria-controls="pe2-attr-ed" onClick={() => setAttrOpen(on ? null : k)}>
+              <button key={k} type="button" role="listitem" className={"ff-agrp " + (empty ? "pe2-agrp-empty" : tierCls17(ci)) + (on ? " pe2-agrp-on" : "")} aria-label={`Edit ${def.label}`} aria-expanded={on} aria-controls="pe2-attr-ed" onClick={() => { setAttrOpen(on ? null : k); setQualOpen(null); }}>
                 <span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span>{!empty && <span className="ff-agrp-n">{shown.length}</span>}</span>
                 {empty ? <span className="pe2-empty-fill" aria-hidden="true" /> : <span className="ff-agrp-l">{shown.slice(0, 5).map(r => <span key={r.id}>{nbh21(r.name)}</span>)}</span>}
                 {shown.length > 5 && <span className="ff-agrp-more">{`+${shown.length - 5}`}</span>}
@@ -245,6 +207,7 @@ function PE2Overview({ records }) {
           })}
           <span className="ff-acar-end" aria-hidden="true" />
         </div>
+        {qualOpen && <PE2QualEditor records={records.qualifications} id={qualOpen} onDone={() => setQualOpen(null)} />}
         {/* pfc (Alex 03:29): the tapped card opens its editor here, in the page, as on the live FF Team site: the type box,
             then the entries as tiles; a tile opens its own editor under the row. No pop-up. */}
         {attrOpen && BASE_CATEGORIES[attrOpen] && (
@@ -263,9 +226,6 @@ function PE2Overview({ records }) {
           <ExperienceEditor29 items={venAll} onOpen={(r) => setOpenVen(r)} />
         </section>
       )}
-      <PE2Sheet open={!!sheet && !openVen && !openProf} title={PE2_TITLES[sheet] || ""} wide={sheet === "profs"} onClose={() => setSheet(null)}>
-        {sheet === "profs" && <PE2ProfEd />}
-      </PE2Sheet>
       <GenericAttributeCardCreator open={!!openProf} record={openProf} def={BASE_CATEGORIES.professions} category="professions" onClose={() => setOpenProf(null)} />
       <GenericAttributeCardCreator open={!!openVen} record={openVen} def={openVen && BASE_CATEGORIES[openVen.category]} category={openVen && openVen.category} onClose={() => setOpenVen(null)} />
     </>

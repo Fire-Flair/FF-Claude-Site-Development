@@ -102,7 +102,7 @@ Return JSON only: {"intro": "<the introduction>"}`;
 
 
 function aboutFacts(state) {
-  const p = state.profile, names = (cat, n) => withRanks(recsOf(p, cat).filter(r => !r.proposed && !r.hidden)).slice(0, n).map(e => e.r.name);
+  const p = state.profile, names = (cat, n) => withRanks(recsOf(p, cat).filter(r => !r.proposed && !r.hidden && !r.cv)).slice(0, n).map(e => e.r.name);
   const exp = withRanks(recsOf(p, "experience").filter(r => !r.proposed && !r.hidden)).slice(0, 4).map(e => [e.r.name, e.r.details && e.r.details.employer].filter(Boolean).join(" at "));
   return { firstName: String(p.name || "").split(" ")[0] || undefined, professions: names("professions", 5), skills: names("skills", 6), qualifications: names("qualifications", 5), experience: exp, languages: names("languages", 5), workLocations: covPlaces17(p).slice(0, 4).map(x => x.name), interests: names("interests", 4) };
 }

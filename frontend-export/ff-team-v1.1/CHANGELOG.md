@@ -4,7 +4,7 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
-## v1.40
+## v1.42
 
 Bookings, FF Party packages wording (Alex, 18 Nov 19:20). `src/components/team/bookings.jsx`, `src/components/party/terms-and-packages.jsx`.
 
@@ -12,6 +12,103 @@ Bookings, FF Party packages wording (Alex, 18 Nov 19:20). `src/components/team/b
 - Intro no longer says FireFlair sets the pay rate for each package: "Be your own boss. Sign up to the packages you want to deliver, or create your own. Every package shows what you earn before you sign up, and you deal directly with the client, with FireFlair here to support you. The rates are strong, so we expect strong work in return."
 - Term 1, How packages work: "A package is a fixed offer that clients book on FF Party. Every package shows what you earn before you sign up: FireFlair sets it on FireFlair packages, and you set it on your own. By signing up you agree to that amount."
 - Checked: `npm run check`, `npm run build`, Playwright at 390 and 1280 on all three tabs (cards unchanged: equal heights and gaps, no overflow, no console errors), terms in the Event brief and invoice.
+
+## v1.41
+
+Profile builder thread (18 Nov, about 19:40): Professions, Skills/Interests, Qualifications and Profile Card fitting. Merged over v1.40; nothing from other chats removed. Built from branches pb-professions, pb-typecards, pb-qualifications and pb-cardfit (all on GitHub). Published over live 1795030282-bffd (v1.40), index.html and manifest.json only (all other files kept). Artifact version 1795030434-a840. Built page saved as `live-v1.41-index.html`.
+
+Known for review: on Skills/Interests the top-three numbers mark the first three entries; with next-in-line fitting the card may show the 4th entry in place of one over the width, and that 4th entry has no number yet (pending Alex's feedback).
+
+### pb-professions
+
+Profile builder, Professions (Alex, 18 Nov 18:03, 18:59 and 19:19). Builder only; the display page is unchanged.
+
+- **No pop-up.** The Professions sheet is gone (`PE2Sheet`, `PE2ProfEd`, `PE2Picker`, `PE2Item` and their CSS deleted).
+- **No professions yet** (no CV, or a CV that gave none): a type box, then every category as a box the size of the
+  Attribute boxes (`.ff-agrp t-card` in the same `.ff-acar` rail), each listing its professions. Tap one to add it
+  (burgundy with a tick); tap again to remove it. Bar keeps its ranked ladder (Barback to Mixologist, a rising gold
+  bar per step); other categories are alphabetical. The rail scrolls across on phones and wraps from 700 px.
+  It stays open while they pick, with the chosen professions appearing as tiles above it.
+- **Professions already there:** the tiles, then a "+" box. The "+" opens the same type box and category boxes under
+  the row and turns into a burgundy close (x). Alex picked this flow (19:26); the "type" variant (type box with
+  suggestions, then a category picker) and its `PROF_ADD_MODE` switch were deleted. The tiles row always starts at the
+  first tile, also when the "+" opens or closes the boxes.
+- **Any profession:** typed ones that FireFlair can't place still get "Which category is ...?", now with Other.
+- **Length:** typed professions up to 60 characters (`PROF_MAX_LEN`); the boxes wrap between words. The Profile Card's
+  16-character rule is only for the card (an entry that doesn't fit is left off whole, never cut); not built here.
+- **Top three** (Alex 19:19): the first three professions (`FEATURE_LIMIT`) go onto the Profile Card, so the builder
+  marks them with a gold number tab (1, 2, 3) on the tile's top edge and a stronger gold border. The tiles can now be
+  dragged into order (handle bottom right; arrow keys work too). Shared marking for other sections: `.ff-top3` on
+  the entry's wrapper plus a `.ff-top3-n` child holding the number (CSS at the end of `src/styles/prof21.css`).
+  `ProfTiles21` takes new `reorder` and `top` props; the display page passes neither.
+- Files: `src/components/team/profile-edit-p2.jsx`, `src/components/team/attribute-cards.jsx` (`ProfTiles21` props
+  only), `src/styles/profile-edit-p2.css`, `src/styles/prof21.css`.
+### pb-typecards
+
+- **Skills and Interests are typed straight onto their cards** in the profile builder's Attributes rail (new
+  `src/components/team/type-cards.jsx`, `TypeCards26`; CSS `src/styles/type-cards.css`). The old tap-to-open editor
+  (TypeBox21 + tiles) is no longer used for these two; Qualifications is unchanged.
+- A card holds 5 entries. The last card has the type line; when it fills, a new empty card appears and the cursor moves onto it.
+  Enter or a comma adds an entry (pasting a comma list adds each one); Backspace in an empty line removes the last entry;
+  tapping an entry opens it to edit, with earlier / later / remove buttons. Mouse and pen can drag entries to reorder.
+- **Top three:** the first 3 entries in order go on the Profile Card; they carry a small gold number. A top-three entry over
+  16 characters shows its number hollow with a dashed edge (it can't go on the card).
+- Profile entries may be up to 60 characters (wrap between words; one long word shrinks). The Profile Card
+  (`PlayerFace17`) leaves out a Skill or Interest over 16 characters whole, never cut and not replaced.
+- Data shape unchanged: ordered records in `profile.records.skills` / `.interests`. Order is `rankedRecords()` (rank, then
+  list order); moves dispatch `REC_MOVE { id, to }`, which rewrites ranks from positions. New entries join the end.
+  CV imports fill the cards 5 at a time (no cap).
+- Title Case: `CAP_SMALL17` now also keeps an, or, at, by, upon and with lower case.
+- The Profile Card editor's Skills / Interests chips: 60-character limit, Title Case on add, neutral placeholders
+  ("Skill", "Interest") in place of instruction text.
+- The public profile is unchanged: it already shows 5 per card and never an empty card.
+### pb-qualifications
+
+Qualifications in Attributes, on the left (Alex, 18 Nov 18:59 and 19:19). No version bump.
+
+- **Builder:** Qualifications is the first (left-hand) Attributes card (`PE2_ATTRS` order). The card is typed onto: one
+  line at its foot, Enter adds the entry (`QUAL_MAX_CHARS = 60`; names wrap between words, never split). Tapping an
+  entry opens its editor under the rail (no pop-up): details, up to 4 pictures (`record.media`) and one document
+  (`record.document`). The document slot is new in `EntryEditor21` for any category whose def has `"document"` (only
+  Qualifications today); it reuses the existing record shape and file rules from `GenericAttributeCardCreator`.
+  Empty cards still show on the builder so people can type onto them.
+- **CV = a qualification:** uploading a CV in Let's get started (`CVUpload17`) now also saves it as the Qualification
+  record `{ name: "CV", cv: true, document }` (`pbqSaveCV`, same record `CVPanel` makes; a new upload replaces it).
+  Deleting the CV entry (trash in its editor) takes it off the public profile.
+- **Public profile:** empty cards are never shown. Qualifications is the left-hand card and shows only with at least one
+  entry; the CV counts. Anyone can open the CV from the card (and from View all) while `SHOW_CV_PUBLIC = true`
+  (src/components/team/pb-qualifications.jsx); set it false to keep the CV off public profiles. Entries with a document or
+  pictures show small marks after the name. Certificates are not openable by visitors (file name in View all only).
+- The CV is left out of the FF AI introduction and About-me facts (it is a file, not a qualification name).
+- Qualifications are not on the Profile Card (unchanged).
+- **Back end (Griffy):** each entry is card-section data (`POST|PATCH|DELETE /api/user/card/sections/:sectionId/data`).
+  Needed per entry: `name` (<= 60), `description`, `media[]` (<= 4 images, S3), `document` (one file: name, size, type,
+  url), `cv: boolean`, `hidden`. The repo does not document the per-entry media field; the prototype stores data URLs.
+  The CV file must be served to visitors at a public URL (`document.url`; the front end prefers it over `dataUrl`), and
+  removed from storage when the member deletes the CV entry.
+- Files: new `src/components/team/pb-qualifications.jsx`, `src/styles/pb-qualifications.css` (manifest after
+  profile-edit-p2.jsx); small edits in profile-edit-p2.jsx, attribute-cards.jsx (one line in `EntryEditor21`),
+  public-profile.jsx (`attributesOf` order and CV filter, `AttrGroups`, `ExpandedAttrs`), introductions.jsx,
+  creator-media.jsx, profile-builder.jsx (`CVUpload17`).
+
+### pb-cardfit
+
+- Profile Card (large share card and small site card): every row now shows the member's "top three" (Professions, Skills,
+  Interests, Locations). If a top-three entry doesn't fit, it is left out whole and the next entry in the member's order that fits
+  takes its place, so the row still shows up to three. `pc17Fit` walks each row's ordered list (`PC17_PER_ROW = 3`); large card
+  rows may run to two lines, the small card stays one line. If the large card's box would reach the footer, the row with the
+  most entries on two lines is re-walked on one line. Never truncates, never splits a word.
+- `meAsStaff` gives the card a `cardLists` pool (all visible professions/skills/interests in order); `professions`/`skills`/`interests` stay top three for everything else.
+- Locations on the card: town or city only, each once (`cardPlaces17` in src/utils/text17.js): "Montreal, Quebec, Canada" -> Montreal;
+  "St Albans, UK" + "London, UK" -> St Albans, London. A name with no comma (UK, Scotland, International) stays as it is.
+  Card only for now; the profile page is unchanged.
+- Capitals: "upon", "under", "le", "la", "de", "du", "en", "sur" stay lower case inside names ("Newcastle upon Tyne").
+
+
+## v1.40
+
+- Home questions ("Can FF Team help you?", Alex 18 Nov): back to Alex's original questions from v16.66, in a new order. 1 "Do you work events, or would you like to?" (Yes, I work events / I'd like to), 2 "Do you work in hospitality?" (Yes, it's my career / Not yet, but I'd like to), 3 "What would help you most right now?" unchanged. The Launch Challenge question and "I'd like shifts around my main job" are no longer in the box; "No, I'm here for something else" is left out because it only led to FF Party (Alex chose to drop it). `components/home/growth-and-terms.jsx`.
+- Also repairs the live page: version 1795029777-6437 (v1.39) did not load (SyntaxError) because every "VER" in the published file had been replaced with `version:"1.39"` (e.g. `VERIFICATION_LEVELS`, `FF_LOGO_SILVER`, `FI_VERSION`); this publish is built from GitHub, so that is gone. It also carries the palette tokens from d9face0, which were on GitHub but not yet live. Check, build and phone/desktop screenshots of the questions done (no journey-test script in this repo). Artifact version 1795030282-bffd.
 
 ## v1.39 (homepage)
 
