@@ -37,6 +37,17 @@ This line is the FF Team front-end export ("FF Team version 1.1. Final"), not th
 - Changelog: `frontend-export/ff-team-v1.1/CHANGELOG.md` (starts at `## v1.1`; the newest heading is the version the
   page shows). Leave the root `CHANGELOG.md` to the prototype. Point releases go 1.12, 1.13 … after 1.11.
 - Strip by deletion, never by flags. Demo profiles stay in one removable file (`DEMO_SEED`).
+- **Several chats update this artifact (Alex, 18 Nov 16:31). Before every update:**
+  1. **Check the prototype:** `get_artifact` on slug `a139e698-9bc3-47b1-93d6-b2e3c541732e` and compare its live version
+     with the newest "Artifact version …" recorded in the changelog. If the live version isn't recorded on GitHub,
+     someone published without pushing: stop and find their code (ask Alex) before you publish over it.
+  2. **Merge:** `git fetch origin ff-team-v1.1 && git merge origin/ff-team-v1.1` into your branch (keep every changelog
+     entry; yours goes on top with the next number).
+  3. **Check the update:** `npm run check`, `npm run build`, the journey tests, and look at screenshots.
+  4. Then publish with `base_version` = the live version, record the artifact version in the changelog, and push to
+     `ff-team-v1.1` straight away, so the next chat merges your work.
+- **Who changes what:** the home page (`#/ff-team`) is changed only in Alex's homepage thread. Other pages are updated
+  in their own separate threads. Don't edit another thread's page.
 
 ## Versions
 
