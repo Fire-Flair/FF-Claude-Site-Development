@@ -36,6 +36,12 @@
   --color-ivory: #FFFCF4;
   --color-champagne: #EADBB4;
   --color-gold-leaf: #EDD58F;
+  /* home2 (Alex, 18 Nov 15:29): burgundy pillars and the plum bookings box */
+  --color-ox-hi: #6E1A2C;
+  --color-ox-deep: #4A0E1A;
+  --color-plum: #4E1E4A;
+  --color-plum-hi: #5E2759;
+  --color-plum-dk: #301230;
 
   --font-display: 'Cinzel', 'Optima', 'Palatino Linotype', Georgia, serif;
   /* v1.01: the italic serif (Cormorant Garamond) is gone - it was hard to

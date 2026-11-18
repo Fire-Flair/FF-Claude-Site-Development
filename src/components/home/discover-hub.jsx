@@ -405,11 +405,11 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
       id: "ff-dx-h",
       /* chal (Alex, 18 Nov 03:13): on FF Team a quieter "What is FF Team?" so the hero's welcome leads. */
       className: kind === "team" ? "ff-dx-h ff-dx-q" : "ff-h1 ff-dx-h"
-    /* home-update (Alex, 18 Nov 14:18): the title is "FF Team is built for event and hospitality professionals", with a
-       smaller tagline below it. */
-    }, kind === "team" ? "FF Team is built for event and hospitality professionals" : "Discover FireFlair"), kind === "team" && React.createElement("p", {
+    /* home-update / home2 (Alex, 18 Nov 15:29): the title is "FF Team is for event and hospitality professionals", with a
+       smaller subheading below it. */
+    }, kind === "team" ? "FF Team is for event and hospitality professionals" : "Discover FireFlair"), kind === "team" && React.createElement("p", {
       className: "ff-dx-tag"
-    }, "Look below and see how it all works."), React.createElement("span", {
+    }, "Find out how it works"), React.createElement("span", {
       className: "ff-dx-sent",
       ref: sent,
       "aria-hidden": "true"

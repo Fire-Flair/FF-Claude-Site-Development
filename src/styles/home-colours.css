@@ -1,5 +1,5 @@
 /* home-colours: the FF Team home in ivory and burgundy (Alex, 18 Nov 14:53), built on option 1 "Ivory and wine".
-   Every colour on the front screen matches: ivory, burgundy, gold, champagne.
+   Every colour on the front screen matches: ivory, burgundy, gold, champagne; plum for the bookings box (home2).
    Switch: FF_HOME_COLOUR in components/home/team-home.jsx (4 = this look, the default; 0 = the v1.18 look).
    Scoped to .ff-home-c4 on the home root (.ff-home.ff-hf22). Layout, wording and photos are unchanged. */
 
@@ -9,44 +9,64 @@
 .ff .ff-hf22 .ff-hero-sub101 .ff-hl { display:inline-block; }
 @media (min-width:900px) { .ff .ff-hf22.ff-home-c4 .ff-hero-sub101 { font-size:clamp(19px,1.7vw,23px); } }
 
-/* ---------- Hero lighting: champagne spotlights in place of the violet beams ----------
-   Same shape, position, blur and fade as v17.32 (p12.css): from the bottom-left and bottom-right corners, shooting
-   upwards and spreading slightly. Only the colour changes. The burgundy centre, photo, card shine and easel stay. */
-.ff .ff-hf22.ff-home-c4 .ff-hero18::after {
-  background:
-    conic-gradient(from 0deg at 0% 100%, rgba(255,246,222,0) 0deg, rgba(255,244,214,.85) 7deg, rgba(234,219,180,.5) 15deg, rgba(234,219,180,0) 27deg, rgba(234,219,180,0) 360deg),
-    conic-gradient(from 333deg at 100% 100%, rgba(234,219,180,0) 0deg, rgba(234,219,180,.5) 12deg, rgba(255,244,214,.85) 20deg, rgba(255,246,222,0) 27deg, rgba(255,246,222,0) 360deg); }
-
-/* ---------- "What is FF Team?" pillars: ivory with a burgundy border ---------- */
-.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile,
-.ff .ff-hf22.ff-home-c4 .ff-dx.is-open .ff-dx-tile.on { background:linear-gradient(160deg,var(--color-ivory,#FFFCF4) 0%,var(--color-sand,#F3EAD5) 100%); color:var(--color-text,#1A1712); }
-.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile { border:1.5px solid var(--color-ox,#5C1220) !important; box-shadow:0 14px 24px -18px rgba(92,18,32,.38) !important; }
-.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .tx b { color:var(--color-ox,#5C1220); }
-.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .tx small { color:var(--color-text-2,#4A443A); }
-.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .chev { color:var(--color-ox,#5C1220); background:var(--color-ox-tint,#F7E9EC); border-color:rgba(92,18,32,.55); }
-.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile.on .chev { color:var(--color-ivory,#FFFCF4); background:var(--color-ox,#5C1220); border-color:var(--color-ox,#5C1220); }
-/* open: the tile and its box are one burgundy outline; the box keeps its cream fill */
-.ff .ff-hf22.ff-home-c4 .ff-dx.is-open .ff-dx-tile.on { border:1.5px solid var(--color-ox,#5C1220) !important; border-bottom:0 !important; box-shadow:none !important; }
-.ff .ff-hf22.ff-home-c4 .ff-dx-panel { border-color:var(--color-ox,#5C1220) !important; }
-.ff .ff-hf22.ff-home-c4 .ff-dx-panel::before {
-  background:linear-gradient(90deg,var(--color-ox,#5C1220) 0,var(--color-ox,#5C1220) calc(var(--tx,0px) + 1.5px),transparent calc(var(--tx,0px) + 1.5px),transparent calc(var(--tx,0px) + var(--tw,0px) + 1.5px),var(--color-ox,#5C1220) calc(var(--tx,0px) + var(--tw,0px) + 1.5px)); }
-.ff .ff-hf22.ff-home-c4 .ff-dx-panel::after {
-  background:
-    radial-gradient(circle at 0 0, transparent calc(var(--fl) - 1.5px), var(--color-ox,#5C1220) calc(var(--fl) - 1.5px), var(--color-ox,#5C1220) var(--fl), #EAE0C3 calc(var(--fl) + .5px)) calc(var(--tx,0px) - var(--fl) + 1.5px) 100% / var(--fl) var(--fl) no-repeat,
-    radial-gradient(circle at 100% 0, transparent calc(var(--fq) - 1.5px), var(--color-ox,#5C1220) calc(var(--fq) - 1.5px), var(--color-ox,#5C1220) var(--fq), #EAE0C3 calc(var(--fq) + .5px)) calc(var(--tx,0px) + var(--tw,0px) + 1.5px) 100% / var(--fq) var(--fq) no-repeat; }
-@media (min-width:760px) {
-  /* wide screens: the photo fades into the tile's sand */
-  .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .ph::after { background:linear-gradient(180deg,rgba(255,252,244,0) 32%,rgba(250,244,229,.86) 60%,var(--color-sand,#F3EAD5) 94%); }
-  .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile:not(.on) .chev { background:rgba(255,252,244,.9); }
+/* ---------- Hero: no lighting (Alex, 18 Nov 15:29) ----------
+   The champagne beams are gone so the photo looks natural. The burgundy panel behind the words, the easel, the
+   Profile Card and its shine, the crops, the title, the line and the button are unchanged. */
+.ff .ff-hf22.ff-home-c4 .ff-hero18::after { content:none !important; display:none !important; background:none !important; }
+/* wide screens: the words sit over the photo's left, so a soft dark fade sits behind them only (for AA contrast) */
+@media (min-width:900px) {
+  .ff .ff-hf22.ff-home-c4 section#ff-hero.ff-hero18::after { content:"" !important; display:block !important; position:absolute; inset:0; z-index:1; pointer-events:none; border-radius:inherit;
+    mix-blend-mode:normal !important; filter:none !important; -webkit-mask-image:none !important; mask-image:none !important;
+    background:linear-gradient(90deg,rgba(24,6,11,.78) 0%,rgba(24,6,11,.66) 30%,rgba(24,6,11,.3) 42%,rgba(24,6,11,0) 52%) !important; }
 }
 
-/* ---------- "FF Team is built for getting you bookings": gold leaf with a burgundy title ---------- */
-.ff .ff-hf22.ff-home-c4 .ff-hb23-box { background:linear-gradient(150deg,#F7EAC2 0%,var(--color-gold-leaf,#EDD58F) 55%,#E2C677 100%); border-color:var(--color-gold-mid,#B08D2A); color:var(--color-text,#1A1712); box-shadow:0 18px 30px -22px rgba(126,97,29,.6); }
-.ff .ff-hf22.ff-home-c4 .ff-hbc-btn .ff-hb23-t { color:var(--color-ox,#5C1220); }
-.ff .ff-hf22.ff-home-c4 .ff-hbc-btn .ff-hb23-t::before { background:radial-gradient(circle at 35% 30%,#8E2A3B,var(--color-ox,#5C1220) 60%,var(--color-ox-dk,#37070F)); box-shadow:inset 0 0 0 2px rgba(55,7,15,.5), 0 1px 2px rgba(0,0,0,.18); }
-.ff .ff-hf22.ff-home-c4 .ff-hbc-st .lb { color:var(--color-text,#1A1712); }
-.ff .ff-hf22.ff-home-c4 .ff-hbc-arr { color:var(--color-ox,#5C1220); }
-.ff .ff-hf22.ff-home-c4 .ff-hbc-btn:hover { background:rgba(92,18,32,.05); }
-.ff .ff-hf22.ff-home-c4 .ff-hbc-btn:focus-visible { outline-color:var(--color-ox,#5C1220); }
-.ff .ff-hf22.ff-home-c4 .ff-hb23-body .ff-label { color:var(--color-ox,#5C1220); }
-.ff .ff-hf22.ff-home-c4 .ff-hb23-body .ff-hb17-row .arr { color:var(--color-ox,#5C1220); }
+/* ---------- "What is FF Team?" pillars: burgundy with champagne (Alex, 18 Nov 15:29) ----------
+   Burgundy tiles, champagne borders, ivory titles, champagne text and chevrons. The open box is burgundy with a
+   champagne outline; the cards inside it stay ivory with champagne edges. */
+.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile,
+.ff .ff-hf22.ff-home-c4 .ff-dx.is-open .ff-dx-tile.on { background:linear-gradient(160deg,var(--color-ox-hi,#6E1A2C) 0%,var(--color-ox,#5C1220) 55%,var(--color-ox-deep,#4A0E1A) 100%); color:var(--color-ivory,#FFFCF4); }
+.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile { border:1.5px solid var(--color-champagne,#EADBB4) !important; box-shadow:0 14px 24px -18px rgba(55,7,15,.6) !important; }
+.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .tx b { color:var(--color-ivory,#FFFCF4); }
+.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .tx small { color:var(--color-champagne,#EADBB4); }
+.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .chev { color:var(--color-champagne,#EADBB4); background:rgba(234,219,180,.12); border-color:rgba(234,219,180,.7); }
+.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile.on .chev { color:var(--color-ox,#5C1220); background:var(--color-champagne,#EADBB4); border-color:var(--color-champagne,#EADBB4); }
+.ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile:focus-visible { outline:2px solid var(--color-champagne,#EADBB4); outline-offset:3px; }
+/* open: the tile and its box are one champagne outline on burgundy */
+.ff .ff-hf22.ff-home-c4 .ff-dx.is-open .ff-dx-tile.on { border:1.5px solid var(--color-champagne,#EADBB4) !important; border-bottom:0 !important; box-shadow:none !important;
+  background:linear-gradient(180deg,var(--color-ox-hi,#6E1A2C) 0%,var(--color-ox,#5C1220) 100%) !important; }
+.ff .ff-hf22.ff-home-c4 .ff-dx-panel { --pf:var(--color-ox,#5C1220); border-color:var(--color-champagne,#EADBB4) !important; color:var(--color-ivory,#FFFCF4);
+  background:linear-gradient(180deg,var(--color-ox,#5C1220) 0,var(--color-ox,#5C1220) calc(100% - 240px),var(--color-ox-deep,#4A0E1A) 100%) !important;
+  box-shadow:0 18px 30px -24px rgba(55,7,15,.7) !important; }
+.ff .ff-hf22.ff-home-c4 .ff-dx-panel::before {
+  background:linear-gradient(90deg,var(--color-champagne,#EADBB4) 0,var(--color-champagne,#EADBB4) calc(var(--tx,0px) + 1.5px),transparent calc(var(--tx,0px) + 1.5px),transparent calc(var(--tx,0px) + var(--tw,0px) + 1.5px),var(--color-champagne,#EADBB4) calc(var(--tx,0px) + var(--tw,0px) + 1.5px)) !important; }
+.ff .ff-hf22.ff-home-c4 .ff-dx-panel::after {
+  background:
+    radial-gradient(circle at 0 0, transparent calc(var(--fl) - 1.5px), var(--color-champagne,#EADBB4) calc(var(--fl) - 1.5px), var(--color-champagne,#EADBB4) var(--fl), var(--color-ox,#5C1220) calc(var(--fl) + .5px)) calc(var(--tx,0px) - var(--fl) + 1.5px) 100% / var(--fl) var(--fl) no-repeat,
+    radial-gradient(circle at 100% 0, transparent calc(var(--fq) - 1.5px), var(--color-champagne,#EADBB4) calc(var(--fq) - 1.5px), var(--color-champagne,#EADBB4) var(--fq), var(--color-ox,#5C1220) calc(var(--fq) + .5px)) calc(var(--tx,0px) + var(--tw,0px) + 1.5px) 100% / var(--fq) var(--fq) no-repeat !important; }
+/* words straight on the burgundy: ivory headings, champagne text */
+.ff .ff-hf22.ff-home-c4 .ff-dx-panel > .ff-dx-intro h3,
+.ff .ff-hf22.ff-home-c4 .ff-dx-panel > .ff-dx-intro h2 { color:var(--color-ivory,#FFFCF4); }
+.ff .ff-hf22.ff-home-c4 .ff-dx-panel > .ff-dx-intro p { color:var(--color-champagne,#EADBB4); }
+/* the cards inside: ivory with champagne edges */
+.ff .ff-hf22.ff-home-c4 .ff-dx-panel .ff-cta17 li,
+.ff .ff-hf22.ff-home-c4 .ff-dx-panel .ff-ps21 { border-color:var(--color-champagne,#EADBB4) !important; box-shadow:0 16px 26px -22px rgba(20,4,8,.8) !important; }
+@media (min-width:760px) {
+  /* wide screens: the photo fades into the tile's burgundy */
+  .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .ph::after { background:linear-gradient(180deg,rgba(92,18,32,0) 32%,rgba(84,16,30,.86) 60%,var(--color-ox-deep,#4A0E1A) 94%); }
+  .ff .ff-hf22.ff-home-c4 .ff-dx.is-open .ff-dx-tile.on .ph::after { background:linear-gradient(180deg,rgba(92,18,32,0) 32%,rgba(92,18,32,.86) 60%,var(--color-ox,#5C1220) 94%); }
+  .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile:not(.on) .chev { background:rgba(74,14,26,.82); }
+}
+
+/* ---------- "FF Team is built for getting you bookings": plum with champagne (Alex, 18 Nov 15:29) ----------
+   No line before the title (the box frames it). Ivory labels, champagne title, arrows and chevron. */
+.ff .ff-hf22.ff-home-c4 .ff-hb23-box { background:linear-gradient(150deg,var(--color-plum-hi,#5E2759) 0%,var(--color-plum,#4E1E4A) 52%,var(--color-plum-dk,#301230) 100%); border-color:rgba(234,219,180,.6); color:var(--color-ivory,#FFFCF4); box-shadow:0 18px 30px -22px rgba(48,18,48,.75); }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-btn .ff-hb23-t { color:var(--color-champagne,#EADBB4); }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-btn .ff-hb23-t::before { content:none !important; display:none !important; }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-st .lb { color:var(--color-ivory,#FFFCF4); }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-arr { color:var(--color-champagne,#EADBB4); }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-ch { color:var(--color-champagne,#EADBB4); background:rgba(234,219,180,.12); border-color:rgba(234,219,180,.7); }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-btn:hover { background:rgba(234,219,180,.06); }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-btn:hover .ff-hbc-ch { background:rgba(234,219,180,.22); }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-btn:focus-visible { outline-color:var(--color-champagne,#EADBB4); }
+.ff .ff-hf22.ff-home-c4 .ff-hb23-body .ff-label { color:var(--color-champagne,#EADBB4); }
+.ff .ff-hf22.ff-home-c4 .ff-hb23-body .ff-hb17-row .arr { color:var(--color-champagne,#EADBB4); }

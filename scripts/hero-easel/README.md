@@ -8,3 +8,9 @@ How the home hero photo was made from photo-library rb04 (IMG_8273). Kept so the
 
 The scripts read the original from a local path; point them at `photo-library/originals/rb04-vooshka-rb-wedding.webp`.
 If the hero photo changes, measure the four board corners again and update both constants.
+
+## home2 (18 Nov): natural photo
+
+Alex asked for no lighting on the hero. `natural.py` replaces `grade.py`: the same crop and card geometry, with only an
+even colour balance (no violet lamps, golden spotlight, beam or vignette). Saved as 1800×850 and 900×425 WebP
+(`hero` / `hero_sm` in `src/shell/ff-img.json`).
