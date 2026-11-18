@@ -291,10 +291,56 @@ function usePkcEven17(key) {
   }, [key]);
 }
 
-function BkPkgCard17({ sv, on, onClick }) {
-  const p = PKG_BY17[sv.id] || {};
-  const ref = useRef(null);
-  const pay = PAY17[sv.id];
+/* pkc-team (Alex, 18 Nov 18:21): on FF Team every package is written to the bartender who signs up ("you", the
+   professional; "the client", the host). FF Party keeps the client-facing catalogue wording in PKG_CAT17. The face
+   carries no shopping list; it sits in the Event brief and invoice inside Details, with the five package terms. */
+const PKC_TEAM17 = {
+  svc_masterclass: {
+    line: "Teach guests something extraordinary.",
+    provide: "Your cocktail expertise, professional-grade equipment and the confidence to teach a group",
+    ideal: "Hen and stag parties, team socials and celebrations",
+    brief: "As an expert mixologist, you teach, demonstrate and guide guests as they create and personalise their own cocktails, using your professional-grade cocktail equipment.",
+    points: ["Teach and demonstrate as the expert mixologist", "Guide guests to create and personalise their own cocktails", "Make bespoke and off-menu drinks when guests ask"],
+    shop: "You give the client a shopping list for their menu, and the client buys everything on it.",
+    cond: "One professional: you. Ingredients and glassware are agreed with the client and are not part of the package. The number of cocktails depends on the group." },
+  svc_flair: {
+    line: "Serve cocktails with your performance.",
+    provide: "Cocktail service skills and a genuine flair performance",
+    ideal: "Launches, weddings and parties that want a show",
+    brief: "You prepare and serve the cocktails the client chooses, and perform flair for their guests while you serve.",
+    points: ["Serve the client's chosen cocktails", "Perform flair for their guests", "Agree the length of your performance with the client"],
+    shop: "You give the client a shopping list for their menu, and the client buys everything on it.",
+    cond: "One professional: you. Ingredients, glassware and ice are agreed with the client and are not part of the package." },
+  svc_mixology: {
+    line: "Serve their favourite cocktails, expertly.",
+    provide: "Cocktail skills and basic cocktail equipment",
+    ideal: "Weddings, launches and celebrations",
+    brief: "You prepare and serve the cocktails the client chooses for their menu, using your basic cocktail equipment.",
+    points: ["Prepare the client's chosen cocktail menu", "Serve their guests with care and skill", "Bring and use your basic cocktail equipment"],
+    shop: "You give the client a shopping list for their menu, and the client buys everything on it.",
+    cond: "One professional: you. Ingredients, glassware and ice are agreed with the client and are not part of the package." },
+  svc_bartending: {
+    line: "Be the bartender they chose.",
+    provide: "Professional service and basic bartending equipment",
+    ideal: "House parties, birthdays and private events",
+    brief: "The client chooses you as their bartender. You serve drinks at their event, using your basic bartending equipment.",
+    points: ["Serve drinks professionally at the event", "Bring your basic bartending equipment", "Look after the client and their guests"],
+    shop: "",
+    cond: "One professional: you. Drinks, glassware and ice are agreed with the client and are not part of the package." },
+  svc_staffing: {
+    line: "Join the event as a skilled professional.",
+    provide: "Hospitality skills and the confidence to work solo",
+    ideal: "Business and private events, venues and festivals",
+    brief: "You work solo as a hospitality professional and look after the client and their guests.",
+    points: ["One professional per package: you", "Work solo and confidently", "Look after the client and their guests"],
+    shop: "",
+    cond: "Your role and hours are agreed and confirmed before the booking." },
+};
+/* The ribbon icon follows the tab: a cocktail glass for Bar, music for Entertainment, a concierge bell for Services. */
+const PKC_ICO17 = { bar: lucideIcon("Martini"), ent: lucideIcon("Music"), svc: lucideIcon("ConciergeBell") };
+
+/* The face's text never splits a word: a line that doesn't fit shrinks. */
+function usePkcFitAll17(ref, key) {
   React.useLayoutEffect(() => {
     const root = ref.current; if (!root) return;
     const fit = () => root.querySelectorAll(".fit").forEach(el => {
@@ -307,18 +353,25 @@ function BkPkgCard17({ sv, on, onClick }) {
     let ro = null; if (window.ResizeObserver) { ro = new ResizeObserver(fit); ro.observe(root); }
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit).catch(() => {});
     return () => { root.removeEventListener("toggle", tg, true); if (ro) ro.disconnect(); };
-  }, [sv.id, on]);
-  /* pkc-tone (Alex, 18 Nov 18:12): the bartender reads what they provide (the package's capability), not what the client gets. */
-  const rows = [[S17I.Sparkles, "You provide", p.capability || p.includes], [S17I.Users, "Ideal for", p.ideal], [S17I.Clock, "Duration", p.durationLabel]].filter(r => r[2]);
-  /* bk5 (Mr G 03:03): same face as the profile Packages tab (FF Party ribbon, no "Bar"), compact, 5:7 portrait. */
-  const line = p.headline || p.tagline || sv.tagline;
+  }, [key]);
+}
+
+function BkPkgCard17({ sv, on, onClick }) {
+  const p = PKG_BY17[sv.id] || {};
+  const t = PKC_TEAM17[sv.id] || {};
+  const ref = useRef(null);
+  const pay = PAY17[sv.id];
+  usePkcFitAll17(ref, sv.id + (on ? "1" : "0"));
+  const Ico = sv.id === "svc_staffing" ? PKC_ICO17.svc : PKC_ICO17.bar;
+  const rows = [[S17I.Sparkles, "You provide", t.provide || p.capability || p.includes], [S17I.Users, "Ideal for", t.ideal || p.ideal], [S17I.Clock, "Duration", p.durationLabel]].filter(r => r[2]);
+  const brief = [["Package", p.name || sv.title], ["Your role", p.role], ["Duration", p.durationLabel], ["What you do", t.brief || p.description], t.shop ? ["Shopping list", t.shop] : null].filter(r => r && r[1]);
   return (
     <div ref={ref} className={`ff-pkc cmp${on ? " sel" : ""}`} data-pk17={sv.id}>
-      <span className="ff-pkc-rb"><S17I.Sparkles size={12} /> {sv.site || "FF Party"}</span>
+      <span className="ff-pkc-rb"><Ico size={13} strokeWidth={1.8} /> {sv.site || "FF Party"}</span>
       <span className="ff-pkc-logo"><FFLogo size={34} tier="gold" /></span>
       <div className="ff-pkc-hd">
         <h5 className="ff-pkc-ti fit">{p.name || sv.title}</h5>
-        {line && <p className="ff-pkc-tg fit">{line}</p>}
+        {(t.line || p.headline) && <p className="ff-pkc-tg fit">{t.line || p.headline}</p>}
       </div>
       <div className="ff-pkc-rows">
         {rows.map(([Ic, l, v]) => (
@@ -331,10 +384,17 @@ function BkPkgCard17({ sv, on, onClick }) {
       <details className="ff-pkc-dt">
         <summary><span>Details</span><S17I.ChevronDown size={18} strokeWidth={2} /></summary>
         <div className="in">
-          {p.description && <p>{pkcNoBreak17(p.description)}</p>}
-          {(p.points || []).length > 0 && <ul>{p.points.map(x => <li key={x}>{pkcNoBreak17(x)}</li>)}</ul>}
-          {p.capability && p.includes && <div><i>The client gets</i><p>{pkcNoBreak17(p.includes)}</p></div>}
-          {p.conditions && <p className="cond">{pkcNoBreak17(p.conditions)}</p>}
+          <div className="pv-inv ff-pkc-inv" role="group" aria-label="Event brief and invoice">
+            <div className="hd"><b>Event brief and invoice</b></div>
+            <dl>{brief.map(([k, v]) => <div key={k} className={String(v).length > 40 ? "lg" : ""}><dt>{k}</dt><dd>{pkcNoBreak17(v)}</dd></div>)}</dl>
+            {(t.points || []).length > 0 && <ul>{t.points.map(x => <li key={x}>{pkcNoBreak17(x)}</li>)}</ul>}
+            {(t.cond || p.conditions) && <p className="cond">{pkcNoBreak17(t.cond || p.conditions)}</p>}
+            {pay != null && <div className="tot"><span>You earn</span><b>{pkgPayLabel17(sv.id)}</b></div>}
+          </div>
+          <div className="ff-pkc-tcs">
+            <h4>Terms and conditions</h4>
+            <ol>{PARTY_PKG_TERMS17.map((x, i) => <li key={x.k}><span><b>{i + 1}</b>{x.label}</span><p>{x.text}</p></li>)}</ol>
+          </div>
         </div>
       </details>
       <div className="ff-pkc-ft">
@@ -399,7 +459,7 @@ function BkPkgSoon17({ pk = PK_SOON17.bar[0], own = false }) {
   };
   return (
     <div ref={ref} className={`ff-pkc cmp ff-pkc-new${on ? " sel" : ""}`} data-pk17={(own ? "create-" : "new-") + pk.id}>
-      <span className="ff-pkc-rb"><S17I.Sparkles size={12} /> FF Party</span>
+      <span className="ff-pkc-rb">{React.createElement(PKC_ICO17[own ? "bar" : (PK_SOON17.ent.includes(pk) ? "ent" : PK_SOON17.svc.includes(pk) ? "svc" : "bar")], { size: 13, strokeWidth: 1.8 })} FF Party</span>
       <span className="ff-pkc-logo"><FFLogo size={34} tier="gold" /></span>
       <div className="ff-pkc-hd">
         <h5 className="ff-pkc-ti fit">{title}</h5>
