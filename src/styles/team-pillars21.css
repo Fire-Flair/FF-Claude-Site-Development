@@ -264,3 +264,39 @@
 .ff .ff-cta17.nb .cd b { word-break:keep-all; overflow-wrap:normal; hyphens:none; text-wrap:balance; padding-bottom:9px; }
 @media (max-width:420px) { .ff .ff-dx-panel .ff-cta17.nb .cd b, .ff .ff-ip21 .ff-cta17.nb .cd b { font-size:11.5px; padding-left:6px; padding-right:6px; } }
 .ff .ff-ip21-more .c { word-break:keep-all; overflow-wrap:normal; hyphens:none; }
+
+/* ---------- pillar-dropdowns (Alex, 18 Nov 16:07): the 1-2-3 as drop-downs inside an open FF Team pillar ----------
+   Each step is a box: rosé picture well (multiply, as the v1.24 cards), gold number, title, burgundy squircle chevron.
+   It opens (grid rows 0fr -> 1fr) to the step's full section, which sits flat inside the box. */
+.ff .ff-st21 { display:flex; flex-direction:column; gap:10px; margin:14px 0 4px; }
+.ff .ff-st21 .it { background:#FFFDF7; border:1.5px solid rgba(176,141,42,.6); border-radius:18px; corner-shape:squircle; overflow:hidden; box-shadow:0 14px 24px -20px rgba(48,36,10,.6); transition:border-color .25s; }
+.ff .ff-st21 .it.on { border-color:var(--color-ox,#5C1220); }
+.ff .ff-st21 .hh { margin:0; font:inherit; }
+.ff .ff-st21 .hh button { box-sizing:border-box; display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:12px; width:100%; min-height:44px; margin:0; padding:8px 12px 8px 8px; border:0; border-radius:16px; corner-shape:squircle; background:transparent; color:inherit; font:inherit; text-align:left; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.ff .ff-st21 .hh button:focus-visible { outline:3px solid var(--gold-mid,#B08D2A); outline-offset:-3px; }
+.ff .ff-st21 .ph { position:relative; display:block; width:104px; aspect-ratio:16 / 10; border-radius:12px; corner-shape:squircle; overflow:hidden; background:#E8CCD0; isolation:isolate; }
+.ff .ff-st21 .ph img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; mix-blend-mode:multiply; }
+.ff .ff-st21 .ph i { position:absolute; top:5px; left:5px; width:22px; height:22px; border-radius:50%; display:grid; place-items:center; font-style:normal; font-weight:800; font-size:12px; color:#16130F; background:linear-gradient(135deg,#F4DC8E,var(--gold,#C9A227)); box-shadow:0 2px 5px rgba(0,0,0,.35); }
+.ff .ff-st21 .hh b { min-width:0; font-family:var(--display); font-weight:700; font-size:17px; line-height:1.2; color:#16130F; text-wrap:balance; word-break:keep-all; overflow-wrap:normal; hyphens:none; }
+.ff .ff-st21 .chev { flex:none; width:30px; height:30px; border-radius:9px; corner-shape:squircle; display:grid; place-items:center; color:var(--color-ox,#5C1220); background:var(--color-ox-tint,#F7E9EC); border:1px solid rgba(92,18,32,.55); transition:transform .3s ease, background-color .25s, color .25s; }
+.ff .ff-st21 .it.on .chev { color:var(--color-ivory,#FFFCF4); background:var(--color-ox,#5C1220); border-color:var(--color-ox,#5C1220); transform:rotate(180deg); }
+.ff .ff-st21 .hh button:hover .chev { border-color:var(--color-ox,#5C1220); }
+.ff .ff-st21 .bw { display:grid; grid-template-rows:0fr; transition:grid-template-rows .42s cubic-bezier(.22,.8,.24,1); }
+.ff .ff-st21 .it.on .bw { grid-template-rows:1fr; }
+.ff .ff-st21 .bi { min-height:0; overflow:hidden; visibility:hidden; transition:visibility 0s linear .42s; }
+.ff .ff-st21 .it.on .bi { visibility:visible; transition-delay:0s; }
+.ff .ff-st21 .ff-ps21 { margin:0 !important; padding:6px 14px 18px; border:0 !important; border-radius:0; box-shadow:none !important; background:transparent !important; }
+.ff .ff-st21 .ff-ps21 .hd { grid-template-columns:minmax(0,1fr); }
+.ff .ff-st21 .ff-ps21 .n { display:none; }
+.ff .ff-st21 .ff-ps21 .ttl { font-size:clamp(20px,5.2vw,28px); }
+@media (max-width:360px) { .ff .ff-st21 .ph { width:84px; } .ff .ff-st21 .hh b { font-size:15.5px; } }
+@media (min-width:760px) {
+  .ff .ff-st21 { gap:12px; }
+  .ff .ff-st21 .it { border-radius:22px; }
+  .ff .ff-st21 .hh button { gap:20px; padding:10px 18px 10px 10px; }
+  .ff .ff-st21 .ph { width:180px; }
+  .ff .ff-st21 .ph i { top:8px; left:8px; width:28px; height:28px; font-size:14px; }
+  .ff .ff-st21 .hh b { font-size:22px; }
+  .ff .ff-st21 .ff-ps21 { padding:8px 28px 26px; }
+}
+@media (prefers-reduced-motion:reduce) { .ff .ff-st21 .bw, .ff .ff-st21 .bi, .ff .ff-st21 .chev { transition:none; } }

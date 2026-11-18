@@ -61,6 +61,7 @@
   .ff .ff-hf22.ff-home-c4 .ff-hb23-box {
     background:linear-gradient(122deg,var(--color-ox-deep,#4A0E1A) 0%,var(--color-ox,#5C1220) 40%,var(--color-ox-hi,#6E1A2C) 64%,#9A5A38 72%,var(--gold,#C9A227) 81%,var(--color-gold-leaf,#EDD58F) 100%) !important; }
   .ff .ff-hf22.ff-home-c4 .ff-hbc-ch { color:var(--color-champagne,#EADBB4) !important; background:var(--color-ox,#5C1220) !important; border-color:var(--color-champagne,#EADBB4) !important; }
-  /* the last label sits on the gold, so it turns burgundy */
-  .ff .ff-hf22.ff-home-c4 .ff-hbc-flow > .ff-hbc-st:last-child .lb { color:var(--color-ox-deep,#4A0E1A) !important; }
+  /* closed, the last label sits on the gold, so it turns burgundy; open, the box is taller and the gold moves to the
+     bottom corner, so the label stays ivory */
+  .ff .ff-hf22.ff-home-c4 .ff-hbc:not(.is-open) .ff-hbc-flow > .ff-hbc-st:last-child .lb { color:var(--color-ox-deep,#4A0E1A) !important; }
 }

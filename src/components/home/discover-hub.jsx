@@ -128,6 +128,18 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
       collapse();
     };
     const jump = (id) => {
+      /* pillar-dropdowns: on FF Team a section sits inside its step's drop-down, so open that step, then scroll to it. */
+      if (kind === "team") {
+        try { window.dispatchEvent(new CustomEvent("ff-step21", { detail: id })); } catch (_) {}
+        setTimeout(() => {
+          const el = document.getElementById(id);
+          const h = el && el.closest(".ff-st21 .it");
+          const t = h ? h.querySelector(".hh") : el;
+          if (t)
+            t.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" });
+        }, 60);
+        return;
+      }
       const el = document.getElementById(id);
       if (el)
         el.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" });
@@ -354,13 +366,22 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
           return false;
         /* FF Party and FF Staff: the pillar section wins over any same-named block elsewhere on the home page. */
         const own = kind === "team" ? id : pid;
-        if (open === c.k && document.getElementById(own))
-          return false;
+        if (open === c.k && document.getElementById(own)) {
+          if (kind !== "team")
+            return false;
+          /* pillar-dropdowns: the pillar is open, but the section may sit in a closed step */
+          jump(document.getElementById(id) ? id : pid);
+          return true;
+        }
         grab();
         setLeaving(null);
         setOpen(c.k);
         setTimeout(() => {
-          const el = kind === "team" ? document.getElementById(id) || document.getElementById(pid) : document.getElementById(pid) || document.getElementById(id);
+          if (kind === "team") {
+            jump(document.getElementById(id) ? id : pid);
+            return;
+          }
+          const el = document.getElementById(pid) || document.getElementById(id);
           if (el)
             el.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" });
         }, 420);
@@ -401,7 +422,9 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
       id: "ff-discover",
       "aria-labelledby": "ff-dx-h",
       ref: root
-    }, React.createElement("style", null, ROT17_CSS), React.createElement("h2", {
+    }, React.createElement("style", null, ROT17_CSS),
+    /* title-bars (Alex, 18 Nov 17:00): on FF Team the title and its subheading share one gold line (titles2.css, .ff-tlx). */
+    React.createElement(kind === "team" ? "div" : React.Fragment, kind === "team" ? { className: "ff-tlx" } : null, React.createElement("h2", {
       id: "ff-dx-h",
       /* chal (Alex, 18 Nov 03:13): on FF Team a quieter "What is FF Team?" so the hero's welcome leads. */
       className: kind === "team" ? "ff-dx-h ff-dx-q" : "ff-h1 ff-dx-h"
@@ -409,7 +432,7 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
        smaller subheading below it. */
     }, kind === "team" ? "Built for event and hospitality professionals" : "Discover FireFlair"), kind === "team" && React.createElement("p", {
       className: "ff-dx-tag"
-    }, "Turn your CV into a Profile Card, build a team with the people you love working with and get booked for events and hospitality work. Explore the boxes below to see everything FF Team does for you."), React.createElement("span", {
+    }, "Turn your CV into a Profile Card, build a team with the people you love working with and get booked for events and hospitality work. Explore the boxes below to see everything FF Team does for you.")), React.createElement("span", {
       className: "ff-dx-sent",
       ref: sent,
       "aria-hidden": "true"
@@ -431,14 +454,21 @@ const DX_ALIAS_TEAM21 = { "ff-teams": "ff-pl-team", "ff-map": "ff-pl-marketing",
       key: "t" + cur.k
     }, React.createElement("h3", null, cur.h), React.createElement("p", {
       className: "ff-dx-tl21"
-    }, cur.tldr)), React.createElement(PillarCards21, {
+    }, cur.tldr)), kind === "team" ? React.createElement(PillarSteps21, {
+      key: "st" + cur.k,
+      pl: cur,
+      photo: (i) => dxCard17(cur, rotOf(cur), i),
+      run,
+      link: !!cur.infoLinks
+    /* pillar-dropdowns (Alex, 18 Nov 16:07): FF Team shows the 1-2-3 as drop-downs; FF Party and FF Staff are unchanged. */
+    }) : React.createElement(React.Fragment, null, React.createElement(PillarCards21, {
       pl: cur,
       photo: (i) => dxCard17(cur, rotOf(cur), i),
       jump
     }), React.createElement("div", {
       className: "ff-dx-secs21",
       key: "s" + cur.k
-    }, cur.sections.map((x, i) => React.createElement(PillarSection21, { key: x.id, s: x, n: i + 1, run, level: "h4", link: !!cur.infoLinks, locked: kind === "party" })))), !cur.sections && React.createElement("div", {
+    }, cur.sections.map((x, i) => React.createElement(PillarSection21, { key: x.id, s: x, n: i + 1, run, level: "h4", link: !!cur.infoLinks, locked: kind === "party" }))))), !cur.sections && React.createElement("div", {
       className: "ff-dx-intro",
       key: "b" + cur.k
     }, React.createElement("h3", null, cur.h), cur.p.map((t, n) => React.createElement("p", {

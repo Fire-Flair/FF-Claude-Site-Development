@@ -4,6 +4,15 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.28
+
+Merged after Alex's approval (18 Nov 17:29): the title lines (branch `title-bars`, Gimli) and the 1-2-3 pillar drop-downs (branch `pillar-dropdowns`, Gimli and Legolas). Applied onto v1.27 and published by a three-way merge onto the live page so the photo-browsing chat's unpushed work stays.
+
+- Title lines (`styles/titles2.css`, wrappers in `discover-hub.jsx`, `discover-and-support.jsx`, `team/bookings.jsx`, one selector in `bkd.css`): wherever a title has text under it, one gold-to-champagne line starts at the top of the title, runs beside the title and its text, and fades out at the text's last line. Titles with no text under them keep the line beside the title only. Network: "Our professionals" and "FF Event Directory" line up with "Explore our network" (they were 19px too far left). Bookings: the text under "FFParty – Our bar packages", "FFStaff – Shifts with businesses" and "Grow with FireFlair" moves 19px right to line up with its title.
+- Bookings box on phones, open: the "Review Card" label stays ivory (the gold moves to the bottom corner of the taller box); it is burgundy only while the box is closed.
+- Pillar drop-downs (`team-pillars.jsx`, `discover-hub.jsx`, `team-pillars21.css`): inside an open FF Team pillar, the 1-2-3 steps are collapsible boxes (picture, gold number, title, burgundy chevron), collapsed by default; each opens to its full section. Picture wells use the deeper champagne from v1.25.
+- Checked: `npm run check`, `npm run build`; screenshots at 390, 820 and 1180 of the bookings box open and closed, an open pillar with a step open, and the Network titles. Merged page saved as `live-v1.28-index.html`. Artifact version 1795023137-ff60.
+
 ## v1.27
 
 Profile builder, "Let's get started" (Alex, 18 Nov 17:06). Published by a three-way merge onto the live page
