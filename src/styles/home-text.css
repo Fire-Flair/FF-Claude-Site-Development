@@ -41,32 +41,26 @@
 /* four tiles in a row: two-line subtitles, so the photo stops a little higher */
 @media (min-width:1000px) { .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .ph { bottom:80px !important; } }
 
-/* ---------- phones: champagne to burgundy (Alex, 18 Nov 16:59) ----------
-   Pillar boxes run champagne (left, behind the photo and words) into burgundy (right, behind the chevron).
-   The open tile fades back to champagne at its bottom edge so it still joins its box.
-   "Built for getting you bookings" runs the other way: burgundy, with champagne glowing in from the top right. */
+/* ---------- phones: diagonal gradients (Alex, 18 Nov 16:59, diagonal 17:12) ----------
+   Pillar boxes: champagne behind the photo and words, with a burgundy wedge on the right whose edge runs diagonally
+   (wider at the top, narrower at the bottom), behind the chevron. The open tile fades back to champagne at its bottom
+   edge so it still joins its box.
+   "Built for getting you bookings": the same diagonal, but gold, coming in from the bottom right, and a bit larger. */
 @media (max-width:759px) {
   .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile {
-    background:linear-gradient(90deg,#F2EAD2 0%,var(--color-champagne-box,#EAE0C3) 82%,#B98A7C 87%,var(--color-ox-hi,#6E1A2C) 92%,var(--color-ox,#5C1220) 100%) !important; }
+    background:linear-gradient(56deg,#F2EAD2 0%,var(--color-champagne-box,#EAE0C3) 80%,#B98A7C 86%,var(--color-ox-hi,#6E1A2C) 91%,var(--color-ox,#5C1220) 100%) !important; }
   .ff .ff-hf22.ff-home-c4 .ff-dx.is-open .ff-dx-tile.on {
     background:
       linear-gradient(180deg,rgba(234,224,195,0) 45%,var(--color-champagne-box,#EAE0C3) 100%),
-      linear-gradient(90deg,#F2EAD2 0%,var(--color-champagne-box,#EAE0C3) 82%,#B98A7C 87%,var(--color-ox-hi,#6E1A2C) 92%,var(--color-ox,#5C1220) 100%) !important; }
-  /* the chevron sits on burgundy: champagne outline, ivory arrow */
-  .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .chev { color:var(--color-champagne,#EADBB4) !important; background:rgba(234,219,180,.14) !important; border-color:rgba(234,219,180,.75) !important; }
+      linear-gradient(56deg,#F2EAD2 0%,var(--color-champagne-box,#EAE0C3) 80%,#B98A7C 86%,var(--color-ox-hi,#6E1A2C) 91%,var(--color-ox,#5C1220) 100%) !important; }
+  /* the chevron sits on the diagonal edge: a solid burgundy button with a champagne outline and arrow */
+  .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .chev { color:var(--color-champagne,#EADBB4) !important; background:var(--color-ox,#5C1220) !important; border-color:rgba(234,219,180,.75) !important; }
   .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile.on .chev { color:var(--color-ox,#5C1220) !important; background:var(--color-champagne,#EADBB4) !important; border-color:var(--color-champagne,#EADBB4) !important; }
 
-  /* the other way: burgundy across the box with the champagne glowing in from the top right corner (behind the
-     chevron), kept clear of the title and of every label so the text always sits on burgundy */
+  /* bookings box: burgundy, with a larger gold wedge from the bottom right on the same diagonal */
   .ff .ff-hf22.ff-home-c4 .ff-hb23-box {
-    background:
-      radial-gradient(ellipse 78px 120px at 100% 0%,var(--color-champagne,#EADBB4) 0%,rgba(234,219,180,.92) 36%,rgba(214,182,140,.6) 66%,rgba(201,162,126,0) 100%),
-      linear-gradient(90deg,var(--color-ox-deep,#4A0E1A) 0%,var(--color-ox,#5C1220) 45%,var(--color-ox-hi,#6E1A2C) 100%) !important; }
+    background:linear-gradient(122deg,var(--color-ox-deep,#4A0E1A) 0%,var(--color-ox,#5C1220) 40%,var(--color-ox-hi,#6E1A2C) 64%,#9A5A38 72%,var(--gold,#C9A227) 81%,var(--color-gold-leaf,#EDD58F) 100%) !important; }
   .ff .ff-hf22.ff-home-c4 .ff-hbc-ch { color:var(--color-champagne,#EADBB4) !important; background:var(--color-ox,#5C1220) !important; border-color:var(--color-champagne,#EADBB4) !important; }
-  @media (max-width:389px) {
-    .ff .ff-hf22.ff-home-c4 .ff-hb23-box {
-      background:
-        radial-gradient(ellipse 56px 110px at 100% 0%,var(--color-champagne,#EADBB4) 0%,rgba(234,219,180,.92) 36%,rgba(214,182,140,.6) 66%,rgba(201,162,126,0) 100%),
-        linear-gradient(90deg,var(--color-ox-deep,#4A0E1A) 0%,var(--color-ox,#5C1220) 45%,var(--color-ox-hi,#6E1A2C) 100%) !important; }
-  }
+  /* the last label sits on the gold, so it turns burgundy */
+  .ff .ff-hf22.ff-home-c4 .ff-hbc-flow > .ff-hbc-st:last-child .lb { color:var(--color-ox-deep,#4A0E1A) !important; }
 }
