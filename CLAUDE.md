@@ -24,6 +24,20 @@ Whenever the FireFlair site artifact is published, its code goes to this repo
   and commit `src/` with the notes. The single HTML is a build output and is not committed on the v17.4 line.
   See `docs/DEVELOPING.md`.
 
+## FF Team v1.1 artifact (branch ff-team-v1.1 and its v11-* branches)
+
+This line is the FF Team front-end export ("FF Team version 1.1. Final"), not the FireFlair prototype above.
+
+- **FF Team v1.1 artifact: published by hand; do NOT run `sync-published-site.sh`, it pushes to main.** The hook in
+  `.claude/settings.json` only reacts to the prototype artifact, so publishing the v1.1 artifact leaves it alone;
+  never wire the v1.1 slug into it.
+- Build: `npm run check` (includes `scripts/check-refs.mjs`, the undefined-name check), `npm run build` →
+  `build/ff-team-v1.1.html`, `npm run publish-build` → `build/release/`. Publish the release with `publish_files`
+  into the claude.ai folder "FF Team — Front-end export"; GitHub copy under `frontend-export/ff-team-v1.1/`.
+- Changelog: `frontend-export/ff-team-v1.1/CHANGELOG.md` (starts at `## v1.1`; the newest heading is the version the
+  page shows). Leave the root `CHANGELOG.md` to the prototype. Point releases go 1.12, 1.13 … after 1.11.
+- Strip by deletion, never by flags. Demo profiles stay in one removable file (`DEMO_SEED`).
+
 ## Versions
 
 - One file per version: `fireflair-vN.html`, then point releases

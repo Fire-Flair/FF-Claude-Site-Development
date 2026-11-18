@@ -1,0 +1,29 @@
+{
+ "note": "Undefined names already in src/ when check-refs was added (unreached code). See scripts/check-refs.mjs.",
+ "known": [
+  {
+   "file": "state/themes-xp.js",
+   "name": "QUARTER_MONTHS"
+  },
+  {
+   "file": "components/team/profile-builder.jsx",
+   "name": "phoneOk"
+  },
+  {
+   "file": "components/team/profile-marks-qa.jsx",
+   "name": "BellIcon"
+  },
+  {
+   "file": "components/home/home-sections.jsx",
+   "name": "useNavigate"
+  },
+  {
+   "file": "components/home/home-sections.jsx",
+   "name": "fetchFeatured"
+  },
+  {
+   "file": "components/home/home-sections.jsx",
+   "name": "Skeleton"
+  }
+ ]
+}
