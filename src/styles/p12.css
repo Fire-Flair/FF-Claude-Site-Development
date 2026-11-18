@@ -289,7 +289,8 @@
 .ff .ff-teamcard { flex:none; width:min(86vw,340px); }
 
 .ff .ff-cf { position:relative; }
-.ff .ff-cf-track { --cf-h:min(var(--cf-half,160px),36vw); display:flex; align-items:center; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory; padding:30px calc(50% - var(--cf-h)) 46px; scrollbar-width:none; overscroll-behavior-x:contain; cursor:grab; -webkit-overflow-scrolling:touch; }
+.ff .ff-cf-track { --cf-h:min(var(--cf-half,160px),36vw); display:flex; align-items:center; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory; padding:30px calc(50% - var(--cf-h)) 46px; scrollbar-width:none; overscroll-behavior-x:contain; cursor:grab; -webkit-overflow-scrolling:touch; touch-action:pan-y; }
+/* v1.57: sideways swipes on a touch screen are moved by useCoverSwipe17 (public-profile.jsx); the page only scrolls up and down from the track. */
 .ff .ff-cf-track::-webkit-scrollbar { display:none; }
 .ff .ff-cf-track.dragging { cursor:grabbing; scroll-snap-type:none; user-select:none; }
 .ff .ff-cf-item { flex:none; width:calc(var(--cf-h)*2); scroll-snap-align:center; transform:scale(var(--cf-s,1)); opacity:var(--cf-o,1); transition:transform .18s ease, opacity .18s ease; transform-origin:center; cursor:pointer; }

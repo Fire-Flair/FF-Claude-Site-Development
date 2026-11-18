@@ -64,6 +64,7 @@
   "components/team/public-profile.jsx",
   "components/team/introductions.jsx",
   "components/team/profile-edit-tabs.jsx",
+  "components/team/profile-packages.jsx",
   "components/team/type-cards.jsx",
   "components/team/profile-edit-p2.jsx",
   "components/team/pb-qualifications.jsx",

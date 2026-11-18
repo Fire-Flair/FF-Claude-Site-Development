@@ -4,6 +4,19 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.69
+
+Profile Packages tab, in the profile builder and on a public profile (Alex, 18 Nov 20:51). New `team/profile-packages.jsx`, `styles/profile-packages.css`; `team/profile-edit-tabs.jsx`, `team/introductions.jsx`, `team/public-profile.jsx` (CoverFlow), `styles/p12.css`, `manifest.json`.
+
+- Work locations are off the Packages tab for now (builder and public page). Their records, the coverage editor elsewhere and the Overview are unchanged.
+- The packages slider stays. Its cards are now the Bookings page's FF Party package cards (`BkPkgCard17`, `BkPkgOwn17`, `PkgFace17`, used as they are, with the Bookings styles), including Entertainment and Services packages you signed up for. Sign up / Signed up opens Bookings at FF Party – Our packages, where sign-ups are made. On someone else's page (or yours viewed as a guest) "You earn" is left off the cards.
+- Create your own is the same size as every other card (one width, all as tall as the tallest) and has the Staffing card's platinum face. On your own profile it is the Bookings type-box card, saved to the same answer, so both places match.
+- Swiping fixed on phones and iPads: a swipe that is more sideways than up-and-down moves the slider and holds the page still, a short swipe moves on to the next card instead of snapping back, and up-and-down swipes still scroll the page. Mouse drag and the arrows are unchanged.
+- Under the slider, one Terms and conditions box (closed to start with) for the card in the centre: that package's own condition, then the five FF Party package terms from the Bookings terms.
+- Your own profile only: FF Staff, a card per profession with your preferred hourly rate (empty until you type it) and your preferred terms, one Save. Rates are the same answers as Bookings' FF Staff box, so a rate saved in either place shows in both; terms are saved per profession. With no professions yet it says the professions show here. Nobody else sees this part.
+- Checked: `npm run check`, `npm run build`; touch swipes (clean, 15°, 30°, 45°, short, from the card's middle, vertical) at 390, 820 and 1180 signed out and with the DEV sign-in, on the builder, the live own profile and a public profile; page never moved sideways; Bookings page screenshot identical to before; desktop arrows and drag; no console errors.
+- Merged onto the live page 1795037978-eab3 (v1.68). Artifact version 1795038385-8581.
+
 ## v1.68
 
 Profile builder, Professions picker (Alex, 18 Nov 21:34, option 5 of six mock-ups). `src/components/team/profile-edit-p2.jsx` (`PE2ProfCats`, `PE2CatSheet`, `PE2TopSlots`), `src/styles/profile-edit-p2.css` (prof-grid).
