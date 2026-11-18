@@ -2,6 +2,8 @@
 
 ## v17.48
 
+Artifact version 1794965586-9624.
+
 Profile edit page, test build for Alex (option 1). Branch merged: `p2-aragorn`.
 
 - Own profile edit page (`aragorn-preview.jsx`, `aragorn-preview.css`, `profile-builder.jsx`): below Media, the tabs now look like the finished public page (Professions, Attributes, Introductions, Q&A) with a pencil on each section that opens its editor in a sheet. On by default; `localStorage.ffAragornOpt = 2|3` shows the other two options. Venues stay off. The editors themselves are the existing ones and are being redesigned next (profession picker and pencil editors).
