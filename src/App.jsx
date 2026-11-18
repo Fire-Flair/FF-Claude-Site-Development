@@ -29,7 +29,7 @@ function FireFlair() {
         const snap = await ref.get();
         if (!cancelled && snap.exists) {
           const saved = snap.data() || {};
-          const stale = saved.profile && (!saved.profile.records || typeof saved.profile.xp === "undefined");
+          const stale = saved.profile && !saved.profile.records;
           if (stale) {
             hydratedRef.current = true;
             return;
@@ -42,17 +42,7 @@ function FireFlair() {
           /* Saved state from before v17.6.1 carries a forced code and no kind: that code was never a real invitation. */
           if (patch.session) patch.session = patch.session.refKind ? patch.session : { ...patch.session, refTag: null, refKind: null };
           if (patch.profile) {
-            patch.profile = { ...patch.profile, records: capRecords17({ ...emptyRecords(), ...patch.profile.records || {} }), xp: patch.profile.xp || 0, media: patch.profile.media || [] };
-            if (PHASE1.xpLive && Array.isArray(patch.profile.xpLog) && patch.profile.xpLog.some((e) => e && e.xp === 0 && e.planned)) {
-              const owed = patch.profile.xpLog.reduce((n, e) => n + (e && e.xp === 0 && e.planned ? e.planned : 0), 0);
-              patch.profile = {
-                ...patch.profile,
-                xp: (patch.profile.xp || 0) + owed,
-                xpPeriod: (patch.profile.xpPeriod || 0) + owed,
-                xpLog: patch.profile.xpLog.map((e) => e && e.xp === 0 && e.planned ? { ...e, xp: e.planned, credited: "v1.1" } : e)
-              };
-            }
-            patch.profile = rollXPPeriodIfNeeded(patch.profile);
+            patch.profile = { ...patch.profile, records: capRecords17({ ...emptyRecords(), ...patch.profile.records || {} }), media: patch.profile.media || [] };
             if (patch.profile.theme && !THEMES[patch.profile.theme]) patch.profile.theme = "burgundy";
           }
           if (Object.keys(patch).length) dispatch({ type: "HYDRATE", patch });

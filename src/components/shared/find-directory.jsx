@@ -490,7 +490,6 @@ function FdAsk11({ siteKey, node, kind, company, onDone }) {
       <div className="ff-fd-done" role="status">
         <b>{sourcing ? "Request received." : "Thanks, we've noted your interest."}</b>
         <p>{done.dupe ? `We already have this request. ` : ""}Your reference is <b className="ref">{done.ref}</b>. {sourcing ? `Nothing is confirmed yet: no one has been booked or reserved, and you have not been charged. The FireFlair team will look for suitable people and contact you about the options${f.email || f.phone ? ` by ${f.email ? "email" : "telephone"}` : ""}.` : `FireFlair isn't taking requests here yet. We'll use your details only to tell you if that changes.`}</p>
-        <p className="ff-fd-dev"><span className="ff-dev17 tag">DEV</span> Saved to the preview's data as a local_service_request. Admin and acknowledgement notifications are simulated.</p>
         {onDone && <Btn onClick={onDone}>Done</Btn>}
       </div>
     );
@@ -700,7 +699,7 @@ function FdReqs11({ fd, upd, dispatch, state }) {
                   {r.headcount && <><dt>People</dt><dd>{r.headcount}</dd></>}
                   {r.brief && <><dt>Notes</dt><dd>{r.brief}</dd></>}
                   <dt>Source</dt><dd>{FD_SITES[r.siteKey].name} · {r.sourcePath || "no page"}</dd>
-                  <dt>Notifications</dt><dd>Admin: {r.notif.admin} · Acknowledgement: {r.notif.ack}{r.notif.failed ? " · FAILED, retry" : ""} <span className="ff-dev17 tag">DEV</span></dd>
+                  <dt>Notifications</dt><dd>Admin: {r.notif.admin} · Acknowledgement: {r.notif.ack}{r.notif.failed ? " · FAILED, retry" : ""}</dd>
                 </dl>
                 <div className="ff-fd-act">
                   <label>Status <select value={r.status} onChange={(e) => upd(r.id, { status: e.target.value })}>{FD_STATUSES.map(s => <option key={s[0]} value={s[0]}>{s[1]}</option>)}</select></label>
@@ -767,7 +766,6 @@ function FdPages11({ fd, state, dispatch, can, by, people, stamp }) {
           {FD_CHECKS.map(c => <label key={c[0]} className="ff-fd-chk"><input type="checkbox" checked={!!checks[c[0]]} onChange={(e) => setChecks(x => ({ ...x, [c[0]]: e.target.checked }))} /> {c[1]}</label>)}</fieldset>
         <label className="ff-fd-f"><span>Short reason (recorded)</span><textarea rows={2} value={reason} onChange={(e) => setReason(e.target.value)} placeholder="Why is this page useful in its own right?" /></label>
         <div className="ff-fd-act"><Btn variant="gold" disabled={!okForm} onClick={approve}>Approve for search</Btn><Btn onClick={() => setRev(false)}>Cancel</Btn></div>
-        {FF_SEO.demoData && <p className="ff-fd-fine"><span className="ff-dev17 tag">DEV</span> The prototype still emits noindex while demo data is on. Approval is recorded for the real build.</p>}
       </div>}
       <div className="ff-fd-tbl pages" role="table" aria-label="Pages">
         <div className="tr th" role="row"><span /><span>Place</span><span>Type</span><span>Market</span><span>State</span><span /></div>

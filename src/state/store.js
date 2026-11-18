@@ -10,13 +10,7 @@ const initialState = {
   profile: {
     name: "", photo: null, theme: "ivory", tier: "standard", level: 3,
     hasCar: false, live: false, cardShade: "slate",
-    xp: 0, xpClaimed: [], xpLog: [], answers: {}, media: [],
-    /* Quarterly XP: xpPeriod is the CURRENT quarter's running total — what
-       resets. xpPeriodKey remembers which quarter that total belongs to, so
-       a new quarter is detected automatically. xpHistory archives every
-       past quarter's final total; nothing here ever deletes xp/xpLog, the
-       all-time record. */
-    xpPeriod: 0, xpPeriodKey: xpPeriodKey(XP_CURRENT_PERIOD), xpHistory: [],
+    xpClaimed: [], answers: {}, media: [],
     records: emptyRecords(), categories: {}, extraction: null, aiQuestions: [],
     about: "",          // personal summary — from FireFlair / CV, or written by hand
   },
@@ -90,50 +84,19 @@ const withRecords = (s, cat, list) => ({
 
 
 
-/* Claim a task once. Re-claiming is a no-op, so XP can never be farmed by
-   repeating the same action. Every award lands in xpLog for Core to read. */
-/* Quarter rollover — if the profile's stored xpPeriodKey no longer matches
-   the live current quarter, archive that period's final total into history
-   and start the new quarter at 0. All-time xp/xpLog are untouched: this
-   only ever resets the CURRENT-period counter. */
-function rollXPPeriodIfNeeded(profile) {
-  const liveKey = xpPeriodKey(XP_CURRENT_PERIOD);
-  if (profile.xpPeriodKey === liveKey) return profile;
-  const closed = { period: profile.xpPeriodKey, xp: profile.xpPeriod || 0 };
-  return {
-    ...profile,
-    xpPeriod: 0,
-    xpPeriodKey: liveKey,
-    xpHistory: [...(profile.xpHistory || []), closed],
-  };
-}
-
-
-
-function claimXP(s, taskId, amount) {
+/* v1.1: no XP points. A task is still recorded once in profile.xpClaimed: the profile builder reads it to know
+   whether this is the first Profile Card, first publish or first record of a kind (its toasts and first-time steps). */
+function claimXP(s, taskId) {
   const claimed = s.profile.xpClaimed || [];
   if (claimed.includes(taskId)) return s;
-  const planned = amount === undefined ? XP_VALUES.task : amount;
-  /* FF XP Beta: points as before. Each award is logged with its date;
-     PHASE1.xpLive false would record the activity without points. */
-  const xp = PHASE1.xpLive ? planned : 0;
-  return {
-    ...s,
-    profile: {
-      ...s.profile,
-      xp: (s.profile.xp || 0) + xp,
-      xpPeriod: (s.profile.xpPeriod || 0) + xp,
-      xpClaimed: [...claimed, taskId],
-      xpLog: [...(s.profile.xpLog || []), { id: taskId, xp, planned, at: Date.now() }],
-    },
-  };
+  return { ...s, profile: { ...s.profile, xpClaimed: [...claimed, taskId] } };
 }
 
 
 
 /* Claim the matching "Add …" task once a category holds real (non-proposed)
    records, however they were added — card editor, review screen or CV. Uses
-   the existing claim-once system, so XP can never be awarded twice. */
+   the existing claim-once record. */
 function claimListXP(s, cat, list) {
   const id = xpTaskFor(cat);
   if (!XP_TASKS.some(t => t.id === id)) return s;
@@ -302,14 +265,14 @@ function reducerCore17(s0, a) {
         next = { ...s, profile: { ...s.profile, ...patch } };
       }
       if (a.visibility && !(q && q.group === "feedback")) next = setQaVis17(next, a.qid, a.visibility);
-      /* +1 XP the first time a question is answered, never on edits. */
-      return isAnswered(prevVal) ? next : claimXP(next, `question_${a.qid}`, XP_VALUES.question);
+      /* Recorded once, the first time a question is answered, never on edits. */
+      return isAnswered(prevVal) ? next : claimXP(next, `question_${a.qid}`);
     }
     case "AI_QUESTION_ADD": {
       const list = s.profile.aiQuestions || [];
       if (list.some(x => x.text.toLowerCase() === a.q.text.toLowerCase())) return s;
       const next = { ...s, profile: { ...s.profile, aiQuestions: [...list, a.q] } };
-      return isAnswered(a.q.answer) ? claimXP(next, `question_${a.q.id}`, XP_VALUES.question) : next;
+      return isAnswered(a.q.answer) ? claimXP(next, `question_${a.q.id}`) : next;
     }
     case "CONNECT":   return { ...s, connections: [...s.connections, ...a.people] };
     case "REVIEW_ADD": {
@@ -356,7 +319,7 @@ function reducerCore17(s0, a) {
       return s;
     }
     case "SEED_DEMO": {
-      /* The demo profile is complete, so it carries the XP its data has earned. */
+      /* The demo profile is complete, so its first-time tasks are recorded as done. */
       let n = {
       ...s, role: "team", tab: "home", route: "home", viewing: null,
       session: { ...s.session, tag: "SAM42", phone: "+44 7700 900412", verified: true },

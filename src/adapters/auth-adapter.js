@@ -2,7 +2,6 @@
 /* ADAPTER FILE — AUTH_ADAPTER
    CONTRACT SUMMARY (the real service keeps these names, inputs and outputs; see the comments below for details):
    available  (value)
-   note  (value)
    TAG_MIN  (value)
    TAG_MAX  (value)
    cleanTag(t)
@@ -43,7 +42,6 @@
    ========================================================================== */
 const AUTH_ADAPTER = {
   available: false,
-  note: "Prototype sign-in: no FireFlair account service is connected yet.",
   TAG_MIN: 3, TAG_MAX: 8,
   cleanTag: (t) => String(t || "").toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 8),
   tagOk: (t) => { const n = AUTH_ADAPTER.cleanTag(t).length; return n >= AUTH_ADAPTER.TAG_MIN && n <= AUTH_ADAPTER.TAG_MAX; },

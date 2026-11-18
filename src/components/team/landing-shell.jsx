@@ -159,7 +159,6 @@ function LoginSheet({ open, onClose }) {
         )}
 
         {err && <p className="ff-lg21-err" role="alert">{err}</p>}
-        <p className="ff-lg21-note">{AUTH_ADAPTER.note}</p>
       </div>
     </Sheet>
   );
@@ -252,7 +251,7 @@ function Shell({ children }) {
           {NAV.map(n => n.key === "__ff" ? (
             <div key="ff" className="ff-navcentre">
               <button className="ff-coinbtn" style={{ position: "relative" }} onClick={() => setNotifyOpen(true)} aria-label={notifyCount17(state) > 0 ? `Notifications, ${notifyCount17(state)} waiting` : "Notifications"}>
-                <span className="ff-coinwrap20 mob"><style>{NET20_CSS}</style><FFLogo size={56} tier={isTeam ? xpProgress(state.profile.xp).currentTier : "gold"} /><span className={`ff-coinnum20${notifyCount17(state) > 0 ? " on" : ""}${notifyCount17(state) > 9 ? " d2" : ""}`} aria-hidden="true">{notifyCount17(state) > 0 ? Math.min(notifyCount17(state), 99) : ""}</span></span>
+                <span className="ff-coinwrap20 mob"><style>{NET20_CSS}</style><FFLogo size={56} tier={isTeam ? "standard" : "gold"} /><span className={`ff-coinnum20${notifyCount17(state) > 0 ? " on" : ""}${notifyCount17(state) > 9 ? " d2" : ""}`} aria-hidden="true">{notifyCount17(state) > 0 ? Math.min(notifyCount17(state), 99) : ""}</span></span>
               </button>
             </div>
           ) : (
