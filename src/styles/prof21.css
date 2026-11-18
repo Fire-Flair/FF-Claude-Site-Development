@@ -254,7 +254,7 @@
 .ff .ff-tm34 > #ff-sec-tag { margin: 0; align-content: stretch; }
 .ff .ff-tm34 > #ff-sec-tag > .ff-gb21, .ff .ff-tm34 > .ff-gb21-media { height: 100%; box-sizing: border-box; }
 .ff .ff-tm34 .ff-acct21 + .ff-gb21-media { margin-top: 0; }
-@media (min-width: 900px) { .ff .ff-tm34 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+/* v1.56 (Alex, 18 Nov 20:46): Media always sits below FF Tag, on every size (was side by side from 900px). */
 /* the Phone number box, third in Let's get started: full width of the box */
 .ff .ff-way17-phone > .ff-way17-wide { grid-column: 1 / -1; }
 
@@ -532,3 +532,15 @@
    now a true circle at every size, and the empty bust fills the same circle. */
 .ff #ff-sec-card .ff-photobtn { width: 110px !important; height: 110px !important; aspect-ratio: 1 / 1; padding: 0 !important; }
 .ff #ff-sec-card .ff-photobtn .ff-photoempty { width: 100% !important; height: 100% !important; aspect-ratio: 1 / 1; }
+
+/* v1.56 (Alex, 18 Nov 20:46): FF Tag and Media stacked; FF Tag only as tall as its contents. Media shows two labelled groups,
+   "Profile" (the profile photo) and "Page" (the pictures across the top of the public profile), with dotted empty boxes and a
+   faint second box while Page is empty. */
+.ff .ff-tm34 > #ff-sec-tag > .ff-gb21, .ff .ff-tm34 > .ff-gb21-media { height: auto !important; }
+.ff .ff-tm34 { align-items: start; }
+.ff .ff-gb21-media .ff-m19 { align-items: flex-start; }
+.ff .ff-m19-g { flex: none; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.ff .ff-m19-row { display: flex; gap: 10px; }
+.ff .ff-m19-g .cap { padding-left: 2px; font: 600 12px/1.2 var(--font-sans, Inter, sans-serif); letter-spacing: .04em; color: #6A5A36; }
+.ff .ff-gb21-media .ff-m19-t.ghost { background: transparent; border: 1.5px dashed rgba(126,97,29,.25); box-shadow: none; opacity: .7; }
+.ff .ff-m19 > .pfa-sep { align-self: stretch; margin: 8px 2px 26px; }
