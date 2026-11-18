@@ -8,7 +8,7 @@
 const ARAGORN_CSS = __ff_css("styles/aragorn-preview.css");
 
 function aragornOpt() {
-  try { const v = +(window.localStorage.getItem("ffAragornOpt") || 0); return v >= 1 && v <= 3 ? v : 0; } catch (e) { return 0; }
+  try { const v = +(window.localStorage.getItem("ffAragornOpt") || 0); return v >= 1 && v <= 3 ? v : 1; } catch (e) { return 1; }
 }
 
 /* The attribute categories edited as lists (the builder's RANK_CATS19 minus professions). */
@@ -152,7 +152,7 @@ function AragornTabs({ person, opt }) {
           : <AttrGroups items={attrs} mem={mem} onOpen={(k) => setAttrCat(k)} />}
       </section>
     )}
-    {(venues.length > 0 || opt === 3) && (
+    {SHOW_VENUES17 && (venues.length > 0 || opt === 3) && (
       <section className="ff-pp ff-pp21" aria-labelledby="ara-ven-h">
         <AraHead id="ara-ven-h" title="Venues" action={pen("venues", "Venues") || plus("venues", "Venues")} />
         {opt === 3 && adding === "venues"
