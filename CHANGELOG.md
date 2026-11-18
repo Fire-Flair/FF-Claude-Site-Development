@@ -2,6 +2,8 @@
 
 ## v17.49
 
+Artifact version 1794966229-5133.
+
 Team tab and people with several professions. Branch merged: `p2-teambuild`.
 
 - Network (`professions.js`, `network.jsx`, `network-directory.jsx`, `map.jsx`): a professional is listed once in every category covered by their top 3 public professions; the card shows the profession that put them there; order is top-profession holders, then 2nd, then 3rd, then the existing order; a 4th profession doesn't count. Search lists each person once, top-profession matches first. Top staff and the map show one entry per person (a pin shows if any of their top 3 is switched on). Category counts are unique people. FF Staff follows the same rule.
