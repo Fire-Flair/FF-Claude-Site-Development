@@ -31,6 +31,30 @@ Bookings, FF Party package cards (Alex, 18 Nov 18:12–19:02). `src/components/t
 - Create your own (`BkPkgOwn17`) ends all three tabs and looks like the other cards: name, line, You provide, Ideal for, Duration and You earn are type boxes that grow with their text. Sign up saves one typed Q&A answer per tab (`int.party_package_own_<tab>`, kind `own_package`); name and amount are needed, and a missing one gets a red outline. Signed out, Sign up opens sign-in.
 - Checked: `npm run check`, `npm run build`, Playwright at 390 and 1280 on all three tabs (equal heights and gaps on all 14 cards, no overflow or split words, no console errors), Details pop-ups, Create your own filled in.
 - Published over live 1795028595-33d7 (v1.37), index.html only (all other files kept). Artifact version 1795028903-26df. Built page saved as `live-v1.38-index.html`.
+## Unreleased (pb-professions)
+
+Profile builder, Professions (Alex, 18 Nov 18:03, 18:59 and 19:19). Builder only; the display page is unchanged.
+
+- **No pop-up.** The Professions sheet is gone (`PE2Sheet`, `PE2ProfEd`, `PE2Picker`, `PE2Item` and their CSS deleted).
+- **No professions yet** (no CV, or a CV that gave none): a type box, then every category as a box the size of the
+  Attribute boxes (`.ff-agrp t-card` in the same `.ff-acar` rail), each listing its professions. Tap one to add it
+  (burgundy with a tick); tap again to remove it. Bar keeps its ranked ladder (Barback to Mixologist, a rising gold
+  bar per step); other categories are alphabetical. The rail scrolls across on phones and wraps from 700 px.
+  It stays open while they pick, with the chosen professions appearing as tiles above it.
+- **Professions already there:** the tiles, then a "+" box. The "+" opens the same type box and category boxes under
+  the row and turns into a burgundy close (x). Alex picked this flow (19:26); the "type" variant (type box with
+  suggestions, then a category picker) and its `PROF_ADD_MODE` switch were deleted. The tiles row always starts at the
+  first tile, also when the "+" opens or closes the boxes.
+- **Any profession:** typed ones that FireFlair can't place still get "Which category is ...?", now with Other.
+- **Length:** typed professions up to 60 characters (`PROF_MAX_LEN`); the boxes wrap between words. The Profile Card's
+  16-character rule is only for the card (an entry that doesn't fit is left off whole, never cut); not built here.
+- **Top three** (Alex 19:19): the first three professions (`FEATURE_LIMIT`) go onto the Profile Card, so the builder
+  marks them with a gold number tab (1, 2, 3) on the tile's top edge and a stronger gold border. The tiles can now be
+  dragged into order (handle bottom right; arrow keys work too). Shared marking for other sections: `.ff-top3` on
+  the entry's wrapper plus a `.ff-top3-n` child holding the number (CSS at the end of `src/styles/prof21.css`).
+  `ProfTiles21` takes new `reorder` and `top` props; the display page passes neither.
+- Files: `src/components/team/profile-edit-p2.jsx`, `src/components/team/attribute-cards.jsx` (`ProfTiles21` props
+  only), `src/styles/profile-edit-p2.css`, `src/styles/prof21.css`.
 
 ## v1.37
 

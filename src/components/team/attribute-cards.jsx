@@ -521,7 +521,9 @@ function ProfTile21({ r, i, editable, open, lifted, dx, onTap, grip, extra, catK
 }
 
 
-function ProfTiles21({ items, editable, def, onOpen, extra, tail, label = "Professions", catKey = "professions", compact }) {
+/* pb-professions (Alex 19:19): reorder lets the read-only tiles (builder Professions, which open their own editor) be
+   dragged into order; top marks the first N as the "top three" that go onto the Profile Card (.ff-top3 + .ff-top3-n). */
+function ProfTiles21({ items, editable, def, onOpen, extra, tail, label = "Professions", catKey = "professions", compact, reorder, top = 0 }) {
   const { dispatch } = useStore();
   const rows = editable ? rankedRecords(items || []) : rankedRecords(items || []).filter(r => !r.hidden && !r.proposed);
   const ids = rows.map(r => r.id);
@@ -562,11 +564,12 @@ function ProfTiles21({ items, editable, def, onOpen, extra, tail, label = "Profe
   return (<>
     <div ref={rowRef} className={"ff-pt21-row" + (compact ? " ff-pa40-row" : "") + (drag ? " dragging" : "")} role="list" aria-label={`${label}, ${rows.length}`}>
       {rows.map((r, i) => (
-        <div role="listitem" key={r.id} className={"ff-pt21-slot" + (mark && mark.id === r.id ? " mk-" + mark.side : "")}>
+        <div role="listitem" key={r.id} className={"ff-pt21-slot" + (i < top ? " ff-top3" : "") + (mark && mark.id === r.id ? " mk-" + mark.side : "")}>
+          {i < top && <span className="ff-top3-n" aria-label={`Top ${top}, number ${i + 1}`}>{i + 1}</span>}
           <ProfTile21 r={r} i={i} editable={editable} catKey={catKey} compact={compact} open={openId === r.id} lifted={drag && drag.id === r.id} dx={drag ? drag.dx : 0}
             extra={extra ? extra(r) : null}
             onTap={() => editable ? setOpenId(openId === r.id ? null : r.id) : onOpen && onOpen(r)}
-            grip={editable ? (
+            grip={editable || reorder ? (
               <span className="ff-pt21-grip" role="button" tabIndex={0} aria-label={`Move ${r.name}. Drag, or use the left and right arrow keys`}
                 onPointerDown={(e) => down(e, r.id)} onPointerMove={(e) => drag && move(e)} onPointerUp={up} onPointerCancel={() => { noSel21(false); setDrag(null); }} onKeyDown={(e) => key(e, r.id, i)}>
                 <i /><i /><i />
