@@ -15,6 +15,12 @@
   --color-ox: #5C1220;
   --color-ox-dk: #37070F;
   --color-silver: #C6C8CC;
+  /* v1.46 bookings (Alex, 18 Nov 20:06): the platinum face of the Staffing package card */
+  --color-platinum-hi: #F6F7F9;
+  --color-platinum: #CDD2D9;
+  --color-platinum-edge: #8E949C;
+  /* v1.46 bookings: the WhatsApp Yes button (white text on it is about 5.9:1) */
+  --color-wa-deep: #13733A;
   --color-bronze: #9A6634;
 
   /* v1.01 colour system (Gilded Balance) */

@@ -125,3 +125,8 @@
 /* Bookings: the text under the title starts where the title text does (as on the Network page), so the line runs beside
    it rather than through it. */
 .ff .ff-tlx > .ff-bk-bh + p { padding-left:19px; }
+/* v1.46 bookings (Alex, 18 Nov 20:06): "Your bookings" and "Explore our network" sit higher: the gap between the top
+   bar and the title drops from 40px to 22px on every width (the page's own 18px top padding plus 4px). */
+.ff .ff-bk > section.ff-bk-yours { margin-top:4px; }
+.ff .ff-bk > section.ff-bk-yours > .ff-bk-yh { margin-top:0; }
+.ff #ff-netmap > .ff-tl20.ff-tl20-pg { margin-top:4px; }

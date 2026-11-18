@@ -532,3 +532,8 @@
 /* builder Professions: room for the tabs above the row; the drag handle sits bottom right (the level is top right) */
 .ff .pp-sec .ff-pt21-row { padding-top: 16px; }
 .ff .pp-sec .ff-pt21-grip { top: auto; bottom: 10px; right: 8px; }
+
+/* v1.51 (Alex, 18 Nov 20:31): the builder's photo circle was 120x110 (an oval) because of the button's side padding; it is
+   now a true circle at every size, and the empty bust fills the same circle. */
+.ff #ff-sec-card .ff-photobtn { width: 110px !important; height: 110px !important; aspect-ratio: 1 / 1; padding: 0 !important; }
+.ff #ff-sec-card .ff-photobtn .ff-photoempty { width: 100% !important; height: 100% !important; aspect-ratio: 1 / 1; }
