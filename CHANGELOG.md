@@ -1,5 +1,12 @@
 # FireFlair prototype — changelog
 
+## v17.54
+
+Fix: the prototype loads again. Branch merged: `p2-cats`.
+
+- `discover-and-support.jsx`: v17.52 cut the Launch Challenge rewards list to two entries but the challenge boxes still read a third, so the whole app failed to load (blank page on v17.52 and v17.53). The boxes now pick their reward text by label ("Top 10", "Overall winner").
+- Our professionals on FF Team (`network-directory.jsx`, `professions.js`): Front of House and Back of House get their own drop-downs; order Bar, Front of House, Management, Back of House, Entertainment, Services, Food, Other; same top-3 rule. The map legend (`map.jsx`) lists these groups with counts of unique people, on FF Team and FF Staff.
+
 ## v17.53
 
 Artifact version 1794968621-773a.

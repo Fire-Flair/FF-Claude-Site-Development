@@ -420,8 +420,8 @@ function TeamCompetition20() {
   /* [sheet title, face label, face line, icon, sheet sections]. Alex (18 Nov): three boxes; who can enter stays in the Rules. */
   const boxes = [
     [CH.boxes[0].t, "90 days", "1 Dec to 28 Feb", LC22_I.CalendarDays, [["Dates", "The challenge runs for 90 days, from 1 December 2026 to 28 February 2027."]]],
-    ["Rewards for the top 10", "Rewards for the top 10", "Gold membership", LC22_I.Crown, [[CH.rewards[0][0], CH.rewards[0][1]]]],
-    [CH.boxes[3].t, "Win Athens", "Athens Bar Show trip", LC22_I.Plane, [[CH.rewards[1][0], CH.rewards[1][1]], [CH.rewards[2][0], CH.rewards[2][1]]]]
+    ["Rewards for the top 10", "Rewards for the top 10", "Gold membership", LC22_I.Crown, CH.rewards.filter(r => r[0] === "Top 10").map(r => [r[0], r[1]])],
+    [CH.boxes[3].t, "Win Athens", "Athens Bar Show trip", LC22_I.Plane, CH.rewards.filter(r => r[0] === "Overall winner").map(r => [r[0], r[1]])]
   ];
   const cur = box === null ? null : [boxes[box][0], null, boxes[box][4]];
   const sec = (t, body) => h("div", { key: t }, h("h3", { className: "ff-label" }, t), body);
