@@ -145,8 +145,11 @@ function PlayerFace17({ person, large, themeKey, tier, onClick, selected, nameAs
   if (locs.length && countries.every((c) => c && c === countries[0])) locs = locs.map((l) => l.replace(/,\s*[^,]+$/, ""));
   const cap = large ? 6 : 3;
   const langs = (person.languages || []).filter(Boolean).slice(0, 5);
+  /* pb-typecards (Alex, 19:19): profile entries can be long, but the card shows a Skill or Interest only if it is at most
+     PC_ENTRY_CHARS (16) characters; a longer one among the first entries is left out whole (never cut), not replaced. */
+  const cardFits = (k) => (v) => (k !== "Skills" && k !== "Interests") || String(v).length <= PC_ENTRY_CHARS;
   const rows = [["Professions", Users, pros], ["Skills", Star, list(person.skills)], ["Interests", Heart, list(person.interests)], ["Locations", MapPin, locs]]
-    .filter((r) => r[2].length).map((r) => [r[0], r[1], r[2].slice(0, cap)]);
+    .map((r) => [r[0], r[1], r[2].slice(0, cap).filter(cardFits(r[0]))]).filter((r) => r[2].length);
   const sig = [large, themeKey, tier, name, headline, rows.map((r) => r[2].join("|")).join("/"), langs.join(","), person.hasCar, person.tag].join("~");
   React.useLayoutEffect(() => {
     const el = rootRef.current && rootRef.current.parentElement;
