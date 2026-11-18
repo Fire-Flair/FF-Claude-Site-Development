@@ -1,5 +1,9 @@
 # FireFlair prototype — changelog
 
+## v17.61
+
+- Reverted the v17.60 section-title change (option 3): Alex had not chosen it. Titles are back to their v17.59 look; `src/styles/titles3.css` is removed. The section titles will be redesigned after the FF Team v1.1 split, from the three options in the titles proposal (branch `p2-titles`). The smaller published page from v17.60 stays.
+
 ## v17.60
 
 Artifact version 1794995892-14df.
