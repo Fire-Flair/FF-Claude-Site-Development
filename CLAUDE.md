@@ -44,7 +44,9 @@ This line is the FF Team front-end export ("FF Team version 1.1. Final"), not th
   2. **Merge:** `git fetch origin ff-team-v1.1 && git merge origin/ff-team-v1.1` into your branch (keep every changelog
      entry; yours goes on top with the next number).
   3. **Check the update:** `npm run check`, `npm run build`, the journey tests, and look at screenshots.
-  4. Then publish with `base_version` = the live version, record the artifact version in the changelog, and push to
+  4. Then publish with `base_version` = the live version, **always passing `title: "FF Team version 1.1. Final"`** (Alex,
+     18 Nov 20:36: without it the artifact takes the page's own `<title>`, "FF Team · FireFlair", which is right for
+     FFTeam.uk but renames the artifact), record the artifact version in the changelog, and push to
      `ff-team-v1.1` straight away, so the next chat merges your work.
 - **Who changes what:** the home page (`#/ff-team`) is changed only in Alex's homepage thread. Other pages are updated
   in their own separate threads. Don't edit another thread's page.
