@@ -4,6 +4,19 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.60
+
+Bookings, FFParty – Our packages (Alex, 18 Nov 20:51). `team/bookings.jsx`, `styles/bkd.css`.
+
+- The line "Packages are offered where you work: your areas are on your profile." is removed, with its link handler (`goAreas`) and its styles. The intro now says it instead: "Be your own boss. Sign up to the packages you want to deliver, or create your own, and we find you work close to home. Every package shows …" (rest unchanged).
+- iPad pop-up fix. The package Details pop-up (Event brief and invoice) was drawn inside the package slider's scroll box; on iPad Safari a fixed pop-up inside a touch scroll box is clipped to that box, so it sat under the Bar / Entertainment / Services tabs, cut off top and bottom, with the page and the Confirm bar showing through. The Details pop-up and the package terms pop-up now render at the app root (`PkPop17`, a portal), above everything (z-index 200), centred, rounded all round.
+- While either pop-up is open the page behind it does not scroll (html and body overflow held, touch moves outside the pop-up held, scrollbar gutter kept on desktop so nothing jumps); the pop-up scrolls inside itself (`overscroll-behavior: contain`). Closing (X, tap outside, Escape) restores the page exactly where it was.
+- Package terms pop-up: same floating panel, and "Accept and confirm" stays pinned in view at its foot.
+- Package slider: `overscroll-behavior-x: contain` so a sideways swipe at either end no longer drags the page; swipes left and right step card by card from any position.
+- Shared components unchanged (`Sheet`, `HScroll`, `PkgFace17` / `PkgDoc17` props).
+- Checked: `npm run check`, `npm run build`; touch emulation at 768×1024, 820×1180, 1024×1366 and landscape 1180×820, 1366×1024, phone 390×844, desktop 1280: pop-up outside the slider, hit-tested on top, inner scroll moves the pop-up only (page stays put), close by X / outside tap / Escape, slider swipes both ways with page X 0.
+- Merged onto the live page 1795036085-feac (v1.59). Artifact version 1795036260-d6d7.
+
 ## v1.59
 
 Profile builder, top three professions (Alex, 18 Nov 21:02, option 1 for testing). `src/components/team/profile-edit-p2.jsx` (`PE2TopSlots`), `src/styles/profile-edit-p2.css` (top-slots block).
