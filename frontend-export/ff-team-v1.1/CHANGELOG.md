@@ -34,6 +34,20 @@ Developer notes:
 - Data: a venue record with `details.kind === "favourite"` is kept untouched in the data but never shown or edited (`xpShown29`). Do not migrate or delete those records; new venues are saved with `details: { kind: "worked" }` as before.
 - `VenueCard19` (the small tile) stays only for the Network page's Venues section, which is switched off (`SHOW_VENUES17 = false`). The old `.ff-ven19` / `.ff-seg19` / `.ff-vc19` rules in `prof21.css` and `rank17.css` are left in place (another chat edits `prof21.css`); they can be deleted when the Network venues code goes.
 - The new styles are in `src/styles/experience29.css`, loaded by the Experience components themselves.
+## v1.31
+
+FF Team home, the four pillar boxes (Alex, 18 Nov 18:15). `discover-hub.jsx`, `styles/home-text.css`.
+
+- No gradient on the pillar boxes on phones: plain champagne (#EAE0C3), as on iPad and desktop.
+- The chevron is a solid burgundy button with a champagne outline and arrow on every size, open and closed.
+- Each tile shows its title only (the subtitle line, e.g. "Your CV, as your own page", is removed from the tile; the text stays in `team-pillars.json` for the pages that use it). Titles are bold (700) and bigger: 25px on phones, 27px on iPad, 24px with four tiles in a row.
+- iPad and desktop: the photo comes down to 56px above the tile's bottom edge, since there is now one line of words.
+- Merged onto the live page (v1.30); page saved as `live-v1.31-index.html`. Artifact version 1795026094-3cb5.
+
+## v1.30
+
+- FF Team home pillar boxes on iPad and desktop (Alex, 18 Nov 18:04): no fade on the photos. The photo ends cleanly above the champagne area with the words (`styles/home-text.css`); phones unchanged.
+- Merged onto the live page 1795025163-2b90 (a profile-tabs update from another chat, not on GitHub), so that work stays; page saved as `live-v1.30-index.html`. Artifact version 1795025706-b439.
 
 ## v1.29
 
