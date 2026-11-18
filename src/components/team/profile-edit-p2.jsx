@@ -17,14 +17,15 @@ function PE2TopSlots({ profs }) {
   const ids = profs.map(r => r.id);
   const nameOf = (id) => (profs.find(r => r.id === id) || {}).name || "";
   const [slots, setSlots] = useState(() => [0, 1, 2].map(i => ids[i] || null));
+  const cleared = useRef(new Set());
   /* Keep the slots in step with the list (a profession added, removed or renamed elsewhere). */
   useEffect(() => {
     setSlots(cur => {
       const kept = cur.map(id => (id && ids.includes(id)) ? id : null);
       const used = new Set(kept.filter(Boolean));
       const free = ids.filter(id => !used.has(id));
-      /* An empty slot the member left stays empty; a slot left over from a removed profession takes the next one. */
-      return kept.map((id, i) => id || (cur[i] && !ids.includes(cur[i]) ? (free.shift() || null) : null));
+      /* An empty slot the member emptied stays empty until they fill it; any other empty slot takes the next profession. */
+      return kept.map((id, i) => id || (cleared.current.has(i) ? null : (free.shift() || null)));
     });
   }, [ids.join("|")]);
   const save = (next) => {
@@ -34,6 +35,7 @@ function PE2TopSlots({ profs }) {
   const empty = (i) => {
     const id = slots[i]; if (!id) return;
     const next = slots.map((x, k) => k === i ? null : x);
+    cleared.current.add(i);
     setSlots(next);
     dispatch({ type: "REC_MOVE", category: "professions", id, to: ids.length - 1 });
     save(next);
@@ -41,6 +43,7 @@ function PE2TopSlots({ profs }) {
   const fill = (id) => {
     const at = slots.indexOf(null); if (at < 0) return;
     const next = slots.map((x, k) => k === at ? id : x);
+    cleared.current.delete(at);
     setSlots(next); save(next);
   };
   const rest = ids.filter(id => !slots.includes(id));
@@ -172,8 +175,8 @@ function PE2ProfCats({ P }) {
     if (!P.has(nm)) P.toggle(nm);
     setQ("");
   };
-  const own = P.ownIn("Other");
-  const cats = [...PE2_CATS.filter(c => c.key !== "Other"), ...(own.length ? [{ key: "Other", list: [] }] : [])];
+  const [openCat, setOpenCat] = useState(null);
+  const cats5 = [...PE2_CATS.filter(c => c.key !== "Other"), { key: "Other", list: [] }].sort((a, b) => CATEGORY_ORDER.indexOf(a.key) - CATEGORY_ORDER.indexOf(b.key));
   return (
     <div className="pe2-pc">
       <form className={"ff-type21 pe2-pc-type" + (q.trim() ? " has" : "")} onSubmit={add}>
@@ -187,27 +190,61 @@ function PE2ProfCats({ P }) {
         </div>
       )}
       <PE2Which P={P} />
-      <div className="ff-mrow ff-acar pe2-rail pe2-cats" role="list" aria-label="Profession categories">
-        {cats.map(c => {
-          const mineHere = P.ownIn(c.key);
-          const n = c.list.filter(x => P.has(x)).length + mineHere.length;
+      {/* prof-grid (Alex, 18 Nov 21:34, option 5): every category on screen as an icon tile (eight, four across), with how
+          many of its professions are chosen; tapping a tile opens that category in a pop-up to pick as many as you like
+          or add your own under it. */}
+      <div className="pe2-grid" role="list" aria-label="Profession categories">
+        {cats5.map(c => {
+          const n = c.list.filter(x => P.has(x)).length + P.ownIn(c.key).length;
           return (
-            <div key={c.key} role="listitem" className={"ff-agrp t-card pe2-cat" + (c.ranked ? " bar" : "") + (n ? " has" : "")}>
-              <span className="ff-agrp-top">
-                <span className="pe2-cat-ic" aria-hidden="true">{pe2CatIcon(c.key, 18)}</span>
-                <span className="ff-agrp-h" style={{ "--fs": pe2Fit(c.key) }}>{c.key}</span>
-                {n > 0 && <span className="ff-agrp-n">{n}</span>}
-              </span>
-              <span className="pe2-cat-l" role="group" aria-label={c.key}>
-                {c.list.map((x, i) => <PE2CatItem key={x} name={x} on={P.has(x)} step={c.ranked ? i + 1 : 0} onClick={() => P.toggle(x)} />)}
-                {mineHere.map(r => <PE2CatItem key={r.id} name={r.name} on onClick={() => P.remove(r)} />)}
-              </span>
-            </div>
+            <button key={c.key} type="button" role="listitem" className={"pe2-gt" + (n ? " has" : "")} aria-haspopup="dialog" onClick={() => setOpenCat(c.key)}
+              aria-label={`${groupLabel17(c.key)}${n ? `, ${n} chosen` : ""}`}>
+              <span className="ic" aria-hidden="true">{pe2CatIcon(c.key, 22)}</span>
+              <span className="nm" style={{ fontSize: pe2TileFs(groupLabel17(c.key)) }}>{groupLabel17(c.key)}</span>
+              {n > 0 && <span className="ct" aria-hidden="true">{n}</span>}
+            </button>
           );
         })}
-        <span className="ff-acar-end" aria-hidden="true" />
       </div>
+      {openCat && <PE2CatSheet P={P} c={cats5.find(c => c.key === openCat)} onClose={() => setOpenCat(null)} />}
     </div>
+  );
+}
+
+/* prof-grid: a tile label never splits a word; the longest word sets a smaller size (Entertainment on a phone). */
+const pe2TileFs = (t) => { const L = Math.max(...String(t).split(/\s+/).map(w => w.length)); return L >= 13 ? "clamp(9.5px,2.6vw,13.5px)" : L >= 10 ? "clamp(10.5px,2.9vw,13.5px)" : undefined; };
+
+/* prof-grid: one category's professions in a pop-up. Tap to add or remove; "Add your own" puts a typed profession
+   under this category (Other included), with the same suggestions as the main type box. */
+function PE2CatSheet({ P, c, onClose }) {
+  const [q, setQ] = useState("");
+  if (!c) return null;
+  const mineHere = P.ownIn(c.key);
+  const add = (e) => {
+    e.preventDefault();
+    const t = q.trim(); if (!t) return;
+    const hit = pe2Listed(t);
+    const nm = hit ? hit.name : pe2Title(t);
+    if (!P.has(nm)) P.toggle(nm, hit ? undefined : c.key);
+    setQ("");
+  };
+  return (
+    <Sheet open onClose={onClose} title={groupLabel17(c.key)}>
+      <div className="pe2-cs">
+        {(c.list.length > 0 || mineHere.length > 0) && (
+          <div className="pe2-cs-l" role="group" aria-label={groupLabel17(c.key)}>
+            {c.list.map((x, i) => <PE2CatItem key={x} name={x} on={P.has(x)} step={c.ranked ? i + 1 : 0} onClick={() => P.toggle(x)} />)}
+            {mineHere.map(r => <PE2CatItem key={r.id} name={r.name} on onClick={() => P.remove(r)} />)}
+          </div>
+        )}
+        <form className={"ff-type21 pe2-pc-type" + (q.trim() ? " has" : "")} onSubmit={add}>
+          <input type="text" value={q} maxLength={PROF_MAX_LEN} autoComplete="off" spellCheck={false} enterKeyHint="enter" placeholder="Add your own" aria-label={`Add your own ${groupLabel17(c.key)} profession`}
+            onChange={(e) => setQ(e.target.value)} />
+          <button type="submit" className="ff-type21-key" aria-label="Add" tabIndex={-1}><span>Enter</span><CornerDownLeft21 size={15} strokeWidth={2.2} aria-hidden="true" /></button>
+        </form>
+        <button type="button" className="ff-btn primary wide pe2-cs-done" onClick={onClose}><Check size={15} /> Done</button>
+      </div>
+    </Sheet>
   );
 }
 

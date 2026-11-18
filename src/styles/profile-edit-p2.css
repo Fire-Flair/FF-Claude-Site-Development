@@ -96,3 +96,18 @@
 .ff .pe2-pc-hit small { font-weight:500; font-size:11.5px; color:#8A6A14; }
 .ff .pe2-pc-hit:hover { background:#FBF6E8; }
 .ff .pe2-pc-hit:focus-visible { outline:2px solid #8A6A14; outline-offset:2px; }
+
+/* prof-grid (Alex, 18 Nov 21:34, option 5): the eight categories as icon tiles, four across; a tile opens a pop-up. */
+.ff .pe2-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; padding-top:12px; }
+.ff .pe2-gt { all:unset; box-sizing:border-box; cursor:pointer; position:relative; display:flex; flex-direction:column; align-items:center; gap:7px; padding:12px 4px 10px; min-height:96px; text-align:center;
+  background:#FFFDF8; border:1px solid rgba(126,97,29,.3); border-radius:18px; corner-shape:squircle; transition:border-color .15s, box-shadow .15s; }
+.ff .pe2-gt:hover { border-color:var(--color-gold,#C9A227); }
+.ff .pe2-gt:focus-visible { outline:2px solid #8A6A14; outline-offset:2px; }
+.ff .pe2-gt.has { border-color:var(--color-gold,#C9A227); background:linear-gradient(180deg,#FFF8E6,#F8EDD0); }
+.ff .pe2-gt .ic { display:grid; place-items:center; width:46px; height:46px; border-radius:14px; corner-shape:squircle; background:#16130F; color:#E4C36A; }
+.ff .pe2-gt .nm { font:600 12px/1.2 var(--font-sans); color:#16130F; overflow-wrap:normal; word-break:normal; hyphens:none; }
+.ff .pe2-gt .ct { position:absolute; top:6px; right:6px; min-width:20px; height:20px; padding:0 6px; border-radius:10px; background:#5C1220; color:#F3DE9C; font:700 11px/20px var(--font-sans); text-align:center; }
+@media (min-width:760px) { .ff .pe2-gt { min-height:110px; } .ff .pe2-gt .nm { font-size:13.5px; } }
+.ff .pe2-cs { padding:14px 16px 4px; display:flex; flex-direction:column; gap:12px; }
+.ff .pe2-cs-l { display:flex; flex-direction:column; gap:8px; }
+.ff .pe2-cs-done { margin-top:2px; }
