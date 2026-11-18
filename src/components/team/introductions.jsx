@@ -474,6 +474,7 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
   const Empty1 = ({ icon, children }) => <div className="ff-tab-empty">{icon}<p>{children}</p></div>;
   return (
     <div className="ff-ptabs-wrap" style={cardTone17(cardThemeOf17(state, person))}>
+      <ProfileCoin17 />
       <ProfileH117 person={person} />
       <ProfileTabs tabs={tabs} active={tab} onChange={setTab} />
       <div role="tabpanel" id="ff-tabpanel" aria-labelledby={`ff-tab-${tab}`} className="ff-tabpanel" tabIndex={0}>

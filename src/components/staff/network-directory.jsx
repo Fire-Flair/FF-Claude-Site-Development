@@ -603,6 +603,7 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
       </>} />
 
       <div className="ff-ptabs-wrap" style={cardTone17(co.theme || "onyx")}>
+        <ProfileCoin17 />
         <style>{CO_PAGE_CSS21}</style>
         <ProfileH117 person={{ name: co.name, profession: [].concat(co.kind || [])[0], locations: [co.area || areas[0]].filter(Boolean) }} />
         {!co.unclaimed && <ProfileTabs tabs={tabs} active={tab} onChange={setTab} />}

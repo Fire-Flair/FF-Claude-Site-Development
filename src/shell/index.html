@@ -128,8 +128,19 @@ window.lucide || document.write('<script src="https://cdn.jsdelivr.net/npm/lucid
 .ff .ff-ptabs-wrap > .ff-ptabs.ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) > button.on{background:#5C1220 !important;border-color:#5C1220 !important;color:#EDD58F !important;font-weight:800}
 .ff .ff-ptabs-wrap > .ff-ptabs.ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) > button.on::after{content:"" !important;position:absolute;left:50%;bottom:-7px;width:12px;height:12px;margin-left:-6px;background:#5C1220;transform:rotate(45deg);border-radius:2px;transition:none}
 .ff .ff-ptabs-wrap{position:relative}
-.ff .ff-ptabs-wrap::before{content:"";display:block;height:56px;margin:24px 0 20px;background:url(ffasset:img/a76f52c80cd8d6b4.webp) center/52px 52px no-repeat,linear-gradient(90deg,transparent 0,#CDB46C 12%,#CDB46C calc(50% - 38px),transparent calc(50% - 38px),transparent calc(50% + 38px),#CDB46C calc(50% + 38px),#CDB46C 88%,transparent 100%) center/100% 1px no-repeat}
-@media (min-width:760px){.ff .ff-ptabs-wrap::before{height:48px;margin:26px 0 22px;background-size:44px 44px,100% 1px;background-image:url(ffasset:img/a76f52c80cd8d6b4.webp),linear-gradient(90deg,transparent 0,#CDB46C 14%,#CDB46C calc(50% - 34px),transparent calc(50% - 34px),transparent calc(50% + 34px),#CDB46C calc(50% + 34px),#CDB46C 86%,transparent 100%)}}
+/* v1.70: the separator coin spins. It is the home page's coin (V101.CoinDivider in ProfileCoin17, profile-edit-tabs.jsx);
+   these rules give it the home look outside .ff-home, at 52px on phones and 44px from 760px, with the gold line either side. */
+.ff .ff-ptabs-wrap > .ff-pcoin17{margin:24px 0 20px}
+.ff .ff-pcoin17 .ff-coindiv{display:flex;align-items:center;justify-content:center;gap:12px;height:56px;margin:0}
+.ff .ff-pcoin17 .ff-coindiv .ln{flex:1;height:1px;background:linear-gradient(90deg,transparent 0,#CDB46C 24%)}
+.ff .ff-pcoin17 .ff-coindiv .ln:last-child{background:linear-gradient(90deg,#CDB46C 76%,transparent 100%)}
+.ff .ff-pcoin17 .ff-coin3d{flex:none;width:52px;height:52px;perspective:420px;filter:drop-shadow(0 6px 10px rgba(48,36,10,.32))}
+.ff .ff-pcoin17 .ff-coin3d .spin{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;will-change:transform}
+.ff .ff-pcoin17 .ff-coin3d .face{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.ff .ff-pcoin17 .ff-coin3d .front{transform:translateZ(3px)}
+.ff .ff-pcoin17 .ff-coin3d .back{transform:rotateY(180deg) translateZ(3px)}
+.ff .ff-pcoin17 .ff-coin3d .edge{position:absolute;inset:1px;border-radius:50%;background:linear-gradient(90deg,#6A4F12,#E4C36A 45%,var(--gold-mid,#B08D2A) 70%,#5C430F)}
+@media (min-width:760px){.ff .ff-ptabs-wrap > .ff-pcoin17{margin:26px 0 22px}.ff .ff-pcoin17 .ff-coindiv{height:48px}.ff .ff-pcoin17 .ff-coin3d{width:44px;height:44px}}
 .ff .ff-ptabs-wrap > #ff-tabpanel#ff-tabpanel{padding-top:24px !important}
 .ff #ff-tabpanel > section.ff-about:first-of-type{border:1px solid #E2D3A8 !important;border-radius:18px !important;corner-shape:squircle;background:#FFFCF4 !important}
 </style>

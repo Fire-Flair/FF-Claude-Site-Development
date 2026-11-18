@@ -7,6 +7,15 @@
 
 const PROFILE_EDIT_TABS_CSS = __ff_css("styles/profile-edit-tabs.css");
 
+/* v1.70: the spinning FF coin between the Profile Card buttons and the profile tabs, first child of every
+   .ff-ptabs-wrap (public profile, profile builder, own profile edit page, company profile). It is the home page's
+   coin (V101.CoinDivider, turned by V101.useCoinSpin as the page scrolls), so it looks and spins the same. */
+function ProfileCoin17() {
+  const ref = useRef(null);
+  V101.useCoinSpin(ref);
+  return <div ref={ref} className="ff-pcoin17"><V101.CoinDivider /></div>;
+}
+
 /* The small squircle pencil beside a section heading. */
 function EditTabPencil({ label, onClick }) {
   return <button type="button" className="ara-pen" aria-label={`Edit ${label}`} title={`Edit ${label}`} onClick={onClick}><Pencil size={15} strokeWidth={2} aria-hidden="true" /></button>;
@@ -86,6 +95,7 @@ function ProfileEditTabs({ person }) {
       <style>{PROFILE_EDIT_TABS_CSS}</style>
       <style>{RANK_CSS17}</style>
       <div className="ff-ptabs-wrap">
+        <ProfileCoin17 />
         <ProfileTabs tabs={tabs} active={tab} onChange={setTab} />
         <div role="tabpanel" id="ff-tabpanel" aria-labelledby={`ff-tab-${tab}`} className="ff-tabpanel" tabIndex={0}>
           {tab === "overview" && overview}
