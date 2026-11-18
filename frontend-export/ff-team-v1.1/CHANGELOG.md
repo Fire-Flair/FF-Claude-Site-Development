@@ -4,6 +4,17 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.66
+
+Profile tabs (Alex, 18 Nov 21:13: "I like number 5", from the six mock-ups on branch `tabs-mock`). `shell/index.html`.
+
+- A gold line with the FF coin in the middle now separates the Profile Card buttons from the tabs (coin 52px on phones, 44px from 760px).
+- Overview, Packages, Team and Reviews are separate ivory boxes with a fine gold edge; the chosen tab is burgundy with gold-leaf text and a small pointer down into its page. The burgundy box joining the tab to its page is gone.
+- The About Me box is ivory with a fine gold edge.
+- Applies wherever the profile tabs are used: public profiles, the profile builder and company profiles. The other five options were not kept (the mock-up switch is not in the release).
+- Checked: `npm run check`, `npm run build`; public profile and builder at 390 and 1180, no sideways overflow, no tab label cut.
+- Merged onto the live page 1795037620-f350 (v1.65). Artifact version 1795037719-8da7.
+
 ## v1.65
 
 Profile builder, Let's get started (Alex, 18 Nov 21:31). `src/components/team/profile-builder.jsx`, `src/styles/v11.css`.

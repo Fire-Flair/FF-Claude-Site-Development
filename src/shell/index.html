@@ -119,6 +119,19 @@ window.lucide || document.write('<script src="https://cdn.jsdelivr.net/npm/lucid
 .ff .ff-pub-grid11 > .ff-csm-btn.ff-pub-wa11{background:#E4D0A0 !important;color:#2A1E04 !important;border:1px solid #B89B5E !important;box-shadow:0 4px 10px -8px rgba(110,80,20,.6) !important}
 .ff .ff-pub-grid11 > .ff-csm-btn.ff-pub-wa11 svg{color:#25D366;fill:#25D366}
 .ff .ff-pub-grid11 > .ff-btn{background:#fff;border:1px solid #D9CDAE;color:#16130F}
+
+/* v1.66 profile tabs (Alex, 18 Nov 21:13, option 5 of six): a gold line with the FF coin in the middle separates the Profile Card
+   buttons from the tabs; the tabs are separate ivory boxes, the chosen one burgundy with a small pointer into its page. No
+   burgundy join box. The About Me box is ivory with a fine gold edge. */
+.ff .ff-ptabs-wrap > .ff-ptabs.ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19){margin-top:0 !important;margin-bottom:0 !important;align-items:stretch;gap:8px}
+.ff .ff-ptabs-wrap > .ff-ptabs.ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) > button{position:relative;min-height:52px;margin-bottom:0 !important;padding-bottom:6px !important;border-radius:14px !important;corner-shape:squircle;white-space:nowrap;word-break:keep-all;overflow-wrap:normal;hyphens:none;background:#FFFCF4 !important;border:1px solid #D9C68E !important;color:#3A2F1A !important;font-weight:700;box-shadow:0 4px 10px -8px rgba(80,58,14,.5)}
+.ff .ff-ptabs-wrap > .ff-ptabs.ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) > button.on{background:#5C1220 !important;border-color:#5C1220 !important;color:#EDD58F !important;font-weight:800}
+.ff .ff-ptabs-wrap > .ff-ptabs.ff-ptabs:not(.ff-nt20):not(.ff-ptabs-cat19) > button.on::after{content:"" !important;position:absolute;left:50%;bottom:-7px;width:12px;height:12px;margin-left:-6px;background:#5C1220;transform:rotate(45deg);border-radius:2px;transition:none}
+.ff .ff-ptabs-wrap{position:relative}
+.ff .ff-ptabs-wrap::before{content:"";display:block;height:56px;margin:24px 0 20px;background:url(ffasset:img/a76f52c80cd8d6b4.webp) center/52px 52px no-repeat,linear-gradient(90deg,transparent 0,#CDB46C 12%,#CDB46C calc(50% - 38px),transparent calc(50% - 38px),transparent calc(50% + 38px),#CDB46C calc(50% + 38px),#CDB46C 88%,transparent 100%) center/100% 1px no-repeat}
+@media (min-width:760px){.ff .ff-ptabs-wrap::before{height:48px;margin:26px 0 22px;background-size:44px 44px,100% 1px;background-image:url(ffasset:img/a76f52c80cd8d6b4.webp),linear-gradient(90deg,transparent 0,#CDB46C 14%,#CDB46C calc(50% - 34px),transparent calc(50% - 34px),transparent calc(50% + 34px),#CDB46C calc(50% + 34px),#CDB46C 86%,transparent 100%)}}
+.ff .ff-ptabs-wrap > #ff-tabpanel#ff-tabpanel{padding-top:24px !important}
+.ff #ff-tabpanel > section.ff-about:first-of-type{border:1px solid #E2D3A8 !important;border-radius:18px !important;corner-shape:squircle;background:#FFFCF4 !important}
 </style>
 </head>
 <body>
