@@ -260,9 +260,9 @@ const swipeImgs = () => {
   /* Where each card photo's subject sits (object-position) when the photo is shown at the card's 4:3 top half:
      heads and the drink stay in frame, above the title. Update the entry when a card's photo is swapped. */
   const pos = {
-    jobs: { music_festivals: "50% 62%", food_festivals: "50% 78%", sports: "50% 42%", motorsport: "50% 72%", international: "50% 30%", yachts: "50% 40%", after_dark: "50% 62%", flair: "50% 52%" },
-    training: { intro_cocktails: "60% 64%", mixology: "50% 6%", wset_spirits: "38% 50%", wset_wine: "22% 50%", brand_training: "77% 72%", ff_open_class: "70% 50%", ff_open_bar: "50% 100%", ff_masterclass: "50% 42%" },
-    rewards: { shoot: "49% 58%" },
+    jobs: { music_festivals: "50% 30%", food_festivals: "50% 78%", sports: "50% 40%", motorsport: "50% 20%", international: "50% 30%", yachts: "50% 40%", after_dark: "50% 35%", flair: "50% 35%" },
+    training: { intro_cocktails: "60% 64%", mixology: "50% 6%", wset_spirits: "50% 45%", wset_wine: "50% 40%", brand_training: "77% 72%", ff_open_class: "50% 60%", ff_open_bar: "50% 100%", ff_masterclass: "50% 30%" },
+    rewards: { bar_shows: "50% 30%", training: "50% 50%", kit: "50% 50%", party: "50% 40%", shoot: "49% 58%" },
   };
   return { jobs: own("in_dj_", base.jobs), training: own("in_tr_", base.training), rewards: own("in_rw_", base.rewards), pos };
 };

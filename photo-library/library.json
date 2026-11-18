@@ -134,6 +134,10 @@
     {
      "key": "jr_shifts",
      "where": "Story: How to get your first event shifts"
+    },
+    {
+     "key": "in_rw_training",
+     "where": "Reward: Free training tickets (FF Team Bookings, Build your career)"
     }
    ],
    "note": "Screenshot: the web copy is the photo only, with the app interface trimmed off."
@@ -237,6 +241,10 @@
     {
      "key": "t17_p05, j17_p05",
      "where": "FF Business home: profile pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "in_rw_kit",
+     "where": "Reward: Branded cocktail equipment (FF Team Bookings, Build your career)"
     }
    ]
   },
@@ -340,6 +348,10 @@
     {
      "key": "jr_sites",
      "where": "Story: Three FireFlair sites, one network"
+    },
+    {
+     "key": "in_tr_wset_wine",
+     "where": "Training card: WSET Wine (FF Team Bookings, Build your career)"
     }
    ]
   },
@@ -384,10 +396,6 @@
     {
      "key": "t17_p08, j17_p08",
      "where": "FF Party home: profile pillar (rotating, 1 of 5)"
-    },
-    {
-     "key": "in_tr_ff_masterclass",
-     "where": "Training card: FireFlair Masterclass"
     }
    ]
   },
@@ -472,6 +480,10 @@
     {
      "key": "j17_p10",
      "where": "FF Team home: profile pillar cards (rotating)"
+    },
+    {
+     "key": "in_dj_flair",
+     "where": "Dream job: Flair jobs (FF Team Bookings, Build your career)"
     }
    ]
   },
@@ -675,6 +687,10 @@
     {
      "key": "jr_cards",
      "where": "Story: Why everything on FireFlair is a card"
+    },
+    {
+     "key": "bk_rewards",
+     "where": "Bookings: FireFlair rewards drop-down photo (FF Team Bookings, Build your career)"
     }
    ]
   },
@@ -728,6 +744,10 @@
     {
      "key": "jr_menuteam",
      "where": "Story: Learn the menu"
+    },
+    {
+     "key": "in_tr_wset_spirits",
+     "where": "Training card: WSET Spirits (FF Team Bookings, Build your career)"
     }
    ]
   },
@@ -865,10 +885,6 @@
     {
      "key": "in_tr_mixology",
      "where": "Training card: Mixology"
-    },
-    {
-     "key": "bk_rewards",
-     "where": "Bookings: FireFlair rewards drop-down photo (replaced the tool roll in v17.3.127)"
     }
    ]
   },
@@ -1195,6 +1211,10 @@
     {
      "key": "jr_whyteam",
      "where": "Story: Why join FF Team"
+    },
+    {
+     "key": "in_dj_music_festivals",
+     "where": "Dream job: Music festivals (FF Team Bookings, Build your career)"
     }
    ]
   },
@@ -1291,6 +1311,10 @@
     {
      "key": "t17_p27, j17_p27",
      "where": "FF Party home: community pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "in_dj_after_dark",
+     "where": "Dream job: After Dark (FF Team Bookings, Build your career)"
     }
    ]
   },
@@ -1478,6 +1502,10 @@
     {
      "key": "jr_workteam",
      "where": "Story: How to receive and accept work on FF Team"
+    },
+    {
+     "key": "in_tr_ff_open_class",
+     "where": "Training card: FireFlair Open Class (FF Team Bookings, Build your career)"
     }
    ]
   },
@@ -1674,6 +1702,10 @@
     {
      "key": "t17_p35, j17_p35",
      "where": "FF Party home: community pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "in_dj_sports",
+     "where": "Dream job: Sports events (FF Team Bookings, Build your career)"
     }
    ]
   },
@@ -2112,6 +2144,10 @@
     {
      "key": "t17_p45, j17_p45",
      "where": "FF Business home: community pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "in_dj_motorsport",
+     "where": "Dream job: Motorsport (FF Team Bookings, Build your career)"
     }
    ]
   },
@@ -6502,6 +6538,10 @@
     {
      "key": "t17_vke03, j17_vke03",
      "where": "FF Business home: events pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "in_rw_bar_shows",
+     "where": "Reward: International bar shows (FF Team Bookings, Build your career)"
     }
    ]
   },
@@ -6550,6 +6590,10 @@
     {
      "key": "t17_vke04, j17_vke04",
      "where": "FF Party home: community pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "in_tr_ff_masterclass",
+     "where": "Training card: FireFlair Masterclass (FF Team Bookings, Build your career)"
     }
    ]
   },
@@ -6641,6 +6685,10 @@
     {
      "key": "t17_vke06, j17_vke06",
      "where": "FF Business home: community pillar (rotating, 1 of 5)"
+    },
+    {
+     "key": "in_rw_party",
+     "where": "Reward: FF staff parties (FF Team Bookings, Build your career)"
     }
    ]
   },
