@@ -2,6 +2,8 @@
 
 ## v17.57
 
+Artifact version 1794972321-59f1.
+
 FF Team home order (Legolas's recommendation, approved by Alex). Branch merged: `p2-home5`.
 
 - `team-home.jsx`, `home-sections.jsx`, `home-fix22.css`, `tm20.css`: order is Welcome hero (+ Welcome back), Discover, the "built for getting you bookings" box, Launch Challenge, FF Stories, the video under "Life at FF Team" (16:9 on phones), Can FF Team help you?, Join / Your FireFlair, Business & Support, then the coin game in its own box at the very bottom. Five spinning coins with equal gaps; the page is about 630px shorter on phones.
