@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.51
+
+- Profile builder, Profile Card face (Alex, 18 Nov 20:31): the empty photo with the bust was an oval (120×110, from the photo button's side padding). It is now a true 110px circle on every size (`styles/prof21.css`). Merged onto the live page (v1.50). Artifact version 1795034109-a91a.
+
 ## v1.50
 
 - FF Team home, Launch Challenge (Alex, 18 Nov 20:26): the Top 10 rewards tile's faint background symbol is a champagne bottle instead of a credit card (`ChampagneBottle22` in `discover-and-support.jsx`, drawn in the lucide line style). Merged onto the live page (v1.49). Artifact version 1795033808-5463.
