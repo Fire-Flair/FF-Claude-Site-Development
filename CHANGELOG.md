@@ -2,6 +2,8 @@
 
 ## v17.41
 
+Artifact version 1794960401-32cd.
+
 Defect fixes and review findings. Branches merged: `p2-fixes`, `p2-fixes2`.
 
 - Reviews (`profile-from-text.jsx`, `network.jsx`, `network-directory.jsx`, `review-card35.jsx`): the "Review sent" message is no longer overwritten by the sign-up message; a signed-out review on FF Staff and FF Party logs in on the same site and waits; "Write a review" stays in the profile menu until written; a waiting company review shows "Waiting for … to accept" and is not counted; empty-state wording; the review note label.
