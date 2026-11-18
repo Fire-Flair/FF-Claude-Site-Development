@@ -1,0 +1,41 @@
+/* v17.20 — FF Team Network page: Directory and Venues tabs, Featured tag, venue tile with the members who listed it. */
+/* 17.21 — sub-category tabs: a single row of squircle buttons. The row scrolls left and right only: fixed height, no vertical overflow,
+   touch-action pan-x, and no underline element that could add height when a tab is chosen. */
+.ff .ff-ptabs.ff-nt20 { display: flex; flex-wrap: nowrap; align-items: center; gap: 8px; height: 62px; box-sizing: border-box; margin: 0 -16px 6px; padding: 9px 16px; border: 0;
+  overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; touch-action: pan-x; scroll-snap-type: x proximity; scroll-padding-inline: 16px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.ff .ff-ptabs.ff-nt20::-webkit-scrollbar { display: none; }
+.ff .ff-ptabs.ff-nt20 button { flex: none; flex-direction: row; gap: 8px; height: 44px; min-height: 44px; min-width: 44px; padding: 0 16px; box-sizing: border-box; scroll-snap-align: start;
+  font: 600 13.5px/1 var(--sans); letter-spacing: .005em; color: #3A3427; white-space: nowrap; overflow-wrap: normal; word-break: normal; hyphens: none;
+  background: #FFFDF8; border: 1px solid rgba(126,97,29,.3); border-radius: 15px; corner-shape: squircle; box-shadow: 0 1px 0 rgba(255,255,255,.7) inset, 0 4px 10px -8px rgba(40,30,10,.5);
+  transition: background .18s ease, color .18s ease, border-color .18s ease; }
+.ff .ff-ptabs.ff-nt20 button::after { content: none; }
+.ff .ff-ptabs.ff-nt20 button:hover { border-color: rgba(126,97,29,.6); }
+.ff .ff-ptabs.ff-nt20 button.on { background: #16130F; border-color: #B08D2A; color: #F4EFE4; font-weight: 700; box-shadow: 0 6px 14px -8px rgba(0,0,0,.7); }
+.ff .ff-ptabs.ff-nt20 button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 15px; }
+.ff .ff-ptabs.ff-nt20 .ic { display: inline-flex; color: var(--gold-dk, #7E611D); }
+.ff .ff-ptabs.ff-nt20 button.on .ic { color: #E4C36A; }
+.ff .ff-ptabs.ff-nt20 .ct { font-weight: 600; font-size: 12px; opacity: .65; font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) { .ff .ff-ptabs.ff-nt20 button { transition: none; } }
+.ff .ff-vt20 { display: flex; flex-direction: column; gap: 10px; width: 236px; }
+.ff .ff-vt20 .ff-vc19 { width: 100%; }
+.ff .ff-vt20 .lb { margin: 0 2px; font: 800 10.5px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: #6A5E48; }
+.ff .ff-vt20 .by { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 0 2px; }
+.ff .ff-vt20 .by button { display: grid; place-items: center; width: 44px; height: 44px; margin: -6px; padding: 0; border: 0; background: none; cursor: pointer; border-radius: 50%; line-height: 0; }
+.ff .ff-vt20 .by button:focus-visible { outline: 2px solid var(--gold); outline-offset: 0; }
+
+/* Coin: the FF coin shows the notification count. With one or more waiting, a black face with the number in gold
+   covers the FF letters (gold rim and burgundy line stay); with none, the coin shows FF. Short fade, none under reduced motion. */
+.ff .ff-coinwrap20 { position: relative; display: block; line-height: 0; flex: none; }
+.ff .ff-coinwrap20.mob { --cs: 56px; --cf: .885; --n1: .56; --n2: .44; }
+.ff .ff-coinwrap20.desk { --cs: 30px; --cf: .8; --n1: .5; --n2: .39; }
+.ff .ff-coinnum20 {
+  position: absolute; left: 50%; top: 50%; width: calc(var(--cs) * var(--cf)); height: calc(var(--cs) * var(--cf));
+  transform: translate(-50%, -50%); border-radius: 50%; background: var(--color-ink);
+  display: grid; place-items: center; line-height: 1; white-space: nowrap;
+  font-family: var(--font-display); font-weight: 700; font-size: calc(var(--cs) * var(--n1)); letter-spacing: 0;
+  font-variant-numeric: lining-nums; color: var(--color-gold-lt);
+  opacity: 0; transition: opacity .25s ease; pointer-events: none;
+}
+.ff .ff-coinnum20.d2 { font-size: calc(var(--cs) * var(--n2)); letter-spacing: -.02em; }
+.ff .ff-coinnum20.on { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .ff .ff-coinnum20 { transition: none; } }

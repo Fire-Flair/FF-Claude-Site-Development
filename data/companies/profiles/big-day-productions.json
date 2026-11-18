@@ -1,0 +1,71 @@
+{
+  "formatVersion": 2,
+  "slug": "big-day-productions",
+  "name": "Big Day Productions",
+  "kind": "Wedding photo & film team",
+  "base": "Henley-on-Thames",
+  "areas": [
+    "Oxfordshire",
+    "UK-wide"
+  ],
+  "description": "A Henley-on-Thames team of wedding photographers and videographers working UK-wide, aiming for creative, timeless images without heavy posing.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://app.bridebook.com/uk/search/wedding-photographers/united-kingdom--gb?page=3",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding photography",
+        "Wedding film"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/search/wedding-photographers/united-kingdom--gb?page=3",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/search/wedding-photographers/united-kingdom--gb?page=3",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "BIGDA",
+    "position": 70,
+    "source": {
+      "urls": [
+        "https://app.bridebook.com/uk/search/wedding-photographers/united-kingdom--gb?page=3"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Henley-on-Thames",
+        "lat": 51.536,
+        "lng": -0.902,
+        "approx": false
+      }
+    ]
+  }
+}

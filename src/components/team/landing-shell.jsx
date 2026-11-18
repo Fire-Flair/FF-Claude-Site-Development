@@ -8,18 +8,10 @@ function Landing() {
   const { state, dispatch } = useStore();
   if (state.tab === "network") return <NetworkScreen guest />;
   if (state.tab === "bookings") return PHASE1.bookingsLive ? <TeamBookings guest /> : <P1Bookings guest />;
-  if (state.tab && state.tab !== "home") {
-    return (
-      <div className="ff-landing">
-        <div style={{ textAlign: "center", padding: "40px 0 10px" }}>
-          <div style={{ display: "flex", justifyContent: "center", marginBottom: 14 }}><Coin size={50} tier="gold" /></div>
-          <h1 className="ff-h1" style={{ fontSize: 20 }}>This is where your Profile Card lives</h1>
-          <p className="ff-lede" style={{ marginTop: 10, maxWidth: 320, marginLeft: "auto", marginRight: "auto" }}>Choose how you'll use FireFlair.</p>
-        </div>
-        <RoleCards />
-      </div>
-    );
-  }
+  /* The old chooser screen is retired. Signed out with no role, any other tab (a TAB "profile" sent without a role, or a
+     saved state) hands over: Profile opens FF Team Profile, the same as the hero's Create your Profile Card; anything else
+     goes to the home page. */
+  if (state.tab && state.tab !== "home") return <LandingHandOver17 tab={state.tab} />;
 
   return (
     <V101.Home101 />
@@ -27,9 +19,21 @@ function Landing() {
 }
 
 
+/* Runs once, then unmounts (Profile hands over to TeamRouter, Home to the home page), so it cannot loop. */
+function LandingHandOver17({ tab }) {
+  const { dispatch } = useStore();
+  useEffect(() => {
+    if (tab === "profile") { dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); }
+    else dispatch({ type: "TAB", tab: "home" });
+  }, []);
+  return null;
+}
+
+
 
 function ActionSheet({ open, onClose }) {
   const { state, dispatch } = useStore();
+  if (isPartySite17(state)) return null;
   const go = (fn) => () => { onClose(); fn(); };
   const item = (Icon, label, note, onClick) => (
     <button onClick={onClick} className="ff-frame" style={{ width: "100%", textAlign: "left", padding: 14, marginBottom: 8, display: "flex", gap: 12, alignItems: "center" }}>
@@ -49,8 +53,8 @@ function ActionSheet({ open, onClose }) {
         <>
           {item(FileText, "Send a CV", "We read it and propose your cards", go(() => { dispatch({ type: "TAB", tab: "profile", route: "home" }); dispatch({ type: "FOCUS", focus: { target: "cv" } }); }))}
           {item(Plus, "Add information cards", "Professions, skills, interests, qualifications", go(() => { dispatch({ type: "TAB", tab: "profile", route: "home" }); dispatch({ type: "FOCUS", focus: { target: "professions" } }); }))}
-          {ph17(state) >= 2 && item(Users, "Invite people you work with", "They accept before anything connects", go(() => dispatch({ type: "TAB", tab: "network" })))}
-          {item(Share2, "Share my card", `${CARD_DOMAIN}/${state.session.tag || "username"}`, go(() => dispatch({ type: "TOAST", toast: "Link copied" })))}
+          {item(Users, "Invite people you work with", "They accept before anything connects", go(() => window.dispatchEvent(new Event("ff-invite"))))}
+          {item(ShareUp17, "Share my card", `${CARD_DOMAIN}/${pc17Tag(state.session.tag) || "username"}`, go(() => dispatch({ type: "TOAST", toast: "Link copied" })))}
         </>
       ) : (
         <>
@@ -272,100 +276,127 @@ function XPBar({ info }) {
 
 
 
-/* LOG IN — FF Tag + WhatsApp code (every account), or FF Tag + password
-   (accounts that chose to create one). Talks only to AUTH_ADAPTER; a
-   successful result becomes AUTH_SIGNED_IN, which is the one thing the nav
-   button reads. */
+const LOGIN_CSS21 = __ff_css("styles/login21.css");
+
+/* Dial codes offered on the log-in sheet (the backend takes the code and the digits separately). */
+const LOGIN_DIAL21 = [["+44", "UK"], ["+353", "IE"], ["+1", "US"], ["+33", "FR"], ["+34", "ES"], ["+39", "IT"], ["+49", "DE"], ["+31", "NL"], ["+351", "PT"], ["+971", "AE"], ["+61", "AU"], ["+91", "IN"]];
+
+/* Six one-digit boxes for the WhatsApp code: types forward, backspace goes back, a pasted code fills all six. */
+function CodeBoxes21({ value, onChange, onDone }) {
+  const refs = useRef([]);
+  const set = (digits) => { const d = digits.replace(/\D/g, "").slice(0, 6); onChange(d); if (d.length === 6 && onDone) onDone(d); };
+  const put = (i, ch) => {
+    const d = value.split(""); d[i] = ch; const next = d.join("").slice(0, 6);
+    set(next); if (ch && refs.current[i + 1]) refs.current[i + 1].focus();
+  };
+  return (
+    <div className="ff-lg21-code" role="group" aria-label="Code from WhatsApp">
+      {[0, 1, 2, 3, 4, 5].map((i) => (
+        <input key={i} ref={(el) => (refs.current[i] = el)} className={value[i] ? "on" : ""} inputMode="numeric" autoComplete={i === 0 ? "one-time-code" : "off"} maxLength={1} aria-label={`Digit ${i + 1}`}
+          value={value[i] || ""}
+          onChange={(e) => { const ch = e.target.value.replace(/\D/g, "").slice(-1); if (ch) put(i, ch); else { const d = value.split(""); d[i] = ""; set(d.join("")); } }}
+          onKeyDown={(e) => { if (e.key === "Backspace" && !value[i] && i > 0) refs.current[i - 1].focus(); }}
+          onPaste={(e) => { e.preventDefault(); set(e.clipboardData.getData("text")); const n = Math.min(5, e.clipboardData.getData("text").replace(/\D/g, "").length); if (refs.current[n]) refs.current[n].focus(); }} />
+      ))}
+    </div>
+  );
+}
+
+/* LOG IN — phone number + WhatsApp code, or username (FF Tag) + password. Talks only to AUTH_ADAPTER;
+   a successful result becomes AUTH_SIGNED_IN, which is the one thing the nav button reads.
+   v17.111: the WhatsApp tab asks for the phone number only (the account's FF Tag comes back from the
+   service); the password tab asks for username and password. */
 function LoginSheet({ open, onClose }) {
   const { state, dispatch } = useStore();
   const [mode, setMode] = useState("otp");
-  const [tag, setTag] = useState("");
+  const [user, setUser] = useState("");
   const [pw, setPw] = useState("");
-  const [phone, setPhone] = useState("");
+  const [showPw, setShowPw] = useState(false);
+  const [dial, setDial] = useState("+44");
+  const [local, setLocal] = useState("");
   const [code, setCode] = useState("");
   const [sent, setSent] = useState(false);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState(null);
-  useEffect(() => { if (open) { setMode("otp"); setPw(""); setCode(""); setSent(false); setErr(null); setBusy(false); } }, [open]);
+  useEffect(() => { if (open) { setMode("otp"); setPw(""); setShowPw(false); setCode(""); setSent(false); setErr(null); setBusy(false); } }, [open]);
   if (!open) return null;
   if (hireSiteOf(state).party) return <PartyLoginSheet17 onClose={onClose} />;
 
-  const clean = AUTH_ADAPTER.cleanTag(tag);
+  const clean = AUTH_ADAPTER.cleanTag(user);
   const tagOk = AUTH_ADAPTER.tagOk(clean);
+  const digits = local.replace(/\D/g, "").replace(/^0+/, "");
+  const phone = `${dial} ${digits}`;
+  const phoneOk = (dial.replace(/\D/g, "") + digits).length >= 9;
   const run = async (fn) => {
     setBusy(true); setErr(null);
     try { return await fn(); } catch (e) { setErr(e.message); return null; } finally { setBusy(false); }
   };
   const done = (res) => {
     if (!res) return;
-    const demo = false;
-    if (demo) dispatch({ type: "SEED_DEMO" });
-    else if (res.method === "otp") dispatch({ type: "SESSION", patch: { tag: res.tag, phone, verified: true } });
-    else dispatch({ type: "SESSION", patch: { tag: res.tag } });
-    dispatch({ type: "AUTH_SIGNED_IN", tag: demo ? "SAM42" : res.tag, method: res.method });
-    dispatch({ type: "TOAST", toast: `Logged in as ${demo ? "SAM42" : res.tag}` });
+    const mine = state.session && state.session.phone && state.session.phone.replace(/\D/g, "") === phone.replace(/\D/g, "") && state.session.tag;
+    const tag = res.method === "otp" && mine ? state.session.tag : res.tag;
+    if (res.method === "otp") dispatch({ type: "SESSION", patch: { tag, phone, verified: true } });
+    else dispatch({ type: "SESSION", patch: { tag } });
+    const draft = !!(state.session && state.session.reviewDraft17);
+    dispatch({ type: "AUTH_SIGNED_IN", tag, method: res.method, login: true });
+    /* A review written while signed out posts at sign-in with its own "Review sent to …" toast; keep that one. */
+    if (!draft) dispatch({ type: "TOAST", toast: `Logged in as ${tag}` });
     onClose();
   };
   const switchTo = (m) => { setMode(m); setErr(null); setSent(false); setCode(""); };
   const loginPw = () => run(() => AUTH_ADAPTER.loginWithPassword(clean, pw)).then(done);
-  const sendCode = () => run(() => AUTH_ADAPTER.sendCode(clean, phone)).then(r => { if (r) setSent(true); });
-  const verify = () => run(() => AUTH_ADAPTER.verifyCode(clean, phone, code)).then(done);
+  const sendCode = () => run(() => AUTH_ADAPTER.sendCode(phone)).then(r => { if (r) setSent(true); });
+  const verify = (c) => run(() => AUTH_ADAPTER.verifyCode(phone, c || code)).then(done);
 
   return (
-    <Sheet open onClose={onClose} title="Log in">
-      <div className="ff-authtabs" role="tablist" aria-label="How to log in">
-        <button type="button" role="tab" aria-selected={mode === "otp"} className={mode === "otp" ? "on" : ""} onClick={() => switchTo("otp")}>
-          <WhatsAppIcon size={12} /> WhatsApp code
-        </button>
-        <button type="button" role="tab" aria-selected={mode === "password"} className={mode === "password" ? "on" : ""} onClick={() => switchTo("password")}>
-          <Lock size={11} /> Password
-        </button>
+    <Sheet open onClose={onClose} title="Log in" newLogo>
+      <style>{LOGIN_CSS21}</style>
+      <div className="ff-lg21">
+        <header className="ff-lg21-hd">
+          <span className="mk" aria-hidden="true"><FFLogo size={64} tier="gold" /></span>
+          <h2>Welcome back</h2>
+        </header>
+
+        <div className="ff-lg21-tabs" role="tablist" aria-label="How to log in">
+          <button type="button" role="tab" aria-selected={mode === "otp"} className={mode === "otp" ? "on" : ""} onClick={() => switchTo("otp")}><WhatsAppIcon size={14} /> WhatsApp</button>
+          <button type="button" role="tab" aria-selected={mode === "password"} className={mode === "password" ? "on" : ""} onClick={() => switchTo("password")}><Lock size={13} /> Password</button>
+        </div>
+
+        {mode === "password" ? (
+          <form className="ff-lg21-form" onSubmit={(e) => { e.preventDefault(); if (tagOk && pw && !busy) loginPw(); }}>
+            <label className="ff-lg21-f"><span>Username</span>
+              <input className="ff-lg21-in" autoComplete="username" autoCapitalize="none" spellCheck={false} placeholder="Your FF Tag" value={clean} maxLength={AUTH_ADAPTER.TAG_MAX} onChange={(e) => setUser(e.target.value)} />
+            </label>
+            <label className="ff-lg21-f"><span>Password</span>
+              <span className="ff-lg21-pw">
+                <input className="ff-lg21-in" type={showPw ? "text" : "password"} autoComplete="current-password" value={pw} onChange={(e) => setPw(e.target.value)} />
+                <button type="button" className="eye" aria-label={showPw ? "Hide password" : "Show password"} aria-pressed={showPw} onClick={() => setShowPw(v => !v)}>{showPw ? <EyeOff size={17} /> : <Eye size={17} />}</button>
+              </span>
+            </label>
+            <button type="submit" className="ff-lg21-go" disabled={busy || !tagOk || !pw}>{busy ? <Loader2 size={16} className="ff-spin" /> : <ShieldCheck size={16} />} Log in</button>
+          </form>
+        ) : !sent ? (
+          <form className="ff-lg21-form" onSubmit={(e) => { e.preventDefault(); if (phoneOk && !busy) sendCode(); }}>
+            <label className="ff-lg21-f"><span>Phone number</span>
+              <span className="ff-lg21-ph">
+                <select aria-label="Country code" value={dial} onChange={(e) => setDial(e.target.value)}>{LOGIN_DIAL21.map(([d, n]) => <option key={d} value={d}>{n} {d}</option>)}</select>
+                <input className="ff-lg21-in" type="tel" autoComplete="tel-national" placeholder="7700 900000" value={local} onChange={(e) => setLocal(e.target.value)} />
+              </span>
+            </label>
+            <button type="submit" className="ff-lg21-go wa" disabled={busy || !phoneOk}>{busy ? <Loader2 size={16} className="ff-spin" /> : <WhatsAppIcon size={16} />} Send code on WhatsApp</button>
+          </form>
+        ) : (
+          <div className="ff-lg21-form">
+            <p className="ff-lg21-to">Code sent to <b>{phone}</b></p>
+            <CodeBoxes21 value={code} onChange={setCode} onDone={(c) => !busy && verify(c)} />
+            <button type="button" className="ff-lg21-go" disabled={busy || code.length < 6} onClick={() => verify()}>{busy ? <Loader2 size={16} className="ff-spin" /> : <ShieldCheck size={16} />} Log in</button>
+            <button type="button" className="ff-lg21-link" onClick={() => { setSent(false); setCode(""); setErr(null); }}>Use a different number</button>
+          </div>
+        )}
+
+        {err && <p className="ff-lg21-err" role="alert">{err}</p>}
+        <p className="ff-lg21-note">{AUTH_ADAPTER.note}</p>
       </div>
-
-      <Field label="FF Tag">
-        <TagInput value={clean} onChange={setTag} />
-      </Field>
-
-      {mode === "password" ? (<>
-        <Field label="Password">
-          <input className="ff-input" type="password" autoComplete="current-password" value={pw}
-            onChange={(e) => setPw(e.target.value)} onKeyDown={(e) => e.key === "Enter" && tagOk && pw && !busy && loginPw()} />
-        </Field>
-        <Btn variant="primary wide" disabled={busy || !tagOk || !pw} onClick={loginPw}>
-          {busy ? <Loader2 size={14} className="ff-spin" /> : <ShieldCheck size={14} />} Log in
-        </Btn>
-        <div style={{ height: 8 }} />
-        <Btn variant="ghost wide" onClick={() => switchTo("otp")}><WhatsAppIcon size={13} /> Use a WhatsApp code instead</Btn>
-      </>) : (<>
-        <Field label="Phone number" hint="The mobile number on your FireFlair account. We'll send a code on WhatsApp.">
-          <input className="ff-input" type="tel" autoComplete="tel" placeholder="+44 7700 900000" value={phone} disabled={sent}
-            onChange={(e) => setPhone(e.target.value)} />
-        </Field>
-        {!sent ? (
-          <Btn variant="primary wide" disabled={busy || !tagOk || phone.replace(/\D/g, "").length < 9} onClick={sendCode}>
-            {busy ? <Loader2 size={14} className="ff-spin" /> : <WhatsAppIcon size={14} />} Send WhatsApp code
-          </Btn>
-        ) : (<>
-          <Field label="Code from WhatsApp" hint={`Sent to ${phone}.`}>
-            <input className="ff-input ff-tagin" inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={code}
-              onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))} placeholder="000000" aria-label="Code from WhatsApp" />
-          </Field>
-          <Btn variant="primary wide" disabled={busy || code.length < 6} onClick={verify}>
-            {busy ? <Loader2 size={14} className="ff-spin" /> : <ShieldCheck size={14} />} Verify & log in
-          </Btn>
-          <div style={{ height: 8 }} />
-          <Btn variant="ghost wide" onClick={() => { setSent(false); setCode(""); }}>Change number</Btn>
-        </>)}
-        <div style={{ height: 8 }} />
-        <Btn variant="ghost wide" onClick={() => switchTo("password")}><Lock size={13} /> Use your password instead</Btn>
-        <p className="ff-body ff-muted" style={{ fontSize: 11.5, margin: "8px 0 0", textAlign: "center" }}>Only if you created one — passwords are optional.</p>
-      </>)}
-
-      {err && <p className="ff-body" role="alert" style={{ color: "var(--bad)", fontSize: 12.5, margin: "12px 0 0" }}>{err}</p>}
-      <p className="ff-body ff-muted" style={{ fontSize: 11, margin: "14px 0 0" }}>
-        {AUTH_ADAPTER.note} Any FF Tag with a six-digit code, or a password of five or more characters, logs in.
-        New to FireFlair? Create your FF Tag at the top of the Profile page.
-      </p>
       <button type="button" className="ff-dev17 login" onClick={() => {
         ["team", "biz", "party"].forEach(k => seedDemo17(state, dispatch, k));
         dispatch({ type: "V11_SET", patch: { devDone: { team: true, biz: true, party: true } } });
@@ -375,12 +406,41 @@ function LoginSheet({ open, onClose }) {
           const party = state.site === "party";
           dispatch({ type: "COMPANY_SAVE", company: party
             ? { name: "Jennifer Aniston", kind: "Host", location: "London", description: "Hosts private dinners, birthdays and garden parties across London.", saved: true, cardSavedAt: Date.now(), finishedAt: Date.now(), joinedAt: Date.now() }
-            : { ...vooshkaEditable17(), phone: "+44 7814 904355", saved: true, cardSavedAt: Date.now(), finishedAt: Date.now(), joinedAt: Date.now() } });
+            : { ...coFromProfile17("vooshka"), phone: "+44 7814 904355", saved: true, cardSavedAt: Date.now(), finishedAt: Date.now(), joinedAt: Date.now() } });
           dispatch({ type: "COMPANY_SIGNED_IN", slug: party ? "jenniferaniston" : "vooshka" });
         }
         dispatch({ type: "TOAST", toast: "Complete profile loaded" });
         onClose();
       }}>DEV · complete profile</button>
+      <button type="button" className="ff-dev17 login" onClick={() => {
+        dispatch({ type: "SIGN_OUT" });
+        dispatch({ type: "ROLE", role: "team" });
+        dispatch({ type: "SESSION", patch: { refTag: "ALEX424", refKind: "team" } });
+        dispatch({ type: "TAB", tab: "profile" });
+        dispatch({ type: "TOAST", toast: "Join from invite loaded" });
+        onClose();
+        window.scrollTo(0, 0);
+      }}>DEV · join from invite</button>
+      <button type="button" className="ff-dev17 login" onClick={() => {
+        /* FireFlair's own staff: the admin site opens on the Claims list. Claims and edits made so far stay. */
+        dispatch({ type: "SIGN_OUT" });
+        dispatch({ type: "AUTH_SIGNED_IN", tag: "ALEXG", method: "dev" });
+        dispatch({ type: "ROLE", role: "staff", site: "staff" });
+        dispatch({ type: "V11_SET", patch: { adminMode17: true, adminOpen17: true, adminSite20: "staff", adminSec17: "claims" } });
+        dispatch({ type: "TOAST", toast: "FireFlair admin loaded" });
+        onClose();
+        window.scrollTo(0, 0);
+      }}>DEV · FireFlair admin</button>
+      <button type="button" className="ff-dev17 login" onClick={() => {
+        /* A visitor on FF Staff looking at a directory company they could claim. */
+        const row = REAL_COMPANIES11.find((c) => c.unclaimed && c.slug !== "vooshka");
+        dispatch({ type: "SIGN_OUT" });
+        dispatch({ type: "ROLE", role: "staff", site: "staff" });
+        dispatch({ type: "VIEW_COMPANY", id: row ? "co_" + row.slug : null });
+        dispatch({ type: "TOAST", toast: "Company to claim loaded" });
+        onClose();
+        window.scrollTo(0, 0);
+      }}>DEV · claim a company</button>
     </Sheet>
   );
 }
@@ -413,10 +473,10 @@ function Shell({ children }) {
   const isTeam = state.role === "team";
   const isStaff = state.role === "staff";
   const isParty = isStaff && state.site === "party";
+  const partyLocked = isParty;
   const isVip = state.role === "vip";
-  const isPartners = state.role === "partners";
   const goSite = useGoSite();
-  const currentSite = isVip ? "vip" : isPartners ? "partners" : isParty ? "party" : isStaff ? "staff" : isTeam ? "team" : null;
+  const currentSite = isVip ? "vip" : isParty ? "party" : isStaff ? "staff" : isTeam ? "team" : null;
   useEffect(() => {
     if (!menuOpen) return;
     const h = (e) => { if (e.key === "Escape") setMenuOpen(false); };
@@ -424,6 +484,7 @@ function Shell({ children }) {
     return () => window.removeEventListener("keydown", h);
   }, [menuOpen]);
   const goTab = (tab) => {
+    if (partyLocked && PARTY_LOCKED_TABS17.includes(tab)) return;
     if (!state.role && tab === "profile") { dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "profile" }); return; }
     if (!state.role) { dispatch({ type: "TAB", tab }); return; }
     if (isTeam) dispatch({ type: "TAB", tab, route: state.profile.live ? "home" : state.route });
@@ -472,11 +533,11 @@ function Shell({ children }) {
             <button type="button" className="ff-acct-btn"
               aria-haspopup="menu" aria-expanded={menuOpen} aria-label="FireFlair sites and account"
               onClick={() => setMenuOpen(o => !o)}>
-              <img decoding="async" className="ff-acct-logo" src={FF_SITE_BRAND[isVip ? "vip" : isPartners ? "partners" : isParty ? "party" : isStaff ? "staff" : "team"].icon} width={30} height={30} alt="" draggable={false} />
+              <img decoding="async" className="ff-acct-logo" src={FF_SITE_BRAND[isVip ? "vip" : isParty ? "party" : isStaff ? "staff" : "team"].icon} width={30} height={30} alt="" draggable={false} />
               <span style={{ lineHeight: 1.1, textAlign: "left" }}>
                 <Wordmark size={13} />
                 <span style={{ display: "block", fontSize: 9, letterSpacing: ".2em", color: "rgba(234,215,156,.7)", textTransform: "uppercase" }}>
-                  {isVip ? "VIP" : isPartners ? "Partners" : isParty ? "Party" : isStaff ? "Staff" : "Team"}
+                  {isVip ? "VIP" : isParty ? "Party" : isStaff ? "Staff" : "Team"}
                 </span>
               </span>
               <span aria-hidden="true" className="ff-acct-caret">
@@ -489,14 +550,14 @@ function Shell({ children }) {
                 <div className="ff-acct-menu" role="menu" aria-label="FireFlair sites">
                   {state.role && (
                     <div className="ff-acct-who">
-                      <div className="ff-acct-name">{isPartners ? ((((ptnMine(ptnGet(), ptnOwner(state)).partner) || {}).org) || "FF Partners") : isVip ? (((state.vip21 || {}).card || {}).name || "FF VIP") : isTeam ? (state.profile.name || state.session.tag || "Your profile") : ((state.company && state.company.name) || (isParty ? "FF Party" : "FF Staff"))}</div>
+                      <div className="ff-acct-name">{isVip ? (((state.vip21 || {}).card || {}).name || "FF VIP") : isTeam ? (state.profile.name || state.session.tag || "Your profile") : ((state.company && state.company.name) || (isParty ? "FF Party" : "FF Staff"))}</div>
                       <div className="ff-acct-sub">
-                        {isPartners ? "FF Partners" : isVip ? "FF VIP" : isTeam ? "FF Team" : isParty ? "FF Party" : "FF Staff"}{isPartners ? (state.session.tag ? ` · ${state.session.tag}` : "") : isVip ? (state.session.tag ? ` · ${state.session.tag}` : "") : isTeam ? (state.session.tag ? ` · ${state.session.tag}` : "") : (state.company && state.company.slug ? ` · ${CARD_DOMAIN}/${state.company.slug}` : "")}
+                        {isVip ? "FF VIP" : isTeam ? "FF Team" : isParty ? "FF Party" : "FF Staff"}{isVip ? (state.session.tag ? ` · ${state.session.tag}` : "") : isTeam ? (state.session.tag ? ` · ${state.session.tag}` : "") : (state.company && state.company.slug ? ` · ${CARD_DOMAIN}/${state.company.slug}` : "")}
                       </div>
                     </div>
                   )}
                   <div className="ff-acct-sect">FireFlair sites</div>
-                  {FF_SITES.filter(s => PHASE1.sitesShown.includes(s.key) && (ph17(state) >= 3 || s.key !== "partners")).sort((a, b) => ph17(state) >= 3 ? PHASE1.sitesShown.indexOf(a.key) - PHASE1.sitesShown.indexOf(b.key) : ({ party: ["party","vip","team","staff"], staff: ["staff","team","party","vip"], vip: ["vip","party","staff","team"], team: ["team","staff","party","vip"] }[currentSite || "team"] || ["team","staff","party","vip"]).indexOf(a.key) - ({ party: ["party","vip","team","staff"], staff: ["staff","team","party","vip"], vip: ["vip","party","staff","team"], team: ["team","staff","party","vip"] }[currentSite || "team"] || ["team","staff","party","vip"]).indexOf(b.key))
+                  {FF_SITES.filter(s => PHASE1.sitesShown.includes(s.key)).sort((a, b) => { const o = SITE_ORDER17[currentSite || "team"] || SITE_ORDER17.team; return o.indexOf(a.key) - o.indexOf(b.key); })
                   .map(s => (
                     <button key={s.key} type="button" role="menuitem" className={`ff-site${s.locked ? " locked" : ""}`} data-href={s.url}
                       aria-current={currentSite === s.key ? "page" : undefined} aria-disabled={s.locked || undefined}
@@ -512,8 +573,6 @@ function Shell({ children }) {
                         : <ChevronRight size={15} color="rgba(234,215,156,.7)" />}
                     </button>
                   ))}
-                  <AdminSiteItem17 onPick={() => setMenuOpen(false)} />
-                  <PhaseSwitch17 />
                   {authed && state.session.tag && (
                     <div className="ff-acct-foot">
                       <button type="button" role="menuitem" className="ff-acct-item" onClick={() => { setMenuOpen(false); setAcctOpen(true); }}>
@@ -528,10 +587,15 @@ function Shell({ children }) {
           {/* Home, Network, Bookings, Profile — centred in the bar on desktop. */}
           <nav className="ff-desknav" aria-label="Main">
             {/* v1.3: the FF coin sits to the right of Profile. */}
-            {NAV.filter(n => n.key !== "__ff").map(n => (
+            {NAV.filter(n => n.key !== "__ff").map(n => partyLocked && PARTY_LOCKED_TABS17.includes(n.key) ? (
+              <button key={n.key} type="button" className="ff-navlocked17" aria-disabled="true" aria-label={`${tabLabel17(n.key, state, n.label)}. ${LOCKED_LABEL17}`} title={LOCKED_LABEL17} onClick={(e) => e.preventDefault()}>{tabLabel17(n.key, state, n.label)}<Lock size={9} className="ff-locked17-ic" aria-hidden="true" /></button>
+            ) : (
               <button key={n.key} className={state.tab === n.key ? "on" : ""} aria-current={state.tab === n.key ? "page" : undefined} onClick={() => goTab(n.key)}>{tabLabel17(n.key, state, n.label)}</button>
             ))}
-            <button key="__ff" type="button" className="ff-topcoin ff-navcoin" style={{ position: "relative" }} onClick={() => setNotifyOpen(true)} aria-label="Notifications"><Coin size={30} tier="gold" />{notifyCount17(state) > 0 && <i className="ff-nbadge11">{notifyCount17(state)}</i>}</button>
+            <button key="__ff" type="button" className="ff-topcoin ff-navcoin" style={{ position: "relative" }} onClick={() => setNotifyOpen(true)} aria-label={notifyCount17(state) > 0 ? `Notifications, ${notifyCount17(state)} waiting` : "Notifications"}>
+              {/* The coin becomes the count: the number replaces FF on the black face. */}
+              <span className="ff-coinwrap20 desk"><style>{NET20_CSS}</style><Coin size={30} tier="gold" /><span className={`ff-coinnum20${notifyCount17(state) > 0 ? " on" : ""}${notifyCount17(state) > 9 ? " d2" : ""}`} aria-hidden="true">{notifyCount17(state) > 0 ? Math.min(notifyCount17(state), 99) : ""}</span></span>
+            </button>
           </nav>
           <div className="ff-topbar-right">
             {PHASE1.desktopAdd && state.role && (
@@ -540,7 +604,6 @@ function Shell({ children }) {
                 Add <AddFireFlairMark size={16} />
               </button>
             )}
-            <BetaBadge />
             <button type="button" className={`ff-authbtn${authed ? " out" : ""}`} onClick={() => authed ? logout() : setLoginOpen(true)}>
               {authed ? "Log out" : "Log in"}
             </button>
@@ -586,10 +649,14 @@ function Shell({ children }) {
         <div className="ff-bottomnav-in">
           {NAV.map(n => n.key === "__ff" ? (
             <div key="ff" className="ff-navcentre">
-              <button className="ff-coinbtn" style={{ position: "relative" }} onClick={() => setNotifyOpen(true)} aria-label="Notifications">
-                <Coin size={56} tier={isTeam ? xpProgress(state.profile.xp).currentTier : "gold"} />{notifyCount17(state) > 0 && <i className="ff-nbadge11">{notifyCount17(state)}</i>}
+              <button className="ff-coinbtn" style={{ position: "relative" }} onClick={() => setNotifyOpen(true)} aria-label={notifyCount17(state) > 0 ? `Notifications, ${notifyCount17(state)} waiting` : "Notifications"}>
+                <span className="ff-coinwrap20 mob"><style>{NET20_CSS}</style><FFLogo size={56} tier={isTeam ? xpProgress(state.profile.xp).currentTier : "gold"} /><span className={`ff-coinnum20${notifyCount17(state) > 0 ? " on" : ""}${notifyCount17(state) > 9 ? " d2" : ""}`} aria-hidden="true">{notifyCount17(state) > 0 ? Math.min(notifyCount17(state), 99) : ""}</span></span>
               </button>
             </div>
+          ) : partyLocked && PARTY_LOCKED_TABS17.includes(n.key) ? (
+            <button key={n.key} type="button" className="ff-navbtn ff-navlocked17" aria-disabled="true" aria-label={`${tabLabel17(n.key, state, n.label)}. ${LOCKED_LABEL17}`} title={LOCKED_LABEL17} onClick={(e) => e.preventDefault()}>
+              <NavMark shape={n.mark} size={23} tone="#D8D6D0" /><Lock size={9} className="ff-locked17-ic" aria-hidden="true" />
+            </button>
           ) : (
             <button key={n.key} className={`ff-navbtn ${state.tab === n.key ? "on" : ""}`}
               onClick={() => goTab(n.key)} aria-label={tabLabel17(n.key, state, n.label)} aria-current={state.tab === n.key ? "page" : undefined} title={tabLabel17(n.key, state, n.label)}>
@@ -622,5 +689,7 @@ function ProfilePage() {
   const { state } = useStore();
   useState(() => { resetQuestionOrder(); return 0; });   // new question order per visit
   useAutoSave();
-  return state.profile.live ? <TeamProfile /> : <ProfileBuilder />;
+  /* v17.40: one edit screen for new and existing members. A live profile reaches this only through Edit; TeamProfile
+     (bookings.jsx) is no longer shown here. */
+  return <ProfileBuilder />;
 }

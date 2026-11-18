@@ -255,8 +255,11 @@ function ShareCardSheet({ open, onClose }) {
   }), " Send my card"));
   if (tag && !sent) {
     const me = meAsStaff(state.profile, state.session);
+    /* v17.22: once the profile is complete, your own card's Share sends your join link (the code is already in it: no ?r=). */
+    const join = profileBasics17(state);
     return React.createElement(CardShareSheet17, {
-      open: true, onClose, title: "My FireFlair card", url: "https://" + CARD_DOMAIN + "/" + tag, fileName: "fireflair-" + cx17Slug(tag),
+      open: true, onClose, title: join ? "Join my team on FireFlair:" : "My FireFlair card", url: join ? inv17Link(tag) : "https://" + CARD_DOMAIN + "/" + tag,
+      noRef: join, fileName: (join ? "fireflair-join-" : "fireflair-") + cx17Slug(tag),
       extra: React.createElement("div", { style: { marginTop: 14 } }, phoneUi)
     }, React.createElement(PlayerCard, { person: me, format: "full", themeKey: state.profile.theme }));
   }
@@ -303,27 +306,78 @@ function ShareCardSheet({ open, onClose }) {
 
 
 
-function ReviewSheet({ open, person, shiftId, onClose }) {
+/* v17.22 ONE REVIEW FORM, used everywhere a review is written (ReviewSheet, the slot on a profile, the FF Team homepage pillar).
+   Question, Yes | No, five stars (5 to start; No hides them and the rating is stored as null), a type box, Post review.
+   Signed in: REVIEW_ADD (it waits for the person to accept). Signed out: REVIEW_DRAFT, then sign-up; the draft posts itself
+   after sign-in. preview: looks and moves the same, posts nothing. */
+const reviewName17 = (person) => person && person.isCompany ? String(person.name || "") : String(person && person.name || "").trim().split(" ")[0] || "them";
+
+
+function ReviewForm17({ person, shiftId, onDone, preview }) {
   const { state, dispatch } = useStore();
-  const [rating, setRating] = useState(5);
+  const [worked, setWorked] = useState(null);
+  const [rating, setRating] = useState(REVIEW_MAX);
   const [text, setText] = useState("");
-  useEffect(() => { if (open) { setRating(5); setText(""); } }, [open, person && person.id]);
-  if (!open || !person) return null;
-
-  const submit = () => {
-    dispatch({
-      type: "REVIEW_ADD",
-      review: {
-        id: uid("rev"), aboutId: person.id, byId: "me", shiftId: shiftId || null,
-        byName: state.company?.name || state.profile.name || "You", rating, text: text.trim(), at: Date.now(),
-      },
-    });
-    dispatch({ type: "TOAST", toast: `Review posted for ${person.isCompany ? person.name : person.name.split(" ")[0]}` });
-    onClose();
+  const [pulse, setPulse] = useState(1);
+  const pid = person && person.id;
+  useEffect(() => { setWorked(null); setRating(REVIEW_MAX); setText(""); setPulse(p => p + 1); }, [pid]);
+  if (!person) return null;
+  const first = reviewName17(person);
+  const qid = "ff-rf17-q-" + String(pid || "x").replace(/[^a-z0-9_-]/gi, "");
+  const typed = text.trim();
+  const ready = worked === true || (worked === false && !!typed);
+  const rate = (n) => { setRating(Math.max(1, Math.min(REVIEW_MAX, n))); setPulse(p => p + 1); };
+  const post = () => {
+    if (!ready) return;
+    const r = worked ? rating : null;
+    if (preview) { setWorked(null); setRating(REVIEW_MAX); setText(""); setPulse(p => p + 1); return; }
+    if (state.auth.status !== "signedIn") {
+      dispatch({ type: "REVIEW_DRAFT", draft: { aboutId: person.id, worked, rating: r, text: typed } });
+      if (onDone) onDone();
+      /* Fixes2: on FF Staff and FF Party the visitor logs in on the same site; the draft waits and posts at sign-in. */
+      if (state.role !== "team") { window.dispatchEvent(new CustomEvent("ff-login")); return; }
+      dispatch({ type: "VIEW", id: null });
+      dispatch({ type: "TAB", tab: "profile" });
+      window.scrollTo(0, 0);
+      return;
+    }
+    dispatch({ type: "REVIEW_ADD", review: {
+      id: uid("rev"), aboutId: person.id, byId: "me", shiftId: shiftId || null,
+      byName: (state.role === "staff" && state.site !== "party" && state.company?.name) || state.profile.name || "You",
+      worked, rating: r, text: typed, at: Date.now(),
+    } });
+    dispatch({ type: "TOAST", toast: `Review sent to ${first}` });
+    if (onDone) onDone();
   };
-
   return (
-    <Sheet open onClose={onClose} title={`Review ${person.isCompany ? person.name : person.name.split(" ")[0]}`}>
+    <div className="ff-rf17" role="group" aria-labelledby={qid}>
+      <span className="lb">Question</span>
+      <p className="q" id={qid}>Have you worked with {first}?</p>
+      <div className="yn">
+        <button type="button" className={worked === true ? "on" : ""} aria-pressed={worked === true} onClick={() => setWorked(true)}>Yes</button>
+        <button type="button" className={worked === false ? "on" : ""} aria-pressed={worked === false} onClick={() => setWorked(false)}>No</button>
+      </div>
+      {worked !== false && (
+        <div className="st" role="group" aria-label={`${rating} out of ${REVIEW_MAX} stars`} key={pulse}>
+          {Array.from({ length: REVIEW_MAX }).map((_, i) => (
+            <button key={i} type="button" aria-label={`${i + 1} star${i ? "s" : ""}`} aria-pressed={i + 1 === rating}
+              className={i < rating ? "on" : ""} style={{ "--d": `${i * 55}ms` }} onClick={() => rate(i + 1)}>
+              <Star size={30} strokeWidth={i < rating ? 0 : 1.5} fill={i < rating ? "currentColor" : "none"} aria-hidden="true" />
+            </button>
+          ))}
+        </div>
+      )}
+      <textarea className="ty" rows={3} value={text} onChange={(e) => setText(e.target.value)} placeholder="Type a review" aria-label="Review" name="review" autoComplete="off" />
+      <Btn variant="gold wide" disabled={!ready} onClick={post}>Post review</Btn>
+    </div>
+  );
+}
+
+
+function ReviewSheet({ open, person, shiftId, onClose }) {
+  if (!open || !person) return null;
+  return (
+    <Sheet open onClose={onClose} title={`Review ${reviewName17(person)}`}>
       <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 16 }}>
         <Portrait src={person.photo} name={person.name} size={44} tier={person.tier} />
         <div>
@@ -331,22 +385,7 @@ function ReviewSheet({ open, person, shiftId, onClose }) {
           <div className="ff-serif" style={{ fontSize: 12.5, color: "var(--gold-dk)", fontStyle: "normal" }}>{person.profession}</div>
         </div>
       </div>
-      <Field label="Rating">
-        <div style={{ display: "flex", gap: 6 }}>
-          {Array.from({ length: REVIEW_MAX }).map((_, i) => (
-            <button key={i} aria-label={`${i + 1} star${i ? "s" : ""}`} onClick={() => setRating(i + 1)}
-              style={{ padding: 6, minWidth: 44, minHeight: 44, color: i < rating ? "var(--gold)" : "#C9C3B4" }}>
-              <Star size={30} strokeWidth={i < rating ? 0 : 1.5} fill={i < rating ? "currentColor" : "none"} />
-            </button>
-          ))}
-        </div>
-      </Field>
-      <Field label="Review" hint="How they were to work with — this goes on their profile.">
-        <textarea className="ff-input" rows={4} value={text} onChange={(e) => setText(e.target.value)}
-          placeholder="Reliable, great with guests, always on time…" />
-      </Field>
-      <Btn variant="primary wide" onClick={submit}><Star size={14} /> Post review</Btn>
-      <ProtoNote>Prototype: saved in this preview only. On the live site {person.name.split(" ")[0]} is notified and accepts before it shows on their profile.</ProtoNote>
+      <ReviewForm17 person={person} shiftId={shiftId} onDone={onClose} />
     </Sheet>
   );
 }
@@ -380,7 +419,7 @@ function AskForReviewSheet({ open, onClose }) {
         <div className="ff-frame" style={{ padding: 14, marginTop: 10 }}>
           <p className="ff-body" style={{ margin: "0 0 10px" }}>Nobody in your network yet. Share your card instead — they can send you a review once they have it.</p>
           <Btn variant="primary wide" onClick={() => { dispatch({ type: "TOAST", toast: "Link copied" }); onClose(); }}>
-            <Share2 size={14} /> Share my card
+            <ShareUp17 size={14} /> Share my card
           </Btn>
         </div>
       ) : network.map(p => (

@@ -66,29 +66,26 @@ const DEMO_SHIFTS = __ff_json("content/data/demo-shifts.json");
 
 const DEMO_ENGAGEMENTS = [
   { id: "eng_1", shiftId: "shf_1", staffId: "me", state: "paid" },
-  { id: "eng_2", shiftId: "shf_2", staffId: "stf_tom", state: "paid" },
-  { id: "eng_3", shiftId: "shf_3", staffId: "stf_mia", state: "signed_off" },
+  { id: "eng_2", shiftId: "shf_2", staffId: "stf_bruno", state: "paid" },
+  { id: "eng_3", shiftId: "shf_3", staffId: "stf_dany", state: "signed_off" },
   { id: "eng_4", shiftId: "shf_4", staffId: "me", state: "completed" },
   { id: "eng_5", shiftId: "shf_5", staffId: "me", state: "confirmed" },
-  { id: "eng_6", shiftId: "shf_5b", staffId: "stf_don", state: "confirmed" },
-  { id: "eng_x1", shiftId: "shf_x1", staffId: "stf_sam", state: "confirmed" },
-  { id: "eng_x2", shiftId: "shf_x2", staffId: "stf_fre", state: "requested", credit: true, sentAt: Date.now() - 6 * 3600000, expiresAt: Date.now() + 42 * 3600000 },
-  { id: "eng_n1", shiftId: "shf_n1", staffId: "stf_pri", state: "confirmed" },
+  { id: "eng_6", shiftId: "shf_5b", staffId: "stf_alex", state: "confirmed" },
+  { id: "eng_x1", shiftId: "shf_x1", staffId: "stf_james", state: "confirmed" },
+  { id: "eng_x2", shiftId: "shf_x2", staffId: "stf_simao", state: "requested", credit: true, sentAt: Date.now() - 6 * 3600000, expiresAt: Date.now() + 42 * 3600000 },
+  { id: "eng_n1", shiftId: "shf_n1", staffId: "stf_gav", state: "confirmed" },
   { id: "eng_7", shiftId: "shf_6", staffId: "me", state: "requested", exclusive: true },
-  { id: "eng_8", shiftId: "shf_6b", staffId: "stf_ava", state: "confirmed" },
-  { id: "eng_9", shiftId: "shf_7", staffId: "stf_nia", state: "confirmed" },
-  { id: "eng_10", shiftId: "shf_9", staffId: "me", state: "requested", auto: true, batch: 1, batchSize: 10 },
+  { id: "eng_8", shiftId: "shf_6b", staffId: "stf_gav", state: "confirmed" },
+  { id: "eng_9", shiftId: "shf_7", staffId: "stf_dany", state: "confirmed" },
+  { id: "eng_10", shiftId: "shf_9", staffId: "me", state: "requested", auto: true, batch: 1, batchSize: 6 },
   { id: "eng_v1", shiftId: "shf_v1", staffId: "me", state: "requested", exclusive: true },
-  { id: "eng_v2", shiftId: "shf_v2", staffId: "me", state: "requested", auto: true, batch: 1, batchSize: 10 },
-  { id: "eng_v3", shiftId: "shf_v2", staffId: "stf_sam", state: "available", auto: true, batch: 1, batchSize: 10 },
-  { id: "eng_v4", shiftId: "shf_v2", staffId: "stf_don", state: "available", auto: true, batch: 1, batchSize: 10 },
-  { id: "eng_v5", shiftId: "shf_v2", staffId: "stf_ava", state: "available", auto: true, batch: 1, batchSize: 10 },
-  { id: "eng_v6", shiftId: "shf_v2", staffId: "stf_fre", state: "available", auto: true, batch: 1, batchSize: 10 },
-  { id: "eng_v7", shiftId: "shf_v2", staffId: "stf_leo", state: "requested", auto: true, batch: 1, batchSize: 10 },
-  { id: "eng_v8", shiftId: "shf_v2", staffId: "stf_zar", state: "requested", auto: true, batch: 1, batchSize: 10 },
-  { id: "eng_v9", shiftId: "shf_v2", staffId: "stf_jam", state: "unavailable", auto: true, batch: 1, batchSize: 10 },
-  { id: "eng_v10", shiftId: "shf_v2", staffId: "stf_osc", state: "requested", auto: true, batch: 1, batchSize: 10 },
-  { id: "eng_v11", shiftId: "shf_v2", staffId: "stf_mia", state: "requested", auto: true, batch: 1, batchSize: 10 }
+  { id: "eng_v2", shiftId: "shf_v2", staffId: "me", state: "requested", auto: true, batch: 1, batchSize: 6 },
+  { id: "eng_v3", shiftId: "shf_v2", staffId: "stf_james", state: "available", auto: true, batch: 1, batchSize: 6 },
+  { id: "eng_v4", shiftId: "shf_v2", staffId: "stf_alex", state: "available", auto: true, batch: 1, batchSize: 6 },
+  { id: "eng_v5", shiftId: "shf_v2", staffId: "stf_gav", state: "available", auto: true, batch: 1, batchSize: 6 },
+  { id: "eng_v7", shiftId: "shf_v2", staffId: "stf_simao", state: "requested", auto: true, batch: 1, batchSize: 6 },
+  { id: "eng_v9", shiftId: "shf_v2", staffId: "stf_dany", state: "unavailable", auto: true, batch: 1, batchSize: 6 },
+  { id: "eng_v11", shiftId: "shf_v2", staffId: "stf_bruno", state: "requested", auto: true, batch: 1, batchSize: 6 }
 ].map((e) => ({ ...e, sentAt: Date.now() - 6 * 3600000, expiresAt: Date.now() + RESPONSE_MS - 6 * 3600000, ...e.auto ? { selectBy: Date.now() + 7 * 86400000 - 6 * 3600000, thread: [] } : { thread: [] }, history: [{ state: e.state, at: Date.now() }] })).map((e) => e.id === "eng_x2" ? { ...e, state: "discuss", thread: [{ from: "pro", text: "Is parking available at the venue?", at: Date.now() - 2 * 3600000 }] } : e);
 
 
@@ -134,12 +131,12 @@ const DEMO_RECORDS = () => {
   add("qualifications", "Personal Licence", { description: "Issued by Enfield Council. Valid and current.", document: { name: "personal-licence.pdf", size: 184320, type: "application/pdf", dataUrl: null } });
   add("qualifications", "WSET Level 2", { description: "Wines and spirits, merit pass." });
 
-  add("experience", "The Loft Lounge — Head Bartender", { description: "2022–2025. Ran the bar team, built the seasonal cocktail menus and managed supplier relationships." });
-  add("venues", "The Loft Lounge", { address: "Enfield, London", description: "Head bartender 2022–2025." });
-  add("venues", "Mayfair Rooms", { address: "Mayfair, London W1", description: "Members' club bar." });
-  add("venues", "Hackney Depot", { address: "Hackney, London E8", description: "Launch events and festival bars." });
+  /* v17.14: two venues picked from the sample business search (placed on their area pages and the map) and one typed
+     by hand (not on Google, so it waits in FF Admin under Venues to review). */
+  add("venues", "Tobacco Dock", { ...venueFromSample17("sample:tobacco-dock"), description: "Launch events and festival bars." });
+  add("venues", "Claridge's", { ...venueFromSample17("sample:claridges"), description: "Hotel bar, private events." });
+  add("venues", "The Loft Lounge", { ...venueTypedPatch17("The Loft Lounge"), description: "Head bartender 2022–2025." });
 
-  add("experience", "Mayfair Rooms — Bartender", { description: "2019–2022. Members' club service, high-spec classics." });
   return R;
 };
 
@@ -165,9 +162,9 @@ const XP_TASKS = [
   { id: "add_languages",      label: "Add languages",            hint: "What you speak" },
   { id: "add_locations",      label: "Add work locations",       hint: "Where you work" },
   { id: "add_qualifications", label: "Add a qualification",      hint: "Licences and certificates" },
-  { id: "add_experience",     label: "Add experience",           hint: "Where you've worked" },
+  { id: "add_venues",         label: "Add venues",               hint: "Where you've worked" },
   { id: "first_review",       label: "Receive a review",         hint: "Ask someone you've worked with" },
-].map(t => ({ ...t, xp: XP_VALUES.task }));
+].filter(t => SHOW_VENUES17 || t.id !== "add_venues").map(t => ({ ...t, xp: XP_VALUES.task }));
 
 
 
@@ -203,6 +200,7 @@ const QUESTION_GROUP_COLOR = {
   ai:       { bg: "linear-gradient(165deg,#3A2712,#1B1108)", ink: "#FBF0DE", sub: "#E0B274", rule: "rgba(224,178,116,.34)" }, // amber
   personal: { bg: "linear-gradient(165deg,#232323,#101010)", ink: "#F0EFEC", sub: "#C6C2BA", rule: "rgba(198,194,186,.28)" },
   asked:    { bg: "linear-gradient(165deg,#3E1424,#18070C)", ink: "#FBEFF2", sub: "#E9BAC5", rule: "rgba(233,186,197,.30)" }, // burgundy: asked on a profile
+  interest: { bg: "linear-gradient(165deg,#10332F,#071816)", ink: "#E8F7F4", sub: "#86D4C8", rule: "rgba(134,212,200,.32)" }, // teal: Interests
   hiring:   { bg: "linear-gradient(165deg,#2E2614,#110D06)", ink: "#FBF3DF", sub: "#E5C77A", rule: "rgba(229,199,122,.32)" }, // gold: a company's hiring questions
 };
 

@@ -64,8 +64,10 @@ const BASE_CATEGORIES = {
     onCard: false, fields: ["media", "document"], system: true,
     placeholder: "Summer launch, Hackney Depot",
   },
+  /* v17.14: Venues take Experience's place. The name comes from Google's business search (venues17.jsx), which also
+     fills the address, the map point and the area; nothing about the venue is typed except a name Google doesn't know. */
   venues: {
-    label: "Venues", singular: "Venue", icon: "venue", landscape: true,
+    label: "Venues", singular: "Venue", icon: "venue", landscape: true, titleLabel: "Venue",
     onCard: false, fields: ["address", "description", "media"],
     placeholder: "Your venue",
   },
@@ -143,7 +145,8 @@ const recsOf = (profile, cat) => (profile.records && profile.records[cat]) || []
 const FEATURE_LIMIT = 3;
 
 
-const cardRank = (i) => i === 0 ? "primary" : i < FEATURE_LIMIT ? "secondary" : "tertiary";
+/* v17.18: colour follows the order only: the first is Gold, the second Silver, all the rest Bronze (FEATURE_LIMIT is how many the Profile Card shows). */
+const cardRank = (i) => i === 0 ? "primary" : i === 1 ? "secondary" : "tertiary";
 
 
 const visibleRecs = (profile, cat) => rankedRecords(recsOf(profile, cat)).filter(r => !r.proposed && !r.hidden);
@@ -166,13 +169,19 @@ const emptyRecords = () => Object.keys(BASE_CATEGORIES).reduce((m, k) => { m[k] 
    someone else's profile uses the same Information Card components. */
 /* Reviews written ABOUT a person, newest first, shaped as records so they
    render through the same Information Card as everything else. */
+/* Reviews shown for a person. Declined ones never show. Pending ones show only to their writer ("me"), marked pending: true.
+   A saved review with no status counts as accepted.
+   Reviews hidden in FF Admin (admin17.hidden.reviews) never show here, so every profile, tab count and card skips them;
+   FF Admin's own Reviews list reads state.reviews directly and still lists them. */
 function reviewRecordsFor(state, personId) {
+  const hiddenRv = (state.admin17 && state.admin17.hidden && state.admin17.hidden.reviews) || {};
   return (state.reviews || [])
-    .filter(r => r.aboutId === personId)
+    .filter(r => r.aboutId === personId && !hiddenRv[r.id] && r.status !== "declined" && (r.status !== "pending" || r.byId === "me"))
     .sort((a, b) => b.at - a.at)
     .map(r => ({
-      ...makeRecord("reviews", `${r.rating}★ from ${r.byName}`),
+      ...makeRecord("reviews", r.rating == null ? `From ${r.byName}` : `${r.rating}★ from ${r.byName}`),
       id: r.id, description: r.text, rating: r.rating, primary: true, readOnly: true,
+      ...(r.status === "pending" ? { pending: true } : {}),
     }));
 }
 
@@ -196,8 +205,25 @@ function recordsForPerson(state, person) {
     ...makeRecord(cat, n), id: `${person.id}_${cat}_${String(n).replace(/\W+/g, "")}`,
     description: demoFiller(person.id + cat + n), primary: true, readOnly: true,
   }));
+  /* v17.12: real FF Team members — every profession, their experience, and no filler descriptions. */
+  if (person.real) {
+    const mkR = (cat, arr) => (arr || []).filter(Boolean).map((n, i) => ({
+      ...makeRecord(cat, n), id: `${person.id}_${cat}_${i}_${String(n).replace(/\W+/g, "")}`, primary: true, readOnly: true,
+    }));
+    return {
+      professions: mkR("professions", person.professions || [person.profession]),
+      skills: mkR("skills", person.skills), interests: mkR("interests", person.interests),
+      locations: mkR("locations", person.locations), languages: mkR("languages", person.languages),
+      qualifications: mkR("qualifications", person.qualifications), reviews: reviewRecordsFor(state, person.id),
+      experience: (person.workHistory || []).map((x, i) => ({ ...makeRecord("experience", x.title, {
+        details: { type: "work", ...(x.employer ? { employer: x.employer } : {}), ...(x.location ? { location: x.location } : {}), ...(x.start ? { start: x.start } : {}), ...(x.end ? { end: x.end } : {}) } }),
+        id: `${person.id}_experience_${i}`, primary: true, readOnly: true })),
+      cocktails: [],
+    };
+  }
   return {
-    professions: mk("professions", [person.profession]).map((r, i) => (i === 0 && person.level ? { ...r, level: person.level } : r)),
+    /* No filler on demo professions: a blank description shows the profession's default one (v17.9.5). */
+    professions: mk("professions", [person.profession]).map((r, i) => ({ ...r, description: "", ...(i === 0 && person.level ? { level: person.level } : {}) })),
     skills: mk("skills", person.skills),
     interests: mk("interests", person.interests),
     locations: mk("locations", person.locations),

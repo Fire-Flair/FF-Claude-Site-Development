@@ -1,0 +1,1629 @@
+{
+  "formatVersion": 2,
+  "slug": "vooshka",
+  "name": "Vooshka Cocktail Bar",
+  "kind": "Luxury mobile cocktail bar",
+  "base": "Luton",
+  "areas": [
+    "England",
+    "Wales"
+  ],
+  "areasNote": "Mobile bar experiences across England and Wales",
+  "logo": "ffasset:img/cd638621cd5188e1.webp",
+  "logoBg": "dark",
+  "logoWide": true,
+  "card": {
+    "theme": "onyx",
+    "layout": "centre"
+  },
+  "description": "Vooshka is a luxury mobile cocktail bar bringing exquisite drinks and elevated hospitality to events across the UK. Bespoke bars, exceptional cocktails and complete drinks service for weddings, private celebrations and corporate events nationwide.\n\nA great bar brings people together. At Vooshka, distinctive design, expertly made drinks and a warm welcome create a natural gathering place at the heart of your celebration. From intimate gatherings to grand receptions, we work with you to find the right look, menu and style of service.",
+  "aboutSource": {
+    "by": "owner",
+    "at": "2026-11-14"
+  },
+  "media": [
+    {
+      "id": "vk_occ1",
+      "src": "ffasset:img/e2a324655aff127e.webp",
+      "alt": "Private Celebrations",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "vk_g0",
+      "src": "ffasset:img/9266df6b74c77f50.webp",
+      "alt": "Behind every memorable occasion",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "vk_g1",
+      "src": "ffasset:img/f282ecd3ac662245.webp",
+      "alt": "A personalised focal point",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "vk_g2",
+      "src": "ffasset:img/e0bcda47cfdcdfe0.webp",
+      "alt": "Bespoke tropical styling",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "vk_g3",
+      "src": "ffasset:img/79eb80b23c2e761b.webp",
+      "alt": "A statement in light",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "vk_g4",
+      "src": "ffasset:img/d550a15487644187.webp",
+      "alt": "Classic lines, distinctive details",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "vk_g5",
+      "src": "ffasset:img/28dfbf858f94fc9b.webp",
+      "alt": "After-dark atmosphere",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "vk_g6",
+      "src": "ffasset:img/e73b2d7acf0d65ae.webp",
+      "alt": "Warm hospitality, expertly delivered",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "vk_g7",
+      "src": "ffasset:img/f56445d0ab9b533d.webp",
+      "alt": "An elegant centrepiece",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "vk_g8",
+      "src": "ffasset:img/60a757a620d05fb5.webp",
+      "alt": "A setting made for celebration",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "vk_g9",
+      "src": "ffasset:img/497e50d90f924bb1.webp",
+      "alt": "The details set the tone",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "vk_g10",
+      "src": "ffasset:img/90d089707a534df6.webp",
+      "alt": "At the heart of the occasion",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "vk_g11",
+      "src": "ffasset:img/4b4f57d125b8e360.webp",
+      "alt": "Your bar, your way",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "vk_g12",
+      "src": "ffasset:img/ae372d01c9721c1d.webp",
+      "alt": "A distinctive focal point",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "vk_g13",
+      "src": "ffasset:img/4a1080aba53d1619.webp",
+      "alt": "A look entirely your own",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "vk_g14",
+      "src": "ffasset:img/5be3ef3dc01790bb.webp",
+      "alt": "A little theatre, expertly delivered",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "vk_g15",
+      "src": "ffasset:img/af9e1ac44f80156f.webp",
+      "alt": "Expert service, from cocktails to draught beer",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "vk_g16",
+      "src": "ffasset:img/a0ecc2eed9714cb8.webp",
+      "alt": "Expert hands, memorable occasions",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    }
+  ],
+  "info": [
+    {
+      "id": "vk_exp",
+      "title": "The Vooshka experience",
+      "lead": "A little theatre. A lot of elegance.",
+      "text": "You bring the people and the reason to celebrate; we’ll take care of the bar.",
+      "chips": [
+        "Bespoke Bars",
+        "Cocktails",
+        "Mocktails",
+        "Spirits",
+        "Beers"
+      ],
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "vk_why",
+      "title": "Why Vooshka",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "vk_steps",
+      "title": "The Vooshka process",
+      "numbered": true,
+      "quote": "Not just a bar. A beautiful part of your celebration.",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "vk_bars",
+      "title": "Bar styles",
+      "text": "Ordered by overall span, from smallest to largest. Made-to-measure designs appear last. All bars are 1.2 m high.",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "instagram",
+        "name": "@vooshkacocktailbar",
+        "description": "Instagram",
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "website",
+        "name": "vooshkabars.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      }
+    ],
+    "info_vk_why": [
+      {
+        "id": "vk_why_0",
+        "name": "Your Bar, Bespoke",
+        "description": "Created to complement your occasion. Work with our design team to tailor the size, style and finish of your bar, from understated elegance to a striking centrepiece.",
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_why_1",
+        "name": "Drinks with Personality",
+        "description": "Your favourites, alongside something new to discover. Choose from classic cocktails, signature creations and alcohol-free serves, with a menu that reflects your tastes and gives every guest something to enjoy.",
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_why_2",
+        "name": "Care in Every Detail",
+        "description": "Quality spirits, fresh ingredients and precise preparation make the difference. From the balance of a cocktail to the glass and garnish, each serve is finished with care.",
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_why_3",
+        "name": "Expert Team",
+        "description": "Skilled bartenders, creative mixologists and accomplished flair bartenders bring exceptional drinks and effortless hosting to your occasion, with a touch of theatre when the moment calls for it.",
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      }
+    ],
+    "info_vk_steps": [
+      {
+        "id": "vk_steps_0",
+        "name": "It Begins With You",
+        "description": "Our team will take you through the details of your event, exploring your vision, your venue and the atmosphere you’d like to create. Together, we’ll shape a bar experience that feels entirely yours.",
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_steps_1",
+        "name": "The Details, Designed Around You",
+        "description": "Enjoy a personal tasting with our mixologist to create a drinks menu for your occasion. Work alongside our design team to select your bar style and develop bespoke artwork, bringing your vision to life.",
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_steps_2",
+        "name": "A Date to Look Forward To",
+        "description": "Once you’re happy with your proposal, return your signed agreement and pay the agreed deposit to secure your date.",
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_steps_3",
+        "name": "We’ll Take It From Here",
+        "description": "We’ll confirm the final arrangements and coordinate with your venue. From setup to the last drink and breakdown, our team takes care of the bar, leaving you free to enjoy the occasion.",
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      }
+    ],
+    "info_vk_bars": [
+      {
+        "id": "vk_bars_0",
+        "name": "Bar 04",
+        "description": "1.6 m long × 0.8 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_0_p0",
+            "src": "ffasset:img/3f1c17ff318dcb1d.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_1",
+        "name": "Bar 01",
+        "description": "2.1 m long × 0.8 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_1_p0",
+            "src": "ffasset:img/b852c832b2b59db5.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_2",
+        "name": "Bar 02",
+        "description": "2.1 m long × 1.2 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_2_p0",
+            "src": "ffasset:img/6cfaa261ae17a3e8.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_3",
+        "name": "Bar 08",
+        "description": "2.8 × 2.8 m layout · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_3_p0",
+            "src": "ffasset:img/a029183d7a14b18c.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_4",
+        "name": "Bar 17",
+        "description": "3.0 m long × 2.9 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_4_p0",
+            "src": "ffasset:img/84fcaacbdbf5ba28.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_5",
+        "name": "Bar 31",
+        "description": "3.0 m long × 3.2 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_5_p0",
+            "src": "ffasset:img/d5e04ed5bb10ffe6.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_6",
+        "name": "Bar 07",
+        "description": "3.5 m long × 1.4 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_6_p0",
+            "src": "ffasset:img/51cb60abec0c1e51.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_7",
+        "name": "Bar 13",
+        "description": "3.5 m long × 1.4 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_7_p0",
+            "src": "ffasset:img/dcfc72bebceb0b15.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_8",
+        "name": "Bar 06",
+        "description": "2.8 × 3.5 m layout · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_8_p0",
+            "src": "ffasset:img/c3f8f909cd4c7914.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_9",
+        "name": "Bar 33",
+        "description": "3.5 m long × 2.8 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_9_p0",
+            "src": "ffasset:img/4dd8acdc3da89211.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_10",
+        "name": "Bar 03",
+        "description": "3.5 × 3.5 m layout · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_10_p0",
+            "src": "ffasset:img/58cbb0516d278595.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_11",
+        "name": "Bar 11",
+        "description": "4.0 m long × 2.0 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_11_p0",
+            "src": "ffasset:img/70a9f2c4d321c419.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_12",
+        "name": "Bar 34",
+        "description": "4.0 m long × 2.3 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_12_p0",
+            "src": "ffasset:img/bfd52fcd2f8d0c8f.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_13",
+        "name": "Bar 09",
+        "description": "4.0 m diameter · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_13_p0",
+            "src": "ffasset:img/8c6d56c3e1436bad.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_14",
+        "name": "Bar 10",
+        "description": "4.2 m long × 0.8 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_14_p0",
+            "src": "ffasset:img/c1ec8fbadc50aa41.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_15",
+        "name": "Bar 05",
+        "description": "4.5 m long × 1.5 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_15_p0",
+            "src": "ffasset:img/00eba15b13a696fb.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_16",
+        "name": "Bar 32",
+        "description": "4.6 m long × 1.6 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_16_p0",
+            "src": "ffasset:img/d4116994a3b0430e.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_17",
+        "name": "Bar 14",
+        "description": "4.9 × 2.8 m layout · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_17_p0",
+            "src": "ffasset:img/9a1c3fdb25d26cb2.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_18",
+        "name": "Bar 23",
+        "description": "4.9 × 4.9 m layout · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_18_p0",
+            "src": "ffasset:img/3ca1878d1b41d075.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_19",
+        "name": "Bar 16",
+        "description": "5.6 m long × 1.4 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_19_p0",
+            "src": "ffasset:img/a7405a8f0f3cfb90.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_20",
+        "name": "Bar 22",
+        "description": "5.6 m long × 1.4 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_20_p0",
+            "src": "ffasset:img/ebbd9e5b5f51235b.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_21",
+        "name": "Bar 35",
+        "description": "5.6 m long × 2.2 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_21_p0",
+            "src": "ffasset:img/3ef61a75c712281d.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_22",
+        "name": "Bar 29",
+        "description": "5.6 m long × 2.7 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_22_p0",
+            "src": "ffasset:img/b29ab0f8acb687a4.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_23",
+        "name": "Bar 12",
+        "description": "5.6 × 3.5 m layout · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_23_p0",
+            "src": "ffasset:img/092768a81057b635.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_24",
+        "name": "Bar 21",
+        "description": "5.6 × 5.6 m layout · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_24_p0",
+            "src": "ffasset:img/d80322c2bd50e8df.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_25",
+        "name": "Bar 38",
+        "description": "5.6 × 5.6 m layout · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_25_p0",
+            "src": "ffasset:img/514026d93098e8ab.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_26",
+        "name": "Bar 20",
+        "description": "5.8 m long × 2.9 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_26_p0",
+            "src": "ffasset:img/d4281b54c23d4a15.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_27",
+        "name": "Bar 41",
+        "description": "5.8 × 4.3 m layout · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_27_p0",
+            "src": "ffasset:img/6d6c891de2e1fba4.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_28",
+        "name": "Bar 15",
+        "description": "5.8 × 5.6 m layout · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_28_p0",
+            "src": "ffasset:img/c8bd25c3aa401c87.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_29",
+        "name": "Bar 37",
+        "description": "5.8 × 5.6 m layout · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_29_p0",
+            "src": "ffasset:img/59e2cc985858eb01.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_30",
+        "name": "Bar 26",
+        "description": "6.1 m long × 2.0 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_30_p0",
+            "src": "ffasset:img/ff1a1d83b55e55ef.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_31",
+        "name": "Bar 36",
+        "description": "6.1 m long × 2.2 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_31_p0",
+            "src": "ffasset:img/36f994cca6e4d47f.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_32",
+        "name": "Bar 18",
+        "description": "6.1 × 4.0 m layout · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_32_p0",
+            "src": "ffasset:img/c07a821ea89d8247.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_33",
+        "name": "Bar 39",
+        "description": "6.1 × 4.9 m layout · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_33_p0",
+            "src": "ffasset:img/8c6aef6a6918d3f2.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_34",
+        "name": "Bar 24",
+        "description": "6.1 × 6.1 m layout · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_34_p0",
+            "src": "ffasset:img/4f7a63b60e0aaad6.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_35",
+        "name": "Bar 19",
+        "description": "6.3 m long × 0.8 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_35_p0",
+            "src": "ffasset:img/b77e51b49c0b27c7.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_36",
+        "name": "Bar 25",
+        "description": "7.7 m long × 1.4 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_36_p0",
+            "src": "ffasset:img/1780815ec546abc9.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_37",
+        "name": "Bar 30",
+        "description": "7.7 × 5.0 m layout · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_37_p0",
+            "src": "ffasset:img/8da04590293b0072.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_38",
+        "name": "Bar 40",
+        "description": "7.7 × 5.0 m layout · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_38_p0",
+            "src": "ffasset:img/29b5738555c7769a.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_39",
+        "name": "Bar 27",
+        "description": "8.2 × 4.0 m layout · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_39_p0",
+            "src": "ffasset:img/54afc0625d07654b.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_40",
+        "name": "Bar 28",
+        "description": "10.5 m long × 0.8 m deep · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_40_p0",
+            "src": "ffasset:img/52c92a78932fa401.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_bars_41",
+        "name": "Bar 42",
+        "description": "Made to measure · 1.2 m high",
+        "media": [
+          {
+            "id": "vk_bars_41_p0",
+            "src": "ffasset:img/4338a67f37083d8d.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      }
+    ],
+    "packages": [
+      {
+        "id": "vk_pk_0",
+        "name": "Weddings",
+        "description": "From the welcome drinks to the final toast, a bar designed around your day, your tastes and the people celebrating with you.\n\nIncludes: Bespoke bar, cocktails, mocktails and an expert team\nIdeal for: Wedding receptions and celebrations",
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_pk_1",
+        "name": "Private Celebrations",
+        "description": "Your favourite drinks, a distinctive bar and a team who know how to look after your guests.\n\nIncludes: Bespoke bar, cocktails, mocktails and an expert team\nIdeal for: Birthdays, anniversaries and parties",
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_pk_2",
+        "name": "Corporate Events",
+        "description": "A polished bar service that reflects your brand and welcomes your guests, from product launches to company celebrations.\n\nIncludes: Branded bar styling, cocktails, mocktails and an expert team\nIdeal for: Product launches and company celebrations",
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_pk_3",
+        "name": "Full Bar Service",
+        "description": "Beyond cocktails, we offer a complete drinks selection: premium spirits, wines, draught and bottled beers, mocktails and soft drinks.\n\nIncludes: Premium spirits, wines, draught and bottled beers, mocktails and soft drinks\nIdeal for: Any occasion that needs a complete bar",
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      }
+    ],
+    "cocktail_menu": [
+      {
+        "id": "vk_ck_0",
+        "name": "Popcorn Whisky",
+        "description": "Whisky softened with sweet popcorn and a squeeze of lemon.",
+        "media": [
+          {
+            "id": "vk_ck_0_p0",
+            "src": "ffasset:img/d6b27b076f876082.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_ck_1",
+        "name": "Marmalade Gin",
+        "description": "Gin, bitter orange marmalade and lemon over ice.",
+        "media": [
+          {
+            "id": "vk_ck_1_p0",
+            "src": "ffasset:img/7a5b040b1210c63d.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_ck_2",
+        "name": "Limoncello Martini",
+        "description": "Zesty limoncello and vodka, bright and sharp.",
+        "media": [
+          {
+            "id": "vk_ck_2_p0",
+            "src": "ffasset:img/41b0dbd468bae3c0.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_ck_3",
+        "name": "Maple Old Fashioned",
+        "description": "Bourbon and bitters, sweetened with maple.",
+        "media": [
+          {
+            "id": "vk_ck_3_p0",
+            "src": "ffasset:img/377ed8732b156632.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_ck_4",
+        "name": "Maple Manhattan",
+        "description": "A smooth stirred Manhattan with a touch of maple.",
+        "media": [
+          {
+            "id": "vk_ck_4_p0",
+            "src": "ffasset:img/b4381da9ed2f5b85.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_ck_5",
+        "name": "Maple Espresso Martini",
+        "description": "Rich espresso and vodka with a hint of maple.",
+        "media": [
+          {
+            "id": "vk_ck_5_p0",
+            "src": "ffasset:img/13cdfca505430d30.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_ck_6",
+        "name": "Raspberry & Lychee Mojito",
+        "description": "Fresh mint, raspberry and lychee over crushed ice.",
+        "media": [
+          {
+            "id": "vk_ck_6_p0",
+            "src": "ffasset:img/100b4d1d2de27540.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_ck_7",
+        "name": "Ginger & Passionfruit Mojito",
+        "description": "Zingy ginger and passion fruit with fresh mint.",
+        "media": [
+          {
+            "id": "vk_ck_7_p0",
+            "src": "ffasset:img/8c6ebc42e0d49e71.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_ck_8",
+        "name": "Strawberry & Ting Mojito",
+        "description": "Strawberry and grapefruit soda, a long and fruity mojito.",
+        "media": [
+          {
+            "id": "vk_ck_8_p0",
+            "src": "ffasset:img/12086ec9113712cf.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_ck_9",
+        "name": "Limoncello & Lychee Mojito",
+        "description": "Limoncello and lychee lifted by lemon and mint.",
+        "media": [
+          {
+            "id": "vk_ck_9_p0",
+            "src": "ffasset:img/ef56b9345c8e7e7a.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_ck_10",
+        "name": "Spicy Strawberry Margarita",
+        "description": "Strawberry and a little chilli heat with a spiced rim.",
+        "media": [
+          {
+            "id": "vk_ck_10_p0",
+            "src": "ffasset:img/6dcc54650ef8f68c.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_ck_11",
+        "name": "Mango Colada",
+        "description": "Mango, coconut and pineapple, holiday in a glass.",
+        "media": [
+          {
+            "id": "vk_ck_11_p0",
+            "src": "ffasset:img/a1433f19f2e219ba.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_ck_12",
+        "name": "Penicillin",
+        "description": "Smoky whisky, lemon, honey and ginger.",
+        "media": [
+          {
+            "id": "vk_ck_12_p0",
+            "src": "ffasset:img/573011eeeb53fc87.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_ck_13",
+        "name": "Passionfruit & Lychee Sour",
+        "description": "A silky sour of passion fruit and lychee.",
+        "media": [
+          {
+            "id": "vk_ck_13_p0",
+            "src": "ffasset:img/f069a4f0866ade2a.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_ck_14",
+        "name": "Guava & Ginger Mule",
+        "description": "Guava and ginger beer with a lime kick.",
+        "media": [
+          {
+            "id": "vk_ck_14_p0",
+            "src": "ffasset:img/e133d45679006400.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_ck_15",
+        "name": "Raspberry & Rose Martini",
+        "description": "Raspberry and rose, delicate and floral.",
+        "media": [
+          {
+            "id": "vk_ck_15_p0",
+            "src": "ffasset:img/72ddf931bd520ce3.webp",
+            "source": {
+              "by": "owner",
+              "at": "2026-11-14"
+            }
+          }
+        ],
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      }
+    ],
+    "web_reviews": [
+      {
+        "id": "vk_wr_0",
+        "name": "Pav",
+        "description": "Just wanted to say a massive thank you to you & the team for the amazing cocktails at the wedding, you guys absolutely smashed it! Everyone really enjoyed them. Thanks for all your help, service was 💯👌🏽 Thank you again & look forward to using you again in the future❤️🫶🏼🍸",
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_wr_1",
+        "name": "Jay",
+        "description": "From our very first conversation, Vooshka understood exactly what we envisioned for our wedding and made it happen! The management team were so kind, respectful and polite, and nothing was ever too much trouble. The cocktails and mocktails tasted absolutely amazing, and so many of our guests commented on how good they were! The mixologists and bartenders were fantastic, so friendly and engaging with all our guests. The whole team really went above and beyond to make our day special. Couldn’t recommend Vooshka enough!",
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_wr_2",
+        "name": "Vinny",
+        "description": "We can’t recommend Vooshka enough! They absolutely smashed it at our wedding, from the initial planning right through to the day itself.  Raj and his team really listened to what we wanted and helped bring our vision to life. They also shared some great ideas to make the experience even better for our guests, from designing the menu and setting up the bar to creating a fantastic cocktail experience.  We had a tasting session with our family, which was a great touch, and even came up with some fun, quirky cocktail names to fit our wedding theme.  The cocktail bar was a massive hit with our guests and really added something special to the day. Raj and the team also had a few surprises up their sleeves, which helped take the party to another level!  The whole team were brilliant from start to finish, and their attention to detail and willingness to go the extra mile really made a difference.  A massive thank you to Raj and everyone at Vooshka for helping make our wedding so special. If you’re planning a wedding or event and want something a bit different, we’d 100% recommend them!",
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      },
+      {
+        "id": "vk_wr_3",
+        "name": "Maria",
+        "description": "Amazing Cocktails and Fantastic Service!  The cocktails at our wedding were amazing, and all our guests raved about them! The tasting beforehand was a fantastic addition, allowing me to create cocktails that perfectly suited our wedding. The service was great, and the attention to detail was brilliant, with the cocktail board and menus designed to match our wedding theme. Everything felt personal and was done to such a high standard. The cocktails were a real highlight of our day, and I couldn’t recommend them enough to anyone looking for something special for their wedding or event. Thank you for making our day extra special!",
+        "source": {
+          "by": "owner",
+          "at": "2026-11-14"
+        }
+      }
+    ]
+  },
+  "qa": [
+    {
+      "id": "qa_vk0",
+      "group": "business",
+      "text": "Do you offer a full bar service?",
+      "answer": "Yes",
+      "note": "Bespoke bars, cocktails, mocktails, spirits, wines, beers, draught beer and soft drinks.",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "qa_vk1",
+      "group": "business",
+      "text": "Do you travel across the UK?",
+      "answer": "Yes",
+      "note": "Mobile bar experiences across the UK. Share your venue or postcode to discuss availability and access.",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "qa_vk2",
+      "group": "business",
+      "text": "Do you design the bar around my event?",
+      "answer": "Yes",
+      "note": "Choose from 42 bar styles or ask for a made to measure design, with bespoke artwork.",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "qa_vk3",
+      "group": "business",
+      "text": "Do you offer alcohol-free serves?",
+      "answer": "Yes",
+      "note": "Mocktails and soft drinks sit alongside the cocktails.",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "qa_vk4",
+      "group": "business",
+      "text": "Do you hold a tasting before the event?",
+      "answer": "Yes",
+      "note": "A personal tasting with our mixologist to create your drinks menu.",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "qa_vk5",
+      "group": "business",
+      "text": "Do you coordinate with my venue?",
+      "answer": "Yes",
+      "note": "We confirm final arrangements with your venue, from setup to breakdown.",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "qa_vk6",
+      "group": "business",
+      "text": "Does my venue need to provide space, access, power and water?",
+      "answer": "Yes",
+      "note": "Requirements depend on the bar and service you choose. We discuss them with you and your venue before the event.",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    },
+    {
+      "id": "qa_vk7",
+      "group": "business",
+      "text": "Does an enquiry reserve my date?",
+      "answer": "No",
+      "note": "Your date is secured once your signed agreement and deposit are received.",
+      "source": {
+        "by": "owner",
+        "at": "2026-11-14"
+      }
+    }
+  ],
+  "meta": {
+    "status": "claimed",
+    "statusAt": "2026-11-14",
+    "category": "bar",
+    "tag": "VOOSH",
+    "tier": "gold",
+    "legal": {
+      "form": null,
+      "legalName": null,
+      "companyNumber": null
+    },
+    "permission": {
+      "text": "granted",
+      "images": "granted"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Luton",
+        "lat": 51.8911,
+        "lng": -0.4279,
+        "approx": false
+      }
+    ]
+  }
+}

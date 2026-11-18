@@ -1,4 +1,4 @@
 .pending-notes.md
 CHANGELOG.new
 build/
-node_modules/
+node_modules

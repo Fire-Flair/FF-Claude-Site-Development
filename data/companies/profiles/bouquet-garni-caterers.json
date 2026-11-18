@@ -1,0 +1,74 @@
+{
+  "formatVersion": 2,
+  "slug": "bouquet-garni-caterers",
+  "name": "Bouquet Garni Caterers",
+  "kind": "Wedding & event caterers",
+  "base": "Manningtree",
+  "areas": [
+    "Essex",
+    "Suffolk",
+    "East Anglia"
+  ],
+  "description": "An Essex wedding and event catering company on the Essex-Suffolk border.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://app.bridebook.com/uk/search/wedding-catering/bury-st-edmunds",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding catering",
+        "Event catering"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/search/wedding-catering/bury-st-edmunds",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/search/wedding-catering/bury-st-edmunds",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "catering",
+    "tag": "BOUQU",
+    "position": 110,
+    "source": {
+      "urls": [
+        "https://app.bridebook.com/uk/search/wedding-catering/bury-st-edmunds"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Manningtree",
+        "lat": 51.944,
+        "lng": 1.062,
+        "approx": false
+      }
+    ]
+  }
+}

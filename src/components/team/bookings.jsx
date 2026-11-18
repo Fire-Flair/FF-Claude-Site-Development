@@ -21,7 +21,7 @@ function PosterCard({ tone = "dark", ribbon, eyebrow, title, subtitle, tagline, 
   return (
     <article className={`ff-poster ${t.cls}`} style={{ "--pc-accent": t.accent, ...(t.edge ? { "--pc-edge": metalEdge(t.edge) } : {}) }}>
       <div className="ff-poster-ribbon"><Sparkles size={11} /> {ribbon}</div>
-      <span className="ff-poster-coin"><Coin size={44} tier={t.edge || "gold"} /></span>
+      <span className="ff-poster-coin"><FFLogo size={44} tier={t.edge || "gold"} /></span>
       <div className="ff-poster-head">
         {eyebrow && <div className="ff-poster-eyebrow">✦ {eyebrow} ✦</div>}
         <h3 className="ff-poster-title">{title}</h3>
@@ -143,22 +143,41 @@ function BookingsSoon() {
 
 
 
-/* v17.3.80: the three interest drop-downs on the Bookings page are larger boxes:
-   a photo, the title and a short description, opening to the cards inside. */
+/* The three interest drop-downs on the Bookings page. Each is a card: the photo is the top half with only the title on it;
+   the icon, the description and the chevron sit below on the solid card. On wide screens the three cards share one row
+   (.ff-bkd-row) and an opened card's contents span the full width underneath (the box then carries its own title). */
 const BKD_CSS = __ff_css("styles/bkd.css");
 
 
-function BkDrop17({ id, title, desc, icon: Icon, photo, children }) {
-  const [open, setOpen] = useState(false);
+/* open / onOpen come from TeamBookings so only one of the three boxes is open at a time (onOpen(null) closes). */
+function BkDrop17({ id, title, desc, icon: Icon, photo, children, open: openP, onOpen }) {
+  const [openS, setOpenS] = useState(false);
+  const open = onOpen ? !!openP : openS;
+  const setOpen = onOpen ? (f) => onOpen((typeof f === "function" ? f(open) : f) ? id : null) : setOpenS;
   useEffect(() => {
     const h = (e) => {
       if (e.detail === id) setOpen(true);
     };
     window.addEventListener("ff-opendrop", h);
     return () => window.removeEventListener("ff-opendrop", h);
-  }, [id]);
+  }, [id, onOpen]);
   const src = (window.FF_IMG || {})[photo] || "";
-  return /* @__PURE__ */ React.createElement("section", { className: `ff-bkd${open ? " open" : ""}`, id }, /* @__PURE__ */ React.createElement("button", { type: "button", className: "bkd-hd", "aria-expanded": open, onClick: () => setOpen((o) => !o) }, src ? /* @__PURE__ */ React.createElement("span", { className: "bkd-ph" }, /* @__PURE__ */ React.createElement("img", { decoding: "async", src, style: fp17(photo), alt: "", loading: "lazy" })) : null, /* @__PURE__ */ React.createElement("span", { className: "bkd-tx" }, /* @__PURE__ */ React.createElement("span", { className: "bkd-ic" }, /* @__PURE__ */ React.createElement(Icon, { size: 16 })), /* @__PURE__ */ React.createElement("b", null, title), /* @__PURE__ */ React.createElement("span", { className: "bkd-ds" }, desc), /* @__PURE__ */ React.createElement(I11.ChevronRight, { size: 18, className: "bkd-chev" }))), open && /* @__PURE__ */ React.createElement("div", { className: "bkd-bd" }, children));
+  return (
+    <section className={`ff-bkd${open ? " open" : ""}`}>
+      <button type="button" className="bkd-hd" id={id} aria-expanded={open} onClick={() => setOpen((o) => !o)}>
+        <span className={`bkd-ph${src ? "" : " none"}`}>
+          {src ? <img decoding="async" src={src} style={fp17(photo)} alt="" loading="lazy" /> : null}
+          <b>{title}</b>
+        </span>
+        <span className="bkd-tx">
+          <span className="bkd-ic"><Icon size={16} /></span>
+          <span className="bkd-ds">{desc}</span>
+          <I11.ChevronDown size={18} className="bkd-chev" />
+        </span>
+      </button>
+      {open && <div className="bkd-bd"><h3 className="bkd-bt">{title}</h3>{children}</div>}
+    </section>
+  );
 }
 
 
@@ -168,9 +187,25 @@ function BkDrop17({ id, title, desc, icon: Icon, photo, children }) {
    in profile.staffAvail, as before) and takes an optional preferred hourly rate: a typed Q&A answer
    rate.<profession id> in pence, visibility "ff-staff" (shown on the member's FF Staff profile only).
    Businesses set the actual shift rate on each Shift Card. */
-function ProfRateTile17({ name, cat, value, onChange, err, busy }) {
+/* Terms shown after signing in, before packages or rates are saved. kind "pkg": FF Party packages. kind "shift": FF Staff shifts. */
+function PkgTerms17({ kind = "pkg", onClose, onAccept }) {
+  const list = kind === "shift" ? STAFF_SHIFT_TERMS17 : PARTY_PKG_TERMS17;
+  return (
+    <Sheet open onClose={onClose} title={kind === "shift" ? "FF Staff shift terms" : "FF Party package terms"}>
+      <div className="ff-tc5">
+        {list.map((t, i) => <div key={t.k} className="ff-tc5-read"><span><b>{i + 1}</b>{t.label}</span><p>{t.text}</p></div>)}
+      </div>
+      <div className="ff-bsec-acts" style={{ marginTop: 10 }}><Btn variant="primary wide" onClick={onAccept}><Check size={14} /> Accept and confirm</Btn></div>
+    </Sheet>
+  );
+}
+
+
+function ProfRateTile17({ name, cat, guest, val, onVal, err }) {
   const { state, dispatch } = useStore();
   const account = qaAccount17(state);
+  const saved = account ? prefRateP17(state, account, name) : null;
+  const v = val != null ? val : saved != null ? String(saved / 100) : "";
   const staffAvail = state.profile.staffAvail || {};
   const ans = staffAvail[name] || "";
   const q = `Are you available for bookings as ${/^[aeiou]/i.test(name) ? "an" : "a"} ${name.toLowerCase()}?`;
@@ -188,8 +223,8 @@ function ProfRateTile17({ name, cat, value, onChange, err, busy }) {
         <small>Your preferred hourly rate</small>
         <span className="rt">
           <span aria-hidden="true">£</span>
-          <input type="text" inputMode="decimal" value={value} aria-label={`Your preferred hourly rate as ${name}, pounds per hour`} disabled={busy}
-            onChange={(e) => onChange(e.target.value.replace(/[^\d.]/g, "").slice(0, 7))} />
+          <input type="text" inputMode="decimal" value={v} aria-label={`Your preferred hourly rate as ${name}, pounds per hour`}
+            onChange={(e) => onVal(name, e.target.value.replace(/[^\d.]/g, "").slice(0, 7))} />
           <span>/hour</span>
         </span>
         {err ? <span className="er" role="alert">{err}</span> : <span className="vis">Shown to businesses on FF Staff only</span>}
@@ -200,59 +235,179 @@ function ProfRateTile17({ name, cat, value, onChange, err, busy }) {
 
 
 function ProfRates17({ guest }) {
-  const { state } = useStore();
+  const { state, dispatch } = useStore();
   const account = qaAccount17(state);
   const mine = recsOf(state.profile, "professions").filter(r => !r.proposed).map(r => r.name);
   const answered = [...Object.keys(state.profile.staffAvail || {}), ...ALL_PROFESSIONS.map(p => p.name).filter(n => account && prefRateP17(state, account, n) != null)];
   const yours = [...new Set([...mine, ...answered])];
-  const dispatch = useStore().dispatch;
-  const [drafts, setDrafts] = useState({});
+  const [cat, setCat] = useState(() => (!guest && yours.length ? "Yours" : PROFESSION_CATEGORIES[0].key));
+  const [vals, setVals] = useState({});
   const [errs, setErrs] = useState({});
   const [busy, setBusy] = useState(false);
-  const savedStr = (n) => { const p = account ? prefRateP17(state, account, n) : null; return p != null ? String(p / 100) : ""; };
-  const valOf = (n) => drafts[n] !== undefined ? drafts[n] : savedStr(n);
-  const dirty = Object.keys(drafts).filter(n => String(drafts[n]).trim() !== savedStr(n));
-  const submit = async () => {
-    if (busy || !dirty.length) return;
-    if (!account) { window.dispatchEvent(new Event("ff-login")); return; }
-    const bad = {};
-    dirty.forEach(n => { const t = String(drafts[n]).trim(); if (t && (!isFinite(Number(t)) || Number(t) <= 0 || !/^\d+(\.\d{1,2})?$/.test(t))) bad[n] = "Enter an amount in pounds, like 18 or 18.50."; });
-    setErrs(bad);
-    if (Object.keys(bad).length) return;
-    setBusy(true);
-    let done = 0; const left = { ...drafts }; const fail = {};
-    for (const n of dirty) {
-      const t = String(drafts[n]).trim();
-      const r = t
-        ? await qaSubmit17(dispatch, { questionId: qaRateQid17(n), account, typed: { kind: "rate_gbp_hour", pence: Math.round(Number(t) * 100), profession: n }, visibility: "ff-staff", source: "FF Team Bookings · FF Staff Shifts" })
-        : await qaWithdraw17(dispatch, { questionId: qaRateQid17(n), account });
-      if (r.ok) { done++; delete left[n]; } else fail[n] = "That couldn't be saved.";
-    }
-    setBusy(false); setDrafts(left); setErrs(fail);
-    if (done) dispatch({ type: "TOAST", toast: done === 1 ? "Preferred rate saved" : "Preferred rates saved" });
-  };
-  const [cat, setCat] = useState(() => (!guest && yours.length ? "Yours" : PROFESSION_CATEGORIES[0].key));
   const list = cat === "Yours" ? yours.map(n => ({ name: n, cat: professionCategory(n) || "Other" })) : ALL_PROFESSIONS.filter(p => p.cat === cat).map(p => ({ name: p.name, cat: p.cat }));
   const chips = [...(!guest && yours.length ? ["Yours"] : []), ...PROFESSION_CATEGORIES.map(c => c.key)];
+  const onVal = (n, v) => { setVals(x => ({ ...x, [n]: v })); setErrs(x => ({ ...x, [n]: "" })); };
+  const dirty = Object.keys(vals).length > 0;
+  const [terms, setTerms] = useState(false);
+  const confirm = () => {
+    if (busy || !dirty) return;
+    const bad = {};
+    Object.entries(vals).forEach(([n, t0]) => { const t = String(t0).trim(); if (t && (!isFinite(Number(t)) || Number(t) <= 0 || !/^\d+(\.\d{1,2})?$/.test(t))) bad[n] = "Enter an amount in pounds, like 18 or 18.50."; });
+    if (Object.keys(bad).length) { setErrs(bad); return; }
+    if (!account) { window.dispatchEvent(new Event("ff-login")); return; }
+    setTerms(true);
+  };
+  const save = async () => {
+    setTerms(false);
+    setBusy(true);
+    let okAll = true;
+    for (const [n, t0] of Object.entries(vals)) {
+      const t = String(t0).trim();
+      const saved = prefRateP17(state, account, n);
+      if (!t) {
+        if (saved != null) { const r2 = await qaWithdraw17(dispatch, { account, questionId: qaRateQid17(n) }); if (!r2.ok) okAll = false; }
+        continue;
+      }
+      const pence = Math.round(Number(t) * 100);
+      if (pence === saved) continue;
+      const r = await qaSubmit17(dispatch, { questionId: qaRateQid17(n), account, typed: { kind: "rate_gbp_hour", pence, profession: n }, visibility: "ff-staff", source: "FF Team Bookings · FF Staff Shifts" });
+      if (!r.ok) { okAll = false; setErrs(x => ({ ...x, [n]: "That couldn't be saved." })); }
+    }
+    setBusy(false);
+    if (okAll) { setVals({}); dispatch({ type: "TOAST", toast: "Your rates are saved" }); }
+  };
   return (
     <>
-      <div className="ff-pr17-chips" role="group" aria-label="Profession categories">
-        {chips.map(k => <button key={k} type="button" className="ff-chip" aria-pressed={k === cat} onClick={() => setCat(k)}>{k === "Yours" ? "Your professions" : k}</button>)}
+      <div className="ff-pr17-chips" role="tablist" aria-label="Profession categories">
+        {chips.map(k => <button key={k} type="button" role="tab" className="ff-chip ff-pr17-tab" aria-selected={k === cat} aria-pressed={k === cat} onClick={() => setCat(k)}>{k === "Yours" ? "Your professions" : k}</button>)}
       </div>
-      <HScroll label="FF Staff Shifts" snap>
-        {list.map(p => <div key={p.name} className="ff-tp17-cell"><ProfRateTile17 name={p.name} cat={p.cat} value={valOf(p.name)} busy={busy} err={errs[p.name]}
-          onChange={(v) => { setDrafts(d => ({ ...d, [p.name]: v })); setErrs(e => { const { [p.name]: _, ...rest } = e; return rest; }); }} /></div>)}
-      </HScroll>
-      <div className="ff-bk-submit"><Btn variant="primary" disabled={!dirty.length || busy} onClick={submit}>Submit</Btn></div>
+      <div className="ff-pr17-panel" role="tabpanel">
+        <div className="ff-pr17-ph"><I11.ChevronDown size={16} aria-hidden="true" /> <b>{cat === "Yours" ? "Your professions" : cat}</b> shifts</div>
+        <HScroll label="FF Staff Shifts" snap>
+          {list.map(p => <div key={p.name} className="ff-tp17-cell"><ProfRateTile17 name={p.name} cat={p.cat} guest={guest} val={vals[p.name]} onVal={onVal} err={errs[p.name]} /></div>)}
+        </HScroll>
+      </div>
+      <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={busy || !dirty} onClick={confirm}><Check size={15} /> Save your rates</button>
+      {terms && <PkgTerms17 kind="shift" onClose={() => setTerms(false)} onAccept={save} />}
     </>
   );
 }
 
 
+/* A bar package on FF Team Bookings: the package card (Alex's option 3, pkgbuild). Written for the bartender who signs up:
+   one design for every package (no tier colours), copy straight from the catalogue (PKG_BY17), Details closed by default,
+   the burgundy footer carries "You earn" and FF Team's Sign up. A long word shrinks its line instead of splitting. */
+/* Fixes2: a hyphenated word ("flair-performing") never breaks at its hyphen on a package card. */
+function pkcNoBreak17(v) {
+  if (typeof v !== "string" || !/\w-\w/.test(v)) return v;
+  return v.split(/(\S*\w-\w\S*)/).map((t, i) => i % 2 ? <span key={i} style={{ whiteSpace: "nowrap" }}>{t}</span> : t);
+}
+function BkPkgCard17({ sv, on, onClick }) {
+  const p = PKG_BY17[sv.id] || {};
+  const ref = useRef(null);
+  const pay = PAY17[sv.id];
+  React.useLayoutEffect(() => {
+    const root = ref.current; if (!root) return;
+    const fit = () => root.querySelectorAll(".fit").forEach(el => {
+      if (!el.offsetParent) return;
+      el.style.fontSize = ""; let fs = parseFloat(getComputedStyle(el).fontSize), n = 0;
+      while (el.scrollWidth > el.clientWidth + 0.5 && fs > 9 && n++ < 40) { fs -= 0.5; el.style.fontSize = fs + "px"; }
+    });
+    fit();
+    const tg = () => fit(); root.addEventListener("toggle", tg, true);
+    let ro = null; if (window.ResizeObserver) { ro = new ResizeObserver(fit); ro.observe(root); }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit).catch(() => {});
+    return () => { root.removeEventListener("toggle", tg, true); if (ro) ro.disconnect(); };
+  }, [sv.id, on]);
+  const rows = [[S17I.Sparkles, "Includes", p.includes], [S17I.Users, "Ideal for", p.ideal], [S17I.Clock, "Duration", p.durationLabel]].filter(r => r[2]);
+  return (
+    <div ref={ref} className={`ff-pkc${on ? " sel" : ""}`} data-pk17={sv.id}>
+      <span className="ff-pkc-rb"><S17I.Sparkles size={12} /> Package card</span>
+      <span className="ff-pkc-logo"><FFLogo size={40} tier="gold" /></span>
+      <div className="ff-pkc-hd">
+        <div className="ff-pkc-eb fit">+ {sv.level} · FF Party +</div>
+        <h5 className="ff-pkc-ti fit">{p.name || sv.title}</h5>
+        {p.tagline && <p className="ff-pkc-tg">{pkcNoBreak17(p.tagline)}</p>}
+      </div>
+      <div className="ff-pkc-rows">
+        {rows.map(([Ic, l, v]) => (
+          <div key={l} className="ff-pkc-row">
+            <span className="ff-pkc-ico"><Ic size={18} strokeWidth={1.6} /></span>
+            <span className="v"><i>{l}</i><b className="fit">{pkcNoBreak17(v)}</b></span>
+          </div>
+        ))}
+      </div>
+      <details className="ff-pkc-dt">
+        <summary><span>Details</span><S17I.ChevronDown size={18} strokeWidth={2} /></summary>
+        <div className="in">
+          {p.description && <p>{pkcNoBreak17(p.description)}</p>}
+          {(p.points || []).length > 0 && <ul>{p.points.map(x => <li key={x}>{pkcNoBreak17(x)}</li>)}</ul>}
+          {p.capability && <div><i>You bring</i><p>{pkcNoBreak17(p.capability)}</p></div>}
+          {p.conditions && <p className="cond">{pkcNoBreak17(p.conditions)}</p>}
+        </div>
+      </details>
+      <div className="ff-pkc-ft">
+        {pay != null && <span className="ff-pkc-earn"><i>You earn</i><b>{pkgPayLabel17(sv.id)}</b></span>}
+        <button type="button" className="ff-pkc-go fit" onClick={onClick} aria-pressed={!!on} aria-label={`${p.name || sv.title}: ${on ? "Signed up" : "Sign up"}`}>
+          {on ? <><S17I.Check size={13} strokeWidth={2.6} /> Signed up</> : "Sign up"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* pkg3 / v17.46: Coming soon package cards. The Bar rail ends with the custom-package card; the Entertainment and
+   Services tabs each preview three packages to come. Copy speaks to the professional who will create them. */
+const PK_SOON17 = {
+  bar: [{ id: "custom", eb: "FF Party", ti: "FF Party packages", tg: "Create custom packages. Your skills, your package, your price.",
+    inc: "Your signature serves, your kit, your style", ideal: "The events you love working" }],
+  ent: [
+    { id: "dj", eb: "Entertainment · FF Party", ti: "DJ Package", tg: "Your sound, your package, your price.",
+      inc: "Your sets, your kit, your sound", ideal: "Weddings, birthdays and late-night parties" },
+    { id: "music", eb: "Entertainment · FF Party", ti: "Live Music Package", tg: "Your music, your package, your price.",
+      inc: "Your act, your repertoire, your setup", ideal: "Ceremonies, receptions and drinks receptions" },
+    { id: "act", eb: "Entertainment · FF Party", ti: "Entertainer Package", tg: "Your act, your package, your price.",
+      inc: "Magic, caricatures or a show of your own", ideal: "Family parties, corporate events and receptions" },
+  ],
+  svc: [
+    { id: "photo", eb: "Services · FF Party", ti: "Photographer Package", tg: "Your eye, your package, your price.",
+      inc: "Your camera, your style, your edit", ideal: "Weddings, parties and brand events" },
+    { id: "video", eb: "Services · FF Party", ti: "Videographer Package", tg: "Your story, your package, your price.",
+      inc: "Your filming, your edit, your highlights reel", ideal: "Weddings, launches and celebrations" },
+    { id: "host", eb: "Services · FF Party", ti: "Event Host Package", tg: "Your welcome, your package, your price.",
+      inc: "Your welcome, your timing, your way with a crowd", ideal: "Corporate events, awards nights and parties" },
+  ],
+};
+function BkPkgSoon17({ pk = PK_SOON17.bar[0] }) {
+  const rows = [[S17I.Sparkles, "Includes", pk.inc], [S17I.Users, "Ideal for", pk.ideal], [S17I.Clock, "Duration", "As long as you choose"], [S17I.Star, "Price", "You set it"]];
+  return (
+    <div className="ff-pkc ff-pkc-soon" data-pk17={"soon-" + pk.id}>
+      <span className="ff-pkc-rb"><S17I.Sparkles size={12} /> Package card</span>
+      <span className="ff-pkc-logo"><FFLogo size={40} tier="gold" /></span>
+      <div className="ff-pkc-hd">
+        <div className="ff-pkc-eb">+ {pk.eb} +</div>
+        <h5 className="ff-pkc-ti">{pk.ti}</h5>
+        <p className="ff-pkc-tg">{pk.tg}</p>
+      </div>
+      <div className="ff-pkc-rows ff-pkc-pv" aria-label={`${pk.ti} preview`}>
+        {rows.map(([Ic, l, v]) => (
+          <div key={l} className="ff-pkc-row">
+            <span className="ff-pkc-ico"><Ic size={18} strokeWidth={1.6} /></span>
+            <span className="v"><i>{l}</i><b>{v}</b></span>
+          </div>
+        ))}
+      </div>
+      <div className="ff-pkc-pvdt" aria-hidden="true"><span>Details</span><S17I.ChevronDown size={18} strokeWidth={2} /></div>
+      <div className="ff-pkc-ft"><span className="ff-pkc-soonb"><S17I.Clock size={14} strokeWidth={2} /> Coming soon</span></div>
+    </div>
+  );
+}
+
 function TeamBookings({ guest = false }) {
   const { state, dispatch } = useStore();
   const [open, setOpen] = useState(null);
   const [showPast, setShowPast] = useState(false);
+  const [drop, setDrop] = useState(null);
   const signedIn = state.auth.status === "signedIn";
   /* Only the demo profile (SAM42) carries sample bookings. Everyone else starts clean. */
   const demo = !guest && signedIn && ["SAM42", "ALEXG"].includes(state.auth.tag);
@@ -262,6 +417,7 @@ function TeamBookings({ guest = false }) {
   const byIso = (a, b) => String(a.iso).localeCompare(String(b.iso));
   const requests = all.filter(x => ["requested", "discuss", "available"].includes(x.e.state)).filter(x => { const t = startMs17(x.shift); return !(t && t <= now17(state)); }).sort(byIso);
   const upcoming = all.filter(x => ["confirmed"].includes(x.e.state)).sort(byIso);
+  const cancelledByBiz = all.filter(x => x.e.state === "cancelled_biz").sort(byIso);
   const previous = all.filter(x => PAST_STATES.includes(x.e.state)).sort((a, b) => byIso(b, a));
   const goProfile = () => { dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); };
   const respond = (x, st) => {
@@ -269,25 +425,28 @@ function TeamBookings({ guest = false }) {
     dispatch({ type: "TOAST", toast: st === "confirmed" ? `Confirmed: ${x.shift.role}, ${x.shift.date}. It's now in your bookings.` : "Declined. The company has been told." });
   };
   const svcInterest = state.profile.serviceInterest || [];
-  const [pkgSel, setPkgSel] = useState(svcInterest);
-  const svcKey = svcInterest.join("|");
-  useEffect(() => { setPkgSel(svcInterest); }, [svcKey]);
-  const pkgDirty = [...pkgSel].sort().join("|") !== [...svcInterest].sort().join("|");
+  const [sel, setSel] = useState(null);
+  const [pkgTerms, setPkgTerms] = useState(false);
+  const picked = sel || svcInterest;
+  const tick = (sv) => setSel(picked.includes(sv.id) ? picked.filter(x => x !== sv.id) : [...picked, sv.id]);
   /* v17.4.6: package sign-ups are one Q&A answer (int.party_package, option ids = package ids). */
-  const toggleService = (sv) => setPkgSel(cur => cur.includes(sv.id) ? cur.filter(x => x !== sv.id) : [...cur, sv.id]);
-  const submitPackages = async () => {
+  const confirmPkgs = async () => {
+    setPkgTerms(false);
     const account = qaAccount17(state);
     if (!account) { window.dispatchEvent(new Event("ff-login")); return; }
-    if (!pkgDirty) return;
-    const next = pkgSel;
+    const next = picked;
+    const sv = { title: next.length === 1 ? (pkgs.find(x => x.id === next[0]) || {}).title || "the package" : "your packages" };
     const mirror = { type: "PROFILE", patch: { serviceInterest: next } };
     const r = next.length
-      ? await qaSubmit17(dispatch, { questionId: "int.party_package", account, optionIds: next, visibility: "private", source: "FF Team Bookings · FF Party packages" }, mirror)
+      ? await qaSubmit17(dispatch, { questionId: "int.party_package", account, optionIds: next, visibility: "public", source: "FF Team Bookings · FF Party packages" }, mirror)
       : await qaWithdraw17(dispatch, { questionId: "int.party_package", account }, mirror);
-    dispatch({ type: "TOAST", toast: r.ok ? "Packages saved" : "That couldn't be saved. Try again." });
+    dispatch({ type: "TOAST", toast: r.ok ? (next.length ? `Signed up for ${sv.title}` : "Withdrawn from your packages") : "That couldn't be saved. Try again." });
+    if (r.ok) setSel(null);
   };
-  const ownPackage = () => { dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); let n = 0; const go = () => { const el = document.getElementById("ff-cr17-service"); if (el) el.scrollIntoView({ behavior: "auto", block: "start" }); else if (++n < 20) setTimeout(go, 60); }; setTimeout(go, 120); };
-  const pkgs = [...PARTY_SERVICES.filter(sv => sv.id !== "svc_full"), ...(hid17(state, "packages", "svc_staffing") ? [] : [STAFFING_SERVICE])];
+  /* Bar packages: Masterclass first, then down the catalogue's own order to Staffing. */
+  const pkgs = [...PARTY_SERVICES.filter(sv => sv.id !== "svc_full").reverse(), ...(hid17(state, "packages", "svc_staffing") ? [] : [STAFFING_SERVICE])];
+  const [pkTab, setPkTab] = useState("bar");
+  const PK_TABS = [["bar", "Bar"], ["ent", "Entertainment"], ["svc", "Services"]];
 
   const Row = ({ x, tag, onClick }) => (
     <button type="button" className="ff-bk-row" onClick={onClick}>
@@ -303,41 +462,62 @@ function TeamBookings({ guest = false }) {
 
   return (
     <div className="ff-bk">
-      <div className="ff-eyebrow">FF Team</div>
-      <h1 className="ff-h1" style={{ marginTop: 4 }}>Bookings</h1>
+      <BigHead20 title="Bookings" />
+      <style>{BKD_CSS}</style>
 
-      {demo && requests.length > 0 && (
-        <section className="ff-bk-sec">
-          <h2 className="ff-bk-h"><span className="ff-bk-wa"><WhatsAppIcon size={14} /></span> Invitations <i>{requests.length}</i></h2>
-          <div className="ff-sdrail11"><HScroll label="Invitations">{requests.map(x => <ShiftDelivery11 key={x.e.id} e={x.e} shift={x.shift} event={x.event} />)}</HScroll></div>
-        </section>
-      )}
+      <section className="ff-bk-sec ff-bk-yours" id="ff-bk-yours" aria-labelledby="ff-bk-yours-h">
+        <h2 className="ff-h1 ff-big20 ff-bk-yh" id="ff-bk-yours-h"><span className="ff-wa-ico"><WhatsAppIcon size={22} /></span><span className="t">Your Bookings</span></h2>
+        <div className="ff-wa ff-bk-waline">
+          <span className="ff-body" style={{ color: "#0B3D22", fontSize: 13.5 }}>
+            <b>Requests come to you on WhatsApp.</b> When companies and clients ask if you're free, each request is sent to you directly on WhatsApp and shows here. You reply in either place.
+          </span>
+        </div>
 
-      <section className="ff-bk-sec">
-        <div className="ff-bk-hrow"><h2 className="ff-bk-h ff-bk-hl">Confirmed bookings {demo && upcoming.length > 0 && <i>{upcoming.length}</i>}</h2><button type="button" className="ff-bk-hist" aria-pressed={showPast} onClick={() => setShowPast(v => !v)}><Clock size={12} /> History</button></div>
-        {upcoming.length ? <div className="ff-sdrail11"><HScroll label="Confirmed bookings">{upcoming.map(x => <ShiftDelivery11 key={x.e.id} e={x.e} shift={x.shift} event={x.event} />)}</HScroll></div>
-          : (
-            <BookingsSoon />
-          )}
-        {showPast && (previous.length ? previous.map(x => <Row key={x.e.id} x={x} onClick={() => setOpen(x.e)} tag={<span className="ff-bk-done">Worked</span>} />)
-          : <p className="ff-bk-none">No past bookings yet.</p>)}
+        {demo && requests.length > 0 && (
+          <div className="ff-bk-grp">
+            <h3 className="ff-bk-h">Invitations <i>{requests.length}</i></h3>
+            <div className="ff-sdrail11"><HScroll label="Invitations">{requests.map(x => <ShiftDelivery11 key={x.e.id} e={x.e} shift={x.shift} event={x.event} />)}</HScroll></div>
+          </div>
+        )}
+
+        {signedIn ? <div className="ff-bk-grp ff-bk-conf17">
+          <div className="ff-bk-hrow"><h3 className="ff-bk-h">Confirmed {demo && upcoming.length > 0 ? <i>{upcoming.length}</i> : null}</h3><button type="button" className="ff-bk-hist" aria-pressed={showPast} onClick={() => setShowPast(v => !v)}><Clock size={12} /> History</button></div>
+          {upcoming.length ? <div className="ff-sdrail11"><HScroll label="Confirmed bookings">{upcoming.map(x => <ShiftDelivery11 key={x.e.id} e={x.e} shift={x.shift} event={x.event} />)}</HScroll></div>
+            : cancelledByBiz.length ? null : <p className="ff-bk-none ff-bk-none17">Your booked shifts will be shown here.</p>}
+          {cancelledByBiz.map(x => <Row key={x.e.id} x={x} onClick={() => setOpen(x.e)} tag={<span className="ff-bk-done">Cancelled by the business</span>} />)}
+          {showPast && (previous.length ? previous.map(x => <Row key={x.e.id} x={x} onClick={() => setOpen(x.e)} tag={<span className="ff-bk-done">Worked</span>} />)
+            : <p className="ff-bk-none">No past bookings yet.</p>)}
+        </div> : <p className="ff-bk-none ff-bk-none17">Your booked shifts will be shown here.</p>}
       </section>
 
       <section className="ff-bk-sec ff-fb21" id="ff-bk-fireflair">
-        <style>{BKD_CSS}</style>
-        <BigHead20 title="FireFlair bookings" />
-        <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-party">
-          <h3>FF Party packages</h3>
+        <BigHead20 title="Packages" />
+        <div className="ff-bk-sell ff-bkpc ff-fb21-box pkg3" id="ff-bk-party">
+          <h3>FFParty</h3>
+          {pkTab === "bar" && <h4 className="ff-bkpk-sub">Our bar packages</h4>}
           <p>You are your own boss. FireFlair sets the pay rate for each package. You deal directly with the client, and FireFlair is here to support you. Packages are advertised at a set rate, and by signing up to one you agree to that rate. The rates are strong, so we expect strong work in return.</p>
-          <HScroll label="FF Party packages" snap>
-            {pkgs.map(sv => <div key={sv.id} className="ff-tp17-cell"><PkgTile17 sv={sv} on={pkgSel.includes(sv.id)} onClick={() => toggleService(sv)} /></div>)}
-            <div className="ff-tp17-cell"><button type="button" className="ff-tp17 own" onClick={ownPackage}><span className="pl"><Plus size={22} /></span><b className="tt">Create your own package</b></button></div>
-          </HScroll>
-          <div className="ff-bk-submit"><Btn variant="primary" disabled={!pkgDirty} onClick={submitPackages}>Submit</Btn></div>
+          <div className="ff-pr17-chips" role="tablist" aria-label="Package types">
+            {PK_TABS.map(([k, l], i) => <button key={k} id={`ff-pktab-${k}`} type="button" role="tab" className="ff-chip ff-pr17-tab" aria-selected={k === pkTab} aria-controls={`ff-pkpanel-${k}`} tabIndex={k === pkTab ? 0 : -1} onClick={() => setPkTab(k)}
+              onKeyDown={e => { const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : e.key === "Home" ? -i : e.key === "End" ? PK_TABS.length - 1 - i : 0; if (!d) return; e.preventDefault(); const nk = PK_TABS[(i + d + PK_TABS.length) % PK_TABS.length][0]; setPkTab(nk); const b = document.getElementById(`ff-pktab-${nk}`); if (b) b.focus(); }}>{l}</button>)}
+          </div>
+          {pkTab === "bar" ? (<div role="tabpanel" id="ff-pkpanel-bar" aria-labelledby="ff-pktab-bar">
+            <HScroll label="Our bar packages" snap>
+              {pkgs.map(sv => <div key={sv.id} className="ff-bkpk-cell"><BkPkgCard17 sv={sv} on={picked.includes(sv.id)} onClick={() => tick(sv)} /></div>)}
+              <div className="ff-bkpk-cell"><BkPkgSoon17 /></div>
+            </HScroll>
+            <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={!sel} onClick={() => { if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; } setPkgTerms(true); }}><Check size={15} /> Confirm</button>
+          </div>) : (
+            <div role="tabpanel" id={`ff-pkpanel-${pkTab}`} aria-labelledby={`ff-pktab-${pkTab}`}>
+              <HScroll label="Packages coming soon" snap>
+                {(PK_SOON17[pkTab] || PK_SOON17.bar).map(pk => <div key={pk.id} className="ff-bkpk-cell"><BkPkgSoon17 pk={pk} /></div>)}
+              </HScroll>
+            </div>
+          )}
+          {pkgTerms && <PkgTerms17 kind="pkg" onClose={() => setPkgTerms(false)} onAccept={confirmPkgs} />}
         </div>
 
         <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-staff">
-          <h3>FF Staff Shifts</h3>
+          <h3>FFStaff</h3>
           <p>Businesses create shift cards and set their pay rates.</p>
           <ProfRates17 guest={guest || !signedIn} />
         </div>
@@ -346,12 +526,12 @@ function TeamBookings({ guest = false }) {
       <section className="ff-bk-sec ff-bkgrow" id="ff-bk-grow">
         <BigHead20 title="Build your career" />
         <p className="ff-bk-sub">Training, dream jobs and rewards.</p>
-        <BkDrop17 id="ff-bk-training" title="Training" icon={E17I.GraduationCap} photo="bk_training" desc="Courses, qualifications and masterclasses to sharpen your craft. Register your interest and we will tell you when places open."><InterestSection kind="training" inner /></BkDrop17>
-        <BkDrop17 id="ff-bk-jobs" title="Dream jobs" icon={E17I.Plane} photo="bk_jobs" desc="Tell us where you dream of working, from festivals to yachts, and we will keep you in mind when it comes up."><InterestSection kind="jobs" inner /></BkDrop17>
-        <BkDrop17 id="ff-bk-rewards" title="FireFlair rewards" icon={E17I.Gift} photo="bk_rewards" desc="Perks for people who work with FireFlair: kit, tickets and experiences. Register your interest in the ones you want."><InterestSection kind="rewards" inner /></BkDrop17>
+        <div className="ff-bkd-row">
+          <BkDrop17 id="ff-bk-training" open={drop === "ff-bk-training"} onOpen={setDrop} title="Training" icon={E17I.GraduationCap} photo="bk_training" desc="Courses, qualifications and masterclasses to sharpen your craft. Register your interest and we will tell you when places open."><InterestSection kind="training" inner /></BkDrop17>
+          <BkDrop17 id="ff-bk-jobs" open={drop === "ff-bk-jobs"} onOpen={setDrop} title="Dream jobs" icon={E17I.Plane} photo="bk_jobs" desc="Tell us where you dream of working, from festivals to yachts, and we will keep you in mind when it comes up."><InterestSection kind="jobs" inner /></BkDrop17>
+          <BkDrop17 id="ff-bk-rewards" open={drop === "ff-bk-rewards"} onOpen={setDrop} title="FireFlair rewards" icon={E17I.Gift} photo="bk_rewards" desc="Perks for people who work with FireFlair: kit, tickets and experiences. Register your interest in the ones you want."><InterestSection kind="rewards" inner /></BkDrop17>
+        </div>
       </section>
-
-      <V101.BusinessSupport19 />
 
       <BookingSheet engagement={open} onClose={() => setOpen(null)} />
     </div>
@@ -363,7 +543,7 @@ function TeamBookings({ guest = false }) {
 function draftFromProfile(state) {
   const names = (cat) => recsOf(state.profile, cat).filter(r => !r.proposed).map(r => r.name);
   return {
-    name: state.profile.name, professions: names("professions"), photo: state.profile.photo,
+    name: state.profile.name, headline: state.profile.headline || "", professions: names("professions"), photo: state.profile.photo,
     skills: names("skills"), interests: names("interests"),
     locations: names("locations"), languages: names("languages"),
   };
@@ -419,7 +599,7 @@ function TeamProfile() {
             tag={state.session.tag} tier={state.profile.tier} level={state.profile.level}
             onPhoto={(url) => setD(x => ({ ...x, photo: url }))} />
           <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap", margin: "16px 0 4px" }}>
-            {Object.entries(THEMES).map(([k, t]) => (
+            {Object.entries(THEMES).filter(([, x]) => !x.directoryOnly).map(([k, t]) => (
               <button key={k} type="button" className={t.locked ? "ff-swatch-lock" : undefined} onClick={() => { if (t.locked) previewTheme17(k, th, setTh); else { clearPv17(); setTh(k); } }} aria-label={`${t.name} card`} title={t.name}
                 style={{ width: 30, height: 30, borderRadius: "50%", background: t.swatch, border: th === k ? "2px solid var(--gold)" : "1px solid var(--rule)" }}>{t.locked ? <I11.Lock size={13} /> : null}</button>
             ))}

@@ -5,7 +5,7 @@
 
   let DIR = [];
 
-  const ID_MAP = { dir_maya: "stf_ava", dir_theo: "stf_tom", dir_priya: "stf_pri", dir_sam: "stf_sam", dir_ines: "stf_mia", dir_kofi: "stf_leo", dir_elena: "stf_nia" };
+  const ID_MAP = { dir_maya: "stf_gav", dir_theo: "stf_bruno", dir_priya: "stf_dany", dir_sam: "stf_james", dir_ines: "stf_simao", dir_kofi: "stf_alex", dir_elena: "stf_dany" };
 
   const dirFind = (id) => DIR.find((p) => p.id === (ID_MAP[id] || id));
 

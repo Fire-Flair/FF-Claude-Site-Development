@@ -188,7 +188,7 @@ function EventCard11({ ev, edit, onPatch, people = [], foot, onClick, className 
       "aria-label": edit ? "Your Event Card" : `Event Card: ${eventTitle(ev)}`
     },
     React.createElement("span", { className: "ff-evc-plate" }, "Event Card"),
-    React.createElement("span", { className: "ff-evc-coin" }, React.createElement(Coin, { size: 30, tier: "gold" })),
+    React.createElement("span", { className: "ff-evc-coin" }, React.createElement(FFLogo, { size: 30, tier: "gold" })),
     edit ? React.createElement(
       "input",
       {
@@ -272,7 +272,7 @@ function ShiftCard11({ shift, event, person, status, onClick, acts }) {
     <div className="ff-shc-wrap">
       <Tag type={onClick ? "button" : undefined} className={`ff-shc${onClick ? " hit" : ""}`} onClick={onClick} aria-label={`Service Card: ${shift.role || "role to set"}${person ? `, ${person.name}` : ""}`}>
         <span className="ff-shc-plate"><I11.ClipboardList size={11} /> Service Card</span>
-        <span className="ff-shc-coin"><Coin size={28} tier="gold" /></span>
+        <span className="ff-shc-coin"><FFLogo size={28} tier="gold" /></span>
         <div className="ff-shc-who">
           {person ? <Portrait src={person.photo} name={person.name} size={46} tier={person.tier} /> : <span className="empty"><I11.User size={20} strokeWidth={1.5} /></span>}
           <span className="nm">{person ? person.name : "Not assigned yet"}</span>

@@ -1,0 +1,61 @@
+/* Shift Card (v17.5.5): 5 x 7, two plates, event name headline, rows, footer logo and address on the left.
+   Sizes are the approved 344 px reference scaled with container units, so the card is the same at any width and at 1080 x 1512.
+   Generated from the reference sizes; edit the values here, not the unit. */
+.ff .ff-sc17{container-type:inline-size;width:100%;aspect-ratio:5 / 7;display:block;box-sizing:border-box;position:relative;font-family:var(--sans);color:#16130F;
+  --g-light:#E4C36A;--g-mid:#B08D2A;--g-dk:#7E611D;--ink2:#16130F;
+  --foil:linear-gradient(135deg,#8A6A1C 0%,#E9CE7C 16%,#FFF4C8 28%,#C9A227 44%,#8A6A1C 58%,#E4C36A 74%,#FFF1BE 86%,#B08D2A 100%);
+  overflow-wrap:normal;word-break:keep-all;hyphens:none;-webkit-font-smoothing:antialiased;
+  /* v17.18: no gold outline. The edge takes the colour already used below the cards for the booking's source (FF Staff / FF Party). */
+  --sc-edge:#6B1226}
+.ff .ff-sc17.src-party{--sc-edge:#7A5A12}
+.ff .ff-sc17 *{box-sizing:border-box}
+.ff .ff-sc17 .card{height:100%;display:flex;border-radius:7.558cqw;corner-shape:squircle;padding:1.163cqw;background:var(--sc-edge);box-shadow:0 3.488cqw 7.558cqw -16px rgba(30,22,6,.6)}
+.ff .ff-sc17 .face{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0;border-radius:6.686cqw;corner-shape:squircle;overflow:hidden;text-align:center;
+  background:radial-gradient(120% 34% at 50% 0%,#FFFFFF,rgba(255,255,255,0) 60%),linear-gradient(170deg,#FFFDF8,#F3EAD5)}
+.ff .ff-sc17 .in{flex:1;display:flex;flex-direction:column;min-height:0;position:relative;padding:4.07cqw 4.36cqw 3.779cqw}
+.ff .ff-sc17 .in::before{content:"";position:absolute;inset:1.744cqw;border-radius:5.233cqw;corner-shape:squircle;border:1px solid var(--sc-edge);opacity:.55;pointer-events:none}
+.ff .ff-sc17 .top{display:flex;align-items:center;gap:1.744cqw;flex:none;height:12.209cqw}
+.ff .ff-sc17 .plate{border-radius:2.326cqw;corner-shape:squircle;font-weight:800;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap;line-height:1.2;padding:1.453cqw 2.616cqw;font-size:3.052cqw}
+.ff .ff-sc17 .plate.site{color:var(--g-light);background:var(--ink2);border:1px solid var(--g-mid)}
+.ff .ff-sc17 .plate.open{color:#2A1E04;background:linear-gradient(160deg,#F6E7B4,#E0BE5C 55%,#CDA63A);border:1px solid var(--g-dk);box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+.ff .ff-sc17 .plate.chosen{color:#F4EFE4;background:linear-gradient(160deg,#7A1830,#5C1220 60%,#4A0E1A);border:1px solid #3A0A14;box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+.ff .ff-sc17 .plate.confirmed{color:#5C1220;background:linear-gradient(160deg,#FFFDF4,#F4EAC9);border:1px solid var(--g-dk);box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
+.ff .ff-sc17 .logo{margin-left:auto;width:10.378cqw;height:10.378cqw;border-radius:50%;flex:none;box-shadow:0 0.872cqw 2.326cqw -3px rgba(48,36,10,.6);display:block}
+.ff .ff-sc17 .role{flex:none;margin:3.198cqw 0 3.488cqw;height:30.233cqw;padding:0}
+.ff .ff-sc17 .rin{height:100%;display:flex;flex-direction:column;justify-content:center;overflow:hidden;background:none}
+.ff .ff-sc17 .role h1{margin:0;padding:0 2.326cqw;font-family:var(--display);font-weight:700;font-size:6.6cqw;line-height:1.16;letter-spacing:.06em;text-transform:uppercase;text-wrap:balance;color:var(--ink2)}
+.ff .ff-sc17 .rows{flex:1;display:flex;flex-direction:column;min-height:0;border:1px solid var(--sc-edge);border-radius:4.07cqw;corner-shape:squircle;overflow:hidden;text-align:left;background:rgba(255,255,255,.72)}
+.ff .ff-sc17 .row{flex:1;display:flex;align-items:center;min-height:0;border-top:1px solid rgba(176,141,42,.3)}
+.ff .ff-sc17 .row:first-child{border-top:0}
+.ff .ff-sc17 .row .ic{flex:none;align-self:stretch;width:11.628cqw;display:grid;place-items:center;color:var(--g-light);background:var(--ink2)}
+.ff .ff-sc17 .row .ic svg{width:4.942cqw;height:4.942cqw}
+.ff .ff-sc17 .row .k{flex:none;width:20.9cqw;margin-left:2.6cqw;font-size:2.762cqw;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--g-dk);line-height:1.2;white-space:nowrap}
+.ff .ff-sc17 .row .v{flex:1;min-width:0;margin-right:2.326cqw;font-size:4.651cqw;font-weight:700;color:var(--ink2);line-height:1.2;white-space:nowrap;overflow:hidden}
+.ff .ff-sc17 .row.pay{background:linear-gradient(160deg,#FCF5E1,#F2E3B9)}
+.ff .ff-sc17 .row.pay .v{font-size:5.523cqw}
+.ff .ff-sc17 .row .v small{font-size:.74em;font-weight:700;letter-spacing:.02em}
+.ff .ff-sc17 .row .v .eq{color:var(--g-dk);margin:0 .08em}
+.ff .ff-sc17 .foot{flex:none;display:flex;align-items:center;justify-content:flex-start;gap:2.326cqw;height:10.465cqw;padding:0 4.651cqw;background:var(--ink2);border-top:0.581cqw solid var(--g-mid)}
+.ff .ff-sc17 .foot .fl{display:block;width:6.395cqw;height:6.395cqw;flex:none}
+.ff .ff-sc17 .foot .url{font-size:3.488cqw;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--g-light);white-space:nowrap}
+
+/* Profile Card plate (v17.5.5): the Shift Card's first plate, top left */
+.ff .ff-pc-plate.ff-pc-plate17{left:4.651cqw;padding:1.453cqw 2.616cqw;font-family:var(--sans);font-weight:800;font-size:3.052cqw;letter-spacing:.18em;line-height:1.2;color:#E4C36A;background:#16130F;border:1px solid #B08D2A;border-radius:2.326cqw;corner-shape:squircle;box-shadow:none;text-transform:uppercase;white-space:nowrap}
+
+/* Company type choice on the FF Staff company profile */
+.ff .ff-cotype17{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px auto 0;max-width:460px}
+.ff .ff-cotype17 button{min-height:44px;border-radius:18px;corner-shape:squircle;border:1.5px solid #6B1226;background:transparent;color:#6B1226;font-weight:700;font-size:14px;cursor:pointer;padding:0 10px;white-space:nowrap}
+.ff .ff-cotype17 button[aria-pressed="true"]{background:#6B1226;color:#FBF8F1}
+
+/* Shift brief page (/fx/<code>) */
+.ff .ff-fx17.page{max-width:460px;margin:0 auto;padding:14px 16px 40px}
+.ff .ff-fx17-back{display:inline-flex;align-items:center;gap:4px;border:0;background:none;padding:6px 0;font-weight:700;font-size:14px;color:var(--ink,#16130F);cursor:pointer}
+.ff .ff-fx17-card{max-width:380px;margin:6px auto 0}
+.ff .ff-fx17-share{display:flex;justify-content:center;margin:12px 0 4px}
+.ff .ff-fx17-reply{max-width:380px;margin:10px auto 0}
+.ff .ff-fx17-reply .ff-sd11.acts{margin:0}
+.ff .ff-fx17-body{margin-top:18px}
+
+/* Shared profile, not signed in: Join FireFlair first and largest, then Book and Review */
+.ff .ff-pc-acts.ff-pc-acts17{grid-template-columns:1fr 1fr}
+.ff .ff-pc-acts17 .ff-pc-act.big{grid-column:1 / -1;padding:18px 10px;font-size:15px;letter-spacing:.12em}

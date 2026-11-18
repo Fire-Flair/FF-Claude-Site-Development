@@ -1,0 +1,34 @@
+/* v17.20 — Company Card (shared by every site): top aligned to the Profile Card, claimed vs unclaimed marks, footer, Banner layout.
+   Loaded after v11.css. Sizes use cqw (the card is a size container) so the plate, the inner hairline and the rim keep their places at every size. */
+
+/* Plate: tucked into the top-left corner inside the inner line, as on the Profile Card. */
+.ff .ff-cc11 .ff-cc11-plate { top: 2.9cqw !important; left: 2.9cqw !important; padding: .5em .95em !important; font-size: clamp(8px, 2.6cqw, 12px) !important; font-family: var(--sans); font-weight: 800; letter-spacing: .16em; line-height: 1.2; color: #E4C36A; background: #16130F; border: 1px solid #B08D2A; border-radius: .9em; corner-shape: squircle; box-shadow: none; text-transform: uppercase; white-space: nowrap; }
+/* FIREFLAIR logo (claimed companies): top-right, the same place and size as on the Profile Card. */
+.ff .ff-cc11 .ff-cc11-coin { top: 3.1cqw; right: 3.1cqw; width: 7.14cqw; height: 7.14cqw; display: block; filter: drop-shadow(0 .8cqw 1.2cqw rgba(0,0,0,.35)); }
+/* Footer: FFTeam.uk/<slug> on the left (v17.34: no FIREFLAIR word on the right). Never cut with an ellipsis. */
+.ff .ff-cc11 .ff-cc11-foot { justify-content: space-between; gap: 3cqw; }
+.ff .ff-cc11 .ff-cc11-foot .url { margin-left: 0; max-width: none; overflow: visible; text-overflow: clip; white-space: nowrap; font-weight: 700; letter-spacing: .02em; }
+/* Words are never split; the area line wraps between words instead of ending in "…". */
+.ff .ff-cc11 .nm { overflow-wrap: normal; word-break: normal; hyphens: none; }
+.ff .ff-cc11 .ar > span { white-space: normal; overflow: visible; text-overflow: clip; }
+.ff .ff-cc11 .ff-cc11-tx { transform-origin: left center; }
+.ff .ff-cc11.l-centre .ff-cc11-tx { transform-origin: center; }
+
+/* ---- Banner: a tinted band across the top half holding the logo, then name and tagline, left-aligned ---- */
+.ff .ff-cc11.l-banner .ff-cc11-body, .ff .ff-cc11.sm.l-banner .ff-cc11-body { flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 0; padding: 0; }
+.ff .ff-cc11.l-banner .ff-cc11-logo, .ff .ff-cc11.l-banner .ff-cc11-logo.w { flex: none !important; width: 100% !important; height: 26cqw !important; max-width: none !important; aspect-ratio: auto !important; border: 0 !important; border-bottom: 1px solid var(--rule) !important; border-radius: 0 !important; background: rgba(255,255,255,.08) !important; position: relative; }
+.ff .ff-cc11.lite.l-banner .ff-cc11-logo { background: rgba(0,0,0,.05) !important; }
+.ff .ff-cc11.l-banner .ff-cc11-logo { display: flex; align-items: center; justify-content: center; }
+.ff .ff-cc11.l-banner .ff-cc11-logo img { width: auto; height: auto; max-width: calc(100% - 34cqw); max-height: calc(100% - 6cqw); object-fit: contain; }
+.ff .ff-cc11.l-banner .ff-cc11-logo.ul img { position: static; inset: auto; padding: 0; background: transparent; }
+.ff .ff-cc11.l-banner .ff-cc11-logo .mono { font-size: 7cqw; }
+.ff .ff-cc11.l-banner .ff-cc11-tx { flex: 1 1 auto; align-content: center; justify-items: start; text-align: left; gap: .8cqw; padding: 2.2cqw 5cqw 1.2cqw; }
+.ff .ff-cc11.l-banner .kd > span { white-space: nowrap; }
+.ff .ff-cc11.l-banner .ff-cc11-tx.wr .kd > span { white-space: normal; }
+
+/* ---- Layout picker thumbnails for the two new layouts ---- */
+.ff .ff-cc11-layouts .t-banner .lg { left: 0; top: 0; width: 64px; height: 17px; border-radius: 0; opacity: .32; }
+.ff .ff-cc11-layouts .t-banner .a { left: 6px; top: 22px; width: 30px; height: 4px; }
+.ff .ff-cc11-layouts .t-banner .b { left: 6px; top: 29px; width: 40px; height: 3px; opacity: .6; }
+.ff .ff-cc11-layouts .t-banner .c { left: 6px; top: 34px; width: 22px; height: 2px; opacity: .6; }
+.ff .ff-cc11-layouts { grid-template-columns: repeat(4, 1fr); }

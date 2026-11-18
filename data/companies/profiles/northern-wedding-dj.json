@@ -1,0 +1,71 @@
+{
+  "formatVersion": 2,
+  "slug": "northern-wedding-dj",
+  "name": "Northern Wedding DJ",
+  "kind": "Wedding DJ",
+  "base": "Stretford",
+  "areas": [
+    "Greater Manchester"
+  ],
+  "description": "A Manchester-area wedding DJ service that also plays other special occasions.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://app-proxy-dev-1.bridebook.com/uk/wedding-musicians-bands-djs/northern-wedding-dj-stretford-greater-manchester-csog4GG5WX",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding DJ",
+        "Special occasion DJ"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app-proxy-dev-1.bridebook.com/uk/wedding-musicians-bands-djs/northern-wedding-dj-stretford-greater-manchester-csog4GG5WX",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app-proxy-dev-1.bridebook.com/uk/wedding-musicians-bands-djs/northern-wedding-dj-stretford-greater-manchester-csog4GG5WX",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "NORTH",
+    "position": 34,
+    "source": {
+      "urls": [
+        "https://app-proxy-dev-1.bridebook.com/uk/wedding-musicians-bands-djs/northern-wedding-dj-stretford-greater-manchester-csog4GG5WX"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Stretford",
+        "lat": 53.447,
+        "lng": -2.308,
+        "approx": false
+      }
+    ]
+  }
+}

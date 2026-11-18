@@ -1,6 +1,6 @@
 # FireFlair photo library
 
-Every photo supplied for the FireFlair sites, in one place, so any image on the website can be swapped and future features (for example a slideshow) can draw from the same set. 169 items.
+Every photo supplied for the FireFlair sites, in one place, so any image on the website can be swapped and future features (for example a slideshow) can draw from the same set. 171 items.
 
 - `originals/`: the files as supplied (full resolution, original format). Vooshka photos are the files from the Vooshka profile in the prototype.
 - `web/`: web copies (WebP, up to 2000 px, orientation fixed). Screenshots have the app interface trimmed off. The video has an H.264 `.mp4` that plays in every browser and a still.
@@ -14,11 +14,12 @@ Every photo supplied for the FireFlair sites, in one place, so any image on the 
 |---|---|---|---|
 | p01-p47, v01 | Alex's uploads (three batches and a video) | 48 | Yes, all but p02, p09, p22, p47 (see notes) |
 | vkg01-vkg17, vko01 | Vooshka gallery: event bars and bartenders | 18 | Bar and people photos without prominent Vooshka branding |
-| hp01-hp04 | Harry Pseftoudis event photography (supplied 15 Nov 2026, used with his permission) | 4 | Not yet placed (library only) |
 | vke01-vke13 | Photos the prototype used before 6 Nov (Vooshka events) | 13 | Yes, the people and event-bar ones; vke08 and vke13 are copies of vkg02 and vkg15 |
 | vkb01-vkb42 | Vooshka bar designs | 42 | No (library only) |
 | vks01-vks16 | Vooshka signature cocktails | 16 | No (library only) |
 | vkc01-vkc29 | Classic cocktail photos | 29 | No (library only) |
+| hp01-hp04 | Harry Pseftoudis event photography (credit: Photography by Harry Pseftoudis, used with his permission) | 4 | Yes, FF Team home pillars (hp03 is cropped above its bottom-right watermark) |
+| pen01, pen02 | FireFlair pens | 2 | pen01: top strip only, Our packages. pen02: library only, do not use on the site: old wording |
 
 ## How the prototype uses them
 
@@ -201,7 +202,9 @@ Every photo supplied for the FireFlair sites, in one place, so any image on the 
 | vke11 | Pink cocktail line-up | photo, portrait | - | - | Dream job |
 | vke12 | Rows of coupes with cherries | photo, portrait | - | - | FF Team home |
 | vke13 | Bartender in a Vooshka apron | photo, square | 1 | Vooshka | library only |
-| hp01 | Gold bistro table with a posy vase in pink light | photo, portrait | - | - | library only |
-| hp02 | Charred orange cocktail with cherries and rosemary | photo, portrait | - | - | library only |
-| hp03 | Coupes and highballs on a mirrored bar | photo, portrait | - | - | library only |
-| hp04 | Glass chandelier in a domed hall | photo, portrait | 5 | - | library only |
+| hp01 | Gold bistro table with a posy vase in pink light | photo, portrait | - | - | FF Team home: Your bookings |
+| hp02 | Charred orange cocktail with cherries and rosemary | photo, portrait | - | - | FF Team home: Our packages |
+| hp03 | Coupes and highballs on a mirrored bar | photo, portrait | - | - | FF Team home: Our packages, Your bookings |
+| hp04 | Glass chandelier in a domed hall | photo, portrait | 5 | - | FF Team home: Our community |
+| pen01 | FireFlair pen: Add FF speech bubble | photo, landscape | - | FireFlair | FF Team home: Our packages (top strip only) |
+| pen02 | FireFlair pen: Add Fire Flare (old wording) | photo, landscape | - | FireFlair | library only, do not use on the site: old wording |

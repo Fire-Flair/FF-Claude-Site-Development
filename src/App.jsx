@@ -1,6 +1,6 @@
 /* src/App.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
 function FireFlair() {
-  const [state, baseDispatch] = useReducer(reducer, initialState);
+  const [state, baseDispatch] = useReducer(reducer, initialState, inv17Init);
   {
     const tr17 = state.role === "team" ? state.profile && state.profile.tier : state.company && state.company.tier;
     THEMES.silver.locked = !["silver", "gold"].includes(tr17);
@@ -16,9 +16,6 @@ function FireFlair() {
   const store = useMemo(() => ({ state, dispatch }), [state, dispatch]);
   applyAdmin17(state);
   useAnalytics17(state);
-  useEffect(() => {
-    dispatch({ type: "SESSION", patch: { refTag: INVITE_LINK_TAG } });
-  }, []);
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -49,9 +46,10 @@ function FireFlair() {
             delete patch.engagements;
             if (patch.route === "shiftNew" || patch.route === "shiftSend") patch.route = "staffHome";
           }
-          if (patch.session) patch.session = { ...patch.session, refTag: INVITE_LINK_TAG };
+          /* Saved state from before v17.6.1 carries a forced code and no kind: that code was never a real invitation. */
+          if (patch.session) patch.session = patch.session.refKind ? patch.session : { ...patch.session, refTag: null, refKind: null };
           if (patch.profile) {
-            patch.profile = { ...patch.profile, records: { ...emptyRecords(), ...patch.profile.records || {} }, xp: patch.profile.xp || 0, media: patch.profile.media || [] };
+            patch.profile = { ...patch.profile, records: capRecords17({ ...emptyRecords(), ...patch.profile.records || {} }), xp: patch.profile.xp || 0, media: patch.profile.media || [] };
             if (PHASE1.xpLive && Array.isArray(patch.profile.xpLog) && patch.profile.xpLog.some((e) => e && e.xp === 0 && e.planned)) {
               const owed = patch.profile.xpLog.reduce((n, e) => n + (e && e.xp === 0 && e.planned ? e.planned : 0), 0);
               patch.profile = {
@@ -92,6 +90,6 @@ function FireFlair() {
       if (seo && FF_SEO.onView) FF_SEO.onView(seo);
     } catch (e) {
     }
-  }, [state.role, state.tab, state.route, state.viewing, !!(state.profile && state.profile.live), state.fdArea && state.fdArea.path, state.fdArea && state.fdArea.site, state.pkgPage && state.pkgPage.slug, state.supportPage20, state.fd, state.fdPreview]);
-  return React.createElement(Store.Provider, { value: store }, React.createElement("style", null, CSS + P1_CSS + V101_CSS + V11_CSS + FD_CSS + TRIAL_DESIGN_CSS), React.createElement("div", { className: "ff" }, React.createElement(Shell, null, state.adminOpen17 ? React.createElement(Admin17, null) : state.ptnGuest ? React.createElement(PtnGuestPage, null) : state.supportPage20 ? React.createElement(V101.SupportBookPage20, null) : state.pkgPage ? React.createElement(V101.PackagePage18, null) : state.fdArea ? React.createElement(AreaPage11, null) : state.viewingCompany ? React.createElement(CompanyPublic, null) : state.viewing ? React.createElement(PersonProfile, null) : state.role === "team" ? React.createElement(TeamRouter, null) : state.role === "staff" ? React.createElement(StaffRouter, null) : state.role === "vip" ? React.createElement(VipRouter21, null) : state.role === "partners" ? React.createElement(PartnersRouter, null) : React.createElement(Landing, null)), React.createElement(CardPeek, null), React.createElement(FdRoute11, null), React.createElement(V101.PkgRoute18, null), React.createElement(PtnRoute, null), React.createElement(V101.SupportRoute20, null), React.createElement(AutofillEngine17, null), React.createElement(FitWords17, null), React.createElement(LongPress17, null)));
+  }, [state.role, state.tab, state.route, state.viewing, state.viewingCompany, state.role === "staff" ? state.site : "", !!(state.profile && state.profile.live), state.fdArea && state.fdArea.path, state.fdArea && state.fdArea.site, state.pkgPage && state.pkgPage.slug, state.infoPage21 && state.infoPage21.slug, state.supportPage20, state.fd, state.fdPreview]);
+  return React.createElement(Store.Provider, { value: store }, React.createElement("style", null, CSS + P1_CSS + V101_CSS + V11_CSS + FD_CSS + TRIAL_DESIGN_CSS), React.createElement("div", { className: "ff" }, React.createElement(Shell, null, state.adminOpen17 ? React.createElement(Admin17, null) : state.fxPage17 ? React.createElement(ShiftBriefPage17, null) : state.supportPage20 ? React.createElement(V101.SupportBookPage20, null) : state.pkgPage ? React.createElement(V101.PackagePage18, null) : state.infoPage21 ? React.createElement(V101.TeamInfoPage21, null) : state.fdArea ? React.createElement(AreaPage11, null) : state.viewingCompany ? React.createElement(CompanyPublic, null) : state.viewing ? React.createElement(PersonProfile, null) : state.role === "team" ? React.createElement(TeamRouter, null) : state.role === "staff" ? React.createElement(StaffRouter, null) : state.role === "vip" ? React.createElement(VipRouter21, null) : React.createElement(Landing, null)), React.createElement(CardPeek, null), React.createElement(FdRoute11, null), React.createElement(V101.PkgRoute18, null), React.createElement(V101.SupportRoute20, null), React.createElement(Routes17, null), React.createElement(InviteHost17, null), React.createElement(AutofillEngine17, null), React.createElement(FitWords17, null), React.createElement(LongPress17, null)));
 }

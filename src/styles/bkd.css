@@ -1,15 +1,35 @@
 
-.ff-bkd { padding:0 !important; margin:0 0 12px; border-radius:22px; corner-shape:squircle; background:#FFFDF8; border:1px solid rgba(126,97,29,.3); overflow:hidden; }
-.ff-bkd .bkd-hd { position:relative; margin:0; border:0; background:none; display:block; width:100%; text-align:left; color:#16130F; padding:0 !important; }
-.ff-bkd .bkd-ph { display:block; aspect-ratio:23 / 10; overflow:hidden; background:#16130F; }
-.ff-bkd .bkd-ph img { width:100%; height:100%; object-fit:cover; display:block; }
-.ff-bkd .bkd-tx { position:relative; display:grid; grid-template-columns:30px 1fr; column-gap:10px; align-items:center; padding:13px 46px 15px 14px; }
+/* Build your career drop-downs: the photo is the top half of each card and only the title sits on it;
+   the icon, the description and the chevron are below, on the solid card. */
+.ff-bkd-row { display:grid; gap:12px; }
+.ff .ff-bkd-row > .ff-bkd { display:block; margin:0; }
+.ff-bkd { padding:0 !important; margin:0; border-radius:22px; corner-shape:squircle; background:#FFFDF8; border:1px solid rgba(126,97,29,.3); overflow:hidden; }
+.ff-bkd .bkd-hd { margin:0; border:0; background:none; display:flex; flex-direction:column; width:100%; text-align:left; color:#16130F; padding:0 !important; font:inherit; cursor:pointer; }
+.ff-bkd .bkd-ph { position:relative; display:block; width:100%; aspect-ratio:23 / 10; overflow:hidden; background:#16130F; }
+.ff-bkd .bkd-ph img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+.ff-bkd .bkd-ph::after { content:""; position:absolute; left:0; right:0; bottom:0; height:58%; background:linear-gradient(0deg,rgba(11,11,12,.86) 0%,rgba(11,11,12,.5) 45%,rgba(11,11,12,0) 100%); pointer-events:none; }
+.ff-bkd .bkd-ph > b { position:absolute; left:14px; right:14px; bottom:11px; z-index:1; font-family:var(--display); font-weight:700; font-size:clamp(19px,5.4vw,23px); line-height:1.15; color:#fff; text-shadow:0 1px 8px rgba(0,0,0,.65); overflow-wrap:normal; word-break:normal; hyphens:none; }
+.ff-bkd .bkd-ph.none { aspect-ratio:auto; padding:16px 14px 12px; }
+.ff-bkd .bkd-ph.none::after { display:none; }
+.ff-bkd .bkd-ph.none > b { position:static; }
+.ff-bkd .bkd-tx { display:grid; grid-template-columns:30px minmax(0,1fr) 18px; column-gap:11px; align-items:start; padding:13px 14px 15px; flex:1; }
 .ff-bkd .bkd-ic { width:30px; height:30px; border-radius:50%; display:grid; place-items:center; color:#E4C36A; background:#16130F; }
-.ff-bkd .bkd-tx > b { font-family:var(--display); font-size:18px; }
-.ff-bkd .bkd-ds { grid-column:1 / -1; margin-top:7px; font-size:13.5px; line-height:1.45; color:#5B5346; }
-.ff-bkd .bkd-chev { position:absolute; right:14px; top:19px; color:var(--gold-dk,#7E611D); transition:transform .2s; }
-.ff-bkd.open .bkd-chev { transform:rotate(90deg); }
-.ff-bkd .bkd-bd { padding:0 12px 14px; }
+.ff-bkd .bkd-ds { font-size:13.5px; line-height:1.45; color:#4A443A; overflow-wrap:normal; word-break:normal; hyphens:none; }
+.ff-bkd .bkd-chev { margin-top:6px; color:var(--gold-dk,#7E611D); transition:transform .2s; }
+.ff-bkd.open .bkd-chev { transform:rotate(180deg); }
+.ff-bkd .bkd-hd:focus-visible { outline:2px solid var(--gold,#C9A227); outline-offset:-3px; }
+.ff-bkd .bkd-bd { padding:2px 12px 14px; }
+.ff-bkd .bkd-bt { display:none; }
+/* Wide screens: the three cards share a row; an opened card's contents span the full width below the row. */
+@media (min-width:760px) {
+  .ff-bkd-row { grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; align-items:stretch; }
+  .ff .ff-bkd-row > .ff-bkd { display:contents; }
+  .ff-bkd-row .bkd-hd { order:0; border-radius:22px; corner-shape:squircle; background:#FFFDF8; border:1px solid rgba(126,97,29,.3); overflow:hidden; transition:border-color .2s, box-shadow .2s; }
+  .ff-bkd-row .ff-bkd.open .bkd-hd { border-color:var(--gold,#C9A227); box-shadow:0 0 0 2px rgba(201,162,39,.45); }
+  .ff-bkd-row .bkd-ph > b { font-size:22px; }
+  .ff-bkd-row .bkd-bd { order:1; grid-column:1 / -1; padding:18px 16px 16px; border-radius:22px; corner-shape:squircle; background:#FFFDF8; border:1px solid rgba(126,97,29,.3); }
+  .ff-bkd-row .bkd-bt { display:block; margin:0 0 8px; font-family:var(--display); font-size:22px; line-height:1.15; color:#16130F; }
+}
 .ff-bk-sell.ff-bkpc { padding:16px 12px 14px; border-radius:24px; corner-shape:squircle; background:#FFFDF8; border:1px solid rgba(126,97,29,.32); box-shadow:0 6px 22px rgba(22,19,15,.06); }
 .ff-bk-sell.ff-bkpc .ff-bk-h { margin-top:0; }
 .ff-bkpc .ff-hscroll { margin-left:-12px; margin-right:-12px; padding-left:12px; padding-right:12px; scroll-padding-left:12px; }
@@ -21,9 +41,87 @@
 .ff-fb21-row { margin:0 0 10px; }
 .ff-fb21-row .rate { display:block; margin-top:6px; font-size:13px; color:#5B5346; }
 .ff-fb21-row .rate b { color:#16130F; }
-@media (min-width:720px) {
-  .ff-bkd .bkd-hd { display:grid; grid-template-columns:minmax(240px, 36%) 1fr; align-items:stretch; }
-  .ff-bkd .bkd-ph { position:relative; aspect-ratio:auto; min-height:170px; }
-  .ff-bkd .bkd-ph img { position:absolute; inset:0; }
-  .ff-bkd .bkd-tx { align-content:center; }
-}
+/* Task 003 (Bookings): Your Bookings section with the WhatsApp icon beside its heading, small group labels inside it. */
+.ff .ff-bk-yh { margin:18px 0 12px; }
+.ff .ff-bk-yh .ff-wa-ico { width:34px; height:34px; }
+.ff .ff-bk-waline { margin:0 0 14px; }
+.ff .ff-bk-grp { margin-top:14px; }
+.ff .ff-bk-grp .ff-bk-hrow { margin-bottom:8px; }
+/* Bookings 2/2 (P3): bar package cards in the FF Party package card look, package tabs. */
+.ff .ff-bkpk-sub { margin:0 0 6px; font-family:var(--display); font-size:17px; line-height:1.2; color:var(--ox,#5C1220); }
+.ff .ff-bkpk-cell { flex:none; width:min(300px, calc(100vw - 72px)); scroll-snap-align:start; display:flex; }
+.ff .ff-bkpk-cell > .ff-pk17w { width:100%; }
+.ff .ff-bkpk-cell .ff-pk17.rd { height:100%; min-height:420px; }
+.ff .ff-bkpk .ff-pk17 .ph { position:relative; }
+.ff .ff-bkpk .ff-pk17 .ph .pr { font-size:13px; border-radius:10px; corner-shape:squircle; }
+.ff .ff-bkpk .ff-pk17 .tx .tm { display:inline-flex; align-items:center; gap:5px; font-size:13px; color:#5B5346; }
+.ff .ff-bkpk .ff-pk17 .tx .tm svg { color:var(--gold-mid,#B08D2A); }
+.ff #ff-bk-party .ff-hscroll { align-items:stretch; }
+.ff #ff-bk-party .ff-hitem { display:flex; }
+
+/* pkgbuild: bar package card, option 3 (dark card, ribbon, FF logo, icon rows, closed Details, burgundy "You earn" footer). One design for every package. */
+.ff .ff-bkpk-cell > .ff-pkc { width:100%; }
+.ff .ff-pkc { position:relative; display:flex; flex-direction:column; text-align:left; background:linear-gradient(180deg,#1C1517 0%,var(--color-ink) 55%); color:var(--color-cream); border:1.5px solid var(--color-gold-dk); border-radius:28px; corner-shape:squircle; overflow:hidden; box-shadow:0 18px 40px -18px rgba(0,0,0,.6); }
+.ff .ff-pkc::before { content:""; position:absolute; left:0; right:0; top:0; height:5px; background:linear-gradient(90deg,var(--color-gold-dk),var(--color-gold),var(--color-gold-lt),var(--color-gold)); }
+.ff .ff-pkc * { overflow-wrap:normal; word-break:normal; hyphens:none; }
+.ff .ff-pkc.sel { box-shadow:0 0 0 3px var(--color-gold), 0 18px 40px -18px rgba(0,0,0,.6); }
+.ff .ff-pkc-rb { align-self:flex-start; margin-top:18px; display:inline-flex; align-items:center; gap:7px; padding:8px 22px 8px 14px; font:700 11px/1 var(--font-sans); letter-spacing:.2em; text-transform:uppercase; color:#F3DE9C; background:linear-gradient(90deg,#7A1A2C,var(--color-ox)); clip-path:polygon(0 0,100% 0,calc(100% - 12px) 50%,100% 100%,0 100%); }
+.ff .ff-pkc-logo { position:absolute; top:12px; right:12px; line-height:0; }
+.ff .ff-pkc-hd { padding:16px 20px 0; text-align:center; }
+.ff .ff-pkc-eb { font:700 11px/1.2 var(--font-sans); letter-spacing:.22em; color:var(--color-gold-lt); text-transform:uppercase; white-space:nowrap; }
+.ff .ff-pkc-ti { margin:10px 0 8px; font:600 25px/1.15 var(--font-display); letter-spacing:.04em; text-transform:uppercase; color:#F6EBD0; }
+.ff .ff-pkc-tg { margin:0; font:400 15px/1.4 var(--font-sans); color:#E9E1CF; }
+.ff .ff-pkc-rows { margin:16px 16px 0; border:1px solid rgba(201,162,39,.35); border-radius:20px; corner-shape:squircle; }
+.ff .ff-pkc-row { display:flex; gap:14px; align-items:center; padding:12px 14px; }
+.ff .ff-pkc-row + .ff-pkc-row { border-top:1px solid rgba(201,162,39,.22); }
+.ff .ff-pkc-ico { display:grid; place-items:center; flex:none; width:40px; height:40px; border-radius:50%; color:#F3DE9C; border:1.5px solid var(--color-gold-mid); background:radial-gradient(circle at 35% 30%,#7A1A2C,var(--color-ox) 60%,var(--color-ox-dk)); }
+.ff .ff-pkc-row .v { flex:1; min-width:0; text-align:center; }
+.ff .ff-pkc-row i { display:block; font:700 10.5px/1 var(--font-sans); font-style:normal; letter-spacing:.2em; color:var(--color-gold-lt); text-transform:uppercase; margin-bottom:6px; }
+.ff .ff-pkc-row b { display:block; font:400 13.5px/1.3 var(--font-display); letter-spacing:.06em; text-transform:uppercase; color:#F1E8D2; }
+.ff .ff-pkc-dt { margin:12px 16px 16px; border:1px solid rgba(201,162,39,.35); border-radius:18px; corner-shape:squircle; background:rgba(201,162,39,.05); }
+.ff .ff-pkc-dt summary { list-style:none; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:44px; padding:0 16px; font:600 14px/1 var(--font-display); letter-spacing:.12em; text-transform:uppercase; color:#F3DE9C; border-radius:18px; corner-shape:squircle; }
+.ff .ff-pkc-dt summary::-webkit-details-marker { display:none; }
+.ff .ff-pkc-dt summary:focus-visible { outline:2px solid #F4DC8E; outline-offset:2px; }
+.ff .ff-pkc-dt summary svg { transition:transform .2s; }
+.ff .ff-pkc-dt[open] summary svg { transform:rotate(180deg); }
+.ff .ff-pkc-dt .in { padding:0 16px 16px; display:grid; gap:10px; }
+.ff .ff-pkc-dt p { margin:0; font:400 13.5px/1.5 var(--font-sans); color:#E3DACB; }
+.ff .ff-pkc-dt ul { margin:0; padding:0; list-style:none; display:grid; gap:6px; }
+.ff .ff-pkc-dt li { position:relative; padding-left:16px; font:400 13.5px/1.4 var(--font-sans); color:#E3DACB; }
+.ff .ff-pkc-dt li::before { content:""; position:absolute; left:2px; top:.5em; width:6px; height:6px; border-radius:50%; background:var(--color-gold); }
+.ff .ff-pkc-dt i { display:block; font:700 10.5px/1 var(--font-sans); font-style:normal; letter-spacing:.18em; text-transform:uppercase; color:var(--color-gold-lt); margin-bottom:5px; }
+.ff .ff-pkc-dt .cond { color:var(--color-muted-dark); font-size:12.5px; }
+.ff .ff-pkc-ft { margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:16px 14px; background:linear-gradient(135deg,#7A1A2C,var(--color-ox) 55%,var(--color-ox-dk)); border-top:1px solid var(--color-gold-dk); }
+.ff .ff-pkc-earn { display:flex; align-items:baseline; gap:8px; padding:8px 10px; border:1.5px solid rgba(243,222,156,.6); border-radius:14px; corner-shape:squircle; white-space:nowrap; flex:0 0 auto; }
+.ff .ff-pkc-earn i { font:700 10.5px/1 var(--font-sans); font-style:normal; letter-spacing:.16em; text-transform:uppercase; color:#F3DE9C; }
+.ff .ff-pkc-earn b { font:600 24px/1 var(--font-display); color:#FFF1C8; }
+.ff .ff-pkc-go { all:unset; box-sizing:border-box; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:5px; min-height:44px; text-align:center; font:800 14px/1 var(--font-sans); padding:13px 14px; border-radius:14px; corner-shape:squircle; white-space:nowrap; flex:0 1 auto; min-width:0; overflow:hidden; background:linear-gradient(180deg,#F3DE9C,var(--color-gold)); color:var(--color-on-action); }
+.ff .ff-pkc-go:focus-visible { outline:2px solid #F4DC8E; outline-offset:2px; }
+.ff .ff-pkc-go[aria-pressed="true"] { background:var(--color-cream); }
+
+/* pkg3 (FFParty box alignment + closing card): tabs, intro and rail share one left edge; tabs are full squircles on one baseline;
+   Includes / Ideal for values in sentence-case Inter, left beside the icon; labels small caps Cinzel; one "FF Party packages" closing card. */
+.ff #ff-bk-party.pkg3 .ff-pr17-chips { gap:8px; padding:0; margin:0 0 12px; align-items:flex-end; }
+.ff #ff-bk-party.pkg3 .ff-pr17-chips .ff-pr17-tab { border-radius:14px; border-bottom-color:rgba(126,97,29,.5); box-shadow:none; }
+.ff #ff-bk-party.pkg3 .ff-pr17-chips .ff-pr17-tab[aria-selected=true] { border-color:#8C7230; box-shadow:0 4px 12px -6px rgba(176,141,42,.6); }
+.ff #ff-bk-party.pkg3 .ff-hscroll { padding-top:0; }
+.ff #ff-bk-party.pkg3 .ff-pkc-rb { margin-top:18px; height:28px; padding-top:0; padding-bottom:0; }
+.ff #ff-bk-party.pkg3 .ff-pkc-logo { top:12px; }
+.ff #ff-bk-party.pkg3 .ff-pkc-row .v { text-align:left; }
+.ff #ff-bk-party.pkg3 .ff-pkc-row i { font:600 11px/1 var(--font-display); font-style:normal; letter-spacing:.14em; text-transform:uppercase; color:var(--color-gold-lt); margin-bottom:5px; }
+.ff #ff-bk-party.pkg3 .ff-pkc-row b { font:400 14px/1.4 var(--font-sans); letter-spacing:0; text-transform:none; color:#F1E8D2; }
+.ff #ff-bk-party .ff-pkc-soon { min-height:100%; }
+.ff #ff-bk-party .ff-pkc-soon .ff-pkc-ti { white-space:normal; }
+.ff #ff-bk-party .ff-pkc-emb { flex:1; display:grid; place-items:center; min-height:200px; padding:24px 0; background:radial-gradient(closest-side, rgba(122,26,44,.75), rgba(92,18,32,.25) 60%, transparent); }
+.ff #ff-bk-party .ff-pkc-emb svg { filter:drop-shadow(0 10px 24px rgba(0,0,0,.55)); }
+.ff #ff-bk-party .ff-pkc-soon .ff-pkc-ft { justify-content:center; }
+.ff #ff-bk-party .ff-pkc-soonb { display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:0 20px; border-radius:14px; corner-shape:squircle; border:1.5px solid rgba(243,222,156,.7); font:600 15px/1 var(--font-display); letter-spacing:.12em; text-transform:uppercase; color:#FFF1C8; white-space:nowrap; }
+.ff #ff-bk-party .ff-bkpk-soonp { display:flex; }
+.ff #ff-bk-party .ff-bkpk-soonp .ff-pkc-soon { min-height:520px; }
+
+/* v17.44: the Coming soon card previews an empty package card (rows with placeholder lines) instead of a big FF logo. */
+.ff #ff-bk-party .ff-pkc-pv { flex:none; }
+.ff #ff-bk-party .ff-pkc-soon .ff-pkc-ft { margin-top:auto; }
+
+.ff #ff-bk-party .ff-pkc-pv .ff-pkc-ico { opacity:.75; }
+.ff #ff-bk-party .ff-pkc-pvdt { display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:44px; margin:12px 16px 16px; padding:0 16px; border:1px solid rgba(201,162,39,.35); border-radius:18px; corner-shape:squircle; background:rgba(201,162,39,.05); font:600 14px/1 var(--font-display); letter-spacing:.12em; text-transform:uppercase; color:rgba(243,222,156,.6); }

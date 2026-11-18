@@ -11,11 +11,13 @@
    Methods (inputs: none; outputs: JSON, see each comment). Editing data = edit the JSON file (or the
    Markdown under stories/ and run `npm run stories`); no .jsx file needs to change. */
 const CONTENT_ADAPTER = {
-  /** Company profile pages shown on Network (FF Team and FF Staff) and each company page. Returns an array of profile objects (slug, name, about, services, events, contact, areas, packages, questions).
-   *  Prototype source: src/content/companies/real-companies.json. Replace the body with a Content API call. */
+  /** Bar company profile pages shown on Network (FF Team and FF Staff) and each company page. Returns an array of company profiles in format version 2
+   *  (docs/company-profile-format.md: slug, name, kind, base, areas, description, media, info, records, qa, meta), each with areaPlaces, the stated areas
+   *  resolved to place ids. Prototype source: src/content/companies/real-companies.json, written by npm run companies from data/companies/profiles/<slug>.json.
+   *  Replace the body with a Content API call that returns the same profiles. */
   companyProfiles() { return __ff_json("content/companies/real-companies.json"); },
-  /** Directory of supplier companies (bar, DJ, entertainment, services, caterers). Returns an array of supplier objects (slug, tag, name, kind, cat, base, areas, ...).
-   *  Prototype source: src/content/companies/suppliers.json. Replace the body with a Content API call. */
+  /** Directory of the other companies (DJ, photo, catering, bar services): the same format 2 profiles as companyProfiles(), with meta.category dj, photo, catering or svc.
+   *  Prototype source: src/content/companies/suppliers.json, written by npm run companies. Replace the body with a Content API call. */
   supplierProfiles() { return __ff_json("content/companies/suppliers.json"); },
   /** Raise the Bar cocktail menu source data (name, size options, ingredients).
    *  Prototype source: src/content/packages/raise-the-bar-menu.json. Replace the body with a Content API call. */
@@ -29,6 +31,20 @@ const CONTENT_ADAPTER = {
   /** Homepage "discover" copy for FF Team (cards with title, text, image key).
    *  Prototype source: src/content/homepage/discover-team.json. Replace the body with a Content API call. */
   homepageDiscoverTeam() { return __ff_json("content/homepage/discover-team.json"); },
+  /** FF Team home pillars (v17.9): four pillars, each with a summary, three cards and three full sections (title, three paragraphs, visual key, call to action, SEO title and description), plus tile photo pools, Launch Challenge copy and growth events. Every pillar and section also has a page at ffteam.uk/info/<slug>.
+   *  Prototype source: src/content/homepage/team-pillars.json. Replace the body with a Content API call. */
+  homepageTeamPillars() { return __ff_json("content/homepage/team-pillars.json"); },
+  /** FF Party home pillars (v17.10): same shape as homepageTeamPillars() (four pillars, three cards and three sections each, tile photo pools), without the team-only keys.
+   *  Prototype source: src/content/homepage/party-pillars.json. Replace the body with a Content API call. */
+  homepagePartyPillars() { return __ff_json("content/homepage/party-pillars.json"); },
+  /** FF Staff home pillars (v17.10): same shape as homepageTeamPillars().
+   *  Prototype source: src/content/homepage/staff-pillars.json. Replace the body with a Content API call. */
+  homepageStaffPillars() { return __ff_json("content/homepage/staff-pillars.json"); },
+  /** Default profession descriptions: shown on a public profile when the member left that profession's description blank (never saved, never shown in the builder).
+   *  Prototype source: src/content/data/profession-descriptions.json. Replace the body with a Content API call. */
+  professionDescriptions() { return __ff_json("content/data/profession-descriptions.json"); },
+  /** FF Team home video (press to play). Source: src/content/homepage/team-intro-video.json. */
+  homepageTeamIntroVideo() { return __ff_json("content/homepage/team-intro-video.json"); },
   /** Homepage "discover" copy for FF Staff.
    *  Prototype source: src/content/homepage/discover-staff.json. Replace the body with a Content API call. */
   homepageDiscoverStaff() { return __ff_json("content/homepage/discover-staff.json"); },

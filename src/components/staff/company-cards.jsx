@@ -7,7 +7,35 @@ const CC_LAYOUTS = [
   { key: "classic", name: "Classic" },
   { key: "logo", name: "Big logo" },
   { key: "centre", name: "Centred" },
+  { key: "banner", name: "Banner" },
 ];
+
+
+/* v17.20: the text block shrinks (never wraps inside a word, never cut with "…") until it fits the card. The tagline keeps to
+   one line in the Banner layout and only wraps, between words, when it still does not fit at the smallest size. */
+function useCardFit20(ref, sig, off) {
+  useLayoutEffect(() => {
+    const body = ref.current, tx = body && body.querySelector(".ff-cc11-tx");
+    if (!body || !tx || off) return;
+    let raf = 0;
+    const over = () => body.scrollHeight > body.clientHeight + 1 || tx.scrollWidth > tx.clientWidth + 1;
+    const fit = () => {
+      tx.classList.remove("wr"); tx.style.zoom = "";
+      for (let pass = 0; pass < 2; pass++) {
+        let z = 1;
+        while (over() && z > 0.55) { z = Math.round((z - 0.04) * 100) / 100; tx.style.zoom = z; }
+        if (!over()) return;
+        tx.classList.add("wr"); tx.style.zoom = "";
+      }
+    };
+    fit();
+    const ro = window.ResizeObserver ? new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(fit); }) : null;
+    if (ro) ro.observe(body);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+    const late = setTimeout(fit, 600);
+    return () => { if (ro) ro.disconnect(); clearTimeout(late); cancelAnimationFrame(raf); };
+  }, [sig, off]);
+}
 
 
 const coInitials = (n) => String(n || "").replace(/^the\s+/i, "").split(/\s+/).filter(Boolean).map(w => w[0]).slice(0, 2).join("").toUpperCase() || "FF";
@@ -36,11 +64,11 @@ function SocialIcon11({ k, size = 15 }) {
 
 
 /* Social links, each row named so nobody has to guess the icon. Used on the Company Card, the VIP Host Card and the FF Team profile. */
-function SocialEdit11({ value, onChange }) {
+function SocialEdit11({ value, onChange, noPhone }) {
   const v = value || {};
   return (
     <div className="ff-soc11-edit">
-      {SOC11.map(x => (
+      {SOC11.filter(x => !(noPhone && x.k === "whatsapp")).map(x => (
         <label key={x.k} className="row"><span className="ic"><SocialIcon11 k={x.k} size={18} /></span>
           <span className="col"><b className="sn">{x.label}</b>
             <input className="ff-input" value={v[x.k] || ""} placeholder={x.ph} aria-label={x.label} autoCapitalize="none" spellCheck={false}
@@ -63,7 +91,8 @@ function SocialRow11({ value, named }) {
 function ProfileSocial11({ isMe, person }) {
   const { state, dispatch } = useStore();
   if (!isMe) {
-    const s = person && person.socials;
+    /* v17.18: the WhatsApp number is not asked for or shown here (it comes from the account); a stored value is kept. */
+    const s = person && person.socials ? { ...person.socials, whatsapp: undefined } : null;
     if (!s || !SOC11.some(x => String(s[x.k] || "").trim())) return null;
     return (
       <section style={{ marginTop: 22 }}>
@@ -76,17 +105,19 @@ function ProfileSocial11({ isMe, person }) {
   return (
     <section id="ff-sec-social" style={{ marginTop: 22 }}>
       <SectionHead icon={<I11.Globe size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Social links" action={<CategoryToggle sectionKey="pf_social" defaultOpen={false} />} />
-      {open && <SocialEdit11 value={(state.profile || {}).socials} onChange={(socials) => dispatch({ type: "PROFILE", patch: { socials } })} />}
+      {open && <SocialEdit11 noPhone value={(state.profile || {}).socials} onChange={(socials) => dispatch({ type: "PROFILE", patch: { socials } })} />}
     </section>
   );
 }
 
 
-const socialsOf11 = (co) => {
+const socialValues11 = (co) => {
   const s = { ...((co && co.socials) || {}) };
   ((co && co.contact) || []).forEach(([k, v]) => { const m = SOC11.find(x => new RegExp(x.label, "i").test(k)); if (m && !s[m.k]) s[m.k] = v; });
-  return SOC11.filter(x => String(s[x.k] || "").trim()).map(x => x.k);
+  coRecsOf17(co, "contact").forEach((r) => { const m = coKindOf17(r.description).soc; if (m && !r.hidden && !s[m] && String(r.name || "").trim()) s[m] = r.name; });
+  return s;
 };
+const socialsOf11 = (co) => { const s = socialValues11(co); return SOC11.filter(x => String(s[x.k] || "").trim()).map(x => x.k); };
 
 
 
@@ -216,7 +247,7 @@ const CO_QA_SEED = [
 const coQa = (c) => (c && Array.isArray(c.qa) ? c.qa : CO_QA_SEED);
 
 
-const qaShown = (q) => (q.answer ? (q.note ? `${q.answer} — ${q.note}` : q.answer) : "");
+const qaShown = (q) => (q.answer ? (q.note ? `${q.answer} — ${q.note}` : q.answer) : String(q.note || "").trim());
 
 
 function CoQSheet11({ sheet, qa, save, onClose }) {
@@ -233,7 +264,7 @@ function CoQSheet11({ sheet, qa, save, onClose }) {
     return null;
   const done = () => {
     if (isNew)
-      save([...qa, { id: uid("qa"), group: "business", text: text.trim(), answer: "", note: "", custom: true }]);
+      save([...qa, { id: uid("qa"), group: "business", text: text.trim(), answer: ans, note: note.trim(), custom: true }]);
     else
       save(qa.map((x) => x.id === sheet.id ? { ...x, answer: ans, note: note.trim() } : x));
     onClose();
@@ -260,14 +291,12 @@ function CoQSheet11({ sheet, qa, save, onClose }) {
   }, ["Yes", "No"].map((o) => React.createElement("button", {
     key: o,
     type: "button",
-    disabled: isNew,
     "aria-pressed": ans === o,
     onClick: () => setAns(ans === o ? "" : o)
   }, o))), React.createElement("textarea", {
     className: "ff-input",
     rows: 3,
     value: note,
-    disabled: isNew,
     onChange: (e) => setNote(e.target.value),
     placeholder: "Type your answer",
     "aria-label": "Type your answer",
@@ -291,10 +320,11 @@ function CoQSheet11({ sheet, qa, save, onClose }) {
 }
 
 
-function CompanyQA11({ c }) {
+function CompanyQA11({ c, addSignal }) {
   const { dispatch } = useStore();
   const [view, setView] = useState("todo");
   const [sheet, setSheet] = useState(null);
+  useEffect(() => { if (addSignal) { setView("todo"); setSheet("new"); } }, [addSignal]);
   const qa = coQa(c);
   const isDone = (q) => !!(q.answer || q.note);
   const todo = qa.filter(q => !isDone(q)), done = qa.filter(isDone);
@@ -323,42 +353,57 @@ function CompanyQA11({ c }) {
 
 
 
-function CompanyCardFace({ c, edit, set, onLogo, size = "", party }) {
+function CompanyCardFace({ c, edit, set, onLogo, size = "", party, links }) {
   const co = c || {};
   const t = THEMES[co.theme] || THEMES.onyx;
-  const layout = co.layout || "logo";
-  const slug = co.slug || slugify(co.name) || (party ? "your-name" : "your-company");
+  const layout = (!co.layout || co.layout === "crest") ? "logo" : co.layout;
+  const slug = (co.id && !co.mine ? rt17Slug(co) : (co.slug || slugify(co.name))) || (party ? "your-name" : "your-company");
   const baseN = baseNodeOfCo17(co);
   const areas = baseN ? baseLabelOf17(baseN) : (co.areas !== undefined ? co.areas : (co.location || co.area || ""));
   const logoRef = useRef(null);
-  const pick = (e) => { const f = e.target.files && e.target.files[0]; e.target.value = ""; if (!f || !set) return; const r = new FileReader(); r.onload = () => set({ logo: r.result }); r.readAsDataURL(f); };
+  const pick = (e) => { const f = e.target.files && e.target.files[0]; e.target.value = ""; if (!f || !set) return; const r = new FileReader(); r.onload = () => {
+    const src = r.result, im = new Image();
+    im.onload = () => {
+      const k = im.naturalWidth / Math.max(1, im.naturalHeight), wide = k >= 1.8;
+      set({ logo: src, logoWide: wide, logoRatio: wide ? Math.min(5, Math.round(k * 100) / 100) : null });
+    };
+    im.onerror = () => set({ logo: src, logoWide: false, logoRatio: null });
+    im.src = src;
+  }; r.readAsDataURL(f); };
+  const lr = co.logoWide && co.logoRatio ? { "--lr": co.logoRatio } : undefined;
   const vars = { "--ink": t.ink, "--sub": t.sub, "--rule": t.rule, "--acc": t.accent || "#D9BE68" };
   const logo = edit ? (
-    <button type="button" className={"ff-cc11-logo" + (co.logoWide ? " w" : "")} onClick={() => logoRef.current && logoRef.current.click()} aria-label={co.logo ? "Change your logo" : "Add your logo"}>
+    <button type="button" className={"ff-cc11-logo" + (co.logoWide ? " w" : "")} style={lr} onClick={() => logoRef.current && logoRef.current.click()} aria-label={co.logo ? "Change your logo" : "Add your logo"}>
       {co.logo ? <img decoding="async" src={co.logo} referrerPolicy="no-referrer" alt="" /> : <><CameraPlusGlyph size={layout === "logo" ? 26 : 20} /><span>Logo</span></>}
       <input ref={logoRef} type="file" accept="image/*" hidden onChange={pick} />
     </button>
   ) : (
-    <span className={"ff-cc11-logo" + (co.logoWide ? " w" : "") + (co.unclaimed && co.logo ? (co.logoBg === "light" ? " ul lt" : " ul") : "")}>{co.unclaimed && co.logo ? <><span className="mono">{coInitials(co.name)}</span><img decoding="async" src={co.logo} referrerPolicy="no-referrer" alt="" onError={(e) => { e.currentTarget.style.display = "none"; }} /></> : co.logo ? <img decoding="async" src={co.logo} referrerPolicy="no-referrer" alt="" /> : <span className="mono">{coInitials(co.name)}</span>}</span>
+    <span style={lr} className={"ff-cc11-logo" + (co.logoWide ? " w" : "") + (co.unclaimed && co.logo ? (co.logoBg === "light" ? " ul lt" : " ul") : "")}>{co.unclaimed && co.logo ? <><span className="mono">{coInitials(co.name)}</span><img decoding="async" src={co.logo} referrerPolicy="no-referrer" alt="" onError={(e) => { e.currentTarget.style.display = "none"; }} /></> : co.logo ? <img decoding="async" src={co.logo} referrerPolicy="no-referrer" alt="" /> : <span className="mono">{coInitials(co.name)}</span>}</span>
   );
   const name = edit ? <input className="ff-cardin nm" value={co.name || ""} placeholder={party ? "Your name" : "Company name"} aria-label={party ? "Your name" : "Company name"} maxLength={60} onChange={(e) => set({ name: e.target.value })} />
     : <span className="nm">{co.name || (party ? "Your name" : "Your company")}</span>;
   const kind = edit ? <span className="kd2"><I11.Briefcase size={12} /><input className="ff-cardin kd" value={co.kind || ""} placeholder="What do you do?" aria-label="What do you do?" maxLength={70} onChange={(e) => set({ kind: e.target.value })} /></span>
-    : <span className="kd kd2"><I11.Briefcase size={12} /><span>{co.kind || "What you do"}</span></span>;
-  const area = (
+    : (String(co.kind || "").trim() ? <span className="kd kd2"><I11.Briefcase size={12} /><span>{co.kind}</span></span> : null);
+  const area = (edit || String(areas || "").trim()) ? (
     <span className="ar"><I11.MapPin size={12} /><span>{areas || "Where you're based"}</span></span>
-  );
+  ) : null;
+  const sv = socialValues11(co);
+  const bodyRef = useRef(null);
+  useCardFit20(bodyRef, [co.name, co.kind, areas, layout, size, co.logoWide, socialsOf11(co).join(), edit].join("|"), !!edit);
+  /* v17.20: a claimed company has no plate; the FIREFLAIR logo sits top right instead (the VIP Host Card keeps its plate). v17.34: no FIREFLAIR word in the footer. */
+  const claimed = !co.unclaimed;
+  const urlText = `${CARD_DOMAIN}/${slug}`;
+  const urlFs = `min(3.3cqw, ${((claimed ? 56 : 86) / Math.max(12, urlText.length * 0.62)).toFixed(2)}cqw)`;
   return (
-    <CardFrame tier={(co.theme === "silver" || co.theme === "gold") ? co.theme : (co.tier || "gold")} theme={t} premium ratio="8 / 5" className={`ff-cocard ff-cc11 l-${layout} ${size}`} style={{ ...vars, maxWidth: 460, margin: size ? 0 : "0 auto" }}>
-      <span className="ff-pc-plate ff-cc11-plate">{co.unclaimed ? "Company card" : party ? "VIP Host Card" : "Company Card"}</span>
-      {!co.unclaimed && <span className="ff-cc11-coin"><Coin size={size ? 24 : 30} tier={co.theme === "silver" ? "silver" : "gold"} /></span>}
-      <div className="ff-cc11-body">
+    <CardFrame tier={(co.theme === "silver" || co.theme === "gold") ? co.theme : (co.tier || "gold")} theme={t} premium ratio="8 / 5" className={`ff-cocard ff-cc11 l-${layout} ${size}${co.logoWide ? " lw" : ""}`} style={{ ...vars, maxWidth: 460, margin: size ? 0 : "0 auto" }}>
+      {(!claimed || party) && <span className="ff-pc-plate ff-cc11-plate">{party ? "VIP Host Card" : "Company Card"}</span>}
+      {claimed && <span className="ff-cc11-coin"><FFLogo size="100%" tier={co.theme === "silver" ? "silver" : "gold"} /></span>}
+      <div className="ff-cc11-body" ref={bodyRef}>
         {logo}
-        <span className="ff-cc11-tx">{name}{kind}{area}{socialsOf11(co).length > 0 && <span className="soc">{socialsOf11(co).map(k => <span key={k} className="si" title={(SOC11.find(x => x.k === k) || {}).label}><SocialIcon11 k={k} size={size ? 11 : 15} /></span>)}</span>}</span>
+        <span className="ff-cc11-tx">{name}{kind}{area}{socialsOf11(co).length > 0 && <span className="soc">{socialsOf11(co).map(k => { const lb = (SOC11.find(x => x.k === k) || {}).label, ic = <SocialIcon11 k={k} size={size ? 11 : 15} />; return links ? <a key={k} className="si" title={lb} aria-label={lb} href={coContactHref17(lb, sv[k])} target="_blank" rel="noopener noreferrer">{ic}</a> : <span key={k} className="si" title={lb}>{ic}</span>; })}</span>}</span>
       </div>
       <div className="ff-cc11-foot" style={{ background: t.dark ? "rgba(0,0,0,.45)" : "#141416" }}>
-        {!co.unclaimed && <><Coin size={size ? 15 : 18} /><Wordmark size={size ? 9 : 11} /></>}
-        {!co.unclaimed && <span className="url">{CARD_DOMAIN}/{slug}</span>}
+        <span className="url" style={{ fontSize: urlFs }}>{urlText}</span>
       </div>
     </CardFrame>
   );
@@ -366,7 +411,7 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party }) {
 
 
 
-function EditableCompanyCard({ plain }) {
+function EditableCompanyCard({ plain, noType }) {
   const { state, dispatch } = useStore();
   const c = state.company || {};
   const set = (p) => dispatch({ type: "COMPANY_SAVE", company: p });
@@ -378,6 +423,11 @@ function EditableCompanyCard({ plain }) {
         <span className="ff-cc11-baseh">Where are you based?</span>
         <BaseField17 ink="#16130F" owner="company" />
       </div>
+      {!party && !noType && <div className="ff-cotype17" role="group" aria-label="Company type">
+        {[["limited", "Limited company"], ["sole", "Sole trader"]].map(([k, l]) => (
+          <button key={k} type="button" aria-pressed={c.companyType === k} onClick={() => set({ companyType: k })}>{l}</button>
+        ))}
+      </div>}
       {!plain && <>
       <div className="ff-swatches" role="group" aria-label="Card colour">
         {Object.entries(THEMES).map(([k, th]) => (
@@ -387,7 +437,7 @@ function EditableCompanyCard({ plain }) {
       </div>
       <div className="ff-cc11-layouts" role="group" aria-label="Card layout">
         {CC_LAYOUTS.map(l => (
-          <button key={l.key} type="button" aria-label={`${l.name} layout`} title={`${l.name} layout`} aria-pressed={(c.layout || "logo") === l.key} onClick={() => set({ layout: l.key })}>
+          <button key={l.key} type="button" aria-label={`${l.name} layout`} title={`${l.name} layout`} aria-pressed={((!c.layout || c.layout === "crest") ? "logo" : c.layout) === l.key} onClick={() => set({ layout: l.key })}>
             <span className={`thumb t-${l.key}`} aria-hidden="true"><i className="lg" /><i className="a" /><i className="b" /><i className="c" /></span>
           </button>
         ))}
@@ -419,12 +469,34 @@ function CompanyJoin({ inBooking }) {
   const emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(String(email).trim());
   const ready = signedIn || phoneOk;
   const via = "phone";
-  const slug = c.slug || slugify(c.name) || slugify(String(email).split("@")[0]) || `ff-${digits.slice(-6) || Date.now().toString(36)}`;
+  const slug0 = c.slug || slugify(c.name) || slugify(String(email).split("@")[0]) || `ff-${digits.slice(-6) || Date.now().toString(36)}`;
+  /* Reserved words (network, profile, stories ...) are page names, so a company address never uses one. */
+  const slug = rt17Reserved(slug0) || rt17DirSlugTaken(slug0) ? slug0 + "-co" : slug0;
   const create = () => {
+    if (!signedIn) dispatch({ type: "SAMPLE_OFF" });   /* a new company starts empty: the sample bookings belong to the demo accounts */
+    /* Back with the phone number of an earlier claim: the page comes back as it was left, with its status. */
+    const prior = !signedIn && (state.coClaims17 || []).find((x) => phoneOk && CLAIM_DIG17(x.phone) === CLAIM_DIG17(phone));
+    if (prior) {
+      dispatch({ type: "CLAIM17_RESTORE", id: prior.id });
+      dispatch({ type: "COMPANY_SIGNED_IN", slug: prior.slug });
+      dispatch({ type: "TOAST", toast: `Welcome back to ${site.name}` });
+      setStage("details"); setCode("");
+      return;
+    }
+    /* Claim this profile: the company starts as the directory page, the way the agent left it. */
+    const claimSlug = state.session && state.session.claimSlug;
+    if (claimSlug && !signedIn) {
+      dispatch({ type: "CLAIM17_NEW", slug: claimSlug, phone: phoneOk ? String(phone).trim() : "" });
+      dispatch({ type: "COMPANY_SAVE", company: { email: emailOk ? String(email).trim() : "", tcMode: "template", questions: CO_QA_SEED.map((q) => ({ ...q })) } });
+      dispatch({ type: "COMPANY_SIGNED_IN", slug: claimSlug });
+      dispatch({ type: "TOAST", toast: `Welcome to ${site.name}` });
+      setStage("details"); setCode("");
+      return;
+    }
     dispatch({ type: "COMPANY_SAVE", company: {
       slug,
       theme: c.theme || "onyx",
-      layout: c.layout || "logo",
+      layout: (!c.layout || c.layout === "crest") ? "logo" : c.layout,
       phone: phoneOk ? String(phone).trim() : c.phone || "",
       email: emailOk ? String(email).trim() : c.email || "",
       joinedAt: Date.now(),
@@ -562,6 +634,27 @@ function CompanyJoin({ inBooking }) {
 
 
 
+/* Find your company: part of its name shows its Company Card; choosing it opens its page, where Claim this profile is. Closed until opened. */
+function CoFind17() {
+  const { state, dispatch } = useStore();
+  const [q, setQ] = useState("");
+  const t = q.trim().toLowerCase();
+  const hits = t.length < 2 ? [] : [...REAL_COMPANIES11, ...REAL_SUPPLIERS17].filter((r) => r.slug !== "vooshka" && String(r.name || "").toLowerCase().includes(t)).slice(0, 6)
+    .map((r) => companyById(state, "co_" + r.slug)).filter((c) => c && c.unclaimed);
+  return (
+    <VkFold17 title="Find your company">
+      <div className="ff-cofind17">
+        <label className="ff-cofind17-q"><I11.Search size={15} /><input value={q} onChange={(e) => setQ(e.target.value.slice(0, 60))} aria-label="Find your company" autoComplete="off" /></label>
+        <div className="ff-cofind17-res">
+          {hits.map((c) => <button key={c.id} type="button" className="ff-co11-tile" aria-label={c.name} onClick={() => { dispatch({ type: "VIEW_COMPANY", id: c.id }); window.scrollTo(0, 0); }}><CompanyCardFace c={c} size="sm" /></button>)}
+        </div>
+      </div>
+    </VkFold17>
+  );
+}
+
+
+
 /* ==========================================================================
    COMPANY PROFILE (v1.1) — what a hiring business needs now: About, Media,
    Contact & social, Areas covered, Venues, Documents, T&Cs, hiring
@@ -571,23 +664,42 @@ function CompanyJoin({ inBooking }) {
 function CompanyMedia({ list, editable }) {
   const { dispatch } = useStore();
   const ref = useRef(null);
+  const [sel, setSel] = useState(null);
   const add = (e) => {
     const files = [...(e.target.files || [])].slice(0, 6); e.target.value = "";
     files.forEach(f => { const r = new FileReader(); r.onload = () => dispatch({ type: "COMPANY_MEDIA_ADD", item: { id: uid("cm"), src: r.result } }); r.readAsDataURL(f); });
   };
+  const cur = sel && list.find(m => m.id === sel);
+  const idx = cur ? list.indexOf(cur) : -1;
   return (
-    <div className="ff-cmedia">
+    <div className={"ff-cmedia" + (editable ? " row" : "")}>
+      {editable && (
+        <button type="button" className="ff-cmedia-add" onClick={() => ref.current && ref.current.click()}>
+          <I11.ImagePlus size={22} /><b>Add photos</b>
+          <input ref={ref} type="file" accept="image/*" multiple hidden onChange={add} />
+        </button>
+      )}
       {list.map((m, mi) => (
         <figure key={m.id || m.src} className="ff-cmedia-it">
-          <img decoding="async" src={m.src} alt={m.alt || ""} loading={mi < 8 ? "eager" : "lazy"} referrerPolicy="no-referrer" onError={(e) => { if (/^https?:/.test(m.src)) e.currentTarget.style.visibility = "hidden"; }} />
+          {editable
+            ? <button type="button" className="ff-cmedia-open" aria-label={m.alt ? `Edit photo: ${m.alt}` : "Edit photo"} onClick={() => setSel(m.id)}>
+                <img decoding="async" src={m.src} alt={m.alt || ""} loading={mi < 8 ? "eager" : "lazy"} referrerPolicy="no-referrer" onError={(e) => { if (/^https?:/.test(m.src)) e.currentTarget.style.visibility = "hidden"; }} /></button>
+            : <img decoding="async" src={m.src} alt={m.alt || ""} loading={mi < 8 ? "eager" : "lazy"} referrerPolicy="no-referrer" onError={(e) => { if (/^https?:/.test(m.src)) e.currentTarget.style.visibility = "hidden"; }} />}
           {editable && <button type="button" aria-label="Remove photo" onClick={() => dispatch({ type: "COMPANY_MEDIA_DELETE", id: m.id })}><I11.X size={13} /></button>}
         </figure>
       ))}
-      {editable && (
-        <button type="button" className="ff-cmedia-add" onClick={() => ref.current && ref.current.click()}>
-          <I11.ImagePlus size={22} /><b>Add photos</b><small>Your bar, your events, your team</small>
-          <input ref={ref} type="file" accept="image/*" multiple hidden onChange={add} />
-        </button>
+      {editable && cur && (
+        <Sheet open onClose={() => setSel(null)} title="Photo">
+          <div className="ff-cmedia-prev"><img src={cur.src} alt="" /></div>
+          <Field label="Caption">
+            <input className="ff-input" value={cur.alt || ""} maxLength={120} onChange={(e) => dispatch({ type: "COMPANY_MEDIA_PATCH", id: cur.id, patch: { alt: e.target.value } })} />
+          </Field>
+          <div className="ff-co-shift17" role="group" aria-label="Order">
+            <button type="button" aria-label="Move earlier" disabled={idx <= 0} onClick={() => dispatch({ type: "COMPANY_MEDIA_MOVE", id: cur.id, dir: -1 })}><ChevronLeft size={15} /> Earlier</button>
+            <button type="button" aria-label="Move later" disabled={idx >= list.length - 1} onClick={() => dispatch({ type: "COMPANY_MEDIA_MOVE", id: cur.id, dir: 1 })}>Later <ChevronRight size={15} /></button>
+          </div>
+          <Btn variant="primary wide" onClick={() => setSel(null)}><I11.Check size={14} /> Done</Btn>
+        </Sheet>
       )}
     </div>
   );
@@ -679,141 +791,78 @@ function SearchBox11({ value, onChange, placeholder, label }) {
 
 
 
+/* A text box that grows with its content, so nothing scrolls inside it. */
+function AutoText17({ value, onChange, onBlur, rows = 3, className = "ff-input", ...rest }) {
+  const ref = useRef(null);
+  const fit = () => { const el = ref.current; if (!el) return; el.style.height = "auto"; el.style.height = el.scrollHeight + 2 + "px"; };
+  React.useLayoutEffect(fit, [value]);
+  useEffect(() => { window.addEventListener("resize", fit); return () => window.removeEventListener("resize", fit); }, []);
+  return <textarea ref={ref} className={className + " ff-autotext"} rows={rows} value={value} onChange={onChange} onBlur={onBlur} {...rest} />;
+}
+
+
 /* About: just a box you type in. It saves as you leave it. */
 function AboutBox11() {
   const { state, dispatch } = useStore();
   const c = state.company || {};
   const [t, setT] = useState(c.description || "");
   useEffect(() => { setT(c.description || ""); }, [c.description]);
-  return <textarea className="ff-input ff-aboutbox" rows={4} value={t} aria-label="About" placeholder="Tell people what your business does"
+  return <AutoText17 className="ff-input ff-aboutbox" rows={4} value={t} aria-label="About" placeholder="A mobile cocktail bar bringing exquisite drinks and a warm welcome to weddings and parties across the UK."
     onChange={(e) => setT(e.target.value)} onBlur={() => { if (t.trim() !== (c.description || "")) dispatch({ type: "COMPANY_SAVE", company: { description: t.trim() } }); }} />;
 }
 
 
 
-function CompanySections() {
+/* The companies a company works with, picked from the directory. */
+function PartnerPick17({ open, onClose }) {
+  const { state, dispatch } = useStore();
+  const [q, setQ] = useState("");
+  if (!open) return null;
+  const mine = (state.company || {}).partners || [];
+  const t = q.trim().toLowerCase();
+  const pool = browseCompanies17(state).filter(co => co && co.id !== "mine" && (!t || `${co.name} ${co.kind || ""} ${co.area || ""}`.toLowerCase().includes(t))).slice(0, 60);
+  const toggle = (id) => dispatch({ type: "COMPANY_SAVE", company: { partners: mine.includes(id) ? mine.filter(x => x !== id) : [...mine, id] } });
+  return (
+    <Sheet open onClose={onClose} title="Companies" center>
+      <div className="ff-fav17-pick">
+        <label className="srch"><I11.Search size={14} /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search companies" aria-label="Search companies" /></label>
+        <ul>
+          {pool.map(co => {
+            const on = mine.includes(co.id);
+            return (
+              <li key={co.id}>
+                <button type="button" className={on ? "on" : ""} aria-pressed={on} onClick={() => toggle(co.id)}>
+                  <I11.Briefcase size={20} /><span><b>{co.name}</b><small>{co.kind || ""}</small></span>{on ? <I11.Check size={17} /> : <I11.Plus size={17} />}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </Sheet>
+  );
+}
+
+/* FF Staff, "Your business", owner only: the people you added with "Add to favourites". Collapsed by default; never part of the public company page. */
+function CompanyFavs17() {
   const { state, dispatch } = useStore();
   const all = useDirectory();
-  const c = state.company || {};
-  const [openRec, setOpenRec] = useState(null);
-  const [addingTo, setAddingTo] = useState(null);
-  const [termsOpen, setTermsOpen] = useState(false);
-  const [tab, setTab] = useState("overview");
-  const engs = state.auth && state.auth.status === "signedIn" ? state.engagements : [];
-  const stat = (st) => engs.filter(e => e.state === st).length;
-  const teamIds = [...new Set(engs.filter(e => ["confirmed", "completed", "signed_off", "paid"].includes(e.state)).map(e => e.staffId))];
-  const team = teamIds.filter(id => id !== "me").map(id => findPerson(all, state, id)).filter(Boolean);
-  const reviews = (c.reviews || []).map(r => ({ ...makeRecord("reviews", r.byName), id: r.id, description: r.text, rating: r.rating, readOnly: true }));
-  const termsRecs = [
-    { ...makeRecord("terms", "T&Cs"), id: "co_tcs", description: "Your five terms, sent with every Service Card. Tap to view or edit." },
-  ];
-  const vis = (k) => state.categoryVisibility[k] === true;
-  const termsDef = { label: "Terms and conditions", singular: "Terms", icon: "qualification", fields: ["description"] };
-  const soc = c.socials || {};
-  const recSection = (k) => (
-    <ProfileAttributeSection key={k} catKey={k} def={COMPANY_CATEGORIES[k]} list={recsOf(c, k)} isMe shade="onyx" owner="company"
-      onOpen={(r) => setOpenRec({ record: r, def: COMPANY_CATEGORIES[k], category: k })} onAdd={() => setAddingTo(k)} />
-  );
-  const tabs = [
-    { key: "overview", label: "Overview" },
-    { key: "services", label: "Packages" },
-    { key: "team", label: "Team", count: team.length },
-    { key: "reviews", label: "Reviews", count: reviews.length },
-  ];
+  const favs = favsOf(state, all);
+  const open = state.categoryVisibility.co_favs === true;
   return (
-    <>
-      <section id="ff-co-media" style={{ marginTop: 22 }}>
-        <CompanyMedia list={c.media || []} editable />
-      </section>
-
-      {c.joinedAt && (
-        <div className="ff-costats">
-          {[["Confirmed", stat("confirmed")], ["Awaiting", stat("requested")], ["Team", team.length]].map(([l, v]) => (
-            <div key={l} className="ff-frame" style={{ padding: 11 }}>
-              <div className="ff-display" style={{ fontSize: 22 }}>{v}</div>
-              <div className="ff-label">{l}</div>
+    <section id="ff-co-favs" style={{ marginTop: 22 }}>
+      <SectionHead icon={<I11.Heart size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Favourites" count={favs.length} action={<CategoryToggle sectionKey="co_favs" defaultOpen={false} />} />
+      {open && favs.length > 0 && (
+        <HScroll label="Favourites">
+          {favs.map(p => (
+            <div key={p.id} className="ff-favtile17">
+              <PlayerTile person={p} onClick={() => { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); }} />
+              <button type="button" className="fav on" aria-pressed="true" aria-label={`Remove ${firstName(p.name)} from favourites`}
+                onClick={() => { dispatch({ type: "FAV_TOGGLE", id: p.id }); dispatch({ type: "TOAST", toast: `${firstName(p.name)} removed from your favourites` }); }}><I11.Heart size={14} /></button>
             </div>
           ))}
-        </div>
+        </HScroll>
       )}
-
-      <div className="ff-ptabs-wrap">
-        <ProfileTabs tabs={tabs} active={tab} onChange={setTab} />
-        <div role="tabpanel" id="ff-tabpanel" aria-labelledby={`ff-tab-${tab}`} className="ff-tabpanel" tabIndex={0}>
-          {tab === "overview" && (<>
-            <section id="ff-co-about" style={{ marginTop: 22 }}>
-              <SectionHead icon={<I11.Briefcase size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="About" action={<CategoryToggle sectionKey="co_about" defaultOpen={false} />} />
-              {vis("co_about") && <AboutBox11 />}
-            </section>
-
-            <section id="ff-co-social" style={{ marginTop: 22 }}>
-              <SectionHead icon={<I11.Globe size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Social links" action={<CategoryToggle sectionKey="co_social" defaultOpen={false} />} />
-              {vis("co_social") && (
-                <SocialEdit11 value={soc} onChange={(socials) => dispatch({ type: "COMPANY_SAVE", company: { socials } })} />
-              )}
-            </section>
-
-            {recSection("contact")}
-            {recSection("locations")}
-            {recSection("venues")}
-            {recSection("documents")}
-
-            <section id="ff-co-terms" style={{ marginTop: 22 }}>
-              <SectionHead icon={<I11.FileText size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Terms and conditions" count={1 + companyDocs(c).length + (c.tcDocs || []).length}
-                action={<CategoryToggle sectionKey="co_terms" defaultOpen={false} />} />
-              {vis("co_terms") && (
-                <HScroll label="Terms and conditions">
-                  {termsRecs.map(r => <InformationCard key={r.id} record={r} def={termsDef} themeKey="onyx" editable onClick={() => setTermsOpen(true)} />)}
-                </HScroll>
-              )}
-            </section>
-
-          </>)}
-
-          {tab === "services" && (<>
-            <section id="ff-co-svc" style={{ marginTop: 22 }}>
-              <SectionHead icon={<I11.Sparkles size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Services" count={(c.svcCards || []).length} action={<CategoryToggle sectionKey="co_svc" defaultOpen={false} />} />
-              {vis("co_svc") && <SvcBuilder11 />}
-            </section>
-            <section id="ff-co-ck" style={{ marginTop: 22 }}>
-              <SectionHead icon={<I11.Martini size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Cocktail menu" count={(c.menu || []).length} action={<CategoryToggle sectionKey="co_ck" defaultOpen={false} />} />
-              {vis("co_ck") && <MenuBuilder11 />}
-            </section>
-            <section id="ff-co-questions" style={{ marginTop: 22 }}>
-              <SectionHead icon={<I11.MessageSquare size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Q&A" count={coQa(c).length} action={<CategoryToggle sectionKey="co_qa" defaultOpen={false} />} />
-              {vis("co_qa") && <CompanyQA11 c={c} />}
-            </section>
-          </>)}
-
-          {tab === "team" && (
-            <section style={{ marginTop: 18 }}>
-              {team.length ? (
-                <HScroll label="Your team">
-                  {team.map(p => <PlayerTile key={p.id} person={p} onClick={() => dispatch({ type: "VIEW", id: p.id })} />)}
-                </HScroll>
-              ) : <p className="ff-body ff-muted" style={{ margin: 0 }}>Everyone you book joins your team, so you can rebook them in a tap.</p>}
-              <div style={{ marginTop: 12 }}><Btn variant="sm ghost" onClick={() => dispatch({ type: "TAB", tab: "network" })}>Find more</Btn></div>
-            </section>
-          )}
-
-          {tab === "reviews" && (
-            <section id="ff-co-reviews" style={{ marginTop: 18 }}>
-              {reviews.length ? (
-                <HScroll label="Reviews">
-                  {reviews.map((r, i) => <InformationCard key={r.id} record={r} def={BASE_CATEGORIES.reviews} themeKey="onyx" highlight={i < 3} rank={cardRank(i)} />)}
-                </HScroll>
-              ) : <p className="ff-body ff-muted" style={{ margin: 0 }}>No reviews yet. Staff review you after each booking.</p>}
-            </section>
-          )}
-        </div>
-      </div>
-
-      <GenericAttributeCardCreator owner="company" open={!!openRec} record={openRec && openRec.record} def={openRec && openRec.def} category={openRec && openRec.category}
-        readOnly={!!(openRec && openRec.record && openRec.record.readOnly)} onClose={() => setOpenRec(null)} />
-      <GenericAttributeCardCreator owner="company" open={!!addingTo} record={null} category={addingTo} def={addingTo ? COMPANY_CATEGORIES[addingTo] : null}
-        onClose={() => setAddingTo(null)} />
-
-      <TermsSheet11 open={termsOpen} onClose={() => setTermsOpen(false)} />
-    </>
+    </section>
   );
 }

@@ -1,0 +1,74 @@
+{
+  "formatVersion": 2,
+  "slug": "party-people-video-djs",
+  "name": "Party People Video DJs",
+  "kind": "Video DJs",
+  "base": "Glasgow",
+  "areas": [
+    "West Scotland",
+    "Central Scotland"
+  ],
+  "description": "A Glasgow mobile DJ company that specialises in video DJing across West and Central Scotland, for birthdays, weddings, corporate and charity events.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/listings/djs/central-scotland",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Video DJing",
+        "Mobile DJ"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/listings/djs/central-scotland",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Birthdays",
+        "Corporate events",
+        "Charity events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/listings/djs/central-scotland",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "PARTY",
+    "position": 42,
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/listings/djs/central-scotland"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Glasgow",
+        "lat": 55.8642,
+        "lng": -4.2518,
+        "approx": false
+      }
+    ]
+  }
+}

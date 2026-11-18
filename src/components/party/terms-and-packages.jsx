@@ -9,6 +9,25 @@ const MY_TERMS17 = [
 ];
 
 
+/* v17.5.1: the terms shown when you sign up to FF Party packages, and when you save your FF Staff shift rates. How the platform works, in five points each. */
+const PARTY_PKG_TERMS17 = [
+  { k: "how", label: "How packages work", text: "A package is a fixed offer that clients book on FF Party. FireFlair sets the pay rate for each package and shows it before you sign up. By signing up you agree to that rate." },
+  { k: "boss", label: "You are your own boss", text: "You work as a self-employed freelancer. You deal directly with the client, and FireFlair is here to support you. FireFlair is not your employer." },
+  { k: "book", label: "Bookings", text: "When a client books a package, FireFlair invites you on WhatsApp. The booking is yours once you accept, and not before." },
+  { k: "cancel", label: "Cancelling", text: "If you cannot make a booking, tell the client and FireFlair as early as you can. Late cancellations affect your reputation on FireFlair." },
+  { k: "work", label: "Standards and reviews", text: "Arrive on time, dressed as agreed, and deliver the package as it is described. Clients can review you afterwards, and your reviews appear on your profile." },
+];
+
+
+const STAFF_SHIFT_TERMS17 = [
+  { k: "how", label: "How shifts work", text: "Businesses create shift cards and set the pay rate for each shift. Your preferred rate is a guide that businesses see on FF Staff. It does not set the rate for a shift." },
+  { k: "invite", label: "Invitations", text: "When a business invites you to a shift, FireFlair sends you a WhatsApp message with the details. You are only booked once you accept." },
+  { k: "boss", label: "Self-employed", text: "You work as a self-employed freelancer and are responsible for your own tax. The business that books you is not your employer, and neither is FireFlair." },
+  { k: "cancel", label: "Cancelling", text: "If you can no longer work a shift, tell the business and FireFlair as early as you can. Late cancellations affect your reputation on FireFlair." },
+  { k: "rep", label: "Reputation", text: "Businesses can review you after a shift. Turning up on time and doing great work builds your reputation and gets you booked again." },
+];
+
+
 /* FF Team terms, the way FF Staff shows them: a card for each set of terms. Tap one to read and edit its five points in a pop-up. */
 const TERM_SETS17 = {
   mine: { key: "myTerms17", title: "Personal T&Cs", note: "Shown when a business hires you.", head: "Personal terms and conditions", list: MY_TERMS17 },
@@ -80,7 +99,6 @@ function TermsRow17() {
 /* Tab names, by site: FF Party is Home, Browse, Book, Party. FF Staff is Home, Our people, Your bookings, Your business. */
 const tabLabel17 = (key, state, dflt) => {
   const staff = state.role === "staff", party = staff && state.site === "party";
-  if (state.role === "partners") return ({ network: "People" })[key] || dflt;
   if (state.role === "vip") return ({ network: "Experiences", bookings: "Book", profile: "My card" })[key] || dflt;
   if (party) return ({ network: "Browse", bookings: "Book", profile: "Party" })[key] || dflt;
   if (staff) return ({ network: "Our people", bookings: "Your bookings", profile: "Your business" })[key] || dflt;
@@ -89,32 +107,23 @@ const tabLabel17 = (key, state, dflt) => {
 
 
 
-/* Training, Dream jobs and FF rewards cards: tap one and it turns over to its description. Both sites. */
-function FlipChoice17({ kind, title, img, note, on, onClick }) {
-  const [back, setBack] = useState(false);
-  const key = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setBack(b => !b); } };
-  const tick = (
-    <button type="button" className="tick" aria-pressed={on} onClick={(e) => { e.stopPropagation(); onClick(); }}>
-      {on ? <><S17I.Check size={13} strokeWidth={2.6} /> Interested</> : <><S17I.Plus size={13} /> I'm interested</>}
-    </button>
-  );
+/* Training, Dream jobs and FF Rewards cards (FF Team Bookings and FF Staff). The photo is the top half of the card and
+   only the title sits on it; the label, the description and the button are below, on the solid card.
+   `pos` is the photo's object-position (where its subject is), so a crop never cuts a head. */
+function FlipChoice17({ kind, title, img, pos, note, on, onClick }) {
   return (
-    <div className={`ff-fc17${back ? " back" : ""}`}>
-      <div className="fi">
-        <div className="ff-shine-img fr" role="button" tabIndex={back ? -1 : 0} aria-pressed={on} aria-label={`${title}: turn over`} onClick={() => setBack(true)} onKeyDown={key}>
-          {img ? <img decoding="async" src={img} alt="" loading="eager" draggable="false" /> : <HomeScene kind="bar" />}
-          <span className="shade" aria-hidden="true" />
-          <span className="k">{kind}</span>
-          <span className="tx"><span className="t">{title}</span>
-          {note && <span className="d">{note}</span>}</span>
-          {tick}
-          {on && <span className="chk" aria-hidden="true"><S17I.Check size={13} strokeWidth={3} /></span>}
-        </div>
-        <div className="bk" role="button" tabIndex={back ? 0 : -1} aria-label={`${title}: turn back`} onClick={() => setBack(false)} onKeyDown={key}>
-          <b className="bt">{title}</b>
-          <p>{note}</p>
-          {tick}
-        </div>
+    <div className={`ff-fc17${on ? " on" : ""}`}>
+      <div className="ph">
+        {img ? <img decoding="async" src={img} alt="" loading="lazy" draggable="false" style={pos ? { objectPosition: pos } : undefined} /> : <HomeScene kind="bar" />}
+        <span className="t">{title}</span>
+        {on && <span className="chk" aria-hidden="true"><S17I.Check size={13} strokeWidth={3} /></span>}
+      </div>
+      <div className="bd">
+        {kind && <span className="k">{kind}</span>}
+        {note && <p className="d">{note}</p>}
+        <button type="button" className="tick" aria-pressed={on} aria-label={`${title}: ${on ? "interested" : "I'm interested"}`} onClick={onClick}>
+          {on ? <><S17I.Check size={13} strokeWidth={2.6} /> Interested</> : <><span className="pl" aria-hidden="true"><S17I.Plus size={13} /></span> I'm interested</>}
+        </button>
       </div>
     </div>
   );
@@ -146,7 +155,7 @@ function PkgCardOld17({ svc, n, noun, match, on, onToggle, onInfo }) {
       <button type="button" className={`ff-lst ff-pk17 ${svc.tone || ""}${match ? " match" : ""}`} onClick={onToggle} aria-pressed={!!on} aria-label={`${svc.title}: ${on ? "selected" : "select"}`}>
         <span className="ph" style={svc.img ? { backgroundImage: `linear-gradient(rgba(10,8,8,.12),rgba(10,8,8,.55)), url(${svc.img})`, backgroundSize: "cover", backgroundPosition: "center 20%" } : undefined}>
           <span className="pl">{lvl17(svc.level)}</span>
-          <span className="cn"><Coin size={30} tier="gold" /></span>
+          <span className="cn"><FFLogo size={30} tier="gold" /></span>
           <span className="ic"><Ic size={34} strokeWidth={1.4} /></span>
           {svc.price && !svc.noPrice && <span className="pr">{svc.price}</span>}
         </span>
@@ -172,12 +181,18 @@ function PkgCard17({ svc, n, noun, match, on, onToggle, onInfo }) {
   const { state } = useStore();
   const Ic = PKICON17[svc.cat] || S17I.Sparkles;
   const inc = bul17(svc.includes), ideal = bul17(svc.ideal);
+  /* Phase 2: on FF Party the card shows the package; its Book now is locked. Tapping the card opens the details. */
+  const locked = pkgCta17(state, on) === "Book now";
+  const Card = locked ? "div" : "button";
+  const cardProps = locked
+    ? { role: "group", tabIndex: 0, "aria-label": svc.title, style: { cursor: onInfo ? "pointer" : "default" }, onClick: onInfo || undefined, onKeyDown: (e) => { if (onInfo && e.target === e.currentTarget && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); onInfo(); } } }
+    : { type: "button", onClick: onToggle, "aria-pressed": !!on, "aria-label": `${svc.title}: ${pkgCta17(state, on)}` };
   return (
     <div className={`ff-pk17w rd${on ? " sel" : ""}`} data-pk17={svc.id} data-pk17-alt={svc.title === "BYOB" ? "byob" : ""}>
-      <button type="button" className={`ff-lst ff-pk17 rd ${svc.tone || ""}${match ? " match" : ""}`} onClick={onToggle} aria-pressed={!!on} aria-label={`${svc.title}: ${pkgCta17(state, on)}`}>
+      <Card className={`ff-lst ff-pk17 rd ${svc.tone || ""}${match ? " match" : ""}`} {...cardProps}>
         <span className="ph" style={svc.img ? { backgroundImage: `linear-gradient(rgba(10,8,8,.12),rgba(10,8,8,.55)), url(${svc.img})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}>
           <span className="pl">FF Party</span>
-          <span className="cn"><Coin size={30} tier="gold" /></span>
+          <span className="cn"><FFLogo size={30} tier="gold" /></span>
           <span className="ic"><Ic size={30} strokeWidth={1.4} /></span>
           {svc.price && !svc.noPrice && <span className="pr">{svc.price}</span>}
         </span>
@@ -186,9 +201,10 @@ function PkgCard17({ svc, n, noun, match, on, onToggle, onInfo }) {
           {inc.length > 0 && <span className="bl"><i>Includes</i><ul>{inc.map(x => <li key={x}>{x}</li>)}</ul></span>}
           {ideal.length > 0 && <span className="bl"><i>Ideal for</i><ul>{ideal.map(x => <li key={x}>{x}</li>)}</ul></span>}
           {(svc.by && svc.by !== "FF Party" && svc.by !== "FireFlair") || n > 0 ? <span className="by">{svc.by && svc.by !== "FF Party" && svc.by !== "FireFlair" ? svc.by : `${n} ${noun} to choose from`}</span> : null}
-          <span className={"go" + (pkgCta17(state, on) === "Book now" || pkgCta17(state, on) === "Added" ? " gold" : "")}>{on ? <><S17I.Check size={13} strokeWidth={2.6} /> {pkgCta17(state, on)}</> : pkgCta17(state, on)}</span>
+          {locked ? <LockedBtn17 bare className="go gold">Book now</LockedBtn17>
+            : <span className={"go" + (pkgCta17(state, on) === "Book now" || pkgCta17(state, on) === "Added" ? " gold" : "")}>{on ? <><S17I.Check size={13} strokeWidth={2.6} /> {pkgCta17(state, on)}</> : pkgCta17(state, on)}</span>}
         </span>
-      </button>
+      </Card>
       {onInfo && <button type="button" className="inf" aria-label={`${svc.title}: details`} onClick={onInfo}><S17I.Info size={16} strokeWidth={2} /></button>}
     </div>
   );
@@ -204,7 +220,7 @@ async function pkgSignup17(state, dispatch, sv) {
   const next = on ? cur.filter(x => x !== sv.id) : [...cur, sv.id];
   const mirror = { type: "PROFILE", patch: { serviceInterest: next } };
   const r = next.length
-    ? await qaSubmit17(dispatch, { questionId: "int.party_package", account, optionIds: next, visibility: "private", source: "FF Team Bookings · FF Party packages" }, mirror)
+    ? await qaSubmit17(dispatch, { questionId: "int.party_package", account, optionIds: next, visibility: "public", source: "FF Team Bookings · FF Party packages" }, mirror)
     : await qaWithdraw17(dispatch, { questionId: "int.party_package", account }, mirror);
   dispatch({ type: "TOAST", toast: r.ok ? (on ? `Withdrawn from ${sv.title}` : `Signed up for ${sv.title}`) : "That couldn't be saved. Try again." });
 }
@@ -258,7 +274,7 @@ function PkgSheet17({ svc, qual, onClose }) {
         {svc.id === "svc_full" && <div className="ff-br17-qual" role="group" aria-label="Preferred quality">
           {QUALITY17.map(o => <button key={o.k} type="button" className={`${o.k}${qual === o.k ? " on" : ""}`} aria-pressed={qual === o.k} onClick={() => dispatch({ type: "V11_SET", patch: { br17: { ...(state.br17 || {}), q: qual === o.k ? "" : o.k } } })}><b>{o.label}</b></button>)}
         </div>}
-        <button type="button" className="ff-pks17-go" aria-pressed={on} onClick={toggle}>{on ? <><S17I.Check size={16} strokeWidth={2.6} /> In your basket</> : <><S17I.Plus size={16} /> Add to basket</>}</button>
+        {pkgCta17(state, false) === "Book now" ? <LockedBtn17 bare className="ff-pks17-go">Add to basket</LockedBtn17> :         <button type="button" className="ff-pks17-go" aria-pressed={on} onClick={toggle}>{on ? <><S17I.Check size={16} strokeWidth={2.6} /> In your basket</> : <><S17I.Plus size={16} /> Add to basket</>}</button>}
         <button type="button" className={`ff-pks17-fav${inF ? " on" : ""}`} aria-pressed={inF} onClick={toggleF}><S17I.Heart size={16} fill={inF ? "currentColor" : "none"} /> {inF ? "In your favourites" : "Add to favourites"}</button>
       </div>
     </Sheet>

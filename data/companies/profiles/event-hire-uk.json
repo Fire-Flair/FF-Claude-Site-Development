@@ -1,0 +1,101 @@
+{
+  "formatVersion": 2,
+  "slug": "event-hire-uk",
+  "name": "Event Hire UK",
+  "kind": "Glassware hire & delivery",
+  "base": "UK-wide",
+  "areas": [
+    "UK-wide"
+  ],
+  "description": "A nationwide event hire company supplying furniture, catering equipment and tableware, including glassware, for temporary events.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://eventhireuk.com",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Glassware hire",
+        "Furniture hire",
+        "Tableware hire"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://eventhireuk.com",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://eventhireuk.com",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Established 2005",
+        "UK-wide"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://eventhireuk.com",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://eventhireuk.com",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://eventhireuk.com",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "svc",
+    "sub": "glassware",
+    "tag": "EVHUK",
+    "position": 137,
+    "source": {
+      "urls": [
+        "https://eventhireuk.com"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Birmingham",
+        "lat": 52.4862,
+        "lng": -1.8904,
+        "approx": true
+      }
+    ]
+  }
+}

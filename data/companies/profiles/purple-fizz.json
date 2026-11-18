@@ -1,0 +1,130 @@
+{
+  "formatVersion": 2,
+  "slug": "purple-fizz",
+  "name": "Purple Fizz",
+  "kind": "Cocktail bar hire & mixologists",
+  "base": "Sidcup",
+  "areas": [
+    "London",
+    "Surrey",
+    "Home Counties"
+  ],
+  "logo": "https://www.purplefizz.co.uk/wp-content/uploads/2020/01/Purple-Fizz-logo-hdpi.png",
+  "logoBg": "light",
+  "logoWide": false,
+  "description": "A cocktail bar hire company trading since 2013, offering fully stocked, all-inclusive cocktail bars and expert mixologists for London and the surrounding counties.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.poptop.uk.com/supplier/purple-fizz-limited",
+    "at": "2026-11-07"
+  },
+  "media": [
+    {
+      "id": "purple-fizz_0",
+      "src": "https://www.purplefizz.co.uk/wp-content/uploads/2020/01/Purple-fizz-making-cocktail.jpg",
+      "alt": "Purple Fizz",
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/purple-fizz-limited",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "All-inclusive cocktail bar hire",
+        "Mixologist and bartender hire",
+        "Cocktail equipment"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/purple-fizz-limited",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Private parties",
+        "Corporate events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/purple-fizz-limited",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "scale",
+      "title": "Scale",
+      "chips": [
+        "Trading since 2013"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/purple-fizz-limited",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Listing details only; own website not confirmed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/purple-fizz-limited",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://www.purplefizz.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://www.poptop.uk.com/supplier/purple-fizz-limited",
+          "at": "2026-11-07"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "PURFZ",
+    "position": 13,
+    "legal": {
+      "form": null,
+      "legalName": "Purple Fizz Limited",
+      "companyNumber": null
+    },
+    "source": {
+      "urls": [
+        "https://www.poptop.uk.com/supplier/purple-fizz-limited"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Sidcup",
+        "lat": 51.4262,
+        "lng": 0.1043,
+        "approx": false
+      }
+    ]
+  }
+}

@@ -9,10 +9,10 @@ function BigHead20({ tag, title, count, id }) {
 }
 
 
-function CompaniesSection({ title = "Companies", note, list: listIn, fold }) {
+function CompaniesSection({ title = "Companies", note, list: listIn, fold, icon, open }) {
   const { state, dispatch } = useStore();
   const list = listIn || companyList(state);
-  const Wrap = fold ? ({ children }) => React.createElement(Fold17, { shut: true, id: fold, icon: React.createElement(I11.Briefcase, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title, count: list.length }, children) : ({ children }) => React.createElement("section", { className: "ff-co11-sect", style: { marginTop: 22 } }, React.createElement(SectionHead, { icon: React.createElement(I11.Briefcase, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title, count: list.length }), children);
+  const Wrap = fold ? ({ children }) => React.createElement(Fold17, { shut: !open, id: fold, icon: icon || React.createElement(I11.Briefcase, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title, count: list.length }, children) : ({ children }) => React.createElement("section", { className: "ff-co11-sect", style: { marginTop: 22 } }, React.createElement(SectionHead, { icon: icon || React.createElement(I11.Briefcase, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.6 }), title, count: list.length }), children);
   return React.createElement(Wrap, null, note && React.createElement("p", { className: "ff-body", style: { margin: "-2px 0 8px", fontSize: 13.5 } }, note), React.createElement(HScroll, { label: title }, list.map((co) => React.createElement(
     "button",
     {
@@ -38,6 +38,9 @@ function CompaniesSection({ title = "Companies", note, list: listIn, fold }) {
 
 /* Browse under the map: the four pillars sort the people and companies, and the map follows. */
 const NET_CO_TYPES17 = [["bar", "Bar companies"], ["dj", "Entertainment"], ["photo", "Event services"], ["catering", "Caterers"], ["svc", "Bar services"]];
+/* Netmap: muted FireFlair palette tints (black, burgundy, dark gold, burgundy tint, warm grey), no category rainbow. */
+const NET_CAT_VIEW17 = { bar: ["Martini", "#16130F"], dj: ["Music", "#5C1220"], photo: ["PartyPopper", "#7E611D"], catering: ["UtensilsCrossed", "#8A4A55"], svc: ["Wine", "#4A443A"] };
+function catIcon17(k) { const v = NET_CAT_VIEW17[k] || ["Briefcase", "var(--gold-dk)"]; return React.createElement(I11[v[0]] || I11.Briefcase, { size: 15, color: v[1], strokeWidth: 1.8 }); }
 
 
 const PILLAR_OF_GROUP17 = { "Bar": "bar", "Front of House": "bar", "Management": "bar", "Back of House": "bar", "Entertainment": "ent", "Services": "svc", "Chefs": "food" };
@@ -58,17 +61,24 @@ function browseCompanies17(state) {
 function NetDirectory19(props) {
   const h = React.createElement;
   const st = useStore(), state = st.state;
-  const open = state.netPillar17 || "";
+  /* FF Team has no package explorer, so no pillar filter applies to its Directory: every company type shows. */
+  const open = state.role === "team" ? "" : (state.netPillar17 || "");
   const every = browseCompanies17(state);
   const all = every.filter(function (c) { return c.unclaimed; });
-  const top = every.filter(function (c) { return !c.unclaimed && (!open || PILLAR_OF_CAT17[c.cat || "bar"] === open); });
+  /* On FF Staff the signed-in business sees its own Company Card once: the directory entry for the same company is left out. */
+  const own = state.role === "staff" && every.find(function (c) { return c.mine; });
+  const ownKey = own ? coKey17(own) : "";
+  const top = every.filter(function (c) { return !c.unclaimed && !(ownKey && !c.mine && coKey17(c) === ownKey) && (!open || PILLAR_OF_CAT17[c.cat || "bar"] === open); });
   const secs = NET_CO_TYPES17.filter(function (t) { return !open || PILLAR_OF_CAT17[t[0]] === open; })
     .map(function (t) { return [t, all.filter(function (c) { return (c.cat || "bar") === t[0]; })]; })
     .filter(function (x) { return x[1].length; });
   return h("section", { id: "ff-directory", style: { marginTop: 30, scrollMarginTop: 70 } },
     h(BigHead20, { title: "FF Event Directory" }),
-    top.length ? h(CompaniesSection, { title: "Top companies", list: top }) : null,
-    secs.map(function (x) { return h(CompaniesSection, { key: "dir" + x[0][0], title: x[0][1], list: x[1], fold: "ff-dir-" + x[0][0] }); }));
+    top.length ? h(CompaniesSection, { title: "Featured companies", list: top, icon: React.createElement(I11.Star, { size: 15, color: "var(--gold-dk)", strokeWidth: 1.8 }) }) : null,
+    /* Netmap: a category shows once it has a company; every Directory box is open by default (Alex's exception). */
+    secs.map(function (x) {
+      return h(CompaniesSection, { key: "dir" + x[0][0], title: x[0][1], list: x[1], fold: "ff-dir-" + x[0][0], icon: catIcon17(x[0][0]), open: true });
+    }));
 }
 
 
@@ -78,20 +88,16 @@ function NetPackages20({ pillar }) {
   const [pop, setPop] = useState(null);
   const isParty = state.role === "staff" && !!(hireSiteOf(state) || {}).party;
   const all = pkgsOf17(state).filter(function (x) { return (x.cat || "bar") === pillar; });
-  const sr = isParty ? all.filter(function (x) { return x.special; }) : [];
   const pkgs = all.filter(function (x) { return !x.special; });
   const co = pkgs.filter(function (x) { return x.by || x.id === "svc_supplier"; });
   const pro = pkgs.filter(function (x) { return !x.ff; });
   const secs = pillar === "bar" ? [["Professional packages", pro], ["Company packages", co]] : [["Company packages", co], ["Professional packages", pro]];
   const shown = secs.filter(function (x) { return x[1].length; });
-  /* The Special Request card leads the first row, the same size as every package card. */
-  if (shown.length) shown[0] = [shown[0][0], sr.concat(shown[0][1])]; else if (sr.length) shown.push(["FireFlair packages", sr]);
   const picked = bkOf17(state).pk;
   const pick = function (svc) {
     /* FF Team: Sign up. FF Staff: Create your own. Both go to the profile where that is done. */
     if (!isParty) { dispatch({ type: "TAB", tab: "profile" }); window.scrollTo(0, 0); return; }
     if (picked.includes(svc.id)) { dispatch({ type: "V11_SET", patch: { bk17: { ...bkOf17(state), pk: picked.filter(function (x) { return x !== svc.id; }) } } }); return; }
-    if (svc.special) srAuto17(state, dispatch, svc.cat);
     selectPkg17(state, dispatch, svc.id, true);
   };
   return React.createElement(React.Fragment, null,
@@ -183,25 +189,156 @@ function InviteTeamSheet17({ open, onClose, companyKey }) {
 }
 
 
+/* The search text now being used by the network pages, read by the map so its pins follow the results. */
+const NetQ17 = React.createContext("");
+
+
+/* Search text for a company or Directory entry: name, kind and what they do, areas and location, category. */
+function coSearchText17(c) {
+  const cat = (NET_CO_TYPES17.find(function (x) { return x[0] === (c.cat || "bar"); }) || [])[1] || "";
+  const places = [].concat(c.area || [], c.areas || [], c.location || [], c.serviceLocations || [], (c.locations || []).map(function (l) { return (l && l.label) || l; }));
+  const what = [].concat(c.kind || [], (c.seed && c.seed.services) || [], (c.seed && c.seed.base) || []);
+  return [c.name, c.tag].concat(what, places, [cat]).filter(Boolean).join(" ").toLowerCase();
+}
+
+
+/* Companies and FF Event Directory entries that match a network search. cos: claimed companies, dir: unclaimed Directory entries. */
+function netSearch17(state, query) {
+  const n = String(query || "").trim().toLowerCase();
+  if (!n) return null;
+  const hit = browseCompanies17(state).filter(function (c) { return coSearchText17(c).includes(n); });
+  return { cos: hit.filter(function (c) { return !c.unclaimed; }), dir: hit.filter(function (c) { return c.unclaimed; }) };
+}
+
+
+/* The types of professional on the FF Team network, each a closed drop-down: Bar, Management, Entertainment, Services, Food, Other.
+   net2: Management (v1.6 display category) is its own type, out of Bar. */
+const PRO_TYPES17 = [["bar", "Bar", "Bar"], ["mgmt", "Management", "Management"], ["ent", "Entertainment", "Entertainment"], ["svc", "Services", "Services"], ["food", "Food", "Chefs"], ["other", "Other", "Other"]];
+
+
+function ProsByType17({ onPick }) {
+  const { state, dispatch } = useStore();
+  const everyone = useDirectory();
+  /* v17.48: a person is listed once in every type their top 3 professions cover, the plate showing the best-ranked
+     profession of that type; top-profession holders first, then 2nd, then 3rd, then the existing order. */
+  const kindOf = (g) => g === "Management" ? "mgmt" : (PILLAR_OF_GROUP17[g] || "other");
+  return (
+    <>
+      {PRO_TYPES17.map(([k, label, icon]) => {
+        const list = everyone.map((p, i) => [p, (p.groups || [{ group: p.group, profession: p.profession, rank: 0 }]).find(x => kindOf(x.group) === k), i])
+          .filter(([, x]) => x).sort((a, b) => a[1].rank - b[1].rank || a[2] - b[2]).map(([p, x]) => plateAs17(p, x.profession));
+        if (!list.length) return null;
+        return (
+          <Fold17 key={k} id={"ff-pros-" + k} icon={<GroupIcon group={icon} />} title={label} count={list.length} shut>
+            {list.length ? (
+              <HScroll label={label} snap>
+                {list.map(p => <PlayerTile key={p.id} person={p} onClick={() => onPick(p)} />)}
+              </HScroll>
+            ) : <p className="ff-body ff-muted" style={{ margin: 0 }}>No one yet.</p>}
+          </Fold17>
+        );
+      })}
+    </>
+  );
+}
+
+
 function NetBrowse17(props) {
   const query = props.query || "";
   const st = useStore(), state = st.state, dispatch = st.dispatch;
   const open = state.netPillar17 || "";
-  if (query.trim()) return React.createElement(React.Fragment, null, props.after || null, React.createElement(GroupedPeople, { query: query, onPick: props.onPick, scope: props.scope }));
+  /* v17.20 FF Team: map, then the search box, then the Directory and Venues. No Our professionals banner, no Explore by area. */
+  const team20 = !!props.search && !props.noPackages;
+  if (query.trim()) {
+    const found = netSearch17(state, query);
+    const anyCo = found.cos.length + found.dir.length > 0;
+    /* Netmap: the search sits at the top of the Network page, above the map (FF Team: under the page heading). */
+    return React.createElement(NetQ17.Provider, { value: query },
+      team20 ? netMapWithSearch20(props) : React.createElement(React.Fragment, null,
+        props.search ? React.createElement("section", { id: "ff-net-search", style: { marginTop: 4, scrollMarginTop: 70 } }, props.search) : null,
+        props.after || null),
+      React.createElement(GroupedPeople, { query: query, onPick: props.onPick, scope: props.scope, quietEmpty: anyCo }),
+      found.cos.length ? React.createElement(CompaniesSection, { title: "Companies", list: found.cos }) : null,
+      found.dir.length ? React.createElement(CompaniesSection, { title: "FF Event Directory", list: found.dir }) : null);
+  }
   const groups = open ? Object.keys(PILLAR_OF_GROUP17).filter(function (g) { return PILLAR_OF_GROUP17[g] === open; }) : "";
   const items = BCATS17.map(function (c) { return { k: c.k, t: c.label, s: NET_PILLAR_TEXT17[c.k], img: (window.FF_IMG || {})[BIMG17[c.k]] }; });
+  /* FF Team (search passed in): no package explorer; the search sits under the Our professionals banner, then the five type drop-downs. */
+  const teamSite = !!props.search && !props.noPackages;
+  /* FF Staff (noPackages): no package explorer either; the map comes first and the search sits under Our professionals. */
+  const noPkg = teamSite || !!props.noPackages;
+  if (team20) {
+    return React.createElement(React.Fragment, null,
+      /* Netmap: search at the top (under the page heading, above the map), then the map, Our professionals and the Directory. */
+      netMapWithSearch20(props),
+      React.createElement("section", { id: "ff-our-pros", style: { marginTop: 18, scrollMarginTop: 70 } },
+        React.createElement(BigHead20, { title: "Our professionals" }),
+        React.createElement(TopStaff11, null),
+        React.createElement(ProsByType17, { onPick: props.onPick })),
+      React.createElement(NetDirectory20, null));
+  }
   return React.createElement(React.Fragment, null,
-    React.createElement(BigHead20, { title: "Explore our packages" }),
-    React.createElement(PillarBox17, { label: "Explore our packages", open: open, items: items, onPick: function (k) { dispatch({ type: "V11_SET", patch: { netPillar17: k } }); } }, open ? React.createElement(NetPackages20, { pillar: open }) : null),
-    props.after || null,
-    React.createElement("section", { id: "ff-our-pros", style: { marginTop: 30, scrollMarginTop: 70 } },
+    noPkg ? null : React.createElement(BigHead20, { title: "Explore our packages" }),
+    noPkg ? null : React.createElement(PillarBox17, { label: "Explore our packages", open: open, items: items, onPick: function (k) { dispatch({ type: "V11_SET", patch: { netPillar17: k } }); } }, open ? React.createElement(NetPackages20, { pillar: open }) : null),
+    /* Netmap: the search sits at the top, above the map. */
+    !teamSite && props.search ? React.createElement("section", { id: "ff-net-search", style: { marginTop: 4, scrollMarginTop: 70 } }, props.search) : null,
+    teamSite ? null : (props.after || null),
+    React.createElement("section", { id: "ff-our-pros", style: { marginTop: noPkg ? 18 : 30, scrollMarginTop: 70 } },
       React.createElement(BigHead20, { title: "Our professionals" }),
+      teamSite ? (props.search || null) : null,
+      teamSite ? (props.after || null) : null,
       React.createElement(TopStaff11, null),
-      React.createElement(GroupedPeople, { query: "", onPick: props.onPick, scope: props.scope, only: groups, shut: true, insertAfter: props.teamSlot ? "Chefs" : "", insert: props.teamSlot || null })),
+      teamSite
+        ? React.createElement(ProsByType17, { onPick: props.onPick })
+        : React.createElement(GroupedPeople, { query: "", onPick: props.onPick, scope: props.scope, only: groups, shut: true, insertAfter: props.teamSlot ? "Chefs" : "", insert: props.teamSlot || null })),
     React.createElement(NetDirectory19, null));
 }
 
 
+
+/* A company's public Q&A: a search, then Question Cards that open in a pop-up. */
+function CoQA17({ list, name }) {
+  const [q, setQ] = useState("");
+  const [open, setOpen] = useState(null);
+  const t = q.trim().toLowerCase();
+  const shown = t ? list.filter(x => `${x.text} ${x.answer || ""} ${x.note || ""}`.toLowerCase().includes(t)) : list;
+  return (
+    <div className="ff-coqa17">
+      <label className="ff-coqa17-srch">
+        <I11.Search size={15} aria-hidden="true" />
+        <input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search questions" aria-label={`Search ${name || "the company"}'s questions and answers`} />
+        {q ? <button type="button" aria-label="Clear the search" onClick={() => setQ("")}><I11.X size={14} /></button> : null}
+      </label>
+      {shown.length
+        ? <HScroll label="Q&A" snap>{shown.map(x => <QuestionCard key={x.id} q={{ text: x.text, group: "hiring" }} label="Q&A" answer={qaShown(x)} onClick={() => setOpen(x)} />)}</HScroll>
+        : <p className="ff-body ff-muted" style={{ margin: "6px 2px 0" }} role="status">No questions match.</p>}
+      <Sheet open={!!open} onClose={() => setOpen(null)} title={name || "Q&A"} center>
+        {open ? <div className="ff-coqa17-pop"><p className="q">{open.text}</p>{open.answer ? <p className="a">{open.answer}</p> : null}{open.note ? <p className="n">{open.note}</p> : null}</div> : null}
+      </Sheet>
+    </div>
+  );
+}
+
+/* A company's Service Cards or Cocktail Cards, as people see them: tap one to open it. */
+function CoCardRow17({ type, list, by, tag }) {
+  const [view, setView] = useState(null);
+  const T = STUDIO17[type];
+  return (
+    <>
+      <HScroll label={type === "service" ? "Packages" : "Cocktails"}>
+        {list.map(x => (
+          <div key={x.id} className="ff-st17-item">
+            <div className="ff-st17-tap" role="button" tabIndex={0} aria-label={`Open ${T.name(x) || T.plate}`} onClick={() => setView(x)}
+              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setView(x); } }}>
+              <StudioPair17 type={type} x={x} site="FF Staff" by={by} tag={tag} size="sm" only />
+            </div>
+          </div>
+        ))}
+      </HScroll>
+      {view ? <CardPop17 type={type} x={view} site="FF Staff" by={by} tag={tag} onClose={() => setView(null)} /> : null}
+    </>
+  );
+}
 
 /* A company's page, as anyone sees it. */
 function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
@@ -210,12 +347,19 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   const co = coIn || companyById(state, state.viewingCompany);
   const [asking, setAsking] = useState(false);
   const [reviewing, setReviewing] = useState(false);
-  const [tab, setTab] = useState("overview");
+  /* On a public company page the tab is kept in the store so it is part of the address; the owner's preview keeps its own. */
+  const [ltab, setLtab] = useState("overview");
+  const inStore = !coIn && !!state.viewingCompany;
+  const tab = !inStore ? ltab : (co && state.ptab17 && state.ptab17.key === "c:" + co.id ? state.ptab17.tab : "overview");
+  const setTab = (t) => !inStore ? setLtab(t) : dispatch({ type: "V11_SET", patch: { ptab17: t === "overview" || !co ? null : { key: "c:" + co.id, tab: t } } });
   if (!co) return null;
   const isStaff = state.role === "staff";
   /* v17.4.6.1: the roster is the company's accepted members (plus any listed roster), people with a published Profile Card only. */
   const ck = coKey17(co);
   const team = [...new Set([...(co.team || []), ...ctMembers17(state, ck)])].map(id => findPerson(all, state, id)).filter(p => p && !p.isCompany);
+  const partners = coPartners17(state, co);
+  const coNet = co.mine ? (state.netAdds17 || []).filter(id => !String(id).startsWith("co_")).map(id => findPerson(all, state, id)).filter(p => p && !p.isCompany && !team.some(t => t.id === p.id)) : [];
+  const coCos = co.mine ? [...partners, ...(state.netAdds17 || []).filter(id => String(id).startsWith("co_") && !partners.some(x => x.id === id)).map(id => companyById(state, id)).filter(Boolean)] : partners;
   const teamSite = state.role === "team" && state.auth && state.auth.status === "signedIn";
   const myRel = teamSite && ck ? ctMyStatus17(state, ck) : "";
   const joinTeam = () => {
@@ -224,15 +368,48 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   };
   const inv = myRel === "invited" && ctInvitesForMe17(state).find(x => x.companyKey === ck);
   const back = () => { dispatch({ type: "VIEW_COMPANY", id: null }); window.scrollTo(0, 0); };
-  const asPerson = { id: co.id, name: co.name || "this company", tag: co.slug, profession: co.kind, isCompany: true, photo: co.logo || null, tier: co.tier };
-  const contact = co.mine ? recsOf(co, "contact").filter(r => !r.hidden).map(r => [r.description || "Contact", r.name]) : (co.contact || []);
-  const areas = co.mine ? companyLocations(co) : String(co.areas || "").split("·").map(x => x.trim()).filter(Boolean);
-  const venues = co.mine ? recsOf(co, "venues").filter(r => !r.hidden).map(r => r.name) : (co.venues || []);
-  const reviews = co.mine ? (co.reviews || []).map(r => [null, r.rating, r.text, r.byName]) : (co.reviews || []);
-  const pubQa = co.mine || co.qa ? coQa(co).filter(q => q.group !== "feedback" && q.answer) : coQa({}).filter(q => q.group !== "feedback").map((q, i) => ({ ...q, answer: (i + String(co.id).length) % 3 ? "Yes" : "No" }));
+  const asPerson = { id: co.id, name: co.name || "this company", tag: co.slug, profession: co.kind, isCompany: true, photo: co.logo || null, tier: co.tier, companyKey: ck };
+  const contact = coContacts17(co).map(x => [x.kind, x.value]);
+  /* One rule for every company: the areas come from the location records when the page has them; the free-text areas line is only for directory drafts without records. */
+  const recAreas = companyLocations(co);
+  const areas = co.mine || recAreas.length ? recAreas : String(co.areas || "").split("·").map(x => x.trim()).filter(Boolean);
+  const venues = !SHOW_VENUES17 ? [] : co.mine ? recsOf(co, "venues").filter(r => !r.hidden).map(r => r.name) : (co.venues || []);
+  /* Reviews posted on this company's page (state.reviews, newest first) come before its own. Declined ones never show; a waiting one only to its writer (as reviewRecordsFor). */
+  const hiddenRv = (state.admin17 && state.admin17.hidden && state.admin17.hidden.reviews) || {};
+  const posted = (state.reviews || []).filter(r => !hiddenRv[r.id] && r.status !== "declined" && (r.status !== "pending" || r.byId === "me")).filter(r => r.aboutId === co.id || ck &&  (r.aboutId && r.aboutId !== "me" && coKey17(companyById(state, r.aboutId)) === ck)).slice().reverse().map(r => [null, r.rating, r.text, r.byName, r.status === "pending"]);
+  const reviews = [...posted, ...(co.mine ? (co.reviews || []).map(r => [null, r.rating, r.text, r.byName]) : (co.reviews || [])), ...coWebReviews17(co).map(r => [null, 0, r.description, r.name])];
+  const ownQa = co.mine || co.qa ? coQa(co).filter(q => q.group !== "feedback" && (q.answer || String(q.note || "").trim())) : [];
+  /* Questions asked on this page that the company answered and made public sit next to its own Q&A, newest first. */
+  const askedQa = (state.profileQuestions || []).filter(q => q.companyKey && q.companyKey === ck && q.visibility === "public" && isAnswered(q.answer)).slice().reverse().map(q => ({ id: q.id, text: q.text, answer: q.answer, note: "", group: "business" }));
+  const pubQa = [...askedQa, ...ownQa];
+  const services = coPackages17(co), cocktails = coCocktails17(co);
+  const pkgBlock = (services.length > 0 || cocktails.length > 0 || pubQa.length > 0) ? <section className="ff-copub-sec ff-copub-pk">
+    {services.length > 0 && <VkFold17 title="Packages" count={services.length}><CoSimpleRow17 cards={services} label="Packages" /></VkFold17>}
+    {cocktails.length > 0 && <VkFold17 title="Cocktails" count={cocktails.length}><CoSimpleRow17 cards={cocktails} label="Cocktails" /></VkFold17>}
+    {pubQa.length > 0 && <VkFold17 title="Q&A" count={pubQa.length}><CoQA17 list={pubQa} name={co.name} /></VkFold17>}
+  </section> : <section className="ff-copub-sec ff-copub-pk"><p className="ff-body ff-muted" style={{ margin: 0 }}>No packages yet.</p></section>;
   const isParty = isStaff && hireSiteOf(state).party;
-  const pkgs = isParty ? ((typeof PARTY_SERVICES !== "undefined" && PARTY_SERVICES) || []) : [];
-  const tabs = [{ key: "overview", label: "Overview" }, { key: "qa", label: "Packages", count: isParty ? pkgs.length : pubQa.length }, ...(ph17(state) >= 2 ? [{ key: "team", label: "Team", count: team.length }] : []), { key: "reviews", label: "Reviews", count: reviews.length }];
+  /* Claim this profile: a directory company nobody has claimed, on FF Staff, for a visitor who is not already claiming one. */
+  const mineClaim = coClaimMine17(state);
+  const canClaim = !done && isStaff && !isParty && !co.mine && co.unclaimed && !co.claimPending && !isAdmin17(state) && !coClaimOn17(state, co.slug) && !(mineClaim && mineClaim.status !== "rejected");
+  const claimIt = () => {
+    dispatch({ type: "SESSION", patch: { claimSlug: co.slug } });
+    dispatch({ type: "VIEW_COMPANY", id: null });
+    dispatch({ type: "TAB", tab: "profile" });
+    window.scrollTo(0, 0);
+  };
+  /* FireFlair Edit: only in an admin session that may edit. */
+  const A17 = adm17(state), myAdmin = A17.admins.find(x => x.tag === String((state.auth && state.auth.tag) || "").toUpperCase() && x.active);
+  const adminRole = A17.viewAs || (myAdmin ? myAdmin.role : "owner");
+  const canEditDir = !done && !co.mine && isAdmin17(state) && (ADM17_ROLES[adminRole] || ADM17_ROLES.gold).can.includes("edit") && String(co.id).startsWith("co_");
+  const editDir = () => {
+    dispatch({ type: "DIR_EDIT17_START", slug: co.slug });
+    dispatch({ type: "VIEW_COMPANY", id: null });
+    dispatch({ type: "ROLE", role: "staff", site: "staff" });
+    dispatch({ type: "TAB", tab: "profile" });
+    window.scrollTo(0, 0);
+  };
+  const tabs = [{ key: "overview", label: "Overview" }, { key: "qa", label: "Packages", count: services.length + cocktails.length }, { key: "team", label: "Team", count: team.length }, { key: "reviews", label: "Reviews", count: reviews.filter(x => !x[4]).length }];
   const cIcon = (k) => /mail/i.test(k) ? I11.Mail : /phone/i.test(k) ? I11.Phone : /web/i.test(k) ? I11.Globe : I11.MessageCircle;
   const addTeam = () => {
     const ids = team.map(p => p.id).filter(id => !state.selection.includes(id));
@@ -246,64 +423,61 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
     dispatch({ type: "VIEW_COMPANY", id: null });
     dispatch({ type: "TAB", tab: "bookings" }); window.scrollTo(0, 0);
   };
+  const tag = rt17Slug(co) || cx17Slug(co.name || "");
+  const shareBtn = (co.slug || co.name) ? <CardShareBtn17 title={`${co.name || "Company"} on FireFlair`} url={`https://${CARD_DOMAIN}/${tag}`} fileName={"fireflair-" + cx17Slug(co.slug || co.name)} render={() => <CompanyCardFace c={co} />} label="Share" className="wide" /> : null;
+  const acts = done ? [] : [
+    !co.unclaimed && !co.mine && ["ask", <Btn variant="wide" onClick={() => setAsking(true)}><I11.MessageSquare size={14} /> Ask a question</Btn>],
+    !co.mine && !isParty && ["net", <NetBtn17 id={co.id} name={co.name} wide />],
+    !co.unclaimed && !co.mine && ["rev", <Btn variant="wide" onClick={() => setReviewing(true)}><I11.Award size={14} /> Review</Btn>],
+    canClaim && ["claim", <Btn variant="wide primary" onClick={claimIt}><I11.BadgeCheck size={14} /> Claim this profile</Btn>],
+    canEditDir && ["edit", <Btn variant="wide" onClick={editDir}><I11.Pencil size={14} /> Edit</Btn>],
+    shareBtn && ["share", shareBtn],
+  ].filter(Boolean);
+  const about = String(co.description || "").split(/\n\s*\n/).map(x => x.trim()).filter(Boolean);
   return (
     <div className="ff-copub">
-      <PublicHero media={(co.mediaList || []).map(m => ({ id: m.id, src: m.src, name: m.alt || "" }))} card={<><CompanyCardFace c={co} />{(co.slug || co.name) ? <div style={{ marginTop: 10, textAlign: "center" }}><CardShareBtn17 title={`${co.name || "Company"} on FireFlair`} url={`https://${CARD_DOMAIN}/${co.slug || cx17Slug(co.name)}`} fileName={"fireflair-" + cx17Slug(co.slug || co.name)} render={() => <CompanyCardFace c={co} />} label="Share Company Card" /></div> : null}</>} below={<>
-      {!done && <button type="button" className="ff-pback ff-copub-back" onClick={back}><I11.ChevronLeft size={20} /> <span>Back</span></button>}
-      {!done && !co.mine && !isParty && <div className="ff-copub-acts"><NetBtn17 id={co.id} name={co.name} wide /></div>}
+      <PublicHero media={(co.mediaList || []).map(m => ({ id: m.id, src: m.src, name: m.alt || "" }))} card={<><CompanyCardFace c={co} links />{done && shareBtn ? <div style={{ marginTop: 10, textAlign: "center" }}><CardShareBtn17 title={`${co.name || "Company"} on FireFlair`} url={`https://${CARD_DOMAIN}/${tag}`} fileName={"fireflair-" + cx17Slug(co.slug || co.name)} render={() => <CompanyCardFace c={co} />} label="Share Company Card" /></div> : null}</>} below={<>
+      {!done && <BackBtn17 fallback={back} />}
       {!done && !co.mine && !co.unclaimed && teamSite && ck && <div className="ff-copub-acts">
         {myRel === "member" ? <Btn variant="wide" disabled><I11.Check size={14} /> On their team</Btn>
           : myRel === "requested" ? <Btn variant="wide" disabled><I11.Clock size={14} /> Request sent</Btn>
           : inv ? <div className="two"><Btn variant="primary" onClick={() => { dispatch({ type: "CT_DECIDE", id: inv.id, accept: true }); dispatch({ type: "TOAST", toast: `You're on ${co.name}'s team` }); }}><I11.Check size={14} /> Accept invitation</Btn><Btn onClick={() => dispatch({ type: "CT_DECIDE", id: inv.id, accept: false })}>Decline</Btn></div>
           : <Btn variant="primary wide" onClick={joinTeam}><I11.UserPlus size={14} /> Join team</Btn>}
       </div>}
-      {co.unclaimed || done ? null : (
-      <div className="ff-copub-acts">
-        {isStaff && team.length > 0 && (isParty
-          ? <Btn variant="primary wide" onClick={bookForEvent}><I11.PartyPopper size={14} /> Book for your event</Btn>
-          : <Btn variant="primary wide" onClick={addTeam}><I11.Users size={14} /> Book from their team</Btn>)}
-        <div className="two">
-          <Btn onClick={() => setAsking(true)}><I11.MessageSquare size={14} /> Ask a question</Btn>
-          <Btn onClick={() => setReviewing(true)}><I11.Award size={14} /> Review</Btn>
-        </div>
-      </div>
-      )}
+      {!done && !co.unclaimed && isStaff && team.length > 0 && <div className="ff-copub-acts">
+        {isParty
+          ? <LockedBtn17 variant="primary wide" icon={<I11.PartyPopper size={14} />}>Book for your event</LockedBtn17>
+          : <Btn variant="primary wide" onClick={addTeam}><I11.Users size={14} /> Book from their team</Btn>}
+      </div>}
+      {!done && (co.claimPending || co.claimRejected) && <div className="ff-copub-acts"><span style={{ display: "flex", justifyContent: "center" }}><Pill tone="warn">{co.claimRejected ? "Claim not approved" : "Claim being checked"}</Pill></span></div>}
+      {acts.length > 0 && <div className="ff-copub-grid">{acts.map(([k, el], i) => { const last = acts.length % 2 && i === acts.length - 1; /* A Share left alone on the last row: centred, half the row wide. */ return <div key={k} className={"c-" + k + (last ? " span" : "") + (last && k === "share" ? " ff-share-half" : "")}>{el}</div>; })}</div>}
       </>} />
 
       <div className="ff-ptabs-wrap">
         {!co.unclaimed && <ProfileTabs tabs={tabs} active={tab} onChange={setTab} />}
         <div role="tabpanel" id="ff-tabpanel" aria-labelledby={`ff-tab-${tab}`} className="ff-tabpanel" tabIndex={0}>
           {tab === "overview" && (<>
-            {co.description && <section className="ff-copub-sec"><SectionHead icon={<I11.Briefcase size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="About" />
-              <p className="ff-body" style={{ margin: 0, fontSize: 15, lineHeight: 1.55, color: "#2A2620" }}>{co.description}</p></section>}
+            {about.length > 0 && <section className="ff-copub-sec"><SectionHead icon={<I11.Briefcase size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="About" />
+              {about.map((p, i) => <p key={i} className="ff-body" style={{ margin: i ? "12px 0 0" : 0, fontSize: 15, lineHeight: 1.55, color: "#2A2620" }}>{p}</p>)}</section>}
             {contact.length > 0 && <section className="ff-copub-sec"><SectionHead icon={<I11.MessageCircle size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Contact" />
-              <ul className="ff-copub-contact">{contact.map(([k, v]) => { const Ic = cIcon(k); return <li key={k + v}><span className="ic"><Ic size={15} /></span><span><small>{k}</small><b>{v}</b></span></li>; })}</ul></section>}
+              <ul className="ff-copub-contact">{contact.map(([k, v]) => { const href = coContactHref17(k, v); return <li key={k + v}><a href={href} target={/^https?:/.test(href) ? "_blank" : undefined} rel="noopener noreferrer"><span className="ic"><CoKindIcon17 kind={k} size={15} /></span><span><small>{k}</small><b>{v}</b></span></a></li>; })}</ul></section>}
             {(areas.length > 0 || venues.length > 0) && <section className="ff-copub-sec"><SectionHead icon={<I11.MapPinned size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Areas covered" />
               <div className="ff-copub-chips">{areas.map(a => <span key={a}><I11.MapPin size={12} /> {a}</span>)}{venues.map(v => <span key={v} className="ven"><I11.Star size={12} /> {v}</span>)}</div></section>}
-            {co.seed && [["Services", co.seed.services], ["Events", co.seed.eventTypes], ["Scale", co.seed.scale], ["Good to know", co.seed.facts]].filter(([, v]) => v && v.length > 0).map(([h, v]) => (
-              <section key={h} className="ff-copub-sec"><SectionHead icon={<I11.Star size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={h} />
-                <div className="ff-copub-chips">{v.map(x => <span key={x}>{x}</span>)}</div></section>))}
-            {co.extras && <VkExtras17 x={co.extras} />}
+            {co.info && co.info.length > 0 && <CoInfo17 co={co} />}
+            {co.unclaimed && (services.length > 0 || cocktails.length > 0 || pubQa.length > 0) && pkgBlock}
           </>)}
-          {tab === "qa" && isParty && <section className="ff-copub-sec">
-            <HScroll label="Packages">{pkgs.map(sv => <div key={sv.id} style={{ width: CARD_W.poster, flex: "none" }}><ServicePoster svc={sv} /></div>)}</HScroll>
-            {pubQa.length > 0 && <><SectionHead icon={<I11.MessageSquare size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Questions and answers" />
-              <ul className="ff-copub-qa">{pubQa.map(q => <li key={q.id}><b>{q.text}</b><span>{qaShown(q)}</span></li>)}</ul></>}
-          </section>}
-          {tab === "qa" && !isParty && <section className="ff-copub-sec">
-            {pubQa.length > 0 && <SectionHead icon={<I11.MessageSquare size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Questions and answers" />}
-            {pubQa.length ? <ul className="ff-copub-qa">{pubQa.map(q => <li key={q.id}><b>{q.text}</b><span>{qaShown(q)}</span></li>)}</ul>
-              : <p className="ff-body ff-muted" style={{ margin: 0 }}>No answers yet.</p>}</section>}
+          {tab === "qa" && pkgBlock}
           {tab === "team" && <section className="ff-copub-sec">
-            {team.length ? <HScroll label="Their team">{team.map(p => { const on = state.selection.includes(p.id); return (
+            <TeamParts17 team={team} companies={coCos} network={coNet} teamEmpty="No team yet." renderTeam={(p) => { const on = state.selection.includes(p.id); return (
               <div key={p.id} className="ff-ct17-m"><PlayerTile person={p} selected={on} onClick={() => { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); }} />
                 {isStaff && !isParty && !co.mine && <Btn variant={on ? "sm" : "sm primary"} onClick={() => { dispatch({ type: on ? "SELECT" : "SELECT_ADD", id: p.id }); dispatch({ type: "TOAST", toast: on ? `${firstName(p.name)} removed from your booking bar` : `${firstName(p.name)} added to your booking bar` }); }}>{on ? <><I11.Check size={13} /> In your booking</> : <><I11.Plus size={13} /> Add to booking</>}</Btn>}
-              </div>); })}</HScroll>
-              : <p className="ff-body ff-muted" style={{ margin: 0 }}>No team yet.</p>}</section>}
+              </div>); }} />
+          </section>}
           {tab === "reviews" && <section className="ff-copub-sec">
-            {reviews.length ? <div className="ff-copub-revs">{reviews.map(([by, rating, text, byName], i) => { const p = by && all.find(x => x.id === by); return (
+            {reviews.length ? <div className="ff-copub-revs">{reviews.map(([by, rating, text, byName, waiting], i) => { const p = by && all.find(x => x.id === by); return (
               <figure key={i} className="ff-copub-rev">{rating > 0 && <span className="st" aria-label={`${rating} out of 5`}>{"★".repeat(rating)}{"☆".repeat(5 - rating)}</span>}<blockquote>"{text}"</blockquote>
-                <figcaption>{p && <Portrait src={p.photo} name={p.name} size={26} tier={p.tier} />}{p ? p.name : byName}{p ? ` · ${p.profession}` : ""}</figcaption></figure>); })}</div>
+                <figcaption>{p && <Portrait src={p.photo} name={p.name} size={26} tier={p.tier} />}{p ? p.name : byName}{p ? ` · ${p.profession}` : ""}</figcaption>
+                {waiting && <p className="ff-copub-wait"><I11.Clock size={15} strokeWidth={2} aria-hidden="true" /><span>Waiting for {co.name || "the company"} to accept</span></p>}</figure>); })}</div>
               : <p className="ff-body ff-muted" style={{ margin: 0 }}>No reviews yet.</p>}</section>}
         </div>
       </div>
@@ -311,6 +485,20 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
       <AskQuestionSheet open={asking} person={asPerson} onClose={() => setAsking(false)} />
       <ReviewSheet open={reviewing} person={asPerson} onClose={() => setReviewing(false)} />
     </div>
+  );
+}
+
+/* A row of company tiles (opens the company's page). */
+function CoTiles17({ list, label = "Companies" }) {
+  const { dispatch } = useStore();
+  return (
+    <HScroll label={label}>
+      {list.map(co => (
+        <button key={co.id} type="button" className="ff-co11-tile" onClick={() => { dispatch({ type: "VIEW_COMPANY", id: co.id }); window.scrollTo(0, 0); }} aria-label={`${co.name}: open their page`}>
+          <CompanyCardFace c={co} size="sm" />
+        </button>
+      ))}
+    </HScroll>
   );
 }
 
@@ -331,13 +519,13 @@ function StaffRosterStaff11() {
   useEffect(() => { if (state.netQuery) dispatch({ type: "NET_QUERY", q: "" }); }, []);
   return (
     <div>
-      <BigHead20 tag="h1" title="Our network" />
+      <BigHead20 tag="h1" title="Explore our network" />
       <p className="ff-body ff-muted" style={{ marginBottom: 4 }}>Find the people to book, and the companies they work with.</p>
       {state.netBrief && <BookingBrief brief={state.netBrief} />}
-      <FFAI query={q} onQuery={setQ} title="Search the network" context="FF Staff"
-        purpose="Find people to hire — search by name, profession, skill or area. Tap a card to see their profile."
-        placeholder="Name, profession, skill or area…" />
-      <NetBrowse17 query={q} onPick={(p) => dispatch({ type: "VIEW", id: p.id })} scope="staff_" after={!q && !state.netBrief ? <NetMap11 /> : null} teamSlot={myCoKey17(state) ? <CompanyTeam17 /> : null} />
+      <NetBrowse17 query={q} onPick={(p) => dispatch({ type: "VIEW", id: p.id })} scope="staff_" noPackages
+        search={<FFAI query={q} onQuery={setQ} title="Search people, skills or places" context="FF Staff" searchBox
+          purpose="Find people to hire — search by name, profession, skill or area. Tap a card to see their profile."
+          placeholder="Search people, skills or places" />} after={!state.netBrief ? <NetMap11 bare /> : null} teamSlot={myCoKey17(state) ? <CompanyTeam17 /> : null} />
     </div>
   );
 }
@@ -345,7 +533,7 @@ function StaffRosterStaff11() {
 
 
 /* Network pages (FF Team, FF Staff, FF Party): Top staff, then the map. */
-const TOP_STAFF11 = ["stf_sam", "stf_pri", "stf_mia", "stf_tom", "stf_don", "stf_ava", "stf_leo", "stf_jam"];
+const TOP_STAFF11 = ["stf_alex", "stf_gav", "stf_bruno", "stf_simao", "stf_dany", "stf_james"];
 
 
 function TopStaff11() {

@@ -19,8 +19,8 @@
       className: "tx"
     }, React.createElement("b", null, name), React.createElement("small", null, role)), React.createElement("span", {
       className: "coin"
-    }, React.createElement(Coin, {
-      size: 26,
+    }, React.createElement(FFLogo, {
+      size: 22,
       tier,
       flat: true
     })), React.createElement(CfPlate11, null, "Profile Card"));
@@ -51,8 +51,8 @@
       className: "rb"
     }, "Service Card"), React.createElement("span", {
       className: "coin"
-    }, React.createElement(Coin, {
-      size: 28,
+    }, React.createElement(FFLogo, {
+      size: 24,
       tier: tone === "bronze" ? "bronze" : tone === "silver" ? "silver" : "gold",
       flat: true
     })), React.createElement("div", {
@@ -413,11 +413,9 @@
       strokeWidth: 1.7
     })), React.createElement("b", null, x.t), React.createElement("span", null, x.d)))), React.createElement("div", {
       className: "ff-trust17-cta"
-    }, React.createElement(Button, {
-      onClick: hire.toProfile
-    }, React.createElement(V17I.PartyPopper, {
-      size: 14
-    }), " Create your Party profile")));
+    }, React.createElement(LockedBtn17, {
+      icon: React.createElement(V17I.PartyPopper, { size: 14 })
+    }, "Create your Party profile")));
   }
 
   function PartyOccasions17() {
@@ -434,14 +432,16 @@
     }, PARTY_OCCASIONS.map((o) => React.createElement("button", {
       key: o,
       type: "button",
-      onClick: hire.toEvent
+      className: "ff-locked17",
+      "aria-disabled": "true",
+      "aria-label": o + ". " + LOCKED_LABEL17,
+      title: LOCKED_LABEL17,
+      onClick: (e) => e.preventDefault()
     }, o))), React.createElement("div", {
       className: "ff-trust17-cta"
-    }, React.createElement(Button, {
-      onClick: hire.toEvent
-    }, React.createElement(V17I.PartyPopper, {
-      size: 14
-    }), " Plan your event")));
+    }, React.createElement(LockedBtn17, {
+      icon: React.createElement(V17I.PartyPopper, { size: 14 })
+    }, "Plan your event")));
   }
 
   function HowSteps17({ kind = "party" }) {

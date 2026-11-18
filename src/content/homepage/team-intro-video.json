@@ -1,0 +1,8 @@
+{
+  "_note": "The FF Team home video: portrait (720 by 1280), press to play, never autoplays. poster is the first frame (the doors). src is a path beside the page in the prototype (scripts/copy-media.mjs copies the file from media/video-content/ff-team-reel/); in production set it to the hosted video address.",
+  "src": "v/ff-team-reel.mp4",
+  "poster": "intro_doors",
+  "label": "Watch the FF Team video",
+  "width": 720,
+  "height": 1280
+}

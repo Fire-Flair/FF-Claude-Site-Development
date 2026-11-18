@@ -1,0 +1,154 @@
+{
+  "formatVersion": 2,
+  "slug": "adapt-events",
+  "name": "Adapt Events",
+  "kind": "Mobile cocktail bars & bar staffing",
+  "base": "London",
+  "areas": [
+    "UK-wide"
+  ],
+  "logo": "https://images.squarespace-cdn.com/content/v1/5a2139db8fd4d2bb97bfa4b3/1519653838781-UAM474EUU6LE40PAD2BG/logo-grey-RGB.png",
+  "logoBg": "light",
+  "logoWide": false,
+  "description": "A London event company with over ten years' experience, supplying mobile cocktail bars, pop-up cash bars, bartenders and ice, plus remote welcome-drink bars.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.poptop.uk.com/supplier/adapt-events-ltd/",
+    "at": "2026-11-07"
+  },
+  "media": [
+    {
+      "id": "adapt-events_0",
+      "src": "https://images.squarespace-cdn.com/content/v1/5a2139db8fd4d2bb97bfa4b3/ca704aa1-49f0-4ce4-b9c6-8217e62c1eb6/DSCF0647.JPG",
+      "alt": "Adapt Events",
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/adapt-events-ltd/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "adapt-events_1",
+      "src": "https://images.squarespace-cdn.com/content/v1/5a2139db8fd4d2bb97bfa4b3/1754655276838-9WF3Z3U1HV8U8LYEZXMZ/Secret+cinema+.jpg",
+      "alt": "Adapt Events",
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/adapt-events-ltd/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "adapt-events_2",
+      "src": "https://images.squarespace-cdn.com/content/v1/5a2139db8fd4d2bb97bfa4b3/49da90fd-75e6-4a25-8a81-ef4d288bbc83/chelsea+flower+show+Lucy.jpg",
+      "alt": "Adapt Events",
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/adapt-events-ltd/",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Mobile cocktail bars",
+        "Pop-up cash bars",
+        "Professional bartenders",
+        "Bar staffing",
+        "Remote welcome drink bars",
+        "Ice supply"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/adapt-events-ltd/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Birthdays",
+        "Festivals",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/adapt-events-ltd/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "scale",
+      "title": "Scale",
+      "chips": [
+        "Over ten years trading"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/adapt-events-ltd/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Listing details only; own website not confirmed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/adapt-events-ltd/",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://www.adaptevents.com",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://www.poptop.uk.com/supplier/adapt-events-ltd/",
+          "at": "2026-11-07"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "ADAPT",
+    "position": 12,
+    "legal": {
+      "form": null,
+      "legalName": "Adapt Events Ltd",
+      "companyNumber": null
+    },
+    "source": {
+      "urls": [
+        "https://www.poptop.uk.com/supplier/adapt-events-ltd/"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5246,
+        "lng": -0.1024,
+        "approx": false
+      }
+    ]
+  }
+}

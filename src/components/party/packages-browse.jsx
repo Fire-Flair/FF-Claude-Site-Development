@@ -48,14 +48,31 @@ const recOf17 = (b) => REC17[(b || []).join(",")] || "parties of any size";
 const lvl17 = (l) => (/^(bronze|silver|gold)$/i.test(l || "") ? "" : (l || ""));
 
 
+/* A company's own package (custom, DJ, bar supplier or sample) is not part of the booking flow in Phase Two. */
+function isCoPkg17(id) {
+  if (typeof id !== "string" || !id) return false;
+  return /^my_/.test(id) || DJ_IDS17.includes(id) || RTB_PKGS17.some(x => x.id === id) || SAMPLE_PKGS17.some(x => x.id === id);
+}
+
+
+/* Phase Two guard: shifts and basket picks never carry a company's package. Runs after every reducer step. */
+function pkgGuard17(s) {
+  if (!s) return s;
+  let out = s;
+  if (Array.isArray(s.shifts) && s.shifts.some(x => x && isCoPkg17(x.svcId))) out = { ...out, shifts: s.shifts.filter(x => !(x && isCoPkg17(x.svcId))) };
+  const bk = s.bk17;
+  if (bk && Array.isArray(bk.pk) && bk.pk.some(isCoPkg17)) out = { ...out, bk17: { ...bk, pk: bk.pk.filter(x => !isCoPkg17(x)) } };
+  return out;
+}
+
+
 function pkgsOf17(state) {
-  const ff = [...(V101.PARTY_SERVICES || []).map(sv => ({ ...sv, features: FEATS17[sv.id], cat: FFCAT17[sv.id] || "bar", bands: SVC_BANDS11[sv.id] || ALLB17, ff: true })),     ...[...DJ_PKGS17, ...RTB_PKGS17].filter(x => !hid17(state, "packages", x.id)).map(x => ({ ...x, ff: true }))];
+  const ff = [...(V101.PARTY_SERVICES || []).map(sv => ({ ...sv, features: FEATS17[sv.id], cat: FFCAT17[sv.id] || "bar", bands: SVC_BANDS11[sv.id] || ALLB17, ff: true }))];
   const bt = ff.find(x => x.id === "svc_bartending");
   if (bt) ff.push({ ...bt, id: "svc_supplier", title: "Bar company supplier", tagline: "A bar company supplies the bar, the drinks and the team.", includes: "Bar, drinks and bartenders from one company",
     role: "Bartender", ideal: "Parties that want everything supplied", time: "From 4 hours", noPrice: true, drinks: true, shop: false,
     features: ["A bar company looks after your whole bar", "Bar, drinks and bartenders supplied", "Set-up, service and tidy-down included", "Chosen from FireFlair bar companies"] });
-  const mine = myContent17(state, "services").filter(x => x.type !== "addon" && String(x.title).trim() && !hid17(state, "cards", x.id)).map(x => ({ ...svcFrom17(x), cat: x.cat || "bar", bands: (x.bands && x.bands.length) ? x.bands : ALLB17, mine: true }));
-  return [...ff, ...mine, ...SAMPLE_PKGS17, ...SR_PKGS17];
+  return ff;
 }
 
 
@@ -436,7 +453,6 @@ function PartyBrowse17() {
   const [q, setQ] = useState(() => state.netQuery || "");
   useEffect(() => { if (state.netQuery) dispatch({ type: "NET_QUERY", q: "" }); }, []);
   const br = state.br17 || {};
-  const p2 = ph17(state) === 2;
   const qual = br.q || "";
   const [pop, setPop] = useState(null);
   const cos = companyList(state).filter(c => !c.mine && !c.unclaimed);
@@ -480,9 +496,8 @@ function PartyBrowse17() {
   }, [JSON.stringify(bk), band, qual, state.activeEventId, state.events.length, state.shifts.length]);
   return React.createElement("div", { className: "ff-pn ff-br17" },
     React.createElement(BigHead20, { tag: "h1", title: "Our network" }),
-    p2 && React.createElement("p", { className: "ff-br17-launch", role: "note" }, React.createElement("b", null, "FireFlair is launching with bar packages."), " Every other profession on the platform will be added later."),
     React.createElement(FFAI, { query: q, onQuery: setQ, title: "Search for your team", context: "FF Party", purpose: "Find the right people for your event: search by name, profession, skill or area.", placeholder: "Name, profession, skill or area\u2026" }),
     pop && React.createElement(PkgSheet17, { svc: pop, qual: qual, onClose: function () { setPop(null); } }),
     state.netBrief && React.createElement(BookingBrief, { brief: state.netBrief }),
-    !state.netBrief && React.createElement(NetBrowse17, { query: q, onPick: function (p) { dispatch({ type: "VIEW", id: p.id }); }, scope: "staff_", after: !q ? React.createElement(NetMap11, null) : null }));
+    !state.netBrief && React.createElement(NetBrowse17, { query: q, onPick: function (p) { dispatch({ type: "VIEW", id: p.id }); }, scope: "staff_", after: React.createElement(NetMap11, null) }));
 }

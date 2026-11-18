@@ -146,7 +146,7 @@ function EventPoster({ card, edit, onPatch, people = [], saved }) {
       <span className="ff-ec-edge" />
       <span className="ff-ec-orn tl" /><span className="ff-ec-orn tr" />
       <div className="ff-ec-ribbon"><Calendar size={11} /> Event Card</div>
-      <span className="ff-ec-coin"><Coin size="100%" tier="gold" /></span>
+      <span className="ff-ec-coin"><FFLogo size="100%" tier="gold" /></span>
 
       <div className="ff-ec-in">
         <header className="ff-ec-head">
@@ -225,12 +225,12 @@ function EventPoster({ card, edit, onPatch, people = [], saved }) {
       </div>
 
       <footer className="ff-ec-foot">
-        <span className="qr"><Share2 size={26} /></span>
+        <span className="qr"><ShareUp17 size={26} /></span>
         <span className="msg">
           <b>{saved ? "Saved on FF Party" : "Share it on WhatsApp"}</b>
           <span>Your team sees the same card.</span>
         </span>
-        <span className="cn"><Coin size="100%" tier="gold" /></span>
+        <span className="cn"><FFLogo size="100%" tier="gold" /></span>
         <span className="slogan">People.<br /><em>Events.</em><br />Experiences.</span>
       </footer>
       <div className="ff-ec-strap">Plan · Book · Celebrate</div>

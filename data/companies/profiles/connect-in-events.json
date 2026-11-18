@@ -1,0 +1,86 @@
+{
+  "formatVersion": 2,
+  "slug": "connect-in-events",
+  "name": "Connect In Events",
+  "kind": "Event management",
+  "base": "Manchester",
+  "areas": [
+    "Manchester",
+    "Wales"
+  ],
+  "description": "An event management company working in Manchester and Wales.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://connectinevents.co.uk",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Event management"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://connectinevents.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://connectinevents.co.uk",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://connectinevents.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://connectinevents.co.uk",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "CONNE",
+    "position": 147,
+    "source": {
+      "urls": [
+        "https://connectinevents.co.uk"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Manchester",
+        "lat": 53.4808,
+        "lng": -2.2426,
+        "approx": true
+      }
+    ]
+  }
+}

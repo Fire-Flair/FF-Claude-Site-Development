@@ -1,0 +1,92 @@
+{
+  "formatVersion": 2,
+  "slug": "red-mobile-bars",
+  "name": "R.E.D Mobile Bars",
+  "kind": "Mobile bar hire with full staffing",
+  "base": "Kent",
+  "areas": [
+    "Kent",
+    "Sussex",
+    "Essex",
+    "London"
+  ],
+  "description": "A Kent mobile bar company providing fully stocked and staffed bars with draught beer, cider and soft drinks, and help with event licensing, for events of 80 guests or more.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/suppliers/red-mobile-bars-ltd",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Mobile bar hire",
+        "Stocked and staffed bars",
+        "Licensing support"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/red-mobile-bars-ltd",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "scale",
+      "title": "Scale",
+      "chips": [
+        "Events of 80 guests or more"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/red-mobile-bars-ltd",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Fully insured and licensed",
+        "Listing details only; own website not confirmed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/red-mobile-bars-ltd",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "REDMB",
+    "position": 23,
+    "legal": {
+      "form": null,
+      "legalName": "R.E.D Mobile Bars Ltd",
+      "companyNumber": null
+    },
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/suppliers/red-mobile-bars-ltd"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "none"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Maidstone",
+        "lat": 51.272,
+        "lng": 0.529,
+        "approx": true
+      }
+    ]
+  }
+}

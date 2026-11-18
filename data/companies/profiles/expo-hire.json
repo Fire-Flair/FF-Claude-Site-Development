@@ -1,0 +1,101 @@
+{
+  "formatVersion": 2,
+  "slug": "expo-hire",
+  "name": "Expo Hire",
+  "kind": "Glassware hire & delivery",
+  "base": "England and Wales",
+  "areas": [
+    "England",
+    "Wales"
+  ],
+  "description": "An event hire company with 11 depots across England and Wales, supplying furniture and catering equipment.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.expohire.com",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Furniture hire",
+        "Catering equipment hire"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.expohire.com",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.expohire.com",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "11 depots",
+        "England and Wales"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.expohire.com",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://www.expohire.com",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://www.expohire.com",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "svc",
+    "sub": "glassware",
+    "tag": "EXPOH",
+    "position": 136,
+    "source": {
+      "urls": [
+        "https://www.expohire.com"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Birmingham",
+        "lat": 52.4862,
+        "lng": -1.8904,
+        "approx": true
+      }
+    ]
+  }
+}

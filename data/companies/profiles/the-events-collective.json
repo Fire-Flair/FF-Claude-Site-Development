@@ -1,0 +1,104 @@
+{
+  "formatVersion": 2,
+  "slug": "the-events-collective",
+  "name": "The Events Collective",
+  "kind": "Event management",
+  "base": "Glasgow",
+  "areas": [
+    "Glasgow",
+    "Edinburgh",
+    "London",
+    "UK-wide"
+  ],
+  "description": "A multi-award-winning event management and production company, established in 2008, working across Edinburgh, Glasgow, London and the UK.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://eventscollective.global",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Event management",
+        "AV production",
+        "Staffing",
+        "Venue finding",
+        "Conference services"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://eventscollective.global",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://eventscollective.global",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Established 2008"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://eventscollective.global",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://eventscollective.global",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://eventscollective.global",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "EVCOL",
+    "position": 143,
+    "source": {
+      "urls": [
+        "https://eventscollective.global"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Glasgow",
+        "lat": 55.8642,
+        "lng": -4.2518,
+        "approx": true
+      }
+    ]
+  }
+}

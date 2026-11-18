@@ -1,0 +1,74 @@
+{
+  "formatVersion": 2,
+  "slug": "skaffta",
+  "name": "Skaffta",
+  "kind": "DJ service",
+  "base": "Cardiff",
+  "areas": [
+    "Cardiff",
+    "South Wales"
+  ],
+  "description": "A Cardiff DJ service whose package includes sound, lighting and effects.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://app-proxy-dev-1.bridebook.com/uk/search/wedding-musicians-bands-djs/south-west?page=3",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "DJ service",
+        "Sound",
+        "Lighting",
+        "Effects"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app-proxy-dev-1.bridebook.com/uk/search/wedding-musicians-bands-djs/south-west?page=3",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app-proxy-dev-1.bridebook.com/uk/search/wedding-musicians-bands-djs/south-west?page=3",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "SKAFF",
+    "position": 50,
+    "source": {
+      "urls": [
+        "https://app-proxy-dev-1.bridebook.com/uk/search/wedding-musicians-bands-djs/south-west?page=3"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Cardiff",
+        "lat": 51.4816,
+        "lng": -3.1791,
+        "approx": false
+      }
+    ]
+  }
+}

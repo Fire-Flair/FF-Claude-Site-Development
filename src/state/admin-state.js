@@ -36,13 +36,13 @@ const hid17 = (state, kind, id) => !!(state && state.admin17 && state.admin17.hi
 
 
 const ADM17_ROLES = {
-  owner: { label: "Owner", can: ["hide", "verify", "sites", "data", "admins", "export"] },
-  admin: { label: "Admin", can: ["hide", "verify", "sites", "data", "export"] },
+  owner: { label: "Owner", can: ["hide", "verify", "sites", "data", "admins", "export", "claims", "edit"] },
+  admin: { label: "Admin", can: ["hide", "verify", "sites", "data", "export", "claims", "edit"] },
   gold: { label: "Gold package", can: ["hide", "verify"] },
 };
 
 
-const ADM17_PERMS = [["hide", "Hide and show content"], ["verify", "Set verification"], ["sites", "Switch sites and features"], ["data", "See answers, sign-ups and the database"], ["admins", "Manage admins"], ["export", "Copy data out"]];
+const ADM17_PERMS = [["claims", "Decide company claims"], ["edit", "Edit company pages"], ["hide", "Hide and show content"], ["verify", "Set verification"], ["sites", "Switch sites and features"], ["data", "See answers, sign-ups and the database"], ["admins", "Manage admins"], ["export", "Copy data out"]];
 
 
 /* Verification. The prototype's "standard" is Core's "base" (users.verification_level: base | bronze | silver | gold). */
@@ -90,6 +90,16 @@ function admin17Reduce(s, a) {
         log: entry(a.patch.active === false ? "Deactivated" : a.patch.active === true ? "Reactivated" : `Role set to ${(ADM17_ROLES[a.patch.role] || {}).label}`, "admins", a.tag, a.tag) } };
     case "rename": return { ...s, admin17: { ...A, names: { ...(A.names || {}), [a.id]: a.name }, log: entry("Renamed a photo", "photos", a.id, a.name) } };
     case "copy": { const c = { ...(A.copy || {}) }; if (a.clear) delete c[a.key]; else c[a.key] = { ...(c[a.key] || {}), ...a.patch }; return { ...s, admin17: { ...A, copy: c, log: entry(a.clear ? "Reset front door content" : "Edited front door content", "doors", a.key, a.label) } }; }
+    /* A claim on a directory company: approved (it shows as claimed) or rejected (the directory version shows again). */
+    case "claim": {
+      const cl = (s.coClaims17 || []).find(x => x.id === a.id); if (!cl) return s;
+      const status = a.status === "approved" ? "approved" : "rejected";
+      const meta = { ...((cl.company || {}).meta || {}), status: claimStatusMeta17(status), statusAt: TODAY_ISO };
+      return { ...s,
+        coClaims17: s.coClaims17.map(x => x.id === a.id ? { ...x, status, decidedAt: Date.now(), company: { ...x.company, meta } } : x),
+        company: s.company && s.company.claimId === a.id ? { ...s.company, meta } : s.company,
+        admin17: { ...A, log: entry(status === "approved" ? "Approved the claim on" : "Did not approve the claim on", "companies", cl.slug, a.label || cl.slug) } };
+    }
     case "viewAs": return { ...s, admin17: { ...A, viewAs: a.value } };
     /* Invitations to join. Core sends them on WhatsApp (or email) with a sign-up link; the prototype records them. */
     case "invite": {
@@ -126,7 +136,7 @@ let PS_ALL17 = null, P1_DEF17 = null;
 
 const allPackages17 = () => {
   const base = PS_ALL17 || PARTY_SERVICES;
-  return [...(base.some(x => x.id === "svc_staffing") ? base : [...base, STAFFING_SERVICE]), ...DJ_PKGS17];
+  return [...(base.some(x => x.id === "svc_staffing") ? base : [...base, STAFFING_SERVICE])];
 };
 
 

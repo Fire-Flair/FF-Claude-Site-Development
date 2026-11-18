@@ -1,111 +1,134 @@
 /* src/components/team/network.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
 /* ==========================================================================
-   ADD TO TEAM (v16.11) — adding someone to your network is two-way.
-   1. "Add to team" opens a sheet like the review box: have you worked with
-      them, would you work with them again, how are they to work with, and a
-      written review.
-   2. Add → a confirmation: the team invitation goes to them on WhatsApp.
-   3. They accept → you're connected, and the review goes on their profile.
-   Until then the invitation is "pending". In this prototype nothing is sent;
-   a "Preview: they accept" link shows what happens when they do.
+   NETWORK → REVIEW → TEAM (v17.22). On someone else's profile a signed-in member sees ONE relationship slot that grows:
+   Add to network (one tap) → the review form in place, once → Invite to your team (one tap) → Invitation sent → On your team.
+   Removing, the prototype "they accept" preview and a skipped review (Write a review) live in the small ⋯ menu beside it.
+   A signed-out visitor sees two buttons: Join <First>'s team, Share. The review form is ReviewForm17 (profile-from-text.jsx).
    ========================================================================== */
-const HOW_TO_WORK = [
-  { key: "excellent", label: "Excellent", rating: 5 },
-  { key: "great", label: "Great", rating: 4 },
-  { key: "good", label: "Good", rating: 3 },
-  { key: "improve", label: "Could improve", rating: 2 },
-];
+/* A button label that wraps between words and, if one word still does not fit, gets a smaller font. Never splits a word. */
+function FitLabel17({ children }) {
+  const ref = React.useRef(null);
+  const key = typeof children === "string" ? children : React.Children.toArray(children).join("");
+  React.useLayoutEffect(() => {
+    const el = ref.current; if (!el) return;
+    const fit = () => {
+      el.style.fontSize = "";
+      let fs = parseFloat(getComputedStyle(el).fontSize), n = 0;
+      while (el.scrollWidth > el.clientWidth + 0.5 && fs > 9 && n++ < 40) { fs -= 0.5; el.style.fontSize = fs + "px"; }
+    };
+    fit();
+    let ro = null;
+    const host = el.parentElement;
+    if (window.ResizeObserver && host) { let w = host.clientWidth; ro = new ResizeObserver(() => { const nw = host.clientWidth; if (Math.abs(nw - w) > 1) { w = nw; fit(); } }); ro.observe(host); }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit).catch(() => {});
+    return () => { if (ro) ro.disconnect(); };
+  }, [key]);
+  return <span ref={ref} className="ff-fit17">{children}</span>;
+}
 
 
-const YES_NO = [{ v: true, label: "Yes" }, { v: false, label: "No" }];
+/* The small ⋯ menu beside the relationship button. Closes on an outside tap and on Escape. */
+const MoreDots17 = lucideIcon("MoreHorizontal");
 
 
-
-function TickChoice({ id, label, options, value, onChange }) {
+function RelMenu17({ items }) {
+  const [open, setOpen] = useState(false);
+  const wrap = useRef(null);
+  const btn = useRef(null);
+  useEffect(() => {
+    if (!open) return;
+    const out = (e) => { if (wrap.current && !wrap.current.contains(e.target)) setOpen(false); };
+    const key = (e) => { if (e.key === "Escape") { setOpen(false); if (btn.current) btn.current.focus(); } };
+    document.addEventListener("pointerdown", out);
+    document.addEventListener("keydown", key);
+    const first = wrap.current && wrap.current.querySelector("[role=menuitem]");
+    if (first) first.focus();
+    return () => { document.removeEventListener("pointerdown", out); document.removeEventListener("keydown", key); };
+  }, [open]);
+  if (!items.length) return null;
   return (
-    <div className="ff-tickq" role="group" aria-labelledby={id}>
-      <div className="ff-tickq-label" id={id}>{label}</div>
-      <div className="ff-tickq-opts">
-        {options.map(o => {
-          const on = value === o.v;
-          return (
-            <button key={String(o.v)} type="button" className={`ff-tick${on ? " on" : ""}`} aria-pressed={on} onClick={() => onChange(o.v)}>
-              <span className="box" aria-hidden="true">{on && <Check size={13} strokeWidth={3} />}</span>{o.label}
-            </button>
-          );
-        })}
-      </div>
+    <div className="ff-rs17-more" ref={wrap}>
+      <button ref={btn} type="button" className="ff-rs17-dots" aria-label="More" aria-haspopup="menu" aria-expanded={open} onClick={() => setOpen(o => !o)}>
+        <MoreDots17 size={20} aria-hidden="true" />
+      </button>
+      {open && (
+        <div className="ff-rs17-menu" role="menu">
+          {items.map(it => (
+            <button key={it.label} type="button" role="menuitem" onClick={() => { setOpen(false); it.go(); }}>{it.label}</button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
 
 
-
-function AddToTeamSheet({ open, person, onClose }) {
+/* The one relationship slot on someone else's profile, for a signed-in member. */
+function RelSlot17({ person }) {
   const { state, dispatch } = useStore();
-  const [worked, setWorked] = useState(null);
-  const [again, setAgain] = useState(null);
-  const [howTo, setHowTo] = useState(null);
-  const [text, setText] = useState("");
-  const [confirming, setConfirming] = useState(false);
-  useEffect(() => { if (open) { setWorked(null); setAgain(null); setHowTo(null); setText(""); setConfirming(false); } }, [open, person && person.id]);
-  if (!open || !person) return null;
-  const first = String(person.name || "").split(" ")[0] || "them";
-  const ready = worked !== null && again !== null && (worked === false || howTo);
-  const send = () => {
-    const how = HOW_TO_WORK.find(h => h.key === howTo);
-    dispatch({ type: "TEAM_INVITE", invite: {
-      id: uid("tinv"), personId: person.id, name: person.name, tag: person.tag || null, note: person.profession || "",
-      workedBefore: worked, workAgain: again, howTo: worked ? (how ? how.label : null) : null, rating: worked && how ? how.rating : null,
-      review: text.trim(), at: Date.now(), status: "pending",
-    } });
-    dispatch({ type: "TOAST", toast: `Team invitation sent to ${first}` });
-    onClose();
-  };
-
-  return (
-    <Sheet open onClose={onClose} title={confirming ? "Send team invitation" : `Add ${first} to your team`}>
-      <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 16 }}>
-        <Portrait src={person.photo} name={person.name} size={44} tier={person.tier} />
-        <div>
-          <div className="ff-display" style={{ fontSize: 15 }}>{person.name}</div>
-          <div className="ff-serif" style={{ fontSize: 12.5, color: "var(--gold-dk)", fontStyle: "normal" }}>{person.profession}</div>
-        </div>
+  const [offer, setOffer] = useState(false);
+  useEffect(() => { setOffer(false); }, [person.id]);
+  const first = reviewName17(person);
+  const status = connStatus17(state, person.id);
+  const reviewed = (state.reviews || []).some(r => r && r.byId === "me" && r.aboutId === person.id);
+  const askIn = status === "network" ? teamAsksWaiting17(state).find(x => x.fromId === person.id) : null;
+  const invite = (state.teamInvites || []).filter(i => i.personId === person.id && i.status === "pending").slice(-1)[0];
+  const toast = (t) => dispatch({ type: "TOAST", toast: t });
+  if (offer) {
+    return (
+      <div className="ff-rs17-card">
+        <button type="button" className="x" aria-label="Skip" onClick={() => setOffer(false)}><X size={18} aria-hidden="true" /></button>
+        <ReviewForm17 person={person} onDone={() => setOffer(false)} />
       </div>
+    );
+  }
+  let main;
+  if (status === "none") {
+    main = <Btn variant="gold wide" onClick={() => {
+      dispatch({ type: "NET_TOGGLE", id: person.id }); toast(`${first} added to your network`);
+      if (!reviewed) setOffer(true);
+    }}><UserPlus size={15} aria-hidden="true" /><FitLabel17>Add to network</FitLabel17></Btn>;
+  } else if (status === "network") {
+    main = askIn
+      ? <Btn variant="gold wide" onClick={() => { dispatch({ type: "TEAM_ASK_REPLY", ask: askIn, accept: true }); toast(`You and ${first} are on each other's team`); if (!reviewed) setOffer(true); }}><Check size={15} aria-hidden="true" /><FitLabel17>Accept invitation</FitLabel17></Btn>
+      : <Btn variant="gold wide" onClick={() => {
+          dispatch({ type: "TEAM_INVITE", invite: { id: uid("tinv"), personId: person.id, name: person.name, tag: person.tag || null, note: person.profession || "", at: Date.now(), status: "pending" } });
+          toast(`Invitation sent to ${first}`);
+        }}><Users size={15} aria-hidden="true" /><FitLabel17>Invite to your team</FitLabel17></Btn>;
+  } else if (status === "pending") {
+    main = <div className="ff-rs17-quiet"><Clock size={15} aria-hidden="true" /><FitLabel17>Invitation sent</FitLabel17></div>;
+  } else {
+    main = <div className="ff-rs17-quiet"><FitLabel17>On your team</FitLabel17><Check size={15} aria-hidden="true" /></div>;
+  }
+  /* Mr G, 17 Nov: no separate Review entry for a signed-in member; the review is offered in place as they add to network or team.
+     Fixes2 (Fable): a skipped review stays reachable from the ⋯ menu until it is written. */
+  const items = [
+    ...(status !== "none" && !reviewed ? [{ label: "Write a review", go: () => setOffer(true) }] : []),
+    ...(status === "network" ? [{ label: "Remove from network", go: () => { dispatch({ type: "CONN_REMOVE", id: person.id, from: "network" }); toast(`${first} removed from your network`); } }] : []),
+    ...(status === "pending" ? [{ label: "Cancel invitation", go: () => { dispatch({ type: "CONN_REMOVE", id: person.id, from: "pending" }); toast("Invitation cancelled"); } }] : []),
+    ...(status === "team" ? [{ label: "Remove from team", go: () => { dispatch({ type: "CONN_REMOVE", id: person.id, from: "team" }); toast(`${first} removed from your team`); } }] : []),
+    ...(status === "pending" && invite ? [{ label: `Preview: ${first} accepts`, go: () => { dispatch({ type: "TEAM_INVITE_ACCEPT", id: invite.id }); toast(`${first} accepted · now on your team`); if (!reviewed) setOffer(true); } }] : []),
+  ];
+  return <div className="ff-rs17">{main}<RelMenu17 items={items} /></div>;
+}
 
-      {!confirming ? (<>
-        <div className="ff-tickqs">
-          <TickChoice id="att-worked" label={`Have you worked with ${first} before?`} options={YES_NO} value={worked}
-            onChange={(v) => { setWorked(v); if (!v) setHowTo(null); }} />
-          <TickChoice id="att-again" label={worked === false ? `Would you like to work with ${first}?` : `Would you like to work with ${first} again?`}
-            options={YES_NO} value={again} onChange={setAgain} />
-          {worked && (
-            <TickChoice id="att-how" label={`How is ${first} to work with?`} options={HOW_TO_WORK.map(h => ({ v: h.key, label: h.label }))}
-              value={howTo} onChange={setHowTo} />
-          )}
-        </div>
-        <Field label={worked === false ? `A note for ${first}` : "Your review"}
-          hint={worked === false ? "Optional. Say why you'd like them on your team." : `Goes on ${first}'s profile once they accept your invitation.`}>
-          <textarea id="att-review" className="ff-input" rows={4} value={text} onChange={(e) => setText(e.target.value)}
-            placeholder={worked === false ? "Loved your cocktail menu at the launch night…" : "Reliable, great with guests, always on time…"} />
-        </Field>
-        <Btn variant="primary wide" disabled={!ready} onClick={() => setConfirming(true)}><Plus size={14} /> Add {first}</Btn>
-        {!ready && <p className="ff-body ff-muted" style={{ fontSize: 12, margin: "8px 0 0", textAlign: "center" }}>Answer the questions above to continue.</p>}
-      </>) : (
-        <div className="ff-confirm">
-          <span className="ff-confirm-ic"><WhatsAppIcon size={22} /></span>
-          <p className="ff-confirm-main">Your team invitation{text.trim() || (worked && howTo) ? " and review" : ""} will be sent to <b>{person.name}</b> on WhatsApp.</p>
-          <p className="ff-body" style={{ margin: 0 }}>
-            {first} will be notified that you'd like to add them to your team. You're connected once {first} accepts{worked ? `, and your review goes on ${first}'s profile then` : ""}.
-          </p>
-          <div className="ff-confirm-acts">
-            <Btn variant="primary wide" onClick={send}><Send size={14} /> Send invitation</Btn>
-            <Btn variant="ghost wide" onClick={() => setConfirming(false)}>Back</Btn>
-          </div>
-          <ProtoNote />
-        </div>
-      )}
-    </Sheet>
+
+/* Your own card's Share: once the profile is complete it sends your join link (no ?r=, the code is in it). */
+function MyShareBtn17({ person, onTap }) {
+  const { state } = useStore();
+  const [open, setOpen] = useState(false);
+  const tag = String((state.auth.status === "signedIn" && (state.auth.tag || state.session.tag)) || "");
+  const join = !!tag && profileBasics17(state);
+  return (
+    <>
+      <button type="button" className="ff-csm-btn wide" onClick={() => onTap ? onTap() : setOpen(true)} aria-label="Share my card"><WhatsAppIcon size={18} aria-hidden="true" /> Share</button>
+      {open ? (
+        <CardShareSheet17 open onClose={() => setOpen(false)} title={join ? "Join my team on FireFlair:" : "My FireFlair card"} url={join ? inv17Link(tag) : `https://${CARD_DOMAIN}/${pc17Tag(tag)}`} noRef={join}
+          fileName={(join ? "fireflair-join-" : "fireflair-") + cx17Slug(tag)}>
+          <PlayerCard person={person} format="full" nameAs="div" themeKey={state.profile.theme} />
+        </CardShareSheet17>
+      ) : null}
+    </>
   );
 }
 
@@ -119,46 +142,27 @@ function PersonProfile() {
   const person = all.find(p => p.id === state.viewing)
     || (state.viewing === "me" ? { ...meAsStaff(state.profile, state.session), group: "Your profile" } : null);
   const guestOfMe = !!state.viewingAsGuest && state.viewing === "me";
-  const connected = state.connections.some(c => c.id === state.viewing);
-  const invite = (state.teamInvites || []).filter(i => i.personId === state.viewing).slice(-1)[0];
-  const pending = !connected && invite && invite.status === "pending";
   const [reviewing, setReviewing] = useState(false);
-  const [adding, setAdding] = useState(false);
   const [asking, setAsking] = useState(false);
   const [checking, setChecking] = useState(false);
   if (!person) return null;
   const first = String(person.name || "").split(" ")[0];
   const preview = (msg) => dispatch({ type: "TOAST", toast: msg || "This is how guests see your profile" });
-  const acts = guestOfMe ? { onBook: () => preview(), onReview: () => preview(), onJoin: () => preview() } : {
-    onBook: () => { if (!state.selection.includes(person.id)) dispatch({ type: "SELECT", id: person.id }); dispatch({ type: "TOAST", toast: `${first} added to your basket` }); },
-    onReview: () => setReviewing(true),
-    onJoin: () => {
-      if (state.auth.status === "signedIn" || person.id === "me") { dispatch({ type: "TOAST", toast: "Share this card so they can join FireFlair" }); return; }
-      dispatch({ type: "SESSION", patch: { invitedBy: person.id } });
-      dispatch({ type: "VIEW", id: null });
-      if (state.role !== "team") dispatch({ type: "ROLE", role: "team" });
-      dispatch({ type: "TAB", tab: "profile" });
-      dispatch({ type: "TOAST", toast: `Joining with ${first} — your first connection` });
-      window.scrollTo(0, 0);
-    },
-  };
   const other = person.id !== "me";
   const publicView = other || guestOfMe;
-  /* Prototype only: what happens when they accept on WhatsApp. */
-  const acceptPreview = () => {
-    dispatch({ type: "TEAM_INVITE_ACCEPT", id: invite.id });
-    if (invite.workedBefore && (invite.review || invite.rating)) {
-      dispatch({ type: "REVIEW_ADD", review: {
-        id: uid("rev"), aboutId: person.id, byId: "me", shiftId: null,
-        byName: state.company?.name || state.profile.name || "You", rating: invite.rating || 5,
-        text: invite.review || `${invite.howTo} to work with.`, at: Date.now(),
-      } });
-    }
-    dispatch({ type: "TOAST", toast: `${first} accepted · now on your team` });
+  const signedIn = state.auth.status === "signedIn";
+  const party = !!hireSiteOf(state).party;
+  /* Join from someone's profile: they are the one who brought you in (their team invitation waits after sign-up), unless a code was already recorded. */
+  const join = () => {
+    dispatch({ type: "INV_REF", code: person.tag, kind: "team" });
+    dispatch({ type: "VIEW", id: null });
+    if (state.role !== "team") dispatch({ type: "ROLE", role: "team" });
+    dispatch({ type: "TAB", tab: "profile" });
+    window.scrollTo(0, 0);
   };
 
   const backBtn = (
-    <button aria-label="Back" onClick={() => dispatch({ type: "VIEW", id: null })} className="ff-pback"
+    <button aria-label="Back" onClick={() => rt17Back(() => dispatch({ type: "VIEW", id: null }))} className="ff-pback"
       style={{
         display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
         width: "100%", padding: "12px 4px", marginBottom: 12,
@@ -169,120 +173,65 @@ function PersonProfile() {
     </button>
   );
   const guestNote = guestOfMe ? <div className="ff-guestnote"><Eye size={16} /> This is your profile as a guest sees it.</div> : null;
-  const myTag = state.auth.status === "signedIn" ? (state.auth.tag || state.session.tag) : "";
-  const shareTag = person.id === "me" ? myTag : String(person.tag || cx17Slug(person.name || person.id) || "");
-  const shareBtn = shareTag ? (
-      <CardShareBtn17 title={person.id === "me" ? "My FireFlair card" : `${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${shareTag}`} fileName={"fireflair-" + cx17Slug(shareTag)} label="Share" className="wide"
-        render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={person.id === "me" ? state.profile.theme : (person.theme || "ivory")} />} />) : null;
-  const shareEl = shareBtn ? <div style={{ marginTop: 8, width: "calc(50% - 4px)", marginInline: "auto" }}>{shareBtn}</div> : null;
-  const actionsEl = other ? (<div className="ff-pub-acts">
-        {hireSiteOf(state).party ? <FavBtn11 person={person} wide /> : (<>
-          {state.role === "staff" && <div style={{ marginBottom: 8 }}><FavBtn11 person={person} wide /></div>}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-            <NetBtn17 id={person.id} name={first} />
-            {connected ? (
-              <Btn variant="ghost" disabled><Check size={14} /> On your team</Btn>
-            ) : pending ? (
-              <Btn variant="ghost" onClick={() => setAdding(true)}><Clock size={14} /> Invitation sent</Btn>
-            ) : (
-              <Btn variant="gold" onClick={() => setAdding(true)}><Plus size={14} /> Add to team</Btn>
-            )}
-          </div>
-        </>)}
-        {pending && (
-          <div className="ff-pendingnote">
-            <span>Waiting for {first} to accept your team invitation on WhatsApp.</span>
-            <button type="button" className="ff-linkbtn" onClick={acceptPreview}>Preview: {first} accepts</button>
-          </div>
-        )}
-        <div style={{ marginTop: 8, display: "grid", gap: 8 }}>
-          {state.role === "staff" && state.site === "party" && !person.isCompany && (
-            <Btn variant="primary wide" onClick={() => {
-              if (!state.selection.includes(person.id)) dispatch({ type: "SELECT_ADD", id: person.id });
-              dispatch({ type: "V11_SET", patch: { bkView: { mode: "new", open: "event" } } });
-              dispatch({ type: "TAB", tab: "bookings" }); window.scrollTo(0, 0);
-            }}><Users size={14} /> Book this person</Btn>
-          )}
-          {state.role === "staff" && state.site !== "party" && (
-            <Btn variant={state.selection.includes(person.id) ? "ghost wide" : "primary wide"} onClick={() => {
-              dispatch({ type: "SELECT", id: person.id });
-              dispatch({ type: "TOAST", toast: state.selection.includes(person.id) ? `${person.name} removed from your booking bar` : `${person.name} added to your booking bar` });
-            }}>
-              {state.selection.includes(person.id) ? <><Check size={14} /> In your booking bar</> : <><Users size={14} /> Add to booking</>}
-            </Btn>
-          )}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-            <Btn onClick={() => setAsking(true)}><MessageSquare size={14} /> Ask a question</Btn>
-            <Btn onClick={() => setChecking(true)}><I11.CalendarCheck size={14} /> Availability</Btn>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: shareBtn ? "1fr 1fr" : "1fr", gap: 8 }}>
-            <Btn variant="wide" onClick={() => setReviewing(true)}><Award size={14} /> Review</Btn>
-            {shareBtn}
-          </div>
-        </div>
-      </div>) : null;
+  const shareTag = String(person.tag || cx17Slug(person.name || person.id) || "");
+  const shareBtn = other && shareTag ? (
+      <CardShareBtn17 title={`${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${pc17Tag(shareTag)}`} fileName={"fireflair-" + cx17Slug(shareTag)} label="Share" className="wide"
+        render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={person.theme || "ivory"} />} />) : null;
+  const myTag = signedIn ? (state.auth.tag || state.session.tag) : "";
+  const shareEl = !other && !guestOfMe && myTag ? <div style={{ marginTop: 8, width: "calc(50% - 4px)", marginInline: "auto" }}><MyShareBtn17 person={person} /></div> : null;
+  const askRow = (
+    <div className="ff-pub-two">
+      <Btn variant={party ? "" : "ghost"} onClick={() => setAsking(true)}><MessageSquare size={14} aria-hidden="true" /><FitLabel17>{party ? "Ask a question" : "Ask"}</FitLabel17></Btn>
+      <Btn variant={party ? "" : "ghost"} onClick={() => setChecking(true)}><I11.CalendarCheck size={14} aria-hidden="true" /><FitLabel17>Availability</FitLabel17></Btn>
+    </div>
+  );
+  /* All three sites: Share sits below the other buttons, centred, half the row wide. */
+  const halfShare = (el) => el ? <div className="ff-share-half">{el}</div> : null;
+  let actionsEl = null;
+  if (guestOfMe || (other && !signedIn && !party)) {
+    /* A signed-out visitor (and you, previewing your profile as a guest): Join (muted gold), then a smaller Share below. */
+    actionsEl = (<div className="ff-pub-acts ff-pub-stack">
+      <Btn variant="wide ff-join-mut" onClick={guestOfMe ? () => preview() : join}><FitLabel17>{`Join ${first}'s team`}</FitLabel17></Btn>
+      {halfShare(guestOfMe ? <MyShareBtn17 person={person} onTap={() => preview()} /> : shareBtn)}
+    </div>);
+  } else if (other && party) {
+    actionsEl = (<div className="ff-pub-acts ff-pub-stack">
+      <FavBtn11 person={person} wide />
+      {state.role === "staff" && !person.isCompany && <LockedBtn17 variant="primary wide" icon={<Users size={14} />}>Book this person</LockedBtn17>}
+      {askRow}
+      <Btn variant="wide" onClick={() => setReviewing(true)}><Award size={14} aria-hidden="true" /><FitLabel17>Review</FitLabel17></Btn>
+      {halfShare(shareBtn)}
+    </div>);
+  } else if (other) {
+    actionsEl = (<div className="ff-pub-acts ff-pub-stack">
+      {state.role === "staff" && <FavBtn11 person={person} wide />}
+      <RelSlot17 person={person} />
+      {state.role === "staff" && (
+        <Btn variant={state.selection.includes(person.id) ? "ghost wide" : "primary wide"} onClick={() => {
+          dispatch({ type: "SELECT", id: person.id });
+          dispatch({ type: "TOAST", toast: state.selection.includes(person.id) ? `${person.name} removed from your booking bar` : `${person.name} added to your booking bar` });
+        }}>
+          {state.selection.includes(person.id) ? <><Check size={14} /> In your booking bar</> : <><Users size={14} /> Add to booking</>}
+        </Btn>
+      )}
+      {askRow}
+      {state.role === "staff" && <Btn variant="wide" onClick={() => setReviewing(true)}><Award size={14} aria-hidden="true" /><FitLabel17>Review</FitLabel17></Btn>}
+      {halfShare(shareBtn)}
+    </div>);
+  }
   const cardEl = <PlayerCard person={person} format="full" nameAs="div" themeKey={person.id === "me" ? state.profile.theme : (person.theme || "ivory")}  />;
   return (
-    <div className={publicView ? "ff-pubpage" : undefined}>
-      <PublicHero media={mediaOf(state, person)} card={cardEl} narrow below={<>{backBtn}{guestNote}{actionsEl}{other ? null : shareEl}</>} />
+    <div className={publicView ? "ff-pubpage ff-pp-other" : undefined}>
+      <PublicHero media={mediaOf(state, person)} card={cardEl} narrow below={<>{backBtn}{guestNote}{actionsEl}{shareEl}</>} />
       <HireCards11 person={person} />
-      <PublicProfileBody person={person} />
+      <PublicProfileBody person={person} aboutFirst={publicView} />
       <ReviewSheet open={reviewing} person={person} onClose={() => setReviewing(false)} />
-      <AddToTeamSheet open={adding && !pending} person={person} onClose={() => setAdding(false)} />
       <AskQuestionSheet open={asking} person={person} onClose={() => setAsking(false)} />
       <CheckAvailabilitySheet open={checking} person={person} onClose={() => setChecking(false)} />
-      {adding && pending && (
-        <Sheet open onClose={() => setAdding(false)} title="Team invitation sent">
-          <p className="ff-body" style={{ marginTop: 0 }}>
-            Your team invitation went to {person.name} on WhatsApp at {timeOf(invite.at)}. You'll be connected as soon as {first} accepts.
-          </p>
-          <Btn variant="ghost wide" onClick={() => setAdding(false)}>Close</Btn>
-        </Sheet>
-      )}
     </div>
   );
 }
 
-
-
-
-function ShiftCard({ shift, event, footer }) {
-  const row = (Icon, label, value) => value ? (
-    <div style={{ display: "flex", gap: 9, alignItems: "flex-start", padding: "8px 0", borderBottom: "1px solid var(--rule)" }}>
-      <span style={{ width: 26, height: 26, borderRadius: "50%", background: "#5C1220", display: "grid", placeItems: "center", flex: "none" }}>
-        <Icon size={13} color="#EAD79C" strokeWidth={1.6} />
-      </span>
-      <span style={{ flex: 1 }}>
-        <span className="ff-label" style={{ display: "block" }}>{label}</span>
-        <span className="ff-serif" style={{ fontSize: 16, color: "#1D1B18" }}>{value}</span>
-      </span>
-    </div>
-  ) : null;
-
-  return (
-    <CardFrame tier="standard" theme={THEMES.paper} style={{ marginBottom: 12, paddingTop: 24 }}>
-      <span className="ff-label" style={{ position: "absolute", top: 10, left: 14, fontSize: 7, letterSpacing: ".2em", zIndex: 4 }}>Shift</span>
-      <span style={{ position: "absolute", top: 8, right: 8, zIndex: 4 }}><Coin size={24} /></span>
-      <div style={{ padding: "6px 14px 0" }}>
-        <div className="ff-display" style={{ fontSize: 21, lineHeight: 1.1 }}>{shift.role}</div>
-        {event && <div className="ff-body ff-muted" style={{ marginTop: 4 }}>{event.title}</div>}
-        <Divider />
-        {row(Calendar, "Date", event?.date || shift.date)}
-        {row(Clock, "Start — finish", shift.time)}
-        {row(MapPin, "Venue", event?.venue || shift.venue)}
-        {row(SlidersHorizontal, "Requirements", (shift.skills || []).join("  ·  "))}
-        {row(Wallet, "Pay rate", shift.pay)}
-        {row(PenLine, "Notes", shift.notes)}
-        {row(User, "Dress code", shift.dress)}
-      </div>
-      {footer && <div style={{ padding: 14 }}>{footer}</div>}
-      <div style={{ background: "#141416", padding: "9px 14px", display: "flex", alignItems: "center", gap: 9 }}>
-        <Coin size={20} /><Wordmark size={11} />
-        <span style={{ marginLeft: "auto", fontSize: 8.5, letterSpacing: ".14em", color: "rgba(234,215,156,.75)", textTransform: "uppercase" }}>FF Staff</span>
-      </div>
-    </CardFrame>
-  );
-}
 
 
 
@@ -290,19 +239,15 @@ function ShiftCard({ shift, event, footer }) {
    6. FF TEAM
    ========================================================================== */
 
-/* INVITES. Every new FireFlair user starts with one Network connection: the
-   person who brought them in. That's whoever's invite link they arrived on,
-   or — if they were browsing — whoever's profile they tapped Join on.
-   Prototype: everyone arrives on Don Gee's link (DONGE). Live, the tag comes
-   from the link itself. */
-const INVITE_LINK_TAG = "DONGE";
-
-
+/* INVITES. Who brought you in is a real record (src/state/invite17.js): the code from the link you arrived on, kept in
+   session.refTag before sign-up and in profile.referredBy after it. Nobody is the inviter unless that record says so. */
 function inviterOf(state, people) {
-  const id = state.session.invitedBy;
-  if (id) return people.find(p => p.id === id) || null;
-  const ref = String(state.session.refTag || "").toLowerCase();
-  return ref ? people.find(p => String(p.tag || "").toLowerCase() === ref) || null : null;
+  if (state.auth && state.auth.status === "signedIn") {
+    const r = state.profile && state.profile.referredBy;
+    return r ? people.find(p => p.id === r.personId) || null : null;
+  }
+  const s = inv17Sender(state, state.session.refTag);
+  return s ? people.find(p => p.id === s.id) || null : null;
 }
 
 
@@ -321,7 +266,7 @@ function NetBtn17({ id, name, wide }) {
 
 
 function myNetwork(state, people) {
-  const inv = inviterOf(state, people);
+  const inv = state.auth && state.auth.status === "signedIn" ? inviterOf(state, people) : null;
   const rest = state.connections.map(c => people.find(p => p.id === c.id)).filter(Boolean).filter(p => !inv || p.id !== inv.id);
   return { inviter: inv, list: inv ? [inv, ...rest] : rest };
 }
@@ -339,7 +284,7 @@ function NetworkTile({ person, invited, onClick }) {
 
 
 
-const TAKEN_TAGS = ["SAM42", "DONGE", "AVA03", "LEO09", "MIAS1", "JAMEW", "ZARA7", "NIAOK", "TOMBE", "ADMIN"];
+const TAKEN_TAGS = ["SAM42", "ALEX424", "GAVRILAS", "CUARTERO", "SIMAO", "DANYG", "JAMESALL", "ADMIN"];
 
 
 
@@ -358,7 +303,7 @@ function ChipEdit({ values, onChange, placeholder, flags, ink, rule, leadFirst }
           ))}
         </div>
       )}
-      <input className="ff-cardin" value={t} placeholder={placeholder} style={{ color: ink, borderBottomColor: rule }}
+      <input className="ff-cardin ff-cardin-row" value={t} placeholder={placeholder} style={{ color: ink }}
         onChange={(e) => setT(e.target.value)} onBlur={add}
         onKeyDown={(e) => { if (e.key === "Enter" || e.key === ",") { e.preventDefault(); add(); } }} />
     </div>
@@ -414,8 +359,9 @@ function FitList17({ items, accent }) {
 
 /* v17.3.77: type a profession straight into the card (as on the live ffteam.uk site):
    search the 35 known professions as you type, or add your own. */
-function ProfTypeIn({ profs, set, ink, rule }) {
+function ProfTypeIn({ profs, set, ink, rule, onAdd }) {
   const [q, setQ] = useState("");
+  const [cat, setCat] = useState(null);
   const n = q.trim().toLowerCase();
   const has = (x) => profs.some(p => String(p).toLowerCase() === String(x).toLowerCase());
   const hits = n ? [
@@ -424,20 +370,35 @@ function ProfTypeIn({ profs, set, ink, rule }) {
   ].filter(p => !has(p.name)).slice(0, 5) : [];
   const typed = q.trim().replace(/\s+/g, " ").replace(/\b\w/g, c => c.toUpperCase());
   const custom = n && !ALL_PROFESSIONS.some(p => p.name.toLowerCase() === n) && !has(typed) ? typed : null;
-  const add = (name) => { if (!has(name)) set("professions")([...profs, name]); setQ(""); };
+  /* v17.111111: a profession outside the FireFlair list that the rules can't place asks for its category first (or Other). */
+  const customCat = custom ? professionCategory(custom) : null;
+  const add = (name, category) => { if (!has(name)) { if (onAdd) onAdd(name, category); else set("professions")([...profs, name]); } setQ(""); setCat(null); };
   return (
     <div>
       <input className="ff-cardin" type="text" value={q} autoComplete="off" spellCheck={false}
         placeholder={profs.length ? "Add another profession" : "Search or type a profession"} aria-label="Search or type a profession"
         onChange={(e) => setQ(e.target.value)}
-        onKeyDown={(e) => { if (e.key === "Enter" && n) { e.preventDefault(); add(hits[0] ? hits[0].name : typed); } }}
-        style={{ color: ink, borderBottomColor: rule, textAlign: "center", fontSize: 13.5 }} />
+        onKeyDown={(e) => { if (e.key === "Enter" && n) { e.preventDefault(); if (hits[0]) add(hits[0].name); else if (!custom) return; else if (customCat) add(custom); else if (cat) add(custom, cat); } }}
+        style={{ color: ink, borderBottomColor: rule, textAlign: "left", fontSize: 13.5 }} />
       {n && (hits.length > 0 || custom) && (
-        <div role="list" aria-label="Matching professions" style={{ display: "flex", flexWrap: "wrap", gap: 5, justifyContent: "center", marginTop: 8 }}>
+        <div role="list" aria-label="Matching professions" style={{ display: "flex", flexWrap: "wrap", gap: 5, justifyContent: "flex-start", marginTop: 8 }}>
           {hits.map(p => (
             <button key={p.name} type="button" role="listitem" className="ff-tagchip" onClick={() => add(p.name)} style={{ color: ink, cursor: "pointer" }}>+ {p.name}</button>
           ))}
-          {custom && <button type="button" role="listitem" className="ff-tagchip" onClick={() => add(custom)} style={{ color: ink, cursor: "pointer" }}>+ Add “{custom}”</button>}
+          {custom && customCat && <button type="button" role="listitem" className="ff-tagchip" onClick={() => add(custom)} style={{ color: ink, cursor: "pointer" }}>+ Add “{custom}”</button>}
+        </div>
+      )}
+      {n && custom && !customCat && (
+        <div className="ff-profcat" style={{ marginTop: 8, textAlign: "left" }}>
+          <div style={{ color: ink, fontSize: 12.5, fontWeight: 600, marginBottom: 6 }}>Which category is “{custom}” in?</div>
+          <div role="list" aria-label="Categories" style={{ display: "flex", flexWrap: "wrap", gap: 5, justifyContent: "flex-start" }}>
+            {CATEGORY_ORDER.map(k => (
+              <button key={k} type="button" role="listitem" className="ff-tagchip" aria-pressed={cat === k} onClick={() => setCat(k)}
+                style={cat === k ? { background: "#141416", color: "#EAD79C", borderColor: "#141416", cursor: "pointer" } : { color: ink, cursor: "pointer" }}>{k}</button>
+            ))}
+          </div>
+          <button type="button" className="ff-tagchip" disabled={!cat} onClick={() => cat && add(custom, cat)}
+            style={{ marginTop: 8, color: ink, opacity: cat ? 1 : 0.45, cursor: cat ? "pointer" : "default", fontWeight: 600 }}>+ Add “{custom}”{cat ? ` · ${cat}` : ""}</button>
         </div>
       )}
     </div>
@@ -445,8 +406,9 @@ function ProfTypeIn({ profs, set, ink, rule }) {
 }
 
 
-function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "username", tier = "standard", level = 3, onPhoto }) {
+function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "username", level = 3, onPhoto }) {
   const t = THEMES[themeKey] || THEMES.onyx;
+  const tier = cardMetal17({ name: draft.name, tag }, themeKey);
   const tr = TIERS[tier] || TIERS.standard;
   const { ink, sub, rule } = t;
   const set = (k) => (v) => setDraft({ ...draft, [k]: v });
@@ -487,11 +449,14 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
     theme: t,
     style: { maxWidth: 340, margin: "0 auto", padding: "40px 16px 0" }
   }, React.createElement("span", {
-    className: "ff-pc-plate"
-  }, "Profile Card"), React.createElement("span", {
-    style: { position: "absolute", top: 9, right: 9, zIndex: 4 }
-  }, React.createElement(Coin, {
-    size: 32,
+    className: "pc17-plate",
+    style: { color: "#E4C36A", borderColor: (METAL[tier] || METAL.bronze).edge[1], fontFamily: "Inter,ui-sans-serif,-apple-system,sans-serif" }
+  }, React.createElement("span", {
+    style: { width: "3.4cqw", height: "3.4cqw", display: "block", flex: "none" }
+  }, React.createElement(PcBust17, { size: "100%", color: "#E4C36A" })), React.createElement("span", { className: "t" }, "Profile Card")), React.createElement("span", {
+    className: "pc17-logo"
+  }, React.createElement(FFLogo, {
+    size: "100%",
     tier
   })), React.createElement("div", {
     style: { display: "flex", justifyContent: "center", marginTop: 4 }
@@ -513,7 +478,7 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
   }, React.createElement(Portrait, {
     src: draft.photo,
     name: draft.name,
-    size: 92,
+    size: 108,
     ring: tr.ring[0],
     ink: tr.ink
   }), draft.photo ? React.createElement("span", {
@@ -540,10 +505,18 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
     placeholder: "Your name",
     onChange: (e) => setDraft({ ...draft, name: e.target.value }),
     style: { color: ink, borderBottomColor: rule, marginTop: 12 }
+  }), React.createElement("input", {
+    className: "ff-cardin headline",
+    value: draft.headline || "",
+    placeholder: "Headline",
+    "aria-label": "Headline",
+    maxLength: 28,
+    onChange: (e) => setDraft({ ...draft, headline: e.target.value }),
+    style: { color: t.dark ? t.accent : "#6A4F12", borderBottomColor: rule, marginTop: 8, textAlign: "center", fontSize: 13.5, textTransform: "uppercase", letterSpacing: ".14em" }
   }), React.createElement("div", {
     style: { marginTop: 8 }
   }, React.createElement("div", {
-    style: { display: "flex", alignItems: "center", gap: 6, justifyContent: "center", marginBottom: 4 }
+    style: { display: "flex", alignItems: "center", gap: 6, justifyContent: "flex-start", marginBottom: 4 }
   }, React.createElement(CatIcon, {
     kind: "profession",
     size: 12,
@@ -554,7 +527,7 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
   }, "Professions")), React.createElement("div", {
     ref: profRef
   }, React.createElement("div", {
-    style: { display: "flex", flexWrap: "wrap", gap: 5, justifyContent: "center", marginBottom: 6 }
+    style: { display: "flex", flexWrap: "wrap", gap: 5, justifyContent: "flex-start", marginBottom: 6 }
   }, profs.map((v, i) => React.createElement("span", {
     key: v + i,
     className: `ff-tagchip${i === 0 ? " lead" : ""}`,
@@ -570,7 +543,8 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
     profs,
     set,
     ink,
-    rule
+    rule,
+    onAdd: (name, category) => setDraft({ ...draft, professions: [...profs, name], ...(category ? { professionCats: { ...(draft.professionCats || {}), [name]: category } } : {}) })
   }))), React.createElement("div", {
     style: { height: 8 }
   }), React.createElement(Row, {
@@ -606,14 +580,12 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
     rule
   })), React.createElement("div", {
     style: { margin: "0 -16px", background: t.dark ? "rgba(0,0,0,.45)" : "#141416", borderTop: `1px solid ${rule}`, padding: "9px 16px", display: "flex", alignItems: "center", gap: 9 }
-  }, React.createElement(Coin, {
-    size: 20,
-    tier
-  }), React.createElement(Wordmark, {
-    size: 12
-  }), React.createElement("span", {
-    style: { marginLeft: "auto", fontFamily: "var(--sans)", fontSize: 12, fontWeight: 600, color: "#EAD79C" }
-  }, CARD_DOMAIN, "/", tag)));
+  }, React.createElement("span", {
+    style: { fontFamily: "Inter,ui-sans-serif,-apple-system,sans-serif", fontSize: "4.3cqw", letterSpacing: ".03em", fontWeight: 400, color: "#EAD79C", whiteSpace: "nowrap" }
+  }, CARD_DOMAIN, "/", pc17Tag(tag)), React.createElement("span", {
+    className: "pc17-brand",
+    style: { fontFamily: "'Cinzel','Optima',Georgia,serif" }
+  }, React.createElement("span", { className: "pc17-mark" }, React.createElement(FFLogo, { size: "100%", tier })), "FIREFLAIR")));
 }
 
 
@@ -650,7 +622,11 @@ function syncCardRecords(state, dispatch, d, cats = ["professions", "skills", "i
     const has = (n) => want.some(v => v.toLowerCase() === n.toLowerCase());
     const front = want.map(v => {
       const match = existing.find(r => r.name.toLowerCase() === v.toLowerCase());
-      return match ? { ...match, name: v, hidden: false } : makeRecord(cat, v);
+      if (cat !== "professions") return match ? { ...match, name: v, hidden: false } : makeRecord(cat, v);
+      /* Professions keep where they came from: "approved" (the FireFlair list) or "user" (typed by the member), with any category the member chose. */
+      const chosen = (d.professionCats || {})[v];
+      const extra = { professionSource: ALL_PROFESSIONS.some(p => p.name.toLowerCase() === v.toLowerCase()) ? "approved" : "user", ...(chosen ? { displayCategory: chosen } : {}) };
+      return match ? { ...match, ...extra, ...(match.displayCategory && !chosen ? { displayCategory: match.displayCategory } : {}), name: v, hidden: false } : makeRecord(cat, v, extra);
     });
     /* The card lists every record, so one that is no longer wanted was removed
        with its X: delete it (only suggestions FireFlair proposed are kept). */
@@ -661,75 +637,23 @@ function syncCardRecords(state, dispatch, d, cats = ["professions", "skills", "i
 
 
 
-function InviteSheet({ open, onClose }) {
-  const { state, dispatch } = useStore();
-  const [granted, setGranted] = useState(false);
-  const [picked, setPicked] = useState([]);
-  const invitedIds = state.invitations.map(i => i.id);
-
-  return (
-    <Sheet open={open} onClose={onClose} title="Invite people you work with">
-      {!granted ? (
-        <>
-          <p className="ff-body">FireFlair can check your contacts for people already here. We only read them when you allow it, and we never invite anyone on your behalf.</p>
-          <div style={{ height: 12 }} />
-          <Btn variant="primary wide" onClick={() => setGranted(true)}>Allow contact access</Btn>
-          <div style={{ height: 8 }} />
-          <Btn variant="ghost wide" onClick={onClose}>Not now — share my link</Btn>
-        </>
-      ) : (
-        <>
-          {CONTACTS.map(c => {
-            const on = picked.includes(c.id), done = invitedIds.includes(c.id);
-            return (
-              <button key={c.id} disabled={done} onClick={() => setPicked(p => on ? p.filter(x => x !== c.id) : [...p, c.id])}
-                className="ff-frame" style={{ width: "100%", textAlign: "left", padding: 11, marginBottom: 8, display: "flex", gap: 11, alignItems: "center", opacity: done ? .55 : 1, background: on ? "rgba(201,162,39,.10)" : "var(--paper)" }}>
-                <Portrait name={c.name} size={36} ring={c.onFF ? "#C9A227" : "#B9B1A2"} />
-                <span style={{ flex: 1, minWidth: 0 }}>
-                  <span className="ff-display" style={{ fontSize: 13, display: "block" }}>{c.name}</span>
-                  <span className="ff-body ff-muted" style={{ fontSize: 12 }}>{c.note}{c.onFF ? ` · ${c.tag}` : ""}</span>
-                </span>
-                {done ? <Pill tone="ok">Invited</Pill> : on ? <Check size={17} color="var(--gold-dk)" /> : <Plus size={15} color="#B0A895" />}
-              </button>
-            );
-          })}
-          <Btn variant="primary wide" disabled={!picked.length}
-            onClick={() => {
-              const people = CONTACTS.filter(c => picked.includes(c.id));
-              dispatch({ type: "INVITE", people });
-              /* Phase 1: people already on FireFlair get a team invitation —
-                 connected once they accept, never assumed. */
-              people.filter(p => p.onFF).forEach(p => {
-                const d = state.directory.find(x => x.tag === p.tag);
-                if (d) dispatch({ type: "TEAM_INVITE", invite: { id: uid("tinv"), personId: d.id, name: d.name, tag: d.tag, note: d.profession || "",
-                  workedBefore: null, workAgain: null, howTo: null, rating: null, review: "", at: Date.now(), status: "pending" } });
-              });
-              setPicked([]); onClose();
-              dispatch({ type: "TOAST", toast: `${people.length} invitation${people.length > 1 ? "s" : ""} sent` });
-            }}>
-            <Send size={15} /> Invite {picked.length || ""}
-          </Btn>
-          <p className="ff-body ff-muted" style={{ fontSize: 12, marginTop: 12, marginBottom: 0 }}>
-            An invitation is not a connection. They accept first. When someone joins from your invitation, you're in each other's network automatically.
-          </p>
-          <ProtoNote />
-        </>
-      )}
-    </Sheet>
-  );
-}
-
-
-
-function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "", shut = false, insertAfter = "", insert = null }) {
+function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "", shut = false, insertAfter = "", insert = null, quietEmpty = false }) {
   const { state, dispatch } = useStore();
   const everyone = useDirectory();
   const n = query.trim().toLowerCase();
-  const all0 = n ? everyone.filter(p => personSearchText(p).includes(n)) : everyone;
-  const all = only && only.length ? all0.filter(p => [].concat(only).includes(p.group)) : all0;
+  /* v17.48: one entry per category a person's top 3 professions cover, the plate showing the profession that put them
+     there, top-profession holders first. A search lists each person once, in the category of the profession that matched. */
+  const entries = [];
+  everyone.forEach(p => {
+    if (n) { const h = netSearchHit17(p, n); if (h) entries.push({ p: plateAs17(p, h.profession), g: h.group, r: h.rank }); return; }
+    (p.groups || [{ group: p.group, profession: p.profession, rank: 0 }]).forEach(x => entries.push({ p: plateAs17(p, x.profession), g: x.group, r: x.rank }));
+  });
+  const all = only && only.length ? entries.filter(e => [].concat(only).includes(e.g)) : entries;
+  if (n && !all.length && quietEmpty) return null;
   if (n && !all.length) return <div style={{ marginTop: 18 }}><Empty icon={<Search size={26} />} title={`Nobody matches “${query}” yet. Try a different name, skill or area.`} /></div>;
   const order = CATEGORY_ORDER;
-  const groups = all.reduce((m, p) => { (m[p.group] = m[p.group] || []).push(p); return m; }, {});
+  const groups = all.reduce((m, e) => { (m[e.g] = m[e.g] || []).push(e); return m; }, {});
+  Object.keys(groups).forEach(g => { groups[g] = groups[g].map((e, i) => [e, i]).sort((a, b) => a[0].r - b[0].r || a[1] - b[1]).map(([e]) => e.p); });
   const keys = Object.keys(groups).sort((a, b) => order.indexOf(a) - order.indexOf(b));
   /* Something placed straight after one group (FF Staff: Your team after Chefs); at the end if that group isn't shown. */
   const slotAt = insert ? (keys.includes(insertAfter) ? insertAfter : null) : null;
@@ -749,11 +673,7 @@ function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "", 
                   <PlayerTile key={p.id} person={p} selected={selectable && state.selection.includes(p.id)}
                     onClick={() => onPick(p)} />
                 ))}
-                {ph17(state) >= 2 && <button className="ff-card ff-portrait ff-addtile" style={{ width: CARD_W.player }}
-                  onClick={() => state.role === "team" ? window.dispatchEvent(new Event("ff-invite")) : dispatch({ type: "TOAST", toast: "Join FF Team to invite the people you work with." })}>
-                  <span style={{ textAlign: "center" }}><Plus size={20} color="var(--gold-dk)" />
-                    <span className="ff-label" style={{ display: "block", marginTop: 6 }}>Invite</span></span>
-                </button>}
+                {/* No Invite tile: inviting is part of Share (your own card sends your join link). */}
               </HScroll>
             )}
           </section>
@@ -821,15 +741,47 @@ function NetDrop17({ title, count, children }) {
   );
 }
 
+/* The companies a person works with: accepted team links first, then (for your own profile) companies you added to your network.
+   withNet false (v17.48 Team tab): company teams only, without the network adds. */
+function personCompanies17(state, person, withNet = true) {
+  if (!person) return [];
+  const me = person.id === "me";
+  const tag = String(person.tag || "").toLowerCase();
+  const keys = new Set(ctAll17(state).filter(x => x.status === "accepted" && (me ? ctIsMe17(state, x) : (x.personId === person.id || (tag && String(x.tag || "").toLowerCase() === tag)))).map(x => x.companyKey));
+  const out = browseCompanies17(state).filter(c => c && c.id !== "mine" && (keys.has(coKey17(c)) || (c.team || []).includes(person.id)));
+  if (me && withNet) (state.netAdds17 || []).filter(id => String(id).startsWith("co_")).forEach(id => {
+    const c = companyById(state, id);
+    if (c && !out.some(x => x.id === c.id)) out.push(c);
+  });
+  return out;
+}
+
+/* Team tab of a profile: the team, then Companies and Network drop-downs. */
+function TeamParts17({ team, companies, network, teamEmpty, renderTeam }) {
+  const { dispatch } = useStore();
+  const view = (p) => { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); };
+  const none = (t) => <p className="ff-body ff-muted" style={{ margin: 0 }}>{t}</p>;
+  return (
+    <div className="ff-tparts17">
+      <SectionHead icon={<I11.Users size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Team" count={team.length} />
+      {team.length ? <HScroll label="Team">{team.map(p => renderTeam ? renderTeam(p) : <PlayerTile key={p.id} person={p} onClick={() => view(p)} />)}</HScroll> : none(teamEmpty || "No one yet.")}
+      <NetDrop17 title="Companies" count={companies.length}>
+        {companies.length ? <CoTiles17 list={companies} label="Companies" /> : none("No companies yet.")}
+      </NetDrop17>
+      <NetDrop17 title="Network" count={network.length}>
+        {network.length ? <HScroll label="Network">{network.map(p => <PlayerTile key={p.id} person={p} onClick={() => view(p)} />)}</HScroll> : none("No one yet.")}
+      </NetDrop17>
+    </div>
+  );
+}
+
 
 
 /* NETWORK — the bartending network, for everyone. Signed-out visitors see
    the same people a member does; joining happens on Home and Profile. */
 function NetworkScreen({ guest = false }) {
   const { state, dispatch } = useStore();
-  const [inviting, setInviting] = useState(false);
   const [reviewing, setReviewing] = useState(null);
-  useEffect(() => { const h = () => setInviting(true); window.addEventListener("ff-invite", h); return () => window.removeEventListener("ff-invite", h); }, []);
   const q = state.netQuery || "";
   const setQ = (v) => dispatch({ type: "NET_QUERY", q: v });
   const mine = guest ? { inviter: null, list: [] } : myNetwork(state, adminPeople17(state, state.directory));
@@ -838,77 +790,18 @@ function NetworkScreen({ guest = false }) {
   const netPeople = adds.map(id => state.directory.find(p => p.id === id)).filter(p => p && !connected.some(c => c.id === p.id));
   const netCos = adds.filter(id => String(id).startsWith("co_")).map(id => companyById(state, id)).filter(Boolean);
   const view = (p) => { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); };
-  const join = () => { dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); };
 
   return (
     <div>
-      <div style={{ display: "flex", alignItems: "flex-end", gap: 10, marginTop: 4 }}>
-        <div style={{ flex: 1 }}><BigHead20 tag="h1" title="Our network" /></div>
-        {!guest && ph17(state) >= 2 && <Btn variant="sm" onClick={() => setInviting(true)}><Send size={12} /> Invite</Btn>}
-      </div>
 
-      <FFAI query={q} onQuery={setQ} title="Search the network"
-        placeholder="Search the network. Describe who you're looking for." />
+      {!q && !guest && <SentInvitations />}
 
-      {guest && !q && (
-        <div className="ff-pendingnote" style={{ marginTop: 6 }}>
-          <span>{ph17(state) >= 2 ? "Join FF Team to build your own network. Whoever invites you is added to it automatically." : "Join FF Team to create your own Profile Card."}</span>
-          <Btn variant="sm gold" onClick={join}><User size={12} /> Create your Profile Card</Btn>
-        </div>
-      )}
-
-      {!q && ph17(state) >= 2 && mine.inviter && <InvitedByBanner person={mine.inviter} onReview={() => setReviewing(mine.inviter)} />}
-
-      {!q && !guest && ph17(state) >= 2 && (
-        <section style={{ marginTop: 20 }}>
-          <SectionHead icon={<Check size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Your team" count={connected.length + netPeople.length + netCos.length} />
-          <HScroll label="Your team">
-            {connected.map(p => (
-              <div key={p.id} className="ff-nettile">
-                <NetworkTile person={p} invited={!!(mine.inviter && mine.inviter.id === p.id)} onClick={() => view(p)} />
-                <span className="ff-invited"><Check size={11} /> On your team</span>
-                <button type="button" className="ff-btn sm ghost" onClick={() => setReviewing(p)}><Award size={12} /> Review</button>
-              </div>
-            ))}
-            <button className="ff-card ff-portrait ff-addtile" style={{ width: CARD_W.player }} onClick={() => setInviting(true)}>
-              <span style={{ textAlign: "center" }}><UserPlus size={20} color="var(--gold-dk)" />
-                <span className="ff-label" style={{ display: "block", marginTop: 6 }}>Invite</span></span>
-            </button>
-          </HScroll>
-          <NetDrop17 title="Companies" count={netCos.length}>
-            {netCos.length ? (
-              <HScroll label="Companies">
-                {netCos.map(c => (
-                  <button key={c.id} type="button" className="ff-co11-tile ff-netco17" aria-label={`${c.name}: open their page`} onClick={() => { dispatch({ type: "VIEW_COMPANY", id: c.id }); window.scrollTo(0, 0); }}>
-                    <CompanyCardFace c={c} size="sm" />
-                  </button>
-                ))}
-              </HScroll>
-            ) : <p className="ff-body ff-muted" style={{ margin: 0 }}>No companies yet.</p>}
-          </NetDrop17>
-          <NetDrop17 title="Network" count={netPeople.length}>
-            {netPeople.length ? (
-              <HScroll label="Network">
-                {netPeople.map(p => (
-                  <div key={p.id} className="ff-nettile">
-                    <PlayerTile person={p} onClick={() => view(p)} />
-                    <button type="button" className="ff-btn sm ghost" onClick={() => setReviewing(p)}><Award size={12} /> Review</button>
-                  </div>
-                ))}
-              </HScroll>
-            ) : <p className="ff-body ff-muted" style={{ margin: 0 }}>No one yet.</p>}
-          </NetDrop17>
-        </section>
-      )}
-      {!q && !guest && ph17(state) >= 2 && <SentInvitations />}
-
-      <NetBrowse17 query={q} onPick={view} after={<NetMap11 />} />
+      <NetBrowse17 query={q} onPick={view} after={<NetMap20 />} search={<FFAI query={q} onQuery={setQ} title="Search people, skills or places" searchBox
+        placeholder="Search people, skills or places" />} />
       {!q && (<>
         {PHASE1.leaderboards && <Rankings />}
         <Divider />
       </>)}
-      <V101.BusinessSupport19 />
-      {!guest && <InviteSheet open={inviting} onClose={() => setInviting(false)} />}
       <ReviewSheet open={!!reviewing} person={reviewing} onClose={() => setReviewing(null)} />
     </div>
   );
@@ -932,24 +825,19 @@ function BookingSheet({ engagement, onClose }) {
 
   return (
     <Sheet open onClose={onClose} title={shift.role}>
-      <ShiftCard shift={shift} event={event} footer={
-        <div>
-          <div style={{ marginBottom: 10 }}><Pill tone={ENG_TONE[e.state]}><span className="ff-dot" /> {ENG_LABEL[e.state]}</Pill></div>
-          {["requested", "discuss", "available", "withdrawn", "not_selected", "cancelled_pro"].includes(e.state) && <ProOffer17 e={e} shift={shift} onDone={onClose} />}
-          {e.state === "requested" && e.expiresAt && <p className="ff-body ff-muted" style={{ margin: "8px 0 0", fontSize: 12 }}>{timeLeft(e.expiresAt)}</p>}
-          {e.state === "expired" && <p className="ff-body ff-muted" style={{ margin: 0 }}>This request expired without a reply.</p>}
-          {e.state === "confirmed" && (
-            <div>
-              <p className="ff-body" style={{ margin: "0 0 10px" }}>You are booked.</p>
-              <ProOffer17 e={e} shift={shift} onDone={onClose} />
-              <WalletButton kind="booking" wide dark={false} payload={{ shiftId: shift.id, role: shift.role, date: shift.date, venue: shift.venue }} />
-            </div>
-          )}
-          {e.state === "completed" && <Btn variant="primary wide" onClick={() => act("signed_off")}><PenLine size={14} /> Sign off this shift</Btn>}
-          {e.state === "signed_off" && <p className="ff-body ff-muted" style={{ margin: 0 }}>Signed off. The hirer pays you directly, as agreed on the Service Card.</p>}
-          {e.state === "paid" && <p className="ff-body" style={{ margin: 0 }}>This shift is closed.</p>}
-        </div>
-      } />
+      <ShiftDelivery11 e={e} shift={shift} event={event} onDone={onClose} onMore={onClose} />
+      <div style={{ padding: "0 2px 6px" }}>
+        {e.state === "requested" && e.expiresAt && <p className="ff-body ff-muted" style={{ margin: "0 0 8px", fontSize: 12 }}>{timeLeft(e.expiresAt)}</p>}
+        {e.state === "confirmed" && (
+          <div>
+            {e.revised && <ProOffer17 e={e} shift={shift} onDone={onClose} />}
+            <WalletButton kind="booking" wide dark={false} payload={{ shiftId: shift.id, role: shift.role, date: shift.date, venue: shift.venue }} />
+          </div>
+        )}
+        {e.state === "completed" && <Btn variant="primary wide" onClick={() => act("signed_off")}><PenLine size={14} /> Sign off this shift</Btn>}
+        {e.state === "signed_off" && <p className="ff-body ff-muted" style={{ margin: 0 }}>Signed off. The hirer pays you directly, as agreed on the Service Card.</p>}
+        {e.state === "paid" && <p className="ff-body" style={{ margin: 0 }}>This shift is closed.</p>}
+      </div>
     </Sheet>
   );
 }

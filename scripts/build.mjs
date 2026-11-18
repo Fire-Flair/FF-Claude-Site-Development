@@ -26,8 +26,10 @@ function assetBytes(rel) {  // 'img/<hash>.webp' lives in src/assets; 'story/<sl
 }
 const dataUri = (rel) => `data:${MIME[rel.split('.').pop()]};base64,${assetBytes(rel).toString('base64')}`;
 const resolveAssets = (t) => t.replace(/ffasset:((?:img|story)\/[A-Za-z0-9._-]+\.(?:webp|png|jpg|gif|svg))/g, (m, rel) => dataUri(rel));
+/* The prototype's version is the newest entry in CHANGELOG.md ("## v17.49" -> "17.49"); the footer reads it. */
+const CL_VERSION = ((fs.readFileSync(path.join(ROOT, 'CHANGELOG.md'), 'utf8').match(/^## v(\d+(?:\.\d+)*)\s*$/m) || [])[1]) || manifest.version.replace(/^v/, '');
 const resolveDirectives = (t) =>
-  t.replace(/__ff_css\(((?:"[^"]+"(?:,\s*)?)+)\)/g, (m, list) => JSON.stringify([...list.matchAll(/"([^"]+)"/g)].map((x) => read(x[1])).join('')))
+  t.replace(/__ff_changelog_version\(\)/g, () => JSON.stringify(CL_VERSION)).replace(/__ff_css\(((?:"[^"]+"(?:,\s*)?)+)\)/g, (m, list) => JSON.stringify([...list.matchAll(/"([^"]+)"/g)].map((x) => read(x[1])).join('')))
    .replace(/__ff_json\("([^"]+)"\)/g, (m, f) => JSON.stringify(JSON.parse(read(f))));
 
 function join(entries) {

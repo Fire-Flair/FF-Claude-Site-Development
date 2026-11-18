@@ -169,6 +169,30 @@ function ST19_Footer({ o, children }) {
         React.createElement("dt", null, "Sources"), React.createElement("dd", null, src.length ? src.join("; ") : "None listed"))));
 }
 
+/* Five story categories on all three sites (plus All). Every story's own category is folded into one of them. */
+const STORY_CATS17 = ["How it works", "Planning and booking", "Pay and costs", "Skills and growth", "Local and news"];
+function storyCat17(c) {
+  const t = String(c || "").toLowerCase();
+  if (/local|news/.test(t)) return STORY_CATS17[4];
+  if (/cost|fee|pay|tax|money|terms|rate/.test(t)) return STORY_CATS17[2];
+  if (/compar|how ff|your profile|staffing options/.test(t)) return STORY_CATS17[0];
+  if (/book|accept|plan|urgent|problem|finding work|choosing|shift/.test(t)) return STORY_CATS17[1];
+  return STORY_CATS17[3];
+}
+
+
+/* homefix: a story card shows whole sentences, never a "..." cut-off. A blurb that was cut short is replaced by the
+   intro's opening sentences (about 150 characters, always at least one whole sentence). */
+function storyLine22(p) {
+  const b = String(p.blurb || "").trim();
+  if (b && !/(\.\.\.|\u2026)$/.test(b)) return b;
+  const src = String(p.intro || b).replace(/(\.\.\.|\u2026)$/, "").trim();
+  const ss = src.match(/[^.!?]+[.!?]+["\u201D\u2019)]*(?=\s|$)/g) || [src];
+  let out = "";
+  for (const x of ss) { const t = (out + " " + x.trim()).trim(); if (out && t.length > 150) break; out = t; }
+  return out;
+}
+
 function Journal17({ kind = "team" }) {
   const [open, setOpen] = useState(null);
   const [cat, setCat] = useState("All");
@@ -176,8 +200,8 @@ function Journal17({ kind = "team" }) {
   const { dispatch } = useStore();
   const opener = useRef(null);
   const ids = (JR17_ORDER[kind] || JR17_ORDER.team).filter((i) => JR17[i]);
-  const cats = ["All", ...Array.from(new Set(ids.map((i) => JR17[i].cat)))];
-  const shown = ids.filter((i) => cat === "All" || JR17[i].cat === cat);
+  const cats = ["All", ...STORY_CATS17.filter((c) => ids.some((i) => storyCat17(JR17[i].cat) === c))];
+  const shown = ids.filter((i) => cat === "All" || storyCat17(JR17[i].cat) === cat);
   const img = (k) => k ? ((ST18_IMGS[k] && ST18_IMGS[k].src) || CfImg11(k) || (typeof IMGS !== "undefined" && IMGS[k]) || "") : "";
   const fpos = (k) => (ST18_IMGS[k] ? { objectPosition: ST18_IMGS[k].pos } : fp17(k));
   const o = open ? JR17[open] : null;
@@ -190,7 +214,14 @@ function Journal17({ kind = "team" }) {
     const m = /^\/stories\/([a-z0-9-]+)\/?$/.exec(window.location.pathname || "");
     if (m && ids.indexOf(m[1]) >= 0) setOpen(m[1]);
     const pop = () => { const mm = /^\/stories\/([a-z0-9-]+)/.exec(window.location.pathname || ""); setOpen(mm && JR17[mm[1]] ? mm[1] : null); };
-    if (ST18_ROUTES) { window.addEventListener("popstate", pop); return () => window.removeEventListener("popstate", pop); }
+    /* Address (single file): #/<site>/stories/<slug> opens the article on load, on Back and on Forward. */
+    const site = RT17_SITE_OF_KIND(kind);
+    const fromHash = () => { const r = rt17Parse(window.location.hash); return r.kind === "stories" && r.site === site && ids.indexOf(r.slug) >= 0 ? r.slug : null; };
+    const h0 = fromHash(); if (h0) setOpen(h0);
+    const hpop = () => { if (rt17Parse(window.location.hash).kind !== "foreign") setOpen(fromHash()); };
+    window.addEventListener("popstate", hpop);
+    if (ST18_ROUTES) window.addEventListener("popstate", pop);
+    return () => { window.removeEventListener("popstate", hpop); if (ST18_ROUTES) window.removeEventListener("popstate", pop); };
   }, []);
 
   const openStory = (id, trigger) => {
@@ -198,6 +229,7 @@ function Journal17({ kind = "team" }) {
     if (trigger) opener.current = trigger;
     setOpen(id);
     if (ST18_ROUTES) { try { window.history.pushState({ story: id }, "", "/stories/" + id); } catch (e) { /* ignore */ } }
+    else rt17Go(rt17Href({ kind: "stories", site: RT17_SITE_OF_KIND(kind), slug: id }));
   };
   /* Other parts of the page (the FF Staff Gold box) open a story with the "ff-openstory" event. */
   useEffect(() => {
@@ -208,6 +240,7 @@ function Journal17({ kind = "team" }) {
   const closeStory = () => {
     setOpen(null);
     if (ST18_ROUTES && /^\/stories\//.test(window.location.pathname)) { try { window.history.back(); } catch (e) { /* ignore */ } }
+    else if (!ST18_ROUTES && rt17Parse(window.location.hash).kind === "stories") rt17Go(rt17Href({ kind: "home", site: RT17_SITE_OF_KIND(kind) }));
     const t = opener.current; if (t && t.focus) setTimeout(() => { try { t.focus(); } catch (e) { /* ignore */ } }, 50);
   };
 
@@ -238,9 +271,13 @@ function Journal17({ kind = "team" }) {
     if (o && o.site === "ffteam.uk") { dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); }
     else nav.toEvent();
   };
+  /* Phase 2: on FF Party a button that would start a booking is locked; one that opens the network or another site still works. */
+  const ctaLocked = !!o && o.site !== "ffteam.uk" && !/packages/i.test((o && o.to) || "") && kind === "party";
   const more = o && o.related ? o.related.map((r) => ST18_IDS[r]).filter((s) => s && JR17[s] && JR17[s].site === o.site) : [];
 
-  return React.createElement("section", { className: "ff-sect ff-jr17", id: "ff-journal", "aria-labelledby": "ff-jr-h" },
+  const jrRef = useRef(null);
+  useFitLine22(jrRef, "[data-fit22]", [cat]);
+  return React.createElement("section", { className: "ff-sect ff-jr17", id: "ff-journal", ref: jrRef, "aria-labelledby": "ff-jr-h" },
     React.createElement("h2", { id: "ff-jr-h", className: "ff-h1 ff-jr17-title" }, React.createElement("span", { className: "k" }, "FireFlair"), React.createElement("span", { className: "s" }, "Stories")),
     React.createElement("div", { className: "ff-jr17-rule", "aria-hidden": "true" }, React.createElement("i", null),
       React.createElement("svg", { viewBox: "0 0 24 24", width: "18", height: "18" }, React.createElement("path", { d: "M12 2c1 3.5 5 5.5 5 10.5A5 5 0 0 1 7 13c0-2 1-3 2-4 .3 1.3 1 2 2 2-.5-3 0-6 1-9z", fill: "currentColor" })), React.createElement("i", null)),
@@ -252,11 +289,12 @@ function Journal17({ kind = "team" }) {
         key: id, className: "ff-jr17-card", href: "/stories/" + id,
         onClick: (e) => { if (e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey) { e.preventDefault(); openStory(id, e.currentTarget); } }
       },
-        React.createElement("span", { className: "ph" + (src ? "" : " txt") }, src ? React.createElement("img", { src, style: fpos(p.img), alt: p.alt || "", loading: "lazy", draggable: false }) : React.createElement("span", null, p.cat)),
-        React.createElement("span", { className: "tx" }, React.createElement("i", null, p.cat + " · " + p.date), React.createElement("b", null, p.title), React.createElement("small", null, p.blurb || p.intro)));
+        React.createElement("span", { className: "ph" + (src ? "" : " txt") }, src ? React.createElement("img", { src, style: fpos(p.img), alt: p.alt || "", loading: "lazy", draggable: false }) : React.createElement("span", null, storyCat17(p.cat))),
+        React.createElement("span", { className: "tx" }, React.createElement("i", { "data-fit22": "" }, storyCat17(p.cat) + " · " + p.date), React.createElement("b", null, p.title), React.createElement("small", null, storyLine22(p))));
     })),
-    React.createElement(Sheet, { open: !!o, onClose: closeStory, title: o ? o.cat : "", center: true },
+    React.createElement(Sheet, { open: !!o, onClose: closeStory, title: o ? storyCat17(o.cat) : "", center: true },
       o && React.createElement("article", { className: "ff-jr17-pop ff-jr17-art" },
+        React.createElement(BackBtn17, { fallback: closeStory }),
         img(o.img) && React.createElement("img", { className: "hero", src: img(o.img), style: fpos(o.img), alt: o.alt || "" }),
         React.createElement("div", { className: "meta" }, React.createElement("time", null, o.date), React.createElement("span", null, o.min + " min read")),
         React.createElement("h3", null, o.title),
@@ -265,7 +303,7 @@ function Journal17({ kind = "team" }) {
         React.createElement("div", { className: "lede" }, ST18_blocks(o.intro, openStory)),
         o.body.map(([h, t]) => React.createElement(React.Fragment, { key: h }, React.createElement("h4", null, h), ST18_blocks(t, openStory))),
         React.createElement(ST19_Footer, { key: o.slug, o },
-          o.cta && React.createElement("div", { className: "ff-st-cta" }, React.createElement(Button, { onClick: cta }, o.cta))),
+          o.cta && React.createElement("div", { className: "ff-st-cta" }, ctaLocked ? React.createElement(LockedBtn17, null, o.cta) : React.createElement(Button, { onClick: cta }, o.cta))),
         more.length > 0 && React.createElement("div", { className: "ff-st-more" }, React.createElement("b", null, "Keep reading"),
           more.map((s) => React.createElement("a", { key: s, href: "/stories/" + s, onClick: (e) => { if (e.button === 0 && !e.metaKey && !e.ctrlKey) { e.preventDefault(); openStory(s); } } }, JR17[s].title))))));
 }
@@ -281,7 +319,7 @@ function StoryPreview17({ p, by }) {
     React.createElement("style", null, ST18_CSS + ".ff .ff-st17-prev{margin:14px 0 4px;padding:14px;border:1px solid rgba(126,97,29,.3);border-radius:18px;corner-shape:squircle;background:#FFFDF8}.ff .ff-st17-prev .hero{width:100%;max-height:220px;object-fit:cover;border-radius:14px;corner-shape:squircle}.ff .ff-st17-prev h3{margin:8px 0 4px}.ff .ff-st17-prev .meta{display:flex;gap:10px;font-size:12.5px;color:#6A6253}.ff .ff-st17-prev .by{font-size:13px;margin:4px 0 10px}"),
     React.createElement("article", { className: "ff-jr17-art" },
       p.photo && React.createElement("img", { className: "hero", src: img(p.photo), alt: "" }),
-      React.createElement("div", { className: "meta" }, React.createElement("span", null, p.cat || "Story"), React.createElement("time", null, p.date), React.createElement("span", null, Math.max(1, Math.round(words / 200)) + " min read")),
+      React.createElement("div", { className: "meta" }, React.createElement("span", null, p.cat ? storyCat17(p.cat) : "Story"), React.createElement("time", null, p.date), React.createElement("span", null, Math.max(1, Math.round(words / 200)) + " min read")),
       React.createElement("h3", null, p.title || "Untitled story"),
       React.createElement("div", { className: "by" }, "By ", React.createElement("b", null, by || "You")),
       p.intro && React.createElement("div", { className: "lede" }, ST18_blocks(pcSafeMd17(p.intro))),

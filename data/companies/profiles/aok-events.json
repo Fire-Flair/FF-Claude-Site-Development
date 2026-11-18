@@ -1,0 +1,85 @@
+{
+  "formatVersion": 2,
+  "slug": "aok-events",
+  "name": "AOK Events",
+  "kind": "Event management",
+  "base": "London",
+  "areas": [
+    "London"
+  ],
+  "description": "A London event management company.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://aokevents.com",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Event management"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://aokevents.com",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://aokevents.com",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://aokevents.com",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://aokevents.com",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "AOKEV",
+    "position": 140,
+    "source": {
+      "urls": [
+        "https://aokevents.com"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": true
+      }
+    ]
+  }
+}

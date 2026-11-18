@@ -124,7 +124,21 @@ const FOCUS17 = {
  "in_tr_ff_open_bar": "50% 60%",
  "in_tr_ff_masterclass": "50% 50%",
  "in_dj_food_festivals": "50% 50%",
- "in_rw_shoot": "49% 42%"
+ "in_rw_shoot": "49% 42%",
+ "j17_vke07": "55% 50%",
+ "j17_vke09": "62% 50%",
+ "t17_hp02": "40% 38%",
+ "j17_hp02": "40% 50%",
+ "j17_vke12": "50% 50%",
+ "t17_hp03": "55% 44%",
+ "j17_hp03": "55% 50%",
+ "t17_hp01": "30% 51%",
+ "j17_hp01": "30% 50%",
+ "t17_p44": "50% 62%",
+ "j17_p37": "60% 50%",
+ "t17_vkg15": "50% 30%",
+ "j17_hp04": "40% 55%",
+ "j17_p43": "60% 50%"
 };
 
 
@@ -153,6 +167,7 @@ function dxPick17(c, n, shape) {
 /* A card photo: from the pillar's own card photos when it has them (FF Team), otherwise the
    pool photos after the one on the tile. Either way a card never shows the tile's photo. */
 function dxCard17(c, n, i) {
+  if (c && c.fixedCards) return "j17_" + c.fixedCards[i % c.fixedCards.length];
   const k = c && c.cards; if (k && k.length) return "j17_" + k[(((n + i) % k.length) + k.length) % k.length];
   return dxPick17(c, n + 1 + i, "j");
 }
@@ -197,100 +212,6 @@ const VK17_OCC = [
 ];
 
 
-const VK17_WHY = [
-  ["Your Bar, Bespoke", "Created to complement your occasion. Work with our design team to tailor the size, style and finish of your bar, from understated elegance to a striking centrepiece."],
-  ["Drinks with Personality", "Your favourites, alongside something new to discover. Choose from classic cocktails, signature creations and alcohol-free serves, with a menu that reflects your tastes and gives every guest something to enjoy."],
-  ["Care in Every Detail", "Quality spirits, fresh ingredients and precise preparation make the difference. From the balance of a cocktail to the glass and garnish, each serve is finished with care."],
-  ["Expert Team", "Skilled bartenders, creative mixologists and accomplished flair bartenders bring exceptional drinks and effortless hosting to your occasion, with a touch of theatre when the moment calls for it."]
-];
-
-
-const VK17_STEPS = [
-  ["It Begins With You", "Our team will take you through the details of your event, exploring your vision, your venue and the atmosphere you\u2019d like to create. Together, we\u2019ll shape a bar experience that feels entirely yours."],
-  ["The Details, Designed Around You", "Enjoy a personal tasting with our mixologist to create a drinks menu for your occasion. Work alongside our design team to select your bar style and develop bespoke artwork, bringing your vision to life."],
-  ["A Date to Look Forward To", "Once you\u2019re happy with your proposal, return your signed agreement and pay the agreed deposit to secure your date."],
-  ["We\u2019ll Take It From Here", "We\u2019ll confirm the final arrangements and coordinate with your venue. From setup to the last drink and breakdown, our team takes care of the bar, leaving you free to enjoy the occasion."]
-];
-
-
-const VK17_QA = [
-  ["Do you offer a full bar service?", "Yes", "Bespoke bars, cocktails, mocktails, spirits, wines, beers, draught beer and soft drinks."],
-  ["Do you travel across the UK?", "Yes", "Mobile bar experiences across the UK. Share your venue or postcode to discuss availability and access."],
-  ["Do you design the bar around my event?", "Yes", "Choose from 42 bar styles or ask for a made to measure design, with bespoke artwork."],
-  ["Do you offer alcohol-free serves?", "Yes", "Mocktails and soft drinks sit alongside the cocktails."],
-  ["Do you hold a tasting before the event?", "Yes", "A personal tasting with our mixologist to create your drinks menu."],
-  ["Do you coordinate with my venue?", "Yes", "We confirm final arrangements with your venue, from setup to breakdown."],
-  ["Does my venue need to provide space, access, power and water?", "Yes", "Requirements depend on the bar and service you choose. We discuss them with you and your venue before the event."],
-  ["Does an enquiry reserve my date?", "No", "Your date is secured once your signed agreement and deposit are received."]
-];
-
-
-const VK17_DESC = "Vooshka is a luxury mobile cocktail bar bringing exquisite drinks and elevated hospitality to events across the UK. Bespoke bars, exceptional cocktails and complete drinks service for weddings, private celebrations and corporate events nationwide.\n\nA great bar brings people together. At Vooshka, distinctive design, expertly made drinks and a warm welcome create a natural gathering place at the heart of your celebration. From intimate gatherings to grand receptions, we work with you to find the right look, menu and style of service.";
-
-
-const vkMedia17 = () => [
-  ...VK17.occ.map((f, i) => f ? { id: "vk_occ" + i, src: f, alt: VK17_OCC[i][0] } : null).filter(Boolean),
-  ...VK17.gal.map(([f, a], i) => ({ id: "vk_g" + i, src: vkSrc17(f), alt: a }))
-];
-
-
-const vkExtras17 = () => ({
-  offering: ["Bespoke Bars", "Cocktails", "Mocktails", "Spirits", "Beers"],
-  website: "http://www.vooshkabars.co.uk/",
-  experience: ["A little theatre. A lot of elegance.", "A great bar brings people together. At Vooshka, distinctive design, expertly made drinks and a warm welcome create a natural gathering place at the heart of your celebration.", "From intimate gatherings to grand receptions, we work with you to find the right look, menu and style of service. You bring the people and the reason to celebrate; we\u2019ll take care of the bar."],
-  why: VK17_WHY,
-  occasions: VK17_OCC.map(([t, d], i) => ({ t, d, src: VK17.occ[i] || "" })),
-  steps: VK17_STEPS,
-  quote: "Not just a bar. A beautiful part of your celebration.",
-  barsNote: "Ordered by overall span, from smallest to largest. Made-to-measure designs appear last. All bars are 1.2 m high.",
-  bars: VK17.bars.map(([f, l, s]) => ({ src: f, label: l, size: s })),
-  cocktails: [{ cat: "Signature cocktails", items: VK17.sig.map(([f, n]) => ({ src: f, name: n })) }]
-});
-
-
-const vkReviews17 = () => VK17.revs.map(([by, text]) => [null, 0, text, by]);
-
-
-const vkContact17 = () => [["WhatsApp", "+44 7814 904355"], ["Instagram", "@vooshkacocktailbar"], ["Website", "vooshkabars.co.uk"]];
-
-
-function vooshkaEditable17() {
-  const quick = (t) => t.length > 90 ? t.slice(0, t.lastIndexOf(" ", 90)) + "." : t;
-  return {
-    name: "Vooshka Cocktail Bar",
-    kind: "Luxury mobile cocktail bar",
-    areas: "Nationwide",
-    slug: "vooshka",
-    socials: { whatsapp: "+44 7814 904355", instagram: "@vooshkacocktailbar" },
-    theme: "onyx",
-    layout: "centre",
-    logoWide: true,
-    description: VK17_DESC,
-    logo: vkSrc17(VK17.logo),
-    media: vkMedia17(),
-    records: {
-      contact: [
-        makeRecord("contact", "+44 7814 904355", { description: "WhatsApp" }),
-        makeRecord("contact", "@vooshkacocktailbar", { description: "Instagram" }),
-        makeRecord("contact", "vooshkabars.co.uk", { description: "Website" })
-      ],
-      locations: [
-        makeRecord("locations", "Nationwide", { description: "Mobile bar experiences across the UK" }),
-        makeRecord("locations", "United Kingdom")
-      ]
-    },
-    svcCards: VK17_OCC.map(([title, tagline, includes, ideal]) => ({ id: uid("svcCards"), tone: "gold", title, tagline: quick(tagline), includes, ideal, time: "Tailored to your event", price: "" })),
-    menu: VK17.sig.map(([f, name]) => ({ id: uid("menu"), tone: "dark", name, desc: "Signature cocktail", ingredients: "See the Vooshka cocktail menu", method: "Made fresh at the bar", glass: "Glassware and garnish may vary", price: "", img: f })),
-    qa: [
-      ...CO_QA_SEED.filter((q) => q.group === "feedback"),
-      ...VK17_QA.map(([text, answer, note], i) => ({ id: "qa_vk" + i, group: "business", text, answer, note }))
-    ],
-    reviews: VK17.revs.map(([byName, text], i) => ({ id: "vkr" + i, rating: 0, text, byName })),
-    extras: vkExtras17()
-  };
-}
-
-
 function VkFold17({ title, count, children }) {
   const [open, setOpen] = useState(false);
   return React.createElement("section", {
@@ -331,79 +252,110 @@ function VkGrid17({ items }) {
 }
 
 
-function VkExtras17({ x }) {
-  const total = (x.cocktails || []).reduce((n, g) => n + g.items.length, 0);
-  return React.createElement(React.Fragment, null, x.pkgs && React.createElement(VkFold17, {
-    title: "Packages",
-    count: x.pkgs.length
-  }, x.pkgs.map(([t, pr, d]) => React.createElement("div", {
-    key: t,
-    className: "ff-vk-row"
-  }, React.createElement("b", null, t + " · " + pr), React.createElement("span", null, d)))), x.faq && React.createElement(VkFold17, {
-    title: "Questions and answers",
-    count: x.faq.length
-  }, x.faq.map(([t, d]) => React.createElement("div", {
-    key: t,
-    className: "ff-vk-row"
-  }, React.createElement("b", null, t), React.createElement("span", null, d)))), x.experience && React.createElement(VkFold17, {
-    title: "The " + (x.name || "Vooshka") + " experience"
-  }, React.createElement("h4", {
-    className: "ff-vk-h"
-  }, x.experience[0]), x.experience.slice(1).map((p) => React.createElement("p", {
-    key: p,
-    className: "ff-body ff-vk-p"
-  }, p)), x.offering && React.createElement("div", {
-    className: "ff-copub-chips"
-  }, x.offering.map((o) => React.createElement("span", {
-    key: o
-  }, o)))), x.why && React.createElement(VkFold17, {
-    title: "Why " + (x.name || "Vooshka"),
-    count: x.why.length
-  }, x.why.map(([t, d]) => React.createElement("div", {
-    key: t,
-    className: "ff-vk-row"
-  }, React.createElement("b", null, t), React.createElement("span", null, d)))), x.occasions && React.createElement(VkFold17, {
-    title: "Occasions",
-    count: x.occasions.length
-  }, React.createElement("div", {
-    className: "ff-vk-grid wide"
-  }, x.occasions.map((o) => React.createElement("figure", {
-    key: o.t,
-    className: "ff-vk-it" + (o.src ? "" : " noimg")
-  }, o.src && React.createElement("img", { decoding: "async",
-    src: o.src,
-    alt: o.t,
-    loading: "lazy"
-  }), React.createElement("figcaption", null, React.createElement("b", null, o.t), React.createElement("small", null, o.d)))))), x.steps && React.createElement(VkFold17, {
-    title: "The " + (x.name || "Vooshka") + " process",
-    count: x.steps.length
-  }, x.steps.map(([t, d], i) => React.createElement("div", {
-    key: t,
-    className: "ff-vk-row"
-  }, React.createElement("b", null, String(i + 1).padStart(2, "0"), "  ", t), React.createElement("span", null, d))), x.quote && React.createElement("p", {
-    className: "ff-vk-quote"
-  }, x.quote)), x.bars && x.bars.length > 0 && React.createElement(VkFold17, {
-    title: "Bar styles",
-    count: x.bars.length
-  }, x.barsNote && React.createElement("p", {
-    className: "ff-body ff-vk-p"
-  }, x.barsNote), React.createElement(VkGrid17, {
-    items: x.bars
-  })), total > 0 && React.createElement(VkFold17, {
-    title: x.cocktailsTitle || "Signature cocktails",
-    count: total
-  }, x.cocktails.map((g) => React.createElement("div", {
-    key: g.cat,
-    className: "ff-vk-grp"
-  }, React.createElement("h4", {
-    className: "ff-vk-h"
-  }, g.cat), React.createElement(VkGrid17, {
-    items: g.items
-  })))));
+/* A card as people see it: open it for every photo, the full text and the PDF. */
+function CoCardPop17({ card, onClose }) {
+  const photos = card ? coPhotos17(card) : [];
+  const doc = card && card.document && card.document.name ? card.document : null;
+  return (
+    <Sheet open={!!card} onClose={onClose} title={card ? card.name : ""} center>
+      {card ? <div className="ff-coqa17-pop">
+        {photos.length > 0 && <div className={"ff-co-pop-ph n" + Math.min(photos.length, 5)}>{photos.map((src, i) => <img key={i} decoding="async" src={src} alt="" referrerPolicy="no-referrer" />)}</div>}
+        {String(card.description || "").trim() ? <p className="ff-co-pop-tx">{card.description}</p> : null}
+        {doc ? (doc.dataUrl ? <a className="ff-btn sm" href={doc.dataUrl} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}><I11.FileText size={13} /> {doc.name}</a> : <span className="ff-body"><I11.FileText size={13} /> {doc.name}</span>) : null}
+      </div> : null}
+    </Sheet>
+  );
 }
 
 
-/* Raise the Bar Glasgow (v17.3.138): full profile built from their public website, with their permission. */
+/* Boxes in a row: a squircle per card with its first photo, its title and its text. A number shows when the section is numbered. */
+function CoBoxes17({ cards, label, numbered, onOpen }) {
+  return (
+    <HScroll label={label}>
+      {cards.map((r, i) => {
+        const ph = coPhotos17(r)[0];
+        return (
+          <button key={r.id} type="button" className="ff-co-box" onClick={() => onOpen(r)}>
+            {ph ? <img decoding="async" src={ph} alt="" loading="lazy" referrerPolicy="no-referrer" onError={(e) => { if (/^https?:/.test(ph)) e.currentTarget.style.display = "none"; }} /> : null}
+            {numbered ? <span className="no">{String(i + 1).padStart(2, "0")}</span> : null}
+            <b>{r.name}</b>
+            {String(r.description || "").trim() ? <span className="tx">{r.description}</span> : null}
+          </button>
+        );
+      })}
+    </HScroll>
+  );
+}
+
+
+/* One section's cards. Every card with a photo: the photo grid (title and text as the caption). Otherwise: boxes in a row. */
+function CoCardsView17({ cards, label, numbered, onOpen }) {
+  if (!cards.length) return null;
+  if (cards.every((r) => coPhotos17(r).length)) {
+    return (
+      <div className="ff-vk-grid">
+        {cards.map((r, i) => {
+          const more = coPhotos17(r).length > 1 || (r.document && r.document.name);
+          const inner = <>
+            <img decoding="async" src={coPhotos17(r)[0]} alt={r.name || ""} loading="lazy" referrerPolicy="no-referrer" onError={(e) => { e.currentTarget.style.visibility = "hidden"; }} />
+            <figcaption>{numbered ? <span className="no">{String(i + 1).padStart(2, "0")}</span> : null}{r.name ? <b>{r.name}</b> : null}{String(r.description || "").trim() ? <small>{r.description}</small> : null}</figcaption>
+          </>;
+          return more
+            ? <figure key={r.id} className="ff-vk-it"><button type="button" className="ff-vk-itb" onClick={() => onOpen(r)}>{inner}</button></figure>
+            : <figure key={r.id} className="ff-vk-it">{inner}</figure>;
+        })}
+      </div>
+    );
+  }
+  return <CoBoxes17 cards={cards} label={label} numbered={numbered} onOpen={onOpen} />;
+}
+
+
+/* A company's own "More information" sections, as people see them. Reads the one company shape (sections plus their cards). */
+function CoInfo17({ co }) {
+  const [pop, setPop] = useState(null);
+  return (
+    <>
+      <CoCardPop17 card={pop} onClose={() => setPop(null)} />
+      {coSections17(co).map((sec, si) => {
+        const cards = coShownCards17(coSecAll17(co, sec));
+        const paras = String(sec.text || "").split(/\n\s*\n/).map((x) => x.trim()).filter(Boolean);
+        const chips = (sec.chips || []).filter(Boolean);
+        if (!cards.length && !paras.length && !sec.lead && !sec.quote && chips.length) {
+          return (
+            <section key={sec.id || si} className="ff-copub-sec"><SectionHead icon={<I11.Star size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={sec.title} />
+              <div className="ff-copub-chips">{chips.map((x) => <span key={x}>{x}</span>)}</div></section>
+          );
+        }
+        return (
+          <VkFold17 key={sec.id || si} title={sec.title} count={cards.length || null}>
+            {sec.lead ? <h4 className="ff-vk-h">{sec.lead}</h4> : null}
+            {paras.map((p, i) => <p key={"p" + i} className="ff-body ff-vk-p">{p}</p>)}
+            {chips.length ? <div className="ff-copub-chips">{chips.map((x) => <span key={x}>{x}</span>)}</div> : null}
+            <CoCardsView17 cards={cards} label={sec.title} numbered={!!sec.numbered} onOpen={setPop} />
+            {sec.quote ? <p className="ff-vk-quote">{sec.quote}</p> : null}
+          </VkFold17>
+        );
+      })}
+    </>
+  );
+}
+
+
+/* Packages and Cocktails: simple cards in a row, each opening its photos and full text. */
+function CoSimpleRow17({ cards, label }) {
+  const [pop, setPop] = useState(null);
+  return (
+    <>
+      <CoBoxes17 cards={cards} label={label} onOpen={setPop} />
+      <CoCardPop17 card={pop} onClose={() => setPop(null)} />
+    </>
+  );
+}
+
+
+/* Raise the Bar Glasgow: their page is data/companies/profiles/raise-the-bar.json like every other company.
+   These three constants are only for the FF Party package browser (packages-browse.jsx). */
 const RTB_BLOB17 = "https://6istx3ephgqw5ngz.public.blob.vercel-storage.com/cocktails/";
 
 
@@ -413,70 +365,47 @@ const RTB_MENU17 = CONTENT_ADAPTER.raiseTheBarMenu();
 const rtbMoney17 = (n) => "£" + (n % 1 ? n.toFixed(2) : String(n));
 
 
-function rtbPage17() {
-  const base = realPage11(REAL_COMPANIES11.find((c) => c.slug === "raise-the-bar"))[1];
-  return {
-    ...base,
-    contact: [["Website", "raisethebarglasgow.com"], ["Email", "info@raisethebarglasgow.com"], ["Phone", "07498 723388"]],
-    extras: {
-      name: "Raise the Bar",
-      cocktailsTitle: "Cocktail menu",
-      pkgs: [
-        ["Mobile Cocktail Bar", "From £400", "A fully staffed mobile cocktail bar: mixologist, bar, printed menu, spirits, mixers, garnishes, ice and glassware. 3 hours of service. Choose your cocktails as add-ons."],
-        ["Cocktail Masterclass", "Enquire for a quote", "A hands-on class led by professional mixologists, at your venue, for teams, hen parties and private groups. Alcohol-free options available."],
-        ["Whisky Tasting", "Enquire for a quote", "A guided Scotch whisky tasting led by kilted hosts, with distillery stories and a curated selection of drams."]
-      ],
-      experience: ["Fully staffed mobile cocktail bars for Glasgow and Scotland.", "Raise the Bar brings a professional mixologist, a fully stocked mobile bar and a printed menu of the cocktails you choose to weddings, parties, corporate events and festivals. Everything needed for the service is included, and travel within 30 miles of Glasgow is part of the price."],
-      offering: ["Mobile cocktail bar", "Individual serve cocktails", "Mini party packs", "Party packs", "Mocktails", "Masterclasses", "Whisky tastings", "Branded bars"],
-      faq: [
-        ["What is included?", "A professional mixologist, a fully stocked mobile bar, a bespoke printed cocktail menu, spirits, liqueurs, mixers, fresh ingredients, garnishes, ice and all glassware."],
-        ["Is there a minimum booking?", "Yes, £400 before any travel charge. Travel within 30 miles of Glasgow is included; beyond that a travel charge may apply and is quoted before you confirm."],
-        ["How long is the service?", "3 hours from your start time. The team arrives about 30 minutes before to set up. Longer service is quoted on request."],
-        ["How many cocktails can I choose?", "Up to 6 online. For a longer menu, or drinks that are not on the menu, ask for a bespoke menu."],
-        ["Can I order single serves?", "Yes, with a minimum of 5 of each cocktail, and the £400 minimum booking still applies."],
-        ["How do deposits work?", "A £50 deposit secures the request and the team confirm within 48 hours. The balance is invoiced and due within 14 days, and no later than 72 hours before the event. The deposit is non-refundable if you cancel, and refunded in full if they cannot attend."],
-        ["How big is the bar?", "About 1.6 m by 1 m, with working room needed behind it. The front can be branded for an extra fee."],
-        ["Are they insured?", "Yes, they hold public liability insurance and can share proof on request."]
-      ],
-      cocktails: [{ cat: "Single serve, mini party pack (14) and party pack (28)", items: RTB_MENU17.map(([n, i, m, p, f]) => ({ src: RTB_BLOB17 + f, name: n, size: [i && "Single " + rtbMoney17(i), m && "Mini " + rtbMoney17(m), p && "Party " + rtbMoney17(p)].filter(Boolean).join(" · ") })) }]
-    }
-  };
-}
-
-
 const COMPANY_PAGES = {
-  co_vooshka: {
-    name: "Vooshka Cocktail Bar",
-    kind: "Luxury mobile cocktail bar",
-    areas: "Nationwide",
-    slug: "vooshka",
-    socials: { whatsapp: "+44 7814 904355", instagram: "@vooshkacocktailbar" },
-    theme: "onyx",
-    layout: "centre",
-    logoWide: true,
-    tier: "gold",
-    logo: vkSrc17(VK17.logo),
-    description: VK17_DESC,
-    media: vkMedia17(),
-    team: [],
-    contact: vkContact17(),
-    venues: [],
-    reviews: vkReviews17(),
-    qa: [...CO_QA_SEED.filter((q) => q.group === "feedback"), ...VK17_QA.map(([text, answer, note], i) => ({ id: "qa_vk" + i, group: "business", text, answer, note }))],
-    extras: vkExtras17()
-  },
+  /* The same source the DEV owner's account is built from. */
   ...Object.fromEntries(REAL_COMPANIES11.map(realPage11)),
-  "co_raise-the-bar": rtbPage17(),
   ...Object.fromEntries(REAL_SUPPLIERS17.map(realPage11)),
 };
 
 
 function companyById(state, id) {
-  if (id === "mine") { const c = state.company || {}; return { ...c, id: "mine", mine: true, mediaList: (c.media || []), areas: c.areas !== undefined ? c.areas : (c.location || "") }; }
+  if (id === "mine") { const c = state.company || {}; const cl = coClaimMine17(state), open = cl && cl.status !== "approved"; return { ...c, ...(open ? { unclaimed: true, claimPending: cl.status === "pending", claimRejected: cl.status === "rejected" } : {}), id: "mine", mine: true, mediaList: (c.media || []), areas: c.areas !== undefined ? c.areas : (c.location || "") }; }
   const base = COMPANIES.find(x => x.id === id) || SUPPLIER_BASES17[id];
   const page = COMPANY_PAGES[id];
   if (!base || !page) return null;
-  return { ...base, ...page, id, mediaList: page.media.map(k => typeof k === "string" ? { id: k, src: IMG11[k] } : k).filter(m => m.src) };
+  /* FireFlair's edits or a live claim sit over the profile file (claims17.js). */
+  const ov = dirOverlay17(state, id);
+  const merged = ov ? { ...base, ...page, ...ov } : { ...base, ...page };
+  return { ...merged, id, mediaList: merged.media.map(k => typeof k === "string" ? { id: k, src: IMG11[k] } : k).filter(m => m.src) };
+}
+
+
+function coIsVk17(state) {
+  const c = state.company || {};
+  /* The sample company: the dev/demo Vooshka account, or the signed-out preview (no company yet). A company that has joined has a slug and starts empty. */
+  return c.slug === "vooshka" || (!c.slug && !String(c.name || "").trim());
+}
+
+
+function coSeeds17(state) { return coIsVk17(state) ? vkSeeds17() : {}; }
+
+
+function coCards17(state, co, pub) {
+  if (!co || (pub && co.mine)) return { services: [], cocktails: [] };  /* Phase 2: what a company saves in its card builders is not shown on its public page. */
+  const sd = co.mine ? coSeeds17(state) : {};
+  const services = co.mine ? (state.coServices17 || sd.service || []) : (co.services || []);
+  const cocktails = co.mine ? (state.coCocktails17 || sd.cocktail || []) : (co.cocktails || []);
+  return { services: services.filter(x => String(x.title || "").trim()), cocktails: cocktails.filter(x => String(x.name || "").trim()) };
+}
+
+
+function coPartners17(state, co) {
+  const ids = (co && (co.mine ? (state.company || {}).partners : co.partners)) || [];
+  return ids.map(id => companyById(state, id)).filter(Boolean);
 }
 
 

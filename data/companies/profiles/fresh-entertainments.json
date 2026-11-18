@@ -1,0 +1,86 @@
+{
+  "formatVersion": 2,
+  "slug": "fresh-entertainments",
+  "name": "Fresh Entertainments",
+  "kind": "Wedding entertainment & DJs",
+  "base": "Glasgow",
+  "areas": [
+    "Glasgow",
+    "Ayrshire",
+    "Loch Lomond",
+    "Edinburgh",
+    "Scotland-wide"
+  ],
+  "description": "A Glasgow wedding entertainment company offering DJ hire across Scotland. It lists Ayrshire, Loch Lomond, Stornoway and Edinburgh as areas it knows well.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://encoremusicians.com/Fresh-Entertainments",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "DJ hire",
+        "Wedding entertainment"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://encoremusicians.com/Fresh-Entertainments",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://encoremusicians.com/Fresh-Entertainments",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Public liability insurance listed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://encoremusicians.com/Fresh-Entertainments",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "FRESH",
+    "position": 38,
+    "source": {
+      "urls": [
+        "https://encoremusicians.com/Fresh-Entertainments"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Glasgow",
+        "lat": 55.8642,
+        "lng": -4.2518,
+        "approx": false
+      }
+    ]
+  }
+}

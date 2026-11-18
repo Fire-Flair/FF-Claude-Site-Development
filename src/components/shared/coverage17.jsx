@@ -1,19 +1,52 @@
 /* src/components/shared/coverage17.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
 /* ==========================================================================
-   COVERAGE (v17.4.6) — one UK location tree for FF Team, FF Staff and FF Party.
+   COVERAGE (v17.6.1) — one UK location tree for FF Team, FF Staff and FF Party.
 
    Data: the Front Door catalogue (FD_NODES, built from src/content/data/fd-rows.json; ids are
    GeoNames "gn:<id>" or "country:XX"). Coverage is stored by stable location id:
-     owner.records.locations[].locId   the places the owner ticked (what the public sees)
-     owner.coverage17 = { v: 2, inc: [ids], exc: [ids], updatedAt }
+     owner.records.locations[]   one Work Location record per ticked place: { locId, name, lat, lng, ... }
+                                 (lat/lng = the centre of the place; the live back end requires both)
+     owner.coverage17 = { v: 2, inc: [ids], exc: [ids], updatedAt }   inc mirrors the records; exc holds the exceptions
    A place is covered when the nearest ticked-or-excluded place at or above it is ticked.
    Ticking London covers every borough and neighbourhood beneath it; unticking Camden then adds
    Camden to exc, and London shows as partly selected. Ticking a partly selected place clears the
    exceptions beneath it. Expanding a branch and selecting it are separate controls.
-   The postcode (state.workPostcode) is private and belongs to the base (base17.jsx); the tree only reads the base
-   to suggest places. A suggestion is a tick box on the same coverage: it starts unticked unless already covered.
-   The same tree, in "links" mode, is Explore by area: every place is a link to its area page.
+
+   v17.6.1: the tick list IS how work locations are chosen (FF Team profile and FF Staff company builder): one closed
+   drop-down, "Tick all the places you'd like to work". There is no distance setting and no ranking of places; the
+   base point (base17.jsx) is used for the map pin only. A record whose place is not in the tree is kept and shown as a
+   ticked row at the end of the list, so nothing already collected is lost. The same tree, in "links" mode, is Explore
+   by area: every place is a link to its area page.
    ========================================================================== */
+/* The heading of the tick list, and its only text. */
+const COV_HEAD17 = "Tick all the places you'd like to work";
+/* The name a record carries for a place (the United Kingdom is never called "UK-wide"). */
+const covRecName17 = (n) => (n.id === "country:GB" ? "United Kingdom" : FD_TICK_NAME19(n));
+/* The centre of a place: its own point, else the middle of the places directly beneath it (the United Kingdom is the
+   middle of its nations), else the middle of everything beneath it. null when the catalogue has none (non-UK countries). */
+function covCentre17(n) {
+  if (!n) return null;
+  if (n.lat != null && n.lng != null) return { lat: n.lat, lng: n.lng };
+  const pts = (k) => k.filter(x => x.lat != null && x.lng != null);
+  let d = pts(n.kids.map(i => FD_NODES[i]));
+  if (!d.length) d = pts(fdDesc(n));
+  if (!d.length) return null;
+  const m = (f) => Math.round(d.reduce((t, x) => t + x[f], 0) / d.length * 10000) / 10000;
+  return { lat: m("lat"), lng: m("lng") };
+}
+/* A new Work Location record for a ticked place. */
+function covNewRec17(n) {
+  const c = covCentre17(n);
+  return makeRecord("locations", covRecName17(n), { locId: n.id, lat: c ? c.lat : null, lng: c ? c.lng : null });
+}
+/* The same record with its place id and centre filled in when they are missing (nothing else is changed). */
+function covFill17(r) {
+  const id = r.locId || covIdOfName17(r.name), n = id && FD_BY_ID[id];
+  if (!n) return r;
+  const c = covCentre17(n), needPt = c && (r.lat == null || r.lng == null);
+  if (r.locId && !needPt) return r;
+  return { ...r, locId: id, ...(needPt ? { lat: c.lat, lng: c.lng } : {}) };
+}
 /* Coverage tree shape: Northern Ireland sits with Ireland (the island), not under the UK. Covering Ireland covers
    Northern Ireland; covering the UK covers England, Scotland and Wales. Area pages and URLs are unchanged. */
 const COV_NI17 = "gn:2641364", COV_IE17 = "country:IE";
@@ -30,6 +63,44 @@ function covOf17(owner) {
   recs.forEach(r => { if (r.hidden || r.proposed) return; const id = r.locId || covIdOfName17(r.name); if (id && FD_BY_ID[id]) inc.add(id); });
   const exc = new Set((c.exc || []).filter(id => FD_BY_ID[id]));
   return { inc, exc };
+}
+
+
+/* The places an owner has ticked, as they are shown: in the tree's order, a ticked parent standing for everything beneath
+   it (its ticked children are not repeated unless an exception sits between them). Records whose place is not in the
+   tree come last, in the order they were added. Each entry: { node, rec, name }; node is null for those records. */
+let COV_ORD17 = null;
+function covOrder17() {
+  if (COV_ORD17) return COV_ORD17;
+  COV_ORD17 = {};
+  let i = 0;
+  const walk = (n) => { if (COV_ORD17[n.id] === undefined) COV_ORD17[n.id] = i++; covKids17(n).forEach(walk); };
+  covRoots17().forEach(walk);
+  return COV_ORD17;
+}
+
+
+function covPlaces17(owner) {
+  const recs = (((owner && owner.records) || {}).locations || []).filter(r => !r.hidden && !r.proposed);
+  const c = covOf17(owner), ord = covOrder17(), seen = new Set(), known = [], extra = [];
+  recs.forEach(r => {
+    const id = r.locId || covIdOfName17(r.name), n = id && FD_BY_ID[id];
+    if (!n) { if (String(r.name || "").trim()) extra.push({ node: null, rec: r, name: r.name }); return; }
+    if (seen.has(n.id)) return;
+    seen.add(n.id);
+    known.push({ node: n, rec: r, name: n.id === "country:GB" ? "United Kingdom" : (r.name || covRecName17(n)) });
+  });
+  const standing = known.filter(({ node }) => { for (const a of covAnc17(node).slice(1)) { if (c.exc.has(a.id)) return true; if (c.inc.has(a.id)) return false; } return true; });
+  const at = (x) => (ord[x.node.id] === undefined ? 1e9 : ord[x.node.id]);
+  return [...standing.sort((a, b) => at(a) - at(b)), ...extra];
+}
+/* The public chips: the ticked places' names, in the tree's order. */
+const covChips17 = (owner) => covPlaces17(owner).map(p => p.name);
+/* The location records of a person as the public sees them: tree order, a ticked parent standing for what is beneath it.
+   The exceptions are known only for the signed-in member's own profile. */
+function covRecsFor17(state, person, list) {
+  const own = person && person.id === "me" ? state.profile : null;
+  return covPlaces17({ records: { locations: list || [] }, coverage17: own ? own.coverage17 : undefined }).map(p => (p.name === p.rec.name ? p.rec : { ...p.rec, name: p.name }));
 }
 
 
@@ -86,34 +157,49 @@ function covText17(owner, max) {
 }
 
 
-/* Store side. COV_SET { owner: "company" | undefined, inc, exc } rewrites the location records for
-   the ticked places (existing records keep their id, rank, description and media; free-text places
-   that are not in the catalogue are kept as they are) and stores the exceptions. */
+/* Store side. COV_SET { owner: "company" | undefined, inc, exc } rewrites the Work Location records for the ticked
+   places (an existing record keeps its id, description and media and gains its place id and centre when it lacks them; a
+   new one is made with both; places that are not in the catalogue are kept as they are) and stores the exceptions.
+   Records are not ranked: nothing here sets or reads a primary, secondary or extra place. */
 function cov17Reducer(s, a) {
   if (a.type !== "COV_SET") return null;
   const co = a.owner === "company";
   const owner = co ? (s.company || {}) : s.profile;
   const recs = ((owner.records || {}).locations) || [];
   const inc = [...a.inc].filter(id => FD_BY_ID[id]);
-  const keep = recs.filter(r => { const id = r.locId || covIdOfName17(r.name); return !id || inc.includes(id) || r.proposed; })
-    .map(r => r.locId || !covIdOfName17(r.name) ? r : { ...r, locId: covIdOfName17(r.name) });
-  const have = new Set(keep.map(r => r.locId).filter(Boolean));
-  const fresh = inc.filter(id => !have.has(id)).map(id => makeRecord("locations", FD_TICK_NAME19(FD_BY_ID[id]), { locId: id }));
-  const list = addRanked(keep, fresh);
+  const idOf = (r) => { const id = r.locId || covIdOfName17(r.name); return id && FD_BY_ID[id] ? id : null; };
+  const keep = recs.filter(r => { const id = idOf(r); return !id || inc.includes(id) || r.proposed; }).map(covFill17);
+  const have = new Set(keep.map(idOf).filter(Boolean));
+  const fresh = inc.filter(id => !have.has(id)).map(id => covNewRec17(FD_BY_ID[id]));
+  const list = [...keep, ...fresh];
   const coverage17 = { v: 2, inc, exc: [...a.exc].filter(id => FD_BY_ID[id]), updatedAt: new Date().toISOString() };
   if (co) return { ...s, company: { ...owner, records: { ...(owner.records || {}), locations: list }, coverage17 } };
   return { ...s, profile: { ...s.profile, records: { ...(s.profile.records || {}), locations: list }, coverage17 } };
 }
 
 
-/* Older saved coverage (location records with names only) gets stable ids once. Names that match no
-   catalogue place stay as they are and are shown, but are not used for area matching. */
+/* One-time moves on load (idempotent). Older saved coverage (location records with names only) gets stable ids and
+   centres. Names that match no catalogue place stay as they are and are shown, but are not used for area matching.
+   v17.6.1: the saved travel distance of v17.6 (COV_OLD_KEY17) is dropped; "uk" becomes a tick on the United Kingdom
+   (country:GB) so nobody loses coverage, and a numeric distance is simply dropped. The key is built from two pieces so a
+   search for the removed feature finds nothing else. */
+const COV_OLD_KEY17 = "trav" + "el17";
 function covMigrate17(s) {
+  const idOf = (r) => { const id = r.locId || covIdOfName17(r.name); return id && FD_BY_ID[id] ? id : null; };
   const fix = (owner) => {
-    if (!owner || !owner.records || !(owner.records.locations || []).length) return owner;
-    let changed = false;
-    const locations = owner.records.locations.map(r => { if (r.locId) return r; const id = covIdOfName17(r.name); if (!id) return r; changed = true; return { ...r, locId: id }; });
-    return changed || !owner.coverage17 ? { ...owner, records: { ...owner.records, locations }, coverage17: owner.coverage17 || { v: 2, inc: locations.map(r => r.locId).filter(Boolean), exc: [], updatedAt: null } } : owner;
+    if (!owner) return owner;
+    const hadTravel = COV_OLD_KEY17 in owner, uk = owner[COV_OLD_KEY17] === "uk";
+    const recs = (owner.records || {}).locations || [];
+    if (!hadTravel && !recs.length) return owner;
+    let list = recs.map(covFill17), changed = hadTravel || list.some((r, i) => r !== recs[i]);
+    const gb = FD_BY_ID["country:GB"];
+    if (uk && gb && !list.some(r => !r.hidden && !r.proposed && idOf(r) === gb.id)) { list = [...list, covNewRec17(gb)]; changed = true; }
+    const ids = list.filter(r => !r.hidden && !r.proposed).map(idOf).filter(Boolean);
+    const cov = owner.coverage17 ? (uk && !(owner.coverage17.inc || []).includes("country:GB") ? { ...owner.coverage17, inc: [...(owner.coverage17.inc || []), "country:GB"] } : owner.coverage17) : { v: 2, inc: ids, exc: [], updatedAt: null };
+    if (!changed && owner.coverage17) return owner;
+    const rest = { ...owner };
+    delete rest[COV_OLD_KEY17];
+    return { ...rest, records: { ...(rest.records || {}), locations: list }, coverage17: cov };
   };
   const profile = fix(s.profile), company = fix(s.company);
   return profile === s.profile && company === s.company ? s : { ...s, profile, company };
@@ -135,16 +221,37 @@ const COV17_CSS = `
 .ff .ff-cov17-lb small{color:#7A7366;font-size:12px}
 .ff .ff-cov17-a{flex:1;min-width:0;font-size:14.5px;color:#16130F;text-decoration:none;font-weight:600;padding:8px 0}
 .ff .ff-cov17-a:hover{text-decoration:underline}
-.ff .ff-cov17-pc{display:flex;gap:8px;margin:0 0 10px}
-.ff .ff-cov17-pc input,.ff .ff-cov17-q input{flex:1;min-width:0;font-size:16px;padding:10px 12px;border:1px solid var(--rule,#d8ccb0);border-radius:12px;corner-shape:squircle;background:#fff}
 .ff .ff-cov17-q{display:flex;align-items:center;gap:8px;margin:0 0 8px}
-.ff .ff-cov17-sug{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
-.ff .ff-cov17-msg{font-size:13px;margin:0 0 8px;color:#5C1220}
+.ff .ff-cov17-q input{flex:1;min-width:0;font-size:16px;padding:10px 12px;border:1px solid var(--rule,#d8ccb0);border-radius:12px;corner-shape:squircle;background:#fff}
 .ff .ff-cov17-hits{list-style:none;margin:0 0 8px;padding:0}
-.ff .ff-cov17-sug2{display:flex;flex-direction:column;gap:2px;margin:0 0 10px;padding:8px 10px;border-radius:14px;corner-shape:squircle;background:rgba(201,162,39,.10)}
-.ff .ff-cov17-sugh{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6A4F12}
-.ff .ff-cov17-sug2 .ff-cov17-lb{min-height:36px}
-.ff .ff-cov17-sum{font-size:13px;margin:8px 0 0;color:#3A342B}
+/* The work-locations drop-down (select mode): one closed control; the tree opens beneath it and scrolls with the page. */
+.ff .ff-cov17-pick{margin-top:14px}
+.ff .ff-cov17-ctl{display:flex;align-items:center;gap:12px;width:100%;box-sizing:border-box;min-height:58px;padding:10px 14px;border:1px solid var(--gold-mid,#B08D2A);border-radius:20px;corner-shape:squircle;background:linear-gradient(180deg,#FFFDF7,#F6EDD8);color:#16130F;text-align:left;cursor:pointer;font:inherit;box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 1px 6px rgba(126,97,29,.10)}
+.ff .ff-cov17-ctl:focus-visible{outline:2px solid var(--gold-dk);outline-offset:2px}
+.ff .ff-cov17-pin{flex:none;width:36px;height:36px;border-radius:12px;corner-shape:squircle;display:grid;place-items:center;background:rgba(201,162,39,.16);color:var(--gold-dk)}
+.ff .ff-cov17-cb{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.ff .ff-cov17-h{font-size:15px;font-weight:700;line-height:1.25;overflow-wrap:normal;word-break:normal}
+.ff .ff-cov17-ctl.has .ff-cov17-h{font-size:13px;color:#6A4F12}
+.ff .ff-cov17-pills{display:flex;flex-wrap:wrap;gap:6px}
+.ff .ff-cov17-pill{display:inline-block;padding:4px 10px;border-radius:12px;corner-shape:squircle;background:#16130F;color:#F4DC8E;font-size:13px;font-weight:600;line-height:1.3;max-width:100%;overflow-wrap:normal;word-break:normal}
+.ff .ff-cov17-chev{flex:none;color:var(--gold-dk);transition:transform .18s}
+.ff .ff-cov17-ctl[aria-expanded=true] .ff-cov17-chev{transform:rotate(180deg)}
+.ff .ff-cov17-panel{margin-top:8px;padding:10px 8px 8px;border:1px solid var(--rule,#d8ccb0);border-radius:20px;corner-shape:squircle;background:#FFFDF8}
+.ff .ff-cov17-pick .ff-cov17-q{margin:0 4px 8px;padding:0 4px 0 12px;border:1px solid var(--rule,#d8ccb0);border-radius:14px;corner-shape:squircle;background:#fff;color:#7A7366}
+.ff .ff-cov17-pick .ff-cov17-q input{border:0;background:none;padding:12px 8px;min-height:44px;box-sizing:border-box}
+.ff .ff-cov17-pick .ff-cov17-q input:focus{outline:none}
+.ff .ff-cov17-pick .ff-cov17-q:focus-within{border-color:var(--gold-dk)}
+.ff .ff-cov17-pick .ff-cov17-row{min-height:44px;border-radius:12px;corner-shape:squircle}
+.ff .ff-cov17-pick .ff-cov17-x{width:44px;height:44px}
+.ff .ff-cov17-pick .ff-cov17-lb{align-self:stretch;padding:4px 8px 4px 2px;border-radius:12px;corner-shape:squircle;line-height:1.3;font-size:15px}
+.ff .ff-cov17-pick .ff-cov17-lb input{width:22px;height:22px}
+.ff .ff-cov17-pick .ff-cov17-lb:has(input:checked){background:rgba(201,162,39,.14);font-weight:600}
+.ff .ff-cov17-pick .ff-cov17-lb:has(input:indeterminate){background:rgba(201,162,39,.07)}
+.ff .ff-cov17-pick .ff-cov17-x[aria-hidden=true]{pointer-events:none}
+.ff .ff-cov17-pick .ff-cov17-ul .ff-cov17-ul{border-left:1px solid rgba(201,162,39,.35);margin-left:22px}
+.ff .ff-cov17-pick .ff-cov17-box{max-height:none;overflow:visible;border-top:0;padding-top:0}
+.ff .ff-cov17-end{border-top:1px solid var(--line,#e5dcc8);margin-top:6px;padding-top:6px}
+@media (max-width:480px){.ff .ff-cov17-pick .ff-cov17-lb{font-size:15.5px}}
 `;
 
 
@@ -178,14 +285,18 @@ const COV17_MEMO = {};
 
 
 function useCovState17(key, name, init) {
-  const box = COV17_MEMO[key] || (COV17_MEMO[key] = {});
-  const [v, setV] = useState(() => (name in box ? box[name] : (typeof init === "function" ? init() : init)));
-  const set = (x) => { const cur = name in box ? box[name] : v; const next = typeof x === "function" ? x(cur) : x; box[name] = next; setV(next); };
+  const box = key ? (COV17_MEMO[key] || (COV17_MEMO[key] = {})) : null;
+  const [v, setV] = useState(() => (box && name in box ? box[name] : (typeof init === "function" ? init() : init)));
+  const set = (x) => {
+    if (!box) { setV(x); return; }
+    const cur = name in box ? box[name] : v; const next = typeof x === "function" ? x(cur) : x; box[name] = next; setV(next);
+  };
   return [v, set];
 }
 
 
-/* mode "select": tick boxes (FF Team work areas, FF Staff company coverage).
+/* mode "select": the work-locations drop-down (FF Team work locations, FF Staff areas covered). Closed until opened;
+                  every branch is closed until expanded.
    mode "links":  every place is a link to its area page (Explore by area). */
 function CoverageTree17({ mode = "select", owner: ownerKind, siteKey, compact, title, onOpen, startOpen }) {
   const { state, dispatch } = useStore();
@@ -195,26 +306,26 @@ function CoverageTree17({ mode = "select", owner: ownerKind, siteKey, compact, t
   const links = mode === "links";
   const sk = siteKey || fdSiteKey(state);
   const mk = `${mode}|${ownerKind || "profile"}|${compact ? "c" : "f"}|${sk}`;
-  const [openIds, setOpenIds] = useCovState17(mk, "open", () => Object.fromEntries((startOpen || []).map(id => [id, true])));
-  const [q, setQ] = useCovState17(mk, "q", "");
+  /* The drop-down starts closed, with every branch closed, each time it appears (nothing is remembered); Explore by area keeps its place. */
+  const mem = links ? mk : null;
+  const [openIds, setOpenIds] = useCovState17(mem, "open", () => Object.fromEntries((startOpen || []).map(id => [id, true])));
+  const [q, setQ] = useCovState17(mem, "q", "");
+  const [drop, setDrop] = useCovState17(mem, "drop", false);
   const hits = fdSearch(q);
-  /* A Company Card that has never set its areas starts as the whole UK, England, Scotland and Wales (Northern Ireland is covered with Ireland). */
-  const untouched = co && !owner.coverage17 && !(((owner.records || {}).locations) || []).length;
-  useEffect(() => { if (untouched && !links) dispatch({ type: "COV_SET", owner: "company", inc: ["country:GB"], exc: [] }); }, [untouched]);
   const toggle = (n) => { const next = covToggle17(cov, n); dispatch({ type: "COV_SET", owner: co ? "company" : undefined, inc: [...next.inc], exc: [...next.exc] }); };
   const openTo = (n) => { const o = { ...openIds }; covAnc17(n).slice(1).forEach(a => { o[a.id] = true; }); setOpenIds(o); };
   const setOpen = (id, v) => { setOpenIds(o => ({ ...o, [id]: v })); if (v && onOpen && FD_BY_ID[id]) onOpen(FD_BY_ID[id]); };
   const row = (n, depth) => {
     const kids = links ? fdTickKids19(n) : covKids17(n), isOpen = !!openIds[n.id];
     const x = kids.length ? (
-      <button type="button" className="ff-cov17-x" aria-expanded={isOpen} aria-label={`${isOpen ? "Collapse" : "Expand"} ${n.name}`}
+      <button type="button" className="ff-cov17-x" aria-expanded={isOpen} aria-label={`${isOpen ? "Collapse" : "Expand"} ${n.id === "country:GB" ? "United Kingdom" : n.name}`}
         onClick={() => setOpen(n.id, !isOpen)}
         onKeyDown={(e) => { if (e.key === "ArrowRight" && !isOpen) { e.preventDefault(); setOpen(n.id, true); } if (e.key === "ArrowLeft" && isOpen) { e.preventDefault(); setOpen(n.id, false); } }}>
         <I11.ChevronRight size={16} />
       </button>) : <span className="ff-cov17-x" aria-hidden="true" />;
     return (
       <li key={n.id} role="treeitem" aria-expanded={kids.length ? isOpen : undefined} aria-level={depth + 1}>
-        <div className="ff-cov17-row" style={{ paddingLeft: depth * 14 }}>
+        <div className="ff-cov17-row" style={links ? { paddingLeft: depth * 14 } : undefined}>
           {x}
           {links
             ? <a className="ff-cov17-a" href={fdHref(sk, n.path)} onClick={(e) => { e.preventDefault(); fdNav(dispatch, sk, n.path); }}>{n.id === "country:GB" ? "United Kingdom" : n.name}</a>
@@ -224,56 +335,63 @@ function CoverageTree17({ mode = "select", owner: ownerKind, siteKey, compact, t
       </li>
     );
   };
-  const summary = !links && covText17(owner, 4);
+  if (!links) {
+    const places = covPlaces17(owner), extras = places.filter(p => !p.node), shown = places.slice(0, 3);
+    const untick = (p) => dispatch({ type: "REC_DELETE", owner: co ? "company" : undefined, category: "locations", id: p.rec.id });
+    return (
+      <div className="ff-cov17 ff-cov17-pick">
+        <style>{COV17_CSS}</style>
+        <button type="button" className={`ff-cov17-ctl${places.length ? " has" : ""}`} aria-expanded={drop} onClick={() => setDrop(!drop)}>
+          <span className="ff-cov17-pin" aria-hidden="true"><MapPin size={18} strokeWidth={1.8} /></span>
+          <span className="ff-cov17-cb">
+            <span className="ff-cov17-h">{COV_HEAD17}</span>
+            {places.length > 0 && <span className="ff-cov17-pills">{shown.map(p => <span key={p.node ? p.node.id : p.rec.id} className="ff-cov17-pill">{p.name}</span>)}{places.length > shown.length && <span className="ff-cov17-pill">+{places.length - shown.length}</span>}</span>}
+          </span>
+          <I11.ChevronDown className="ff-cov17-chev" size={18} aria-hidden="true" />
+        </button>
+        {drop && (
+          <div className="ff-cov17-panel">
+            <label className="ff-cov17-q"><A17I.Search size={16} /><input value={q} onChange={(e) => setQ(e.target.value.slice(0, 60))} aria-label="Search places" autoComplete="off" spellCheck={false} /></label>
+            {q.trim().length >= 2 ? (
+              <ul className="ff-cov17-hits" aria-label="Matching places">
+                {hits.length ? hits.map(n => (
+                  <li key={n.id} className="ff-cov17-row">
+                    <CovCheck17 n={n} cov={cov} onToggle={(m) => { toggle(m); openTo(m); }} label={<>{fdLabel(n)} <small>{fdChain(n)}</small></>} />
+                  </li>)) : <li className="ff-cov17-row">No matching place.</li>}
+              </ul>
+            ) : (
+              <>
+                <ul className="ff-cov17-box" role="tree" aria-label="Places">{covRoots17().map(n => row(n, 0))}</ul>
+                {extras.length > 0 && (
+                  <ul className="ff-cov17-ul ff-cov17-end" aria-label="Other places">
+                    {extras.map(p => (
+                      <li key={p.rec.id} className="ff-cov17-row"><span className="ff-cov17-x" aria-hidden="true" />
+                        <label className="ff-cov17-lb"><input type="checkbox" checked onChange={() => untick(p)} /><span>{p.name}</span></label>
+                      </li>))}
+                  </ul>
+                )}
+              </>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  }
   return (
     <div className={`ff-cov17${compact ? "" : " ff-frame"}`}>
       <style>{COV17_CSS}</style>
-      {title !== null && <h3 className="ff-label">{title || (links ? "Explore by area" : "What areas do you cover?")}</h3>}
-      {!links && !co && <CovSuggest17 cov={cov} toggle={toggle} openTo={openTo} />}
+      {title !== null && <h3 className="ff-label">{title || "Explore by area"}</h3>}
       <label className="ff-cov17-q"><A17I.Search size={14} /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search for a town, borough or neighbourhood" aria-label="Search for a place" /></label>
       {q.trim().length >= 2 ? (
         <ul className="ff-cov17-hits" aria-label="Matching places">
           {hits.length ? hits.map(n => (
             <li key={n.id} className="ff-cov17-row">
-              {links
-                ? <a className="ff-cov17-a" href={fdHref(sk, n.path)} onClick={(e) => { e.preventDefault(); fdNav(dispatch, sk, n.path); }}>{fdLabel(n)} <small>{fdChain(n)}</small></a>
-                : <CovCheck17 n={n} cov={cov} onToggle={(m) => { toggle(m); openTo(m); }} label={<>{fdLabel(n)} <small>{fdChain(n)}</small></>} />}
+              <a className="ff-cov17-a" href={fdHref(sk, n.path)} onClick={(e) => { e.preventDefault(); fdNav(dispatch, sk, n.path); }}>{fdLabel(n)} <small>{fdChain(n)}</small></a>
             </li>)) : <li className="ff-cov17-row">No matching place.</li>}
         </ul>
       ) : (
-        <ul className="ff-cov17-box" role="tree" aria-label={links ? "Places" : "Areas you cover"}>{covRoots17().map(n => row(n, 0))}</ul>
+        <ul className="ff-cov17-box" role="tree" aria-label="Places">{covRoots17().map(n => row(n, 0))}</ul>
       )}
-      {summary ? <p className="ff-cov17-sum"><b>Shown on your profile:</b> {summary}</p> : null}
-    </div>
-  );
-}
-
-
-/* Short list of places around the member's base, shown above the tree. Ticking one writes the same coverage as
-   ticking it in the tree. Picking or changing the base never ticks anything. */
-function covBaseSuggestions17(base) {
-  if (!base) return [];
-  const out = [], seen = new Set();
-  const add = (n) => { if (n && n.id !== "country:GB" && !seen.has(n.id) && ["p", "h", "b", "a"].includes(n.k)) { seen.add(n.id); out.push(n); } };
-  add(base);
-  const par = baseParent17(base);
-  add(par);
-  if (base.lat != null) {
-    FD_NODES.filter(n => n.uk && n.lat != null && (n.k === "p" || n.k === "h" || n.k === "b") && n.id !== base.id)
-      .map(n => [fdHav(base.lat, base.lng, n.lat, n.lng), n]).filter(x => x[0] < 25).sort((a, b) => a[0] - b[0]).slice(0, 4).forEach(x => add(x[1]));
-  }
-  return out.slice(0, 6);
-}
-
-
-function CovSuggest17({ cov, toggle, openTo }) {
-  const { state } = useStore();
-  const list = covBaseSuggestions17(baseNode17(state));
-  if (!list.length) return null;
-  return (
-    <div className="ff-cov17-sug2" role="group" aria-label="Suggested areas">
-      <span className="ff-cov17-sugh">Suggested areas</span>
-      {list.map(n => <CovCheck17 key={n.id} n={n} cov={cov} onToggle={(m) => { toggle(m); openTo(m); }} label={baseLabelOf17(n)} />)}
     </div>
   );
 }
@@ -290,4 +408,25 @@ function covSuggest17(r) {
       .map(n => [fdHav(r.lat, r.lng, n.lat, n.lng), n]).filter(x => x[0] < 25).sort((a, b) => a[0] - b[0]).slice(0, 6).forEach(x => add(x[1]));
   }
   return out.slice(0, 8);
+}
+
+
+/* ---- The public chips ------------------------------------------------------------------------------- */
+const AREAS17_CSS = `
+.ff .ff-ar17-chips{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
+.ff .ff-ar17-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 6px 6px 12px;border-radius:14px;corner-shape:squircle;background:rgba(201,162,39,.14);border:1px solid rgba(201,162,39,.4);font-size:13.5px;color:#16130F;overflow-wrap:normal;word-break:normal;max-width:100%}
+.ff .ff-ar17-chip.ro{padding:6px 12px}
+`;
+
+
+/* The public form: the ticked places as chips, in the tree's order. `owner` carries the records (and the exceptions when known). */
+function AreasChips17({ owner }) {
+  const chips = covChips17(owner);
+  if (!chips.length) return null;
+  return (
+    <div style={{ marginTop: 6 }}>
+      <style>{AREAS17_CSS}</style>
+      <ul className="ff-ar17-chips" aria-label="Work locations">{chips.map((c, i) => <li key={i} className="ff-ar17-chip ro">{c}</li>)}</ul>
+    </div>
+  );
 }

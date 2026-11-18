@@ -18,7 +18,8 @@ const prefersReducedMotion = () => { try { return window.matchMedia("(prefers-re
 const PUB_KIND = { professions: "m", experience: "x", qualifications: "d", skills: "s", interests: "s", languages: "s", locations: "s" };
 
 
-const PUB_ORDER = ["professions", "media", "qualifications", "skills", "experience", "locations", "languages", "interests"];
+/* v17.18: the Profile Card's order (Skills, Interests, Locations, Languages), then Venues, Qualifications and the rest. */
+const PUB_ORDER = ["professions", "media", "skills", "interests", "locations", "languages", "venues", "qualifications", "experience"].filter(venuesOn17);
 
 
 
@@ -56,6 +57,7 @@ function useDragScroll(ref) {
     let down = null, moved = false;
     const onDown = (e) => {
       if (e.pointerType === "touch" || e.button !== 0) return;
+      if (e.target && e.target.closest && e.target.closest("[data-nodrag], .ff-pt21-grip")) return;
       down = { x: e.clientX, left: el.scrollLeft }; moved = false;
     };
     const onMove = (e) => {
@@ -89,7 +91,7 @@ function useDragScroll(ref) {
 function mediaOf(state, person) {
   const recs = recordsForPerson(state, person);
   const own = person.id === "me" ? (state.profile.media || []) : (person.media || []);
-  const order = [...PUB_ORDER, ...Object.keys(recs).filter(k => !PUB_ORDER.includes(k))];
+  const order = [...PUB_ORDER, ...Object.keys(recs).filter(k => !PUB_ORDER.includes(k) && venuesOn17(k))];
   const onCards = order.flatMap(k => (recs[k] || []).filter(r => !r.hidden && !r.proposed).flatMap(r => r.media || []));
   const seen = new Set();
   return [...own, ...onCards]
@@ -113,16 +115,22 @@ function useWide(min = 900) {
 }
 
 
-function MediaCarousel({ items, onBad, start = 0, flat = false, pull = false }) {
-  const [open, setOpen] = useState(false);
+function MediaCarousel({ items, onBad, start = 0, flat = false, pull = false, open: openIn, onOpen }) {
+  const [openS, setOpenS] = useState(false);
+  const open = openIn !== undefined ? openIn : openS;
+  const setOpen = onOpen || setOpenS;
   const [at, setAt] = useState(start);
   const ref = useRef(null);
   useDragScroll(ref);
+  /* Phone: the card's own pull-down. Only touches that start on the card are
+     watched, so a touch on the photos is left entirely to the browser's
+     native sideways scroller (no JavaScript in the way of a swipe). */
   useEffect(() => {
     if (!pull || flat)
       return;
     const hero = ref.current && ref.current.closest(".ff-phero");
-    if (!hero)
+    const zone = hero && hero.querySelector(".ff-pcol");
+    if (!hero || !zone)
       return;
     const scroller = () => {
       let n = hero.parentElement;
@@ -195,7 +203,9 @@ function MediaCarousel({ items, onBad, start = 0, flat = false, pull = false }) 
       else if (e.deltaY > 12)
         setOpen(false);
     };
-    const sc = () => {
+    const sc = (e) => {
+      if (e && e.target && e.target.nodeType === 1 && hero.contains(e.target))
+        return;
       if (!atTop() && !hero.classList.contains("dragging"))
         setOpen(false);
     };
@@ -204,17 +214,17 @@ function MediaCarousel({ items, onBad, start = 0, flat = false, pull = false }) 
     root.style.overscrollBehaviorY = "none";
     body.style.overscrollBehaviorY = "none";
     const pa = { passive: true }, np = { passive: false }, cap = { passive: true, capture: true };
-    hero.addEventListener("touchstart", ts, pa);
-    hero.addEventListener("touchmove", tm, np);
-    hero.addEventListener("touchend", te, pa);
-    hero.addEventListener("touchcancel", te, pa);
+    zone.addEventListener("touchstart", ts, pa);
+    zone.addEventListener("touchmove", tm, np);
+    zone.addEventListener("touchend", te, pa);
+    zone.addEventListener("touchcancel", te, pa);
     window.addEventListener("wheel", wh, pa);
     window.addEventListener("scroll", sc, cap);
     return () => {
-      hero.removeEventListener("touchstart", ts, pa);
-      hero.removeEventListener("touchmove", tm, np);
-      hero.removeEventListener("touchend", te, pa);
-      hero.removeEventListener("touchcancel", te, pa);
+      zone.removeEventListener("touchstart", ts, pa);
+      zone.removeEventListener("touchmove", tm, np);
+      zone.removeEventListener("touchend", te, pa);
+      zone.removeEventListener("touchcancel", te, pa);
       window.removeEventListener("wheel", wh, pa);
       window.removeEventListener("scroll", sc, cap);
       root.style.overscrollBehaviorY = prev[0];
@@ -226,6 +236,55 @@ function MediaCarousel({ items, onBad, start = 0, flat = false, pull = false }) 
     if (el && start)
       el.scrollLeft = start * el.clientWidth;
   }, []);
+  /* Auto scroll: one photo every 5 seconds, looping. Waits while the photos
+     are touched, hovered or focused, for 8 seconds after a manual swipe, while
+     off screen or in a hidden tab; never runs under reduced motion. */
+  const auto = useRef({ until: 0 });
+  useEffect(() => {
+    const el = ref.current, box = el && el.parentElement;
+    if (!el || flat || items.length < 2 || prefersReducedMotion())
+      return;
+    const a = auto.current;
+    let touching = false, hover = false, focus = false, seen = true, hold = 0;
+    const now = () => Date.now();
+    const pause = (ms) => { hold = Math.max(hold, now() + ms); };
+    const tS = () => { touching = true; };
+    const tE = () => { touching = false; pause(8000); };
+    const onScroll = () => { if (now() > a.until) pause(8000); };
+    const mE = () => { hover = true; }, mL = () => { hover = false; };
+    const fI = () => { focus = true; }, fO = () => { focus = false; };
+    const io = typeof IntersectionObserver !== "undefined" ? new IntersectionObserver(([en]) => { seen = en.isIntersecting; }, { threshold: 0.4 }) : null;
+    if (io) io.observe(el);
+    const tick = setInterval(() => {
+      if (touching || hover || focus || !seen || document.hidden || now() < hold)
+        return;
+      const w = el.clientWidth || 1, n = Math.round(el.scrollLeft / w);
+      const k = n >= items.length - 1 ? 0 : n + 1;
+      a.until = now() + 1600;
+      el.scrollTo({ left: k * w, behavior: "smooth" });
+    }, 5000);
+    const pa = { passive: true };
+    el.addEventListener("touchstart", tS, pa);
+    el.addEventListener("touchend", tE, pa);
+    el.addEventListener("touchcancel", tE, pa);
+    el.addEventListener("scroll", onScroll, pa);
+    box.addEventListener("mouseenter", mE);
+    box.addEventListener("mouseleave", mL);
+    box.addEventListener("focusin", fI);
+    box.addEventListener("focusout", fO);
+    return () => {
+      clearInterval(tick);
+      if (io) io.disconnect();
+      el.removeEventListener("touchstart", tS, pa);
+      el.removeEventListener("touchend", tE, pa);
+      el.removeEventListener("touchcancel", tE, pa);
+      el.removeEventListener("scroll", onScroll, pa);
+      box.removeEventListener("mouseenter", mE);
+      box.removeEventListener("mouseleave", mL);
+      box.removeEventListener("focusin", fI);
+      box.removeEventListener("focusout", fO);
+    };
+  }, [items.length, flat]);
   const list = items;
   if (!list.length)
     return null;
@@ -234,6 +293,7 @@ function MediaCarousel({ items, onBad, start = 0, flat = false, pull = false }) 
     if (!el)
       return;
     const k = Math.max(0, Math.min(list.length - 1, i));
+    auto.current.until = 0;
     el.scrollTo({ left: k * el.clientWidth, behavior: prefersReducedMotion() ? "auto" : "smooth" });
   };
   return React.createElement("section", {
@@ -244,6 +304,7 @@ function MediaCarousel({ items, onBad, start = 0, flat = false, pull = false }) 
     className: "ff-pm-track",
     ref,
     tabIndex: 0,
+    onClick: pull && !flat ? () => setOpen(!open) : undefined,
     "aria-label": `Media, ${list.length} item${list.length === 1 ? "" : "s"}. Use the left and right arrow keys.`,
     onScroll: (e) => {
       const el = e.currentTarget;
@@ -266,6 +327,14 @@ function MediaCarousel({ items, onBad, start = 0, flat = false, pull = false }) 
     "aria-roledescription": "slide",
     "aria-label": `${i + 1} of ${list.length}`
   }, React.createElement("img", { decoding: "async",
+    className: "ff-pm-fill",
+    src: m.src,
+    alt: "",
+    "aria-hidden": "true",
+    draggable: false,
+    loading: i ? "lazy" : "eager"
+  }), React.createElement("img", { decoding: "async",
+    className: "ff-pm-img",
     src: m.src,
     alt: m.name ? `Media: ${m.name}` : `Media ${i + 1}`,
     draggable: false,
@@ -312,7 +381,8 @@ function MediaMosaic({ items, onBad }) {
     <section className={`ff-pmos n${show.length}`} aria-label={`Media, ${items.length} picture${items.length === 1 ? "" : "s"}`}>
       {show.map((m, i) => (
         <button key={m.src.slice(-40) + i} type="button" className="ff-pmos-t" aria-label={`Open picture ${i + 1} of ${items.length}`} onClick={() => setView(i)}>
-          <img decoding="async" src={m.src} alt="" draggable={false} loading={i ? "lazy" : "eager"} onError={() => onBad && onBad(m.src)} />
+          <img decoding="async" className="ff-pm-fill" src={m.src} alt="" aria-hidden="true" draggable={false} loading={i ? "lazy" : "eager"} />
+          <img decoding="async" className="ff-pm-img" src={m.src} alt="" draggable={false} loading={i ? "lazy" : "eager"} onError={() => onBad && onBad(m.src)} />
           {i === show.length - 1 && more > 0 && <span className="more" aria-hidden="true">+{more}</span>}
         </button>
       ))}
@@ -348,10 +418,14 @@ function PublicHero({ media, card, below, narrow }) {
   const list = media.filter(m => seen[m.src] === true);
   const onBad = (src) => setSeen(v => (v[src] === false ? v : { ...v, [src]: false }));
   const has = list.length > 0;
+  /* Phone: the card covers the foot of the photos; a tap on the photos or on
+     the grip at the card's top edge moves it down out of the way and back. */
+  const [open, setOpen] = useState(false);
   return (
     <div className={`ff-phero${has ? " has-media" : ""}${wide ? " wide" : ""}`}>
-      {has && (wide && list.length <= 4 ? <MediaMosaic items={list} onBad={onBad} /> : <MediaCarousel items={list} onBad={onBad} pull={!wide} />)}
+      {has && (wide && list.length <= 4 ? <MediaMosaic items={list} onBad={onBad} /> : <MediaCarousel items={list} onBad={onBad} pull={!wide} open={open} onOpen={setOpen} />)}
       <div className="ff-pcol">
+        {has && !wide && <button type="button" className="ff-ph-grip" aria-label={open ? "Cover the photos" : "Show the photos"} aria-expanded={open} onClick={() => setOpen(!open)}><span aria-hidden="true" /></button>}
         <div className="ff-ph-card">{card}</div>
         <div className={"ff-prest" + (narrow ? " narrow" : "")}>{below}</div>
       </div>
@@ -376,7 +450,7 @@ function OwnEditTools() {
       <Btn variant="primary" onClick={() => { dispatch({ type: "VIEW", id: "me", guest: true }); window.scrollTo(0, 0); }}><Eye size={14} /> View as guest</Btn>
     </section>
   );
-  return (<><ProfileFFAI /><CVPanel /><CreatorMedia /><CreatorAboutMe /></>);
+  return (<><ProfileFFAI /><CVPanel /><CreatorMedia /></>);
 }
 
 
@@ -497,7 +571,9 @@ function reviewsOf(state, person) {
   return reviewRecordsFor(state, person.id).map(rec => {
     const r = raw.find(x => x.id === rec.id) || {};
     const shift = r.shiftId ? (state.shifts || []).find(s => s.id === r.shiftId) : null;
-    return { ...rec, subline: [dt(r.at), shift ? [shift.role, shift.venue].filter(Boolean).join(" · ") : ""].filter(Boolean).join(" · ") };
+    /* v17.22: my review that waits for them to accept reads "Waiting for <First>" in place of the date. */
+    const when = rec.pending ? `Waiting for ${person.isCompany ? person.name : String(person.name || "").split(" ")[0]}` : dt(r.at);
+    return { ...rec, subline: [when, shift ? [shift.role, shift.venue].filter(Boolean).join(" · ") : ""].filter(Boolean).join(" · ") };
   });
 }
 
@@ -513,7 +589,7 @@ function attributesOf(state, person, cats) {
   const recs = recordsForPerson(state, person);
   const order = categoryOrder().filter(k => !cats[k].system && k !== "professions");
   const keys = [...PUB_ORDER.filter(k => order.includes(k)), ...order.filter(k => !PUB_ORDER.includes(k))];
-  const flat = keys.flatMap((k, ki) => withRanks((recs[k] || []).filter(r => !r.hidden && !r.proposed)).map(({ r, rank }, i) => ({ id: `${k}:${r.id}`, record: r, def: cats[k], category: k, rank, score: completeness(r), at: ki * 1000 + i })));
+  const flat = keys.flatMap((k, ki) => (k === "locations" ? covRecsFor17(state, person, (recs[k] || []).filter(r => !r.hidden && !r.proposed)).map(r => ({ r, rank: "tertiary" })) : withRanks((recs[k] || []).filter(r => !r.hidden && !r.proposed))).map(({ r, rank }, i) => ({ id: `${k}:${r.id}`, record: r, def: cats[k], category: k, rank, score: completeness(r), at: ki * 1000 + i })));
   return flat.sort((a, b) => b.score - a.score || a.at - b.at);
 }
 
@@ -533,6 +609,7 @@ function ExpandedAttrs({ list }) {
         return (
           <article key={r.id} className="ff-xatt-box">
             <h3>{r.name}</h3>
+            {r.category === "venues" && r.address && <div className="ff-xatt-note">{r.address}{r.place ? <> · <a href={venueMapsUrl17(r)} target="_blank" rel="noopener noreferrer">View on Google Maps</a></> : null}</div>}
             {String(r.description || "").trim() && <p>{r.description}</p>}
             {det.length > 0 && <dl>{det.map(([k, v]) => <div key={k}><dt>{cap(k)}</dt><dd>{String(v)}</dd></div>)}</dl>}
             {media.length > 0 && <div className="ff-xatt-media">{media.map((m, i) => <img decoding="async" key={i} src={m.dataUrl || m.src} alt={m.name || ""} loading="eager" />)}</div>}
@@ -556,23 +633,34 @@ function AttrGroups({ items, mem, onOpen }) {
   });
   groups.sort((a, b) => a.ord - b.ord);
   groups.forEach(g => g.list.sort((a, b) => a.at - b.at));
+  /* v17.18: a summary card lists five entries at most; with more, a second card of the same category follows with the next five, and so on.
+     Work locations are the exception: the areas as they were ticked, three on the card and "+N" for the rest. */
+  const cards = [];
+  groups.forEach(g => {
+    if (g.key === "locations") { cards.push({ g, key: g.key, part: g.list.slice(0, 3), more: Math.max(0, g.list.length - 3) }); return; }
+    for (let i = 0; i < g.list.length; i += 5) cards.push({ g, key: `${g.key}-${i}`, part: g.list.slice(i, i + 5), more: 0 });
+  });
   return (
-    <MemScroll mem={mem} k="overview" label={`Attributes, ${groups.length} card${groups.length === 1 ? "" : "s"}`} className="ff-acar">
-      {groups.map((g, gi) => {
-        const show = g.list.slice(0, 9), more = g.list.length - show.length;
-        const label = (g.def && g.def.label) || g.key;
+    <MemScroll mem={mem} k="overview" label={`Attributes, ${cards.length} card${cards.length === 1 ? "" : "s"}`} className="ff-acar">
+      {cards.map((c, ci) => {
+        const label = (c.g.def && c.g.def.label) || c.g.key;
         return (
-          <button key={g.key} type="button" className={"ff-agrp " + ["t-gold", "t-silver", "t-bronze"][gi % 3]} onClick={() => onOpen(g.key)}
-            aria-label={`${label}: ${g.list.map(it => it.record.name).join(", ")}. View all attributes`}>
-            <span className="ff-agrp-top"><span className="ff-agrp-h">{label}</span><span className="ff-agrp-n">{g.list.length}</span></span>
-            <span className="ff-agrp-l">{show.map(it => <span key={it.id}>{it.record.name}</span>)}</span>
-            {more > 0 && <span className="ff-agrp-more">+{more} more</span>}
+          <button key={c.key} type="button" className={"ff-agrp " + tierCls17(ci)} onClick={() => onOpen(c.g.key)}
+            aria-label={`${label}: ${c.g.list.map(it => it.record.name).join(", ")}. View all attributes`}>
+            <span className="ff-agrp-top"><span className="ff-agrp-h">{label}</span><span className="ff-agrp-n">{c.part.length + c.more}</span></span>
+            <span className="ff-agrp-l">{c.part.map(it => <span key={it.id}>{nbh21(it.record.name)}</span>)}</span>
+            {c.more > 0 && <span className="ff-agrp-more">{`+${c.more}`}</span>}
           </button>
         );
       })}
     </MemScroll>
   );
 }
+
+
+
+/* v17.18: one Gold, one Silver, every other card Bronze (the order decides; the colours never repeat). */
+const tierCls17 = (i) => i === 0 ? "t-gold" : i === 1 ? "t-silver" : "t-bronze";
 
 
 
@@ -583,8 +671,8 @@ function AboutMeBlock({ text }) {
   useLayoutEffect(() => { const el = ref.current; if (el) setOver(more || el.scrollHeight > el.clientHeight + 2); }, [text, more]);
   if (!String(text || "").trim()) return null;
   return (
-    <section className="ff-about" aria-labelledby="ff-about-h">
-      <h2 id="ff-about-h" className="ff-about-h">About Me</h2>
+    <section className="ff-about ff-pp21" aria-labelledby="ff-about-h">
+      <div className="ff-pp-head"><h2 id="ff-about-h" className="ff-about-h">About Me</h2></div>
       <p ref={ref} id="ff-about-text" className={more ? "" : "clamp"}>{text}</p>
       {(over || more) && <button type="button" className="ff-pub-more" aria-expanded={more} aria-controls="ff-about-text" onClick={() => setMore(!more)}>{more ? "Read less" : "Read more"}</button>}
     </section>

@@ -1,0 +1,85 @@
+{
+  "formatVersion": 2,
+  "slug": "appetite-direct",
+  "name": "Appetite Direct",
+  "kind": "Boutique catering & events",
+  "base": "Edinburgh",
+  "areas": [
+    "Edinburgh",
+    "Scotland"
+  ],
+  "description": "A multi-award-winning boutique Edinburgh catering and events company focused on high-quality local, seasonal food.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://app-proxy-dev-1.bridebook.com/uk/search/wedding-catering/glasgow",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding catering",
+        "Event catering"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app-proxy-dev-1.bridebook.com/uk/search/wedding-catering/glasgow",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app-proxy-dev-1.bridebook.com/uk/search/wedding-catering/glasgow",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Multi-award winning"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app-proxy-dev-1.bridebook.com/uk/search/wedding-catering/glasgow",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "catering",
+    "tag": "APPET",
+    "position": 92,
+    "source": {
+      "urls": [
+        "https://app-proxy-dev-1.bridebook.com/uk/search/wedding-catering/glasgow"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Edinburgh",
+        "lat": 55.9533,
+        "lng": -3.1883,
+        "approx": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "formatVersion": 2,
+  "slug": "ministry-of-cocktails",
+  "name": "Ministry of Cocktails",
+  "kind": "Mobile cocktail bars & full bar service",
+  "base": "UK",
+  "areas": [
+    "UK-wide"
+  ],
+  "logo": "https://ministryofcocktails.co.uk/wp-content/uploads/2022/01/white-no-back-logo-2022-140x63.png",
+  "logoBg": "dark",
+  "logoWide": true,
+  "description": "A mobile bar company offering fully managed bar services. Cocktail, mocktail, coffee and juice bars for weddings, corporate events, exhibitions and festivals, with modular bars built in its own workshop.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://ministryofcocktails.co.uk/",
+    "at": "2026-11-07"
+  },
+  "media": [
+    {
+      "id": "ministry-of-cocktails_0",
+      "src": "https://ministryofcocktails.co.uk/wp-content/uploads/elementor/thumbs/ITV_7568-scaled-qktmc7btv95orwoegkv2jnwajy7uwg2gozfp3fgkug.jpg",
+      "alt": "Ministry of Cocktails",
+      "source": {
+        "by": "agent",
+        "url": "https://ministryofcocktails.co.uk/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "ministry-of-cocktails_1",
+      "src": "https://ministryofcocktails.co.uk/wp-content/uploads/2024/05/143-DM_10136-1024x683.jpg",
+      "alt": "Ministry of Cocktails",
+      "source": {
+        "by": "agent",
+        "url": "https://ministryofcocktails.co.uk/",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Cocktail bars",
+        "Mocktail bars",
+        "Full service bars",
+        "Mobile coffee bars",
+        "Juice and smoothie bars",
+        "Mixology masterclasses",
+        "Bartenders and mixologists",
+        "Custom modular bar design",
+        "Glassware"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://ministryofcocktails.co.uk/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Exhibitions",
+        "Festivals",
+        "Private parties",
+        "Celebrity and VIP events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://ministryofcocktails.co.uk/",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Fully licensed and insured",
+        "Zero-plastic approach"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://ministryofcocktails.co.uk/",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://ministryofcocktails.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://ministryofcocktails.co.uk/",
+          "at": "2026-11-07"
+        }
+      },
+      {
+        "id": "instagram",
+        "name": "@ministry_of_cocktails",
+        "description": "Instagram",
+        "source": {
+          "by": "agent",
+          "url": "https://ministryofcocktails.co.uk/",
+          "at": "2026-11-07"
+        }
+      },
+      {
+        "id": "facebook",
+        "name": "ministryofcocktails1",
+        "description": "Facebook",
+        "source": {
+          "by": "agent",
+          "url": "https://ministryofcocktails.co.uk/",
+          "at": "2026-11-07"
+        }
+      },
+      {
+        "id": "linkedin",
+        "name": "ministry-of-cocktails",
+        "description": "LinkedIn",
+        "source": {
+          "by": "agent",
+          "url": "https://ministryofcocktails.co.uk/",
+          "at": "2026-11-07"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "MINCK",
+    "position": 2,
+    "legal": {
+      "form": null,
+      "legalName": "Ministry of Cocktails LTD",
+      "companyNumber": "14770394"
+    },
+    "source": {
+      "urls": [
+        "https://ministryofcocktails.co.uk/"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "granted"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.495,
+        "lng": -0.15,
+        "approx": true
+      }
+    ]
+  }
+}

@@ -17,8 +17,8 @@
    async setPassword(tag, password)
    async changeTag(oldTag, newTag)
    async loginWithPassword(tag, password)
-   async sendCode(tag, phone)
-   async verifyCode(tag, phone, code)
+   async sendCode(phone)
+   async verifyCode(phone, code)
    async logout()
    Nothing outside this file talks to a backend: the rest of the app calls AUTH_ADAPTER only. */
 /* ==========================================================================
@@ -29,8 +29,8 @@
 
    Account creation:  FF Tag + phone number -> WhatsApp one-time code ->
    account created. A password is optional and offered afterwards.
-   Sign-in:           FF Tag + WhatsApp code (always), or FF Tag + password
-                      (only once one has been created).
+   Sign-in:           phone number + WhatsApp code (always), or username (the FF Tag)
+                      + password (only once one has been created).
 
    FF TAG: a short username — 3 to 8 letters or numbers, unique, not case
    sensitive (stored lower case: alex, alexg, alex94). Eight is the most
@@ -63,6 +63,7 @@ const AUTH_ADAPTER = {
   isAvailable(tag, current) {
     const t = AUTH_ADAPTER.cleanTag(tag);
     if (!AUTH_ADAPTER.tagOk(t)) return false;
+    if (rt17Reserved(t)) return false;      /* page names (network, profile, party ...) are never FF Tags: see docs/URLS.md */
     return t === String(current || "").toLowerCase() || !AUTH_ADAPTER._taken(t);
   },
   /* A suggested Tag from the person's name: their first name where it's
@@ -120,17 +121,18 @@ const AUTH_ADAPTER = {
     if (String(password || "").length < 5) throw new Error("That password doesn't match this FF Tag.");
     return { tag: t, method: "password" };
   },
-  async sendCode(tag, phone) {
+  /* Log in with the phone number alone (v17.111). The account's FF Tag is not asked for: the service finds the
+     account by its verified number and returns the Tag in verifyCode. The mock makes one up from the last four digits. */
+  async sendCode(phone) {
     await new Promise(r => setTimeout(r, 450));
-    AUTH_ADAPTER._tag(tag);
-    if (String(phone || "").replace(/\D/g, "").length < 9) throw new Error("Enter the mobile number on your FireFlair account.");
+    AUTH_ADAPTER._phone(phone);
     return { sentTo: phone, channel: "whatsapp" };
   },
-  async verifyCode(tag, phone, code) {
+  async verifyCode(phone, code) {
     await new Promise(r => setTimeout(r, 450));
-    const t = AUTH_ADAPTER._tag(tag);
+    AUTH_ADAPTER._phone(phone);
     if (!/^\d{6}$/.test(String(code || ""))) throw new Error("The code is six digits.");
-    return { tag: t, method: "otp" };
+    return { tag: "ff" + String(phone).replace(/\D/g, "").slice(-4), method: "otp" };
   },
   async logout() { await new Promise(r => setTimeout(r, 120)); },
 };

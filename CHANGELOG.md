@@ -1,11 +1,786 @@
 # FireFlair prototype — changelog
 
-## v17.4.7.23 — 2026-11-15 — New homepage hero image
-Phase Two artifact version 1794758943-28c4.
+## v17.53
 
-- The hero image on the FF Team, FF Staff and FF Party home pages is replaced with a new people-free bar scene (gold bar tools, a rocks glass with orange peel, burgundy velvet and candlelight). All three homes share one hero image, so it changes everywhere at once.
-- Same format as before: 1800 x 850 WebP (the box is fixed at 1800:850), with a 900 x 425 version for small screens. The code is unchanged.
-- Developers: only `src/shell/ff-img.json` (the `hero` and `hero_sm` keys) and the two new files in `src/assets/img/` changed. The previous hero is kept in `assets/photos/` as `hero_whiskey_bar_v17.webp`, and the new one as `hero_bar_gold_burgundy.webp`.
+Artifact version 1794968621-773a.
+
+Reviews hidden in FF Admin. Branch merged: `p2-revhide`.
+
+- `records.js` (`reviewRecordsFor`): reviews hidden in FF Admin are left out in the one shared review reader, so every profile, Reviews tab, review card and count skips them; FF Admin's own Reviews list still shows them marked Hidden. Company pages (`network-directory.jsx`) apply the same rule.
+
+## v17.52
+
+Artifact version 1794968540-0181.
+
+FF Team home round 2 and Network tidy. Branches merged: `p2-home2`, `p2-net2`.
+
+- Launch Challenge (`discover-and-support.jsx`, `home-fix22.css`): no coin in the eyebrow; larger "FF Team Launch Challenge" title in gold Cinzel; the box runs edge to edge on phones; the 90 days tile shows a big gold "90" with "DAYS" small. Rules sheet (`team-pillars.json`): opens with Rewards (overall winner: Athens Bar Show trip; then "The top 10 go Gold and receive their choice of rewards, including an American Express business expense card, professional equipment or a professional photo shoot."); "hospitality and event professionals" throughout; no XP or levels; the "final terms to be confirmed" section hidden. The Our community pillar's challenge text and rewards list use the same wording; the old "rewards suggested by the community" lines are gone.
+- Home (`team-home.jsx`, `discover-hub.jsx`): "FF Team is built for getting you bookings" is a collapsed drop-down in a dark and gold box, with a spinning coin between the video and the box; the coin between Our community and the video is centred to the pixel; the coin game sits below Business & Support.
+- Network (`network-directory.jsx`, `network-directory20.jsx`, `network.jsx`, `profile-card-parts.jsx`): "Explore our network" is the page heading and sits higher on FF Team; the search box has no FF logo and no microphone, a magnifying-glass button and the placeholder "Search people, skills or places"; FF Team's Our professionals gets its own Management category.
+
+## v17.51
+
+Artifact version 1794967305-ac3d.
+
+FF Team home screen (fellowship review). Branch merged: `p2-homefix`.
+
+- Launch Challenge (`discover-and-support.jsx`, `team-home.jsx`, new `home-fix22.css`): heading "Grow your Team. Win prizes." in Cinzel; Join Challenge and a squircle Rules button; the countdown kept; three equal boxes with gold icons (90 days, Rewards for the top 10, Win Athens), each opening its existing sheet; the progress bar's ladder reads Now (Profiles and teams), 100 (Bookings go live, a third of the way along), 1,000 (Launch party and nationwide campaign). The date chip, summary sentence, FFTeam.uk line and old stage labels are gone; 54 visible words.
+- Discover FireFlair pillars (`discover-hub.jsx`, `team-pillars.json`) now sit below the Launch Challenge: full-width rows on phone, 2x2 on tablet, four across on desktop; titles shrink instead of splitting; new one-liners.
+- Rest of the home: Business & Support after Join FF Team; three coin dividers instead of seven, smaller gaps; the middle Create your Profile Card button and the "Answer three quick questions" line removed; equal-height question boxes and How bookings steps; headings left-aligned; Stories chips squircle, excerpts as whole sentences, dates on one line (`stories-reader.jsx`); smaller empty band in the Join card; the footer version now comes from the newest CHANGELOG entry at build time (`scripts/build.mjs`).
+
+## v17.50
+
+Artifact version 1794966831-ddca.
+
+Profile edit page (Alex's top priority). Branch merged: `p2-pbuild`.
+
+- Own profile edit page (new `profile-edit-p2.jsx`, `profile-edit-p2.css`; `aragorn-preview.jsx`, `profile-builder.jsx`): below Media the page looks like the finished profile. Professions and Attribute cards (Skills, Interests, Languages, Qualifications) show even when empty, each with a pencil. A pencil opens a light sheet; the Professions pencil opens the Tiles picker with every category, Bar as a ladder (1 Barback, 2 Bartender, 3 Cocktail Bartender, 4 Flair Bartender, 5 Mixologist), the rest alphabetical. Profession removal goes by record id.
+- Q&A sits below the tabs and above Save, always open, answered inline and shown at once (as on the live FF Team site); own questions are Yes/No plus a type box and save for real. Q&A is gone from the Bookings tab on the edit page.
+- Edit bar (`party-live.jsx`, FF Team only): Save, then a small X in a circle that closes edit (everything is already saved). New members see Save only. Venues stay off; About Me stays above the tabs.
+
+## v17.49
+
+Artifact version 1794966229-5133.
+
+Team tab and people with several professions. Branch merged: `p2-teambuild`.
+
+- Network (`professions.js`, `network.jsx`, `network-directory.jsx`, `map.jsx`): a professional is listed once in every category covered by their top 3 public professions; the card shows the profession that put them there; order is top-profession holders, then 2nd, then 3rd, then the existing order; a 4th profession doesn't count. Search lists each person once, top-profession matches first. Top staff and the map show one entry per person (a pin shows if any of their top 3 is switched on). Category counts are unique people. FF Staff follows the same rule.
+- Team tab (`introductions.jsx`, `attribute-cards.jsx`, `hire.jsx`, new `team-tab17.css`): My team (preview cards stacking downwards, grouped by top profession, other professions as small labels, search after 12, gold star and "N joined through you" on your own profile only), Company teams (company cards stacking downwards, real memberships only), Network at the bottom (collapsed; visitors see the count only). My team and Company teams open by default. The tab number counts My team only. The invented visitor team (`networkOf11`) and the duplicate Network section on the edit page are removed. No named crews.
+
+## v17.48
+
+Artifact version 1794965586-9624.
+
+Profile edit page, test build for Alex (option 1). Branch merged: `p2-aragorn`.
+
+- Own profile edit page (`aragorn-preview.jsx`, `aragorn-preview.css`, `profile-builder.jsx`): below Media, the tabs now look like the finished public page (Professions, Attributes, Introductions, Q&A) with a pencil on each section that opens its editor in a sheet. On by default; `localStorage.ffAragornOpt = 2|3` shows the other two options. Venues stay off. The editors themselves are the existing ones and are being redesigned next (profession picker and pencil editors).
+
+## v17.47
+
+Artifact version 1794964994-7195.
+
+Venues switched off. Branch merged: `p2-novenues`.
+
+- One switch, `SHOW_VENUES17 = false` with `venuesOn17(k)` in `src/state/phase-config.js` (mirrors the live frontend's `SHOW_VENUES = false`). Hidden: the Venues section in the profile order (builder, own, public, attribute summaries), the edit page editor, the public profile and its media carousel, the other-profile Venues row, "Venues in …" on area pages and the venue map pins, the home map legend entry, FF Staff company page chips and company builder section, CV / FF AI suggestions into Venues and the CV details venue line, the "Add venues" checklist task, and the FF Team home sentence about venues. Stored venue records are untouched; FF Admin keeps its review view.
+
+## v17.46
+
+Artifact version 1794962439-de2f.
+
+- FF Party box (`bookings.jsx`): the Coming soon cards are per tab. Bar keeps the custom-package card; Entertainment previews DJ, Live Music and Entertainer packages; Services previews Photographer, Videographer and Event Host packages. Each card's Includes and Ideal for wording fits its trade; Duration "As long as you choose" and Price "You set it" on all. Entertainment and Services show their cards in a swipeable rail.
+
+## v17.45
+
+Artifact version 1794961970-f877.
+
+- FF Party box, Coming soon card (`bookings.jsx`, `bkd.css`): the preview rows now carry aspirational copy for the bartender (Includes, Ideal for, Duration, and a Price row saying they set it); sub-title "Create custom packages. Your skills, your package, your price."
+
+## v17.44
+
+Artifact version 1794961863-74c2.
+
+- FF Party box, Coming soon card (`bookings.jsx`, `bkd.css`): the big FF logo is replaced by a preview of an empty package card (the Includes, Ideal for and Duration rows with placeholder lines, and a Details bar).
+
+## v17.43
+
+Artifact version 1794961478-5f9f.
+
+Maps and the Network page. Branch merged: `p2-netmap`.
+
+- Maps (`map.jsx`, `vip-site.jsx`, `base.css`): one finger scrolls the page, two fingers pan and zoom; the desktop wheel scrolls the page, ctrl/cmd + wheel zooms; a mouse drag still pans. One shared gesture helper; the base style that blocked touch scrolling on maps is changed.
+- Network search (`network.jsx`, `network-directory.jsx`): at the top of the page, above the map, on FF Team (under "Explore our network") and FF Staff; placeholder "Search the network".
+- Empty categories are hidden: profession groups, FF Event Directory categories and map legend layers show only when they have someone in them.
+- FF Directory (`network-directory20.jsx`, `companies.js`, `themes-xp.js`): every box open by default; category icons, map dots and directory Company Card faces use muted FireFlair shades (text contrast 4.5:1 or more).
+
+## v17.42
+
+Artifact version 1794961397-8c5b.
+
+FF Party box on the FF Team Bookings page. Branch merged: `p2-pkg3`.
+
+- `bookings.jsx`, `bkd.css`: title, intro text, tabs and the package rail share one left edge; the tabs are separate squircles on one baseline above the cards; the ribbon sits level with the FF logo; Includes / Ideal for / Duration values are sentence-case Inter beside the icon (labels stay small-caps Cinzel).
+- "Create your own package" removed. A themed closing card ("FF Party packages", "Create custom packages", Coming soon badge; no button) ends the Bar rail and fills the Entertainment and Services tabs.
+
+## v17.41
+
+Artifact version 1794960401-32cd.
+
+Defect fixes and review findings. Branches merged: `p2-fixes`, `p2-fixes2`.
+
+- Reviews (`profile-from-text.jsx`, `network.jsx`, `network-directory.jsx`, `review-card35.jsx`): the "Review sent" message is no longer overwritten by the sign-up message; a signed-out review on FF Staff and FF Party logs in on the same site and waits; "Write a review" stays in the profile menu until written; a waiting company review shows "Waiting for … to accept" and is not counted; empty-state wording; the review note label.
+- Package cards (`bookings.jsx`, `bkd.css`): "Signed up" fits inside the card; hyphenated words wrap whole; the tabs are announced as tabs and move with the arrow keys; the "Our bar packages" sub-title shows on the Bar tab only.
+- Tags are shown in lowercase everywhere (cards, builder, toasts, admin, network, share links); FFTeam.uk keeps its capitals.
+- Profiles: About me ends cleanly (no "…"); About me comes first in the page markup on other people's profiles; Share is half width and centred on FF Staff and FF Party profiles; the company panel no longer shows the photo through its gap or corners.
+- Network: the Invite tiles are removed from the rows (invite is part of Share).
+- Hero: the FF Team heading takes two lines at most on wide screens; tapping the card on FF Staff and FF Party opens the profile page and sets its address.
+- Removed the unused `RoleCards`.
+
+## v17.40
+
+Artifact version 1794959527-87d7.
+
+Own-profile edit page rebuilt, hero swipe removed. Branch merged: `p2-profile3`.
+
+- Hero easel (`hero-easel.jsx`): swipe, arrow keys and dots removed; a different member's card is drawn on the easel each time the page loads, a tap opens the profile. The moving shine, desktop crop and larger phone card from v17.37 stay.
+- Home (`home-sections.jsx`): the search bar and FF icon under the FF Team hero are gone (the Network page has the search). Network page (`network-directory.jsx`, `map.jsx`): the Venues section and venue pins are removed.
+- Own profile (`attribute-cards.jsx`, `profile-builder.jsx`, `prof21.css`, `landing-shell.jsx`): one edit page for new and existing members; compact dark category boxes, collapsed by default (Professions open); Verify stays grey while the FF Tag is empty or taken; three buttons at most; Need help? at the bottom.
+
+## v17.39
+
+Artifact version 1794958245-25a4.
+
+FF Party package cards in the FF Team Bookings page. Branch merged: `p2-pkg2`.
+
+- Dark package card with the burgundy "Package card" ribbon, the FF logo, the package name in Cinzel and its tagline.
+- Round burgundy icon rows for Includes, Ideal for and Duration. Includes is shown as one line, no longer split into bullets on "and".
+- A Details box, closed by default, holds the description, the points, what the bartender brings and the conditions.
+- Burgundy footer with "You earn" and Sign up (Signed up when chosen); Confirm and the terms step work as before.
+- One design for every package: no bronze, silver, gold or platinum colours or labels. Staffing shows as a package in the same design. Platinum Tasting is not on this list.
+- All wording comes unchanged from the package catalogue and is written for the bartenders who sign up. Long words shrink rather than split.
+- Files: src/components/team/bookings.jsx (BkPkgCard17), src/styles/bkd.css (cell width, new pkgbuild block).
+
+## v17.38
+
+Artifact version 1794957357-2667.
+
+Photo area on profile and company pages. Branch merged: `p2-media`.
+
+- `public-profile.jsx`, `p12.css`: the card's pull-down listens only to touches that start on the card, so swipes on photos are left to the browser; the photo scroller moves sideways only, one photo per step; photos are never cropped (a blurred copy fills spare space); on phones tapping the photo or the grip on the card's top edge moves the card down and back; photos advance every 5 seconds and loop, pausing on touch, hover, focus, after a manual swipe and when off screen, and not at all with reduced motion; position dots shrink to fit.
+
+## v17.37
+
+Artifact version 1794956507-bbaf.
+
+Profile Card icon column and commas, the FF coin as the notification count, Review Cards on every Reviews tab. Branches merged: `p2-card`, `p2-net-ladder` (coin).
+
+- Profile Card (`profile-card-parts.jsx`, `pc1716.css`): the rows box has a black column down its left edge holding the five row icons in gold, as on the live FF Team cards; entries are separated by commas instead of dots (a comma never starts a line). Small browse tiles and the builder's editable card are unchanged.
+- FF coin (`landing-shell.jsx`, `net20.css`): with one or more notifications waiting, the coin's face shows the number in gold in place of FF and the small badge is not drawn; with none it shows FF. Two digits shrink to fit; 100 or more shows 99. Phone bottom bar and desktop top bar, all three sites.
+- Reviews tab on public and finished profiles (`introductions.jsx`): now draws the Review Cards (`ReviewsTab35`); in v17.36 only the builder used them.
+- Home hero easel (`hero-easel.jsx`, `p12.css`): swipe or arrow keys move between members (tap still opens the profile); dots under the board; the shine only exists when motion is allowed; desktop keeps the full photo width and crops only top and bottom; the phone card is about 18% larger.
+- Visiting someone's profile (`network.jsx`, `introductions.jsx`, `prof21.css`): signed-out visitors see a muted-gold Join and a smaller Share, no Review button; About me sits above Professions; the Overview / Bookings / Team / Reviews tabs are boxed squircles; the company panel's shadow no longer overlaps the tabs. Branches merged: `p2-hero`, `p2-profile`.
+
+## v17.36
+
+Bookings packages and the old chooser screen, Review Cards in the Reviews tab, Need help? on finished profiles. Branches merged: `p2-bookings` (second commit), `p2-design`.
+
+- Bookings, FFParty box (`bookings.jsx`, `bkd.css`): sub-title "Our bar packages"; packages run Masterclass, Flair, Cocktail, Bartending, Staffing (no amount changed); larger cards in the FF Party package card style; tabs Bar / Entertainment / Services, where Entertainment and Services show Coming soon with a gold Create your own package button. Sign up, Confirm and the terms step work as before.
+- The old chooser screen ("This is where your Profile Card lives") is removed (`landing-shell.jsx`). Many buttons opened Profile without setting the site first, which showed that screen to signed-out visitors; Profile now opens Create your Profile Card in that case. `RoleCards` in `shared/landing-and-sites.jsx` is now unused.
+- Review Cards (`attribute-cards.jsx` reviews section, new Review Card component, `rank17.css`): each review in a profile's Reviews tab is one Review Card (the home-page design): plate, FF logo, stars, the words, the writer, and a black footer with the writer's FFTeam.uk address and the date. No stars when the writer has not worked with the person. The writer's own waiting review shows a burgundy footer "Waiting for {First} to accept". Review Cards appear in the Reviews tab only.
+- Finished FF Team profile (`party-live.jsx`): the Need help? Book a meeting box now also closes a member's own live profile page; the Share under your own card sends your join link.
+- FF Staff shift rate cards and Shift Cards are unchanged (postponed).
+
+## v17.35
+
+Bookings page (Task 003), the new profile buttons and review form (network ladder part 2), Profile Card polish, Need help? Book a meeting. Branches merged: `p2-bookings` (first commit), `p2-net-ladder`, `p2-card`, `p2-profile`.
+
+- Bookings (`bookings.jsx`, `bkd.css`): the page title is "Bookings". The first section is "Your Bookings" with the WhatsApp icon and the line "Requests come to you on WhatsApp."; every invitation and confirmed card sits inside it (Invitations, Confirmed, History as before). Then "Packages", holding the two existing boxes, now titled "FFParty" and "FFStaff" (these two titles only; FF Party and FF Staff are unchanged everywhere else). Under Build your career, only one of Training, Dream jobs and FireFlair rewards can be open at a time. The FF Staff shifts cards and all Shift Cards are unchanged (that work is postponed).
+- Someone else's profile on FF Team (`network.jsx`, `profile-card-parts.jsx`, `net20.css`): a signed-out visitor sees three buttons: Join {First}'s team (large, gold), Review, Share. A signed-in member sees one relationship button that grows (Add to network, Invite to your team, Invitation sent, On your team) with a small menu for removing, then Ask and Availability, then Share. There is no Review button for signed-in members on FF Team; the review is offered straight after Add to network.
+- One review form everywhere (`profile-from-text.jsx`): "Have you worked with {First}?" Yes / No, five stars chosen by default (hidden on No), a type box, Post review. A signed-out review is kept and posted after sign-up. A new review waits until its subject accepts it; screens that list reviews now show accepted ones only.
+- Your own card's Share sends your join link (FFTeam.uk/join/<tag>) once your profile is complete; the separate Invite tiles are gone. The line "Ask someone you've worked with for a review" is replaced by the small Ask for a review tile.
+- Profile Card (`profile-card-parts.jsx`, `pc1716.css`): the rows share the spare height so the gap under the last row equals the gap above the first; the card address is in Cinzel and starts at the left edge of the rows box; the inner border line sits against the outer rim (large card, small tiles, builder card, exported image).
+- Profile builder (`profile-builder.jsx`): a "Need help?" box with Book a meeting at the bottom of the page, opening the same booking sheet as before. The FF Tag is still saved as typed; the availability check ignores capitals.
+- Still to come on these branches: the old chooser screen made unreachable and the bar packages tabs (Bookings, second commit); developer notes for the network ladder; an independent review of all of the above.
+
+## v17.34
+
+Artifact version 1794952568-151a.
+
+Profile builder layout, Profile Card labels and branding, and the stored records for the new network ladder. Branches merged: `p2-profile`, `p2-card`, `p2-net-ladder`.
+
+- Profile builder (`profile-builder.jsx`, `prof21.css`): the Phone number box (same inputs, country code, Verify and code step) is now the third entry in Let's get started, in place of Book an interview. It appears once on the page. `InterviewBook17` stays in the code: FF Staff's Book a meeting uses it.
+- Profile builder, Your Profile Page: FF Tag on the left and Media on the right from 900px wide; stacked FF Tag then Media below that. About Me is its own box under them, above the tabs, and no longer repeats inside the Overview tab (`creator-media.jsx`).
+- Profile Card (`profile-card-parts.jsx`, `pc1716.css`): the written row labels (Professions, Skills, Interests, Locations, Languages) are gone from the large card; the icons stay, and the words stay for screen readers.
+- FF Cards: the top-right FF logo is about 15% smaller on every card variant. The FIREFLAIR word (and the small mark beside it) is gone from the bottom right of the Profile Card and the Company Card; the card address stays on the left.
+- Network ladder, part 1 of 3 (records only, screens follow): `connStatus17(state, id)` returns none / network / pending / team; a shared profile link (`?r=`) now creates the same pending team invitation as a join link; one review shape `{ id, aboutId, byId, byName, worked, rating, text, status, at, shiftId }` where a new review waits as `pending` until its subject accepts; signed-out review drafts post after sign-up; new actions `REVIEW_DRAFT`, `REVIEW_DECIDE`, `TEAM_INVITE`, `TEAM_INVITE_ACCEPT`, `CONN_REMOVE`; two new notification cards (added you to their network, reviewed you) shown as samples after the DEV login only.
+- Known, to be closed by part 2: three screens still read the raw review list and can show a waiting review (`public-profile.jsx`, `network-directory.jsx`, `home-sections.jsx`).
+
+## v17.33
+
+- Hero, wide view (900px and up): the whole photo is shown, never cropped; the words sit over its left; the card stays on the easel; the violet beams rise from the photo's bottom-left and bottom-right corners (`.ff section#ff-hero` rules at the end of `p12.css`).
+- Hero search bar is smaller on wide screens (just wider than the Create Your Profile card); placeholder shortened to "Search FireFlair…". Phones are unchanged (photo still cropped at the sides).
+
+## v17.32
+
+Artifact version 1794947135-8ae7.
+
+- Hero card sits centred on the easel: the board in the photo is moved right, and `HERO_EASEL24` / `HERO_EASEL24_REFL` are re-measured (scripts/hero-easel/).
+- Hero photo: colour grading reduced again, close to the photo as shot; the gold light stays on the easel.
+- Hero panel: a little burgundy in the middle; violet beams rise from the bottom-left and bottom-right corners and spread slightly as they go up (`.ff-hero18::after`).
+- Card shine: a small glint across the bottom-right corner only (`.ff-easel24-sheen`), instead of a band across the middle.
+
+## v17.31
+
+Artifact version 1794946952-7d15.
+
+- Map: the FF pin over Shoreditch is removed (`MAP_FF_HOME27` and `.ff-lffpin27` are gone). The Shoreditch name stays.
+
+## v17.30
+
+Artifact version 1794946920-0308.
+
+Home hero: a shinier card that opens the member's profile, larger on phones, new panel colours. Network page: Our professionals is back.
+
+- Hero card (`HeroEasel24`): tapping or pressing Enter on the card opens that member's profile (`VIEW`). The card is brighter, has a gold glow and a band of light that crosses it every few seconds (`.ff-easel24-sheen`; still under reduced motion).
+- Hero photo: far less colour grading than v17.26, so it reads as the real photo; the gold light on the easel stays.
+- Hero panel: burgundy in the middle with violet rising from the foot of the Welcome box. The photo now melts into the panel with a mask (the coloured fade layer is hidden).
+- Phones (under 900px): the photo is cropped at the sides, never stretched, so the easel and card are about a third larger and always sit above the heading; the foot of the photo runs under the heading.
+- Network page (FF Team): the whole Our professionals section (heading, Top staff, professionals by type) is back between the map and the search box, as before v17.20.
+- Map legend: Professionals and FF Directory only. Partner companies stay on the map.
+- These hero rules are appended to p12.css with `!important` because v101.css repeats the hero selectors at the same weight; folding the two together is a tidy-up for later.
+
+## v17.29
+
+Artifact version 1794946184-36d1.
+
+Explore our network map: London areas, the FF pin, venues off the map.
+
+- Venues are no longer drawn on this map or listed in its legend (`MAP_LAYERS19` is Companies, Professionals, FF Directory). Venues come from Google's business search, and Google's terms allow that data on a Google map only; a separate Google map for venues may follow. Venue cards and the Venues section of the page are unchanged.
+- The legend's "Directory" now reads "FF Directory".
+- London area names (`MAP_LONDON27`, 40 areas including Shoreditch, Soho and Camden) appear from the London view inwards. A name that would touch another sits to the left of its dot instead of the right; if it still touches, it waits for the next zoom in.
+- The FF pin (`MAP_FF_HOME27`, the gold FF coin) marks FireFlair in Shoreditch, above the other pins.
+
+## v17.28
+
+Artifact version 1794945683-592c.
+
+Explore our network map (FF Team, FF Staff, FF Party): pins instead of numbers, green land, place names.
+
+- The numbered clusters from v17.21 are withdrawn: every place is its own pin again (shared/map.jsx). At the UK view the pins are drawn small so the country stays readable; they are full size once zoomed in.
+- The map is the drawn map again: land green, sea and rivers blue, county lines from the first zoom in, Greater London and the Thames closer in. Map-server tiles are switched off by one constant, `MAP_TILES27` (the tile code and `TILE_URL21` stay). The prototype cannot load tiles inside the preview, so what was reviewed there was never the tile map; which map system the live site uses is being decided separately.
+- Place names: `MAP_TOWNS27`, 104 towns and cities in three ranks (`MAP_TOWN_Z27` sets the zoom each rank appears at). Coordinates come from the FF Event Directory's location list (content/data/fd-rows.json). A name is left off when it would touch one already placed, and names are redrawn on every zoom and move. Styles: `.ff-ltown27` at the end of v11.css.
+- Also in this build: the Verify button in the Phone number box drops under the number when the box is narrower than 300px.
+
+## v17.27
+
+Artifact version 1794945469-0318.
+
+FF Team profile builder: the Phone number box.
+
+- The Phone number box (and its WhatsApp code step, and the signed-in Phone number box) is a shiny gold box: `GoldBox21` with `className="shine"`, styles `.ff-gb21.shine` at the end of prof21.css. FF Tag and Media keep the paler gold.
+- Country code drop-down in front of the number, as on the live FFTeam.uk, showing +44 by default: `DialCode26` and the `DIAL_CODES26` list in profile-builder.jsx (a native select under a compact "+44" label, so phones use their own picker). The list in the prototype is a starter list; the live site should use its full list.
+- The number passed to `AUTH_ADAPTER.sendSignupCode` / `verifySignupCode` is the code plus the national number with any leading 0 dropped (+44 7700 900000). A number typed with its own + or 00 is passed as typed.
+
+## v17.26
+
+Artifact version 1794945257-a2e3.
+
+Home hero easel: the Profile Card is now the board itself, and the photo is relit again.
+
+- The card covers the whole display board (no dark border round it) and rests on the easel's ledge. `HERO_EASEL24` and `HERO_EASEL24_REFL` are now the board's own four corners. In the photo the board's square corner tips are painted out, so the card's round corners end cleanly against the room.
+- On the easel the card takes the board's proportions (`aspect-ratio: 757 / 994` on `.ff-easel24-card > .ff-deck`, a little wider than 5:7) so nothing is stretched; the card lays itself out to that shape.
+- Lighting: violet light comes up from the bottom-left and bottom-right corners; one golden spotlight sits over the card, the easel and the nearest drinks. `.ff-easel24-shade` / `.ff-easel24-key` match the card to it.
+- scripts/hero-easel/ holds the updated steps and measurements.
+
+## v17.25
+
+Artifact version 1794945024-9a74.
+
+FF Team Bookings, "Build your career": Training, Dream jobs and FireFlair rewards cards and their drop-down headers.
+
+- Cards (`FlipChoice17`, terms-and-packages.jsx; styles in v11.css `.ff-fc17`): the photo is the top half of the card and only the title sits on it, over a short dark fade. Label, description and the button sit below on the solid card. The cards no longer turn over, because the description is always on the front.
+- Drop-down headers (`BkDrop17`, bookings.jsx; styles in bkd.css): same rule, photo on top with the title on it, then icon, description and chevron. From 760px wide the three sit in one row and the opened one shows its cards full width underneath with its own title. Still closed by default. The ids ff-bk-training, ff-bk-jobs and ff-bk-rewards moved to the header button and remain the scroll targets.
+- Each card photo has a position setting (`swipeImgs().pos`, home-scenes.jsx) so heads and drinks stay in frame above the title. Update it when a photo is swapped.
+- Buttons are squircle and 44px tall; cards in a row share one height; words never split.
+- The Training label "FireFlair event" now reads "FF event".
+- No photos were changed. A picture audit of these 27 images is with Alex.
+
+## v17.24
+
+Artifact version 1794944686-9549.
+
+Home hero on FF Team, FF Staff, FF Party (and FF VIP): a real member's Profile Card stands on the easel in the photo, a different member on every page load, and the photo is relit.
+
+- New component `HeroEasel24` (src/components/shared/hero-easel.jsx), placed in each hero between the photo and the fade. It draws the live `PlayerCard` (format "full") onto the photo's display board with a CSS `matrix3d` worked out from four corner points (`HERO_EASEL24`, fractions of the hero image). A second, mirrored copy (`HERO_EASEL24_REFL`) is the card's faint reflection in the bar top. Nothing is baked into the image, so any member, any card theme and any future card design fit with no new artwork.
+- One member is chosen at random per page load from the directory (`state.directory`). Live site: choose one published FF Team profile at random per page load.
+- The stage `.ff-easel24` covers the photo exactly as `object-fit: cover` does (centred, 1800:850), so the card stays on the board at every size. Styles are at the end of src/styles/p12.css: `.ff-easel24-shade` (multiply) and `.ff-easel24-key` (screen) light the card to match the room.
+- Hero photo (`hero`, `hero_sm` in src/shell/ff-img.json): same photo (library rb04), cropped a little higher, the printed menu painted off the board, its reflection removed from the bar, and relit: violet room light, one warm lamp on the easel and drinks. The steps and the corner measurements are in scripts/hero-easel/. If the photo is ever replaced, the corner points must be measured again.
+- `pc17Fit` (profile-card-parts.jsx) now measures with the easel's transform switched off for that instant, so entries are dropped correctly on a card drawn in perspective. No change anywhere else.
+
+## v17.23
+
+Artifact version 1794943438-15dd.
+
+- Home hero on FF Team, FF Staff, FF Party (and FF VIP): the FF coin, its reflection and its shadow are removed from the bar. The hero is now a real photo and a drawn coin on it no longer works. Removed from home-sections.jsx, staff-home.jsx and vip-site.jsx; the .ff-hero18-coin / .ff-hero18-shadow styles and SiteHeroCoin are now unused.
+
+## v17.22
+
+Artifact version 1794941242-d066.
+
+Real photo for the home hero on FF Team, FF Staff and FF Party.
+
+- Hero image (`hero` 1800×850 and `hero_sm` 900×425 in src/shell/ff-img.json) is now a real event photo: Vooshka's bar tools, cocktail menu, old fashioneds and barrel on a curved bar (photo library rb04, IMG_8273). Cropped to the hero shape with the coin landing on clear bar in front of the drinks; colour warmed slightly toward the site's gold and burgundy. The coin is still drawn by the page, not part of the image.
+- The previous AI hero files are removed from src/assets/img.
+- Photo library: five new photos from the same event added (rb01–rb05, batch rb-wedding).
+
+## v17.21
+
+Artifact version 1794905340-a264.
+
+Design round built with the FireFlair design toolkit (repo .claude/skills): profile builder and complete profile page back to the v17.15 benchmark look, a calmer familiar Network map, and the Profile Card restored to its approved design.
+
+- Profile builder: "Your Profile Card" and "Your Profile Page" headings in the "Let's get started" style. Phone number and FF Tag are golden boxes with their descriptions ("Used to send you bookings via WhatsApp." / "Your personal web page, displaying all your profile information."), the entry box and Verify on one line (side by side on desktop and landscape; stacked on a portrait phone). Media is a golden box with a description and no drop-down.
+- Professions: the v17.15 "Pick your professions" box (search, category row that scrolls sideways, suggestion chips) and gold / silver / bronze tiles are back, in the builder and on the displayed page. Tiles reorder with the three-line handle. No "Add a profession" row.
+- Qualifications, Skills, Interests, Languages: a white type box with an ENTER key; pressing Enter adds the entry. No plus circles, "Add a…" rows or section drop-downs. Tapping an entry opens a compact editor (details, photos, hide, remove that asks once, one gold Done). No X buttons.
+- Packages tab renamed Bookings (builder and displayed profile); Work locations live in Bookings.
+- Venues editor polished in the approved Worked at | Favourites design.
+- Complete profile page: v17.15 visual weight — big profession tiles, About Me, Attributes cards (tap for full details and photos), Venues.
+- Network page: opens on "Explore Our Network" and the map. Standard Leaflet map on CARTO Voyager tiles (one constant, TILE_URL21, in shared/map.jsx), no M25 overlay, category dot colours kept, light custom clustering (small numbered squircles with a thin ring in the category colours; 44px tap area; tap to zoom). A drawn UK map shows if tiles can't load. Tile terms need checking for the live site.
+- Directory and venue tabs: one row of squircle buttons, fixed height, horizontal scroll only.
+- Company cards: no Featured badge; smaller FF logo on claimed cards; Crest layout removed (saved Crest cards fall back to Big logo).
+- Profile Card: large card restored to the approved layout (photo, name, headline and icon row were about 28px low; plate position); the card editor in the builder now matches the large card (dark plate with bust icon, headline style, footer).
+
+## v17.20
+
+Artifact version 1794860910-0648.
+
+FF Team Network page (Phase 2 = FFTeam.uk 1.1): map, legend, search, FF Event Directory with five tabs per section, a Venues section, and a rebuilt Company Card with two new layouts.
+
+- Page order: map → legend → Search the network → FF Event Directory → Venues (NetBrowse17, NetworkScreen). "Our professionals" and the Explore by area drop-downs are not shown here (the code stays for other pages). Member cards are reached through search and the map. The VIP and signed-out Network pages share this layout; FF Staff and FF Party keep theirs.
+- FF Event Directory (network-directory20.jsx, styles/net20.css): no Featured companies section; Vooshka keeps its Featured tag and sits first in Bar companies; Bar companies is open, the others start collapsed. Each section has up to five tabs (one constant, NET_DIR_TABS20, with the labels and match rules; empty tabs are hidden): Bar companies (Mobile cocktail bars, Event bar hire, Bartender staffing, Specialist bars, Bar & catering); Entertainment (Wedding DJs, Party & club DJs, Corporate DJs, DJ & live music, Sound & lighting); Event services (Photography, Videography, Photo booths, Styling & decor, Planning & staffing); Caterers (Street food, Private chefs, Wedding catering, Corporate catering, Desserts & cakes); Bar services (Glassware & equipment, Ice & drinks supply, Cocktail masterclasses, Mobile bar builds, Drinks consultancy).
+- Colours: muted category colours; Caterers is grassy green (#4E8A3A).
+- Venues section under the directory: every venue members have listed, once each (VenueCard19), in five tabs by type (Cocktail bars, Hotels, Restaurants, Event venues, Clubs & late bars; typed venues go to Event venues), scrolling across, with the listing members' portraits under each card.
+- Company Card (shared, company-cards.jsx, styles/cc20.css): plate and logo use the Profile Card insets so they line up with the rim and inner line. Claimed companies have no "Company Card" plate; the FF logo sits top right. Unclaimed Directory entries keep the plate, no logo. Footer: FFTeam.uk/<slug> left; claimed companies show FIREFLAIR right. Two new layouts in CC_LAYOUTS: Banner (logo band across the top, name and tagline below) and Crest (centred logo in a metal ring, centred name and tagline). All text shrinks to fit.
+- Small Profile Cards: FFTeam.uk/<Tag> left, FIREFLAIR word right (no logo).
+
+## v17.19
+
+Artifact version 1794860123-92ae.
+
+Profile page: numbered lists with details and photos, Worked at and Favourites venues, separate Phone, FF Tag and Media boxes, category tabs for professions, Silver and Gold card colours.
+
+- New list editor RankList17 (attribute-cards.jsx, styles/rank17.css) for Professions, Qualifications, Skills, Interests and Languages, on the builder and (read-only) on the displayed profile. Each entry: a plain number (no gold, silver or bronze), the name, a "+" that opens a panel for detail text and photos (up to 4, shrunk to 1000px; Hide and Remove live here), and a three-line handle to drag (touch and pointer; arrow keys too). Detail text and every photo (one square box each) always show under the entry. The order is the record order (backend display_order; one PATCH /sections/:id/data/order call), so rank is only order. REC_MOVE takes {id, to}.
+- Removed: the drag-and-drop introduction and the Primary / Secondary / Extra boxes (TierEditor, ProfileEditHead, editRows).
+- Overview order, builder and displayed profile: Professions, About me, Qualifications, Skills, Interests, Work locations, Languages, Venues. Social links and Network are on the Team tab; Reviews & References on the Reviews tab.
+- Venues (VenuesEditor19, VenueCard19): a "Worked at | Favourites" switch above the search box sets the kind of the next venue (record.details.kind "worked" | "favourite"; CV venues and venues with no kind count as worked). Two rows scroll across. Landscape cards (200px): type icon, type, name, street and area, the member's line. Google venues: blue (worked) or plum (favourites) with a Google Maps link. Typed venues: cream with a dashed outline, a pencil and "Added by hand", no map link. Remove is inside the venue's sheet (no X on cards). Backend: needs a "venue" section added to seedCards.js; the kind fits in additional_data.
+- Account boxes on the builder: Phone number, FF Tag and Media, each its own box, in that order. Inputs are as wide as their content. The phone button reads "Verify". Media: square tiles in a row that scrolls across with a "+" tile at the end.
+- Pick your professions: the category row uses the profile tab style; typed suggestions no longer print a category; only a new profession asks for one.
+- Card colour: picking Silver or Gold makes the rim, inner line, photo ring and FF logo silver or gold (cardMetal17); other colours keep the verification tier.
+- Card footer (editor and large card): FFTeam.uk/<Tag> bottom left; FF logo and FIREFLAIR bottom right.
+
+## v17.18
+
+Artifact version 1794855679-a976.
+
+Profile page update: the attribute boxes, rank colours, venues, builder tabs, invitations and work locations.
+
+- Rank colours (cardRank, records.js): one Gold (index 0), one Silver (index 1), every other card Bronze. Colour follows the order only. The builder boxes keep the labels Primary, Secondary and Extra; Primary and Secondary hold one card each (RANK_CAP in profile-edit.jsx) and a card dropped into a full box moves the occupant down one box. The Profile Card still features the top three by order (FEATURE_LIMIT). The displayed profile no longer repeats gold, silver, bronze (tierCls17 in public-profile.jsx, also used for the profession cards).
+- Builder attribute boxes (TierEditor, styles/p12.css): three boxes across, fitting the content width, the same size in every category. A card shows its name in its tier colour (the full card opens on a tap). An empty box shows a plus in its centre; tapping it adds straight into that box (Professions focus the profession search and the next pick goes into that box). The Extra box always ends with a plus. The company builder is unchanged.
+- Category order, builder and displayed profile, as on the Profile Card: Professions, Skills, Interests, Work locations, Languages, then Venues, Qualifications and the rest (profileOrder in phase-config.js, PUB_ORDER in public-profile.jsx).
+- Venues: one line under the heading ("Add the top venues you've worked at, or your favourite bars."). Venue cards are square and the same size as the attribute boxes, three across, in the neutral faded blue, with no rank colour. Tapping a venue opens the same card sheet (description, pictures, Google Maps link). The meta line wraps instead of ending in an ellipsis.
+- Social links in the builder: the WhatsApp number is no longer asked for or shown (it comes from the account). Stored values are kept.
+- Builder tabs (attribute-cards.jsx): Overview, Packages, Team and Reviews, the same tabs as the displayed profile. Q&A, Build your packages (Signature cocktails, Service Cards) and Terms and conditions are in Packages, in that order. Team and Reviews reuse TeamTab17 and ReviewsTab17 (introductions.jsx), now shared with the displayed profile. On the signed-in displayed profile, Build your packages and Terms and conditions moved from under the tabs into the Packages tab, below the Q&A (packagesTail on PublicProfileBody). Build your packages now starts collapsed like every other box.
+- Cocktail builder (card-studio.jsx, v11.css): the Cocktail / Mocktail switch, the Recipe label and the 1 / 20 size control share one row, the size control a little larger and the switch a little smaller. Fits at 360 px.
+- Invitations (Shift Cards, shift-card17.jsx, styles/shift17.css and sd11.css): no gold outline; the edge, inner line and rows border take one colour per source (--sc-edge: FF Staff and FF Party). The black panel behind the event name is gone: dark text, slightly smaller, still shrinks to fit. The three buttons are squircles; Available is the site's gold button. Note: the Shift Card on the home pillar demo uses the same component.
+- Work locations card (displayed profile): the areas as they were ticked (a ticked parent stands for what is beneath it), at most three, then "+N". Entries wrap between whole words; no ellipsis in any summary card.
+- More than five entries: a summary card lists five at most; a category with six or more continues on a second card of the same title with the next five, and so on (AttrGroups).
+- Simao's Profile Card is Silver (cardTier17). Alexander stays Gold, Bruno Silver, everyone else Bronze.
+
+## v17.17
+
+Artifact version 1794852236-3e59 (FireFlair — Phase Two, almost final).
+
+Home pillars on all three sites: new FF Team wording, picture-only 1-2-3 cards, titles level with the visuals on desktop, one Review Card design, and a real photographer on the example Service Card.
+
+- FF Team, Your profile pillar (team-pillars.json): tagline "Your CV can become a page of your own"; title "Build, share, grow". SEO titles and descriptions unchanged.
+- FF Team, Our packages pillar summary rewritten: FF Staff is built for hospitality businesses to request your services; FF Party markets set-price packages direct to private clients, launching with exciting bar packages; from 2027 every professional can create packages of their own.
+- 1-2-3 cards (PillarCards21, shared by FF Team, FF Staff and FF Party): picture and title only, no description line. The "more from this pillar" links on section pages show titles only. card.d stays in the JSON. Titles wrap between words only and shrink on narrow screens.
+- Pillar sections, desktop (from 680px, team-pillars21.css): two-column grid so the top of the section title lines up with the top of the visual. Mobile unchanged.
+- Profile Cards inside pillar visuals: the section's tall line height pushed the card's inline icons below their boxes (row icons clipped, profession marks running into the first row). Fixed with display:block on the card icons and line-height 1.2 inside the card, scoped to .pv. Applies to Simao's card in the CV and WhatsApp visuals and the three small team cards.
+- Review Card (ReviewCardPv21, team-pillars.jsx): "Review Card" plate top left, five drawn gold stars, the review, then the reviewer with logo or photo. FF Team: Vooshka reviewing Simao ("I worked with Simao on New Year's Eve..."). FF Staff and FF Party review visuals (SvReview21) now use the same card with their own client reviews instead of ReviewCard11.
+- Event Photography example Service Card (OwnServiceCard, ownPhotoExample17 in services.jsx, used by both pillar visual files): Hayden Forde-Pogson, HF portrait, a location pin with Norfolk, the package price on his card, and a drawn camera strip across the top (item.sampleIcon). Other own-service cards still read "Priced by <name>".
+- Pillar 1-2-3 pictures regenerated where their visuals changed: th_cv, th_team, th_reviews, th_own (FF Team), ths_reviews, ths_services (FF Staff), thp_reviews (FF Party). make-pillar-thumbs.py gained a team mode and an ONLY filter, and the review visuals are now captured from .pv-rvx.
+
+## v17.16
+
+Artifact version 1794850484-a629.
+
+Profile Card redesign: a large share card and a small web card, Bronze for everyone (Silver and Gold for two members), the FFTeam.uk address, a 28-character Headline, and a capital on every word.
+
+- Two card formats in PlayerCard (profile-card-parts.jsx, styles/pc1716.css). format="full" is the large 5 x 7 share card (plate "Profile Card", five boxes: Professions, Skills, Interests, Locations, Languages; entries centred under a small title, wrapping onto two lines between whole entries; FIREFLAIR in the footer). format="portrait" is the small web card (plate "Profile", icon-only rows, flags centred between the box and the footer, address only). Both use the Cinzel name, Inter for everything else, one inner hairline, a metal ring round the photo, the FF logo top right only, and the address FFTeam.uk/<Tag> (first letter capital) in the footer.
+- Entries: every word capitalised, separated by "•", never "…" or "/" as a separator, never split across lines. An entry that does not fit is dropped whole (the last first); if none fit the shortest stands alone; if that does not fit the row is hidden. Locations drop a shared trailing country. Professions lists every profession, top one first. Experience, Roles, Qualifications and "years" are no longer on the card (the data stays on the profile).
+- No photo: a metal bust silhouette on a dark disc replaces the initials.
+- Spacing: the icon row sits the same distance below the headline as above the Professions box (equal margins; spare height is shared at the top and bottom of the whole column).
+- Tiers: cardTier17() in card-brand.jsx. Alexander Gagnon is Gold, Bruno Cuartero is Silver, everyone else is Bronze; "standard" is no longer drawn for people. The card theme no longer changes the metal. Explainer tiles, site coins, Shift Cards, Service Cards and company cards are unchanged.
+- Address: CARD_DOMAIN is now FFTeam.uk, so share links read https://FFTeam.uk/<TAG>. The SEO canonical and profileOrigin settings (seo.js) are unchanged.
+- Share sends the large card: the share sheets on Network, FF Party live profile, the booking peek, Send my card and the invite sheet all render format="full"; the PNG is 1080 x 1512.
+- Headline: the Profile Card editor's Headline box is limited to 28 characters; meAsStaff passes profile.headline. The card shows the headline, else the top profession. Simao and James Allcott have headlines in REAL_MEMBERS.
+- Capitals on save, site-wide: capWords17() (utils/text17.js) capitalises every lower-case word of a record name in REC_ADD, REC_PATCH (when the name changes), REC_BULK, RECORDS_MERGE and RECORDS_FILL (name only). Words with a capital already (McDonald's, WSET, UK) stay as typed; and, of, the, &, in, on, for, to, a stay lower case unless first. Contact, Media and Reviews records are not changed. Saved profiles are normalised once on load (App.jsx) and the directory members when they are built (staff()).
+
+## v17.15
+
+Artifact version 1794846979-291b (FireFlair — Phase Two, almost final).
+
+Venue cards simplified; Let's get started and the Profile Card tidied.
+
+- Venues: the Primary, Secondary and Extra boxes and the Add venue tile are gone from Venues. The section is one search box (VenueSearch17, the Google business search) with the member's venues below it. Nothing else is asked for.
+- Venue cards (VenueLandscapeCard, attribute-cards.jsx) are small and the same size as the dotted outline in the Primary, Secondary and Extra boxes (clamp(110px, 30vw, 140px) wide, 110px high, squircle), in one neutral faded blue, on profiles, area pages and the map. Each shows the name, the type and area, and View on Google Maps (Google venues only). An X removes a venue while editing. Long names shrink so no word splits.
+- Let's get started (desktop): Upload CV and Book an interview sit on the right; Book an interview is a soft faded red instead of solid burgundy.
+- Profile Card editor: Professions sit on the left; a Headline box sits under the name (saved as profile.headline; its details come from another thread); the double line between Skills and Interests is one line (the type-in underline now shows only while typing); the postcode box matches the card (no white box) and works the same.
+
+## v17.14
+
+Artifact version 1794844826-2fe8 (FireFlair — Phase Two, almost final).
+
+Venues replace Experience, picked from Google's business search. Full write-up for the developers: docs/venues-phase2.md.
+
+- Profile → Venues → Add venue: one box. Typing a name ("Savoy") opens a dropdown like the location search: venue name, address underneath, and "Add “…” as a venue" at the bottom for places Google doesn't know. Picking a venue fills the address and a View on Google Maps link. No town, role or dates are asked. The same sheet works for FF Staff company venues.
+- Search: PLACES_ADAPTER (src/adapters/places-adapter.js), the live site's Google Places autocomplete with includedPrimaryTypes ["bar", "restaurant", "night_club", "hotel", "event_venue"] in place of ["(regions)"], then one Place Details call. The prototype has no key, so it searches 31 sample venues (src/content/data/venue-samples.json, shaped like Place Details). A key saved in the browser as localStorage "ff_places_key" switches it to Google. "Powered by Google" shows in live mode only.
+- Each Google venue is placed in the area list automatically (venueAreaFor17): the most specific name that is a place in our list (neighbourhood, then ward, parish and local authority from the postcode lookup, then postal town and locality), otherwise the nearest neighbourhood, borough or town within 50 km; abroad, the country. Claridge's goes to Mayfair, Satan's Whiskers to Bethnal Green, Three Blue Ducks to Australia.
+- Area pages: new "Venues in <place>" section (after Available packages, before the FF Event Directory) with every placed venue at or under that place. Each card opens Google Maps, and the names under it open the profiles that listed it.
+- Network map: the Venues layer shows members' venues, each at its own point (people stay at area level). The six invented venues (VENUES in people-demo.js) and the unused VenueCard are removed.
+- Typed venues, and Google venues that can't be placed, stay on the member's profile, are left off area pages and the map, and are listed in FF Admin under Venues to review (All sites and FF Team). The prototype keeps that list when someone signs out (venueReview17, like claims).
+- Experience: no new Experience cards. Profiles that already have entries (CV imports, the real members' work history) still show them after Venues; nothing is deleted. The "Add experience" next step is now "Add venues".
+- Venue cards show the address only when there is one, the type and area along the bottom, and View on Google Maps only for Google venues. The all-attributes view shows a venue's address.
+- LOCATION_ADAPTER.lookupPostcode also returns ward and parish.
+- Test profile (DEV · complete profile): its venues are Tobacco Dock and Claridge's from the sample search, plus The Loft Lounge typed by hand, so it shows on the review list. Its two invented Experience entries are removed.
+
+## v17.13
+
+Artifact version 1794843150-a221 (FireFlair — Phase Two, almost final).
+
+The made-up demo profiles are gone. The directory is now the six real FF Team members with published profiles, taken from the live database: Alexander Gagnon (ALEX424), Alexandru Gavrilas (GAVRILAS), Bruno Cuartero (CUARTERO), Simao (SIMAO), Dany Gagnon (DANYG) and James Allcott (JAMESALL).
+
+- src/content/people-demo.js: REAL_MEMBERS holds each member's professions (all of them, in their order), skills, interests, locations, languages, qualifications, work history and About text as they are on FFTeam.uk. Card colours follow their own choice (oxblood shows as Burgundy, slate as Forest). Nothing is invented for them: no ratings, review counts, levels or tiers, and no gallery photos.
+- Photos: none yet, so cards show initials. Simao uses the photo already supplied. Photos from the production upload store are still to be copied into the photo library.
+- Simao's name is shown as "Simao" (was "SIMAO"), on his profile and on the FF Team home example.
+- Dany Gagnon is listed as a Sommelier, in a new Sommeliers group on Network.
+- records.js recordsForPerson: real members get every profession, their work history as Experience cards (employer, location, dates), and no filler descriptions.
+- Every place that pointed at a demo person now points at a real member: home featured people and crews, FF Staff top staff, FF Party live booking, network seed, availability answers, the FF Staff autofill example (now six people) and the other seeded shifts, and the team invitation sample. These are test data for trying the journeys; they are not the members' real bookings or answers.
+- Removed rather than moved to real people: the two seeded reviews' links to demo profiles, the two sample Q&A answers, the demo area coverage for three demo people, the demo signature cocktails' creators (now FireFlair). The photography service example in the home pillars is shown as made by "you".
+- Invite links in the prototype now come from ALEX424 (was DONGE). TAKEN_TAGS lists the real tags.
+
+## v17.12
+
+Artifact version 1794842473-7ec3 (FireFlair — Phase Two, almost final). Brings together the three updates published on 16 Nov 2026 in the afternoon.
+
+- Create a profile, "Let's get started": Upload CV, Talk or type to GPT and Book an interview now sit inside one box, divided by thin gold lines, instead of three separate boxes (.ff-start17 in src/styles/v11.css).
+- Book an interview is a burgundy button with gold text, so it no longer reads white on white.
+- The three sections are no longer faded (an older badge rule set .ff-way17 to 78% opacity).
+
+- Profile Card colour picker is back to seven colours: Ivory, Onyx, Burgundy, Forest, Paper, Silver, Gold. Magenta, Cobalt, Saffron and Grey no longer appear on the create-a-profile page or in the Bookings card editor.
+- Those four stay as the FF Event Directory category colours (entertainment, event services, caterers, bar services), marked `directoryOnly: true` in src/state/themes-xp.js; the Profile Card pickers filter them out. The company builder's picker is unchanged.
+
+- Professions are open-ended: members can add any profession, as many as they want, because people describe their work in different ways. The list of professions grows as members add new ones.
+- A typed profession that isn't on the FireFlair list and that the rules can't place now asks "Which category is “…” in?" before it is added: Bar, Front of House, Management, Entertainment, Services, Chefs, Back of House or Other. Add stays disabled until one is chosen. This is on the Profile Card type-in (network.jsx ProfTypeIn) and on Pick your professions (attribute-cards.jsx ProfessionPicker). Typed professions the rules can place (for example "Head Sommelier") are added straight away as before.
+- Other is now a category everywhere a profession's category is chosen: the type-ins, the "which category" prompt on the Professions section and the Display category menu on a profession card (CATEGORY_ORDER).
+- Each profession record carries `professionSource`: "approved" (on the FireFlair list) or "user" (created by a member), plus `displayCategory` when the member chose one. syncCardRecords sets both from the card draft (draft.professionCats holds the chosen categories).
+- Sommelier added to Front of House (now six suggestions there); the category rules place any sommelier role under Front of House instead of Bar.
+- For the back end: keep FireFlair-approved professions and user-created professions apart (profession_master holds the approved list; store a member's own profession with created_by_type "user", the member's id and the category they chose). FireFlair can later approve a user-created profession into the list. Sommelier needs adding to profession_master under front_of_house.
+
+## v17.11111
+
+- Site icons from the new logo (black disc, gold ring, FF), made from assets/brand/ff-logo-social-print.png and kept in assets/brand/site-icons/: one 512 px icon (logo on black) used as the browser tab icon and the Apple home-screen icon (the 64, 180 and 192 px versions are kept in assets/brand/site-icons for the live site), and the link-preview image (1200 x 630, logo on black). index.html head now has the icon links, apple-touch-icon, Apple web-app tags, og:image and twitter:image (summary_large_image).
+- For the live site: serve the og image and icons from the real domain and make og:image and twitter:image absolute URLs (for example https://ffparty.uk/og-image.png); link-preview crawlers do not follow relative paths. Add assets/brand/site-icons/manifest.webmanifest as /manifest.webmanifest with `<link rel="manifest">` so Android installs with the same logo on a black background.
+
+## v17.1111
+
+- New logo (FFLogo) on the log-in sheets (header and the large mark; FF Team and FF Party sheets) and on the centre FF button in the bottom bar. Sheet takes a new prop `newLogo`. Hero, spinning coins, the top-bar coin and every other Coin are unchanged.
+
+## v17.111
+
+- Log-in screen redesigned (landing-shell.jsx LoginSheet, styles/login21.css). WhatsApp tab: phone number only (country code list + number), then six code boxes; the FF Tag is no longer asked for. Password tab: username (the FF Tag) and password, with show/hide.
+- AUTH_ADAPTER.sendCode(phone) and verifyCode(phone, code) no longer take a tag; verifyCode returns the account's tag. The FF Party host sheet (phone + password) is unchanged.
+- Backend check (FireFlair-Backend e643e5e): /auth/send-otp and /auth/verify-otp still require ff_tag, so phone-only log-in needs a backend change first. See the notes in the chat hand-off.
+
+## v17.11
+
+- Pillar sections no longer have a call-to-action button at the bottom (Create your Profile Card, Join the Challenge, Explore the network and the rest). Applies to FF Team, FF Party and FF Staff. The 1-2-3 cards at the top still link as before.
+- Launch Party visual (FF Team, section 2 of Our Network): the six items are a plain list, no tick boxes (.pv-lpl in team-pillars21.css).
+- Bookings screen, Build your career (Training, Dream jobs, FireFlair rewards): the photo is half the box, the title sits on the photo and the description is beside it, never over it (styles/bkd.css, same on mobile and desktop).
+- Versioning: the prototype stays on 17.1 until told otherwise; small updates are 17.11, 17.111 and so on.
+
+## v17.10
+
+For the developers: the FF Party and FF Staff home pillars now use exactly the FF Team pillar format (same components, same CSS, same layout). Copy is kept; FF Team is unchanged (pixel-identical at 820 wide before and after).
+
+- New content: src/content/homepage/party-pillars.json and staff-pillars.json, same schema as team-pillars.json (pillars[].{k,slug,t,s,h,tldr,seo,sections[]}, sections[].{id,slug,card,h,p,visual,cta,seo,card_img}, photos). New CONTENT_ADAPTER.homepagePartyPillars() and homepageStaffPillars(). Section ids: ff-pp-*, ff-pn-*, ff-pb-*, ff-py-* (Party), ff-sc-*, ff-se-*, ff-so-*, ff-sb-* (Staff).
+- package-pages.jsx: the DX_TEAM mapper is now dxFromPillars21(), used for DX_TEAM, DX_PARTY and DX_BIZ (DX_PARTY moved here from discover-hub.jsx). Each cat has infoLinks (true for FF Team only: section titles link to /info/<slug>; Party and Staff titles are plain text, there are no info pages for them yet).
+- discover-hub.jsx: the cur.sections branch renders Party and Staff (the legacy p / jn / parts branch stays for the VIP site). New DX_ALIAS_PARTY21 and DX_ALIAS_STAFF21 send every old anchor id (#ff-offer, #ff-guarantee, #ff-trust, #ff-team, #ff-relationships, #ff-companies, #ff-how, #ff-occasions, #ff-yourparty, #ff-teams, #ff-steps, #ff-what, #ff-cards, #ff-coming, #ff-company, ...) to the pillar section that now holds it; on Party and Staff the pillar section wins over a same-named block elsewhere on the page. New call-to-action target "pkgs" opens the FireFlair Packages page.
+- team-pillars.jsx: usePillarRun21(kind) handles every go value (profile, network, bookings, book, pkgs, #id, site:x). PillarSection21 takes locked: on FF Party the book, profile and bookings calls to action are the same locked button as before (LockedBtn17); no lock was added or removed.
+- New src/components/home/site-pillar-visuals.jsx (in the manifest after team-pillars.jsx) with the Party and Staff visuals, built from the real cards in a compact form. Live as before: package tiles open the package pop-up, featured people open their profile, company cards open the company page. Examples (ticks, Favourite, Book again, layout switch) are tappable but lead nowhere. Styles added to src/styles/team-pillars21.css (v17.10 block at the end).
+- Pictures: tile photo pools chosen from the library (t17_ crops). Card pictures thp_* (Party) and ths_* (Staff) are screenshots of each section's own visual, made by the new scripts/make-pillar-thumbs.py (python3 scripts/make-pillar-thumbs.py party|staff after npm run build) and registered in photos17.json as j17_thp_* and j17_ths_*.
+- Copy: "Mixology Package" is now "Cocktail Package". No prices, no payment talk and no new numbers in the new copy; package tiles show no price (the pop-up shows the card as before).
+- Next button in a pillar: pillars in the section format use a photo from their pool as the backdrop (nextImg21 in discover-hub.jsx), not a card picture.
+- FF Team home video: the play button is a see-through circle the size of the FF emblem on the doors, placed over it (src/styles/tm20.css).
+
+## v17.9.5
+
+- Default profession descriptions. On a public profile page a profession whose description was left blank now shows a default description for that profession, so no profession box looks empty. It is display only: nothing is written to the member's record, and the profile builder still shows the box blank.
+- The list is content: `src/content/data/profession-descriptions.json`, read through `CONTENT_ADAPTER.professionDescriptions()`. `byProfession` has one line per profession (the 35 catalogue professions and 11 common typed ones), `byCategory` covers any other typed profession by its display category, `fallback` covers the rest. Lookup is `professionDefaultDesc(name, displayCategory)` in `src/state/professions.js`.
+- Where it shows: the Professions cards on the public profile (`introductions.jsx`), the visitor's Information Card (`profile-card-parts.jsx`) and the read-only pop-up (`attribute-cards.jsx`).
+- For ffteam.uk: apply the same rule in the public profile view only (member description if present, else the default for the profession, else the category line, else the fallback). Do not store the default and do not prefill the builder's text box.
+- Demo professions no longer carry filler text, so the demo profiles show the defaults.
+
+## v17.9.4
+
+- FF Team home video is now the Launch Challenge reel v3 (marketing/reels/ff-team_launch-challenge_v3.mp4 on main, copied to media/video-content/ff-team-reel/ff-team-reel.mp4 with faststart). Poster is its first frame (closed doors).
+
+## v17.9.3
+
+- Pillar pages: the 1, 2, 3 cards have no button; the whole card is the link to its section (PillarCards21, class ff-cta17 nb).
+- Launch party section: venue photo with the party title and place, and the tick list below it (the NFC card picture is gone from this section).
+
+## v17.9.2
+
+- Pillar pages: the 1, 2, 3 cards at the top are back to three small cards on one line with small pictures (src/styles/team-pillars21.css); the larger numbered sections follow below.
+- 1, 2, 3 pictures are made from the prototype's own cards and visuals, so each one relates to its subject.
+- FF Team home: new FF Team video (portrait, press to play, doors poster from its first frame); the gold border is now the video box itself, no black stage. Video served from v/ff-team-reel.mp4 (scripts/copy-media.mjs).
+- FF Event Directory: each category has its own icon (Bar companies cocktail glass, Entertainment music, Event services party popper, Caterers cutlery, Bar services wine glass, Featured star) and its own default card colour (bar black, entertainment magenta, event services cobalt, caterers saffron, bar services grey). New card themes: magenta, cobalt, saffron, grey (src/state/themes-xp.js, default by category in src/content/companies.js).
+- Event management companies moved from Bar services to Event services (data/companies/profiles); Bar services is now ice and glassware.
+- Your profile section: the visual is now a stack, Your CV, down arrow, Profile Card, down arrow, Profile page (VisCvToProfile21). A photo shows on the card and page as soon as examples.card.photo in team-pillars.json is set to an image key; until then the initial shows.
+- SIMAO example uses his real photo (cropped from his live profile photo); Profile page stand-in shows it too.
+- FF Team home: heading "FF Team is built for getting you bookings"; FF Stories now sits above the questions; video loads as a whole file before playing (fixes browsers that need byte ranges) and is full width on mobile.
+- Our packages: FF Party packages in price order (Masterclass, Flair, Cocktail, Bartending, Staffing) and wrap on desktop instead of scrolling sideways (still scroll on mobile); Event Photography sits above Signature Cocktail in Create your own packages.
+- Photo album removed from the FF Team home; "Top companies" is now "Featured companies"; area pages list FF Directory companies from the nearest wider place when none are listed.
+
+## v17.9.1 (artifact version 1794782522-a739): FF Team pillars redesign (iPad review), intro video panel
+
+- Pillar sections: text on the left, visual on the right from 680px wide (stacked on a phone). Number and title sit together; the title link underline is gone.
+- Your profile: CV to Profile Card (card on the right); share visual is a WhatsApp message with a Profile Card and three equal Book, Review, Join buttons, then three real team cards; review and its tick questions are one card and the ticks work.
+- Our packages: title "FireFlair is built to be your booking agent"; all "Coming 2027" badges removed; Flair tile outline overlap fixed; plain text pills instead of icon chips.
+- Your bookings: rate tiles are tickable and typable (nothing saved); request buttons are tappable; "Event brief and invoice" is a compact card with the five terms as editable drop-downs.
+- Our community: Athens prize shows the passport photo; launch party shows the NFC Profile Card picture and tickable list; event calendar drop-down (UK, Ireland, Europe) in industry events.
+- 1-2-3 cards now use 12 different photos from the pillar tile photos (new crops j17_p02, p03, p17, p19, p21, p47).
+- Profile start box: Book an interview is now a quiet button, not gold.
+- FF Team home: the "It takes 2 minutes to enter" panel is replaced by a press-to-play video (doors poster, no autoplay). The video file URL goes in src/content/homepage/team-intro-video.json; empty until the final cut is added.
+
+## v17.9 — 2026-11-15 — FF Team home pillars rebuilt; 16 info pages; Launch Challenge prizes
+Phase Two artifact version 1794780711-1744. Full developer notes: `docs/handoff-v17.9.md`.
+
+- FF Team "Discover FireFlair" pillars are rebuilt and reordered: Your profile, Our packages, Your bookings, Our community. FF Staff, FF Party and FF VIP pillars are unchanged.
+- Every pillar now has the same shape: a title, one summary paragraph, three numbered cards, then one full section per card (title, three paragraphs, a visual built from the live Profile Card, Shift Card, package cards, terms and event brief). Featured professionals, the map block, the platforms roadmap and the old card journey are no longer in the FF Team pillars.
+- All wording lives in one file, `src/content/homepage/team-pillars.json`, read through `CONTENT_ADAPTER.homepageTeamPillars()`. Change copy there only.
+- New pages for search: each pillar and each section has its own address, `ffteam.uk/info/<slug>` (16 pages; `#/ff-team/info/<slug>` in the prototype), with its own title, description and canonical, `index, follow`. The home page drop-downs work as before; section titles link to the pages. Production must server-render the title, description, canonical and real links. See `docs/URLS.md`.
+- Launch Challenge box (same place on the home page, countdown and progress bar kept): the top 10 become FireFlair Gold members, the overall winner receives the Athens Bar Show trip, and runners-up choose from rewards members suggest. The earlier Gold, Silver, Bronze and Mystery Prize wording is removed everywhere, including the rules. "Suggest a reward" sends an answer through the existing Q&A system (`int.challenge_reward`).
+- Industry events list updated: BCB London 10 and 11 May 2027; Bar Convent Berlin October 2027 and Athens Bar Show November 2027 (dates to be announced).
+- Photos: new pillar photo pools (profile: single-person photos; packages and bookings: drinks and bars; community: the group photo p44). Four new event photos (hp01 to hp04) and two pen images (pen01 used on the site, pen02 library only) are in `photo-library/`. `scripts/check-team-photos.py` checks that no pillar photo repeats.
+- Fix: closing a pillar because the address moved to another page no longer overwrites that address with the home address (`discover-hub.jsx`).
+- Old anchors (`#ff-teams`, `#ff-terms`, `#ff-coming` and others) are re-pointed to the new sections; the full list is in the handoff document.
+
+## v17.8.2 — 2026-11-15 — Business & Support banner on home pages only
+Phase Two artifact: see the label "Business & Support on home pages only".
+
+- The Business & Support box now appears on the home page of each site and nowhere else: not on profiles (a person's or a company's page), and no longer on the Network and Bookings pages (this supersedes the v17.4.6.1 rule that it closes those pages). It is one component (`BusinessSupport19`), rendered only by the home pages (`team-home.jsx`, `staff-party-home.jsx`, the FF VIP home).
+- Developers: the live FF Team site shows the box at the bottom of every member's profile page. It should be removed from profile pages (and from Network and Bookings) and kept on Home only. The prototype already does this.
+
+## v17.8.1 — 2026-11-15 — New hero image; FF Staff Network tidy; Business & Support "Book a meeting"
+Phase Two artifact version 1794771022-c8f0.
+
+- Hero: new people-free bar image on the FF Team, FF Staff and FF Party homes (one shared image, 1800 x 850 WebP plus a 900 x 425 version). Only `src/shell/ff-img.json` and two files in `src/assets/img/` changed; the previous hero is kept in `assets/photos/hero_whiskey_bar_v17.webp`, the new one as `hero_bar_gold_burgundy.webp`.
+- FF Staff Network: the "Explore our packages" pillar is removed (FF Party keeps it). The page has one heading, "Explore our network", then the map, then "Our professionals" with the search directly under that heading. `NetBrowse17` takes a new `noPackages` prop and `NetMap11` a `bare` prop (map without its own heading) for this. The map heading elsewhere now reads "Explore our network" instead of "Browse the network".
+- Business & Support box (one component, `BusinessSupport19`, so it changes on every page of every site): "Book a 15-minute Call" becomes "Book a meeting" with a video icon. It still opens the same booking page.
+
+## v17.8 (claim a directory profile; FireFlair editing; every company page comes from a file)
+
+Documents: `docs/company-claim-phase2.md` (new, with ready text for section 5.4 of the notifications document), `docs/company-profile-format.md` (status values, who-wrote-what on edit).
+
+- Claim, FireFlair edit and who-wrote-what live in `src/state/claims17.js`. The reducer chain calls `claim17Reducer` first and `claim17Post` after every action.
+- `state.coClaims17` and `state.dirEdits17` are persisted (`PERSIST_KEYS`) and kept across `SIGN_OUT`, together with `admin17`. Saved state from before has neither key; both are read with a default.
+- A claim keeps its own copy of the page in the builder's shape. The profile files are never written by the prototype.
+- `dirOverlay17` is applied in `companyById`. A pending claim leaves `unclaimed: true` and adds `claimPending`; approved sets `unclaimed: false`; rejected shows the plain directory page.
+- Owner stamping: after any change to `state.company` that has a `claimId`, changed items get `source: { by: "owner", at }` (items with no `by`, such as a record from `makeRecord`, count as unstamped). While FireFlair edits (`company.dirEditSlug`) the same code stamps `fireflair`. `COMPANY_SAVE` that carries a whole `records` object (the Cancel restore) is not stamped.
+- FireFlair Edit puts the page into `state.company` with `dirEditSlug`, keeps the signed-in company in `state.dirStash17`, and writes `state.dirEdits17[slug]` only on Save.
+- Admin: a `claims` permission and an `edit` permission were added to the owner and admin roles. The `claim` op of `ADMIN17` approves or rejects. The admin site entry was removed in Phase 2 stage 2; `App.jsx` renders `Admin17` again when `state.adminOpen17` is set, and the DEV · FireFlair admin button sets it together with `adminMode17`.
+- Vooshka is `data/companies/profiles/vooshka.json`. `coFromProfile17(slug)` turns any profile into the builder's shape (used by the DEV owner account and by claims). New optional profile fields: `card` (theme, layout), `areasNote`, `meta.tier`.
+- `DIR_PRIVATE17` in `src/content/companies.js` holds contact details that must not be in a profile file; it is the stand-in for Core's private contact record.
+- Kept on purpose: `RTB_BLOB17`, `RTB_MENU17`, `rtbMoney17` (FF Party package browser) and `vkSeeds17` with `VK17_OCC` (Studio card seeds). The base row for Vooshka in `COMPANIES` is kept for its cover list and place id.
+- The map filters company pins to unclaimed companies, so Vooshka (claimed) has no directory pin, as before.
+- DEV buttons on the login sheet: DEV · FireFlair admin (signs out, signs in as the admin tag, opens Claims) and DEV · claim a company (signs out, opens a directory page that can be claimed).
+- After a claim is live there is one copy of the page (the claim's): FireFlair's later edits are written to it, not to a separate overlay.
+
+Checks run on the merged build: `npm run check`, `npm run check-companies` (150 profiles, 0 errors), `npm run build`, `npm run publish-build`; Playwright at 390x844 and 1280x900 for claiming, approving, rejecting, FireFlair editing, Find your company and the DEV buttons, plus the builder, invitations, work-locations and profile-creator sets. Raise the Bar's and Vooshka's page text is unchanged apart from the new Claim this profile button on Raise the Bar's unclaimed page. Not checked: FireFlair editing a page after a claim has been made on it; Keep and Remove on proposed cards through the screen.
+
+## v17.7 (company builder edited on the page; one company file for the directory agent, FireFlair and the company)
+
+Two pieces of work, built separately and merged. Documents: `docs/company-profile-format.md` (rewritten for format 2, with the mapping to the back end), `data/companies/AGENT.md` (the directory agent's instructions), `data/companies/company-profile.schema.json`.
+
+### Company builder (FF Staff)
+- Every company that has joined and saved once gets the finished page with the Live Action Bar Edit button (same state the DEV login reaches). `ProfileGate17` treats `kind biz` as done when signed in with `joinedAt` and `finishedAt`. "Welcome to FF Staff" shows once above the finished page (`company.welcomeAt`, `company.welcomeShown`).
+- Edit mode is one page, no tabs, in the public order: Photos, About, Contact, Areas covered, the company's own sections, then groups Packages (Packages, Cocktails, Q&A, Service Cards, Cocktail Cards), Reviews (from bookings, from other sources), Team (members, Companies), Private (Company details, Documents, Terms, Favourites). New file `components/staff/company-builder17.jsx` holds `CompanySections` and its parts; `InfoBuilder17`, `InfoSheet17`, `BulkPhotos17` are gone.
+- Closed rows show a quiet line of the company's own words and a "+" that opens the row and starts adding; zero counts are hidden. Edit opens with every `co_*` row closed.
+- Own sections are typed in place (title, bold line, text, tags, cards, closing line, Numbered switch, move up/down, delete with a second press). Reducer actions: `CO_SEC_ADD`, `CO_SEC_PATCH`, `CO_SEC_MOVE`, `CO_SLUG_SET` (company-shape.jsx). Stored shape unchanged.
+- Starters live in one constant, `CO_STARTERS17` (company-shape.jsx): title, numbered, bulk (Gallery picks photos straight away) and the placeholder examples. Placeholders are never saved. The starter is remembered per visit only; after a reload the examples are chosen by matching the section title to a starter name, otherwise the "Your own" examples. The directory agent can write any section without a starter.
+- Card tool (`GenericAttributeCardCreator`): new optional `def.descPlaceholder`; the "Add up to 5 images..." sentence is not shown when `owner === "company"`. FF Team is unchanged (defaults).
+- `ProfileAttributeSection`: new optional props `quiet`, `plus`, `hideZero` (all off by default, FF Team unchanged).
+- `TagInput`: new optional props `cleanWith`, `freeCheck`, `minLength`, `maxLength` (defaults keep the FF Tag rules). Used for the company address.
+- Contact is one section: a row of kind icons, then one box with an example for that kind. Stored as `records.contact` (title = value, description = kind). `socials` is kept in step by the reducer (store.js, owner "company", category "contact") for WhatsApp, Instagram, Facebook, TikTok, LinkedIn. Socials without a contact card are turned into cards when the builder opens; the public page shows each once (`coContacts17`). Public rows and Company Card icons are real links (`coContactHref17`: wa.me, tel:, mailto:, https).
+- Address: made from the company name at the first save (`coSlugFromName17`); `ff-<digits>` addresses are replaced then. Private, Company details has the address as a `TagInput` with availability (`coSlugFree17`: shape, reserved words, directory addresses). `CO_SLUG_SET` re-keys the company's team records and questions and the sign-in tag.
+- Team: builder and public list `ctMembers17` (plus any listed roster); count is the member count in both. The booked-people list is removed from the profile.
+- Cancel restores the whole company object including keys added since Edit and the address.
+- F9: no placeholder words on visitors' cards; empty bar under Share Company Card hidden (`.ff-copub .ff-prest:empty`); heading "Edit your company profile"; Live Action Bar status wraps between words (both sites); footer version comes from `PHASE1.version` (now 17.7); owners do not see Ask a question or Review on their own page; briefcase on the dark editable card uses the card's own colour.
+- For docs/company-profile-format.md (spec G): Contact row is now "Contact" (no separate Social links); sections are edited on the page; add the note that `socials` follows the contact cards.
+
+### Company files
+- Every directory company is now one file, `data/companies/profiles/<slug>.json`, in company-profile format 2 (`docs/company-profile-format.md`, schema `data/companies/company-profile.schema.json`). 149 files, converted from the five seed files with `scripts/convert-seeds.mjs` (it never overwrites an existing file unless `--force`). The seed files are unchanged.
+- `npm run check-companies` checks every file (schema, 5 photos and 1 PDF per card, titles, unique slugs, tags and ids, no currency amounts, emails or phone numbers in agent text, nothing written by the agent after a claim, photo and review permission). Names that match no place are warnings. `--against <commit>` also reports any item a person wrote that changed, and any claimed file that changed.
+- `npm run companies` (also the first step of `npm run build`) checks the files and writes `src/content/companies/real-companies.json` (bar companies) and `suppliers.json` (the rest). They are generated, committed, and `npm run check` fails if they are stale. The page cannot fetch files at run time, so they reach it through `CONTENT_ADAPTER.companyProfiles()` / `supplierProfiles()` and `__ff_json`, as before.
+- `src/content/companies.js` passes a profile to the page as it is. A directory profile with its own section, packages, cocktails or Q&A shows them with no other change. Nothing visible changed for the 149 pages (text compared before and after).
+- Each profile also carries `meta`: status, category, tag, partner, position (the list order), legal details, source pages, permission, pins. `source.by` (agent, fireflair, owner) is on every item; the rules for who may change what are in the doc and in `data/companies/AGENT.md`.
+- `areaPlaces` is written into the bundle next to each profile: the stated areas resolved to place ids as work location records. The directory page still shows the stated names; `areaPlaces` is what a claimed company's ticked places start from.
+- Back-end mapping is in the last section of the format doc. The one thing to agree: `additional_data.source` is already reserved by the server for FF AI and CV records, so our `source` needs another key (we suggest `provenance`).
+- Two small data changes while converting: the tag of Eventologists is now EVNTL (it shared EVENT with another company, and tags must be unique; the tag only shows in network search). Info section ids are now `services`, `events`, `scale`, `good-to-know` instead of `seed_0` to `seed_3`, so an id means the same section in every file.
+- Raise the Bar Glasgow is in its own profile file as the worked example: packages, cocktails and questions as cards written by the company. Its page is still assembled in `company-pages.jsx` (`rtbPage17`), which replaces those records with identical ones. To route it fully through the file: delete `rtbPage17`, and add its "The Raise the Bar experience" section (lead, text, tags) to the profile `info`, with the contact rows for email and phone. They are left out of the file on purpose. Vooshka is still the one hand-built company.
+
+Checks run on the merged build: `npm run check`, `npm run check-companies` (149 profiles, 0 errors), `npm run build`, `npm run publish-build`; Playwright at 390x844 and 1280x900 for the builder test set (a company built by hand without the DEV login reaches a finished page with every kind of piece Vooshka's page has), the profile creator, invitations and work-locations sets. Not checked: a company Team with real members (the sample company has none), and a reload of saved state.
+
+## v17.6.1 (review fixes: profile creator, work locations as a tick list, invitations built properly)
+
+Three pieces of work, built separately and merged. Documents: `docs/locations-phase2.md` (rewritten), `docs/invitations-phase2.md` (new), `docs/URLS.md` (join route).
+
+### FF Team profile creator and company builder
+- Company builder: the `web_reviews` section is now labelled "Reviews from other sources" (builder, shape comments, `docs/company-profile-format.md`). The record key `web_reviews` is unchanged.
+- FF Team profile, step 1: heading "Let's get started" (the 1 minute pill is gone). The box holds three separate rows built the same way, a control and one short line each: Upload CV ("Create your profile in <1 minute"), Talk or type to GPT, and Book an interview (only when `V101.support20Url()` returns a link). Behaviour of `CVPanel inline`, `FFAI` and `InterviewBook17` is unchanged. Phones stack each row; from 720px wide the control sits left and the line right.
+- CSS: the stacked generations of `.ff-start17-*`, `.ff-way17` and `.ff-1min17` rules in `v11.css` are replaced by one block (`.ff-way17`, `-ctl`, `-line`, `-wide`). `.ff-start17` (box frame) is kept because the FF Staff "Book a meeting" box (`.ff-comeet17`) shares it.
+- FF Tag hint and Discover copy now say "personal web page" instead of "personal website".
+- "Available for hire?" is disabled (`disabled` and `aria-disabled`) until `hireReady17(state)` is true: signed in with an FF Tag (a verified phone is what creates the account), `profile.savedAt` set, a name, a profile photo and at least one non-proposed profession. No helper text. When ready it opens Bookings as before.
+- DEV "complete profile" seed (`seedDemo17` in `party-live.jsx`) now also sets `saved` and `savedAt` so the demo profile counts as saved.
+- Profile Card address follows the FF Tag field while typing: `TagSection` writes the cleaned value to `session.tagDraft`; the creator's card shows `session.tag || session.tagDraft || "username"`. `tagDraft` is display only and is not read anywhere else (share links, sign-in and `shareCode17` still use the real tag). Clearing the field brings back the placeholder. The company card address already follows the name live, so it is unchanged.
+
+### Work locations
+- Work locations are now chosen only from one closed tick-list, headed "Tick all the places you'd like to work", on the FF Team profile and the FF Staff company builder (`CoverageTree17`, select mode, in `src/components/shared/coverage17.jsx`). Every branch starts closed. Rows are at least 44px tall; the list scrolls with the page.
+- Removed: the distance setting, its reducer case, the typed "Add a place" editor, the `COV_TREE_PHASE3` switch, the "Suggested areas" row, the typed-chip sheet (`WorkLocationsSheet`) and the Primary / Secondary / Extra cards for locations. Ranking for other categories is untouched.
+- Stored shape is unchanged: one Work Location record per ticked place, `{ locId, name, lat, lng, ... }`; exceptions stay in `coverage17.exc`. Records made by v17.6 chips are the same records and show as ticked.
+- A record whose place is not in the list is kept and shown as a ticked row at the end of the list; unticking it removes the record.
+- On load (`covMigrate17`): the saved v17.6 distance value is dropped (the key is built from two string pieces in the code so a search for the removed feature finds nothing else); "uk" becomes a tick on the United Kingdom (`country:GB`). Name-only records get `locId` and centre filled in when the name matches a place (`covFill17`, also run whenever a tick changes).
+- Centre points: every UK place has one; the United Kingdom uses the middle of its four nations. The 88 worldwide rows (Worldwide, 7 continents, 80 countries) have none, so ticking one stores `lat`/`lng` as null. The live site must fill them from the place id, because the back end requires both.
+- Public chips (profile, attribute card, all-attributes sheet, company page, introduction text, creator-media facts) come from `covPlaces17`: tree order, a ticked parent stands for what is beneath it, off-list records last.
+- Primary location readers now: `meAsStaff().locations` (base town label, else first ticked place in tree order, else "London" as before); the profile card already prefers `person.base`.
+- Matching is ticks only (`covForFd17` -> `{ whole, sub, exc }`); the base point is used for the map pin only. Distance helpers (`baseOriginOf17`, `baseOrigin17`, `baseDistanceKm17`, `fdNear*`) are gone.
+- Postcode line for FF Team: "We put you on the map to find jobs close to you." Company line unchanged.
+- Doc rewritten: `docs/locations-phase2.md`.
+- Vooshka's England and Wales areas now carry their place id and centre like any ticked place.
+
+### Invitations
+- Who brought you in is now a real record. `session.refTag` + `session.refKind` ("team" or "share") before sign-up; `profile.referredBy` after. No default code; the forced "DONGE" is gone, so nobody sees "Invited you" unless a link or a profile Join tap recorded it.
+- First valid code wins; unknown code or own tag ignored; same sender's join link upgrades share to team. Log in and the DEV complete-profile login never credit anyone. SIGN_OUT clears both fields.
+- Sign-up of a new account on FF Team with a valid code: `referredBy` written once, sender added to the network (`netAdds17`), and for a join link one pending team invitation in `state.teamAsksIn17` (persisted). `completedAt` is set the first time `profileBasics17` is true (Core sends 10.5 then).
+- New join route: `#/ff-team/join/<code>` (`ffteam.uk/join/<code>`); `join` is a reserved word; documented in docs/URLS.md.
+- New banner `InviteBanner17` on the create-a-profile page (one line added to ProfileBuilder). Accept / Not now; Accept opens the existing ReviewSheet once.
+- Team invitations from links appear in the notification centre and the banner from the same record. The two sample invitations and the sample "Are you available?" ask show only after the DEV complete-profile login.
+- Invite opens the Share sheet with the member's own card, "Join my team on FireFlair:" and `https://ffteam.uk/join/<tag>` (new `noRef` prop on CardShareSheet17). New Invite tile beside Add people in the Network section of the member's own profile.
+- Login sheet: new DEV button "DEV · join from invite" under "DEV · complete profile".
+- Removed: InviteSheet, CONTACTS, INVITE and INVITE_JOINED reducer cases, InvitedByBanner (unused), the contact-list half of SentInvitations, ASK_FROM_INVITER, `session.invitedBy`, INVITE_LINK_TAG.
+- Own profile Team tab now lists only accepted team members (the inviter sits in Network until accepted).
+- Full detail: docs/invitations-phase2.md.
+- `hireReady17` now calls `profileBasics17` (`src/state/invite17.js`), so "Available for hire?" and the inviter's reward use one rule for a complete profile.
+
+Checks run on the merged build: `npm run check`, `npm run build`, `npm run publish-build`; Playwright at 390x844 and 1280x900 for the profile creator, work locations and invitations test sets and a whole-site smoke test, all with zero page errors. Not checked: the image step of the Invite share sheet.
+
+## v17.6 (company builder)
+
+We upgraded the company profile builder so it produces everything on Vooshka's page, using the same universal card tool as FF Team (`ProfileAttributeSection`, `GenericAttributeCardCreator`, `GenericAttributeCard` / `InformationCard`, `HorizontalCardRanker`). There is now one company-profile shape, read by the builder, the owner's own page, every directory company and the directory agent. The field-by-field description is in `docs/company-profile-format.md`.
+
+State shape (`state.company`, new helpers in `src/components/staff/company-shape.jsx`):
+- `info`: `[{ id, title, lead (headline), text, chips (tags), numbered, quote (closing line) }]`. Settings only. Old `info[].items` is read as cards on the fly and written to records by `CO_INFO_MIGRATE` when the builder opens.
+- `records["info_<section id>"]`: the cards of a section, as shared card records (name = title, description, `media` up to 5, `document`, `hidden`, `rank`).
+- `records.packages`, `records.cocktail_menu`, `records.web_reviews`: new simple card sections (Packages, Cocktails, Reviews from your website; for reviews the title is who said it and the description is what they said). They show on the public page for the owner and for directory companies. The existing Service Card and Cocktail Card builders are unchanged and still off the public page.
+- `media[]`: `{ id, src, alt }`, `alt` is the optional caption, array order is display order.
+- `qa[]`: a question can be created with its Yes/No and typed note straight away; the public page shows a question when it has an answer or a note.
+
+Reducer actions:
+- New: `REC_SHIFT { category, id, dir }` (store.js; moves a card one place in the order people see, tiers follow the place), `COMPANY_MEDIA_PATCH { id, patch }`, `COMPANY_MEDIA_MOVE { id, dir }`, `CO_SECTION_DELETE { id }` (section and its cards), `CO_INFO_MIGRATE` (the last three in `coShapeReducer17`, called from `v11Reducer`).
+- Existing, now used by company sections: `REC_ADD`, `REC_PATCH`, `REC_DELETE`, `REC_BULK` with `owner: "company"`. Bulk "Add photos" in a section makes one card per photo (title = file name without extension) with one `REC_BULK`.
+- Card tool: new optional `def` fields `maxMedia` (company cards allow 5 photos; FF Team keeps its own limit), `titleLabel`, `descLabel`; `ProfileAttributeSection` takes optional `top` and `moreTail`.
+
+Builder: More information lists the sections (closed); opening one shows Settings (pencil) and its cards row with the add tile and Add photos. The gallery is one horizontal row with the Add photos tile; each photo opens a caption and order sheet. About grows with its content.
+
+Public page (`CoInfo17`, `CompanyPublic`): one fold per section; headline, text paragraphs, tags, closing line. Cards show as a photo grid when every card has a photo, otherwise as boxes in a row (box with photos opens them in its pop-up); numbered sections show 01, 02, and so on. Packages tab: Packages, Cocktails, then Q&A. Reviews tab: FireFlair reviews, then reviews from the website (no stars).
+
+Vooshka is one source object (`vooshkaSource17`) used by `COMPANY_PAGES.co_vooshka` and `vooshkaEditable17()`. Raise the Bar (`rtbPage17`) and the unclaimed directory companies (`realPage11`: Services, Events, Scale, Good to know become sections with tags) use the same shape; `VkExtras17`, the `extras` path and the special `co.seed` rendering are removed (`seed` stays as data for search and routing). Unclaimed pages have no tab bar, so their Packages, Cocktails and Q&A folds sit under their sections on the Overview.
+
+Not touched: locations and base (`base17.jsx`, `coverage17.jsx`, `BaseField17`, `companyLocations`, `areas` in `CompanyPublic`), company address logic, Team tab, Contact and Social links, sign-in, FF Team pages, FF Party behaviour.
+### Merge notes (v17.6)
+
+- v17.6 is three pieces merged: the company builder, locations, and v17.5.5 (Shift Card, share codes, company type). The live prototype was checked against GitHub before the merge and matched file for file.
+- In the builder's Packages tab the locked full builders are titled Service Cards and Cocktail Cards, so they are not confused with the new Packages and Cocktails card sections above them.
+- Vooshka's package cards carry no photo: its occasion photos are already in its gallery, and no photo is used twice on one site.
+- A directory company's Areas covered now comes from its location records and travel distance, the same rule as a company's own page. The free-text areas line is only used for directory drafts that have no location records.
+- Developer documents for this release: `docs/company-profile-format.md` (the one company-profile shape, which the directory agent fills) and `docs/locations-phase2.md` (base, travel distance, added places, and how they fit the existing Work Location records).
+
+## v17.6 (locations)
+
+Where you are based, and the areas you cover, are now two separate things. The 1,000-place tick tree is no longer used to collect coverage in Phase 2.
+
+- Where are you based? (`BaseField17`, FF Team profile and Company Card): one box, placeholder "Postcode". A full or partial UK postcode is looked up (`LOCATION_ADAPTER.lookupPostcode`) and saved at once: the private postcode and its point, and the public label at town or city level (any London postcode gives London). A place name can be typed instead (catalogue search); picking one saves that place's centre and marks the base `approx: true`. The line under the field is "We put you on the map to find jobs as close to you as possible." (FF Team) or "We put you on the map so people nearby can find you." (company). "We only display your area." is removed.
+- Offline: when the postcode service cannot be reached the adapter returns an estimate from the outward code (`source: "offline-estimate"`, always `approx`), with centre points added for the London areas. A lookup that fails with no estimate shows "We couldn't look that postcode up."
+- Areas you cover (FF Team Work locations and the company's Areas covered, both through the locations branch of `ProfileAttributeSection`): `AreasEditor17` has one drop-down, "How far do you travel?" (5, 10, 25, 50, 100 miles, UK-wide), and an "Add a place" search that adds an unlimited number of chips. Each chip is a location record, removable. The company no longer starts as UK-wide by itself.
+- The tick tree (`CoverageTree17` in select mode, `COV_SET`, exceptions) stays in the code behind `COV_TREE_PHASE3 = false` and returns in Phase 3. The "Explore by area" links tree, the area pages and their addresses are unchanged.
+- Matching: a place is covered when it is at or under an added place (minus any old `coverage17.exc`), or it is a town, neighbourhood, borough, county or unitary area whose centre lies within the travel distance of the base point (straight line), or travel is UK-wide and the place is in the UK. `covOn17`, `covForFd17` and the area pages (`fdCovers`, `fdServesWithin`) all use this. A nation or country is not covered by distance alone.
+- Public: the card shows the base label only. Areas show the travel distance first ("Within 25 miles of Luton" or "UK-wide"), then each added place: `companyLocations(c)` and `covText17` return them in that order; the area-page cards say "Works in: Within 10 miles of London, ...".
+- Map: every person and company with a base gets a pin from the centre of the base's public place (the postcode point is never plotted; a base outside the catalogue is rounded to about 1 km). The signed-in member's pin now comes from the base even when they have no work areas, and the signed-in company gets a pin from its base.
+- New document for the developers: docs/locations-phase2.md.
+
+State shape (all new fields optional; older saved data keeps working):
+- `profile.base17` and `company.base17` = `{ locId, label, lat, lng, approx, postcode?: { code, lat, lng, approx }, at }`. `lat`/`lng` are the public place centre; `postcode` is private and is used only for distance. A base saved as `{ locId, at }` uses the place centre. `state.workPostcode` is still written for the profile.
+- `profile.travel17` and `company.travel17` = `5 | 10 | 25 | 50 | 100 | "uk"`; absent until chosen.
+- Location records are unchanged and gain `lat`/`lng`: `{ id, name, locId, lat, lng, ... }` in `records.locations`.
+- Reducer: `BASE_SET { owner?, locId?, label?, lat?, lng?, postcode?, approx? }` (now accepts a base outside the catalogue when `label`, `lat` and `lng` are given) and new `TRAVEL_SET { owner?, value }` in `cov17Reducer`. `COV_SET` is unchanged.
+- Person object (`meAsStaff`) gains `basePin` and `travelText`; its `coverage` gains `near { lat, lng, km, baseId }`, `uk` and `travelText`.
+
+## v17.5.5 (Phase Two, almost final)
+
+Artifact version 1794685156-ccdc. Front end only unless marked (Core).
+
+- **Shift Card redrawn, one component everywhere.** New `ShiftCard17` (src/components/shared/shift-card17.jsx, styles/shift17.css) replaces the old cards in FF Team Bookings, the notification centre, the FF Staff booking stack and shift delivery (`ShiftDelivery11`, and the FF Team `BookingSheet`, which now uses `ShiftDelivery11`; the old `ShiftCard` in network.jsx is removed). 5 x 7, drawn in container units so it is identical at any width and at 1080 x 1512. Top row: site plate (FF Staff or FF Party), status plate (Open shift gold, Chosen for you burgundy, Confirmed cream), FF logo. Headline: event name. Rows: Role, When, Time, Where, Pay, plus Company on FF Staff shifts. Footer: logo and `ffteam.uk` on the left. Dress code, notes and operational details are not on the face; they are in the brief. Text that does not fit shrinks (`useFit17`); words are never split. The Service Card (`ShiftCard11`, with a portrait) is a different card and is unchanged.
+- **Pay.** `payLine17(shift)` in src/utils/pay17.js is the only pay formatter for Shift Cards and reads only `payOf17`. Format `37 p/h = £150`. Fixed total: hourly derived and rounded down to whole pounds. Hourly rate: shown as entered, exact total. Comma from 1,000. No agreed pay still reads "Pay not recorded". `PayPair17` is removed.
+- **Reply buttons.** `ShiftReplyBar17`: Available, Unavailable, More info on both booking types (`WA_BTN17`, WhatsApp previews, docs/whatsapp-templates.md). Available on a chosen shift confirms at once (`AF_RESPOND` accept) and shows Confirmed with Add to calendar (`addToCalendar17`, an .ics download). Available on an open shift records availability; the hirer chooses. More info opens the brief; Ask a question is on the brief. New reducer action `SHIFT_APPLY17` for a signed-in member answering an open brief they were not invited to (Core: becomes an availability record for that shift).
+- **Shift brief at `/fx/<code>`.** New route `fx` on all three sites (reserved in `RT17_RESERVED`, parsed in `rt17Parse`, documented in docs/URLS.md). FF Team: `ShiftBriefPage17` (Shift Card, share, reply buttons, event details, operational details, dress code, terms, hirer's Company Card with a link to its profile). FF Staff: opens the hirer's booking for that event. FF Party: FF Party home for now. Codes: five characters, alphabet without 0, 1, I, L, O, not case sensitive; four for the event, one for the shift (`fxCodeOf17`, `fxFind17`). Prototype derives them from demo ids; Core issues and guarantees unique codes. The brief is public. A signed-out visitor who taps Available is sent to Join with the code carried through (`session.fxReturn17`) and returns to the brief once signed in.
+- **Profile Card** (`PlayerCard`): "Profile" plate top left in the Shift Card plate style, a fourth row (Qualifications, else second and third professions, left out if neither), profile address on the left of the footer with the logo on the right (the wordmark is dropped from the footer). Share and Download now export the portrait Profile Card format.
+- **Share.** The three-dot glyph (`Share2`) is replaced by the square-and-arrow-up icon (lucide `Share`, `ShareUp17`). `CardShareSheet17` adds the sharer's code to every link it produces (`withRef17`, `shareCode17`, `?r=<code>`), and the company profile share does too. A shared profile opened by a signed-out visitor shows Join FireFlair first and largest, then Book and Review (`ProfileActions`). A `?r=` on the page address sets the session's referrer. Core: read `r` on every shared link.
+- **Card images.** `card-export17.js`: cards marked `data-cx-fixed` (Profile Card, Shift Card) export as exactly 1080 x 1512 PNG, the card on a dark mat, no address band.
+- **Company type.** FF Staff company profile has a Limited company / Sole trader choice, stored as `companyType` ("limited" or "sole") on the Company Card data (`EditableCompanyCard`). Core: add the field.
+- `npm run check` and `npm run build` pass. No price values were changed.
+## v17.5.4 (Phase Two, almost final)
+Artifact version 1794670999-61b2.
+
+- FireFlair's new logo (black disc, gold ring, thin burgundy line just inside the ring, heavy slanted gold "FF") replaces the old FF coin emblem as the brand mark on every card. New component `FFLogo` in src/components/shared/card-brand.jsx: inline SVG drawn from assets/brand/ff-logo-social-print.png (sharp from 18 px up, per-instance gradient ids, same props as `Coin`: `size`, `tier`, `flat`, `style`; `size="100%"` works).
+- Tiers: `standard` and `gold` use the logo's own gold. `bronze`, `silver` and `base` take the ring and letter metal from `metalOf(tier)`; the disc stays black and the inner line stays burgundy in every tier.
+- Moved to `FFLogo` (card faces and footers): Profile Card (editable card, card faces, mini and footer bar), Company Card and its footer, Company listing card, Organisation/Venue card, Team Card, Review Card, Event Card, Event poster card (face and footer), Shift Card (face, footer, shift editor face), Service Card, Shift delivery card, Package/Service poster card, FF Party package cards, VIP Host Card, Invite card, Cocktail and Service cards with their shared base (card studio), landing role cards, the card-family row on the home pages, and the card preview placeholder in the profile builder.
+- Unchanged, still `Coin`: top navigation and notification coin, XP and verification-level coins, spinning, hero and boot coins, site-menu coins, level and tier coins shown as coins (including package tier coins), admin, map layer icon, search and FFAI input tags and headers, sheet headers, Save & Share and VIP promo headers, invoice and event-brief headers, basket and "Auto match" tiles, Host info and Create-card prompts, Coming-soon tiles, footers, Stories byline, Booking Guarantee. The platinum poster keeps the VIP logo.
+- No other changes. `npm run check` and `npm run build` pass.
+
+## v17.5.3 (Phase Two, almost final)
+
+- FF VIP is locked in the prototype: it keeps its lock and "Coming 2027" in every site menu and cannot be opened. FF VIP is no longer in `PHASE1.sitesOpen` (src/state/phase-config.js), and its entry in `FF_SITES` carries `locked: true`.
+- The prototype is renamed "Phase Two, almost final".
+
+## v17.5.2 (Phase 2 Final, review changes)
+
+- FF Staff Gold box: the four tile photos are replaced with library photos (p12, p21, p35, p10), cropped square with faces kept in frame.
+- FF Stories: five categories plus All on all three sites (How it works, Planning and booking, Pay and costs, Skills and growth, Local and news). Each story's own category is folded into one of them in `storyCat17`.
+- FF Staff Fire & Flair fold now matches FF Party (philosophy and dream only).
+- FF Staff booking screen: the "Tell us about your event" box is removed; the first section is open and titled Event details.
+- FF Staff profile: step 1 reads Create your company profile; step 3 (Describe your business) is replaced by Book a meeting, which opens the same booking page as the FF Team interview.
+- FF Staff company profile: More information sits directly under About, and a company's information sections show as cards that open in a pop-up.
+
+## v17.5.1 (Phase 2 Final, review changes)
+
+- FF Team profile: Book an interview sits on the right, under the CV button, and its sheet no longer has the CV upload box.
+- FF Bookings: the extra "FireFlair" heading is removed.
+- FF Party package sign-up and FF Staff shift rates: both need a signed-in account, then show their own five-point terms (platform explanations, no prices) before saving.
+- FF Team Network: no "Our network" heading, no "Invited you" banner, and no Your team, Companies or Network lists (they live on the profile). Explore our packages is removed. Our professionals has the search under its banner, then five closed drop-downs: Bar, Entertainment, Services, Food, Other.
+- FF Event Directory on FF Team always lists all five company types (Bar companies, Entertainment, Event services, Caterers, Bar services).
+
+## v17.5 — 2026-11-13 — Phase 2 Final
+
+- The Phase 2 build, on the `phase-2-final` branch. Phase 3 stays on `main`.
+- Removed: FF Partners, the FF Admin menu item, the Phase 2 / Phase 3 switch, custom packages and add-ons in bookings, the Stories builder and Special Request. The site menu is FF Team, FF Staff, FF Party, FF VIP. Page title "FireFlair Phase 2".
+- FF Party is display only: browsing, profiles, companies, area and package pages and Stories work; every control that would start a booking is greyed with a small lock and does nothing. The Book and Party tabs cannot be opened. FF VIP stays locked.
+- Card builders on FF Team and FF Staff still work and save, marked "Coming soon" with a small lock; what they save is not shown on public pages.
+- Q&A: three categories with a filter (About me, Asked, Interests), Public / Private on every answer (Private by default), edit your own questions, and "I'm interested" shows as an Interests card.
+- Notifications stay once dealt with: they grey out with their outcome, a Clear button removes them, and they drop off after seven days. The badge counts active ones only.
+- FF Staff inbox: "Question for your company", "<Name> added you to their network" and join-team requests. Reviews posted on a company page show on its Reviews tab, credited to the reviewer.
+- FF Staff: private Favourites on Your business; network search also finds companies and Directory entries, and the map follows the results; Autofill is one ticked-by-default checkbox per booking with an "Autofill · N invited" list under each shift; after a professional accepts, a quiet "Delete booking" link replaces the refund option.
+- Every page has an address on all three sites; see `docs/URLS.md`. Home sections moved to `#/<site>/home/<section>`.
+- Verification fixes: review credit, the business's own Company Card shown once on Our people, home-section addresses opening on direct load.
+- Merged the live FF Bookings update (published while this branch was built): the page heading is "FF Bookings"; choosing packages ends with one Confirm that first shows the terms and conditions sheet ("Accept and confirm"); the preferred hourly rates have one Confirm ("Save your rates"); the Invitations section shows for the demo account only; the Save row on the profile builder is two equal columns with "Available for hire" as an outline button. Package and interest answers are still saved as public Interests answers.
+- Directory entries (unclaimed companies) now have their own address on all three sites, the same form as a claimed company (`#/<site>/<slug>`, `ffparty.uk/<slug>` in production). Slugs are stable and made unique the same way every time. The Company Card shows its address again. No true duplicates were found in the directory data (Pure Photo N.I and EPIC Caterers each have two base pins on the map).
+- Back: each tab click stays its own history step. Every detail screen (profile, company, Directory company, area page, package page, Story article) has a visible Back button on all sites: one step back when the app has history, otherwise the parent list or home.
+- Everything is indexable in production: the site-based `noindex` for FF Team, FF Staff and FF VIP is gone (the prototype stays `noindex` through `demoData`). No redirects between sites. The canonical of a profile, company or Directory entry is now the site's own host and path. Share links still point at ffparty.uk. `docs/URLS.md` updated.
+- Vooshka Cocktail Bar is based in Luton (card, map pin) and covers England and Wales. It is listed on every English and Welsh area page, through coverage by nation in the area pages' company lookup, and on no Scottish or Northern Irish page. Search for "Luton" finds it.
+- A company that joins with a new phone number starts empty: the sample bookings, engagements, team counts and notifications belong to the dev/demo Vooshka account and the demo FF Team account.
+- Removed the "Section 4 opens when you save" hover and screen-reader text from the profile builder.
+- Developers: see `docs/handoff-v17.5.md`.
 
 ## v17.4.7.22 — 2026-11-13 — FF Partners (Phase 3)
 Artifact version 1794553380-858a.

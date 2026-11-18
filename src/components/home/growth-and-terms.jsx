@@ -1,9 +1,6 @@
 /* src/components/home/growth-and-terms.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
-  const GE17 = [
-    { n: "Athens Bar Show", d: "2 to 5 November 2026", w: "Athens, Greece", t: "Four days for the bar industry, held at Technopolis City of Athens." },
-    { n: "BCB London", d: "10 and 11 May 2027", w: "Tobacco Dock, London", t: "Bar Convent London at Tobacco Dock, bringing the drinks trade together for two days." },
-    { n: "Bar Convent Berlin", d: "4 and 5 October 2027", w: "Exhibition Centre Berlin", t: "Bar Convent Berlin, the international bar trade event, held at the Exhibition Centre Berlin." }
-  ];
+  /* v17.9: dates come from src/content/homepage/team-pillars.json (growthEvents), the one list for FF Team. */
+  const GE17 = CONTENT_ADAPTER.homepageTeamPillars().growthEvents;
 
   function GrowthEvents17() {
     return React.createElement("section", {
@@ -135,7 +132,7 @@
       team: {
         profile: ["Create your Profile Card", () => nav.goProfile()],
         network: ["Explore the network", () => nav.goNetwork()],
-        career: ["See Career Support", sec("ff-career")],
+        career: ["See training and support", sec("ff-pl-industry")],
         party: ["Visit FF Party", () => goSite("party")],
         biz: ["Visit FF Staff", () => goSite("staff")]
       },
@@ -147,7 +144,7 @@
         party: ["Visit FF Party", () => goSite("party")]
       },
       party: {
-        plan: ["Plan your event", () => hire.toEvent()],
+        plan: ["Plan your event", null],
         offer: ["See what we offer", sec("ff-offer")],
         cocktails: ["Choose your cocktails", sec("ff-cocktails")],
         companies: ["See bar companies", sec("ff-companies")],
@@ -163,7 +160,7 @@
           { l: "No, I'm here for something else", r: "If you are planning a party of your own, FF Party is the place to start.", c: A.party }
         ] },
         { q: "Do you work events, or would you like to?", a: [
-          { l: "Yes, I work events", r: "Put your event experience and the venues you work at on your profile, and ask the people you work with for reviews.", c: A.profile },
+          { l: "Yes, I work events", r: SHOW_VENUES17 ? "Put your event experience and the venues you work at on your profile, and ask the people you work with for reviews." : "Put your event experience on your profile, and ask the people you work with for reviews.", c: A.profile },
           { l: "I'm full time, but could pick up a shift now and then", r: "Make a Profile Card and answer availability for the dates you can do. Businesses can book you around your main job.", c: A.profile },
           { l: "I run a hospitality business", r: "FF Staff is where companies hire staff and advertise their services for free.", c: A.biz }
         ] },
@@ -207,14 +204,18 @@
         ] }
       ]
     }[kind];
+    /* homefix: the three question boxes are the same height (an answer shown under one grows only that box). */
+    const qgRef = useRef(null);
+    useEqualH22(qgRef, ".ff-qg-q", ".res", [kind, JSON.stringify(pick)]);
     return React.createElement("section", {
       className: "ff-sect ff-qg",
       id: "ff-guide",
+      ref: qgRef,
       "aria-labelledby": "ff-qg-h"
     }, React.createElement("h2", {
       id: "ff-qg-h",
       className: "ff-h1 ff-qg-title"
-    }, React.createElement("span", null, "Can FireFlair help you?")), React.createElement("p", {
+    }, React.createElement("span", null, "Can FireFlair help you?")), kind !== "team" && React.createElement("p", {
       className: "ff-qg-lede"
     }, "Answer three quick questions and we'll point you to the right place."), React.createElement("div", {
       className: "ff-qg-grid"
@@ -239,7 +240,9 @@
       }, o.l))), ans && React.createElement("div", {
         className: "res",
         role: "status"
-      }, React.createElement("p", null, ans.r), React.createElement("button", {
+      }, React.createElement("p", null, ans.r), !ans.c[1] ? React.createElement(LockedBtn17, {
+        variant: "primary wide"
+      }, ans.c[0]) : React.createElement("button", {
         type: "button",
         className: "ff-btn primary wide",
         onClick: ans.c[1]

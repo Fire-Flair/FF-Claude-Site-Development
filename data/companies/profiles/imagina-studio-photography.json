@@ -1,0 +1,70 @@
+{
+  "formatVersion": 2,
+  "slug": "imagina-studio-photography",
+  "name": "Imagina Studio Photography",
+  "kind": "Wedding photography",
+  "base": "Edinburgh",
+  "areas": [
+    "Edinburgh",
+    "Scotland"
+  ],
+  "description": "An Edinburgh wedding photography team of two.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://bridebook.com/uk/search/wedding-photographers/scotland?page=6",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding photography"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/search/wedding-photographers/scotland?page=6",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/search/wedding-photographers/scotland?page=6",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "IMAGI",
+    "position": 81,
+    "source": {
+      "urls": [
+        "https://bridebook.com/uk/search/wedding-photographers/scotland?page=6"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Edinburgh",
+        "lat": 55.9533,
+        "lng": -3.1883,
+        "approx": false
+      }
+    ]
+  }
+}

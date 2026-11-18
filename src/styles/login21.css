@@ -1,0 +1,32 @@
+/* v17.111: log-in sheet. Cream card, onyx and gold, squircle corners, green only on the WhatsApp action. */
+.ff-lg21 { display:grid; gap:18px; padding:4px 2px 2px; }
+.ff-lg21-hd { display:flex; flex-direction:column; align-items:center; gap:10px; padding-top:2px; }
+.ff-lg21-hd .mk { display:grid; place-items:center; width:72px; height:72px; filter:drop-shadow(0 10px 14px rgba(22,19,15,.35)); }
+.ff-lg21-hd h2 { margin:0; font-family:var(--display); font-weight:700; font-size:27px; line-height:1.1; letter-spacing:-.01em; color:#16130F; text-align:center; }
+.ff-lg21-tabs { display:grid; grid-template-columns:1fr 1fr; gap:4px; padding:4px; border-radius:18px; corner-shape:squircle; background:#EFE5CD; border:1px solid rgba(126,97,29,.28); }
+.ff .ff-lg21-tabs button { display:flex; align-items:center; justify-content:center; gap:7px; min-height:46px; border-radius:14px; corner-shape:squircle; font:700 14.5px var(--font-sans,Inter,sans-serif); color:#5B5346; background:transparent; border:0; cursor:pointer; transition:background .18s,color .18s,box-shadow .18s; }
+.ff .ff-lg21-tabs button.on { background:#16130F; color:#F4DC8E; box-shadow:0 6px 14px -8px rgba(22,19,15,.8); }
+.ff-lg21-form { display:grid; gap:14px; }
+.ff-lg21-f { display:grid; gap:7px; }
+.ff-lg21-f > span:first-child { font:700 13px var(--font-sans,Inter,sans-serif); color:#3A3226; }
+.ff .ff-lg21-in { width:100%; min-height:52px; padding:0 16px; border-radius:16px; corner-shape:squircle; background:#fff; border:1.5px solid rgba(126,97,29,.4); font:600 17px var(--font-sans,Inter,sans-serif); color:#16130F; box-sizing:border-box; outline:none; transition:border-color .15s, box-shadow .15s; }
+.ff .ff-lg21-in::placeholder { color:#A39A87; font-weight:500; }
+.ff .ff-lg21-in:focus, .ff .ff-lg21-ph:focus-within, .ff .ff-lg21-code input:focus { border-color:#B08D2A; box-shadow:0 0 0 4px rgba(201,162,39,.22); }
+.ff-lg21-ph { display:grid; grid-template-columns:auto 1fr; gap:8px; border-radius:18px; }
+.ff .ff-lg21-ph select { min-height:52px; padding:0 30px 0 14px; border-radius:16px; corner-shape:squircle; background:#fff; border:1.5px solid rgba(126,97,29,.4); font:700 15px var(--font-sans,Inter,sans-serif); color:#16130F; cursor:pointer; }
+.ff-lg21-pw { position:relative; display:block; }
+.ff-lg21-pw .ff-lg21-in { padding-right:50px; }
+.ff-lg21-pw .eye { position:absolute; right:6px; top:50%; transform:translateY(-50%); width:42px; height:42px; display:grid; place-items:center; border:0; background:none; color:#7E611D; cursor:pointer; border-radius:12px; }
+.ff .ff-lg21-go { display:flex; align-items:center; justify-content:center; gap:9px; width:100%; min-height:54px; margin-top:2px; border-radius:18px; corner-shape:squircle; border:1px solid #8A6A18; background:linear-gradient(172deg,#F8E9B4 0%,#D9B451 55%,#E8C972 100%); color:#2A1E04; font:800 16px var(--font-sans,Inter,sans-serif); cursor:pointer; box-shadow:0 10px 20px -12px rgba(60,44,8,.7); transition:transform .12s, filter .15s; }
+.ff .ff-lg21-go.wa { background:#1FA855; border-color:#15803D; color:#fff; box-shadow:0 10px 20px -12px rgba(21,128,61,.8); }
+.ff-lg21-go:not(:disabled):active { transform:translateY(1px); }
+.ff-lg21-go:disabled { opacity:.45; cursor:not-allowed; box-shadow:none; }
+.ff-lg21-to { margin:0; text-align:center; font-size:14.5px; color:#5B5346; }
+.ff-lg21-to b { color:#16130F; }
+.ff-lg21-code { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:8px; }
+.ff .ff-lg21-code input { width:100%; min-width:0; height:58px; padding:0; text-align:center; border-radius:16px; corner-shape:squircle; background:#fff; border:1.5px solid rgba(126,97,29,.4); font:700 24px var(--font-sans,Inter,sans-serif); color:#16130F; box-sizing:border-box; outline:none; }
+.ff .ff-lg21-code input.on { background:#F3EAD5; border-color:#B08D2A; }
+.ff .ff-lg21-link { justify-self:center; padding:10px 14px; border:0; background:none; font:700 14px var(--font-sans,Inter,sans-serif); color:#7E611D; text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+.ff-lg21-err { margin:0; padding:11px 14px; border-radius:14px; corner-shape:squircle; background:rgba(176,32,32,.08); color:var(--bad,#B02020); font-size:13.5px; font-weight:600; }
+.ff-lg21-note { margin:0; text-align:center; font-size:11.5px; color:#8B8272; }
+@media (prefers-reduced-motion:reduce) { .ff .ff-lg21-tabs button, .ff-lg21-go { transition:none; } }

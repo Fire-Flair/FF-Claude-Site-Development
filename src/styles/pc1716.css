@@ -1,0 +1,85 @@
+/* v17.16 Profile Card: the large share card (lg) and the small web card (sm). 5 x 7, every size in container units. */
+.ff .ff-deck.pc.pc17{border-radius:6% / 4.29%;corner-shape:squircle}
+.ff .ff-deck.pc.pc17 .fx.wm{display:none}
+.ff .ff-deck.pc.pc17 .fx.hair{inset:0;border-radius:calc(6% - 3px) / calc(4.29% - 3px);corner-shape:squircle;border-color:var(--pc17-hair)}
+.ff .ff-deck.pc.pc17 .fx.hair::after{display:none}
+.ff .pc17,.ff .pc17 *{font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif !important}
+.ff .pc17 .pc17-name,.ff .pc17 .pc17-brand,.ff .pc17 .pc17-url{font-family:'Cinzel','Optima','Palatino Linotype',Georgia,serif !important}
+.pc17-in{position:absolute;inset:0 0 10cqw 0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5cqw 4.4cqw 0;box-sizing:border-box}
+.pc17.sm .pc17-in{justify-content:flex-start}
+.pc17-plate{position:absolute;top:2.9cqw;left:2.9cqw;z-index:4;display:flex;align-items:center;gap:1.5cqw;padding:1.3cqw 2.1cqw 1.3cqw 1.9cqw;font-size:2.5cqw;font-weight:800;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;line-height:1.2;background:#16130F;border:1px solid;border-radius:2.326cqw;corner-shape:squircle}
+.pc17-plate .t{margin-right:-.16em}
+.pc17-logo{position:absolute;top:2.3cqw;right:2.3cqw;z-index:4;width:10.625cqw;height:10.625cqw;display:block;filter:drop-shadow(0 .8cqw 1.2cqw rgba(0,0,0,.35))}
+.pc17-photo{flex:none;border-radius:50%;padding:1.5cqw;box-shadow:0 1.4cqw 3.6cqw rgba(0,0,0,.38),inset 0 0 0 1px rgba(255,255,255,.35)}
+.pc17-photo-in{width:100%;height:100%;border-radius:50%;overflow:hidden;border:1px solid rgba(8,8,10,.85);display:grid;place-items:center}
+.pc17-name{width:100%;max-width:100%;font-size:7.8cqw;font-weight:700;text-transform:uppercase;letter-spacing:.04em;line-height:1.08;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:clip;margin:0}
+.pc17-title{width:100%;max-width:100%;font-size:4.4cqw;font-weight:400;text-transform:uppercase;letter-spacing:.16em;line-height:1.2;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:clip}
+.pc17 .ff-pc-rule{width:86%}
+.pc17-panel{width:100%;border:1px solid;border-radius:2.4cqw;corner-shape:squircle;overflow:hidden}
+.pc17-row{padding:1cqw 4.4cqw 1.15cqw;border-bottom:1px solid}
+.pc17-row:last-child{border-bottom:0}
+.pc17-lbl{margin-left:-1.6cqw;display:flex;align-items:center;gap:1.5cqw;font-size:2.7cqw;font-weight:700;letter-spacing:.12em;text-transform:uppercase;line-height:1.2;margin-bottom:.5cqw}
+.pc17-val{min-width:0;overflow:hidden;white-space:nowrap;padding:0;font-size:3.9cqw;font-weight:600;line-height:1.2;text-align:center}
+.pc17-fit{display:block;min-width:0;overflow:hidden;white-space:nowrap;text-align:center}
+.pc17-fit .bu{font-weight:400}
+.pc17-fit .bl{font-weight:inherit}
+.pc17-fit .bu{margin:0 .45em}
+.pc17-fit.wr{white-space:normal;line-height:1.25}
+.pc17-fit.wr .en{white-space:nowrap}
+.pc17-fit.wr .bl{margin:0}
+.pc17-bar{position:absolute;left:0;right:0;bottom:0;height:10cqw;display:flex;align-items:center;padding:0 5.4cqw 0 4.4cqw;box-sizing:border-box;border-top:1px solid}
+.pc17-url{flex:1;min-width:0;font-size:4cqw;font-weight:600;letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-align:left}
+.pc17-brand{margin-left:auto;padding-left:2cqw;font-weight:700;font-size:3.3cqw;letter-spacing:.28em;color:#D9B54F;white-space:nowrap;display:flex;align-items:center;gap:1.6cqw}
+.pc17-mark{display:block;width:5.6cqw;height:5.6cqw;flex:none}
+/* v17.20 small Profile Card: the FIREFLAIR word alone in the footer, right; no mark */
+.pc17.sm .pc17-brand{font-size:3cqw;letter-spacing:.2em;padding-left:1.5cqw;flex:none}
+.pc17.sm .pc17-url{flex:1 1 0;min-width:0}
+.pc17-row.one{position:relative;min-height:9cqw;display:flex;align-items:center}
+.pc17-row.one .pc17-lbl{margin-bottom:0}
+.pc17-row.one .pc17-flags{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
+.pc17-flags{display:flex;gap:3cqw;align-items:center;justify-content:center;padding:0}
+.pc17-flag{display:inline-grid;place-items:center;border:0;padding:0;width:9cqw;line-height:1;font-size:5.8cqw}
+.pc17.lg .ff-pc-rule{margin:2.8cqw 0}
+.pc17.lg .pc17-title{margin-top:.7cqw}
+.pc17.lg .pc17-photo{margin-top:1cqw}
+/* small web card: icon rows, entries left, flags outside the box */
+.pc17.sm .pc17-val,.pc17.sm .pc17-fit{text-align:left}
+.pc17.sm .pc17-ico{display:grid;place-items:center;align-self:stretch;background:linear-gradient(180deg,#1C1C1F,#09090B)}
+.pc17.sm .pc17-ico>span{display:flex !important;align-items:center;justify-content:center}
+.pc17.sm .pc17-ico svg{display:block}
+.pc17.sm .pc17-flagzone{flex:1;width:100%;display:flex;align-items:center;justify-content:center}
+.pc17.sm .ff-pc-rule{margin:3cqw 0 3.6cqw}
+.pc17.sm .pc17-row{display:grid;grid-template-columns:10cqw minmax(0,1fr);align-items:center;height:11.2cqw;padding:0}
+.pc17.sm .pc17-val{padding:0 2.4cqw;font-size:4.4cqw}
+.pc17.sm .pc17-title{margin-top:1.2cqw}
+/* v17.21: the large card starts at the approved photo position (top aligned), the spare height sits under the box */
+.pc17.lg .pc17-in{justify-content:flex-start}
+.pc17.lg .pc17-lbl{font-size:2.7cqw;letter-spacing:.135em}
+.pc17.lg .pc17-plate{top:2.7cqw;left:2.7cqw}
+.pc17.sm .pc17-photo{margin-top:3cqw}
+/* Task 002 + 008 (v17.34): the large card's rows show the icon only (the word stays for screen readers), icon at the left,
+   centred on the entries, which get the freed space. The FIREFLAIR word in the footer is gone on every card that drew it. */
+.pc17.lg .pc17-row{display:grid;grid-template-columns:3.5cqw minmax(0,1fr);column-gap:1.8cqw;align-items:center;min-height:0;padding:1.3cqw 2.8cqw}
+.pc17.lg .pc17-lico{display:flex;align-items:center;justify-content:center;align-self:center}
+.pc17.lg .pc17-row .pc17-flags{position:static;transform:none}
+.ff .pc17-brand{display:none}
+/* Task 008 (v17.34): the top-right FF logo is about 15% smaller on every card that sizes it in the component; same corner inset. */
+.ff .ff-rvcard-coin svg,.ff .ff-tcard-coin svg,.ff .ff-c17 .face>.cn svg{width:29px;height:29px}
+.ff .ff-poster-coin svg,.ff .ff-poster-coin img{width:37px;height:37px}
+.ff .ff-evc-coin svg,.ff .ff-pk17 .ph .cn svg{width:25.5px;height:25.5px}
+.ff .ff-shc-coin svg,.ff .ff-sface .coin svg,.ff .ff-pcard11 .coin svg{width:24px;height:24px}
+.ff .ff-tc17-coin svg{width:22px;height:22px}
+.ff .ff-cardghost .coin svg{width:19px;height:19px}
+/* Card polish (p2-card, Mr G 22:17): the builder's editable Profile Card matches the card face: one hairline flush
+   against the rim (no second inner line), and the address in Cinzel. */
+.ff .ff-deck.pc:not(.pc17):has(> .pc17-plate) .fx.hair{inset:0;border-radius:calc(4.2% - 3px) / calc(3% - 3px);corner-shape:squircle}
+.ff .ff-deck.pc:not(.pc17):has(> .pc17-plate) .fx.hair::after{display:none}
+.ff .ff-deck.pc:not(.pc17):has(> .pc17-plate) > div:last-child > span:first-child{font-family:'Cinzel','Optima','Palatino Linotype',Georgia,serif !important;font-weight:600 !important;letter-spacing:.06em !important;font-size:4cqw !important}
+/* Card banner (p2-card, Mr G 22:41): the large card's rows box gets a black column down its left edge, full height,
+   holding the row icons in gold, each centred on its row (as on the live FFTeam.uk cards and the Shift Card).
+   The column is the panel's own ::before, so its outer corners follow the box's squircle corners (overflow hidden);
+   it paints over the row dividers, which therefore run across the cream part only. */
+.pc17.lg .pc17-panel{position:relative}
+.pc17.lg .pc17-panel::before{content:"";position:absolute;left:0;top:0;bottom:0;width:8.4cqw;background:linear-gradient(180deg,#1C1C1F,#0B0B0C);z-index:1;pointer-events:none}
+.pc17.lg .pc17-row{grid-template-columns:8.4cqw minmax(0,1fr);column-gap:2.4cqw;padding-left:0;padding-right:2.8cqw}
+.pc17.lg .pc17-lico{position:relative;z-index:2}

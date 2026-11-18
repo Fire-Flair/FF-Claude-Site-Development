@@ -10,23 +10,31 @@
 .ff .dot.primary { background:linear-gradient(140deg,#F4E1A0,#B98F2A); }
 .ff .dot.secondary { background:linear-gradient(140deg,#F1F3F6,#8D939C); }
 .ff .dot.tertiary { background:linear-gradient(140deg,#EBC09A,#94582F); }
-.ff .ff-pe-row { display:flex; gap:12px; overflow-x:auto; padding:4px 16px 14px; margin:0 -16px; scroll-padding:0 12px; overscroll-behavior-x:contain; }
-.ff .ff-pe-row.dragging { cursor:grabbing; }
-.ff .ff-pe-lane { flex:none; display:flex; flex-direction:column; gap:8px; padding:10px; border-radius:22px; border:1.5px dashed transparent; transition:border-color .12s, background .12s; }
+/* v17.18: the Primary, Secondary and Extra boxes sit three across and fit the content width, the same size in every category. */
+.ff .ff-pe3 { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; align-items:start; padding:4px 0 14px; min-width:0; }
+.ff .ff-pe3.dragging { cursor:grabbing; }
+.ff .ff-pe3 .ff-pe-lane { display:flex; flex-direction:column; gap:6px; min-width:0; padding:6px; border-radius:20px; corner-shape:squircle; border:1.5px dashed transparent; transition:border-color .12s, background .12s; }
 .ff .ff-pe-lane.primary { background:rgba(201,162,39,.10); }
 .ff .ff-pe-lane.secondary { background:rgba(141,147,156,.13); }
 .ff .ff-pe-lane.tertiary { background:rgba(148,88,47,.09); }
 .ff .ff-pe-lane.over { border-color:rgba(126,97,29,.6); }
-.ff .ff-pe-lane-h { display:flex; align-items:center; gap:7px; padding:0 4px; white-space:nowrap; }
-.ff .ff-pe-lane-h b { font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:#2A2116; }
-.ff .ff-pe-cards { display:flex; gap:10px; align-items:stretch; min-height:110px; }
-.ff .ff-pe-card { position:relative; cursor:grab; touch-action:pan-x pan-y; user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; border-radius:22px; }
+.ff .ff-pe-lane-h { display:flex; align-items:center; gap:5px; padding:0 2px; white-space:nowrap; min-width:0; }
+.ff .ff-pe-lane-h b { font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:#2A2116; }
+.ff .ff-pe3 .ff-pe-cards { display:flex; flex-direction:column; align-items:stretch; gap:6px; min-width:0; }
+.ff .ff-pe-card { position:relative; min-width:0; cursor:grab; touch-action:pan-x pan-y; user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; border-radius:18px; corner-shape:squircle; }
+.ff .ff-pe-card .sq, .ff .ff-pe-card .ff-venmini17 { width:100% !important; max-width:100%; box-sizing:border-box; }
 .ff .ff-pe-card img { -webkit-user-drag:none; pointer-events:none; }
+/* The box shows the card in its tier colour with its name only; the full card opens on a tap. The name wraps between words and shrinks to fit. */
+.ff .ff-pe-card .ff-deck.sq { container-type:inline-size; padding:6px 5px !important; justify-content:center; align-items:center; }
+.ff .ff-pe-card .ff-ic2-top { position:absolute; top:9px; left:10px; right:10px; min-height:0; padding:0; z-index:3; }
+.ff .ff-pe-card .ff-ic2-top .lbl, .ff .ff-pe-card .ff-ic2-top .side.r, .ff .ff-pe-card .ff-ic2-sub, .ff .ff-pe-card .ff-ic2-desc, .ff .ff-pe-card .ff-ic2-media, .ff .ff-pe-card .ff-ic2-badges, .ff .ff-pe-card .ff-way17 { display:none; }
+.ff .ff-pe-card .ff-ic2-title { margin:10px 0 0; width:100%; font-size:var(--pe-fs,12px); line-height:1.2; text-align:center; -webkit-line-clamp:4; overflow-wrap:normal; word-break:normal; hyphens:none; }
 .ff .ff-pe-card.lifted { opacity:.28; }
-.ff .ff-pe-card:focus-within { outline:2px solid var(--gold-mid,#B08D2A); outline-offset:3px; }
-.ff .ff-pe-drop { flex:none; width:4px; border-radius:4px; align-self:stretch; background:linear-gradient(180deg,#F4E1A0,var(--gold-mid,#B08D2A)); box-shadow:0 0 0 3px rgba(201,162,39,.25); }
-.ff .ff-pe-empty { flex:none; width:clamp(110px,30vw,140px); min-height:110px; border-radius:18px; border:1.5px dashed rgba(126,97,29,.3); display:grid; place-items:center; font-size:12px; color:#6A5A33; }
-.ff .ff-pe-tail { flex:none; align-self:flex-end; }
+.ff .ff-pe-card:focus-within { outline:2px solid var(--gold-mid,#B08D2A); outline-offset:2px; }
+.ff .ff-pe-drop { flex:none; height:4px; border-radius:4px; background:linear-gradient(90deg,#F4E1A0,var(--gold-mid,#B08D2A)); box-shadow:0 0 0 3px rgba(201,162,39,.25); }
+.ff .ff-pe-empty, .ff .ff-pe-plus { width:100%; aspect-ratio:1 / 1; box-sizing:border-box; border-radius:16px; corner-shape:squircle; border:1.5px dashed rgba(126,97,29,.4); display:grid; place-items:center; font-size:12px; color:#6A5A33; background:rgba(255,255,255,.35); padding:0; }
+.ff .ff-pe-plus { cursor:pointer; color:var(--gold-dk,#7E611D); }
+.ff .ff-pe-plus:hover { background:rgba(255,255,255,.7); }
 .ff .ff-pe-ghost { position:fixed; z-index:200; pointer-events:none; transform:rotate(-2deg) scale(1.04); filter:drop-shadow(0 18px 30px rgba(0,0,0,.35)); }
 
 /* ---- v1.2: profession symbols on the card --------------------------------- */
@@ -162,6 +170,28 @@
 .ff .ff-pub-bio p.clamp { display:-webkit-box; -webkit-line-clamp:6; -webkit-box-orient:vertical; overflow:hidden; }
 .ff .ff-pub-more { margin-top:6px; background:none; border:0; color:var(--gold-dk); font-weight:700; font-size:13px; text-decoration:underline; text-underline-offset:3px; padding:4px 2px; }
 .ff .ff-pub-acts { max-width:440px; margin:16px auto 0; }
+/* net-ladder 2/3 (v17.22): profile actions: one column; signed out = Join (largest), Review, Share; signed in = one relationship slot with a ⋯ menu,
+   Ask | Availability, Share last. Labels wrap between words and shrink if a word does not fit (FitLabel17). */
+.ff .ff-pub-stack { display:grid; gap:8px; }
+.ff .ff-pub-stack > .ff-btn, .ff .ff-pub-stack > .ff-csm-btn { width:100%; min-height:48px; justify-content:center; }
+.ff .ff-pub-two { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:8px; }
+.ff .ff-pub-two > .ff-btn { min-width:0; min-height:48px; padding-left:10px; padding-right:10px; }
+.ff .ff-pub-stack .ff-btn, .ff .ff-pub-stack .ff-csm-btn, .ff .ff-rs17-quiet { border-radius:14px; corner-shape:squircle; }
+.ff .ff-fit17 { display:block; min-width:0; max-width:100%; white-space:normal; overflow-wrap:normal; word-break:normal; hyphens:none; text-align:center; line-height:1.2; }
+.ff .ff-btn.ff-join17 { min-height:64px; padding:14px 18px; font-size:16px; letter-spacing:.08em; border-radius:16px; }
+.ff .ff-rs17 { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; align-items:stretch; }
+.ff .ff-rs17 > .ff-btn, .ff .ff-rs17 > .ff-rs17-quiet { min-width:0; min-height:48px; grid-column:1; }
+.ff .ff-rs17 > :only-child { grid-column:1 / -1; }
+.ff .ff-rs17-quiet { display:flex; align-items:center; justify-content:center; gap:8px; padding:12px 16px; font:700 12px/1.2 var(--sans); letter-spacing:.06em; text-transform:uppercase; color:var(--color-text-2); background:var(--color-cream); border:1px solid rgba(126,97,29,.35); box-sizing:border-box; }
+.ff .ff-rs17-more { position:relative; }
+.ff .ff-rs17-dots { width:48px; height:100%; min-height:48px; display:grid; place-items:center; border-radius:14px; corner-shape:squircle; border:1px solid rgba(126,97,29,.45); background:var(--color-soft); color:var(--color-text); }
+.ff .ff-rs17-dots:focus-visible, .ff .ff-rs17-menu button:focus-visible, .ff .ff-rs17-card .x:focus-visible { outline:2px solid var(--color-gold-dk); outline-offset:2px; }
+.ff .ff-rs17-menu { position:absolute; right:0; top:calc(100% + 6px); z-index:30; min-width:220px; max-width:min(300px,86vw); display:grid; padding:6px; border-radius:16px; corner-shape:squircle; background:var(--color-soft); border:1px solid rgba(126,97,29,.4); box-shadow:0 14px 30px -12px rgba(28,20,6,.35); }
+.ff .ff-rs17-menu button { min-height:44px; padding:10px 12px; text-align:left; border-radius:10px; corner-shape:squircle; font:600 14px/1.3 var(--sans); color:var(--color-text); overflow-wrap:normal; word-break:normal; hyphens:none; }
+.ff .ff-rs17-menu button:hover, .ff .ff-rs17-dots:hover { background:var(--color-cream); }
+.ff .ff-rs17-card { position:relative; padding:16px; border-radius:20px; corner-shape:squircle; background:var(--color-soft); border:1px solid rgba(126,97,29,.4); box-shadow:0 10px 22px -16px rgba(60,20,8,.45); }
+.ff .ff-rs17-card .x { position:absolute; top:4px; right:4px; width:44px; height:44px; display:grid; place-items:center; border-radius:12px; corner-shape:squircle; color:var(--color-text-2); }
+.ff .ff-rs17-card .ff-rf17 .q { padding-right:36px; }
 .ff .ff-pub .ff-hscroll { zoom:.8; }
 .ff .ff-pubgrid { display:grid; gap:10px; justify-content:center; grid-template-columns:repeat(auto-fit,minmax(var(--pmin,156px),var(--pmax,186px))); }
 .ff .ff-pubgrid > [role=listitem] { min-width:0; display:flex; }
@@ -187,6 +217,8 @@
 .ff .ff-deck.sq.pub-s .ff-ic2-desc { margin-top:4px; font-size:12px; -webkit-line-clamp:2; }
 .ff .ff-deck.sq.pub-s .ff-ic2-sub { margin-top:2px; font-size:11px; }
 .ff .ff-ic2-badges { position:relative; z-index:4; margin-top:auto; padding-top:6px; display:flex; gap:5px; justify-content:center; flex-wrap:wrap; }
+.ff .ff-way17 { display:inline-block; align-self:center; margin-top:6px; padding:3px 10px; border-radius:11px; border:1px solid currentColor; font-size:10.5px; font-weight:700; line-height:1.3; letter-spacing:.01em; opacity:.78; white-space:nowrap; }
+.ff .ff-way17.row { width:fit-content; justify-self:start; align-self:flex-start; margin:0 0 8px; padding:3px 10px; border:0; background:rgba(176,141,60,.16); color:var(--gold-dk); opacity:1; }
 .ff .ff-ic2-badges .ff-ic2-doc { margin-top:0; align-self:auto; }
 .ff .ff-pubgrid .ff-deck.sq.pub:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,.28); }
 .ff .ff-pubgrid .ff-deck.sq.pub:active { transform:scale(.97); }
@@ -230,7 +262,7 @@
 .ff .ff-about { max-width:68ch; }
 .ff .ff-about-h { margin:0 0 8px; font-family:var(--display); font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:#2A2620; font-weight:700; }
 .ff .ff-about p { margin:0; font-size:15px; line-height:1.62; color:#2A2620; white-space:pre-wrap; overflow-wrap:anywhere; }
-.ff .ff-about p.clamp { display:-webkit-box; -webkit-line-clamp:5; -webkit-box-orient:vertical; overflow:hidden; }
+.ff .ff-about p.clamp { display:block; max-height:calc(5 * 1.62em); overflow:hidden; }
 .ff .ff-pp { margin-top:24px; }
 .ff .ff-tabpanel > .ff-pp:first-child { margin-top:0; }
 .ff .ff-about + .ff-pp { margin-top:26px; }
@@ -340,7 +372,7 @@
 .ff .ff-phero:not(.wide) .ff-pm.open .ff-pm-arrow { top:50%; }
 @media (prefers-reduced-motion: reduce) { .ff .ff-phero.has-media:not(.wide) .ff-pcol { transition:none; } }
 .ff .ff-phero.wide .ff-pm-track { position:absolute; inset:0; height:auto; }
-.ff .ff-agrp { position:relative; flex:none; width:clamp(164px,45vw,196px); aspect-ratio:5/7; display:flex; flex-direction:column; gap:10px; padding:18px 18px 16px; text-align:left; cursor:pointer; border-radius:22px; overflow:hidden; isolation:isolate;
+.ff .ff-agrp { position:relative; flex:none; width:clamp(164px,45vw,196px); aspect-ratio:5/7; display:flex; flex-direction:column; gap:10px; padding:18px 18px 16px; text-align:left; cursor:pointer; border-radius:22px; corner-shape:squircle; overflow:visible; isolation:isolate;
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",Inter,system-ui,sans-serif; color:#F7F2E7; border:1px solid rgba(201,162,39,.55);
   background:radial-gradient(120% 60% at 0% 0%,rgba(228,195,106,.13),transparent 55%),linear-gradient(165deg,#2A292E 0%,#151417 58%,#0B0B0D 100%);
   box-shadow:0 10px 24px rgba(0,0,0,.24),0 1px 3px rgba(0,0,0,.18); transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .2s; -webkit-tap-highlight-color:transparent; }
@@ -353,8 +385,8 @@
 .ff .ff-agrp-top { display:flex; align-items:baseline; justify-content:space-between; gap:8px; padding-bottom:10px; background:linear-gradient(90deg,rgba(228,195,106,.55),rgba(228,195,106,0)) left bottom/100% 1px no-repeat; }
 .ff .ff-agrp-h { font-size:17px; font-weight:600; letter-spacing:-.015em; line-height:1.2; color:#fff; }
 .ff .ff-agrp-n { font-size:13px; font-weight:600; color:rgba(228,195,106,.85); font-variant-numeric:tabular-nums; }
-.ff .ff-agrp-l { display:flex; flex-direction:column; min-height:0; overflow:hidden; font-size:14px; line-height:1.25; }
-.ff .ff-agrp-l > span { position:relative; padding:7px 0 7px 12px; border-top:.5px solid rgba(255,255,255,.09); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:rgba(247,242,231,.92); }
+.ff .ff-agrp-l { display:flex; flex-direction:column; flex:none; overflow:visible; font-size:14px; line-height:1.25; }
+.ff .ff-agrp-l > span { position:relative; padding:7px 0 7px 12px; border-top:.5px solid rgba(255,255,255,.09); white-space:normal; overflow-wrap:normal; word-break:normal; hyphens:none; color:rgba(247,242,231,.92); }
 .ff .ff-agrp-l > span:first-child { border-top:0; }
 .ff .ff-agrp-l > span::before { content:""; position:absolute; left:0; top:50%; width:4px; height:4px; margin-top:-2px; border-radius:50%; background:rgba(228,195,106,.8); }
 .ff .ff-agrp-d { min-height:0; overflow:hidden; font-size:13.5px; line-height:1.45; color:rgba(247,242,231,.8); display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:7; }
@@ -708,3 +740,142 @@
 .ff .ff-chat .acts button { min-height:34px; padding:6px 12px; border-radius:999px; font-size:12.5px; font-weight:700; color:#2A1E04; background:#F6E8BC; border:1px solid rgba(126,97,29,.5); cursor:pointer; }
 .ff .ff-chat .acts button:hover { background:#F1DC97; }
 
+
+
+/* ======================= v17.24 — hero easel ======================= */
+/* The stage covers the hero photo exactly (same box as object-fit:cover, centred), so the four corner points in
+   HERO_EASEL24 (hero-easel.jsx) land on the photo's display board at every size. */
+.ff .ff-easel24 { position:absolute; left:50%; top:50%; width:100%; aspect-ratio:1800 / 850; transform:translate(-50%,-50%); pointer-events:none; overflow:visible; }
+@media (min-width:900px) { .ff .ff-hero18 .ff-easel24 { width:max(100cqw, 211.7647cqh); } }
+.ff .ff-easel24-card { position:absolute; left:0; top:0; width:372px; transform-origin:0 0; will-change:transform; backface-visibility:hidden; border-radius:4.4cqw; corner-shape:squircle; container-type:inline-size;
+  box-shadow:0 0 0 1px rgba(0,0,0,.6), 0 0 26px 8px rgba(255,200,96,.20); }
+/* v17.26: the card is the board. It takes the board's own proportions (a little wider than 5:7) so nothing is stretched. */
+.ff .ff-easel24-card > .ff-deck, .ff .ff-easel24-card > :first-child { max-width:none !important; width:100% !important; margin:0 !important; aspect-ratio:757 / 994 !important; }
+/* room light on the card: a dim room with one golden spotlight straight above. "shade" takes the card down to the room's
+   level and lets the violet floor light catch its foot; "key" is the spotlight's pool on its upper half. */
+.ff .ff-easel24-shade, .ff .ff-easel24-key { position:absolute; inset:0; border-radius:inherit; corner-shape:squircle; pointer-events:none; }
+.ff .ff-easel24-shade { mix-blend-mode:multiply; background:linear-gradient(180deg, rgba(60,24,96,0) 55%, rgba(60,24,96,.34) 100%), radial-gradient(100% 76% at 50% 26%, #FFF0CC 0%, #F4D7A2 46%, #C6A988 100%); }
+.ff .ff-easel24-key { mix-blend-mode:screen; background:radial-gradient(64% 46% at 50% 22%, rgba(255,204,96,.30) 0%, rgba(255,196,96,.12) 50%, rgba(255,190,96,0) 80%); }
+.ff .ff-easel24-card:not(.refl) { filter:blur(.45px) saturate(.94); }
+/* the card's mirror image in the bar top: only its foot, dim and soft */
+.ff .ff-easel24-card.refl { box-shadow:none; opacity:.24; filter:blur(5px) saturate(.8) brightness(.8);
+  -webkit-mask-image:linear-gradient(to top, #000 0%, rgba(0,0,0,.55) 12%, rgba(0,0,0,0) 30%); mask-image:linear-gradient(to top, #000 0%, rgba(0,0,0,.55) 12%, rgba(0,0,0,0) 30%); }
+
+
+/* ======================= v17.30 — hero: shiny card that opens the profile, larger on phones, burgundy and violet panel ======================= */
+.ff .ff-easel24-face { display:block; pointer-events:none; }
+.ff .ff-easel24-face > .ff-deck, .ff .ff-easel24-face > :first-child { max-width:none !important; width:100% !important; margin:0 !important; aspect-ratio:757 / 994 !important; }
+.ff .ff-easel24-card:not(.refl) { pointer-events:auto; cursor:pointer; filter:blur(.3px); outline:none;
+  box-shadow:0 0 0 1px rgba(0,0,0,.6), 0 0 0 3px rgba(243,222,156,.55), 0 0 30px 10px rgba(255,205,105,.42), 0 0 90px 30px rgba(255,190,90,.22); }
+.ff .ff-easel24-card:not(.refl):focus-visible { box-shadow:0 0 0 1px rgba(0,0,0,.6), 0 0 0 6px #F3DE9C, 0 0 30px 10px rgba(255,205,105,.5); }
+/* brighter card: the shade no longer dims it, the key light is stronger */
+.ff .ff-easel24-shade { background:linear-gradient(180deg, rgba(60,24,96,0) 62%, rgba(60,24,96,.18) 100%), radial-gradient(110% 80% at 50% 26%, #FFFFFF 0%, #FFF3D6 55%, #EBD3AE 100%); }
+.ff .ff-easel24-key { background:radial-gradient(70% 50% at 50% 20%, rgba(255,214,120,.34) 0%, rgba(255,200,100,.14) 50%, rgba(255,190,96,0) 82%); }
+/* the shine: a band of light that crosses the card every few seconds */
+.ff .ff-easel24-sheen { position:absolute; inset:0; border-radius:inherit; corner-shape:squircle; overflow:hidden; pointer-events:none; mix-blend-mode:screen; }
+.ff .ff-easel24-sheen::before { content:""; position:absolute; top:-20%; bottom:-20%; left:-60%; width:46%; transform:skewX(-18deg);
+  background:linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,244,214,.20) 35%, rgba(255,255,255,.62) 50%, rgba(255,244,214,.20) 65%, rgba(255,255,255,0) 100%);
+  animation:ff-easel-sheen30 5.5s cubic-bezier(.4,0,.2,1) 1.2s infinite; }
+@keyframes ff-easel-sheen30 { 0% { left:-60%; } 32%, 100% { left:130%; } }
+@media (prefers-reduced-motion: reduce) { .ff .ff-easel24-sheen::before { animation:none; left:18%; opacity:.6; } }
+/* the panel behind the words: burgundy in the middle, violet rising from the Welcome box */
+.ff .ff-hero18, .ff .ff-home .ff-hero18 { background:radial-gradient(120% 70% at 50% 108%, rgba(112,52,170,.62) 0%, rgba(96,44,150,.28) 38%, rgba(96,44,150,0) 66%), radial-gradient(110% 85% at 50% 52%, #5C1220 0%, #3B0D17 52%, #170709 100%) !important; }
+.ff .ff-hero18-fade, .ff .ff-home .ff-hero18-fade { background:linear-gradient(180deg, rgba(40,10,18,0) 62%, rgba(70,16,30,.92) 100%) !important; }
+@media (min-width:900px) {
+  .ff .ff-hero18, .ff .ff-home .ff-hero18 { background:radial-gradient(70% 90% at 20% 112%, rgba(112,52,170,.60) 0%, rgba(96,44,150,.26) 40%, rgba(96,44,150,0) 68%), radial-gradient(90% 110% at 34% 50%, #5C1220 0%, #3B0D17 55%, #170709 100%) !important; }
+  .ff .ff-hero18-fade, .ff .ff-home .ff-hero18-fade { background:linear-gradient(90deg, rgba(74,16,30,.98) 0%, rgba(66,14,28,.55) 14%, rgba(40,10,18,0) 40%) !important; }
+}
+/* phones: the photo is cropped at the sides (never stretched) so the easel and its card are about a third larger; the foot of the photo runs under the heading */
+@media (max-width:899px) {
+  .ff .ff-hero18 .ff-hero18-img { aspect-ratio:1800 / 960 !important; }
+  .ff .ff-hero18 .ff-hero18-photo { inset:auto !important; left:50% !important; top:0 !important; width:136% !important; height:auto !important; aspect-ratio:1800 / 850 !important; object-fit:fill !important; transform:translate(-50.5%,-5%) !important; max-width:none !important; }
+  .ff .ff-hero18 .ff-easel24 { width:136% !important; top:0 !important; transform:translate(-50.5%,-5%) !important; }
+  .ff .ff-hero18 .ff-hero18-in { margin-top:-18px !important; }
+}
+/* the photo melts into the panel (a mask, so it matches any panel colour) */
+.ff .ff-hero18 .ff-hero18-fade { display:none !important; }
+.ff .ff-hero18 .ff-hero18-img { background:transparent !important; -webkit-mask-image:linear-gradient(180deg, #000 0, #000 84%, transparent 100%) !important; mask-image:linear-gradient(180deg, #000 0, #000 84%, transparent 100%) !important; }
+@media (min-width:900px) { .ff .ff-hero18 .ff-hero18-img { -webkit-mask-image:linear-gradient(90deg, transparent 0, rgba(0,0,0,.5) 12%, #000 26%) !important; mask-image:linear-gradient(90deg, transparent 0, rgba(0,0,0,.5) 12%, #000 26%) !important; } }
+
+/* ======================= v17.32 — hero: violet beams from the bottom corners, a small glint on the card ======================= */
+/* panel: a little burgundy in the middle; violet comes from the bottom-left and bottom-right corners, shoots upwards and spreads slightly as it rises */
+.ff .ff-hero18, .ff .ff-home .ff-hero18 { background:radial-gradient(90% 80% at 50% 55%, #4E1020 0%, #300B14 55%, #150608 100%) !important; }
+.ff .ff-hero18::after { content:""; position:absolute; inset:0; z-index:0; pointer-events:none; border-radius:inherit;
+  background:
+    conic-gradient(from 0deg at 0% 100%, rgba(128,64,196,0) 0deg, rgba(140,70,214,.85) 7deg, rgba(124,60,192,.5) 15deg, rgba(120,58,186,0) 27deg, rgba(120,58,186,0) 360deg),
+    conic-gradient(from 333deg at 100% 100%, rgba(120,58,186,0) 0deg, rgba(124,60,192,.5) 12deg, rgba(140,70,214,.85) 20deg, rgba(128,64,196,0) 27deg, rgba(128,64,196,0) 360deg);
+  -webkit-mask-image:linear-gradient(to top, #000 0%, rgba(0,0,0,.75) 30%, rgba(0,0,0,0) 88%); mask-image:linear-gradient(to top, #000 0%, rgba(0,0,0,.75) 30%, rgba(0,0,0,0) 92%); filter:blur(9px); }
+.ff .ff-hero18 > * { position:relative; z-index:1; }
+.ff .ff-hero18 .ff-hero18-in { z-index:2; }
+/* the glint: a small band of light across the card's bottom-right corner only */
+.ff .ff-easel24-sheen { inset:auto 0 0 auto !important; width:52%; height:34%; border-radius:0 0 4.4cqw 0; }
+.ff .ff-easel24-sheen::before { top:-30%; bottom:-30%; left:-70%; width:38%; transform:skewX(-32deg);
+  background:linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,240,200,.25) 35%, rgba(255,255,255,.75) 50%, rgba(255,240,200,.25) 65%, rgba(255,255,255,0) 100%);
+  animation:ff-easel-sheen32 6s cubic-bezier(.4,0,.2,1) 1.2s infinite; }
+@keyframes ff-easel-sheen32 { 0% { left:-70%; } 22%, 100% { left:150%; } }
+@media (prefers-reduced-motion: reduce) { .ff .ff-easel24-sheen::before { animation:none; left:40%; opacity:.55; } }
+
+/* ======================= v17.33 — hero, wide view: the whole photo is shown (never cropped); the words sit over its left; violet beams rise from the photo's bottom corners; smaller search bar ======================= */
+@media (min-width:900px) {
+  .ff section#ff-hero.ff-hero18 { grid-template-columns:minmax(0,1fr) !important; align-items:center !important; }
+  .ff section#ff-hero.ff-hero18 .ff-hero18-img { grid-area:1 / 1 !important; aspect-ratio:1800 / 850 !important; height:auto !important; width:100% !important; order:0;
+    -webkit-mask-image:linear-gradient(90deg, transparent 0, rgba(0,0,0,.45) 16%, #000 34%) !important; mask-image:linear-gradient(90deg, transparent 0, rgba(0,0,0,.45) 16%, #000 34%) !important; }
+  .ff section#ff-hero.ff-hero18 .ff-hero18-photo { object-fit:fill !important; }
+  .ff section#ff-hero.ff-hero18 .ff-easel24 { width:100% !important; }
+  .ff section#ff-hero.ff-hero18 .ff-hero18-in { grid-area:1 / 1 !important; align-self:center; justify-self:start; width:39%; min-width:0; margin:0 !important; padding:20px 0 20px clamp(24px,3.4vw,44px); }
+  .ff section#ff-hero.ff-hero18 .ff-hero17-ai { width:316px !important; max-width:100% !important; }
+  .ff section#ff-hero.ff-hero18 .ff-hero-search { padding:6px !important; }
+  /* the violet beams sit above the photo so they show where the picture ends */
+  .ff section#ff-hero.ff-hero18::after { z-index:1; mix-blend-mode:screen; }
+}
+
+/* ======================= v17.36 — hero (Gimli task): swipeable card, dots under the easel, moving-or-absent shine, crops ======================= */
+/* the card face slides inside a clip that has the card's own shape, so a swipe stays in the board's perspective */
+.ff .ff-easel24-clip { display:block; position:relative; overflow:hidden; border-radius:inherit; corner-shape:squircle; }
+.ff .ff-easel24-slide { display:block; pointer-events:none; will-change:transform; }
+.ff .ff-easel24-slide > .ff-deck, .ff .ff-easel24-slide > :first-child { max-width:none !important; width:100% !important; margin:0 !important; aspect-ratio:757 / 994 !important; }
+.ff .ff-easel24-card:not(.refl) { touch-action:pan-y; user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; }
+/* the shine is never static: with reduced motion the element is not rendered (hero-easel.jsx); this is the backstop */
+@media (prefers-reduced-motion: reduce) { .ff .ff-easel24-sheen { display:none !important; } }
+/* dots: drawn inside the card's own transform, so they sit just under the board in the same tilt */
+.ff .ff-easel24-dots { position:absolute; left:0; right:0; top:calc(100% + 26px); display:flex; justify-content:center; gap:13px; pointer-events:none; }
+.ff .ff-easel24-dots > i { display:block; width:14px; height:14px; border-radius:50%; background:rgba(244,239,228,.5); box-shadow:0 0 0 2px rgba(11,11,12,.55); }
+.ff .ff-easel24-dots > i.on { background:#C9A227; box-shadow:0 0 0 2px rgba(11,11,12,.55), 0 0 14px 3px rgba(201,162,39,.55); }
+/* wide view: the photo keeps its full width (never cropped left or right); only the top and bottom are cropped */
+@media (min-width:900px) {
+  /* the box is at least 1800:697 (photo rows 5%–87% of its height) and grows with the words when they are taller;
+     the photo stays centred on the easel and its top and bottom edges melt into the panel */
+  .ff section#ff-hero.ff-hero18 .ff-hero18-img { aspect-ratio:auto !important; height:auto !important; align-self:stretch !important; container-type:inline-size !important;
+    -webkit-mask-image:linear-gradient(90deg, transparent 0, rgba(0,0,0,.45) 16%, #000 34%), linear-gradient(180deg, transparent 0, #000 7%, #000 93%, transparent 100%) !important;
+    mask-image:linear-gradient(90deg, transparent 0, rgba(0,0,0,.45) 16%, #000 34%), linear-gradient(180deg, transparent 0, #000 7%, #000 93%, transparent 100%) !important;
+    -webkit-mask-composite:source-in !important; mask-composite:intersect !important; }
+  .ff section#ff-hero.ff-hero18 .ff-hero18-img::before { content:""; display:block; padding-top:38.7222%; }
+  .ff section#ff-hero.ff-hero18 .ff-hero18-photo { inset:auto !important; left:0 !important; top:50% !important; width:100% !important; height:auto !important; max-width:none !important; aspect-ratio:1800 / 850 !important; transform:translateY(-46%) !important;
+    -webkit-mask-image:linear-gradient(180deg, transparent 3%, #000 12%, #000 90%, transparent 97%) !important; mask-image:linear-gradient(180deg, transparent 3%, #000 12%, #000 90%, transparent 97%) !important; }
+  .ff section#ff-hero.ff-hero18 .ff-easel24 { width:100% !important; left:0 !important; top:50% !important; transform:translateY(-46%) !important; }
+}
+/* phones: the sides are cropped a little more so the card is larger (160% wide, was 136%) */
+@media (max-width:899px) {
+  .ff .ff-hero18 .ff-hero18-img { aspect-ratio:1800 / 1080 !important; }
+  .ff .ff-hero18 .ff-hero18-photo { width:160% !important; transform:translate(-50.5%,-6%) !important; }
+  .ff .ff-hero18 .ff-easel24 { width:160% !important; transform:translate(-50.5%,-6%) !important; }
+}
+
+/* Media (photo area) fix: whole photos, one sideways scroller, tap/grip to reveal, auto scroll. css18.css is not loaded on profile or company pages, so this block lives with the photo rules it extends. */
+.ff .ff-pm-track { overflow-y:hidden; touch-action:pan-x pan-y; overscroll-behavior-x:contain; overscroll-behavior-y:auto; }
+.ff .ff-pm-slide { position:relative; overflow:hidden; scroll-snap-align:start; scroll-snap-stop:always; background:#14110A; }
+.ff .ff-pm-slide img, .ff .ff-pmos-t img { touch-action:pan-x pan-y; pointer-events:none; }
+.ff .ff-pm-slide .ff-pm-fill, .ff .ff-pmos-t .ff-pm-fill { position:absolute; inset:-24px; width:calc(100% + 48px); height:calc(100% + 48px); object-fit:cover; filter:blur(22px) brightness(.5) saturate(1.1); transform:translateZ(0); }
+.ff .ff-pm-slide .ff-pm-img, .ff .ff-pmos-t .ff-pm-img { position:relative; width:100%; height:100%; object-fit:contain; object-position:50% 50%; }
+.ff .ff-pmos-t .ff-pm-img { position:absolute; inset:0; }
+.ff .ff-pmos-t:hover .ff-pm-img, .ff .ff-pmos-t:hover .ff-pm-fill { transform:none; }
+.ff .ff-phero:not(.wide) .ff-pm:not(.open):not(.flat) .ff-pm-img { object-position:50% 0; }
+.ff .ff-phero:not(.wide) .ff-pm:not(.flat) .ff-pm-track { cursor:pointer; }
+.ff .ff-pm-dots { padding:0 12px; }
+.ff .ff-pm-dots button { flex:0 1 22px; min-width:10px; }
+.ff .ff-phero.has-media:not(.wide) .ff-pm:not(.open):not(.flat) .ff-pm-dots { bottom:152px; }
+.ff .ff-ph-grip { position:absolute; z-index:3; top:-26px; left:50%; transform:translateX(-50%); width:64px; height:34px; padding:0; border:0; background:none; display:grid; place-items:center; cursor:pointer; -webkit-tap-highlight-color:transparent; touch-action:none; }
+.ff .ff-ph-grip span { width:44px; height:5px; border-radius:3px; corner-shape:squircle; background:rgba(244,239,228,.92); box-shadow:0 1px 4px rgba(0,0,0,.45); transition:width .2s ease; }
+.ff .ff-ph-grip:hover span, .ff .ff-ph-grip[aria-expanded="true"] span { width:56px; }
+.ff .ff-ph-grip:focus-visible { outline:2px solid var(--gold); outline-offset:-4px; border-radius:10px; }
+@media (prefers-reduced-motion: reduce) { .ff .ff-ph-grip span { transition:none; } }

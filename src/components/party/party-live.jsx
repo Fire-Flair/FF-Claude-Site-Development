@@ -34,7 +34,8 @@ function LiveActionBar17({ placement }) {
             <b>{c.label}</b>{c.onRemove && <button type="button" aria-label={`Remove ${c.label}`} onClick={c.onRemove}><S17I.X size={11} strokeWidth={2.6} /></button>}</span>))}</span>}
         <span className="acts">
           {bar.actions.map(a => (
-            a.coin ? <button key={a.key} type="button" className="lb coin" disabled={a.disabled} onClick={a.onClick} aria-label={a.label} title={a.label}><S17I.ArrowRight size={20} strokeWidth={2.6} /></button>
+            a.xc ? <button key={a.key} type="button" className="lb xc" onClick={a.onClick} aria-label={a.label} title={a.label}><S17I.X size={16} strokeWidth={2.4} /></button>
+            : a.coin ? <button key={a.key} type="button" className="lb coin" disabled={a.disabled} onClick={a.onClick} aria-label={a.label} title={a.label}><S17I.ArrowRight size={20} strokeWidth={2.6} /></button>
             : <button key={a.key} type="button" className={`lb ${a.primary ? "pri" : "out"}`} onClick={a.onClick} aria-label={a.label}>
               {a.icon}<span className={a.primary ? undefined : "lab"}>{a.label}</span>
             </button>
@@ -53,27 +54,26 @@ function DoneProfile17({ kind }) {
   if (kind === "team") {
     const p = state.profile;
     const mine = String(p.name || "").trim() && recsOf(p, "professions").length;
-    const person = mine ? { ...meAsStaff(p, state.session), group: "Your profile" } : (["stf_pri", "stf_leo", "stf_ava"].map(id => all.find(x => x.id === id)).find(Boolean) || meAsStaff(p, state.session));
+    const person = mine ? { ...meAsStaff(p, state.session), group: "Your profile" } : (["stf_dany", "stf_simao", "stf_gav"].map(id => all.find(x => x.id === id)).find(Boolean) || meAsStaff(p, state.session));
     const card = <PlayerCard person={person} format="full" nameAs="h1" themeKey={mine ? p.theme : (person.theme || "ivory")} />;
     const dTag = state.auth.status === "signedIn" ? (state.auth.tag || state.session.tag) : "";
     const edit17 = () => { dispatch({ type: "V11_SET", patch: { ed17: "team" } }); dispatch({ type: "PE_START" }); window.scrollTo(0, 0); };
     const cardShare = dTag && mine ? <div style={{ marginTop: 10, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, maxWidth: 440, marginInline: "auto" }}>
       <Btn variant="wide" onClick={edit17}><S17I.Pencil size={14} /> Edit</Btn>
-      <CardShareBtn17 title="My FireFlair card" url={`https://${CARD_DOMAIN}/${dTag}`} fileName={"fireflair-" + cx17Slug(dTag)} label="Share" className="wide" render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={p.theme} />} />
+      <MyShareBtn17 person={person} />
     </div> : null;
     return (
       <div className="ff-pubpage ff-done17 team">
         <PublicHero media={mediaOf(state, person)} card={<>{card}{cardShare}</>} below={null} />
-        <PublicProfileBody person={person} />
-        <Creators17 kind="team" by={person.name} />
-        <PersonalTerms17 />
+        <PublicProfileBody person={person} packagesTail={<><Creators17 kind="team" by={person.name} /><PersonalTerms17 /></>} />
+        {mine ? <NeedHelp34 /> : null}
       </div>
     );
   }
   if (kind === "biz") {
     const cos = companyList(state);
     const co = cos.find(c => c.mine && String(c.name || "").trim()) || cos.find(c => !c.mine);
-    return <CompanyPublic co={co} done slot={<Creators17 kind="biz" by={co && co.name} />} />;
+    return <CompanyPublic co={co} done slot={<>{co && co.mine && state.auth && state.auth.status === "signedIn" && <div className="ff-pubpage-fav17"><CompanyFavs17 /></div>}<Creators17 kind="biz" by={co && co.name} /></>} />;
   }
   return <PartyDone17 />;
 }
@@ -124,7 +124,7 @@ function seedDemo17(state, dispatch, kind) {
   const patch = {};
   if (kind === "team" && String(state.profile.name || "").trim() && !state.profile.live) dispatch({ type: "PROFILE", patch: { live: true } });
   if (kind === "team" && !String(state.profile.name || "").trim()) {
-    dispatch({ type: "PROFILE", patch: { name: "Alexander Gagnon", live: true, theme: "gold", tier: "gold", level: 5, hasCar: true, photo: avatarFor("Alexander Gagnon"), records: DEMO_RECORDS(), about: state.profile.about || "Bartender for fifteen years, building FireFlair." } });
+    dispatch({ type: "PROFILE", patch: { name: "Alexander Gagnon", live: true, saved: true, savedAt: Date.now(), theme: "gold", tier: "gold", level: 5, hasCar: true, photo: avatarFor("Alexander Gagnon"), records: DEMO_RECORDS(), about: state.profile.about || "Bartender for fifteen years, building FireFlair." } });
     dispatch({ type: "SESSION", patch: { tag: "ALEXG", phone: "+44 7700 900412", verified: true } });
   }
   /* No default cocktails or Service Cards: they stay empty until the person adds or signs up. */
@@ -139,12 +139,6 @@ function seedDemo17(state, dispatch, kind) {
     base: "North London", areas: ["London", "Hertfordshire", "Essex"], equipment: "Portable bar, glassware, ice, garnishes", extras: ["Extra bartender", "Cocktail masterclass"], events: ["Birthdays", "Weddings", "Launches"],
     guests: "20 to 80", bands: ["s", "m"], cat: "bar", staff: "1 bartender", setup: "45 minutes before", provides: "A table near power and water", days: ["Thu", "Fri", "Sat", "Sun"], keywords: ["Cocktail bartender", "Mixologist"] },
     { ...NEW_SERVICE17(), type: "addon", tone: "bronze", title: "Extra bartender", tagline: "A second pair of hands behind the bar.", includes: "One more bartender for the night", ideal: "Larger guest lists", time: "4 hours", base: "North London", areas: ["London"], staff: "1 bartender", keywords: ["Extra bartender"] }];
-  const demoStory = {
-    id: uid("bp"), cat: "Story", title: "A night at the Connaught Bar", intro: "Why the martini trolley is still worth the trip.", photo: "", date: today17(),
-    body: "Space comes first. A bar needs a flat surface about two metres long, close to power and water, out of the main walkway.\n\nThen ice. Plan on about a third of a kilo per guest for the night, more in summer.\n\nFinally the menu. Three or four cocktails is plenty: one long and refreshing, one classic, one stronger sipper and one alcohol-free.",
-    places: ["Connaught Bar, London"], socials: ["@fireflair", "#houseparty"] };
-  if (kind === "team" && !myContent17(state, "stories").length) { const pc = pcOf17(state.profile); dispatch({ type: "PC_SAVE", content: { ...pc, rev: (pc.rev || 0) + 1, updatedAt: new Date().toISOString(), stories: [demoStory] } }); }
-  if (kind !== "team" && !(state.myPosts || []).length) patch.myPosts = [demoStory];
   if (Object.keys(patch).length) dispatch({ type: "V11_SET", patch });
 }
 
@@ -182,19 +176,29 @@ function StaffEdit17({ kind }) {
   }, site.name, " · ", party ? "Your Party" : "Your Business"), React.createElement("h1", {
     className: "ff-h1",
     style: { marginTop: 4, marginBottom: 14 }
-  }, party ? "Edit your VIP Host Card" : "Edit your Company Card"), React.createElement("div", {
+  }, party ? "Edit your VIP Host Card" : "Edit your company profile"), React.createElement("div", {
     id: "ff-co-card"
   }, party ? React.createElement(PartyCard11, {
     edit: true
-  }) : React.createElement(EditableCompanyCard, null)), party ? React.createElement(PartySections11, null) : React.createElement(CompanySections, null));
+  }) : React.createElement(EditableCompanyCard, { noType: true })), party ? React.createElement(PartySections11, null) : React.createElement(CompanySections, null));
 }
 
 
 function ProfileGate17({ kind }) {
   const { state, dispatch } = useStore();
   const live = kind === "team" && !!state.profile.live;
-  const done = live || !!(state.devDone || {})[kind];
+  /* A company that has joined and saved once gets its finished page, like the DEV login. */
+  const co = state.company || {};
+  const coSaved = kind === "biz" && state.auth.status === "signedIn" && !!co.joinedAt && !!co.finishedAt;
+  const done = live || coSaved || !!(state.devDone || {})[kind];
+  /* "Welcome to FF Staff" shows once, straight after the first save, above the finished page. */
+  const [welcome, setWelcome] = useState(false);
+  useEffect(() => {
+    if (coSaved && co.welcomeAt && !co.welcomeShown) { setWelcome(true); dispatch({ type: "COMPANY_SAVE", company: { welcomeShown: true } }); }
+  }, [coSaved, co.welcomeAt]);
   const editing = done && state.ed17 === kind;
+  const claim = kind === "biz" ? coClaimMine17(state) : null;
+  const dirSlug = kind === "biz" ? co.dirEditSlug : null;
   const snap = useRef(null);
   const [justShared, setJustShared] = useState(false);
   const was = useRef(live);
@@ -205,11 +209,13 @@ function ProfileGate17({ kind }) {
   }, [live]);
   const edit = () => {
     snap.current = state.company || {};
+    /* Edit opens with every company section closed. */
+    if (kind === "biz") Object.keys(state.categoryVisibility || {}).filter((k) => /^co_/.test(k) && state.categoryVisibility[k] === true).forEach((k) => dispatch({ type: "TOGGLE_CATEGORY", key: k, visible: false }));
     if (kind !== "team" && !String((state.company || {}).name || "").trim()) {
       const demo = kind === "party" ? { ...DEMO_HOST17, tier: undefined, photo: (window.FF_IMG || {}).face_you || "" } : (() => {
         const demoCo = companyList(state).find((x) => !x.mine) || {};
         if (demoCo.id === "co_vooshka")
-          return vooshkaEditable17();
+          return coFromProfile17("vooshka");
         const { id, mine, tier, ...rest } = demoCo;
         return rest;
       })();
@@ -228,19 +234,35 @@ function ProfileGate17({ kind }) {
     window.scrollTo(0, 0);
   };
   const cancel = () => {
-    if (kind !== "team" && snap.current)
-      dispatch({ type: "COMPANY_SAVE", company: snap.current });
+    if (kind !== "team" && snap.current) {
+      /* Back to how it was when Edit was pressed: the address (and what follows it), and every key added since (sections, cards, contacts). */
+      const cur = state.company || {};
+      if (kind === "biz" && snap.current.slug && cur.slug !== snap.current.slug) dispatch({ type: "CO_SLUG_SET", slug: snap.current.slug });
+      const gone = {};
+      Object.keys(cur).forEach((k) => { if (!(k in snap.current)) gone[k] = undefined; });
+      dispatch({ type: "COMPANY_SAVE", company: { ...gone, ...snap.current } });
+    }
     close();
+    if (dirSlug) endDir(false);
+  };
+  /* FireFlair editing a directory page: Save keeps the edits, Cancel drops them; either way back to the page. */
+  const endDir = (commit) => {
+    dispatch({ type: "DIR_EDIT17_END", commit });
+    dispatch({ type: "VIEW_COMPANY", id: "co_" + dirSlug });
+    window.scrollTo(0, 0);
   };
   const save = () => {
     if (kind === "team")
       window.dispatchEvent(new Event("ff-save"));
     dispatch({ type: "TOAST", toast: "Saved" });
     close();
+    if (dirSlug) endDir(true);
   };
   useLiveAction17({
-    status: kind === "party" ? "" : done ? editing ? "Editing your profile" : "Your profile is live" : "Building your profile",
-    actions: kind === "party" ? [] : done ? editing ? [{ key: "cancel", label: "Cancel", icon: React.createElement(S17I.X, {
+    status: kind === "party" ? "" : done ? editing ? (dirSlug ? "Editing for FireFlair" : "Editing your profile") : claim && claim.status === "pending" ? "Claim being checked" : claim && claim.status === "rejected" ? "Claim not approved" : "Your profile is live" : claim && claim.status === "rejected" ? "Claim not approved" : "Building your profile",
+    actions: kind === "party" ? [] : done ? editing ? kind === "team" && !dirSlug ? [{ key: "save", label: "Save", icon: React.createElement(S17I.Check, {
+      size: 14
+    }), onClick: save, primary: true }, { key: "close", label: "Close", xc: true, onClick: close }] : [{ key: "cancel", label: "Cancel", icon: React.createElement(S17I.X, {
       size: 14
     }), onClick: cancel }, { key: "save", label: "Save", icon: React.createElement(S17I.Check, {
       size: 14
@@ -249,16 +271,16 @@ function ProfileGate17({ kind }) {
     }), onClick: edit, primary: true }] : [{ key: "save", label: "Save", icon: React.createElement(S17I.Check, {
       size: 14
     }), onClick: () => window.dispatchEvent(new Event("ff-save")), primary: true }]
-  }, [done, editing, kind]);
+  }, [done, editing, kind, claim && claim.status, dirSlug]);
   return React.createElement("div", {
     className: `ff-pg17${done ? " done" : ""}`
-  }, kind === "party" ? React.createElement(HostPage17, null) : done && !editing ? React.createElement(React.Fragment, null, React.createElement(DoneProfile17, {
+  }, kind === "party" ? React.createElement(HostPage17, null) : done && !editing ? React.createElement(React.Fragment, null, kind === "biz" && welcome && React.createElement(CompanyWelcome, null), React.createElement(DoneProfile17, {
     kind
   }), justShared && kind === "team" && React.createElement("div", {
     className: "ff-pg17-shared"
   }, React.createElement(PublishedPanel, null))) : done ? React.createElement(React.Fragment, null, kind === "team" ? React.createElement(ProfilePage, null) : React.createElement(StaffEdit17, {
     kind
-  }), React.createElement(BulkAI17, null)) : kind === "team" ? React.createElement(ProfilePage, null) : React.createElement(StaffProfile, null));
+  }), kind === "team" ? React.createElement(BulkAI17, null) : null) : kind === "team" ? React.createElement(ProfilePage, null) : React.createElement(StaffProfile, null));
 }
 
 
@@ -266,17 +288,3 @@ function ProfileGate17({ kind }) {
 /* ==== FF Party: Browse ===========================================================================
    Packages first. The guest count and what the person is after narrow the packages; FireFlair's own
    come first. Booking a package starts the event with what was entered and adds the package to it. */
-/* Prototype phase. Phase 3 is everything. Phase 2 is the launch scope: FF Party offers FireFlair's own bar packages only, with no custom Service Cards, add-ons or menu builder. */
-const ph17 = (state) => (state && state.phase17 === "2" ? 2 : 3);
-
-
-function PhaseSwitch17() {
-  const { state, dispatch } = useStore();
-  const p = ph17(state);
-  return (
-    <div className="ff-phase17" role="group" aria-label="Prototype phase">
-      <span className="lb">Prototype phase</span>
-      <span className="seg">{[2, 3].map(n => <button key={n} type="button" role="radio" aria-checked={p === n} className={p === n ? "on" : ""} onClick={() => { dispatch({ type: "V11_SET", patch: { phase17: String(n) } }); dispatch({ type: "TOAST", toast: `Phase ${n} prototype` }); }}>Phase {n}</button>)}</span>
-    </div>
-  );
-}

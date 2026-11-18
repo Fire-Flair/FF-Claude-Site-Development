@@ -1,7 +1,7 @@
 /* src/components/shared/card-brand.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
 /* flagFor now lives with LANGUAGE_MASTER (Phase 1): real flag images, 52 languages. */
 
-const CARD_DOMAIN = "ffparty.uk";
+const CARD_DOMAIN = "FFTeam.uk";
 
 
 
@@ -95,6 +95,24 @@ const METAL = {
 
 
 const metalOf = (tier) => METAL[tier] || METAL.standard;
+
+
+/* v17.16: the metal a person's card is drawn in. Alexander Gagnon is Gold; Bruno Cuartero and Simao are Silver (v17.18); everyone else is Bronze. */
+function cardTier17(person) {
+  const tag = String((person && person.tag) || "").toUpperCase();
+  const name = String((person && person.name) || "").trim().toLowerCase();
+  if (tag === "ALEX424" || tag === "ALEXG" || name === "alexander gagnon") return "gold";
+  if (tag === "CUARTERO" || name === "bruno cuartero") return "silver";
+  if (tag === "SIMAO" || name === "simao") return "silver";
+  return "bronze";
+}
+
+/* v17.19: the card colour Silver or Gold sets the metal of the card (rim, inner line, photo ring, FF logo);
+   every other colour keeps the verification tier from cardTier17. */
+function cardMetal17(person, themeKey) {
+  return themeKey === "silver" || themeKey === "gold" ? themeKey : cardTier17(person);
+}
+
 
 
 const metalEdge = (tier, angle = 150) => {
@@ -295,6 +313,65 @@ function Coin({ size = 40, tier = "standard", flat = false, style }) {
 
 
 
+/* FireFlair's logo for cards (v17.5.4): black disc, metal ring, thin burgundy line just inside the ring, heavy slanted "FF".
+   Drawn from assets/brand/ff-logo-social-print.png (1080 px; disc centre 540,540, ring outer radius 463, inner 428.5, burgundy
+   line radius 423, letters 207..881 by 331..768) as inline SVG, so it stays sharp from 18 px up. Used on cards only; navigation,
+   splash, hero, site-menu, XP and admin keep <Coin />. Standard and gold are the PNG's own gold; bronze, silver and base take
+   their ring and letter metal from metalOf(tier). The disc stays black and the inner line stays burgundy in every tier. */
+const FF_LOGO_GOLD_METAL = { ring: ["#EDD088", "#E2BF70", "#C8A158"], top: "#F1D38D", bottom: "#D8AE5C", shade: "#A67F3F", outline: "#7C6C45" };
+
+const ffHexMix = (a, b, t) => {
+  const pa = [1, 3, 5].map(i => parseInt(a.slice(i, i + 2), 16));
+  const pb = [1, 3, 5].map(i => parseInt(b.slice(i, i + 2), 16));
+  return "#" + pa.map((v, i) => Math.round(v + (pb[i] - v) * t).toString(16).padStart(2, "0")).join("");
+};
+
+const ffLogoMetal = (tier) => {
+  if (tier === "standard" || tier === "gold" || !METAL[tier]) return FF_LOGO_GOLD_METAL;
+  const e = metalOf(tier).edge;
+  return {
+    ring: [ffHexMix(e[0], e[1], 0.35), e[1], ffHexMix(e[1], e[2], 0.35)],
+    top: ffHexMix(e[0], e[1], 0.5),
+    bottom: ffHexMix(e[1], e[2], 0.12),
+    shade: ffHexMix(e[1], e[2], 0.55),
+    outline: ffHexMix(e[1], e[2], 0.6),
+  };
+};
+
+/* One letter, left F, in the 1080 px frame; the right F is the same shape 322 px to the right. */
+const FF_LOGO_F_SHADE = "M272 331 H560 L545 438 H364 L354 510 H523 L509 613 H338 L315 768 H207.5 Z";
+const FF_LOGO_F_FACE = "M272 331 H560 L545.7 433 H364.7 L354.7 510 H523 L509.7 608 H338.7 L315.7 763 H208.2 Z";
+
+function FFLogo({ size = 40, tier = "standard", flat = false, style }) {
+  const id = useSimpleId();
+  const m = ffLogoMetal(tier);
+  return (
+    <svg width={size} height={size} viewBox="77 77 926 926" aria-hidden="true" focusable="false"
+      style={{ display: "block", flex: "none", ...style }}>
+      <defs>
+        <linearGradient id={`${id}r`} x1="0.25" y1="0" x2="0.75" y2="1">
+          <stop offset="0" stopColor={m.ring[0]} /><stop offset=".5" stopColor={m.ring[1]} /><stop offset="1" stopColor={m.ring[2]} />
+        </linearGradient>
+        <linearGradient id={`${id}l`} gradientUnits="userSpaceOnUse" x1="0" y1="331" x2="0" y2="768">
+          <stop offset="0" stopColor={m.top} /><stop offset="1" stopColor={m.bottom} />
+        </linearGradient>
+      </defs>
+      <circle cx="540" cy="540" r="463" fill={`url(#${id}r)`} />
+      <circle cx="540" cy="540" r="462.4" fill="none" stroke={m.outline} strokeWidth="1.6" />
+      <circle cx="540" cy="540" r="428.5" fill="#0B0B0C" />
+      <circle cx="540" cy="540" r="423" fill="none" stroke="#5C1220" strokeWidth="6.5" />
+      <path d={FF_LOGO_F_SHADE} fill={m.shade} />
+      <path d={FF_LOGO_F_FACE} fill={`url(#${id}l)`} />
+      <g transform="translate(322 0)">
+        <path d={FF_LOGO_F_SHADE} fill={m.shade} />
+        <path d={FF_LOGO_F_FACE} fill={`url(#${id}l)`} />
+      </g>
+    </svg>
+  );
+}
+
+
+
 const WM_LIGHT = "linear-gradient(100deg,#FBF0CA,#E6CE84 26%,#B08D2A 52%,#EBD695 74%,#FCF2D2)";
 
 
@@ -311,12 +388,13 @@ function Wordmark({ size = 15, tone = "#EAD79C", text = "FIREFLAIR", spacing = "
 }
 
 
-function CardFrame({ tier = "standard", theme, ratio, selected, onClick, style, className = "", hair = true, corners = false, premium = false, as = "div", children }) {
+function CardFrame({ tier = "standard", theme, ratio, selected, onClick, style, className = "", hair = true, corners = false, premium = false, fixed = false, as = "div", children }) {
   const t = theme || THEMES.onyx;
   const m = metalOf(tier);
   const Tag = as;
   return React.createElement(Tag, {
     className: `ff-deck ${premium ? "pc" : ""} ${t.dark ? "" : "lite"} ${selected ? "ff-sel" : ""} ${className}`,
+    "data-cx-fixed": fixed ? "1" : undefined,
     onClick,
     style: {
       backgroundImage: `${t.bg}, ${metalEdge(tier)}`,

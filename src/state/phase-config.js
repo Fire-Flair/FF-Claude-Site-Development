@@ -17,18 +17,29 @@
    Everything else stays in this file for later releases, but is shown as
    Coming Soon and can't start a booking, payment or anything consequential.
    ========================================================================== */
+/* v17.47: Venues are switched off for now (Alex: "we can drop the venues for now"), as the live frontend's
+   SHOW_VENUES = false. Members no longer see or edit Venues on FF Team, FF Staff or FF Party; saved venue
+   records stay untouched and FF Admin keeps its Venues view. Set true to bring every Venues surface back. */
+const SHOW_VENUES17 = false;
+/* Keeps a profile category key unless it is Venues and Venues are off. */
+const venuesOn17 = (k) => SHOW_VENUES17 || k !== "venues";
+
+
 const PHASE1 = {
   name: "FireFlair prototype",
-  version: "16.16",
+  version: __ff_changelog_version(),   /* the newest CHANGELOG.md entry, filled in by scripts/build.mjs */
   status: "In development",
   /* The top-left selector, in this order. FF Team, FF Staff and FF Party
      are open in this prototype (FF VIP opens with its launch party in early 2027). */
-  sitesShown: ["team", "staff", "party", "partners", "vip"],
-  sitesOpen: ["team", "staff", "party", "partners", "vip"],
+  sitesShown: ["team", "staff", "party", "vip"],
+  sitesOpen: ["team", "staff", "party"],
   /* Profile sections in Phase 1, in this order. Qualifications above Skills;
      Venues straight after Experience; Work locations as its own section.
      Signature cocktails stay in BASE_CATEGORIES for a later release. */
-  profileOrder: ["professions", "qualifications", "skills", "experience", "venues", "locations", "languages", "interests", "media", "reviews"],
+  /* v17.14: Venues replace Experience. Experience stays in the order only so entries already saved still show;
+     nobody can add a new one, and the section is left out when it is empty. */
+  /* v17.18: the same order as the Profile Card (Professions, Skills, Interests, Locations, Languages), then Venues, Qualifications and the rest. */
+  profileOrder: ["professions", "skills", "interests", "locations", "languages", "venues", "qualifications", "experience", "media", "reviews"].filter(venuesOn17),
   /* FF XP · 2027 runs on the prototype's own XP and tier logic. The only
      way in is the FF coin pop-up: no XP bar, no XP page. */
   xpLive: false,   /* v1.2: XP isn't live in version 1 — the pop-up says Coming 2027 */
@@ -47,7 +58,7 @@ const PHASE1 = {
 const p1SiteOpen = (key) => PHASE1.sitesOpen.includes(key);
 
 
-const p1SiteName = (key) => ({ team: "FF Team", staff: "FF Staff", party: "FF Party", partners: "FF Partners", vip: "FF VIP" })[key] || "That";
+const p1SiteName = (key) => ({ team: "FF Team", staff: "FF Staff", party: "FF Party", vip: "FF VIP" })[key] || "That";
 
 
 /* " · +10 XP" after a toast, only once XP is live. */

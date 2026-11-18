@@ -53,7 +53,7 @@ function fiFacts17(state, person) {
   const name = fiClean17(person.name);
   if (name) facts.push({ field_id: "name", category: "name", value: name, detail: "", verification: "owner-declared" });
   ["professions", "experience", "qualifications", "skills", "languages", "interests", "locations"].forEach((cat) => {
-    (recs[cat] || []).filter((r) => r && !r.hidden && !r.proposed).forEach((r) => {
+    (cat === "locations" ? covRecsFor17(state, person, recs[cat]) : (recs[cat] || []).filter((r) => r && !r.hidden && !r.proposed)).forEach((r) => {
       const v = fiClean17(r.name); if (!v) return;
       const emp = r.details && r.details.employer ? fiClean17(r.details.employer) : "";
       facts.push({ field_id: cat + ":" + (r.id || v), category: cat, value: v, detail: fiClean17([r.description, emp].filter(Boolean).join(" · ")).slice(0, 240), verification: r.verified ? "verified" : "owner-declared" });
@@ -293,7 +293,7 @@ function IntroEditor17() {
 
 /* Search-facing helpers: the profile's own domain is its canonical, and the title and
    description come from the validated introduction when there is one. */
-const ffSeoProfileUrl17 = (tag) => FF_SEO.profileOrigin + "/" + (tag ? encodeURIComponent(tag) : "");
+const ffSeoProfileUrl17 = (tag, origin) => (origin || FF_SEO.profileOrigin) + "/" + (tag ? encodeURIComponent(tag) : "");
 
 
 function ffIntroSeo17(person, title, description) {
@@ -309,40 +309,193 @@ window.__ffIntro17 = { snapshot: fiSnapshot17, fallback: fiFallback17, compose: 
 
 
 
-function PublicProfileBody({ person }) {
+/* v17.18: the Team and Reviews tabs are one piece of code, used on the displayed profile and in the profile builder. */
+function TabEmpty17({ icon, children }) { return <div className="ff-tab-empty">{icon}<p>{children}</p></div>; }
+
+
+/* v17.48 Team tab (option 1): My team, Company teams, then Network.
+   My team: two-way team links (invite + accept), grouped by top profession. Someone else's team shows only the link the
+   prototype knows (you, if you are on their team); nothing is invented. Company teams: accepted company memberships only.
+   Network: one-way adds; the owner sees the list, visitors only the count. */
+function teamTabData17(state, all, person) {
+  const me = person.id === "me";
+  const conn = (id) => (state.connections || []).some(c => c.id === id);
+  const teams = me ? myNetwork(state, all).list.filter(p => conn(p.id)) : (conn(person.id) ? all.filter(p => p.id === "me") : []);
+  const tCos = personCompanies17(state, person, false);
+  const adds = me ? (state.netAdds17 || []) : [];
+  const tNet = adds.map(id => all.find(p => p.id === id)).filter(p => p && !p.isCompany && !teams.some(t => t.id === p.id));
+  const netCos = adds.filter(id => String(id).startsWith("co_")).map(id => companyById(state, id)).filter(c => c && !tCos.some(x => x.id === c.id));
+  return { teams, tCos, tNet, netCos };
+}
+
+
+/* Joined FireFlair through your link: the team record says so, or their own referral record names you. */
+function joinedThrough17(state, p) {
+  const c = (state.connections || []).find(x => x.id === p.id);
+  if (c && c.joinedThroughMe) return true;
+  const r = p.referredBy, tag = String((state.auth && state.auth.tag) || "").toLowerCase();
+  return !!(r && (r.personId === "me" || (tag && String(r.tag || r.code || "").toLowerCase() === tag)));
+}
+
+
+const TEAM_TAB_CSS17 = __ff_css("styles/team-tab17.css");
+const TtNet17 = lucideIcon("Waypoints");
+
+
+/* A preview card: portrait, name, top profession, the other professions as small labels. */
+function TeamTile17({ p, star, onClick }) {
+  const others = (p.profs17 || []).slice(1).map(x => x.profession);
+  return (
+    <button type="button" className="ff-tt17-tile" onClick={onClick}>
+      {star ? <span className="rec" title="Joined through you" aria-label="Joined through you"><Star size={10} fill="currentColor" aria-hidden="true" /></span> : null}
+      <Portrait src={p.photo} name={p.name} size={58} />
+      <b><FitLabel17>{p.name}</FitLabel17></b>
+      <small><FitLabel17>{p.profession}</FitLabel17></small>
+      {others.length ? <span className="ot">{others.map(o => <i key={o}><FitLabel17>{o}</FitLabel17></i>)}</span> : null}
+    </button>
+  );
+}
+
+
+/* A company team: logo, name, what they do, and the faces of its members. */
+function CoTeamCard17({ co, all }) {
   const { state, dispatch } = useStore();
-  const [tab, setTab] = useState("overview");
-  const [openRec, setOpenRec] = useState(null);
-  const [svcOpen, setSvcOpen] = useState(null);
+  const ids = [...new Set([...ctMembers17(state, coKey17(co)), ...(co.team || [])])];
+  const people = ids.map(id => all.find(p => p.id === id)).filter(Boolean);
+  const ini = String(co.name || "").split(/\s+/).filter(w => /^[A-Za-z]/.test(w)).map(w => w[0]).slice(0, 2).join("").toUpperCase();
+  const [bad, setBad] = useState(false);
+  const kind = [].concat(co.kind || []).join(" · ");
+  return (
+    <button type="button" className="ff-tt17-co" onClick={() => { dispatch({ type: "VIEW_COMPANY", id: co.id }); window.scrollTo(0, 0); }}>
+      <span className="logo" aria-hidden="true">{co.logo && !bad ? <img src={co.logo} alt="" onError={() => setBad(true)} /> : ini}</span>
+      <span className="tx"><b>{co.name}</b>{kind ? <small>{kind}</small> : null}</span>
+      {people.length ? (
+        <span className="ft" aria-label={`${people.length} on the team`}>
+          <span className="stack" aria-hidden="true">{people.slice(0, 5).map(p => <span key={p.id} className="f"><Portrait src={p.photo} name={p.name} size={30} /></span>)}</span>
+          {people.length > 5 ? <span className="more" aria-hidden="true">+{people.length - 5}</span> : null}
+        </span>
+      ) : null}
+    </button>
+  );
+}
+
+
+function TeamTab17({ person }) {
+  const { state, dispatch } = useStore();
+  const all = useDirectory();
+  const own = person.id === "me";
+  const first = String(person.name || "").split(" ")[0] || "them";
+  const { teams, tCos, tNet, netCos } = teamTabData17(state, all, person);
+  const [q, setQ] = useState("");
+  useEffect(() => { setQ(""); }, [person.id]);
+  const n = q.trim().toLowerCase();
+  /* Team search matches every profession, not only the top 3. */
+  const shown = n ? teams.filter(p => personSearchText(p).includes(n)) : teams;
+  const groups = CATEGORY_ORDER.map(g => [g, shown.filter(p => p.group === g)]).filter(([, l]) => l.length);
+  const rec = own ? teams.filter(p => joinedThrough17(state, p)).length : 0;
+  const view = (p) => { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); };
+  const none = (t) => <p className="ff-body ff-muted" style={{ margin: 0 }}>{t}</p>;
+  const netCount = tNet.length + netCos.length;
+  return (
+    <div className="ff-tt17">
+      <style>{TEAM_TAB_CSS17}</style>
+      <Fold17 id="team17_my" icon={<Users size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={own ? "My team" : `${first}'s team`} count={teams.length}>
+        {rec ? <p className="ff-tt17-sub"><Star size={11} fill="currentColor" aria-hidden="true" /> {rec} joined through you</p> : null}
+        {teams.length > 12 ? (
+          <label className="ff-tt17-search"><Search size={15} aria-hidden="true" />
+            <input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={own ? "Search your team" : "Search the team"} aria-label="Search the team" />
+          </label>
+        ) : null}
+        {!teams.length ? none(own ? "No one on your team yet." : `${first} hasn't added anyone to their team yet.`)
+          : !shown.length ? none(`Nobody on the team matches “${q.trim()}”.`)
+          : groups.map(([g, l]) => (
+            <div key={g} className="ff-tt17-group">
+              <div className="ff-tt17-gh">{g} <i>{l.length}</i></div>
+              <div className="ff-tt17-grid">{l.map(p => <TeamTile17 key={p.id} p={p} star={own && joinedThrough17(state, p)} onClick={() => view(p)} />)}</div>
+            </div>
+          ))}
+      </Fold17>
+      <Fold17 id="team17_cos" icon={<Briefcase size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Company teams" count={tCos.length}>
+        {tCos.length ? <div className="ff-tt17-cos">{tCos.map(co => <CoTeamCard17 key={co.id} co={co} all={all} />)}</div> : none("No company teams yet.")}
+      </Fold17>
+      {own ? (
+        <Fold17 id="team17_net" icon={<TtNet17 size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Network" count={netCount} shut>
+          {tNet.length ? <div className="ff-tt17-grid">{tNet.map(p => <TeamTile17 key={p.id} p={p} onClick={() => view(p)} />)}</div> : null}
+          {netCos.length ? <div style={{ marginTop: tNet.length ? 12 : 0 }}><CoTiles17 list={netCos} label="Network companies" /></div> : null}
+          {!netCount ? none("No one yet.") : null}
+        </Fold17>
+      ) : netCount ? (
+        <section className="ff-pn-sec"><SectionHead icon={<TtNet17 size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Network" count={netCount} /></section>
+      ) : null}
+    </div>
+  );
+}
+
+
+function ReviewsTab17({ person, mem }) {
+  const { state } = useStore();
+  const local = useRef({});
+  const m = mem || local;
   const [revOpen, setRevOpen] = useState(null);
-  const [allAttrs, setAllAttrs] = useState(false);
-  const [attrCat, setAttrCat] = useState(null);
   const [allReviews, setAllReviews] = useState(false);
+  const first = String(person.name || "").split(" ")[0] || "them";
+  const reviews = reviewsOf(state, person);
+  const def = BASE_CATEGORIES.reviews;
+  const reviewCard = (r, active) => (
+    <div className="ff-rvslide"><InformationCard record={r} def={def} themeKey="onyx" pub="r" highlight={active} rank={active ? "primary" : "secondary"} /></div>
+  );
+  return (<>
+    {reviews.length ? (<>
+      <CoverFlow items={reviews} label="Reviews" mem={m} k="reviews" half={140} onOpen={setRevOpen} render={reviewCard} />
+      {reviews.length > 1 && <div className="ff-rv-all"><button type="button" className="ff-pp-all" onClick={() => setAllReviews(true)}>View all reviews <ChevronRight size={13} /></button></div>}
+    </>) : <TabEmpty17 icon={<Award size={20} />}>{person.id === "me" || !String(person.name || "").trim() || /^your$/i.test(first) ? "No reviews yet." : `No reviews for ${first} yet.`}</TabEmpty17>}
+    <Sheet open={!!revOpen} onClose={() => setRevOpen(null)} title="Review">
+      {revOpen && <div className="ff-rvfull">{reviewCard(revOpen, true)}</div>}
+    </Sheet>
+    <Sheet open={allReviews} onClose={() => setAllReviews(false)} title={`Reviews (${reviews.length})`}>
+      <div className="ff-rvlist">{reviews.map(r => <div key={r.id}>{reviewCard(r, false)}</div>)}</div>
+    </Sheet>
+  </>);
+}
+
+
+
+/* packagesTail: shown in the Bookings tab (was Packages) below the Q&A (the signed-in member's own page puts Build your packages, Service Cards and Terms and conditions here). */
+/* aboutFirst: someone else's profile (and yours viewed as a guest) shows About Me first, above Professions. */
+function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
+  const { state, dispatch } = useStore();
+  /* The tab is kept in the store so it can be part of the address (#/<site>/<tag>/reviews). */
+  const inStore = state.viewing === person.id;
+  const [ltab, setLtab] = useState("overview");
+  const tab = inStore ? (state.ptab17 && state.ptab17.key === "p:" + person.id ? state.ptab17.tab : "overview") : ltab;
+  const setTab = (t) => inStore ? dispatch({ type: "V11_SET", patch: { ptab17: t === "overview" ? null : { key: "p:" + person.id, tab: t } } }) : setLtab(t);
+  const [svcOpen, setSvcOpen] = useState(null);
   const mem = useRef({});
-  useEffect(() => { setTab("overview"); mem.current = {}; }, [person.id]);
+  useEffect(() => { setLtab("overview"); mem.current = {}; }, [person.id]);
   const cats = BASE_CATEGORIES;
   const first = String(person.name || "").split(" ")[0] || "them";
   const services = servicesOf(state, person);
   const teamAll_ = useDirectory();
-  const teams = networkOf11(state, teamAll_, person);
+  const { teams } = teamTabData17(state, teamAll_, person);
   const reviews = reviewsOf(state, person);
-  const attrs = attributesOf(state, person, cats);
   const records = recordsForPerson(state, person);
   const profs = (records.professions || []).filter(r => !r.hidden && !r.proposed);
+  const venues = SHOW_VENUES17 ? (records.venues || []).filter(r => !r.hidden && !r.proposed) : [];
+  /* Attributes: every other category as a summary card (Work locations are on Bookings; Venues have their own row). */
+  const attrs = attributesOf(state, person, cats).filter(it => it.category !== "locations" && it.category !== "venues");
+  const [openRec, setOpenRec] = useState(null);
+  const [allAttrs, setAllAttrs] = useState(false);
+  const [attrCat, setAttrCat] = useState(null);
   /* Preferred hourly rates are shown on FF Staff only (v17.4.6), never on FF Party or FF Team. */
   const onStaff = state.role === "staff" && state.site !== "party";
   const asked = person.id === "me" ? [] : [...ASKED_EXAMPLES.filter(q => q.personId === person.id), ...(state.profileQuestions || []).filter(q => q.personId === person.id)];
   const tabs = [
     { key: "overview", label: "Overview" },
-    { key: "services", label: "Packages", count: services.length + (person.id === "me" ? myContent17(state, "services").filter(x => String(x.title).trim()).length + myContent17(state, "cocktails").filter(x => String(x.name).trim()).length + myContent17(state, "stories").filter(x => String(x.title).trim()).length : 0) },
-    ...(ph17(state) >= 2 ? [{ key: "teams", label: "Team", count: teams.length }] : []),
+    { key: "services", label: "Bookings", count: services.length },
+    { key: "teams", label: "Team", count: teams.length },
     { key: "reviews", label: "Reviews", count: reviews.length },
   ];
-  const openAttr = (it) => setOpenRec({ record: it.record, def: it.def, category: it.category });
   const Empty1 = ({ icon, children }) => <div className="ff-tab-empty">{icon}<p>{children}</p></div>;
-  const reviewCard = (r, active) => (
-    <div className="ff-rvslide"><InformationCard record={r} def={cats.reviews || BASE_CATEGORIES.reviews} themeKey="onyx" pub="r" highlight={active} rank={active ? "primary" : "secondary"} /></div>
-  );
   const svcCard = (it) => it.kind === "std"
     ? <div className="ff-svslide std"><ServicePoster svc={it.svc} price /></div>
     : <div className="ff-svslide own"><OwnServiceCard item={it.item} /></div>;
@@ -352,67 +505,60 @@ function PublicProfileBody({ person }) {
       <ProfileTabs tabs={tabs} active={tab} onChange={setTab} />
       <div role="tabpanel" id="ff-tabpanel" aria-labelledby={`ff-tab-${tab}`} className="ff-tabpanel" tabIndex={0}>
         {tab === "overview" && (<>
-          <AboutMeBlock text={person.id === "me" ? state.profile.about : person.about} />
+          <style>{RANK_CSS17}</style>
+          {/* v17.21: the v17.15 look is back — big profession tiles, About Me, the Attributes cards, then Venues. */}
+          {aboutFirst && <AboutMeBlock text={person.id === "me" ? state.profile.about : person.about} />}
           {profs.length > 0 && (
-            <section className="ff-pp ff-profs" aria-labelledby="ff-profs-h">
-              <h2 id="ff-profs-h" className="ff-about-h">Professions</h2>
-              <MemScroll mem={mem} k="profs" label={`Professions, ${profs.length} card${profs.length === 1 ? "" : "s"}`} className="ff-acar">
-                {profs.map((r, ri) => (
-                  <button key={r.id} type="button" className={"ff-agrp prof " + ["t-gold", "t-silver", "t-bronze"][ri % 3]} aria-label={`${r.name}. Open details`}
-                    onClick={() => setOpenRec({ record: r, def: cats.professions, category: "professions" })}>
-                    <span className="ff-agrp-top"><span className="ff-agrp-h">{r.name}</span></span>
-                    {onStaff && staffRateP17(state, person.tag, r.name) != null && <span className="ff-agrp-rate">Preferred rate {gbp17(staffRateP17(state, person.tag, r.name))}/hour</span>}
-                    {String(r.description || "").trim() && <span className="ff-agrp-d">{r.description}</span>}
-                  </button>
-                ))}
-              </MemScroll>
+            <section className="ff-pp ff-pp21" aria-labelledby="ff-profs-h">
+              <div className="ff-pp-head"><h2 id="ff-profs-h" className="ff-about-h">Professions</h2></div>
+              <ProfTiles21 items={profs} def={cats.professions} onOpen={(r) => setOpenRec({ record: r, def: cats.professions, category: "professions" })}
+                extra={onStaff ? (r) => staffRateP17(state, person.tag, r.name) != null ? <span className="ff-agrp-rate">Preferred rate {gbp17(staffRateP17(state, person.tag, r.name))}/hour</span> : null : undefined} />
             </section>
           )}
-          <section className="ff-pp" aria-labelledby="ff-pp-h" hidden={!attrs.length && profs.length > 0}>
-            <div className="ff-pp-head">
-              <h2 id="ff-pp-h" className="ff-about-h">Attributes</h2>
-              {attrs.length > 0 && <button type="button" className="ff-pp-all" onClick={() => setAllAttrs(true)}>View all <ChevronRight size={13} /></button>}
-            </div>
-            {attrs.length ? <AttrGroups items={attrs} mem={mem} onOpen={(k) => setAttrCat(k)} />
-              : <Empty1 icon={<Briefcase size={20} />}>{first} hasn't added any other profile cards yet.</Empty1>}
-          </section>
+          {!aboutFirst && <AboutMeBlock text={person.id === "me" ? state.profile.about : person.about} />}
+          {attrs.length > 0 && (
+            <section className="ff-pp ff-pp21" aria-labelledby="ff-pp-h">
+              <div className="ff-pp-head">
+                <h2 id="ff-pp-h" className="ff-about-h">Attributes</h2>
+                <button type="button" className="ff-pp-all" onClick={() => setAllAttrs(true)}>View all <ChevronRight size={13} /></button>
+              </div>
+              <AttrGroups items={attrs} mem={mem} onOpen={(k) => setAttrCat(k)} />
+            </section>
+          )}
+          {venues.length > 0 && (
+            <section className="ff-pp ff-pp21" aria-labelledby="ff-ven-h">
+              <div className="ff-pp-head"><h2 id="ff-ven-h" className="ff-about-h">Venues</h2></div>
+              <div className="ff-ven19"><VenueRows19 items={venues} /></div>
+            </section>
+          )}
           <FireFlairIntroductions17 person={person} />
         </>)}
+        {tab === "services" && records.locations && records.locations.length > 0 && cats.locations && (
+          <ProfileAttributeSection catKey="locations" def={cats.locations} list={records.locations} isMe={false} shade="onyx" pub onAdd={() => {}} onOpen={() => {}} />
+        )}
         {tab === "services" && (services.length
           ? <CoverFlow items={services} label="Packages" mem={mem} k="services" half={150} onOpen={setSvcOpen} render={(it) => svcCard(it)} />
           : (person.id === "me" ? null : <Empty1 icon={<Sparkles size={20} />}>{first} hasn't added any packages yet.</Empty1>))}
         {tab === "services" && <PkgExtras17 person={person} />}
-        {tab === "teams" && (teams.length
-          ? <HScroll label={`Team, ${teams.length}`}>
-              {teams.map(t => <PlayerTile key={t.id} person={t} onClick={() => { dispatch({ type: "VIEW", id: t.id }); window.scrollTo(0, 0); }} />)}
-            </HScroll>
-          : <Empty1 icon={<Users size={20} />}>{person.id === "me" ? "Your team is everyone you add to your network." : `${first} hasn't added anyone to their team yet.`}</Empty1>)}
-        {tab === "reviews" && (reviews.length ? (<>
-          <CoverFlow items={reviews} label="Reviews" mem={mem} k="reviews" half={140} onOpen={setRevOpen} render={reviewCard} />
-          {reviews.length > 1 && <div className="ff-rv-all"><button type="button" className="ff-pp-all" onClick={() => setAllReviews(true)}>View all reviews <ChevronRight size={13} /></button></div>}
-        </>) : <Empty1 icon={<Award size={20} />}>No reviews for {first} yet.</Empty1>)}
+        {tab === "services" && packagesTail}
+        {tab === "teams" && (<><ProfileSocial11 person={person.id === "me" ? { ...person, socials: state.profile.socials } : person} /><div style={{ marginTop: 22 }}><TeamTab17 person={person} /></div></>)}
+        {tab === "reviews" && <ReviewsTab35 person={person} />}
       </div>
 
       <GenericAttributeCardCreator open={!!openRec} record={openRec && openRec.record} def={openRec && openRec.def} category={openRec && openRec.category} readOnly onClose={() => setOpenRec(null)} />
-      <Sheet open={allAttrs} onClose={() => setAllAttrs(false)} title="All attributes">
-        <div className="ff-pub">
-          {[...PUB_ORDER, ...categoryOrder().filter(k => !cats[k].system && !PUB_ORDER.includes(k))].filter(k => cats[k]).map(k => (
-            <ProfileAttributeSection key={k} catKey={k} def={cats[k]} list={records[k] || []} isMe={false} shade="onyx" pub onAdd={() => {}}
-              onOpen={(r) => setOpenRec({ record: r, def: cats[k], category: k })} />
-          ))}
-        </div>
-      </Sheet>
       <Sheet center open={!!attrCat} onClose={() => setAttrCat(null)} title={attrCat && cats[attrCat] ? cats[attrCat].label : ""}>
-        {attrCat && cats[attrCat] && <ExpandedAttrs list={(records[attrCat] || []).filter(r => !r.hidden && !r.proposed)} />}
+        {attrCat && cats[attrCat] && <ExpandedAttrs list={rankedRecords((records[attrCat] || []).filter(r => !r.hidden && !r.proposed))} />}
+      </Sheet>
+      <Sheet open={allAttrs} onClose={() => setAllAttrs(false)} title="All attributes">
+        {[...new Set(attrs.map(it => it.category))].map(k => (
+          <section key={k} className="ff-xatt-sec">
+            <h3 className="ff-about-h">{cats[k] ? cats[k].label : k}</h3>
+            <ExpandedAttrs list={rankedRecords((records[k] || []).filter(r => !r.hidden && !r.proposed))} />
+          </section>
+        ))}
       </Sheet>
       <Sheet open={!!svcOpen} onClose={() => setSvcOpen(null)} title={svcOpen ? (svcOpen.kind === "std" ? svcOpen.svc.title : svcOpen.item.title) : "Service"}>
         {svcOpen && <div className="ff-svfull">{svcCard(svcOpen)}</div>}
-      </Sheet>
-      <Sheet open={!!revOpen} onClose={() => setRevOpen(null)} title="Review">
-        {revOpen && <div className="ff-rvfull">{reviewCard(revOpen, true)}</div>}
-      </Sheet>
-      <Sheet open={allReviews} onClose={() => setAllReviews(false)} title={`Reviews (${reviews.length})`}>
-        <div className="ff-rvlist">{reviews.map(r => <div key={r.id}>{reviewCard(r, false)}</div>)}</div>
       </Sheet>
     </div>
   );

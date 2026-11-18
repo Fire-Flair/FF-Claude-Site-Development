@@ -1,0 +1,74 @@
+{
+  "formatVersion": 2,
+  "slug": "canvas-and-peach-studios",
+  "name": "Canvas and Peach Studios",
+  "kind": "Wedding, newborn & family photography",
+  "base": "Glasgow",
+  "areas": [
+    "Glasgow",
+    "Edinburgh",
+    "Scotland"
+  ],
+  "description": "A Glasgow studio covering wedding, couple, newborn and family photography across Glasgow, Edinburgh and the rest of Scotland, with wedding albums on offer.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://bridebook.com/uk/wedding-photographers/canvas-and-peach-studios-coatbridge-north-lanarkshire-csaXqRbD7g",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding photography",
+        "Couple photography",
+        "Albums",
+        "Newborn and family photography"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/wedding-photographers/canvas-and-peach-studios-coatbridge-north-lanarkshire-csaXqRbD7g",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/wedding-photographers/canvas-and-peach-studios-coatbridge-north-lanarkshire-csaXqRbD7g",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "CANVA",
+    "position": 83,
+    "source": {
+      "urls": [
+        "https://bridebook.com/uk/wedding-photographers/canvas-and-peach-studios-coatbridge-north-lanarkshire-csaXqRbD7g"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Glasgow",
+        "lat": 55.8642,
+        "lng": -4.2518,
+        "approx": false
+      }
+    ]
+  }
+}

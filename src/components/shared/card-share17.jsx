@@ -7,18 +7,27 @@
    Props: open, onClose, title (share message), url (the card's FireFlair address, https://…), fileName,
           children (the card element, rendered exactly as on the page), extra (optional content below the menu).
    ========================================================================== */
-function CardShareSheet17({ open, onClose, title, url, fileName, children, extra }) {
-  const { dispatch } = useStore();
+/* The sharer's code: their tag. Every link the Share sheet produces carries it as ?r=<code> (v17.5.5). */
+const shareCode17 = (state) => String((state.auth && state.auth.status === "signedIn" && (state.auth.tag || state.session.tag)) || "").toLowerCase();
+const withRef17 = (url, code) => {
+  if (!code) return url;
+  try { const u = new URL(url); u.searchParams.set("r", code); return u.toString(); } catch (e) { return url + (url.includes("?") ? "&" : "?") + "r=" + encodeURIComponent(code); }
+};
+
+
+function CardShareSheet17({ open, onClose, title, url, fileName, children, extra, noRef }) {
+  const { state, dispatch } = useStore();
   const holder = useRef(null);
   const [png, setPng] = useState(null);
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
   const [note, setNote] = useState("");
-  const full = /^https?:/.test(url || "") ? url : "https://" + (url || "");
+  const base = /^https?:/.test(url || "") ? url : "https://" + (url || "");
+  const full = noRef ? base : withRef17(base, shareCode17(state));
   const make = () => {
     setPng(null); setErr(""); setBusy(true);
     const node = holder.current && holder.current.firstElementChild;
-    return cardToPng17(node, { url: full }).then(r => { setPng(r); setBusy(false); return r; })
+    return cardToPng17(node, { url: base }).then(r => { setPng(r); setBusy(false); return r; })
       .catch(e => { setErr((e && e.message) || "The card couldn't be turned into an image."); setBusy(false); return null; });
   };
   useEffect(() => {
@@ -26,7 +35,7 @@ function CardShareSheet17({ open, onClose, title, url, fileName, children, extra
     setNote("");
     const t = setTimeout(make, 450);
     return () => clearTimeout(t);
-  }, [open, full]);
+  }, [open, base]);
   if (!open) return null;
   const file = png ? cx17File(png.blob, fileName) : null;
   const say = (t) => { setNote(t); dispatch({ type: "TOAST", toast: t }); };
@@ -56,14 +65,14 @@ function CardShareSheet17({ open, onClose, title, url, fileName, children, extra
   return (
     <Sheet open onClose={onClose} title={title || "Share"}>
       <div className="ff-csm-stage" ref={holder}>{children}</div>
-      <p className="ff-csm-url" aria-label="Card address">{full.replace(/^https?:\/\//, "")}</p>
+      <p className="ff-csm-url" aria-label="Card address">{base.replace(/^https?:\/\//, "").replace(/^ff([a-z])/i, (m, c) => "FF" + c.toUpperCase())}</p>
       {err ? (
         <div className="ff-cverr" role="alert"><span>{err}</span><Btn variant="sm ghost" onClick={make}><RotateCcw size={12} /> Try again</Btn></div>
       ) : busy ? (
         <p className="ff-body ff-csm-busy" role="status"><Loader2 size={14} className="ff-spin" /> Getting your image ready</p>
       ) : null}
       <div className="ff-csm-menu" role="group" aria-label="Share options">
-        {opt("Share", doShare, <Share2 size={16} />, !ready)}
+        {opt("Share", doShare, <ShareUp17 size={16} />, !ready)}
         {opt("WhatsApp", doWhatsApp, <MessageCircle size={16} />, !ready)}
         {opt("Download PNG", doDownload, <Download size={16} />, !ready)}
         {opt("Copy Link", doCopy, <Link2 size={16} />, false)}

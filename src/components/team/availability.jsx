@@ -9,13 +9,12 @@ const availQ = (iso) => ({ id: `av_${iso}`, iso, group: "availability", type: "t
 /* Answers some of the sample people have already given, so "Check
    availability" can show an instant answer. */
 const AVAIL_DEMO = {
-  stf_sam: { "2026-11-15": "Yes", "2026-12-12": "Yes", "2026-12-19": "Yes", "2026-12-24": "No", "2026-12-31": "Yes" },
-  stf_pri: { "2026-11-15": "Yes", "2026-12-12": "Maybe", "2026-12-31": "Yes" },
-  stf_mia: { "2026-11-15": "Yes", "2026-12-12": "No" },
-  stf_tom: { "2026-12-12": "Yes", "2026-12-31": "Yes" },
-  stf_ava: { "2026-11-15": "Yes", "2026-12-19": "Yes" },
-  stf_fre: { "2026-12-12": "Yes" },
-  stf_leo: { "2026-12-19": "Maybe" },
+  stf_james: { "2026-11-15": "Yes", "2026-12-12": "Yes", "2026-12-19": "Yes", "2026-12-24": "No", "2026-12-31": "Yes" },
+  stf_dany: { "2026-11-15": "Yes", "2026-12-12": "Maybe", "2026-12-31": "Yes" },
+  stf_bruno: { "2026-11-15": "Yes", "2026-12-12": "No" },
+  stf_alex: { "2026-12-12": "Yes", "2026-12-31": "Yes" },
+  stf_gav: { "2026-11-15": "Yes", "2026-12-19": "Yes" },
+  stf_simao: { "2026-12-19": "Maybe" },
 };
 
 
@@ -44,7 +43,8 @@ const AVAIL_ASKED_DEMO = [{ id: "avx_loft", iso: "2026-12-12", byName: "Vooshka 
 
 function availabilityAskedOfMe(state) {
   const mine = (state.availabilityAsks || []).filter(x => x.personId === "me");
-  return [...(state.role === "team" || state.profile.live ? AVAIL_ASKED_DEMO : []), ...mine];
+  /* The sample ask from Vooshka appears only when the DEV complete-profile login put it there (nobody asked a real member). */
+  return [...((state.role === "team" || state.profile.live) && state.devDone && state.devDone.team ? AVAIL_ASKED_DEMO : []), ...mine];
 }
 
 
@@ -221,7 +221,7 @@ function AskQuestionSheet({ open, person, onClose }) {
   const send = () => {
     if (!ok)
       return;
-    const q = { id: uid("ask"), personId: person.id, text: text.trim(), askedAt: Date.now(), by: state.session.tag || null, byId: "me", byName: me, answer: null };
+    const q = { id: uid("ask"), personId: person.id, text: text.trim(), askedAt: Date.now(), by: state.session.tag || null, byId: "me", byName: me, answer: null, ...(person.companyKey ? { companyKey: person.companyKey } : {}) };
     dispatch({ type: "ASK_QUESTION", q });
     setSent(q);
   };
@@ -257,7 +257,7 @@ function AskQuestionSheet({ open, person, onClose }) {
     pending: `Sent to ${first}`
   }), React.createElement(WhatsAppPreview, {
     lines: [`FireFlair · ${me} asked you a question:`, `“${sent.text}”`],
-    link: `Tap to answer · ${CARD_DOMAIN}/${person.tag || "you"}`
+    link: `Tap to answer · ${CARD_DOMAIN}/${pc17Tag(person.tag) || "you"}`
   })), React.createElement("p", {
     className: "ff-body",
     style: { fontSize: 13, margin: "12px 0" }

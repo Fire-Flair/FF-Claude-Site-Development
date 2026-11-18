@@ -1,0 +1,73 @@
+{
+  "formatVersion": 2,
+  "slug": "vamos-paella",
+  "name": "Vamos Paella",
+  "kind": "Paella & tapas catering",
+  "base": "Brighton",
+  "areas": [
+    "Brighton",
+    "Sussex"
+  ],
+  "description": "A Brighton caterer cooking authentic Spanish paella and tapas for weddings, parties and corporate events.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.freeindex.co.uk/categories/entertainment_and_lifestyle/weddings/wedding_catering",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Paella catering",
+        "Tapas catering"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.freeindex.co.uk/categories/entertainment_and_lifestyle/weddings/wedding_catering",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Corporate events",
+        "Private parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.freeindex.co.uk/categories/entertainment_and_lifestyle/weddings/wedding_catering",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "catering",
+    "tag": "VAMOS",
+    "position": 112,
+    "source": {
+      "urls": [
+        "https://www.freeindex.co.uk/categories/entertainment_and_lifestyle/weddings/wedding_catering"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Brighton",
+        "lat": 50.8225,
+        "lng": -0.1372,
+        "approx": false
+      }
+    ]
+  }
+}

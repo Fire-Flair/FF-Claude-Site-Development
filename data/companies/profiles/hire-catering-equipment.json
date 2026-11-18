@@ -1,0 +1,87 @@
+{
+  "formatVersion": 2,
+  "slug": "hire-catering-equipment",
+  "name": "Hire Catering Equipment",
+  "kind": "Glassware hire & delivery",
+  "base": "London",
+  "areas": [
+    "London"
+  ],
+  "description": "A London hire company supplying catering equipment and glassware for events.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://hirecatering.co.uk",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Catering equipment hire",
+        "Glassware hire"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://hirecatering.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://hirecatering.co.uk",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://hirecatering.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://hirecatering.co.uk",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "svc",
+    "sub": "glassware",
+    "tag": "HIREC",
+    "position": 134,
+    "source": {
+      "urls": [
+        "https://hirecatering.co.uk"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": true
+      }
+    ]
+  }
+}

@@ -30,7 +30,7 @@ const Briefcase = lucideIcon("Briefcase"), SlidersHorizontal = lucideIcon("Slide
   ChevronRight = lucideIcon("ChevronRight"), ChevronLeft = lucideIcon("ChevronLeft"), Plus = lucideIcon("Plus"),
   Users = lucideIcon("Users"), Calendar = lucideIcon("Calendar"), Clock = lucideIcon("Clock"),
   Bookmark = lucideIcon("Bookmark"), User = lucideIcon("User"), Home = lucideIcon("Home"),
-  Share2 = lucideIcon("Share2"), Loader2 = lucideIcon("Loader2"), Phone = lucideIcon("Phone"),
+  Share2 = lucideIcon("Share"), ShareUp17 = lucideIcon("Share"), Loader2 = lucideIcon("Loader2"), Phone = lucideIcon("Phone"),
   ShieldCheck = lucideIcon("ShieldCheck"), Send = lucideIcon("Send"), Wallet = lucideIcon("Wallet"),
   PenLine = lucideIcon("PenLine"), Search = lucideIcon("Search"), AlertCircle = lucideIcon("AlertCircle"),
   Martini = lucideIcon("Martini"), Music = lucideIcon("Music"), Mic = lucideIcon("Mic"),

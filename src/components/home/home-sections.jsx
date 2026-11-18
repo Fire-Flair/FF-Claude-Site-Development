@@ -416,7 +416,7 @@
       className: "ff-tcard-plate"
     }, "Team Card"), React.createElement("span", {
       className: "ff-tcard-coin"
-    }, React.createElement(Coin, {
+    }, React.createElement(FFLogo, {
       size: 34,
       tier: "gold"
     })), React.createElement("div", {
@@ -460,7 +460,7 @@
       className: "v"
     }, interests.join(" · ")))), React.createElement("span", {
       className: "ff-tcard-url"
-    }, React.createElement(Coin, {
+    }, React.createElement(FFLogo, {
       size: 18,
       tier: "gold"
     }), " ", url));
@@ -664,7 +664,7 @@
       fill: "currentColor"
     }), " Review Card"), React.createElement("span", {
       className: "ff-rvcard-coin"
-    }, React.createElement(Coin, {
+    }, React.createElement(FFLogo, {
       size: 34,
       tier: "gold"
     })), React.createElement("div", {
@@ -1602,53 +1602,13 @@
       type: "button",
       className: "ff-drop-reset",
       onClick: () => api.current?.reset(),
-      "aria-label": "Put the coins back in the box"
+      "aria-label": "Put the coins back in the box",
+      title: "Reset"
     }, React.createElement(RotateCcw, {
-      size: 13,
-      strokeWidth: 2.4
-    }), " Reset"));
-  }
-
-  function HomeSearch() {
-    const { dispatch } = useStore();
-    const nav = useHomeNav();
-    const [val, setVal] = useState("");
-    const submit = () => {
-      dispatch({ type: "NET_QUERY", q: val.trim() });
-      nav.goNetwork();
-    };
-    return React.createElement("form", {
-      className: "ff-frame ff-ai ff-ffai-tint hero bare ff-hero-search",
-      role: "search",
-      onSubmit: (e) => {
-        e.preventDefault();
-        submit();
-      }
-    }, React.createElement("div", {
-      className: "ff-ai-row",
-      style: { alignItems: "center" }
-    }, React.createElement("span", {
-      className: "ff-ai-tag",
-      "aria-hidden": "true"
-    }, React.createElement(Coin, {
-      size: 20,
-      tier: "gold"
-    })), React.createElement("input", {
-      type: "search",
-      className: "ff-input ff-ai-in min-w-0 flex-1",
-      "aria-label": "Search FireFlair",
-      placeholder: "Search people, skills, locations…",
-      value: val,
-      onChange: (e) => setVal(e.target.value)
-    }), React.createElement("button", {
-      type: "submit",
-      className: "ff-ai-send",
-      "aria-label": "Search",
-      title: "Search"
-    }, React.createElement(Search, {
       size: 16,
-      strokeWidth: 2
-    }))));
+      strokeWidth: 2.4,
+      "aria-hidden": "true"
+    })));
   }
 
   function HomeHero101() {
@@ -1670,18 +1630,10 @@
       decoding: "async"
     }) : React.createElement(HomeScene, {
       kind: "bar"
-    }), React.createElement("div", {
+    }), IMGS.hero ? React.createElement(HeroEasel24, null) : null, React.createElement("div", {
       className: "ff-hero18-fade",
       "aria-hidden": "true"
-    }), React.createElement("span", {
-      className: "ff-hero18-shadow",
-      "aria-hidden": "true"
-    }), React.createElement("span", {
-      className: "ff-hero18-coin refl",
-      "aria-hidden": "true"
-    }, React.createElement(SiteHeroCoin, { site: "team" })), React.createElement("span", {
-      className: "ff-hero18-coin ff-hero17-coin"
-    }, React.createElement(SiteHeroCoin, { site: "team" }))), React.createElement("div", {
+    })), React.createElement("div", {
       className: "ff-hero18-in"
     }, React.createElement("h1", {
       id: "ff-hero17-h",
@@ -1690,16 +1642,14 @@
       className: "ff-hero-sub101"
     }, "Get seen. Get booked."), React.createElement("div", {
       className: "ff-hero17-cta"
-    }, mine ? React.createElement(ShineButton, { onClick: nav.goNetwork }, React.createElement(Users, { size: 15 }), " Build your network") : React.createElement(ShineButton, { onClick: nav.goProfile }, React.createElement(User, { size: 15 }), " Create your Profile Card")), React.createElement("div", {
-      className: "ff-hero17-ai"
-    }, React.createElement(HomeSearch, null))));
+    }, mine ? React.createElement(ShineButton, { onClick: nav.goNetwork }, React.createElement(Users, { size: 15 }), " Build your network") : React.createElement(ShineButton, { onClick: nav.goProfile }, React.createElement(User, { size: 15 }), " Create your Profile Card"))));
   }
 
   function WelcomeBack101() {
     const { state, dispatch } = useStore();
     const shown = CARD_CATEGORIES.reduce((n, k) => n + featuredCount(state.profile, k), 0);
     const netCount = myNetwork(state, state.directory).list.length;
-    const myReviews = (state.reviews || []).filter((r) => r.aboutId === "me").length;
+    const myReviews = reviewRecordsFor(state, "me").length;
     const first = (state.profile.name || "").trim().split(" ")[0];
     return React.createElement("div", {
       className: "ff-frame ff-welcome17",

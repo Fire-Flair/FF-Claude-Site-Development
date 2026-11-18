@@ -228,12 +228,12 @@
     })));
   }
 
-  const Mail19 = lucideIcon("Mail"), Phone19 = lucideIcon("Phone");
+  const Mail19 = lucideIcon("Mail"), Phone19 = lucideIcon("Phone"), Video19 = lucideIcon("Video");
 
-  /* One instance per page: second from bottom on every home page, last on every Network and Bookings page. */
+  /* One instance per page: second from bottom on every home page, and nowhere else (v17.8.2). */
   function BusinessSupport19() {
     const { state, dispatch } = useStore();
-    const dom = state.role === "partners" ? "FFParty.uk" : state.role === "team" || !state.role ? "FFTeam.uk" : state.site === "party" ? "FFParty.uk" : state.role === "vip" || state.site === "vip" ? "FFVIP.uk" : "FFStaff.uk";
+    const dom = state.role === "team" || !state.role ? "FFTeam.uk" : state.site === "party" ? "FFParty.uk" : state.role === "vip" || state.site === "vip" ? "FFVIP.uk" : "FFStaff.uk";
     const row = (k, label, value) => React.createElement("div", { key: k, className: "ff-biz19-row" }, React.createElement("dt", null, label), React.createElement("dd", null, value));
     return React.createElement("section", {
       className: "ff-sect ff-biz19",
@@ -262,7 +262,7 @@
       type: "button",
       className: "ff-biz19-link ff-biz19-call",
       onClick: () => V101.support20Open(dispatch)
-    }, React.createElement(Phone19, { size: 16, strokeWidth: 1.8, "aria-hidden": "true" }), "Book a 15-minute Call"))), React.createElement("p", {
+    }, React.createElement(Video19, { size: 16, strokeWidth: 1.8, "aria-hidden": "true" }), "Book a meeting"))), React.createElement("p", {
       className: "ff-biz19-legal"
     }, "\u00A9 2026 FIREFLAIR LTD. All rights reserved.")));
   }
@@ -271,12 +271,11 @@
    Join goes to the existing profile journey (useHomeNav.goProfile). The rules open in the shared Sheet. No scoring, leaderboard or sign-up form is built here. */
 const COMP_RULES20 = [
   ["Challenge dates", "The challenge runs for 90 days, from 1 December 2026 to 28 February 2027."],
-  ["Eligibility", "Open to any hospitality professional, and anyone who wants to get into hospitality and is willing and available to undertake suitable freelance hospitality work. Previous hospitality experience is not mandatory. Hospitality professionals can sign up from anywhere in the world."],
-  ["Entry", "Everyone who creates a profile during the challenge is entered automatically."],
-  ["Winning", "At the end of the challenge, whoever has built the largest and best Team wins."]
+  ["Eligibility", "Open to hospitality and event professionals, anywhere in the world."],
+  ["Entry", "Everyone who creates a profile during the challenge is entered automatically."]
 ];
 
-const COMP_TBC20 = ["Scoring calculation", "Tie-break procedure", "Prize values", "Winner verification", "Fulfilment conditions", "Promoter details"];
+
 
 const PROMO_CSS20 = ".ff-cp20{position:relative;margin:22px 0;border-radius:26px;overflow:hidden;color:#F4EBD6;background:linear-gradient(135deg,#0B0A09 0%,#1C0E12 55%,#4A1220 100%);border:1px solid rgba(201,162,75,.45);isolation:isolate}"
     + ".ff-cp20:before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(115deg,transparent 58%,rgba(201,162,75,.16) 58.2%,rgba(201,162,75,.16) 60%,transparent 60.2%)}"
@@ -293,6 +292,9 @@ const PROMO_CSS20 = ".ff-cp20{position:relative;margin:22px 0;border-radius:26px
     + ".ff-cp20r h3{margin:16px 0 4px;font-size:15px}.ff-cp20r p,.ff-cp20r li{font-size:14px;line-height:1.5;margin:0 0 6px}.ff-cp20r ul,.ff-cp20r ol{margin:0;padding-left:20px}"
     + ".ff-cp20r .tbc{display:inline-block;margin:0 6px 6px 0;padding:4px 10px;border-radius:12px;border:1px dashed var(--gold-dk,#A5802F);font-size:12.5px}"
     + ".ff-vip20-ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px}.ff-vip20-ul li{padding:7px 10px;border-radius:14px;border:1px solid rgba(201,162,75,.4);font-size:12px;line-height:1.3;color:#F4EBD6}";
+
+/* v17.9: a little more contrast, spacing and size for the FF Team Launch Challenge box (FF Staff and VIP boxes keep the shared look). */
+const TEAM_CP21_CSS = ".ff-cp20.t21 p{font-size:16px;line-height:1.55;color:rgba(244,235,214,.96)}.ff-cp20.t21 .ff-cp20-boxes{gap:12px}.ff-cp20.t21 .ff-cp20-box b{font-size:16px;line-height:1.25;color:#FFF6DC}.ff-cp20.t21 .ff-cp20-box span{font-size:14.5px;line-height:1.4;color:rgba(244,235,214,.94)}.ff-cp20.t21 .ff-cp20-date{font-size:14px}.ff-cp20.t21 .ff-cp20-rules{padding:10px 16px;min-height:44px;border-radius:99px;corner-shape:squircle;border:1px solid rgba(201,162,75,.6);background:transparent;color:#F4DC8E;font-weight:700;font-size:14px;font-family:inherit;cursor:pointer}@media(max-width:640px){.ff-cp20.t21 p{font-size:17px}.ff-cp20.t21 .ff-cp20-box span{font-size:15px}.ff-cp20.t21 .ff-cp20-in{gap:22px}}";
 
 const PROMO_BOX_CSS20 = __ff_css("styles/promo-box-20.css");
 
@@ -340,25 +342,73 @@ const LB20_CSS = __ff_css("styles/lb20.css");
 
 const TM20_CSS = __ff_css("styles/tm20.css");
 
+/* v17.9.2: the "2 minutes" panel is now the FF Team video. Portrait (9:16), press to play, never autoplays; the poster is the
+   video's own first frame (the doors). Source and poster: src/content/homepage/team-intro-video.json. */
 function TwoMinutes20() {
   const h = React.createElement;
-  const nav = useHomeNav();
-  const steps = [["Sign up", "Create your account."], ["Upload your CV", "Your profile builds itself automatically."], ["Add pictures", "Show who you are."], ["Send invites", "Invite the hospitality professionals you have worked with, would like to work with, or believe are great."], ["You are in", "Everyone who creates a profile during the challenge is entered automatically."]];
+  const V = CONTENT_ADAPTER.homepageTeamIntroVideo();
+  const IM = window.FF_IMG || {};
+  const [play, setPlay] = useState(false);
+  const [src, setSrc] = useState(null);
+  const ref = useRef(null);
+  const poster = IM[V.poster];
+  /* Some hosts serve files without byte ranges, which iPad and iPhone browsers refuse to play: fetch the file whole and play it from memory, falling back to the plain address. */
+  const start = () => {
+    setPlay(true);
+    let done = false;
+    const use = (u) => { if (!done) { done = true; setSrc(u); } };
+    try {
+      fetch(V.src).then((r) => (r.ok ? r.blob() : Promise.reject(new Error("video")))).then((b) => use(URL.createObjectURL(new Blob([b], { type: "video/mp4" })))).catch(() => use(V.src));
+    } catch (e) { use(V.src); }
+  };
+  const failed = () => { if (src && src !== V.src) setSrc(V.src); };
+  useEffect(() => { if (src && ref.current) { const p = ref.current.play(); if (p && p.catch) p.catch(() => {}); } }, [src]);
   return h(
     "section",
-    { className: "ff-sect ff-tm20", id: "ff-two-minutes", "aria-labelledby": "ff-tm20-h" },
+    { className: "ff-sect ff-tm20", id: "ff-two-minutes", "aria-label": V.label },
     h("style", null, TM20_CSS),
     h(
       "div",
-      { className: "ff-tm20-h" },
-      h("span", { className: "ff-tm20-big", "aria-hidden": "true" }, h("b", null, "2"), h("span", null, "minutes")),
-      h("h2", { id: "ff-tm20-h", className: "ff-h1" }, "It takes 2 minutes to enter")
-    ),
-    h("p", null, "Create your profile, then invite the hospitality professionals you want on your Team. At the end of the challenge, whoever has built the largest and best Team wins."),
-    h("ol", { className: "ff-tm20-s" }, steps.map((s, i) => h("li", { key: s[0] }, h("span", { className: "n" }, i + 1), h("span", null, h("b", null, s[0]), h("small", null, s[1]))))),
-    h("div", { className: "ff-tm20-w" }, "Hospitality professionals can sign up anywhere in the world. Marketing in 2027 takes place in the UK. From 2028, marketing and bookings go worldwide, so you can take bookings all around the world."),
-    h("div", { style: { marginTop: 14 } }, h(ShineButton, { onClick: nav.goProfile }, "Join Challenge"))
+      { className: "ff-tm20-st", style: poster ? { "--tm-poster": "url(" + poster + ")" } : undefined },
+      h(
+        "div",
+        { className: "ff-tm20-v", style: { aspectRatio: V.width + " / " + V.height } },
+        play && src
+          ? h("video", { ref, src, poster, controls: true, playsInline: true, preload: "auto", onError: failed, "aria-label": V.label })
+          : h(
+              "button",
+              { type: "button", className: "ff-tm20-p", onClick: start, "aria-label": V.label },
+              poster ? h("img", { src: poster, alt: "", width: V.width, height: V.height, decoding: "async", draggable: false }) : null,
+              h("span", { className: "ff-tm20-play", "aria-hidden": "true" }, h("svg", { viewBox: "0 0 24 24", width: 30, height: 30 }, h("path", { d: "M8 5.5v13l11-6.5z", fill: "currentColor" })))
+            )
+      )
+    )
   );
+}
+
+/* homefix: the FF Team Launch Challenge, short form. Four equal boxes (each opens its existing detail sheet), the countdown,
+   and the ladder: live count, 100 (bookings go live), 1,000 (launch party and nationwide campaign). Styles: styles/home-fix22.css. */
+const LC22_I = { CalendarDays: lucideIcon("CalendarDays"), Users: lucideIcon("Users"), Crown: lucideIcon("Crown"), Plane: lucideIcon("Plane"),
+  UserCheck: lucideIcon("UserCheck"), CalendarCheck: lucideIcon("CalendarCheck"), PartyPopper: lucideIcon("PartyPopper"), ChevronRight: lucideIcon("ChevronRight") };
+
+function LaunchLadder22() {
+  const h = React.createElement;
+  const people = useDirectory();
+  const c = FF_CHALLENGE20, n = people.length;
+  /* Alex (18 Nov): no live count on the ladder; the 100 stop sits a third of the way along. */
+  const AT = 100 / 3;
+  const pct = n <= c.staffAt ? n / c.staffAt * AT : AT + (Math.min(n, c.partyAt) - c.staffAt) / (c.partyAt - c.staffAt) * (100 - AT);
+  const stops = [
+    [LC22_I.UserCheck, "Now", "Profiles and teams", 0],
+    [LC22_I.CalendarCheck, c.staffAt.toLocaleString("en-GB"), "Bookings go live", AT],
+    [LC22_I.PartyPopper, c.partyAt.toLocaleString("en-GB"), "Launch party and nationwide campaign", 100]
+  ];
+  return h("div", { className: "ff-lc22-lad" },
+    h("div", { className: "ff-lc22-ic" }, stops.map((s, i) => h("span", { key: i, className: "p" + i, style: { left: s[3] + "%" }, "aria-hidden": "true" }, h(s[0], { size: 16, strokeWidth: 1.8 })))),
+    h("div", { className: "ff-lc22-tr", role: "progressbar", "aria-valuemin": 0, "aria-valuemax": c.partyAt, "aria-valuenow": n, "aria-label": "Professionals joined" },
+      h("span", { className: "f", style: { width: pct + "%" } }),
+      stops.map((s, i) => h("i", { key: i, className: "d" + (pct >= s[3] ? " on" : ""), style: { left: s[3] + "%" } }))),
+    h("div", { className: "ff-lc22-st" }, stops.map((s, i) => h("div", { key: i, className: "p" + i }, h("b", null, s[1]), h("span", null, s[2])))));
 }
 
 function TeamCompetition20() {
@@ -366,56 +416,59 @@ function TeamCompetition20() {
   const nav = useHomeNav();
   const [rules, setRules] = useState(false);
   const [box, setBox] = useState(null);
+  const CH = TP21.challenge;
+  /* [sheet title, face label, face line, icon, sheet sections]. Alex (18 Nov): three boxes; who can enter stays in the Rules. */
   const boxes = [
-    ["90 day challenge", "Starting 1 December", [["Dates", "The challenge runs for 90 days, from 1 December 2026 to 28 February 2027."]]],
-    ["Who can enter", "Hospitality professionals, and anyone getting into hospitality", [["Who can enter", "Any hospitality professional, and anyone who wants to get into hospitality and is willing and available to undertake suitable freelance hospitality work."], ["Experience", "Previous hospitality experience is not mandatory."], ["Where", "Hospitality professionals can sign up from anywhere in the world."]]],
-    ["Competition rewards", "Gold, Silver, Bronze and Mystery", [["Winners", "Gold, Silver and Bronze go to the largest and best Teams. The Mystery Prize goes to a random eligible participant outside the top three."], ["Rewards", "Hospitality experiences, training, professional equipment, photography and more."]]],
-    ["Competition rules", "What you need to do", null]
+    [CH.boxes[0].t, "90 days", "1 Dec to 28 Feb", LC22_I.CalendarDays, [["Dates", "The challenge runs for 90 days, from 1 December 2026 to 28 February 2027."]]],
+    ["Rewards for the top 10", "Rewards for the top 10", "Gold membership", LC22_I.Crown, [[CH.rewards[0][0], CH.rewards[0][1]]]],
+    [CH.boxes[3].t, "Win Athens", "Athens Bar Show trip", LC22_I.Plane, [[CH.rewards[1][0], CH.rewards[1][1]], [CH.rewards[2][0], CH.rewards[2][1]]]]
   ];
-  const cur = box === null ? null : boxes[box];
-  const css = PROMO_CSS20 + PROMO_BOX_CSS20 + LB20_CSS;
+  const cur = box === null ? null : [boxes[box][0], null, boxes[box][4]];
   const sec = (t, body) => h("div", { key: t }, h("h3", { className: "ff-label" }, t), body);
-  const pick = (i) => {
-    if (boxes[i][2]) setBox(i);
-    else setRules(true);
-  };
+  const pick = (i) => setBox(i);
+  const lcRef = useRef(null);
+  useFitLine22(lcRef, "[data-fit22]", []);
   return h(
     "section",
-    { className: "ff-sect", id: "ff-competition", "aria-labelledby": "ff-cp20-h" },
-    h("style", null, css),
+    { className: "ff-sect ff-lc22-sect", id: "ff-competition", ref: lcRef, "aria-labelledby": "ff-cp20-h" },
+    h("style", null, PROMO_CSS20 + LB20_CSS),
     h(
       "div",
-      { className: "ff-cp20" },
+      { className: "ff-lc22" },
       h(
         "div",
-        { className: "ff-cp20-in" },
+        { className: "ff-lc22-top" },
         h(
           "div",
-          null,
-          h("div", { className: "ff-cp20-eye" }, h(Coin, { size: 34, tier: "gold" }), h("span", null, "FF Team Launch Challenge")),
-          h("h2", { id: "ff-cp20-h" }, "Build your Network. Grow your Team. Win prizes."),
-          h("span", { className: "ff-cp20-date" }, "90 day challenge \xB7 starting 1 December 2026"),
-          h("p", null, "Prizes include hospitality experiences, training, professional equipment, photography and more."),
-          h(
-            "div",
-            { className: "ff-cp20-btns" },
-            h(ShineButton, { onClick: nav.goProfile }, "Join Challenge")
-          )
+          { className: "ff-lc22-head" },
+          h("div", { className: "ff-lc22-eye" }, h("span", { "data-fit22": "" }, "FF Team Launch Challenge")),
+          h("h2", { id: "ff-cp20-h" }, "Grow your Team. Win prizes.")
         ),
         h(
           "div",
-          null,
-          h("div", { className: "ff-cp20-boxes" }, boxes.map((b, i) => h("button", { key: b[0], type: "button", className: "ff-cp20-box", onClick: () => pick(i), "aria-haspopup": "dialog" }, h("b", null, b[0]), h("span", null, b[1])))),
-          h("div", { className: "ff-cp20-url" }, "FFTeam.uk")
+          { className: "ff-lc22-go" },
+          h(Countdown20, null),
+          h(
+            "div",
+            { className: "ff-lc22-btns" },
+            h(ShineButton, { onClick: nav.goProfile }, "Join Challenge"),
+            h("button", { type: "button", className: "ff-lc22-rules", onClick: () => setRules(true) }, "Rules")
+          )
         )
       ),
-      h(Countdown20, null),
-      h(LaunchBar20, null)
+      h("div", { className: "ff-lc22-boxes" }, boxes.map((b, i) => h("button", { key: b[1], type: "button", className: "ff-lc22-box" + (i === 0 ? " is-days" : ""), onClick: () => pick(i), "aria-haspopup": "dialog", "aria-label": i === 0 ? "90 days, " + b[2] : undefined },
+        /* home2 (Alex, 18 Nov): the 90 days tile is a big gold 90 with "days" small and a calendar flourish. */
+        i === 0 && h("span", { className: "fl", "aria-hidden": "true" }, h(b[3], { size: 96, strokeWidth: 1 })),
+        h("span", { className: "ic", "aria-hidden": "true" }, h(b[3], { size: 18, strokeWidth: 1.7 })),
+        h("span", { className: "ch", "aria-hidden": "true" }, h(LC22_I.ChevronRight, { size: 16, strokeWidth: 2 })),
+        i === 0 ? h("b", { className: "num", "aria-hidden": "true" }, h("span", { className: "n" }, "90"), h("small", null, "days")) : h("b", { "data-fit22": "" }, b[1]),
+        h("span", { className: "t", "data-fit22": "" }, b[2])))),
+      h(LaunchLadder22, null)
     ),
     h(
       Sheet,
       { open: box !== null, onClose: () => setBox(null), title: cur ? cur[0] : "", center: true },
-      cur && cur[2] ? h("div", { className: "ff-cp20r" }, cur[2].map((r) => sec(r[0], h("p", null, r[1])))) : null
+      cur ? h("div", { className: "ff-cp20r" }, cur[2].map((r) => sec(r[0], h("p", null, r[1])))) : null
     ),
     h(
       Sheet,
@@ -423,6 +476,10 @@ function TeamCompetition20() {
       h(
         "div",
         { className: "ff-cp20r" },
+        /* home2 (Alex, 18 Nov): rewards first (the overall winner, then the top 10); hospitality and event professionals; no XP or levels; no final-terms list. */
+        sec("Rewards", h("ul", null,
+          h("li", null, h("b", null, "Overall winner: "), "a trip to the Athens Bar Show, with flights, accommodation and a ticket to the show."),
+          h("li", null, h("b", null, "Top 10: "), "The top 10 go Gold and receive their choice of rewards, including an American Express business expense card, professional equipment or a professional photo shoot."))),
         sec("To enter", h(
           "ol",
           null,
@@ -435,23 +492,13 @@ function TeamCompetition20() {
         sec("To win", h(
           "ol",
           null,
-          h("li", null, "Invite hospitality professionals you have worked with, would like to work with, or believe are great."),
+          h("li", null, "Invite hospitality and event professionals you have worked with, would like to work with, or believe are great."),
           h("li", null, "Build genuine Network and Team connections."),
           h("li", null, "Have the largest and best Team at the end of the challenge.")
         )),
         h("p", { style: { marginTop: 8 } }, "Network and Team are separate features. Team connections need mutual acceptance."),
         COMP_RULES20.map((r) => sec(r[0], h("p", null, r[1]))),
-        sec("Prizes", h(
-          "ul",
-          null,
-          h("li", null, h("b", null, "Gold: "), "premium hospitality experiences and professional rewards."),
-          h("li", null, h("b", null, "Silver: "), "career-enhancing training and rewards."),
-          h("li", null, h("b", null, "Bronze: "), "professional equipment and rewards."),
-          h("li", null, h("b", null, "Mystery Prize: "), "a random eligible participant outside the top three.")
-        )),
-        h("p", { style: { marginTop: 8 } }, "Challenge placements are separate from the Bronze, Silver and Gold XP levels."),
-        sec("Fair participation", h("p", null, "Only genuine accounts and authentic professional connections qualify. Duplicate, fabricated or manipulated activity may be disqualified following review.")),
-        sec("Final terms", h("div", null, h("p", null, "To be confirmed before the challenge opens:"), COMP_TBC20.map((t) => h("span", { key: t, className: "tbc" }, t + ": to be confirmed"))))
+        sec("Fair participation", h("p", null, "Only genuine accounts and authentic professional connections qualify. Duplicate, fabricated or manipulated activity may be disqualified following review."))
       )
     )
   );
@@ -501,10 +548,10 @@ const vipFoundingCount20 = (state) => (state.vipClaims || []).filter((x) => x.st
 const GOLD20 = {
   limit: 100,
   tiles: [
-    { k: "marketing", t: "Marketing", img: "reward_photoshoot", d: ["We help promote your company across FireFlair, so more hosts and businesses find you."], story: "how-to-get-mobile-bar-bookings" },
-    { k: "training", t: "Staff training and equipment", img: "reward_bar_kit", d: ["We help train your team and provide them with cocktail equipment."] },
-    { k: "events", t: "Smaller events", img: "dream_after_dark", d: ["We can help you run smaller events under your own brand."], story: "small-cocktail-event-profitability" },
-    { k: "brand", t: "Your brand", img: "training_brand_training", d: ["Your cocktails, your staff and your events, booked through FireFlair."], story: "signature-cocktail-services-on-ff-party" },
+    { k: "marketing", t: "Marketing", img: "gold_marketing", d: ["We help promote your company across FireFlair, so more hosts and businesses find you."], story: "how-to-get-mobile-bar-bookings" },
+    { k: "training", t: "Staff training and equipment", img: "gold_training", d: ["We help train your team and provide them with cocktail equipment."] },
+    { k: "events", t: "Smaller events", img: "gold_events", d: ["We can help you run smaller events under your own brand."], story: "small-cocktail-event-profitability" },
+    { k: "brand", t: "Your brand", img: "gold_brand", d: ["Your cocktails, your staff and your events, booked through FireFlair."], story: "signature-cocktail-services-on-ff-party" },
   ],
 };
 
@@ -531,7 +578,7 @@ function GoldLaunch20() {
           h("div", { className: "ff-cp20-btns" }, h(ShineButton, { onClick: nav.toEvent }, "Hire staff"))),
         h("div", null,
           h("div", { className: "ff-gold20-tiles", role: "group", "aria-label": "What Gold includes" },
-            GOLD20.tiles.map((t, i) => h("button", { key: t.k, type: "button", className: "ff-gold20-t", style: IM[t.img] ? { backgroundImage: "url(" + IM[t.img] + ")" } : undefined, onClick: () => setBox(i) }, h("b", null, t.t)))),
+            GOLD20.tiles.map((t, i) => h("button", { key: t.k, type: "button", className: "ff-gold20-t", style: IM[t.img] ? { backgroundImage: "url(" + IM[t.img] + ")", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" } : undefined, onClick: () => setBox(i) }, h("b", null, t.t)))),
           h("div", { className: "ff-cp20-url" }, "FFStaff.uk")))),
     h(Sheet, { open: box !== null, onClose: () => setBox(null), title: cur ? cur.t : "", center: true },
       cur ? h("div", { className: "ff-cp20r" }, cur.d.map((p, i) => h("p", { key: i }, p)),
@@ -561,7 +608,7 @@ function VipFounding20() {
           h("p", null, "Be one of our first " + lim + " VIP Hosts and enjoy exclusive FireFlair rates, special offers and member benefits."),
           left !== null ? h("span", { className: "ff-cp20-date" }, left.toLocaleString("en-GB") + " founding places left") : null,
           h("div", { className: "ff-cp20-btns" },
-            h(ShineButton, { onClick: go }, vip ? "Open your VIP Host Card" : "Create your VIP Host Card"),
+            h(LockedBtn17, { shine: true }, vip ? "Open your VIP Host Card" : "Create your VIP Host Card"),
             h(Button, { onClick: () => setInfo(true) }, "VIP details"))),
         h("div", null,
           h("div", { className: "ff-cp20-boxes" }, cfg.benefits.map((b, i) => h("button", { key: b.t, type: "button", className: "ff-cp20-box", onClick: () => setBox(i) }, h("b", null, b.t), h("span", null, b.s)))),

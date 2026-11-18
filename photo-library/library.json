@@ -1,6 +1,6 @@
 {
  "library": "FireFlair photo library",
- "count": 169,
+ "count": 176,
  "photos": [
   {
    "id": "p01",
@@ -7099,6 +7099,317 @@
    "near_duplicate_of": null,
    "credit": "Photography by Harry Pseftoudis, used with his permission",
    "used_in": []
+  },
+  {
+   "id": "pen01",
+   "title": "FireFlair pen: Add FF speech bubble",
+   "description": "Black and gold FireFlair pen, \"FIRE FLAIR Cocktail Bar Experience | ADD (FF speech bubble) | FFPARTY.UK\", with detail shots, gift box and feature list. Current wording: use on the site (top strip only).",
+   "batch": "pens",
+   "kind": "photo",
+   "original": "originals/pen-add-ff-speech-bubble.png",
+   "web": "web/pen-add-ff-speech-bubble.webp",
+   "thumb": "thumbs/pen-add-ff-speech-bubble.webp",
+   "web_size": [
+    1536,
+    1024
+   ],
+   "original_size": [
+    1536,
+    1024
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "FireFlair"
+   ],
+   "tags": [
+    "marketing",
+    "pen",
+    "merchandise",
+    "packages"
+   ],
+   "focus": [
+    0.5,
+    0.15
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    0.31
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    {
+     "key": "pen_strip",
+     "where": "FF Team: Our packages, \"We market you\" section (top strip of the image only)"
+    }
+   ]
+  },
+  {
+   "id": "pen02",
+   "title": "FireFlair pen: Add Fire Flare (old wording)",
+   "description": "Black and gold FireFlair pen engraved \"ADD FIRE FLARE | ffparty.uk\", with detail shots and gift box. LIBRARY ONLY, DO NOT USE ON THE SITE: old wording.",
+   "batch": "pens",
+   "kind": "photo",
+   "original": "originals/pen-add-fire-flare-OLD-library-only.png",
+   "web": "web/pen-add-fire-flare-OLD-library-only.webp",
+   "thumb": "thumbs/pen-add-fire-flare-OLD-library-only.webp",
+   "web_size": [
+    1402,
+    1122
+   ],
+   "original_size": [
+    1402,
+    1122
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "FireFlair"
+   ],
+   "tags": [
+    "marketing",
+    "pen",
+    "merchandise",
+    "old wording"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": [],
+   "note": "library only, do not use on the site: old wording",
+   "library_only": true
+  },
+  {
+   "id": "rb01",
+   "title": "Vooshka at the R&B wedding (IMG_8269)",
+   "description": "Vooshka bar tools and R&B cocktail menu on a stainless bar, no people. Menu shows the couple's monogram and names.",
+   "batch": "rb-wedding",
+   "kind": "photo",
+   "original": "originals/rb01-vooshka-rb-wedding.webp",
+   "web": "web/rb01-vooshka-rb-wedding.webp",
+   "thumb": "thumbs/rb01-vooshka-rb-wedding.webp",
+   "web_size": [
+    1600,
+    1200
+   ],
+   "original_size": [
+    2016,
+    1512
+   ],
+   "orientation": "landscape",
+   "people": 0,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "bar",
+    "cocktails",
+    "event",
+    "wedding",
+    "vooshka"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": [],
+   "note": "supplied 17 Nov 2026",
+   "library_only": false
+  },
+  {
+   "id": "rb02",
+   "title": "Vooshka at the R&B wedding (IMG_8271)",
+   "description": "Vooshka bartender in waistcoat behind the R&B cocktail menu, barrel and old fashioneds. Menu shows the couple's monogram and names.",
+   "batch": "rb-wedding",
+   "kind": "photo",
+   "original": "originals/rb02-vooshka-rb-wedding.webp",
+   "web": "web/rb02-vooshka-rb-wedding.webp",
+   "thumb": "thumbs/rb02-vooshka-rb-wedding.webp",
+   "web_size": [
+    1600,
+    1200
+   ],
+   "original_size": [
+    2016,
+    1512
+   ],
+   "orientation": "landscape",
+   "people": 3,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "bar",
+    "cocktails",
+    "event",
+    "wedding",
+    "vooshka"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": [],
+   "note": "supplied 17 Nov 2026",
+   "library_only": false
+  },
+  {
+   "id": "rb03",
+   "title": "Vooshka at the R&B wedding (IMG_8272)",
+   "description": "R&B cocktail menu, bar tools, barrel and old fashioneds; bartender partly hidden behind the menu. Menu shows the couple's monogram and names.",
+   "batch": "rb-wedding",
+   "kind": "photo",
+   "original": "originals/rb03-vooshka-rb-wedding.webp",
+   "web": "web/rb03-vooshka-rb-wedding.webp",
+   "thumb": "thumbs/rb03-vooshka-rb-wedding.webp",
+   "web_size": [
+    1600,
+    1200
+   ],
+   "original_size": [
+    2016,
+    1512
+   ],
+   "orientation": "landscape",
+   "people": 2,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "bar",
+    "cocktails",
+    "event",
+    "wedding",
+    "vooshka"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": [],
+   "note": "supplied 17 Nov 2026",
+   "library_only": false
+  },
+  {
+   "id": "rb04",
+   "title": "Vooshka at the R&B wedding (IMG_8273)",
+   "description": "Vooshka bar tools, R&B cocktail menu, old fashioneds and a barrel on a curved stainless bar under red light. Menu shows the couple's monogram and names.",
+   "batch": "rb-wedding",
+   "kind": "photo",
+   "original": "originals/rb04-vooshka-rb-wedding.webp",
+   "web": "web/rb04-vooshka-rb-wedding.webp",
+   "thumb": "thumbs/rb04-vooshka-rb-wedding.webp",
+   "web_size": [
+    1600,
+    1200
+   ],
+   "original_size": [
+    2016,
+    1512
+   ],
+   "orientation": "landscape",
+   "people": 3,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "bar",
+    "cocktails",
+    "event",
+    "wedding",
+    "vooshka"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": [
+    "home hero (FF Team, FF Staff, FF Party) from v17.22"
+   ],
+   "note": "supplied 17 Nov 2026",
+   "library_only": false
+  },
+  {
+   "id": "rb05",
+   "title": "Vooshka at the R&B wedding (IMG_8274)",
+   "description": "Rows of salt-rimmed mango margaritas with chilli and fresh mangoes on a stainless bar. Menu shows the couple's monogram and names.",
+   "batch": "rb-wedding",
+   "kind": "photo",
+   "original": "originals/rb05-vooshka-rb-wedding.webp",
+   "web": "web/rb05-vooshka-rb-wedding.webp",
+   "thumb": "thumbs/rb05-vooshka-rb-wedding.webp",
+   "web_size": [
+    1600,
+    1200
+   ],
+   "original_size": [
+    2016,
+    1512
+   ],
+   "orientation": "landscape",
+   "people": 1,
+   "brands_visible": [
+    "Vooshka"
+   ],
+   "tags": [
+    "bar",
+    "cocktails",
+    "event",
+    "wedding",
+    "vooshka"
+   ],
+   "focus": [
+    0.5,
+    0.5
+   ],
+   "keep": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "near_duplicate_of": null,
+   "used_in": [],
+   "note": "supplied 17 Nov 2026",
+   "library_only": false
   }
  ]
 }

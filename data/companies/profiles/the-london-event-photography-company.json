@@ -1,0 +1,72 @@
+{
+  "formatVersion": 2,
+  "slug": "the-london-event-photography-company",
+  "name": "The London Event Photography Company",
+  "kind": "Event photography",
+  "base": "London",
+  "areas": [
+    "London",
+    "UK-wide"
+  ],
+  "description": "A London event photography team covering award ceremonies, dinners, exhibitions, networking and PR events and grand openings across the country.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://blog.giggster.com/event-photographers-london-uk",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Event photography"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://blog.giggster.com/event-photographers-london-uk",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Corporate events",
+        "Awards",
+        "Exhibitions"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://blog.giggster.com/event-photographers-london-uk",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "LONDO",
+    "position": 66,
+    "source": {
+      "urls": [
+        "https://blog.giggster.com/event-photographers-london-uk"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "formatVersion": 2,
+  "slug": "enhanced-entertainment",
+  "name": "Enhanced Entertainment",
+  "kind": "Wedding DJs & mobile disco",
+  "base": "Weston-super-Mare",
+  "areas": [
+    "Somerset",
+    "South West"
+  ],
+  "description": "A South West award-winning DJ company based in Weston-super-Mare, specialising in wedding DJs and mobile disco hire with extras to complete a package.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://bridebook.com/uk/wedding-musicians-bands-djs/enhanced-entertainment-weston-super-mare-somerset-csWXR33NAg",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding DJs",
+        "Mobile disco hire"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/wedding-musicians-bands-djs/enhanced-entertainment-weston-super-mare-somerset-csWXR33NAg",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/wedding-musicians-bands-djs/enhanced-entertainment-weston-super-mare-somerset-csWXR33NAg",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Award-winning"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/wedding-musicians-bands-djs/enhanced-entertainment-weston-super-mare-somerset-csWXR33NAg",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "ENHAN",
+    "position": 47,
+    "source": {
+      "urls": [
+        "https://bridebook.com/uk/wedding-musicians-bands-djs/enhanced-entertainment-weston-super-mare-somerset-csWXR33NAg"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Weston-super-Mare",
+        "lat": 51.346,
+        "lng": -2.977,
+        "approx": false
+      }
+    ]
+  }
+}

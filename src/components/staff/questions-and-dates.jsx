@@ -21,11 +21,13 @@ function NewQuestionSheet({ open, onClose, onAdded }) {
   const [question, setQuestion] = useState("");
   const [yes, setYes] = useState(null);
   const [text, setText] = useState("");
+  const [vis, setVis] = useState("private");
   useEffect(() => {
     if (open) {
       setQuestion("");
       setYes(null);
       setText("");
+      setVis("private");
     }
   }, [open]);
   if (!open)
@@ -35,7 +37,7 @@ function NewQuestionSheet({ open, onClose, onAdded }) {
   const submit = () => {
     if (!ready)
       return;
-    dispatch({ type: "MY_QUESTION_ADD", question: { id: `my_${Date.now().toString(36)}`, text: question.trim(), type: kind }, value: kind === "yesno" ? yes ? "Yes" : "No" : text.trim() });
+    dispatch({ type: "MY_QUESTION_ADD", question: { id: `my_${Date.now().toString(36)}`, text: question.trim(), type: kind }, value: kind === "yesno" ? yes ? "Yes" : "No" : text.trim(), visibility: vis });
     onAdded && onAdded();
     onClose();
   };
@@ -85,14 +87,13 @@ function NewQuestionSheet({ open, onClose, onAdded }) {
         setYes(null);
     },
     placeholder: "Type your answer"
-  })), React.createElement(Btn, {
+  })), React.createElement("div", {
+    style: { margin: "0 0 14px" }
+  }, React.createElement(VisSwitch17, { value: vis, onChange: setVis })), React.createElement(Btn, {
     type: "submit",
     variant: "primary wide",
     disabled: !ready
-  }, "Add question"), React.createElement("p", {
-    className: "ff-body ff-muted",
-    style: { margin: "14px 0 0", fontSize: 11.5 }
-  }, "Like the other Question Cards, it doesn't appear on your public card.")));
+  }, "Add question")));
 }
 
 
@@ -122,7 +123,7 @@ const I11 = {
   ClipboardList: lucideIcon("ClipboardList"), BadgeCheck: lucideIcon("BadgeCheck"), MapPinned: lucideIcon("MapPinned"),
   Lock: lucideIcon("Lock"), Martini: lucideIcon("Martini"), Sparkles: lucideIcon("Sparkles"), Send: lucideIcon("Send"),
   ArrowRight: lucideIcon("ArrowRight"), Trash2: lucideIcon("Trash2"), UserPlus: lucideIcon("UserPlus"), Star: lucideIcon("Star"),
-  Search: lucideIcon("Search"), Briefcase: lucideIcon("Briefcase"), MessageCircle: lucideIcon("MessageCircle"),
+  Search: lucideIcon("Search"), Briefcase: lucideIcon("Briefcase"), Music: lucideIcon("Music"), UtensilsCrossed: lucideIcon("UtensilsCrossed"), Snowflake: lucideIcon("Snowflake"), Wine: lucideIcon("Wine"), PartyPopper2: lucideIcon("PartyPopper"), MessageCircle: lucideIcon("MessageCircle"),
   HelpCircle: lucideIcon("HelpCircle"), Users: lucideIcon("Users"), Clock: lucideIcon("Clock"), MapPin: lucideIcon("MapPin"),
   Check: lucideIcon("Check"), Plus: lucideIcon("Plus"), Pencil: lucideIcon("Pencil"), ChevronLeft: lucideIcon("ChevronLeft"),
   ChevronRight: lucideIcon("ChevronRight"), ChevronDown: lucideIcon("ChevronDown"), Banknote: lucideIcon("Banknote"), FileText: lucideIcon("FileText"), MessageSquare: lucideIcon("MessageSquare"),
@@ -133,8 +134,10 @@ const I11 = {
 
 /* ---- State: one small reducer in front of the main one ------------------- */
 function v11Reducer(s, a) {
-  /* v17.4: leaving FF Admin — any move to a tab, a site or a profile closes it first. */
-  if (s.adminOpen17 && ["TAB", "ROLE", "VIEW", "VIEW_COMPANY"].includes(a.type)) return reducer({ ...s, adminOpen17: false }, a);
+  /* Phase 2: FF Party is display only. Book and Party (the host profile) cannot be opened, whatever asks for them. */
+  if (isPartySite17(s) && a.type === "TAB" && PARTY_LOCKED_TABS17.includes(a.tab)) return s;
+  if (isPartySite17(s) && a.type === "TAB" && PARTY_LOCKED_ROUTES17.includes(a.route)) return v11Reducer(s, { ...a, route: undefined });
+  if (isPartySite17(s) && a.type === "GO" && PARTY_LOCKED_ROUTES17.includes(a.route)) return s;
   const booked = v11BookReducer(s, a); if (booked) return booked;
   switch (a.type) {
     case "ADMIN17": return admin17Reduce(s, a);
@@ -146,12 +149,26 @@ function v11Reducer(s, a) {
     case "AVAIL_ASK_PATCH": return { ...s, availabilityAsks: (s.availabilityAsks || []).map(x => x.id === a.id ? { ...x, ...a.patch } : x) };
     case "COMPANY_MEDIA_ADD": { const c = s.company || {}; return { ...s, company: { ...c, media: [...(c.media || []), a.item] } }; }
     case "COMPANY_MEDIA_DELETE": { const c = s.company || {}; return { ...s, company: { ...c, media: (c.media || []).filter(m => m.id !== a.id) } }; }
-    case "NOTES_SEEN": return { ...s, notesSeenAt: Date.now() };
-    /* v17.4.4 networking. Network = a one-way add of a person or a company (no confirmation). Team stays two-way (TEAM_INVITE). */
-    case "NET_TOGGLE": { const n = s.netAdds17 || []; return { ...s, netAdds17: n.includes(a.id) ? n.filter(x => x !== a.id) : [...n, a.id] }; }
+    case "COMPANY_MEDIA_PATCH": case "COMPANY_MEDIA_MOVE": case "CO_SECTION_DELETE": case "CO_INFO_MIGRATE": case "CO_SEC_ADD": case "CO_SEC_PATCH": case "CO_SEC_MOVE": case "CO_SLUG_SET": return coShapeReducer17(s, a) || s;
+    case "NOTES_SEEN": return notesSeen17(s);
+    /* Networking. Network is one tap, one way (a person or a company; no confirmation). Team is two way (TEAM_INVITE, then they accept).
+       One status per person: connStatus17(state, id) gives "team", "pending", "network" or "none". */
+    case "NET_TOGGLE": {
+      const n = s.netAdds17 || [], adding = !n.includes(a.id);
+      const out = { ...s, netAdds17: adding ? [...n, a.id] : n.filter(x => x !== a.id) };
+      /* Adding a company tells that company ("<Name> added you to their network"). */
+      const co = adding && String(a.id).startsWith("co_") ? companyById(s, a.id) : null, ck = co && coKey17(co);
+      const from = String((s.role === "staff" ? (s.company && s.company.name) : "") || s.profile.name || "").trim() || "Someone";
+      if (ck && !(s.role === "staff" && myCoKeys17(s).includes(ck)) && !(s.coNetNotes17 || []).some(x => x.companyKey === ck && x.fromName === from && !x.seen))
+        out.coNetNotes17 = [...(s.coNetNotes17 || []), { id: uid("cn"), companyKey: ck, fromName: from, at: Date.now(), seen: false }];
+      return out;
+    }
     /* A team invitation sent TO you: accept (you join each other's team) or decline. */
     case "TEAM_ASK_REPLY": {
       const done = { ...(s.teamAsks17 || {}), [a.ask.id]: a.accept ? "accepted" : "declined" };
+      /* What was typed with Yes or No travels with the answer. */
+      const said = String(a.text || "").trim();
+      if (said) s = { ...s, teamAskNotes17: { ...(s.teamAskNotes17 || {}), [a.ask.id]: said } };
       if (!a.accept) return { ...s, teamAsks17: done };
       /* v17.4.6.1: accepting a company's invitation makes you a member of its team (and keeps it in your network). */
       if (a.ask.company) { const co = companyById(s, a.ask.fromId) || { name: a.ask.name }; return ct17Reducer({ ...s, teamAsks17: done, netAdds17: (s.netAdds17 || []).includes(a.ask.fromId) ? s.netAdds17 : [...(s.netAdds17 || []), a.ask.fromId] }, { type: "CT_ACCEPTED", companyKey: coKey17(co), companyName: co.name || a.ask.name, personId: "me", tag: (s.auth && s.auth.tag) || "", name: (s.profile && s.profile.name) || "", ref: a.ask.id }); }
@@ -166,6 +183,9 @@ function v11Reducer(s, a) {
     case "TAB": case "ROLE": case "ACTIVE_EVENT": {
       /* Leaving the Network drops the booking you were searching for. */
       const base = (a.type === "TAB" && a.tab !== "network" && s.netBrief) ? { ...s, netBrief: null } : s;
+      if ((a.type === "TAB" || a.type === "ROLE") && base.infoPage21) return reducer({ ...base, infoPage21: null }, a);
+      if (a.type === "TAB" && base.supportPage20) return reducer({ ...base, supportPage20: null }, a);
+      if (a.type === "TAB" && (base.fxPage17 || base.fxStaff17)) return reducer({ ...base, fxPage17: null, fxStaff17: null }, a);
       if (base.viewingCompany || base.peek) return reducer({ ...base, viewingCompany: null, peek: null }, a);
       return base !== s ? reducer(base, a) : null;
     }

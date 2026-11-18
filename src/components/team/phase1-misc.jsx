@@ -1,54 +1,14 @@
 /* src/components/team/phase1-misc.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
-function InvitedByBanner({ person, onReview }) {
-  const { dispatch } = useStore();
-  if (!person) return null;
-  const first = String(person.name || "").split(" ")[0];
-  const view = () => { dispatch({ type: "VIEW", id: person.id }); window.scrollTo(0, 0); };
-  return (
-    <div className="ff-invitedby">
-      <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-        <button type="button" onClick={view} aria-label={`Open ${person.name}'s profile`} style={{ flex: "none" }}>
-          <Portrait src={person.photo} name={person.name} size={56} tier={person.tier} />
-        </button>
-        <div style={{ minWidth: 0 }}>
-          <span className="ff-invited"><Star size={11} fill="currentColor" /> Invited you</span>
-          <div className="ff-display" style={{ fontSize: 15, marginTop: 6 }}>{person.name}</div>
-          <div className="ff-serif" style={{ fontSize: 13, color: "var(--gold-dk)", fontStyle: "normal" }}>{person.profession}</div>
-        </div>
-      </div>
-      <p className="ff-body" style={{ margin: "12px 0 6px" }}>{person.name} invited you to FireFlair, so {first} is in your network automatically. You don't need to search for {first} or connect again.</p>
-      <p className="ff-body ff-muted" style={{ fontSize: 12.5, margin: "0 0 10px" }}>Worked with {first}? Leave a review.</p>
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-        <Btn variant="sm primary" onClick={onReview}><Award size={12} /> Review {first}</Btn>
-        <Btn variant="sm" onClick={view}><Eye size={12} /> View profile</Btn>
-      </div>
-    </div>
-  );
-}
-
-
-
-/* Invitations you've sent: people not on FireFlair yet (INVITE) and team
-   invitations to people who are (TEAM_INVITE). The preview buttons show what
-   happens when they act; in production that comes from Core. */
+/* Team invitations you have sent to people already on FireFlair (TEAM_INVITE). The preview link shows what happens when
+   they accept; in production that comes from Core. */
 function SentInvitations() {
   const { state, dispatch } = useStore();
   const directory = useDirectory();
   const teams = (state.teamInvites || []).filter(i => i.status === "pending");
-  const teamTags = new Set(teams.map(i => String(i.tag || "").toLowerCase()));
-  /* Contacts invited from the contact list: not on FireFlair yet (they join),
-     or on FireFlair but not in this demo directory (they accept). */
-  const joins = (state.invitations || []).filter(c => !c.joined && !(c.tag && teamTags.has(String(c.tag).toLowerCase()))
-    && !(state.connections || []).some(x => x.id === `inv_${c.id}` || (c.tag && x.tag === c.tag)));
-  if (!joins.length && !teams.length) return null;
-  const preview = (c) => {
-    const id = `inv_${c.id}`;
-    dispatch({ type: "INVITE_JOINED", person: staff({ id, name: c.name, tag: c.tag || (c.name.replace(/[^A-Za-z]/g, "").slice(0, 4) + "1").toUpperCase(), profession: c.note && !/worked|together/i.test(c.note) ? c.note : "Bartender", group: "Bartenders", tier: "standard", level: 1, years: 1, rating: null, reviews: 0, skills: [], interests: [], languages: ["English"], locations: [] }) });
-    dispatch({ type: "TOAST", toast: c.onFF ? `${c.name.split(" ")[0]} accepted · now in your network` : `${c.name.split(" ")[0]} joined · added to your network automatically` });
-  };
+  if (!teams.length) return null;
   return (
     <section style={{ marginTop: 22 }}>
-      <SectionHead icon={<Send size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Invitations you've sent" count={joins.length + teams.length} />
+      <SectionHead icon={<Send size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Invitations you've sent" count={teams.length} />
       <div className="ff-sentlist">
         {teams.map(i => {
           const p = directory.find(x => x.id === i.personId);
@@ -59,19 +19,11 @@ function SentInvitations() {
               <span style={{ flex: 1, minWidth: 0 }}><b>{i.name}</b><small>Team invitation · waiting for {first} to accept</small></span>
               <button type="button" className="ff-linkbtn" onClick={() => {
                 dispatch({ type: "TEAM_INVITE_ACCEPT", id: i.id });
-                if (i.workedBefore && (i.review || i.rating)) dispatch({ type: "REVIEW_ADD", review: { id: uid("rev"), aboutId: i.personId, byId: "me", shiftId: null, byName: state.profile.name || "You", rating: i.rating || 5, text: i.review || `${i.howTo} to work with.`, at: Date.now() } });
-                dispatch({ type: "TOAST", toast: `${first} accepted · now in your network` });
+                dispatch({ type: "TOAST", toast: `${first} accepted · now on your team` });
               }}>Preview: {first} accepts</button>
             </div>
           );
         })}
-        {joins.map(c => (
-          <div key={c.id} className="ff-sentrow">
-            <Portrait name={c.name} size={34} ring="#B9B1A2" />
-            <span style={{ flex: 1, minWidth: 0 }}><b>{c.name}</b><small>{c.onFF ? `On FireFlair · waiting for ${c.name.split(" ")[0]} to accept` : "Invited on WhatsApp · not on FireFlair yet"}</small></span>
-            <button type="button" className="ff-linkbtn" onClick={() => preview(c)}>Preview: {c.name.split(" ")[0]} {c.onFF ? "accepts" : "joins"}</button>
-          </div>
-        ))}
       </div>
       <p className="ff-body ff-muted" style={{ fontSize: 11.5, margin: "8px 0 0" }}>{NETWORK_ADAPTER.note} The preview links show what happens when they act.</p>
     </section>
@@ -240,8 +192,6 @@ const P1_CSS = P12_CSS + `
 .ff .ff-wlrow .ff-input { flex:1; padding:6px 10px; }
 .ff .ff-soonbadge { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:999px; background:var(--onyx,#141416); color:#EAD79C; border:1px solid var(--gold-dk); font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; white-space:nowrap; }
 .ff .ff-soonbadge.sm { padding:3px 8px; font-size:11px; letter-spacing:.12em; gap:4px; }
-.ff .ff-invitedby { margin-top:18px; padding:14px 16px; border-radius:16px; background:#FFF8E8; border:1px solid rgba(176,141,42,.45); }
-.ff .ff-invitedby .ff-invited { align-self:flex-start; }
 .ff .ff-nettile { display:flex; flex-direction:column; align-items:center; gap:6px; }
 .ff .ff-sentlist { display:grid; gap:6px; }
 .ff .ff-sentrow { display:flex; align-items:center; gap:10px; padding:9px 12px; border:1px solid var(--rule); border-radius:12px; background:#fff; flex-wrap:wrap; }

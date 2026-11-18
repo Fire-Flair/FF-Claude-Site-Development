@@ -1,0 +1,89 @@
+{
+  "formatVersion": 2,
+  "slug": "santi-sounds-entertainment",
+  "name": "Santi Sounds Entertainment",
+  "kind": "DJ, sound & lighting",
+  "base": "London",
+  "areas": [
+    "London",
+    "Hertfordshire",
+    "Essex",
+    "Surrey",
+    "South East"
+  ],
+  "description": "A London DJ, sound and lighting provider with over fifteen years' experience, covering London and the home counties and travelling UK-wide for larger events.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/suppliers/santi-sounds-entertainment",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding DJ",
+        "Sound and lighting hire",
+        "AV production"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/santi-sounds-entertainment",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Birthdays",
+        "Corporate events"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/santi-sounds-entertainment",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "15+ years' experience"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/santi-sounds-entertainment",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "dj",
+    "tag": "SANTI",
+    "position": 56,
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/suppliers/santi-sounds-entertainment"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": false
+      }
+    ]
+  }
+}

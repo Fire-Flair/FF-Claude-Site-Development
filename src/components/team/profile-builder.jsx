@@ -10,7 +10,7 @@ function CardBuilder() {
     const nd = typeof next === "function" ? next(d) : next;
     const changed = CATS.filter(c => JSON.stringify(nd[c] || []) !== JSON.stringify(d[c] || []));
     if (changed.length) syncCardRecords(state, dispatch, nd, changed);
-    if (nd.name !== d.name || nd.photo !== d.photo) dispatch({ type: "PROFILE", patch: { name: nd.name, photo: nd.photo } });
+    if (nd.name !== d.name || nd.photo !== d.photo || (nd.headline || "") !== (d.headline || "")) dispatch({ type: "PROFILE", patch: { name: nd.name, photo: nd.photo, headline: nd.headline || "" } });
     if (String(nd.name || "").trim() && (nd.professions || []).length && !(state.profile.xpClaimed || []).includes("create_card")) {
       dispatch({ type: "CARD_CREATED_XP" });
       dispatch({ type: "TOAST", toast: `Profile Card created${xpNote(XP_VALUES.task)}` });
@@ -19,10 +19,10 @@ function CardBuilder() {
   return (
     <>
       <EditablePlayerCard draft={d} setDraft={setD} themeKey={state.profile.theme}
-        tag={state.session.tag || "username"} tier={state.profile.tier} level={state.profile.level}
+        tag={state.session.tag || state.session.tagDraft || "username"} level={state.profile.level}
         onPhoto={(url) => setD(x => ({ ...x, photo: url }))} />
       <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap", margin: "16px 0 4px" }}>
-        {Object.entries(THEMES).map(([k, th]) => (
+        {Object.entries(THEMES).filter(([, x]) => !x.directoryOnly).map(([k, th]) => (
           <button key={k} className={th.locked ? "ff-swatch-lock" : undefined} onClick={() => { const ap = (v) => dispatch({ type: "PROFILE", patch: { theme: v } }); if (th.locked) previewTheme17(k, state.profile.theme, ap); else { clearPv17(); ap(k); } }} aria-label={`${th.name} card`} title={th.name}
             style={{ width: 30, height: 30, borderRadius: "50%", background: th.swatch, border: state.profile.theme === k ? "2px solid var(--gold)" : "1px solid var(--rule)" }}>{th.locked ? <I11.Lock size={13} /> : null}</button>
         ))}
@@ -48,7 +48,7 @@ const dataUrlToFile = (u, name, type) => {
 };
 
 
-function CVPanel() {
+function CVPanel({ inline = false } = {}) {
   const { state, dispatch } = useStore();
   const ref = useRef(null);
   const [st, setSt] = useState(null);
@@ -87,6 +87,25 @@ function CVPanel() {
       <ImportToEdit key={ex.st.result.report && ex.st.result.report.ms} result={ex.st.result} onDone={ex.reset} />
     )}
   </>);
+
+  /* Inline: the compact form inside the one FF AI box at the top of Create a profile. */
+  if (inline) return (
+    <div className="ff-cvinl17">
+      {input}
+      {cvRec ? (
+        <div className="row">
+          <span className="ok"><Check size={16} strokeWidth={2.4} /></span>
+          <span className="nm"><b>CV uploaded</b><small>{(cvRec.document && cvRec.document.name) || "Saved under Qualifications"}</small></span>
+          {ex.st.phase === "idle" && <Btn variant="sm" disabled={st && st.busy} onClick={readSaved}><Sparkles size={13} /> Read my CV</Btn>}
+          <Btn variant="sm ghost" disabled={(st && st.busy) || ex.busy} onClick={() => ref.current && ref.current.click()}><Upload size={13} /> Replace</Btn>
+        </div>
+      ) : (
+        <Btn variant="gold ff-bigcv17" disabled={(st && st.busy) || ex.busy} onClick={() => ref.current && ref.current.click()}><Upload size={16} strokeWidth={2.2} /> Upload CV</Btn>
+      )}
+      {status}
+      {below}
+    </div>
+  );
 
   /* Uploaded: stays on the page, calm — done, but still there to read or replace. */
   if (cvRec) return (
@@ -196,17 +215,24 @@ function useShareCard() {
 }
 
 
-function TagInput({ value, onChange, placeholder = "username", current, check, autoFocus, label = "FF Tag" }) {
-  const clean = AUTH_ADAPTER.cleanTag(value);
-  const ok = AUTH_ADAPTER.isAvailable(clean, current);
-  const show = check && clean.length >= AUTH_ADAPTER.TAG_MIN;
+/* v17.35 note for developers (FF Tag case): the availability check already ignores case: AUTH_ADAPTER.cleanTag
+   lowercases before isAvailable compares, and _taken lowercases the taken list, so ALEXG = alexg = taken.
+   But cleanTag also lowercases what is shown and saved, so capitals are not kept today. Mr G wants the tag saved
+   as typed (ALEXG) with the check run on the lowercase form: that change belongs in auth-adapter.js (keep a
+   display form beside the lowercase key); Core must store both and compare on the key. */
+/* Optional (the company address uses them; FF Team leaves them out): cleanWith(value) makes the text, freeCheck(text) says whether it is available, minLength and maxLength set the bounds. */
+function TagInput({ value, onChange, placeholder = "username", current, check, autoFocus, label = "FF Tag", cleanWith, freeCheck, minLength, maxLength, fit }) {
+  const clean = cleanWith ? cleanWith(value) : AUTH_ADAPTER.cleanTag(value);
+  const ok = freeCheck ? freeCheck(clean) : AUTH_ADAPTER.isAvailable(clean, current);
+  const show = check && clean.length >= (minLength || AUTH_ADAPTER.TAG_MIN);
   return React.createElement("span", {
     className: "ff-userfield"
   }, React.createElement("span", {
     className: "pre"
   }, CARD_DOMAIN, "/"), React.createElement("input", {
     value: clean,
-    maxLength: AUTH_ADAPTER.TAG_MAX,
+    maxLength: maxLength || AUTH_ADAPTER.TAG_MAX,
+    style: fit ? { flex: "none", width: `${Math.max(9, clean.length + 2)}ch` } : undefined,
     onChange: (e) => onChange(e.target.value),
     placeholder,
     "aria-label": label,
@@ -327,7 +353,8 @@ function PasswordSheet({ open, onClose, change }) {
 }
 
 
-function AccountSettings() {
+/* only (v17.34, with boxes): "phone" or "tag" shows just that box — Phone number now sits in Let's get started. */
+function AccountSettings({ boxes = false, only } = {}) {
   const { state, dispatch } = useStore();
   const tag = state.auth.tag || state.session.tag;
   const [editing, setEditing] = useState(false);
@@ -346,7 +373,7 @@ function AccountSettings() {
       const r = await AUTH_ADAPTER.changeTag(tag, clean);
       dispatch({ type: "SESSION", patch: { tag: r.tag } });
       dispatch({ type: "AUTH_SIGNED_IN", tag: r.tag, method: state.auth.method });
-      dispatch({ type: "TOAST", toast: `Your FF Tag is now ${r.tag} · ${CARD_DOMAIN}/${r.tag}` });
+      dispatch({ type: "TOAST", toast: `Your FF Tag is now ${pc17Tag(r.tag)} · ${CARD_DOMAIN}/${pc17Tag(r.tag)}` });
       setEditing(false);
     } catch (e) {
       setErr(e.message);
@@ -354,6 +381,19 @@ function AccountSettings() {
       setBusy(false);
     }
   };
+  if (boxes && !editing) return (<>
+    {only !== "tag" && <GoldBox21 icon={<Phone size={16} strokeWidth={1.8} />} title="Phone number" desc={ACCT_DESC21.phone} className="shine">
+      <span className="ff-gb21-val"><Check size={15} color="var(--ok)" strokeWidth={2.6} /> {phone || "Number verified"}</span>
+    </GoldBox21>}
+    {only !== "phone" && <GoldBox21 icon={<Hash size={16} strokeWidth={1.8} />} title="FF Tag" desc={ACCT_DESC21.tag}
+      note={<span className="ff-gb21-links">
+        <button type="button" className="ff-linkbtn" onClick={() => { setNext(tag); setErr(null); setEditing(true); }}>Change Tag</button>
+        <button type="button" className="ff-linkbtn" onClick={() => setPwOpen(true)}>{hasPw ? "Change password" : "Add a password"}</button>
+      </span>}>
+      <span className="ff-gb21-val">{CARD_DOMAIN}/{String(tag || "").toLowerCase()}</span>
+      <PasswordSheet open={pwOpen} change={hasPw} onClose={() => setPwOpen(false)} />
+    </GoldBox21>}
+  </>);
   return React.createElement("div", null, React.createElement("div", {
     style: { display: "flex", gap: 14, alignItems: "center" }
   }, React.createElement("span", {
@@ -363,7 +403,7 @@ function AccountSettings() {
   }, React.createElement("span", {
     className: "ff-body",
     style: { fontWeight: 700, color: "var(--ink)", overflowWrap: "anywhere" }
-  }, CARD_DOMAIN, "/", tag), React.createElement("span", {
+  }, CARD_DOMAIN, "/", pc17Tag(tag)), React.createElement("span", {
     className: "ff-body ff-muted",
     style: { fontSize: 12.5, display: "flex", gap: 5, alignItems: "center" }
   }, React.createElement(Check, {
@@ -429,7 +469,60 @@ function AccountSettings() {
 }
 
 
-function TagSection() {
+/* v17.21: the descriptions Alex asked to keep (from v17.15), and one for Media. */
+const ACCT_DESC21 = {
+  phone: "Used to send you bookings via WhatsApp.",
+  tag: "Your personal web page, displaying all your profile information.",
+  media: "These pictures play across the top of your public profile. They are the first thing people see, and the best way to show your work.",
+};
+
+
+/* v17.21: a golden account box. The name, the entry box and its button on one line, the description under them. */
+/* v17.27: country (dialling) code for the phone number. The closed control shows only the code ("+44"); the list shows
+   the country beside it. A native select sits invisibly over the label so phones use their own picker. */
+const DIAL_CODES26 = [["+44", "United Kingdom"], ["+353", "Ireland"], ["+33", "France"], ["+34", "Spain"], ["+39", "Italy"], ["+351", "Portugal"], ["+49", "Germany"], ["+31", "Netherlands"], ["+32", "Belgium"], ["+41", "Switzerland"], ["+30", "Greece"], ["+40", "Romania"], ["+48", "Poland"], ["+46", "Sweden"], ["+45", "Denmark"], ["+47", "Norway"], ["+1", "United States / Canada"], ["+61", "Australia"], ["+64", "New Zealand"], ["+27", "South Africa"], ["+971", "United Arab Emirates"], ["+91", "India"], ["+55", "Brazil"], ["+52", "Mexico"]];
+function DialCode26({ value, onChange }) {
+  return (
+    <span className="ff-dial26">
+      <span className="v" aria-hidden="true">{value}</span>
+      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+      <select aria-label="Country code" autoComplete="tel-country-code" value={value} onChange={(e) => onChange(e.target.value)}>
+        {DIAL_CODES26.map(([c, n]) => <option key={c + n} value={c}>{n} ({c})</option>)}
+      </select>
+    </span>
+  );
+}
+
+function GoldBox21({ icon, title, count, desc, note, children, line = true, id, className }) {
+  return (
+    <section className={"ff-gb21" + (className ? " " + className : "")} id={id} aria-label={title}>
+      <div className={line ? "ff-gb21-line" : "ff-gb21-head"}>
+        <span className="ff-gb21-lb">{icon}<span>{title}</span>{count !== undefined && <span className="ff-gb21-ct">{count}</span>}</span>
+        {line ? children : null}
+      </div>
+      {desc && <p className="ff-gb21-ds">{desc}</p>}
+      {!line && children}
+      {note}
+    </section>
+  );
+}
+
+
+/* v17.19: an account box — a title row like the other sections, then its content (the same look as the Media box). */
+function AcctBox19({ icon, title, count, action, children, id }) {
+  return (
+    <section className="ff-box19" id={id} style={{ marginTop: 14 }}>
+      <style>{RANK_CSS17}</style>
+      <SectionHead icon={icon} title={title} count={count} action={action} />
+      {children}
+    </section>
+  );
+}
+
+
+/* v17.34: the sign-up state (FF Tag, phone number, country code, WhatsApp code) in one hook, so the Phone number box
+   (third in Let's get started) and the FF Tag box (Your Profile Page) share one entry, one Verify and one code step. */
+function useJoin21({ inSave = false, top = false, onSignedIn } = {}) {
   const { state, dispatch } = useStore();
   const signedIn = state.auth.status === "signedIn" && !!(state.auth.tag || state.session.tag);
   const suggestion = useMemo(() => AUTH_ADAPTER.suggestTag(state.profile.name), [state.profile.name]);
@@ -442,7 +535,13 @@ function TagSection() {
   const [pwOpen, setPwOpen] = useState(false);
   const clean = AUTH_ADAPTER.cleanTag(typed === null ? suggestion : typed);
   const available = AUTH_ADAPTER.isAvailable(clean);
-  const phoneOk = phone.replace(/\D/g, "").length >= 9;
+  /* v17.27: country code drop-down in front of the number, +44 by default (as on the live FFTeam.uk). The number sent
+     to the adapter is the code plus the national number with its leading 0 dropped: +44 7700 900000. */
+  const [dial, setDial] = useState("+44");
+  const natDigits = phone.replace(/\D/g, "").replace(/^0+/, "");
+  const typedCode = /^\s*(\+|00)/.test(phone);
+  const fullPhone = typedCode ? phone.trim() : (natDigits ? `${dial} ${natDigits}` : "");
+  const phoneOk = natDigits.length >= (dial === "+44" && !typedCode ? 9 : 6);
   const run = async (fn) => {
     setBusy(true);
     setErr(null);
@@ -455,37 +554,104 @@ function TagSection() {
       setBusy(false);
     }
   };
-  const send = () => run(() => AUTH_ADAPTER.sendSignupCode(clean, phone)).then((r) => {
+  const send = () => run(() => AUTH_ADAPTER.sendSignupCode(clean, fullPhone)).then((r) => {
     if (r) {
       setStage("code");
       setCode("");
     }
   });
-  const verify = () => run(() => AUTH_ADAPTER.verifySignupCode(clean, phone, code)).then((r) => {
+  const verify = () => run(() => AUTH_ADAPTER.verifySignupCode(clean, fullPhone, code)).then((r) => {
     if (!r)
       return;
     dispatch({ type: "SESSION", patch: { tag: r.tag, phone: r.phone, verified: true } });
+    /* A review written while signed out posts at sign-up with its own "Review sent to …" toast; keep that one. */
+    const draft = !!(state.session && state.session.reviewDraft17);
     dispatch({ type: "AUTH_SIGNED_IN", tag: r.tag, method: r.method });
-    dispatch({ type: "TOAST", toast: `${CARD_DOMAIN}/${r.tag} is yours` });
+    if (!draft) dispatch({ type: "TOAST", toast: `${CARD_DOMAIN}/${pc17Tag(r.tag)} is yours` });
     setStage("details");
     setCode("");
-    setPwOpen(true);
+    if (inSave || top) {
+      if (onSignedIn) onSignedIn();
+    } else setPwOpen(true);
   });
+  const setTag = (v) => {
+    setTyped(v);
+    /* Display only: lets the Profile Card address follow the field. Never a real tag. */
+    dispatch({ type: "SESSION", patch: { tagDraft: AUTH_ADAPTER.cleanTag(v) } });
+  };
+  return { signedIn, phone, setPhone, stage, setStage, code, setCode, busy, err, setErr, pwOpen, setPwOpen, clean, available, dial, setDial, fullPhone, phoneOk, send, verify, setTag };
+}
+
+
+/* v17.34: the Phone number entry — third in Let's get started. The same gold box, country code, Verify and WhatsApp
+   code step as before; a signed-in member sees the verified number, as in AccountSettings. */
+function PhoneBox21({ join: j }) {
+  if (j.signedIn) return <AccountSettings boxes only="phone" />;
+  return (<>
+    {j.stage === "details" ? (
+      <GoldBox21 icon={<Phone size={16} strokeWidth={1.8} />} title="Phone number" desc={ACCT_DESC21.phone} className="shine">
+        <DialCode26 value={j.dial} onChange={j.setDial} />
+        <input className="ff-gb21-in" type="tel" inputMode="tel" autoComplete="tel-national" placeholder="7700 900000" aria-label="Phone number"
+          value={j.phone} onChange={(e) => j.setPhone(e.target.value)} enterKeyHint="send"
+          onKeyDown={(e) => e.key === "Enter" && j.available && j.phoneOk && !j.busy && j.send()} />
+        <button type="button" className="ff-gb21-btn" disabled={j.busy || !j.available || !j.phoneOk} onClick={j.send}>{j.busy ? <Loader2 size={14} className="ff-spin" /> : null}Verify</button>
+      </GoldBox21>
+    ) : (
+      <GoldBox21 className="shine" icon={<Phone size={16} strokeWidth={1.8} />} title="WhatsApp code" desc={`Sent to ${j.fullPhone} · any six digits in this preview`}
+        note={<span className="ff-gb21-links">
+          <button type="button" className="ff-linkbtn" onClick={() => { j.setStage("details"); j.setCode(""); j.setErr(null); }}>Change number</button>
+          <button type="button" className="ff-linkbtn" disabled={j.busy} onClick={j.send}>Resend code</button>
+        </span>}>
+        <input className="ff-gb21-in code" inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={j.code}
+          autoFocus={FF_FINE_POINTER} onChange={(e) => j.setCode(e.target.value.replace(/\D/g, ""))} placeholder="000000" aria-label="Code from WhatsApp"
+          onKeyDown={(e) => e.key === "Enter" && j.code.length === 6 && !j.busy && j.verify()} />
+        <button type="button" className="ff-gb21-btn" disabled={j.busy || j.code.length < 6} onClick={j.verify}>{j.busy ? <Loader2 size={14} className="ff-spin" /> : <Check size={14} />} Create</button>
+      </GoldBox21>
+    )}
+    {j.err && <p className="ff-body" role="alert" style={{ color: "var(--bad)", fontSize: 13, margin: "10px 0 0", fontWeight: 600 }}>{j.err}</p>}
+  </>);
+}
+
+
+function TagSection({ inSave = false, top = false, onSignedIn, join } = {}) {
+  const own = useJoin21({ inSave, top, onSignedIn });
+  const { signedIn, phone, setPhone, stage, setStage, code, setCode, busy, err, setErr, pwOpen, setPwOpen, clean, available, send, verify } = join || own;
+  /* v17.34: the FF Tag box only — the Phone number entry is now third in Let's get started (PhoneBox21). FF Tag sits
+     left of Media on desktop, above it on a phone. */
+  if (top) {
+    const jt = join || own;
+    return (
+      <div id="ff-sec-tag" className="ff-tagsection ff-acct19 ff-acct21">
+        {signedIn ? <AccountSettings boxes only="tag" /> : stage === "details" ? (
+          <GoldBox21 icon={<Hash size={16} strokeWidth={1.8} />} title="FF Tag" desc={ACCT_DESC21.tag} note={<TagNote clean={clean} />}>
+            <TagInput value={clean} check onChange={jt.setTag} />
+          </GoldBox21>
+        ) : (
+          <GoldBox21 icon={<Hash size={16} strokeWidth={1.8} />} title="FF Tag" desc={ACCT_DESC21.tag}>
+            <span className="ff-gb21-val">{CARD_DOMAIN}/{clean}</span>
+          </GoldBox21>
+        )}
+        <PasswordSheet open={pwOpen} onClose={() => setPwOpen(false)} />
+      </div>
+    );
+  }
   return React.createElement("div", {
     id: "ff-sec-tag",
     className: "ff-tagsection"
   }, signedIn ? React.createElement(AccountSettings, null) : stage === "details" ? React.createElement(React.Fragment, null, React.createElement("div", {
     className: "ff-tagrow"
   }, React.createElement(Field, {
-    label: "FF Tag"
+    label: "FF Tag",
+    hint: top ? "Your personal web page, displaying all your profile information." : undefined
   }, React.createElement(TagInput, {
     value: clean,
-    onChange: setTyped,
+    onChange: (join || own).setTag,
     check: true
   }), React.createElement(TagNote, {
     clean
   })), React.createElement(Field, {
-    label: "Phone number"
+    label: "Phone number",
+    hint: top ? "Used to send you bookings via WhatsApp." : undefined
   }, React.createElement("input", {
     className: "ff-input",
     type: "tel",
@@ -502,16 +668,7 @@ function TagSection() {
   }, busy ? React.createElement(Loader2, {
     size: 14,
     className: "ff-spin"
-  }) : React.createElement(WhatsAppIcon, {
-    size: 15
-  }), " Continue"), React.createElement("p", {
-    className: "ff-body",
-    style: { fontSize: 13, margin: "10px 0 0", textAlign: "center" }
-  }, React.createElement("button", {
-    type: "button",
-    className: "ff-linkbtn",
-    onClick: () => window.dispatchEvent(new Event("ff-login"))
-  }, "I already have a Tag"))) : React.createElement(React.Fragment, null, React.createElement(Field, {
+  }) : null, inSave ? "Save" : "Continue")) : React.createElement(React.Fragment, null, React.createElement(Field, {
     label: "WhatsApp code",
     hint: `Sent to ${phone} · any six digits in this preview`
   }, React.createElement("input", {
@@ -534,7 +691,7 @@ function TagSection() {
     className: "ff-spin"
   }) : React.createElement(Check, {
     size: 14
-  }), " Create"), React.createElement("div", {
+  }), inSave ? " Save" : " Create"), React.createElement("div", {
     style: { display: "flex", justifyContent: "space-between", gap: 10, marginTop: 10, flexWrap: "wrap" }
   }, React.createElement("button", {
     type: "button",
@@ -561,6 +718,11 @@ function TagSection() {
 
 
 
+/* "Available for hire?" uses the one rule for a complete profile, profileBasics17 (src/state/invite17.js):
+   signed in, saved once, a name, a photo and one confirmed profession. The same rule decides when an inviter is rewarded. */
+const hireReady17 = (state) => profileBasics17(state);
+
+
 /* SAVE & SHARE — at the foot of the profile. The profile already saves
    itself; Save is the explicit "done" that opens Section 5. Share sends
    the finished card to the person on WhatsApp. */
@@ -570,11 +732,13 @@ function SaveShareCard({ onSaved }) {
   const signedIn = state.auth.status === "signedIn";
   const { share, busy, tag } = useShareCard();
   const cardReady = recsOf(p, "professions").some(r => !r.proposed);
+  /* v17.40: an existing member edits on this same page; Save takes them back to their finished profile, as the bar's Save does. */
+  const leaveLive = () => { if (p.live && state.ed17 === "team") { dispatch({ type: "V11_SET", patch: { ed17: null } }); window.scrollTo(0, 0); } };
   const save = () => {
     if (!signedIn) {
-      const el = document.getElementById("ff-sec-tag");
+      const el = document.getElementById("ff-sec-phone") || document.getElementById("ff-sec-tag");
       if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
-      setTimeout(() => { const i = document.querySelector('#ff-sec-tag input'); if (i) i.focus({ preventScroll: true }); }, 400);
+      setTimeout(() => { const i = document.querySelector('#ff-sec-phone input[type="tel"], #ff-sec-phone input, #ff-sec-tag input'); if (i) i.focus({ preventScroll: true }); }, 400);
       dispatch({ type: "TOAST", toast: "Create your FF Tag first" });
       return;
     }
@@ -582,6 +746,7 @@ function SaveShareCard({ onSaved }) {
       dispatch({ type: "PROFILE", patch: { saved: true, savedAt: r.savedAt, finishedAt: p.finishedAt || r.savedAt } });
       dispatch({ type: "TOAST", toast: "Saved" });
       dispatch({ type: "PE_DONE" });
+      leaveLive();
       if (onSaved) onSaved();
     });
   };
@@ -596,6 +761,7 @@ function SaveShareCard({ onSaved }) {
       const now = Date.now();
       dispatch({ type: "PROFILE", patch: { saved: true, savedAt: r.savedAt, finishedAt: p.finishedAt || r.savedAt, published: true, publishedAt: p.publishedAt || now, introduction: r.intro || null } });
       dispatch({ type: "PE_DONE" });
+      leaveLive();
       if (!p.publishedAt) {
         dispatch({ type: "PUBLISH_XP" });
         P1_JUST_PUBLISHED.v = true;
@@ -605,14 +771,20 @@ function SaveShareCard({ onSaved }) {
     });
   };
   useEffect(() => { const h = () => publish(); window.addEventListener("ff-save", h); return () => window.removeEventListener("ff-save", h); });
+  const hireOk = hireReady17(state);
+  const hire = () => {
+    if (!hireOk) return;
+    dispatch({ type: "ROLE", role: "team" });
+    dispatch({ type: "TAB", tab: "bookings" });
+    window.scrollTo(0, 0);
+  };
 
   return (
     <div id="ff-sec-share" className="ff-publishcard" style={{ marginTop: 26 }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
-        <Coin size={30} tier="gold" />
-        <span className="ff-h2" style={{ fontSize: 19, color: "var(--gold-lt)", flex: 1 }}>Save</span>
+      <div className="ff-save17-row">
+        <button type="button" className="ff-btn gold ff-save17" onClick={save}>Save</button>
+        <button type="button" className="ff-btn ff-save17 hire17" onClick={hire} disabled={!hireOk} aria-disabled={!hireOk}>Available for hire?</button>
       </div>
-      <button type="button" className="ff-publish-btn" onClick={publish}><Check size={17} /> Save</button>
       {blocker && signedIn && <p style={{ margin: "10px 0 0", fontSize: 12.5, color: "rgba(244,239,228,.72)", textAlign: "center" }}>{blocker}</p>}
       {signedIn && p.savedAt && <p style={{ margin: "10px 0 0", fontSize: 12, color: "rgba(244,239,228,.66)", display: "flex", gap: 5, alignItems: "center", justifyContent: "center" }}>
         <Check size={13} color="#8FDCAE" strokeWidth={2.4} /> Saved {timeOf(p.savedAt)}{p.publishedAt && <> · <button type="button" className="ff-livelink17" onClick={() => { dispatch({ type: "VIEW", id: "me", guest: true }); window.scrollTo(0, 0); }}><Eye size={13} /> Live · view</button></>}</p>}
@@ -655,6 +827,82 @@ function BigStepHead({ n, title, done, id }) {
 
 
 
+/* The GPT mark, beside "Talk or type to GPT". */
+function GptLogo17({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" fillRule="evenodd" aria-hidden="true" focusable="false">
+      <path d="M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z" />
+    </svg>
+  );
+}
+
+
+/* Book an interview: a short call where FireFlair fills the profile out with you. Opens the booking page with your details filled in. */
+function InterviewBook17({ notes, onClose, name, title = "Book an interview" }) {
+  const { state, dispatch } = useStore();
+  const [phone, setPhone] = useState(state.session.phone || "");
+  const ok = phone.replace(/\D/g, "").length >= 9;
+  const cal = V101.support20Url();
+  let href = cal;
+  try {
+    const u = new URL(cal);
+    if (name || state.profile.name) u.searchParams.set("name", name || state.profile.name);
+    if (ok) u.searchParams.set("attendeePhoneNumber", phone.replace(/[^\d+]/g, ""));
+    if (notes && notes.trim()) u.searchParams.set("notes", notes.trim().slice(0, 500));
+    href = u.toString();
+  } catch (e) { /* keep the plain link */ }
+  const go = (e) => {
+    if (!ok) { e.preventDefault(); return; }
+    dispatch({ type: "SESSION", patch: { phone: phone.trim() } });
+    setTimeout(onClose, 150);
+  };
+  return (
+    <Sheet open onClose={onClose} title={title}>
+      <div className="ff-ib17">
+        <Field label="Phone number"><input className="ff-input" type="tel" inputMode="tel" autoComplete="tel" placeholder="+44 7700 900000" value={phone} onChange={(e) => setPhone(e.target.value)} /></Field>
+        <a className={"ff-btn gold ff-bigcv17" + (ok ? "" : " off")} href={ok ? href : undefined} aria-disabled={!ok} target="_blank" rel="noopener noreferrer" onClick={go}><Calendar size={16} /> Choose a time</a>
+      </div>
+    </Sheet>
+  );
+}
+
+
+/* Create a profile: one box. Upload a CV, or talk or type to GPT, then the Phone number (v17.34: in place of Book an
+   interview; InterviewBook17 stays for FF Staff's Book a meeting). */
+function StartBox17({ join }) {
+  const [text, setText] = useState("");
+  const ex = useExtraction({ withAnswers: true });
+  const run = (v) => { if (String(v || "").trim().length < 3 || ex.busy) return; ex.start({ text: v }); };
+  return (
+    <div id="ff-sec-ffai" className="ff-start17">
+      <section className="ff-way17 ff-way17-cv">
+        <div className="ff-way17-ctl"><CVPanel inline /></div>
+        <p className="ff-way17-line"><Timer size={16} strokeWidth={2.2} aria-hidden="true" /><span>Create your profile in &lt;1 minute</span></p>
+      </section>
+      <section className="ff-way17 ff-way17-gpt">
+        <h3 className="ff-way17-ctl"><GptLogo17 size={18} /> Talk or type to GPT</h3>
+        <p className="ff-way17-line"><span>Tell us about yourself and we'll build the profile for you.</span></p>
+        <div className="ff-way17-wide">
+          <FFAI bare plain multiline tint={false} tagIcon title="Tell us who you are" noMicStatus placeholder="I'm a bartender…" query={text} onQuery={setText} onSubmit={run} submitLabel="Fill out my profile">
+            <ExtractionStatus ex={ex} />
+            {ex.st.phase === "review" && <ImportToEdit key={ex.st.result.report && ex.st.result.report.ms} result={ex.st.result} onDone={() => { ex.reset(); setText(""); }} />}
+          </FFAI>
+        </div>
+      </section>
+      {join && (
+        <section id="ff-sec-phone" className="ff-way17 ff-way17-phone">
+          <div className="ff-way17-wide"><PhoneBox21 join={join} /></div>
+        </section>
+      )}
+    </div>
+  );
+}
+
+
+/* v17.34: true where the page shows About Me above the tabs (the builder), so the Overview tab leaves its copy out. */
+const ABOUT_TOP34 = createContext(false);
+
+
 function ProfileBuilder() {
   const { state, dispatch } = useStore();
   const p = state.profile;
@@ -662,30 +910,37 @@ function ProfileBuilder() {
   const cardReady = recsOf(p, "professions").some(r => !r.proposed);
   const signedIn = state.auth.status === "signedIn";
   const finished = signedIn && !!p.finishedAt;
+  /* v17.40: an existing member editing a live profile sees the same page; Welcome to the Team is only for the first save. */
+  const editingLive = !!p.live && !!(state.profileEdit && state.profileEdit.on);
+  const join = useJoin21({ top: true });
   const toWelcome = () => setTimeout(() => {
     const el = document.getElementById("ff-sec-welcome");
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   }, 80);
   return (
     <div>
+      <InviteBanner17 />
       <div className="ff-eyebrow">FF Team · Profile</div>
 
       <div className="ff-journey">
-        <BigStepHead n={1} title="Join the Team" done={signedIn} />
-        <TagSection />
+        <BigStepHead n={1} title="Let's get started" done={hasCV(p) || cardReady} />
+        <StartBox17 join={join} />
 
-        <StepHead n={2} title="Profile Card" done={cardReady} />
+        <BigStepHead n={2} title="Your Profile Card" done={cardReady} />
         <div id="ff-sec-card"><CardBuilder /></div>
 
-        <StepHead n={3} title="FF AI and CV upload" done={hasCV(p)} />
-        <ProfileFFAI />
-        <CVPanel />
-
-        <StepHead n={4} title="Your profile" done={false} />
-        <CreatorMedia />
-        <CreatorAboutMe />
-        <ProfileSections person={me} isMe />
+        <BigStepHead n={3} title="Your Profile Page" done={false} />
+        {/* v17.34: FF Tag | Media (stacked on a phone), then About Me, then the tabs. */}
+        <div className="ff-tm34">
+          <TagSection top join={join} />
+          <CreatorMedia />
+        </div>
+        <ABOUT_TOP34.Provider value={true}>
+          <CreatorAboutMe top />
+          {aragornOpt() ? <AragornTabs person={me} opt={aragornOpt()} /> : <ProfileSections person={me} isMe />}
+        </ABOUT_TOP34.Provider>
         <IntroEditor17 />
+        {aragornOpt() === 1 && <PE2QA />}
       </div>
 
       {/* Section 4 → Save & Share → Section 5. v16.11: everything stays on the
@@ -695,15 +950,33 @@ function ProfileBuilder() {
       <div className={`ff-finale${finished ? " open" : ""}`}>
         <div className="ff-s5row">
           {!finished && (
-            <div className="ff-s5mark" title="Section 5 opens when you save" aria-label="Section 5 — opens when you save">
-              <span className="ff-stepnum closed" aria-hidden="true">05</span>
+            <div className="ff-s5mark" aria-hidden="true">
+              <span className="ff-stepnum closed" aria-hidden="true">04</span>
             </div>
           )}
           <SaveShareCard onSaved={toWelcome} />
         </div>
-        {!finished && <CardPreviewSoon />}
-        {finished && <WelcomeSection me={me} />}
+        {/* v17.40: no card preview here (its Share and wallet buttons went past three buttons); the finished card shows in Welcome to the Team. */}
+        {finished && !editingLive && <WelcomeSection me={me} />}
       </div>
+      <NeedHelp34 />
+    </div>
+  );
+}
+
+
+/* v17.35: Need help? Book a meeting — the old Book an interview box (same burgundy button, same booking sheet),
+   now at the very bottom of the profile page. Self-contained so the complete-profile page can render it too. */
+function NeedHelp34() {
+  const [book, setBook] = useState(false);
+  if (!V101.support20Url()) return null;
+  return (
+    <div className="ff-start17 ff-help34">
+      <section className="ff-way17 ff-way17-int">
+        <div className="ff-way17-ctl"><Btn variant="ghost ff-bigcv17" onClick={() => setBook(true)}><Calendar size={16} /> Book a meeting</Btn></div>
+        <p className="ff-way17-line"><span>Need help?</span></p>
+      </section>
+      {book && <InterviewBook17 title="Book a meeting" onClose={() => setBook(false)} />}
     </div>
   );
 }
@@ -753,6 +1026,20 @@ function WelcomeSection({ me }) {
           </div>
         </Sheet>
       )}
+    </div>
+  );
+}
+
+
+/* FF Staff company profile, step 3: a meeting instead of typing a description. Opens the same booking page as the FF Team interview. */
+function CompanyMeeting17() {
+  const { state } = useStore();
+  const [book, setBook] = useState(false);
+  if (!V101.support20Url()) return null;
+  return (
+    <div className="ff-start17 ff-comeet17">
+      <Btn variant="sm" onClick={() => setBook(true)}><Calendar size={14} /> Book a meeting</Btn>
+      {book && <InterviewBook17 name={(state.company || {}).name} title="Book a meeting" onClose={() => setBook(false)} />}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 {
-  "_note": "The ONE place the call-booking address is set. Paste the Calendly event link (https://calendly.com/<account>/<event>) into calendlyUrl. While it is empty, the booking page shows a configuration state and nothing is presented as live.",
-  "calendlyUrl": "",
+  "_note": "The ONE place the call-booking address is set (Cal.com event link, https://cal.com/<account>/<event>). Used by the Book a 15-minute Call page and by Need a hand? on the FF Team profile. While it is empty, both show a configuration state and nothing is presented as live.",
+  "bookingUrl": "https://cal.com/mrg-pmrllv/15min",
   "callLabel": "Book a 15-minute Call",
   "path": "/support/book-a-call"
 }

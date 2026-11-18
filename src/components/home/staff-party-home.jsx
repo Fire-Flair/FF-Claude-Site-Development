@@ -80,11 +80,10 @@
       strokeWidth: 1.7
     })), React.createElement("b", null, s.title), React.createElement("span", null, s.text)))), React.createElement("div", {
       className: "ff-hw11-cta"
-    }, React.createElement(ShineButton, {
-      onClick: nav.toEvent
-    }, React.createElement(Popper11, {
-      size: 15
-    }), " Plan your event"))));
+    }, React.createElement(LockedBtn17, {
+      shine: true,
+      icon: React.createElement(Popper11, { size: 15 })
+    }, "Plan your event"))));
   }
 
   function PartyCompanies() {
@@ -159,11 +158,10 @@
     })))), React.createElement("div", {
       className: "ff-hero17-cta",
       style: { marginTop: 14 }
-    }, React.createElement(ShineButton, {
-      onClick: nav.toEvent
-    }, React.createElement(Popper11, {
-      size: 15
-    }), " Plan your event")), React.createElement("ul", {
+    }, React.createElement(LockedBtn17, {
+      shine: true,
+      icon: React.createElement(Popper11, { size: 15 })
+    }, "Plan your event")), React.createElement("ul", {
       className: "ff-offer11-list"
     }, PARTY_OFFER.map(([t, d]) => React.createElement("li", {
       key: t

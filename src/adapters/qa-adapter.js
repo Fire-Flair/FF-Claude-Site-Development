@@ -23,6 +23,7 @@ const QA_Q17 = {
   "int.biz_training":   { text: "Are you interested in training for your staff?", group: "interest", multi: true },
   "int.biz_rewards":    { text: "Are you interested in rewards for your staff?", group: "interest", multi: true },
   "int.planning":       { text: "Are you interested in these planning options?", group: "interest", multi: true },
+  "int.challenge_reward": { text: CONTENT_ADAPTER.homepageTeamPillars().challenge.suggestQuestion, group: "interest", multi: false, guest: true, contactOptional: true },
   "int.area_expansion": { text: "Are you interested in FireFlair opening in your area?", group: "interest", multi: true, guest: true },
 };
 
@@ -198,6 +199,7 @@ function qaOptionLabel17(qid, id) {
     : qid === "int.party_package" ? from(allPackages17())
     : qid === "int.planning" ? ({ bronze: "Bronze", silver: "Silver", gold: "Gold" })[id]
     : qid === "int.area_expansion" ? FD_ROLE_LABEL[id]
+    : qid === "int.challenge_reward" ? ({ yes: "Yes", no: "No" })[id]
     : qid === "int.vip" ? ({ launch_party_guest_list: "Launch party guest list" })[id] : null;
   return t || id;
 }

@@ -1,6 +1,12 @@
-# Photo crops used by the prototype (v17.3.82)
+# Photo crops used by the prototype (v17.9)
 
 Each file is a crop of a photo from `photo-library/` (ids in `photo-library/library.json`), cut to the exact shape it is shown at, with heads kept in frame. The published page embeds these as data URIs under `PHOTOS17`; `FOCUS17` gives the face position for places that show a crop at another shape.
+
+## FF Team home pillars (v17.9)
+
+The four FF Team pillars (Your profile, Our packages, Your bookings, Our community) use the photos named in `src/content/homepage/team-pillars.json`. Community uses fixed card crops (p45, hp04, p43) through `fixedCards`; the other pillars draw from their tile pool. No photo is used twice on FF Team, except that hp04 and p43 appear as both card and section visual inside their own section.
+
+New crops: `t17_hp01`, `t17_hp02`, `t17_hp03`, `t17_p44` (tiles); `j17_hp01`, `j17_hp02`, `j17_hp03`, `j17_hp04`, `j17_p37`, `j17_p43`, `j17_vke07`, `j17_vke09`, `j17_vke12` (cards). The hp03 crops stop above the bottom-right watermark. `pen_strip.webp` is the top 30% of pen01 only; pen02 is old wording and is never used. Only one photo of Alex (p43) is used, in the industry events section.
 
 ## Pillar photos (rotate on the home page)
 

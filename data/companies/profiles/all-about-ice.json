@@ -1,0 +1,102 @@
+{
+  "formatVersion": 2,
+  "slug": "all-about-ice",
+  "name": "All About Ice Europe",
+  "kind": "Ice delivery",
+  "base": "London",
+  "areas": [
+    "London",
+    "UK-wide",
+    "Europe"
+  ],
+  "description": "A London-based ice supplier providing cubed and crushed ice, ice sculptures and dry ice to events across the UK and Europe.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://allaboutice.com",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Cubed and crushed ice",
+        "Ice sculptures",
+        "Dry ice"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://allaboutice.com",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://allaboutice.com",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "UK and Europe coverage"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://allaboutice.com",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://allaboutice.com",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://allaboutice.com",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "svc",
+    "sub": "ice",
+    "tag": "ALLAB",
+    "position": 123,
+    "source": {
+      "urls": [
+        "https://allaboutice.com"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "approx": true
+      }
+    ]
+  }
+}

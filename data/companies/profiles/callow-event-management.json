@@ -1,0 +1,86 @@
+{
+  "formatVersion": 2,
+  "slug": "callow-event-management",
+  "name": "Callow Event Management",
+  "kind": "Event management",
+  "base": "Belfast",
+  "areas": [
+    "Belfast",
+    "Northern Ireland"
+  ],
+  "description": "A Belfast event management company.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://callowevents.co.uk",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Event management"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://callowevents.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://callowevents.co.uk",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://callowevents.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://callowevents.co.uk",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "CALLO",
+    "position": 146,
+    "source": {
+      "urls": [
+        "https://callowevents.co.uk"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Belfast",
+        "lat": 54.5973,
+        "lng": -5.9301,
+        "approx": true
+      }
+    ]
+  }
+}

@@ -83,6 +83,7 @@ const VIP21_CSS = [
   ".ff-v21-eye img{width:46px;height:46px;border-radius:50%;object-fit:cover}",
   ".ff-v21-hero h1{margin:6px 0 10px;font-size:clamp(34px,9vw,60px);line-height:1.02;font-weight:600;color:#fff}",
   ".ff-v21-hero p{margin:0 0 8px;font-size:16.5px;line-height:1.5;color:rgba(244,242,236,.86);max-width:560px}",
+  ".ff .ff-v21-locked,.ff button.ff-btn.ff-v21-locked{opacity:.62;cursor:not-allowed;filter:saturate(.6);display:inline-flex;align-items:center;justify-content:center;gap:7px;animation:none !important}.ff .ff-v21-locked::after{display:none !important}.ff .ff-v21-lockbar{display:flex;justify-content:center;margin:18px 0}",
   ".ff-v21-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}",
   ".ff-v21-hero-pic{position:relative;border-radius:30px;overflow:hidden;aspect-ratio:4/3;border:1px solid rgba(217,220,226,.4)}",
   ".ff-v21-hero-pic img{width:100%;height:100%;object-fit:cover;display:block}",
@@ -167,7 +168,19 @@ const VIP21_CSS = [
 ].join("");
 
 
-function VipShine21({ onClick, children }) {
+const VIP_LOCKED21 = true;
+const VIP_LOCK_LABEL21 = "Locked in Phase Two";
+function VipLockBtn21({ children, label, shine, className, style }) {
+  const name = (label || (typeof children === "string" ? children : "")) + ((label || typeof children === "string") ? ". " : "") + VIP_LOCK_LABEL21;
+  return (
+    <button type="button" className={"ff-btn ff-v21-locked" + (shine ? " ff-shine" : "") + (className ? " " + className : "")} style={style} aria-disabled="true" aria-label={name} title={VIP_LOCK_LABEL21}
+      onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>
+      <Lock size={14} aria-hidden="true" /> <span className="lab">{children}</span>
+    </button>
+  );
+}
+function VipShine21({ onClick, children, locked }) {
+  if (locked) return <VipLockBtn21 shine>{children}</VipLockBtn21>;
   return (
     <button type="button" className="ff-btn ff-shine" onClick={onClick}>
       <i className="sp s1" aria-hidden="true" /><i className="sp s2" aria-hidden="true" /><i className="sp s3" aria-hidden="true" />
@@ -227,10 +240,11 @@ function vipGo21(dispatch, tab, id) {
 }
 
 
-function vipShare21(text) { window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank", "noopener"); }
+function vipShare21(text) { if (VIP_LOCKED21) return; window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank", "noopener"); }
 
 
 function vipCopy21(dispatch, text) {
+  if (VIP_LOCKED21) return;
   try { navigator.clipboard.writeText(text).then(() => dispatch({ type: "TOAST", toast: "Link copied" }), () => dispatch({ type: "TOAST", toast: text })); }
   catch (e) { dispatch({ type: "TOAST", toast: text }); }
 }
@@ -281,10 +295,8 @@ function VipHero21() {
     <section className="ff-hero18 ff-hero11 vip" aria-labelledby="ff-v21-h" id="ff-hero">
       <div className="ff-hero18-img">
         {IM.hero ? <img decoding="async" className="ff-hero18-photo" src={IM.hero} srcSet={IM.hero_sm ? `${IM.hero_sm} 900w, ${IM.hero} 1800w` : undefined} sizes="(min-width:900px) 760px, 100vw" alt="" decoding="async" /> : null}
+        {IM.hero ? <HeroEasel24 /> : null}
         <div className="ff-hero18-fade" aria-hidden="true" />
-        <span className="ff-hero18-shadow" aria-hidden="true" />
-        <span className="ff-hero18-coin refl" aria-hidden="true"><SiteHeroCoin site="vip" /></span>
-        <span className="ff-hero18-coin ff-hero17-coin"><SiteHeroCoin site="vip" /></span>
       </div>
       <div className="ff-hero18-in">
         <h1 id="ff-v21-h" className="ff-hero17-h ff-hero-h101">Welcome to FF VIP</h1>
@@ -504,8 +516,8 @@ function VipRewardsSect21() {
         <h2 id="ff-v21-rh" className="ff-h1" style={{ margin: "8px 0 6px" }}>Share FireFlair. Earn FF Rewards.</h2>
         <p>Every person you bring to FireFlair earns you reward points. The more you share, the more you earn.</p>
         <div className="ff-v21-link"><code>{link}</code>
-          <Btn onClick={() => vipCopy21(dispatch, "https://" + link)}>Copy link</Btn>
-          <Btn onClick={() => vipShare21(msg)}>Share on WhatsApp</Btn></div>
+          <VipLockBtn21>Copy link</VipLockBtn21>
+          <VipLockBtn21>Share on WhatsApp</VipLockBtn21></div>
         <p style={{ fontSize: 13.5, opacity: .85 }}>The points system opens later. Everyone you bring before then counts.</p>
       </div>
     </section>
@@ -604,6 +616,7 @@ function VipBook21() {
   const reqBits = [f.champagne && "Champagne", f.table && "Best table", f.priv && "Private place", total ? total + " drinks" : "", f.waiter && "Waiter", f.bartender && "Bartender"].filter(Boolean);
   const upsert = (data) => { const list = events.some(e => e.id === ev.id) ? events.map(e => e.id === ev.id ? { ...e, ...data } : e) : [{ id: ev.id, ...data }, ...events]; vipPatch21(dispatch, state, { events: list, pick: "" }); };
   const saveEvent = () => {
+    if (VIP_LOCKED21) return false;
     if (!evDone) { dispatch({ type: "TOAST", toast: "Add the date and location" }); return false; }
     const ci = cleanIso11(ev.iso);
     if (ci.past) { setEv(d => ({ ...d, iso: ci.iso })); dispatch({ type: "TOAST", toast: "That date has already passed. Choose today or a later date" }); return false; }
@@ -613,6 +626,7 @@ function VipBook21() {
     return true;
   };
   const confirm = () => {
+    if (VIP_LOCKED21) return;
     if (!done) { dispatch({ type: "TOAST", toast: "Create your VIP card first, so the venue receives it" }); return; }
     if (!evDone) { setOpK("event", true); focusSec("ff-bs-event"); dispatch({ type: "TOAST", toast: "Add the date and location" }); return; }
     if (!f.exp) { setOpK("exp", true); focusSec("ff-bs-exp"); dispatch({ type: "TOAST", toast: "Choose the kind of experience" }); return; }
@@ -639,7 +653,7 @@ function VipBook21() {
   };
   const reset = () => { setSent(null); setEv(blank()); setF({ exp: "", drinks: {}, champagne: false, table: false, priv: false, waiter: "", bartender: "" }); setOp({}); window.scrollTo(0, 0); };
   const editEvent = (e) => { setEv({ id: e.id, title: e.title || "", kind: e.kind || "", iso: e.iso || "", start: e.start || "", venue: e.venue || "", guests: e.guests || "", details: e.details || "" }); setSent(null); setOpK("event", true); focusSec("ff-bs-event"); };
-  const openInvite = (e) => setInvOpen({ evId: e.id, title: eventTitle(e), date: e.iso ? longDay(e.iso) : (e.date || ""), venue: e.venue || "" });
+  const openInvite = (e) => VIP_LOCKED21 ? null : setInvOpen({ evId: e.id, title: eventTitle(e), date: e.iso ? longDay(e.iso) : (e.date || ""), venue: e.venue || "" });
   const host = (v.card && v.card.name) || "";
   const sw = (key, t, s) => <button type="button" className="ff-v21-sw" aria-pressed={!!f[key]} onClick={() => set({ [key]: !f[key] })}><span><b>{t}</b><small>{s}</small></span><i aria-hidden="true" /></button>;
   const when = ev.iso ? new Date(ev.iso + "T12:00").toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" }) : "";
@@ -648,7 +662,7 @@ function VipBook21() {
       {op.event ? (<>
         <SecHead n={1} title="Event Card" onToggle={() => setOpK("event", false)} />
         <div className="ff-evwrap"><EventCard11 ev={ev} edit onPatch={(x) => setEv(d => ({ ...d, ...x }))} /></div>
-        <div className="ff-v21-btns" style={{ marginTop: 12, justifyContent: "center" }}><Btn variant="primary" onClick={saveEvent}><Check size={14} /> Save Event Card</Btn></div>
+        <div className="ff-v21-btns" style={{ marginTop: 12, justifyContent: "center" }}><VipLockBtn21 label="Save Event Card">Save Event Card</VipLockBtn21></div>
       </>) : (
         <BigBtn n={1} icon={Cal} title="Event Card" done={evDone}
           hint={evDone ? [when, ev.start, ev.venue].filter(Boolean).join(" · ") : "Date, place and guests"}
@@ -710,9 +724,9 @@ function VipBook21() {
                 <p style={{ margin: "4px 0 12px" }}>The venue receives your VIP card with the request. FireFlair will confirm it with you.</p>
                 <div style={{ maxWidth: 260, margin: "0 auto 14px" }}><VipCard21 card={v.card} tag={state.session && state.session.tag} /></div>
                 <div className="ff-v21-btns" style={{ justifyContent: "center" }}>
-                  <VipShine21 onClick={() => { const e = (v.events || []).find(x => x.id === ev.id); if (e) openInvite(e); }}>Share as an invitation</VipShine21>
+                  <VipShine21 locked>Share as an invitation</VipShine21>
                   <Btn onClick={reset}>Plan another</Btn></div></div>
-            ) : <ConfirmSpin17 lines={["Review", "&", "Confirm"]} label="Review and confirm your VIP booking" onClick={confirm} />}
+            ) : <div className="ff-v21-lockbar"><VipLockBtn21 label="Review and confirm your VIP booking">Review and confirm</VipLockBtn21></div>}
           </div>
         </section>
         {events.length > 0 ? (
@@ -722,7 +736,7 @@ function VipBook21() {
               <div key={e.id} className="ff-pev17-c" style={{ width: 300, flex: "none" }}>
                 <EventCard11 ev={e} />
                 <div className="ff-v21-btns" style={{ marginTop: 8, justifyContent: "center" }}>
-                  <button type="button" className="ff-pev17-again" onClick={() => openInvite(e)}><Send size={14} /> Share invitation</button>
+                  <button type="button" className="ff-pev17-again ff-v21-locked" aria-disabled="true" aria-label={"Share invitation. " + VIP_LOCK_LABEL21} title={VIP_LOCK_LABEL21} onClick={(x) => { x.preventDefault(); x.stopPropagation(); }}><Lock size={14} aria-hidden="true" /> Share invitation</button>
                   <button type="button" className="ff-pev17-again" onClick={() => editEvent(e)}><Pencil size={14} /> Edit</button>
                 </div>
               </div>))}</HScroll>
@@ -872,8 +886,9 @@ function VipMap21() {
     const L = window.L, G = ukGeo11();
     let map;
     try {
-      map = L.map(boxRef.current, { zoomControl: false, attributionControl: false, scrollWheelZoom: false, dragging: !L.Browser.mobile, zoomSnap: 0.25, zoomDelta: 1, minZoom: 5, maxZoom: 13, preferCanvas: true });
+      map = L.map(boxRef.current, { zoomControl: false, attributionControl: false, scrollWheelZoom: false, dragging: true, touchZoom: true, zoomSnap: 0.25, zoomDelta: 1, minZoom: 5, maxZoom: 13, preferCanvas: true });
       mapRef.current = map;
+      map.on("unload", ffMapGestures17(map, boxRef.current));
       const cv = L.canvas({ padding: 0.4 });
       const area = (sets, style) => sets && sets.length ? L.polygon(sets.map(p => p.map(decRing11)), { renderer: cv, interactive: false, ...style }) : null;
       const line = (sets, style) => sets && sets.length ? L.polyline(sets.map(decRing11), { renderer: cv, interactive: false, ...style }) : null;
@@ -961,7 +976,7 @@ function VipMedia21({ list, onChange }) {
 function VipWallet21({ open, onClose, card }) {
   const { dispatch } = useStore();
   return (
-    <Sheet open={open} onClose={onClose} title="Add to wallet" center>
+    <Sheet open={open && !VIP_LOCKED21} onClose={onClose} title="Add to wallet" center>
       <div style={{ display: "grid", gap: 12, justifyItems: "center" }}>
         <VipCard21 card={card} />
         <div className="ff-v21-wallet" style={{ width: "100%", maxWidth: 440 }}>
@@ -987,6 +1002,7 @@ function VipCardPage21() {
   const stock = ["training_mixology", "reward_bar_kit", "jr_menuteam"].map(k => ({ id: "stock_" + k, src: vipImg21(k), name: "" })).filter(m => m.src);
   const own = (c.media || []).filter(m => m.src);
   const save = async () => {
+    if (VIP_LOCKED21) return;
     if (!String(c.name || "").trim()) { dispatch({ type: "TOAST", toast: "Add your name" }); window.scrollTo({ top: 0, behavior: "smooth" }); return; }
     const first = !v.guest;
     const guest = v.guest || { ref: vipRef21("VG"), at: Date.now() };
@@ -1036,9 +1052,9 @@ function VipCardPage21() {
             <VipChips21 list={VIP21_DIET} value={c.diet} onChange={(x) => set({ diet: x })} />
             <label style={{ display: "block", marginTop: 12 }}><span className="ff-v21-k">Allergies and anything else</span><input className="ff-v21-in" value={c.allergies} onChange={(e) => set({ allergies: e.target.value })} aria-label="Allergies and anything else" /></label>
           </section>
-          {done ? <div className="ff-v21-btns" style={{ marginTop: 22 }}><VipShine21 onClick={() => setWallet(true)}>Add to wallet</VipShine21><CardShareBtn17 title={`${c.name || "My"} FF VIP card`} url={`https://${VIP21.domain}/${VIP21.slug(state)}`} fileName={"fireflair-vip-" + cx17Slug(VIP21.slug(state))} render={() => <VipCard21 card={c} tag={tag} />} label="Share my card" /></div> : null}
+          {done ? <div className="ff-v21-btns" style={{ marginTop: 22 }}><VipShine21 locked>Add to wallet</VipShine21><VipLockBtn21>Share my card</VipLockBtn21></div> : null}
         </>} />
-        <ConfirmSpin17 lines={["Save"]} label={v.guest ? "Save VIP card" : "Save VIP card and join the guest list"} onClick={save} />
+        <div className="ff-v21-lockbar"><VipLockBtn21 label={v.guest ? "Save VIP card" : "Save VIP card and join the guest list"}>{v.guest ? "Save VIP card" : "Save VIP card and join the guest list"}</VipLockBtn21></div>
         <VipRewardsSect21 />
       </div>
       <VipWallet21 open={wallet} onClose={() => setWallet(false)} card={c} />
@@ -1051,9 +1067,9 @@ function VipRouter21() {
   const { state } = useStore();
   const { tab } = state;
   if (state.viewing) return React.createElement(PersonProfile, null);
-  /* Business & Support closes every Network and Bookings page (v17.4.6.1). */
-  if (tab === "network") return React.createElement(React.Fragment, null, React.createElement(VipExperiences21, null), React.createElement(V101.BusinessSupport19, null));
-  if (tab === "bookings") return React.createElement(React.Fragment, null, React.createElement(VipBook21, null), React.createElement(V101.BusinessSupport19, null));
+  /* Business & Support sits on the home pages only (v17.8.2); profiles, Network and Bookings do not carry it. */
+  if (tab === "network") return React.createElement(React.Fragment, null, React.createElement(VipExperiences21, null));
+  if (tab === "bookings") return React.createElement(React.Fragment, null, React.createElement(VipBook21, null));
   if (tab === "profile") return React.createElement(VipCardPage21, null);
   return React.createElement(VipHome21, null);
 }
@@ -1075,10 +1091,13 @@ function StaffRouter() {
   const { route, tab } = state;
   if (state.viewing)
     return React.createElement(PersonProfile, null);
+  /* Phase 2: FF Party shows Home and Browse only; whatever state or link asks for Book or Party lands on Home. */
+  if (isPartySite17(state) && (PARTY_LOCKED_TABS17.includes(tab) || PARTY_LOCKED_ROUTES17.includes(route)))
+    return React.createElement(V101.PartyHome11, null);
   if (tab === "network")
-    return React.createElement(React.Fragment, null, React.createElement(StaffRoster, null), React.createElement(V101.BusinessSupport19, null));
+    return React.createElement(React.Fragment, null, React.createElement(StaffRoster, null));
   if (tab === "bookings")
-    return React.createElement(React.Fragment, null, React.createElement(StaffBookings, null), React.createElement(V101.BusinessSupport19, null));
+    return React.createElement(React.Fragment, null, React.createElement(StaffBookings, null));
   if (tab === "profile")
     return React.createElement(ProfileGate17, {
       kind: state.site === "party" ? "party" : "biz"

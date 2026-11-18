@@ -1,0 +1,101 @@
+{
+  "formatVersion": 2,
+  "slug": "lunar-ice",
+  "name": "Lunar Ice",
+  "kind": "Ice delivery",
+  "base": "Crawley",
+  "areas": [
+    "Surrey",
+    "Sussex",
+    "Kent",
+    "Hampshire"
+  ],
+  "description": "An ice delivery company based near Gatwick, supplying bars, restaurants and events across Surrey, Sussex, Kent and Hampshire.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://lunarice.co.uk",
+    "at": "2026-11-08"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Ice delivery"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://lunarice.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Private parties",
+        "Corporate events",
+        "Bars and venues"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://lunarice.co.uk",
+        "at": "2026-11-08"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Based near Gatwick"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://lunarice.co.uk",
+        "at": "2026-11-08"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://lunarice.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://lunarice.co.uk",
+          "at": "2026-11-08"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "svc",
+    "sub": "ice",
+    "tag": "LUNAR",
+    "position": 124,
+    "source": {
+      "urls": [
+        "https://lunarice.co.uk"
+      ],
+      "retrievedAt": "2026-11-08"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Crawley",
+        "lat": 51.1092,
+        "lng": -0.1872,
+        "approx": true
+      }
+    ]
+  }
+}

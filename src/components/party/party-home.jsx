@@ -22,7 +22,7 @@ function PartyCard11({ edit, demo }) {
     <div className="ff-pcard11">
       <span className="plate">VIP Host Card</span>
       {c.vip && c.vip.status === "founding" && <span className="fnd" style={{ position: "absolute", left: 10, bottom: 10, padding: "3px 10px", borderRadius: 12, background: "linear-gradient(135deg,#E6C877,#B8912F)", color: "#1A1408", fontSize: 10.5, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", zIndex: 2 }}>Founding VIP</span>}
-      <span className="coin"><Coin size={28} tier="gold" /></span>
+      <span className="coin"><FFLogo size={28} tier="gold" /></span>
       <button type="button" className="ph" onClick={() => edit && ref.current && ref.current.click()} aria-label={c.photo ? "Change your photo" : "Add your photo"} disabled={!edit}>
         {c.photo ? <img decoding="async" src={c.photo} alt="" /> : <span className="add"><CameraPlusGlyph size={28} /><span>Add your photo</span></span>}
         <input ref={ref} type="file" accept="image/*" hidden onChange={pick} />
@@ -158,7 +158,7 @@ function InviteCard17({ iv, host }) {
       {iv.venue && <span className="dt"><I11.MapPin size={14} /> {iv.venue}</span>}
       {iv.msg && <p className="ms">{iv.msg}</p>}
       <span className="ho">{host ? `Hosted by ${host}` : "FF Party"}</span>
-      <span className="cn" aria-hidden="true"><Coin size={26} tier="gold" /></span>
+      <span className="cn" aria-hidden="true"><FFLogo size={26} tier="gold" /></span>
     </article>);
 }
 
@@ -245,12 +245,14 @@ function PartyLoginSheet17({ onClose }) {
       const tag = "HOST" + phone.replace(/\D/g, "").slice(-4);
       const res = await AUTH_ADAPTER.loginWithPassword(tag, pw);
       dispatch({ type: "SESSION", patch: { tag: res.tag, phone, verified: true } });
+      const draft = !!(state.session && state.session.reviewDraft17);
       dispatch({ type: "AUTH_SIGNED_IN", tag: res.tag, method: res.method });
-      dispatch({ type: "TOAST", toast: "Logged in" }); onClose();
+      /* Fixes2: a review written while signed out posts at sign-in with its own "Review sent to …" toast; keep that one. */
+      if (!draft) dispatch({ type: "TOAST", toast: "Logged in" }); onClose();
     } catch (e) { setErr("That phone number and password do not match."); } finally { setBusy(false); }
   };
   return (
-    <Sheet open onClose={onClose} title="Log in">
+    <Sheet open onClose={onClose} title="Log in" newLogo>
       <Field label="Phone number"><input className="ff-input" type="tel" autoComplete="tel" placeholder="+44 7700 900000" value={phone} onChange={(e) => setPhone(e.target.value)} /></Field>
       <Field label="Password"><input className="ff-input" type="password" autoComplete="current-password" value={pw} onChange={(e) => setPw(e.target.value)} onKeyDown={(e) => e.key === "Enter" && ok && !busy && go()} /></Field>
       <Btn variant="primary wide" disabled={busy || !ok} onClick={go}>{busy ? <Loader2 size={14} className="ff-spin" /> : <ShieldCheck size={14} />} Log in</Btn>
@@ -272,8 +274,9 @@ function StaffProfile() {
   return (
     <div>
       <div className="ff-eyebrow">{site.name} · {site.party ? "Your Party" : "Your Business"}</div>
+      {!joined && !site.party && !(state.session && state.session.claimSlug) && <CoFind17 />}
       <div className="ff-journey">
-        <BigStepHead n={1} title={`Join ${site.name}`} done={joined} id="ff-co-step-1" />
+        <BigStepHead n={1} title={site.party ? `Join ${site.name}` : "Create your company profile"} done={joined} id="ff-co-step-1" />
         <CompanyJoin />
         {site.party ? (<>
           <StepHead n={2} title="Your FF Party Card" done={cardReady} note="Shared with the people you book, so they know who you are and how you like your parties." />
@@ -282,9 +285,9 @@ function StaffProfile() {
           <PartySections11 />
         </>) : (<>
           <StepHead n={2} title="Company Card" done={cardReady} note="Sent to anyone you hire, to show them who you are. It can also be added to FF Party to advertise your services." />
-          <div id="ff-co-card"><EditableCompanyCard /></div>
-          <StepHead n={3} title="Describe your business" done={!!c.description} />
-          <CompanyFFAI />
+          <div id="ff-co-card"><EditableCompanyCard noType /></div>
+          <StepHead n={3} title="Book a meeting" done={false} note="We'll fill your profile out for you." />
+          <CompanyMeeting17 />
           <StepHead n={4} title="Your company profile" done={false} />
           <CompanySections />
         </>)}

@@ -131,9 +131,6 @@ const FD_REGION = {
 
 
 const FD_PERSON_COV = {
-  stf_sam: { whole: [FD_LONDON] },
-  stf_fre: { sub: [FD_HERTS] },
-  stf_zar: { sub: ["gn:2638867", "gn:2647138"] },
 };
 
 
@@ -173,6 +170,8 @@ const fdCompanyCover = (c) => {
     FD_NODES.forEach(n => { if (n.lat == null || (n.k !== "p" && n.k !== "a")) return; const d = fdHav(l.lat, l.lng, n.lat, n.lng); if (!best || d < best[0]) best = [d, n.id]; });
     if (best && best[0] < 30) whole.add(best[1]);
   });
+  /* Named coverage ("England", "Wales"): the whole nation, so every page under it lists the company. */
+  (c.cover || []).forEach(nm => { const n = FD_NODES.find(x => x.k === "n" && x.name === nm); if (n) whole.add(n.id); });
   return (FD_CO_CACHE[c.id] = { whole: [...whole], sub: [], fixture: true });
 };
 
@@ -240,8 +239,17 @@ function fdResults(state, node, people, roleId) {
     }
   }
   const person = (l) => l.filter(x => x.kind === "person"), comp = (l) => l.filter(x => x.kind === "company");
-  const dir = all.filter((x) => isDir(x) && (fdCovers(x.cov, node) || (hasKids && fdServesWithin(x.cov, node))));
-  return { exact, within, wider, scope, total: provs.length, exactPeople: person(exact), exactCos: comp(exact), dir };
+  let dir = all.filter((x) => isDir(x) && (fdCovers(x.cov, node) || (hasKids && fdServesWithin(x.cov, node))));
+  /* A place with no listed company of its own shows the FF Event Directory companies that serve the nearest wider place. */
+  let dirScope = null;
+  if (!dir.length) {
+    for (const a of fdAnc(node).slice(1)) {
+      if (a.k === "r" || a.k === "t") break;
+      const found = all.filter((x) => isDir(x) && fdServesWithin(x.cov, a));
+      if (found.length) { dir = found; dirScope = a; break; }
+    }
+  }
+  return { exact, within, wider, scope, total: provs.length, exactPeople: person(exact), exactCos: comp(exact), dir, dirScope };
 }
 
 
@@ -491,7 +499,7 @@ function FdAsk11({ siteKey, node, kind, company, onDone }) {
       <div className="ff-fd-done" role="status">
         <b>{sourcing ? "Request received." : "Thanks, we've noted your interest."}</b>
         <p>{done.dupe ? `We already have this request. ` : ""}Your reference is <b className="ref">{done.ref}</b>. {sourcing ? `Nothing is confirmed yet: no one has been booked or reserved, and you have not been charged. The FireFlair team will look for suitable people and contact you about the options${f.email || f.phone ? ` by ${f.email ? "email" : "telephone"}` : ""}.` : `FireFlair isn't taking requests here yet. We'll use your details only to tell you if that changes.`}</p>
-        <p className="ff-fd-dev"><span className="ff-dev17 tag">DEV</span> Saved to the preview's data as a local_service_request. Admin and acknowledgement notifications are simulated; see FF Admin → Areas and requests.</p>
+        <p className="ff-fd-dev"><span className="ff-dev17 tag">DEV</span> Saved to the preview's data as a local_service_request. Admin and acknowledgement notifications are simulated.</p>
         {onDone && <Btn onClick={onDone}>Done</Btn>}
       </div>
     );
@@ -640,7 +648,7 @@ function AreaPage11() {
   }, [a.path]);
   useEffect(() => { setRole(""); setShowAll(false); setAskCo(null); }, [a.path, siteKey]);
   const res = useMemo(() => node ? fdResults(state, node, people, role) : null, [state.directory, state.admin17, state.company, a.path, role, people.length]);
-  const back = <button type="button" className="ff-fd-back" onClick={() => fdClose(dispatch)}>← Back</button>;
+  const back = <button type="button" className="ff-fd-back" onClick={() => rt17Back(() => fdClose(dispatch))}>← Back</button>;
   if (FD_PATH_ALIASES[a.path]) return <div className="ff-fd-page"><p>Redirecting…</p></div>;
   if (!node) {
     return (
@@ -722,9 +730,11 @@ function AreaPage11() {
         {React.createElement(window.PartyPackages18, { ids: pkgHere.ids, peopleOf: (id) => pkgHere.by[id] || [], place: fdLabel(node), title: "Available packages" })}
       </section>}
 
+      <AreaVenues17 node={node} />
+
       {res.dir.length > 0 && <section id="ff-fd-dir" aria-labelledby="fd-dir-h" style={{ marginTop: 26, scrollMarginTop: 70 }}>
         <h2 id="fd-dir-h" className="ff-h2">FF Event Directory</h2>
-        <p className="ff-fd-sub">Companies listed from their public contact details. FF companies are the companies that have joined and can be booked through FireFlair.</p>
+        <p className="ff-fd-sub">{res.dirScope ? `No companies are listed in ${fdLabel(node)} yet, so these serve ${fdLabel(res.dirScope)}. ` : ""}Companies listed from their public contact details. FF companies are the companies that have joined and can be booked through FireFlair.</p>
         <HScroll label={`FF Event Directory in ${fdLabel(node)}`} snap>{res.dir.slice(0, showAll ? 60 : 24).map(x => <FdResultTile11 key={x.key} x={x} />)}</HScroll>
       </section>}
       {copy.ask && <section id="ff-fd-ask" ref={askRef} className="ff-fd-card" aria-labelledby="fd-ask-h" style={{ scrollMarginTop: 70 }}>
@@ -866,7 +876,7 @@ function FdPages11({ fd, state, dispatch, can, by, people, stamp }) {
   const okForm = reason.trim().length >= 10 && FD_CHECKS.every(c => checks[c[0]]) && approveIds.length > 0;
   const approve = () => { const ids = approveIds.filter(id => ["recruiting", "operational"].includes(fdMarket(fd, site, FD_BY_ID[id]))); if (!ids.length) { dispatch({ type: "TOAST", toast: "Only recruiting or operational markets can be approved for search." }); return; }
     write(ids, "approved", { reason: reason.trim(), checks: { ...checks }, exceptions: sel.filter(id => skip[id]) }); };
-  const pre = (id) => { dispatch({ type: "V11_SET", patch: { adminOpen17: false, fdPreview: true } }); fdNav(dispatch, site, FD_BY_ID[id].path); };
+  const pre = (id) => { dispatch({ type: "V11_SET", patch: { fdPreview: true } }); fdNav(dispatch, site, FD_BY_ID[id].path); };
   const showAdmin = !!canEdit;
   return (
     <>
@@ -957,7 +967,7 @@ function FdAbout11({ fd }) {
   const L = [
     ["What this is", "One location system shared by FF Party, FF Team and FF Staff. 1,000 prepared places can each have one page per site: up to 3,000 routes, each with its own intent, copy and canonical."],
     ["Three states", "Prepared: admin preview only. Published for use: a working page, noindex, not in the sitemap. Approved for search: reviewed, indexable, self-canonical and in its site's sitemap. Each (site, place) pair moves on its own."],
-    ["Coverage", "Whole-area coverage (Greater London) includes places beneath it. A selected place (Camden) covers only that place. Parent fallback climbs the browsing tree, is labelled, and stops at the UK nation. Distance is never claimed."],
+    ["Coverage", "Whole-area coverage (Greater London) includes places beneath it. A selected place (Camden) covers only that place. Parent fallback climbs the browsing tree, is labelled, and stops at the UK nation. Distance is only used where a member chose a travel distance from their base."],
     ["Requests", "Every request is saved first as a local_service_request with a reference. It books, reserves and charges nothing. Unclaimed company cards: FireFlair contacts the company and passes the enquiry on."],
     ["Simulated here", "Persistence (saved with the preview data), notifications, the sitemap, and the provider coverage (fixtures built from the sample people's regions and company base locations)."]
   ];
@@ -970,6 +980,6 @@ const FD_CSS = __ff_css("styles/fd.css");
 
 
 
-function NetMap11() {
-  return React.createElement(React.Fragment, null, React.createElement("section", { id: "ff-netmap", style: { marginTop: 22, scrollMarginTop: 70 } }, React.createElement(BigHead20, { title: "Browse the network" }), React.createElement(FFMap, { mode: "network" })), React.createElement(AreaExplorer11, null));
+function NetMap11(props) {
+  return React.createElement(React.Fragment, null, React.createElement("section", { id: "ff-netmap", style: { marginTop: props && props.bare ? 14 : 22, scrollMarginTop: 70 } }, props && props.bare ? null : React.createElement(BigHead20, { title: "Explore our network" }), React.createElement(FFMap, { mode: "network" })), React.createElement(AreaExplorer11, null));
 }

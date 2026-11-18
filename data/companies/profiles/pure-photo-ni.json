@@ -1,0 +1,89 @@
+{
+  "formatVersion": 2,
+  "slug": "pure-photo-ni",
+  "name": "Pure Photo N.I",
+  "kind": "Wedding photography",
+  "base": "Lisburn",
+  "areas": [
+    "Lisburn",
+    "Belfast",
+    "Northern Ireland"
+  ],
+  "description": "A multi-award-winning husband-and-wife wedding photography team based in Lisburn, just outside Belfast.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://app.bridebook.com/uk/search/wedding-photographers/gb?page=100",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding photography"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/search/wedding-photographers/gb?page=100",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/search/wedding-photographers/gb?page=100",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Multi-award winning"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://app.bridebook.com/uk/search/wedding-photographers/gb?page=100",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "PUREP",
+    "position": 89,
+    "source": {
+      "urls": [
+        "https://app.bridebook.com/uk/search/wedding-photographers/gb?page=100"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Lisburn",
+        "lat": 54.5162,
+        "lng": -6.058,
+        "approx": false
+      },
+      {
+        "label": "Belfast",
+        "lat": 54.5973,
+        "lng": -5.9301,
+        "approx": true
+      }
+    ]
+  }
+}

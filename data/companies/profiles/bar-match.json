@@ -1,0 +1,147 @@
+{
+  "formatVersion": 2,
+  "slug": "bar-match",
+  "name": "Bar Match",
+  "kind": "Mobile cocktail bar & bartenders",
+  "base": "London",
+  "areas": [
+    "London"
+  ],
+  "description": "A London mobile bar company offering custom cocktails and mocktails, mixologists, waiting staff, glassware and ice.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.poptop.uk.com/supplier/bar-match-ltd",
+    "at": "2026-11-07"
+  },
+  "media": [
+    {
+      "id": "bar-match_0",
+      "src": "https://barmatch.co.uk/wp-content/uploads/2026/05/private-event-2-750-750.jpg",
+      "alt": "Bar Match",
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/bar-match-ltd",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "bar-match_1",
+      "src": "https://barmatch.co.uk/wp-content/uploads/2026/06/mobile-bar-hire-1-750-750.jpg",
+      "alt": "Bar Match",
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/bar-match-ltd",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "bar-match_2",
+      "src": "https://barmatch.co.uk/wp-content/uploads/2026/07/expert-mixologists.webp",
+      "alt": "Bar Match",
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/bar-match-ltd",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "bar-match_3",
+      "src": "https://barmatch.co.uk/wp-content/uploads/2026/07/the-art-of-mixologist-made-with-love.webp",
+      "alt": "Bar Match",
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/bar-match-ltd",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Mobile cocktail bar",
+        "Custom cocktails and mocktails",
+        "Mixologists",
+        "Waiting staff",
+        "Glassware and ice"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/bar-match-ltd",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Private events",
+        "Corporate events",
+        "Weddings",
+        "Birthday parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/bar-match-ltd",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Listing details only; own website not confirmed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/bar-match-ltd",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://barmatch.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://www.poptop.uk.com/supplier/bar-match-ltd",
+          "at": "2026-11-07"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "BARMT",
+    "position": 16,
+    "legal": {
+      "form": null,
+      "legalName": "Bar Match Ltd",
+      "companyNumber": null
+    },
+    "source": {
+      "urls": [
+        "https://www.poptop.uk.com/supplier/bar-match-ltd"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "London",
+        "lat": 51.51,
+        "lng": -0.16,
+        "approx": false
+      }
+    ]
+  }
+}

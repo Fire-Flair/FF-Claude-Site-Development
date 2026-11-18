@@ -1,0 +1,149 @@
+{
+  "formatVersion": 2,
+  "slug": "barworx",
+  "name": "Barworx",
+  "kind": "Festival bars & bar equipment hire",
+  "base": "Milton Keynes",
+  "areas": [
+    "Milton Keynes",
+    "London",
+    "UK-wide"
+  ],
+  "logoBg": "dark",
+  "logoWide": false,
+  "description": "A festival bar and bar equipment hire specialist for beer festivals and large-scale festivals. It supplies counters, cask ale cooling, keg hire and craft beer walls, with delivery, installation and collection.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/suppliers/barworx",
+    "at": "2026-11-07"
+  },
+  "media": [
+    {
+      "id": "barworx_0",
+      "src": "https://www.addtoevent.co.uk/sites/default/files/styles/x_large/gs.ate-mp-production-0a18-drupal-public-files/uploads/d727bf70-3910-4a09-8cc1-8d39f4156ed5/PHOTO-2025-01-10-13-37-41.jpg",
+      "alt": "Barworx",
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/barworx",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "barworx_1",
+      "src": "https://www.addtoevent.co.uk/sites/default/files/styles/x_large/gs.ate-mp-production-0a18-drupal-public-files/uploads/9e04f6e3-04a0-4a40-9b61-a2219de05d34/PHOTO-2025-01-10-13-37-35%20(1).jpg",
+      "alt": "Barworx",
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/barworx",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "barworx_2",
+      "src": "https://www.addtoevent.co.uk/sites/default/files/styles/x_large/gs.ate-mp-production-0a18-drupal-public-files/uploads/fe312d9d-11d5-42da-8b33-74bad3a28c94/PHOTO-2025-01-10-13-37-35.jpg",
+      "alt": "Barworx",
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/barworx",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "barworx_3",
+      "src": "https://www.addtoevent.co.uk/sites/default/files/styles/x_large/gs.ate-mp-production-0a18-drupal-public-files/uploads/1670a70b-3912-4873-9163-aa3b2105cae2/PHOTO-2025-01-10-13-37-34.jpg",
+      "alt": "Barworx",
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/barworx",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Festival bars",
+        "Mobile craft beer bars",
+        "Bar equipment hire",
+        "Keg hire",
+        "Craft beer walls",
+        "Cask ale racking and cooling",
+        "Delivery, installation and servicing"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/barworx",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Beer festivals",
+        "Large-scale festivals",
+        "Weddings",
+        "Venue and promoter events",
+        "Oktoberfest bierkellers"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/barworx",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "scale",
+      "title": "Scale",
+      "chips": [
+        "Bar counters up to 400 metres",
+        "Cask cooling for over 300 nine-gallon casks"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/barworx",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Listing details only; own website not confirmed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/suppliers/barworx",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "BARWX",
+    "position": 5,
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/suppliers/barworx"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "granted"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Milton Keynes",
+        "lat": 52.0406,
+        "lng": -0.7594,
+        "approx": false
+      }
+    ]
+  }
+}

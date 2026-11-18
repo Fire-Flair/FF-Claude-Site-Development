@@ -39,25 +39,51 @@ const OWN_SERVICE_EXAMPLES = [
 
 
 
+/* The Event Photography example card shown on the FF Team and FF Staff pillars (v17.16): Hayden's card, with a sample photo from the
+   library across the top (it is not a picture of Hayden), his town with a pin and his own price line. Other own-service cards are unchanged. */
+const OWN_PHOTO_SAMPLE17 = {
+  person: { id: "hayden", name: "Hayden Forde-Pogson", tag: "hayden", tier: "standard", photo: null, profession: "Photographer", group: "Photographers" },
+  sampleIcon: "camera", place: "Norfolk", priceLine: "£329",
+};
+const ownPhotoExample17 = () => {
+  const ex = OWN_SERVICE_EXAMPLES.find((x) => x.id === "own_photo");
+  return ex ? { ...ex, ...OWN_PHOTO_SAMPLE17 } : null;
+};
+
+
+
 /* A user's own Service Card: square, on the same card system as skills. */
 function OwnServiceCard({ item, onClick }) {
   const p = item.person;
   const t = THEMES[item.theme] || THEMES.onyx;
   const first = String(p.name || "").split(" ")[0];
+  const IM = window.FF_IMG || {};
+  const ph = item.sample && IM[item.sample] ? IM[item.sample] : null;
+  const ic = item.sampleIcon === "camera" ? Camera : null; /* v17.17: a drawn camera instead of a photo */
+  const top = (
+    <span className="ff-svcsq-top" style={{ color: t.sub }}>
+      <span>Service Card</span>
+      <span className="kind" style={{ borderColor: t.rule, color: t.ink }}>{item.kind}</span>
+    </span>
+  );
   return (
-    <CardFrame as={onClick ? "button" : "div"} tier={p.tier} theme={t} ratio="1 / 1" className="sq ff-svcsq" onClick={onClick}
+    <CardFrame as={onClick ? "button" : "div"} tier={p.tier} theme={t} ratio="1 / 1" className={"sq ff-svcsq" + (ph || ic ? " has-ph" : "")} onClick={onClick}
       style={{ width: CARD_W.svcsq, padding: "14px 14px 12px", display: "flex", flexDirection: "column", textAlign: "left" }}>
-      <span className="ff-svcsq-top" style={{ color: t.sub }}>
-        <span>Service Card</span>
-        <span className="kind" style={{ borderColor: t.rule, color: t.ink }}>{item.kind}</span>
-      </span>
+      {ph ? <span className="ff-svcsq-ph"><img decoding="async" src={ph} alt="" draggable={false} /></span>
+        : ic ? <span className="ff-svcsq-ph ic" aria-hidden="true">{React.createElement(ic, { size: 40, strokeWidth: 1.4 })}</span> : null}
+      {top}
       <span className="ff-svcsq-title" style={{ color: t.ink }}>{item.title}</span>
       <span className="ff-svcsq-desc" style={{ color: t.ink }}>{item.text}</span>
       <span className="ff-svcsq-by" style={{ borderTopColor: t.rule }}>
         <Portrait src={p.photo} name={p.name} size={34} tier={p.tier} />
         <span style={{ minWidth: 0 }}>
           <b style={{ color: t.ink }}>{p.name}</b>
-          <small style={{ color: t.sub }}>Priced by {first}</small>
+          {item.priceLine || item.place
+            ? <small className="ff-svcsq-meta" style={{ color: t.sub }}>
+                {item.priceLine ? <span>{item.priceLine}</span> : null}
+                {item.place ? <span className="loc"><MapPin size={11} strokeWidth={2} aria-hidden="true" />{item.place}</span> : null}
+              </small>
+            : <small style={{ color: t.sub }}>Priced by {first}</small>}
         </span>
       </span>
     </CardFrame>
@@ -105,9 +131,9 @@ const TRAINING_COURSES = [
   { id: "wset_spirits", kind: "Qualification", icon: Award, tone: "steel", title: "WSET Spirits", note: "Wine & Spirit Education Trust spirits qualifications, taught by an approved course provider." },
   { id: "wset_wine", kind: "Qualification", icon: Wine, tone: "violet", title: "WSET Wine", note: "Wine & Spirit Education Trust wine qualifications, taught by an approved course provider." },
   { id: "brand_training", kind: "Brand event", icon: Sparkles, tone: "emerald", title: "Spirit brand training", note: "Training events hosted by spirit brands: their spirits, their story and how to serve them." },
-  { id: "ff_open_class", kind: "FireFlair event", coin: true, tone: "onyx", title: "FireFlair Open Class", note: "Open training sessions run by FireFlair for everyone in the network." },
-  { id: "ff_open_bar", kind: "FireFlair event", coin: true, tone: "bronze", title: "FireFlair Open Bar", note: "Hands-on sessions behind the bar with other FF Team members." },
-  { id: "ff_masterclass", kind: "FireFlair event", coin: true, tone: "platinum", title: "FireFlair Masterclass", note: "Led by experienced bartenders, one technique or spirit at a time." },
+  { id: "ff_open_class", kind: "FF event", coin: true, tone: "onyx", title: "FireFlair Open Class", note: "Open training sessions run by FireFlair for everyone in the network." },
+  { id: "ff_open_bar", kind: "FF event", coin: true, tone: "bronze", title: "FireFlair Open Bar", note: "Hands-on sessions behind the bar with other FF Team members." },
+  { id: "ff_masterclass", kind: "FF event", coin: true, tone: "platinum", title: "FireFlair Masterclass", note: "Led by experienced bartenders, one technique or spirit at a time." },
 ];
 
 
@@ -147,7 +173,7 @@ function ReviewCardSample({ from, to, worked, how, text, status, done }) {
   return (
     <article className="ff-rvcard" aria-label={`Example Review Card from ${from.name} to ${to.name}`}>
       <div className="ff-rvcard-ribbon"><Star size={11} fill="currentColor" /> Review Card</div>
-      <span className="ff-rvcard-coin"><Coin size={34} tier="gold" /></span>
+      <span className="ff-rvcard-coin"><FFLogo size={34} tier="gold" /></span>
       <div className="ff-rvcard-who">
         <span className="p"><Portrait src={from.photo} name={from.name} size={54} tier={from.tier} /><b>{first(from)}</b><small>{from.profession}</small></span>
         <span className="arrow" aria-hidden="true"><ArrowRight size={18} /></span>

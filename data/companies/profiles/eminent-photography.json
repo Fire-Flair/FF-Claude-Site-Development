@@ -1,0 +1,70 @@
+{
+  "formatVersion": 2,
+  "slug": "eminent-photography",
+  "name": "Eminent Photography",
+  "kind": "Wedding photography",
+  "base": "Cardiff",
+  "areas": [
+    "Cardiff",
+    "South Wales"
+  ],
+  "description": "A small Cardiff team of photographers blending fine-art and documentary styles for modern contemporary wedding photography.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://bridebook.com/uk/search/wedding-photographers/south-wales?page=4",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Wedding photography"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/search/wedding-photographers/south-wales?page=4",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://bridebook.com/uk/search/wedding-photographers/south-wales?page=4",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "photo",
+    "tag": "EMINE",
+    "position": 85,
+    "source": {
+      "urls": [
+        "https://bridebook.com/uk/search/wedding-photographers/south-wales?page=4"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Cardiff",
+        "lat": 51.4816,
+        "lng": -3.1791,
+        "approx": false
+      }
+    ]
+  }
+}

@@ -6,7 +6,7 @@
    category for quick picking; any profession can be typed in. */
 const PROFESSION_CATEGORIES = [
   { key: "Bar",            suggested: ["Barback", "Bartender", "Cocktail Bartender", "Flair Bartender", "Mixologist"] },
-  { key: "Front of House", suggested: ["Waiter", "Host", "Front of House", "Event Host", "Catering Assistant"] },
+  { key: "Front of House", suggested: ["Waiter", "Host", "Front of House", "Event Host", "Catering Assistant", "Sommelier"] },
   { key: "Management",     suggested: ["Event Manager", "Event Planner", "Bar Manager", "Floor Manager", "Kitchen Manager"] },
   { key: "Entertainment",  suggested: ["DJ", "Saxophonist", "Violinist", "Singer", "Magician"] },
   { key: "Services",       suggested: ["Photographer", "Videographer", "Content Creator", "Influencer", "Event Stylist"] },
@@ -23,9 +23,9 @@ const CATEGORY_ORDER = [...PROFESSION_CATEGORIES.map(c => c.key), "Other"];
 const PROFESSION_RULES = [
   ["Management", /\b(manager|planner|coordinator|director|supervisor)\b/],
   ["Back of House", /\b(stock|porter|kitchen assistant|logistics|cellar)\b/],
-  ["Bar", /\b(bar|bartend\w*|mixolog\w*|barback|barista|sommelier)\b/],
+  ["Bar", /\b(bar|bartend\w*|mixolog\w*|barback|barista)\b/],
   ["Chefs", /\b(chef|cook|caterer|pastry|baker)\b/],
-  ["Front of House", /\b(waiter|waitress|host|hostess|front of house|server|catering assistant|usher|runner)\b/],
+  ["Front of House", /\b(waiter|waitress|host|hostess|front of house|server|catering assistant|usher|runner|sommelier)\b/],
   ["Entertainment", /\b(dj|music\w*|singer|sax\w*|violin\w*|magician|mc|band|performer|dancer|entertainer)\b/],
   ["Services", /\b(photo\w*|video\w*|content|influencer|stylist|florist|make-?up|decor\w*)\b/],
 ];
@@ -49,7 +49,60 @@ function professionCategory(name, override) {
 const professionId = (name) => "prof." + String(name || "").trim().toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 
 
+/* v17.9.5: the default description of a profession, for public profile pages only. Used when the member has left the
+   profession's own description blank, so no profession box looks empty. It is never written to the record and the
+   profile builder still shows the box blank. */
+const PROF_DESC17 = CONTENT_ADAPTER.professionDescriptions();
+const PROF_DESC_BY17 = Object.fromEntries(Object.entries(PROF_DESC17.byProfession).map(([k, v]) => [k.toLowerCase(), v]));
+function professionDefaultDesc(name, override) {
+  const n = String(name || "").trim().toLowerCase();
+  if (!n) return "";
+  return PROF_DESC_BY17[n] || PROF_DESC17.byCategory[professionCategory(name, override)] || PROF_DESC17.fallback;
+}
+
+
 const personCategory = (p) => professionCategory(p.profession, p.categoryOverride) || "Other";
+
+
+/* v17.48 (multi-category rule): only a member's top 3 public professions count for Network, search and the map.
+   personProfs17: those three, best first, each with its category. cats: optional { lower-case name: displayCategory }. */
+function personProfs17(p, cats) {
+  const seen = new Set(), out = [];
+  [p.profession, ...(p.professions || [])].forEach(n => {
+    const name = String(n || "").trim(), k = name.toLowerCase();
+    if (!name || seen.has(k) || out.length >= 3) return;
+    seen.add(k);
+    const rank = out.length;
+    out.push({ profession: name, rank, group: professionCategory(name, (cats && cats[k]) || (rank === 0 ? p.categoryOverride : null)) || "Other" });
+  });
+  return out.length ? out : [{ profession: p.profession || "", rank: 0, group: personCategory(p) }];
+}
+
+
+/* The distinct categories of those professions, each once, with the best-ranked profession that put the member there. */
+function personGroups(p, cats) {
+  const out = [];
+  personProfs17(p, cats).forEach(x => { if (!out.some(g => g.group === x.group)) out.push(x); });
+  return out;
+}
+
+
+/* The person as listed under one category: the card plate (first profession) shows the profession that put them there. */
+function plateAs17(p, prof) {
+  if (!prof) return p;
+  const k = String(prof).toLowerCase();
+  return { ...p, profession: prof, professions: [prof, ...(p.professions || []).filter(x => String(x).toLowerCase() !== k)] };
+}
+
+
+/* Network search: a person's search text with only the top 3 professions. Returns how they matched, or null:
+   rank 0-2 = that profession matched (shown on the plate, listed in its category), 3 = name, skill, area and the rest. */
+function netSearchHit17(p, n) {
+  const profs = p.profs17 || personProfs17(p);
+  const m = profs.find(x => x.profession.toLowerCase().includes(n));
+  if (m) return m;
+  return personSearchText({ ...p, profession: "", professions: [] }).includes(n) ? { ...profs[0], rank: 3 } : null;
+}
 
 
 

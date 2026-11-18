@@ -1,0 +1,174 @@
+/* src/state/notes17.js — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
+/* ==========================================================================
+   NOTIFICATIONS THAT STAY (Phase 2 Final, stage 3B)
+   A notification that is dealt with does not vanish: it moves to state.notesDone17 and shows greyed under the
+   active ones, with its outcome ("Accepted", "Declined", "Answered: Yes"), until the person taps Clear or seven
+   days pass. The badge counts active ones only.
+
+   state.notesDone17 = [{ id, acct, kind, title, sub, outcome, at }]
+     acct   "<role>:<FF Tag>"  one list per account and site
+     kind   shift | avail | team | review | coinvite | corequest | question | coquestion | netadd | bkavail | bkupd
+   Production: Core keeps the same record on the notification row (status, outcome, decided_at) and drops rows 7 days
+   after they were decided.
+
+   state.coNetNotes17 = [{ id, companyKey, fromName, at, seen }] — "<Name> added you to their network" for a company.
+   state.profileQuestions[].companyKey — a profile question asked on a Company page, answered by that company.
+   ========================================================================== */
+const NOTES_KEEP_MS17 = 7 * 24 * 3600 * 1000;
+
+
+const notesAcct17 = (s) => `${s.role || "none"}:${(s.auth && s.auth.tag) || "me"}`;
+
+
+/* Profile questions asked on a Company page that the signed-in business has not answered. */
+function coQuestionsWaiting17(s) {
+  const ks = myCoKeys17(s);
+  return ks.length ? (s.profileQuestions || []).filter(q => q.companyKey && ks.includes(q.companyKey) && !isAnswered(q.answer)) : [];
+}
+
+
+/* "<Name> added you to their network" rows that have not been opened yet. */
+function coNetUnseen17(s) {
+  const ks = myCoKeys17(s);
+  return ks.length ? (s.coNetNotes17 || []).filter(x => ks.includes(x.companyKey) && !x.seen) : [];
+}
+
+
+/* The notifications that wait for a reply, in one plain shape. NotifySheet17 draws these rows and notesWatch17 compares them
+   before and after every action to see which ones were dealt with. */
+function notesBrief17(s, people) {
+  const out = [];
+  if (!(s.auth && s.auth.status === "signedIn")) return out;
+  if (s.role === "team") {
+    pending11(s).forEach(e => {
+      const sh = s.shifts.find(x => x.id === e.shiftId), ev = sh && s.events.find(x => x.id === sh.eventId);
+      if (sh) out.push({ id: e.id, kind: "shift", title: `${e.auto ? "Open shift" : "You've been selected"} · ${sh.role}`, sub: `${hirerOf11(s, ev)} · ${whenOf11(sh)}`, e });
+    });
+    availWaiting17(s).forEach(x => out.push({ id: x.id, kind: "avail", qid: `av_${x.iso}`, title: "Are you available?", sub: `${x.byName} · ${shortDay(x.iso)}`, x }));
+    teamAsksWaiting17(s).forEach(x => out.push({ id: x.id, kind: "team", title: x.netAdd ? `${firstName(x.name)} added you to their network` : "Team invitation", sub: x.name, x }));
+    reviewAsksWaiting17(s).forEach(r => out.push({ id: r.id, kind: "review", title: `${firstName(r.byName)} reviewed you`, sub: r.byName, r }));
+    coInvites17(s).forEach(x => out.push({ id: x.id, kind: "coinvite", title: "Company team invitation", sub: x.companyName, x }));
+    questionsWaiting17(s, people).forEach(q => out.push({ id: q.id, kind: "question", qid: q.id, title: "Question for you", sub: `${askerName(q, people)} · ${q.text}`, q }));
+  } else if (s.role === "staff") {
+    coRequests17(s).forEach(x => out.push({ id: x.id, kind: "corequest", title: "Asks to join your team", sub: x.name || (findPerson(people, s, x.personId) || {}).name || "", x }));
+    coQuestionsWaiting17(s).forEach(q => out.push({ id: q.id, kind: "coquestion", title: "Question for your company", sub: `${q.byName || "Someone"} · ${q.text}`, q }));
+    /* "<Name> is available" waits for the business to choose; it greys out once they are chosen, passed over or lapse. */
+    bookingUpdates17(s).filter(u => u.action).forEach(u => out.push({ id: u.id, kind: "bkavail", title: bookingTitle17(u, people), sub: `${u.sh.role} · ${eventTitle(u.ev)} · ${whenOf11(u.sh)}`, u, eid: u.e.id }));
+  }
+  return out;
+}
+
+
+/* The row title for a reply to one of your invitations ("<Name> is available", "<Name> is unavailable", "<Name> didn't reply"). */
+function bookingTitle17(u, people) {
+  const who = (people || []).find(p => p.id === u.e.staffId) || {}, fn = String(who.name || "").split(" ")[0] || "Someone";
+  return { confirmed: `${fn} confirmed`, unavailable: `${fn} is unavailable`, available: `${fn} is available`, noreply: `${fn} didn't reply` }[u.kind];
+}
+
+
+/* What happened to a notification that has just left the active list (null: it only expired or moved, so nothing is kept). */
+function notesOutcome17(it, n) {
+  const short = (v) => { const t = Array.isArray(v) ? v.join(", ") : String(v); return t.length > 60 ? t.slice(0, 57) + "…" : t; };
+  if (it.kind === "shift") {
+    const st = ((n.engagements || []).find(x => x.id === it.id) || {}).state;
+    return st === "confirmed" ? "Accepted" : st === "unavailable" ? "Declined" : st === "available" ? "Marked available" : null;
+  }
+  if (it.kind === "avail") { const v = ((n.profile && n.profile.answers) || {})[it.qid]; return isAnswered(v) ? `Answered: ${short(v)}` : null; }
+  if (it.kind === "question") { const v = ((n.profile && n.profile.answers) || {})[it.qid]; return isAnswered(v) ? `Answered: ${short(v)}` : null; }
+  if (it.kind === "coquestion") { const q = (n.profileQuestions || []).find(x => x.id === it.id); return q && isAnswered(q.answer) ? `Answered: ${short(q.answer)}` : null; }
+  if (it.kind === "bkavail") {
+    const st = ((n.engagements || []).find(x => x.id === it.eid) || {}).state;
+    return st === "confirmed" ? "Chosen" : st === "not_selected" ? "Someone else chosen" : st === "withdrawn" ? "Withdrawn" : st === "unavailable" ? "Unavailable" : null;
+  }
+  if (it.kind === "team") {
+    const v = (n.teamAsks17 || {})[it.id];
+    return v === "accepted" ? "Accepted" : v === "declined" ? "Declined" : (n.connections || []).some(c => c.id === it.x.fromId) ? "Accepted" : null;
+  }
+  if (it.kind === "review") {
+    const d = (n.reviewAsks17 || {})[it.id];
+    return d ? (d.show ? "Shown on your profile" : "Not shown") : null;
+  }
+  if (it.kind === "coinvite" || it.kind === "corequest") {
+    const y = (n.coTeams17 || []).find(r => r.id === it.id);
+    return y && y.status === "accepted" ? "Accepted" : y && y.status === "declined" ? "Declined" : null;
+  }
+  return null;
+}
+
+
+/* Wrapped round the main reducer: any notification that was active before an action and is not after it is kept, greyed. */
+function notesWatch17(prev, next, a) {
+  if (prev === next || !prev.auth || !next.auth || next.auth.status !== "signedIn") return next;
+  if (prev.role !== next.role || prev.site !== next.site || prev.auth.status !== next.auth.status || prev.auth.tag !== next.auth.tag) return next;
+  const was = notesBrief17(prev, prev.directory || []);
+  if (!was.length) return next;
+  const still = new Set(notesBrief17(next, next.directory || []).map(x => x.id));
+  const gone = was.filter(x => !still.has(x.id));
+  if (!gone.length) return next;
+  const t = Date.now(), acct = notesAcct17(next);
+  const add = gone.map(x => ({ id: x.id, acct, kind: x.kind, title: x.title, sub: x.sub, outcome: notesOutcome17(x, next), at: t })).filter(x => x.outcome);
+  if (!add.length) return next;
+  return { ...next, notesDone17: [...(next.notesDone17 || []).filter(d => t - d.at < NOTES_KEEP_MS17 && !add.some(n => n.id === d.id && n.acct === d.acct)), ...add] };
+}
+
+
+/* Greyed rows for this account, newest first, with anything older than seven days dropped. */
+const notesDoneFor17 = (s) => {
+  const t = Date.now(), acct = notesAcct17(s);
+  return (s.notesDone17 || []).filter(d => d.acct === acct && t - d.at < NOTES_KEEP_MS17).sort((a, b) => b.at - a.at);
+};
+
+
+/* The list was opened: stamp it, drop old greyed rows, and grey the informational rows. */
+function notesSeen17(s) {
+  const t = Date.now(), acct = notesAcct17(s);
+  const kept = (s.notesDone17 || []).filter(d => t - d.at < NOTES_KEEP_MS17);
+  const un = coNetUnseen17(s);
+  let out = { ...s, notesSeenAt: t };
+  if (un.length) {
+    out.coNetNotes17 = (s.coNetNotes17 || []).map(x => un.includes(x) ? { ...x, seen: true } : x);
+    un.forEach(x => kept.push({ id: x.id, acct, kind: "netadd", title: `${x.fromName} added you to their network`, sub: "Network", outcome: "Seen", at: t }));
+  }
+  /* Replies that are only news (confirmed, unavailable, no reply) grey out the first time the list is opened. */
+  if (s.role === "staff") bookingUpdates17(s).filter(u => !u.action && u.at > (s.notesSeenAt || 0) && !kept.some(d => d.id === u.id && d.acct === acct))
+    .forEach(u => kept.push({ id: u.id, acct, kind: "bkupd", title: bookingTitle17(u, s.directory || []), sub: `${u.sh.role} · ${eventTitle(u.ev)} · ${whenOf11(u.sh)}`, outcome: "Seen", at: t }));
+  out.notesDone17 = kept;
+  return out;
+}
+
+
+function notes17Reducer(s, a) {
+  if (a.type === "NOTES_CLEAR") { const acct = notesAcct17(s); return { ...s, notesDone17: (s.notesDone17 || []).filter(d => d.acct !== acct) }; }
+  return null;
+}
+
+
+
+/* ==========================================================================
+   SAMPLE BOOKINGS (Phase 2 Final, fix C)
+   The seed events, shifts, engagements and Autofill runs are the sample bookings of the demo accounts: the dev/demo
+   Vooshka company on FF Staff and the demo FF Team account (SAM42 / ALEXG). A company that joins with a new phone
+   number starts empty: SAMPLE_OFF clears them and sets state.sampleOff17. Signing in as a demo account puts them back
+   (events and shifts the person made are kept). Core starts every company empty; this only scopes the prototype's sample.
+   ========================================================================== */
+const SAMPLE_TAGS17 = ["SAM42", "ALEXG"];
+
+
+function sample17Off(s) {
+  return { ...s, events: [], shifts: [], engagements: [], af17: {}, activeEventId: null, selection: [], sampleOff17: true };
+}
+
+
+function sample17On(s) {
+  if (!s.sampleOff17) return s;
+  const merge = (seed, cur) => [...(seed || []).filter(x => !(cur || []).some(y => y.id === x.id)), ...(cur || [])];
+  return { ...s, sampleOff17: false, events: merge(initialState.events, s.events), shifts: merge(initialState.shifts, s.shifts), engagements: merge(initialState.engagements, s.engagements), af17: { ...initialState.af17, ...(s.af17 || {}) } };
+}
+
+
+/* Run before the main reducer: returns the state to use (and handles SAMPLE_OFF). */
+function sample17Pre(s, a) {
+  if (a.type === "SAMPLE_OFF") return { done: sample17Off(s) };
+  if ((a.type === "AUTH_SIGNED_IN" && SAMPLE_TAGS17.includes(String(a.tag || "").toUpperCase())) || (a.type === "COMPANY_SIGNED_IN" && a.slug === "vooshka")) return { s: sample17On(s) };
+  return { s };
+}

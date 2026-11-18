@@ -1,0 +1,381 @@
+{
+ "_note": "FF Staff home pillars (v17.10). Same schema and layout as team-pillars.json. Pillar names are unchanged. Card pictures (ths_*) are made by scripts/make-pillar-thumbs.py.",
+ "pillars": [
+  {
+   "k": "community",
+   "slug": "our-community",
+   "t": "Our community",
+   "s": "What we are building together",
+   "h": "Hospitality, brought together.",
+   "tldr": "Hospitality is a community, and FireFlair brings it together: bartenders, waiters, event staff and the businesses that hire them. Reputation travels with people on FireFlair, so you hire with confidence. Choose staff your colleagues already trust and build a bench you can call on all year.",
+   "seo": {
+    "title": "Hire Hospitality Staff You Can Trust | FF Staff",
+    "description": "Meet featured staff, book whole teams and read reviews from other businesses on FF Staff."
+   },
+   "sections": [
+    {
+     "id": "ff-sc-featured",
+     "slug": "meet-featured-staff",
+     "card": {
+      "t": "Meet featured staff",
+      "d": "Bartenders, waiters and event staff to book.",
+      "b": "Meet the staff"
+     },
+     "h": "Meet the featured staff",
+     "p": [
+      "Featured staff are bartenders, waiters and event staff with strong profiles and reviews. Browse them and see who they work with.",
+      "Everyone shares the same values: be reliable, be kind, and make every event a night worth remembering. Find the people who work that way and keep them close.",
+      "Every profile shows skills, experience and reviews, so you know who you are booking before you ask."
+     ],
+     "visual": "staff-featured",
+     "cta": {
+      "label": "Meet the staff",
+      "go": "network"
+     },
+     "seo": {
+      "title": "Meet the featured staff | FF Staff",
+      "description": "Bartenders, waiters and event staff to book."
+     },
+     "card_img": "ths_featured"
+    },
+    {
+     "id": "ff-sc-teams",
+     "slug": "book-a-team",
+     "card": {
+      "t": "Book a whole team",
+      "d": "Companies with teams ready to hire together.",
+      "b": "Book a team"
+     },
+     "h": "Book a team, not just a person",
+     "p": [
+      "Companies on FireFlair bring teams that are ready to work together. Book the whole team in one go, rather than person by person.",
+      "Book someone and see their network. Add the people they work with to the same event, so teams that work well together stay together.",
+      "Book a company, then choose from its team."
+     ],
+     "visual": "staff-teams",
+     "cta": {
+      "label": "Book a team",
+      "go": "network"
+     },
+     "seo": {
+      "title": "Book a team, not just a person | FF Staff",
+      "description": "Companies with teams ready to hire together."
+     },
+     "card_img": "ths_teams"
+    },
+    {
+     "id": "ff-sc-reviews",
+     "slug": "trust-the-reviews",
+     "card": {
+      "t": "Trust the reviews",
+      "d": "What other businesses say.",
+      "b": "Read reviews"
+     },
+     "h": "Hire people you can trust",
+     "p": [
+      "Reviews come from other businesses that have hired the same people, so you can book with confidence.",
+      "Every review shows on their profile. After each shift you review them, and they review you.",
+      "Choose staff your colleagues already trust and build a bench you can call on all year."
+     ],
+     "visual": "staff-review",
+     "cta": {
+      "label": "Read reviews",
+      "go": "network"
+     },
+     "seo": {
+      "title": "Hire people you can trust | FF Staff",
+      "description": "What other businesses say."
+     },
+     "card_img": "ths_reviews"
+    }
+   ]
+  },
+  {
+   "k": "events",
+   "slug": "your-events",
+   "t": "Your events",
+   "s": "Enhance your events with the best staff, made easy",
+   "h": "From one shift to a festival.",
+   "tldr": "Whether it is a single bar shift or a full festival, start with an Event Card: the date, the place and the roles you need. Choose your people, send the shifts and let everyone confirm on WhatsApp. Everything stays in one place.",
+   "seo": {
+    "title": "Book Event Staff for Any Event | FF Staff",
+    "description": "Create an Event Card, choose your people and let everyone confirm on WhatsApp, from one bar shift to a festival."
+   },
+   "sections": [
+    {
+     "id": "ff-se-event",
+     "slug": "create-an-event-card",
+     "card": {
+      "t": "Create an Event Card",
+      "d": "Your date, venue and the staff you need.",
+      "b": "Create your Event Card"
+     },
+     "h": "Start with an Event Card",
+     "p": [
+      "An Event Card holds your date, venue and the staff you need. Everything else in the booking grows from it.",
+      "Plan once, repeat with ease. Your Event Cards stay in Bookings, so the next festival, launch or private party starts from what already worked."
+     ],
+     "visual": "staff-event",
+     "cta": {
+      "label": "Create your Event Card",
+      "go": "book"
+     },
+     "seo": {
+      "title": "Start with an Event Card | FF Staff",
+      "description": "Your date, venue and the staff you need."
+     },
+     "card_img": "ths_event"
+    },
+    {
+     "id": "ff-se-steps",
+     "slug": "book-in-four-steps",
+     "card": {
+      "t": "Book in four steps",
+      "d": "From Event Card to confirmation.",
+      "b": "See the steps"
+     },
+     "h": "Book your staff in four steps",
+     "p": [
+      "Four steps take you from Event Card to confirmation: choose your people, send the request, and let everyone confirm on WhatsApp.",
+      "Create your Event Card, add the shift details for each role, choose your people, then review and confirm. Everyone is asked on WhatsApp."
+     ],
+     "visual": "staff-steps",
+     "cta": {
+      "label": "Book your staff",
+      "go": "book"
+     },
+     "seo": {
+      "title": "Book your staff in four steps | FF Staff",
+      "description": "From Event Card to confirmation."
+     },
+     "card_img": "ths_steps"
+    },
+    {
+     "id": "ff-se-modern",
+     "slug": "hire-the-modern-way",
+     "card": {
+      "t": "Hire the modern way",
+      "d": "From one bar shift to a festival.",
+      "b": "See how"
+     },
+     "h": "Hire hospitality staff, the modern way",
+     "p": [
+      "Whether it is one bar shift or a festival, you book the same way, with everything in one place.",
+      "FF Staff is where hospitality businesses book freelance staff from FF Team.",
+      "What matters is who you can trust. See their experience, skills and reviews before you book, and rebook your favourites in a couple of taps."
+     ],
+     "visual": "staff-modern",
+     "cta": {
+      "label": "Find your people",
+      "go": "network"
+     },
+     "seo": {
+      "title": "Hire hospitality staff, the modern way | FF Staff",
+      "description": "From one bar shift to a festival."
+     },
+     "card_img": "ths_modern"
+    }
+   ]
+  },
+  {
+   "k": "services",
+   "slug": "our-events",
+   "t": "Our events",
+   "s": "Every booking, start to finish",
+   "h": "Grow with every event.",
+   "tldr": "Our events are where hospitality gets better. Follow every booking from the first request to the five-star review, and learn from each event so the next one runs even better. If your company offers services of its own, list them as Service Cards, and get booked by hosts on FF Party as your reputation grows.",
+   "seo": {
+    "title": "Follow Every Booking, Start to Finish | FF Staff",
+    "description": "Follow a booking from the first request to the five-star review, and get booked by hosts on FF Party."
+   },
+   "sections": [
+    {
+     "id": "ff-so-follow",
+     "slug": "follow-a-booking",
+     "card": {
+      "t": "Follow a booking",
+      "d": "The cards, in the order a booking happens.",
+      "b": "Follow a booking"
+     },
+     "h": "Follow a booking, card by card",
+     "p": [
+      "A booking moves through the same cards, from the Event Card to the Review Card. Following them shows you how every request is handled.",
+      "Follow every booking from the first request to the five-star review, and learn from each event so the next one runs even better."
+     ],
+     "visual": "staff-follow",
+     "cta": {
+      "label": "Open Bookings",
+      "go": "bookings"
+     },
+     "seo": {
+      "title": "Follow a booking, card by card | FF Staff",
+      "description": "The cards, in the order a booking happens."
+     },
+     "card_img": "ths_follow"
+    },
+    {
+     "id": "ff-so-party",
+     "slug": "get-booked-on-ff-party",
+     "card": {
+      "t": "Get booked on FF Party",
+      "d": "Hosts book companies like yours.",
+      "b": "Visit FF Party"
+     },
+     "h": "Get booked on FF Party",
+     "p": [
+      "FF Party is where hosts book bar companies for their events. List your company there and the bookings come to you.",
+      "Your reputation grows with every event, and hosts see it on your Company Card."
+     ],
+     "visual": "staff-party",
+     "cta": {
+      "label": "Visit FF Party",
+      "go": "site:party"
+     },
+     "seo": {
+      "title": "Get booked on FF Staff | FF Staff",
+      "description": "Hosts book companies like yours."
+     },
+     "card_img": "ths_party"
+    },
+    {
+     "id": "ff-so-services",
+     "slug": "service-cards",
+     "card": {
+      "t": "Service Cards",
+      "d": "List what your company offers.",
+      "b": "See Service Cards"
+     },
+     "h": "List your company's own Service Cards",
+     "p": [
+      "If your company offers services of its own, list them as Service Cards.",
+      "Create your company's own Service Cards. Clients book them on FF Party, and you choose the team."
+     ],
+     "visual": "staff-services",
+     "cta": {
+      "label": "Create your Company Card",
+      "go": "profile"
+     },
+     "seo": {
+      "title": "List your company's own Service Cards | FF Staff",
+      "description": "List what your company offers."
+     },
+     "card_img": "ths_services"
+    }
+   ]
+  },
+  {
+   "k": "profiles",
+   "slug": "your-business",
+   "t": "Your business",
+   "s": "Build your company profile to advertise to staff and new customers",
+   "h": "A company card people trust.",
+   "tldr": "Your Company Card tells everyone you hire who you are, what you do and who is on your team. Share it with a link, send it with every booking and let your professionalism show before the first message.",
+   "seo": {
+    "title": "Create Your Company Card | FF Staff",
+    "description": "Build a Company Card, set up your company and your team, and find the right people for every event."
+   },
+   "sections": [
+    {
+     "id": "ff-sb-card",
+     "slug": "your-company-card",
+     "card": {
+      "t": "Your Company Card",
+      "d": "Sent to everyone you hire.",
+      "b": "See the Company Card"
+     },
+     "h": "One card for your business",
+     "p": [
+      "Your Company Card is what everyone you hire sees first. It says who you are, what you do and who is on your team.",
+      "It is sent to anyone you hire, to show them who you are. It can also be added to FF Party to advertise your services.",
+      "A strong Company Card wins the trust of the best people before you have said a word. Keep it fresh, add your team and let your reputation do the recruiting."
+     ],
+     "visual": "staff-company",
+     "cta": {
+      "label": "Create your Company Card",
+      "go": "profile"
+     },
+     "seo": {
+      "title": "One card for your business | FF Staff",
+      "description": "Sent to everyone you hire."
+     },
+     "card_img": "ths_card"
+    },
+    {
+     "id": "ff-sb-profile",
+     "slug": "create-your-company-profile",
+     "card": {
+      "t": "Create your company profile",
+      "d": "Set up your company and your team.",
+      "b": "Create your Company Card"
+     },
+     "h": "Set up your company and your team",
+     "p": [
+      "Joining FF Staff sets up your company and your team, so you can book, and be booked, with your own card.",
+      "Add your terms and conditions, documents, Q&A, media and the areas you cover, then add your team."
+     ],
+     "visual": "staff-profile",
+     "cta": {
+      "label": "Set up your company",
+      "go": "profile"
+     },
+     "seo": {
+      "title": "Set up your company and your team | FF Staff",
+      "description": "Set up your company and your team."
+     },
+     "card_img": "ths_profile"
+    },
+    {
+     "id": "ff-sb-find",
+     "slug": "find-your-people",
+     "card": {
+      "t": "Find your people",
+      "d": "Search the whole network.",
+      "b": "Explore the network"
+     },
+     "h": "Find the right people for every event",
+     "p": [
+      "People search the whole network by skill, area and level, so you find the right person for every event.",
+      "Every Profile Card shows skills, experience and reviews, so you can choose with confidence.",
+      "Add the people you love working with to your team and rebook them in a couple of taps."
+     ],
+     "visual": "staff-find",
+     "cta": {
+      "label": "Explore the network",
+      "go": "network"
+     },
+     "seo": {
+      "title": "Find the right people for every event | FF Staff",
+      "description": "Search the whole network."
+     },
+     "card_img": "ths_find"
+    }
+   ]
+  }
+ ],
+ "photos": {
+  "community": [
+   "p44",
+   "p46",
+   "p45",
+   "p35"
+  ],
+  "events": [
+   "vkg11",
+   "vkg14",
+   "aiIntl",
+   "hp03"
+  ],
+  "services": [
+   "vke01",
+   "vke05",
+   "vke04",
+   "vke09"
+  ],
+  "profiles": [
+   "vkg15",
+   "p27",
+   "vke07",
+   "p04"
+  ]
+ }
+}

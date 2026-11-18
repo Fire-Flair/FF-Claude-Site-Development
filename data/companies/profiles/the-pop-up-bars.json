@@ -1,0 +1,108 @@
+{
+  "formatVersion": 2,
+  "slug": "the-pop-up-bars",
+  "name": "The Pop Up Bars",
+  "kind": "Mobile bars & cocktail classes",
+  "base": "Bedfordshire",
+  "areas": [
+    "Bedfordshire",
+    "UK-wide"
+  ],
+  "description": "A mobile bar company that travels UK-wide, offering cocktail and mocktail service, mobile cocktail classes and optional event or company branding.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.addtoevent.co.uk/the-pop-up-bars-limited",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Mobile bars",
+        "Cocktail bars",
+        "Cocktail and mocktail service",
+        "Mobile cocktail classes",
+        "Branded bars"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/the-pop-up-bars-limited",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Weddings",
+        "Hen parties",
+        "Birthdays",
+        "Corporate events",
+        "Club events",
+        "House parties"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/the-pop-up-bars-limited",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "scale",
+      "title": "Scale",
+      "chips": [
+        "Events of about 10 to 500 guests"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/the-pop-up-bars-limited",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Listing details only; own website not confirmed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.addtoevent.co.uk/the-pop-up-bars-limited",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {},
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "POPUP",
+    "position": 19,
+    "legal": {
+      "form": null,
+      "legalName": "The Pop Up Bars Limited",
+      "companyNumber": null
+    },
+    "source": {
+      "urls": [
+        "https://www.addtoevent.co.uk/the-pop-up-bars-limited"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "none"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Bedford",
+        "lat": 52.1356,
+        "lng": -0.4685,
+        "approx": false
+      }
+    ]
+  }
+}

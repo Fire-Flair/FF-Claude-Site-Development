@@ -3,7 +3,8 @@
    1. every file in src/manifest.json exists; no src .js/.jsx/.css/.json file is left out of the build
    2. directives (__ff_css / __ff_json) and ffasset: tokens all resolve
    3. no inline base64 images in src (they belong in src/assets)
-   4. the build runs twice into fresh directories and both outputs are byte-identical */
+   4. the company bundles match the profile files in data/companies/profiles
+   5. the build runs twice into fresh directories and both outputs are byte-identical */
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
@@ -32,6 +33,9 @@ for (const f of all.filter((x) => /\.(js|jsx|css|json|html)$/.test(x) && !x.star
   }
   if (/data:image\/[a-z+]+;base64,[A-Za-z0-9+/=]{200,}/.test(t)) fail.push(f + ': inline base64 image (move to src/assets)');
 }
+/* 5. the company bundles in src/content/companies are what data/companies/profiles/*.json produce (npm run companies) */
+try { execFileSync('node', [path.join(ROOT, 'scripts/build-companies.mjs'), '--check'], {stdio: 'pipe'}); }
+catch (e) { fail.push('company bundles are out of date or a profile has errors: ' + String(e.stderr || e.message).trim()); }
 const build = (dir) => { execFileSync('node', [path.join(ROOT, 'scripts/build.mjs'), '--out', dir], {stdio: 'pipe'}); return fs.readFileSync(path.join(dir, `fireflair-${manifest.version}.html`)); };
 const t1 = fs.mkdtempSync(path.join(os.tmpdir(), 'ff-a-')), t2 = fs.mkdtempSync(path.join(os.tmpdir(), 'ff-b-'));
 const a = build(t1), b = build(t2);

@@ -107,18 +107,10 @@ const FIRE17_STILL = __ff_json("content/data/fire17-still.json");
       decoding: "async"
     }) : React.createElement(HomeScene, {
       kind: "bar"
-    }), React.createElement("div", {
+    }), IMGS.hero ? React.createElement(HeroEasel24, null) : null, React.createElement("div", {
       className: "ff-hero18-fade",
       "aria-hidden": "true"
-    }), React.createElement("span", {
-      className: "ff-hero18-shadow",
-      "aria-hidden": "true"
-    }), React.createElement("span", {
-      className: "ff-hero18-coin refl",
-      "aria-hidden": "true"
-    }, React.createElement(SiteHeroCoin, { site: kind === "party" ? "party" : "staff" })), React.createElement("span", {
-      className: "ff-hero18-coin ff-hero17-coin"
-    }, React.createElement(SiteHeroCoin, { site: kind === "party" ? "party" : "staff" }))), React.createElement("div", {
+    })), React.createElement("div", {
       className: "ff-hero18-in"
     }, React.createElement("h1", {
       id: "ff-hero11-h",
@@ -127,7 +119,7 @@ const FIRE17_STILL = __ff_json("content/data/fire17-still.json");
       className: "ff-hero-sub101"
     }, c.sub), React.createElement("div", {
       className: kind === "party" ? "ff-hero17-cta two" : "ff-hero17-cta"
-    }, React.createElement(ShineButton, {
+    }, kind === "party" ? React.createElement(LockedBtn17, { shine: true, icon: React.createElement(CalDays11, { size: 15 }) }, c.cta) : React.createElement(ShineButton, {
       onClick: nav.toEvent
     }, React.createElement(CalDays11, {
       size: 15
@@ -325,7 +317,7 @@ const FIRE17_STILL = __ff_json("content/data/fire17-still.json");
       className: "it wa"
     }, React.createElement(WhatsAppPreview, {
       lines: ["FireFlair · Vooshka Cocktail Bar would like to book you:", "Cocktail Bartender · Sat 20 Mar · 17:00 · Hackney Depot"],
-      buttons: ["Accept shift", "Unavailable"]
+      buttons: ["Available", "Unavailable", "More info"]
     }), React.createElement("div", {
       className: "ff-hw11-ok"
     }, React.createElement(Check, {
@@ -425,7 +417,7 @@ const FIRE17_STILL = __ff_json("content/data/fire17-still.json");
       fill: "currentColor"
     }), " Review Card"), React.createElement("span", {
       className: "ff-rvcard-coin"
-    }, React.createElement(Coin, {
+    }, React.createElement(FFLogo, {
       size: 34,
       tier: "gold"
     })), React.createElement("div", {
@@ -796,7 +788,10 @@ const FIRE17_STILL = __ff_json("content/data/fire17-still.json");
       className: "ff-join-h"
     }, c.h), React.createElement("p", {
       className: "ff-join-t"
-    }, c.t), React.createElement(ShineButton, {
+    }, c.t), kind === "party" ? React.createElement(LockedBtn17, {
+      shine: true,
+      icon: React.createElement(c.icon, { size: 15 })
+    }, c.b) : React.createElement(ShineButton, {
       onClick: c.go
     }, React.createElement(c.icon, {
       size: 15

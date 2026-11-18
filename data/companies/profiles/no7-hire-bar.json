@@ -1,0 +1,115 @@
+{
+  "formatVersion": 2,
+  "slug": "no7-hire-bar",
+  "name": "No.7 Hire Bar",
+  "kind": "All-inclusive mobile pop-up bar",
+  "base": "Harrow",
+  "areas": [
+    "Harrow",
+    "London"
+  ],
+  "logo": "https://no7hirebar.co.uk/wp-content/uploads/2026/04/Cocktail-White.png.webp",
+  "logoBg": "dark",
+  "logoWide": false,
+  "description": "An all-inclusive mobile pop-up bar serving drinks and cocktails with bar staff, for private and corporate events, with around ten years of event experience.",
+  "aboutSource": {
+    "by": "agent",
+    "url": "https://www.poptop.uk.com/supplier/no-7-hire-bar",
+    "at": "2026-11-07"
+  },
+  "media": [],
+  "info": [
+    {
+      "id": "services",
+      "title": "Services",
+      "chips": [
+        "Mobile pop-up bar",
+        "Cocktails and drinks",
+        "Bar staff"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/no-7-hire-bar",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "chips": [
+        "Private events",
+        "Corporate events",
+        "Christmas parties",
+        "Bridal celebrations"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/no-7-hire-bar",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "scale",
+      "title": "Scale",
+      "chips": [
+        "Around ten years of event experience"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/no-7-hire-bar",
+        "at": "2026-11-07"
+      }
+    },
+    {
+      "id": "good-to-know",
+      "title": "Good to know",
+      "chips": [
+        "Listing details only; own website not confirmed"
+      ],
+      "source": {
+        "by": "agent",
+        "url": "https://www.poptop.uk.com/supplier/no-7-hire-bar",
+        "at": "2026-11-07"
+      }
+    }
+  ],
+  "records": {
+    "contact": [
+      {
+        "id": "website",
+        "name": "https://no7hirebar.co.uk",
+        "description": "Website",
+        "source": {
+          "by": "agent",
+          "url": "https://www.poptop.uk.com/supplier/no-7-hire-bar",
+          "at": "2026-11-07"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "status": "directory",
+    "category": "bar",
+    "tag": "NO7HB",
+    "position": 10,
+    "source": {
+      "urls": [
+        "https://www.poptop.uk.com/supplier/no-7-hire-bar"
+      ],
+      "retrievedAt": "2026-11-07"
+    },
+    "permission": {
+      "text": "own-words",
+      "images": "to_confirm"
+    },
+    "verifiedBy": null,
+    "pins": [
+      {
+        "label": "Harrow",
+        "lat": 51.5806,
+        "lng": -0.342,
+        "approx": false
+      }
+    ]
+  }
+}

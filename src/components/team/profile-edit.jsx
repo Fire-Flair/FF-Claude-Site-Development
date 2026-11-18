@@ -2,7 +2,7 @@
 /* ==========================================================================
    FF TEAM PHASE 1 — v1.2 additions
    1. Card tiers: every profile card has a rank — primary (gold), secondary
-      (silver, two at most) or tertiary (bronze). Stored on the record as
+      (silver) or tertiary (bronze); one Gold and one Silver at most since v17.18. Stored on the record as
       `rank`; profiles saved before v1.2 have no rank and keep their old
       look (first card gold, next two silver, the rest bronze).
    2. Edit Profile mode: tick the cards to keep, drag them into order and
@@ -23,14 +23,21 @@ const TIER_KEYS = ["primary", "secondary", "tertiary"];
 const RANK_ORDER = { primary: 0, secondary: 1, tertiary: 2 };
 
 
-const SECONDARY_MAX = 2;
+/* v17.18: one Gold (Primary) and one Silver (Secondary); every other card is Bronze (Extra). */
+const PRIMARY_MAX = 1;
+
+
+const SECONDARY_MAX = 1;
+
+
+const RANK_CAP = { primary: PRIMARY_MAX, secondary: SECONDARY_MAX };
 
 
 const RANK_NAME = { primary: "Primary", secondary: "Secondary", tertiary: "Extra" };
 
 
 /* Sections that Edit Profile manages (Reviews and Q&A aren't cards you rank). */
-const EDIT_CATS = ["professions", "qualifications", "skills", "experience", "venues", "locations", "languages", "interests", "media"];
+const EDIT_CATS = ["professions", "qualifications", "skills", "venues", "experience", "languages", "interests", "media"].filter(venuesOn17);
 
 
 
@@ -39,9 +46,10 @@ const EDIT_CATS = ["professions", "qualifications", "skills", "experience", "ven
 function withRanks(list) {
   const shown = (r) => !r.hidden && !r.proposed;
   const legacy = !list.some(r => shown(r) && r.rank);
-  let i = 0, sec = 0;
+  let i = 0, pri = 0, sec = 0;
   const eff = list.map((r, idx) => {
     let k = !shown(r) ? "tertiary" : legacy ? cardRank(i++) : (RANK_ORDER[r.rank] !== undefined ? r.rank : "tertiary");
+    if (k === "primary" && shown(r) && ++pri > PRIMARY_MAX) k = "secondary";
     if (k === "secondary" && shown(r) && ++sec > SECONDARY_MAX) k = "tertiary";
     return { r, rank: k, idx, last: shown(r) ? 0 : 1 };
   });
@@ -80,32 +88,28 @@ function addRanked(list, fresh) {
 }
 
 
-/* Rows for the editor: every card, its tier, in order. */
-function editRows(profile, cat) {
-  return rankAll(recsOf(profile, cat)).map(r => ({ id: r.id, rank: r.rank, rec: r }));
-}
-
-
-/* Move one card to a tier and a place in it. A third Secondary card sends
-   the last of the other two to the front of Tertiary (and says so). */
+/* Move one card to a tier and a place in it. Primary and Secondary hold one card each: the card that was there
+   moves down one box (Primary to Secondary, Secondary to the front of Extra), and the move says so. */
 function moveRecord(list, id, toRank, toIndex) {
   const rows = rankAll(list);
   const me = rows.find(r => r.id === id);
   if (!me) return { list: rows };
   const rest = rows.filter(r => r.id !== id);
   const lanes = Object.fromEntries(TIER_KEYS.map(k => [k, rest.filter(r => r.rank === k)]));
-  let bumped = null;
-  if (toRank === "secondary" && me.rank !== "secondary") {
-    const sec = lanes.secondary.filter(r => !r.hidden);
-    if (sec.length >= SECONDARY_MAX) {
-      bumped = sec[sec.length - 1];
-      lanes.secondary = lanes.secondary.filter(r => r.id !== bumped.id);
-      lanes.tertiary = [{ ...bumped, rank: "tertiary" }, ...lanes.tertiary];
-    }
-  }
   const lane = lanes[toRank];
   const at = Math.max(0, Math.min(toIndex === undefined ? lane.length : toIndex, lane.length));
   lane.splice(at, 0, { ...me, rank: toRank });
+  let bumped = null;
+  ["primary", "secondary"].forEach((k, ki) => {
+    const next = TIER_KEYS[ki + 1];
+    const shown = lanes[k].filter(r => !r.hidden && !r.proposed);
+    while (shown.length > RANK_CAP[k]) {
+      const out = shown.pop();
+      lanes[k] = lanes[k].filter(r => r.id !== out.id);
+      lanes[next] = [{ ...out, rank: next }, ...lanes[next]];
+      if (out.id !== id) bumped = { ...out, rank: next };
+    }
+  });
   return { list: TIER_KEYS.flatMap(k => lanes[k]), bumped };
 }
 
@@ -116,7 +120,6 @@ function p1EditReducer(s, a) {
     case "PE_START": return { ...s, profileEdit: { on: true, at: Date.now() } };
     case "P1_STAFF_NOTIFY": return { ...s, staffNotify: { at: a.at } };
     case "P1_REWARDS_INTEREST": return { ...s, rewardsInterest: a.interest };
-    case "P1_SET_PRIMARY_LOC": return p1PrimaryLocationReducer(s, a);
     case "P1_MEDIA_MOVE": {
       const m = [...(s.profile.media || [])], i = m.findIndex(x => x.id === a.id), j = i + a.dir;
       if (i < 0 || j < 0 || j >= m.length) return s;
@@ -128,7 +131,7 @@ function p1EditReducer(s, a) {
     case "PE_MOVE": {
       const { list, bumped } = moveRecord(recsOf(s.profile, a.category), a.id, a.rank, a.index);
       const next = withRecords(s, a.category, list);
-      return bumped ? { ...next, toast: `${bumped.name} moved to Extra` } : next;
+      return bumped ? { ...next, toast: `${bumped.name} moved to ${RANK_NAME[bumped.rank]}` } : next;
     }
     default: return null;
   }
@@ -149,186 +152,7 @@ function useEditing(isMe) {
 
 
 
-function ProfileEditHead() {
-  const { state, dispatch } = useStore();
-  const editing = useEditing(true);
-  const p = state.profile;
-  const saved = state.auth.status === "signedIn" && (!!p.finishedAt || !!p.live);
-  if (!editing) return null;
-  return (
-    <div className="ff-pe-head" id="ff-pe-head" role="note">
-      {saved && <span className="ff-pe-badge"><Pencil size={12} /> Editing</span>}
-      <p>
-        <b>Drag and drop cards to place them.</b> <span className="dot primary" /> Primary attributes always show on your Profile Card,
-        followed by <span className="dot secondary" /> secondary where possible. <span className="dot tertiary" /> Extra stay on your profile page.
-        Tap a card to edit, hide or delete it.
-      </p>
-    </div>
-  );
-}
-
-
-
-/* One section while editing: three lanes in one row. Drag a whole card —
-   with a mouse, just drag; on a touchscreen, press and hold, then drag. A
-   quick tap opens the card. Arrow keys on a focused card: ← → reorder,
-   ↑ ↓ change tier. */
-const DRAG_START_PX = 6;
-
-
-const HOLD_MS = 240;
-
-
-function TierEditor({ catKey, def, rows, onOpen, tail }) {
-  const { dispatch } = useStore();
-  const scrollRef = useRef(null);
-  const [drag, setDrag] = useState(null);      // { id, x, y, w, dx, dy, over }
-  const press = useRef(null);                  // pending press before a drag starts
-  const dragRef = useRef(null); dragRef.current = drag;
-  const suppressClick = useRef(false);
-  const ptr = useRef(null);
-  const lanes = Object.fromEntries(TIER_KEYS.map(k => [k, rows.filter(r => r.rank === k)]));
-
-  const move = (id, rank, index) => dispatch({ type: "PE_MOVE", category: catKey, id, rank, index });
-
-  const targetAt = (x, y, id) => {
-    const el = document.elementFromPoint(x, y);
-    const lane = el && el.closest && el.closest(`[data-pe-lane][data-pe-cat="${catKey}"]`);
-    if (!lane) return null;
-    const rank = lane.getAttribute("data-pe-lane");
-    const cards = [...lane.querySelectorAll("[data-pe-card]")].filter(c => c.getAttribute("data-pe-card") !== id);
-    let index = cards.length;
-    for (let i = 0; i < cards.length; i++) {
-      const r = cards[i].getBoundingClientRect();
-      if (x < r.left + r.width / 2) { index = i; break; }
-    }
-    return { rank, index };
-  };
-  const begin = (pr) => {
-    const r = pr.el.getBoundingClientRect();
-    const row = rows.find(x => x.id === pr.id);
-    try { pr.el.setPointerCapture(pr.pointerId); } catch (e) { /* older browsers */ }
-    if (navigator.vibrate && pr.type === "touch") { try { navigator.vibrate(12); } catch (e) { /* not allowed */ } }
-    setDrag({ id: pr.id, x: pr.x, y: pr.y, w: r.width, dx: pr.sx - r.left, dy: pr.sy - r.top,
-      over: { rank: row.rank, index: lanes[row.rank].findIndex(x => x.id === pr.id) } });
-  };
-  const onDown = (ev, row) => {
-    if (ev.button !== undefined && ev.button !== 0) return;
-    const pr = { id: row.id, el: ev.currentTarget, pointerId: ev.pointerId, type: ev.pointerType, sx: ev.clientX, sy: ev.clientY, x: ev.clientX, y: ev.clientY, timer: null };
-    if (ev.pointerType === "touch") pr.timer = setTimeout(() => { if (press.current === pr) begin(pr); }, HOLD_MS);
-    press.current = pr;
-  };
-  const onMove = (ev) => {
-    const pr = press.current;
-    const d = dragRef.current;
-    if (!d && pr) {
-      const far = Math.hypot(ev.clientX - pr.sx, ev.clientY - pr.sy) > DRAG_START_PX;
-      pr.x = ev.clientX; pr.y = ev.clientY;
-      if (far && pr.type !== "touch") begin(pr);           // mouse / pen: drag at once
-      else if (far && pr.type === "touch") { clearTimeout(pr.timer); press.current = null; }   // a swipe: let the row scroll
-      return;
-    }
-    if (!d) return;
-    ptr.current = { x: ev.clientX, y: ev.clientY };
-    const over = targetAt(ev.clientX, ev.clientY, d.id) || d.over;
-    setDrag(x => x && ({ ...x, x: ev.clientX, y: ev.clientY, over }));
-  };
-  const finish = (ev, cancel) => {
-    const pr = press.current;
-    if (pr) clearTimeout(pr.timer);
-    press.current = null;
-    const d = dragRef.current;
-    if (!d) return;
-    const over = (!cancel && ev && targetAt(ev.clientX, ev.clientY, d.id)) || d.over;
-    setDrag(null);
-    suppressClick.current = true;
-    setTimeout(() => { suppressClick.current = false; }, 50);
-    if (!cancel && over && over.rank) move(d.id, over.rank, over.index);
-  };
-  /* Once a touch drag has started, stop the page and the row from scrolling. */
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const stop = (e) => { if (dragRef.current) e.preventDefault(); };
-    el.addEventListener("touchmove", stop, { passive: false });
-    return () => el.removeEventListener("touchmove", stop);
-  }, []);
-  /* Near either end of the row, keep scrolling it while dragging. */
-  useEffect(() => {
-    if (!drag) return;
-    const t = setInterval(() => {
-      const sc = scrollRef.current, p0 = ptr.current;
-      if (!sc || !p0) return;
-      const b = sc.getBoundingClientRect();
-      const step = p0.x > b.right - 44 ? 16 : p0.x < b.left + 44 ? -16 : 0;
-      if (!step) return;
-      const before = sc.scrollLeft;
-      sc.scrollLeft += step;
-      if (sc.scrollLeft !== before) setDrag(d => d && ({ ...d, over: targetAt(p0.x, p0.y, d.id) || d.over }));
-    }, 30);
-    return () => clearInterval(t);
-  }, [!!drag]);
-  const onKey = (ev, row) => {
-    const lane = lanes[row.rank];
-    const i = lane.findIndex(x => x.id === row.id);
-    const up = { secondary: "primary", tertiary: "secondary" }, down = { primary: "secondary", secondary: "tertiary" };
-    if (ev.key === "ArrowLeft" && i > 0) { ev.preventDefault(); move(row.id, row.rank, i - 1); }
-    else if (ev.key === "ArrowRight" && i < lane.length - 1) { ev.preventDefault(); move(row.id, row.rank, i + 1); }
-    else if (ev.key === "ArrowUp" && up[row.rank]) { ev.preventDefault(); move(row.id, up[row.rank]); }
-    else if (ev.key === "ArrowDown" && down[row.rank]) { ev.preventDefault(); move(row.id, down[row.rank], 0); }
-  };
-
-  const cardFor = (row, rank) => <GenericAttributeCard record={row.rec} def={def} themeKey="onyx" rank={row.rec.hidden ? "tertiary" : rank} editable onClick={() => onOpen(row.rec)} />;
-  const indicator = (rank, index) => drag && drag.over && drag.over.rank === rank && drag.over.index === index
-    ? <span className="ff-pe-drop" aria-hidden="true" key={`drop-${rank}-${index}`} /> : null;
-
-  return (
-    <div className={`ff-pe-row${drag ? " dragging" : ""}`} ref={scrollRef}>
-      {TIER_KEYS.map(rank => {
-        const lane = lanes[rank];
-        const others = lane.filter(r => !drag || r.id !== drag.id).length;
-        let j = 0;
-        const target = drag && drag.over && drag.over.rank === rank;
-        return (
-          <div key={rank} className={`ff-pe-lane ${rank}${target ? " over" : ""}`} data-pe-lane={rank} data-pe-cat={catKey} aria-label={`${RANK_NAME[rank]} ${def.label.toLowerCase()}`}>
-            <div className="ff-pe-lane-h"><span className={`dot ${rank}`} /><b>{RANK_NAME[rank]}</b></div>
-            <div className="ff-pe-cards">
-              {lane.map((row) => {
-                const lifted = drag && drag.id === row.id;
-                const at = lifted ? null : j++;
-                return (
-                  <React.Fragment key={row.id}>
-                    {!lifted && indicator(rank, at)}
-                    <div className={`ff-pe-card${lifted ? " lifted" : ""}`} data-pe-card={row.id}
-                      onPointerDown={(ev) => onDown(ev, row)} onPointerMove={onMove}
-                      onPointerUp={(ev) => finish(ev, false)} onPointerCancel={() => finish(null, true)}
-                      onClickCapture={(ev) => { if (suppressClick.current) { ev.stopPropagation(); ev.preventDefault(); } }}
-                      onContextMenu={(ev) => ev.preventDefault()}
-                      onKeyDown={(ev) => onKey(ev, row)}
-                      aria-roledescription="draggable card" title="Drag to place · tap to edit">
-                      {cardFor(row, rank)}
-                    </div>
-                  </React.Fragment>
-                );
-              })}
-              {indicator(rank, others)}
-              {!lane.length && <div className="ff-pe-empty" aria-hidden="true">{drag ? "Drop here" : ""}</div>}
-            </div>
-          </div>
-        );
-      })}
-      {tail && <div className="ff-pe-tail">{tail}</div>}
-      {drag && (() => {
-        const row = rows.find(r => r.id === drag.id);
-        return row ? (
-          <div className="ff-pe-ghost" style={{ left: drag.x - drag.dx, top: drag.y - drag.dy, width: drag.w }} aria-hidden="true">
-            {cardFor(row, drag.over && drag.over.rank ? drag.over.rank : row.rank)}
-          </div>
-        ) : null;
-      })()}
-    </div>
-  );
-}
+/* v17.19: the builder's lists (RankList17 in attribute-cards.jsx) replace the Primary / Secondary / Extra boxes and their introduction. */
 
 
 
@@ -364,7 +188,7 @@ function ImportToEdit({ result, onDone }) {
     const n = Object.values(byCategory).reduce((k, l) => k + l.length, 0);
     const from = result.what === "your CV" ? "your CV" : "what you wrote";
     dispatch({ type: "PE_START" });
-    dispatch({ type: "TOAST", toast: n ? `${n} card${n === 1 ? "" : "s"} added from ${from} — drag to place, tap to edit` : `Nothing new found in ${from}` });
+    dispatch({ type: "TOAST", toast: n ? `${n} added from ${from}` : `Nothing new found in ${from}` });
     Object.keys(byCategory).forEach(cat => dispatch({ type: "TOGGLE_CATEGORY", key: `edit_attr_${cat}`, visible: true }));
     setTimeout(() => {
       const first = Object.keys(byCategory)[0];

@@ -46,26 +46,13 @@ function LandingRoleCard({ role, tier, plate, question, line, cta }) {
       onClick={() => { dispatch({ type: "ROLE", role }); if (role === "team") dispatch({ type: "TAB", tab: "profile" }); window.scrollTo(0, 0); }}
       style={{ padding: "24px 11px 10px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", width: "100%" }}>
       <span className="ff-label" style={{ position: "absolute", top: 10, left: 12, fontSize: 7, letterSpacing: ".2em", color: THEMES.onyx.sub, zIndex: 4 }}>{plate}</span>
-      <div style={{ marginTop: 10 }}><Coin size={42} tier={tier} /></div>
+      <div style={{ marginTop: 10 }}><FFLogo size={42} tier={tier} /></div>
       <div className="ff-display" style={{ color: "#F2ECE0", fontSize: 12.5, marginTop: 11, letterSpacing: ".05em", lineHeight: 1.25 }}>{question}</div>
       <div className="ff-serif" style={{ color: "#D9BE68", fontStyle: "normal", fontSize: 12.5, marginTop: 6, lineHeight: 1.35 }}>{line}</div>
       <div style={{ marginTop: "auto", width: "100%", borderTop: "1px solid rgba(201,162,39,.3)", paddingTop: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 5, color: "#EAD79C", fontSize: 8.5, letterSpacing: ".14em", textTransform: "uppercase" }}>
         {cta} <ChevronRight size={11} />
       </div>
     </CardFrame>
-  );
-}
-
-
-
-function RoleCards() {
-  return (
-    <div className="ff-rolegrid">
-      <LandingRoleCard role="team" tier="gold" plate="FF Team"
-        question="FF Team" line="Join the Team" cta="Create your card" />
-      {p1SiteOpen("staff") && <LandingRoleCard role="staff" tier="silver" plate="FF Staff"
-        question="FF Staff" line="Hire Staff" cta="Create your profile" />}
-    </div>
   );
 }
 
@@ -113,12 +100,13 @@ const FF_SITES = [
     line: "For hospitality businesses", pitch: "Bars, restaurants, venues, caterers and event companies: hire staff for your events and keep the people you trust.", cta: "Hire staff" },
   { key: "party", name: "FF Party", domain: "ffparty.uk", url: "https://ffparty.uk", tier: "gold",
     line: "Plan an event and book your team", pitch: "Planning a party? Find your team and create your Event Card in minutes.", cta: "Plan an event" },
-  { key: "partners", name: "FF Partners", domain: "", url: "", tier: "gold",
-    line: "For hosts, property managers and concierges", pitch: "Offer private cocktail experiences at your property, or arrange something bespoke for your guests.", cta: "Become a partner" },
-  { key: "vip",   name: "FF VIP",   domain: "ffvip.uk",   url: "https://ffvip.uk",   tier: "standard", logo: FF_VIP_LOGO,
+  { key: "vip",   name: "FF VIP",   domain: "ffvip.uk",   url: "https://ffvip.uk",   tier: "standard", logo: FF_VIP_LOGO, locked: true,
     line: "Your VIP card, luxury experiences and rewards", pitch: "Create your VIP card, book luxury experiences and VIP tables, and earn FF Rewards. Launch party in Shoreditch, early 2027.", cta: "Join the guest list" },
 ];
 
+
+/* The site-menu order, by the site the visitor is on. */
+const SITE_ORDER17 = { party: ["party","vip","team","staff"], staff: ["staff","team","party","vip"], vip: ["vip","party","staff","team"], team: ["team","staff","party","vip"] };
 
 const FF_SITE_BRAND = __ff_json("content/data/ff-site-brand.json");
 
@@ -147,15 +135,6 @@ function useGoSite() {
     if (key === "team") {
       if (state.role !== "team") dispatch({ type: "ROLE", role: "team" });
       dispatch({ type: "TAB", tab: opts.to === "profile" ? "profile" : "home", route: opts.to === "profile" ? "home" : undefined });
-      window.scrollTo(0, 0);
-      return;
-    }
-    /* FF Partners is Phase 3 only. In Phase 2 it takes the same safe path as a closed site: a note, then FF Team. */
-    if (key === "partners") {
-      if (ph17(state) === 2) { dispatch({ type: "TOAST", toast: "FF Partners is part of Phase 3" }); if (state.role !== "team") dispatch({ type: "ROLE", role: "team" }); return; }
-      if (state.role !== "partners") dispatch({ type: "ROLE", role: "partners" });
-      dispatch({ type: "V11_SET", patch: { ptnGuest: null } });
-      dispatch({ type: "TAB", tab: opts.to === "profile" ? "profile" : "home" });
       window.scrollTo(0, 0);
       return;
     }
