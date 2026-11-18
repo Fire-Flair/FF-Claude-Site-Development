@@ -303,10 +303,7 @@ function Shell({ children }) {
             {NAV.filter(n => n.key !== "__ff").map(n => (
               <button key={n.key} className={state.tab === n.key ? "on" : ""} aria-current={state.tab === n.key ? "page" : undefined} onClick={() => goTab(n.key)}>{tabLabel17(n.key, state, n.label)}</button>
             ))}
-            <button key="__ff" type="button" className="ff-topcoin ff-navcoin" style={{ position: "relative" }} onClick={() => setNotifyOpen(true)} aria-label={notifyCount17(state) > 0 ? `Notifications, ${notifyCount17(state)} waiting` : "Notifications"}>
-              {/* The coin becomes the count: the number replaces FF on the black face. */}
-              <span className="ff-coinwrap20 desk"><style>{NET20_CSS}</style><Coin size={30} tier="gold" /><span className={`ff-coinnum20${notifyCount17(state) > 0 ? " on" : ""}${notifyCount17(state) > 9 ? " d2" : ""}`} aria-hidden="true">{notifyCount17(state) > 0 ? Math.min(notifyCount17(state), 99) : ""}</span></span>
-            </button>
+            {/* v1.52 (Alex, 18 Nov 20:35): the FF coin button is gone from the desktop bar; notifications show on Bookings. */}
           </nav>
           <div className="ff-topbar-right">
             {PHASE1.desktopAdd && state.role && (
@@ -337,9 +334,10 @@ function Shell({ children }) {
         <div className="ff-bottomnav-in">
           {NAV.map(n => n.key === "__ff" ? (
             <div key="ff" className="ff-navcentre">
-              <button className="ff-coinbtn" style={{ position: "relative" }} onClick={() => setNotifyOpen(true)} aria-label={notifyCount17(state) > 0 ? `Notifications, ${notifyCount17(state)} waiting` : "Notifications"}>
+              {/* v1.52 (Alex, 18 Nov 20:35): the centre FF coin is a mark, not a button; notifications show on Bookings. */}
+              <span className="ff-coinbtn" style={{ position: "relative" }} aria-hidden="true">
                 <span className="ff-coinwrap20 mob"><style>{NET20_CSS}</style><FFLogo size={56} tier={isTeam ? "standard" : "gold"} /><span className={`ff-coinnum20${notifyCount17(state) > 0 ? " on" : ""}${notifyCount17(state) > 9 ? " d2" : ""}`} aria-hidden="true">{notifyCount17(state) > 0 ? Math.min(notifyCount17(state), 99) : ""}</span></span>
-              </button>
+              </span>
             </div>
           ) : (
             <button key={n.key} className={`ff-navbtn ${state.tab === n.key ? "on" : ""}`}

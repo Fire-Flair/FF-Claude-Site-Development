@@ -6,10 +6,18 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
 
 ## v1.52
 
+<<<<<<< HEAD
 - Profile page photos (Alex, 18 Nov 20:10), bug fixes. Phone and iPad: the photos now end exactly on the Profile Card's icon line, which is where the card sits when the page opens, and from there the whole page scrolls as one (the photos no longer stay stuck behind the card until the Overview tabs). While the photos are open, a scroll anywhere on the page, up or down, by touch, wheel or keys, brings the card back up (before, only a long upward drag did). Opening the photos from further down the page brings them into view.
 - iPad at every size, portrait or landscape, uses the phone layout; the desktop layout needs a wide window with a mouse or trackpad.
 - Desktop: one big photo with every photo in a row below it (arrows and keys step through; the row scrolls left and right after five), in place of the mosaic that opened one photo full size. `components/team/public-profile.jsx` (DeskGallery11, PublicHero), `styles/p12.css`.
 - Company Cards (no icon line) keep the previous photo behaviour.
+=======
+Bookings and the bar (Alex, 18 Nov 20:35). `team/bookings.jsx`, `styles/bkd.css`, `team/landing-shell.jsx`, `state/seed-data.js`.
+
+- Bookings: the "Are you happy to receive bookings via WhatsApp?" question and its Yes button from v1.49 are removed (component, styles and the `pref.whatsapp_bookings` Question Card deleted). In their place the WhatsApp box has a second row: the Add FireFlair mark (FF in a speech bubble, `AddFireFlairMark`) on a black circle, with "Notifications will also be shown here."
+- Mobile bottom bar: the centre FF coin is a mark, not a button (it no longer opens the notification pop-up). Desktop top bar: the FF coin button after Profile is removed. Notifications are to show on Bookings.
+- Merged onto the live page (v1.51). Artifact version 1795034255-f8d9.
+>>>>>>> origin/ff-team-v1.1
 
 ## v1.51
 
