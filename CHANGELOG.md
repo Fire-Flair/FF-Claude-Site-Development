@@ -2,6 +2,8 @@
 
 ## v17.58
 
+Artifact version 1794973072-c272. The artifact holds at most 512 files, so the release now inlines the smallest images into index.html (`/home/claude/scripts/inline-small.py`, limit 510 files); developers can ignore this, it only affects the artifact upload.
+
 Bookings page, Launch Challenge redesign, company pages, Grow with FireFlair pictures. Branches merged: `p2-chal`, `p2-pics`, `p2-bk5`, `p2-copage`.
 
 - FF Team home (`discover-hub.jsx`, `discover-and-support.jsx`, `home-fix22.css`): "What is FF Team?" replaces "Discover FireFlair" (small burgundy eyebrow, no rule; the four pillar boxes get a thin gold outline). Launch Challenge: title above the box; "Grow your team. / Win prizes. / Work with friends."; three equal tiles in the 90 days style (90 days; Top 10, Win rewards, card symbol; Win a trip, Athens Bar Show, plane symbol); countdown below the tiles and above the timeline; timeline reads Launch, 100 Bookings go live, 1,000 Launch party and nationwide marketing campaign. The bookings box is a left-to-right picture flow (Profile Card → Shift Card → "Yes, I'm in" with WhatsApp → Review Card) and the whole box expands when tapped.
