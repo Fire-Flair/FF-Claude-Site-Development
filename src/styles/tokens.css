@@ -32,6 +32,14 @@
   --color-warn: #7A4A20;
   --color-bad: #B3261E;
 
+  /* home-colours (Alex, 18 Nov 14:00): option palettes for the FF Team home pillars and bookings box */
+  --color-ivory: #FFFCF4;
+  --color-wine: #7A1F2E;
+  --color-champagne: #EADBB4;
+  --color-gold-leaf: #EDD58F;
+  --color-bottle: #1F4A3B;
+  --color-bottle-dk: #12302A;
+
   --font-display: 'Cinzel', 'Optima', 'Palatino Linotype', Georgia, serif;
   /* v1.01: the italic serif (Cormorant Garamond) is gone - it was hard to
      read. "Serif" text now uses the same face as the body. */

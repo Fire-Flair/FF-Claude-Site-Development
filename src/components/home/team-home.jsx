@@ -1,6 +1,9 @@
 /* src/components/home/team-home.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
 /* homefix: FF Team home layout fixes (pillar rows, Launch Challenge, spacing, equal boxes). Styles scoped under .ff-hf22. */
-const HF22_CSS = __ff_css("styles/home-fix22.css");
+const HF22_CSS = __ff_css("styles/home-fix22.css", "styles/home-colours.css");
+/* home-colours (Alex, 18 Nov 14:00): 0 = the current look; 1, 2 or 3 = the numbered options (pillar and bookings-box
+   colours plus the hero line "Get seen, get booked, get paid."). Change this one number to apply the chosen option. */
+const FF_HOME_COLOUR = 0;
 
 /* Pillars per row on the FF Team home: 1 on a phone (full-width rows), 2 on a tablet, 4 on a desktop. 0 = not split. */
 function useDxPerRow22(on) {
@@ -128,7 +131,7 @@ function Home101() {
       })
     ];
     return React.createElement("div", {
-      className: "ff-home ff-hf22",
+      className: `ff-home ff-hf22${FF_HOME_COLOUR ? ` ff-home-c${FF_HOME_COLOUR}` : ""}`,
       ref: root
     }, React.createElement("style", null, HF22_CSS), React.createElement("div", {
       className: `ff-home17${guest ? " ff-landing" : ""}`

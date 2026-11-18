@@ -1658,7 +1658,7 @@
       className: "ff-hero17-h ff-hero-h101"
     }, "Welcome to FF Team"), React.createElement("p", {
       className: "ff-hero-sub101"
-    }, "Get seen. Get booked."), React.createElement("div", {
+    }, FF_HOME_COLOUR ? React.createElement(React.Fragment, null, React.createElement("span", { className: "ff-hl" }, "Get seen, get booked,"), " ", React.createElement("span", { className: "ff-hl" }, "get paid.")) : "Get seen. Get booked."), React.createElement("div", {
       className: "ff-hero17-cta"
     }, mine ? React.createElement(ShineButton, { onClick: nav.goNetwork }, React.createElement(Users, { size: 15 }), " Build your network") : React.createElement(ShineButton, { onClick: nav.goProfile }, React.createElement(User, { size: 15 }), " Create your Profile Card"))));
   }
