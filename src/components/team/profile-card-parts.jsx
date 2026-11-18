@@ -589,8 +589,14 @@ function timeLeft(expiresAt) {
 function useDirectory() {
   const { state } = useStore();
   const base = state.profile.live ? [meAsStaff(state.profile, state.session), ...state.directory] : state.directory;
-  /* Network grouping comes from each person's top profession (v1.6). */
-  return adminPeople17(state, base).map(p => ({ ...p, group: personCategory(p) }));
+  /* Network grouping comes from each person's top profession (v1.6). v17.48: groups = every category of their top 3
+     public professions (best first, each with the profession that put them there); group stays the top one. */
+  const myCats = {};
+  recsOf(state.profile, "professions").filter(r => !r.proposed && r.displayCategory).forEach(r => { myCats[String(r.name).toLowerCase()] = r.displayCategory; });
+  return adminPeople17(state, base).map(p => {
+    const cats = p.id === "me" ? myCats : null;
+    return { ...p, group: personCategory(p), groups: personGroups(p, cats), profs17: personProfs17(p, cats) };
+  });
 }
 
 

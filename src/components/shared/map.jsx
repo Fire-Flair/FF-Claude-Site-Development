@@ -203,14 +203,18 @@ const catOf19 = (p) => p.kind === "person" ? (p.profession || p.group || "Other"
 const layerOf19 = (p) => p.kind === "person" ? "pros" : p.kind === "company" ? (p.partner ? "partners" : "dir") : p.kind === "venue" ? "venues" : "";
 
 
-const mapLayer19 = (show, hide) => (p) => { const k = layerOf19(p); return !k ? true : show[k] && !(hide || {})[k + ":" + catOf19(p)]; };
+/* v17.48: a person counts under each of their top 3 professions; their one pin shows if any of those is switched on. */
+const catsOf19 = (p) => p.kind === "person" && p.profs17 ? [...new Set(p.profs17.map((x) => x.profession).filter(Boolean))] : [catOf19(p)];
+
+
+const mapLayer19 = (show, hide) => (p) => { const k = layerOf19(p); return !k ? true : show[k] && catsOf19(p).some((c) => !(hide || {})[k + ":" + c]); };
 
 
 function MapLegend19({ pins, show, setShow, hide, setHide }) {
   const h = React.createElement;
   const [openK, setOpenK] = useState("");
   const members = (k) => { const seen = {}; return pins.filter((p) => layerOf19(p) === k).filter((p) => { const key = p.coId || p.id; if (seen[key]) return false; seen[key] = 1; return true; }); };
-  const cats = (k) => { const m = {}; members(k).forEach((p) => { const c = catOf19(p); m[c] = (m[c] || 0) + 1; }); return Object.keys(m).sort().map((c) => [c, m[c]]); };
+  const cats = (k) => { const m = {}; members(k).forEach((p) => { catsOf19(p).forEach((c) => { m[c] = (m[c] || 0) + 1; }); }); return Object.keys(m).sort().map((c) => [c, m[c]]); };
   const count = {}; MAP_LAYERS19.forEach(([k]) => { count[k] = members(k).length; });
   const icon = { partners: h(Coin, { size: 17 }), pros: h(MapPerson17, { size: 18 }), dir: h(MapDot17, { cat: "bar", size: 18 }), venues: h(MapVenue20, { size: 18 }) };
   return h("div", { className: "ff-ml19", role: "group", "aria-label": "Map layers" },
@@ -273,11 +277,11 @@ function FFMap({ mode = "home" }) {
   const netPillar = mode === "network" && !searching ? (state.netPillar17 || "") : "";
   const pinsAll = useMemo(() => {
     if (!netPillar) return pins0;
-    return pins0.filter((p) => p.kind === "company" ? PILLAR_OF_CAT17[p.cat || "bar"] === netPillar : p.kind === "person" ? PILLAR_OF_GROUP17[p.group] === netPillar : false);
+    return pins0.filter((p) => p.kind === "company" ? PILLAR_OF_CAT17[p.cat || "bar"] === netPillar : p.kind === "person" ? (p.groups || [{ group: p.group }]).some((x) => PILLAR_OF_GROUP17[x.group] === netPillar) : false);
   }, [pins0, netPillar]);
   /* While a network search is active the map shows only the matching people, companies and Directory entries (venues are hidden). */
   const hitCos = useMemo(() => { const f = searching ? netSearch17(state, netQ) : null; return f ? new Set([...f.cos, ...f.dir].map(c => c.id)) : null; }, [searching, netQ, state.company, state.admin17]);
-  const pinsFound = useMemo(() => !searching ? pinsAll : pinsAll.filter(p => p.kind === "person" ? personSearchText(p).includes(String(netQ).trim().toLowerCase()) : p.kind === "company" ? hitCos.has(p.coId) : false), [pinsAll, searching, netQ, hitCos]);
+  const pinsFound = useMemo(() => !searching ? pinsAll : pinsAll.filter(p => p.kind === "person" ? !!netSearchHit17(p, String(netQ).trim().toLowerCase()) : p.kind === "company" ? hitCos.has(p.coId) : false), [pinsAll, searching, netQ, hitCos]);
   const pins = useMemo(() => mode !== "network" ? pinsAll : pinsFound.filter(mapLayer19(show, hideCat)), [pinsAll, pinsFound, show, hideCat, mode]);
 
   const boxRef = useRef(null), mapRef = useRef(null);

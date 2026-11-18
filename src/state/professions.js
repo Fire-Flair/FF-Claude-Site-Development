@@ -64,6 +64,47 @@ function professionDefaultDesc(name, override) {
 const personCategory = (p) => professionCategory(p.profession, p.categoryOverride) || "Other";
 
 
+/* v17.48 (multi-category rule): only a member's top 3 public professions count for Network, search and the map.
+   personProfs17: those three, best first, each with its category. cats: optional { lower-case name: displayCategory }. */
+function personProfs17(p, cats) {
+  const seen = new Set(), out = [];
+  [p.profession, ...(p.professions || [])].forEach(n => {
+    const name = String(n || "").trim(), k = name.toLowerCase();
+    if (!name || seen.has(k) || out.length >= 3) return;
+    seen.add(k);
+    const rank = out.length;
+    out.push({ profession: name, rank, group: professionCategory(name, (cats && cats[k]) || (rank === 0 ? p.categoryOverride : null)) || "Other" });
+  });
+  return out.length ? out : [{ profession: p.profession || "", rank: 0, group: personCategory(p) }];
+}
+
+
+/* The distinct categories of those professions, each once, with the best-ranked profession that put the member there. */
+function personGroups(p, cats) {
+  const out = [];
+  personProfs17(p, cats).forEach(x => { if (!out.some(g => g.group === x.group)) out.push(x); });
+  return out;
+}
+
+
+/* The person as listed under one category: the card plate (first profession) shows the profession that put them there. */
+function plateAs17(p, prof) {
+  if (!prof) return p;
+  const k = String(prof).toLowerCase();
+  return { ...p, profession: prof, professions: [prof, ...(p.professions || []).filter(x => String(x).toLowerCase() !== k)] };
+}
+
+
+/* Network search: a person's search text with only the top 3 professions. Returns how they matched, or null:
+   rank 0-2 = that profession matched (shown on the plate, listed in its category), 3 = name, skill, area and the rest. */
+function netSearchHit17(p, n) {
+  const profs = p.profs17 || personProfs17(p);
+  const m = profs.find(x => x.profession.toLowerCase().includes(n));
+  if (m) return m;
+  return personSearchText({ ...p, profession: "", professions: [] }).includes(n) ? { ...profs[0], rank: 3 } : null;
+}
+
+
 
 const GROUP_ICON = {
   Bar: Martini, "Front of House": Users, Chefs: ChefHat, Management: Briefcase,

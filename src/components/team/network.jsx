@@ -641,12 +641,19 @@ function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "", 
   const { state, dispatch } = useStore();
   const everyone = useDirectory();
   const n = query.trim().toLowerCase();
-  const all0 = n ? everyone.filter(p => personSearchText(p).includes(n)) : everyone;
-  const all = only && only.length ? all0.filter(p => [].concat(only).includes(p.group)) : all0;
+  /* v17.48: one entry per category a person's top 3 professions cover, the plate showing the profession that put them
+     there, top-profession holders first. A search lists each person once, in the category of the profession that matched. */
+  const entries = [];
+  everyone.forEach(p => {
+    if (n) { const h = netSearchHit17(p, n); if (h) entries.push({ p: plateAs17(p, h.profession), g: h.group, r: h.rank }); return; }
+    (p.groups || [{ group: p.group, profession: p.profession, rank: 0 }]).forEach(x => entries.push({ p: plateAs17(p, x.profession), g: x.group, r: x.rank }));
+  });
+  const all = only && only.length ? entries.filter(e => [].concat(only).includes(e.g)) : entries;
   if (n && !all.length && quietEmpty) return null;
   if (n && !all.length) return <div style={{ marginTop: 18 }}><Empty icon={<Search size={26} />} title={`Nobody matches “${query}” yet. Try a different name, skill or area.`} /></div>;
   const order = CATEGORY_ORDER;
-  const groups = all.reduce((m, p) => { (m[p.group] = m[p.group] || []).push(p); return m; }, {});
+  const groups = all.reduce((m, e) => { (m[e.g] = m[e.g] || []).push(e); return m; }, {});
+  Object.keys(groups).forEach(g => { groups[g] = groups[g].map((e, i) => [e, i]).sort((a, b) => a[0].r - b[0].r || a[1] - b[1]).map(([e]) => e.p); });
   const keys = Object.keys(groups).sort((a, b) => order.indexOf(a) - order.indexOf(b));
   /* Something placed straight after one group (FF Staff: Your team after Chefs); at the end if that group isn't shown. */
   const slotAt = insert ? (keys.includes(insertAfter) ? insertAfter : null) : null;
@@ -734,14 +741,15 @@ function NetDrop17({ title, count, children }) {
   );
 }
 
-/* The companies a person works with: accepted team links first, then (for your own profile) companies you added to your network. */
-function personCompanies17(state, person) {
+/* The companies a person works with: accepted team links first, then (for your own profile) companies you added to your network.
+   withNet false (v17.48 Team tab): company teams only, without the network adds. */
+function personCompanies17(state, person, withNet = true) {
   if (!person) return [];
   const me = person.id === "me";
   const tag = String(person.tag || "").toLowerCase();
   const keys = new Set(ctAll17(state).filter(x => x.status === "accepted" && (me ? ctIsMe17(state, x) : (x.personId === person.id || (tag && String(x.tag || "").toLowerCase() === tag)))).map(x => x.companyKey));
   const out = browseCompanies17(state).filter(c => c && c.id !== "mine" && (keys.has(coKey17(c)) || (c.team || []).includes(person.id)));
-  if (me) (state.netAdds17 || []).filter(id => String(id).startsWith("co_")).forEach(id => {
+  if (me && withNet) (state.netAdds17 || []).filter(id => String(id).startsWith("co_")).forEach(id => {
     const c = companyById(state, id);
     if (c && !out.some(x => x.id === c.id)) out.push(c);
   });
