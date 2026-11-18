@@ -211,8 +211,9 @@ function netSearch17(state, query) {
 }
 
 
-/* The five types of professional on the FF Team network, each a closed drop-down: Bar, Entertainment, Services, Food, Other. */
-const PRO_TYPES17 = [["bar", "Bar", "Bar"], ["ent", "Entertainment", "Entertainment"], ["svc", "Services", "Services"], ["food", "Food", "Chefs"], ["other", "Other", "Other"]];
+/* The types of professional on the FF Team network, each a closed drop-down: Bar, Management, Entertainment, Services, Food, Other.
+   net2: Management (v1.6 display category) is its own type, out of Bar. */
+const PRO_TYPES17 = [["bar", "Bar", "Bar"], ["mgmt", "Management", "Management"], ["ent", "Entertainment", "Entertainment"], ["svc", "Services", "Services"], ["food", "Food", "Chefs"], ["other", "Other", "Other"]];
 
 
 function ProsByType17({ onPick }) {
@@ -220,7 +221,7 @@ function ProsByType17({ onPick }) {
   const everyone = useDirectory();
   /* v17.48: a person is listed once in every type their top 3 professions cover, the plate showing the best-ranked
      profession of that type; top-profession holders first, then 2nd, then 3rd, then the existing order. */
-  const kindOf = (g) => PILLAR_OF_GROUP17[g] || "other";
+  const kindOf = (g) => g === "Management" ? "mgmt" : (PILLAR_OF_GROUP17[g] || "other");
   return (
     <>
       {PRO_TYPES17.map(([k, label, icon]) => {
@@ -521,9 +522,9 @@ function StaffRosterStaff11() {
       <p className="ff-body ff-muted" style={{ marginBottom: 4 }}>Find the people to book, and the companies they work with.</p>
       {state.netBrief && <BookingBrief brief={state.netBrief} />}
       <NetBrowse17 query={q} onPick={(p) => dispatch({ type: "VIEW", id: p.id })} scope="staff_" noPackages
-        search={<FFAI query={q} onQuery={setQ} title="Search the network" context="FF Staff"
+        search={<FFAI query={q} onQuery={setQ} title="Search people, skills or places" context="FF Staff" searchBox
           purpose="Find people to hire — search by name, profession, skill or area. Tap a card to see their profile."
-          placeholder="Search the network" />} after={!state.netBrief ? <NetMap11 bare /> : null} teamSlot={myCoKey17(state) ? <CompanyTeam17 /> : null} />
+          placeholder="Search people, skills or places" />} after={!state.netBrief ? <NetMap11 bare /> : null} teamSlot={myCoKey17(state) ? <CompanyTeam17 /> : null} />
     </div>
   );
 }

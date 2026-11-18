@@ -632,7 +632,7 @@ function useDirectory() {
    field, the person checks or edits it, then sends it. `multiline` gives a
    longer guided entry with a submit button; `children` renders the page's
    own result (e.g. Profile's proposed information) under the input. */
-function FFAI({ query, onQuery, onSubmit, onEvent, onShift, placeholder, context = "FireFlair", title, titleAs, purpose, actions, hero = false, multiline = false, submitLabel = "Go", note, children, tint = true, coinSize, compact = false, bare, chat, noMicStatus, plain, tagIcon }) {
+function FFAI({ query, onQuery, onSubmit, onEvent, onShift, placeholder, context = "FireFlair", title, titleAs, purpose, actions, hero = false, multiline = false, submitLabel = "Go", note, children, tint = true, coinSize, compact = false, bare, chat, noMicStatus, plain, tagIcon, searchBox }) {
   const [val, setVal] = useState(query || "");
   const [listening, setListening] = useState(false);
   const [micMsg, setMicMsg] = useState(null);
@@ -688,7 +688,7 @@ function FFAI({ query, onQuery, onSubmit, onEvent, onShift, placeholder, context
   );
 
   const canSend = !!val.trim() && !listening;
-  const sendLabel = submitLabel === "Go" ? "Send" : submitLabel;
+  const sendLabel = searchBox ? "Search" : submitLabel === "Go" ? "Send" : submitLabel;
   const taRef = useRef(null);
   useEffect(() => { const el = taRef.current; if (!el) return; if (!val) { el.style.height = ""; return; } el.style.height = "auto"; el.style.height = Math.min(el.scrollHeight, 140) + "px"; }, [val]);
   return (
@@ -700,14 +700,14 @@ function FFAI({ query, onQuery, onSubmit, onEvent, onShift, placeholder, context
         <span className="ff-body ff-muted ff-ai-purpose" title={purpose || undefined}>{purpose || "Tell us what you're looking for."}</span>
       </div>}
       <div className="ff-ai-row">
-        {mic({})}
-        {isBare && !tagIcon && <span className="ff-ai-tag" aria-hidden="true"><Coin size={20} tier="gold" /></span>}
+        {!searchBox && mic({})}
+        {isBare && !tagIcon && !searchBox && <span className="ff-ai-tag" aria-hidden="true"><Coin size={20} tier="gold" /></span>}
         <textarea ref={taRef} className={`ff-input ff-ai-in${(placeholder || "").length > 36 ? " tall" : ""}`} rows={1} value={val} aria-label={title || "FireFlair"}
           placeholder={placeholder || "Name, skill, area, or describe your event…"}
           onChange={(e) => change(e.target.value)}
           onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey && (!multiline || e.metaKey || e.ctrlKey)) { e.preventDefault(); submit(); } }} />
         <button type="button" className="ff-ai-send" disabled={!canSend} onClick={submit} aria-label={sendLabel} title={sendLabel}>
-          <Send size={16} strokeWidth={2} /><span className="ff-sr">{sendLabel}</span>
+          {searchBox ? <Search size={17} strokeWidth={2} /> : <Send size={16} strokeWidth={2} />}<span className="ff-sr">{sendLabel}</span>
         </button>
       </div>
       {micMsg && !noMicStatus && <p className="ff-body" role="status" style={{ fontSize: 11.5, margin: "6px 0 0", color: listening ? "var(--ox)" : "#6A6253" }}>{micMsg}</p>}
