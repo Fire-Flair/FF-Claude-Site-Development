@@ -9,3 +9,7 @@ const V101_CSS = __ff_css("styles/tokens.css", "styles/v101.css");
 
 
 const V11_CSS = __ff_css("styles/v11.css", "styles/cc20.css", "styles/prof21.css");
+
+
+/* v11-a (Alex, 18 Nov 10:20): titles option 2 "Gold mark" and the full-underline page titles, every FF Team page. */
+const TITLES2_CSS = __ff_css("styles/titles2.css");

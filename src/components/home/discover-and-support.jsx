@@ -415,7 +415,8 @@ function TeamCompetition20() {
     h("style", null, PROMO_CSS20 + LB20_CSS),
     /* chal (Alex, 18 Nov 03:13): the title sits above the box, full width; inside, a three-line heading, the three tiles,
        then the countdown, then the timeline. */
-    h("h2", { id: "ff-cp20-h", className: "ff-lc22-eye ff-lcc-title" }, h("span", { "data-fitw22": "" }, "FF Team Launch Challenge")),
+    /* v11-a (Alex, 18 Nov 10:20): the option 2 "Gold mark" section title (titles2.css), so no longer stretched to the box width. */
+    h("h2", { id: "ff-cp20-h", className: "ff-lc22-eye ff-lcc-title" }, h("span", null, "FF Team Launch Challenge")),
     h(
       "div",
       { className: "ff-lc22 ff-lcc" },

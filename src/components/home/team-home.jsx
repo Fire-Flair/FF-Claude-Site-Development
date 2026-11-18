@@ -96,8 +96,9 @@ function Home101() {
     /* home5 (Alex, 18 Nov 03:06 and 03:13): hero (+ Welcome back), Discover, bookings 1-2-3-4, Launch Challenge,
        FF Stories, the door video, the questions, Join / Your FireFlair, Business & Support, and the coin game last.
        Coins above Discover, before the Challenge, before Stories, before Join and before the game. */
+    /* v11-a (Alex, 18 Nov 10:20): no coin between the welcome and "What is FF Team?"; no "Life at FF Team" heading,
+       the door video full size again; Join FF Team and the coin game one box again (as before v17.57), last on the page. */
     const sections = [
-      coin("top"),
       React.createElement(DiscoverHub11, {
         key: "discover"
       }),
@@ -112,30 +113,18 @@ function Home101() {
         key: "journal",
         kind: "team"
       }),
-      /* home5: the door video under a short heading (Discover FireFlair heading style). */
-      React.createElement("section", {
-        key: "twomin",
-        className: "ff-sect ff-tm5",
-        "aria-labelledby": "ff-tm5-h"
-      }, React.createElement("h2", {
-        id: "ff-tm5-h",
-        className: "ff-h1 ff-dx-h"
-      }, "Life at FF Team"), React.createElement(TwoMinutes20, null)),
+      React.createElement(TwoMinutes20, { key: "twomin" }),
       React.createElement(GuideQuestions11, {
         key: "guide",
         kind: "team"
       }),
-      coin("j"),
-      React.createElement(HomeJoin, {
-        key: "join",
-        withGame: false
-      }),
+      coin("c"),
       React.createElement(BusinessSupport19, {
         key: "business"
       }),
-      coin("g"),
-      React.createElement(HomeCoinGame5, {
-        key: "game"
+      coin("j"),
+      React.createElement(HomeJoin, {
+        key: "join"
       })
     ];
     return React.createElement("div", {
