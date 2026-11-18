@@ -23,6 +23,10 @@
 const SHOW_VENUES17 = false;
 /* Keeps a profile category key unless it is Venues and Venues are off. */
 const venuesOn17 = (k) => SHOW_VENUES17 || k !== "venues";
+/* p2/pubprof: Venues come back on profile pages only (a visitor's profile and your own edit page), with the old
+   Experience records shown under Venues. Map pins, the home legend, area pages, company chips and CV suggestions
+   still follow SHOW_VENUES17 and stay off. */
+const SHOW_VENUES_PROFILE17 = true;
 
 
 const PHASE1 = {

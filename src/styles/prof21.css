@@ -350,3 +350,30 @@
 .ff .ff-pkc.cmp .ff-pkc-dt summary { min-height:44px; }
 .ff .ff-pkc.ff-pkc-own { padding-bottom:12px; }
 .ff .ff-cf-item .ff-svslide .ff-pkc.cmp summary { pointer-events:auto; }
+
+/* ---- p2/pubprof (Alex 02:51): profile cards in the person's Profile Card theme, About Me bigger, Introductions set apart ----
+   One look for every profession and attribute card: a muted tint of the card theme (CSS variables from cardTone17),
+   a gold hairline, cream text on the dark themes. Fallbacks are Ivory. */
+.ff .ff-agrp.t-card { border-color: var(--tc-line, rgba(176,141,42,.7)); background: var(--tc-bg, linear-gradient(165deg,#FBF7EE 0%,#EFE6D3 100%)); color: var(--tc-ink, #1E1A12); }
+.ff .ff-agrp.t-card .ff-agrp-h, .ff .ff-agrp.t-card .ff-agrp-rate { color: var(--tc-ink, #1E1A12); }
+.ff .ff-agrp.t-card .ff-agrp-n, .ff .ff-agrp.t-card .ff-agrp-more { color: var(--tc-acc, #8A6A1E); }
+.ff .ff-agrp.t-card .ff-agrp-d, .ff .ff-agrp.t-card .ff-agrp-l > span { color: var(--tc-sub, #5E5646); }
+.ff .ff-agrp.t-card .ff-agrp-l > span { border-top-color: var(--tc-rule, rgba(30,26,18,.12)); }
+.ff .ff-agrp.t-card .ff-agrp-l > span::before { background: var(--tc-acc, #8A6A1E); }
+.ff .ff-agrp.t-card .ff-agrp-top { background: linear-gradient(90deg, var(--tc-line, rgba(176,141,42,.7)), transparent) left bottom/100% 1px no-repeat; }
+.ff .ff-agrp.t-card::before { border-color: var(--tc-line, rgba(176,141,42,.7)); opacity: .55; }
+.ff .ff-agrp.t-card::after { background: linear-gradient(180deg, rgba(255,255,255,.06), transparent 30%); }
+.ff .ff-pt21-edh .dot.t-card { background: var(--tc-bg, #EFE6D3); border: 1px solid var(--tc-line, rgba(176,141,42,.7)); }
+
+/* About Me on the public page: larger type in its own panel. */
+.ff .ff-about.ff-about-big { max-width: none; padding: 20px 22px 18px; border: 1px solid rgba(176,141,42,.45); border-radius: 22px; corner-shape: squircle; background: #FBF7EE; box-sizing: border-box; }
+.ff .ff-about.ff-about-big .ff-about-h { font-size: 16px; letter-spacing: .16em; }
+.ff .ff-about.ff-pp21.ff-about-big p { margin-top: 10px; font-size: 18px; line-height: 1.6; color: #1E1A12; }
+.ff .ff-about.ff-about-big p.clamp { max-height: calc(6 * 1.6em); }
+@media (min-width: 900px) { .ff .ff-about.ff-pp21.ff-about-big p { font-size: 19px; } }
+
+/* FireFlair Introductions: its own segment, divided from Attributes and Venues. */
+.ff .ff-intro.ff-intro-seg { margin-top: 36px; padding: 26px 22px 18px; position: relative; border: 1px solid rgba(176,141,42,.4); border-radius: 22px; corner-shape: squircle; background: #F4EFE4; box-sizing: border-box; }
+.ff .ff-intro.ff-intro-seg::before { content: ""; position: absolute; left: 22px; right: 22px; top: -19px; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,162,39,.7), transparent); }
+.ff .ff-intro.ff-intro-seg .ff-about-h { margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid rgba(176,141,42,.35); }
+.ff .ff-intro.ff-intro-seg p { color: #1E1A12; }

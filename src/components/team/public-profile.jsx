@@ -659,19 +659,41 @@ function AttrGroups({ items, mem, onOpen }) {
 
 
 
-/* v17.18: one Gold, one Silver, every other card Bronze (the order decides; the colours never repeat). */
-const tierCls17 = (i) => i === 0 ? "t-gold" : i === 1 ? "t-silver" : "t-bronze";
+/* p2/pubprof: no more Gold / Silver / Bronze. Every profession and attribute card takes the person's Profile Card
+   theme, muted (a quiet tint of that theme, a gold hairline, cream text on the dark ones). The colours are CSS
+   variables set by cardTone17 on the profile's wrapper; .t-card in prof21.css reads them. */
+const tierCls17 = () => "t-card";
+const CARD_TONES17 = {
+  ivory:    { bg: "linear-gradient(165deg,#FBF7EE 0%,#EFE6D3 100%)", ink: "#1E1A12", sub: "#5E5646", dark: false },
+  paper:    { bg: "linear-gradient(165deg,#F8F7F3 0%,#E8E6E0 100%)", ink: "#1A1A1C", sub: "#55544F", dark: false },
+  grey:     { bg: "linear-gradient(165deg,#F4EFE4 0%,#E2D7C2 100%)", ink: "#1A1712", sub: "#4A443A", dark: false },
+  silver:   { bg: "linear-gradient(165deg,#EEEFF1 0%,#D2D5DA 100%)", ink: "#16181C", sub: "#3E434A", dark: false },
+  gold:     { bg: "linear-gradient(165deg,#F3EAD0 0%,#DCC896 100%)", ink: "#221A06", sub: "#4A3C16", dark: false },
+  onyx:     { bg: "linear-gradient(165deg,#2A292D 0%,#161518 100%)", ink: "#F4EFE4", sub: "#C9C3B6", dark: true },
+  burgundy: { bg: "linear-gradient(165deg,#5A2A33 0%,#33161C 100%)", ink: "#F4EFE4", sub: "#DCC6BC", dark: true },
+  slate:    { bg: "linear-gradient(165deg,#2E3F37 0%,#19251F 100%)", ink: "#F4EFE4", sub: "#C3D0C7", dark: true },
+  magenta:  { bg: "linear-gradient(165deg,#5A3442 0%,#301A22 100%)", ink: "#F4EFE4", sub: "#DCC6CA", dark: true },
+  cobalt:   { bg: "linear-gradient(165deg,#544a30 0%,#2C2616 100%)", ink: "#F4EFE4", sub: "#DACFB0", dark: true },
+  saffron:  { bg: "linear-gradient(165deg,#6A4740 0%,#36211B 100%)", ink: "#F4EFE4", sub: "#DFC9BA", dark: true },
+};
+function cardTone17(themeKey) {
+  const t = CARD_TONES17[themeKey] || CARD_TONES17.ivory;
+  return { "--tc-bg": t.bg, "--tc-ink": t.ink, "--tc-sub": t.sub, "--tc-line": t.dark ? "rgba(201,162,39,.6)" : "rgba(176,141,42,.7)",
+    "--tc-rule": t.dark ? "rgba(244,239,228,.14)" : "rgba(30,26,18,.12)", "--tc-acc": t.dark ? "#D9BE68" : "#8A6A1E" };
+}
+/* The theme a profile's cards follow: yours from your Profile Card, anyone else's as their card shows it. */
+const cardThemeOf17 = (state, person) => person.id === "me" ? (state.profile.theme || "onyx") : (person.theme || "ivory");
 
 
 
-function AboutMeBlock({ text }) {
+function AboutMeBlock({ text, big }) {
   const [more, setMore] = useState(false);
   const ref = useRef(null);
   const [over, setOver] = useState(false);
   useLayoutEffect(() => { const el = ref.current; if (el) setOver(more || el.scrollHeight > el.clientHeight + 2); }, [text, more]);
   if (!String(text || "").trim()) return null;
   return (
-    <section className="ff-about ff-pp21" aria-labelledby="ff-about-h">
+    <section className={"ff-about ff-pp21" + (big ? " ff-about-big" : "")} aria-labelledby="ff-about-h">
       <div className="ff-pp-head"><h2 id="ff-about-h" className="ff-about-h">About Me</h2></div>
       <p ref={ref} id="ff-about-text" className={more ? "" : "clamp"}>{text}</p>
       {(over || more) && <button type="button" className="ff-pub-more" aria-expanded={more} aria-controls="ff-about-text" onClick={() => setMore(!more)}>{more ? "Read less" : "Read more"}</button>}
