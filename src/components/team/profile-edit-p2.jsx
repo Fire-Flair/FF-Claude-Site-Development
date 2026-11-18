@@ -1,12 +1,14 @@
 /* src/components/team/profile-edit-p2.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json).
    p2/pbuild (18 Nov 2026): the own-profile edit page, below Media, looks like the finished profile.
-   Professions and every Attribute card show even when empty, as placeholder cards with a pencil; a pencil opens the
+   p2/pfb: Professions have no pencil — a card opens its own editor (level, description, media) and a blank "+" card
+   at the end opens the Tiles picker. Every Attribute card shows even when empty, as a placeholder card with a pencil; a pencil opens the
    Light sheet editor (approved editor option 1); the Professions editor holds the Tiles picker (approved picker option 2).
    Q&A sits above Save, always open, answered inline. Ported from the p2/profpick drafts; reads and writes the real records. */
 
 const PE2_CSS = __ff_css("styles/profile-edit-p2.css");
 
-/* The Bar ladder, entry to top: 1 Barback … 5 Mixologist. Every other category is alphabetical. */
+/* The Bar ladder, entry to top: 1 Barback … 5 Mixologist, shown top down (p2/pfb: Barback first and smallest,
+   Mixologist last and largest). Every other category is alphabetical. */
 const PE2_LADDER = ["Barback", "Bartender", "Cocktail Bartender", "Flair Bartender", "Mixologist"];
 const PE2_LINE = {
   Bar: "From first shift to signature menus",
@@ -109,8 +111,8 @@ function PE2Picker({ P }) {
     <div key="panel" className={"pp2-panel" + (c.ranked ? " ladder" : "")} role="region" aria-label={c.key}>
       {c.ranked ? (
         <div className="pp2-stairs">
-          {c.list.map((x, i) => ({ x, i })).reverse().filter(o => ok(o.x)).map(({ x, i }) => (
-            <div key={x} className="pp2-stair" style={{ "--s": i }}><PE2Item name={x} on={P.has(x)} onClick={() => P.toggle(x)} step={i + 1} /></div>
+          {c.list.map((x, i) => ({ x, i })).filter(o => ok(o.x)).map(({ x, i }) => (
+            <div key={x} className="pp2-stair" style={{ "--s": c.list.length - 1 - i, "--g": i }}><PE2Item name={x} on={P.has(x)} onClick={() => P.toggle(x)} step={i + 1} /></div>
           ))}
           {P.ownIn(c.key).map(r => <div key={r.id} className="pp2-own"><PE2Item name={r.name} on onClick={() => P.remove(r)} /></div>)}
         </div>
@@ -220,6 +222,20 @@ function PE2Sheet({ open, title, wide, onClose, children }) {
   );
 }
 
+/* p2/pfb: a profession's level, five grey diamonds filling in (the earlier system, as on the live FF Team site). */
+function PE2Level({ r }) {
+  const n = r.level || 0;
+  return (
+    <span className="ff-proflevel pe2-lv" role="img" aria-label={n ? `Level ${n} of 5, ${professionLevelTitle(n)}` : "Level not set"}>
+      {[1, 2, 3, 4, 5].map(i => <i key={i} className={i <= n ? "on" : ""} />)}
+    </span>
+  );
+}
+
+function PE2AddProf({ onClick }) {
+  return <button type="button" className="pe2-add-prof" aria-label="Add a profession" onClick={onClick}><span className="pe2-add-ic" aria-hidden="true"><Plus size={26} strokeWidth={2.2} /></span></button>;
+}
+
 function PE2Pencil({ label, onClick }) {
   return <button type="button" className="pp-pen" aria-label={`Edit ${label}`} title={`Edit ${label}`} onClick={onClick}><Pencil size={15} strokeWidth={2} aria-hidden="true" /></button>;
 }
@@ -229,6 +245,7 @@ function PE2Overview({ records }) {
   const [sheet, setSheet] = useState(null);
   const [start, setStart] = useState(null);
   const [openVen, setOpenVen] = useState(null);
+  const [openProf, setOpenProf] = useState(null);
   const profs = rankedRecords(records.professions || []).filter(r => !r.hidden && !r.proposed);
   const cats = PE2_ATTRS.filter(k => BASE_CATEGORIES[k]);
   /* Venues: venue records and the older Experience records together. */
@@ -239,12 +256,11 @@ function PE2Overview({ records }) {
     <>
       <style>{PE2_CSS}</style>
       <section className="ff-pp ff-pp21 pp-sec" aria-labelledby="pe2-profs-h">
-        <div className="ff-pp-head"><h2 id="pe2-profs-h" className="ff-about-h">Professions</h2><PE2Pencil label="Professions" onClick={() => setSheet("profs")} /></div>
+        <div className="ff-pp-head"><h2 id="pe2-profs-h" className="ff-about-h">Professions</h2></div>
         {profs.length
-          ? <ProfTiles21 items={profs} def={BASE_CATEGORIES.professions} onOpen={() => setSheet("profs")} />
-          : <button type="button" className="pe2-empty pe2-empty-prof" aria-label="Edit Professions" onClick={() => setSheet("profs")}>
-              <span className="pe2-empty-pen" aria-hidden="true"><Pencil size={18} strokeWidth={2} /></span>
-            </button>}
+          ? <ProfTiles21 items={profs} def={BASE_CATEGORIES.professions} onOpen={(r) => setOpenProf(r)} extra={(r) => <PE2Level r={r} />}
+              tail={<div role="listitem" className="ff-pt21-slot"><PE2AddProf onClick={() => setSheet("profs")} /></div>} />
+          : <div className="ff-pt21-row" role="list" aria-label="Professions"><div role="listitem" className="ff-pt21-slot"><PE2AddProf onClick={() => setSheet("profs")} /></div></div>}
       </section>
       <section className="ff-pp ff-pp21 pp-sec" aria-labelledby="pe2-attr-h">
         <div className="ff-pp-head"><h2 id="pe2-attr-h" className="ff-about-h">Attributes</h2><PE2Pencil label="Attributes" onClick={() => openAttr(cats[0])} /></div>
@@ -275,11 +291,12 @@ function PE2Overview({ records }) {
               </button>}
         </section>
       )}
-      <PE2Sheet open={!!sheet && !openVen} title={PE2_TITLES[sheet] || ""} wide={sheet === "profs"} onClose={() => setSheet(null)}>
+      <PE2Sheet open={!!sheet && !openVen && !openProf} title={PE2_TITLES[sheet] || ""} wide={sheet === "profs"} onClose={() => setSheet(null)}>
         {sheet === "profs" && <PE2ProfEd />}
         {sheet === "attrs" && <PE2AttrEd start={start} />}
         {sheet === "venues" && <VenuesEditor19 items={venAll} onOpen={(r) => setOpenVen(r)} />}
       </PE2Sheet>
+      <GenericAttributeCardCreator open={!!openProf} record={openProf} def={BASE_CATEGORIES.professions} category="professions" onClose={() => setOpenProf(null)} />
       <GenericAttributeCardCreator open={!!openVen} record={openVen} def={openVen && BASE_CATEGORIES[openVen.category]} category={openVen && openVen.category} onClose={() => setOpenVen(null)} />
     </>
   );

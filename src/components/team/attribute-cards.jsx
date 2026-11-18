@@ -521,7 +521,7 @@ function ProfTile21({ r, i, editable, open, lifted, dx, onTap, grip, extra, catK
 }
 
 
-function ProfTiles21({ items, editable, def, onOpen, extra, label = "Professions", catKey = "professions", compact }) {
+function ProfTiles21({ items, editable, def, onOpen, extra, tail, label = "Professions", catKey = "professions", compact }) {
   const { dispatch } = useStore();
   const rows = editable ? rankedRecords(items || []) : rankedRecords(items || []).filter(r => !r.hidden && !r.proposed);
   const ids = rows.map(r => r.id);
@@ -573,6 +573,7 @@ function ProfTiles21({ items, editable, def, onOpen, extra, label = "Professions
               </span>) : null} />
         </div>
       ))}
+      {tail}
       <span className="ff-acar-end" aria-hidden="true" />
     </div>
     {openRec && (

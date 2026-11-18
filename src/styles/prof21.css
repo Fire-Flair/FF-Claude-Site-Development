@@ -377,3 +377,19 @@
 .ff .ff-intro.ff-intro-seg::before { content: ""; position: absolute; left: 22px; right: 22px; top: -19px; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,162,39,.7), transparent); }
 .ff .ff-intro.ff-intro-seg .ff-about-h { margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid rgba(176,141,42,.35); }
 .ff .ff-intro.ff-intro-seg p { color: #1E1A12; }
+
+/* ==== p2/pfb: Professions on the edit page ==================================
+   The profession card is a Skills box wide (same width rule as .ff-agrp) and keeps its old height;
+   five level diamonds top right; a blank "+" card ends the row; the Bar ladder grows from Barback down to Mixologist. */
+.ff .pp-sec .ff-agrp.ff-pt21 { width: clamp(164px, 45vw, 196px); aspect-ratio: auto; min-height: calc(clamp(168px, 45vw, 204px) * 1.4); }
+.ff .pp-sec .ff-agrp.ff-pt21 .ff-agrp-top { padding-right: 62px; }
+.ff .pp-sec .ff-pt21 .pe2-lv { top: 20px; right: 16px; }
+.ff .pp-sec .ff-pt21 .pe2-lv i { border-color: rgba(120,112,96,.55); background: rgba(150,147,140,.35); }
+.ff .pp-sec .ff-pt21 .pe2-lv i.on { background: var(--color-ox); border-color: var(--color-ox); }
+.ff .pe2-add-prof { flex: none; display: grid; place-items: center; width: clamp(164px, 45vw, 196px); min-height: calc(clamp(168px, 45vw, 204px) * 1.4); padding: 0; cursor: pointer;
+  background: #FFFDF8; border: 1.5px dashed rgba(126,97,29,.55); color: var(--color-gold-dk); border-radius: 22px; corner-shape: squircle; box-sizing: border-box; }
+.ff .pe2-add-prof:hover { border-color: var(--color-gold); background: #FFF8E6; }
+.ff .pe2-add-prof:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+.ff .pe2-add-ic { display: grid; place-items: center; width: 52px; height: 52px; background: var(--color-soft); border: 1px solid #D8CBA6; border-radius: 16px; corner-shape: squircle; }
+.ff .pp2-stair .pp-row { min-height: calc(46px + var(--g, 0) * 3px); }
+.ff .pp2-stair .pp-nm { font-size: calc(14px + var(--g, 0) * .5px); }
