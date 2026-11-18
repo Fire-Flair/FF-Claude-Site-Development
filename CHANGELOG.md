@@ -2,6 +2,8 @@
 
 ## v17.59
 
+Artifact version 1794994701-82b2.
+
 Profile edit page (Alex's top priority). Branches merged: `p2-pfa`, `p2-pfb`, `p2-pfc`, `p2-pfd`.
 
 - Let's get started (`profile-builder.jsx`): Phone number first, above Upload CV, in WhatsApp green with the WhatsApp icon.
