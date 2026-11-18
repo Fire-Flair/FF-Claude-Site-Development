@@ -4,9 +4,9 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
-## v1.32
+## v1.33
 
-Profile page (Alex, 18 Nov 17:49), two parallel branches merged: `v11-phone-1749` (phone box, Let's get started) and `v11-venues-1749` (Experience). Published by a three-way merge onto the live page, so other chats' work stays.
+Profile page (Alex, 18 Nov 17:49), two parallel branches merged: `v11-phone-1749` (phone box, Let's get started) and `v11-venues-1749` (Experience). Published by a three-way merge onto the live page 1795026796-63b5 (homepage v1.32 and other chats' unpushed work stay). The page's version label still reads 1.32 (the homepage chat's number, taken while this was publishing); the next publish corrects it. Merged page saved as `live-v1.33-index.html`. Artifact version 1795026837-609e.
 
 ### Phone number box and Let's get started
 - **Final colour (Alex, 18 Nov 18:22): champagne box with a green WhatsApp logo** — new default tone `ff-wa-champ` (`PHONE_TONE21`): champagne `#F5ECD3` > `#EADBB4` > `#DCCB9F`, text `#2A1E04`, WhatsApp mark `#1A9E4B`, gold edge. The sage / olive / moss tones below stay available as one-line switches.
@@ -35,6 +35,16 @@ Developer notes:
 - Data: a venue record with `details.kind === "favourite"` is kept untouched in the data but never shown or edited (`xpShown29`). Do not migrate or delete those records; new venues are saved with `details: { kind: "worked" }` as before.
 - `VenueCard19` (the small tile) stays only for the Network page's Venues section, which is switched off (`SHOW_VENUES17 = false`). The old `.ff-ven19` / `.ff-seg19` / `.ff-vc19` rules in `prof21.css` and `rank17.css` are left in place (another chat edits `prof21.css`); they can be deleted when the Network venues code goes.
 - The new styles are in `src/styles/experience29.css`, loaded by the Experience components themselves.
+
+## v1.32
+
+"Built for getting you bookings" box, phones (Alex, 18 Nov 18:15; Legolas, branch `bookings-box`). `styles/home-text.css`.
+
+- The gold now runs from behind the chevron down the right side to the bottom right, closed and open, with no line: a 16px gold strip down the whole right edge (grows with the box, narrows to nothing at the bottom right) over a 72×200px wedge behind the chevron, each fully faded before its own edges. The line was the old 150px layer ending in colour, plus the button's hover tint left after a tap; the tint is off on phones, and off on iPad/desktop while the box is open.
+- "How bookings work" and the step cards share the title's left and right edges (14px on phones, 30px from 900px); the step row can shrink, so at 360px the cards no longer overflow.
+- Contrast (360–430 and 1180, closed and open): title 8.1:1 or better, flow labels 12.8:1 or better, "How bookings work" 9.8:1. iPad and desktop stay flat burgundy.
+- Merged onto the live page 1795026408-9c88 (a Share-button update from another chat, not on GitHub), so that work stays; page saved as `live-v1.32-index.html`. Artifact version 1795026796-63b5.
+
 ## v1.31
 
 FF Team home, the four pillar boxes (Alex, 18 Nov 18:15). `discover-hub.jsx`, `styles/home-text.css`.

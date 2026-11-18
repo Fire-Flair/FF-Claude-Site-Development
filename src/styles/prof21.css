@@ -494,7 +494,7 @@
 .ff .ff-gb21.shine.ff-wa-pfa.ff-wa-moss {
   --wa-bg: linear-gradient(165deg, #466F52 0%, #3B6347 50%, #2F5139 100%); --wa-edge: rgba(20,44,28,.5); --wa-shadow: rgba(20,44,28,.6);
   --wa-ink: #F4EACB; --wa-mark: #EADBB4; --wa-ring: rgba(244,234,203,.35); --wa-off-bg: rgba(244,234,203,.16); --wa-off-ink: rgba(244,234,203,.72); }
-/* v1.32 (Alex, 18 Nov 18:22): "champagne box with a green WhatsApp logo — that's the way we do that". The default. */
+/* v1.33 (Alex, 18 Nov 18:22): "champagne box with a green WhatsApp logo — that's the way we do that". The default. */
 .ff .ff-gb21.shine.ff-wa-pfa.ff-wa-champ {
   --wa-bg: linear-gradient(165deg, #F5ECD3 0%, #EADBB4 55%, #DCCB9F 100%); --wa-edge: rgba(176,141,42,.38); --wa-shadow: rgba(126,97,29,.45);
   --wa-ink: #2A1E04; --wa-mark: #1A9E4B; --wa-ring: rgba(26,158,75,.22); --wa-off-bg: rgba(42,30,4,.10); --wa-off-ink: rgba(42,30,4,.58); }
