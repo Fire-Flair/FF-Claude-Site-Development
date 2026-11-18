@@ -1,5 +1,13 @@
 # FireFlair prototype — changelog
 
+## v17.55
+
+FF Team home round 3. Branch merged: `p2-home3`.
+
+- Launch Challenge (`discover-and-support.jsx`, `team-home.jsx`, `home-fix22.css`): the box is back to the normal page width; the "FF Team Launch Challenge" eyebrow sizes itself to fill the box width on one line; "Grow your Team." and "Win prizes." sit on separate lines.
+- Coins: a spinning coin above Discover FireFlair, below FF Stories, below the questions and between Business & Support and the coin game; every coin has a larger, equal gap above and below (30 / 46 / 48 px at 390 / 768 / 1280).
+- Questions (`growth-and-terms.jsx`): "Can FF Team help you?" on FF Team; the first question reads "Do you work in events or hospitality?".
+
 ## v17.54
 
 Artifact version 1794969481-3618.
