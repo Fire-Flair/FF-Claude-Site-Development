@@ -515,7 +515,8 @@
 /* v1.29 (Alex, 18 Nov 17:49): on desktop the Let's get started box sits on the left, under its heading (its left edge
    lines up with the "Let's get started" title); the Profile Card stays in the middle. Need help? and Book a meeting
    keep the centred rule above. */
-.ff .ff-journey > #ff-sec-ffai.ff-start17 { margin-left: 0; margin-right: auto; }
+/* v1.55 (Alex, 18 Nov 20:43): back in the centre, under the Profile Card, on every size (replaces the left alignment above). */
+.ff .ff-journey > #ff-sec-ffai.ff-start17 { margin-left: auto; margin-right: auto; }
 
 /* ---- pb-professions (Alex 19:19): the "top three", the first three entries that go onto the Profile Card ----
    Shared marking: .ff-top3 on the entry's wrapper (position: relative) and a .ff-top3-n number tab on its top edge. */

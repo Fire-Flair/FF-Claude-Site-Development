@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.55
+
+- Profile builder (Alex, 18 Nov 20:43): the Let's get started box is centred again on desktop (max 640px, under the Profile Card); it was left-aligned under its heading since v1.29 (`styles/prof21.css`). Merged onto the live page (v1.54). Artifact version 1795034708-9a3c.
+
 ## v1.54
 
 Alex, 18 Nov 20:40. `team/creator-media.jsx`, `styles/prof21.css`, `styles/base.css`.
