@@ -2,6 +2,8 @@
 
 ## v17.42
 
+Artifact version 1794961397-8c5b.
+
 FF Party box on the FF Team Bookings page. Branch merged: `p2-pkg3`.
 
 - `bookings.jsx`, `bkd.css`: title, intro text, tabs and the package rail share one left edge; the tabs are separate squircles on one baseline above the cards; the ribbon sits level with the FF logo; Includes / Ideal for / Duration values are sentence-case Inter beside the icon (labels stay small-caps Cinzel).
