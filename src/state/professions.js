@@ -15,7 +15,13 @@ const PROFESSION_CATEGORIES = [
 ];
 
 
-const CATEGORY_ORDER = [...PROFESSION_CATEGORIES.map(c => c.key), "Other"];
+/* cats: the display order everywhere (Network drop-downs, map legend, Team tab): Bar, Front of House, Management,
+   Back of House, then the rest. */
+const CATEGORY_ORDER = ["Bar", "Front of House", "Management", "Back of House", "Entertainment", "Services", "Chefs", "Other"];
+
+
+/* cats: the name a category is shown under on Network and the map (Chefs reads "Food"). */
+const groupLabel17 = (g) => g === "Chefs" ? "Food" : g;
 
 
 /* Assignment for professions outside the suggestion lists. Checked in this

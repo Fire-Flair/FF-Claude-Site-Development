@@ -203,8 +203,9 @@ const catOf19 = (p) => p.kind === "person" ? (p.profession || p.group || "Other"
 const layerOf19 = (p) => p.kind === "person" ? "pros" : p.kind === "company" ? (p.partner ? "partners" : "dir") : p.kind === "venue" ? "venues" : "";
 
 
-/* v17.48: a person counts under each of their top 3 professions; their one pin shows if any of those is switched on. */
-const catsOf19 = (p) => p.kind === "person" && p.profs17 ? [...new Set(p.profs17.map((x) => x.profession).filter(Boolean))] : [catOf19(p)];
+/* v17.48: a person counts under each of their top 3 professions; their one pin shows if any of those is switched on.
+   cats: the Professionals list shows the groups those professions are in (Bar, Front of House, ... Food), each person once per group. */
+const catsOf19 = (p) => p.kind === "person" ? [...new Set((p.profs17 || [{ group: p.group || "Other" }]).map((x) => groupLabel17(x.group || "Other")))] : [catOf19(p)];
 
 
 const mapLayer19 = (show, hide) => (p) => { const k = layerOf19(p); return !k ? true : show[k] && catsOf19(p).some((c) => !(hide || {})[k + ":" + c]); };
@@ -214,7 +215,7 @@ function MapLegend19({ pins, show, setShow, hide, setHide }) {
   const h = React.createElement;
   const [openK, setOpenK] = useState("");
   const members = (k) => { const seen = {}; return pins.filter((p) => layerOf19(p) === k).filter((p) => { const key = p.coId || p.id; if (seen[key]) return false; seen[key] = 1; return true; }); };
-  const cats = (k) => { const m = {}; members(k).forEach((p) => { catsOf19(p).forEach((c) => { m[c] = (m[c] || 0) + 1; }); }); return Object.keys(m).sort().map((c) => [c, m[c]]); };
+  const cats = (k) => { const m = {}; members(k).forEach((p) => { catsOf19(p).forEach((c) => { m[c] = (m[c] || 0) + 1; }); }); const ord = (c) => { const i = CATEGORY_ORDER.map(groupLabel17).indexOf(c); return i < 0 ? 99 : i; }; return Object.keys(m).sort((a, b) => k === "pros" ? ord(a) - ord(b) || a.localeCompare(b) : a.localeCompare(b)).map((c) => [c, m[c]]); };
   const count = {}; MAP_LAYERS19.forEach(([k]) => { count[k] = members(k).length; });
   const icon = { partners: h(Coin, { size: 17 }), pros: h(MapPerson17, { size: 18 }), dir: h(MapDot17, { cat: "bar", size: 18 }), venues: h(MapVenue20, { size: 18 }) };
   return h("div", { className: "ff-ml19", role: "group", "aria-label": "Map layers" },
