@@ -4,6 +4,17 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.48
+
+FF Team home, "Can FF Team help you?" (Alex, 18 Nov 20:21; question agent). `src/components/home/growth-and-terms.jsx` (team questions only).
+
+- Three questions, three answers each:
+  1. "Do you work in events?" Yes (Create your Profile Card) / No, but I'd like to (Explore the network) / What kind of events? (private parties, weddings, corporate events, festivals, launches and more; See events and support).
+  2. "Are you a freelancer?" replaces "Do you work in hospitality?": Yes (Create your Profile Card) / No, but I'd like to be (See events and support) / What is a freelancer? (self-employed, you choose your work and rates, work for different clients and look after your own tax; Read FFStories, which has the freelance bartending guides).
+  3. "What would help you most right now?" Getting booked (button now Create your Profile Card) / Training events (replaces Building my team; See events and support) / A support network (replaces Collecting reviews; Explore the network).
+- Checked: `npm run check`, `npm run build`, home page at phone and desktop width with answers opened (no overflow, no console errors).
+- Published over live 1795033110-6709 (v1.47), index.html only (all other files kept). Artifact version 1795033554-e789. Built page saved as `live-v1.48-index.html`.
+
 ## v1.47
 
 FF Team home, FF Party Launch Event intro (Alex, 18 Nov 20:16; writer agent). `src/components/home/discover-and-support.jsx`.
