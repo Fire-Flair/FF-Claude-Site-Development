@@ -1,0 +1,67 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@font-face{font-family:Cinzel;src:url(/home/claude/fonts/cinzel-latin-600-normal.woff2) format("woff2");font-weight:600}
+@font-face{font-family:Cinzel;src:url(/home/claude/fonts/cinzel-latin-700-normal.woff2) format("woff2");font-weight:700}
+:root{--gold:#C9A227;--gold-lt:#E7CB7A;--burg:#5C1220;--cream:#F4EFE4;--black:#0B0B0C}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);font-family:Inter,sans-serif;padding:24px 16px;word-break:normal;overflow-wrap:normal;hyphens:none}
+.wrap{max-width:868px;margin:0 auto}
+.cp{position:relative;border-radius:26px;corner-shape:squircle;overflow:hidden;color:#F4EBD6;background:linear-gradient(135deg,#0B0A09 0%,#1C0E12 55%,#4A1220 100%);border:1px solid rgba(201,162,75,.45);padding:22px 18px 22px}
+.eye{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#D9B968;font-weight:600}
+.coin{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#F6E3A4,#C9A227 55%,#8C6A1F);display:grid;place-items:center;font-family:Cinzel;font-weight:700;color:#3A2A08;font-size:13px;box-shadow:0 0 0 2px rgba(0,0,0,.4) inset}
+h2{font-family:Cinzel;font-weight:700;margin:12px 0 14px;font-size:clamp(24px,6.4vw,34px);line-height:1.12;color:#F4EBD6}
+.cd{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cd-l{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#D9B968;font-weight:600;margin-right:4px}
+.cd-c{display:inline-flex;flex-direction:column;align-items:center;min-width:58px;padding:6px 10px;border-radius:14px;corner-shape:squircle;border:1px solid rgba(201,162,75,.5);background:rgba(244,235,214,.05)}
+.cd-c b{font-size:22px;line-height:1.1;font-variant-numeric:tabular-nums}.cd-c small{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#D9B968}
+.tiles{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:10px;margin:18px 0 0}
+.t{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:14px;border-radius:18px;corner-shape:squircle;border:1px solid rgba(201,162,75,.45);background:rgba(244,235,214,.05);min-height:118px;text-align:left;color:inherit;font:inherit}
+.t svg{width:30px;height:30px;color:var(--gold-lt);flex:none}
+.t b{font-size:16px;line-height:1.2;color:#FFF6DC}.t span{font-size:13.5px;line-height:1.3;color:#D9B968}
+.btns{display:flex;gap:10px;margin-top:16px}
+.btn{flex:1;min-height:48px;border-radius:14px;corner-shape:squircle;font:inherit;font-weight:700;font-size:14px;display:grid;place-items:center}
+.gold{background:linear-gradient(180deg,#F1D98A,#C9A227);color:#1A1205;letter-spacing:.08em;text-transform:uppercase;border:1px solid #F4E1A0}
+.ghost{background:transparent;color:#F4DC8E;border:1px solid rgba(201,162,75,.6)}
+.lad{margin-top:22px;padding-top:18px;border-top:1px solid rgba(201,162,75,.25)}
+.bar{position:relative;height:12px;border-radius:12px;background:rgba(244,235,214,.14);border:1px solid rgba(201,162,75,.45);margin:14px 14px 0}
+.f{position:absolute;left:0;top:0;bottom:0;width:3%;border-radius:12px;background:linear-gradient(90deg,#8C6A1F,#E7CB7A)}
+.d{position:absolute;top:50%;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;background:#1C0E12;border:2px solid rgba(201,162,75,.7);display:grid;place-items:center}
+.d svg{width:15px;height:15px;color:var(--gold-lt)}.d.on{background:#E7CB7A;border-color:#F4EBD6}.d.on svg{color:#1C0E12}
+.n{margin-top:18px;text-align:center;font-size:13px;color:#D9B968}
+.stops{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.s{display:flex;flex-direction:column;gap:3px;font-size:13px;line-height:1.3;color:rgba(244,235,214,.9)}
+.s em{font-style:normal;font-family:Cinzel;font-weight:700;font-size:15px;color:#E7CB7A}
+.s:nth-child(2){text-align:center}.s:nth-child(3){text-align:right}
+@media(min-width:900px){
+ .cp{padding:30px}
+ .grid{display:grid;grid-template-columns:1.05fr 1fr;gap:28px;align-items:start}
+ .tiles{margin:0}
+ .btns{max-width:420px}
+ .stops .s{font-size:14px}
+}
+</style></head><body><div class="wrap"><section class="cp" id="cp">
+<div class="grid"><div>
+ <div class="eye"><span class="coin">FF</span><span>FF Team Launch Challenge</span></div>
+ <h2>Grow your Team. Win prizes.</h2>
+ <div class="cd"><span class="cd-l">Starts in</span><span class="cd-c"><b>12</b><small>days</small></span><span class="cd-c"><b>22</b><small>hours</small></span><span class="cd-c"><b>20</b><small>mins</small></span></div>
+ <div class="btns"><span class="btn gold">Join Challenge</span><span class="btn ghost">Rules</span></div>
+</div>
+<div class="tiles">
+ <button class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="4"/><path d="M8 2.5v4M16 2.5v4M3 10h18"/></svg><b>90 days</b><span>1 Dec to 28 Feb</span></button>
+ <button class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M17 14.5c2.4 0 4.1 1.5 4.6 4"/></svg><b>Open to all</b><span>Anyone in hospitality</span></button>
+ <button class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.5 14 7 21.5l5-2.5 5 2.5-1.5-7.5"/><path d="M12 6.5v5M10 9h4"/></svg><b>Top 10 go Gold</b><span>Gold membership</span></button>
+ <button class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg><b>Winner flies to Athens</b><span>Athens Bar Show</span></button>
+</div></div>
+<div class="lad">
+ <div class="bar"><span class="f"></span>
+  <i class="d on" style="left:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.7-3.6 3.5-5.5 7-5.5s6.3 1.9 7 5.5"/></svg></i>
+  <i class="d" style="left:50%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="4"/><path d="M8 2.5v4M16 2.5v4M8 14l3 3 5-6"/></svg></i>
+  <i class="d" style="left:100%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 9 7l8 8z"/><path d="M14 4v2M19 9h2M17 6l1.5-1.5M12.5 9.5 15 7"/></svg></i>
+ </div>
+ <div class="n">6 professionals so far</div>
+ <div class="stops">
+  <div class="s"><em>Now</em>Profiles and networks</div>
+  <div class="s"><em>100</em>Bookings go live</div>
+  <div class="s"><em>1,000</em>Launch party and nationwide campaign</div>
+ </div>
+</div>
+</section></div></body></html>
