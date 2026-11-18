@@ -286,6 +286,8 @@ const noSel21 = (on) => { try { document.body.style.userSelect = on ? "none" : "
 /* v17.21: the one editor for an entry (Professions, Qualifications, Skills, Interests, Languages). It opens under the entry
    when the entry is tapped: the detail text, the pictures, then one row — remove (trash), hide, and Done. */
 function EntryEditor21({ r, catKey, def, onDone }) {
+  /* prof-edits (Alex, 18 Nov 20:58): a profession with no text of its own opens with its default description (its own, or its category's, e.g. Front of House) ready to edit; clearing the box on purpose keeps it empty. */
+  const [edTouched, setEdTouched] = useState(false);
   const { dispatch } = useStore();
   const [busy, setBusy] = useState(null);
   const [sure, setSure] = useState(false);
@@ -312,15 +314,14 @@ function EntryEditor21({ r, catKey, def, onDone }) {
         </div>
       )}
       {meta && <p className="meta">{meta}</p>}
-      <textarea className="ff-ed21-ta" rows={Math.max(2, Math.min(6, Math.ceil(String(r.description || "").length / 34)))} value={r.description || ""} aria-label={`Details for ${r.name}`} placeholder="Details"
-        autoFocus={FF_FINE_POINTER} onChange={(e) => patch({ description: e.target.value })} />
+      <textarea className="ff-ed21-ta" rows={Math.max(2, Math.min(6, Math.ceil(String(r.description || "").length / 34)))} value={r.description || (catKey === "professions" && !edTouched ? professionDefaultDesc(r.name, r.displayCategory) : "")} aria-label={`Details for ${r.name}`} placeholder="Details"
+        autoFocus={FF_FINE_POINTER} onChange={(e) => { setEdTouched(true); patch({ description: e.target.value }); }} />
       <PhotoBoxes19 media={r.media} max={maxMedia} busy={busy === "loading"} onAdd={addPhoto}
         onRemove={(m) => patch({ media: (r.media || []).filter(x => x.id !== m.id) })} />
       {catHas(def, "document") && <EntryDocBox r={r} patch={patch} />}
       {busy && busy !== "loading" && <p className="ff-wlbox-err" role="alert">{busy}</p>}
       {catKey === "professions" && (<>
         <div className="ff-levels-wrap"><ProfessionLevelPicker value={r.level || null} onChange={(n) => patch({ level: n })} /></div>
-        <label className="ff-remote17 ff-rl19-chk"><input type="checkbox" checked={!!r.remote} onChange={(e) => patch({ remote: e.target.checked })} /><span>Available for remote work</span></label>
       </>)}
       {catKey === "languages" && (
         <select className="ff-input ff-ed21-sel" aria-label="Level" value={r.proficiency || ""} onChange={(e) => patch({ proficiency: e.target.value })}>
@@ -1053,13 +1054,7 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
         </div>
       )}
 
-      {/* Remote work for this profession: independent of the areas covered */}
-      {category === "professions" && !readOnly && owner !== "company" && !adding && (
-        <label className="ff-remote17" style={{ display: "flex", alignItems: "center", gap: 10, minHeight: 44, margin: "0 0 14px", cursor: "pointer", fontSize: 14.5, color: "#16130F" }}>
-          <input type="checkbox" checked={!!live.remote} onChange={(e) => patch({ remote: e.target.checked })} style={{ width: 20, height: 20, accentColor: "#5C1220", flex: "none" }} />
-          <span>Available for remote work</span>
-        </label>
-      )}
+      {/* prof-edits (Alex, 18 Nov 20:58): "Available for remote work" removed. */}
 
       {/* Profession level: only ever seen by the owner, while editing */}
       {category === "professions" && !readOnly && (
@@ -1131,8 +1126,8 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
       <Field label={def.descLabel || "Description"}>
         {readOnly
           ? <p className="ff-serif" style={{ fontSize: 16, lineHeight: 1.5, margin: 0 }}>{draft.description || (category === "professions" ? professionDefaultDesc(draft.name, draft.displayCategory) : "") || "Nothing written yet."}</p>
-          : <textarea className="ff-input" rows={5} value={draft.description || ""} placeholder={def.descPlaceholder || undefined}
-              onChange={(e) => patch({ description: e.target.value })} />}
+          : <textarea className="ff-input" rows={5} value={draft.description != null && draft.description !== "" ? draft.description : (category === "professions" && !adding && !draft.descTouched ? professionDefaultDesc(draft.name, draft.displayCategory) : "")} placeholder={def.descPlaceholder || undefined}
+              onChange={(e) => { setDraft(d => ({ ...d, descTouched: true })); patch({ description: e.target.value }); }} />}
       </Field>
       )}
 

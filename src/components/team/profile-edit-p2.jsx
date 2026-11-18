@@ -155,9 +155,18 @@ function PE2Which({ P }) {
 /* The add flow: a type box, then every category as an Attribute-sized box. */
 function PE2ProfCats({ P }) {
   const [q, setQ] = useState("");
+  /* prof-edits (Alex, 18 Nov 20:58): the same search-as-you-type as the rest of the profile (ProfTypeIn): known
+     professions that start with what was typed, then ones that contain it; Enter takes the first. */
+  const qn = q.trim().toLowerCase();
+  const hits = qn ? [
+    ...ALL_PROFESSIONS.filter(x => x.name.toLowerCase().startsWith(qn)),
+    ...ALL_PROFESSIONS.filter(x => !x.name.toLowerCase().startsWith(qn) && x.name.toLowerCase().includes(qn)),
+  ].filter(x => !P.has(x.name)).slice(0, 6) : [];
+  const pickHit = (nm) => { if (!P.has(nm)) P.toggle(nm); setQ(""); };
   const add = (e) => {
     e.preventDefault();
     const t = q.trim(); if (!t) return;
+    if (hits[0] && hits[0].name.toLowerCase().startsWith(t.toLowerCase())) { pickHit(hits[0].name); return; }
     const hit = pe2Listed(t);
     const nm = hit ? hit.name : pe2Title(t);
     if (!P.has(nm)) P.toggle(nm);
@@ -172,6 +181,11 @@ function PE2ProfCats({ P }) {
           onChange={(e) => setQ(e.target.value)} />
         <button type="submit" className="ff-type21-key" aria-label="Add a profession" tabIndex={-1}><span>Enter</span><CornerDownLeft21 size={15} strokeWidth={2.2} aria-hidden="true" /></button>
       </form>
+      {hits.length > 0 && (
+        <div className="pe2-pc-hits" role="listbox" aria-label="Matching professions">
+          {hits.map(x => <button key={x.name} type="button" role="option" aria-selected="false" className="pe2-pc-hit" onClick={() => pickHit(x.name)}><span>{x.name}</span><small>{x.cat}</small></button>)}
+        </div>
+      )}
       <PE2Which P={P} />
       <div className="ff-mrow ff-acar pe2-rail pe2-cats" role="list" aria-label="Profession categories">
         {cats.map(c => {
