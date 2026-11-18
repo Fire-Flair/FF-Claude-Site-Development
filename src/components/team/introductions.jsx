@@ -313,20 +313,122 @@ window.__ffIntro17 = { snapshot: fiSnapshot17, fallback: fiFallback17, compose: 
 function TabEmpty17({ icon, children }) { return <div className="ff-tab-empty">{icon}<p>{children}</p></div>; }
 
 
+/* v17.48 Team tab (option 1): My team, Company teams, then Network.
+   My team: two-way team links (invite + accept), grouped by top profession. Someone else's team shows only the link the
+   prototype knows (you, if you are on their team); nothing is invented. Company teams: accepted company memberships only.
+   Network: one-way adds; the owner sees the list, visitors only the count. */
 function teamTabData17(state, all, person) {
-  const teams = person.id === "me" ? myNetwork(state, all).list.filter(p => (state.connections || []).some(c => c.id === p.id)) : networkOf11(state, all, person);
-  const tCos = personCompanies17(state, person);
-  const tNet = person.id === "me" ? (state.netAdds17 || []).map(id => all.find(p => p.id === id)).filter(p => p && !p.isCompany && !teams.some(t => t.id === p.id)) : [];
-  return { teams, tCos, tNet };
+  const me = person.id === "me";
+  const conn = (id) => (state.connections || []).some(c => c.id === id);
+  const teams = me ? myNetwork(state, all).list.filter(p => conn(p.id)) : (conn(person.id) ? all.filter(p => p.id === "me") : []);
+  const tCos = personCompanies17(state, person, false);
+  const adds = me ? (state.netAdds17 || []) : [];
+  const tNet = adds.map(id => all.find(p => p.id === id)).filter(p => p && !p.isCompany && !teams.some(t => t.id === p.id));
+  const netCos = adds.filter(id => String(id).startsWith("co_")).map(id => companyById(state, id)).filter(c => c && !tCos.some(x => x.id === c.id));
+  return { teams, tCos, tNet, netCos };
+}
+
+
+/* Joined FireFlair through your link: the team record says so, or their own referral record names you. */
+function joinedThrough17(state, p) {
+  const c = (state.connections || []).find(x => x.id === p.id);
+  if (c && c.joinedThroughMe) return true;
+  const r = p.referredBy, tag = String((state.auth && state.auth.tag) || "").toLowerCase();
+  return !!(r && (r.personId === "me" || (tag && String(r.tag || r.code || "").toLowerCase() === tag)));
+}
+
+
+const TEAM_TAB_CSS17 = __ff_css("styles/team-tab17.css");
+const TtNet17 = lucideIcon("Waypoints");
+
+
+/* A preview card: portrait, name, top profession, the other professions as small labels. */
+function TeamTile17({ p, star, onClick }) {
+  const others = (p.profs17 || []).slice(1).map(x => x.profession);
+  return (
+    <button type="button" className="ff-tt17-tile" onClick={onClick}>
+      {star ? <span className="rec" title="Joined through you" aria-label="Joined through you"><Star size={10} fill="currentColor" aria-hidden="true" /></span> : null}
+      <Portrait src={p.photo} name={p.name} size={58} />
+      <b><FitLabel17>{p.name}</FitLabel17></b>
+      <small><FitLabel17>{p.profession}</FitLabel17></small>
+      {others.length ? <span className="ot">{others.map(o => <i key={o}><FitLabel17>{o}</FitLabel17></i>)}</span> : null}
+    </button>
+  );
+}
+
+
+/* A company team: logo, name, what they do, and the faces of its members. */
+function CoTeamCard17({ co, all }) {
+  const { state, dispatch } = useStore();
+  const ids = [...new Set([...ctMembers17(state, coKey17(co)), ...(co.team || [])])];
+  const people = ids.map(id => all.find(p => p.id === id)).filter(Boolean);
+  const ini = String(co.name || "").split(/\s+/).filter(w => /^[A-Za-z]/.test(w)).map(w => w[0]).slice(0, 2).join("").toUpperCase();
+  const [bad, setBad] = useState(false);
+  const kind = [].concat(co.kind || []).join(" · ");
+  return (
+    <button type="button" className="ff-tt17-co" onClick={() => { dispatch({ type: "VIEW_COMPANY", id: co.id }); window.scrollTo(0, 0); }}>
+      <span className="logo" aria-hidden="true">{co.logo && !bad ? <img src={co.logo} alt="" onError={() => setBad(true)} /> : ini}</span>
+      <span className="tx"><b>{co.name}</b>{kind ? <small>{kind}</small> : null}</span>
+      {people.length ? (
+        <span className="ft" aria-label={`${people.length} on the team`}>
+          <span className="stack" aria-hidden="true">{people.slice(0, 5).map(p => <span key={p.id} className="f"><Portrait src={p.photo} name={p.name} size={30} /></span>)}</span>
+          {people.length > 5 ? <span className="more" aria-hidden="true">+{people.length - 5}</span> : null}
+        </span>
+      ) : null}
+    </button>
+  );
 }
 
 
 function TeamTab17({ person }) {
-  const { state } = useStore();
+  const { state, dispatch } = useStore();
   const all = useDirectory();
+  const own = person.id === "me";
   const first = String(person.name || "").split(" ")[0] || "them";
-  const { teams, tCos, tNet } = teamTabData17(state, all, person);
-  return <TeamParts17 team={teams} companies={tCos} network={tNet} teamEmpty={person.id === "me" ? "No one on your team yet." : `${first} hasn't added anyone to their team yet.`} />;
+  const { teams, tCos, tNet, netCos } = teamTabData17(state, all, person);
+  const [q, setQ] = useState("");
+  useEffect(() => { setQ(""); }, [person.id]);
+  const n = q.trim().toLowerCase();
+  /* Team search matches every profession, not only the top 3. */
+  const shown = n ? teams.filter(p => personSearchText(p).includes(n)) : teams;
+  const groups = CATEGORY_ORDER.map(g => [g, shown.filter(p => p.group === g)]).filter(([, l]) => l.length);
+  const rec = own ? teams.filter(p => joinedThrough17(state, p)).length : 0;
+  const view = (p) => { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); };
+  const none = (t) => <p className="ff-body ff-muted" style={{ margin: 0 }}>{t}</p>;
+  const netCount = tNet.length + netCos.length;
+  return (
+    <div className="ff-tt17">
+      <style>{TEAM_TAB_CSS17}</style>
+      <Fold17 id="team17_my" icon={<Users size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={own ? "My team" : `${first}'s team`} count={teams.length}>
+        {rec ? <p className="ff-tt17-sub"><Star size={11} fill="currentColor" aria-hidden="true" /> {rec} joined through you</p> : null}
+        {teams.length > 12 ? (
+          <label className="ff-tt17-search"><Search size={15} aria-hidden="true" />
+            <input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={own ? "Search your team" : "Search the team"} aria-label="Search the team" />
+          </label>
+        ) : null}
+        {!teams.length ? none(own ? "No one on your team yet." : `${first} hasn't added anyone to their team yet.`)
+          : !shown.length ? none(`Nobody on the team matches “${q.trim()}”.`)
+          : groups.map(([g, l]) => (
+            <div key={g} className="ff-tt17-group">
+              <div className="ff-tt17-gh">{g} <i>{l.length}</i></div>
+              <div className="ff-tt17-grid">{l.map(p => <TeamTile17 key={p.id} p={p} star={own && joinedThrough17(state, p)} onClick={() => view(p)} />)}</div>
+            </div>
+          ))}
+      </Fold17>
+      <Fold17 id="team17_cos" icon={<Briefcase size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Company teams" count={tCos.length}>
+        {tCos.length ? <div className="ff-tt17-cos">{tCos.map(co => <CoTeamCard17 key={co.id} co={co} all={all} />)}</div> : none("No company teams yet.")}
+      </Fold17>
+      {own ? (
+        <Fold17 id="team17_net" icon={<TtNet17 size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Network" count={netCount} shut>
+          {tNet.length ? <div className="ff-tt17-grid">{tNet.map(p => <TeamTile17 key={p.id} p={p} onClick={() => view(p)} />)}</div> : null}
+          {netCos.length ? <div style={{ marginTop: tNet.length ? 12 : 0 }}><CoTiles17 list={netCos} label="Network companies" /></div> : null}
+          {!netCount ? none("No one yet.") : null}
+        </Fold17>
+      ) : netCount ? (
+        <section className="ff-pn-sec"><SectionHead icon={<TtNet17 size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Network" count={netCount} /></section>
+      ) : null}
+    </div>
+  );
 }
 
 
@@ -374,7 +476,7 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
   const first = String(person.name || "").split(" ")[0] || "them";
   const services = servicesOf(state, person);
   const teamAll_ = useDirectory();
-  const { teams, tCos, tNet } = teamTabData17(state, teamAll_, person);
+  const { teams } = teamTabData17(state, teamAll_, person);
   const reviews = reviewsOf(state, person);
   const records = recordsForPerson(state, person);
   const profs = (records.professions || []).filter(r => !r.hidden && !r.proposed);
@@ -390,7 +492,7 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
   const tabs = [
     { key: "overview", label: "Overview" },
     { key: "services", label: "Bookings", count: services.length },
-    { key: "teams", label: "Team", count: teams.length + tCos.length + tNet.length },
+    { key: "teams", label: "Team", count: teams.length },
     { key: "reviews", label: "Reviews", count: reviews.length },
   ];
   const Empty1 = ({ icon, children }) => <div className="ff-tab-empty">{icon}<p>{children}</p></div>;

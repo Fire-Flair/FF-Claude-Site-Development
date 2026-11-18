@@ -1,5 +1,14 @@
 # FireFlair prototype — changelog
 
+## v17.49
+
+Artifact version 1794966229-5133.
+
+Team tab and people with several professions. Branch merged: `p2-teambuild`.
+
+- Network (`professions.js`, `network.jsx`, `network-directory.jsx`, `map.jsx`): a professional is listed once in every category covered by their top 3 public professions; the card shows the profession that put them there; order is top-profession holders, then 2nd, then 3rd, then the existing order; a 4th profession doesn't count. Search lists each person once, top-profession matches first. Top staff and the map show one entry per person (a pin shows if any of their top 3 is switched on). Category counts are unique people. FF Staff follows the same rule.
+- Team tab (`introductions.jsx`, `attribute-cards.jsx`, `hire.jsx`, new `team-tab17.css`): My team (preview cards stacking downwards, grouped by top profession, other professions as small labels, search after 12, gold star and "N joined through you" on your own profile only), Company teams (company cards stacking downwards, real memberships only), Network at the bottom (collapsed; visitors see the count only). My team and Company teams open by default. The tab number counts My team only. The invented visitor team (`networkOf11`) and the duplicate Network section on the edit page are removed. No named crews.
+
 ## v17.48
 
 Artifact version 1794965586-9624.
