@@ -4,7 +4,6 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
-## v1.40
 ## v1.41
 
 Profile builder thread (18 Nov, about 19:40): Professions, Skills/Interests, Qualifications and Profile Card fitting. Merged over v1.40; nothing from other chats removed. Built from branches pb-professions, pb-typecards, pb-qualifications and pb-cardfit (all on GitHub).
@@ -94,6 +93,8 @@ Qualifications in Attributes, on the left (Alex, 18 Nov 18:59 and 19:19). No ver
   Card only for now; the profile page is unchanged.
 - Capitals: "upon", "under", "le", "la", "de", "du", "en", "sur" stay lower case inside names ("Newcastle upon Tyne").
 
+
+## v1.40
 
 - Home questions ("Can FF Team help you?", Alex 18 Nov): back to Alex's original questions from v16.66, in a new order. 1 "Do you work events, or would you like to?" (Yes, I work events / I'd like to), 2 "Do you work in hospitality?" (Yes, it's my career / Not yet, but I'd like to), 3 "What would help you most right now?" unchanged. The Launch Challenge question and "I'd like shifts around my main job" are no longer in the box; "No, I'm here for something else" is left out because it only led to FF Party (Alex chose to drop it). `components/home/growth-and-terms.jsx`.
 - Also repairs the live page: version 1795029777-6437 (v1.39) did not load (SyntaxError) because every "VER" in the published file had been replaced with `version:"1.39"` (e.g. `VERIFICATION_LEVELS`, `FF_LOGO_SILVER`, `FI_VERSION`); this publish is built from GitHub, so that is gone. It also carries the palette tokens from d9face0, which were on GitHub but not yet live. Check, build and phone/desktop screenshots of the questions done (no journey-test script in this repo). Artifact version 1795030282-bffd.
