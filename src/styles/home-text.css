@@ -69,7 +69,7 @@
 /* ---------- pillar tiles: title only, bigger and bold, every size (Alex, 18 Nov 18:15) ---------- */
 .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .tx b { font-weight:700 !important; font-size:25px !important; line-height:1.1 !important; }
 @media (min-width:760px) { .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .tx b { font-size:27px !important; } }
-@media (min-width:1000px) { .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .tx b { font-size:24px !important; } }
+@media (min-width:1024px) { .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .tx b { font-size:clamp(18px,1.7vw,23px) !important; } }
 /* with one line of words, the photo can come down closer to the title on iPad and desktop */
 @media (min-width:760px) { .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .ph { bottom:56px !important; } }
 /* the pillar chevron is a solid burgundy button on every size, open and closed (Alex, 18 Nov 18:15) */
@@ -84,3 +84,21 @@
 @media (min-width:860px) { .ff .ff-hf22.ff-home-c4 .ff-hb23-body .ff-hb17-row { grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr); } }
 /* open on iPad and desktop the tint would stop at the button's edge too */
 .ff .ff-hf22.ff-home-c4 .ff-hb23.is-open .ff-hbc-btn:hover { background:transparent; }
+
+/* ---------- pillar tiles on iPad and desktop (Alex, 18 Nov 19:16) ----------
+   The chevron moves to the bottom right, beside the title. The photo is shorter, ending above a champagne band that
+   always has room for the title (two lines when four tiles share a row), so the words never sit on the photo. */
+@media (min-width:760px) {
+  .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .chev { top:auto !important; bottom:14px !important; right:14px !important; }
+  .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .tx { padding-right:58px !important; padding-bottom:14px !important; }
+  .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .ph { bottom:60px !important; }
+}
+@media (min-width:1024px) {
+  .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .ph { bottom:84px !important; }
+  .ff .ff-hf22.ff-home-c4 .ff-dx .ff-dx-tile .tx { min-height:84px; display:flex !important; align-items:center; box-sizing:border-box; padding-top:10px !important; }
+}
+
+/* ---------- hero on desktop (Alex, 18 Nov 19:16): the words and Create your profile card sit in the bottom left ---------- */
+@media (min-width:900px) {
+  .ff .ff-hf22.ff-home-c4 section#ff-hero.ff-hero18 .ff-hero18-in { align-self:end !important; padding-bottom:clamp(26px,3vw,40px) !important; }
+}
