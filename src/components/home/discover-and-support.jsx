@@ -345,11 +345,12 @@ function TwoMinutes20() {
     "section",
     { className: "ff-sect ff-tm20", id: "ff-two-minutes", "aria-labelledby": "ff-tm20-h" },
     h("style", null, TM20_CSS),
+    /* launch-copy (Alex, 18 Nov 20:16; writer agent, option 2): the launch night is a masterclass, a competition and a launch party in one. */
     /* home-text (Alex, 18 Nov 16:26): a title and a few lines above the video: what happens when the 90-day challenge ends (Bilbo). */
     /* title-bars (Alex, 18 Nov 17:00): the title and its intro share one gold line (titles2.css, .ff-tlx). */
     h("div", { className: "ff-tlx" },
     h("h2", { id: "ff-tm20-h", className: "ff-lc22-eye ff-lcc-title ff-tm20-title" }, h("span", null, "FF Party Launch Event")),
-    h("p", { className: "ff-sec-intro" }, "When the 90-day challenge ends, our marketing campaign begins. It kicks off with our training, a cocktail training competition and the FF Party launch event. Then our UK‑wide marketing gets to work, bringing jobs and bookings to you and your team.")),
+    h("p", { className: "ff-sec-intro" }, "When the 90-day challenge ends, our marketing campaign begins. It opens with the FF Party launch event. Cocktail masterclass. Cocktail competition. Launch party. One night, all three. Then our UK‑wide marketing gets to work, bringing jobs and bookings to you and your team.")),
     h(
       "div",
       { className: "ff-tm20-st", style: poster ? { "--tm-poster": "url(" + poster + ")" } : undefined },

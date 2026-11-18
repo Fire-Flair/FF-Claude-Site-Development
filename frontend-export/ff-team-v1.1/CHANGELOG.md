@@ -4,6 +4,14 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.47
+
+FF Team home, FF Party Launch Event intro (Alex, 18 Nov 20:16; writer agent). `src/components/home/discover-and-support.jsx`.
+
+- The intro above the launch video no longer says "It kicks off with our training, a cocktail training competition and the FF Party launch event". It now reads: "When the 90-day challenge ends, our marketing campaign begins. It opens with the FF Party launch event. Cocktail masterclass. Cocktail competition. Launch party. One night, all three. Then our UK‑wide marketing gets to work, bringing jobs and bookings to you and your team." (writer agent's recommended option of three).
+- Checked: `npm run check`, `npm run build`, home page screenshot at phone and desktop width.
+- Published over live 1795032854-05d4 (v1.46), index.html only (all other files kept). Artifact version 1795033110-6709. Built page saved as `live-v1.47-index.html`.
+
 ## v1.46
 
 Network, Vooshka Company Card (Alex, 18 Nov 20:12). `data/companies/profiles/vooshka.json`, `data/companies/company-profile.schema.json`, `src/content/companies.js`, `src/components/staff/company-shape.jsx`, `src/components/staff/company-cards.jsx`, `src/content/companies/real-companies.json` (rebuilt with `npm run companies`).
