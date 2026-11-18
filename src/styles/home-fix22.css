@@ -1,7 +1,7 @@
 /* ==== homefix (FF Team home): pillar rows, Launch Challenge, spacing, headings, equal boxes. Loaded by Home101 only (.ff-hf22). ==== */
 
 /* Spacing: three coin dividers at most, with tighter gaps */
-.ff .ff-hf22 .ff-coindiv { margin:clamp(14px,3vw,26px) auto; }
+.ff .ff-hf22 .ff-coindiv { margin:clamp(30px,6vw,48px) auto; }
 .ff .ff-hf22 .ff-dx { padding-bottom:0; }
 
 /* Section headings: all on the left, as Discover FireFlair */
@@ -95,9 +95,7 @@
 }
 
 /* ==== home2 (Alex, 18 Nov): Launch Challenge edge to edge on a phone, the 90 days tile, the bookings drop-down, centred coins ==== */
-@media (max-width:759px) {
-  .ff .ff-hf22 .ff-lc22 { margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw); padding-left:16px; padding-right:16px; }
-}
+/* home3 (Alex, 18 Nov): the box is back to the normal page width; the eyebrow spans the box instead. */
 /* 90 days: big gold numeral, "days" small, a calendar flourish behind */
 .ff .ff-hf22 .ff-lc22-box.is-days { overflow:hidden; background:radial-gradient(120% 90% at 100% 100%,rgba(201,162,39,.2),transparent 60%),rgba(244,239,228,.05); }
 .ff .ff-hf22 .ff-lc22-box .fl { position:absolute; right:-14px; bottom:-16px; color:rgba(228,195,106,.13); transform:rotate(-12deg); pointer-events:none; display:grid; }
@@ -126,3 +124,20 @@
 
 /* Coins sit exactly midway: the video section adds no space of its own, so the coin's margin is the gap on both sides */
 .ff .ff-hf22 .ff-tm20 { margin:0; padding-top:0; padding-bottom:0; }
+
+/* ==== home3 (Alex, 18 Nov): Launch Challenge eyebrow fills the box width, two-line heading, coin spacing ==== */
+.ff .ff-hf22 .ff-lc22-eye { display:block; }
+.ff .ff-hf22 .ff-lc22-eye > span[data-fitw22] { display:inline-block; max-width:none; white-space:nowrap; line-height:1.1; margin-right:-.12em; }
+.ff .ff-hf22 .ff-lc22 h2 > span { display:block; white-space:nowrap; }
+@media (min-width:900px) {
+  .ff .ff-hf22 .ff-lc22-top { row-gap:12px; }
+  .ff .ff-hf22 .ff-lc22-head { display:contents; }
+  .ff .ff-hf22 .ff-lc22-eye { grid-column:1 / -1; }
+  .ff .ff-hf22 .ff-lc22 h2 { margin:0; }
+}
+/* Every coin: the same gap above and below. The sections next to a coin add no space of their own on that side. */
+.ff .ff-hf22 .ff-home17 > .ff-coindiv + .ff-sect { padding-top:0; margin-top:0; }
+.ff .ff-hf22 .ff-home17 > .ff-coindiv + .ff-sect > :not(style):first-of-type,
+.ff .ff-hf22 .ff-home17 > .ff-coindiv + .ff-sect > style + * { margin-top:0; }
+.ff .ff-hf22 .ff-home17 > .ff-sect:has(+ .ff-coindiv) { padding-bottom:0; margin-bottom:0; }
+.ff .ff-hf22 .ff-home17 > .ff-sect:has(+ .ff-coindiv) > :last-child { margin-bottom:0; }

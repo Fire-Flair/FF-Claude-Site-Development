@@ -428,6 +428,8 @@ function TeamCompetition20() {
   const pick = (i) => setBox(i);
   const lcRef = useRef(null);
   useFitLine22(lcRef, "[data-fit22]", []);
+  /* home3 (Alex, 18 Nov): "FF Team Launch Challenge" as large as fits on one line across the box. */
+  useFitWidth22(lcRef, "[data-fitw22]", []);
   return h(
     "section",
     { className: "ff-sect ff-lc22-sect", id: "ff-competition", ref: lcRef, "aria-labelledby": "ff-cp20-h" },
@@ -441,8 +443,9 @@ function TeamCompetition20() {
         h(
           "div",
           { className: "ff-lc22-head" },
-          h("div", { className: "ff-lc22-eye" }, h("span", { "data-fit22": "" }, "FF Team Launch Challenge")),
-          h("h2", { id: "ff-cp20-h" }, "Grow your Team. Win prizes.")
+          h("div", { className: "ff-lc22-eye" }, h("span", { "data-fitw22": "" }, "FF Team Launch Challenge")),
+          /* home3 (Alex, 18 Nov): one line each. */
+          h("h2", { id: "ff-cp20-h" }, h("span", null, "Grow your Team."), " ", h("span", null, "Win prizes."))
         ),
         h(
           "div",

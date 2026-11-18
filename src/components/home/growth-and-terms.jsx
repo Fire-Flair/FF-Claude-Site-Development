@@ -154,7 +154,7 @@
     }[kind];
     const Q = {
       team: [
-        { q: "Do you work in hospitality?", a: [
+        { q: "Do you work in events or hospitality?", a: [
           { l: "Yes, it's my career", r: "Then FireFlair is built for you. Make a Profile Card with your skills, experience and reviews, and businesses can find you and book you.", c: A.profile },
           { l: "Not yet, but I'd like to", r: "Start with Career Support. Training, Dream Jobs and rewards will help you take your first steps.", c: A.career },
           { l: "No, I'm here for something else", r: "If you are planning a party of your own, FF Party is the place to start.", c: A.party }
@@ -215,7 +215,7 @@
     }, React.createElement("h2", {
       id: "ff-qg-h",
       className: "ff-h1 ff-qg-title"
-    }, React.createElement("span", null, "Can FireFlair help you?")), kind !== "team" && React.createElement("p", {
+    }, React.createElement("span", null, kind === "team" ? "Can FF Team help you?" : "Can FireFlair help you?")), kind !== "team" && React.createElement("p", {
       className: "ff-qg-lede"
     }, "Answer three quick questions and we'll point you to the right place."), React.createElement("div", {
       className: "ff-qg-grid"

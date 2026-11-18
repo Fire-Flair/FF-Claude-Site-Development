@@ -45,6 +45,28 @@ function useFitLine22(ref, sel, deps) {
   }, deps);
 }
 
+/* home3: text kept on one line and sized to fill its parent's width exactly (grows or shrinks). The span carries
+   margin-right:-.12em so its trailing letter-spacing is not counted. */
+function useFitWidth22(ref, sel, deps) {
+  useWidthWatch22(ref, (root) => {
+    root.querySelectorAll(sel).forEach((el) => {
+      const box = el.parentElement;
+      if (!box) return;
+      el.style.fontSize = "";
+      const bs = getComputedStyle(box);
+      const avail = box.clientWidth - (parseFloat(bs.paddingLeft) || 0) - (parseFloat(bs.paddingRight) || 0);
+      const foot = () => el.getBoundingClientRect().width - (parseFloat(getComputedStyle(el).letterSpacing) || 0);
+      for (let i = 0; i < 2; i++) {
+        const fs = parseFloat(getComputedStyle(el).fontSize), w = foot();
+        if (!(w > 0) || !(avail > 0)) return;
+        el.style.fontSize = (Math.floor(fs * avail / w * 100) / 100) + "px";
+      }
+      let g = 0;
+      while (foot() > avail + 0.5 && g++ < 40) el.style.fontSize = (parseFloat(el.style.fontSize) - 0.25) + "px";
+    });
+  }, deps);
+}
+
 /* Equal heights for a set of boxes. An optional part (an answer shown under a question) is left out of the measure,
    so only the box that shows it grows. */
 function useEqualH22(ref, sel, exclude, deps) {
@@ -74,6 +96,8 @@ function Home101() {
     const sections = [
       /* Alex (18 Nov): the Launch Challenge comes first, the Discover FireFlair pillars below it. */
       React.createElement(TeamCompetition20, { key: "competition" }),
+      /* home3 (Alex, 18 Nov): a spinning coin above Discover FireFlair. */
+      coin("d"),
       React.createElement(DiscoverHub11, {
         key: "discover"
       }),
@@ -90,6 +114,8 @@ function Home101() {
         key: "journal",
         kind: "team"
       }),
+      /* home3 (Alex, 18 Nov): a spinning coin below FF Stories (and the one below the questions, coin c). */
+      coin("s"),
       React.createElement(GuideQuestions11, {
         key: "guide",
         kind: "team"
@@ -98,7 +124,8 @@ function Home101() {
       React.createElement(BusinessSupport19, {
         key: "business"
       }),
-      /* home2 (Alex, 18 Nov): the coin game sits below Business & Support. */
+      /* home2 (Alex, 18 Nov): the coin game sits below Business & Support. home3: a spinning coin between them. */
+      coin("j"),
       React.createElement(HomeJoin, {
         key: "join"
       })
