@@ -2,6 +2,8 @@
 
 ## v17.60
 
+Artifact version 1794995892-14df.
+
 Section titles (option 3, chosen by Alex) and a smaller published page. Branch merged: `titles3`.
 
 - New `src/styles/titles3.css` (loaded through `css-registry.js`): page titles get a black FF monogram tile beside them ("Explore our network", "Your bookings"); section titles get a gold hairline running right ("Our professionals", "FF Event Directory", "Life at FF Team", "Can FF Team help you?", "What is FF Team?" keeps its quiet label with the hairline). The old underlines are removed (`big20.css`, `v11.css`, `home-fix22.css`). Profile labels are one size (13px, .18em) with a hairline after each, and 40px (48px on wide screens) above each section. FF Stories, titles inside dark boxes and Business & Support are unchanged.
