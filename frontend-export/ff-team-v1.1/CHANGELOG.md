@@ -4,6 +4,16 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.50
+
+Bookings titles and iPad layout (Alex, 18 Nov 20:25). `src/components/team/bookings.jsx`, `src/styles/bkd.css` (bk-titles and bk-ipad blocks).
+
+- New page title "Get booked" (same style as "Your bookings": Cinzel with the gold underline) above the FF Party and FF Staff boxes.
+- "Grow with FireFlair" is now the same page title style; the "Training, dream jobs and rewards." line under it is gone (the cards say it).
+- The gold gradient bar is for titles outside a box: inside the FF Party and FF Staff boxes the title and its text now sit flush left with no bar. (Alex may make this a site-wide rule later.)
+- Grow with FireFlair on iPad: from 470px wide (iPad split view included) the three cards share one row like desktop, and an opened card's contents span the full width below. Between 470px and 899px each card is photo, title and an icon row; its description moves into the opened panel, where it has room. Phones (under 470px) and desktop are unchanged.
+- Checked: `npm run check`, `npm run build`, Playwright at 390, 490, 820 and 1280 (no console errors, no sideways scroll), Training opened at 490.
+
 ## v1.49
 
 Two branches merged (Alex, 18 Nov 20:06): `bk-1206` (Gimli, Bookings) and `shell-1206` (Frodo, top bar and profiles).
