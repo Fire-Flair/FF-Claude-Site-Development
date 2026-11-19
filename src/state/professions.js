@@ -21,7 +21,7 @@ const CATEGORY_ORDER = ["Bar", "Front of House", "Management", "Back of House", 
 
 
 /* cats: the name a category is shown under on Network and the map (Chefs reads "Food"). */
-const groupLabel17 = (g) => g === "Chefs" ? "Food" : g;
+const groupLabel17 = (g) => g === "Chefs" ? "Food" : g === "Other" ? "Specialist" : g;
 
 
 /* Assignment for professions outside the suggestion lists. Checked in this

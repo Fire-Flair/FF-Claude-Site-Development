@@ -354,7 +354,7 @@ function CoTeamTab21({ co, team, companies, network, renderTeam }) {
       <Fold17 id={"co21_team_" + key} icon={<I11.Users size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={`${co.name || "Company"} team`} count={team.length}>
         {!team.length ? none("No team yet.") : groups.map(([g, l]) => (
           <div key={g} className="ff-tt17-group">
-            <div className="ff-tt17-gh">{g} <i>{l.length}</i></div>
+            <div className="ff-tt17-gh">{g === "Other" ? "Specialist" : g} <i>{l.length}</i></div>
             <div className="ff-tt17-grid">{l.map(p => renderTeam(p, () => view(p)))}</div>
           </div>
         ))}

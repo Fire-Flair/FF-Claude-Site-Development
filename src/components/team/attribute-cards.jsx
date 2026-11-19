@@ -913,10 +913,9 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
 
       {!readOnly && category === "professions" && (!professionCategory(draft.name) || draft.displayCategory) && (
         <Field label="Display category">
-          <select className="ff-input" value={professionCategory(draft.name, draft.displayCategory) || ""}
-            onChange={(e) => patch({ displayCategory: e.target.value || undefined })}>
-            <option value="">Not sure yet</option>
-            {CATEGORY_ORDER.map(k => <option key={k} value={k}>{k}</option>)}
+          <select className="ff-input" value={professionCategory(draft.name, draft.displayCategory) || "Other"}
+            onChange={(e) => patch({ displayCategory: e.target.value })}>
+            {CATEGORY_ORDER.map(k => <option key={k} value={k}>{k === "Other" ? "Specialist" : k}</option>)}
           </select>
         </Field>
       )}

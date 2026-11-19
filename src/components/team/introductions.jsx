@@ -411,7 +411,7 @@ function TeamTab17({ person }) {
           : !shown.length ? none(`Nobody on the team matches “${q.trim()}”.`)
           : groups.map(([g, l]) => (
             <div key={g} className="ff-tt17-group">
-              <div className="ff-tt17-gh">{g} <i>{l.length}</i></div>
+              <div className="ff-tt17-gh">{g === "Other" ? "Specialist" : g} <i>{l.length}</i></div>
               <div className="ff-tt17-grid">{l.map(p => <TeamTile17 key={p.id} p={p} star={own && joinedThrough17(state, p)} onClick={() => view(p)} />)}</div>
             </div>
           ))}

@@ -390,7 +390,7 @@ function ProfTypeIn({ profs, set, ink, rule, onAdd }) {
           <div role="list" aria-label="Categories" style={{ display: "flex", flexWrap: "wrap", gap: 5, justifyContent: "flex-start" }}>
             {CATEGORY_ORDER.map(k => (
               <button key={k} type="button" role="listitem" className="ff-tagchip" aria-pressed={cat === k} onClick={() => setCat(k)}
-                style={cat === k ? { background: "#141416", color: "#EAD79C", borderColor: "#141416", cursor: "pointer" } : { color: ink, cursor: "pointer" }}>{k}</button>
+                style={cat === k ? { background: "#141416", color: "#EAD79C", borderColor: "#141416", cursor: "pointer" } : { color: ink, cursor: "pointer" }}>{k === "Other" ? "Specialist" : k}</button>
             ))}
           </div>
           <button type="button" className="ff-tagchip" disabled={!cat} onClick={() => cat && add(custom, cat)}
@@ -642,10 +642,10 @@ function GroupedPeople({ onPick, selectable, scope = "", query = "", only = "", 
         const visible = state.categoryVisibility[key] === undefined ? (!shut && state.role !== "staff") : state.categoryVisibility[key] !== false;
         return (<React.Fragment key={g}>
           <section style={{ marginTop: 20 }}>
-            <SectionHead icon={<GroupIcon group={g} />} title={g} count={groups[g].length}
+            <SectionHead icon={<GroupIcon group={g} />} title={g === "Other" ? "Specialist" : g} count={groups[g].length}
               action={<CategoryToggle sectionKey={key} defaultOpen={!shut} />} />
             {visible && (
-              <HScroll label={g} snap>
+              <HScroll label={g === "Other" ? "Specialist" : g} snap>
                 {groups[g].map(p => (
                   <PlayerTile key={p.id} person={p} selected={selectable && state.selection.includes(p.id)}
                     onClick={() => onPick(p)} />

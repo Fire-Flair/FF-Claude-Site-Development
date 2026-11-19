@@ -128,7 +128,7 @@ function PE2Which({ P }) {
       <div className="pp-which-q"><Coin size={20} tier="gold" /><span>Which category is {"“"}{r.name}{"”"}?</span></div>
       <div className="pp-which-row">
         {PE2_CAT_KEYS.map(k => (
-          <button key={k} type="button" className="pp-cat-b" onClick={() => P.dispatch({ type: "REC_PATCH", category: "professions", id: r.id, patch: { displayCategory: k } })}>{k}</button>
+          <button key={k} type="button" className="pp-cat-b" onClick={() => P.dispatch({ type: "REC_PATCH", category: "professions", id: r.id, patch: { displayCategory: k } })}>{k === "Other" ? "Specialist" : k}</button>
         ))}
       </div>
     </div>

@@ -4,6 +4,14 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.86
+
+- **Specialist category.** A profession that fits no category is Specialist (stored as `Other`, so no data changes). It is shown as Specialist on Network (category chips, group headings, scroll rows), the map legend, the Team tab, the profession category icon grid and the "Which category is…?" prompt. Label mapping in `groupLabel17` (`state/professions.js`) plus `network.jsx`, `introductions.jsx`, `staff/network-directory.jsx`, `profile-edit-p2.jsx`.
+
+## v1.85
+
+- **Display category has no "Not sure yet".** The profession pop-up's Display category list is the categories plus Specialist (stored as Other, so Network and the map are unchanged); a new profession defaults to Specialist (`attribute-cards.jsx`).
+
 ## v1.84
 
 - **Display category only for new professions.** The profession pop-up (`attribute-cards.jsx`) hides the Display category field when the profession is one FireFlair already recognises; it shows only for a profession the person is defining themselves (or one they already gave a category).
