@@ -51,11 +51,13 @@ function LanguagePicker({ selected = [], onPick }) {
 
 
 /* Beneath Save & Share, before the profile is saved: where the finished card
-   will appear (it does, in Welcome to the Team, once saved). */
-function CardPreviewSoon() {
+   will appear (it does, in Welcome to the Team, once saved).
+   v1.96: a member editing a live profile (me given) sees their own Profile Card in the same box. */
+function CardPreviewSoon({ me, themeKey } = {}) {
   return (
-    <div className="ff-cardpreview-wrap">
+    <div className={`ff-cardpreview-wrap${me ? " has-card" : ""}`}>
       <div className="ff-cardpreview">
+        {me ? <div className="ff-cardpreview-card"><PlayerCard person={me} format="full" themeKey={themeKey} /></div> : <>
         <div className="ff-cardghost" aria-hidden="true">
           <span className="coin"><FFLogo size={22} tier="gold" /></span>
           <span className="av" /><span className="l1" /><span className="l2" /><span className="l3" /><span className="l4" />
@@ -64,6 +66,7 @@ function CardPreviewSoon() {
           <b>Your complete card will display here</b>
           <p>Save or publish your profile and your finished Profile Card appears here. Share it, and soon add it to your phone's wallet.</p>
         </div>
+        </>}
         <ShareStack />
       </div>
     </div>

@@ -1243,7 +1243,10 @@ function ProfileBuilder() {
           )}
           <SaveShareCard onSaved={toWelcome} />
         </div>
-        {/* v17.40: no card preview here (its Share and wallet buttons went past three buttons); the finished card shows in Welcome to the Team. */}
+        {/* v1.96 (Alex, 18 Nov 22:22): the card preview under 04 is back (removed in v17.40), with Share, Add to Apple Wallet and
+            Add to Google Wallet. A new member sees "Your complete card will display here"; a member editing a live profile sees their card. */}
+        {!finished && !editingLive && <CardPreviewSoon />}
+        {editingLive && <CardPreviewSoon me={me} themeKey={p.theme} />}
         {finished && !editingLive && <WelcomeSection me={me} />}
       </div>
       <NeedHelp34 />

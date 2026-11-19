@@ -464,6 +464,36 @@
 
 /* 5. Business & Support at the bottom of every FF Team page (Network, Bookings, Profile, someone's profile). */
 .ff .ff-biz-pfa { margin-top: 36px; }
+/* v1.96 (Alex, 18 Nov 22:22): not on the create-a-profile page; the finished "Your profile" page keeps it (party-live.jsx). */
+
+/* ======================= v1.96 (Alex, 18 Nov 22:22) — the card preview under 04, back ======================= */
+/* CardPreviewSoon (work-location-guide.jsx) under Save, with Share and the two wallets. The rules are the v17.4.5 ones
+   (fireflair-v17.4.5.html); since the v17.4 split into src/ they only existed scoped to an unused .ff-fin class. */
+.ff .ff-cardpreview-wrap { position: relative; padding-top: 18px; padding-bottom: 40px; }
+.ff .ff-cardpreview-wrap::before { content: ''; position: absolute; left: -30px; top: 0; bottom: 0; width: 2px; border-radius: 2px; background: linear-gradient(180deg, rgba(176,141,42,.45), rgba(176,141,42,.25) 60%, rgba(176,141,42,0)); }
+@media (max-width: 520px) { .ff .ff-cardpreview-wrap::before { left: -19px; } }
+.ff .ff-cardpreview { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: clamp(18px,4vw,28px); border-radius: 26px; corner-shape: squircle; background: #F6F0E2; border: 1px solid rgba(126,97,29,.16); text-align: center; }
+.ff .ff-cardghost { position: relative; width: 150px; max-width: 100%; aspect-ratio: 5 / 7; box-sizing: border-box; border-radius: 18px; corner-shape: squircle; border: 1.5px dashed rgba(126,97,29,.4); background: linear-gradient(170deg,#FFFDF8,#F3EAD5); display: flex; flex-direction: column; align-items: center; padding: 30px 18px 0; gap: 8px; }
+.ff .ff-cardghost .coin { position: absolute; top: 9px; right: 9px; opacity: .85; }
+.ff .ff-cardghost .av { width: 52px; height: 52px; border-radius: 50%; background: rgba(126,97,29,.12); border: 1.5px solid rgba(176,141,42,.35); margin-bottom: 6px; }
+.ff .ff-cardghost span[class^="l"] { display: block; height: 6px; border-radius: 3px; background: rgba(126,97,29,.14); }
+.ff .ff-cardghost .l1 { width: 70%; height: 8px; }
+.ff .ff-cardghost .l2 { width: 50%; }
+.ff .ff-cardghost .l3 { width: 84%; margin-top: 8px; }
+.ff .ff-cardghost .l4 { width: 84%; }
+.ff .ff-cardpreview-tx { min-width: 0; }
+.ff .ff-cardpreview-tx b { display: block; font-family: var(--display); font-size: 18px; letter-spacing: .04em; color: #1D1B18; text-wrap: balance; overflow-wrap: normal; word-break: normal; hyphens: none; }
+.ff .ff-cardpreview-tx p { margin: 6px auto 0; max-width: 420px; font-size: 13.5px; line-height: 1.5; color: #5A5246; overflow-wrap: normal; word-break: normal; hyphens: none; }
+.ff .ff-cardpreview-card { width: 100%; max-width: 372px; min-width: 0; }
+.ff .ff-cardpreview .ff-sharestack { max-width: 372px; }
+/* "Google Wallet" never cut off on a phone: a little less padding and a font that shrinks to fit. */
+@media (max-width: 520px) {
+  .ff .ff-cardpreview { padding: 18px 12px; }
+  .ff .ff-cardpreview .ff-walletpair { gap: 8px; }
+  .ff .ff-cardpreview .ff-walletpair .ff-stackbtn.soon { gap: 6px; padding: 0 8px; }
+  .ff .ff-cardpreview .ff-walletpair .wtx b { font-size: clamp(11.5px, 3.3vw, 14px); }
+  .ff .ff-cardpreview .ff-walletpair .mk svg { width: 22px; height: auto; }
+}
 
 /* v1.14 (Gimli M3): the phone box sits inside .ff-way17, which a chip rule elsewhere sets to nowrap. Let its text wrap between words. */
 .ff .ff-way17-phone .ff-gb21-ds, .ff .ff-way17-phone .ff-gb21-links { white-space: normal; }
