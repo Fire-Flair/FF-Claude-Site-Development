@@ -4,6 +4,15 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.104
+
+Desktop home and the profile page (Alex, 19 Nov 21:26). `components/home/team-home.jsx`, `styles/home-wide.css`, `styles/prof21.css`.
+
+- Home, from 1100px wide: the FF Party Launch Event words, the door video and the three questions share one row. Words on the left, the video in the middle at its own 9:16 shape (300px wide, the full picture, nothing cropped), the questions stacked on the right and a little smaller. `TwoMinutes20` and `GuideQuestions11` now sit in a `.ff-lg-row` wrapper (a plain block below 1100px, so phones and iPad portrait are unchanged); the coin divider between them is hidden in the row.
+- Profile page, from 1000px wide (option B): the Profile Card (step 2) on the left, Let's get started (step 1) on the right. Below that width the page is stacked as before.
+- Let's get started: the Upload CV button sits above "Create your profile in <1 minute" at every width (as on a phone), so the two no longer crowd each other when the box is narrow.
+- Merged onto the live page 1795123291-402b (v1.103) before publishing; page saved as `live-v1.104-index.html`. Artifact version 1795123763-bc99.
+
 ## v1.103
 
 FF Team home on desktop (Alex, 19 Nov 21:19). `styles/home-wide.css`.

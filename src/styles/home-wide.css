@@ -20,18 +20,25 @@
   .ff .ff-landing #ff-discover > .ff-dx-sent { display: none; }
   .ff .ff-landing #ff-discover > .ff-dx-well { grid-column: 2; grid-row: 1; margin: 0; }
   .ff .ff-landing #ff-competition > .ff-lc22 { grid-column: 2; grid-row: 1; margin: 0; }
-  /* the video is portrait: its box takes the video's own 9:16 shape (full picture, nothing cropped); the words sit beside it and fill the row */
-  .ff .ff-landing #ff-two-minutes { grid-template-columns: minmax(0, 1fr) 400px; column-gap: 64px; align-items: center; }
-  .ff .ff-landing #ff-two-minutes > .ff-tlx { position: relative; align-self: center; } /* v1.103: relative so the gold title bar shows */
-  .ff .ff-landing #ff-two-minutes > .ff-tm20-st { grid-column: 2; grid-row: 1; margin: 0; width: 400px !important; }
+  /* v1.104 (Alex, 19 Nov 21:26): one row: the launch event words on the left, the door video in the middle (its own 9:16 shape, full picture,
+     nothing cropped), the three questions stacked and a little smaller on the right. */
+  .ff .ff-landing .ff-lg-row { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); column-gap: 44px; align-items: center; }
+  .ff .ff-landing .ff-lg-row { margin-bottom: 30px; }
+  .ff .ff-landing .ff-lg-row > .ff-coindiv { display: none; }
+  .ff .ff-landing #ff-two-minutes { grid-template-columns: minmax(0, 1fr) 300px; column-gap: 36px; align-items: center; }
+  .ff .ff-landing #ff-two-minutes > .ff-tlx { position: relative; align-self: center; } /* relative so the gold title bar shows */
+  .ff .ff-landing #ff-two-minutes > .ff-tm20-st { grid-column: 2; grid-row: 1; margin: 0; width: 300px !important; }
   .ff .ff-landing #ff-two-minutes .ff-tm20-v { width: 100% !important; aspect-ratio: 9 / 16 !important; }
   .ff .ff-landing #ff-two-minutes .ff-tm20-p img { object-fit: contain !important; width: 100%; height: 100%; }
-  .ff .ff-landing #ff-two-minutes .ff-tlx h2 { font-size: 40px !important; }
-  .ff .ff-landing #ff-two-minutes .ff-tlx p { font-size: 19px !important; line-height: 1.55 !important; }
-  /* the three questions: heading above, one row of three below */
-  .ff .ff-landing #ff-guide { grid-template-columns: 1fr; row-gap: 22px; }
-  .ff .ff-landing #ff-guide > .ff-qg-title { grid-column: 1; grid-row: 1; position: static; margin: 0; text-align: center; justify-content: center; }
-  .ff .ff-landing #ff-guide > .ff-qg-grid { grid-column: 1; grid-row: 2; margin: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ff .ff-landing #ff-two-minutes .ff-tlx h2 { font-size: 30px !important; }
+  .ff .ff-landing #ff-two-minutes .ff-tlx p { font-size: 17px !important; line-height: 1.55 !important; }
+  /* the three questions: heading above, the cards stacked in one column, compact */
+  .ff .ff-landing #ff-guide { display: block; }
+  .ff .ff-landing #ff-guide > .ff-qg-title { position: static; margin: 0 0 12px; text-align: left; font-size: 26px !important; }
+  .ff .ff-landing #ff-guide > .ff-qg-grid { margin: 0; grid-template-columns: 1fr; gap: 10px; }
+  .ff .ff-landing #ff-guide .ff-qg-q { min-height: 0 !important; padding: 10px 12px 12px; }
+  .ff .ff-landing #ff-guide .ff-qg-q .opts { gap: 6px; }
+  .ff .ff-landing #ff-guide .ff-qg-q .opts button { min-height: 34px; padding: 6px 12px; }
 
   /* left-hand headings and their words fit the narrower column */
   .ff .ff-landing #ff-discover .ff-dx-h, .ff .ff-landing #ff-competition .ff-tlx h2, .ff .ff-landing #ff-two-minutes .ff-tlx h2, .ff .ff-landing #ff-guide .ff-qg-title { font-size: 30px !important; }

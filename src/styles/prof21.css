@@ -592,3 +592,19 @@
 .ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11 svg { color:#25D366 !important; fill:#25D366 !important; }
 .ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11:hover { background:#F3E5C0 !important; }
 .ff .ff-prest > .ff-pback { box-sizing:border-box; display:flex !important; width:calc(100% - 24px) !important; max-width:none !important; margin-left:12px !important; margin-right:12px !important; justify-content:center; min-height:44px; height:44px; }
+
+
+/* ==== v1.104 (Alex, 19 Nov 21:26): profile page, option B ====
+   From 1000px wide: the Profile Card (step 2) on the left, Let's get started (step 1) on the right. The CV button sits above its
+   "Create your profile in <1 minute" line, as on a phone, at every width, so the two no longer crowd each other. */
+.ff .ff-way17-cv { grid-template-columns: minmax(0, 1fr); }
+.ff .ff-way17-cv > .ff-way17-ctl { grid-column: 1; grid-row: 1; }
+.ff .ff-way17-cv > .ff-way17-line { grid-column: 1; grid-row: 2; }
+@media (min-width: 1000px) {
+  .ff .ff-journey { display: grid; grid-template-columns: minmax(0, 400px) minmax(0, 1fr); column-gap: 48px; align-items: start; }
+  .ff .ff-journey > * { grid-column: 1 / -1; }
+  .ff .ff-journey > #ff-step-2 { grid-column: 1; grid-row: 1; }
+  .ff .ff-journey > #ff-sec-card { grid-column: 1; grid-row: 2; }
+  .ff .ff-journey > #ff-step-1 { grid-column: 2; grid-row: 1; margin-left: 0 !important; }
+  .ff .ff-journey > #ff-sec-ffai.ff-start17 { grid-column: 2; grid-row: 2; margin: 0; max-width: 600px; }
+}

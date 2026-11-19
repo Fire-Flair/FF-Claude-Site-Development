@@ -116,12 +116,14 @@ function Home101() {
       /* home-update (Alex, 18 Nov 14:18): a coin between FFStories and the door video, another below the door video;
          no coin below "Can FF Team help you?". */
       coin("v"),
-      React.createElement(TwoMinutes20, { key: "twomin" }),
-      coin("w"),
-      React.createElement(GuideQuestions11, {
-        key: "guide",
-        kind: "team"
-      }),
+      /* v1.104 (Alex, 19 Nov 21:26): the launch event, its video and the questions share one row on desktop (home-wide.css); a plain block elsewhere. */
+      React.createElement("div", { key: "lgrow", className: "ff-lg-row" },
+        React.createElement(TwoMinutes20, { key: "twomin" }),
+        coin("w"),
+        React.createElement(GuideQuestions11, {
+          key: "guide",
+          kind: "team"
+        })),
       React.createElement(BusinessSupport19, {
         key: "business"
       }),
