@@ -6,6 +6,8 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
 
 ## v1.75
 
+Published straight onto live 1795089029-4be2 (v1.74, matched GitHub). Artifact version 1795089092-e99d.
+
 Create-a-profile page (Alex, 18 Nov 22:22): Business & Support removed, the card preview with the wallet buttons back under 04. `src/components/team/team-router.jsx`, `src/components/party/party-live.jsx` (`ProfileGate17`), `src/components/team/profile-builder.jsx` (`ProfileBuilder`), `src/components/team/work-location-guide.jsx` (`CardPreviewSoon`), `src/styles/prof21.css`.
 
 - **Business & Support is no longer on the create-a-profile page** (the profile builder at `#/ff-team/profile`, for a new member and for a member editing). `TeamRouter` no longer wraps the profile tab in it. The finished "Your profile" page keeps the box (now rendered by `ProfileGate17` under `DoneProfile17`, FF Team only), as do Network and Bookings. The home page is untouched. "Need help? Book a meeting" (`NeedHelp34`) stays at the bottom of the builder, unchanged.
