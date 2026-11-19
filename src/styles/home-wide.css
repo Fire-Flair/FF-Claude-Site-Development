@@ -66,3 +66,6 @@
 }
 
 @media (max-width: 1099.98px) { .ff .ff-coindiv.ff-coin-desk { display: none; } }
+
+/* v1.116 (Alex 19 Nov 23:39): less space between the coin game and the bottom nav on the phone home. */
+@media (max-width:1099px){.ff .ff-main:has(.ff-join-box.ff-game){padding-bottom:96px !important}}

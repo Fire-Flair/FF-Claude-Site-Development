@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.116
+- **Phone home:** less space between the coin game and the bottom bar (the page's bottom padding is 96px instead of 150px when the coin game is last).
+- Page saved as `live-v1.116-index.html`. Artifact version 1795131621-5259.
+
 ## v1.115
 - **Desktop profile pop-up (option C):** on a wide mouse screen every person and company profile on the Network page (from cards, map pins and search results) opens as a wide centred card over a dimmed page. Profile Card with Back, Share and Join team on the left; Overview, Packages, Team and Reviews on the right with the close X in line with the tabs; no coin divider. Escape, the X, Back or a click outside close it. Phone and iPad keep the full-page profile.
 - **Back to the card you were on:** the Network page stays mounted behind the pop-up, so scroll, category box and pill are exactly as left; on phone and iPad the scroll position, chosen category box and pill are restored.
