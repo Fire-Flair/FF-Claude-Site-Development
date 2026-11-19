@@ -4,12 +4,14 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
-## v1.78
+## v1.79
 
 - Top bar on phones (Alex, 19 Nov 13:03, option A from the picture): 45px tall instead of 56px. Smaller FF mark (24px),
   smaller burgundy Log in / Log out button (30px tall, 11px text, no glow), tighter padding. The button keeps a 44px
   tap area through an invisible pad. Desktop (over 760px) unchanged. Styles: `topbar-slim` block at the end of
   `src/styles/base.css`. Checked at 390px signed out and signed in.
+  Published by a three-way merge onto live 1795094689-672d (another chat's publish, not yet on GitHub, kept; v1.78 left
+  for that chat). Merged page saved as `live-v1.79-index.html`. Artifact version 1795095701-f7c0.
 
 ## v1.77
 
