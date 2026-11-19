@@ -1608,3 +1608,14 @@
 .ff .ff-nset18-sw.on { background:#5C6B2E; }
 .ff .ff-nset18-sw.on i { transform:translateX(20px); }
 @media (prefers-reduced-motion:reduce) { .ff .ff-nset18-sw, .ff .ff-nset18-sw i { transition:none; } }
+
+/* v1.98 (Alex, 19 Nov 20:57): the slim top bar on desktop as well (it was phones only). The bar drops from 56px to about 44px:
+   a smaller FF mark and Log in button as on the phone, and slimmer Home / Network / Bookings / Profile buttons. */
+@media (min-width: 761px) {
+  .ff .ff-topbar .ff-topbar-in { padding-top: 5px; padding-bottom: 5px; }
+  .ff .ff-topbar .ff-acct-btn.ff-acct-btn { min-height: 0; height: 34px; padding: 0 4px; gap: 8px; font-size: 14px; }
+  .ff .ff-topbar .ff-acct-btn img, .ff .ff-topbar .ff-acct-btn svg, .ff .ff-topbar .ff-acct-btn .ff-coin { width: 26px; height: 26px; }
+  .ff .ff-topbar .ff-authbtn.ff-authbtn { position: relative; min-height: 0; height: 32px; padding: 0 14px; font-size: 11.5px; letter-spacing: .1em; border-radius: 10px; corner-shape: squircle; box-shadow: none; }
+  .ff .ff-topbar .ff-authbtn::after { content: ""; position: absolute; inset: -6px -4px; }
+  .ff .ff-topbar .ff-desknav button { padding-top: 6px; padding-bottom: 6px; min-height: 0; }
+}
