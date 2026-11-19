@@ -635,12 +635,23 @@ function AttrGroups({ items, mem, onOpen }) {
   });
   groups.sort((a, b) => a.ord - b.ord);
   groups.forEach(g => g.list.sort((a, b) => a.at - b.at));
-  /* v17.18: a summary card lists five entries at most; with more, a second card of the same category follows with the next five, and so on.
+  /* v17.18: a summary card holds a size of text (v1.118; was five entries); with more, further cards of the same category follow, evenly filled.
      Work locations are the exception: the areas as they were ticked, three on the card and "+N" for the rest. */
   const cards = [];
   groups.forEach(g => {
     if (g.key === "locations") { cards.push({ g, key: g.key, part: g.list.slice(0, 3), more: Math.max(0, g.list.length - 3) }); return; }
-    for (let i = 0; i < g.list.length; i += 5) cards.push({ g, key: `${g.key}-${i}`, part: g.list.slice(i, i + 5), more: 0 });
+    /* v1.118 (Alex 19 Nov 23:51): cards are filled by the size of their text, not by a count of entries, so the cards of a row come out about the same height. */
+    const w = (it) => Math.max(1, Math.ceil(String((it.record && it.record.name) || "").length / 20)) + 0.4;
+    const total = g.list.reduce((a, it) => a + w(it), 0);
+    const nCards = Math.max(1, Math.ceil(total / 11));
+    const per = total / nCards;
+    let cur = [], acc = 0, made = 0;
+    g.list.forEach((it, idx) => {
+      cur.push(it); acc += w(it);
+      const left = g.list.length - idx - 1;
+      if (acc >= per - 0.01 && made < nCards - 1 && left > 0) { cards.push({ g, key: `${g.key}-${made}`, part: cur, more: 0 }); made++; cur = []; acc = 0; }
+    });
+    if (cur.length) cards.push({ g, key: `${g.key}-${made}`, part: cur, more: 0 });
   });
   return (
     <MemScroll mem={mem} k="overview" label={`Attributes, ${cards.length} card${cards.length === 1 ? "" : "s"}`} className="ff-acar">
