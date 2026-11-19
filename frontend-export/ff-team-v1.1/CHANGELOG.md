@@ -4,6 +4,13 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.102
+
+FF Team home on desktop (Alex, 19 Nov 21:17). `styles/home-wide.css`.
+
+- The FF Team Launch Challenge title and words no longer stay pinned to the top of the screen while you scroll the section; they scroll away with it (the pin made the scrolling feel odd). The pillars' heading in Discover keeps its pin for now.
+- Merged onto the live page 1795122996-e3e6 (v1.101) before publishing; page saved as `live-v1.102-index.html`. Artifact version 1795123202-96b5.
+
 ## v1.101
 
 FF Team home on desktop (Alex, 19 Nov 21:08, draft B). New file `styles/home-wide.css`, only from 1100px wide; phones and iPad portrait are unchanged.
