@@ -1077,9 +1077,9 @@
 
   const EDGE = [-2.5, -2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2, 2.5];
 
-  function CoinDivider() {
+  function CoinDivider({ className } = {}) {
     return React.createElement("div", {
-      className: "ff-coindiv",
+      className: "ff-coindiv" + (className ? " " + className : ""),
       "aria-hidden": "true"
     }, React.createElement("i", {
       className: "ln"

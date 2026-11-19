@@ -4,7 +4,7 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
-## v1.102
+## v1.112
 
 FFTeam Network browsing (Alex, 19 Nov 22:00; mock-ups M1 to M3 approved). `styles/net20.css`, `components/staff/network-directory20.jsx`.
 
@@ -14,6 +14,58 @@ FFTeam Network browsing (Alex, 19 Nov 22:00; mock-ups M1 to M3 approved). `style
 - Explore our network on desktop (from 1100px): the title and words on the left, the map on the right.
 - Company cards say "Company" with their category symbol instead of "Company Card".
 - The notification settings button at the top right of Explore our network is gone.
+## v1.111
+- **Create your own package card (FF Party):** the five type boxes (name, line, You provide, Ideal for, Duration) now share one style and fill their column, so none sticks out past the card edge and Duration matches the others. CSS only (`prof21.css`, scoped to `.ff-pkc-own2`).
+- Page saved as `live-v1.111-index.html`. Artifact version 1795125869-5499.
+
+## v1.110
+- **Top bar, all widths:** the Log in button is now exactly the height of the FF coin on the left (24px on phones, 26px on iPad and desktop), so their tops and bottoms line up. Its tap area is unchanged (invisible padding keeps it 44px).
+- Page saved as `live-v1.110-index.html`. Artifact version 1795125652-6e2e.
+
+## v1.109
+- **Home, desktop (1100px+):** the coin game is removed from Join FF Team (it is a plain Join box via `withGame={false}`; phones and iPad keep the game). Business & Support and Join FF Team are the same height. A spinning coin divider sits between the questions and this row (extra `CoinDivider` with class `ff-coin-desk`, hidden below 1100px).
+- Page saved as `live-v1.109-index.html`. Artifact version 1795125298-d3ce.
+
+## v1.108
+- **Home, desktop:** the other way round: Business and Support on the left, Join FF Team on the right (CSS only, `home-wide.css`).
+- Page saved as `live-v1.108-index.html`. Artifact version 1795124947-4132.
+
+## v1.107
+- **Home, desktop (1100px+):** Join FF Team on the left and Business and Support on the right, side by side (new `.ff-bj-row` wrapper in `team-home.jsx`; the coin divider between them is hidden on desktop only). Phones and iPad keep the stacked order. The coin game is unchanged and not yet reviewed for desktop.
+- Page saved as `live-v1.107-index.html`. Artifact version 1795124751-5963.
+
+## v1.106
+- **Home, desktop:** the gap between the FF Party Launch Event words and the door video sits exactly on the page centre (equal halves, words right-aligned to the gap, video left-aligned to it). Tops still level.
+
+## v1.105
+- **Home, iPad width (760–1099px):** FF Party Launch Event words on the left, the door video on the right (tops level).
+- **Home, desktop (1100px+):** launch event words and the door video sit side by side, centred, tops level; the video keeps its 9:16 shape (full picture). The three questions go below, three across, under the coin divider again (the v1.104 one-row layout is gone).
+- **Profile, desktop (1000px+):** no "Let's get started" or "Your Profile Card" heading. One heading, **01 Build your profile**, on the left (talk-to-GPT box, CV upload, then the card builder); on the right an equal-height heading with a star, **Register now**, holding the phone box (340px wide, pushed to the right edge). Your Profile Page becomes 02 and the final mark 03 on desktop only. A signed-in member has no Register now box.
+- Phones and iPad profile: unchanged (1, 2, 3 stacked). All desktop rules sit in `home-wide.css` (`min-width:1100px`) and `prof21.css` (`min-width:1000px`, plus a `wide` flag in `ProfileBuilder`) so they can be dropped without touching the phone layout.
+- Page saved as `live-v1.105-index.html`. Artifact version 1795124527-66ed.
+
+## v1.104
+
+Desktop home and the profile page (Alex, 19 Nov 21:26). `components/home/team-home.jsx`, `styles/home-wide.css`, `styles/prof21.css`.
+
+- Home, from 1100px wide: the FF Party Launch Event words, the door video and the three questions share one row. Words on the left, the video in the middle at its own 9:16 shape (300px wide, the full picture, nothing cropped), the questions stacked on the right and a little smaller. `TwoMinutes20` and `GuideQuestions11` now sit in a `.ff-lg-row` wrapper (a plain block below 1100px, so phones and iPad portrait are unchanged); the coin divider between them is hidden in the row.
+- Profile page, from 1000px wide (option B): the Profile Card (step 2) on the left, Let's get started (step 1) on the right. Below that width the page is stacked as before.
+- Let's get started: the Upload CV button sits above "Create your profile in <1 minute" at every width (as on a phone), so the two no longer crowd each other when the box is narrow.
+- Merged onto the live page 1795123291-402b (v1.103) before publishing; page saved as `live-v1.104-index.html`. Artifact version 1795123763-bc99.
+
+## v1.103
+
+FF Team home on desktop (Alex, 19 Nov 21:19). `styles/home-wide.css`.
+
+- The gold title bar is back beside "FF Party Launch Event" and the Launch Challenge title. In the two-column desktop layout those blocks were `position: static`, so the bar (drawn from the block's left edge) jumped to the left edge of the page; they are now `position: relative`.
+- Merged onto the live page 1795123202-96b5 (v1.102) before publishing; page saved as `live-v1.103-index.html`. Artifact version 1795123291-402b.
+
+## v1.102
+
+FF Team home on desktop (Alex, 19 Nov 21:17). `styles/home-wide.css`.
+
+- The FF Team Launch Challenge title and words no longer stay pinned to the top of the screen while you scroll the section; they scroll away with it (the pin made the scrolling feel odd). The pillars' heading in Discover keeps its pin for now.
+- Merged onto the live page 1795122996-e3e6 (v1.101) before publishing; page saved as `live-v1.102-index.html`. Artifact version 1795123202-96b5.
 
 ## v1.101
 

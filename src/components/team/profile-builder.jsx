@@ -1201,6 +1201,16 @@ function ProfileBuilder() {
   /* v17.40: an existing member editing a live profile sees the same page; Welcome to the Team is only for the first save. */
   const editingLive = !!p.live && !!(state.profileEdit && state.profileEdit.on);
   const join = useJoin21({ top: true });
+  /* v1.105 (Alex, 19 Nov 21:34): on a desktop the page opens on 01 Build your profile (left) beside a Register now box (right);
+     phones and the iPad keep the stacked 1, 2, 3 order. */
+  const [wide, setWide] = useState(() => typeof matchMedia !== "undefined" && matchMedia("(min-width:1000px)").matches);
+  useEffect(() => {
+    if (typeof matchMedia === "undefined") return;
+    const m = matchMedia("(min-width:1000px)"), f = () => setWide(m.matches);
+    if (m.addEventListener) m.addEventListener("change", f); else m.addListener(f);
+    f();
+    return () => { if (m.removeEventListener) m.removeEventListener("change", f); else m.removeListener(f); };
+  }, []);
   const toWelcome = () => setTimeout(() => {
     const el = document.getElementById("ff-sec-welcome");
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1210,14 +1220,35 @@ function ProfileBuilder() {
       <InviteBanner17 />
       {/* prof-top (Alex, 18 Nov 21:10): no "FF Team · Profile" eyebrow; the page opens on 1, Let's get started. */}
 
-      <div className="ff-journey">
+      <div className={"ff-journey" + (wide ? " ff-journey-wide" : "")}>
+        {wide ? (
+          <div className="ff-jw-row">
+            <div className="ff-jw-left">
+              <BigStepHead n={1} title="Build your profile" done={cardReady} />
+              <StartBox17 join={null} />
+              <div id="ff-sec-card"><CardBuilder /></div>
+            </div>
+            {join && (
+              <aside className="ff-jw-right">
+                <div className="ff-stephead ff-jw-reghead">
+                  <span className="ff-stepnum ff-jw-star" aria-hidden="true"><Star size={16} /></span>
+                  <h1 className="ff-h1" style={{ margin: 0, minWidth: 0 }}>Register now</h1>
+                </div>
+                <section id="ff-sec-phone" className="ff-way17 ff-way17-phone ff-jw-phone">
+                  <div className="ff-way17-wide"><PhoneBox21 join={join} /></div>
+                </section>
+              </aside>
+            )}
+          </div>
+        ) : (<>
         <BigStepHead n={1} title="Let's get started" done={hasCV(p) || cardReady} />
         <StartBox17 join={join} />
 
         <BigStepHead n={2} title="Your Profile Card" done={cardReady} />
         <div id="ff-sec-card"><CardBuilder /></div>
+        </>)}
 
-        <BigStepHead n={3} title="Your Profile Page" done={false} />
+        <BigStepHead n={wide ? 2 : 3} title="Your Profile Page" done={false} />
         {/* v17.34: FF Tag | Media (stacked on a phone), then About Me, then the tabs. */}
         <div className="ff-tm34">
           <TagSection top join={join} />
@@ -1238,7 +1269,7 @@ function ProfileBuilder() {
         <div className="ff-s5row">
           {!finished && (
             <div className="ff-s5mark" aria-hidden="true">
-              <span className="ff-stepnum closed" aria-hidden="true">04</span>
+              <span className="ff-stepnum closed" aria-hidden="true">{wide ? "03" : "04"}</span>
             </div>
           )}
           <SaveShareCard onSaved={toWelcome} />

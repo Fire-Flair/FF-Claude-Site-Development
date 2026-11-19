@@ -592,3 +592,32 @@
 .ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11 svg { color:#25D366 !important; fill:#25D366 !important; }
 .ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11:hover { background:#F3E5C0 !important; }
 .ff .ff-prest > .ff-pback { box-sizing:border-box; display:flex !important; width:calc(100% - 24px) !important; max-width:none !important; margin-left:12px !important; margin-right:12px !important; justify-content:center; min-height:44px; height:44px; }
+
+
+/* ==== v1.104 (Alex, 19 Nov 21:26): profile page, option B ====
+   From 1000px wide: the Profile Card (step 2) on the left, Let's get started (step 1) on the right. The CV button sits above its
+   "Create your profile in <1 minute" line, as on a phone, at every width, so the two no longer crowd each other. */
+.ff .ff-way17-cv { grid-template-columns: minmax(0, 1fr); }
+.ff .ff-way17-cv > .ff-way17-ctl { grid-column: 1; grid-row: 1; }
+.ff .ff-way17-cv > .ff-way17-line { grid-column: 1; grid-row: 2; }
+/* v1.105 (Alex, 19 Nov 21:34): desktop. 01 Build your profile on the left; an equal Register now box (star) on the right, smaller and
+   pushed to the right edge. */
+@media (min-width: 1000px) {
+  .ff .ff-journey-wide .ff-jw-row { display: grid; grid-template-columns: minmax(0, 1fr) 340px; column-gap: 48px; align-items: start; }
+  .ff .ff-jw-left { min-width: 0; }
+  .ff .ff-jw-left > .ff-start17 { max-width: none; margin: 0 0 18px; }
+  .ff .ff-jw-right { min-width: 0; }
+  .ff .ff-jw-reghead { display: flex; gap: 12px; align-items: center; margin: 22px 0 14px; margin-left: 0 !important; }
+  .ff .ff-jw-star { display: inline-flex; align-items: center; justify-content: center; }
+  .ff .ff-jw-phone { margin: 0; }
+}
+
+/* v1.111 (Alex, 19 Nov 22:01): the type boxes on the Create your own package card all match: same width as their column, same
+   border, corners, padding and text size, so none sticks out past the card. */
+.ff .ff-pkc-own2 .ff-pkc-tin { display: block; box-sizing: border-box; width: 100%; max-width: 100%; min-width: 0; margin: 0; padding: 8px 10px; border: 1px solid var(--gold-mid, #B08D2A); border-radius: 10px; corner-shape: squircle; background: #fff; color: #16130F; font: inherit; font-family: var(--sans, inherit); font-size: 14px; line-height: 1.3; resize: none; overflow: hidden; outline: 0; }
+.ff .ff-pkc-own2 .ff-pkc-tin::placeholder { color: #8E887E; opacity: 1; }
+.ff .ff-pkc-own2 .ff-pkc-tin:focus { border-color: var(--gold, #C9A227); box-shadow: 0 0 0 2px rgba(201, 162, 39, .28); }
+.ff .ff-pkc-own2 .ff-pkc-tin.ti { font-family: var(--display, inherit); font-size: 17px; font-weight: 600; }
+.ff .ff-pkc-own2 .ff-pkc-tin.bad { border-color: #A0262E; }
+.ff .ff-pkc-own2 .ff-pkc-tin:is(input) { height: 38px; }
+.ff .ff-pkc-own2 :has(> .ff-pkc-tin) { min-width: 0; }

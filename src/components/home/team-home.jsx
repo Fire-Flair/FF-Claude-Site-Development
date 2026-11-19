@@ -94,6 +94,15 @@ function Home101() {
     const guest = !(state.auth && state.auth.status === "signedIn");
     const root = useRef(null);
     useCoinSpin(root);
+    /* v1.109 (Alex, 19 Nov 21:50): on a desktop Join FF Team is a plain box (no coin game). */
+    const [deskJoin, setDeskJoin] = useState(() => typeof matchMedia !== "undefined" && matchMedia("(min-width:1100px)").matches);
+    useEffect(() => {
+      if (typeof matchMedia === "undefined") return;
+      const m = matchMedia("(min-width:1100px)"), f = () => setDeskJoin(m.matches);
+      if (m.addEventListener) m.addEventListener("change", f); else m.addListener(f);
+      f();
+      return () => { if (m.removeEventListener) m.removeEventListener("change", f); else m.removeListener(f); };
+    }, []);
     /* homefix: coin dividers between sections. home2: the coin game (Join) comes after Business & Support. */
     const coin = (k) => React.createElement(CoinDivider, { key: `coin-${k}` });
     /* home5 (Alex, 18 Nov 03:06 and 03:13): hero (+ Welcome back), Discover, bookings 1-2-3-4, Launch Challenge,
@@ -116,19 +125,25 @@ function Home101() {
       /* home-update (Alex, 18 Nov 14:18): a coin between FFStories and the door video, another below the door video;
          no coin below "Can FF Team help you?". */
       coin("v"),
-      React.createElement(TwoMinutes20, { key: "twomin" }),
-      coin("w"),
-      React.createElement(GuideQuestions11, {
-        key: "guide",
-        kind: "team"
-      }),
-      React.createElement(BusinessSupport19, {
-        key: "business"
-      }),
-      coin("j"),
-      React.createElement(HomeJoin, {
-        key: "join"
-      })
+      /* v1.104 (Alex, 19 Nov 21:26): the launch event, its video and the questions share one row on desktop (home-wide.css); a plain block elsewhere. */
+      React.createElement("div", { key: "lgrow", className: "ff-lg-row" },
+        React.createElement(TwoMinutes20, { key: "twomin" }),
+        coin("w"),
+        React.createElement(GuideQuestions11, {
+          key: "guide",
+          kind: "team"
+        })),
+      /* v1.107 (Alex, 19 Nov 21:44): Join FF Team and Business and Support share a row on desktop, Join on the left (home-wide.css); plain block elsewhere. */
+      React.createElement(CoinDivider, { key: "coin-bj", className: "ff-coin-desk" }),
+      React.createElement("div", { key: "bjrow", className: "ff-bj-row" },
+        React.createElement(BusinessSupport19, {
+          key: "business"
+        }),
+        coin("j"),
+        React.createElement(HomeJoin, {
+          key: "join",
+          withGame: !deskJoin
+        }))
     ];
     return React.createElement("div", {
       className: `ff-home ff-hf22${FF_HOME_COLOUR ? ` ff-home-c${FF_HOME_COLOUR}` : ""}`,
