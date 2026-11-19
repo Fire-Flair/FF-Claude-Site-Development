@@ -4,6 +4,14 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.100
+
+FF Team home on desktop (Alex, 19 Nov 21:08, draft B). New file `styles/home-wide.css`, only from 1100px wide; phones and iPad portrait are unchanged.
+
+- The page column is the width of the top bar (1148px) and the hero is taller with a larger Profile Card, so the tagline no longer touches the card.
+- Built for event and hospitality professionals, the Launch Challenge, FF Party Launch Event and Can FF Team help you are each two columns: title and words on the left (they stay in view while you read), content on the right. The four pillars sit in one row beside their intro and open underneath. The three questions sit side by side.
+- FFStories keeps its centred title with a wider row of story cards. The FF coins stay between the sections.
+
 ## v1.99
 
 FF Team home (Alex, 19 Nov 20:58). `styles/home-text.css`.

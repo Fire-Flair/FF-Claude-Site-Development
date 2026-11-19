@@ -1,0 +1,33 @@
+/* ==== v1.100 (Alex, 19 Nov 21:08): FF Team home on desktop (draft B) ====
+   From 1100px wide the page uses the width of the top bar (1148px) and each section is two columns: its title and words on the
+   left (they stay in view while you read the section), its content on the right. The hero is taller with a larger Profile Card.
+   Phones and the iPad portrait layout are untouched. */
+@media (min-width: 1100px) {
+  .ff .ff-home17.ff-landing { max-width: 1148px; width: 100%; }
+  .ff .ff-landing > *:not(.ff-coindiv) { max-width: none; width: 100%; }
+  .ff .ff-landing #ff-hero { min-height: 470px; }
+
+  /* two-column sections: heading column + content column */
+  .ff .ff-landing #ff-discover,
+  .ff .ff-landing #ff-competition,
+  .ff .ff-landing #ff-two-minutes,
+  .ff .ff-landing #ff-guide { display: grid; grid-template-columns: 310px minmax(0, 1fr); column-gap: 40px; align-items: start; }
+  .ff .ff-landing #ff-discover > .ff-tlx,
+  .ff .ff-landing #ff-competition > .ff-tlx,
+  .ff .ff-landing #ff-two-minutes > .ff-tlx { grid-column: 1; grid-row: 1; position: sticky; top: 72px; margin: 0; }
+  .ff .ff-landing #ff-discover > .ff-dx-sent { display: none; }
+  .ff .ff-landing #ff-discover > .ff-dx-well { grid-column: 2; grid-row: 1; margin: 0; }
+  .ff .ff-landing #ff-competition > .ff-lc22 { grid-column: 2; grid-row: 1; margin: 0; }
+  .ff .ff-landing #ff-two-minutes > .ff-tm20-st { grid-column: 2; grid-row: 1; margin: 0; justify-self: center; width: min(100%, 340px) !important; }
+  .ff .ff-landing #ff-guide > .ff-qg-title { grid-column: 1; grid-row: 1; position: sticky; top: 72px; margin: 0; text-align: left; justify-content: flex-start; }
+  .ff .ff-landing #ff-guide > .ff-qg-grid { grid-column: 2; grid-row: 1; margin: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+  /* left-hand headings and their words fit the narrower column */
+  .ff .ff-landing #ff-discover .ff-dx-h, .ff .ff-landing #ff-competition .ff-tlx h2, .ff .ff-landing #ff-two-minutes .ff-tlx h2, .ff .ff-landing #ff-guide .ff-qg-title { font-size: 30px !important; }
+  .ff .ff-landing #ff-discover .ff-dx-tag, .ff .ff-landing #ff-competition .ff-tlx p, .ff .ff-landing #ff-two-minutes .ff-tlx p { max-width: none !important; }
+
+  /* the four pillars sit in one row; titles are smaller so "Our community" fits */
+  .ff .ff-landing #ff-discover .ff-dx-tile { height: auto !important; }
+  .ff .ff-landing #ff-discover .ff-dx-tile .tx { font-size: 17px !important; }
+  .ff .ff-landing #ff-discover .ff-dx-tile .tx * { font-size: inherit !important; }
+}
