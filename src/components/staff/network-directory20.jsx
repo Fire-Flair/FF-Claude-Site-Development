@@ -149,10 +149,10 @@ function NetDirectory20() {
 /* The map on its own (the Explore by area drop-downs stay on the other pages). */
 function NetMap20(props) {
   const search = props && props.search;
-  return React.createElement(React.Fragment, null, React.createElement(NetNotes11, null), React.createElement("section", { id: "ff-netmap", style: { marginTop: 0, scrollMarginTop: 70 } },
+  return React.createElement("section", { id: "ff-netmap", style: { marginTop: 0, scrollMarginTop: 70 } },
     React.createElement(LinedHead20, { tag: "h1", title: "Explore our network", k: "page" }),
     search ? React.createElement("div", { id: "ff-net-search", className: "ff-netsrch20", style: { margin: "0 0 14px", scrollMarginTop: 70 } }, search) : null,
-    React.createElement(FFMap, { mode: "network" })));
+    React.createElement(FFMap, { mode: "network" }));
 }
 
 

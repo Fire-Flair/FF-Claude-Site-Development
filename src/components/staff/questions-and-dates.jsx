@@ -58,7 +58,7 @@ function v11Reducer(s, a) {
     case "COMPANY_MEDIA_DELETE": { const c = s.company || {}; return { ...s, company: { ...c, media: (c.media || []).filter(m => m.id !== a.id) } }; }
     case "COMPANY_MEDIA_PATCH": case "COMPANY_MEDIA_MOVE": case "CO_SECTION_DELETE": case "CO_INFO_MIGRATE": case "CO_SEC_ADD": case "CO_SEC_PATCH": case "CO_SEC_MOVE": case "CO_SLUG_SET": return coShapeReducer17(s, a) || s;
     case "NOTES_SEEN": return notesSeen17(s);
-    /* Networking. Network is one tap, one way (a person or a company; no confirmation). Team is two way (TEAM_INVITE, then they accept).
+    /* Networking. Network is one tap, one way and only for companies (no confirmation). Team is two way (TEAM_INVITE, then they accept).
        One status per person: connStatus17(state, id) gives "team", "pending", "network" or "none". */
     case "NET_TOGGLE": {
       const n = s.netAdds17 || [], adding = !n.includes(a.id);
@@ -79,8 +79,13 @@ function v11Reducer(s, a) {
       if (!a.accept) return { ...s, teamAsks17: done };
       /* v17.4.6.1: accepting a company's invitation makes you a member of its team (and keeps it in your network). */
       if (a.ask.company) { const co = companyById(s, a.ask.fromId) || { name: a.ask.name }; return ct17Reducer({ ...s, teamAsks17: done, netAdds17: (s.netAdds17 || []).includes(a.ask.fromId) ? s.netAdds17 : [...(s.netAdds17 || []), a.ask.fromId] }, { type: "CT_ACCEPTED", companyKey: coKey17(co), companyName: co.name || a.ask.name, personId: "me", tag: (s.auth && s.auth.tag) || "", name: (s.profile && s.profile.name) || "", ref: a.ask.id }); }
-      return { ...s, teamAsks17: done, connections: s.connections.some(c => c.id === a.ask.fromId) ? s.connections : [...s.connections, { id: a.ask.fromId, name: a.ask.name, onFF: true, tag: a.ask.tag }] };
+      /* The inviter is told "<Name> is now on your team." (toId = the inviter; shown in their notifications). */
+      const mine = s.profile && String(s.profile.name || "").trim() || "Someone";
+      return { ...s, teamAsks17: done, connections: s.connections.some(c => c.id === a.ask.fromId) ? s.connections : [...s.connections, { id: a.ask.fromId, name: a.ask.name, onFF: true, tag: a.ask.tag }],
+        teamJoined18: [...(s.teamJoined18 || []), { id: uid("tj"), toId: a.ask.fromId, personId: "me", name: mine, tag: (s.auth && s.auth.tag) || null, at: Date.now(), seen: false }] };
     }
+    /* "<Name> is now on your team." was opened (View profile): it leaves the notifications. */
+    case "TEAM_JOINED_SEEN": return { ...s, teamJoined18: (s.teamJoined18 || []).map(x => x.id === a.id ? { ...x, seen: true } : x) };
     case "VIEW":
       if (s.viewingCompany || s.peek) return reducer({ ...s, viewingCompany: null, peek: null }, a);
       return null;

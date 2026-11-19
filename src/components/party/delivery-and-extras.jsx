@@ -48,9 +48,9 @@ function availWaiting17(state) {
 
 /* Team invitations sent TO you. The real ones are state.teamAsksIn17 (a join link brought you in; see src/state/invite17.js).
    Core supplies the rest in production. These two samples appear only for the DEV complete-profile login (state.devDone.team).
-   netAdd: the person added you to their network; the card asks whether to add them to your team. */
+   People are invited to a team only (there is no Add to network for people). */
 const TEAM_ASKS_DEMO17 = [
-  { id: "tia_gav", fromId: "stf_gav", name: "Alexandru Gavrilas", tag: "GAVRILAS", netAdd: true, at: Date.UTC(2026, 10, 8) },
+  { id: "tia_gav", fromId: "stf_gav", name: "Alexandru Gavrilas", tag: "GAVRILAS", at: Date.UTC(2026, 10, 8) },
   { id: "tia_vooshka", fromId: "co_vooshka", name: "Vooshka Cocktail Bar", company: true, note: "Wants you on their company team", at: Date.UTC(2026, 10, 9) },
 ];
 
@@ -121,40 +121,11 @@ const notifyCount17 = (state) => state.role !== "team" ? 0
   : pending11(state).length + availWaiting17(state).length + teamAsksWaiting17(state).length + reviewAsksWaiting17(state).length + coInvites17(state).length + questionsWaiting17(state, state.directory || []).length;
 
 
-/* Recovered from the live page (another chat's unpushed v1.1 work): notification bubbles, Network and Bookings notes. */
-function BkTeamNote11({x}){const{state,dispatch}=useStore();const all=useDirectory();const person=x.company?null:all.find(p=>p.id===x.fromId);const co=x.company?companyById(state,x.fromId):null;const first=x.company?x.name:firstName(x.name);const reply=accept=>{dispatch({type:"TEAM_ASK_REPLY",ask:x,accept});dispatch({type:"TOAST",toast:accept?`You and ${first} are on each other's team`:"Invitation declined"});if(accept&&x.viaLink)dispatch({type:"INV_PATCH",patch:{reviewOfferedAt:Date.now()}})};if(!person&&!co)return null;return React.createElement("li",{className:"ff-bkn11 team","aria-label":`Team invitation from ${x.name}`},React.createElement("div",{className:"ff-bkn11-bn"},"Team invitation"),React.createElement("div",{className:"ff-bkn11-face"},co?React.createElement(CompanyCardFace,{c:co,size:"sm"}):React.createElement(PlayerTile,{person})),React.createElement("div",{className:"ff-bkn11-act"},React.createElement("button",{type:"button",className:"ok",onClick:()=>reply(true)},"Accept"),React.createElement("button",{type:"button",className:"no","aria-label":`Decline the invitation from ${x.name}`,onClick:()=>reply(false)},React.createElement(X,{size:18,"aria-hidden":"true"}))))}
+/* Recovered from the live page (another chat's unpushed v1.1 work): notification bubbles, Bookings notes. The Network page notes are NetNotes18 (network.jsx). */
 function BkQuestionNote11({q,by}){const{state,dispatch}=useStore();return React.createElement("li",{className:"ff-bkn11 qn"},React.createElement(PE2QCard,{q,value:answerOf(state,q),label:`Asked by ${by}`,onAnswer:v=>{dispatch({type:"ANSWER",qid:q.id,value:v});dispatch({type:"TOAST",toast:"Answer saved"})}}))}
 function BkNotes11({empty}){const{state}=useStore();const people=useDirectory();const items=notesBrief17(state,people).filter(it=>it.kind==="question"||it.kind==="avail");if(!items.length)return empty;return React.createElement("li",{className:"ff-bkn11-wrap"},React.createElement("ul",{className:"ff-bkn11-list","aria-label":"Waiting for your reply"},items.map(it=>it.kind==="avail"?React.createElement(BkQuestionNote11,{key:it.id,q:availQ(it.x.iso),by:it.x.byName}):React.createElement(BkQuestionNote11,{key:it.id,q:it.q,by:askerName(it.q,people)}))))}
-function noteCounts11(state,people){const b=notesBrief17(state,people);return{network:b.filter(it=>it.kind==="team").length,bookings:b.filter(it=>it.kind==="question"||it.kind==="avail").length}}
+function noteCounts11(state,people){const b=notesBrief17(state,people);return{network:b.filter(it=>it.kind==="team").length+joinedNotes18(state).length,bookings:b.filter(it=>it.kind==="question"||it.kind==="avail").length}}
 function NavBubble11({tab}){const{state}=useStore();const people=useDirectory();const n=noteCounts11(state,people)[tab]||0;if(!n)return null;return React.createElement("span",{className:"ff-nbub11"+(n>9?" d2":""),role:"status","aria-label":`${n} waiting for you`},n>99?"99+":n)}
-function NetNotes11(){const{state}=useStore();const people=useDirectory();const items=notesBrief17(state,people).filter(it=>it.kind==="team");if(!items.length)return null;return React.createElement("section",{className:"ff-netn11","aria-label":"Team invitations"},React.createElement("ul",{className:"ff-bkn11-list"},items.map(it=>React.createElement(BkTeamNote11,{key:it.id,x:it.x}))))}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ======================================================================================================
-   v17.3.33 — Bookings (FF Team), FF events (FF Staff), personal terms (FF Team profile)
-   ====================================================================================================== */
 const E17I = { GraduationCap: lucideIcon("GraduationCap"), Plane: lucideIcon("Plane"), Gift: lucideIcon("Gift"), Layers: lucideIcon("Layers"), ChevronLeft: lucideIcon("ChevronLeft"), ChevronRight: lucideIcon("ChevronRight") };
 
 

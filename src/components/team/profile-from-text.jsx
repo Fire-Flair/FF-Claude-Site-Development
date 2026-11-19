@@ -324,7 +324,7 @@ function ReviewSheet({ open, person, shiftId, onClose }) {
 
 
 
-/* Ask anyone in your network for a review/reference. If they don't have one
+/* Ask anyone on your team for a review/reference. If they don't have one
    posted yet, the fallback is simply to share your card with them. */
 function AskForReviewSheet({ open, onClose }) {
   const { state, dispatch } = useStore();
@@ -344,12 +344,12 @@ function AskForReviewSheet({ open, onClose }) {
   return (
     <Sheet open onClose={onClose} title="Ask for a review">
       <p className="ff-body" style={{ marginTop: 0 }}>
-        Anyone in your network can leave you a review or a reference, whether or not you've worked an event
+        Anyone on your team can leave you a review or a reference, whether or not you've worked an event
         together on FireFlair — most people you'd ask have worked with you somewhere.
       </p>
       {network.length === 0 ? (
         <div className="ff-frame" style={{ padding: 14, marginTop: 10 }}>
-          <p className="ff-body" style={{ margin: "0 0 10px" }}>Nobody in your network yet. Share your card instead — they can send you a review once they have it.</p>
+          <p className="ff-body" style={{ margin: "0 0 10px" }}>Nobody on your team yet. Share your card instead — they can send you a review once they have it.</p>
           <Btn variant="primary wide" onClick={() => { dispatch({ type: "TOAST", toast: "Link copied" }); onClose(); }}>
             <ShareUp17 size={14} /> Share my card
           </Btn>

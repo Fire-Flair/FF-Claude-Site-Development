@@ -396,10 +396,6 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   const coCos = co.mine ? [...partners, ...(state.netAdds17 || []).filter(id => String(id).startsWith("co_") && !partners.some(x => x.id === id)).map(id => companyById(state, id)).filter(Boolean)] : partners;
   const teamSite = state.role === "team" && state.auth && state.auth.status === "signedIn";
   const myRel = teamSite && ck ? ctMyStatus17(state, ck) : "";
-  const joinTeam = () => {
-    dispatch({ type: "CT_REQUEST", companyKey: ck, companyName: co.name || "", personId: "me", tag: state.auth.tag || "", name: state.profile.name || "" });
-    dispatch({ type: "TOAST", toast: `Request sent to ${co.name || "the company"}` });
-  };
   const inv = myRel === "invited" && ctInvitesForMe17(state).find(x => x.companyKey === ck);
   const back = () => { dispatch({ type: "VIEW_COMPANY", id: null }); window.scrollTo(0, 0); };
   const asPerson = { id: co.id, name: co.name || "this company", tag: co.slug, profession: co.kind, isCompany: true, photo: co.logo || null, tier: co.tier, companyKey: ck };
@@ -467,11 +463,11 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
     <div className="ff-copub">
       <PublicHero media={(co.mediaList || []).map(m => ({ id: m.id, src: m.src, name: m.alt || "" }))} card={<><CompanyCardFace c={co} links />{done && shareBtn ? <div style={{ marginTop: 10, textAlign: "center" }}><CardShareBtn17 title={`${co.name || "Company"} on FireFlair`} url={`https://${CARD_DOMAIN}/${tag}`} fileName={"fireflair-" + cx17Slug(co.slug || co.name)} render={() => <CompanyCardFace c={co} />} label="Share Company Card" /></div> : null}</>} below={<>
       {!done && <BackBtn17 fallback={back} />}
-      {!done && !co.mine && !co.unclaimed && teamSite && ck && <div className="ff-copub-acts">
+      {!done && !co.mine && !co.unclaimed && teamSite && ck && (myRel === "member" || myRel === "requested" || inv) && <div className="ff-copub-acts">
         {myRel === "member" ? <Btn variant="wide" disabled><I11.Check size={14} /> On their team</Btn>
           : myRel === "requested" ? <Btn variant="wide" disabled><I11.Clock size={14} /> Request sent</Btn>
           : inv ? <div className="two"><Btn variant="primary" onClick={() => { dispatch({ type: "CT_DECIDE", id: inv.id, accept: true }); dispatch({ type: "TOAST", toast: `You're on ${co.name}'s team` }); }}><I11.Check size={14} /> Accept invitation</Btn><Btn onClick={() => dispatch({ type: "CT_DECIDE", id: inv.id, accept: false })}>Decline</Btn></div>
-          : <Btn variant="primary wide" onClick={joinTeam}><I11.UserPlus size={14} /> Join team</Btn>}
+          : null}
       </div>}
       {!done && !co.unclaimed && isStaff && team.length > 0 && <div className="ff-copub-acts">
         {isParty

@@ -324,7 +324,7 @@ function teamTabData17(state, all, person) {
   const teams = me ? myNetwork(state, all).list.filter(p => conn(p.id)) : (conn(person.id) ? all.filter(p => p.id === "me") : []);
   const tCos = personCompanies17(state, person, false);
   const adds = me ? (state.netAdds17 || []) : [];
-  const tNet = adds.map(id => all.find(p => p.id === id)).filter(p => p && !p.isCompany && !teams.some(t => t.id === p.id));
+  const tNet = [];  /* people are not added to a network (v1.82): the Network list is companies only */
   const netCos = adds.filter(id => String(id).startsWith("co_")).map(id => companyById(state, id)).filter(c => c && !tCos.some(x => x.id === c.id));
   return { teams, tCos, tNet, netCos };
 }

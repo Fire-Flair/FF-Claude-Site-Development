@@ -297,8 +297,8 @@ function reducerCore17(s0, a) {
     case "VIEW":      return { ...s, viewing: a.id, viewingAsGuest: !!(a.id && a.guest) };
     case "TEAM_INVITE": {
       if (!inv17SignedIn(s) || !a.invite) return s;
-      const pid = a.invite.personId, n = s.netAdds17 || [];
-      return { ...s, teamInvites: [...(s.teamInvites || []).filter(i => i.personId !== pid || i.status === "accepted"), a.invite], netAdds17: n.includes(pid) ? n : [...n, pid] };
+      const pid = a.invite.personId;
+      return { ...s, teamInvites: [...(s.teamInvites || []).filter(i => i.personId !== pid || i.status === "accepted"), a.invite] };
     }
     case "TEAM_INVITE_ACCEPT": {
       const inv = (s.teamInvites || []).find(i => i.id === a.id);
@@ -307,7 +307,9 @@ function reducerCore17(s0, a) {
       const connections = s.connections.some(c => c.id === inv.personId) ? s.connections
         : [...s.connections, { id: inv.personId, name: inv.name, note: inv.note, onFF: true, tag: inv.tag }];
       const reviews = (s.reviews || []).map(r => r.byId === "me" && r.aboutId === inv.personId && r.status === "pending" ? { ...r, status: "accepted" } : r);
-      return { ...s, teamInvites: invites, connections, reviews };
+      /* The person said yes: "<Name> is now on your team." waits in my notifications (Network page) until I open their profile. */
+      const joined = [...(s.teamJoined18 || []), { id: uid("tj"), toId: "me", personId: inv.personId, name: inv.name, tag: inv.tag || null, at: Date.now(), seen: false }];
+      return { ...s, teamInvites: invites, connections, reviews, teamJoined18: joined };
     }
     /* Take someone out of one place: "network" (and any pending invitation), "pending" (they stay in my network),
        or "team" (both sides leave the team; they stay in my network). */
@@ -315,7 +317,7 @@ function reducerCore17(s0, a) {
       const n = s.netAdds17 || [], inv = s.teamInvites || [];
       if (a.from === "network") return { ...s, netAdds17: n.filter(x => x !== a.id), teamInvites: inv.filter(i => !(i.personId === a.id && i.status === "pending")) };
       if (a.from === "pending") return { ...s, teamInvites: inv.filter(i => !(i.personId === a.id && i.status === "pending")) };
-      if (a.from === "team") return { ...s, connections: (s.connections || []).filter(c => c.id !== a.id), teamInvites: inv.filter(i => i.personId !== a.id), netAdds17: n.includes(a.id) ? n : [...n, a.id] };
+      if (a.from === "team") return { ...s, connections: (s.connections || []).filter(c => c.id !== a.id), teamInvites: inv.filter(i => i.personId !== a.id), teamJoined18: (s.teamJoined18 || []).filter(x => x.personId !== a.id) };
       return s;
     }
     case "SEED_DEMO": {

@@ -63,7 +63,8 @@ function RelMenu17({ items }) {
 }
 
 
-/* The one relationship slot on someone else's profile, for a signed-in member. */
+/* The one relationship slot on someone else's profile, for a signed-in member: Join team (you ask to join their team; it
+   needs their acceptance). There is no Add to network for people. The review form (ReviewForm17) is offered once, in place. */
 function RelSlot17({ person }) {
   const { state, dispatch } = useStore();
   const [offer, setOffer] = useState(false);
@@ -71,7 +72,7 @@ function RelSlot17({ person }) {
   const first = reviewName17(person);
   const status = connStatus17(state, person.id);
   const reviewed = (state.reviews || []).some(r => r && r.byId === "me" && r.aboutId === person.id);
-  const askIn = status === "network" ? teamAsksWaiting17(state).find(x => x.fromId === person.id) : null;
+  const askIn = teamAsksWaiting17(state).find(x => x.fromId === person.id);
   const invite = (state.teamInvites || []).filter(i => i.personId === person.id && i.status === "pending").slice(-1)[0];
   const toast = (t) => dispatch({ type: "TOAST", toast: t });
   if (offer) {
@@ -83,29 +84,22 @@ function RelSlot17({ person }) {
     );
   }
   let main;
-  if (status === "none") {
+  if (status === "none" && askIn) {
+    main = <Btn variant="gold wide" onClick={() => { dispatch({ type: "TEAM_ASK_REPLY", ask: askIn, accept: true }); toast(`You and ${first} are on each other's team`); if (!reviewed) setOffer(true); }}><Check size={15} aria-hidden="true" /><FitLabel17>Accept invitation</FitLabel17></Btn>;
+  } else if (status === "none") {
     main = <Btn variant="gold wide" onClick={() => {
-      dispatch({ type: "NET_TOGGLE", id: person.id }); toast(`${first} added to your network`);
-      if (!reviewed) setOffer(true);
-    }}><UserPlus size={15} aria-hidden="true" /><FitLabel17>Add to network</FitLabel17></Btn>;
-  } else if (status === "network") {
-    main = askIn
-      ? <Btn variant="gold wide" onClick={() => { dispatch({ type: "TEAM_ASK_REPLY", ask: askIn, accept: true }); toast(`You and ${first} are on each other's team`); if (!reviewed) setOffer(true); }}><Check size={15} aria-hidden="true" /><FitLabel17>Accept invitation</FitLabel17></Btn>
-      : <Btn variant="gold wide" onClick={() => {
-          dispatch({ type: "TEAM_INVITE", invite: { id: uid("tinv"), personId: person.id, name: person.name, tag: person.tag || null, note: person.profession || "", at: Date.now(), status: "pending" } });
-          toast(`Invitation sent to ${first}`);
-        }}><Users size={15} aria-hidden="true" /><FitLabel17>Invite to your team</FitLabel17></Btn>;
+      dispatch({ type: "TEAM_INVITE", invite: { id: uid("tinv"), personId: person.id, name: person.name, tag: person.tag || null, note: person.profession || "", at: Date.now(), status: "pending", kind: "join" } });
+      toast(`Request sent to ${first}`);
+    }}><Users size={15} aria-hidden="true" /><FitLabel17>Join team</FitLabel17></Btn>;
   } else if (status === "pending") {
-    main = <div className="ff-rs17-quiet"><Clock size={15} aria-hidden="true" /><FitLabel17>Invitation sent</FitLabel17></div>;
+    main = <div className="ff-rs17-quiet"><Clock size={15} aria-hidden="true" /><FitLabel17>Request sent</FitLabel17></div>;
   } else {
     main = <div className="ff-rs17-quiet"><FitLabel17>On your team</FitLabel17><Check size={15} aria-hidden="true" /></div>;
   }
-  /* Mr G, 17 Nov: no separate Review entry for a signed-in member; the review is offered in place as they add to network or team.
-     Fixes2 (Fable): a skipped review stays reachable from the ⋯ menu until it is written. */
+  /* A skipped review stays reachable from the ⋯ menu until it is written. */
   const items = [
     ...(status !== "none" && !reviewed ? [{ label: "Write a review", go: () => setOffer(true) }] : []),
-    ...(status === "network" ? [{ label: "Remove from network", go: () => { dispatch({ type: "CONN_REMOVE", id: person.id, from: "network" }); toast(`${first} removed from your network`); } }] : []),
-    ...(status === "pending" ? [{ label: "Cancel invitation", go: () => { dispatch({ type: "CONN_REMOVE", id: person.id, from: "pending" }); toast("Invitation cancelled"); } }] : []),
+    ...(status === "pending" ? [{ label: "Cancel request", go: () => { dispatch({ type: "CONN_REMOVE", id: person.id, from: "pending" }); toast("Request cancelled"); } }] : []),
     ...(status === "team" ? [{ label: "Remove from team", go: () => { dispatch({ type: "CONN_REMOVE", id: person.id, from: "team" }); toast(`${first} removed from your team`); } }] : []),
     ...(status === "pending" && invite ? [{ label: `Preview: ${first} accepts`, go: () => { dispatch({ type: "TEAM_INVITE_ACCEPT", id: invite.id }); toast(`${first} accepted · now on your team`); if (!reviewed) setOffer(true); } }] : []),
   ];
@@ -718,11 +712,120 @@ function TeamParts17({ team, companies, network, teamEmpty, renderTeam }) {
 }
 
 
+/* ==========================================================================
+   NETWORK PAGE NOTIFICATIONS (v1.82)
+   Team invitations look like the WhatsApp message: the inviter's Profile Card, "<Name> has invited you to join their team on
+   FireFlair.", "Accept to appear on <Name>'s team and show their Profile Card on yours.", then Accept, Not now, Leave a review.
+   After Accept the inviter gets "<Name> is now on your team." (View profile) in their notifications (state.teamJoined18).
+   ========================================================================== */
+const NetIco18 = { Check: lucideIcon("Check"), X: lucideIcon("X"), Out: lucideIcon("ArrowUpRight"), Gear: lucideIcon("Settings"), Users: lucideIcon("Users"), Briefcase: lucideIcon("Briefcase") };
+
+
+/* One team invitation. A person's shows their Profile Card; a company's shows its Company Card (Accept and Not now only). */
+function TeamInvite18({ x, onReview }) {
+  const { state, dispatch } = useStore();
+  const all = useDirectory();
+  const person = x.company ? null : all.find(p => p.id === x.fromId);
+  const co = x.company ? companyById(state, x.fromId) : null;
+  if (!person && !co) return null;
+  const first = x.company ? x.name : firstName(x.name);
+  const reply = (accept) => {
+    dispatch({ type: "TEAM_ASK_REPLY", ask: x, accept });
+    if (accept) {
+      dispatch({ type: "TOAST", toast: `You and ${first} are on each other's team` });
+      if (x.viaLink) dispatch({ type: "INV_PATCH", patch: { reviewOfferedAt: Date.now() } });
+    }
+  };
+  return (
+    <li className="ff-inv18" aria-label={`Team invitation from ${x.name}`}>
+      <div className="ff-inv18-card">
+        {co ? <CompanyCardFace c={co} size="sm" /> : <PlayerCard person={person} format="full" nameAs="div" themeKey={person.theme || "ivory"} />}
+      </div>
+      <p className="ff-inv18-t">{first} has invited you to join their team on FireFlair.</p>
+      <p className="ff-inv18-s">Accept to appear on {first}&rsquo;s team and show their {co ? "Company Card" : "Profile Card"} on yours.</p>
+      <div className="ff-inv18-btns">
+        <button type="button" className="ff-inv18-b ok" onClick={() => reply(true)}><NetIco18.Check size={16} aria-hidden="true" /><FitLabel17>Accept</FitLabel17></button>
+        <button type="button" className="ff-inv18-b" onClick={() => reply(false)}><NetIco18.X size={16} aria-hidden="true" /><FitLabel17>Not now</FitLabel17></button>
+        {person ? <button type="button" className="ff-inv18-b" onClick={() => onReview(person)}><NetIco18.Out size={16} aria-hidden="true" /><FitLabel17>Leave a review</FitLabel17></button> : null}
+      </div>
+    </li>
+  );
+}
+
+
+/* "<Name> is now on your team." for the inviter, with a View profile button. */
+function TeamJoined18({ n }) {
+  const { dispatch } = useStore();
+  const all = useDirectory();
+  const p = all.find(x => x.id === n.personId);
+  const first = firstName(n.name);
+  return (
+    <li className="ff-inv18-joined" aria-label={`${n.name} is now on your team`}>
+      <Portrait src={p && p.photo} name={n.name} size={40} tier={p && p.tier} />
+      <span className="tx"><FitLabel17>{`${first} is now on your team.`}</FitLabel17></span>
+      <button type="button" className="ff-inv18-b view" onClick={() => { dispatch({ type: "TEAM_JOINED_SEEN", id: n.id }); dispatch({ type: "VIEW", id: n.personId }); window.scrollTo(0, 0); }}><FitLabel17>View profile</FitLabel17></button>
+    </li>
+  );
+}
+
+
+/* Invitations, then "is now on your team" notes, at the top of the Network page. */
+function NetNotes18({ onReview }) {
+  const { state } = useStore();
+  const people = useDirectory();
+  const invites = notesBrief17(state, people).filter(it => it.kind === "team");
+  const joined = joinedNotes18(state);
+  if (!invites.length && !joined.length) return null;
+  return (
+    <section className="ff-netn18" aria-label="Team invitations and notifications">
+      <ul className="ff-inv18-list">
+        {invites.map(it => <TeamInvite18 key={it.id} x={it.x} onReview={onReview} />)}
+        {joined.map(n => <TeamJoined18 key={n.id} n={n} />)}
+      </ul>
+    </section>
+  );
+}
+
+
+/* Notification channels. A channel with always:true is on and has no switch. Add email (or anything else) here and it
+   appears in the pop-up; state.notifyPrefs18[key] holds the switch (on unless it is false, so new members start with it on). */
+const NOTIFY_CHANNELS18 = [
+  { key: "site", label: "Site", always: true, icon: () => <NetIco18.Users size={18} aria-hidden="true" /> },
+  { key: "whatsapp", label: "WhatsApp", icon: () => <WhatsAppIcon size={20} aria-hidden="true" /> },
+];
+const notifyOn18 = (state, ch) => ch.always || !(state.notifyPrefs18 && state.notifyPrefs18[ch.key] === false);
+
+
+function NotifySettings18({ open, onClose }) {
+  const { state, dispatch } = useStore();
+  const set = (key, on) => dispatch({ type: "V11_SET", patch: { notifyPrefs18: { ...(state.notifyPrefs18 || {}), [key]: on } } });
+  return (
+    <Sheet open={open} onClose={onClose} title="Notifications">
+      <ul className="ff-nset18">
+        {NOTIFY_CHANNELS18.map(ch => {
+          const on = notifyOn18(state, ch);
+          return (
+            <li key={ch.key} className="ff-nset18-row">
+              <span className="ico">{ch.icon()}</span>
+              <b className="nm">{ch.label}</b>
+              {ch.always
+                ? <span className="ff-nset18-on" aria-label={`${ch.label} is on`}>On</span>
+                : <button type="button" role="switch" aria-checked={on} aria-label={ch.label} className={"ff-nset18-sw" + (on ? " on" : "")} onClick={() => set(ch.key, !on)}><i /></button>}
+            </li>
+          );
+        })}
+      </ul>
+    </Sheet>
+  );
+}
+
+
 /* NETWORK — the bartending network, for everyone. Signed-out visitors see
    the same people a member does; joining happens on Home and Profile. */
 function NetworkScreen({ guest = false }) {
   const { state, dispatch } = useStore();
   const [reviewing, setReviewing] = useState(null);
+  const [settings, setSettings] = useState(false);
   const q = state.netQuery || "";
   const setQ = (v) => dispatch({ type: "NET_QUERY", q: v });
   const mine = guest ? { inviter: null, list: [] } : myNetwork(state, adminPeople17(state, state.directory));
@@ -735,6 +838,18 @@ function NetworkScreen({ guest = false }) {
   return (
     <div>
 
+      {!guest && (
+        <div className="ff-netset18-bar">
+          <button type="button" className="ff-netset18" aria-label="Notification settings" onClick={() => setSettings(true)}><NetIco18.Gear size={18} aria-hidden="true" /></button>
+        </div>
+      )}
+      {!q && !guest && <NetNotes18 onReview={setReviewing} />}
+      {!q && !guest && netCos.length > 0 && (
+        <section className="ff-netco18" aria-label="Companies in your network">
+          <SectionHead icon={<NetIco18.Briefcase size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Your network" count={netCos.length} />
+          <CoTiles17 list={netCos} label="Companies in your network" />
+        </section>
+      )}
       {!q && !guest && <SentInvitations />}
 
       <NetBrowse17 query={q} onPick={view} after={<NetMap20 />} search={<FFAI query={q} onQuery={setQ} title="Search people, skills or places" searchBox
@@ -743,6 +858,7 @@ function NetworkScreen({ guest = false }) {
         <Divider />
       </>)}
       <ReviewSheet open={!!reviewing} person={reviewing} onClose={() => setReviewing(null)} />
+      <NotifySettings18 open={settings} onClose={() => setSettings(false)} />
     </div>
   );
 }

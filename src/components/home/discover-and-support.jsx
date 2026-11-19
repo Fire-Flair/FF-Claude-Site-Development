@@ -394,10 +394,10 @@ function TeamCompetition20() {
           "ol",
           null,
           h("li", null, "Invite hospitality and event professionals you have worked with, would like to work with, or believe are great."),
-          h("li", null, "Build genuine Network and Team connections."),
+          h("li", null, "Build genuine Team connections."),
           h("li", null, "Have the largest and best Team at the end of the challenge.")
         )),
-        h("p", { style: { marginTop: 8 } }, "Network and Team are separate features. Team connections need mutual acceptance."),
+        h("p", { style: { marginTop: 8 } }, "Team connections need mutual acceptance."),
         COMP_RULES20.map((r) => sec(r[0], h("p", null, r[1]))),
         sec("Fair participation", h("p", null, "Only genuine accounts and authentic professional connections qualify. Duplicate, fabricated or manipulated activity may be disqualified following review."))
       )
