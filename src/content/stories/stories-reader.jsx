@@ -169,11 +169,11 @@ function ST19_Footer({ o, children }) {
         React.createElement("dt", null, "Sources"), React.createElement("dd", null, src.length ? src.join("; ") : "None listed"))));
 }
 
-/* Five story categories on all three sites (plus All). Every story's own category is folded into one of them. */
-const STORY_CATS17 = ["How it works", "Planning and booking", "Pay and costs", "Skills and growth", "Local and news"];
+/* Four story categories on all three sites (plus All = five chips, two lines on a phone). Every story's own category is folded into one of them. */
+const STORY_CATS17 = ["How it works", "Planning and booking", "Pay and costs", "Growth and news"];
 function storyCat17(c) {
   const t = String(c || "").toLowerCase();
-  if (/local|news/.test(t)) return STORY_CATS17[4];
+  if (/local|news/.test(t)) return STORY_CATS17[3];
   if (/cost|fee|pay|tax|money|terms|rate/.test(t)) return STORY_CATS17[2];
   if (/compar|how ff|your profile|staffing options/.test(t)) return STORY_CATS17[0];
   if (/book|accept|plan|urgent|problem|finding work|choosing|shift/.test(t)) return STORY_CATS17[1];
