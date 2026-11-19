@@ -99,7 +99,7 @@
 /* ==== home2 (Alex, 18 Nov 15:29): the two coins around the door video sit the same distance from the video and from
    the sections either side. FFStories keeps 14px of room under its cards for their shadows, so the coin above the video
    comes up by that much. ==== */
-.ff .ff-hf22 .ff-home17 > #ff-journal + .ff-coindiv { margin-top:calc(clamp(48px,10vw,76px) - 14px); }
+.ff .ff-hf22 .ff-home17 > #ff-journal + .ff-coindiv { margin-top:calc(clamp(64px,13vw,96px) - 14px); }
 
 /* ==== title-bars (Alex, 18 Nov 17:00): "The little gold gradient bars … should extend to cover the text as well, and it
    should fade out completely at the bottom line of the text." One line per titled block: it starts at the top of the

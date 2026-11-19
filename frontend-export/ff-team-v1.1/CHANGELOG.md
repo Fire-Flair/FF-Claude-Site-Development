@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.88
+
+- **A little more space around the Home coin dividers.** Gap above and below each `.ff-coindiv` is now 64px on phones, up to 96px on desktop (`home-fix22.css`, `titles2.css`).
+
 ## v1.87
 
 - **More space around the spinning coin dividers on Home.** The gap above and below each `.ff-coindiv` goes from 30px to 48px on phones (up to 76px on desktop, was 48px). `home-fix22.css` and the matching Journal offset in `titles2.css`.
