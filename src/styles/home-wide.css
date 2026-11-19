@@ -20,25 +20,20 @@
   .ff .ff-landing #ff-discover > .ff-dx-sent { display: none; }
   .ff .ff-landing #ff-discover > .ff-dx-well { grid-column: 2; grid-row: 1; margin: 0; }
   .ff .ff-landing #ff-competition > .ff-lc22 { grid-column: 2; grid-row: 1; margin: 0; }
-  /* v1.104 (Alex, 19 Nov 21:26): one row: the launch event words on the left, the door video in the middle (its own 9:16 shape, full picture,
-     nothing cropped), the three questions stacked and a little smaller on the right. */
-  .ff .ff-landing .ff-lg-row { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); column-gap: 44px; align-items: center; }
-  .ff .ff-landing .ff-lg-row { margin-bottom: 30px; }
-  .ff .ff-landing .ff-lg-row > .ff-coindiv { display: none; }
-  .ff .ff-landing #ff-two-minutes { grid-template-columns: minmax(0, 1fr) 300px; column-gap: 36px; align-items: center; }
-  .ff .ff-landing #ff-two-minutes > .ff-tlx { position: relative; align-self: center; } /* relative so the gold title bar shows */
-  .ff .ff-landing #ff-two-minutes > .ff-tm20-st { grid-column: 2; grid-row: 1; margin: 0; width: 300px !important; }
+  /* v1.105 (Alex, 19 Nov 21:34): the launch event words and the door video sit side by side, centred, with their tops level
+     (video keeps its own 9:16 shape, full picture); the three questions go below, three across. */
+  .ff .ff-landing .ff-lg-row { display: block; }
+  .ff .ff-landing #ff-two-minutes { grid-template-columns: minmax(0, 440px) 300px; column-gap: 64px; justify-content: center; align-items: start; }
+  .ff .ff-landing #ff-two-minutes > .ff-tlx { position: relative; top: auto; align-self: start; margin: 0; } /* relative so the gold title bar shows */
+  .ff .ff-landing #ff-two-minutes > .ff-tlx > *:first-child { margin-top: 0 !important; }
+  .ff .ff-landing #ff-two-minutes > .ff-tm20-st { grid-column: 2; grid-row: 1; margin: 0; width: 300px !important; align-self: start; }
   .ff .ff-landing #ff-two-minutes .ff-tm20-v { width: 100% !important; aspect-ratio: 9 / 16 !important; }
   .ff .ff-landing #ff-two-minutes .ff-tm20-p img { object-fit: contain !important; width: 100%; height: 100%; }
   .ff .ff-landing #ff-two-minutes .ff-tlx h2 { font-size: 30px !important; }
   .ff .ff-landing #ff-two-minutes .ff-tlx p { font-size: 17px !important; line-height: 1.55 !important; }
-  /* the three questions: heading above, the cards stacked in one column, compact */
   .ff .ff-landing #ff-guide { display: block; }
-  .ff .ff-landing #ff-guide > .ff-qg-title { position: static; margin: 0 0 12px; text-align: left; font-size: 26px !important; }
-  .ff .ff-landing #ff-guide > .ff-qg-grid { margin: 0; grid-template-columns: 1fr; gap: 10px; }
-  .ff .ff-landing #ff-guide .ff-qg-q { min-height: 0 !important; padding: 10px 12px 12px; }
-  .ff .ff-landing #ff-guide .ff-qg-q .opts { gap: 6px; }
-  .ff .ff-landing #ff-guide .ff-qg-q .opts button { min-height: 34px; padding: 6px 12px; }
+  .ff .ff-landing #ff-guide > .ff-qg-title { position: static; margin: 0 0 16px; text-align: center; }
+  .ff .ff-landing #ff-guide > .ff-qg-grid { margin: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 
   /* left-hand headings and their words fit the narrower column */
   .ff .ff-landing #ff-discover .ff-dx-h, .ff .ff-landing #ff-competition .ff-tlx h2, .ff .ff-landing #ff-two-minutes .ff-tlx h2, .ff .ff-landing #ff-guide .ff-qg-title { font-size: 30px !important; }
@@ -48,4 +43,13 @@
   .ff .ff-landing #ff-discover .ff-dx-tile { height: auto !important; }
   .ff .ff-landing #ff-discover .ff-dx-tile .tx { font-size: 17px !important; }
   .ff .ff-landing #ff-discover .ff-dx-tile .tx * { font-size: inherit !important; }
+}
+
+/* v1.105: on the iPad the launch event words sit on the left and the door video on the right. */
+@media (min-width: 760px) and (max-width: 1099.98px) {
+  .ff .ff-landing #ff-two-minutes { display: grid; grid-template-columns: minmax(0, 1fr) 280px; column-gap: 32px; align-items: start; }
+  .ff .ff-landing #ff-two-minutes > .ff-tlx { grid-column: 1; grid-row: 1; position: relative; margin: 0; align-self: start; }
+  .ff .ff-landing #ff-two-minutes > .ff-tm20-st { grid-column: 2; grid-row: 1; margin: 0; width: 280px !important; align-self: start; }
+  .ff .ff-landing #ff-two-minutes .ff-tm20-v { width: 100% !important; aspect-ratio: 9 / 16 !important; }
+  .ff .ff-landing #ff-two-minutes .ff-tm20-p img { object-fit: contain !important; width: 100%; height: 100%; }
 }

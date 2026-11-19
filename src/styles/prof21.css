@@ -600,11 +600,14 @@
 .ff .ff-way17-cv { grid-template-columns: minmax(0, 1fr); }
 .ff .ff-way17-cv > .ff-way17-ctl { grid-column: 1; grid-row: 1; }
 .ff .ff-way17-cv > .ff-way17-line { grid-column: 1; grid-row: 2; }
+/* v1.105 (Alex, 19 Nov 21:34): desktop. 01 Build your profile on the left; an equal Register now box (star) on the right, smaller and
+   pushed to the right edge. */
 @media (min-width: 1000px) {
-  .ff .ff-journey { display: grid; grid-template-columns: minmax(0, 400px) minmax(0, 1fr); column-gap: 48px; align-items: start; }
-  .ff .ff-journey > * { grid-column: 1 / -1; }
-  .ff .ff-journey > #ff-step-2 { grid-column: 1; grid-row: 1; }
-  .ff .ff-journey > #ff-sec-card { grid-column: 1; grid-row: 2; }
-  .ff .ff-journey > #ff-step-1 { grid-column: 2; grid-row: 1; margin-left: 0 !important; }
-  .ff .ff-journey > #ff-sec-ffai.ff-start17 { grid-column: 2; grid-row: 2; margin: 0; max-width: 600px; }
+  .ff .ff-journey-wide .ff-jw-row { display: grid; grid-template-columns: minmax(0, 1fr) 340px; column-gap: 48px; align-items: start; }
+  .ff .ff-jw-left { min-width: 0; }
+  .ff .ff-jw-left > .ff-start17 { max-width: none; margin: 0 0 18px; }
+  .ff .ff-jw-right { min-width: 0; }
+  .ff .ff-jw-reghead { display: flex; gap: 12px; align-items: center; margin: 22px 0 14px; margin-left: 0 !important; }
+  .ff .ff-jw-star { display: inline-flex; align-items: center; justify-content: center; }
+  .ff .ff-jw-phone { margin: 0; }
 }

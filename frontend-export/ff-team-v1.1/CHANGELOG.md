@@ -4,6 +4,13 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.105
+- **Home, iPad width (760–1099px):** FF Party Launch Event words on the left, the door video on the right (tops level).
+- **Home, desktop (1100px+):** launch event words and the door video sit side by side, centred, tops level; the video keeps its 9:16 shape (full picture). The three questions go below, three across, under the coin divider again (the v1.104 one-row layout is gone).
+- **Profile, desktop (1000px+):** no "Let's get started" or "Your Profile Card" heading. One heading, **01 Build your profile**, on the left (talk-to-GPT box, CV upload, then the card builder); on the right an equal-height heading with a star, **Register now**, holding the phone box (340px wide, pushed to the right edge). Your Profile Page becomes 02 and the final mark 03 on desktop only. A signed-in member has no Register now box.
+- Phones and iPad profile: unchanged (1, 2, 3 stacked). All desktop rules sit in `home-wide.css` (`min-width:1100px`) and `prof21.css` (`min-width:1000px`, plus a `wide` flag in `ProfileBuilder`) so they can be dropped without touching the phone layout.
+- Page saved as `live-v1.105-index.html`. Artifact version 1795124527-66ed.
+
 ## v1.104
 
 Desktop home and the profile page (Alex, 19 Nov 21:26). `components/home/team-home.jsx`, `styles/home-wide.css`, `styles/prof21.css`.
