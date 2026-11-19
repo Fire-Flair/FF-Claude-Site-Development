@@ -4,13 +4,24 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
-## v1.100
+## v1.101
 
 FF Team home on desktop (Alex, 19 Nov 21:08, draft B). New file `styles/home-wide.css`, only from 1100px wide; phones and iPad portrait are unchanged.
 
 - The page column is the width of the top bar (1148px) and the hero is taller with a larger Profile Card, so the tagline no longer touches the card.
 - Built for event and hospitality professionals, the Launch Challenge, FF Party Launch Event and Can FF Team help you are each two columns: title and words on the left (they stay in view while you read), content on the right. The four pillars sit in one row beside their intro and open underneath. The three questions sit side by side.
 - FFStories keeps its centred title with a wider row of story cards. The FF coins stay between the sections.
+- The video box is the video's own 9:16 shape with the poster uncropped; the words sit beside it. "Can FFTeam help you?" is a heading with the three questions in one row.
+- Merged onto the live page 1795122661-2c9e (v1.100) before publishing; page saved as `live-v1.101-index.html`; artifact version 1795122996-e3e6.
+
+## v1.100
+
+FF Team home (Alex, 19 Nov 21:09, chose "Option 2: ivory and gold" after a colour check against the brand rules). `styles/home-text.css`.
+
+- The boxes inside the four pillars are now ivory (`--color-ivory`) with a gold edge, instead of burgundy (v1.99) or warm black (v1.42): the "How bookings work" box in Your bookings, and the 1-2-3 step header rows in Your profile, Our packages and Our community.
+- Titles and labels are burgundy (`--color-ox`); the chevron is a burgundy medallion with a gold-leaf arrow, and turns gold with a dark arrow while its step is open. A fine gold rule separates an open header from its text. The four small card icons in the flow stay dark as showpieces.
+- Why: the brand rules keep black for showpieces and burgundy to one band per page, and the v1.1 brand brief rejected repeated heavy dark boxes. Colour check: burgundy on ivory 13.1:1, gold-leaf on the burgundy medallion 9.3:1.
+- Merged onto the live page 1795122276-2263 (v1.99) before publishing; page saved as `live-v1.100-index.html`. Artifact version 1795122661-2c9e.
 
 ## v1.99
 
