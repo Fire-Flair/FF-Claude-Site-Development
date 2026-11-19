@@ -1569,8 +1569,8 @@
   .ff .ff-topbar .ff-topbar-in { padding: 5px 12px; gap: 8px; }
   .ff .ff-topbar .ff-acct-btn.ff-acct-btn { min-height: 0; height: 34px; padding: 0 4px; gap: 8px; font-size: 14px; }
   .ff .ff-topbar .ff-acct-btn img, .ff .ff-topbar .ff-acct-btn svg, .ff .ff-topbar .ff-acct-btn .ff-coin { width: 24px; height: 24px; }
-  .ff .ff-topbar .ff-authbtn.ff-authbtn { position: relative; min-height: 0; height: 30px; padding: 0 12px; font-size: 11px; letter-spacing: .1em; border-radius: 10px; corner-shape: squircle; box-shadow: none; }
-  .ff .ff-topbar .ff-authbtn::after { content: ""; position: absolute; inset: -7px -4px; }
+  .ff .ff-topbar .ff-authbtn.ff-authbtn { position: relative; min-height: 0; height: 24px; padding: 0 11px; font-size: 11px; letter-spacing: .1em; border-radius: 10px; corner-shape: squircle; box-shadow: none; }
+  .ff .ff-topbar .ff-authbtn::after { content: ""; position: absolute; inset: -10px -4px; }
 }
 
 
@@ -1615,7 +1615,7 @@
   .ff .ff-topbar .ff-topbar-in { padding-top: 5px; padding-bottom: 5px; }
   .ff .ff-topbar .ff-acct-btn.ff-acct-btn { min-height: 0; height: 34px; padding: 0 4px; gap: 8px; font-size: 14px; }
   .ff .ff-topbar .ff-acct-btn img, .ff .ff-topbar .ff-acct-btn svg, .ff .ff-topbar .ff-acct-btn .ff-coin { width: 26px; height: 26px; }
-  .ff .ff-topbar .ff-authbtn.ff-authbtn { position: relative; min-height: 0; height: 32px; padding: 0 14px; font-size: 11.5px; letter-spacing: .1em; border-radius: 10px; corner-shape: squircle; box-shadow: none; }
-  .ff .ff-topbar .ff-authbtn::after { content: ""; position: absolute; inset: -6px -4px; }
+  .ff .ff-topbar .ff-authbtn.ff-authbtn { position: relative; min-height: 0; height: 26px; padding: 0 14px; font-size: 11.5px; letter-spacing: .1em; border-radius: 10px; corner-shape: squircle; box-shadow: none; }
+  .ff .ff-topbar .ff-authbtn::after { content: ""; position: absolute; inset: -9px -4px; }
   .ff .ff-topbar .ff-desknav button { padding-top: 6px; padding-bottom: 6px; min-height: 0; }
 }
