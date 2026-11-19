@@ -571,8 +571,9 @@
 .ff .ff-gb21-media .ff-m19-t.pf .b.x { top:6px; right:6px; border-radius:50%; corner-shape:round; }
 
 /* photo-frame: the framing pop-up. The circle is the Profile Card's photo circle; outside it the picture is dimmed. */
-.ff.ff-pf17-scrim { position:fixed; inset:0; z-index:9999; background:rgba(8,8,10,.66); display:flex; align-items:center; justify-content:center; padding:16px; }
-.ff .ff-pf17 { width:min(400px,100%); background:#FFFDF8; border:1px solid var(--color-gold-dk,#7E611D); border-radius:24px; corner-shape:squircle; padding:14px 16px 16px; box-shadow:0 24px 60px rgba(0,0,0,.4); display:flex; flex-direction:column; align-items:center; gap:14px; }
+.ff.ff-pf17-scrim { position:fixed; inset:0; z-index:9999; box-sizing:border-box; background:rgba(10,9,8,.52); -webkit-backdrop-filter:blur(16px) saturate(.85); backdrop-filter:blur(16px) saturate(.85); display:flex; align-items:flex-start; justify-content:center; padding:calc(14px + env(safe-area-inset-top,0px)) 10px 0; overflow:hidden; overscroll-behavior:contain; animation:ffCsxIn .18s ease-out; }
+@media (prefers-reduced-motion:reduce) { .ff.ff-pf17-scrim, .ff .ff-pf17 { animation:none !important; } }
+.ff .ff-pf17 { box-sizing:border-box; max-height:calc(100vh - 102px); max-height:calc(100dvh - 102px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px)); overflow-y:auto; overscroll-behavior:contain; transform-origin:50% 0; animation:ffPopTop .2s ease-out; width:min(400px,100%); background:#FFFDF8; border:1px solid var(--color-gold-dk,#7E611D); border-radius:24px; corner-shape:squircle; padding:14px 16px 16px; box-shadow:0 24px 60px rgba(0,0,0,.4); display:flex; flex-direction:column; align-items:center; gap:14px; }
 .ff .ff-pf17-h { align-self:stretch; display:flex; align-items:center; justify-content:space-between; gap:10px; }
 .ff .ff-pf17-h b { font:600 18px/1.2 var(--font-display,'Cinzel',serif); color:#16130F; }
 .ff .ff-pf17-h .x { all:unset; cursor:pointer; display:grid; place-items:center; width:44px; height:44px; border-radius:50%; color:#16130F; }

@@ -124,15 +124,22 @@ function Empty({ icon, title, action }) {
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(later).catch(() => {});
   const st = document.createElement("style");
   st.textContent = ".ff textarea{overflow-y:hidden!important;max-height:none!important;resize:none!important}"
-    /* float-sheets: one look for every pop-up (the full-screen FF Party package page and the flip cards keep their own). */
-    + ".ff .ff-scrim.ff-float{align-items:center!important;padding:14px 10px calc(86px + env(safe-area-inset-bottom,0px))!important}"
-    + "@media(min-width:900px){.ff .ff-scrim.ff-float{padding:24px 24px 40px!important}}"
-    + ".ff .ff-scrim.ff-float>.ff-sheet:not(:has(.ff-disc-modal)):not(:has(.ff-pk18full)){width:100%;max-height:100%!important;border-radius:24px!important;corner-shape:squircle;border:1px solid var(--gold-dk,#7E611D)!important;box-shadow:0 24px 60px rgba(0,0,0,.35)!important}"
-    + ".ff .ff-scrim.ff-float>.ff-sheet:not(.center){animation:ffdocin17 .2s ease-out}"
-    + ".ff .ff-scrim.ff-float>.ff-sheet>.ff-sheet-head{border-radius:24px 24px 0 0}"
-    + "@keyframes ffdocin17{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:none}}"
+    /* top-pop-ups (Alex, 19 Nov): every pop-up is the blurred Share look. Dark-tinted blurred page behind, the panel near the
+       TOP, never rising from the bottom, never full page. A gap of at least 72px is always left under it so a tap on the
+       blurred area closes it; taller content scrolls inside the panel (head stays). --ffpp-t / --ffpp-b: top offset / bottom gap. */
+    + "html .ff .ff-scrim.ff-float{--ffpp-t:calc(14px + env(safe-area-inset-top,0px));--ffpp-b:calc(88px + env(safe-area-inset-bottom,0px));position:fixed!important;inset:0!important;z-index:200!important;box-sizing:border-box!important;display:flex!important;align-items:flex-start!important;justify-content:center!important;padding:var(--ffpp-t) 10px 0!important;overflow:hidden!important;overscroll-behavior:contain;background:rgba(10,9,8,.52)!important;-webkit-backdrop-filter:blur(16px) saturate(.85)!important;backdrop-filter:blur(16px) saturate(.85)!important;animation:ffCsxIn .18s ease-out}"
+    + "@media(min-width:900px){html .ff .ff-scrim.ff-float{--ffpp-t:calc(28px + env(safe-area-inset-top,0px));--ffpp-b:calc(84px + env(safe-area-inset-bottom,0px))}}"
+    + "html .ff .ff-scrim.ff-float>.ff-sheet{box-sizing:border-box!important;width:100%!important;max-width:560px!important;height:auto!important;margin:0 auto!important;max-height:calc(100vh - 102px)!important;max-height:calc(100dvh - var(--ffpp-t) - var(--ffpp-b))!important;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;border-radius:24px!important;corner-shape:squircle;border:1px solid var(--gold-dk,#7E611D)!important;box-shadow:0 24px 60px rgba(0,0,0,.35)!important;padding-bottom:calc(20px + env(safe-area-inset-bottom,0px))!important;transform-origin:50% 0;animation:ffPopTop .2s ease-out!important;word-break:normal;hyphens:none}"
+    + "html .ff .ff-scrim.ff-float>.ff-sheet.center{max-width:680px!important}"
+    + "html .ff .ff-scrim.ff-float>.ff-sheet:has(.ff-doc17),html .ff .ff-scrim.ff-float>.ff-sheet:has(.ff-bkterms17){max-width:760px!important}"
+    + "html .ff .ff-scrim.ff-float>.ff-sheet.center:has(.ff-jr17-art){max-width:640px!important}"
+    + "html .ff .ff-scrim.ff-float>.ff-sheet.center:has(.ff-ib17){max-width:420px!important}"
+    + "html .ff .ff-scrim.ff-float>.ff-sheet:has(.ff-pk18full){max-width:560px!important;height:auto!important;border-radius:24px!important}"
+    + "html .ff .ff-scrim.ff-float>.ff-sheet:has(.ff-disc-modal){width:min(88vw,400px)!important;max-width:none!important;border-radius:30px!important;overflow:hidden!important;animation:ffDiscFlip .5s cubic-bezier(.22,.7,.25,1) both!important}"
+    + "html .ff .ff-scrim.ff-float>.ff-sheet>.ff-sheet-head{border-radius:24px 24px 0 0}"
+    + "@keyframes ffPopTop{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}"
     + ".ff .ff-scrim.ff-csx{box-sizing:border-box!important;padding-bottom:calc(86px + env(safe-area-inset-bottom,0px))!important}"
     + "@media(min-width:900px){.ff .ff-scrim.ff-csx{padding-bottom:40px!important}}"
-    + "@media(prefers-reduced-motion:reduce){.ff .ff-scrim.ff-float>.ff-sheet{animation:none!important}}";
+    + "@media(prefers-reduced-motion:reduce){html .ff .ff-scrim.ff-float,html .ff .ff-scrim.ff-float>.ff-sheet{animation:none!important}}";
   document.head.appendChild(st);
 })();

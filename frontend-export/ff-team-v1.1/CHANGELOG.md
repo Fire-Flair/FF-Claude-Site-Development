@@ -4,6 +4,12 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.80
+
+- Every pop-up is now the blurred Share look (Alex, 19 Nov: "There should always be a gap at the bottom so you can tap away from it"). One central change in `Sheet` styles (the `top-pop-ups` block in `src/components/shared/primitives.jsx`, which wins over the older per-pop-up special cases in p12/v101/v11/css18/bkd/prof21): blurred, dark-tinted page behind; the panel sits near the top (14px, plus the phone safe area), never rises from the bottom and is never full page; a gap of at least 84px (88px on phones, plus the home-bar safe area) is always left under it, and a tap anywhere on the blurred area closes it. Content taller than the panel scrolls inside the panel (the header stays); the page behind does not scroll. The X stays small, top right. Entrance is a short fade with a slight scale-in from the top (no slide from the bottom; none with reduced motion). The full-height FF Party package page (`ff-pk18full`) is now a normal top panel; centred variants are top-aligned too. Escape and the focus trap are unchanged; Share (`ff-csx`) is untouched.
+- Profile photo framing pop-up (`.ff-pf17-scrim`, `src/styles/prof21.css`): same blurred scrim, top panel and tap-away.
+- Checked at 390x844 (and 1280x800): Log in, Ask a question, Check availability, All attributes, Profession card, Edit profession, Terms editor, Event brief and invoice, Package terms, Story reader, Challenge rules, Company card, Company review, person Review, Next steps, Beta feedback, Photo framing: blurred, top-aligned, visible gap, tap on the gap closes each.
+
 ## v1.79
 
 - Top bar on phones (Alex, 19 Nov 13:03, option A from the picture): 45px tall instead of 56px. Smaller FF mark (24px),
