@@ -834,6 +834,15 @@ function NetworkScreen({ guest = false }) {
   const netPeople = adds.map(id => state.directory.find(p => p.id === id)).filter(p => p && !connected.some(c => c.id === p.id));
   const netCos = adds.filter(id => String(id).startsWith("co_")).map(id => companyById(state, id)).filter(Boolean);
   const view = (p) => { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); };
+  /* v1.115: coming back from a profile on a phone or iPad (the page was replaced) puts you at the card you were on. */
+  useEffect(() => {
+    const b = window.__ffBack;
+    if (!b || Date.now() - b.t > 600000 || !b.y) return;
+    window.__ffBack = null;
+    let n = 0;
+    const go = () => { window.scrollTo(0, b.y); if (n++ < 12 && Math.abs(window.scrollY - b.y) > 4) setTimeout(go, 80); };
+    setTimeout(go, 60);
+  }, []);
 
   return (
     <div>

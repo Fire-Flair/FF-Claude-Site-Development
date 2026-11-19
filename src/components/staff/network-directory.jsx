@@ -196,6 +196,7 @@ function NetBrowse17(props) {
         React.createElement(TopStaff11, null),
         React.createElement(ProsBrowse20, { onPick: props.onPick })),
       /* Alex 19 Nov 22:00: the search sits in line with each title (Our professionals and the FF Event Directory), on the right on a wide screen. */
+      React.createElement(FeaturedCos20, null),
       React.createElement(NetDirectory20, { search: props.search }));
   }
   return React.createElement(React.Fragment, null,
@@ -544,9 +545,9 @@ function TopStaff11() {
   return (
     <section style={{ marginTop: 18 }}>
       <SectionHead icon={<I11.Star size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Top staff" count={top.length} />
-      <HScroll label="Top staff">
+      <HeroFlow20 label="Top staff">
         {top.map(p => <PlayerTile key={p.id} person={p} selected={state.role === "staff" && state.selection.includes(p.id)} onClick={() => { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); }} />)}
-      </HScroll>
+      </HeroFlow20>
     </section>
   );
 }

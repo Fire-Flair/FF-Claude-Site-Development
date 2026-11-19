@@ -10,9 +10,21 @@ function FireFlair() {
   const dbDocRef = useRef(null);
   const saveTimer = useRef(null);
   const hydratedRef = useRef(false);
+  const stRef = useRef(state);
+  stRef.current = state;
   const dispatch = React.useCallback((action) => {
+    /* v1.115: remember where the Network page was when a profile opens, so Back returns to the same card. */
+    try {
+      const st = stRef.current;
+      if ((action.type === "VIEW" || action.type === "VIEW_COMPANY") && action.id && st.tab === "network" && !st.viewing && !st.viewingCompany) {
+        window.__ffBack = { y: window.scrollY, t: Date.now() };
+        if (ffPopOn(st)) { window.__ffNoTop = true; setTimeout(() => { window.__ffNoTop = false; }, 500); }
+      }
+      if (action.type === "TAB" || action.type === "ROLE") window.__ffBack = null;
+    } catch (e) { }
     baseDispatch(action);
   }, []);
+  if (!window.__ffScrollPatched) { window.__ffScrollPatched = true; const st0 = window.scrollTo.bind(window); window.scrollTo = function (a, b) { if (window.__ffNoTop && a === 0 && b === 0) return; return st0.apply(window, arguments); }; }
   const store = useMemo(() => ({ state, dispatch }), [state, dispatch]);
   useAnalytics17(state);
   useEffect(() => {
@@ -74,5 +86,5 @@ function FireFlair() {
     } catch (e) {
     }
   }, [state.role, state.tab, state.route, state.viewing, state.viewingCompany, !!(state.profile && state.profile.live), state.infoPage21 && state.infoPage21.slug, state.supportPage20, state.fd, state.fdPreview]);
-  return React.createElement(Store.Provider, { value: store }, React.createElement("style", null, CSS + P1_CSS + V101_CSS + V11_CSS + FD_CSS + TRIAL_DESIGN_CSS + TITLES2_CSS), React.createElement("div", { className: "ff" }, React.createElement(Shell, null, state.supportPage20 ? React.createElement(V101.SupportBookPage20, null) : state.infoPage21 ? React.createElement(V101.TeamInfoPage21, null) : state.viewingCompany ? React.createElement(CompanyPublic, null) : state.viewing && state.role !== "team" ? React.createElement(PersonProfile, null) : state.role === "team" ? React.createElement(TeamRouter, null) : React.createElement(Landing, null)), React.createElement(V101.SupportRoute20, null), React.createElement(Routes17, null), React.createElement(InviteHost17, null), React.createElement(FitWords17, null)));
+  return React.createElement(Store.Provider, { value: store }, React.createElement("style", null, CSS + P1_CSS + V101_CSS + V11_CSS + FD_CSS + TRIAL_DESIGN_CSS + TITLES2_CSS), React.createElement("div", { className: "ff" }, React.createElement(Shell, null, state.supportPage20 ? React.createElement(V101.SupportBookPage20, null) : state.infoPage21 ? React.createElement(V101.TeamInfoPage21, null) : state.viewingCompany && !ffPopOn(state) ? React.createElement(CompanyPublic, null) : state.viewing && state.role !== "team" ? React.createElement(PersonProfile, null) : state.role === "team" ? React.createElement(TeamRouter, null) : React.createElement(Landing, null)), React.createElement(V101.SupportRoute20, null), React.createElement(Routes17, null), React.createElement(InviteHost17, null), React.createElement(FitWords17, null)));
 }

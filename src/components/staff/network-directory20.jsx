@@ -153,7 +153,9 @@ function ProsBrowse20({ onPick }) {
       .filter(function (r) { return r[1]; }).sort(function (a, b) { return a[1].rank - b[1].rank || a[2] - b[2]; }).map(function (r) { return plateAs17(r[0], r[1].profession); });
     return { k: k, label: label, list: list, icon: React.createElement(GroupIcon, { group: t[2] }) };
   }).filter(function (x) { return x.list.length; });
-  const [on, setOn] = useState("");
+  /* v1.115: the chosen type survives opening a profile and coming back. */
+  const [on, setOn0] = useState(function () { return (window.__ffNetSel && window.__ffNetSel.on) || ""; });
+  const setOn = function (v) { window.__ffNetSel = Object.assign({}, window.__ffNetSel, { on: v }); setOn0(v); };
   const cur = lists.find(function (x) { return x.k === on; }) || lists[0];
   if (!cur) return null;
   return React.createElement("div", { className: "ff-br20" },
@@ -170,8 +172,10 @@ function NetDirectory20(props) {
     const list = inCat.filter(function (c) { return !c.unclaimed; }).concat(inCat.filter(function (c) { return c.unclaimed; }));
     return { k: t[0], label: t[1], list: list };
   }).filter(function (x) { return x.list.length; });
-  const [cat, setCat] = useState("");
-  const [sub, setSub] = useState({});
+  const [cat, setCat0] = useState(function () { return (window.__ffNetSel && window.__ffNetSel.cat) || ""; });
+  const [sub, setSub0] = useState(function () { return (window.__ffNetSel && window.__ffNetSel.sub) || {}; });
+  const setCat = function (v) { window.__ffNetSel = Object.assign({}, window.__ffNetSel, { cat: v }); setCat0(v); };
+  const setSub = function (fn) { setSub0(function (o) { const n = typeof fn === "function" ? fn(o) : fn; window.__ffNetSel = Object.assign({}, window.__ffNetSel, { sub: n }); return n; }); };
   const cur = cats.find(function (x) { return x.k === cat; }) || cats[0];
   if (!cur) return null;
   const d = NET_DIR_TABS20[cur.k] || NET_DIR_TABS20.bar;
@@ -226,4 +230,54 @@ function netMapOnly20(props) {
 }
 function netSearch20(props) {
   return props.search ? React.createElement("div", { id: "ff-net-search", className: "ff-netsrch20", style: { margin: "22px 0 18px", scrollMarginTop: 70 } }, props.search) : null;
+}
+
+
+/* v1.115 Hero Flow (Spotlight): the featured row. One card sits large in the middle, its neighbours step back; swipe or
+   scroll sideways to bring the next one forward. Used for Top staff and Featured companies only. */
+function HeroFlow20(props) {
+  const items = React.Children.toArray(props.children).filter(Boolean);
+  const ref = React.useRef(null);
+  const paint = function () {
+    const r = ref.current; if (!r) return;
+    const mid = r.getBoundingClientRect().left + r.clientWidth / 2;
+    Array.prototype.forEach.call(r.children, function (c) {
+      const b = c.getBoundingClientRect();
+      const d = Math.min(1, Math.abs(b.left + b.width / 2 - mid) / Math.max(1, b.width * 1.4));
+      c.style.setProperty("--hf-s", (1 - d * 0.2).toFixed(3));
+      c.style.setProperty("--hf-o", (1 - d * 0.5).toFixed(3));
+      c.style.zIndex = String(10 - Math.round(d * 9));
+    });
+  };
+  React.useEffect(function () {
+    const r = ref.current; if (!r) return;
+    const first = r.children[0];
+    paint();
+    let raf = 0;
+    const on = function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(paint); };
+    r.addEventListener("scroll", on, { passive: true });
+    window.addEventListener("resize", on);
+    const t = setTimeout(paint, 300);
+    return function () { r.removeEventListener("scroll", on); window.removeEventListener("resize", on); clearTimeout(t); cancelAnimationFrame(raf); };
+  }, [items.length]);
+  const centre = function (e, i) {
+    const r = ref.current, c = r && r.children[i]; if (!c) return;
+    const mid = r.getBoundingClientRect().left + r.clientWidth / 2, b = c.getBoundingClientRect();
+    if (Math.abs(b.left + b.width / 2 - mid) > b.width * 0.35) { e.preventDefault(); e.stopPropagation(); r.scrollTo({ left: r.scrollLeft + (b.left + b.width / 2 - mid), behavior: "smooth" }); }
+  };
+  return React.createElement("div", { className: "ff-hf20", ref: ref, role: "list", "aria-label": props.label },
+    items.map(function (c, i) { return React.createElement("div", { className: "ff-hf20-i", role: "listitem", key: i, onClickCapture: function (e) { centre(e, i); } }, c); }));
+}
+
+function FeaturedCos20() {
+  const state = useStore().state;
+  const { dispatch } = useStore();
+  const all = browseCompanies17(state);
+  const list = all.filter(function (c) { return !c.unclaimed; }).concat(all.filter(function (c) { return c.unclaimed && (c.logo || (c.mediaList || []).length); })).slice(0, 8);
+  if (list.length < 2) return null;
+  return React.createElement("section", { id: "ff-featured-cos", className: "ff-hf20-sec" },
+    React.createElement(HeadRow20, { title: "Featured companies", k: "fco", desc: "Companies on FireFlair building their teams and taking bookings." }),
+    React.createElement(HeroFlow20, { label: "Featured companies" }, list.map(function (co) {
+      return React.createElement("button", { key: co.id, type: "button", className: "ff-co11-tile", "aria-label": co.name, onClick: function () { dispatch({ type: "VIEW_COMPANY", id: co.id }); window.scrollTo(0, 0); } }, React.createElement(CompanyCardFace, { c: co, size: "sm" }));
+    })));
 }

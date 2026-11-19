@@ -4,6 +4,12 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.115
+- **Desktop profile pop-up (option C):** on a wide mouse screen every person and company profile on the Network page (from cards, map pins and search results) opens as a wide centred card over a dimmed page. Profile Card with Back, Share and Join team on the left; Overview, Packages, Team and Reviews on the right with the close X in line with the tabs; no coin divider. Escape, the X, Back or a click outside close it. Phone and iPad keep the full-page profile.
+- **Back to the card you were on:** the Network page stays mounted behind the pop-up, so scroll, category box and pill are exactly as left; on phone and iPad the scroll position, chosen category box and pill are restored.
+- **Hero Flow (Spotlight):** Top staff and the new Featured companies row (above the Event Directory) show one card large in the middle with neighbours stepping back. Other rows keep the standard selector row.
+- Page saved as `live-v1.115-index.html`. Artifact version 1795128686-756c.
+
 ## v1.114
 - **FFParty and FFStaff headings (Bookings):** the coins beside them are now the gold FFParty and silver FFStaff logos from the top-left FireFlair sites drop-down (`FF_SITE_BRAND.party.icon` / `.staff.icon`), replacing the generic gold and silver coins from v1.112.
 - Merged onto the live page 1795126236-0cf2 (v1.113) before publishing; renumbered v1.114. Page saved as `live-v1.114-index.html`. Artifact version 1795126944-59ce.

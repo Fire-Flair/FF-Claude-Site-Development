@@ -80,3 +80,22 @@
   .ff .ff-nm20-l .ff-hr20-d { font-size: 17px; }
   .ff .ff-nm20-l .ff-tl20 h1 { font-size: 40px !important; }
 }
+
+/* v1.115 (Alex 19 Nov 22:44): desktop profile pop-up, option C — dimmed background, wide centred card,
+   Profile Card on the left with its buttons, tabs and details on the right, the X in line with the tab bar, no coin. */
+.ff .ff-pop17{position:fixed;inset:0;z-index:5000;background:rgba(24,14,10,.58);overflow:auto;display:flex;align-items:center;justify-content:center;padding:36px 40px}
+.ff .ff-pop17-card{position:relative;box-sizing:border-box;width:min(1200px,100%);max-height:calc(100vh - 72px);overflow:auto;background:var(--paper,#fbf6ea);border-radius:30px;padding:26px 28px 30px;box-shadow:0 30px 90px rgba(0,0,0,.45),0 0 0 1px rgba(160,120,40,.35)}
+.ff .ff-pop17-card > .ff-pubpage,.ff .ff-pop17-card > .ff-copub{display:grid;grid-template-columns:372px minmax(0,1fr);column-gap:30px;align-items:start;padding:0 !important;margin:0 !important;max-width:none !important;background:none !important}
+.ff .ff-pop17-card .ff-phero{grid-column:1;grid-row:1 / span 12;position:sticky;top:0;margin:0 !important;padding:0 !important;max-width:none !important;width:auto !important}
+.ff .ff-pop17-card .ff-ptabs-wrap{grid-column:2;grid-row:1;min-width:0;margin:0 !important;padding:0 !important;max-width:none !important;width:auto !important}
+.ff .ff-pop17-card .ff-pcoin17,.ff .ff-pop17-card .ff-coindiv{display:none !important}
+.ff .ff-pop17-card .ff-ptabs-wrap [role=tablist]{margin-right:58px !important;margin-top:0 !important}
+.ff .ff-pop17-x{position:absolute;top:26px;right:28px;z-index:5;width:46px;height:46px;border-radius:16px;display:flex;align-items:center;justify-content:center;border:1px solid var(--rule,#d9c9a3);background:var(--paper,#fffdf6);color:var(--gold-dk,#8a6a1e);cursor:pointer}
+.ff .ff-pop17-x:hover{background:#f3e9cf}
+
+/* v1.115 Hero Flow (Spotlight) for Top staff and Featured companies. */
+.ff .ff-hf20{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;padding:14px calc(50% - 110px) 26px;margin:0 -16px;-webkit-overflow-scrolling:touch}
+.ff .ff-hf20::-webkit-scrollbar{display:none}
+.ff .ff-hf20-i{flex:0 0 auto;scroll-snap-align:center;transform:scale(var(--hf-s,.85));opacity:var(--hf-o,.6);transition:transform .12s linear,opacity .12s linear;position:relative}
+.ff .ff-hf20-sec{margin-top:18px}
+@media (min-width:1100px){.ff .ff-hf20{padding-inline:calc(50% - 120px);margin:0}.ff }

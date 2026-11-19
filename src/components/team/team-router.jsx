@@ -1,5 +1,33 @@
 /* src/components/team/team-router.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
 /* The FF Team router: which page the tab shows (moved out of components/vip/vip-site.jsx in v1.1). */
+/* v1.115 (Alex 19 Nov 22:44): on desktop a profile (person or company) opens as a dimmed, wide, centred card over the Network page,
+   which stays mounted behind it, so Back and the X return to the same place, category and pill. Phone and iPad keep the full page. */
+function ffPopMq() { return typeof matchMedia !== "undefined" && matchMedia("(min-width:1100px) and (hover:hover) and (pointer:fine)").matches; }
+function ffPopOn(state) { return !!(state && state.role === "team" && state.tab === "network" && ffPopMq()); }
+function ProfilePop17({ children }) {
+  const { state, dispatch } = useStore();
+  const ref = React.useRef(null);
+  const company = !!state.viewingCompany;
+  const id = company ? state.viewingCompany : state.viewing;
+  const close = () => rt17Back(() => dispatch({ type: company ? "VIEW_COMPANY" : "VIEW", id: null }));
+  React.useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const k = (e) => { if (e.key === "Escape") close(); };
+    window.addEventListener("keydown", k);
+    return () => { document.body.style.overflow = prev; window.removeEventListener("keydown", k); };
+  }, []);
+  React.useEffect(() => { const c = ref.current && ref.current.querySelector(".ff-pop17-card"); if (c) c.scrollTop = 0; }, [id]);
+  return (
+    <div className="ff-pop17" ref={ref} onMouseDown={(e) => { if (e.target === e.currentTarget) close(); }}>
+      <div className="ff-pop17-card" role="dialog" aria-modal="true" aria-label="Profile">
+        <button type="button" className="ff-pop17-x" aria-label="Close" onClick={close}><I11.X size={20} strokeWidth={2.2} /></button>
+        {children}
+      </div>
+    </div>
+  );
+}
+
 function TeamRouter() {
   const { state } = useStore();
   const { tab } = state;
@@ -7,6 +35,7 @@ function TeamRouter() {
      v1.47 (Alex 18 Nov 20:06): not on someone else's profile page.
      v1.96 (Alex 18 Nov 22:22): not on the create-a-profile page either; the finished "Your profile" page keeps it (ProfileGate17). */
   const biz = (page, cls) => <>{page}<div className={"ff-biz-pfa" + (cls ? " " + cls : "")}><V101.BusinessSupport19 /></div></>;
+  if ((state.viewing || state.viewingCompany) && ffPopOn(state)) return <>{biz(<NetworkScreen />, "ff-biz-net")}<ProfilePop17>{state.viewingCompany ? <CompanyPublic /> : <PersonProfile />}</ProfilePop17></>;
   if (state.viewing) return <PersonProfile />;
   if (tab === "network") return biz(<NetworkScreen />, "ff-biz-net");
   if (tab === "bookings") return biz(<TeamBookings />);
