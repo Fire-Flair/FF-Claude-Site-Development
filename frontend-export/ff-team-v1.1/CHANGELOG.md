@@ -4,6 +4,13 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.76
+
+- Business & Support no longer shows on the finished "Your profile" page either (Alex, 19 Nov 12:53): the
+  `ff-biz-pfa` element is removed from `ProfileGate17` in `src/components/party/party-live.jsx`. It still shows on
+  Network and Bookings (`team-router.jsx`); "Need help? Book a meeting" is unchanged. Checked by script and screenshot
+  (signed in, finished profile: no Business & Support, Need help? present). Artifact version 1795092957-01e9.
+
 ## v1.75
 
 Published straight onto live 1795089029-4be2 (v1.74, matched GitHub). Artifact version 1795089092-e99d.
