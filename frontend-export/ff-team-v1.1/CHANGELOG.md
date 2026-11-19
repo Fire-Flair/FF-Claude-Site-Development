@@ -4,6 +4,11 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.112
+- **Bookings headings:** "FFParty – Our packages" is now just **FFParty** with the gold FF Party coin on its left; "FFStaff – Shifts with businesses" is now just **FFStaff** with the silver coin on its left (`bookings.jsx`, `titles2.css`).
+- **Note for developers (back end):** package cards are saved through the Q&A system only, until the rest of the back end is built. The aim is to capture interest. The Q&A system will grow a lot (GPT is building a Google Sheet for it; the package-card questions get added to it once it exists). Full note: `docs/package-cards-back-end.md`.
+- Page saved as `live-v1.112-index.html`. Artifact version 1795125931-4532.
+
 ## v1.111
 - **Create your own package card (FF Party):** the five type boxes (name, line, You provide, Ideal for, Duration) now share one style and fill their column, so none sticks out past the card edge and Duration matches the others. CSS only (`prof21.css`, scoped to `.ff-pkc-own2`).
 - Page saved as `live-v1.111-index.html`. Artifact version 1795125869-5499.
