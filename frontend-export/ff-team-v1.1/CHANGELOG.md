@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.107
+- **Home, desktop (1100px+):** Join FF Team on the left and Business and Support on the right, side by side (new `.ff-bj-row` wrapper in `team-home.jsx`; the coin divider between them is hidden on desktop only). Phones and iPad keep the stacked order. The coin game is unchanged and not yet reviewed for desktop.
+- Page saved as `live-v1.107-index.html`. Artifact version 1795124751-5963.
+
 ## v1.106
 - **Home, desktop:** the gap between the FF Party Launch Event words and the door video sits exactly on the page centre (equal halves, words right-aligned to the gap, video left-aligned to it). Tops still level.
 

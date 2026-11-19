@@ -124,13 +124,15 @@ function Home101() {
           key: "guide",
           kind: "team"
         })),
-      React.createElement(BusinessSupport19, {
-        key: "business"
-      }),
-      coin("j"),
-      React.createElement(HomeJoin, {
-        key: "join"
-      })
+      /* v1.107 (Alex, 19 Nov 21:44): Join FF Team and Business and Support share a row on desktop, Join on the left (home-wide.css); plain block elsewhere. */
+      React.createElement("div", { key: "bjrow", className: "ff-bj-row" },
+        React.createElement(BusinessSupport19, {
+          key: "business"
+        }),
+        coin("j"),
+        React.createElement(HomeJoin, {
+          key: "join"
+        }))
     ];
     return React.createElement("div", {
       className: `ff-home ff-hf22${FF_HOME_COLOUR ? ` ff-home-c${FF_HOME_COLOUR}` : ""}`,
