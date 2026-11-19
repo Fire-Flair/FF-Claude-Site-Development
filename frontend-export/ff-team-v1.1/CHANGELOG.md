@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.84
+
+- **Display category only for new professions.** The profession pop-up (`attribute-cards.jsx`) hides the Display category field when the profession is one FireFlair already recognises; it shows only for a profession the person is defining themselves (or one they already gave a category).
+
 ## v1.83
 
 - Phone and iPad profile photos rebuilt on the browser's own scrolling (Alex on his iPhone, 18 Nov: the open photos stopped halfway, flashed and snapped into place). Legolas, Gimli, Aragorn; reviewed by Gandalf. No gesture code is left: the photos sit at the top at one size and fit (the whole photo, top-aligned, over a blurred copy, so nothing switches or flashes) and stick while the card slides over them. The page opens scrolled to the card's icon line on the photos' bottom edge; scrolling up slides the card down to the whole photo, scrolling down slides it back to the line and the same swipe carries on down the page (the photos stop sticking exactly there, in CSS). A tap on the photos or the card glides up to the whole photo; the grip toggles. Nothing sets React state while scrolling.

@@ -911,7 +911,7 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
         )}
       </div>
 
-      {!readOnly && category === "professions" && (
+      {!readOnly && category === "professions" && (!professionCategory(draft.name) || draft.displayCategory) && (
         <Field label="Display category">
           <select className="ff-input" value={professionCategory(draft.name, draft.displayCategory) || ""}
             onChange={(e) => patch({ displayCategory: e.target.value || undefined })}>
