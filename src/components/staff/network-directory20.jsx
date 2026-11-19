@@ -186,6 +186,7 @@ function NetDirectory20(props) {
   return React.createElement("section", { id: "ff-directory", style: { marginTop: 30, scrollMarginTop: 70 } },
     React.createElement("style", null, NET20_CSS),
     React.createElement(HeadRow20, { title: "FF Event Directory", k: "dir", desc: NET_DIR_DESC20, search: props && props.search }),
+    React.createElement(FeaturedCos20, null),
     React.createElement("div", { className: "ff-br20" },
       React.createElement(CatBoxes20, { label: "Types of company", active: cur.k, onPick: setCat, items: cats.map(function (x) { return { k: x.k, label: x.label, icon: catIcon17(x.k), count: x.list.length }; }) }),
       tabs.length > 1 ? React.createElement("div", { className: "ff-dr20-mid ff-br20-pills", role: "tablist", "aria-label": cur.label + " types" },
@@ -276,7 +277,7 @@ function FeaturedCos20() {
   const list = all.filter(function (c) { return !c.unclaimed; }).concat(all.filter(function (c) { return c.unclaimed && (c.logo || (c.mediaList || []).length); })).slice(0, 8);
   if (list.length < 2) return null;
   return React.createElement("section", { id: "ff-featured-cos", className: "ff-hf20-sec" },
-    React.createElement(HeadRow20, { title: "Featured companies", k: "fco", desc: "Companies on FireFlair building their teams and taking bookings." }),
+    React.createElement("h3", { className: "ff-hf20-h" }, "Featured companies"),
     React.createElement(HeroFlow20, { label: "Featured companies" }, list.map(function (co) {
       return React.createElement("button", { key: co.id, type: "button", className: "ff-co11-tile", "aria-label": co.name, onClick: function () { dispatch({ type: "VIEW_COMPANY", id: co.id }); window.scrollTo(0, 0); } }, React.createElement(CompanyCardFace, { c: co, size: "sm" }));
     })));

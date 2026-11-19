@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.117
+- **Network page:** Business and Support is no longer at the bottom. Featured companies now sits inside the FF Event Directory, under its heading and words, above the category boxes. The page has two search boxes: one in Our professionals and one in the FF Event Directory (no search at the top).
+- Page saved as `live-v1.117-index.html`. Artifact version 1795132094-0604.
+
 ## v1.116
 - **Phone home:** less space between the coin game and the bottom bar (the page's bottom padding is 96px instead of 150px when the coin game is last).
 - Page saved as `live-v1.116-index.html`. Artifact version 1795131621-5259.

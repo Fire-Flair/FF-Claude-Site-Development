@@ -196,7 +196,6 @@ function NetBrowse17(props) {
         React.createElement(TopStaff11, null),
         React.createElement(ProsBrowse20, { onPick: props.onPick })),
       /* Alex 19 Nov 22:00: the search sits in line with each title (Our professionals and the FF Event Directory), on the right on a wide screen. */
-      React.createElement(FeaturedCos20, null),
       React.createElement(NetDirectory20, { search: props.search }));
   }
   return React.createElement(React.Fragment, null,
