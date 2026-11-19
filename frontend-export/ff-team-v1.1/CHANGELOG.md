@@ -11,6 +11,7 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
 - Company Cards work the same, with the photos ending 128px down the card. Short pages get a minimum height so the line is always reachable. Desktop keeps the big photo and row.
 - `components/team/public-profile.jsx` (PublicHero, PhotoStrip11), `styles/p12.css` (photo-scroll block).
 - Alex approved after the preview (19 Nov): the menu bar scrolling off the top on phones is fine as long as the bottom bar stays.
+- Checked: `npm run check`, `npm run build`; Playwright at 390, 820 and 1180: the page opens on the icon line, scrolling 0 to past the line moves the card 1:1 with no jumps, the photos stop sticking exactly on the line, tap and grip glide, the bottom bar stays put; no console errors. Published over live 1795100711-a38c (v1.82), index.html only. Artifact version 1795114592-4371.
 
 ## v1.82
 
