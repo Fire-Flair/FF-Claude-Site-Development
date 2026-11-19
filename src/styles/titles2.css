@@ -138,5 +138,5 @@
 
 /* v1.112 (Alex, 19 Nov 22:04): FFParty / FFStaff headings on Bookings carry their coin on the left (gold for FFParty, silver for FFStaff). */
 .ff .ff-bk-bh.ff-bk-bhc { display: flex; align-items: center; gap: 10px; }
-.ff .ff-bk-bh.ff-bk-bhc > .ff-coin, .ff .ff-bk-bh.ff-bk-bhc > :first-child:not(span) { flex: none; }
+.ff .ff-bk-bh.ff-bk-bhc > .ff-bk-bhlogo { flex: none; width: 30px; height: 30px; border-radius: 50%; }
 .ff .ff-bk-bh.ff-bk-bhc > span { min-width: 0; }

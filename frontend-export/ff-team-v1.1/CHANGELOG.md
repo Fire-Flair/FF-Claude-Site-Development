@@ -4,6 +4,9 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.113
+- **FFParty and FFStaff headings (Bookings):** the coins beside them are now the gold FFParty and silver FFStaff logos from the top-left FireFlair sites drop-down (`FF_SITE_BRAND.party.icon` / `.staff.icon`), replacing the generic gold and silver coins from v1.112.
+
 ## v1.112
 - **Bookings headings:** "FFParty – Our packages" is now just **FFParty** with the gold FF Party coin on its left; "FFStaff – Shifts with businesses" is now just **FFStaff** with the silver coin on its left (`bookings.jsx`, `titles2.css`).
 - **Note for developers (back end):** package cards are saved through the Q&A system only, until the rest of the back end is built. The aim is to capture interest. The Q&A system will grow a lot (GPT is building a Google Sheet for it; the package-card questions get added to it once it exists). Full note: `docs/package-cards-back-end.md`.
