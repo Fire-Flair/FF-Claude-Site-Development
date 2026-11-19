@@ -218,7 +218,10 @@ function ProfileGate17({ kind }) {
     kind
   }), justShared && kind === "team" && React.createElement("div", {
     className: "ff-pg17-shared"
-  }, React.createElement(PublishedPanel, null))) : React.createElement(ProfilePage, null));
+  }, React.createElement(PublishedPanel, null)), /* v1.96: Business & Support under the finished profile only, not on the create-a-profile page. */
+  kind === "team" && React.createElement("div", {
+    className: "ff-biz-pfa"
+  }, React.createElement(V101.BusinessSupport19, null))) : React.createElement(ProfilePage, null));
 }
 
 

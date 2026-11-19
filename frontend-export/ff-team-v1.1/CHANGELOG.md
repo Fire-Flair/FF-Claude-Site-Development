@@ -4,6 +4,19 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.75
+
+Create-a-profile page (Alex, 18 Nov 22:22): Business & Support removed, the card preview with the wallet buttons back under 04. `src/components/team/team-router.jsx`, `src/components/party/party-live.jsx` (`ProfileGate17`), `src/components/team/profile-builder.jsx` (`ProfileBuilder`), `src/components/team/work-location-guide.jsx` (`CardPreviewSoon`), `src/styles/prof21.css`.
+
+- **Business & Support is no longer on the create-a-profile page** (the profile builder at `#/ff-team/profile`, for a new member and for a member editing). `TeamRouter` no longer wraps the profile tab in it. The finished "Your profile" page keeps the box (now rendered by `ProfileGate17` under `DoneProfile17`, FF Team only), as do Network and Bookings. The home page is untouched. "Need help? Book a meeting" (`NeedHelp34`) stays at the bottom of the builder, unchanged.
+- **The card preview under 04 is back**: `CardPreviewSoon` under the Save row, with the dashed empty card, "Your complete card will display here", its line of text, and `ShareStack` (Share, Add to Apple Wallet, Add to Google Wallet, "Wallet passes coming in 2027"). Wording and behaviour as before: the wallet buttons are the locked ones (a tap shows the "coming in 2027" toast, no pass is made); Share is as in Welcome to the Team.
+  - A new member (not saved yet) sees the empty card. A member editing a live profile sees their own Profile Card (`PlayerCard`, full format) in the same box, with the same buttons. After the first save, Welcome to the Team shows the finished card as before.
+- **Where the old design came from:** the component was still in `work-location-guide.jsx`, unused. It was last rendered by `ProfileBuilder` (`{!finished && <CardPreviewSoon />}`) until commit `92a230f` (v17.40, 17 Nov, "Profile: one edit page for new and existing members…"). Its styling is taken from `fireflair-v17.4.5.html`, the last versioned page where the box was styled.
+- **Why it had been removed:** v17.40 rebuilt the edit page with a "three buttons at most" rule; the commit says "No card preview between Save and Need help (kept the page to three buttons)", as the preview's Share and two wallet buttons went past three. Separately, since the v17.4 split into `src/` the box's CSS only existed scoped to a `.ff-fin` class that nothing sets, so between v17.4 and v17.40 it rendered without its box styling. The rules are now unscoped in `prof21.css` (squircle corners added).
+- Phone: "Google Wallet" was cut off at 390px in the old design; inside the preview the wallet buttons now have less padding and a label that shrinks to fit, so no word is cut or split.
+- Checked: `npm run check`, `npm run build`; Playwright at 390x844 and 1440x1000, signed out and signed in (DEV · complete profile, then Edit): no Business & Support on the builder, Need help? present, one preview with two wallet buttons, no page errors. Screenshots (before, after, and the old v17.4.5 design) in `/home/claude/shots/wallet-agent/`.
+- Not published; branch `v11-wallet-2222`.
+
 ## v1.74
 
 Profile page (Alex, 18 Nov 22:16–23:31). Four changes from one thread, merged onto ff-team-v1.1 (v1.73). Published straight onto live 1795088883-de56,
