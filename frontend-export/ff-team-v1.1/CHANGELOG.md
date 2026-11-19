@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.90
+
+- **Network page: no text under "Explore our network".** The four-line intro under the page heading is removed; the Our professionals and FF Directory leads stay (`NetLead20` in `staff/network-directory.jsx`).
+
 ## v1.89
 
 - **FFStories has five filter chips, All included, so they sit on two lines on a phone.** "Skills and growth" and "Local and news" are merged into **Growth and news** (`STORY_CATS17` in `content/stories/stories-reader.jsx`). Every story still lands in a category; the three news stories now sit under Growth and news.

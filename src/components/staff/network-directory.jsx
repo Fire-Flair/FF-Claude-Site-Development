@@ -21,6 +21,7 @@ function LinedHead20({ tag, title, k }) {
     React.createElement(BigHead20, { tag: tag, title: title }), React.createElement(NetLead20, { k: k }));
 }
 function NetLead20({ k }) {
+  if (k === "page") return null; /* Alex 19 Nov 20:09: the page heading needs no text under it */
   return React.createElement("p", { className: "ff-body ff-netlead20", style: { margin: "-2px 0 14px", maxWidth: 680, overflowWrap: "normal", wordBreak: "normal", hyphens: "manual" } }, NET_LEAD20[k]);
 }
 
