@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.108
+- **Home, desktop:** the other way round: Business and Support on the left, Join FF Team on the right (CSS only, `home-wide.css`).
+- Page saved as `live-v1.108-index.html`. Artifact version 1795124947-4132.
+
 ## v1.107
 - **Home, desktop (1100px+):** Join FF Team on the left and Business and Support on the right, side by side (new `.ff-bj-row` wrapper in `team-home.jsx`; the coin divider between them is hidden on desktop only). Phones and iPad keep the stacked order. The coin game is unchanged and not yet reviewed for desktop.
 - Page saved as `live-v1.107-index.html`. Artifact version 1795124751-5963.
