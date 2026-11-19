@@ -4,6 +4,13 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.78
+
+- Top bar on phones (Alex, 19 Nov 13:03, option A from the picture): 45px tall instead of 56px. Smaller FF mark (24px),
+  smaller burgundy Log in / Log out button (30px tall, 11px text, no glow), tighter padding. The button keeps a 44px
+  tap area through an invisible pad. Desktop (over 760px) unchanged. Styles: `topbar-slim` block at the end of
+  `src/styles/base.css`. Checked at 390px signed out and signed in.
+
 ## v1.77
 
 - Card preview under step 04 (Alex, 19 Nov 12:57, option B): the paragraph under "Your complete card will display here"

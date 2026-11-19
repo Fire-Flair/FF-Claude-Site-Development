@@ -1560,3 +1560,13 @@
     background:linear-gradient(180deg,rgba(201,162,39,.2),rgba(201,162,39,.08)); box-shadow:inset 0 1px 0 rgba(237,213,143,.18), 0 0 0 1px rgba(0,0,0,.25); }
   .ff .ff-desknav button:focus-visible { outline:2px solid var(--gold,#C9A227); outline-offset:2px; }
 }
+
+/* topbar-slim (Alex, 19 Nov 13:03, option A): on phones the top bar is 44px tall instead of 56px — a smaller FF mark and a
+   smaller burgundy Log in button without its glow. The button's tap area stays 44px (the ::after pad). Desktop unchanged. */
+@media (max-width: 760px) {
+  .ff .ff-topbar .ff-topbar-in { padding: 5px 12px; gap: 8px; }
+  .ff .ff-topbar .ff-acct-btn.ff-acct-btn { min-height: 0; height: 34px; padding: 0 4px; gap: 8px; font-size: 14px; }
+  .ff .ff-topbar .ff-acct-btn img, .ff .ff-topbar .ff-acct-btn svg, .ff .ff-topbar .ff-acct-btn .ff-coin { width: 24px; height: 24px; }
+  .ff .ff-topbar .ff-authbtn.ff-authbtn { position: relative; min-height: 0; height: 30px; padding: 0 12px; font-size: 11px; letter-spacing: .1em; border-radius: 10px; corner-shape: squircle; box-shadow: none; }
+  .ff .ff-topbar .ff-authbtn::after { content: ""; position: absolute; inset: -7px -4px; }
+}
