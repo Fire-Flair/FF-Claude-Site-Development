@@ -127,13 +127,16 @@
     const hire = useHireNav();
     const goSite = useGoSite();
     const [pick, setPick] = useState({});
+    const { dispatch: qDispatch } = useStore();
     const sec = (id) => () => scrollToSection(id);
     /* home-update: straight to a home section (not through the pillar reveal). */
     const jump = (id) => () => { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); };
     const A = {
       /* home-update (Alex, 18 Nov 14:18): every FF Team answer leads somewhere inside FF Team (no links to the other sites). */
       team: {
-        profile: ["Create your Profile Card", () => nav.goProfile()],
+        /* home-questions-2 (Alex, 19 Nov): the default answer is positive and leads to signing up (the Profile Card). */
+        profile: ["Sign up", () => nav.goProfile()],
+        training: ["See training", () => goBookingSection(qDispatch, "ff-bk-training")],
         network: ["Explore the network", () => nav.goNetwork()],
         bookings: ["See your bookings", () => nav.goBookings()],
         reviews: ["See how reviews work", sec("ff-pl-reviews")],
@@ -161,22 +164,23 @@
       /* home-update (Alex, 18 Nov 14:18): three questions, three answers each. */
       team: [
         /* home-questions (Alex, 18 Nov 20:21): events, then freelancing, then what helps most; three answers each.
-           "Are you a freelancer?" replaces "Do you work in hospitality?"; "Training events" and "A support network"
-           replace "Building my team" and "Collecting reviews"; "Getting booked" leads to the Profile Card. */
+           home-questions-2 (Alex, 19 Nov): "Are you available for one or more bookings per month?" replaces "Are you a
+           freelancer?"; replies are positive ("That's amazing.") and lead to Sign up unless a better place exists;
+           "Training events" opens Training on the Bookings page. */
         { q: "Do you work in events?", a: [
-          { l: "Yes", r: "Then FF Team is built for you. Put your event experience on your Profile Card, so event companies can find you and book you.", c: A.profile },
-          { l: "No, but I'd like to", r: "See who is already doing it. Browse the network and follow the people whose work you like.", c: A.network },
+          { l: "Yes", r: "That's amazing. FF Team is built for you. Put your event experience on your Profile Card, so event companies can find you and book you.", c: A.profile },
+          { l: "No, but I'd like to", r: "That's amazing. See who is already doing it: browse the network and follow the people whose work you like.", c: A.network },
           { l: "What kind of events?", r: "Private parties, weddings, corporate events, festivals, launches and much more. Every one is a chance to do what you love.", c: A.support }
         ] },
-        { q: "Are you a freelancer?", a: [
-          { l: "Yes", r: "Your Profile Card works for you: your skills, experience and reviews in one place, ready for every new client.", c: A.profile },
-          { l: "No, but I'd like to be", r: "Start with the FF Team community: training, events and people who will help you take your first steps.", c: A.support },
-          { l: "What is a freelancer?", r: "A freelancer is self-employed. You choose your work and your rates, work for different clients and look after your own tax.", c: A.stories }
+        { q: "Are you available for one or more bookings per month?", a: [
+          { l: "Yes", r: "That's amazing. Sign up and your Profile Card puts you in front of the event companies who book.", c: A.profile },
+          { l: "No, but I'd like to be", r: "That's amazing. Sign up and your Profile Card is ready the moment you are.", c: A.profile },
+          { l: "Not sure yet", r: "That's amazing. Sign up and you choose which bookings you say yes to.", c: A.profile }
         ] },
         { q: "What would help you most right now?", a: [
-          { l: "Getting booked", r: "We put your Profile Card in front of the event companies who book. Requests arrive on WhatsApp and you answer with one tap.", c: A.profile },
-          { l: "Training events", r: "Bar shows, training and events with the FF Team community, so you keep learning and keep growing.", c: A.support },
-          { l: "A support network", r: "Meet people who do what you do. Share tips, make friends in the trade and grow together with the FF Team network.", c: A.network }
+          { l: "Getting booked", r: "That's amazing. We put your Profile Card in front of the event companies who book. Requests arrive on WhatsApp and you answer with one tap.", c: A.profile },
+          { l: "Training events", r: "That's amazing. Bar shows, training and events with the FF Team community, so you keep learning and keep growing.", c: A.training },
+          { l: "A support network", r: "That's amazing. Meet people who do what you do. Share tips, make friends in the trade and grow together with the FF Team network.", c: A.network }
         ] }
       ],
       staff: [
