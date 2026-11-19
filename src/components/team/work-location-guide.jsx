@@ -16,54 +16,27 @@ const P12_CSS = __ff_css("styles/p12.css");
    here is gone. */
 
 
-/* --- Languages: type-ahead from the master list -------------------------- */
-function LanguagePicker({ selected = [], onPick }) {
-  const [q, setQ] = useState("");
-  const has = (n) => selected.some(x => String(x).toLowerCase() === n.toLowerCase());
-  const n = q.trim().toLowerCase();
-  const hits = n
-    ? LANGUAGE_MASTER.filter(l => l.name.toLowerCase().includes(n) || l.iso === n || LANGUAGE_ALIASES[n] === l.iso)
-    : LANGUAGE_MASTER.slice(0, 8);
-  const custom = n && !hits.some(l => l.name.toLowerCase() === n) ? q.trim().replace(/\b\w/g, c => c.toUpperCase()) : null;
-  return (
-    <div className="ff-frame ff-goldpick" style={{ padding: 14, marginTop: 4, marginBottom: 14 }}>
-      <div className="ff-label" style={{ marginBottom: 8 }}>{n ? "Matching languages" : "Pick a language"}</div>
-      <div style={{ position: "relative", marginBottom: 8 }}>
-        <Search size={15} color="#7A7366" style={{ position: "absolute", left: 11, top: 13 }} />
-        <input className="ff-input" style={{ paddingLeft: 34 }} value={q} onChange={(e) => setQ(e.target.value)}
-          placeholder="Search 52 languages, or type your own" aria-label="Search languages" />
-      </div>
-      <div>
-        {hits.map(l => (
-          <button key={l.iso} type="button" className="ff-chip" onClick={() => { onPick(l.name); setQ(""); }}
-            style={has(l.name) ? { background: "#5C1220", borderColor: "#5C1220", color: "#F6E7B4" } : undefined}>
-            <LangFlag lang={l.name} /> {l.name}
-          </button>
-        ))}
-        {custom && <button type="button" className="ff-chip ff-chip-custom" onClick={() => { onPick(custom); setQ(""); }}><LangFlag lang="" /> Add “{custom}”</button>}
-      </div>
-    </div>
-  );
-}
 
 
 
 
 
 /* Beneath Save & Share, before the profile is saved: where the finished card
-   will appear (it does, in Welcome to the Team, once saved). */
-function CardPreviewSoon() {
+   will appear (it does, in Welcome to the Team, once saved).
+   v1.96: a member editing a live profile (me given) sees their own Profile Card in the same box. */
+function CardPreviewSoon({ me, themeKey } = {}) {
   return (
-    <div className="ff-cardpreview-wrap">
+    <div className={`ff-cardpreview-wrap${me ? " has-card" : ""}`}>
       <div className="ff-cardpreview">
+        {me ? <div className="ff-cardpreview-card"><PlayerCard person={me} format="full" themeKey={themeKey} /></div> : <>
         <div className="ff-cardghost" aria-hidden="true">
           <span className="coin"><FFLogo size={22} tier="gold" /></span>
           <span className="av" /><span className="l1" /><span className="l2" /><span className="l3" /><span className="l4" />
         </div>
         <div className="ff-cardpreview-tx">
           <b>Your complete card will display here</b>
-          <p>Save or publish your profile and your finished Profile Card appears here. Share it, and soon add it to your phone's wallet.</p>
         </div>
+        </>}
         <ShareStack />
       </div>
     </div>

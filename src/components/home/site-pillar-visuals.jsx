@@ -3,7 +3,6 @@
    section, exactly like the FF Team visuals in team-pillars.jsx, and are built from the prototype's own cards and components in a compact form.
    Anything live on the old pillars stays live: packages open their pop-up, profile tiles open the profile, company cards open the company page. */
 
-  const SV21_PKG_SLUG = { svc_masterclass: "masterclass", svc_flair: "flair", svc_mixology: "mixology", svc_bartending: "bartending", svc_staffing: "staffing" };
 
   /* A ticked box that leads nowhere (an example, like the FF Team ticks). */
   function SvTicks21({ items }) {
@@ -56,37 +55,6 @@
     );
   }
 
-  function SvPackages21() {
-    const st = useStore();
-    const hire = useHireNav();
-    const [open, setOpen] = useState(null);
-    const all = pkgServices17({ all: true, short: true });
-    const order = ["svc_masterclass", "svc_flair", "svc_mixology", "svc_bartending", "svc_staffing"];
-    const list = order.map((id) => all.find((x) => x.id === id)).filter(Boolean);
-    const cur = open ? pkg18(open) : null;
-    return (
-      <div className="pv pv-pk pv-pkc">
-        <div className="pv-scroll">
-          {list.map((sv) => (
-            <div key={sv.id} className="pv-tile">
-              <button type="button" className={`ff-tp17 ${sv.tone}`} onClick={() => setOpen(SV21_PKG_SLUG[sv.id])}>
-                <span className="lv">{sv.level}</span>
-                <b className="tt">{sv.title}</b>
-                <span className="in">{sv.includes}</span>
-                <span className="tm"><S17I.Clock size={12} /> {TIME17[sv.id] || sv.time}</span>
-                <em className="go">See package</em>
-              </button>
-            </div>
-          ))}
-        </div>
-        {cur ? (
-          <Sheet open={true} onClose={() => setOpen(null)} title={cur.sv.title} center>
-            <PkgFull18 m={cur} st={st} hire={hire} onClose={() => setOpen(null)} />
-          </Sheet>
-        ) : null}
-      </div>
-    );
-  }
 
   function SvGuarantee21() {
     return (
@@ -225,7 +193,6 @@
 
   function SiteVisual21({ k, dir }) {
     switch (k) {
-      case "party-pkgs": return <SvPackages21 />;
       case "party-guarantee": return <SvGuarantee21 />;
       case "party-people": return <SvPeople21 />;
       case "party-featured": return <SvFeatured21 ids={["stf_alex", "stf_gav", "stf_bruno", "stf_simao", "stf_dany", "stf_james"]} />;

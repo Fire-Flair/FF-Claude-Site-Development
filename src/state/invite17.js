@@ -74,17 +74,17 @@ function inv17Ref(s, a) {
 
 
 /* Where a person stands with me, in one word. Team is two way (s.connections); pending = a team invitation I sent that is
-   not answered yet (s.teamInvites); network = a one-way add (s.netAdds17); otherwise none. */
+   not answered yet (s.teamInvites); network = a company added to my network (s.netAdds17, company ids only: people are not added to a network); otherwise none. */
 function connStatus17(s, id) {
   if ((s.connections || []).some(c => c.id === id)) return "team";
   if ((s.teamInvites || []).some(i => i.personId === id && i.status === "pending")) return "pending";
-  if ((s.netAdds17 || []).includes(id)) return "network";
+  if (String(id).startsWith("co_") && (s.netAdds17 || []).includes(id)) return "network";
   return "none";
 }
 
 
 /* Called by AUTH_SIGNED_IN with the state before and after. A new account on FF Team with a valid code records who brought it in,
-   puts the sender in the newcomer's network (one way) and creates one pending team invitation (join link or shared link). */
+   creates one pending team invitation (join link or shared link). */
 function inv17AtSignIn(prev, next, a) {
   if (inv17SignedIn(prev) || a.login || a.method === "dev" || next.role !== "team" || (next.profile && next.profile.referredBy)) return next;
   const sender = inv17Sender(next, next.session.refTag);
@@ -94,7 +94,6 @@ function inv17AtSignIn(prev, next, a) {
   const out = {
     ...next,
     profile: { ...next.profile, referredBy: { code: inv17Code(next.session.refTag), personId: sender.id, kind, at: now } },
-    netAdds17: (next.netAdds17 || []).includes(sender.id) ? next.netAdds17 : [...(next.netAdds17 || []), sender.id],
   };
   if (!(next.teamAsksIn17 || []).some(x => x.fromId === sender.id))
     out.teamAsksIn17 = [...(next.teamAsksIn17 || []), { id: "tia_" + sender.id, fromId: sender.id, name: sender.name, tag: sender.tag, note: `You have been invited to join ${sender.name}'s team`, at: now, viaLink: true }];

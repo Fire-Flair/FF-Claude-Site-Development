@@ -50,8 +50,11 @@ function Sheet({ open, onClose, title, children, center = false, newLogo = false
     };
   }, [open]);
   if (!open) return null;
-  return (
-    <div className={`ff-scrim${center ? " center" : ""}`} onClick={onClose}>
+  /* Pop-up (Alex, 18-19 Nov): drawn at the top of the page (a portal into .ff-shell), so no box it was opened from can clip
+     or cover it. Its look (blurred page, panel at the top, a gap below that closes it) is .ff-scrim / .ff-sheet in base.css. */
+  const host = typeof document !== "undefined" && (document.querySelector(".ff-shell") || document.querySelector(".ff"));
+  const body = (
+    <div className="ff-scrim" onClick={onClose}>
       <div className={`ff-sheet${center ? " center" : ""}`} ref={ref} tabIndex={-1} onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={title}>
         <div className="ff-sheet-head">
           {newLogo ? <FFLogo size={24} tier="gold" /> : <Coin size={22} />}
@@ -62,6 +65,7 @@ function Sheet({ open, onClose, title, children, center = false, newLogo = false
       </div>
     </div>
   );
+  return host && ReactDOM.createPortal ? ReactDOM.createPortal(body, host) : body;
 }
 
 

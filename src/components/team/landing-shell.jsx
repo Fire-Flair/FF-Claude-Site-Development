@@ -264,7 +264,6 @@ function Shell({ children }) {
   const [shareOpen, setShareOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const [fbOpen, setFbOpen] = useState(false);
-  const [notifyOpen, setNotifyOpen] = useState(false);
   useEffect(() => { const h = () => setFbOpen(true); window.addEventListener("ff-feedback", h); return () => window.removeEventListener("ff-feedback", h); }, []);
   useEffect(() => { const h = () => setLoginOpen(true); window.addEventListener("ff-login", h); return () => window.removeEventListener("ff-login", h); }, []);
   useEffect(() => { const h = () => setShareOpen(true); window.addEventListener("ff-add", h); return () => window.removeEventListener("ff-add", h); }, []);
@@ -301,7 +300,7 @@ function Shell({ children }) {
           <nav className="ff-desknav" aria-label="Main">
             {/* v1.3: the FF coin sits to the right of Profile. */}
             {NAV.filter(n => n.key !== "__ff").map(n => (
-              <button key={n.key} className={state.tab === n.key ? "on" : ""} aria-current={state.tab === n.key ? "page" : undefined} onClick={() => goTab(n.key)}>{tabLabel17(n.key, state, n.label)}</button>
+              <button key={n.key} className={state.tab === n.key ? "on" : ""} aria-current={state.tab === n.key ? "page" : undefined} onClick={() => goTab(n.key)}>{tabLabel17(n.key, state, n.label)}<NavBubble11 tab={n.key} /></button>
             ))}
             {/* v1.52 (Alex, 18 Nov 20:35): the FF coin button is gone from the desktop bar; notifications show on Bookings. */}
           </nav>
@@ -336,20 +335,19 @@ function Shell({ children }) {
             <div key="ff" className="ff-navcentre">
               {/* v1.52 (Alex, 18 Nov 20:35): the centre FF coin is a mark, not a button; notifications show on Bookings. */}
               <span className="ff-coinbtn" style={{ position: "relative" }} aria-hidden="true">
-                <span className="ff-coinwrap20 mob"><style>{NET20_CSS}</style><FFLogo size={56} tier={isTeam ? "standard" : "gold"} /><span className={`ff-coinnum20${notifyCount17(state) > 0 ? " on" : ""}${notifyCount17(state) > 9 ? " d2" : ""}`} aria-hidden="true">{notifyCount17(state) > 0 ? Math.min(notifyCount17(state), 99) : ""}</span></span>
+                <span className="ff-coinwrap20 mob"><style>{NET20_CSS}</style><FFLogo size={56} tier={isTeam ? "standard" : "gold"} />{null}</span>
               </span>
             </div>
           ) : (
             <button key={n.key} className={`ff-navbtn ${state.tab === n.key ? "on" : ""}`}
               onClick={() => goTab(n.key)} aria-label={tabLabel17(n.key, state, n.label)} aria-current={state.tab === n.key ? "page" : undefined} title={tabLabel17(n.key, state, n.label)}>
-              <NavMark shape={n.mark} size={23} tone={state.tab === n.key ? "#EAD79C" : "#D8D6D0"} />
+              <NavMark shape={n.mark} size={23} tone={state.tab === n.key ? "#EAD79C" : "#D8D6D0"} /><NavBubble11 tab={n.key} />
             </button>
           ))}
         </div>
       </nav>
 
       <XPPopup open={xpOpen} onClose={() => setXpOpen(false)} />
-      <NotifySheet17 open={notifyOpen} onClose={() => setNotifyOpen(false)} onNext={() => { setNotifyOpen(false); setXpOpen(true); }} />
       <ShareCardSheet open={shareOpen} onClose={() => setShareOpen(false)} />
       <LoginSheet open={loginOpen} onClose={() => setLoginOpen(false)} />
       <FeedbackSheet open={fbOpen} onClose={() => setFbOpen(false)} />

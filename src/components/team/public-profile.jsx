@@ -12,10 +12,6 @@ const prefersReducedMotion = () => { try { return window.matchMedia("(prefers-re
 
 
 
-/* ---- The public profile: what a visitor sees after opening someone from
-   Network (and "view as guest" on your own). Intro first, then cards in a
-   hybrid layout. No editing controls. ----------------------------------- */
-const PUB_KIND = { professions: "m", experience: "x", qualifications: "d", skills: "s", interests: "s", languages: "s", locations: "s" };
 
 
 /* v17.18: the Profile Card's order (Skills, Interests, Locations, Languages), then Venues, Qualifications and the rest. */
@@ -23,18 +19,6 @@ const PUB_ORDER = ["professions", "media", "skills", "interests", "locations", "
 
 
 
-function PubGrid({ catKey, def, items, shade, onOpen }) {
-  const kind = PUB_KIND[catKey] || "other";
-  return (
-    <div className={`ff-pubgrid k-${kind}`} role="list" aria-label={def.label}>
-      {withRanks(items).map(({ r, rank }) => (
-        <div role="listitem" key={r.id}>
-          <GenericAttributeCard record={r} def={def} themeKey={shade} rank={rank} editable={false} pub={PUB_KIND[catKey]} onClick={() => onOpen(r)} />
-        </div>
-      ))}
-    </div>
-  );
-}
 
 
 

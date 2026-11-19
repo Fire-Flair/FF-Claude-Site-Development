@@ -34,6 +34,12 @@ function coNetUnseen17(s) {
 }
 
 
+/* "<Name> is now on your team." notes for me (the inviter) that have not been opened yet (state.teamJoined18, toId "me"). */
+function joinedNotes18(s) {
+  return s.auth && s.auth.status === "signedIn" && s.role === "team" ? (s.teamJoined18 || []).filter(x => x.toId === "me" && !x.seen) : [];
+}
+
+
 /* The notifications that wait for a reply, in one plain shape. NotifySheet17 draws these rows and notesWatch17 compares them
    before and after every action to see which ones were dealt with. */
 function notesBrief17(s, people) {
@@ -45,7 +51,7 @@ function notesBrief17(s, people) {
       if (sh) out.push({ id: e.id, kind: "shift", title: `${e.auto ? "Open shift" : "You've been selected"} · ${sh.role}`, sub: `${hirerOf11(s, ev)} · ${whenOf11(sh)}`, e });
     });
     availWaiting17(s).forEach(x => out.push({ id: x.id, kind: "avail", qid: `av_${x.iso}`, title: "Are you available?", sub: `${x.byName} · ${shortDay(x.iso)}`, x }));
-    teamAsksWaiting17(s).forEach(x => out.push({ id: x.id, kind: "team", title: x.netAdd ? `${firstName(x.name)} added you to their network` : "Team invitation", sub: x.name, x }));
+    teamAsksWaiting17(s).forEach(x => out.push({ id: x.id, kind: "team", title: "Team invitation", sub: x.name, x }));
     reviewAsksWaiting17(s).forEach(r => out.push({ id: r.id, kind: "review", title: `${firstName(r.byName)} reviewed you`, sub: r.byName, r }));
     coInvites17(s).forEach(x => out.push({ id: x.id, kind: "coinvite", title: "Company team invitation", sub: x.companyName, x }));
     questionsWaiting17(s, people).forEach(q => out.push({ id: q.id, kind: "question", qid: q.id, title: "Question for you", sub: `${askerName(q, people)} · ${q.text}`, q }));
@@ -112,11 +118,6 @@ function notesWatch17(prev, next, a) {
 }
 
 
-/* Greyed rows for this account, newest first, with anything older than seven days dropped. */
-const notesDoneFor17 = (s) => {
-  const t = Date.now(), acct = notesAcct17(s);
-  return (s.notesDone17 || []).filter(d => d.acct === acct && t - d.at < NOTES_KEEP_MS17).sort((a, b) => b.at - a.at);
-};
 
 
 /* The list was opened: stamp it, drop old greyed rows, and grey the informational rows. */

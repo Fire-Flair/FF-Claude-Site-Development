@@ -82,17 +82,6 @@ function PersonalTerms17() {
 }
 
 
-/* The same cards, as a row on the profile creation page: between Reviews and Q&A, closed to start with. */
-function TermsRow17() {
-  const { state } = useStore();
-  const open = state.categoryVisibility.terms17 === true;
-  return (
-    <section id="ff-sec-terms" style={{ marginTop: 22 }}>
-      <SectionHead icon={<E17I.Layers size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Terms and conditions" count={Object.keys(TERM_SETS17).length} action={<CategoryToggle sectionKey="terms17" defaultOpen={false} />} />
-      {open && <TermsCards17 />}
-    </section>
-  );
-}
 
 
 /* Tab names, by site: FF Party is Home, Browse, Book, Party. FF Staff is Home, Our people, Your bookings, Your business. */
@@ -128,155 +117,20 @@ function FlipChoice17({ kind, title, img, pos, note, on, onClick }) {
 }
 
 
-/* ---- v17.3.37: FireFlair package cards, the size of a featured company card, and the pop-up that books one ---- */
-const PKICON17 = { bar: S17I.Martini, ent: S17I.Music, svc: S17I.Camera, food: S17I.UtensilsCrossed };
 
 
-/* v17.4.7.6 the package card: a pill (FF Party), the price, the name, what it includes and who it is ideal for as short bullets, then one action.
-   FF Party: Book now. FF Team: Sign up. FF Staff: Create your own. */
-const bul17 = (t) => String(t || "").split(/,\s*|\s+and\s+/).map(x => x.trim()).filter(Boolean).map(x => x.charAt(0).toUpperCase() + x.slice(1));
 
 
-function pkgCta17(state, on) {
-  if (state.role === "team") return on ? "Signed up" : "Sign up";
-  if (state.role === "staff" && !(hireSiteOf(state) || {}).party) return "Create your own";
-  return on ? "Added" : "Book now";
-}
 
 
-/* v17.4.7.17 FF Team keeps the earlier package card (Explore our network): the legacy markup, no .rd redesign class. */
-function PkgCardOld17({ svc, n, noun, match, on, onToggle, onInfo }) {
-  const Ic = PKICON17[svc.cat] || S17I.Sparkles;
-  return (
-    <div className={`ff-pk17w${on ? " sel" : ""}`} data-pk17={svc.id} data-pk17-alt={svc.title === "BYOB" ? "byob" : ""}>
-      <button type="button" className={`ff-lst ff-pk17 ${svc.tone || ""}${match ? " match" : ""}`} onClick={onToggle} aria-pressed={!!on} aria-label={`${svc.title}: ${on ? "selected" : "select"}`}>
-        <span className="ph" style={svc.img ? { backgroundImage: `linear-gradient(rgba(10,8,8,.12),rgba(10,8,8,.55)), url(${svc.img})`, backgroundSize: "cover", backgroundPosition: "center 20%" } : undefined}>
-          <span className="pl">{lvl17(svc.level)}</span>
-          <span className="cn"><FFLogo size={30} tier="gold" /></span>
-          <span className="ic"><Ic size={34} strokeWidth={1.4} /></span>
-          {svc.price && !svc.noPrice && <span className="pr">{svc.price}</span>}
-        </span>
-        <span className="tx">
-          <b>{svc.title}</b>
-          <small className="tg">{svc.tagline}</small>
-          {svc.includes && <span className="ft"><S17I.Sparkles size={12} /> {svc.includes}</span>}
-          {svc.ideal && <span className="ft"><S17I.Star size={12} /> {svc.ideal}</span>}
-          {svc.time && <span className="ft"><S17I.Clock size={12} /> {svc.time}</span>}
-          {shop17(svc) && <span className="ft"><S17I.ShoppingBasket size={12} /> Shopping list for your cocktails</span>}
-          <span className="ft rec"><S17I.Users size={12} /> Best for {recOf17(svc.bands)}</span>
-          <span className="by">{svc.by ? svc.by : svc.mine ? "Your package" : n > 0 ? `${n} ${noun} to choose from` : "FF Party"}</span>
-          <span className="go">{on ? <><S17I.Check size={13} strokeWidth={2.6} /> Selected</> : <>Select</>}</span>
-        </span>
-      </button>
-      <button type="button" className="inf" aria-label={`${svc.title}: details`} onClick={onInfo}><S17I.Info size={16} strokeWidth={2} /></button>
-    </div>
-  );
-}
 
 
-function PkgCard17({ svc, n, noun, match, on, onToggle, onInfo }) {
-  const { state } = useStore();
-  const Ic = PKICON17[svc.cat] || S17I.Sparkles;
-  const inc = bul17(svc.includes), ideal = bul17(svc.ideal);
-  /* Phase 2: on FF Party the card shows the package; its Book now is locked. Tapping the card opens the details. */
-  const locked = pkgCta17(state, on) === "Book now";
-  const Card = locked ? "div" : "button";
-  const cardProps = locked
-    ? { role: "group", tabIndex: 0, "aria-label": svc.title, style: { cursor: onInfo ? "pointer" : "default" }, onClick: onInfo || undefined, onKeyDown: (e) => { if (onInfo && e.target === e.currentTarget && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); onInfo(); } } }
-    : { type: "button", onClick: onToggle, "aria-pressed": !!on, "aria-label": `${svc.title}: ${pkgCta17(state, on)}` };
-  return (
-    <div className={`ff-pk17w rd${on ? " sel" : ""}`} data-pk17={svc.id} data-pk17-alt={svc.title === "BYOB" ? "byob" : ""}>
-      <Card className={`ff-lst ff-pk17 rd ${svc.tone || ""}${match ? " match" : ""}`} {...cardProps}>
-        <span className="ph" style={svc.img ? { backgroundImage: `linear-gradient(rgba(10,8,8,.12),rgba(10,8,8,.55)), url(${svc.img})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}>
-          <span className="pl">FF Party</span>
-          <span className="cn"><FFLogo size={30} tier="gold" /></span>
-          <span className="ic"><Ic size={30} strokeWidth={1.4} /></span>
-          {svc.price && !svc.noPrice && <span className="pr">{svc.price}</span>}
-        </span>
-        <span className="tx">
-          <b>{svc.title}</b>
-          {inc.length > 0 && <span className="bl"><i>Includes</i><ul>{inc.map(x => <li key={x}>{x}</li>)}</ul></span>}
-          {ideal.length > 0 && <span className="bl"><i>Ideal for</i><ul>{ideal.map(x => <li key={x}>{x}</li>)}</ul></span>}
-          {(svc.by && svc.by !== "FF Party" && svc.by !== "FireFlair") || n > 0 ? <span className="by">{svc.by && svc.by !== "FF Party" && svc.by !== "FireFlair" ? svc.by : `${n} ${noun} to choose from`}</span> : null}
-          {locked ? <LockedBtn17 bare className="go gold">Book now</LockedBtn17>
-            : <span className={"go" + (pkgCta17(state, on) === "Book now" || pkgCta17(state, on) === "Added" ? " gold" : "")}>{on ? <><S17I.Check size={13} strokeWidth={2.6} /> {pkgCta17(state, on)}</> : pkgCta17(state, on)}</span>}
-        </span>
-      </Card>
-      {onInfo && <button type="button" className="inf" aria-label={`${svc.title}: details`} onClick={onInfo}><S17I.Info size={16} strokeWidth={2} /></button>}
-    </div>
-  );
-}
 
 
-/* FF Team: sign up to a package (one Q&A answer, int.party_package, option ids = package ids). */
-async function pkgSignup17(state, dispatch, sv) {
-  const account = qaAccount17(state);
-  if (!account) { window.dispatchEvent(new Event("ff-login")); return; }
-  const cur = (state.profile && state.profile.serviceInterest) || [];
-  const on = cur.includes(sv.id);
-  const next = on ? cur.filter(x => x !== sv.id) : [...cur, sv.id];
-  const mirror = { type: "PROFILE", patch: { serviceInterest: next } };
-  const r = next.length
-    ? await qaSubmit17(dispatch, { questionId: "int.party_package", account, optionIds: next, visibility: "public", source: "FF Team Bookings · FF Party packages" }, mirror)
-    : await qaWithdraw17(dispatch, { questionId: "int.party_package", account }, mirror);
-  dispatch({ type: "TOAST", toast: r.ok ? (on ? `Withdrawn from ${sv.title}` : `Signed up for ${sv.title}`) : "That couldn't be saved. Try again." });
-}
 
 
-/* One package card for any site: FF Team signs up, FF Staff creates their own, FF Party books it. */
-function PkgCardSite17({ svc }) {
-  const { state, dispatch } = useStore();
-  const team = state.role === "team", staffSite = state.role === "staff" && !(hireSiteOf(state) || {}).party;
-  const on = team ? ((state.profile && state.profile.serviceInterest) || []).includes(svc.id) : (!staffSite && bkOf17(state).pk.includes(svc.id));
-  const shown = team && svc.pay ? { ...svc, price: "You earn " + svc.pay } : svc;
-  const act = () => {
-    if (team) { pkgSignup17(state, dispatch, svc); return; }
-    if (staffSite) { dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); return; }
-    selectPkg17(state, dispatch, svc.id, true);
-  };
-  return <div className="ff-br17-co ff-pkx"><PkgCard17 svc={shown} n={0} noun="" on={on} onToggle={act} /></div>;
-}
 
 
-function PkgSheet17({ svc, qual, onClose }) {
-  const { state, dispatch } = useStore();
-  const bk = bkOf17(state);
-  const on = bk.pk.includes(svc.id);
-  const Ic = PKICON17[svc.cat] || S17I.Sparkles;
-  const feats = [...(svc.features || String(svc.includes || "").split(/,\s*|\s+and\s+/).filter(Boolean).map(x => x.charAt(0).toUpperCase() + x.slice(1))), ...(shop17(svc) ? ["We provide a shopping list for all of your selected cocktails"] : [])];
-  const sf = state.svFav17 || [], inF = sf.includes(svc.id);
-  const toggleF = () => { dispatch({ type: "V11_SET", patch: { svFav17: inF ? sf.filter(x => x !== svc.id) : [...sf, svc.id] } }); if (!inF) dispatch({ type: "TOAST", toast: `${svc.title} added to your favourites` }); };
-  const toggle = () => {
-    dispatch({ type: "V11_SET", patch: { bk17: { ...bk, pk: pkFlip17(bk.pk, svc.id) } } });
-    if (!on) dispatch({ type: "TOAST", toast: `${svc.title} added to your basket` });
-    onClose();
-  };
-  return (
-    <Sheet open onClose={onClose} title={svc.title}>
-      <div className={`ff-pks17 ${svc.tone || ""}`}>
-        <div className="hd">
-          <span className="ic"><Ic size={30} strokeWidth={1.4} /></span>
-          <span className="t"><small>{[lvl17(svc.level), svc.by || "FF Party"].filter(Boolean).join(" · ")}</small><b>{svc.title}</b></span>
-          {svc.price && !svc.noPrice && <span className="pr">{svc.price}</span>}
-        </div>
-        <p className="tg">{svc.tagline}</p>
-        <ul className="fx">{feats.map(f => <li key={f}><S17I.Check size={14} strokeWidth={2.6} /> {f}</li>)}</ul>
-        {svc.id === "rtb_bar" && <RtbAddons17 />}
-        <div className="mt">
-          <span><S17I.Users size={13} /> Best for {recOf17(svc.bands)}</span>
-          {svc.ideal && <span><S17I.Star size={13} /> {svc.ideal}</span>}
-          {svc.time && <span><S17I.Clock size={13} /> {svc.time}</span>}
-          {qual && <span className={`q ${qual}`}>{(QUALITY17.find(o => o.k === qual) || {}).label} preferred</span>}
-        </div>
-        {svc.id === "svc_full" && <div className="ff-br17-qual" role="group" aria-label="Preferred quality">
-          {QUALITY17.map(o => <button key={o.k} type="button" className={`${o.k}${qual === o.k ? " on" : ""}`} aria-pressed={qual === o.k} onClick={() => dispatch({ type: "V11_SET", patch: { br17: { ...(state.br17 || {}), q: qual === o.k ? "" : o.k } } })}><b>{o.label}</b></button>)}
-        </div>}
-        {pkgCta17(state, false) === "Book now" ? <LockedBtn17 bare className="ff-pks17-go">Add to basket</LockedBtn17> :         <button type="button" className="ff-pks17-go" aria-pressed={on} onClick={toggle}>{on ? <><S17I.Check size={16} strokeWidth={2.6} /> In your basket</> : <><S17I.Plus size={16} /> Add to basket</>}</button>}
-        <button type="button" className={`ff-pks17-fav${inF ? " on" : ""}`} aria-pressed={inF} onClick={toggleF}><S17I.Heart size={16} fill={inF ? "currentColor" : "none"} /> {inF ? "In your favourites" : "Add to favourites"}</button>
-      </div>
-    </Sheet>
-  );
-}
 
 
 function CbCard17({ icon, thumb, title, onX, sent, gold }) {

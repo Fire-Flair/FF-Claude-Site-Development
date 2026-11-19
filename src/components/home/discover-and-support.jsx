@@ -18,103 +18,6 @@
 
   const DISCOVER_PARTY = CONTENT_ADAPTER.homepageDiscoverParty();
 
-  function DiscoverFireFlair({ kind = "team" }) {
-    const nav = useHomeNav();
-    const hire = useHireNav();
-    const set = kind === "staff" ? DISCOVER_STAFF : kind === "party" ? DISCOVER_PARTY : DISCOVER;
-    const [open, setOpen] = useState(null);
-    const row = useRef(null);
-    const go = (to) => {
-      setOpen(null);
-      setTimeout(() => {
-        if (to === "profile")
-          kind === "team" ? nav.goProfile() : hire.toProfile();
-        else if (to === "network")
-          kind === "team" ? nav.goNetwork() : hire.toNetwork("");
-        else if (to === "event")
-          hire.toEvent();
-        else
-          scrollToSection(to.slice(1));
-      }, 60);
-    };
-    const by = (dx) => {
-      const el = row.current;
-      if (el)
-        el.scrollBy({ left: dx * Math.max(160, el.clientWidth * 0.8), behavior: "smooth" });
-    };
-    const c = set.find((x) => x.k === open);
-    return React.createElement("section", {
-      className: "ff-sect ff-disc",
-      id: "ff-discover",
-      "aria-labelledby": "ff-disc-h"
-    }, React.createElement("div", {
-      className: "ff-disc-head"
-    }, React.createElement("h2", {
-      id: "ff-disc-h",
-      className: "ff-h1"
-    }, "Discover FireFlair"), React.createElement("span", {
-      className: "ff-disc-arrows"
-    }, React.createElement("button", {
-      type: "button",
-      onClick: () => by(-1),
-      "aria-label": "Scroll back"
-    }, React.createElement(DI.ChevronLeft, {
-      size: 18
-    })), React.createElement("button", {
-      type: "button",
-      onClick: () => by(1),
-      "aria-label": "Scroll on"
-    }, React.createElement(DI.ChevronRight, {
-      size: 18
-    })))), React.createElement("div", {
-      className: "ff-disc-row",
-      ref: row,
-      role: "list"
-    }, set.map((x) => React.createElement("button", {
-      key: x.k,
-      type: "button",
-      role: "listitem",
-      className: "ff-disc-card",
-      onClick: () => setOpen(x.k),
-      "aria-haspopup": "dialog",
-      "aria-label": `${x.t}: ${x.s}`
-    }, React.createElement("span", {
-      className: "ph"
-    }, IMGS[x.img] ? React.createElement("img", { decoding: "async",
-      src: IMGS[x.img],
-      alt: "",
-      loading: "eager",
-      draggable: false
-    }) : null), React.createElement("span", {
-      className: "tx"
-    }, React.createElement("b", null, x.t), React.createElement("small", null, x.s))))), React.createElement(Sheet, {
-      open: !!c,
-      onClose: () => setOpen(null),
-      title: c ? c.h : "",
-      center: true
-    }, c && React.createElement("div", {
-      className: "ff-disc-modal"
-    }, IMGS[c.img] && React.createElement("span", {
-      className: "ph"
-    }, React.createElement("img", { decoding: "async",
-      src: IMGS[c.img],
-      alt: ""
-    })), React.createElement("p", {
-      className: "lead"
-    }, c.lead), c.body.map((t, i) => React.createElement("p", {
-      key: i
-    }, t)), React.createElement("div", {
-      className: "acts"
-    }, React.createElement("button", {
-      type: "button",
-      className: "ff-btn primary wide",
-      onClick: () => go(c.cta[1])
-    }, c.cta[0]), c.cta2 && React.createElement("button", {
-      type: "button",
-      className: "ff-btn ghost wide",
-      onClick: () => go(c.cta2[1])
-    }, c.cta2[0])))));
-  }
 
   const CORE_SETS = {
     staff: { lede: "The right people for every event.", nodes: [
@@ -491,10 +394,10 @@ function TeamCompetition20() {
           "ol",
           null,
           h("li", null, "Invite hospitality and event professionals you have worked with, would like to work with, or believe are great."),
-          h("li", null, "Build genuine Network and Team connections."),
+          h("li", null, "Build genuine Team connections."),
           h("li", null, "Have the largest and best Team at the end of the challenge.")
         )),
-        h("p", { style: { marginTop: 8 } }, "Network and Team are separate features. Team connections need mutual acceptance."),
+        h("p", { style: { marginTop: 8 } }, "Team connections need mutual acceptance."),
         COMP_RULES20.map((r) => sec(r[0], h("p", null, r[1]))),
         sec("Fair participation", h("p", null, "Only genuine accounts and authentic professional connections qualify. Duplicate, fabricated or manipulated activity may be disqualified following review."))
       )
@@ -538,85 +441,7 @@ const vipClaim20 = (s, patch) => {
   return { ...s, vipClaims: claims.concat([{ key, n, status, at }]), company: { ...c, vip: { status, n, at } } };
 };
 
-const vipFoundingCount20 = (state) => (state.vipClaims || []).filter((x) => x.status === "founding").length;
-
-/* FF Staff launch box (v17.4.6.1): Be first in line for Gold. Launch messaging only: no counter, no automatic
-   Gold enrolment. Eligibility is recorded once per company at its first confirmed hire (goldClaims17, see
-   goldClaim17 in autofill.jsx); this box only reads it. */
-const GOLD20 = {
-  limit: 100,
-  tiles: [
-    { k: "marketing", t: "Marketing", img: "gold_marketing", d: ["We help promote your company across FireFlair, so more hosts and businesses find you."], story: "how-to-get-mobile-bar-bookings" },
-    { k: "training", t: "Staff training and equipment", img: "gold_training", d: ["We help train your team and provide them with cocktail equipment."] },
-    { k: "events", t: "Smaller events", img: "gold_events", d: ["We can help you run smaller events under your own brand."], story: "small-cocktail-event-profitability" },
-    { k: "brand", t: "Your brand", img: "gold_brand", d: ["Your cocktails, your staff and your events, booked through FireFlair."], story: "signature-cocktail-services-on-ff-party" },
-  ],
-};
-
-function GoldLaunch20() {
-  const h = React.createElement;
-  const { state } = useStore();
-  const nav = useHireNav();
-  const [box, setBox] = useState(null);
-  const IM = window.FF_IMG || {};
-  const cur = box === null ? null : GOLD20.tiles[box];
-  const key = goldKey17(state);
-  const mine = key && (state.goldClaims17 || []).find((x) => x.key === key);
-  const story = cur && cur.story && typeof JR17 !== "undefined" && JR17[cur.story] ? JR17[cur.story] : null;
-  const read = () => { const id = cur.story; setBox(null); setTimeout(() => window.dispatchEvent(new CustomEvent("ff-openstory", { detail: id })), 60); };
-  return h("section", { className: "ff-sect", id: "ff-gold", "aria-labelledby": "ff-gold-h" },
-    h("style", null, PROMO_CSS20 + PROMO_BOX_CSS20 + ".ff-gold20-tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}.ff-gold20-t{position:relative;display:flex;align-items:flex-end;aspect-ratio:1/1;padding:10px;border-radius:16px;corner-shape:squircle;border:1px solid rgba(201,162,75,.45);background:#1C0E12 center/cover no-repeat;color:#F4EBD6;font:inherit;text-align:left;cursor:pointer;overflow:hidden}.ff-gold20-t:before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,10,9,0) 35%,rgba(11,10,9,.85))}.ff-gold20-t b{position:relative;font-size:13.5px;line-height:1.2;overflow-wrap:normal;word-break:normal}@media(max-width:640px){.ff-gold20-tiles{grid-template-columns:repeat(2,1fr)}}"),
-    h("div", { className: "ff-cp20" },
-      h("div", { className: "ff-cp20-in" },
-        h("div", null,
-          h("div", { className: "ff-cp20-eye" }, h(Coin, { size: 34, tier: "gold" }), h("span", null, "FF Staff launch · Gold")),
-          h("h2", { id: "ff-gold-h" }, "Be first in line for Gold"),
-          h("p", null, "The first " + GOLD20.limit + " companies to sign up and confirm a hire through FF Staff will be eligible for priority access to our Gold business package."),
-          mine ? h("span", { className: "ff-cp20-date" }, mine.n <= GOLD20.limit ? "Your company is in line for Gold" : "Your first hire is confirmed") : null,
-          h("div", { className: "ff-cp20-btns" }, h(ShineButton, { onClick: nav.toEvent }, "Hire staff"))),
-        h("div", null,
-          h("div", { className: "ff-gold20-tiles", role: "group", "aria-label": "What Gold includes" },
-            GOLD20.tiles.map((t, i) => h("button", { key: t.k, type: "button", className: "ff-gold20-t", style: IM[t.img] ? { backgroundImage: "url(" + IM[t.img] + ")", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" } : undefined, onClick: () => setBox(i) }, h("b", null, t.t)))),
-          h("div", { className: "ff-cp20-url" }, "FFStaff.uk")))),
-    h(Sheet, { open: box !== null, onClose: () => setBox(null), title: cur ? cur.t : "", center: true },
-      cur ? h("div", { className: "ff-cp20r" }, cur.d.map((p, i) => h("p", { key: i }, p)),
-        story ? h(Button, { variant: "ghost", onClick: read }, "Read: " + story.title) : null) : null));
-}
 
 
-function VipFounding20() {
-  const h = React.createElement;
-  const { state, dispatch } = useStore();
-  const [info, setInfo] = useState(false);
-  const [box, setBox] = useState(null);
-  const cfg = FF_VIP_CONFIG;
-  const lim = cfg.foundingLimit.toLocaleString("en-GB");
-  const vip = (state.company || {}).vip;
-  const left = cfg.showRemaining ? Math.max(0, cfg.foundingLimit - vipFoundingCount20(state)) : null;
-  const go = () => { dispatch({ type: "TAB", tab: "profile" }); window.scrollTo(0, 0); };
-  const sec = (t, body) => h("div", { key: t }, h("h3", { className: "ff-label" }, t), body);
-  const cur = box === null ? null : cfg.benefits[box];
-  return h("section", { className: "ff-sect", id: "ff-vip", "aria-labelledby": "ff-vip-h" },
-    h("style", null, PROMO_CSS20 + PROMO_BOX_CSS20),
-    h("div", { className: "ff-cp20 big" },
-      h("div", { className: "ff-cp20-in" },
-        h("div", null,
-          h("div", { className: "ff-cp20-eye" }, h(Coin, { size: 40, tier: "gold" }), h("span", null, "VIP Host Card")),
-          h("h2", { id: "ff-vip-h" }, "You’re invited to VIP."),
-          h("p", null, "Be one of our first " + lim + " VIP Hosts and enjoy exclusive FireFlair rates, special offers and member benefits."),
-          left !== null ? h("span", { className: "ff-cp20-date" }, left.toLocaleString("en-GB") + " founding places left") : null,
-          h("div", { className: "ff-cp20-btns" },
-            h(LockedBtn17, { shine: true }, vip ? "Open your VIP Host Card" : "Create your VIP Host Card"),
-            h(Button, { onClick: () => setInfo(true) }, "VIP details"))),
-        h("div", null,
-          h("div", { className: "ff-cp20-boxes" }, cfg.benefits.map((b, i) => h("button", { key: b.t, type: "button", className: "ff-cp20-box", onClick: () => setBox(i) }, h("b", null, b.t), h("span", null, b.s)))),
-          h("div", { className: "ff-cp20-url" }, "FFParty.uk")))),
-    h(Sheet, { open: box !== null, onClose: () => setBox(null), title: cur ? cur.t : "", center: true },
-      cur ? h("div", { className: "ff-cp20r" }, cur.d.map((p, i) => h("p", { key: i }, p))) : null),
-    h(Sheet, { open: info, onClose: () => setInfo(false), title: "VIP Host Card", center: true },
-      h("div", { className: "ff-cp20r" },
-        sec("What it is", h("p", null, "A free membership benefit. It is not a subscription or a contract, and there is nothing to cancel.")),
-        sec("Founding VIP", h("p", null, "The first " + lim + " qualifying VIP Host Card registrations receive Founding VIP status, saved against the account. One per account.")),
-        sec("Benefits", h("ul", null, cfg.benefits.map((b) => h("li", { key: b.t }, b.t + ": " + b.s)))),
-        sec("Final terms", h("div", null, h("p", null, "To be confirmed before launch:"), ["Eligible FireFlair rates", "Special member offers", "Qualifying registration definition", "Offer end date", "Promoter details"].map((t) => h("span", { key: t, className: "tbc" }, t + ": to be confirmed")))))));
-}
+
+

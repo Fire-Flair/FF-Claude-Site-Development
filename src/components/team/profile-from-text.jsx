@@ -200,74 +200,26 @@ function ExtractionStatus({ ex }) {
 }
 
 
+/* Your own card's Share (v1.72): the same pop-up as a profile's Share (CardShareView17), nothing below the buttons. */
 function ShareCardSheet({ open, onClose }) {
   const { state, dispatch } = useStore();
-  const [phone, setPhone] = useState("");
-  const [sent, setSent] = useState(null);
-  const [busy, setBusy] = useState(false);
-  useEffect(() => {
-    if (open) {
-      setPhone("");
-      setSent(null);
-      setBusy(false);
-    }
-  }, [open]);
   if (!open)
     return null;
   const tag = state.auth.status === "signedIn" ? state.auth.tag || state.session.tag : null;
-  const ok = phone.replace(/\D/g, "").length >= 9;
-  const send = async () => {
-    if (!ok || busy)
-      return;
-    setBusy(true);
-    try {
-      const r = await PROFILE_ADAPTER.shareTo(tag, phone);
-      setSent(r.sentTo);
-      dispatch({ type: "TOAST", toast: `Card sent to ${r.sentTo}` });
-    } finally {
-      setBusy(false);
-    }
-  };
-  const phoneUi = React.createElement(React.Fragment, null, React.createElement("p", {
-    className: "ff-body",
-    style: { marginTop: 0, fontSize: 15 }
-  }, "Type someone's phone number here to share your card with them."), React.createElement(Field, {
-    label: "Phone number"
-  }, React.createElement("input", {
-    className: "ff-input",
-    type: "tel",
-    inputMode: "tel",
-    autoComplete: "off",
-    placeholder: "+44 7700 900000",
-    value: phone,
-    autoFocus: FF_FINE_POINTER && (true),
-    onChange: (e) => setPhone(e.target.value),
-    onKeyDown: (e) => e.key === "Enter" && send()
-  })), React.createElement(Btn, {
-    variant: "primary wide",
-    disabled: !ok || busy,
-    onClick: send
-  }, busy ? React.createElement(Loader2, {
-    size: 14,
-    className: "ff-spin"
-  }) : React.createElement(WhatsAppIcon, {
-    size: 15
-  }), " Send my card"));
-  if (tag && !sent) {
+  if (tag) {
     const me = meAsStaff(state.profile, state.session);
     /* v17.22: once the profile is complete, your own card's Share sends your join link (the code is already in it: no ?r=). */
     const join = profileBasics17(state);
     return React.createElement(CardShareSheet17, {
       open: true, onClose, title: SHARE_TITLE17, message: SHARE_MSG17, url: inv17Link(tag),
-      noRef: join, fileName: (join ? "fireflair-join-" : "fireflair-") + cx17Slug(tag),
-      extra: React.createElement("div", { style: { marginTop: 14 } }, phoneUi)
+      noRef: join, fileName: (join ? "fireflair-join-" : "fireflair-") + cx17Slug(tag)
     }, React.createElement(PlayerCard, { person: me, format: "full", themeKey: state.profile.theme }));
   }
   return React.createElement(Sheet, {
     open: true,
     onClose,
     title: "Share your card"
-  }, !tag ? React.createElement(React.Fragment, null, React.createElement("p", {
+  }, React.createElement("p", {
     className: "ff-body",
     style: { marginTop: 0 }
   }, "Create your FF Tag first — then you can share your card."), React.createElement(Btn, {
@@ -281,27 +233,7 @@ function ShareCardSheet({ open, onClose }) {
     }
   }, React.createElement(User, {
     size: 14
-  }), " Join the Team")) : sent ? React.createElement(React.Fragment, null, React.createElement("div", {
-    className: "ff-frame",
-    style: { padding: 16, textAlign: "center" }
-  }, React.createElement(Check, {
-    size: 22,
-    color: "var(--ok)",
-    style: { marginBottom: 6 }
-  }), React.createElement("p", {
-    className: "ff-body",
-    style: { margin: 0 }
-  }, "Sent to ", React.createElement("b", null, sent), ".")), React.createElement("div", {
-    style: { height: 10 }
-  }), React.createElement(Btn, {
-    variant: "ghost wide",
-    onClick: () => {
-      setSent(null);
-      setPhone("");
-    }
-  }, React.createElement(Plus, {
-    size: 13
-  }), " Share with someone else")) : null);
+  }), " Join the Team"));
 }
 
 
@@ -392,7 +324,7 @@ function ReviewSheet({ open, person, shiftId, onClose }) {
 
 
 
-/* Ask anyone in your network for a review/reference. If they don't have one
+/* Ask anyone on your team for a review/reference. If they don't have one
    posted yet, the fallback is simply to share your card with them. */
 function AskForReviewSheet({ open, onClose }) {
   const { state, dispatch } = useStore();
@@ -412,12 +344,12 @@ function AskForReviewSheet({ open, onClose }) {
   return (
     <Sheet open onClose={onClose} title="Ask for a review">
       <p className="ff-body" style={{ marginTop: 0 }}>
-        Anyone in your network can leave you a review or a reference, whether or not you've worked an event
+        Anyone on your team can leave you a review or a reference, whether or not you've worked an event
         together on FireFlair — most people you'd ask have worked with you somewhere.
       </p>
       {network.length === 0 ? (
         <div className="ff-frame" style={{ padding: 14, marginTop: 10 }}>
-          <p className="ff-body" style={{ margin: "0 0 10px" }}>Nobody in your network yet. Share your card instead — they can send you a review once they have it.</p>
+          <p className="ff-body" style={{ margin: "0 0 10px" }}>Nobody on your team yet. Share your card instead — they can send you a review once they have it.</p>
           <Btn variant="primary wide" onClick={() => { dispatch({ type: "TOAST", toast: "Link copied" }); onClose(); }}>
             <ShareUp17 size={14} /> Share my card
           </Btn>

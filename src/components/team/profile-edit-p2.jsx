@@ -69,11 +69,10 @@ function PE2TopSlots({ profs }) {
 }
 
 
-/* The Bar ladder, entry to top: 1 Barback … 5 Mixologist, shown top down (p2/pfb: Barback first and smallest,
-   Mixologist last and largest). Every other category is alphabetical. */
+/* Bar keeps its entry-to-top order, Barback first, Mixologist last; every other category is alphabetical. */
 const PE2_LADDER = ["Barback", "Bartender", "Cocktail Bartender", "Flair Bartender", "Mixologist"];
 const PE2_CATS = PROFESSION_CATEGORIES.map(c => ({
-  key: c.key, ranked: c.key === "Bar",
+  key: c.key,
   list: c.key === "Bar" ? PE2_LADDER : [...c.suggested].sort((a, b) => a.localeCompare(b)),
 }));
 /* p2/pubprof: Languages live on the Profile Card and Experience has its own section, so neither is an Attribute here. */
@@ -114,19 +113,11 @@ const pe2Title = (t) => String(t).trim().replace(/\s+/g, " ").replace(/\b\w/g, c
 /* A typed name that matches a listed profession (any case) becomes that profession. */
 const pe2Listed = (t) => ALL_PROFESSIONS.find(p => p.name.toLowerCase() === String(t).trim().toLowerCase());
 
-function PE2StairMark({ size = 30 }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 30 30" aria-hidden="true">
-      {[0, 1, 2, 3, 4].map(i => <rect key={i} x={1 + i * 5.8} y={24 - i * 5} width={4.6} height={5 + i * 5} rx={1.4} fill="currentColor" opacity={0.45 + i * 0.13} />)}
-    </svg>
-  );
-}
-
 /* Shrink, never split: the longest word decides the size. */
 const pe2Fit = (t) => { const L = Math.max(...String(t).split(/\s+/).map(w => w.length)); return L >= 13 ? "14.5px" : L >= 11 ? "15.5px" : "17px"; };
 
-/* The category's mark: the Bar ladder's steps, Other a spark (GroupIcon gives Other the Front of House people icon). */
-const pe2CatIcon = (k, size) => k === "Bar" ? <PE2StairMark size={size + 2} /> : k === "Other" ? <Sparkles size={size} strokeWidth={1.6} /> : <GroupIcon group={k} size={size} color="currentColor" />;
+/* The category's mark: GroupIcon's (Bar a cocktail glass, Alex 18 Nov 22:16), Other a spark (GroupIcon gives Other the Front of House people icon). */
+const pe2CatIcon = (k, size) => k === "Other" ? <Sparkles size={size} strokeWidth={1.6} /> : <GroupIcon group={k} size={size} color="currentColor" />;
 
 /* FireFlair asks which category a typed profession belongs to when it can't place it (Other included). */
 function PE2Which({ P }) {
@@ -211,7 +202,7 @@ function PE2ProfCats({ P }) {
 const pe2TileFs = (t) => { const L = Math.max(...String(t).split(/\s+/).map(w => w.length)); return L >= 13 ? "clamp(9.5px,2.6vw,13.5px)" : L >= 10 ? "clamp(10.5px,2.9vw,13.5px)" : undefined; };
 
 /* prof-inline (Alex, 18 Nov 21:49): one category's professions in a panel under the grid row, no pop-up. The professions
-   are chips that wrap across the panel (the Bar ladder keeps its order); the member's own professions in this category
+   are chips that wrap across the panel (Bar keeps its order); the member's own professions in this category
    show as chosen chips; "Add your own" puts a typed profession under this category (a listed name stays that profession). */
 const PE2_GRID_COLS = 4;
 function PE2CatPanel({ P, c }) {
@@ -228,11 +219,11 @@ function PE2CatPanel({ P, c }) {
     setQ("");
   };
   return (
-    <div id="pe2-cat-panel" className={"pe2-cp" + (c.ranked ? " bar" : "")} role="region" aria-label={label}>
+    <div id="pe2-cat-panel" className="pe2-cp" role="region" aria-label={label}>
       <div className="pe2-cp-h"><span className="ic" aria-hidden="true">{pe2CatIcon(c.key, 18)}</span><span className="t" style={{ fontSize: pe2CpFs(label) }}>{label}</span></div>
       {(c.list.length > 0 || mineHere.length > 0) && (
         <div className="pe2-cp-l" role="group" aria-label={label}>
-          {c.list.map((x, i) => <PE2Chip key={x} name={x} on={P.has(x)} step={c.ranked ? i + 1 : 0} onClick={() => P.toggle(x)} />)}
+          {c.list.map(x => <PE2Chip key={x} name={x} on={P.has(x)} onClick={() => P.toggle(x)} />)}
           {mineHere.map(r => <PE2Chip key={r.id} name={r.name} on onClick={() => P.remove(r)} />)}
         </div>
       )}
@@ -248,23 +239,12 @@ function PE2CatPanel({ P, c }) {
 const pe2CpFs = (t) => { const L = Math.max(...String(t).split(/\s+/).map(w => w.length)); return L >= 13 ? "clamp(14px,4.2vw,18px)" : undefined; };
 
 /* prof-inline: a compact chip; chosen is burgundy with gold text and a tick, not chosen is white with a "+". */
-function PE2Chip({ name, on, onClick, step }) {
+function PE2Chip({ name, on, onClick }) {
   return (
     <button type="button" className={"pe2-chip" + (on ? " on" : "")} aria-pressed={on} onClick={onClick}>
-      {step ? <span className="pe2-ci-step" style={{ "--h": step }} aria-label={`Step ${step} of 5`}><i /></span> : null}
       <span className="nm">{name}</span>
       <span className="mk" aria-hidden="true">{on ? <Check size={14} strokeWidth={2.8} /> : <Plus size={14} strokeWidth={2.4} />}</span>
     </button>
-  );
-}
-
-/* p2/pfb: a profession's level, five grey diamonds filling in (the earlier system, as on the live FF Team site). */
-function PE2Level({ r }) {
-  const n = r.level || 0;
-  return (
-    <span className="ff-proflevel pe2-lv" role="img" aria-label={n ? `Level ${n} of 5, ${professionLevelTitle(n)}` : "Level not set"}>
-      {[1, 2, 3, 4, 5].map(i => <i key={i} className={i <= n ? "on" : ""} />)}
-    </span>
   );
 }
 
@@ -292,13 +272,15 @@ function PE2Overview({ records }) {
   return (
     <>
       <style>{PE2_CSS}</style>
+      {/* about-first (Alex, 18 Nov 22:19): About Me sits above Professions, on the edit page and the published profile. */}
+      <CreatorAboutMe top />
       <section ref={profsRef} className="ff-pp ff-pp21 pp-sec" aria-labelledby="pe2-profs-h">
         <div className="ff-pp-head"><h2 id="pe2-profs-h" className="ff-about-h">Professions</h2></div>
         {profs.length > 0 && (
           <PE2TopSlots profs={profs} />
         )}
         {profs.length > 0 && (
-          <ProfTiles21 items={profs} def={BASE_CATEGORIES.professions} onOpen={(r) => setOpenProf(r)} extra={(r) => <PE2Level r={r} />} top={FEATURE_LIMIT}
+          <ProfTiles21 items={profs} def={BASE_CATEGORIES.professions} onOpen={(r) => setOpenProf(r)} top={FEATURE_LIMIT}
             tail={<div role="listitem" className="ff-pt21-slot"><PE2AddProf on={adding} onClick={() => setAdding(!adding)} /></div>} />
         )}
         {(adding || !profs.length) && (
@@ -307,8 +289,6 @@ function PE2Overview({ records }) {
           </div>
         )}
       </section>
-      {/* about-overview (Alex, 18 Nov 21:17): About Me between Professions and Attributes, as on the published profile. */}
-      <CreatorAboutMe top />
       <section className="ff-pp ff-pp21 pp-sec" aria-labelledby="pe2-attr-h">
         <div className="ff-pp-head"><h2 id="pe2-attr-h" className="ff-about-h">Attributes</h2></div>
         <div className="ff-mrow ff-acar pe2-rail" role="list" aria-label="Attributes">
@@ -360,57 +340,111 @@ function PE2Overview({ records }) {
    split into To answer / Answered with a colour key, a left/right row of cards. Tapping a card opens its answer box right
    under the row (Yes / No, then a type box) instead of a sheet; the answer shows on the card at once and it moves to
    Answered. Your own question: Yes / No, then type it and press Enter. */
-function PE2Answer({ q, value, onAnswer, onClose }) {
+/* qa-cards (Alex, 18 Nov 22:21): each Question Card is answered on the card itself. Its Answer area holds the answers as
+   buttons (Yes / No, or the question's own options, e.g. I drive / Public transport / Other) and a type box. No box
+   below the cards and no pop-up. The 11th card is "Create your own question": the question is typed onto the card and
+   answered Yes / No or typed, which replaces the separate Yes / No / Type your own question box. */
+function PE2QCard({ q, value, onAnswer, label }) {
   const [txt, setTxt] = useState("");
+  const answered = isAnswered(value);
+  const c = answered ? QUESTION_DONE : questionGroupColor(q.group);
+  const groupLabel = label || (q.mine ? "My question" : ((QUESTION_GROUPS.find(g => g.key === q.group) || {}).label || q.group));
   const opts = q.type === "text" ? ["Yes", "No"] : (q.options || ["Yes", "No"]);
+  const v = String(Array.isArray(value) ? value.join(", ") : (value || ""));
+  const isOpt = opts.includes(v) || (q.detail && v.startsWith(q.detail.option + " —"));
+  const on = (o) => v === o || (q.detail && o === q.detail.option && v.startsWith(o + " —"));
   const send = () => {
     const t = txt.trim();
     if (!t) return;
-    const pre = q.detail && String(value || "").startsWith(q.detail.option) ? `${q.detail.option} — ` : "";
-    onAnswer(pre + t, true);
+    const pre = q.detail && (v === q.detail.option || v.startsWith(q.detail.option + " —")) ? `${q.detail.option} — ` : "";
+    onAnswer(pre + t);
     setTxt("");
   };
-  const on = (o) => value === o || (q.detail && o === q.detail.option && String(value || "").startsWith(o + " —"));
+  const ph = q.detail && on(q.detail.option) ? (q.detail.placeholder || q.detail.label) : (q.placeholder || "Type");
   return (
-    <div className="pe2-qa-ans" data-qid={q.id}>
-      <div className="pe2-qa-ans-q">{q.text}</div>
-      <div className="pe2-q-opts" role="group" aria-label={q.text}>
-        {opts.map(o => <button key={o} type="button" className={"pe2-opt" + (on(o) ? " on" : "")} aria-pressed={!!on(o)}
-          onClick={() => onAnswer(o, !(q.detail && o === q.detail.option))}>{o}</button>)}
+    <CardFrame as="div" tier="standard" theme={{ bg: c.bg, ink: c.ink, sub: c.sub, rule: c.rule, dark: true }}
+      className={"ff-qcard pe2-qc" + (answered ? " ff-qdone" : "")} style={{ width: CARD_W.question, "--qc-ink": c.ink, "--qc-sub": c.sub, "--qc-rule": c.rule }}>
+      <span className="pe2-qc-grp">{groupLabel}</span>
+      {answered && <span className="ff-qbadge" title="Answered"><TickGlyph size={16} /></span>}
+      <div className="pe2-qc-q">{q.text}</div>
+      <div className="pe2-qc-ans">
+        <span className="pe2-qc-k">Answer</span>
+        {answered && !isOpt && <span className="pe2-qc-typed">{v}</span>}
+        <div className="pe2-qc-opts" role="group" aria-label={q.text}>
+          {opts.map(o => <button key={o} type="button" className={"pe2-qc-opt" + (on(o) ? " on" : "")} aria-pressed={!!on(o)} onClick={() => onAnswer(o)}>{o}</button>)}
+        </div>
+        <form className="pe2-qc-type" onSubmit={(e) => { e.preventDefault(); send(); }}>
+          <input type="text" value={txt} maxLength={400} placeholder={ph} aria-label={`${q.text} — type your answer`} onChange={(e) => setTxt(e.target.value)} />
+          <button type="submit" className="pe2-qc-go" aria-label="Save answer" disabled={!txt.trim()}><CornerDownLeft21 size={14} strokeWidth={2.4} aria-hidden="true" /></button>
+        </form>
       </div>
-      <form className={"ff-type21 pe2-q-type" + (txt.trim() ? " has" : "")} onSubmit={(e) => { e.preventDefault(); send(); }}>
-        <input type="text" value={txt} maxLength={400} placeholder={(q.detail && q.detail.placeholder) || q.placeholder || "Your answer"} aria-label={`${q.text} — your answer`} onChange={(e) => setTxt(e.target.value)} />
-        <button type="submit" className="ff-type21-key" aria-label="Save answer"><span>Enter</span><CornerDownLeft21 size={15} strokeWidth={2.2} aria-hidden="true" /></button>
-      </form>
-      {q.mine && <DeleteMyQuestion q={q} onClose={onClose} />}
-    </div>
+      {q.mine && <PE2QDelete q={q} />}
+    </CardFrame>
   );
 }
+
+
+function PE2QDelete({ q }) {
+  const { dispatch } = useStore();
+  const [sure, setSure] = useState(false);
+  return (
+    <button type="button" className="pe2-qc-del" onClick={() => { if (!sure) return setSure(true); dispatch({ type: "MY_QUESTION_DELETE", id: q.id }); }}>
+      {sure ? "Tap again to delete" : "Delete question"}
+    </button>
+  );
+}
+
+
+/* The 11th card: Create your own question. Type the question on the card, then answer it Yes, No or by typing. */
+function PE2QCreate({ onCreate }) {
+  const [text, setText] = useState("");
+  const [txt, setTxt] = useState("");
+  const c = { bg: "linear-gradient(165deg,#4E1220,#230710)", ink: "#F6EDE4", sub: "#E2C27A", rule: "rgba(226,194,122,.32)" };
+  const ok = text.trim().length > 2;
+  const make = (val) => { if (!ok || !String(val || "").trim()) return; onCreate(text.trim(), String(val).trim()); setText(""); setTxt(""); };
+  return (
+    <CardFrame as="div" tier="standard" theme={{ bg: c.bg, ink: c.ink, sub: c.sub, rule: c.rule, dark: true }}
+      className="ff-qcard pe2-qc pe2-qc-new" style={{ width: CARD_W.question, "--qc-ink": c.ink, "--qc-sub": c.sub, "--qc-rule": c.rule }}>
+      <span className="pe2-qc-grp">My question</span>
+      <textarea className="pe2-qc-qin" rows={3} maxLength={CUSTOM_QUESTION_MAX} value={text} placeholder="Create your own question"
+        aria-label="Create your own question" onChange={(e) => setText(e.target.value)} />
+      <div className="pe2-qc-ans">
+        <span className="pe2-qc-k">Answer</span>
+        <div className="pe2-qc-opts" role="group" aria-label="Answer your question">
+          {["Yes", "No"].map(o => <button key={o} type="button" className="pe2-qc-opt" disabled={!ok} onClick={() => make(o)}>{o}</button>)}
+        </div>
+        <form className="pe2-qc-type" onSubmit={(e) => { e.preventDefault(); make(txt); }}>
+          <input type="text" value={txt} maxLength={400} placeholder="Type" aria-label="Type your answer" onChange={(e) => setTxt(e.target.value)} />
+          <button type="submit" className="pe2-qc-go" aria-label="Add question" disabled={!ok || !txt.trim()}><CornerDownLeft21 size={14} strokeWidth={2.4} aria-hidden="true" /></button>
+        </form>
+      </div>
+    </CardFrame>
+  );
+}
+
 
 function PE2QA() {
   const { state, dispatch } = useStore();
   const qs = allQuestions(state);
   const [side, setSide] = useState("todo");
-  const [openId, setOpenId] = useState(null);
-  const [own, setOwn] = useState("");
-  const [yn, setYn] = useState("Yes");
+  /* Cards answered while this tab is showing stay where they are until the tab changes, so a card never jumps away mid-answer. */
+  const [stay, setStay] = useState([]);
   const canAdd = qs.filter(q => q.mine).length < CUSTOM_QUESTION_LIMIT;
   const isDone = (q) => isAnswered(answerOf(state, q));
-  const todo = qs.filter(q => !isDone(q));
-  const done = qs.filter(isDone);
+  const todo = qs.filter(q => !isDone(q) || (side === "todo" && stay.includes(q.id)));
+  const done = qs.filter(q => isDone(q) && !(side === "todo" && stay.includes(q.id)));
+  const nTodo = qs.filter(q => !isDone(q)).length, nDone = qs.length - nTodo;
   const list = side === "todo" ? todo : done;
   const present = QUESTION_GROUPS.filter(g => qs.some(q => q.group === g.key));
-  const openQ = qs.find(q => q.id === openId) || null;
-  const answer = (v, close) => {
-    dispatch({ type: "ANSWER", qid: openQ.id, value: v });
-    if (close) setOpenId(null);
+  const pick = (t) => { setSide(t); setStay([]); };
+  const answer = (q, v) => {
+    dispatch({ type: "ANSWER", qid: q.id, value: v });
+    setStay(s => s.includes(q.id) ? s : [...s, q.id]);
   };
-  const add = () => {
-    const text = own.trim();
-    if (!text || !canAdd) return;
-    dispatch({ type: "MY_QUESTION_ADD", question: { id: `my_${Date.now().toString(36)}`, text, type: "yesno" }, value: yn, visibility: "private" });
-    setOwn("");
-    setSide("done");
+  const create = (text, value) => {
+    const id = `my_${Date.now().toString(36)}`;
+    dispatch({ type: "MY_QUESTION_ADD", question: { id, text, type: "yesno" }, value, visibility: "private" });
+    setStay(s => [...s, id]);
   };
   return (
     <section className="ff-pp ff-pp21 pe2-qa" id="pe2-qa" aria-labelledby="pe2-qa-h">
@@ -423,35 +457,22 @@ function PE2QA() {
           <span className="ff-qa-meta">never on your public card</span>
         </div>
         <div className="ff-qa-tabs" role="tablist" aria-label="Question Cards">
-          <button type="button" role="tab" aria-selected={side === "todo"} className={side === "todo" ? "on" : ""} onClick={() => setSide("todo")}>To answer <span>{todo.length}</span></button>
-          <button type="button" role="tab" aria-selected={side === "done"} className={`done${side === "done" ? " on" : ""}`} onClick={() => setSide("done")}>Answered <span>{done.length}</span></button>
+          <button type="button" role="tab" aria-selected={side === "todo"} className={side === "todo" ? "on" : ""} onClick={() => pick("todo")}>To answer <span>{nTodo}</span></button>
+          <button type="button" role="tab" aria-selected={side === "done"} className={`done${side === "done" ? " on" : ""}`} onClick={() => pick("done")}>Answered <span>{nDone}</span></button>
         </div>
         <div className="ff-qa-legend">
           {present.map(g => <span key={g.key}><i style={{ background: questionGroupColor(g.key).bg, borderColor: questionGroupColor(g.key).sub }} />{g.label}</span>)}
           <span><i style={{ background: QUESTION_DONE.bg, borderColor: "#39C27E" }} />Answered</span>
         </div>
         <HScroll label={side === "todo" ? "Question Cards to answer" : "Answered Question Cards"} snap>
-          {list.length
-            ? list.map(q => (
-                <span key={q.id} data-qid={q.id} className={"pe2-qa-cardw" + (openId === q.id ? " sel" : "")}>
-                  <QuestionCard q={q} answer={answerOf(state, q)} label={q.mine ? "My question" : undefined} pending=" "
-                    onClick={() => setOpenId(id => (id === q.id ? null : q.id))} />
-                </span>
-              ))
-            : <div className="ff-qa-slot">{side === "todo" ? "All answered — nice work." : "Answered questions move here."}</div>}
+          {list.map(q => (
+            <span key={q.id} data-qid={q.id} className="pe2-qa-cardw">
+              <PE2QCard q={q} value={answerOf(state, q)} onAnswer={(v) => answer(q, v)} />
+            </span>
+          ))}
+          {side === "todo" && canAdd && <span className="pe2-qa-cardw"><PE2QCreate onCreate={create} /></span>}
+          {side === "done" && !list.length && <div className="ff-qa-slot">Answered questions move here.</div>}
         </HScroll>
-        {openQ && <PE2Answer key={openQ.id} q={openQ} value={answerOf(state, openQ)} onAnswer={answer} onClose={() => setOpenId(null)} />}
-        {canAdd && (
-          <div className="pe2-qa-own">
-            <div className="pe2-q-opts">
-              {["Yes", "No"].map(o => <button key={o} type="button" className={"pe2-opt" + (yn === o ? " on" : "")} aria-pressed={yn === o} onClick={() => setYn(o)}>{o}</button>)}
-            </div>
-            <form className={"ff-type21 pe2-q-type" + (own.trim() ? " has" : "")} onSubmit={(e) => { e.preventDefault(); add(); }}>
-              <input type="text" value={own} maxLength={CUSTOM_QUESTION_MAX} placeholder="Type your own question" aria-label="Your own question" onChange={(e) => setOwn(e.target.value)} />
-              <button type="submit" className="ff-type21-key" aria-label="Add question"><span>Enter</span><CornerDownLeft21 size={15} strokeWidth={2.2} aria-hidden="true" /></button>
-            </form>
-          </div>
-        )}
       </div>
     </section>
   );

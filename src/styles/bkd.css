@@ -46,8 +46,6 @@
 .ff .ff-bk-grp .ff-bk-hrow { margin-bottom:8px; }
 /* Bookings 2/2 (P3): bar package cards in the FF Party package card look, package tabs. */
 .ff .ff-bkpk-cell { flex:none; width:min(300px, calc(100vw - 72px)); scroll-snap-align:start; display:flex; }
-.ff .ff-bkpk-cell > .ff-pk17w { width:100%; }
-.ff .ff-bkpk-cell .ff-pk17.rd { height:100%; min-height:420px; }
 .ff #ff-bk-party .ff-hscroll { align-items:stretch; }
 .ff #ff-bk-party .ff-hitem { display:flex; }
 
@@ -253,82 +251,12 @@
 .ff #ff-bk-party .ff-pkc-earn.in input:focus-visible { outline:none; border:0; box-shadow:none; background:transparent; padding:0; }
 .ff #ff-bk-party .ff-pkc-earn.in input:focus-visible { outline:none !important; }
 
-/* pkc-tabs (Alex, 18 Nov 18:44): the Event brief and invoice opens as a floating panel the width of the screen,
-   rounded all round, with a gap below it; it fades in rather than rising from the bottom edge. */
-.ff .ff-scrim:has(.ff-doc17) { align-items:center; padding:14px 10px calc(28px + env(safe-area-inset-bottom,0px)); }
-.ff .ff-sheet:has(.ff-doc17) { width:100%; max-width:760px; max-height:calc(100dvh - 60px); border:1px solid var(--gold-dk); border-radius:24px; corner-shape:squircle; padding-bottom:14px; box-shadow:0 24px 60px rgba(0,0,0,.35); animation:ffdocin .2s ease-out; }
-.ff .ff-sheet:has(.ff-doc17) .ff-sheet-head { border-radius:24px 24px 0 0; }
+/* pkc-tabs (Alex, 18 Nov 18:44): the Event brief and invoice sits in the pop-up panel (base.css) with a margin round the document. */
 .ff .ff-sheet:has(.ff-doc17) .ff-doc17 { margin:14px 12px 0; }
-@keyframes ffdocin { from { opacity:0; transform:scale(.98); } to { opacity:1; transform:none; } }
-@media (prefers-reduced-motion:reduce) { .ff .ff-sheet:has(.ff-doc17) { animation:none; } }
 
-/* Create your own: type boxes styled as the card's own lines. */
-.ff #ff-bk-party .ff-pkc-tin { all:unset; box-sizing:border-box; display:block; width:100%; font:400 14px/1.4 var(--font-sans); color:#2A2224; border-bottom:1.5px dashed rgba(160,124,30,.55); padding:2px 0; resize:none; }
-.ff #ff-bk-party textarea.ff-pkc-tin { min-height:2.9em; }
-.ff #ff-bk-party .ff-pkc-tin::placeholder { color:#A29884; opacity:1; }
-.ff #ff-bk-party .ff-pkc-tin:focus { border-bottom-color:#8A6A14; }
-.ff #ff-bk-party .ff-pkc-tin:focus-visible { outline:none !important; }
-.ff #ff-bk-party .ff-pkc-tin.bad { border-bottom-color:#C0392B; }
-.ff #ff-bk-party .ff-pkc-tin:disabled { border-bottom-color:transparent; -webkit-text-fill-color:currentColor; opacity:1; }
-.ff #ff-bk-party .ff-pkc-tin.ti { margin:0 auto 6px; text-align:center; font:600 21px/1.2 var(--font-display); letter-spacing:.04em; text-transform:uppercase; color:#4A0F1B; max-width:92%; }
-.ff #ff-bk-party .ff-pkc-tin.ti::placeholder { color:#4A0F1B; opacity:.5; }
-.ff #ff-bk-party .ff-pkc-tin.tg { margin:0 auto; text-align:center; font-size:14px; color:#3A3030; max-width:92%; }
-.ff #ff-bk-party .ff-bk-tbc { margin:10px 2px 0; font-size:12.5px; color:#6B6355; }
-.ff #ff-bk-party textarea.ff-pkc-tin.ti, .ff #ff-bk-party textarea.ff-pkc-tin.tg { min-height:0; overflow:hidden; }
-.ff #ff-bk-party textarea.ff-pkc-tin { overflow:hidden; }
-
-/* v1.46 bookings (Alex, 18 Nov 20:06): Staffing keeps its place at the end of the Bar rail, on a platinum face so it reads
-   as different (it is an FF Staff role, not an FF Party package). Text keeps the cream card's colours: burgundy title
-   #4A0F1B on the darkest platinum is about 11:1, the gold-brown labels on the white rows about 5:1. */
-.ff #ff-bk-party .ff-pkc.cmp[data-pk17="svc_staffing"] {
-  background:linear-gradient(150deg,var(--color-platinum-hi) 0%,var(--color-platinum) 38%,var(--color-platinum-hi) 55%,var(--color-platinum) 78%,var(--color-platinum-hi) 100%);
-  border-color:var(--color-platinum-edge); }
-.ff #ff-bk-party .ff-pkc.cmp[data-pk17="svc_staffing"] .ff-pkc-tg { color:#2E2A2B; }
-.ff #ff-bk-party .ff-pkc.cmp[data-pk17="svc_staffing"] .ff-pkc-rows,
-.ff #ff-bk-party .ff-pkc.cmp[data-pk17="svc_staffing"] .ff-pkc-dbtn { border-color:rgba(142,148,156,.6); }
-.ff #ff-bk-party .ff-pkc.cmp[data-pk17="svc_staffing"] .ff-pkc-row + .ff-pkc-row { border-top-color:rgba(142,148,156,.35); }
-
-/* v1.52 (Alex, 18 Nov 20:35): the WhatsApp box has two rows: the WhatsApp line, then the Add FireFlair mark with
-   "Notifications will also be shown here." The mark sits in the same 46px slot as the WhatsApp icon. */
-.ff .ff-bk-wabox2 { flex-direction:column; align-items:stretch; gap:14px; }
-.ff .ff-bk-warow { display:flex; align-items:flex-start; gap:14px; min-width:0; }
-.ff .ff-bk-ffrow { align-items:center; padding-top:14px; border-top:1px solid rgba(18,140,126,.22); }
-.ff .ff-bk-ffico { flex:none; display:grid; place-items:center; width:46px; height:46px; border-radius:50%; background:var(--color-ink-warm,#16130F); }
-
-/* v1.46 bookings: FF Staff shifts, signed out: three steps in a row from 600px, stacked below. */
-.ff .ff-fs6-steps { list-style:none; margin:12px 0 0; padding:0; display:grid; gap:10px; }
-@media (min-width:600px) { .ff .ff-fs6-steps { grid-template-columns:repeat(3,minmax(0,1fr)); } }
-.ff .ff-fs6-steps li { position:relative; display:flex; align-items:center; gap:12px; min-height:64px; padding:12px 14px; background:#fff; border:1px solid rgba(160,124,30,.45); border-radius:18px; corner-shape:squircle; }
-.ff .ff-fs6-steps .n { flex:none; display:grid; place-items:center; width:26px; height:26px; border-radius:9px; corner-shape:squircle; background:var(--color-ox,#5C1220); color:var(--color-gold-leaf,#EDD58F); font:700 13px/1 var(--font-sans); }
-.ff .ff-fs6-steps .ic { flex:none; display:grid; place-items:center; width:36px; height:36px; border-radius:12px; corner-shape:squircle; background:var(--color-sand,#F3EAD5); color:var(--color-gold-dk,#7E611D); }
-.ff .ff-fs6-steps .t { min-width:0; font:600 15px/1.3 var(--display); color:#16130F; overflow-wrap:normal; word-break:normal; hyphens:none; }
-.ff .ff-fs6 .ff-bkconfirm17 { margin-top:14px; }
-
-/* bk-titles (Alex, 18 Nov 20:25): the gold gradient bar is for titles that are not inside a box. Inside the FF Party and
-   FF Staff boxes the title and its text sit flush left with no bar. */
-.ff #ff-bk-fireflair .ff-fb21-box > .ff-tlx::before { display:none; }
-.ff #ff-bk-fireflair .ff-fb21-box > .ff-tlx > .ff-bk-bh::before { display:none !important; }
-.ff #ff-bk-fireflair .ff-fb21-box > .ff-tlx > .ff-bk-bh { gap:0 !important; }
-.ff #ff-bk-fireflair .ff-fb21-box > .ff-tlx > .ff-bk-bh + p { padding-left:0; }
-/* bk-ipad: on iPad-size screens the three cards are photo + title + icon row (the description moves into the opened
-   panel, where it has the full width); desktop keeps the description on the card. */
-.ff-bkd .bkd-bds { display:none; }
-@media (min-width:470px) and (max-width:899px) {
-  .ff-bkd-row { gap:10px; }
-  .ff-bkd-row .bkd-ph { aspect-ratio:4 / 3; }
-  .ff-bkd-row .bkd-ph > b { font-size:clamp(15px,2.6vw,20px); left:10px; right:10px; }
-  .ff-bkd-row .bkd-tx { grid-template-columns:30px minmax(0,1fr) 18px; padding:10px 10px 11px; align-items:center; }
-  .ff-bkd-row .bkd-ds { visibility:hidden; height:0; overflow:hidden; }
-  .ff-bkd-row .bkd-chev { margin-top:0; justify-self:end; }
-  .ff-bkd-row .bkd-bds { display:block; margin:0 0 10px; font-size:14px; line-height:1.5; color:#4A443A; }
-}
 /* bkpop (v1.60): package pop-ups scroll inside themselves only (the page behind stays put), the terms pop-up keeps
    Accept and confirm in view at its foot, and the package slider keeps a sideways swipe to itself. */
-.ff .ff-sheet:has(.ff-doc17), .ff .ff-sheet:has(.ff-bkterms17) { overscroll-behavior:contain; -webkit-overflow-scrolling:touch; touch-action:pan-y; }
-.ff .ff-scrim:has(.ff-doc17), .ff .ff-scrim:has(.ff-bkterms17) { z-index:200; overscroll-behavior:contain; }
-.ff .ff-scrim:has(.ff-bkterms17) { align-items:center; padding:14px 10px calc(28px + env(safe-area-inset-bottom,0px)); }
-.ff .ff-sheet:has(.ff-bkterms17) { max-height:calc(100dvh - 60px); border:1px solid var(--gold-dk); border-radius:24px; corner-shape:squircle; padding-bottom:0; box-shadow:0 24px 60px rgba(0,0,0,.35); }
-.ff .ff-sheet:has(.ff-bkterms17) .ff-sheet-head { border-radius:24px 24px 0 0; }
+.ff .ff-sheet:has(.ff-doc17), .ff .ff-sheet:has(.ff-bkterms17) { touch-action:pan-y; }
 .ff .ff-sheet:has(.ff-bkterms17) .ff-bsec-acts { position:sticky; bottom:0; z-index:2; margin:10px -16px -16px !important; padding:12px 16px calc(14px + env(safe-area-inset-bottom,0px)); background:var(--paper); border-top:1px solid var(--rule); }
 .ff #ff-bk-party .ff-hscroll { overscroll-behavior-x:contain; touch-action:pan-x pan-y; }
 

@@ -56,7 +56,6 @@ const ctSame17 = (s, a, b) => a.companyKey === b.companyKey && ((a.personId && b
 const ctMembers17 = (s, companyKey) => [...new Set(ctAll17(s).filter(x => x.companyKey === companyKey && x.status === "accepted" && x.personId).map(x => x.personId))];
 
 
-const ctPending17 = (s, companyKey) => ctAll17(s).filter(x => x.companyKey === companyKey && x.status === "pending");
 
 
 /* Invitations from businesses waiting for the signed-in member (FF Team). */

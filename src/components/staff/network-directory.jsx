@@ -64,7 +64,6 @@ const PILLAR_OF_GROUP17 = { "Bar": "bar", "Front of House": "bar", "Management":
 const PILLAR_OF_CAT17 = { bar: "bar", dj: "ent", photo: "svc", svc: "svc", catering: "food" };
 
 
-const NET_PILLAR_TEXT17 = { bar: "Bartenders and bar companies", ent: "DJs and performers", svc: "Photo and more", food: "Chefs and caterers" };
 
 
 function browseCompanies17(state) {
@@ -97,68 +96,8 @@ function NetDirectory19(props) {
 }
 
 
-/* Packages under the pillars: FireFlair packages (Bar only), then professional and company packages. */
-function NetPackages20({ pillar }) {
-  const st = useStore(), state = st.state, dispatch = st.dispatch;
-  const [pop, setPop] = useState(null);
-  const isParty = state.role === "staff" && !!(hireSiteOf(state) || {}).party;
-  const all = pkgsOf17(state).filter(function (x) { return (x.cat || "bar") === pillar; });
-  const pkgs = all.filter(function (x) { return !x.special; });
-  const co = pkgs.filter(function (x) { return x.by || x.id === "svc_supplier"; });
-  const pro = pkgs.filter(function (x) { return !x.ff; });
-  const secs = pillar === "bar" ? [["Professional packages", pro], ["Company packages", co]] : [["Company packages", co], ["Professional packages", pro]];
-  const shown = secs.filter(function (x) { return x[1].length; });
-  const picked = bkOf17(state).pk;
-  const pick = function (svc) {
-    /* FF Team: Sign up. FF Staff: Create your own. Both go to the profile where that is done. */
-    if (!isParty) { dispatch({ type: "TAB", tab: "profile" }); window.scrollTo(0, 0); return; }
-    if (picked.includes(svc.id)) { dispatch({ type: "V11_SET", patch: { bk17: { ...bkOf17(state), pk: picked.filter(function (x) { return x !== svc.id; }) } } }); return; }
-    selectPkg17(state, dispatch, svc.id, true);
-  };
-  return React.createElement(React.Fragment, null,
-    pillar === "bar" && window.PartyPackages18 ? React.createElement(window.PartyPackages18, null) : null,
-    shown.map(function (x) {
-      return React.createElement("div", { className: "ff-br17-row", key: x[0] }, React.createElement("h3", { className: "ff-br17-h3" }, x[0]),
-        React.createElement(HScroll, { label: x[0] }, x[1].map(function (svc) { return React.createElement("div", { className: "ff-br17-co", key: svc.id }, React.createElement(state.role === "team" ? PkgCardOld17 : PkgCard17, { svc: svc, n: 0, noun: "person", on: picked.includes(svc.id), match: false, onToggle: function () { pick(svc); }, onInfo: function () { setPop(svc); } })); })));
-    }),
-    pop ? React.createElement(PkgSheet17, { svc: pop, qual: "", onClose: function () { setPop(null); } }) : null);
-}
 
 
-/* Your team (FF Staff, signed in): the business's accepted company members. Open, after Chefs, above FF Event Directory. */
-function CompanyTeam17() {
-  const { state, dispatch } = useStore();
-  const all = useDirectory();
-  const [inviting, setInviting] = useState(false);
-  const key = myCoKey17(state);
-  if (!key) return null;
-  const members = ctMembers17(state, key).map(id => findPerson(all, state, id)).filter(Boolean);
-  const pending = ctPending17(state, key);
-  const sel = state.selection || [];
-  return (
-    <section id="ff-coteam" style={{ marginTop: 20, scrollMarginTop: 70 }} aria-labelledby="ff-coteam-h">
-      <style>{CT17_CSS}</style>
-      <SectionHead icon={<I11.Users size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title={<span id="ff-coteam-h">Your team</span>} count={members.length} />
-      {members.length ? (
-        <HScroll label="Your team">
-          {members.map(p => <PlayerTile key={p.id} person={p} selected={sel.includes(p.id)} onClick={() => dispatch({ type: "VIEW", id: p.id })} />)}
-          <button type="button" className="ff-card ff-portrait ff-addtile" style={{ width: CARD_W.player }} onClick={() => setInviting(true)}>
-            <span style={{ textAlign: "center" }}><I11.UserPlus size={20} color="var(--gold-dk)" /><span className="ff-label" style={{ display: "block", marginTop: 6 }}>Invite your team</span></span>
-          </button>
-        </HScroll>
-      ) : (
-        <div className="ff-ct17-empty">
-          <span className="ic" aria-hidden="true"><I11.Users size={26} /></span>
-          <b>Build your company team</b>
-          <p>The people you invite join your team once they accept. You can book them by name through your company.</p>
-          <Btn variant="primary" onClick={() => setInviting(true)}><I11.UserPlus size={14} /> Invite your team</Btn>
-        </div>
-      )}
-      {pending.length > 0 && <ul className="ff-ct17-pend" aria-label="Waiting for a reply">{pending.map(x => <li key={x.id}><b>{x.name || (findPerson(all, state, x.personId) || {}).name || x.phone}</b><small>{x.dir === "invite" ? "Invited" : "Asked to join"}</small></li>)}</ul>}
-      <InviteTeamSheet17 open={inviting} onClose={() => setInviting(false)} companyKey={key} />
-    </section>
-  );
-}
 
 
 const CT17_CSS = ".ff .ff-ct17-empty{display:grid;justify-items:start;gap:8px;padding:18px;border:1.5px dashed rgba(126,97,29,.5);border-radius:20px;corner-shape:squircle;background:#FFFDF8}.ff .ff-ct17-empty .ic{color:var(--gold-dk)}.ff .ff-ct17-empty b{font-size:16px}.ff .ff-ct17-empty p{margin:0;font-size:14px;line-height:1.45;color:#3A342B}"
@@ -166,42 +105,6 @@ const CT17_CSS = ".ff .ff-ct17-empty{display:grid;justify-items:start;gap:8px;pa
   + ".ff .ff-ct17-sheet .row{display:flex;align-items:center;gap:10px;width:100%;padding:8px;border:1px solid rgba(126,97,29,.3);border-radius:14px;corner-shape:squircle;background:#fff;font:inherit;text-align:left;margin-bottom:6px;cursor:pointer}.ff .ff-ct17-sheet .row[aria-pressed=true]{border-color:#5C1220;background:#FBF1F3}.ff .ff-ct17-sheet .row span{flex:1;min-width:0}.ff .ff-ct17-sheet .row small{display:block;color:#6A6253}.ff .ff-ct17-sheet .new{display:grid;gap:8px;margin-top:12px}.ff .ff-ct17-sheet .new input{font-size:16px;padding:10px 12px;border:1px solid var(--rule,#d8ccb0);border-radius:12px;corner-shape:squircle}";
 
 
-/* Invite people to the company team: someone already on FireFlair, or anyone by name and mobile number (they join
-   FF Team first, then accept; the invitation waits for them against that number). */
-function InviteTeamSheet17({ open, onClose, companyKey }) {
-  const { state, dispatch } = useStore();
-  const all = useDirectory();
-  const [picked, setPicked] = useState([]);
-  const [nm, setNm] = useState(""), [ph, setPh] = useState("");
-  const [q, setQ] = useState("");
-  const coName = (state.company && state.company.name) || "Your company";
-  const taken = new Set(ctAll17(state).filter(x => x.companyKey === companyKey && (x.status === "accepted" || x.status === "pending")).map(x => x.personId).filter(Boolean));
-  const pool = all.filter(p => !p.isCompany && !taken.has(p.id) && (!q.trim() || personSearchText(p).includes(q.trim().toLowerCase()))).slice(0, 30);
-  const send = () => {
-    let n = 0;
-    picked.forEach(id => { const p = all.find(x => x.id === id); if (!p) return; dispatch({ type: "CT_INVITE", companyKey, companyName: coName, personId: p.id, tag: p.tag, name: p.name }); n++; });
-    if (nm.trim() && ph.replace(/\D/g, "").length >= 7) { dispatch({ type: "CT_INVITE", companyKey, companyName: coName, name: nm.trim(), phone: ph.trim() }); n++; }
-    dispatch({ type: "TOAST", toast: n ? `${n} invitation${n === 1 ? "" : "s"} sent on WhatsApp` : "Choose someone to invite" });
-    if (n) { setPicked([]); setNm(""); setPh(""); onClose(); }
-  };
-  return (
-    <Sheet open={open} onClose={onClose} title="Invite your team">
-      <div className="ff-ct17-sheet">
-        <label className="ff-fd-search"><A17I.Search size={14} /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search the network" aria-label="Search the network" /></label>
-        {pool.map(p => { const on = picked.includes(p.id); return (
-          <button key={p.id} type="button" className="row" aria-pressed={on} onClick={() => setPicked(on ? picked.filter(x => x !== p.id) : [...picked, p.id])}>
-            <Portrait src={p.photo} name={p.name} size={34} tier={p.tier} /><span><b>{p.name}</b><small>{p.profession}</small></span>{on && <I11.Check size={16} />}
-          </button>); })}
-        <div className="new">
-          <b>Someone not on FireFlair yet</b>
-          <input value={nm} onChange={(e) => setNm(e.target.value)} placeholder="Their name" aria-label="Their name" autoComplete="off" />
-          <input value={ph} onChange={(e) => setPh(e.target.value)} placeholder="Mobile number" aria-label="Their mobile number" inputMode="tel" autoComplete="off" />
-        </div>
-        <div style={{ marginTop: 12 }}><Btn variant="primary wide" onClick={send}><WhatsAppIcon size={15} /> Send invitations</Btn></div>
-      </div>
-    </Sheet>
-  );
-}
 
 
 /* The search text now being used by the network pages, read by the map so its pins follow the results. */
@@ -278,7 +181,6 @@ function NetBrowse17(props) {
       found.dir.length ? React.createElement(CompaniesSection, { title: "FF Event Directory", list: found.dir }) : null);
   }
   const groups = open ? Object.keys(PILLAR_OF_GROUP17).filter(function (g) { return PILLAR_OF_GROUP17[g] === open; }) : "";
-  const items = BCATS17.map(function (c) { return { k: c.k, t: c.label, s: NET_PILLAR_TEXT17[c.k], img: (window.FF_IMG || {})[BIMG17[c.k]] }; });
   /* FF Team (search passed in): no package explorer; the search sits under the Our professionals banner, then the five type drop-downs. */
   const teamSite = !!props.search && !props.noPackages;
   /* FF Staff (noPackages): no package explorer either; the map comes first and the search sits under Our professionals. */
@@ -294,8 +196,6 @@ function NetBrowse17(props) {
       React.createElement(NetDirectory20, null));
   }
   return React.createElement(React.Fragment, null,
-    noPkg ? null : React.createElement(BigHead20, { title: "Explore our packages" }),
-    noPkg ? null : React.createElement(PillarBox17, { label: "Explore our packages", open: open, items: items, onPick: function (k) { dispatch({ type: "V11_SET", patch: { netPillar17: k } }); } }, open ? React.createElement(NetPackages20, { pillar: open }) : null),
     /* Netmap: the search sits at the top, above the map. */
     !teamSite && props.search ? React.createElement("section", { id: "ff-net-search", style: { marginTop: 4, scrollMarginTop: 70 } }, props.search) : null,
     teamSite ? null : (props.after || null),
@@ -334,26 +234,6 @@ function CoQA17({ list, name }) {
   );
 }
 
-/* A company's Service Cards or Cocktail Cards, as people see them: tap one to open it. */
-function CoCardRow17({ type, list, by, tag }) {
-  const [view, setView] = useState(null);
-  const T = STUDIO17[type];
-  return (
-    <>
-      <HScroll label={type === "service" ? "Packages" : "Cocktails"}>
-        {list.map(x => (
-          <div key={x.id} className="ff-st17-item">
-            <div className="ff-st17-tap" role="button" tabIndex={0} aria-label={`Open ${T.name(x) || T.plate}`} onClick={() => setView(x)}
-              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setView(x); } }}>
-              <StudioPair17 type={type} x={x} site="FF Staff" by={by} tag={tag} size="sm" only />
-            </div>
-          </div>
-        ))}
-      </HScroll>
-      {view ? <CardPop17 type={type} x={view} site="FF Staff" by={by} tag={tag} onClose={() => setView(null)} /> : null}
-    </>
-  );
-}
 
 /* p2/copage (Alex 03:18): the company page in the same format as a person's page. Sections are Cinzel small-caps heads
    (ff-pp21), cards are the person page's theme cards (ff-agrp t-card, coloured by the company's card theme through cardTone17)
@@ -516,10 +396,6 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
   const coCos = co.mine ? [...partners, ...(state.netAdds17 || []).filter(id => String(id).startsWith("co_") && !partners.some(x => x.id === id)).map(id => companyById(state, id)).filter(Boolean)] : partners;
   const teamSite = state.role === "team" && state.auth && state.auth.status === "signedIn";
   const myRel = teamSite && ck ? ctMyStatus17(state, ck) : "";
-  const joinTeam = () => {
-    dispatch({ type: "CT_REQUEST", companyKey: ck, companyName: co.name || "", personId: "me", tag: state.auth.tag || "", name: state.profile.name || "" });
-    dispatch({ type: "TOAST", toast: `Request sent to ${co.name || "the company"}` });
-  };
   const inv = myRel === "invited" && ctInvitesForMe17(state).find(x => x.companyKey === ck);
   const back = () => { dispatch({ type: "VIEW_COMPANY", id: null }); window.scrollTo(0, 0); };
   const asPerson = { id: co.id, name: co.name || "this company", tag: co.slug, profession: co.kind, isCompany: true, photo: co.logo || null, tier: co.tier, companyKey: ck };
@@ -587,11 +463,11 @@ function CompanyPublic({ co: coIn, done, onEdit, slot } = {}) {
     <div className="ff-copub">
       <PublicHero media={(co.mediaList || []).map(m => ({ id: m.id, src: m.src, name: m.alt || "" }))} card={<><CompanyCardFace c={co} links />{done && shareBtn ? <div style={{ marginTop: 10, textAlign: "center" }}><CardShareBtn17 title={`${co.name || "Company"} on FireFlair`} url={`https://${CARD_DOMAIN}/${tag}`} fileName={"fireflair-" + cx17Slug(co.slug || co.name)} render={() => <CompanyCardFace c={co} />} label="Share Company Card" /></div> : null}</>} below={<>
       {!done && <BackBtn17 fallback={back} />}
-      {!done && !co.mine && !co.unclaimed && teamSite && ck && <div className="ff-copub-acts">
+      {!done && !co.mine && !co.unclaimed && teamSite && ck && (myRel === "member" || myRel === "requested" || inv) && <div className="ff-copub-acts">
         {myRel === "member" ? <Btn variant="wide" disabled><I11.Check size={14} /> On their team</Btn>
           : myRel === "requested" ? <Btn variant="wide" disabled><I11.Clock size={14} /> Request sent</Btn>
           : inv ? <div className="two"><Btn variant="primary" onClick={() => { dispatch({ type: "CT_DECIDE", id: inv.id, accept: true }); dispatch({ type: "TOAST", toast: `You're on ${co.name}'s team` }); }}><I11.Check size={14} /> Accept invitation</Btn><Btn onClick={() => dispatch({ type: "CT_DECIDE", id: inv.id, accept: false })}>Decline</Btn></div>
-          : <Btn variant="primary wide" onClick={joinTeam}><I11.UserPlus size={14} /> Join team</Btn>}
+          : null}
       </div>}
       {!done && !co.unclaimed && isStaff && team.length > 0 && <div className="ff-copub-acts">
         {isParty

@@ -1,11 +1,6 @@
 /* src/components/party/packages-browse.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
-const BCATS17 = [
-  { k: "bar", label: "Bar", Ic: S17I.Martini }, { k: "ent", label: "Entertainment", Ic: S17I.Music },
-  { k: "svc", label: "Services", Ic: S17I.Camera }, { k: "food", label: "Food", Ic: S17I.UtensilsCrossed },
-];
 
 
-const FFCAT17 = { svc_staffing: "svc" };
 
 
 /* v17.4.7: the three selling points come from the package catalogue. */
@@ -31,21 +26,14 @@ const DJ_PKGS17 = CONTENT_ADAPTER.djPackages();
 const DJ_IDS17 = DJ_PKGS17.map((x) => x.id);
 
 
-/* One DJ package per booking: choosing another swaps it in. */
-const pkFlip17 = (pk, id) => pk.includes(id) ? pk.filter((x) => x !== id) : [...pk.filter((x) => !(DJ_IDS17.includes(id) && DJ_IDS17.includes(x))), id];
 
 
-/* Preferred quality on FF Party: helps match packages and custom quotes. */
-const QUALITY17 = [{ k: "bronze", label: "Best value" }, { k: "silver", label: "Best balance" }, { k: "gold", label: "Best quality" }];
 
 
-const REC17 = { s: "up to 30 guests", m: "31 to 100 guests", l: "100+ guests", "s,m": "up to 100 guests", "m,l": "31+ guests" };
 
 
-const recOf17 = (b) => REC17[(b || []).join(",")] || "parties of any size";
 
 
-const lvl17 = (l) => (/^(bronze|silver|gold)$/i.test(l || "") ? "" : (l || ""));
 
 
 /* A company's own package (custom, DJ, bar supplier or sample) is not part of the booking flow in Phase Two. */
@@ -66,27 +54,8 @@ function pkgGuard17(s) {
 }
 
 
-function pkgsOf17(state) {
-  const ff = [...(V101.PARTY_SERVICES || []).map(sv => ({ ...sv, features: FEATS17[sv.id], cat: FFCAT17[sv.id] || "bar", bands: SVC_BANDS11[sv.id] || ALLB17, ff: true }))];
-  const bt = ff.find(x => x.id === "svc_bartending");
-  if (bt) ff.push({ ...bt, id: "svc_supplier", title: "Bar company supplier", tagline: "A bar company supplies the bar, the drinks and the team.", includes: "Bar, drinks and bartenders from one company",
-    role: "Bartender", ideal: "Parties that want everything supplied", time: "From 4 hours", noPrice: true, drinks: true, shop: false,
-    features: ["A bar company looks after your whole bar", "Bar, drinks and bartenders supplied", "Set-up, service and tidy-down included", "Chosen from FireFlair bar companies"] });
-  return ff;
-}
 
 
-/* The same pick buttons as the glassware: one or several. */
-function PkgPick17({ edit, multi, value = [], opts, onChange, cols = 3 }) {
-  if (!edit) return <b>{opts.filter(([k]) => value.includes(k)).map(([, l]) => l).join(", ") || (multi ? "All sizes" : "Not set")}</b>;
-  return (
-    <div className={`ff-c17-glass pk c${cols}`} role={multi ? "group" : "radiogroup"}>
-      {opts.map(([k, l]) => { const on = value.includes(k); return (
-        <button key={k} type="button" role={multi ? "checkbox" : "radio"} aria-checked={on} className={on ? "on" : ""}
-          onClick={() => onChange(multi ? (on ? value.filter(x => x !== k) : [...value, k]) : [k])}><small>{l}</small></button>); })}
-    </div>
-  );
-}
 
 
 /* What each FireFlair package is chosen from: the people who offer it (or the bar companies). */
@@ -174,11 +143,8 @@ const MOCKS17 = [
   keywords: r[3].slice(0, 3).map(x => x[1]), ings: r[3].map((x, j) => ({ id: "mk17_" + i + "_" + j, amt: x[0], unit: x[2] === "dash" ? "dash" : x[2] === "sprig" ? "sprig" : x[2] ? "piece" : "ml", name: x[1], buy: "" })) }));
 
 
-const ALLCK17 = [...CLASSICS17, ...MOCKS17];
 
 
-/* The cocktails chosen for an event, with servings (steps of 20), and a recipe scaled to those servings. */
-const cocktailLines17 = (state, evId) => { const sel = ((state.addons17 || {})[evId || "draft"]) || {}; return [...ALLCK17, ...myContent17(state, "cocktails")].filter(c => sel[c.id] > 0).map(c => ({ c, qty: sel[c.id] })); };
 
 
 const scaleAmt17 = (i, qty) => { const a = parseFloat(i.amt); if (!a) return "–"; const t = +(a * qty).toFixed(2), u = i.unit || "ml";
@@ -208,67 +174,10 @@ function Fold17({ id, icon, title, count, big, shut, children }) {
 }
 
 
-/* A classic cocktail in a pop-up: the card, then add it to the basket or to favourites. */
-function ClassicPop17({ c, onClose }) {
-  const { state, dispatch } = useStore();
-  const bk = bkOf17(state), fv = state.ckFav17 || [];
-  const inB = bk.ck.includes(c.id), inF = fv.includes(c.id);
-  const toggleB = () => { dispatch({ type: "V11_SET", patch: { bk17: { ...bk, ck: inB ? bk.ck.filter(x => x !== c.id) : [...bk.ck, c.id] } } }); if (!inB) dispatch({ type: "TOAST", toast: `${c.name} added to your basket` }); };
-  const toggleF = () => { dispatch({ type: "V11_SET", patch: { ckFav17: inF ? fv.filter(x => x !== c.id) : [...fv, c.id] } }); if (!inF) dispatch({ type: "TOAST", toast: `${c.name} added to your favourites` }); };
-  return (
-    <Sheet open onClose={onClose} title={c.name}>
-      <div className="ff-pop17 ff-ckpop17">
-        <Card17 kind="cocktail" tone="dark" plate={c.mock ? "Classic Mocktail" : "Classic Cocktail"} size="lg" url={CLASSIC_URL17}><CocktailFront17 c={c} /></Card17>
-        <div className="ff-ckpop17-act">
-          <button type="button" className={`pri${inB ? " on" : ""}`} aria-pressed={inB} disabled={!inB && bk.ck.length >= 10} onClick={toggleB}>{inB ? <><S17I.Check size={16} strokeWidth={2.6} /> In your basket</> : bk.ck.length >= 10 ? "Basket full" : <><S17I.Plus size={16} /> Add to basket</>}</button>
-          <button type="button" className={`sec${inF ? " on" : ""}`} aria-pressed={inF} onClick={toggleF}><S17I.Heart size={16} fill={inF ? "currentColor" : "none"} /> {inF ? "In your favourites" : "Add to favourites"}</button>
-        </div>
-      </div>
-    </Sheet>);
-}
 
 
-const byobOf17 = (state) => { const bart = pkgsOf17(state).find(x => x.id === "svc_bartending"); return bart && { ...bart, noPrice: true, shop: false, title: "BYOB", tagline: "Bring your own booze. We provide the bartender, you provide the drinks.", includes: "Our best value package",
-    features: ["A professional bartender for your event", "Bar set-up and drinks service", "You provide the drinks", "Our best value package"] }; };
 
 
-function CocktailBrowser17({ onPkg }) {
-  const [pop, setPop] = useState(null);
-  const B = useBk17();
-  const [mode, setMode] = useState("cocktails");
-  const [q, setQ] = useState("");
-  const { state } = useStore();
-  const bart = pkgsOf17(state).find(x => x.id === "svc_bartending");
-  const supp = pkgsOf17(state).find(x => x.id === "svc_supplier");
-  const byob = byobOf17(state);
-  const n = q.trim().toLowerCase();
-  const list = (mode === "mocktails" ? MOCKS17 : CLASSICS17).filter(c => !n || (c.name + " " + (c.keywords || []).join(" ")).toLowerCase().includes(n));
-  const stdItems = mode === "standard" ? [byob, supp].filter(x => x && (!n || (x.title + " bring your own booze supplier bar company").toLowerCase().includes(n))) : [];
-  return (
-    <Fold17 big id="ff-br17-ck" title="Choose your drinks" count={CLASSICS17.length + MOCKS17.length + 2}>
-      <div className="ff-ck17-bar">
-        <div className="sort" role="radiogroup" aria-label="Cocktails, mocktails or standard drinks">
-          {[["cocktails", "Cocktails"], ["mocktails", "Mocktails"], ["standard", "Standard drinks"]].map(([k, l]) => (
-            <button key={k} type="button" role="radio" aria-checked={mode === k} className={mode === k ? "on" : ""} onClick={() => setMode(k)}>{l}</button>))}
-        </div>
-        <label className="srch"><S17I.Search size={15} /><input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search drinks" aria-label="Search drinks" /></label>
-      </div>
-      {mode === "standard" ? (
-        stdItems.length ? <HScroll label="Standard drinks">{stdItems.map(x => <div className="ff-br17-co" key={x.title}><PkgCard17 svc={x} n={0} noun="" on={B.bk.pk.includes(x.id)} onToggle={() => B.togglePk(x.id)} onInfo={() => onPkg(x)} /></div>)}</HScroll>
-          : <p className="ff-br17-soon">No drinks match.</p>
-      ) : (<>
-        <p className="ff-br17-cksub">We recommend choosing 3 to 5 different drinks.</p>
-        {list.length ? <HScroll label={mode === "mocktails" ? "Mocktails" : "Cocktails"}>{list.map(c => (
-          <div key={c.id} className={`ff-br17-ckw${B.bk.ck.includes(c.id) ? " sel" : ""}`} data-ck17={c.id}>
-            <button type="button" className="ff-br17-ckc" aria-pressed={B.bk.ck.includes(c.id)} aria-label={`${c.name}, classic ${c.mock ? "mocktail" : "cocktail"}: ${B.bk.ck.includes(c.id) ? "selected" : "select"}`} onClick={() => B.toggleCk(c.id)}>
-              <Card17 kind="cocktail" tone="dark" plate={c.mock ? "Classic Mocktail" : "Classic Cocktail"} size="sm" url={CLASSIC_URL17}><CocktailFront17 c={c} /></Card17>
-            </button>
-            <button type="button" className="inf" aria-label={`${c.name}: details`} onClick={() => setPop(c)}><S17I.Info size={16} strokeWidth={2} /></button>
-          </div>))}</HScroll> : <p className="ff-br17-soon">No drinks match.</p>}
-      </>)}
-      {pop && <ClassicPop17 c={pop} onClose={() => setPop(null)} />}
-    </Fold17>);
-}
 
 
 /* Tips and requests on the booking confirmation, between the event invoice and FireFlair's own invoice. */
@@ -312,24 +221,12 @@ function orderPeople17(state, all, svcId, venue) {
 }
 
 
-const bkOf17 = (state) => ({ pk: [], ex: [], ck: [], pp: [], ...(state.bk17 || {}) });
 
 
-/* Tapping a card selects it (gold highlight) and puts it in the basket; tapping again takes it out. */
-function useBk17() {
-  const { state, dispatch } = useStore();
-  const bk = bkOf17(state);
-  const set = (b) => dispatch({ type: "V11_SET", patch: { bk17: b } });
-  const flip = (key, id) => set({ ...bk, [key]: bk[key].includes(id) ? bk[key].filter(x => x !== id) : [...bk[key], id] });
-  return { bk, togglePk: (id) => set({ ...bk, pk: pkFlip17(bk.pk, id) }), toggleEx: (id) => flip("ex", id), togglePp: (id) => flip("pp", id),
-    toggleCk: (id) => { if (!bk.ck.includes(id) && bk.ck.length >= 10) { dispatch({ type: "TOAST", toast: "Your basket is full" }); return; } flip("ck", id); } };
-}
 
 
-const SHOP17 = ["svc_bartending", "svc_mixology", "svc_flair"];
 
 
-const shop17 = (svc) => SHOP17.includes(svc.id) && svc.shop !== false;
 
 
 const ADDONS17 = [
@@ -363,22 +260,8 @@ const RTB_ADDONS17 = RTB_MENU17.flatMap(([name, i, m, p], n) => [i, m, p].map((p
 const ALLAX17 = [...ADDONS17, ...RTB_ADDONS17];
 
 
-function RtbAddons17() {
-  const { state } = useStore();
-  const B = useBk17();
-  const bk = bkOf17(state);
-  return React.createElement(Fold17, { big: true, shut: true, id: "ff-br17-rtb", title: "Raise the Bar cocktails", count: RTB_ADDONS17.length },
-    RTB_SIZES17.map(([k, label, note]) => React.createElement("div", { className: "ff-br17-row", key: k },
-      React.createElement("h3", { className: "ff-br17-h3" }, label + " · " + note),
-      React.createElement(HScroll, { label }, RTB_ADDONS17.filter((a) => a.rtb === k).map((a) => { const on = bk.ex.includes(a.id); return React.createElement("div", { className: "ff-br17-co", key: a.id },
-        React.createElement("button", { type: "button", className: "ff-ax17" + (on ? " sel" : ""), "aria-pressed": on, onClick: () => B.toggleEx(a.id) },
-          React.createElement("span", { className: "ic" }, React.createElement(a.Ic, { size: 26, strokeWidth: 1.5 })),
-          React.createElement("b", null, a.title), React.createElement("small", null, a.tagline), React.createElement("span", { className: "nt" }, a.note),
-          React.createElement("span", { className: "go" }, on ? React.createElement(React.Fragment, null, React.createElement(S17I.Check, { size: 13, strokeWidth: 2.6 }), " Selected") : "Select"))); })))));
-}
 
 
-const BIMG17 = { bar: "px_bar", ent: "dream_music_festivals", svc: "reward_photoshoot", food: "dream_food_festivals_markets" };
 
 
 const BTEXT17 = { bar: "Bar packages", ent: "Music and performers", svc: "Photo and more", food: "Catering" };

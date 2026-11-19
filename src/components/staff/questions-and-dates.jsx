@@ -7,95 +7,8 @@
 const CUSTOM_QUESTION_MAX = 200, CUSTOM_QUESTION_LIMIT = 10;
 
 
-function AddQuestionCard({ onClick }) {
-  return (
-    <button type="button" className="ff-qadd" style={{ width: CARD_W.question }} onClick={onClick} aria-label="Create your own question">
-      <span className="ff-qadd-plus"><Plus size={26} strokeWidth={2} /></span>
-      <b>Create your own question</b>
-    </button>
-  );
-}
 
 
-function NewQuestionSheet({ open, onClose, onAdded }) {
-  const { dispatch } = useStore();
-  const [question, setQuestion] = useState("");
-  const [yes, setYes] = useState(null);
-  const [text, setText] = useState("");
-  const [vis, setVis] = useState("private");
-  useEffect(() => {
-    if (open) {
-      setQuestion("");
-      setYes(null);
-      setText("");
-      setVis("private");
-    }
-  }, [open]);
-  if (!open)
-    return null;
-  const kind = yes !== null ? "yesno" : "text";
-  const ready = !!question.trim() && (yes !== null || !!text.trim());
-  const submit = () => {
-    if (!ready)
-      return;
-    dispatch({ type: "MY_QUESTION_ADD", question: { id: `my_${Date.now().toString(36)}`, text: question.trim(), type: kind }, value: kind === "yesno" ? yes ? "Yes" : "No" : text.trim(), visibility: vis });
-    onAdded && onAdded();
-    onClose();
-  };
-  return React.createElement(Sheet, {
-    open: true,
-    onClose,
-    title: "Create your own question"
-  }, React.createElement("form", {
-    onSubmit: (e) => {
-      e.preventDefault();
-      submit();
-    }
-  }, React.createElement(Field, {
-    label: "Your question",
-    hint: `${question.length} / ${CUSTOM_QUESTION_MAX}`
-  }, React.createElement("input", {
-    className: "ff-input",
-    value: question,
-    maxLength: CUSTOM_QUESTION_MAX,
-    onChange: (e) => setQuestion(e.target.value),
-    placeholder: "e.g. Can you work with flames?",
-    autoFocus: FF_FINE_POINTER && (true)
-  })), React.createElement("p", {
-    className: "ff-label",
-    style: { margin: "4px 0 8px" }
-  }, "Your answer"), React.createElement("div", {
-    style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 8 },
-    role: "radiogroup",
-    "aria-label": "Yes or No"
-  }, [true, false].map((v) => React.createElement(Btn, {
-    key: String(v),
-    variant: yes === v ? "primary" : "",
-    onClick: () => {
-      setYes(yes === v ? null : v);
-      setText("");
-    }
-  }, v ? "Yes" : "No"))), React.createElement(Field, {
-    label: "Or type your answer"
-  }, React.createElement("textarea", {
-    className: "ff-input",
-    rows: 3,
-    value: text,
-    maxLength: 2000,
-    onChange: (e) => {
-      setText(e.target.value);
-      if (e.target.value)
-        setYes(null);
-    },
-    placeholder: "Type your answer"
-  })), React.createElement("div", {
-    style: { margin: "0 0 14px" }
-  }, React.createElement(VisSwitch17, { value: vis, onChange: setVis })), React.createElement(Btn, {
-    type: "submit",
-    variant: "primary wide",
-    disabled: !ready
-  }, "Add question")));
-}
 
 
 function DeleteMyQuestion({ q, onClose }) {
@@ -145,7 +58,7 @@ function v11Reducer(s, a) {
     case "COMPANY_MEDIA_DELETE": { const c = s.company || {}; return { ...s, company: { ...c, media: (c.media || []).filter(m => m.id !== a.id) } }; }
     case "COMPANY_MEDIA_PATCH": case "COMPANY_MEDIA_MOVE": case "CO_SECTION_DELETE": case "CO_INFO_MIGRATE": case "CO_SEC_ADD": case "CO_SEC_PATCH": case "CO_SEC_MOVE": case "CO_SLUG_SET": return coShapeReducer17(s, a) || s;
     case "NOTES_SEEN": return notesSeen17(s);
-    /* Networking. Network is one tap, one way (a person or a company; no confirmation). Team is two way (TEAM_INVITE, then they accept).
+    /* Networking. Network is one tap, one way and only for companies (no confirmation). Team is two way (TEAM_INVITE, then they accept).
        One status per person: connStatus17(state, id) gives "team", "pending", "network" or "none". */
     case "NET_TOGGLE": {
       const n = s.netAdds17 || [], adding = !n.includes(a.id);
@@ -166,8 +79,13 @@ function v11Reducer(s, a) {
       if (!a.accept) return { ...s, teamAsks17: done };
       /* v17.4.6.1: accepting a company's invitation makes you a member of its team (and keeps it in your network). */
       if (a.ask.company) { const co = companyById(s, a.ask.fromId) || { name: a.ask.name }; return ct17Reducer({ ...s, teamAsks17: done, netAdds17: (s.netAdds17 || []).includes(a.ask.fromId) ? s.netAdds17 : [...(s.netAdds17 || []), a.ask.fromId] }, { type: "CT_ACCEPTED", companyKey: coKey17(co), companyName: co.name || a.ask.name, personId: "me", tag: (s.auth && s.auth.tag) || "", name: (s.profile && s.profile.name) || "", ref: a.ask.id }); }
-      return { ...s, teamAsks17: done, connections: s.connections.some(c => c.id === a.ask.fromId) ? s.connections : [...s.connections, { id: a.ask.fromId, name: a.ask.name, onFF: true, tag: a.ask.tag }] };
+      /* The inviter is told "<Name> is now on your team." (toId = the inviter; shown in their notifications). */
+      const mine = s.profile && String(s.profile.name || "").trim() || "Someone";
+      return { ...s, teamAsks17: done, connections: s.connections.some(c => c.id === a.ask.fromId) ? s.connections : [...s.connections, { id: a.ask.fromId, name: a.ask.name, onFF: true, tag: a.ask.tag }],
+        teamJoined18: [...(s.teamJoined18 || []), { id: uid("tj"), toId: a.ask.fromId, personId: "me", name: mine, tag: (s.auth && s.auth.tag) || null, at: Date.now(), seen: false }] };
     }
+    /* "<Name> is now on your team." was opened (View profile): it leaves the notifications. */
+    case "TEAM_JOINED_SEEN": return { ...s, teamJoined18: (s.teamJoined18 || []).map(x => x.id === a.id ? { ...x, seen: true } : x) };
     case "VIEW":
       if (s.viewingCompany || s.peek) return reducer({ ...s, viewingCompany: null, peek: null }, a);
       return null;

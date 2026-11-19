@@ -33,40 +33,6 @@ function hirerCard11(state, ev) {
 }
 
 
-/* FF Team next steps: nothing about Event Cards, which belong to FF Staff and FF Party. */
-function TeamSteps11({ onClose }) {
-  const { state, dispatch } = useStore();
-  const people = useDirectory();
-  const p = state.profile;
-  const live = !!p.live;
-  const cardReady = recsOf(p, "professions").some(r => !r.proposed);
-  const net = myNetwork(state, people).list.length;
-  const go = (tab, focus) => {
-    onClose();
-    if (state.role !== "team") dispatch({ type: "ROLE", role: "team" });
-    dispatch({ type: "TAB", tab, route: "home" });
-    if (focus) dispatch({ type: "FOCUS", focus: { target: focus } }); else window.scrollTo(0, 0);
-  };
-  const steps = [
-    { id: "build", label: "Build your profile", hint: "Your Profile Card, professions and experience", done: cardReady, onClick: () => go("profile", "card") },
-    { id: "share", label: "Share your Profile Card", hint: "Publish and send it on WhatsApp", done: live, onClick: () => go("profile", live ? "card" : "share") },
-    { id: "grow", label: "Grow your network", hint: `${net} connection${net === 1 ? "" : "s"} so far`, done: net >= VERIFICATION_LEVELS[1].connections, onClick: () => go("network") },
-  ];
-  return (
-    <div className="ff-xpsec">
-      {steps.map(t => (
-        <button key={t.id} type="button" className={`ff-task${t.done ? " done" : ""}`} onClick={t.onClick}>
-          <span className="dot">{t.done && <Check size={13} strokeWidth={2.6} />}</span>
-          <span style={{ flex: 1, minWidth: 0 }}>
-            <span className="ff-serif" style={{ fontSize: 15.5, display: "block", color: "#1D1B18", lineHeight: 1.2 }}>{t.label}</span>
-            <span className="ff-body ff-muted" style={{ fontSize: 11.5 }}>{t.hint}</span>
-          </span>
-          {t.done ? <Pill tone="ok">Done</Pill> : <ChevronRight size={16} color="var(--gold-dk)" style={{ flex: "none" }} />}
-        </button>
-      ))}
-    </div>
-  );
-}
 
 
 /* Notifications (v17.4.3): only cards that are waiting for YOUR reply. A Shift Card you were sent, or an
@@ -82,9 +48,9 @@ function availWaiting17(state) {
 
 /* Team invitations sent TO you. The real ones are state.teamAsksIn17 (a join link brought you in; see src/state/invite17.js).
    Core supplies the rest in production. These two samples appear only for the DEV complete-profile login (state.devDone.team).
-   netAdd: the person added you to their network; the card asks whether to add them to your team. */
+   People are invited to a team only (there is no Add to network for people). */
 const TEAM_ASKS_DEMO17 = [
-  { id: "tia_gav", fromId: "stf_gav", name: "Alexandru Gavrilas", tag: "GAVRILAS", netAdd: true, at: Date.UTC(2026, 10, 8) },
+  { id: "tia_gav", fromId: "stf_gav", name: "Alexandru Gavrilas", tag: "GAVRILAS", at: Date.UTC(2026, 10, 8) },
   { id: "tia_vooshka", fromId: "co_vooshka", name: "Vooshka Cocktail Bar", company: true, note: "Wants you on their company team", at: Date.UTC(2026, 10, 9) },
 ];
 
@@ -155,220 +121,11 @@ const notifyCount17 = (state) => state.role !== "team" ? 0
   : pending11(state).length + availWaiting17(state).length + teamAsksWaiting17(state).length + reviewAsksWaiting17(state).length + coInvites17(state).length + questionsWaiting17(state, state.directory || []).length;
 
 
-/* Yes, No and a type box below, in the .ff-qa17 look. No send button: what is typed travels with Yes or No. */
-function YesNoSay17({ placeholder, onAnswer }) {
-  const [txt, setTxt] = useState("");
-  return (
-    <div className="ff-qa17">
-      <div className="yn" role="group" aria-label="Your answer">
-        <button type="button" onClick={() => onAnswer(true, txt.trim())}>Yes</button>
-        <button type="button" onClick={() => onAnswer(false, txt.trim())}>No</button>
-      </div>
-      <div className="ty solo"><input aria-label={placeholder} value={txt} maxLength={400} onChange={(e) => setTxt(e.target.value)} placeholder={placeholder} /></div>
-    </div>
-  );
-}
-
-
-/* Someone added you to their network: a Question Card asks whether to add them to your team. */
-function NetAddNote17({ x, person, onAccepted }) {
-  const { dispatch } = useStore();
-  const first = firstName(x.name);
-  const answer = (accept, text) => {
-    dispatch({ type: "TEAM_ASK_REPLY", ask: x, accept, text });
-    dispatch({ type: "TOAST", toast: accept ? `You and ${first} are on each other's team` : "Not added" });
-    if (accept && x.viaLink) dispatch({ type: "INV_PATCH", patch: { reviewOfferedAt: Date.now() } });
-    if (accept && person && onAccepted) onAccepted(person);
-  };
-  return (
-    <div className="ff-ndcard17 qn17">
-      <div className="face"><QuestionCard q={{ text: `Add ${first} to your team?`, group: "asked" }} answer="" label="Network" asker={`${first} added you to their network`} pending=" " /></div>
-      <YesNoSay17 placeholder={`Say hello to ${first}`} onAnswer={answer} />
-    </div>
-  );
-}
-
-
-/* A review written about you: a Question Card asks whether to show it on your profile. */
-function ReviewAskNote17({ r }) {
-  const { dispatch } = useStore();
-  const first = firstName(r.byName);
-  const n = r.rating ? Math.max(1, Math.min(5, Math.round(r.rating))) : 0;
-  const answer = (show, text) => {
-    dispatch({ type: "REVIEW_DECIDE", id: r.id, show, text, review: r });
-    dispatch({ type: "TOAST", toast: show ? "Review added to your profile" : "Review not shown" });
-  };
-  const asker = <>{`${first} reviewed you`}{n ? <span className="stars" role="img" aria-label={`${n} out of 5 stars`}>{"★".repeat(n)}</span> : null}</>;
-  return (
-    <div className="ff-ndcard17 qn17">
-      <div className="face"><QuestionCard q={{ text: "Show this review on your profile?", group: "asked" }} answer="" label="Review" slotLabel="Review" asker={asker} pending={String(r.text || "").trim() || " "} /></div>
-      <YesNoSay17 placeholder={`Reply to ${first}`} onAnswer={answer} />
-    </div>
-  );
-}
-
-
-function TeamAskNote17({ x, onAccepted }) {
-  const { state, dispatch } = useStore();
-  const all = useDirectory();
-  const person = x.company ? null : all.find(p => p.id === x.fromId);
-  if (x.netAdd) return <NetAddNote17 x={x} person={person} onAccepted={onAccepted} />;
-  const co = x.company ? companyById(state, x.fromId) : null;
-  const first = x.company ? x.name : firstName(x.name);
-  const reply = (accept) => { dispatch({ type: "TEAM_ASK_REPLY", ask: x, accept }); dispatch({ type: "TOAST", toast: accept ? `You and ${first} are on each other's team` : "Invitation declined" }); if (accept && x.viaLink) dispatch({ type: "INV_PATCH", patch: { reviewOfferedAt: Date.now() } }); if (accept && person && onAccepted) onAccepted(person); };
-  return (
-    <div className="ff-ndcard17">
-      <div className="face">{co ? <CompanyCardFace c={co} size="sm" /> : person ? <PlayerCard person={person} format="portrait" themeKey={person.theme || "paper"} /> : null}</div>
-      <p className="nt">{x.note}</p>
-      <div className="btns two">
-        <button type="button" className="yes" onClick={() => reply(true)}>Accept</button>
-        <button type="button" className="no" onClick={() => reply(false)}>Decline</button>
-      </div>
-    </div>
-  );
-}
-
-
-/* A company team invitation (to you, on FF Team) or a join request (to your company, on FF Staff). */
-function CoTeamNote17({ x }) {
-  const { state, dispatch } = useStore();
-  const all = useDirectory();
-  const co = companyList(state).find(c => coKey17(c) === x.companyKey);
-  const person = x.personId ? findPerson(all, state, x.personId) : null;
-  const reply = (accept) => { dispatch({ type: "CT_DECIDE", id: x.id, accept }); dispatch({ type: "TOAST", toast: accept ? (x.dir === "invite" ? `You're on ${x.companyName || "the company"}'s team` : `${firstName((person || x).name || "") || "They"} joined your team`) : x.dir === "invite" ? "Invitation declined" : "Request declined" }); };
-  return (
-    <div className="ff-ndcard17">
-      <div className="face">{x.dir === "invite" ? (co ? <CompanyCardFace c={co} size="sm" /> : null) : person ? <PlayerCard person={person} format="portrait" themeKey={person.theme || "paper"} /> : null}</div>
-      <p className="nt">{x.dir === "invite" ? `${x.companyName || "A company"} invites you to join their company team.` : `${(person || x).name || "Someone"} asks to join your company team.`}</p>
-      <div className="btns two">
-        <button type="button" className="yes" onClick={() => reply(true)}>Accept</button>
-        <button type="button" className="no" onClick={() => reply(false)}>Decline</button>
-      </div>
-    </div>
-  );
-}
-
-
-/* A reply to one of your invitations. Available opens the selection step on that booking; the rest open the booking. */
-function BookingUpdateNote17({ u, who, onGo }) {
-  const { state, dispatch } = useStore();
-  const go = () => { dispatch({ type: "VIEW", id: null }); dispatch({ type: "V11_SET", patch: { bkView: { eventId: u.ev.id, open: "confirm", n: Date.now() } } }); dispatch({ type: "TAB", tab: "bookings" }); onGo && onGo(); window.scrollTo(0, 0); };
-  const text = { confirmed: `${who.name || "They"} accepted the shift. It's confirmed.`, unavailable: `${who.name || "They"} can't work this shift.`, available: `${who.name || "They"} is available. Choosing them confirms the shift.`, noreply: `${who.name || "They"} didn't reply before the deadline. The invitation has ended.` }[u.kind];
-  return (
-    <div className="ff-ndcard17">
-      <p className="nt">{text}</p>
-      <div className="btns">{isPartySite17(state) ? <LockedBtn17 bare className="yes">{u.kind === "available" ? "Choose who to confirm" : "Open booking"}</LockedBtn17> : <button type="button" className="yes" onClick={go}>{u.kind === "available" ? "Choose who to confirm" : "Open booking"}</button>}</div>
-    </div>
-  );
-}
-
-
-/* A question in a notification is the same Question Card as on the profile page, with the quick answer under it. */
-function QuestionNote17({ q, label, asker, noVis }) {
-  const { state, dispatch } = useStore();
-  const [vis, setVis] = useState("private");
-  const save = (v) => { dispatch({ type: "ANSWER", qid: q.id, value: v, visibility: noVis ? undefined : vis }); dispatch({ type: "TOAST", toast: "Answer saved" }); };
-  return (
-    <div className="ff-ndcard17">
-      <div className="face"><QuestionCard q={q} answer={answerOf(state, q)} label={label} asker={asker} pending=" " /></div>
-      <QuickAnswer17 onSave={save} vis={vis} onVis={noVis ? undefined : setVis} />
-    </div>
-  );
-}
-
-
-/* A profile question asked on your Company page (FF Staff): answered Yes, No or typed, and Public or Private. */
-function CoQuestionNote17({ q }) {
-  const { dispatch } = useStore();
-  const [vis, setVis] = useState("private");
-  const save = (v) => { dispatch({ type: "COQ_ANSWER", id: q.id, value: v, visibility: vis }); dispatch({ type: "TOAST", toast: "Answer saved" }); };
-  return (
-    <div className="ff-ndcard17">
-      <div className="face"><QuestionCard q={{ text: q.text, group: "asked" }} answer="" label="Asked" asker={`Asked by ${q.byName || "someone on FireFlair"}`} pending=" " /></div>
-      <QuickAnswer17 onSave={save} vis={vis} onVis={setVis} />
-    </div>
-  );
-}
-
-
-function NoteDrop17({ id, open, onToggle, icon, title, sub, children }) {
-  const ref = useRef(null);
-  useEffect(() => { if (open && ref.current) ref.current.scrollIntoView({ block: "start", behavior: prefersReducedMotion() ? "auto" : "smooth" }); }, [open]);
-  return (
-    <li ref={ref} className={`ff-nd17${open ? " open" : ""}`}>
-      <button type="button" className="hd" aria-expanded={open} aria-controls={`ff-nd-${id}`} onClick={onToggle}>
-        <span className="ic" aria-hidden="true">{icon}</span>
-        <span className="tx"><b>{title}</b><small>{sub}</small></span>
-        <I11.ChevronDown size={18} className="chev" aria-hidden="true" />
-      </button>
-      {open && <div className="bd" id={`ff-nd-${id}`}>{children}</div>}
-    </li>
-  );
-}
-
-
-const NOTE_ICON17 = { shift: "Briefcase", avail: "CalendarCheck", team: "Users", coinvite: "Users", corequest: "UserPlus", question: "MessageSquare", coquestion: "MessageSquare", netadd: "Users", review: "Star", bkavail: "CalendarCheck", bkupd: "Check" };
-
-
-function NotifySheet17({ open, onClose }) {
-  const { state, dispatch } = useStore();
-  const people = useDirectory();
-  const [review, setReview] = useState(null);
-  const [at, setAt] = useState(null);
-  /* Updates that were new when the list opened stay listed while it is open. */
-  const since = useRef(0), was = useRef(false);
-  if (open && !was.current) since.current = state.notesSeenAt || 0;
-  was.current = open;
-  useEffect(() => { if (open) { dispatch({ type: "NOTES_SEEN" }); setAt(null); } }, [open]);
-  if (!open) return null;
-  const ic = (k, size = 18) => { const C = I11[NOTE_ICON17[k]] || I11.Users; return <C size={size} />; };
-  const bodyOf = (it) => {
-    if (it.kind === "shift") return null;   /* v1.1: Shift Cards come back with FF Staff */
-    if (it.kind === "avail") return <QuestionNote17 q={availQ(it.x.iso)} label="Availability" asker={`Asked by ${it.x.byName}`} noVis />;
-    if (it.kind === "team") return <TeamAskNote17 x={it.x} onAccepted={setReview} />;
-    if (it.kind === "review") return <ReviewAskNote17 r={it.r} />;
-    if (it.kind === "coinvite" || it.kind === "corequest") return <CoTeamNote17 x={it.x} />;
-    if (it.kind === "bkavail") return <BookingUpdateNote17 u={it.u} who={findPerson(people, state, it.u.e.staffId) || {}} onGo={onClose} />;
-    if (it.kind === "question") return <QuestionNote17 q={it.q} asker={`Asked by ${askerName(it.q, people)}`} />;
-    return <CoQuestionNote17 q={it.q} />;
-  };
-  const brief = notesBrief17(state, people).map(it => ({ id: it.id, icon: ic(it.kind), title: it.title, sub: it.sub, body: bodyOf(it) }));
-  const rows = brief;
-  const ids = new Set(rows.map(r => r.id));
-  const done = notesDoneFor17(state).filter(d => !ids.has(d.id));
-  return (
-    <Sheet open onClose={onClose} title="Notifications">
-      <div className="ff-ntf17">
-        {rows.length === 0 && done.length === 0 ? (state.auth.status !== "signedIn"
-          ? <p className="none">Sign in to view your notifications.</p>
-          : <p className="none">You are all caught up.</p>) : (
-          <ul className="ff-ndlist17">
-            {rows.map(r => (
-              <NoteDrop17 key={r.id} id={r.id} open={at === r.id} onToggle={() => setAt(at === r.id ? null : r.id)} icon={r.icon} title={r.title} sub={r.sub}>{r.body}</NoteDrop17>))}
-            {done.map(d => (
-              <li key={`done-${d.id}`} className="ff-nd17 done" data-done="1">
-                <div className="hd">
-                  <span className="ic" aria-hidden="true">{ic(d.kind)}</span>
-                  <span className="tx"><b>{d.title}</b><small>{d.sub}</small></span>
-                  <span className="oc">{d.outcome}</span>
-                </div>
-              </li>))}
-          </ul>)}
-        {done.length > 0 && <div className="ff-ntf-clear17"><button type="button" onClick={() => dispatch({ type: "NOTES_CLEAR" })}>Clear</button></div>}
-        <section className="ff-ntf-next17" aria-labelledby="ff-ntf-next-h">
-          <h3 id="ff-ntf-next-h">Next steps</h3>
-          <TeamSteps11 onClose={onClose} />
-        </section>
-      </div>
-      <ReviewSheet open={!!review} person={review} onClose={() => setReview(null)} />
-    </Sheet>
-  );
-}
-
-
-/* ======================================================================================================
-   v17.3.33 — Bookings (FF Team), FF events (FF Staff), personal terms (FF Team profile)
-   ====================================================================================================== */
+/* Recovered from the live page (another chat's unpushed v1.1 work): notification bubbles, Bookings notes. The Network page notes are NetNotes18 (network.jsx). */
+function BkQuestionNote11({q,by}){const{state,dispatch}=useStore();return React.createElement("li",{className:"ff-bkn11 qn"},React.createElement(PE2QCard,{q,value:answerOf(state,q),label:`Asked by ${by}`,onAnswer:v=>{dispatch({type:"ANSWER",qid:q.id,value:v});dispatch({type:"TOAST",toast:"Answer saved"})}}))}
+function BkNotes11({empty}){const{state}=useStore();const people=useDirectory();const items=notesBrief17(state,people).filter(it=>it.kind==="question"||it.kind==="avail");if(!items.length)return empty;return React.createElement("li",{className:"ff-bkn11-wrap"},React.createElement("ul",{className:"ff-bkn11-list","aria-label":"Waiting for your reply"},items.map(it=>it.kind==="avail"?React.createElement(BkQuestionNote11,{key:it.id,q:availQ(it.x.iso),by:it.x.byName}):React.createElement(BkQuestionNote11,{key:it.id,q:it.q,by:askerName(it.q,people)}))))}
+function noteCounts11(state,people){const b=notesBrief17(state,people);return{network:b.filter(it=>it.kind==="team").length+joinedNotes18(state).length,bookings:b.filter(it=>it.kind==="question"||it.kind==="avail").length}}
+function NavBubble11({tab}){const{state}=useStore();const people=useDirectory();const n=noteCounts11(state,people)[tab]||0;if(!n)return null;return React.createElement("span",{className:"ff-nbub11"+(n>9?" d2":""),role:"status","aria-label":`${n} waiting for you`},n>99?"99+":n)}
 const E17I = { GraduationCap: lucideIcon("GraduationCap"), Plane: lucideIcon("Plane"), Gift: lucideIcon("Gift"), Layers: lucideIcon("Layers"), ChevronLeft: lucideIcon("ChevronLeft"), ChevronRight: lucideIcon("ChevronRight") };
 
 

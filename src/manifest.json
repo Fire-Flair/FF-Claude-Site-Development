@@ -98,7 +98,6 @@
   "components/party/card-studio.jsx",
   "components/party/party-live.jsx",
   "components/party/packages-browse.jsx",
-  "components/party/special-request17.jsx",
   "components/party/delivery-and-extras.jsx",
   "components/party/terms-and-packages.jsx",
   "adapters/analytics-adapter.js",

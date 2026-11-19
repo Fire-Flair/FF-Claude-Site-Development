@@ -4,12 +4,137 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
-## Photo scroll (preview, branch profile-photos-2; not yet a version)
+## v1.83
 
 - Phone and iPad profile photos rebuilt on the browser's own scrolling (Alex on his iPhone, 18 Nov: the open photos stopped halfway, flashed and snapped into place). Legolas, Gimli, Aragorn; reviewed by Gandalf. No gesture code is left: the photos sit at the top at one size and fit (the whole photo, top-aligned, over a blurred copy, so nothing switches or flashes) and stick while the card slides over them. The page opens scrolled to the card's icon line on the photos' bottom edge; scrolling up slides the card down to the whole photo, scrolling down slides it back to the line and the same swipe carries on down the page (the photos stop sticking exactly there, in CSS). A tap on the photos or the card glides up to the whole photo; the grip toggles. Nothing sets React state while scrolling.
 - On phones the menu bar still scrolls away (v16.10), so the photos stick at the very top; from 900px wide (iPad landscape) they stick under the menu bar.
 - Company Cards work the same, with the photos ending 128px down the card. Short pages get a minimum height so the line is always reachable. Desktop keeps the big photo and row.
 - `components/team/public-profile.jsx` (PublicHero, PhotoStrip11), `styles/p12.css` (photo-scroll block).
+- Alex approved after the preview (19 Nov): the menu bar scrolling off the top on phones is fine as long as the bottom bar stays.
+
+## v1.82
+
+- Join team and Add to network (Alex's decisions, 19 Nov). A person's profile has one relationship button, **Join team** (you ask to join their team; they accept). There is no Add to network for people any more: the button, the network-add logic for people (the team invite and sign-up no longer add anyone to a network; removing someone from a team no longer puts them in one) and the demo "added you to their network" invitation are gone. On a company profile there is no Join team button; a signed-in professional gets **Add to network** (**In your network** once added, removable; signed out it opens Log in). Companies stay display-only.
+- Network page: team invitations and notifications at the top, then the companies in your network. An invitation looks like the WhatsApp message: the inviter's Profile Card (the real component), "<Name> has invited you to join their team on FireFlair.", "Accept to appear on <Name>'s team and show their Profile Card on yours.", and three buttons: Accept, Not now, Leave a review (opens the existing review pop-up). After Accept the inviter gets "<Name> is now on your team." with a View profile button (`state.teamJoined18`, toId = inviter; the preview "X accepts" menu creates it for you). The red bubble on Network counts these too.
+- Notification settings: a small settings icon at the top right of the Network page opens the blurred pop-up "Notifications". Channels are listed from `NOTIFY_CHANNELS18` (network.jsx), so email etc. can be added by adding one entry: Site is always on (no switch), WhatsApp has a switch, on by default (`state.notifyPrefs18`, persisted).
+- Copy changed: Competition rules "Build genuine Network and Team connections." now "Build genuine Team connections."; "Network and Team are separate features. Team connections need mutual acceptance." now "Team connections need mutual acceptance."; Ask for a review pop-up "Anyone in your network can leave you a review..." now "Anyone on your team ...", "Nobody in your network yet." now "Nobody on your team yet.". Not touched: the home page Team section ("Everyone you add to your network is on your team") belongs to the home page thread.
+- Source recovered: the unpushed live code (`NavBubble11`, `noteCounts11`, `BkNotes11`, `BkQuestionNote11`, the `PE2QCard` label, nav bubble and notes CSS) is now in `src/` (party/delivery-and-extras.jsx, bookings.jsx, landing-shell.jsx, profile-edit-p2.jsx, shell/index.html), so a source build matches live. `NetNotes11` / `BkTeamNote11` are replaced by `NetNotes18` / `TeamInvite18` in network.jsx.
+- Published by a three-way merge of built HTML (base = recovered-source build, which equals live v1.81 apart from newlines between the recovered functions; ours = live; theirs = this build).  Artifact version 1795100711-a38c.
+
+## v1.81
+
+- Old bottom-sheet pop-up style removed. `.ff-scrim` / `.ff-sheet` / `.ff-sheet-head` now have ONE definition in `src/styles/base.css` (blurred dark-tinted page, panel at the top, gap below that closes it, inner scroll, squircle, fade-in), with only the variants still needed (`center` 680px, event brief / terms editors 760px, story reader 640px, meeting booker 420px; Share keeps its own layout via `.ff-csx`). The runtime-injected `top-pop-ups` style block in `primitives.jsx` and the `ff-float` class are gone; the `ffPopTop` keyframes moved to base.css (the photo framing pop-up uses them).
+- Deleted the superseded special cases and bottom-sheet remnants: `ffup`-driven sheet rules, `.ff-sheet.center` modal rules, the `:has(...)` special cases for the disc modal, package full-page, notifications, event brief and terms editors, interview booker (p12, v101, v11, css18, bkd, prof21), the unmounted overlay CSS (`.ff-fd-sheet`, `.ff-stp-scrim`, `.ff-xpd-scrim`, `.ff-peek-scrim` and the opened-card rules that only they styled) and the CSS of every deleted pop-up.
+- Deleted pop-ups nothing opens (confirmed against `/home/claude/shots/popups/{A,B,C}.json` and a grep of every reference, string event names and `h(Sheet` / `createElement(Sheet` forms): InterestSheet17, AddAvailabilitySheet and AvailabilityCards, PickPersonSheet, NotifySheet17 and its unused `notifyOpen` state, InviteTeamSheet17, NewQuestionSheet, CoQSheet11, TermsSheet11, CompanyMedia photo sheet, PartnerPick17, DiscoverFireFlair, GoldLaunch20, VipFounding20, the SvPackages21 visual, ClassicPop17, PkgSheet17 with LongPress17 (its only trigger) and the packages explorer on the Network page that could not render on FF Team, CardPop17 and CoCardRow17, the unused ProfileSections tree (ProfileSections, QuestionCardsCollection, AboutSheet, the add-new-record branch of the attribute card sheet, its second Ask-for-review mount) and everything only those used. `special-request17.jsx` is empty and removed from the manifest.
+- Kept on purpose (ambiguous or live): XPPopup "Next steps" and the profile verification pill that sends `ff-xp` (the pill is defined but no page renders it in `src/` or in the live page; the brief says it is a live pop-up), QuestionSheet (opened from Beta feedback), BetaFeedbackSheet and HomeBeta (dead, but on the home page, which has its own thread), `.ff .ff-pcol:has(.ff-scrim)` in p12.css, the rest of the Stripe overlay CSS (`.ff-stp*`, no scrim any more).
+- Checked at 390x844: the pre-cleanup build (v1.80) and this build give identical computed styles for scrim, sheet and head on Log in, Ask a question, Check availability, All attributes, Profession card, Edit profession, Terms editor, Event brief and invoice (profile and Bookings), Package terms, Story reader, Challenge rules, Next steps, Beta feedback (signed in and out), Company card, Company review, person Review, Photo framing, Share and the signed-out share sheet, and pixel-identical screenshots (sub-pixel noise only); tap on the gap closes each and tall ones scroll inside. Home, profile, network, bookings, simao and a company page load with no page errors.
+- Published by a three-way merge of built HTML (base v1.80 build, ours the live page, theirs this build), so the unpushed live code (red notification bubbles `NavBubble11` / `NetNotes11`, Bookings notification code) is kept as live has it. The merged page is saved as `live-v1.81-index.html`; `availQ` stays in `availability.jsx` because the live Bookings notification code uses it. Artifact version 1795099091-7a1f.
+
+## v1.80
+
+- Every pop-up is now the blurred Share look (Alex, 19 Nov: "There should always be a gap at the bottom so you can tap away from it"). One central change in `Sheet` styles (the `top-pop-ups` block in `src/components/shared/primitives.jsx`, which wins over the older per-pop-up special cases in p12/v101/v11/css18/bkd/prof21): blurred, dark-tinted page behind; the panel sits near the top (14px, plus the phone safe area), never rises from the bottom and is never full page; a gap of at least 84px (88px on phones, plus the home-bar safe area) is always left under it, and a tap anywhere on the blurred area closes it. Content taller than the panel scrolls inside the panel (the header stays); the page behind does not scroll. The X stays small, top right. Entrance is a short fade with a slight scale-in from the top (no slide from the bottom; none with reduced motion). The full-height FF Party package page (`ff-pk18full`) is now a normal top panel; centred variants are top-aligned too. Escape and the focus trap are unchanged; Share (`ff-csx`) is untouched.
+- Profile photo framing pop-up (`.ff-pf17-scrim`, `src/styles/prof21.css`): same blurred scrim, top panel and tap-away.
+- Checked at 390x844 (and 1280x800): Log in, Ask a question, Check availability, All attributes, Profession card, Edit profession, Terms editor, Event brief and invoice, Package terms, Story reader, Challenge rules, Company card, Company review, person Review, Next steps, Beta feedback, Photo framing: blurred, top-aligned, visible gap, tap on the gap closes each.
+- Published by a three-way merge of the built page onto live 1795095797-68ad (another chat's publish after v1.79, not on GitHub; base `live-v1.79-index.html`). That chat's change, as read from the diff: red notification bubbles on the Network and Bookings tabs (`NavBubble11`, `noteCounts11`, `.ff-nbub11`; desktop nav buttons and the phone bottom bar), team invitations moved from Bookings to the top of Network (`NetNotes11`, `.ff-netn11`), Bookings now lists only questions and availability requests, and the old count on the centre FF coin is gone. Its code is in the saved page but NOT in `src/` here, so a source build from this branch does not contain it; the developers need that chat's source.
+- Careful merge: the Bookings-notification code and the `label` argument of `PE2QCard` that live v1.79 carries (also from an unpushed chat, not in `src/`) were kept as live had them; only the pop-up and version changes of this entry were applied on top. The merged page is saved as `live-v1.80-index.html`. Artifact version 1795097021-ecea.
+
+
+## v1.79
+
+- Top bar on phones (Alex, 19 Nov 13:03, option A from the picture): 45px tall instead of 56px. Smaller FF mark (24px),
+  smaller burgundy Log in / Log out button (30px tall, 11px text, no glow), tighter padding. The button keeps a 44px
+  tap area through an invisible pad. Desktop (over 760px) unchanged. Styles: `topbar-slim` block at the end of
+  `src/styles/base.css`. Checked at 390px signed out and signed in.
+  Published by a three-way merge onto live 1795094689-672d (another chat's publish, not yet on GitHub, kept; v1.78 left
+  for that chat). Merged page saved as `live-v1.79-index.html`. Artifact version 1795095701-f7c0.
+
+## v1.77
+
+- Card preview under step 04 (Alex, 19 Nov 12:57, option B): the paragraph under "Your complete card will display here"
+  is removed (`CardPreviewSoon` in `src/components/team/work-location-guide.jsx`); the heading goes straight to Share.
+- "Need help? Book a meeting" rule confirmed by Alex, no code change: it shows at the bottom of the create / edit page
+  and on your own profile, and never on someone else's profile (`NeedHelp34`; `mine` check in `party-live.jsx`).
+  Checked by script: shown on the create page, absent on another member's profile. Artifact version 1795093142-ca91.
+
+## v1.76
+
+- Business & Support no longer shows on the finished "Your profile" page either (Alex, 19 Nov 12:53): the
+  `ff-biz-pfa` element is removed from `ProfileGate17` in `src/components/party/party-live.jsx`. It still shows on
+  Network and Bookings (`team-router.jsx`); "Need help? Book a meeting" is unchanged. Checked by script and screenshot
+  (signed in, finished profile: no Business & Support, Need help? present). Artifact version 1795092957-01e9.
+
+## v1.75
+
+Published straight onto live 1795089029-4be2 (v1.74, matched GitHub). Artifact version 1795089092-e99d.
+
+Create-a-profile page (Alex, 18 Nov 22:22): Business & Support removed, the card preview with the wallet buttons back under 04. `src/components/team/team-router.jsx`, `src/components/party/party-live.jsx` (`ProfileGate17`), `src/components/team/profile-builder.jsx` (`ProfileBuilder`), `src/components/team/work-location-guide.jsx` (`CardPreviewSoon`), `src/styles/prof21.css`.
+
+- **Business & Support is no longer on the create-a-profile page** (the profile builder at `#/ff-team/profile`, for a new member and for a member editing). `TeamRouter` no longer wraps the profile tab in it. The finished "Your profile" page keeps the box (now rendered by `ProfileGate17` under `DoneProfile17`, FF Team only), as do Network and Bookings. The home page is untouched. "Need help? Book a meeting" (`NeedHelp34`) stays at the bottom of the builder, unchanged.
+- **The card preview under 04 is back**: `CardPreviewSoon` under the Save row, with the dashed empty card, "Your complete card will display here", its line of text, and `ShareStack` (Share, Add to Apple Wallet, Add to Google Wallet, "Wallet passes coming in 2027"). Wording and behaviour as before: the wallet buttons are the locked ones (a tap shows the "coming in 2027" toast, no pass is made); Share is as in Welcome to the Team.
+  - A new member (not saved yet) sees the empty card. A member editing a live profile sees their own Profile Card (`PlayerCard`, full format) in the same box, with the same buttons. After the first save, Welcome to the Team shows the finished card as before.
+- **Where the old design came from:** the component was still in `work-location-guide.jsx`, unused. It was last rendered by `ProfileBuilder` (`{!finished && <CardPreviewSoon />}`) until commit `92a230f` (v17.40, 17 Nov, "Profile: one edit page for new and existing members…"). Its styling is taken from `fireflair-v17.4.5.html`, the last versioned page where the box was styled.
+- **Why it had been removed:** v17.40 rebuilt the edit page with a "three buttons at most" rule; the commit says "No card preview between Save and Need help (kept the page to three buttons)", as the preview's Share and two wallet buttons went past three. Separately, since the v17.4 split into `src/` the box's CSS only existed scoped to a `.ff-fin` class that nothing sets, so between v17.4 and v17.40 it rendered without its box styling. The rules are now unscoped in `prof21.css` (squircle corners added).
+- Phone: "Google Wallet" was cut off at 390px in the old design; inside the preview the wallet buttons now have less padding and a label that shrinks to fit, so no word is cut or split.
+- Checked: `npm run check`, `npm run build`; Playwright at 390x844 and 1440x1000, signed out and signed in (DEV · complete profile, then Edit): no Business & Support on the builder, Need help? present, one preview with two wallet buttons, no page errors. Screenshots (before, after, and the old v17.4.5 design) in `/home/claude/shots/wallet-agent/`.
+- Not published; branch `v11-wallet-2222`.
+
+## v1.74
+
+Profile page (Alex, 18 Nov 22:16–23:31). Four changes from one thread, merged onto ff-team-v1.1 (v1.73). Published straight onto live 1795088883-de56,
+which matched GitHub. Artifact version 1795089029-4be2.
+
+- No zoom on text boxes (option A, Alex 23:31): `src/shell/index.html` sets the viewport to `maximum-scale=1` on iPhones
+  and iPads only (a small inline script), which stops iOS zooming the page when a text box under 16px is tapped. No
+  text box changes size. iOS still allows pinch-zoom; Android is left alone. Developers: add the same to the real
+  site's page head. Inside the claude.ai artifact frame the setting is probably ignored, so the zoom may still show in
+  the artifact; it should be gone on the real site. Not yet confirmed on a real iPhone. The alternative (16px text in
+  the 16 small boxes) is parked on branch `v11-zoom-2216` and is NOT merged.
+
+Question Cards on the edit page / profile builder (Alex, 18 Nov 22:21). `src/components/team/profile-edit-p2.jsx`
+(`PE2QA`, new `PE2QCard`, `PE2QCreate`, `PE2QDelete`; `PE2Answer` deleted), `src/styles/prof21.css` (qa-cards block).
+
+- Each Question Card is answered on the card itself: the card's Answer area shows the answers as buttons (Yes / No, or
+  the question's own options, e.g. I drive / Public transport / Other) and a type box. Tapping an answer saves it. The
+  box that opened below the cards is gone, and there is no pop-up or bottom sheet.
+- The separate Yes / No / "Type your own question" box is removed. Instead an 11th card, "Create your own question",
+  ends the To answer row: the question is typed onto the card and answered Yes / No or by typing, which adds it as
+  "My question" (still up to 10 of your own). Your own questions carry a small "Delete question" link on the card.
+- A card answered while To answer is showing stays in place until you switch tabs, so it never jumps away mid-answer.
+- Questions with a detail answer (short-notice: "I require notice") still take the detail in the type box once that
+  option is chosen.
+- Checked: `npm run check`, `npm run build`; phone and desktop: 11 cards, the travel question answered on the card, a
+  question created and answered on the 11th card, no box below the cards.
+- About Me above Professions (Alex, 18 Nov 22:19): on the edit page / profile builder (`src/components/team/profile-edit-p2.jsx`:
+  `<CreatorAboutMe top />` now comes before the Professions section) and on every published profile, your own included
+  (`src/components/team/introductions.jsx`: `AboutMeBlock` is first in the Overview tab; the `aboutFirst` prop is kept
+  for callers but no longer changes the order). Order is now About Me > Professions > Attributes > Experience. Checked
+  on phone and desktop by reading the headings' order on both pages.
+Profile page creator (`#/ff-team/profile`), profession selector (Alex, 18 Nov 22:16).
+
+- **Bar is a cocktail glass.** The Bar category tile and the Bar panel heading in the category grid now show the
+  lucide `Martini` cocktail glass (from `GroupIcon`, the same Bar icon the rest of the site already uses) instead of
+  the five rising bars. `PE2StairMark` is deleted (`src/components/team/profile-edit-p2.jsx`).
+- **Level icons removed.** The rising step bars in front of each Bar profession chip (Barback … Mixologist) and the
+  five level diamonds on the chosen profession tiles are gone (`PE2Chip` step, `PE2Level`; their CSS in
+  `src/styles/profile-edit-p2.css` and `src/styles/prof21.css`). The professions, Bar's order (Barback first,
+  Mixologist last) and the `level` field on profession records are unchanged; the level picker in a profession's own
+  editor is untouched.
+- Network page and other Bar category icons already used the cocktail glass; nothing changed there.
+## v1.73
+
+- **Every bottom sheet is now a centred pop-up.** `Sheet` (`src/components/shared/primitives.jsx`) portals into the app shell and floats centred with squircle corners, always leaving a gap at the bottom (86px + safe area on phones, 40px on desktop) so the bottom nav row and the blurred page stay visible; tapping the gap or blur closes it. Applies to all ~28 sheets, including login, share, terms, story reader and profession edit. The Card Studio / share overlay (`.ff-csx`) gets the same bottom gap. The flip-card (`.ff-disc-modal`) and full-screen package page variants are unchanged. Fixes the clipped Create a password sheet.
+
+## v1.72
+
+The other share pop-ups get the v1.71 profile Share pop-up (Alex, 18 Nov 22:13). `src/components/shared/card-share17.jsx` (`CardShareSheet17`), `src/components/team/profile-from-text.jsx` (`ShareCardSheet`), `src/components/party/card-studio.jsx` (`CardPop17`), `src/styles/base.css`.
+
+- Your own card's Share (`ShareCardSheet`, opened by the `ff-add` event: the desktop top-bar button and the profile builder's Share/publish) and Card Studio's `CardPop17` now open the same pop-up as a profile's Share: page behind blurred under a dark tint and not scrollable, the card at the top scaled to fit, the four buttons (Share, WhatsApp, Download PNG, Copy Link) two by two under it as wide as the card, small X on the card's right edge, background tap and Escape close it, focus trap and `aria-modal` kept. `cardToPng17` unchanged.
+- Removed from `ShareCardSheet`: the phone-number box under the buttons (the "Type someone's phone number…" line, the Phone number field, "Send my card", and the "Sent to …" / "Share with someone else" step that followed it). `PROFILE_ADAPTER.shareTo` is left in the adapter but nothing in the page calls it now. The signed-out "Create your FF Tag first" sheet is unchanged.
+- Removed from `CardPop17`: the card's back (Recipe / Details) shown below the buttons. The pop-up shows the front only.
+- `CardShareSheet17`: the `extra` prop and the old `Sheet` layout behind it are gone; every caller uses `CardShareView17`. Dead CSS removed: `.ff-csm-stage`, `.ff-csm-live`.
+- Checked: `npm run check`, `npm run build`; Playwright at 360x640, 390x844, 1280x800 for `ShareCardSheet` (signed in with DEV · complete profile, opened with `ff-add`), the own-card "Share my card" button, and `CardPop17` (mounted in the page with a demo cocktail, as no page renders `CoCardRow17`, its only caller): pop-up height equals the viewport, nothing inside scrolls, page doesn't scroll on wheel, all four buttons inside the viewport and enabled once the PNG is made, Escape closes; no page errors.
+- Not published; branch `pp-sharesheet2`.
+- Published by a three-way merge onto live 1795040563-6676, which another chat published without pushing to GitHub (photo strip: swipe/compositor hints, eager loading, a 2.5s wait before hiding unloaded photos). Its change is in the live page and in `live-v1.72-index.html`, but its source is not in `src/` yet: that chat must push it. Artifact version 1795088883-de56.
 
 ## v1.71
 

@@ -250,106 +250,8 @@ const coQa = (c) => (c && Array.isArray(c.qa) ? c.qa : CO_QA_SEED);
 const qaShown = (q) => (q.answer ? (q.note ? `${q.answer} — ${q.note}` : q.answer) : String(q.note || "").trim());
 
 
-function CoQSheet11({ sheet, qa, save, onClose }) {
-  const isNew = sheet === "new";
-  const [text, setText] = useState(""), [ans, setAns] = useState(""), [note, setNote] = useState("");
-  useEffect(() => {
-    if (!sheet)
-      return;
-    setText(isNew ? "" : sheet.text);
-    setAns(isNew ? "" : sheet.answer || "");
-    setNote(isNew ? "" : sheet.note || "");
-  }, [sheet === "new" ? "new" : sheet && sheet.id]);
-  if (!sheet)
-    return null;
-  const done = () => {
-    if (isNew)
-      save([...qa, { id: uid("qa"), group: "business", text: text.trim(), answer: ans, note: note.trim(), custom: true }]);
-    else
-      save(qa.map((x) => x.id === sheet.id ? { ...x, answer: ans, note: note.trim() } : x));
-    onClose();
-  };
-  return React.createElement(Sheet, {
-    open: true,
-    onClose,
-    title: isNew ? "Add a question" : sheet.group === "feedback" ? "Website feedback" : "Your business"
-  }, isNew ? React.createElement(Field, {
-    label: "Question"
-  }, React.createElement("input", {
-    className: "ff-input",
-    value: text,
-    autoFocus: FF_FINE_POINTER && (true),
-    onChange: (e) => setText(e.target.value),
-    placeholder: "Do you hold a premises licence?"
-  })) : React.createElement("p", {
-    className: "ff-serif",
-    style: { fontSize: 19, lineHeight: 1.35, marginTop: 0 }
-  }, sheet.text), React.createElement("div", {
-    className: "ff-qa11-yn",
-    role: "group",
-    "aria-label": "Answer"
-  }, ["Yes", "No"].map((o) => React.createElement("button", {
-    key: o,
-    type: "button",
-    "aria-pressed": ans === o,
-    onClick: () => setAns(ans === o ? "" : o)
-  }, o))), React.createElement("textarea", {
-    className: "ff-input",
-    rows: 3,
-    value: note,
-    onChange: (e) => setNote(e.target.value),
-    placeholder: "Type your answer",
-    "aria-label": "Type your answer",
-    style: { marginBottom: 14 }
-  }), React.createElement(Btn, {
-    variant: "primary wide",
-    disabled: isNew ? !text.trim() : !ans && !note.trim(),
-    onClick: done
-  }, React.createElement(I11.Check, {
-    size: 14
-  }), " ", isNew ? "Add question" : "Save answer"), !isNew && sheet.custom && React.createElement("div", {
-    style: { textAlign: "right", marginTop: 12 }
-  }, React.createElement("button", {
-    className: "ff-link",
-    style: { fontSize: 11, color: "#5E574C", textDecoration: "underline", background: "none" },
-    onClick: () => {
-      save(qa.filter((x) => x.id !== sheet.id));
-      onClose();
-    }
-  }, "Delete")));
-}
 
 
-function CompanyQA11({ c, addSignal }) {
-  const { dispatch } = useStore();
-  const [view, setView] = useState("todo");
-  const [sheet, setSheet] = useState(null);
-  useEffect(() => { if (addSignal) { setView("todo"); setSheet("new"); } }, [addSignal]);
-  const qa = coQa(c);
-  const isDone = (q) => !!(q.answer || q.note);
-  const todo = qa.filter(q => !isDone(q)), done = qa.filter(isDone);
-  const list = view === "todo" ? todo : done;
-  const save = (next) => dispatch({ type: "COMPANY_SAVE", company: { qa: next } });
-  return (
-    <>
-      <div className="ff-qa11-pills" role="tablist" aria-label="Q&A">
-        {[["todo", "To answer", todo.length], ["done", "Answered", done.length]].map(([k, l, n]) => <button key={k} type="button" role="tab" aria-selected={view === k} className={view === k ? "on" : ""} onClick={() => setView(k)}>{l} ({n})</button>)}
-      </div>
-      <HScroll label="Q&A" snap>
-        {list.map(q => <QuestionCard key={q.id} q={{ text: q.text, group: q.group === "feedback" ? "feedback" : "hiring" }} label={q.group === "feedback" ? "Website" : "Business"} answer={qaShown(q)} onClick={() => setSheet(q)} />)}
-        {view === "todo" && (
-          <button className="ff-card ff-addtile" aria-label="Add a question" onClick={() => setSheet("new")} style={{ width: CARD_W.question, aspectRatio: "5 / 7" }}>
-            <span style={{ textAlign: "center" }}>
-              <span style={{ display: "grid", placeItems: "center", width: 42, height: 42, margin: "0 auto", border: "1px solid var(--gold-dk)", borderRadius: 12 }}><I11.Plus size={20} color="var(--gold-dk)" /></span>
-              <span className="ff-label" style={{ display: "block", marginTop: 8 }}>Add a question</span>
-            </span>
-          </button>
-        )}
-      </HScroll>
-      <CoQSheet11 sheet={sheet} qa={qa} save={save} onClose={() => setSheet(null)} />
-    </>
-  );
-}
 
 
 
@@ -656,55 +558,6 @@ function CoFind17() {
 
 
 
-/* ==========================================================================
-   COMPANY PROFILE (v1.1) — what a hiring business needs now: About, Media,
-   Contact & social, Areas covered, Venues, Documents, T&Cs, hiring
-   questions, your team and reviews. Services and Signature Cocktails are for
-   advertising on FF Party, so they're shown as coming in 2027.
-   ========================================================================== */
-function CompanyMedia({ list, editable }) {
-  const { dispatch } = useStore();
-  const ref = useRef(null);
-  const [sel, setSel] = useState(null);
-  const add = (e) => {
-    const files = [...(e.target.files || [])].slice(0, 6); e.target.value = "";
-    files.forEach(f => { const r = new FileReader(); r.onload = () => dispatch({ type: "COMPANY_MEDIA_ADD", item: { id: uid("cm"), src: r.result } }); r.readAsDataURL(f); });
-  };
-  const cur = sel && list.find(m => m.id === sel);
-  const idx = cur ? list.indexOf(cur) : -1;
-  return (
-    <div className={"ff-cmedia" + (editable ? " row" : "")}>
-      {editable && (
-        <button type="button" className="ff-cmedia-add" onClick={() => ref.current && ref.current.click()}>
-          <I11.ImagePlus size={22} /><b>Add photos</b>
-          <input ref={ref} type="file" accept="image/*" multiple hidden onChange={add} />
-        </button>
-      )}
-      {list.map((m, mi) => (
-        <figure key={m.id || m.src} className="ff-cmedia-it">
-          {editable
-            ? <button type="button" className="ff-cmedia-open" aria-label={m.alt ? `Edit photo: ${m.alt}` : "Edit photo"} onClick={() => setSel(m.id)}>
-                <img decoding="async" src={m.src} alt={m.alt || ""} loading={mi < 8 ? "eager" : "lazy"} referrerPolicy="no-referrer" onError={(e) => { if (/^https?:/.test(m.src)) e.currentTarget.style.visibility = "hidden"; }} /></button>
-            : <img decoding="async" src={m.src} alt={m.alt || ""} loading={mi < 8 ? "eager" : "lazy"} referrerPolicy="no-referrer" onError={(e) => { if (/^https?:/.test(m.src)) e.currentTarget.style.visibility = "hidden"; }} />}
-          {editable && <button type="button" aria-label="Remove photo" onClick={() => dispatch({ type: "COMPANY_MEDIA_DELETE", id: m.id })}><I11.X size={13} /></button>}
-        </figure>
-      ))}
-      {editable && cur && (
-        <Sheet open onClose={() => setSel(null)} title="Photo">
-          <div className="ff-cmedia-prev"><img src={cur.src} alt="" /></div>
-          <Field label="Caption">
-            <input className="ff-input" value={cur.alt || ""} maxLength={120} onChange={(e) => dispatch({ type: "COMPANY_MEDIA_PATCH", id: cur.id, patch: { alt: e.target.value } })} />
-          </Field>
-          <div className="ff-co-shift17" role="group" aria-label="Order">
-            <button type="button" aria-label="Move earlier" disabled={idx <= 0} onClick={() => dispatch({ type: "COMPANY_MEDIA_MOVE", id: cur.id, dir: -1 })}><ChevronLeft size={15} /> Earlier</button>
-            <button type="button" aria-label="Move later" disabled={idx >= list.length - 1} onClick={() => dispatch({ type: "COMPANY_MEDIA_MOVE", id: cur.id, dir: 1 })}>Later <ChevronRight size={15} /></button>
-          </div>
-          <Btn variant="primary wide" onClick={() => setSel(null)}><I11.Check size={14} /> Done</Btn>
-        </Sheet>
-      )}
-    </div>
-  );
-}
 
 
 
@@ -722,38 +575,6 @@ const TERMS5 = [
 const termsOf = (c) => (c && Array.isArray(c.tcTerms) && c.tcTerms.length ? c.tcTerms : TERMS5);
 
 
-function TermsSheet11({ open, onClose }) {
-  const { state, dispatch } = useStore();
-  const c = state.company || {};
-  const [terms, setTerms] = useState(TERMS5);
-  const [docs, setDocs] = useState([]);
-  const ref = useRef(null);
-  useEffect(() => { if (open) { setTerms(termsOf(c).map(t => ({ ...t }))); setDocs(c.tcDocs || []); } }, [open]);
-  if (!open) return null;
-  const addDoc = (e) => { const fs = [...(e.target.files || [])]; e.target.value = ""; if (fs.length) setDocs(d => [...d, ...fs.map(f => ({ id: uid("tcd"), name: f.name }))]); };
-  const save = () => {
-    dispatch({ type: "COMPANY_SAVE", company: { tcTerms: terms, tcDocs: docs, tcMode: "own", tcOwn: terms.map(t => `${t.label}: ${t.text}`).join("\n") } });
-    dispatch({ type: "TOAST", toast: "Terms saved to your profile" }); onClose();
-  };
-  return (
-    <Sheet open onClose={onClose} title="Terms and conditions">
-      <p className="ff-fp" style={{ margin: "0 0 10px" }}>These five terms go with every Service Card. Edit them, then save to your profile.</p>
-      <div className="ff-tc5">
-        {terms.map((t, i) => (
-          <label key={t.k}><span><b>{i + 1}</b>{t.label}</span>
-            <textarea rows={3} value={t.text} aria-label={t.label} onChange={(e) => setTerms(terms.map((x, j) => j === i ? { ...x, text: e.target.value } : x))} /></label>
-        ))}
-      </div>
-      {docs.length > 0 && <ul className="ff-tc5-docs">{docs.map(d => <li key={d.id}><I11.FileText size={14} /><span>{d.name}</span><button type="button" aria-label={`Remove ${d.name}`} onClick={() => setDocs(docs.filter(x => x.id !== d.id))}><I11.X size={13} /></button></li>)}</ul>}
-      <div className="ff-bsec-acts" style={{ marginTop: 8 }}>
-        <Btn variant="primary" onClick={save}><I11.Check size={14} /> Save to my profile</Btn>
-        <Btn variant="sm" onClick={() => ref.current && ref.current.click()}><I11.Plus size={12} /> Add a document</Btn>
-        <Btn variant="sm ghost" onClick={() => setTerms(TERMS5.map(t => ({ ...t })))}>Reset</Btn>
-        <input ref={ref} type="file" hidden multiple onChange={addDoc} />
-      </div>
-    </Sheet>
-  );
-}
 
 
 
@@ -814,35 +635,6 @@ function AboutBox11() {
 
 
 
-/* The companies a company works with, picked from the directory. */
-function PartnerPick17({ open, onClose }) {
-  const { state, dispatch } = useStore();
-  const [q, setQ] = useState("");
-  if (!open) return null;
-  const mine = (state.company || {}).partners || [];
-  const t = q.trim().toLowerCase();
-  const pool = browseCompanies17(state).filter(co => co && co.id !== "mine" && (!t || `${co.name} ${co.kind || ""} ${co.area || ""}`.toLowerCase().includes(t))).slice(0, 60);
-  const toggle = (id) => dispatch({ type: "COMPANY_SAVE", company: { partners: mine.includes(id) ? mine.filter(x => x !== id) : [...mine, id] } });
-  return (
-    <Sheet open onClose={onClose} title="Companies" center>
-      <div className="ff-fav17-pick">
-        <label className="srch"><I11.Search size={14} /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search companies" aria-label="Search companies" /></label>
-        <ul>
-          {pool.map(co => {
-            const on = mine.includes(co.id);
-            return (
-              <li key={co.id}>
-                <button type="button" className={on ? "on" : ""} aria-pressed={on} onClick={() => toggle(co.id)}>
-                  <I11.Briefcase size={20} /><span><b>{co.name}</b><small>{co.kind || ""}</small></span>{on ? <I11.Check size={17} /> : <I11.Plus size={17} />}
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    </Sheet>
-  );
-}
 
 /* FF Staff, "Your business", owner only: the people you added with "Add to favourites". Collapsed by default; never part of the public company page. */
 function CompanyFavs17() {

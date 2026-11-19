@@ -324,7 +324,7 @@ function teamTabData17(state, all, person) {
   const teams = me ? myNetwork(state, all).list.filter(p => conn(p.id)) : (conn(person.id) ? all.filter(p => p.id === "me") : []);
   const tCos = personCompanies17(state, person, false);
   const adds = me ? (state.netAdds17 || []) : [];
-  const tNet = adds.map(id => all.find(p => p.id === id)).filter(p => p && !p.isCompany && !teams.some(t => t.id === p.id));
+  const tNet = [];  /* people are not added to a network (v1.82): the Network list is companies only */
   const netCos = adds.filter(id => String(id).startsWith("co_")).map(id => companyById(state, id)).filter(c => c && !tCos.some(x => x.id === c.id));
   return { teams, tCos, tNet, netCos };
 }
@@ -434,7 +434,7 @@ function TeamTab17({ person }) {
 
 
 /* packagesTail: shown in the Bookings tab (was Packages) below the Q&A (the signed-in member's own page puts Build your packages, Service Cards and Terms and conditions here). */
-/* aboutFirst: someone else's profile (and yours viewed as a guest) shows About Me first, above Professions. */
+/* aboutFirst: kept for callers; since 18 Nov 22:19 every profile shows About Me first, above Professions. */
 function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
   const { state, dispatch } = useStore();
   /* The tab is kept in the store so it can be part of the address (#/<site>/<tag>/reviews). */
@@ -481,7 +481,8 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
         {tab === "overview" && (<>
           <style>{RANK_CSS17}</style>
           {/* v17.21: the v17.15 look is back — big profession tiles, About Me, the Attributes cards, then Experience. */}
-          {aboutFirst && <AboutMeBlock big text={person.id === "me" ? state.profile.about : person.about} />}
+          {/* about-first (Alex, 18 Nov 22:19): About Me above Professions on every profile, your own included. */}
+          <AboutMeBlock big text={person.id === "me" ? state.profile.about : person.about} />
           {profs.length > 0 && (
             <section className="ff-pp ff-pp21" aria-labelledby="ff-profs-h">
               <div className="ff-pp-head"><h2 id="ff-profs-h" className="ff-about-h">Professions</h2></div>
@@ -489,7 +490,6 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
                 extra={onStaff ? (r) => staffRateP17(state, person.tag, r.name) != null ? <span className="ff-agrp-rate">Preferred rate {gbp17(staffRateP17(state, person.tag, r.name))}/hour</span> : null : undefined} />
             </section>
           )}
-          {!aboutFirst && <AboutMeBlock big text={person.id === "me" ? state.profile.about : person.about} />}
           {attrs.length > 0 && (
             <section className="ff-pp ff-pp21" aria-labelledby="ff-pp-h">
               <div className="ff-pp-head">

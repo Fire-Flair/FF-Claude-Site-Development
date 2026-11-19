@@ -58,16 +58,3 @@ function interestCards17(state, person) {
 }
 
 
-/* A card in Interests: shows the question, "Yes" and the Public / Private switch. */
-function InterestSheet17({ card, onClose }) {
-  const { state, dispatch } = useStore();
-  if (!card) return null;
-  const vis = qaVisOf17(state, { id: card.id });
-  return (
-    <Sheet open onClose={onClose} title="Interest">
-      <p className="ff-serif" style={{ fontSize: 19, lineHeight: 1.35, marginTop: 0 }}>{card.text}</p>
-      <p className="ff-body" style={{ margin: "0 0 12px", fontWeight: 700 }}>Yes</p>
-      <VisSwitch17 value={vis} onChange={(v) => dispatch({ type: "QA_VIS", qid: card.id, visibility: v })} />
-    </Sheet>
-  );
-}

@@ -58,10 +58,6 @@
 .ff .pe2-ci-mk { flex: none; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 8px; corner-shape: squircle; background: #F1E7CC; color: var(--color-gold-dk, #8A6A1E); }
 .ff .pe2-ci.on { background: var(--color-ox, #5C1220); border-color: var(--color-ox, #5C1220); color: #F6EFE2; }
 .ff .pe2-ci.on .pe2-ci-mk { background: var(--color-gold, #C9A227); color: #16130F; }
-/* the Bar ladder: a rising bar per step, Barback smallest to Mixologist largest */
-.ff .pe2-ci-step { flex: none; display: flex; align-items: flex-end; width: 8px; height: 20px; }
-.ff .pe2-ci-step i { display: block; width: 100%; height: calc(var(--h) * 20%); border-radius: 2.5px; background: var(--color-gold, #C9A227); opacity: calc(.5 + var(--h) * .1); }
-.ff .pe2-ci.on .pe2-ci-step i { background: #E4C36A; opacity: 1; }
 .ff .pe2-cat.bar .pe2-ci { min-height: 36px; }
 @media (min-width: 700px) {
   .ff .pe2-cats { flex-wrap: wrap; overflow: visible; row-gap: 14px; }
@@ -129,8 +125,6 @@
 .ff .pe2-chip .mk { flex:none; display:grid; place-items:center; width:22px; height:22px; border-radius:8px; corner-shape:squircle; background:#F1E7CC; color:var(--color-gold-dk,#7E611D); }
 .ff .pe2-chip.on { background:var(--color-ox,#5C1220); border-color:var(--color-ox,#5C1220); color:#F3DE9C; }
 .ff .pe2-chip.on .mk { background:var(--color-gold,#C9A227); color:#16130F; }
-.ff .pe2-chip .pe2-ci-step { height:18px; }
-.ff .pe2-chip.on .pe2-ci-step i { background:#E4C36A; opacity:1; }
 .ff .pe2-cp-type { margin:0; max-width:none; }
 @media (min-width:760px) { .ff .pe2-cp { padding:16px 16px 14px; } }
 @media (prefers-reduced-motion: reduce) { .ff .pe2-chip { transition:none; } }
