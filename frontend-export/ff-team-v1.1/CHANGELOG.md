@@ -4,6 +4,12 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.92
+
+- **Bookings titles:** the fade line now sits to the left of Your bookings, Get booked and Grow with FireFlair (the titles directly on the page), not an underline. The FFParty and FFStaff headings sit inside boxes and have no title line (`bkd.css`).
+- **Grow with FireFlair on a phone:** Training, Dream jobs and FireFlair rewards are slim drop-down rows (small photo, title, chevron). Opened, the choices are one swipeable row (`ff-int-cell` inside `HScroll`, `InterestSection` in `shared/home-scenes.jsx`) instead of a stack you scroll down.
+- **New site rule (CLAUDE.md, Site UI rules): up and down is page navigation, left and right is selection.** Every new feature is checked against it and Alex is told how it fits.
+
 ## v1.91
 
 - **Map:** Northern Ireland is drawn in the same green as Ireland (`isNI19` in `shared/map.jsx` overlays the Northern Ireland polygon). World view now names the capital of every country plus glamorous places (Rome, Monaco, Venice, Paris, Milan, Cannes, Saint-Tropez, Marbella, Ibiza, Mykonos, Dubai, Las Vegas and more): `MAP_WORLD19`, shown by rank as you zoom, never overlapping; styles `.ff-lwld19` in `v11.css`.

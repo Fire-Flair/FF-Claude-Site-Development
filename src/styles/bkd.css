@@ -279,3 +279,32 @@
 .ff .ff-bkh-ds { font:400 15px/1.45 var(--font-sans); color:#6E6558; }
 .ff .ff-bkh-st { display:inline-flex; align-items:center; gap:6px; margin-top:8px; font:700 11.5px/1 var(--font-sans); letter-spacing:.14em; text-transform:uppercase; color:#8A6A1E; }
 @media (max-width:520px) { .ff .ff-bkh-panel { padding:12px; gap:12px; border-radius:24px; } .ff .ff-bkh-wa { gap:14px; padding:16px 14px; } .ff .ff-bkh-wa .ff-wa-ico { width:44px; height:44px; } .ff .ff-bkh-card { gap:14px; padding:16px 14px; } }
+
+
+/* ==== v1.92 (Alex, 19 Nov 20:17) ====
+   1) Titles on Bookings: the fade line sits to the left of each title that sits directly on the page (Your bookings,
+      Get booked, Grow with FireFlair), not an underline. The FFParty and FFStaff headings sit inside boxes, so no line.
+   2) Grow with FireFlair on a phone: each box is a slim row (small photo, title, chevron) that opens to a swipeable row
+      of choices. Rule: up and down is the page, left and right is selection. */
+.ff .ff-bk-yh { position:relative; padding-left:19px; }
+.ff h1.ff-big20.ff-bk-yh .t { padding-bottom:0; border-bottom:0; }
+.ff .ff-bk-yh::after { content:""; position:absolute; left:0; top:0; bottom:0; width:5px; pointer-events:none;
+  background:linear-gradient(180deg,var(--color-gold,#C9A227) 0,#DCC48C 58%,rgba(234,219,180,0) 100%); }
+.ff .ff-fb21-box > .ff-tlx::before { content:none; }
+.ff .ff-int-cell { flex:none; width:168px; scroll-snap-align:start; display:flex; }
+.ff .ff-int-cell > .ff-fc17 { width:100%; }
+.ff .ff-bkd .ff-hscroll { align-items:stretch; }
+@media (max-width:469px) {
+  .ff-bkd-row { gap:10px; }
+  .ff-bkd .bkd-hd { aspect-ratio:auto; flex-direction:row; align-items:center; min-height:0; }
+  .ff-bkd .bkd-ph, .ff-bkd .bkd-ph.none { flex:1 1 auto; aspect-ratio:auto; min-height:0; width:auto; display:flex; align-items:center; gap:14px; padding:10px 0 10px 10px; background:none; overflow:visible; }
+  .ff-bkd .bkd-ph::after { display:none; }
+  .ff-bkd .bkd-ph img { position:static; inset:auto; width:60px; height:60px; flex:none; border-radius:16px; corner-shape:squircle; object-fit:cover; }
+  .ff-bkd .bkd-ph > b { position:static; left:auto; right:auto; bottom:auto; color:#16130F; text-shadow:none; font-size:19px; }
+  .ff-bkd .bkd-tx { flex:none; display:flex; align-items:center; padding:0 16px 0 8px; }
+  .ff-bkd .bkd-ic, .ff-bkd .bkd-ds { display:none; }
+  .ff-bkd .bkd-chev { margin-top:0; }
+  .ff-bkd .bkd-bd { padding:4px 12px 14px; }
+  .ff-bkd .bkd-bt { display:none; }
+  .ff-bkd .bkd-bds { margin:4px 2px 12px; font-size:13.5px; line-height:1.45; color:#4A443A; }
+}

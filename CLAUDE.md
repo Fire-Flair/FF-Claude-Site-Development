@@ -111,6 +111,7 @@ Do not send routine work to Fable. If it is unavailable, say so briefly and cont
 - **Question creation** is Yes/No plus a type box below.
 - **Squircle corners** everywhere.
 - **Never split a word across two lines.** Wrap between words; if a word doesn't fit, shrink the font. This is a resizing rule for every platform.
+- **Scroll direction rule (Alex, 19 Nov 2026): up and down is page navigation; left and right is selection.** When someone picks from a set of options, the options sit in a horizontally scrollable row (swipe left and right); a selection never needs the page to scroll up and down to reach the choices. Check every new feature against this rule and tell Alex how it fits (or where it doesn't) when presenting it.
 
 ## Photo rules
 
