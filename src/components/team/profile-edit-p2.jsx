@@ -344,11 +344,11 @@ function PE2Overview({ records }) {
    buttons (Yes / No, or the question's own options, e.g. I drive / Public transport / Other) and a type box. No box
    below the cards and no pop-up. The 11th card is "Create your own question": the question is typed onto the card and
    answered Yes / No or typed, which replaces the separate Yes / No / Type your own question box. */
-function PE2QCard({ q, value, onAnswer }) {
+function PE2QCard({ q, value, onAnswer, label }) {
   const [txt, setTxt] = useState("");
   const answered = isAnswered(value);
   const c = answered ? QUESTION_DONE : questionGroupColor(q.group);
-  const groupLabel = q.mine ? "My question" : ((QUESTION_GROUPS.find(g => g.key === q.group) || {}).label || q.group);
+  const groupLabel = label || (q.mine ? "My question" : ((QUESTION_GROUPS.find(g => g.key === q.group) || {}).label || q.group));
   const opts = q.type === "text" ? ["Yes", "No"] : (q.options || ["Yes", "No"]);
   const v = String(Array.isArray(value) ? value.join(", ") : (value || ""));
   const isOpt = opts.includes(v) || (q.detail && v.startsWith(q.detail.option + " —"));

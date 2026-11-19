@@ -157,6 +157,30 @@ window.lucide || document.write('<script src="https://cdn.jsdelivr.net/npm/lucid
 .ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11 svg,.ff .ff-pub-grid11 > .ff-csm-btn.ff-pub-wa11 svg{color:#FFF8E6 !important;fill:#FFF8E6 !important}
 .ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11:hover,.ff .ff-pub-grid11 > .ff-csm-btn.ff-pub-wa11:hover{background:#56642E !important}
 .ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11:focus-visible,.ff .ff-pub-grid11 > .ff-csm-btn.ff-pub-wa11:focus-visible{outline:2px solid #5C1220;outline-offset:2px}
+
+/* v1.1 Bookings notifications: team invitations and questions waiting for a reply */
+.ff .ff-bkn11-wrap{list-style:none;padding:0;margin:0}
+.ff .ff-bkn11-list{list-style:none;margin:0;padding:4px 0 0;display:flex;flex-wrap:wrap;gap:18px 16px;justify-content:center;align-items:flex-start}
+.ff .ff-bkn11{list-style:none;margin:0;padding:0;min-width:0}
+.ff .ff-bkn11.team{display:flex;flex-direction:column;width:clamp(208px, 62vw, 240px);max-width:100%}
+.ff .ff-bkn11-face > *{width:100% !important}
+.ff .ff-bkn11.qn .pe2-qc-grp{white-space:normal;overflow:visible;text-overflow:clip;max-width:calc(100% - 26px);line-height:1.3}
+.ff .ff-bkn11-bn{background:#16130F;color:#F2CE7A;font:800 11px/1 Inter,system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase;text-align:center;padding:10px 8px;border-radius:14px 14px 0 0;corner-shape:squircle;border:1px solid #B89B5E;border-bottom:0;white-space:nowrap}
+.ff .ff-bkn11-face{display:flex;justify-content:center}
+.ff .ff-bkn11-face > *{margin:0}
+.ff .ff-bkn11-act{display:flex;gap:8px;margin-top:8px}
+.ff .ff-bkn11-act .ok{flex:1;min-width:0;height:46px;border-radius:14px;corner-shape:squircle;background:#E4D0A0;border:1px solid #B89B5E;color:#2A1E04;font:800 13px/1 Inter,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
+.ff .ff-bkn11-act .ok:hover{background:#EAD8AC}
+.ff .ff-bkn11-act .no{flex:none;width:46px;height:46px;border-radius:50%;border:1.5px solid #B9AE96;background:#FFFDF8;color:#5A5346;display:grid;place-items:center;cursor:pointer}
+.ff .ff-bkn11-act .no:hover{background:#fff;border-color:#8A8272}
+.ff .ff-bkn11-act button:focus-visible{outline:2px solid var(--gold,#C9A227);outline-offset:2px}
+
+/* v1.1 notification bubbles on Network and Bookings; team invitations at the top of Network */
+.ff .ff-navbtn,.ff .ff-desknav > button{position:relative}
+.ff .ff-nbub11{position:absolute;min-width:18px;height:18px;padding:0 4px;box-sizing:border-box;border-radius:99px;background:#B3261E;color:#fff;border:2px solid #16130F;font:800 11px/14px Inter,system-ui,sans-serif;text-align:center;letter-spacing:0;pointer-events:none}
+.ff .ff-navbtn .ff-nbub11{top:6px;left:calc(50% + 4px)}
+.ff .ff-desknav > button .ff-nbub11{top:-7px;right:-7px}
+.ff .ff-netn11{margin:0 0 26px}
 </style>
 </head>
 <body>

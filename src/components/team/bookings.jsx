@@ -819,13 +819,13 @@ function TeamBookings({ guest = false }) {
                 <span className="ff-bkh-st"><Lock size={13} strokeWidth={2} /> Coming soon</span>
               </span>
             </li>
-            <li className="ff-bkh-card">
+            <BkNotes11 empty={<li className="ff-bkh-card">
               <span className="ff-bkh-tile ff-bkh-tile-ff"><AddFireFlairMark size={30} /></span>
               <span className="ff-bkh-tx">
                 <b className="ff-bkh-ti">Notifications</b>
                 <span className="ff-bkh-ds">Notifications will also be shown here.</span>
               </span>
-            </li>
+            </li>} />
           </ul>
         </div>
       </section>
