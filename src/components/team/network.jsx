@@ -189,8 +189,8 @@ function PersonProfile() {
           render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={person.theme || "ivory"} />} /> : null;
     actionsEl = (<div className="ff-pub-acts ff-pub-stack">
       <div className={"ff-pub-joinrow" + (shareIco ? "" : " solo")}>
-        <Btn variant="wide ff-join-mut" onClick={guestOfMe ? () => preview() : join}><FitLabel17>Join team</FitLabel17></Btn>
         {shareIco}
+        <Btn variant="wide ff-join-mut" onClick={guestOfMe ? () => preview() : join}><FitLabel17>Join team</FitLabel17></Btn>
       </div>
     </div>);
   } else if (other && party) {

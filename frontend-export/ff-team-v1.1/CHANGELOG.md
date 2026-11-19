@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.93
+
+- **Profile buttons (signed-out and preview view):** Share is on the left and Join team on the right. Share is now champagne with a green WhatsApp logo (replaces the olive button). All three buttons are slightly smaller (44px high) and inset 12px so Back, Share and Join line up inside the panel instead of touching its edges (`prof21.css`, `JoinRow` in `team/network.jsx`).
+
 ## v1.92
 
 - **Bookings titles:** the fade line now sits to the left of Your bookings, Get booked and Grow with FireFlair (the titles directly on the page), not an underline. The FFParty and FFStaff headings sit inside boxes and have no title line (`bkd.css`).

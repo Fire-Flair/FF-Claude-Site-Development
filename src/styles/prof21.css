@@ -579,3 +579,16 @@
 .ff .pe2-qc-del { position: relative; z-index: 3; align-self: flex-start; padding: 2px 3px; background: none; border: 0; cursor: pointer; font: 600 11.5px var(--sans); color: var(--qc-sub); text-decoration: underline; text-underline-offset: 2px; }
 .ff .pe2-qc textarea.pe2-qc-qin, .ff .pe2-qc textarea.pe2-qc-qin:focus, .ff .pe2-qc textarea.pe2-qc-qin:focus-visible { outline: none !important; box-shadow: none !important; border: 0 !important; border-bottom: 1px dashed var(--qc-rule) !important; border-radius: 0 !important; background: transparent !important; }
 .ff .pe2-qc textarea.pe2-qc-qin:focus, .ff .pe2-qc textarea.pe2-qc-qin:focus-visible { border-bottom: 1.5px solid var(--qc-sub) !important; }
+
+
+/* ==== v1.93 (Alex, 19 Nov 20:21): profile action buttons. Share (champagne, green WhatsApp logo) on the left, Join team on
+   the right; slightly smaller, and inset so the buttons sit inside the panel instead of touching its edges. ==== */
+.ff .ff-pp-other .ff-pub-stack { padding:0 12px; }
+.ff .ff-pp-other .ff-pub-stack > .ff-btn,
+.ff .ff-pp-other .ff-pub-joinrow > .ff-btn,
+.ff .ff-pp-other .ff-pub-joinrow > .ff-csm-btn { min-height:44px !important; height:44px !important; font-size:12.5px !important; letter-spacing:.1em; }
+.ff .ff-pp-other .ff-pub-joinrow { gap:10px; }
+.ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11 { background:#EDDDB4 !important; background-image:none !important; color:#2A1E04 !important; border:1px solid #B89B5E !important; box-shadow:0 4px 10px -8px rgba(110,80,20,.6) !important; }
+.ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11 svg { color:#25D366 !important; fill:#25D366 !important; }
+.ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11:hover { background:#F3E5C0 !important; }
+.ff .ff-prest > .ff-pback { box-sizing:border-box; display:flex !important; width:calc(100% - 24px) !important; max-width:none !important; margin-left:12px !important; margin-right:12px !important; justify-content:center; min-height:44px; height:44px; }
