@@ -14,6 +14,11 @@ FFTeam Network browsing (Alex, 19 Nov 22:00; mock-ups M1 to M3 approved). `style
 - Explore our network on desktop (from 1100px): the title and words on the left, the map on the right.
 - Company cards say "Company" with their category symbol instead of "Company Card".
 - The notification settings button at the top right of Explore our network is gone.
+## v1.112
+- **Bookings headings:** "FFParty – Our packages" is now just **FFParty** with the gold FF Party coin on its left; "FFStaff – Shifts with businesses" is now just **FFStaff** with the silver coin on its left (`bookings.jsx`, `titles2.css`).
+- **Note for developers (back end):** package cards are saved through the Q&A system only, until the rest of the back end is built. The aim is to capture interest. The Q&A system will grow a lot (GPT is building a Google Sheet for it; the package-card questions get added to it once it exists). Full note: `docs/package-cards-back-end.md`.
+- Page saved as `live-v1.112-index.html`. Artifact version 1795125931-4532.
+
 ## v1.111
 - **Create your own package card (FF Party):** the five type boxes (name, line, You provide, Ideal for, Duration) now share one style and fill their column, so none sticks out past the card edge and Duration matches the others. CSS only (`prof21.css`, scoped to `.ff-pkc-own2`).
 - Page saved as `live-v1.111-index.html`. Artifact version 1795125869-5499.

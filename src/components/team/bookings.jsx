@@ -837,7 +837,7 @@ function TeamBookings({ guest = false }) {
           {/* title-bars (Alex, 18 Nov 17:00): the title and its text share one gold line (titles2.css, .ff-tlx). */}
           <div className="ff-tlx">
           {/* pkc-copy (Alex, 18 Nov 19:20): one title for all three tabs (the tab names the kind), so it stays one size on phones. */}
-          <h2 className="ff-bk-bh fit">FFParty – Our packages</h2>
+          <h2 className="ff-bk-bh ff-bk-bhc fit"><Coin size={26} tier="gold" /><span>FFParty</span></h2>
           <p>Be your own boss. Sign up to the packages you want to deliver, or create your own, and we find you work close to home. Every package shows what you earn before you sign up, and you deal directly with the client, with FireFlair here to support you. The rates are strong, so we expect strong work in return.</p>
           </div>
           <div className="ff-pr17-chips" role="tablist" aria-label="Package types">
@@ -865,7 +865,7 @@ function TeamBookings({ guest = false }) {
 
         <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-staff">
           <div className="ff-tlx">
-          <h2 className="ff-bk-bh fit">FFStaff – Shifts with businesses</h2>
+          <h2 className="ff-bk-bh ff-bk-bhc fit"><Coin size={26} tier="silver" /><span>FFStaff</span></h2>
           <p>Businesses on FF Staff hire people for shifts. They see your preferred hourly rate for each of your professions before they hire you, and set the pay on each shift card.</p>
           </div>
           {/* v1.46 bookings (Alex, 18 Nov 20:06): signed out, the three steps; signed in, their own professions and rates. */}

@@ -135,3 +135,8 @@
 
 /* v1.98 (Alex, 19 Nov 20:57): Explore our network, Our professionals and FF Event Directory are the same size and weight. */
 .ff .ff-tl20 > h2.ff-big20 { font-size: clamp(26px,7vw,34px) !important; font-weight: 700 !important; letter-spacing: 0 !important; line-height: 1.12 !important; }
+
+/* v1.112 (Alex, 19 Nov 22:04): FFParty / FFStaff headings on Bookings carry their coin on the left (gold for FFParty, silver for FFStaff). */
+.ff .ff-bk-bh.ff-bk-bhc { display: flex; align-items: center; gap: 10px; }
+.ff .ff-bk-bh.ff-bk-bhc > .ff-coin, .ff .ff-bk-bh.ff-bk-bhc > :first-child:not(span) { flex: none; }
+.ff .ff-bk-bh.ff-bk-bhc > span { min-width: 0; }
