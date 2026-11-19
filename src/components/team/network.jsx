@@ -838,11 +838,6 @@ function NetworkScreen({ guest = false }) {
   return (
     <div>
 
-      {!guest && (
-        <div className="ff-netset18-bar">
-          <button type="button" className="ff-netset18" aria-label="Notification settings" onClick={() => setSettings(true)}><NetIco18.Gear size={18} aria-hidden="true" /></button>
-        </div>
-      )}
       {!q && !guest && <NetNotes18 onReview={setReviewing} />}
       {!q && !guest && netCos.length > 0 && (
         <section className="ff-netco18" aria-label="Companies in your network">

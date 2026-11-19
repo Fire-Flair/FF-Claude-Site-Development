@@ -174,7 +174,9 @@ function NetBrowse17(props) {
     const anyCo = found.cos.length + found.dir.length > 0;
     /* Netmap: the search sits at the top of the Network page, above the map (FF Team: under the page heading). */
     return React.createElement(NetQ17.Provider, { value: query },
-      team20 ? React.createElement(React.Fragment, null, netMapOnly20(props), netSearch20(props)) : React.createElement(React.Fragment, null,
+      /* v1.102: the search stays in the same place in the tree as on the browse view (inside the first section's heading row), so typing never loses the cursor. */
+      team20 ? React.createElement(React.Fragment, null, netMapOnly20(props),
+        React.createElement("section", { id: "ff-our-pros", style: { marginTop: 18, scrollMarginTop: 70 } }, React.createElement(HeadRow20, { title: "Search results", k: "pros", search: props.search, grab: true }))) : React.createElement(React.Fragment, null,
         props.search ? React.createElement("section", { id: "ff-net-search", style: { marginTop: 4, scrollMarginTop: 70 } }, props.search) : null,
         props.after || null),
       React.createElement(GroupedPeople, { query: query, onPick: props.onPick, scope: props.scope, quietEmpty: anyCo }),
@@ -190,12 +192,11 @@ function NetBrowse17(props) {
     return React.createElement(React.Fragment, null,
             netMapOnly20(props),
       React.createElement("section", { id: "ff-our-pros", style: { marginTop: 18, scrollMarginTop: 70 } },
-        React.createElement(LinedHead20, { title: "Our professionals", k: "pros" }),
+        React.createElement(HeadRow20, { title: "Our professionals", k: "pros", search: props.search, grab: true }),
         React.createElement(TopStaff11, null),
-        React.createElement(ProsByType17, { onPick: props.onPick })),
-      /* Alex 19 Nov 20:13: the search sits between Our professionals and the FF Event Directory. */
-      netSearch20(props),
-      React.createElement(NetDirectory20, null));
+        React.createElement(ProsBrowse20, { onPick: props.onPick })),
+      /* Alex 19 Nov 22:00: the search sits in line with each title (Our professionals and the FF Event Directory), on the right on a wide screen. */
+      React.createElement(NetDirectory20, { search: props.search }));
   }
   return React.createElement(React.Fragment, null,
     /* Netmap: the search sits at the top, above the map. */

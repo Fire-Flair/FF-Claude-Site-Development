@@ -4,6 +4,17 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.102
+
+FFTeam Network browsing (Alex, 19 Nov 22:00; mock-ups M1 to M3 approved). `styles/net20.css`, `components/staff/network-directory20.jsx`.
+
+- The FF Event Directory and Our professionals no longer use drop-downs: a row of squircle category boxes (left and right selects), the sub-category pills under it, and one browsing row of cards for the open choice.
+- The search sits in line with the title of Our professionals and of the FF Event Directory (right of the title on a wide screen, under it on a phone and iPad). Typing in either box takes the page to the results with the cursor kept.
+- New words under the titles, written by Bilbo: the FF Event Directory (find companies to work for or work with, support for your own events, register your interest) and Explore our network (put you on the map, jobs where you want to go).
+- Explore our network on desktop (from 1100px): the title and words on the left, the map on the right.
+- Company cards say "Company" with their category symbol instead of "Company Card".
+- The notification settings button at the top right of Explore our network is gone.
+
 ## v1.101
 
 FF Team home on desktop (Alex, 19 Nov 21:08, draft B). New file `styles/home-wide.css`, only from 1100px wide; phones and iPad portrait are unchanged.
