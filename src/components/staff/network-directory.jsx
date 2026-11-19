@@ -21,7 +21,7 @@ function LinedHead20({ tag, title, k }) {
     React.createElement(BigHead20, { tag: tag, title: title }), React.createElement(NetLead20, { k: k }));
 }
 function NetLead20({ k }) {
-  if (k === "page") return null; /* Alex 19 Nov 20:09: the page heading needs no text under it */
+  return null; /* Alex 19 Nov 20:09-20:12: no descriptions under any Network heading */
   return React.createElement("p", { className: "ff-body ff-netlead20", style: { margin: "-2px 0 14px", maxWidth: 680, overflowWrap: "normal", wordBreak: "normal", hyphens: "manual" } }, NET_LEAD20[k]);
 }
 
@@ -174,7 +174,7 @@ function NetBrowse17(props) {
     const anyCo = found.cos.length + found.dir.length > 0;
     /* Netmap: the search sits at the top of the Network page, above the map (FF Team: under the page heading). */
     return React.createElement(NetQ17.Provider, { value: query },
-      team20 ? netMapWithSearch20(props) : React.createElement(React.Fragment, null,
+      team20 ? React.createElement(React.Fragment, null, netMapOnly20(props), netSearch20(props)) : React.createElement(React.Fragment, null,
         props.search ? React.createElement("section", { id: "ff-net-search", style: { marginTop: 4, scrollMarginTop: 70 } }, props.search) : null,
         props.after || null),
       React.createElement(GroupedPeople, { query: query, onPick: props.onPick, scope: props.scope, quietEmpty: anyCo }),
@@ -188,12 +188,13 @@ function NetBrowse17(props) {
   const noPkg = teamSite || !!props.noPackages;
   if (team20) {
     return React.createElement(React.Fragment, null,
-      /* Netmap: search at the top (under the page heading, above the map), then the map, Our professionals and the Directory. */
-      netMapWithSearch20(props),
+            netMapOnly20(props),
       React.createElement("section", { id: "ff-our-pros", style: { marginTop: 18, scrollMarginTop: 70 } },
         React.createElement(LinedHead20, { title: "Our professionals", k: "pros" }),
         React.createElement(TopStaff11, null),
         React.createElement(ProsByType17, { onPick: props.onPick })),
+      /* Alex 19 Nov 20:13: the search sits between Our professionals and the FF Event Directory. */
+      netSearch20(props),
       React.createElement(NetDirectory20, null));
   }
   return React.createElement(React.Fragment, null,

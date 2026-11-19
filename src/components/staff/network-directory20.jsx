@@ -162,3 +162,13 @@ function netMapWithSearch20(props) {
   if (!after) return props.search ? React.createElement("section", { id: "ff-net-search", style: { marginTop: 18 } }, props.search) : null;
   return after.type === NetMap20 ? React.cloneElement(after, { search: props.search }) : React.createElement(React.Fragment, null, props.search, after);
 }
+
+
+/* The map section without the search, and the search on its own (v1.91: the search sits between Our professionals and the FF Event Directory). */
+function netMapOnly20(props) {
+  const after = props.after;
+  return after && after.type === NetMap20 ? React.cloneElement(after, { search: null }) : (after || null);
+}
+function netSearch20(props) {
+  return props.search ? React.createElement("div", { id: "ff-net-search", className: "ff-netsrch20", style: { margin: "22px 0 18px", scrollMarginTop: 70 } }, props.search) : null;
+}

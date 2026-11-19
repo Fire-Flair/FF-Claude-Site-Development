@@ -427,6 +427,9 @@
 
 /* 5. Business & Support at the bottom of every FF Team page (Network, Bookings, Profile, someone's profile). */
 .ff .ff-biz-pfa { margin-top: 36px; }
+/* v1.91 (Alex 19 Nov 20:12): on Network the gap between the closing divider and the Business & Support box is halved. */
+.ff .ff-biz-pfa.ff-biz-net { margin-top: 18px; }
+.ff :has(+ .ff-biz-net) .ff-diamond, .ff .ff-diamond:has(+ .ff-biz-net) { margin-bottom: 9px; }
 /* v1.96 (Alex, 18 Nov 22:22): not on the create-a-profile page; the finished "Your profile" page keeps it (party-live.jsx). */
 
 /* ======================= v1.96 (Alex, 18 Nov 22:22) — the card preview under 04, back ======================= */

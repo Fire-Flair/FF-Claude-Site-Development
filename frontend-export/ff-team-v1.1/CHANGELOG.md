@@ -4,6 +4,11 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.91
+
+- **Map:** Northern Ireland is drawn in the same green as Ireland (`isNI19` in `shared/map.jsx` overlays the Northern Ireland polygon). World view now names the capital of every country plus glamorous places (Rome, Monaco, Venice, Paris, Milan, Cannes, Saint-Tropez, Marbella, Ibiza, Mykonos, Dubai, Las Vegas and more): `MAP_WORLD19`, shown by rank as you zoom, never overlapping; styles `.ff-lwld19` in `v11.css`.
+- **Network:** no description text under any heading (`NetLead20` returns nothing). The search box now sits between Our professionals and the FF Event Directory (`netMapOnly20`/`netSearch20`) and reads "Search companies, people or skills". The gap between the closing divider and the Business & Support box is halved (`.ff-biz-net`, `prof21.css`).
+
 ## v1.90
 
 - **Network page: no text under "Explore our network".** The four-line intro under the page heading is removed; the Our professionals and FF Directory leads stay (`NetLead20` in `staff/network-directory.jsx`).

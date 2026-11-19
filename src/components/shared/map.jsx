@@ -72,6 +72,45 @@ const MAP_TOWN_Z27 = { 1: 0, 2: 6.25, 3: 7.5, 4: 9 };
 const MAP_TILES27 = false;
 
 
+/* Northern Ireland: a UK polygon whose first ring sits wholly in the north-east of the island of Ireland. */
+const isNI19 = (poly) => { try { const r = decRing11(poly[0]); if (!r.length) return false; let la = 0, lo = 0; r.forEach(q => { la += q[0]; lo += q[1]; }); la /= r.length; lo /= r.length; return la > 54.0 && la < 55.4 && lo > -8.3 && lo < -5.4; } catch (e) { return false; } };
+
+
+/* World view (Alex, 19 Nov): the capital of every country plus the glamorous places, [name, lat, lng, rank].
+   Rank 1 shows from the first world view, 2 from a little closer, 3 closer still; names never overlap. */
+const MAP_WORLD19 = [
+  ["New York",40.71,-74.0,1],["Los Angeles",34.05,-118.24,1],["Mexico City",19.43,-99.13,1],["Rio de Janeiro",-22.9,-43.17,1],["Buenos Aires",-34.6,-58.38,1],
+  ["Paris",48.86,2.35,1],["Rome",41.9,12.5,1],["Madrid",40.42,-3.7,1],["Berlin",52.52,13.4,1],["Moscow",55.75,37.62,1],["Cairo",30.04,31.24,1],["Nairobi",-1.29,36.82,1],
+  ["Cape Town",-33.92,18.42,1],["Dubai",25.2,55.27,1],["Delhi",28.61,77.21,1],["Beijing",39.9,116.4,1],["Tokyo",35.68,139.69,1],["Sydney",-33.87,151.21,1],["Singapore",1.35,103.82,1],["Toronto",43.65,-79.38,1],
+  ["Monaco",43.74,7.42,2],["Venice",45.44,12.33,2],["Milan",45.46,9.19,2],["Florence",43.77,11.25,2],["Nice",43.7,7.27,2],["Cannes",43.55,7.01,2],["Saint-Tropez",43.27,6.64,2],["Marbella",36.51,-4.88,2],
+  ["Ibiza",38.91,1.43,2],["Mykonos",37.45,25.33,2],["Santorini",36.39,25.46,2],["Capri",40.55,14.24,2],["Lake Como",46.0,9.26,2],["St Moritz",46.49,9.84,2],["Courchevel",45.41,6.63,2],["Geneva",46.2,6.14,2],
+  ["Zurich",47.37,8.54,2],["Vienna",48.21,16.37,2],["Barcelona",41.39,2.17,2],["Lisbon",38.72,-9.14,2],["Athens",37.98,23.73,2],["Istanbul",41.01,28.98,2],["Amsterdam",52.37,4.9,2],["Brussels",50.85,4.35,2],
+  ["Stockholm",59.33,18.07,2],["Copenhagen",55.68,12.57,2],["Oslo",59.91,10.75,2],["Helsinki",60.17,24.94,2],["Warsaw",52.23,21.01,2],["Prague",50.08,14.44,2],["Budapest",47.5,19.04,2],
+  ["Washington DC",38.91,-77.04,2],["Ottawa",45.42,-75.7,2],["Montreal",45.5,-73.57,2],["Vancouver",49.28,-123.12,2],["Miami",25.76,-80.19,2],["Las Vegas",36.17,-115.14,2],["San Francisco",37.77,-122.42,2],["Aspen",39.19,-106.82,2],
+  ["Havana",23.11,-82.37,2],["Bogotá",4.71,-74.07,2],["Lima",-12.05,-77.04,2],["Santiago",-33.45,-70.67,2],["Brasília",-15.79,-47.88,2],["São Paulo",-23.55,-46.63,2],
+  ["Riyadh",24.71,46.68,2],["Doha",25.29,51.53,2],["Abu Dhabi",24.45,54.38,2],["Tehran",35.69,51.39,2],["Islamabad",33.68,73.05,2],["Mumbai",19.08,72.88,2],["Bangkok",13.76,100.5,2],["Phuket",7.88,98.39,2],
+  ["Hanoi",21.03,105.85,2],["Jakarta",-6.21,106.85,2],["Bali",-8.65,115.22,2],["Manila",14.6,120.98,2],["Seoul",37.57,126.98,2],["Hong Kong",22.32,114.17,2],["Shanghai",31.23,121.47,2],["Malé",4.18,73.51,2],
+  ["Canberra",-35.28,149.13,2],["Wellington",-41.29,174.78,2],["Auckland",-36.85,174.76,2],["Marrakech",31.63,-8.0,2],["Accra",5.6,-0.19,2],["Addis Ababa",9.03,38.74,2],["Johannesburg",-26.2,28.05,2],["Lagos",6.52,3.38,2],
+  ["Reykjavik",64.15,-21.94,3],["Valletta",35.9,14.51,3],["Luxembourg",49.61,6.13,3],["Vaduz",47.14,9.52,3],["San Marino",43.94,12.45,3],["Bern",46.95,7.45,3],["Ljubljana",46.06,14.51,3],["Zagreb",45.81,15.98,3],
+  ["Sarajevo",43.86,18.41,3],["Belgrade",44.79,20.45,3],["Sofia",42.7,23.32,3],["Bucharest",44.43,26.1,3],["Chișinău",47.01,28.86,3],["Kyiv",50.45,30.52,3],["Minsk",53.9,27.57,3],["Vilnius",54.69,25.28,3],
+  ["Riga",56.95,24.11,3],["Tallinn",59.44,24.75,3],["Bratislava",48.15,17.11,3],["Skopje",42.0,21.43,3],["Tirana",41.33,19.82,3],["Podgorica",42.44,19.26,3],["Pristina",42.67,21.17,3],["Nicosia",35.19,33.38,3],
+  ["Ankara",39.93,32.86,3],["Tbilisi",41.72,44.79,3],["Yerevan",40.18,44.51,3],["Baku",40.41,49.87,3],["Astana",51.17,71.43,3],["Tashkent",41.3,69.24,3],["Bishkek",42.87,74.59,3],["Dushanbe",38.56,68.77,3],
+  ["Ashgabat",37.96,58.33,3],["Kabul",34.53,69.17,3],["Kathmandu",27.72,85.32,3],["Thimphu",27.47,89.64,3],["Dhaka",23.81,90.41,3],["Colombo",6.93,79.86,3],["Naypyidaw",19.76,96.08,3],["Vientiane",17.97,102.63,3],
+  ["Phnom Penh",11.56,104.92,3],["Kuala Lumpur",3.14,101.69,3],["Bandar Seri Begawan",4.89,114.94,3],["Dili",-8.56,125.57,3],["Port Moresby",-9.44,147.18,3],["Suva",-18.14,178.44,3],["Taipei",25.03,121.57,3],["Pyongyang",39.02,125.75,3],
+  ["Ulaanbaatar",47.89,106.91,3],["Baghdad",33.31,44.37,3],["Damascus",33.51,36.29,3],["Beirut",33.89,35.5,3],["Amman",31.95,35.93,3],["Jerusalem",31.77,35.22,3],["Kuwait City",29.38,47.99,3],["Manama",26.23,50.59,3],
+  ["Muscat",23.59,58.41,3],["Sanaa",15.37,44.19,3],["Tripoli",32.89,13.19,3],["Tunis",36.81,10.18,3],["Algiers",36.75,3.06,3],["Rabat",34.02,-6.83,3],["Khartoum",15.5,32.56,3],["Juba",4.85,31.58,3],
+  ["Asmara",15.34,38.93,3],["Djibouti",11.59,43.15,3],["Mogadishu",2.05,45.32,3],["Kampala",0.35,32.58,3],["Kigali",-1.95,30.06,3],["Dodoma",-6.16,35.75,3],["Lusaka",-15.39,28.32,3],["Harare",-17.83,31.05,3],
+  ["Maputo",-25.97,32.57,3],["Luanda",-8.84,13.23,3],["Windhoek",-22.56,17.08,3],["Gaborone",-24.65,25.91,3],["Pretoria",-25.75,28.19,3],["Maseru",-29.31,27.48,3],["Mbabane",-26.31,31.14,3],["Antananarivo",-18.88,47.51,3],
+  ["Port Louis",-20.16,57.5,3],["Kinshasa",-4.44,15.27,3],["Brazzaville",-4.27,15.28,3],["Libreville",0.42,9.47,3],["Yaoundé",3.85,11.5,3],["Abuja",9.08,7.4,3],["Niamey",13.51,2.11,3],["N'Djamena",12.13,15.06,3],
+  ["Bamako",12.64,-8.0,3],["Ouagadougou",12.37,-1.52,3],["Dakar",14.72,-17.47,3],["Banjul",13.45,-16.58,3],["Conakry",9.64,-13.58,3],["Freetown",8.48,-13.23,3],["Monrovia",6.3,-10.8,3],["Yamoussoukro",6.83,-5.28,3],
+  ["Lomé",6.13,1.22,3],["Porto-Novo",6.5,2.63,3],["Nouakchott",18.08,-15.98,3],["Praia",14.93,-23.51,3],["Lilongwe",-13.96,33.77,3],["Bujumbura",-3.38,29.36,3],["Malabo",3.75,8.78,3],["Bangui",4.36,18.56,3],
+  ["Guatemala City",14.63,-90.51,3],["San Salvador",13.69,-89.19,3],["Tegucigalpa",14.07,-87.19,3],["Managua",12.13,-86.25,3],["San José",9.93,-84.08,3],["Panama City",8.98,-79.52,3],["Kingston",18.0,-76.79,3],
+  ["Port-au-Prince",18.54,-72.34,3],["Santo Domingo",18.49,-69.93,3],["Nassau",25.05,-77.36,3],["Caracas",10.48,-66.9,3],["Quito",-0.18,-78.47,3],["La Paz",-16.5,-68.15,3],["Asunción",-25.27,-57.58,3],
+  ["Montevideo",-34.9,-56.16,3],["Georgetown",6.8,-58.16,3],["Paramaribo",5.85,-55.2,3],["Port of Spain",10.66,-61.51,3],["Bridgetown",13.1,-59.61,3],["Belmopan",17.25,-88.77,3],
+];
+const MAP_WORLD_Z19 = { 1: 1, 2: 2.25, 3: 3 };
+
+
 const UK_BOUNDS11 = [[49.9, -8.2], [58.7, 1.8]];
 
 
@@ -319,6 +358,8 @@ function FFMap({ mode = "home" }) {
         area(G.world, { color: "#6E9A5A", opacity: 0.55, weight: 0.7, fillColor: "#C9DDB0", fillOpacity: 1 }),
         area(G.ie, { color: "#5E8C4A", opacity: 0.7, weight: 1, fillColor: "#B9D69B", fillOpacity: 1 }),
         area(G.gb, { color: "#4E7F3C", opacity: 0.9, weight: 1.3, fillColor: "#9FCB7A", fillOpacity: 1 }),
+        /* Northern Ireland is drawn in the same green as the rest of Ireland (it sits inside the UK outline, so it is laid over it). */
+        area((G.gb || []).filter(isNI19), { color: "#5E8C4A", opacity: 0.7, weight: 1, fillColor: "#B9D69B", fillOpacity: 1 }),
         area(G.lakes, { stroke: false, fillColor: "#8FC3E6", fillOpacity: 1 }),
         line(G.rivers, { color: "#4F9AD3", opacity: 0.8, weight: 1 }),
       ].forEach(l => l && l.addTo(map));
@@ -351,10 +392,13 @@ function FFMap({ mode = "home" }) {
       const drawNames = () => {
         names.clearLayers();
         const z = map.getZoom();
-        if (z < WORLD_Z11) return;
         const b = map.getBounds().pad(0.05), placed = [];
-        [...(z >= MAP_TOWN_Z27[4] ? MAP_LONDON27 : []), ...MAP_TOWNS27].forEach(([nm, la, lo, rank]) => {
-          if (z < MAP_TOWN_Z27[rank] || !b.contains([la, lo]) || (nm === "London" && z >= MAP_TOWN_Z27[4])) return;
+        const ukList = z < WORLD_Z11 ? [] : [...(z >= MAP_TOWN_Z27[4] ? MAP_LONDON27 : []), ...MAP_TOWNS27];
+        /* world names: capitals and glamorous places, from the world view up to about the UK view; the UK and Ireland keep their own list */
+        const wld = z < 7 ? MAP_WORLD19.filter(([, la, lo, rank]) => z >= MAP_WORLD_Z19[rank] && !(la > 49.5 && la < 61 && lo > -11 && lo < 2.2)).map(w => [...w, true]) : [];
+        [...ukList, ...wld].forEach(([nm, la, lo, rank, wd]) => {
+          if (wd ? false : (z < MAP_TOWN_Z27[rank] || (nm === "London" && z >= MAP_TOWN_Z27[4]))) return;
+          if (!b.contains([la, lo])) return;
           const pt = map.latLngToContainerPoint([la, lo]);
           const w = nm.length * 7.2 + 14, hit = (bx) => placed.some(q => bx[0] < q[2] && bx[2] > q[0] && bx[1] < q[3] && bx[3] > q[1]);
           /* the name sits to the right of its dot; if that would touch another name it sits to the left instead */
@@ -362,7 +406,7 @@ function FFMap({ mode = "home" }) {
           if (hit(box)) { box = [pt.x - w, pt.y - 10, pt.x + 6, pt.y + 10]; left = true; if (hit(box)) return; }
           placed.push(box);
           L.marker([la, lo], { interactive: false, keyboard: false, zIndexOffset: 2000,
-            icon: L.divIcon({ className: "ff-lcity ff-ltown27 r" + rank + (left ? " l" : ""), html: `<i></i><span>${nm}</span>`, iconSize: [0, 0] }) }).addTo(names);
+            icon: L.divIcon({ className: "ff-lcity " + (wd ? "ff-lwld19 w" : "ff-ltown27 r") + rank + (left ? " l" : ""), html: `<i></i><span>${nm}</span>`, iconSize: [0, 0] }) }).addTo(names);
         });
       };
 

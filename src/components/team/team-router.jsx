@@ -6,9 +6,9 @@ function TeamRouter() {
   /* pfa (Alex 03:29, reverses v17.8.2 for FF Team): Business & Support at the bottom of the FF Team pages, the same box as home.
      v1.47 (Alex 18 Nov 20:06): not on someone else's profile page.
      v1.96 (Alex 18 Nov 22:22): not on the create-a-profile page either; the finished "Your profile" page keeps it (ProfileGate17). */
-  const biz = (page) => <>{page}<div className="ff-biz-pfa"><V101.BusinessSupport19 /></div></>;
+  const biz = (page, cls) => <>{page}<div className={"ff-biz-pfa" + (cls ? " " + cls : "")}><V101.BusinessSupport19 /></div></>;
   if (state.viewing) return <PersonProfile />;
-  if (tab === "network") return biz(<NetworkScreen />);
+  if (tab === "network") return biz(<NetworkScreen />, "ff-biz-net");
   if (tab === "bookings") return biz(<TeamBookings />);
   if (tab === "profile") return <ProfileGate17 kind="team" />;
   return <TeamHomeV17 />;
