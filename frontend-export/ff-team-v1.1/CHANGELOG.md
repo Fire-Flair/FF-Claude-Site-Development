@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.111
+- **Create your own package card (FF Party):** the five type boxes (name, line, You provide, Ideal for, Duration) now share one style and fill their column, so none sticks out past the card edge and Duration matches the others. CSS only (`prof21.css`, scoped to `.ff-pkc-own2`).
+- Page saved as `live-v1.111-index.html`. Artifact version 1795125869-5499.
+
 ## v1.110
 - **Top bar, all widths:** the Log in button is now exactly the height of the FF coin on the left (24px on phones, 26px on iPad and desktop), so their tops and bottoms line up. Its tap area is unchanged (invisible padding keeps it 44px).
 - Page saved as `live-v1.110-index.html`. Artifact version 1795125652-6e2e.
