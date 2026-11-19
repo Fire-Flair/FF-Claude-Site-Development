@@ -6,7 +6,8 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
 
 ## v1.74
 
-Profile page (Alex, 18 Nov 22:16–23:31). Four changes from one thread, merged onto ff-team-v1.1 (v1.73).
+Profile page (Alex, 18 Nov 22:16–23:31). Four changes from one thread, merged onto ff-team-v1.1 (v1.73). Published straight onto live 1795088883-de56,
+which matched GitHub. Artifact version 1795089029-4be2.
 
 - No zoom on text boxes (option A, Alex 23:31): `src/shell/index.html` sets the viewport to `maximum-scale=1` on iPhones
   and iPads only (a small inline script), which stops iOS zooming the page when a text box under 16px is tapped. No
