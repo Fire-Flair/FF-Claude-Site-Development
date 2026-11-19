@@ -4,6 +4,9 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.106
+- **Home, desktop:** the gap between the FF Party Launch Event words and the door video sits exactly on the page centre (equal halves, words right-aligned to the gap, video left-aligned to it). Tops still level.
+
 ## v1.105
 - **Home, iPad width (760–1099px):** FF Party Launch Event words on the left, the door video on the right (tops level).
 - **Home, desktop (1100px+):** launch event words and the door video sit side by side, centred, tops level; the video keeps its 9:16 shape (full picture). The three questions go below, three across, under the coin divider again (the v1.104 one-row layout is gone).
