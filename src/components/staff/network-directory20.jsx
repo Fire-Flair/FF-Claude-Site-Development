@@ -130,20 +130,56 @@ function DirSection20({ cat, title, list, open }) {
 
 
 
-/* The FF Event Directory on the FF Team Network page: no Featured section; a claimed company comes first in its category. */
+/* The FF Event Directory on the FF Team Network page (v1.95, Alex 19 Nov 20:49, "directory rail"): the whole directory is one line.
+   The open category is a burgundy rectangle with its sub-categories beside it as round pills; the other categories shrink to an
+   icon and a count. The drop-down box at the right opens and closes the cards. Left and right is selection (the rail scrolls
+   sideways); up and down stays the page. A claimed company comes first in its category. */
 function NetDirectory20() {
   const state = useStore().state;
   const every = browseCompanies17(state);
+  const cats = NET_CO_TYPES17.map(function (t) {
+    const inCat = every.filter(function (c) { return (c.cat || "bar") === t[0]; });
+    const list = inCat.filter(function (c) { return !c.unclaimed; }).concat(inCat.filter(function (c) { return c.unclaimed; }));
+    const d = NET_DIR_TABS20[t[0]] || NET_DIR_TABS20.bar;
+    const groups = {};
+    list.forEach(function (c) { const k = dirTabOf20(c, t[0]); (groups[k] = groups[k] || []).push(c); });
+    return { cat: t[0], title: t[1], list: list, groups: groups, tabs: d.tabs.filter(function (x) { return (groups[x.k] || []).length; }) };
+  }).filter(function (c) { return c.list.length; });
+  const [cat, setCat] = useState("bar");
+  const [tabs, setTabs] = useState({});
+  const [shut, setShut] = useState(false);
+  const railRef = React.useRef(null);
+  const cur = cats.find(function (c) { return c.cat === cat; }) || cats[0];
+  const tab = cur ? (cur.tabs.find(function (x) { return x.k === tabs[cur.cat]; }) || cur.tabs[0]) : null;
+  const pick = function (c) { if (c.cat === cur.cat) { setShut(!shut); return; } setCat(c.cat); setShut(false); };
+  useEffect(function () {
+    const r = railRef.current; if (!r) return;
+    const on = r.querySelector(".ff-dr20-cat.open"); if (on) r.scrollTo({ left: Math.max(0, on.offsetLeft - 16), behavior: "smooth" });
+  }, [cat]);
+  if (!cur) return null;
   return React.createElement("section", { id: "ff-directory", style: { marginTop: 30, scrollMarginTop: 70 } },
     React.createElement("style", null, NET20_CSS),
     React.createElement(LinedHead20, { title: "FF Event Directory", k: "dir" }),
-    NET_CO_TYPES17.map(function (t) {
-      const inCat = every.filter(function (c) { return (c.cat || "bar") === t[0]; });
-      const list = inCat.filter(function (c) { return !c.unclaimed; }).concat(inCat.filter(function (c) { return c.unclaimed; }));
-      /* A category shows once it has a company. v11-b (Alex 10:20): only Bar companies and Entertainment open by default. */
-      return list.length ? React.createElement(DirSection20, { key: t[0], cat: t[0], title: t[1], list: list, open: t[0] === "bar" || t[0] === "dj" }) : null;
-    }));
+    React.createElement("div", { className: "ff-dr20" },
+      React.createElement("div", { className: "ff-dr20-rail", ref: railRef, role: "tablist", "aria-label": "FF Event Directory categories" },
+        cats.map(function (c) {
+          const isOpen = c.cat === cur.cat;
+          return React.createElement(React.Fragment, { key: c.cat },
+            React.createElement("button", { type: "button", role: "tab", "aria-selected": isOpen, "aria-label": c.title + ", " + c.list.length, className: "ff-dr20-cat" + (isOpen ? " open" : ""), onClick: function () { pick(c); } },
+              React.createElement("span", { className: "ic", "aria-hidden": "true" }, catIcon17(c.cat)),
+              isOpen ? React.createElement("span", { className: "lb" }, c.title) : null,
+              React.createElement("span", { className: "ct" }, c.list.length)),
+            isOpen && c.tabs.length > 1 ? c.tabs.map(function (t) {
+              return React.createElement("button", { key: t.k, type: "button", className: "ff-dr20-sub" + (tab && tab.k === t.k && !shut ? " on" : ""), onClick: function () { const n = Object.assign({}, tabs); n[c.cat] = t.k; setTabs(n); setShut(false); } },
+                React.createElement("span", { className: "lb" }, t.label), React.createElement("span", { className: "ct" }, "(" + c.groups[t.k].length + ")"));
+            }) : null);
+        })),
+      React.createElement("button", { type: "button", className: "ff-dr20-chev", "aria-expanded": !shut, "aria-label": shut ? "Show " + cur.title : "Hide " + cur.title, onClick: function () { setShut(!shut); } },
+        React.createElement("svg", { width: 12, height: 12, viewBox: "0 0 10 10", style: { transform: shut ? "rotate(-90deg)" : "none", transition: "transform .15s ease" } }, React.createElement("path", { d: "M0 2 L10 2 L5 9 Z", fill: "currentColor" })))),
+    shut ? null : React.createElement(HScroll, { label: tab ? tab.label : cur.title, key: cur.cat + (tab ? tab.k : "") }, (tab ? cur.groups[tab.k] : cur.list).map(function (co) { return React.createElement(CoTile20, { key: co.id, co: co }); })));
 }
+
+
 
 
 /* The map on its own (the Explore by area drop-downs stay on the other pages). */

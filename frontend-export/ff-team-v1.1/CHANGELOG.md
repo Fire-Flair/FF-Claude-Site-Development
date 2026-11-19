@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.96
+
+- **FF Event Directory is one line (the "directory rail", Alex's draft 5):** the open category is a burgundy rectangle with its sub-categories beside it as round pills; the other categories shrink to an icon and a count. The drop-down box stays at the right and opens and closes the cards. The Company Cards are unchanged. One category is open at a time (was Bar companies and Entertainment together). The rail scrolls left and right only, in line with the scroll rule.
+
 ## v1.95
 
 - **Grow with FireFlair wording (writer bot):** Training now reads "Register your interest and we will notify you with available dates." Dream jobs reads "Tell us your dream jobs and we will help make them happen." (softened from "will make them happen" so it is not a guarantee).
