@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.87
+
+- **More space around the spinning coin dividers on Home.** The gap above and below each `.ff-coindiv` goes from 30px to 48px on phones (up to 76px on desktop, was 48px). `home-fix22.css` and the matching Journal offset in `titles2.css`.
+
 ## v1.86
 
 - **Specialist category.** A profession that fits no category is Specialist (stored as `Other`, so no data changes). It is shown as Specialist on Network (category chips, group headings, scroll rows), the map legend, the Team tab, the profession category icon grid and the "Which category is…?" prompt. Label mapping in `groupLabel17` (`state/professions.js`) plus `network.jsx`, `introductions.jsx`, `staff/network-directory.jsx`, `profile-edit-p2.jsx`.

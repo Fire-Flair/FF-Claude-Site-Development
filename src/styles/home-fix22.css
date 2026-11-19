@@ -1,7 +1,7 @@
 /* ==== homefix (FF Team home): pillar rows, Launch Challenge, spacing, headings, equal boxes. Loaded by Home101 only (.ff-hf22). ==== */
 
 /* Spacing: three coin dividers at most, with tighter gaps */
-.ff .ff-hf22 .ff-coindiv { margin:clamp(30px,6vw,48px) auto; }
+.ff .ff-hf22 .ff-coindiv { margin:clamp(48px,10vw,76px) auto; }
 .ff .ff-hf22 .ff-dx { padding-bottom:0; }
 
 /* Section headings: all on the left, as Discover FireFlair */
