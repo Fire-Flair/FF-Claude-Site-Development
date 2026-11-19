@@ -32,14 +32,6 @@ const startMs17 = (sh) => {
 };
 
 
-/* FF Staff launch (Be first in line for Gold): a company is recorded once, at its first confirmed hire on an FF Staff
-   booking. The list is the prototype's stand-in for the server-side count; nothing is enrolled automatically. */
-const goldKey17 = (s) => {
-  const c = (s && s.company) || {};
-  const nm = c.slug || c.name;
-  if (nm) return "co:" + slugify(nm);
-  return s && s.auth && s.auth.status === "signedIn" && s.role === "staff" && s.site !== "party" && s.auth.tag ? "tag:" + String(s.auth.tag).toLowerCase() : "";
-};
 
 
 /* Words are never split across lines: a long word makes its text smaller instead. Several words may wrap. */
@@ -64,46 +56,3 @@ function FitWords17() {
 }
 
 
-/* Hold a card for half a second and it pops up, anywhere on FF Party: people, packages, drinks and companies. */
-function LongPress17() {
-  const { state, dispatch } = useStore();
-  const [pop, setPop] = useState(null);
-  const on = state.role === "staff" && state.site === "party";
-  const ref = useRef({ on, state });
-  ref.current = { on, state };
-  useEffect(() => {
-    let tm = 0, sx = 0, sy = 0, hold = 0;
-    const SEL = "[data-pk17],[data-ck17],[data-co17],[data-pr17]";
-    const stop = () => { clearTimeout(tm); tm = 0; };
-    const onDown = (e) => {
-      if (!ref.current.on || (e.pointerType === "mouse" && e.button !== 0)) return;
-      const el = e.target.closest && e.target.closest(SEL); if (!el) return;
-      if (el.closest(".inf")) return;
-      sx = e.clientX; sy = e.clientY; stop();
-      tm = setTimeout(() => {
-        tm = 0; hold = Date.now();
-        try { navigator.vibrate && navigator.vibrate(15); } catch (_) {}
-        if (el.dataset.pk17) setPop({ k: "pk", id: el.dataset.pk17, alt: el.dataset.pk17Alt });
-        else if (el.dataset.ck17) setPop({ k: "ck", id: el.dataset.ck17 });
-        else if (el.dataset.co17) dispatch({ type: "VIEW_COMPANY", id: el.dataset.co17 });
-        else if (el.dataset.pr17) dispatch({ type: "VIEW", id: el.dataset.pr17 });
-      }, 480);
-    };
-    const onMove = (e) => { if (tm && Math.hypot(e.clientX - sx, e.clientY - sy) > 10) stop(); };
-    const onClick = (e) => { if (hold && Date.now() - hold < 900) { e.preventDefault(); e.stopPropagation(); hold = 0; } };
-    const onCtx = (e) => { if (ref.current.on && e.target.closest && e.target.closest(SEL)) e.preventDefault(); };
-    document.addEventListener("pointerdown", onDown, true);
-    document.addEventListener("pointermove", onMove, true);
-    document.addEventListener("pointerup", stop, true);
-    document.addEventListener("pointercancel", stop, true);
-    document.addEventListener("scroll", stop, true);
-    document.addEventListener("click", onClick, true);
-    document.addEventListener("contextmenu", onCtx, true);
-    return () => { stop(); document.removeEventListener("pointerdown", onDown, true); document.removeEventListener("pointermove", onMove, true); document.removeEventListener("pointerup", stop, true); document.removeEventListener("pointercancel", stop, true); document.removeEventListener("scroll", stop, true); document.removeEventListener("click", onClick, true); document.removeEventListener("contextmenu", onCtx, true); };
-  }, []);
-  if (!pop) return null;
-  const close = () => setPop(null);
-  if (pop.k === "ck") { const c = ALLCK17.find(x => x.id === pop.id); return c ? <ClassicPop17 c={c} onClose={close} /> : null; }
-  const svc = pop.alt === "byob" ? byobOf17(state) : pkgsOf17(state).find(x => x.id === pop.id);
-  return svc ? <PkgSheet17 svc={svc} qual={(state.br17 || {}).q || ""} onClose={close} /> : null;
-}

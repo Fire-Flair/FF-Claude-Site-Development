@@ -3,7 +3,6 @@
    locked control: the same look as the button it replaces, dimmed, with a small lock, not clickable, no shine. */
 const LOCKED_LABEL17 = "Coming soon";
 
-const isPartySite17 = (state) => !!state && state.role === "staff" && state.site === "party";
 
 /* Tabs and routes of FF Party that are not available in Phase 2 (Book and Party). */
 const PARTY_LOCKED_TABS17 = ["bookings", "profile"];

@@ -253,4 +253,3 @@ let QA_RANKS = {};
 const resetQuestionOrder = () => { QA_RANKS = {}; };
 
 
-const qaRank = (id) => (QA_RANKS[id] === undefined ? (QA_RANKS[id] = Math.random()) : QA_RANKS[id]);

@@ -212,7 +212,6 @@
 .ff .pv-3b.one { display:grid; grid-template-columns:minmax(0,1fr); max-width:230px; margin:10px auto 0; }
 .ff .pv-ft .pv-tile { width:150px; }
 .ff .pv-ft .pv-tile > * { width:100% !important; }
-.ff .pv-pkc .ff-tp17 { aspect-ratio:auto; min-height:0; gap:6px; }
 .ff .pv-co .pv-tile.pv-cob { width:250px; display:grid; gap:6px; padding:0; border:0; background:none; text-align:left; cursor:pointer; color:inherit; font:inherit; }
 .ff .pv-cob .tm { display:flex; align-items:center; gap:4px; flex-wrap:wrap; } .ff .pv-cob .tm small { font-size:12px; margin-left:4px; }
 @media (min-width:900px) { .ff .pv-ft .pv-tile { width:calc(50% - 7px); max-width:170px; } .ff .pv-co .pv-tile.pv-cob { width:100%; max-width:230px; } }

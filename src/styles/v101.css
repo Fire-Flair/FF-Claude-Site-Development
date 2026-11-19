@@ -94,7 +94,6 @@
 .ff .ff-addff:hover{ border-color:var(--gold); background:linear-gradient(180deg,#28282C,#121214)}
 .ff .ff-btn.wine{ background:linear-gradient(170deg,#82203A,var(--ox,#5C1220)); color:#F6E7B4; border-color:var(--ox,#5C1220); box-shadow:0 6px 14px rgba(92,18,32,.22)}
 .ff .ff-btn.wine:hover{ background:linear-gradient(170deg,#94263F,#661528)}
-.ff .ff-goldpick::after{ border-color:rgba(255,255,255,.4)}
 .ff .ff-move:hover:not(:disabled){ background:rgba(201,162,39,.16); color:#4A3A0E}
 .ff .ff-move:disabled{ opacity:.22; cursor:default}
 .ff .ff-wa-btn:hover{ background:#1A9A4D}
@@ -158,7 +157,6 @@
 .ff .ff-xplevel.now{ border-color:var(--gold-dk); box-shadow:0 0 0 1px rgba(201,162,39,.3); opacity:1}
 .ff .ff-verladder::before{ content:''; position:absolute; left:12.5%; right:12.5%; top:54px; height:2px; background:linear-gradient(90deg,#CFCBC3,#C07A3C,#D4D8DE,#E8C75E); opacity:.55}
 @media (max-width:420px){.ff .ff-verladder::before{ top:48px}}
-.ff .ff-sheet:focus{ outline:none}
 .ff .ff-deck.sq.pub{ padding:9px 9px 9px; transition:transform .14s ease, box-shadow .14s ease}
 .ff .ff-deck.sq.pub .ff-ic2-title{ margin-top:7px; font-size:14px}
 .ff .ff-deck.sq.pub .ff-ic2-desc{ margin-top:6px; font-size:12px; -webkit-line-clamp:3}
@@ -173,18 +171,10 @@
 .ff .ff-deck.sq.pub-s .ff-ic2-title{ margin:0 2px; font-size:13px; display:flex; align-items:center; justify-content:center; gap:6px}
 .ff .ff-deck.sq.pub-s .ff-ic2-desc{ margin-top:4px; font-size:12px; -webkit-line-clamp:2}
 .ff .ff-deck.sq.pub-s .ff-ic2-sub{ margin-top:2px; font-size:11px}
-.ff .ff-pubgrid .ff-deck.sq.pub:hover{ transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,.28)}
-.ff .ff-pubgrid .ff-deck.sq.pub:active{ transform:scale(.97)}
-.ff .ff-pubgrid .ff-deck.sq.pub:focus-visible{ outline:2px solid var(--gold); outline-offset:3px}
 @media (prefers-reduced-motion: reduce){.ff .ff-deck.sq.pub{ transition:none}}
-@media (prefers-reduced-motion: reduce){.ff .ff-pubgrid .ff-deck.sq.pub:hover{ transform:none}}
 .ff .ff-deck.sq.pub-r{ min-height:200px; padding:16px 16px 14px; justify-content:center}
 .ff .ff-deck.sq.pub-r .ff-ic2-title{ font-size:15px; margin-top:8px; white-space:normal}
 .ff .ff-deck.sq.pub-r .ff-ic2-desc{ display:block; overflow:visible; -webkit-line-clamp:unset; font-size:14px; line-height:1.5; margin-top:10px}
-@media (prefers-reduced-motion: reduce){.ff .ff-sheet.center{ animation:none}}
-.ff .ff-scrim.center{ align-items:center; padding:16px}
-.ff .ff-sheet.center{ max-width:680px; max-height:86vh; border-radius:24px; border:1px solid rgba(201,162,39,.35); box-shadow:0 30px 80px -20px rgba(0,0,0,.55); padding-bottom:6px; animation:ffpop .24s cubic-bezier(.2,.8,.2,1)}
-.ff .ff-sheet.center .ff-sheet-head{ border-radius:24px 24px 0 0}
 .ff .ff-ai.hero{ padding:9px 12px}
 .ff .ff-ai.hero .ff-ai-title{ font-size:14px}
 .ff .ff-ai-send:disabled{ opacity:.38; cursor:default}
@@ -353,28 +343,6 @@
     flex: none;
     transform: rotate(45deg);
     background: var(--color-gold)}
-.ff .ff-sheet{
-    width: 100%;
-    max-width: 560px;
-    background: var(--color-paper);
-    border-top: 1px solid var(--color-gold-dk);
-    max-height: 88vh;
-    overflow-y: auto;
-    padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
-    animation: ffup .22s ease-out}
-.ff .ff-sheet-top{
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    background: var(--color-paper)}
-.ff .ff-sheet-head{
-    background: var(--color-paper);
-    border-bottom: 1px solid rgba(126, 97, 29, .30);
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    z-index: 2}
 .ff .ff-shimmer{
     position: relative;
     overflow: hidden;
@@ -405,7 +373,6 @@
   to { transform: translateX(100%); }
 }
 html,body{ overscroll-behavior-y: none}
-@media (min-width: 700px){.ff .ff-sheet{ border: 1px solid var(--color-gold-dk)}}
 
 :root{
     --r-sm: 10px;
@@ -661,8 +628,6 @@ html,body{ overscroll-behavior-y: none}
     font-weight: 700;
     letter-spacing: -0.005em;
     color: #16130f}
-.ff .ff-sheet-top,.ff .ff-sheet-head{
-    border-radius: var(--r-xl) var(--r-xl) 0 0}
 .ff .ff-authbtn{
     flex: none;
     white-space: nowrap;
@@ -1133,14 +1098,6 @@ html,body{ overscroll-behavior-y: none}
     place-items: center;
     color: var(--color-gold-dk);
     border-radius: 8px}
-.ff .ff-goldpick .ff-chip.on{
-    background: var(--onyx,#141416);
-    border-color: var(--onyx,#141416);
-    color: #E4C36A}
-.ff .ff-goldpick .ff-chip.picked{
-    background: var(--ox,#5C1220);
-    border-color: var(--ox,#5C1220);
-    color: #f6e7b4}
 @keyframes ffcaret {
   50% {
     opacity: 0;
@@ -1168,7 +1125,6 @@ html,body{ overscroll-behavior-y: none}
     color: #E4C36A; border: 1px solid var(--color-gold-dk); font-size:12px; font-weight: 700; letter-spacing: 0.14em;
     text-transform: uppercase; white-space: nowrap}
 .ff .ff-chip-custom{ border-style: dashed; border-color: var(--color-gold-dk); color: var(--ox,#5C1220); font-weight: 600}
-.ff .ff-goldpick .ff-chip{ font-size:12px; margin: 0 5px 5px 0; gap: 3px}
 .ff .ff-chipcat{ margin-left: 6px; font-size:11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-gold-dk); opacity: 0.85}
 .ff .ff-livebar{ border-color: rgba(201, 162, 39, 0.35)}
 .ff .ff-livebar.top{ border-top: 1px solid rgba(201, 162, 39, 0.35)}
@@ -1647,14 +1603,6 @@ html,body{ overscroll-behavior-y: none}
 .ff .ff-qa-slot{
     width: clamp(176px, 52vw, 204px); aspect-ratio: 5 / 7; border: 1.5px dashed rgba(52, 194, 122, 0.55); border-radius: 22px; display: grid; place-items: center;
     text-align: center; padding: 14px; color: #1e7a4a; font-size: 13px; font-weight: 600; background: rgba(52, 194, 122, 0.06)}
-.ff .ff-qadd{ flex:none; aspect-ratio:5 / 7; border-radius:22px; border:1.5px dashed rgba(177,138,46,.7); background:rgba(177,138,46,.07);
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; padding:14px; text-align:center; cursor:pointer; color:#16130F}
-.ff .ff-qadd:hover{ background:rgba(177,138,46,.13)}
-.ff .ff-qadd:focus-visible{ outline:2px solid var(--gold); outline-offset:2px}
-.ff .ff-qadd-plus{ width:52px; height:52px; border-radius:50%; display:grid; place-items:center; background:#16130F; color:#E4C36A}
-.ff .ff-qadd b{ font-size:14.5px; line-height:1.25}
-.ff .ff-qadd small{ font-size:12px; opacity:.7; line-height:1.3}
-
 .ff .ff-home{
   --ink:#0B0B0C; --onyx:#141416; --char:#1E1F22; --cream:#F4EFE4; --paper:#FBF8F1;
   --gold:#C9A227; --gold-lt:#E4C36A; --gold-dk:#7E611D; --gold-mid:#B08D2A;

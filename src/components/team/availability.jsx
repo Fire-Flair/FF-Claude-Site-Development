@@ -1,10 +1,9 @@
 /* src/components/team/availability.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
 const AVAIL_OPTIONS = ["Yes", "No", "Maybe"];
 
-
+/* Kept on purpose: the live page's Bookings notification code (BkNotes11, published from another chat and not yet in src/) calls availQ. */
 const availQ = (iso) => ({ id: `av_${iso}`, iso, group: "availability", type: "text", options: AVAIL_OPTIONS, xp: 0, public: false,
   text: `Are you available on ${longDay(iso) || "this date"}?` });
-
 
 /* Answers some of the sample people have already given, so "Check
    availability" can show an instant answer. */
@@ -49,84 +48,12 @@ function availabilityAskedOfMe(state) {
 
 
 
-function AddAvailabilityTile({ onClick }) {
-  return (
-    <button type="button" className="ff-qadd ff-avadd" onClick={onClick} style={{ width: CARD_W.question }} aria-label="Add a date">
-      <span className="ff-qadd-plus"><I11.Plus size={26} strokeWidth={2} /></span>
-      <b>Add a date</b>
-      <small>Say if you're free, before anyone asks.</small>
-    </button>
-  );
-}
 
 
 
-function AddAvailabilitySheet({ open, onClose, initialIso }) {
-  const { state, dispatch } = useStore();
-  const [iso, setIso] = useState("");
-  useEffect(() => { if (open) setIso(initialIso || ""); }, [open]);
-  if (!open) return null;
-  const prev = iso ? (state.profile.answers || {})[`av_${iso}`] : undefined;
-  const save = (v) => {
-    dispatch({ type: "ANSWER", qid: `av_${iso}`, value: v });
-    dispatch({ type: "TOAST", toast: `Saved · ${shortDay(iso)}: ${v}` });
-    onClose();
-  };
-  return (
-    <Sheet open onClose={onClose} title="Availability Card">
-      <Field label="Date">
-        <input className="ff-input" type="date" min={TODAY_ISO} value={iso} onChange={(e) => setIso(e.target.value)} aria-label="Date" />
-      </Field>
-      {iso && <p className="ff-body" style={{ margin: "0 0 10px", fontWeight: 700, fontSize: 16 }}>Are you available on {longDay(iso)}?</p>}
-      <div className="ff-av-opts">
-        {AVAIL_OPTIONS.map(o => (
-          <button key={o} type="button" className={`ff-av-opt ${availTone(o)}${prev === o ? " on" : ""}`} disabled={!iso} onClick={() => save(o)}>{o}</button>
-        ))}
-      </div>
-      <p className="ff-body ff-muted" style={{ fontSize: 12, margin: "12px 0 0" }}>
-        Saved with your other answers. When a business asks about this date, they see your answer straight away. You can change it at any time.
-      </p>
-    </Sheet>
-  );
-}
 
 
 
-/* FF Team Bookings: your Availability Cards. */
-function AvailabilityCards() {
-  const { state } = useStore();
-  const [adding, setAdding] = useState(false);
-  const [openQ, setOpenQ] = useState(null);
-  const answers = state.profile.answers || {};
-  const asked = availabilityAskedOfMe(state).filter(x => !isPast(x.iso));
-  const askedIsos = asked.map(x => x.iso);
-  const mine = Object.keys(answers).filter(k => k.startsWith("av_") && isAnswered(answers[k])).map(k => k.slice(3))
-    .filter(iso => !askedIsos.includes(iso) && !isPast(iso)).sort();
-  const todo = asked.filter(x => !isAnswered(answers[`av_${x.iso}`]));
-  const askedDone = asked.filter(x => isAnswered(answers[`av_${x.iso}`]));
-  const card = (iso, extra = {}) => {
-    const q = availQ(iso);
-    return <QuestionCard key={q.id + (extra.key || "")} q={q} answer={answers[q.id]} label="Availability" onClick={() => setOpenQ(q)} {...extra} />;
-  };
-  return (
-    <div className="ff-av-panel">
-      <div className="ff-qa-subh">
-        <span className="ff-qa-ic ff-av-ic"><I11.CalendarCheck size={14} /></span>
-        <b>Availability Cards</b>
-        {todo.length > 0 && <span className="ff-pill gold">{todo.length} to answer</span>}
-      </div>
-      <p className="ff-qa-note">Answer once and it's saved. When a business asks if you're free on a date you've answered, your answer is already there. Requests also come to you on WhatsApp.</p>
-      <HScroll label="Availability Cards" snap>
-        <AddAvailabilityTile onClick={() => setAdding(true)} />
-        {todo.map(x => card(x.iso, { asker: `Asked by ${x.byName}${x.at ? ` · ${askedOn(x.at)}` : ""}`, pending: "Tap to answer" }))}
-        {askedDone.map(x => card(x.iso, { asker: `Asked by ${x.byName}` }))}
-        {mine.map(iso => card(iso))}
-      </HScroll>
-      <AddAvailabilitySheet open={adding} onClose={() => setAdding(false)} />
-      <QuestionSheet open={!!openQ} q={openQ} onClose={() => setOpenQ(null)} />
-    </div>
-  );
-}
 
 
 

@@ -25,80 +25,28 @@ const img17 = (k) => (window.FF_IMG || {})[k] || (typeof IMGS !== "undefined" &&
 
 
 
-/* ---- Recipes and shopping lists ---------------------------------------------------------- */
-const UNITS17 = ["ml", "cl", "dash", "barspoon", "wedge", "wheel", "slice", "twist", "leaf", "sprig", "piece"];
 
 
-const PLURAL17 = { dash: "dashes", barspoon: "barspoons", wedge: "wedges", wheel: "wheels", slice: "slices", twist: "twists", leaf: "leaves", sprig: "sprigs", piece: "pieces" };
 
 
-const UNIT_ML17 = { ml: 1, cl: 10, dash: 0.8, barspoon: 5 };
 
 
-const FRESH_PER17 = { wedge: [8, "whole fruit"], wheel: [8, "whole fruit"], slice: [8, "whole fruit"], twist: [6, "whole fruit"], leaf: [40, "bunch", "bunches"], sprig: [10, "bunch", "bunches"], piece: [1, ""] };
 
 
-const BUY17 = {
-  spirit: { label: "Spirits", short: "Spirit", sizes: [700, 1000] },
-  liqueur: { label: "Liqueurs and vermouths", short: "Liqueur", sizes: [500, 700] },
-  wine: { label: "Wine and fizz", short: "Wine", sizes: [750] },
-  mixer: { label: "Juices and mixers", short: "Mixer", sizes: [1000] },
-  syrup: { label: "Syrups", short: "Syrup", sizes: [700, 1000] },
-  bitters: { label: "Bitters", short: "Bitters", sizes: [200] },
-  fresh: { label: "Fresh", short: "Fresh" },
-  other: { label: "Other", short: "Other" },
-};
 
 
-const BUY_ORDER17 = ["spirit", "liqueur", "wine", "mixer", "syrup", "bitters", "fresh", "other"];
 
 
-function guessBuy17(name) {
-  const n = String(name || "").toLowerCase();
-  const has = (...w) => w.some(x => n.includes(x));
-  if (!n.trim()) return "other";
-  if (has("bitters")) return "bitters";
-  if (has("syrup", "sugar", "grenadine", "honey", "agave", "orgeat", "falernum")) return "syrup";
-  if (has("liqueur", "triple sec", "cointreau", "kahl", "amaretto", "vermouth", "campari", "aperol", "chartreuse", "maraschino", "chambord", "baileys", "limoncello", "st germain", "elderflower", "coffee liq", "crème", "creme de")) return "liqueur";
-  if (has("vodka", "gin", "rum", "tequila", "mezcal", "whisk", "bourbon", "rye", "scotch", "brandy", "cognac", "pisco", "cacha")) return "spirit";
-  if (has("prosecco", "champagne", "cava", "wine", "crémant", "cremant", "sparkling")) return "wine";
-  if (has("lime", "lemon", "orange", "grapefruit", "mint", "basil", "cucumber", "berr", "passion", "pineapple chunk", "egg", "cherry", "olive", "rosemary", "thyme")) return has("juice") ? "mixer" : "fresh";
-  if (has("espresso", "coffee", "tea")) return "other";
-  if (has("juice", "tonic", "soda", "cola", "ginger", "lemonade", "water", "cream", "milk", "puree", "purée", "coconut")) return "mixer";
-  return "other";
-}
 
 
-const fmtVol17 = (ml) => ml >= 1000 ? `${+(ml / 1000).toFixed(2)} L` : `${Math.round(ml * 10) / 10} ml`;
 
 
-const fmtSize17 = (s) => s >= 1000 ? `${s / 1000} L` : `${s / 10} cl`;
 
 
-const unitWord17 = (u, amt) => (UNIT_ML17[u] === 1 || u === "cl") ? u : (+amt === 1 ? u : (PLURAL17[u] || u));
 
 
-function buyOptions17(total, sizes) {
-  const opts = sizes.map(s => { const k = Math.max(1, Math.ceil(total / s - 1e-9)); return { s, k, w: k * s - total }; })
-    .sort((a, b) => a.w - b.w || a.k - b.k);
-  return opts.slice(0, 2).map(o => `${o.k} × ${fmtSize17(o.s)}`).join(" or ");
-}
 
 
-/* One ingredient, for n cocktails: what it says on the recipe, and what to buy. */
-function shopLine17(ing, n) {
-  const amt = +ing.amt || 0, u = ing.unit || "ml", buy = ing.buy || guessBuy17(ing.name);
-  if (n === 1) return { qty: amt ? `${amt} ${unitWord17(u, amt)}` : "", buy: "" };
-  if (UNIT_ML17[u]) {
-    const ml = amt * UNIT_ML17[u] * n;
-    const sizes = (BUY17[buy] || {}).sizes;
-    return { qty: fmtVol17(ml), buy: sizes && ml ? buyOptions17(ml, sizes) : "" };
-  }
-  const count = amt * n;
-  const f = FRESH_PER17[u];
-  if (f && f[0] > 1) { const k = Math.ceil(count / f[0]); return { qty: `${count} ${unitWord17(u, count)}`, buy: `${k} ${k === 1 || !f[2] ? f[1] : f[2]}` }; }
-  return { qty: `${count} ${unitWord17(u, count)}`, buy: "" };
-}
 
 
 
@@ -117,28 +65,6 @@ function Line17({ value, onChange, placeholder, className = "", max = 80, label 
 }
 
 
-function Chips17({ value = [], onChange, placeholder, prefix = "", icon: Ic, edit, max = 12 }) {
-  const [t, setT] = useState("");
-  const add = () => {
-    const v = t.trim().replace(/^[@#]+/, (m) => prefix && m[0] === prefix ? "" : m);
-    if (!v) return;
-    const full = prefix && !/^[@#]/.test(v) ? prefix + v : v;
-    if (!value.includes(full) && value.length < max) onChange([...value, full]);
-    setT("");
-  };
-  if (!edit && !value.length) return null;
-  return (
-    <div className="ff-c17-chips">
-      {value.map(v => (
-        <span key={v} className="chip">{Ic && <Ic size={11} />}{v}
-          {edit && <button type="button" aria-label={`Remove ${v}`} onClick={() => onChange(value.filter(x => x !== v))}><S17I.X size={10} /></button>}
-        </span>))}
-      {edit && value.length < max && <input value={t} placeholder={placeholder} aria-label={placeholder}
-        onChange={(e) => { const v = e.target.value; if (/[,\n]$/.test(v)) { setT(v.slice(0, -1)); setTimeout(add, 0); } else setT(v); }}
-        onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); add(); } }} onBlur={add} />}
-    </div>
-  );
-}
 
 
 function Photo17({ src, fallback, edit, onChange, label = "Add a photo", icon: Ph, fit }) {
@@ -179,11 +105,8 @@ function Photo17({ src, fallback, edit, onChange, label = "Add a photo", icon: P
 
 
 
-/* ---- The card, and the pair (front and back, side by side) -------------------------------------- */
-const slug17 = (t) => String(t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
 
-const PATH17 = { cocktail: "cocktails", service: "services" };
 
 
 /* The same base on every card, the one the Profile Card has: the coin and the owner's FF Tag address. */
@@ -211,13 +134,10 @@ function Card17({ kind, tone = "", plate, tag, url, edit, size = "", children })
 const GLASS17 = [["tall", "highball", "Tall"], ["short", "rocks", "Short"], ["martini", "martini", "Martini"]];
 
 
-const SPIRITS17 = ["Vodka", "Gin", "Rum", "Tequila", "Mezcal", "Whisky", "Bourbon", "Brandy", "Cognac", "Liqueur"];
 
 
-const newIng17 = () => ({ id: uid("ing"), amt: "", unit: "ml", name: "", buy: "" });
 
 
-const NEW_COCKTAIL17 = (style) => ({ id: uid("ck"), style: style === "classic" ? "classic" : "signature", kind: "cocktail", spirit: "", spiritOther: "", price: "", name: "", note: "", photo: "", glass: "martini", glassOther: "", keywords: [], ings: [newIng17(), newIng17(), newIng17()] });
 
 
 function GlassPick17({ value, other, onChange, onOther, edit }) {
@@ -283,211 +203,14 @@ function CocktailFront17({ c, edit, set }) {
 }
 
 
-function AmtInput17({ value, mult, onChange }) {
-  const [txt, setTxt] = useState("");
-  const focus = useRef(false);
-  const shown = value === "" || value == null ? "" : String(+(parseFloat(value) * mult).toFixed(2));
-  useEffect(() => { if (!focus.current) setTxt(shown); }, [shown, mult]);
-  return <input className="a" inputMode="decimal" value={txt} placeholder={mult === 1 ? "50" : "700"} aria-label="Amount"
-    onFocus={() => { focus.current = true; }} onBlur={() => { focus.current = false; setTxt(shown); }}
-    onChange={(e) => { const v = e.target.value.replace(/[^0-9.]/g, "").slice(0, 6); setTxt(v); const f = parseFloat(v); onChange(v === "" || isNaN(f) ? "" : String(+(f / mult).toFixed(4))); }} />;
-}
 
 
-function CocktailBack17({ c, edit, set }) {
-  const [n, setN] = useState(1);
-  const setIng = (id, patch) => set({ ings: c.ings.map((i) => i.id === id ? { ...i, ...patch } : i) });
-  const rows = (c.ings || []).filter((i) => edit || String(i.name).trim());
-  const pickUnit = (i, u) => {
-    if (u === "bottle")
-      setIng(i.id, { unit: "ml", amt: String(+35 .toFixed(4)) });
-    else
-      setIng(i.id, { unit: u });
-  };
-  const recHead = React.createElement("div", {
-    className: "ff-c17-rechead"
-  }, React.createElement("b", {
-    className: "h"
-  }, React.createElement(S17I.Martini, {
-    size: 14
-  }), " Recipe"), React.createElement("span", {
-    className: "ff-c17-size",
-    role: "tablist",
-    "aria-label": "Recipe size"
-  }, [1, 20].map((x) => React.createElement("button", {
-    key: x,
-    type: "button",
-    role: "tab",
-    "aria-selected": n === x,
-    className: n === x ? "on" : "",
-    onClick: () => setN(x),
-    "aria-label": x === 1 ? "1 cocktail" : "20 cocktails"
-  }, x))));
-  const modeTabs = React.createElement("div", {
-    className: "ff-c17-tabs",
-    role: "tablist",
-    "aria-label": "Cocktail or mocktail"
-  }, [["cocktail", "Cocktail"], ["mocktail", "Mocktail"]].map(([k, l]) => React.createElement("button", {
-    key: k,
-    type: "button",
-    role: "tab",
-    "aria-selected": (c.kind || "cocktail") === k,
-    className: (c.kind || "cocktail") === k ? "on" : "",
-    onClick: () => set({ kind: k })
-  }, l)));
-  return React.createElement("div", {
-    className: "ff-c17-body back"
-  }, edit ? React.createElement("div", {
-    className: "ff-c17-kind"
-  }, React.createElement("div", {
-    className: "ff-c17-tabs",
-    role: "tablist",
-    "aria-label": "Classic or signature"
-  }, [["classic", "Classic"], ["signature", "Signature"]].map(([k, l]) => React.createElement("button", {
-    key: k,
-    type: "button",
-    role: "tab",
-    "aria-selected": (c.style || "signature") === k,
-    className: (c.style || "signature") === k ? "on" : "",
-    onClick: () => set({ style: k })
-  }, l)))) : React.createElement("span", {
-    className: "ff-c17-kindline"
-  }, c.style === "classic" ? "Classic " : "Signature ", c.kind === "mocktail" ? "mocktail" : "cocktail", c.kind !== "mocktail" && (c.spirit === "other" ? c.spiritOther : c.spirit) ? ` · ${c.spirit === "other" ? c.spiritOther : c.spirit}` : ""), edit ? React.createElement("div", {
-    className: "ff-c17-modrow"
-  }, modeTabs, recHead) : recHead, edit ? React.createElement("div", {
-    className: "ff-c17-rows"
-  }, c.ings.map((i, ix) => {
-    const sr = ix === 0 && c.kind !== "mocktail";
-    const other = sr && (i.other || String(i.name).trim() && !SPIRITS17.includes(i.name));
-    return React.createElement(React.Fragment, {
-      key: i.id
-    }, React.createElement("div", {
-      className: "r"
-    }, React.createElement(AmtInput17, {
-      value: i.amt,
-      mult: n,
-      onChange: (amt) => setIng(i.id, { amt })
-    }), React.createElement("select", {
-      className: "u",
-      value: i.unit,
-      "aria-label": "Unit",
-      onChange: (e) => pickUnit(i, e.target.value)
-    }, UNITS17.map((u) => React.createElement("option", {
-      key: u,
-      value: u
-    }, u)), n === 20 && React.createElement("option", {
-      value: "bottle"
-    }, "bottle (70 cl)")), sr ? React.createElement("select", {
-      className: "nm sp",
-      value: other ? "other" : i.name || "",
-      "aria-label": "Spirit",
-      onChange: (e) => {
-        const v = e.target.value;
-        if (v === "other")
-          set({ spirit: "other", ings: c.ings.map((x) => x.id === i.id ? { ...x, name: "", other: true } : x) });
-        else
-          set({ spirit: v, spiritOther: "", ings: c.ings.map((x) => x.id === i.id ? { ...x, name: v, other: false } : x) });
-      }
-    }, React.createElement("option", {
-      value: ""
-    }, "Spirit"), SPIRITS17.map((x) => React.createElement("option", {
-      key: x,
-      value: x
-    }, x)), React.createElement("option", {
-      value: "other"
-    }, "Other…")) : React.createElement("input", {
-      className: "nm",
-      value: i.name,
-      placeholder: "Ingredient",
-      maxLength: 40,
-      "aria-label": "Ingredient",
-      onChange: (e) => setIng(i.id, { name: e.target.value })
-    }), React.createElement("select", {
-      className: "by",
-      value: i.buy || guessBuy17(i.name),
-      "aria-label": "Shopping list group",
-      onChange: (e) => setIng(i.id, { buy: e.target.value })
-    }, BUY_ORDER17.map((k) => React.createElement("option", {
-      key: k,
-      value: k
-    }, BUY17[k].short))), React.createElement("button", {
-      type: "button",
-      className: "x",
-      "aria-label": "Remove ingredient",
-      onClick: () => set({ ings: c.ings.filter((x) => x.id !== i.id) })
-    }, React.createElement(S17I.X, {
-      size: 12
-    }))), other && React.createElement("div", {
-      className: "r o"
-    }, React.createElement("input", {
-      className: "nm",
-      value: i.name,
-      placeholder: "Type the spirit",
-      maxLength: 24,
-      "aria-label": "Other spirit",
-      onChange: (e) => set({ spiritOther: e.target.value, ings: c.ings.map((x) => x.id === i.id ? { ...x, name: e.target.value, other: true } : x) })
-    })));
-  }), c.ings.length < 10 && React.createElement("button", {
-    type: "button",
-    className: "add",
-    onClick: () => set({ ings: [...c.ings, newIng17()] })
-  }, React.createElement(S17I.Plus, {
-    size: 13
-  }), " Ingredient")) : React.createElement("ul", {
-    className: "ff-c17-rec"
-  }, rows.filter((i) => String(i.name).trim()).map((i) => {
-    const l = shopLine17(i, n);
-    return React.createElement("li", {
-      key: i.id
-    }, React.createElement("span", {
-      className: "q"
-    }, l.qty), React.createElement("span", {
-      className: "nm"
-    }, i.name, l.buy && React.createElement("small", null, "Buy ", l.buy)));
-  }), !rows.some((i) => String(i.name).trim()) && React.createElement("li", {
-    className: "none"
-  }, "The recipe appears here.")), React.createElement("b", {
-    className: "h"
-  }, React.createElement(S17I.Hash, {
-    size: 14
-  }), " Keywords"), React.createElement(Chips17, {
-    edit,
-    value: c.keywords || [],
-    onChange: (keywords) => set({ keywords }),
-    placeholder: "Add a keyword, like coffee or sweet"
-  }));
-}
 
 
 
 const NEW_SERVICE17 = () => ({ id: uid("sv"), type: "base", cat: "bar", bands: [], price: "", priceFor: "", tone: "silver", title: "", tagline: "", includes: "", ideal: "", time: "", base: "", areas: [], events: [], guests: "", staff: "", setup: "", provides: "", equipment: "", extras: [], days: [], keywords: [] });
 
 
-function ServiceFront17({ s, edit, set, site }) {
-  const row = (Ic, label, k, ph, max = 120) => (
-    <div className="ff-c17-row"><span className="ic"><Ic size={15} /></span><span className="tx"><small>{label}</small>
-      {edit ? <Grow17 value={s[k]} onChange={(v) => set({ [k]: v })} placeholder={ph} max={max} /> : <b>{s[k] || "Not set"}</b>}</span></div>
-  );
-  const addon = s.type === "addon";
-  return (
-    <div className="ff-c17-body svc">
-      {edit ? <Line17 className="ttl" value={s.title} onChange={(title) => set({ title })} placeholder="Name your service" max={40} /> : <h3 className="ttl">{s.title || "Service"}</h3>}
-      {edit ? <Grow17 className="note" value={s.tagline} onChange={(tagline) => set({ tagline })} placeholder="One line that sells it" max={90} /> : (s.tagline && <p className="note">{s.tagline}</p>)}
-      <div className="ff-c17-rule" aria-hidden="true"><i /><span>◆</span><i /></div>
-      {row(S17I.Sparkles, "What the client gets", "includes", "Everything that is included", 800)}
-      {row(S17I.Users, "Ideal for", "ideal", "The events it suits", 300)}
-      {row(S17I.Clock, "Duration", "time", "For example, 4 hours", 80)}
-      <div className="ff-c17-foot">
-        {edit ? <div className="ff-c17-tabs" role="tablist" aria-label="Base package or add-on">{[["base", "Base package"], ["addon", "Add-on"]].map(([k, l]) => <button key={k} type="button" role="tab" aria-selected={(s.type || "base") === k} className={(s.type || "base") === k ? "on" : ""} onClick={() => set({ type: k })}>{l}</button>)}</div>
-          : <span className="kind">{addon ? "Add-on" : "Base package"}</span>}
-        <div className="ff-c17-price"><small>{addon ? "Add-on price" : "Base price"}</small>
-          {edit ? (<div className="pi"><span className="gbp"><i>£</i><input inputMode="decimal" value={s.price || ""} placeholder="0" maxLength={8} aria-label="Price in pounds" onChange={(e) => set({ price: e.target.value.replace(/[^0-9.,]/g, "") })} /></span><input className="for" value={s.priceFor || ""} placeholder="per event" maxLength={24} aria-label="What the price covers" onChange={(e) => set({ priceFor: e.target.value })} /></div>)
-            : (<><b>{s.price ? `£${s.price}` : "Price on request"}</b>{s.priceFor && <span>{s.priceFor}</span>}</>)}
-        </div>
-      </div>
-    </div>
-  );
-}
 
 
 /* Five plain terms for customers booking a Service Card. They apply to every card, or a card can have its own. */
@@ -500,79 +223,15 @@ const TERMS17 = [
 ];
 
 
-const termsFor17 = (s, shared) => { const base = { ...Object.fromEntries(TERMS17.map(t => [t.k, t.text])), ...(shared || {}) }; return s.ownTerms ? { ...base, ...(s.terms || {}) } : base; };
-
-
-function ServiceBack17({ s, edit, set }) {
-  const { state } = useStore();
-  const terms = termsFor17(s, state.svcTerms17);
-  const f = (Ic, label, body) => <div className="ff-c17-f"><small><Ic size={12} /> {label}</small>{body}</div>;
-  const txt = (k, ph) => edit ? <Line17 value={s[k]} onChange={(v) => set({ [k]: v })} placeholder={ph} max={60} /> : <b>{s[k] || "Not set"}</b>;
-  return (
-    <div className="ff-c17-body back">
-      {!edit && (s.includes || s.ideal || s.time) && <>
-        <b className="h"><S17I.Sparkles size={14} /> The package</b>
-        {s.includes && f(S17I.Sparkles, "What the client gets", <b>{s.includes}</b>)}
-        {s.ideal && f(S17I.Users, "Ideal for", <b>{s.ideal}</b>)}
-        {s.time && f(S17I.Clock, "Duration", <b>{s.time}</b>)}
-      </>}
-      <b className="h"><S17I.MapPin size={14} /> Where and when</b>
-      {f(S17I.MapPin, "Based in", txt("base", "Town or postcode area"))}
-      {f(S17I.Truck, "Areas covered", <Chips17 edit={edit} value={s.areas} onChange={(areas) => set({ areas })} placeholder="Add an area, like London" />)}
-      <b className="h"><S17I.Layers size={14} /> On the night</b>
-      {f(S17I.Layers, "Category", <PkgPick17 edit={edit} multi={false} cols={2} value={[s.cat || "bar"]} opts={BCATS17.map(b => [b.k, b.label])} onChange={(v) => set({ cat: v[0] })} />)}
-      {f(S17I.Users, "Guest numbers", <PkgPick17 edit={edit} multi value={s.bands || []} opts={PARTY_BANDS11.map(b => [b.k, b.label])} onChange={(bands) => set({ bands })} />)}
-      {f(S17I.Users, "Staff", txt("staff", "For example, 2 people"))}
-      {f(S17I.Clock, "Set-up time", txt("setup", "For example, 1 hour before"))}
-      {f(S17I.Wine, "We bring", txt("equipment", "Equipment, tools, materials"))}
-      {f(S17I.Plus, "Extras", <Chips17 edit={edit} value={s.extras || []} onChange={(extras) => set({ extras })} placeholder="Add an extra" />)}
-      {f(S17I.Sparkles, "The client provides", txt("provides", "Space, power, parking…"))}
-      {!edit && <><b className="h"><S17I.Check size={14} /> Terms</b>{TERMS17.map(t => f(S17I.Check, t.label, <b>{terms[t.k]}</b>))}</>}
-      <b className="h"><S17I.Hash size={14} /> Found by</b>
-      {f(S17I.PartyPopper || S17I.Star, "Event types", <Chips17 edit={edit} value={s.events} onChange={(events) => set({ events })} placeholder="Weddings, birthdays…" />)}
-      {f(S17I.Search, "Keywords", <Chips17 edit={edit} value={s.keywords} onChange={(keywords) => set({ keywords })} placeholder="DJ, photographer, chef…" />)}
-    </div>
-  );
-}
 
 
 
-/* ---- Blog post: FireFlair Stories -------------------------------------------------------------- */
-/* ---- One studio per card type: your cards, and the card you are making ------------------------ */
-const STUDIO17 = {
-  cocktail: { key: "myCocktails", title: "Cocktails", plate: "Signature Cocktail", plateOf: (x) => (x && x.style === "classic" ? "Classic Cocktail" : "Signature Cocktail"), back: "Recipe", icon: S17I.Martini, add: "New cocktail", make: NEW_COCKTAIL17, ok: (x) => String(x.name).trim(), name: (x) => x.name, tone: () => "dark",
-    Front: ({ x, edit, set }) => <CocktailFront17 c={x} edit={edit} set={set} />, Back: ({ x, edit, set }) => <CocktailBack17 c={x} edit={edit} set={set} /> },
-  service: { key: "myServices", title: "Service Cards", plate: "Service Card", back: "Details", icon: S17I.Sparkles, add: "New Service Card", make: NEW_SERVICE17, ok: (x) => String(x.title).trim(), name: (x) => x.title, tone: () => "ivory",
-    Front: ({ x, edit, set, site }) => <ServiceFront17 s={x} edit={edit} set={set} site={site} />, Back: ({ x, edit, set }) => <ServiceBack17 s={x} edit={edit} set={set} /> },
-};
 
 
-/* Both sides at once: the front is what the customer sees, the back is the detail. */
-function StudioPair17({ type, x, edit, set, site, by, tag, size, only }) {
-  const T = STUDIO17[type];
-  const tone = T.tone(x);
-  const plate = T.plateOf ? T.plateOf(x) : T.plate;
-  return (
-    <div className={`ff-c17pair${only ? " one" : ""}`}>
-      <Card17 kind={type} tone={tone} plate={plate} tag={tag} edit={edit} size={edit ? "auto" : size}><T.Front x={x} edit={edit} set={set} site={site} by={by} /></Card17>
-      {!only && <Card17 kind={type} tone={tone} plate={T.back} tag={tag} edit={edit} size={edit ? "auto" : size}><T.Back x={x} edit={edit} set={set} /></Card17>}
-    </div>
-  );
-}
 
 
-/* The card in a pop-up (v1.72): the same Share pop-up as a profile's (CardShareView17), the card's front on top, the four buttons under it. */
-function CardPop17({ type, x, site, by, tag, onClose }) {
-  const T = STUDIO17[type];
-  const tone = T.tone(x);
-  const addr = `${CARD_DOMAIN}/${pc17Tag(tag) || "yourtag"}/${PATH17[type]}/${slug17(T.name(x)) || "your-card"}`;
-  const nm = T.name(x) || (T.plateOf ? T.plateOf(x) : T.plate);
-  return (
-    <CardShareSheet17 open onClose={onClose} title={nm} url={"https://" + addr} fileName={"fireflair-" + cx17Slug(nm)}>
-      <Card17 kind={type} tone={tone} plate={T.plateOf ? T.plateOf(x) : T.plate} tag={tag} url={addr} size="lg"><T.Front x={x} site={site} by={by} /></Card17>
-    </CardShareSheet17>
-  );
-}
+
+
 
 
 

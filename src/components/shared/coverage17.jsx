@@ -411,22 +411,5 @@ function covSuggest17(r) {
 }
 
 
-/* ---- The public chips ------------------------------------------------------------------------------- */
-const AREAS17_CSS = `
-.ff .ff-ar17-chips{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
-.ff .ff-ar17-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 6px 6px 12px;border-radius:14px;corner-shape:squircle;background:rgba(201,162,39,.14);border:1px solid rgba(201,162,39,.4);font-size:13.5px;color:#16130F;overflow-wrap:normal;word-break:normal;max-width:100%}
-.ff .ff-ar17-chip.ro{padding:6px 12px}
-`;
 
 
-/* The public form: the ticked places as chips, in the tree's order. `owner` carries the records (and the exceptions when known). */
-function AreasChips17({ owner }) {
-  const chips = covChips17(owner);
-  if (!chips.length) return null;
-  return (
-    <div style={{ marginTop: 6 }}>
-      <style>{AREAS17_CSS}</style>
-      <ul className="ff-ar17-chips" aria-label="Work locations">{chips.map((c, i) => <li key={i} className="ff-ar17-chip ro">{c}</li>)}</ul>
-    </div>
-  );
-}

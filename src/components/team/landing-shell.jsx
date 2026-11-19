@@ -264,7 +264,6 @@ function Shell({ children }) {
   const [shareOpen, setShareOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const [fbOpen, setFbOpen] = useState(false);
-  const [notifyOpen, setNotifyOpen] = useState(false);
   useEffect(() => { const h = () => setFbOpen(true); window.addEventListener("ff-feedback", h); return () => window.removeEventListener("ff-feedback", h); }, []);
   useEffect(() => { const h = () => setLoginOpen(true); window.addEventListener("ff-login", h); return () => window.removeEventListener("ff-login", h); }, []);
   useEffect(() => { const h = () => setShareOpen(true); window.addEventListener("ff-add", h); return () => window.removeEventListener("ff-add", h); }, []);
@@ -349,7 +348,6 @@ function Shell({ children }) {
       </nav>
 
       <XPPopup open={xpOpen} onClose={() => setXpOpen(false)} />
-      <NotifySheet17 open={notifyOpen} onClose={() => setNotifyOpen(false)} onNext={() => { setNotifyOpen(false); setXpOpen(true); }} />
       <ShareCardSheet open={shareOpen} onClose={() => setShareOpen(false)} />
       <LoginSheet open={loginOpen} onClose={() => setLoginOpen(false)} />
       <FeedbackSheet open={fbOpen} onClose={() => setFbOpen(false)} />

@@ -45,12 +45,10 @@
 .ff .ff-deck.ff-qcard > .fx { border-radius:inherit; }
 .ff .ff-qasker { margin-top:8px; display:inline-flex; align-items:center; gap:5px; max-width:100%; padding:3px 8px; border-radius:999px; background:rgba(255,255,255,.12); font-size:11px; font-weight:600; line-height:1.3; white-space:normal; overflow-wrap:normal; word-break:keep-all; border-radius:12px; }
 .ff .ff-qa-panel { padding:clamp(12px,3.5vw,18px); border-radius:24px; background:var(--paper,#FBF8F1); border:1px solid rgba(126,97,29,.16); box-shadow:var(--lift-1); }
-.ff .ff-qa-asked { padding-bottom:14px; margin-bottom:14px; border-bottom:1px solid rgba(126,97,29,.14); }
 .ff .ff-qa-subh { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px; }
 .ff .ff-qa-subh b { font-size:15px; color:#1D1B18; }
 .ff .ff-qa-ic { width:26px; height:26px; border-radius:9px; display:grid; place-items:center; background:#F1E8D2; color:var(--gold-dk); flex:none; }
 .ff .ff-qa-meta { margin-left:auto; font-size:12px; color:#6A6253; }
-.ff .ff-qa-note { margin:0 0 10px; font-size:12.5px; line-height:1.45; color:#5A5246; }
 .ff .ff-qa-tabs { display:inline-flex; gap:4px; padding:4px; border-radius:999px; background:#EFE8D8; margin:4px 0 10px; }
 .ff .ff-qa-tabs button { display:inline-flex; align-items:center; gap:7px; height:34px; padding:0 14px; border-radius:999px; font-size:12.5px; font-weight:700; color:#5C513F; }
 .ff .ff-qa-tabs button span { min-width:20px; height:20px; padding:0 6px; border-radius:999px; display:grid; place-items:center; background:rgba(0,0,0,.07); font-size:12px; }
@@ -148,7 +146,6 @@
 .ff .ff-cardta:focus { outline:none; border-color:var(--gold) !important; }
 .ff .ff-bio-count { margin-top:4px; text-align:right; font-size:12px; font-weight:600; letter-spacing:.04em; }
 .ff .ff-bio-count.near { color:#B3261E !important; }
-.ff .ff-sheet:focus { outline:none; }
 
 /* ---- v1.4: the public profile -------------------------------------------- */
 .ff .ff-pubpage { max-width:1040px; margin:0 auto; }
@@ -193,15 +190,6 @@
 .ff .ff-rs17-card .x { position:absolute; top:4px; right:4px; width:44px; height:44px; display:grid; place-items:center; border-radius:12px; corner-shape:squircle; color:var(--color-text-2); }
 .ff .ff-rs17-card .ff-rf17 .q { padding-right:36px; }
 .ff .ff-pub .ff-hscroll { zoom:.8; }
-.ff .ff-pubgrid { display:grid; gap:10px; justify-content:center; grid-template-columns:repeat(auto-fit,minmax(var(--pmin,156px),var(--pmax,186px))); }
-.ff .ff-pubgrid > [role=listitem] { min-width:0; display:flex; }
-.ff .ff-pubgrid > [role=listitem] > * { flex:1; min-width:0; }
-.ff .ff-pubgrid.k-m { --pmin:136px; --pmax:152px; }
-.ff .ff-pubgrid.k-x { --pmin:200px; --pmax:236px; }
-.ff .ff-pubgrid.k-d { --pmin:184px; --pmax:216px; }
-.ff .ff-pubgrid.k-s { --pmin:104px; --pmax:132px; gap:8px; }
-.ff .ff-pubgrid.k-other { display:flex; flex-wrap:wrap; justify-content:center; }
-.ff .ff-pubgrid.k-other > [role=listitem] { zoom:.8; }
 .ff .ff-deck.sq.pub { padding:9px 9px 9px; transition:transform .14s ease, box-shadow .14s ease; }
 .ff .ff-deck.sq.pub .ff-ic2-title { margin-top:7px; font-size:14px; }
 .ff .ff-deck.sq.pub .ff-ic2-desc { margin-top:6px; font-size:12px; -webkit-line-clamp:3; }
@@ -220,10 +208,7 @@
 .ff .ff-way17 { display:inline-block; align-self:center; margin-top:6px; padding:3px 10px; border-radius:11px; border:1px solid currentColor; font-size:10.5px; font-weight:700; line-height:1.3; letter-spacing:.01em; opacity:.78; white-space:nowrap; }
 .ff .ff-way17.row { width:fit-content; justify-self:start; align-self:flex-start; margin:0 0 8px; padding:3px 10px; border:0; background:rgba(176,141,60,.16); color:var(--gold-dk); opacity:1; }
 .ff .ff-ic2-badges .ff-ic2-doc { margin-top:0; align-self:auto; }
-.ff .ff-pubgrid .ff-deck.sq.pub:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,.28); }
-.ff .ff-pubgrid .ff-deck.sq.pub:active { transform:scale(.97); }
-.ff .ff-pubgrid .ff-deck.sq.pub:focus-visible { outline:2px solid var(--gold); outline-offset:3px; }
-@media (prefers-reduced-motion: reduce) { .ff .ff-deck.sq.pub { transition:none; } .ff .ff-pubgrid .ff-deck.sq.pub:hover { transform:none; } }
+@media (prefers-reduced-motion: reduce) { .ff .ff-deck.sq.pub { transition:none; }  }
 
 /* ---- v1.5: media carousel, tabs, cover flow, creator Media / About Me ------ */
 .ff .ff-pm { position:relative; border-radius:16px; overflow:hidden; background:#14110A; height:clamp(150px,34vw,300px); transition:height .28s ease; box-shadow:0 6px 20px rgba(0,0,0,.18); }
@@ -394,10 +379,7 @@
 .ff .ff-agrp-l > span::before { content:""; position:absolute; left:0; top:50%; width:4px; height:4px; margin-top:-2px; border-radius:50%; background:rgba(228,195,106,.8); }
 .ff .ff-agrp-d { min-height:0; overflow:hidden; font-size:13.5px; line-height:1.45; color:rgba(247,242,231,.8); display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:7; }
 .ff .ff-agrp-more { margin-top:auto; display:flex; align-items:center; gap:2px; font-size:13px; font-weight:600; color:#E4C36A; }
-@media (prefers-reduced-motion: reduce) { .ff .ff-agrp { transition:none; } .ff .ff-agrp:hover, .ff .ff-agrp:active { transform:none; } .ff .ff-sheet.center { animation:none; } }
-.ff .ff-scrim.center { align-items:center; padding:16px; }
-.ff .ff-sheet.center { max-width:680px; max-height:86vh; border-radius:24px; border:1px solid rgba(201,162,39,.35); box-shadow:0 30px 80px -20px rgba(0,0,0,.55); padding-bottom:6px; animation:ffpop .24s cubic-bezier(.2,.8,.2,1); }
-.ff .ff-sheet.center .ff-sheet-head { border-radius:24px 24px 0 0; }
+@media (prefers-reduced-motion: reduce) { .ff .ff-agrp { transition:none; } .ff .ff-agrp:hover, .ff .ff-agrp:active { transform:none; } }
 .ff .ff-phero.has-media:not(.wide) .ff-pcol { margin-top:calc(-128px + var(--pull, 0px)); transition:margin-top .38s cubic-bezier(.22,.9,.24,1); }
 .ff .ff-phero.has-media:not(.wide) .ff-pm.open ~ .ff-pcol { margin-top:calc(14px + var(--pull, 0px)); }
 .ff .ff-phero.dragging .ff-pcol { transition:none !important; }
@@ -406,7 +388,6 @@
 .ff .ff-phero .ff-prest .ff-pback { padding:8px 4px !important; margin-bottom:10px !important; border-radius:14px; }
 .ff .ff-phero .ff-prest .ff-pback svg { width:18px; height:18px; }
 .ff .ff-phero .ff-prest .ff-pub-acts { margin-top:0; }
-@keyframes ffpop { from { transform:scale(.96); opacity:0 } to { transform:none; opacity:1 } }
 .ff .ff-xatt { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:12px; padding:16px; align-items:start; }
 .ff .ff-xatt-box { position:relative; isolation:isolate; padding:18px 18px 16px; border-radius:22px; color:#F7F2E7; border:1px solid rgba(201,162,39,.55);
   font-family:var(--font-sans,Inter,sans-serif);
@@ -419,10 +400,6 @@
 .ff .ff-xatt-media { margin-top:12px; display:grid; grid-template-columns:repeat(auto-fill,minmax(90px,1fr)); gap:6px; }
 .ff .ff-xatt-media img { width:100%; aspect-ratio:1; object-fit:cover; border-radius:12px; display:block; }
 .ff .ff-xatt-note { margin-top:10px; font-size:12.5px; font-weight:600; color:#E4C36A; }
-.ff .ff-catfull .ff-pubgrid { grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); justify-content:stretch; gap:12px; }
-.ff .ff-catfull .ff-pubgrid.k-s { grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); }
-.ff .ff-catfull .ff-pubgrid.k-other { display:grid; }
-.ff .ff-catfull .ff-pubgrid.k-other > [role=listitem] { zoom:1; }
 .ff .ff-pmos-t { position:relative; border:0; padding:0; margin:0; min-height:0; overflow:hidden; border-radius:12px; background:#14110A; cursor:zoom-in; }
 .ff .ff-pmos-t img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; transition:transform .25s ease; }
 .ff .ff-pmos-t:hover img { transform:scale(1.03); }
@@ -557,7 +534,6 @@
 /* dream jobs / training / rewards */
 .ff .ff-bt17 { padding-top:30px; }
 .ff .ff-welcome17 { margin-top:12px; }
-
 
 /* ======================= v1.7.1 ======================= */
 /* hero: banner — text left, photograph right (stacked on phones). The coin is the
@@ -743,8 +719,6 @@
 .ff .ff-chat .acts button { min-height:34px; padding:6px 12px; border-radius:999px; font-size:12.5px; font-weight:700; color:#2A1E04; background:#F6E8BC; border:1px solid rgba(126,97,29,.5); cursor:pointer; }
 .ff .ff-chat .acts button:hover { background:#F1DC97; }
 
-
-
 /* ======================= v17.24 — hero easel ======================= */
 /* The stage covers the hero photo exactly (same box as object-fit:cover, centred), so the four corner points in
    HERO_EASEL24 (hero-easel.jsx) land on the photo's display board at every size. */
@@ -763,7 +737,6 @@
 /* the card's mirror image in the bar top: only its foot, dim and soft */
 .ff .ff-easel24-card.refl { box-shadow:none; opacity:.24; filter:blur(5px) saturate(.8) brightness(.8);
   -webkit-mask-image:linear-gradient(to top, #000 0%, rgba(0,0,0,.55) 12%, rgba(0,0,0,0) 30%); mask-image:linear-gradient(to top, #000 0%, rgba(0,0,0,.55) 12%, rgba(0,0,0,0) 30%); }
-
 
 /* ======================= v17.30 — hero: shiny card that opens the profile, larger on phones, burgundy and violet panel ======================= */
 .ff .ff-easel24-face { display:block; pointer-events:none; }

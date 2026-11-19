@@ -112,11 +112,6 @@ function notesWatch17(prev, next, a) {
 }
 
 
-/* Greyed rows for this account, newest first, with anything older than seven days dropped. */
-const notesDoneFor17 = (s) => {
-  const t = Date.now(), acct = notesAcct17(s);
-  return (s.notesDone17 || []).filter(d => d.acct === acct && t - d.at < NOTES_KEEP_MS17).sort((a, b) => b.at - a.at);
-};
 
 
 /* The list was opened: stamp it, drop old greyed rows, and grey the informational rows. */

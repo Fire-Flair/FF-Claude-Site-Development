@@ -1064,49 +1064,6 @@ function BookingBar({ placement = "bottom", dragging = false, style }) {
 }
 
 
-/* ---------------------------------------------------------------------------
-   PICK PERSON — fill or replace the person on a Service Card. The basket comes
-   first; suggestions follow. The hirer always chooses.
-   --------------------------------------------------------------------------- */
-function PickPersonSheet({ open, shift, event, onClose }) {
-  const { state, dispatch } = useStore();
-  const all = useDirectory();
-  if (!open || !shift) return null;
-  const taken = state.shifts.filter(x => x.eventId === event.id && x.id !== shift.id).map(x => x.staffId);
-  const asked = state.engagements.filter(e => e.shiftId === shift.id).map(e => e.staffId);
-  const basket = state.selection.map(id => all.find(p => p.id === id)).filter(p => p && !taken.includes(p.id));
-  const role = (shift.role || "").toLowerCase();
-  const suggestions = all.filter(p => !taken.includes(p.id) && !asked.includes(p.id) && !state.selection.includes(p.id))
-    .filter(p => role && (p.profession.toLowerCase().includes(role.split(" ").pop()) || role.includes(p.profession.toLowerCase().split(" ").pop())))
-    .sort((a, b) => (b.rating || 0) - (a.rating || 0)).slice(0, 6);
-  const pick = (p) => {
-    dispatch({ type: "SHIFT_PATCH", id: shift.id, patch: { staffId: p.id } });
-    dispatch({ type: "TOAST", toast: `${p.name.split(" ")[0]} assigned to this Service Card` });
-    onClose();
-  };
-  const Row = ({ p, tag }) => (
-    <button className="ff-info" onClick={() => pick(p)} style={{ width: "100%", display: "flex", gap: 11, alignItems: "center", textAlign: "left" }}>
-      <Portrait src={p.photo} name={p.name} size={38} tier={p.tier} />
-      <span style={{ flex: 1, minWidth: 0 }}>
-        <span className="ff-display" style={{ fontSize: 13, display: "block" }}>{p.name}</span>
-        <span className="ff-body ff-muted" style={{ fontSize: 12 }}>{p.profession}{p.rating ? ` · ${p.rating}★` : ""}</span>
-      </span>
-      {(() => { const av = availabilityFor(state, p.id, event.iso); return av ? <Pill tone={availTone(av.answer)}>{av.answer === "Yes" ? "Available" : av.answer === "No" ? "Not free" : "Maybe"}</Pill> : null; })()}{tag && <Pill tone="gold">{tag}</Pill>}
-    </button>
-  );
-
-  return (
-    <Sheet open onClose={onClose} title={`Who for ${shift.role || "this shift"}?`}>
-      <div className="ff-label" style={{ marginBottom: 8 }}>Your basket</div>
-      {basket.length ? basket.map(p => <Row key={p.id} p={p} tag="Basket" />)
-        : <p className="ff-body ff-muted" style={{ marginTop: 0, fontSize: 12.5 }}>Your basket is empty. Add people from any profile or the FF Staff home page.</p>}
-      <div className="ff-label" style={{ margin: "16px 0 8px" }}>Suggestions</div>
-      {suggestions.length ? suggestions.map(p => <Row key={p.id} p={p} tag="Suggested" />)
-        : <p className="ff-body ff-muted" style={{ marginTop: 0, fontSize: 12.5 }}>No close matches for this role yet.</p>}
-      <p className="ff-body ff-muted" style={{ fontSize: 11.5, marginBottom: 0 }}>Suggestions only. Nobody is assigned until you choose them.</p>
-    </Sheet>
-  );
-}
 
 
 /* ---------------------------------------------------------------------------

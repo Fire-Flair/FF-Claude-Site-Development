@@ -13,21 +13,13 @@ const OCC_PARTY11 = ["Hen parties", "Stag dos", "Weddings", "Birthdays", "House 
   "Christmas parties", "New Year's Eve", "Baby showers", "Graduations", "Corporate events", "Brand launches", "Private dinners", "Summer parties"];
 
 
-const PARTY_BANDS11 = [
-  { k: "s", label: "Up to 30", sub: "One or two staff, booked directly", guests: "Up to 30" },
-  { k: "m", label: "31 to 100", sub: "Book people or a company", guests: "31 to 100" },
-  { k: "l", label: "100+", sub: "Booked through a company", guests: "100+" },
-];
 
 
 const bandOf11 = (ev) => (ev && ev.band) || "";
 
 
-/* Which FireFlair Service Cards suit which party size. */
-const SVC_BANDS11 = { svc_bartending: ["s", "m"], svc_mixology: ["s", "m", "l"], svc_masterclass: ["s"], svc_flair: ["s", "m", "l"], svc_full: ["m", "l"], svc_staffing: ["s", "m", "l"] };
 
 
-const svcFits11 = (svc, band) => !band || (SVC_BANDS11[svc.id] || ["s", "m", "l"]).includes(band);
 
 
 const whyCompany11 = (ev) => ev && ev.audience === "corporate"

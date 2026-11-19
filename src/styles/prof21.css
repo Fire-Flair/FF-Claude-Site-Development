@@ -54,33 +54,6 @@
 .ff .ff-gb21-media .ff-m19 { overflow-y: hidden; touch-action: pan-x pan-y; overscroll-behavior-x: contain; }
 
 /* ---- Professions: the v17.15 gold picker ------------------------------------------------------------------------- */
-.ff .ff-pk21 { position: relative; isolation: isolate; margin: 2px 0 14px; padding: 16px; border-radius: 22px; corner-shape: squircle;
-  background: linear-gradient(155deg, #FBF1CF 0%, #F1DB94 38%, #DEBC5E 76%, #C9A23A 100%); border: 1px solid rgba(126,97,29,.5);
-  box-shadow: 0 1px 0 rgba(255,255,255,.7) inset, 0 14px 28px -18px rgba(126,97,29,.8); }
-.ff .ff-pk21::before { content: ""; position: absolute; inset: 5px; z-index: -1; border-radius: 17px; corner-shape: squircle; border: 1px solid rgba(255,255,255,.45); pointer-events: none; }
-.ff .ff-pk21-h { font: 800 11.5px var(--sans); letter-spacing: .16em; text-transform: uppercase; color: #2E2206; margin: 0 0 10px; }
-.ff .ff-pk21-h.sm { letter-spacing: .08em; text-transform: none; font-size: 13px; font-weight: 700; margin: 4px 0 8px; }
-.ff .ff-pk21-q { display: flex; align-items: center; gap: 9px; height: 48px; padding: 0 14px; border-radius: 14px; corner-shape: squircle; background: #fff; border: 1px solid rgba(90,64,8,.3); }
-.ff .ff-pk21-q:focus-within { border-color: rgba(92,18,32,.6); box-shadow: 0 0 0 4px rgba(255,255,255,.45); }
-.ff .ff-pk21-q svg { flex: none; color: #7A7366; }
-.ff .ff-pk21-q input { flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font: 500 16px var(--sans); color: #16130F; padding: 0; }
-.ff .ff-pk21-q input::placeholder { color: #8F8778; }
-.ff .ff-pk21-cats { display: flex; gap: 6px; margin-top: 12px; overflow-x: auto; overflow-y: hidden; touch-action: pan-x; overscroll-behavior-x: contain; scrollbar-width: none; padding-bottom: 2px; }
-.ff .ff-pk21-cats::-webkit-scrollbar { display: none; }
-.ff .ff-pk21-cat { flex: none; height: 36px; padding: 0 14px; border-radius: 11px; corner-shape: squircle; border: 1px solid rgba(90,64,8,.28); background: rgba(255,255,255,.62);
-  font: 600 13px var(--sans); color: #2A1E04; white-space: nowrap; cursor: pointer; }
-.ff .ff-pk21-cat.on { background: #141416; border-color: #141416; color: #EAD79C; }
-.ff .ff-pk21-wrap { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-.ff .ff-pk21-chip { display: inline-flex; align-items: center; gap: 5px; min-height: 36px; padding: 0 12px 0 10px; border-radius: 11px; corner-shape: squircle;
-  border: 1px solid rgba(90,64,8,.28); background: rgba(255,255,255,.9); font: 600 13.5px var(--sans); color: #241B07; cursor: pointer; white-space: nowrap; }
-.ff .ff-pk21-chip svg { flex: none; color: #8A6A18; }
-.ff .ff-pk21-chip.on { background: #5C1220; border-color: #5C1220; color: #F6E7B4; }
-.ff .ff-pk21-chip.on svg { color: #F6E7B4; }
-.ff .ff-pk21-chip:disabled { opacity: .45; cursor: default; }
-.ff .ff-pk21-new { width: 100%; }
-.ff .ff-pk21-new .ff-pk21-cats { flex-wrap: wrap; margin: 0 0 8px; }
-.ff .ff-pk21-note { margin: 12px 0 0; font: 500 12.5px var(--sans); color: #3A2C08; }
-
 /* ---- Profession tiles (builder and displayed page) --------------------------------------------------------------- */
 .ff .ff-pt21-row { display: flex; gap: 12px; overflow-x: auto; overflow-y: hidden; touch-action: pan-x pan-y; overscroll-behavior-x: contain; scroll-snap-type: x proximity;
   padding: 6px 2px 18px; margin: 0 -2px -8px; scrollbar-width: none; }
@@ -211,8 +184,6 @@
 .ff .ff-pt21-row .ff-agrp, .ff .ff-pp21 .ff-acar .ff-agrp { box-shadow: 0 10px 16px -12px rgba(40,28,6,.55), 0 1px 2px rgba(40,28,6,.12); }
 .ff .ff-pt21-row .ff-agrp:hover, .ff .ff-pp21 .ff-acar .ff-agrp:hover { box-shadow: 0 12px 18px -12px rgba(40,28,6,.6), 0 1px 2px rgba(40,28,6,.12); }
 .ff .ff-pp21 .ff-acar { padding-bottom: 18px; margin-bottom: -10px; overflow-y: hidden; touch-action: pan-x pan-y; }
-.ff .ff-pk21-cats.wrap { flex-wrap: wrap; overflow: visible; margin-top: 8px; }
-.ff .ff-frame .ff-pk21-cats.wrap .ff-pk21-cat { background: #fff; }
 .ff .ff-about.ff-pp21 p { margin: 6px 0 0; font: 400 15.5px/1.6 var(--sans); color: #2A2620; }
 /* the level picker in the editor: five squircles in a row that scrolls across; whole words, never "…" */
 .ff .ff-ed21 .ff-levels { display: flex; gap: 6px; overflow-x: auto; overflow-y: hidden; touch-action: pan-x pan-y; overscroll-behavior-x: contain; scrollbar-width: none; padding-bottom: 2px; }
@@ -227,10 +198,9 @@
 .ff .ff-pp21 .ff-acar .ff-agrp { aspect-ratio: auto; min-height: 220px; }
 .ff .ff-ed21-ic.del { width: auto; min-width: 44px; padding: 0 12px; display: inline-flex; align-items: center; gap: 6px; transition: background-color .15s ease, color .15s ease; }
 .ff .ff-ed21-ic.del.sure { background: #5C1220; border-color: #5C1220; color: #F6E7B4; font: 800 12px var(--sans); letter-spacing: .08em; text-transform: uppercase; }
-.ff .ff-pt21-row, .ff .ff-pk21-cats, .ff .ff-vr19-row, .ff .ff-type21-key, .ff .ff-ed21 button, .ff .ff-gb21-btn { touch-action: manipulation; }
+.ff .ff-pt21-row, .ff .ff-vr19-row, .ff .ff-type21-key, .ff .ff-ed21 button, .ff .ff-gb21-btn { touch-action: manipulation; }
 .ff .ff-pt21-row { touch-action: pan-x pan-y; }
 @media (prefers-reduced-motion: reduce) { .ff .ff-pt21-it, .ff .ff-type21, .ff .ff-type21-key, .ff .ff-ed21-ic.del { transition: none; } .ff .ff-pt21-it.lifted .ff-agrp { transform: none; } }
-
 
 /* ======================= v17.27 — shiny gold Phone number box + country code ======================= */
 .ff .ff-gb21.shine { background: linear-gradient(118deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.55) 44%, rgba(255,255,255,0) 58%), linear-gradient(172deg, #F6E8B8 0%, #DCC070 38%, #B8963F 68%, #EBD58F 100%);
@@ -248,7 +218,6 @@
 @container (max-width: 380px) { .ff .ff-gb21.shine .ff-gb21-in { padding: 0 8px; font-size: 15px; } .ff .ff-dial26 { padding: 0 6px 0 8px; gap: 2px; font-size: 15px; } .ff .ff-gb21.shine .ff-gb21-btn { min-width: 62px; padding: 0 8px; } }
 @container (max-width: 300px) { .ff .ff-gb21.shine .ff-gb21-btn { flex: 1 0 100%; } }
 
-
 /* ======================= v17.34 — Task 005: FF Tag | Media row, then About Me, then the tabs ======================= */
 .ff .ff-tm34 { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; align-items: stretch; margin: 0; }
 .ff .ff-tm34 > #ff-sec-tag { margin: 0; align-content: stretch; }
@@ -257,7 +226,6 @@
 /* v1.56 (Alex, 18 Nov 20:46): Media always sits below FF Tag, on every size (was side by side from 900px). */
 /* the Phone number box, third in Let's get started: full width of the box */
 .ff .ff-way17-phone > .ff-way17-wide { grid-column: 1 / -1; }
-
 
 /* ======================= v17.35 — Profile A1: Need help? Book a meeting, at the bottom of the profile page ======================= */
 .ff .ff-help34 { margin: 28px 0 8px; }
@@ -456,8 +424,6 @@
 .ff .ff-help34 .ff-help34-t .ff-way17-line { order: 0; font-weight: 500; color: #4A4236; }
 .ff .ff-help34 .ff-way17-int > .ff-help34-t { order: -1; }
 @media (min-width: 720px) { .ff .ff-help34 .ff-way17-int > .ff-help34-t { grid-column: 1; grid-row: 1; } }
-.ff .ff-scrim.center:has(.ff-ib17) { align-items: center; padding: 16px; }
-.ff .ff-sheet.center:has(.ff-ib17) { width: 100%; max-width: 420px; height: auto; max-height: calc(100dvh - 32px); margin: 0 auto; border-radius: 22px; corner-shape: squircle; }
 
 /* 5. Business & Support at the bottom of every FF Team page (Network, Bookings, Profile, someone's profile). */
 .ff .ff-biz-pfa { margin-top: 36px; }

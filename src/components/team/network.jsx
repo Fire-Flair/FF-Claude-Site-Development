@@ -286,15 +286,6 @@ function myNetwork(state, people) {
 }
 
 
-function NetworkTile({ person, invited, onClick }) {
-  if (!invited) return <PlayerTile person={person} onClick={onClick} />;
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-      <PlayerTile person={person} onClick={onClick} />
-      <span className="ff-invited"><Star size={11} fill="currentColor" /> Invited you</span>
-    </div>
-  );
-}
 
 
 const TAKEN_TAGS = ["SAM42", "ALEX424", "GAVRILAS", "CUARTERO", "SIMAO", "DANYG", "JAMESALL", "ADMIN"];
@@ -602,24 +593,6 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
 }
 
 
-/* Consume a FF-sheet focus request: scroll to #ff-sec-<target> and run the
-   matching handler (e.g. open the Add sheet). One consumer is mounted at a
-   time — whichever Profile screen is showing. */
-function useProfileFocus(handlers, enabled = true) {
-  const { state, dispatch } = useStore();
-  useEffect(() => {
-    const f = state.focus;
-    if (!enabled || !f) return;
-    const el = document.getElementById(`ff-sec-${f.target}`);
-    setTimeout(() => {
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-      else window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 60);
-    const h = handlers[f.target] || handlers._any;
-    if (h) h(f.target);
-    dispatch({ type: "FOCUS", focus: null });
-  }, [state.focus, enabled]);
-}
 
 
 /* Write the card editor's draft into the real profile records — the one
