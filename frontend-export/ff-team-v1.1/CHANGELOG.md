@@ -4,6 +4,14 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.99
+
+FF Team home (Alex, 19 Nov 20:58). `styles/home-text.css`.
+
+- The boxes inside the four pillars are the house burgundy (`--color-ox` #5C1220) instead of warm black: the "How bookings work" box in Your bookings, and the 1-2-3 step header rows and their chevrons in Your profile, Our packages and Our community. The gold edge, gold-leaf titles and ivory labels stay; opened sections stay on ivory.
+- Colour check: gold leaf on burgundy 9.3:1, ivory on burgundy 13.1:1, burgundy on gold leaf (open chevron) 9.3:1.
+- Merged onto the live page 1795122027-e096 (v1.98) before publishing; page saved as `live-v1.99-index.html`. Artifact version 1795122276-2263.
+
 ## v1.98
 
 - **Slim top bar on desktop:** the bar drops from 56px to 45px, as on the phone: a smaller FF mark and Log in button and slimmer Home / Network / Bookings / Profile buttons.
