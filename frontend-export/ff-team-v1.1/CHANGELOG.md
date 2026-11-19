@@ -4,8 +4,21 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
-## v1.113
+## v1.114
 - **FFParty and FFStaff headings (Bookings):** the coins beside them are now the gold FFParty and silver FFStaff logos from the top-left FireFlair sites drop-down (`FF_SITE_BRAND.party.icon` / `.staff.icon`), replacing the generic gold and silver coins from v1.112.
+- Merged onto the live page 1795126236-0cf2 (v1.113) before publishing; renumbered v1.114. Page saved as `live-v1.114-index.html`. Artifact version 1795126944-59ce.
+
+## v1.113
+
+FFTeam Network browsing (Alex, 19 Nov 22:00; mock-ups M1 to M3 approved). `styles/net20.css`, `components/staff/network-directory20.jsx`.
+
+- The FF Event Directory and Our professionals no longer use drop-downs: a row of squircle category boxes (left and right selects), the sub-category pills under it, and one browsing row of cards for the open choice.
+- The search sits in line with the title of Our professionals and of the FF Event Directory (right of the title on a wide screen, under it on a phone and iPad). Typing in either box takes the page to the results with the cursor kept.
+- New words under the titles, written by Bilbo: the FF Event Directory (find companies to work for or work with, support for your own events, register your interest) and Explore our network (put you on the map, jobs where you want to go).
+- Explore our network on desktop (from 1100px): the title and words on the left, the map on the right.
+- Company cards say "Company" with their category symbol instead of "Company Card".
+- The notification settings button at the top right of Explore our network is gone.
+- Merged onto the live page 1795125931-4532 (v1.112) before publishing; page saved as `live-v1.113-index.html`; artifact version 1795126236-0cf2.
 
 ## v1.112
 - **Bookings headings:** "FFParty – Our packages" is now just **FFParty** with the gold FF Party coin on its left; "FFStaff – Shifts with businesses" is now just **FFStaff** with the silver coin on its left (`bookings.jsx`, `titles2.css`).
