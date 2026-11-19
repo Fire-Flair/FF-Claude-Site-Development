@@ -35,12 +35,16 @@
   .ff .ff-landing #ff-guide > .ff-qg-title { position: static; margin: 0 0 16px; text-align: center; }
   .ff .ff-landing #ff-guide > .ff-qg-grid { margin: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 
-  /* v1.108: Business and Support on the left, Join FF Team on the right, side by side. */
+  /* v1.108: Business and Support on the left, Join FF Team on the right. v1.109: both the same height; Join is a plain box here
+     (no coin game on desktop) and a spinning coin divider sits above the row. */
   .ff .ff-landing .ff-bj-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 40px; align-items: stretch; }
   .ff .ff-landing .ff-bj-row > .ff-coindiv { display: none; }
-  .ff .ff-landing .ff-bj-row > .ff-join { grid-column: 2; grid-row: 1; margin: 0; }
-  .ff .ff-landing .ff-bj-row > .ff-biz19 { grid-column: 1; grid-row: 1; margin: 0; align-self: center; }
+  .ff .ff-landing .ff-bj-row > .ff-join { grid-column: 2; grid-row: 1; margin: 0 !important; padding: 0 !important; display: flex; flex-direction: column; }
+  .ff .ff-landing .ff-bj-row > .ff-biz19 { grid-column: 1; grid-row: 1; margin: 0; padding: 0 !important; display: flex; flex-direction: column; }
+  .ff .ff-landing .ff-bj-row > .ff-join > .ff-join-box,
+  .ff .ff-landing .ff-bj-row > .ff-biz19 > .ff-biz19-box { flex: 1; height: auto !important; min-height: 300px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; }
   .ff .ff-landing .ff-bj-row .ff-biz19-grid { grid-template-columns: minmax(0, 1fr); }
+  .ff .ff-landing .ff-coin-desk { display: flex; }
 
   /* left-hand headings and their words fit the narrower column */
   .ff .ff-landing #ff-discover .ff-dx-h, .ff .ff-landing #ff-competition .ff-tlx h2, .ff .ff-landing #ff-two-minutes .ff-tlx h2, .ff .ff-landing #ff-guide .ff-qg-title { font-size: 30px !important; }
@@ -60,3 +64,5 @@
   .ff .ff-landing #ff-two-minutes .ff-tm20-v { width: 100% !important; aspect-ratio: 9 / 16 !important; }
   .ff .ff-landing #ff-two-minutes .ff-tm20-p img { object-fit: contain !important; width: 100%; height: 100%; }
 }
+
+@media (max-width: 1099.98px) { .ff .ff-coindiv.ff-coin-desk { display: none; } }

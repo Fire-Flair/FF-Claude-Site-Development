@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.109
+- **Home, desktop (1100px+):** the coin game is removed from Join FF Team (it is a plain Join box via `withGame={false}`; phones and iPad keep the game). Business & Support and Join FF Team are the same height. A spinning coin divider sits between the questions and this row (extra `CoinDivider` with class `ff-coin-desk`, hidden below 1100px).
+- Page saved as `live-v1.109-index.html`. Artifact version 1795125298-d3ce.
+
 ## v1.108
 - **Home, desktop:** the other way round: Business and Support on the left, Join FF Team on the right (CSS only, `home-wide.css`).
 - Page saved as `live-v1.108-index.html`. Artifact version 1795124947-4132.
