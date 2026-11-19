@@ -292,7 +292,12 @@
   background:linear-gradient(180deg,var(--color-gold,#C9A227) 0,#DCC48C 58%,rgba(234,219,180,0) 100%); }
 .ff .ff-fb21-box > .ff-tlx::before { content:none; }
 .ff .ff-int-cell { flex:none; width:168px; scroll-snap-align:start; display:flex; }
-.ff .ff-int-cell > .ff-fc17 { width:100%; }
+.ff .ff-int-cell > .ff-fc17 { width:100%; aspect-ratio:5 / 7; }
+/* v1.94 (Alex, 19 Nov 20:26): mini 5 x 7 portrait cards in the Grow swipe rows; the photo takes the space the text does not need. */
+.ff .ff-int-cell > .ff-fc17 .ph { aspect-ratio:auto; flex:1 1 0; min-height:0; }
+.ff .ff-int-cell > .ff-fc17 .bd { flex:none; gap:6px; padding:6px 10px 10px; }
+.ff .ff-int-cell > .ff-fc17 .bd .tick { min-height:40px; }
+.ff .ff-int-cell > .ff-fc17 .bd .d { display:none; }
 .ff .ff-bkd .ff-hscroll { align-items:stretch; }
 @media (max-width:469px) {
   .ff-bkd-row { gap:10px; }

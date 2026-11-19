@@ -4,6 +4,11 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.94
+
+- **Grow with FireFlair cards (Training, Dream jobs, FireFlair rewards):** each card in the swipe rows is now a mini 5 x 7 portrait (168 x 235 px). The photo leads and the card keeps its title, kind label and I'm interested button. The per-card description is hidden in these rows to save space.
+- **Training intro text:** assessed by the writer. Verdict: keep but shorten, and drop the repeat in the open state. Not changed yet, awaiting Alex.
+
 ## v1.93
 
 - **Profile buttons (signed-out and preview view):** Share is on the left and Join team on the right. Share is now champagne with a green WhatsApp logo (replaces the olive button). All three buttons are slightly smaller (44px high) and inset 12px so Back, Share and Join line up inside the panel instead of touching its edges (`prof21.css`, `JoinRow` in `team/network.jsx`).
