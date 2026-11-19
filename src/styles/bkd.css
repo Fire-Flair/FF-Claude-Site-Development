@@ -313,3 +313,6 @@
   .ff-bkd .bkd-bt { display:none; }
   .ff-bkd .bkd-bds { margin:4px 2px 12px; font-size:13.5px; line-height:1.45; color:#4A443A; }
 }
+
+/* v1.95: on wider screens the header already shows the description, so the open body does not repeat it. */
+@media (min-width:470px) { .ff-bkd .bkd-bd > .bkd-bds { display:none; } }

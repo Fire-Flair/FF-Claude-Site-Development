@@ -4,6 +4,11 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.95
+
+- **Grow with FireFlair wording (writer bot):** Training now reads "Register your interest and we will notify you with available dates." Dream jobs reads "Tell us your dream jobs and we will help make them happen." (softened from "will make them happen" so it is not a guarantee).
+- **Training box:** the two stacked intro paragraphs are gone. A phone shows the one line; wider screens show it once in the header and no longer repeat it in the open box.
+
 ## v1.94
 
 - **Grow with FireFlair cards (Training, Dream jobs, FireFlair rewards):** each card in the swipe rows is now a mini 5 x 7 portrait (168 x 235 px). The photo leads and the card keeps its title, kind label and I'm interested button. The per-card description is hidden in these rows to save space.

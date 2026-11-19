@@ -442,7 +442,7 @@ const interestCfg = (kind) => {
 function InterestInner({ id, lede, children }) {
   return (
     <div id={id}>
-      {lede && <p className="ff-body" style={{ margin: "0 0 14px", fontSize: 13.5 }}>{lede}</p>}
+      {lede && id !== "ff-training-sect" && <p className="ff-body" style={{ margin: "0 0 14px", fontSize: 13.5 }}>{lede}</p>}
       {children}
     </div>
   );

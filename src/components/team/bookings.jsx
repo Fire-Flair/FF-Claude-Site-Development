@@ -877,8 +877,8 @@ function TeamBookings({ guest = false }) {
         {/* bk-titles (Alex, 18 Nov 20:25): a page title like Your bookings (gold underline); the cards below already say Training, Dream jobs and Rewards. */}
         <h1 className="ff-h1 ff-big20 ff-bk-yh" id="ff-bk-grow-h"><span className="t">Grow with FireFlair</span></h1>
         <div className="ff-bkd-row">
-          <BkDrop17 id="ff-bk-training" open={drop === "ff-bk-training"} onOpen={setDrop} title="Training" icon={E17I.GraduationCap} photo="bk_training" desc="Courses, qualifications and masterclasses to sharpen your craft. Register your interest and we will tell you when places open."><InterestSection kind="training" inner /></BkDrop17>
-          <BkDrop17 id="ff-bk-jobs" open={drop === "ff-bk-jobs"} onOpen={setDrop} title="Dream jobs" icon={E17I.Plane} photo="bk_jobs" desc="Tell us where you dream of working, from festivals to yachts, and we will keep you in mind when it comes up."><InterestSection kind="jobs" inner /></BkDrop17>
+          <BkDrop17 id="ff-bk-training" open={drop === "ff-bk-training"} onOpen={setDrop} title="Training" icon={E17I.GraduationCap} photo="bk_training" desc="Register your interest and we will notify you with available dates."><InterestSection kind="training" inner /></BkDrop17>
+          <BkDrop17 id="ff-bk-jobs" open={drop === "ff-bk-jobs"} onOpen={setDrop} title="Dream jobs" icon={E17I.Plane} photo="bk_jobs" desc="Tell us your dream jobs and we will help make them happen."><InterestSection kind="jobs" inner /></BkDrop17>
           <BkDrop17 id="ff-bk-rewards" open={drop === "ff-bk-rewards"} onOpen={setDrop} title="FireFlair rewards" icon={E17I.Gift} photo="bk_rewards" desc="Perks for people who work with FireFlair: kit, tickets and experiences. Register your interest in the ones you want."><InterestSection kind="rewards" inner /></BkDrop17>
         </div>
       </section>
