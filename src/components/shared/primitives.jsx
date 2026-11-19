@@ -50,8 +50,12 @@ function Sheet({ open, onClose, title, children, center = false, newLogo = false
     };
   }, [open]);
   if (!open) return null;
-  return (
-    <div className={`ff-scrim${center ? " center" : ""}`} onClick={onClose}>
+  /* float-sheets (Alex, 18 Nov 23:30): every pop-up is a centred floating panel, never a sheet rising from the bottom
+     edge. A gap is always left under it, so the bottom row and the blurred page show and a tap there closes it. The
+     pop-up is drawn at the top of the page (a portal into .ff-shell), so no box it was opened from can clip or cover it. */
+  const host = typeof document !== "undefined" && (document.querySelector(".ff-shell") || document.querySelector(".ff"));
+  const body = (
+    <div className={`ff-scrim ff-float${center ? " center" : ""}`} onClick={onClose}>
       <div className={`ff-sheet${center ? " center" : ""}`} ref={ref} tabIndex={-1} onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={title}>
         <div className="ff-sheet-head">
           {newLogo ? <FFLogo size={24} tier="gold" /> : <Coin size={22} />}
@@ -62,6 +66,7 @@ function Sheet({ open, onClose, title, children, center = false, newLogo = false
       </div>
     </div>
   );
+  return host && ReactDOM.createPortal ? ReactDOM.createPortal(body, host) : body;
 }
 
 
@@ -118,6 +123,16 @@ function Empty({ icon, title, action }) {
   window.addEventListener("resize", later);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(later).catch(() => {});
   const st = document.createElement("style");
-  st.textContent = ".ff textarea{overflow-y:hidden!important;max-height:none!important;resize:none!important}";
+  st.textContent = ".ff textarea{overflow-y:hidden!important;max-height:none!important;resize:none!important}"
+    /* float-sheets: one look for every pop-up (the full-screen FF Party package page and the flip cards keep their own). */
+    + ".ff .ff-scrim.ff-float{align-items:center!important;padding:14px 10px calc(86px + env(safe-area-inset-bottom,0px))!important}"
+    + "@media(min-width:900px){.ff .ff-scrim.ff-float{padding:24px 24px 40px!important}}"
+    + ".ff .ff-scrim.ff-float>.ff-sheet:not(:has(.ff-disc-modal)):not(:has(.ff-pk18full)){width:100%;max-height:100%!important;border-radius:24px!important;corner-shape:squircle;border:1px solid var(--gold-dk,#7E611D)!important;box-shadow:0 24px 60px rgba(0,0,0,.35)!important}"
+    + ".ff .ff-scrim.ff-float>.ff-sheet:not(.center){animation:ffdocin17 .2s ease-out}"
+    + ".ff .ff-scrim.ff-float>.ff-sheet>.ff-sheet-head{border-radius:24px 24px 0 0}"
+    + "@keyframes ffdocin17{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:none}}"
+    + ".ff .ff-scrim.ff-csx{box-sizing:border-box!important;padding-bottom:calc(86px + env(safe-area-inset-bottom,0px))!important}"
+    + "@media(min-width:900px){.ff .ff-scrim.ff-csx{padding-bottom:40px!important}}"
+    + "@media(prefers-reduced-motion:reduce){.ff .ff-scrim.ff-float>.ff-sheet{animation:none!important}}";
   document.head.appendChild(st);
 })();

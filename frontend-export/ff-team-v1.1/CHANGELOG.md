@@ -45,6 +45,9 @@ Profile page creator (`#/ff-team/profile`), profession selector (Alex, 18 Nov 22
   Mixologist last) and the `level` field on profession records are unchanged; the level picker in a profession's own
   editor is untouched.
 - Network page and other Bar category icons already used the cocktail glass; nothing changed there.
+## v1.73
+
+- **Every bottom sheet is now a centred pop-up.** `Sheet` (`src/components/shared/primitives.jsx`) portals into the app shell and floats centred with squircle corners, always leaving a gap at the bottom (86px + safe area on phones, 40px on desktop) so the bottom nav row and the blurred page stay visible; tapping the gap or blur closes it. Applies to all ~28 sheets, including login, share, terms, story reader and profession edit. The Card Studio / share overlay (`.ff-csx`) gets the same bottom gap. The flip-card (`.ff-disc-modal`) and full-screen package page variants are unchanged. Fixes the clipped Create a password sheet.
 
 ## v1.72
 
@@ -56,7 +59,7 @@ The other share pop-ups get the v1.71 profile Share pop-up (Alex, 18 Nov 22:13).
 - `CardShareSheet17`: the `extra` prop and the old `Sheet` layout behind it are gone; every caller uses `CardShareView17`. Dead CSS removed: `.ff-csm-stage`, `.ff-csm-live`.
 - Checked: `npm run check`, `npm run build`; Playwright at 360x640, 390x844, 1280x800 for `ShareCardSheet` (signed in with DEV · complete profile, opened with `ff-add`), the own-card "Share my card" button, and `CardPop17` (mounted in the page with a demo cocktail, as no page renders `CoCardRow17`, its only caller): pop-up height equals the viewport, nothing inside scrolls, page doesn't scroll on wheel, all four buttons inside the viewport and enabled once the PNG is made, Escape closes; no page errors.
 - Not published; branch `pp-sharesheet2`.
-- Published by a three-way merge onto live 1795040563-6676, which another chat published without pushing to GitHub (photo strip: swipe/compositor hints, eager loading, a 2.5s wait before hiding unloaded photos). Its change is in the live page and in `live-v1.72-index.html`, but its source is not in `src/` yet: that chat must push it. Artifact version 1795040911-d04c.
+- Published by a three-way merge onto live 1795040563-6676, which another chat published without pushing to GitHub (photo strip: swipe/compositor hints, eager loading, a 2.5s wait before hiding unloaded photos). Its change is in the live page and in `live-v1.72-index.html`, but its source is not in `src/` yet: that chat must push it. Artifact version 1795088883-de56.
 
 ## v1.71
 
