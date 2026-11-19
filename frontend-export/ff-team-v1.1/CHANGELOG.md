@@ -4,6 +4,15 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.100
+
+FF Team home (Alex, 19 Nov 21:09, chose "Option 2: ivory and gold" after a colour check against the brand rules). `styles/home-text.css`.
+
+- The boxes inside the four pillars are now ivory (`--color-ivory`) with a gold edge, instead of burgundy (v1.99) or warm black (v1.42): the "How bookings work" box in Your bookings, and the 1-2-3 step header rows in Your profile, Our packages and Our community.
+- Titles and labels are burgundy (`--color-ox`); the chevron is a burgundy medallion with a gold-leaf arrow, and turns gold with a dark arrow while its step is open. A fine gold rule separates an open header from its text. The four small card icons in the flow stay dark as showpieces.
+- Why: the brand rules keep black for showpieces and burgundy to one band per page, and the v1.1 brand brief rejected repeated heavy dark boxes. Colour check: burgundy on ivory 13.1:1, gold-leaf on the burgundy medallion 9.3:1.
+- Merged onto the live page 1795122276-2263 (v1.99) before publishing; page saved as `live-v1.100-index.html`. Artifact version 1795122661-2c9e.
+
 ## v1.99
 
 FF Team home (Alex, 19 Nov 20:58). `styles/home-text.css`.

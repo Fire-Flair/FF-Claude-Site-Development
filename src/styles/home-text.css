@@ -103,15 +103,15 @@
   .ff .ff-hf22.ff-home-c4 section#ff-hero.ff-hero18 .ff-hero18-in { align-self:end !important; padding-bottom:clamp(26px,3vw,40px) !important; }
 }
 
-/* ================= v1.40 (Alex, 18 Nov 19:42): black and gold, recoloured burgundy v1.98 (Alex, 19 Nov 20:58): the boxes inside the four pillars use the house burgundy --color-ox ================= */
+/* ================= v1.40 (Alex, 18 Nov 19:42): black and gold, then burgundy v1.99, now ivory and gold v1.100 (Alex, 19 Nov 21:09): the boxes inside the four pillars are ivory with a gold edge, burgundy titles and burgundy chevron medallions ================= */
 /* "How bookings work" inside the Your bookings pillar (Aragorn's option 1): the flow box in warm black with gold edges and
    gold-leaf words; its four step cards keep their cream faces. */
-.ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hb23-box { background:var(--color-ox,#5C1220) !important; border:1.5px solid var(--gold,#C9A227) !important; box-shadow:0 18px 30px -22px rgba(55,7,15,.7); }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hb23-box { background:var(--color-ivory,#FFFCF4) !important; border:1.5px solid var(--gold,#C9A227) !important; box-shadow:0 14px 26px -22px rgba(55,7,15,.45); }
 .ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hbc-ch { color:var(--color-gold-leaf,#EDD58F) !important; background:var(--color-ox,#5C1220) !important; border-color:var(--gold,#C9A227) !important; }
 .ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hbc-lab,
 .ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hbc-arr,
-.ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hb23-body .ff-hb17-row .arr { color:var(--color-gold-leaf,#EDD58F) !important; }
-.ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hbc-st .lb { color:var(--color-ivory,#FFFCF4) !important; }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hb23-body .ff-hb17-row .arr { color:var(--color-ox,#5C1220) !important; }
+.ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hbc-st .lb { color:var(--color-on-action,#2A1E04) !important; }
 .ff .ff-hf22.ff-home-c4 .ff-hbc-dark .ff-hbc-btn:hover { background:transparent !important; }
 .ff .ff-hf22 .ff-hbc-in { margin:16px 0 4px; }
 .ff .ff-hf22 .ff-hbc-in .ff-hb23-box { border-radius:18px; }
@@ -122,11 +122,12 @@
 /* The 1-2-3 drop-downs in the other pillars get the same black and gold on their header row; the opened section stays
    on ivory so its text reads as before. */
 .ff .ff-hf22.ff-home-c4 .ff-st21 .it { border:1.5px solid var(--gold,#C9A227) !important; }
-.ff .ff-hf22.ff-home-c4 .ff-st21 .hh button { background:var(--color-ox,#5C1220) !important; border-radius:16px 16px 0 0; }
+.ff .ff-hf22.ff-home-c4 .ff-st21 .hh button { background:var(--color-ivory,#FFFCF4) !important; border-radius:16px 16px 0 0; }
+.ff .ff-hf22.ff-home-c4 .ff-st21 .it.on .hh button { border-bottom:1px solid var(--gold,#C9A227) !important; }
 .ff .ff-hf22.ff-home-c4 .ff-st21 .it:not(.on) .hh button { border-radius:16px; }
-.ff .ff-hf22.ff-home-c4 .ff-st21 .hh b { color:var(--color-gold-leaf,#EDD58F) !important; }
+.ff .ff-hf22.ff-home-c4 .ff-st21 .hh b { color:var(--color-ox,#5C1220) !important; }
 .ff .ff-hf22.ff-home-c4 .ff-st21 .chev { color:var(--color-gold-leaf,#EDD58F) !important; background:var(--color-ox,#5C1220) !important; border-color:var(--gold,#C9A227) !important; }
-.ff .ff-hf22.ff-home-c4 .ff-st21 .it.on .chev { color:var(--color-ox,#5C1220) !important; background:var(--color-gold-leaf,#EDD58F) !important; }
+.ff .ff-hf22.ff-home-c4 .ff-st21 .it.on .chev { color:var(--color-on-action,#2A1E04) !important; background:var(--gold,#C9A227) !important; }
 .ff .ff-hf22.ff-home-c4 .ff-dx-panel .ff-st21 .ph { background:var(--color-char,#1E1F22) !important; }
 .ff .ff-hf22.ff-home-c4 .ff-dx-panel .ff-st21 .ph img { mix-blend-mode:normal !important; }
 
