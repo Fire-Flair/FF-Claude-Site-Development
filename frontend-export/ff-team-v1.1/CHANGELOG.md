@@ -4,6 +4,14 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.77
+
+- Card preview under step 04 (Alex, 19 Nov 12:57, option B): the paragraph under "Your complete card will display here"
+  is removed (`CardPreviewSoon` in `src/components/team/work-location-guide.jsx`); the heading goes straight to Share.
+- "Need help? Book a meeting" rule confirmed by Alex, no code change: it shows at the bottom of the create / edit page
+  and on your own profile, and never on someone else's profile (`NeedHelp34`; `mine` check in `party-live.jsx`).
+  Checked by script: shown on the create page, absent on another member's profile. Artifact version 1795093142-ca91.
+
 ## v1.76
 
 - Business & Support no longer shows on the finished "Your profile" page either (Alex, 19 Nov 12:53): the

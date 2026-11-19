@@ -64,7 +64,6 @@ function CardPreviewSoon({ me, themeKey } = {}) {
         </div>
         <div className="ff-cardpreview-tx">
           <b>Your complete card will display here</b>
-          <p>Save or publish your profile and your finished Profile Card appears here. Share it, and soon add it to your phone's wallet.</p>
         </div>
         </>}
         <ShareStack />
