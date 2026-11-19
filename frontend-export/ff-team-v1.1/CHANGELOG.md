@@ -4,6 +4,13 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.103
+
+FF Team home on desktop (Alex, 19 Nov 21:19). `styles/home-wide.css`.
+
+- The gold title bar is back beside "FF Party Launch Event" and the Launch Challenge title. In the two-column desktop layout those blocks were `position: static`, so the bar (drawn from the block's left edge) jumped to the left edge of the page; they are now `position: relative`.
+- Merged onto the live page 1795123202-96b5 (v1.102) before publishing; page saved as `live-v1.103-index.html`. Artifact version 1795123291-402b.
+
 ## v1.102
 
 FF Team home on desktop (Alex, 19 Nov 21:17). `styles/home-wide.css`.
