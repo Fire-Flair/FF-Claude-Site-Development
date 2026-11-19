@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.97
+
+- **FF Event Directory (replaces the v1.96 rail):** the categories are drop-downs again, laid out exactly like Our professionals (icon, title, count, drop-down box at the right). Where Our professionals has a line between the count and the box, the Directory has the sub-category pills, so a category and its sub-categories share one line. The pills scroll left and right only and fade at the right edge. Tapping a pill on a shut category opens it. Bar companies and Entertainment are open by default and several can be open together, as before. The Company Cards are unchanged.
+
 ## v1.96
 
 - **FF Event Directory is one line (the "directory rail", Alex's draft 5):** the open category is a burgundy rectangle with its sub-categories beside it as round pills; the other categories shrink to an icon and a count. The drop-down box stays at the right and opens and closes the cards. The Company Cards are unchanged. One category is open at a time (was Bar companies and Entertainment together). The rail scrolls left and right only, in line with the scroll rule.

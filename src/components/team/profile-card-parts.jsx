@@ -452,13 +452,13 @@ function HScroll({ children, label, snap }) {
 
 
 
-function SectionHead({ icon, title, count, action }) {
+function SectionHead({ icon, title, count, action, mid }) {
   return (
     <div className="ff-secthead">
       {icon}
       <span className="ff-h2">{title}</span>
       {count !== undefined && <span className="ff-pill">{count}</span>}
-      <span className="line" />
+      {mid || <span className="line" />}
       {action}
     </div>
   );

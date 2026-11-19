@@ -156,7 +156,7 @@ const CLASSIC_URL17 = CARD_DOMAIN + "/menu/classics";
 
 
 /* A section that opens and closes, headed like Featured people. Closed until opened. */
-function Fold17({ id, icon, title, count, big, shut, children }) {
+function Fold17({ id, icon, title, count, big, shut, mid, children }) {
   const { state, dispatch } = useStore();
   const v = state.categoryVisibility[id];
   const open = v === undefined ? !shut : v !== false;
@@ -168,7 +168,7 @@ function Fold17({ id, icon, title, count, big, shut, children }) {
   return (
     <section className={`ff-pn-sec ff-fold17${big ? " big" : ""}`} id={id}>
       {big ? <div className="ff-pbh17"><h3>{title}</h3>{count !== undefined && <span className="ff-pill">{count}</span>}<span className="line" />{tg}</div>
-        : <SectionHead icon={icon} title={title} count={count} action={tg} />}
+        : <SectionHead icon={icon} title={title} count={count} action={tg} mid={mid} />}
       {open && <div className="ff-fold17-b">{children}</div>}
     </section>);
 }

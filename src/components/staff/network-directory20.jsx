@@ -114,69 +114,47 @@ function CoTile20({ co }) {
 
 /* One category of the FF Event Directory: a heading with its sub-category tabs, the companies of the open tab across. */
 function DirSection20({ cat, title, list, open }) {
+  const { state, dispatch } = useStore();
   const d = NET_DIR_TABS20[cat] || NET_DIR_TABS20.bar;
   const groups = {};
   list.forEach(function (c) { const k = dirTabOf20(c, cat); (groups[k] = groups[k] || []).push(c); });
   const tabs = d.tabs.filter(function (t) { return (groups[t.k] || []).length; });
   const [tab, setTab] = useState("");
   const cur = tabs.find(function (t) { return t.k === tab; }) || tabs[0];
-  return React.createElement(Fold17, { shut: !open, id: "ff-dir-" + cat, icon: catIcon17(cat), title: title, count: list.length },
-    list.length ? React.createElement(React.Fragment, null,
-      tabs.length > 1 ? React.createElement(NetTabs20, { tabs: tabs, active: cur.k, onChange: setTab, label: title + " types", count: function (t) { return groups[t.k].length; } }) : null,
-      React.createElement(HScroll, { label: cur ? cur.label : title, key: cur ? cur.k : "" }, (cur ? groups[cur.k] : []).map(function (co) { return React.createElement(CoTile20, { key: co.id, co: co }); })))
+  const id = "ff-dir-" + cat;
+  const v = state.categoryVisibility[id];
+  const isOpen = v === undefined ? open : v !== false;
+  /* The sub-category pills sit where the line is on Our professionals. Tapping one opens the category if it is shut. */
+  const mid = tabs.length > 1 ? React.createElement("div", { className: "ff-dr20-mid", role: "tablist", "aria-label": title + " types" },
+    tabs.map(function (t) {
+      const on = isOpen && cur && cur.k === t.k;
+      return React.createElement("button", { key: t.k, type: "button", role: "tab", "aria-selected": on, className: "ff-dr20-sub" + (on ? " on" : ""),
+        onClick: function () { setTab(t.k); if (!isOpen) dispatch({ type: "TOGGLE_CATEGORY", key: id, visible: true }); } },
+        React.createElement("span", { className: "lb" }, t.label), React.createElement("span", { className: "ct" }, "(" + groups[t.k].length + ")"));
+    })) : null;
+  return React.createElement(Fold17, { shut: !open, id: id, icon: catIcon17(cat), title: title, count: list.length, mid: mid },
+    list.length ? React.createElement(HScroll, { label: cur ? cur.label : title, key: cur ? cur.k : "" }, (cur ? groups[cur.k] : []).map(function (co) { return React.createElement(CoTile20, { key: co.id, co: co }); }))
       : React.createElement("p", { className: "ff-body ff-muted", style: { margin: 0 } }, "No companies listed yet."));
 }
 
 
 
 
-/* The FF Event Directory on the FF Team Network page (v1.95, Alex 19 Nov 20:49, "directory rail"): the whole directory is one line.
-   The open category is a burgundy rectangle with its sub-categories beside it as round pills; the other categories shrink to an
-   icon and a count. The drop-down box at the right opens and closes the cards. Left and right is selection (the rail scrolls
-   sideways); up and down stays the page. A claimed company comes first in its category. */
+/* The FF Event Directory on the FF Team Network page (v1.96, Alex 19 Nov 20:56): the categories are drop-downs laid out exactly like
+   Our professionals. Where Our professionals has a line between the count and the drop-down box, the Directory has the
+   sub-category pills, so a category and its sub-categories sit on one line. A claimed company comes first in its category. */
 function NetDirectory20() {
   const state = useStore().state;
   const every = browseCompanies17(state);
-  const cats = NET_CO_TYPES17.map(function (t) {
-    const inCat = every.filter(function (c) { return (c.cat || "bar") === t[0]; });
-    const list = inCat.filter(function (c) { return !c.unclaimed; }).concat(inCat.filter(function (c) { return c.unclaimed; }));
-    const d = NET_DIR_TABS20[t[0]] || NET_DIR_TABS20.bar;
-    const groups = {};
-    list.forEach(function (c) { const k = dirTabOf20(c, t[0]); (groups[k] = groups[k] || []).push(c); });
-    return { cat: t[0], title: t[1], list: list, groups: groups, tabs: d.tabs.filter(function (x) { return (groups[x.k] || []).length; }) };
-  }).filter(function (c) { return c.list.length; });
-  const [cat, setCat] = useState("bar");
-  const [tabs, setTabs] = useState({});
-  const [shut, setShut] = useState(false);
-  const railRef = React.useRef(null);
-  const cur = cats.find(function (c) { return c.cat === cat; }) || cats[0];
-  const tab = cur ? (cur.tabs.find(function (x) { return x.k === tabs[cur.cat]; }) || cur.tabs[0]) : null;
-  const pick = function (c) { if (c.cat === cur.cat) { setShut(!shut); return; } setCat(c.cat); setShut(false); };
-  useEffect(function () {
-    const r = railRef.current; if (!r) return;
-    const on = r.querySelector(".ff-dr20-cat.open"); if (on) r.scrollTo({ left: Math.max(0, on.offsetLeft - 16), behavior: "smooth" });
-  }, [cat]);
-  if (!cur) return null;
   return React.createElement("section", { id: "ff-directory", style: { marginTop: 30, scrollMarginTop: 70 } },
     React.createElement("style", null, NET20_CSS),
     React.createElement(LinedHead20, { title: "FF Event Directory", k: "dir" }),
-    React.createElement("div", { className: "ff-dr20" },
-      React.createElement("div", { className: "ff-dr20-rail", ref: railRef, role: "tablist", "aria-label": "FF Event Directory categories" },
-        cats.map(function (c) {
-          const isOpen = c.cat === cur.cat;
-          return React.createElement(React.Fragment, { key: c.cat },
-            React.createElement("button", { type: "button", role: "tab", "aria-selected": isOpen, "aria-label": c.title + ", " + c.list.length, className: "ff-dr20-cat" + (isOpen ? " open" : ""), onClick: function () { pick(c); } },
-              React.createElement("span", { className: "ic", "aria-hidden": "true" }, catIcon17(c.cat)),
-              isOpen ? React.createElement("span", { className: "lb" }, c.title) : null,
-              React.createElement("span", { className: "ct" }, c.list.length)),
-            isOpen && c.tabs.length > 1 ? c.tabs.map(function (t) {
-              return React.createElement("button", { key: t.k, type: "button", className: "ff-dr20-sub" + (tab && tab.k === t.k && !shut ? " on" : ""), onClick: function () { const n = Object.assign({}, tabs); n[c.cat] = t.k; setTabs(n); setShut(false); } },
-                React.createElement("span", { className: "lb" }, t.label), React.createElement("span", { className: "ct" }, "(" + c.groups[t.k].length + ")"));
-            }) : null);
-        })),
-      React.createElement("button", { type: "button", className: "ff-dr20-chev", "aria-expanded": !shut, "aria-label": shut ? "Show " + cur.title : "Hide " + cur.title, onClick: function () { setShut(!shut); } },
-        React.createElement("svg", { width: 12, height: 12, viewBox: "0 0 10 10", style: { transform: shut ? "rotate(-90deg)" : "none", transition: "transform .15s ease" } }, React.createElement("path", { d: "M0 2 L10 2 L5 9 Z", fill: "currentColor" })))),
-    shut ? null : React.createElement(HScroll, { label: tab ? tab.label : cur.title, key: cur.cat + (tab ? tab.k : "") }, (tab ? cur.groups[tab.k] : cur.list).map(function (co) { return React.createElement(CoTile20, { key: co.id, co: co }); })));
+    NET_CO_TYPES17.map(function (t) {
+      const inCat = every.filter(function (c) { return (c.cat || "bar") === t[0]; });
+      const list = inCat.filter(function (c) { return !c.unclaimed; }).concat(inCat.filter(function (c) { return c.unclaimed; }));
+      /* A category shows once it has a company. v11-b (Alex 10:20): only Bar companies and Entertainment open by default. */
+      return list.length ? React.createElement(DirSection20, { key: t[0], cat: t[0], title: t[1], list: list, open: t[0] === "bar" || t[0] === "dj" }) : null;
+    }));
 }
 
 
