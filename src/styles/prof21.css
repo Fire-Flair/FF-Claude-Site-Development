@@ -644,23 +644,12 @@
 .ff .ff-pub-grid11 > .ff-csm-btn.ff-pub-wa11, .ff .ff-pub-grid11 .ff-csm-btn.ff-pub-wa11 { background:#EDDDB4 !important; background-image:none !important; color:#2A1E04 !important; border:1px solid #B89B5E !important; box-shadow:0 4px 10px -8px rgba(110,80,20,.6) !important; border-radius:14px; corner-shape:squircle; min-height:48px; }
 .ff .ff-pub-grid11 .ff-csm-btn.ff-pub-wa11 svg { color:#25D366 !important; fill:#25D366 !important; }
 
-/* v1.142: award icons, greyed out until earned */
-.ff .ff-awd17 { margin-top: 16px; }
-.ff .ff-awd17-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-.ff .ff-awd17-b { width: 64px; height: 68px; display: grid; place-items: center; border: 0; background: transparent; padding: 0; cursor: pointer; filter: drop-shadow(0 3px 4px rgba(0,0,0,.25)); transition: transform .15s; }
-.ff .ff-awd17-b.on { transform: translateY(-3px) scale(1.06); filter: drop-shadow(0 0 7px rgba(201,162,39,.75)) drop-shadow(0 4px 4px rgba(0,0,0,.25)); }
-.ff .ff-awd17-b:focus-visible { outline: 2px solid var(--gold, #C9A227); outline-offset: 2px; border-radius: 14px; }
-.ff .ff-awd17-tip { margin-top: 12px; padding: 10px 14px; border-radius: 16px; corner-shape: squircle; background: #fff; border: 1px solid rgba(176,141,42,.4); display: flex; flex-direction: column; gap: 2px; font-size: 14px; color: #1E1A12; text-align: center; }
 
 /* v1.149: the gap and the line with the FF monogram between Back / Share / Join and the tabs (the rules also live in profile-edit-tabs.css, which the visitor page does not load) */
 .ff .ff-pgem17 { display: flex; align-items: center; gap: 14px; margin: 44px 0 26px; padding: 0 4px; }
 .ff .ff-pgem17 i { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, #B08D2A 35%, #B08D2A 65%, transparent); }
 .ff .ff-pgem17 svg { flex: none; display: block; }
 .ff .ff-pgem17 .ff-pgem17-c { flex: none; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; border: 1.5px solid #B08D2A; background: transparent; }
-/* v1.149: all five award badges stay on one row on a phone */
-.ff .ff-awd17-row { gap: 4px; flex-wrap: nowrap; }
-.ff .ff-awd17-b { width: 56px; height: 60px; }
-.ff .ff-awd17-b svg { width: 56px; height: 60px; }
 
 /* v1.155: Available for hire tick box, and the challenge buttons beside the card ghost */
 .ff .ff-hiretick17 { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin-top: 14px; padding: 8px; background: none; border: 0; color: #F4EFE4; font: 600 15px var(--sans); cursor: pointer; }
@@ -720,3 +709,26 @@
 .ff .ff-chal-ttl { display: flex; align-items: center; justify-content: center; gap: 12px; }
 .ff .ff-chal-ttl b { flex: 0 1 auto; text-align: center; }
 .ff .ff-chal-sym { flex: none; width: 26px; height: 26px; fill: none; stroke: #B08D2A; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+/* v1.185 (Alex 20 Nov 23:05): FireFlair Introductions. Heading row with a gold Edit button, the cream explanation box for the member, a clean edit pop-up. */
+.ff .ff-intro-head185 { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.ff .ff-intro-head185 .ff-about-h { margin: 0 !important; min-width: 0; }
+.ff .ff-intro-edit185 { flex: none; display: inline-flex; align-items: center; justify-content: center; min-height: 34px; padding: 0 18px; border: 1px solid #F4DC8E; border-radius: 12px; corner-shape: squircle; background: linear-gradient(180deg, #F4DC8E, var(--gold, #C9A227)); color: #1B1405; font: 800 12px/1 var(--sans, Inter, system-ui, sans-serif); letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; cursor: pointer; box-shadow: 0 4px 10px -8px rgba(110,80,20,.6); }
+.ff .ff-intro-edit185:focus-visible { outline: 2px solid var(--gold-dk, #7E611D); outline-offset: 2px; }
+.ff .ff-intro-info185 { margin: 0 0 14px; padding: 12px 16px; border: 1px solid rgba(176,141,42,.55); border-radius: 16px; corner-shape: squircle; background: #FBF4DF; color: #3A2F14; font-size: 14.5px; line-height: 1.5; word-break: normal; overflow-wrap: normal; hyphens: none; }
+.ff .ff-intro-ed185 textarea { display: block; width: 100%; box-sizing: border-box; font: inherit; font-size: 15px; line-height: 1.5; padding: 12px 14px; border: 1px solid rgba(176,141,42,.5); border-radius: 16px; corner-shape: squircle; background: #fff; color: #1E1A12; height: min(50vh, 520px) !important; min-height: 0 !important; max-height: 520px !important; resize: none; overflow-y: auto; }
+.ff .ff-intro-ed185 .ff-intro-btns { margin-top: 12px; }
+
+/* v1.185 (Alex 20 Nov 23:05): on someone's profile Join team and Share are the same gold button (Share keeps its WhatsApp mark). */
+.ff .ff-pub-joinrow > .ff-btn.ff-join-mut,
+.ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11,
+.ff .ff-pub-grid11 > .ff-csm-btn.ff-pub-wa11,
+.ff .ff-pub-grid11 .ff-csm-btn.ff-pub-wa11,
+.ff .ff-pub-grid11 .ff-g11-rel .ff-btn:not(.ghost) { background-color: transparent !important; background-image: linear-gradient(165deg, #F6E2A4 0%, #E2BE62 45%, #D3A848 70%, #E6C676 100%) !important; border: 1px solid #8A6A18 !important; color: #2A1E04 !important; box-shadow: inset 0 1px 0 rgba(255,250,228,.75), 0 4px 12px -7px rgba(140,98,20,.6) !important; text-shadow: none !important; font-weight: 800 !important; letter-spacing: .1em !important; border-radius: 14px !important; corner-shape: squircle; }
+.ff .ff-pub-joinrow > .ff-btn.ff-join-mut:hover,
+.ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11:hover,
+.ff .ff-pub-grid11 > .ff-csm-btn.ff-pub-wa11:hover,
+.ff .ff-pub-grid11 .ff-g11-rel .ff-btn:not(.ghost):hover { background-image: linear-gradient(165deg, #F9E8B4 0%, #E8C770 45%, #D9B050 70%, #EACF84 100%) !important; }
+.ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11 svg,
+.ff .ff-pub-grid11 > .ff-csm-btn.ff-pub-wa11 svg,
+.ff .ff-pub-grid11 .ff-csm-btn.ff-pub-wa11 svg { color: #25D366 !important; fill: #25D366 !important; }
