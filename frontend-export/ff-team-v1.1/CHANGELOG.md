@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.138
+- **Get booked, Create your own:** no "Your skills, your package, your price" and no "You earn" label: the price box is just the pound sign to type into, and the line under Create your own reads "Your custom package". "You provide" and "Ideal for" are keywords: type one and press Enter to make a chip (tap the cross to remove).
+- Page saved as `live-v1.138-index.html`. Artifact version 1795141384-e95c.
+
 ## v1.137
 - **Create a profile, attributes:** tapping a plus box (Qualifications, Skills, Interests) opens the full detail box straight away. The type-box pop-up and the list pop-up that followed are gone for a new entry. The count number on the attribute cards is removed. Tapping a card that already has entries opens its list (top three, tiles) without a type box.
 - **Venues:** venue cards carry a small dark icon badge (like the profile and company cards) instead of the word "Venue". An empty dotted plus card is always shown, and tapping it opens the venue search in a pop-up.
