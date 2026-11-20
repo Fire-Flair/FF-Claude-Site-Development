@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.135
+- **Skills, interests, qualifications:** typing a name and pressing Enter now opens the full detail box straight away (title, description, Image, Document, Delete, update), the same box a profession has, without the level row.
+- Page saved as `live-v1.135-index.html`. Artifact version 1795139711-4953.
+
 ## v1.134
 - **Create a profile:** more space above the profile card, "Your Profile Page" and the FF divider on wide screens. No pencil on the profession category selectors; the pencil on attribute boxes sits on the title line, and every added profession has a pencil top right.
 - **Top three:** professions, skills, interests and qualifications each have a top-three selector (no numbers, no card icon) to put them in order.

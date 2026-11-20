@@ -313,7 +313,7 @@ function PE2Overview({ records }) {
           <Sheet open center title={BASE_CATEGORIES[attrOpen].label} onClose={() => setAttrOpen(null)}>
             <div className="pe2-attr-pop">
               <style>{RANK_CSS17}</style>
-              <TypeBox21 key={attrOpen} catKey={attrOpen} def={BASE_CATEGORIES[attrOpen]} rows={rankedRecords(records[attrOpen] || [])} />
+              <TypeBox21 key={attrOpen} catKey={attrOpen} def={BASE_CATEGORIES[attrOpen]} rows={rankedRecords(records[attrOpen] || [])} onAdded={(r) => setAttrRec(r)} />
               {(records[attrOpen] || []).filter(r => !r.proposed).length > 3 && <PE2TopSlots key={"s" + attrOpen} profs={rankedRecords(records[attrOpen] || []).filter(r => !r.proposed)} catKey={attrOpen} noun={BASE_CATEGORIES[attrOpen].label.toLowerCase()} />}
               <ProfTiles21 key={"t" + attrOpen} items={records[attrOpen] || []} def={BASE_CATEGORIES[attrOpen]} catKey={attrOpen} label={BASE_CATEGORIES[attrOpen].label} pen onOpen={(r) => setAttrRec(r)} />
             </div>

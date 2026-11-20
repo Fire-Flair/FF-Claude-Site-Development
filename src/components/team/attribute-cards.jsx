@@ -195,7 +195,7 @@ function EntryEditor21({ r, catKey, def, onDone }) {
 
 
 /* v17.21: the white type box at the top of a list. Type, press Enter (or the return key in the box), and the entry is added. */
-function TypeBox21({ catKey, def, rows, placeholder }) {
+function TypeBox21({ catKey, def, rows, placeholder, onAdded }) {
   const { state, dispatch } = useStore();
   const [typed, setTyped] = useState("");
   const one = def.singular.toLowerCase();
@@ -207,9 +207,11 @@ function TypeBox21({ catKey, def, rows, placeholder }) {
     if (rows.some(r => String(r.name).toLowerCase() === nm.toLowerCase())) { dispatch({ type: "TOAST", toast: `${nm} is already on your profile` }); return; }
     const taskId = xpTaskFor(catKey);
     const fresh = XP_TASKS.some(t => t.id === taskId) && !(state.profile.xpClaimed || []).includes(taskId);
-    dispatch({ type: "REC_ADD", category: catKey, record: makeRecord(catKey, nm) });
+    const rec = makeRecord(catKey, nm);
+    dispatch({ type: "REC_ADD", category: catKey, record: rec });
     dispatch({ type: "TOAST", toast: `${def.singular} added${fresh ? xpNote(XP_VALUES.task) : ""}` });
     setTyped("");
+    if (onAdded) onAdded(rec);
   };
   return (
     <form className={"ff-type21" + (typed.trim() ? " has" : "")} onSubmit={add}>
