@@ -229,21 +229,42 @@ function fiFor17(state, person, memo) {
 }
 
 
-/* v1.142 (Alex 20 Nov 02:54): five greyed-out award icons at the foot of the box; tap one and its text opens inline under the row. */
+/* v1.143 (Alex 20 Nov 04:06): video-game achievement badges. Hex medal, bevelled rim, engraved glyph, a small padlock while locked. */
+const FI_HEX = "M24 2.5 L43 13.2 V34.8 L24 45.5 L5 34.8 V13.2 Z";
+const FI_GLYPH = {
+  team5: <g><path d="M24 12 L34.5 19.7 L30.5 32 H17.5 L13.5 19.7 Z" fill="none" strokeWidth="1.6" strokeLinejoin="round" /><circle cx="24" cy="12" r="3.2" /><circle cx="34.5" cy="19.7" r="3.2" /><circle cx="30.5" cy="32" r="3.2" /><circle cx="17.5" cy="32" r="3.2" /><circle cx="13.5" cy="19.7" r="3.2" /><path d="M24 20 L25.6 23.4 L29.2 23.8 L26.5 26.2 L27.3 29.8 L24 28 L20.7 29.8 L21.5 26.2 L18.8 23.8 L22.4 23.4 Z" /></g>,
+  party: <g><path d="M24 11 L26.6 19.4 L35 16.5 L30 24 L37 29 L28.4 29.6 L28.5 38 L24 31 L19.5 38 L19.6 29.6 L11 29 L18 24 L13 16.5 L21.4 19.4 Z" /><circle cx="12" cy="12" r="1.8" /><circle cx="37" cy="10.5" r="1.5" /></g>,
+  staff: <g><path d="M24 9 L27 13 V28 H21 V13 Z" /><rect x="15.5" y="28" width="17" height="3.4" rx="1.2" /><rect x="22" y="31.4" width="4" height="6" /><circle cx="24" cy="39.5" r="2.1" /></g>,
+  review: <g><path d="M24 9.5 L28.3 18.8 L38.4 20 L30.9 26.9 L32.9 36.9 L24 31.9 L15.1 36.9 L17.1 26.9 L9.6 20 L19.7 18.8 Z" /><path d="M10 34 Q13 40 20 41.5 M38 34 Q35 40 28 41.5" fill="none" strokeWidth="1.8" strokeLinecap="round" /></g>,
+  complete: <g><path d="M24 8.5 L36.5 24 L24 39.5 L11.5 24 Z" fill="none" strokeWidth="1.8" strokeLinejoin="round" /><path d="M17.5 24.3 L22.2 29 L31 19.6" fill="none" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" /></g>,
+};
 const FI_AWARDS = [
-  { k: "team5", Icon: Users, name: "Team of five", text: "Awarded for forming a team of five people on FFTeam." },
-  { k: "party", Icon: PartyPopper, name: "First FFParty booking", text: "Awarded for the first booking taken through FFParty." },
-  { k: "staff", Icon: Briefcase, name: "First FFStaff booking", text: "Awarded for the first booking taken through FFStaff." },
-  { k: "review", Icon: Star, name: "First 5-star review", text: "Awarded for the first five-star review on your profile." },
-  { k: "complete", Icon: ShieldCheck, name: "Profile complete", text: "Awarded when every part of your profile is filled in." },
+  { k: "team5", name: "Team of five", text: "Awarded for forming a team of five people on FFTeam." },
+  { k: "party", name: "First FFParty booking", text: "Awarded for the first booking taken through FFParty." },
+  { k: "staff", name: "First FFStaff booking", text: "Awarded for the first booking taken through FFStaff." },
+  { k: "review", name: "First 5-star review", text: "Awarded for the first five-star review on your profile." },
+  { k: "complete", name: "Profile complete", text: "Awarded when every part of your profile is filled in." },
 ];
+function FIBadge17({ k, uid }) {
+  return fiH("svg", { viewBox: "0 0 48 52", width: 60, height: 64, "aria-hidden": true, focusable: "false" },
+    fiH("defs", null,
+      fiH("linearGradient", { id: uid + "m", x1: "0", y1: "0", x2: "0", y2: "1" }, fiH("stop", { offset: "0", stopColor: "#9A9A9E" }), fiH("stop", { offset: ".5", stopColor: "#5E5E63" }), fiH("stop", { offset: "1", stopColor: "#38383C" })),
+      fiH("linearGradient", { id: uid + "r", x1: "0", y1: "0", x2: "1", y2: "1" }, fiH("stop", { offset: "0", stopColor: "#C8C8CC" }), fiH("stop", { offset: "1", stopColor: "#4A4A4F" }))),
+    fiH("ellipse", { cx: 24, cy: 49, rx: 15, ry: 2.4, fill: "rgba(0,0,0,.22)" }),
+    fiH("path", { d: FI_HEX, fill: "url(#" + uid + "m)", stroke: "url(#" + uid + "r)", strokeWidth: 2.4, strokeLinejoin: "round" }),
+    fiH("path", { d: "M24 6.6 L39.6 15.3 V32.7 L24 41.4 L8.4 32.7 V15.3 Z", fill: "none", stroke: "rgba(0,0,0,.35)", strokeWidth: 1 }),
+    fiH("path", { d: "M24 4.6 L41 14.2", fill: "none", stroke: "rgba(255,255,255,.55)", strokeWidth: 1.2, strokeLinecap: "round" }),
+    fiH("g", { fill: "#E6E6EA", stroke: "#E6E6EA", transform: "translate(0 -.5)", style: { filter: "drop-shadow(0 1px 0.6px rgba(0,0,0,.7))" } }, FI_GLYPH[k]),
+    fiH("g", { transform: "translate(32 33)" }, fiH("circle", { cx: 5.5, cy: 5.5, r: 6.2, fill: "#1E1E21", stroke: "#8C8C91", strokeWidth: 1 }),
+      fiH("rect", { x: 2.8, y: 5.2, width: 5.4, height: 4, rx: 1, fill: "#B9B9BD" }), fiH("path", { d: "M3.9 5.2 V3.9 a1.6 1.6 0 0 1 3.2 0 V5.2", fill: "none", stroke: "#B9B9BD", strokeWidth: 1.1 })));
+}
 function FIAwards17() {
   const [open, setOpen] = useState(null);
   const cur = FI_AWARDS.find((a) => a.k === open);
   return fiH("div", { className: "ff-awd17" },
     fiH("div", { className: "ff-awd17-row" }, FI_AWARDS.map((a) =>
       fiH("button", { key: a.k, type: "button", className: "ff-awd17-b" + (open === a.k ? " on" : ""), "aria-label": a.name, "aria-expanded": open === a.k, onClick: () => setOpen(open === a.k ? null : a.k) },
-        fiH(a.Icon, { size: 22, strokeWidth: 1.6, "aria-hidden": true })))),
+        fiH(FIBadge17, { k: a.k, uid: "fib" + a.k })))),
     cur && fiH("div", { className: "ff-awd17-tip", role: "status" }, fiH("b", null, cur.name), fiH("span", null, cur.text)));
 }
 

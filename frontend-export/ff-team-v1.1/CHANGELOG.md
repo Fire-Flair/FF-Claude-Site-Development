@@ -4,6 +4,11 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.143
+- **Awards:** the five icons are now video-game achievement badges: hexagon medals with a bevelled metal rim and an engraved symbol, grey with a small padlock until earned; the tapped one lifts and glows.
+- **Venues:** the cards scroll sideways on every screen size, desktop included.
+- Page saved as `live-v1.143-index.html`. Artifact version 1795147695-8cc5.
+
 ## v1.142
 - **Profile:** the gold FF divider above the tabs is gone.
 - **FireFlair Introductions and Awards box:** larger title, no line under it; five greyed-out award icons at the foot of the box (team of five, first FFParty booking, first FFStaff booking, first 5-star review, profile complete). Tapping one opens its text inline under the row, not as a pop-up. Planned by Gandalf with Alex's answers; icons turn gold once earned logic is built.

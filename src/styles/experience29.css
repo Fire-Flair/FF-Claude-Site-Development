@@ -51,10 +51,7 @@
 .ff .ff-xc29 .gm { margin-left: auto; flex: none; font: 700 9.5px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: #EAD79C; text-decoration: none; white-space: nowrap; }
 .ff .ff-xc29 .gm:hover { text-decoration: underline; }
 .ff .ff-xc29 .gm:focus-visible { outline: 2px solid var(--gold, #C9A227); outline-offset: 3px; border-radius: 4px; }
-@media (min-width: 760px) {
-  .ff .ff-xr29 { flex-wrap: wrap; overflow: visible; margin-bottom: 0; padding-bottom: 6px; }
-  .ff .ff-xr29-end { display: none; }
-}
+/* v1.143: venues scroll sideways on every screen size. */
 .ff .ff-xr29 .ff-xc29 { box-shadow: 0 8px 18px rgba(0,0,0,.26), 0 2px 5px rgba(0,0,0,.22); }
 
 /* ---- v1.34: one search box, and the Experience card pop-up ---- */
