@@ -229,6 +229,24 @@ function fiFor17(state, person, memo) {
 }
 
 
+/* v1.142 (Alex 20 Nov 02:54): five greyed-out award icons at the foot of the box; tap one and its text opens inline under the row. */
+const FI_AWARDS = [
+  { k: "team5", Icon: Users, name: "Team of five", text: "Awarded for forming a team of five people on FFTeam." },
+  { k: "party", Icon: PartyPopper, name: "First FFParty booking", text: "Awarded for the first booking taken through FFParty." },
+  { k: "staff", Icon: Briefcase, name: "First FFStaff booking", text: "Awarded for the first booking taken through FFStaff." },
+  { k: "review", Icon: Star, name: "First 5-star review", text: "Awarded for the first five-star review on your profile." },
+  { k: "complete", Icon: ShieldCheck, name: "Profile complete", text: "Awarded when every part of your profile is filled in." },
+];
+function FIAwards17() {
+  const [open, setOpen] = useState(null);
+  const cur = FI_AWARDS.find((a) => a.k === open);
+  return fiH("div", { className: "ff-awd17" },
+    fiH("div", { className: "ff-awd17-row" }, FI_AWARDS.map((a) =>
+      fiH("button", { key: a.k, type: "button", className: "ff-awd17-b" + (open === a.k ? " on" : ""), "aria-label": a.name, "aria-expanded": open === a.k, onClick: () => setOpen(open === a.k ? null : a.k) },
+        fiH(a.Icon, { size: 22, strokeWidth: 1.6, "aria-hidden": true })))),
+    cur && fiH("div", { className: "ff-awd17-tip", role: "status" }, fiH("b", null, cur.name), fiH("span", null, cur.text)));
+}
+
 function FireFlairIntroductions17({ person }) {
   const { state } = useStore();
   const memo = useMemo(() => person.id === "me" ? null : { source: "preview", paragraphs: fiCompose17(fiSnapshot17(state, person)) }, [person.id]);
@@ -238,7 +256,8 @@ function FireFlairIntroductions17({ person }) {
   return fiH("section", { className: "ff-pp ff-intro ff-intro-seg", "aria-labelledby": "ff-intro-h" },
     fiH("h2", { id: "ff-intro-h", className: "ff-about-h" }, FI_HEADING),
     intro.paragraphs.map((p, i) => fiH("p", { key: i }, p.text)),
-    intro.source === "automatic" && !intro.edited && fiH("small", { className: "ff-intro-note" }, "AI-assisted summary of this profile."));
+    intro.source === "automatic" && !intro.edited && fiH("small", { className: "ff-intro-note" }, "AI-assisted summary of this profile."),
+    fiH(FIAwards17));
 }
 
 
