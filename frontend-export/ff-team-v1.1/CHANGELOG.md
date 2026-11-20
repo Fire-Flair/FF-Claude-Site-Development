@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.181
+- **Dream jobs, Motorsport card:** the photo is now a Formula 1 car in the pit lane at sunset (it was a crowd of staff in a grandstand, which did not look like motorsport).
+- Page saved as `live-v1.181-index.html`. Artifact version 1795212825-1511.
+
 ## v1.180
 - **Grow with FireFlair (Bookings):** Training, Dream jobs and FireFlair rewards now stack one under the other on anything narrower than 760px (a phone, an iPad split view). They only sit in a row of three when there is room for the text (before, from 470px, which squeezed it into a thin column).
 - **FireFlair rewards:** the "FF staff parties" card is removed.
