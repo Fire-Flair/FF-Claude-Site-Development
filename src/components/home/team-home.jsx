@@ -178,7 +178,7 @@ function HomeSlides175() {
     React.createElement("div", { className: "ff-hs175-fade", "aria-hidden": "true" }),
     React.createElement("div", { className: "ff-hs175-in" },
       React.createElement("h1", { id: "ff-hs175-h", className: "ff-hs175-h" }, "Welcome to ", React.createElement("span", { className: "br" }, "FFTeam")),
-      React.createElement("p", { className: "ff-hs175-s" }, "Get seen, get booked, get paid"),
+      React.createElement("p", { className: "ff-hs175-s" }, "Get seen, Get booked, Get paid"),
       mine ? React.createElement(ShineButton, { onClick: nav.goNetwork }, React.createElement(Users, { size: 15 }), " Build your network") : React.createElement(ShineButton, { onClick: nav.goProfile }, React.createElement(User, { size: 15 }), " Create your Profile Card")),
     React.createElement("div", { className: "ff-hs175-seg", role: "tablist", "aria-label": "Categories", onKeyDown: keys },
       React.createElement("span", { className: "ff-hs175-thumb" + (held ? " held" : ""), style: { left: "calc(5px + " + cat + " * (100% - 10px) / 3)" }, "aria-hidden": "true" },

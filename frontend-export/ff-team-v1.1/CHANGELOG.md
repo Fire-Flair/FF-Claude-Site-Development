@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.182
+- **"Get seen, Get booked, Get paid":** all three G's are capitals, on the home screen, the Join FFTeam box and the invite message people share.
+- Page saved as `live-v1.182-index.html`. Artifact version 1795213092-277f.
+
 ## v1.181
 - **Dream jobs, Motorsport card:** the photo is now a Formula 1 car in the pit lane at sunset (it was a crowd of staff in a grandstand, which did not look like motorsport).
 - Page saved as `live-v1.181-index.html`. Artifact version 1795212825-1511.

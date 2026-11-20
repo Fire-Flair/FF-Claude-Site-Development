@@ -1133,7 +1133,7 @@
       className: "ff-join-h"
     }, member ? "Your FireFlair" : "Join FF Team"), React.createElement("p", {
       className: "ff-join-t"
-    }, "Get seen, get booked, get paid"), React.createElement(ShineButton, {
+    }, "Get seen, Get booked, Get paid"), React.createElement(ShineButton, {
       onClick: nav.goProfile
     }, React.createElement(User, {
       size: 15

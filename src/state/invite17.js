@@ -46,7 +46,7 @@ function profileBasics17(s) {
 const inv17Link = (tag) => "https://FFTeam.uk/" + String(tag || "").toLowerCase();
 /* v1.15 (Alex, 18 Nov): the WhatsApp / Share message. The link goes on its own line after it. */
 const SHARE_TITLE17 = "Check out my profile page";
-const SHARE_MSG17 = "Check out my profile page and join my team.\nHelp me win the FF Team Launch Challenge.\nGet seen, get booked, get paid.";
+const SHARE_MSG17 = "Check out my profile page and join my team.\nHelp me win the FF Team Launch Challenge.\nGet seen, Get booked, Get paid.";
 
 
 /* Read once when the app starts: a shared link carries the sharer's code as ?r=<code>. */
