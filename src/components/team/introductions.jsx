@@ -245,7 +245,7 @@ const FI_AWARDS = [
   { k: "review", name: "First 5-star review", text: "Awarded for the first five-star review on your profile." },
   { k: "complete", name: "Profile complete", text: "Awarded when every part of your profile is filled in." },
 ];
-function FIBadge17({ k, uid }) {
+function FIBadge17({ k, uid, got }) {
   return fiH("svg", { viewBox: "0 0 48 52", width: 60, height: 64, "aria-hidden": true, focusable: "false" },
     fiH("defs", null,
       fiH("linearGradient", { id: uid + "m", x1: "0", y1: "0", x2: "0", y2: "1" }, fiH("stop", { offset: "0", stopColor: "#9A9A9E" }), fiH("stop", { offset: ".5", stopColor: "#5E5E63" }), fiH("stop", { offset: "1", stopColor: "#38383C" })),
@@ -255,16 +255,25 @@ function FIBadge17({ k, uid }) {
     fiH("path", { d: "M24 6.6 L39.6 15.3 V32.7 L24 41.4 L8.4 32.7 V15.3 Z", fill: "none", stroke: "rgba(0,0,0,.35)", strokeWidth: 1 }),
     fiH("path", { d: "M24 4.6 L41 14.2", fill: "none", stroke: "rgba(255,255,255,.55)", strokeWidth: 1.2, strokeLinecap: "round" }),
     fiH("g", { fill: "#E6E6EA", stroke: "#E6E6EA", transform: "translate(0 -.5)", style: { filter: "drop-shadow(0 1px 0.6px rgba(0,0,0,.7))" } }, FI_GLYPH[k]),
-    fiH("g", { transform: "translate(32 33)" }, fiH("circle", { cx: 5.5, cy: 5.5, r: 6.2, fill: "#1E1E21", stroke: "#8C8C91", strokeWidth: 1 }),
-      fiH("rect", { x: 2.8, y: 5.2, width: 5.4, height: 4, rx: 1, fill: "#B9B9BD" }), fiH("path", { d: "M3.9 5.2 V3.9 a1.6 1.6 0 0 1 3.2 0 V5.2", fill: "none", stroke: "#B9B9BD", strokeWidth: 1.1 })));
+    got
+      ? fiH("g", { transform: "translate(32 33)" }, fiH("circle", { cx: 5.5, cy: 5.5, r: 6.2, fill: "#C9A227", stroke: "#F2DC8E", strokeWidth: 1 }),
+        fiH("path", { d: "M2.6 5.6 L4.9 7.9 L8.6 3.6", fill: "none", stroke: "#14110A", strokeWidth: 1.8, strokeLinecap: "round", strokeLinejoin: "round" }))
+      : fiH("g", { transform: "translate(32 33)" }, fiH("circle", { cx: 5.5, cy: 5.5, r: 6.2, fill: "#1E1E21", stroke: "#8C8C91", strokeWidth: 1 }),
+        fiH("rect", { x: 2.8, y: 5.2, width: 5.4, height: 4, rx: 1, fill: "#B9B9BD" }), fiH("path", { d: "M3.9 5.2 V3.9 a1.6 1.6 0 0 1 3.2 0 V5.2", fill: "none", stroke: "#B9B9BD", strokeWidth: 1.1 })));
 }
-function FIAwards17() {
+/* v1.169 (Alex 20 Nov 19:44): a complete profile has its Profile complete badge ticked. */
+function fiComplete17(person) {
+  const p = person || {};
+  return !!(String(p.name || "").trim() && String(p.about || "").trim() && p.photo && (p.professions || []).length && (p.locations || []).length);
+}
+function FIAwards17({ person }) {
   const [open, setOpen] = useState(null);
+  const earned = { complete: fiComplete17(person) };
   const cur = FI_AWARDS.find((a) => a.k === open);
   return fiH("div", { className: "ff-awd17" },
     fiH("div", { className: "ff-awd17-row" }, FI_AWARDS.map((a) =>
       fiH("button", { key: a.k, type: "button", className: "ff-awd17-b" + (open === a.k ? " on" : ""), "aria-label": a.name, "aria-expanded": open === a.k, onClick: () => setOpen(open === a.k ? null : a.k) },
-        fiH(FIBadge17, { k: a.k, uid: "fib" + a.k })))),
+        fiH(FIBadge17, { k: a.k, uid: "fib" + a.k, got: !!earned[a.k] })))),
     cur && fiH("div", { className: "ff-awd17-tip", role: "status" }, fiH("b", null, cur.name), fiH("span", null, cur.text)));
 }
 
@@ -278,7 +287,7 @@ function FireFlairIntroductions17({ person }) {
     fiH("h2", { id: "ff-intro-h", className: "ff-about-h" }, FI_HEADING),
     intro.paragraphs.map((p, i) => fiH("p", { key: i }, p.text)),
     intro.source === "automatic" && !intro.edited && fiH("small", { className: "ff-intro-note" }, "AI-assisted summary of this profile."),
-    fiH(FIAwards17));
+    fiH(FIAwards17, { person }));
 }
 
 

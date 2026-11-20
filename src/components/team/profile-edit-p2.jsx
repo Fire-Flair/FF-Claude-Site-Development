@@ -300,7 +300,7 @@ function PE2Overview({ records }) {
             const card = (isEmpty, key) => (
               <button key={key} type="button" role="listitem" className={"ff-agrp " + (isEmpty ? "pe2-agrp-empty" : "cat-" + k + " " + tierCls17(ci)) + (on ? " pe2-agrp-on" : "")} aria-label={`${isEmpty && !empty ? "Add another" : "Edit"} ${def.label}`} aria-expanded={on} onClick={() => { setQualOpen(null); if (isEmpty) { const nr = makeRecord(k, ""); dispatch({ type: "REC_ADD", category: k, record: nr }); setAttrOpen(k); setAttrRec(nr); } else { setAttrOpen(on ? null : k); } }}>
                 <span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span></span>
-                {isEmpty ? <span className="pe2-empty-fill" aria-hidden="true" /> : <span className="ff-agrp-l">{shown.slice(0, 5).map(r => <span key={r.id}>{nbh21(r.name)}</span>)}</span>}
+                {isEmpty ? <span className="pe2-empty-fill" aria-hidden="true" /> : <span className="ff-agrp-l">{shown.slice(0, 5).map(r => <span key={r.id}>{nbh21(r.name)}{String(r.description || "").trim() && <small className="ff-agrp-sd">{nbh21(wholeSentences21(r.description, 70))}</small>}</span>)}</span>}
                 {!isEmpty && shown.length > 5 && <span className="ff-agrp-more">{`+${shown.length - 5}`}</span>}
                 {isEmpty && <span className="pe2-plus1" aria-hidden="true"><Plus size={26} strokeWidth={2.2} /></span>}
                 <span className="pe2-pen1" aria-hidden="true"><Pencil size={15} strokeWidth={2.1} /></span>
@@ -463,23 +463,35 @@ function PE2QA() {
 }
 
 
-/* v1.167 (Alex 20 Nov 19:12): at the bottom of Professions, a small tick box, "Are you a business owner?", bank icon, tick on the right.
-   Ticking opens the company card creator (the same card builder FFStaff uses) for the basic company card details. */
+/* v1.169 (Alex 20 Nov 19:44): the row holds the label on the left, then the bank icon, the tick box and (once ticked) the logo on the right.
+   The company card is one dark card headed "Company card", with the postcode box on it. A profile with the box ticked and a company name shows a bank icon last on its card icon row. */
 const Landmark167 = lucideIcon("Landmark");
 function BizOwner167() {
   const { state, dispatch } = useStore();
   const on = !!(state.profile && state.profile.ownsBusiness);
+  const co = state.company || {};
+  const has = on && !!String(co.name || "").trim();
   const toggle = () => dispatch({ type: "PROFILE", patch: { ownsBusiness: !on } });
+  useEffect(() => { if (!!(state.profile && state.profile.hasBiz) !== has) dispatch({ type: "PROFILE", patch: { hasBiz: has } }); }, [has]);
+  const logoRef = useRef(null);
+  const pickLogo = (e) => {
+    const f = e.target.files && e.target.files[0]; e.target.value = ""; if (!f) return;
+    const r = new FileReader(); r.onload = () => dispatch({ type: "COMPANY_SAVE", company: { logo: r.result, logoWide: false, logoRatio: null } }); r.readAsDataURL(f);
+  };
   return (
     <div className={"pe2-biz167" + (on ? " on" : "")}>
-      <button type="button" role="checkbox" aria-checked={on} className="pe2-biz167-b" onClick={toggle}>
-        <span className="ic" aria-hidden="true"><Landmark167 size={18} strokeWidth={1.8} /></span>
+      <div className="pe2-biz167-b">
         <span className="tx"><FitLabel17>Are you a business owner?</FitLabel17></span>
-        <span className="bx" aria-hidden="true">{on ? <Check size={15} strokeWidth={3} /> : null}</span>
-      </button>
-      {on && <div className="pe2-biz167-card"><EditableCompanyCard plain noType /></div>}
+        <span className="ic" aria-hidden="true"><Landmark167 size={18} strokeWidth={1.8} /></span>
+        <button type="button" role="checkbox" aria-checked={on} aria-label="Are you a business owner?" className="bx" onClick={toggle}>{on ? <Check size={15} strokeWidth={3} /> : null}</button>
+        {on && <>
+          <button type="button" className="lg" aria-label={co.logo ? "Change your logo" : "Add your logo"} onClick={() => logoRef.current && logoRef.current.click()}>
+            {co.logo ? <img decoding="async" src={co.logo} alt="" /> : <Camera size={16} strokeWidth={1.9} />}
+          </button>
+          <input ref={logoRef} type="file" accept="image/*" hidden onChange={pickLogo} />
+        </>}
+      </div>
+      {on && <div className="pe2-biz167-card"><span className="hd">Company card</span><EditableCompanyCard plain noType /></div>}
     </div>
   );
 }
-
-

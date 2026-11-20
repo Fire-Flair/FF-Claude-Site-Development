@@ -608,7 +608,7 @@ function ExpandedAttrs({ list }) {
         const det = r.details ? Object.entries(r.details).filter(([, v]) => String(v == null ? "" : v).trim()) : [];
         const media = (r.media || []).filter(m => m && (m.dataUrl || m.src));
         return (
-          <article key={r.id} className="ff-xatt-box">
+          <article key={r.id} className={"ff-xatt-box cat-" + r.category}>
             <h3>{r.name}</h3>
             {r.category === "venues" && r.address && <div className="ff-xatt-note">{r.address}{r.place ? <> · <a href={venueMapsUrl17(r)} target="_blank" rel="noopener noreferrer">View on Google Maps</a></> : null}</div>}
             {String(r.description || "").trim() && <p>{r.description}</p>}
@@ -663,7 +663,7 @@ function AttrGroups({ items, mem, onOpen }) {
           <button key={c.key} type="button" className={"ff-agrp cat-" + c.g.key + " " + tierCls17(ci)} onClick={() => onOpen(c.g.key)}
             aria-label={`${label}: ${c.g.list.map(it => it.record.name).join(", ")}. View all attributes`}>
             <span className="ff-agrp-top"><span className="ff-agrp-h">{label}</span><span className="ff-agrp-n" aria-hidden="true"><ChevronDown size={16} strokeWidth={2.2} /></span></span>
-            <span className="ff-agrp-l">{c.part.map(it => <span key={it.id}>{it.category === "qualifications" ? <QualNm r={it.record} /> : nbh21(it.record.name)}</span>)}</span>
+            <span className="ff-agrp-l">{c.part.map(it => <span key={it.id}>{it.category === "qualifications" ? <QualNm r={it.record} /> : nbh21(it.record.name)}{it.category !== "qualifications" && String(it.record.description || "").trim() && <small className="ff-agrp-sd">{nbh21(wholeSentences21(it.record.description, 70))}</small>}</span>)}</span>
             {c.more > 0 && <span className="ff-agrp-more">{`+${c.more}`}</span>}
           </button>
         );

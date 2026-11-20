@@ -149,7 +149,7 @@ function PlayerFace17({ person, large, themeKey, tier, onClick, selected, nameAs
   const langs = (person.languages || []).filter(Boolean).slice(0, 5);
   const rows = [["Professions", Users, pool("professions", pros)], ["Skills", Star, pool("skills", list(person.skills))], ["Interests", Heart, pool("interests", list(person.interests))], ["Locations", MapPin, locs]]
     .filter((r) => r[2].length).map((r) => [r[0], r[1], r[2].filter((v, i, a) => a.findIndex((x) => x.toLowerCase() === v.toLowerCase()) === i).slice(0, POOL)]);
-  const sig = [large, themeKey, tier, name, headline, rows.map((r) => r[2].join("|")).join("/"), langs.join(","), person.hasCar, person.tag].join("~");
+  const sig = [large, themeKey, tier, name, headline, rows.map((r) => r[2].join("|")).join("/"), langs.join(","), person.hasCar, person.hasBiz, person.tag].join("~");
   React.useLayoutEffect(() => {
     const el = rootRef.current && rootRef.current.parentElement;
     if (!el) return undefined;
@@ -192,7 +192,7 @@ function PlayerFace17({ person, large, themeKey, tier, onClick, selected, nameAs
         <FitText17 size={4.4} className="pc17-title" style={{ color: dark ? t.accent : "#6A4F12" }}>{headline || " "}</FitText17>
         <div className="ff-pc-rule">
           <i style={{ background: `linear-gradient(90deg, transparent, ${t.accent})` }} />
-          <ProfessionMarks professions={pros.slice(0, 3)} hasCar={person.hasCar} full={false} color={t.accent} />
+          <ProfessionMarks professions={pros.slice(0, 3)} hasCar={person.hasCar} hasBiz={person.hasBiz} full={false} color={t.accent} />
           <i style={{ background: `linear-gradient(270deg, transparent, ${t.accent})` }} />
         </div>
         {rows.length > 0 && (

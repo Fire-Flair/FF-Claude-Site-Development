@@ -4,6 +4,14 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.169
+- **Business owner row:** label on the left; the bank icon, the tick box and, once ticked, the logo button sit together on the right, logo last. The company card is one dark card headed "Company card", with the "Where are you based?" postcode box on it.
+- **Profile cards:** a profile with the box ticked and a company name gets a bank icon at the right end of the icon row, on both the Profile Card and the Profile.
+- **Attributes cards:** a skill's or interest's description shows under it in a smaller font, in the builder and on the public profile.
+- **Pop-ups:** the boxes inside All attributes, Skills, Interests and the other attribute pop-ups now take the colour of their outer Attributes box.
+- **Awards:** on a complete profile the Profile complete badge is ticked.
+- Page saved as `live-v1.169-index.html`. Artifact version 1795204127-0e31.
+
 ## v1.168
 - **Professions:** a small "Are you a business owner?" row at the bottom, bank icon on the left, tick box on the right. Ticking opens the company card creator (the same one FFStaff uses) for the basic company card details.
 - **Venue cards:** the title now sits in the same box as the icon, matching the other URL cards. The From and To dates are gone.

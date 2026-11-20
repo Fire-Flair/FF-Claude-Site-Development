@@ -391,7 +391,7 @@ function meAsStaff(profile, session) {
     /* v17.6: the public map point (centre of the public place, never the postcode point). */
     basePin: basePublicPoint17(profile),
     coverage: covForFd17(profile), coverageText: covText17(profile, 3),
-    hasCar: profile.hasCar, availability: "open", photo: profile.photo, theme: profile.theme, about: profile.about || "",
+    hasCar: profile.hasCar, hasBiz: !!profile.hasBiz, availability: "open", photo: profile.photo, theme: profile.theme, about: profile.about || "",
     intro: profile.introduction || null,
     /* Top profession's confirmed display category, if the person set one. */
     categoryOverride: (recsOf(profile, "professions").filter(r => !r.proposed)[0] || {}).displayCategory,

@@ -49,14 +49,15 @@ function professionMark(name) {
 
 /* One symbol per profession (up to three, no repeats), the brand diamond
    between them, and the car when the person drives. */
-function ProfessionMarks({ professions, hasCar, full, color }) {
+const Bank169 = lucideIcon("Landmark");
+function ProfessionMarks({ professions, hasCar, hasBiz, full, color }) {
   const cq = (n) => `${n}cqw`;
   const seen = new Set();
   const marks = (professions || []).map(p => ({ p, icon: professionMark(p) })).filter(m => m.icon && !seen.has(m.icon) && seen.add(m.icon)).slice(0, 3);
   const s = cq(full ? 4.4 : 5.4), d = cq(full ? 1.2 : 1.5);
   const diamond = (k) => <span key={k} style={{ width: d, height: d, transform: "rotate(45deg)", display: "block", flex: "none", background: color, opacity: .8 }} />;
   if (!marks.length) return <>{diamond("solo")}{hasCar && <span style={{ width: cq(full ? 3.2 : 4), height: cq(full ? 3.2 : 4), display: "block", flex: "none" }}><Car size="100%" color={color} strokeWidth={1.8} /></span>}</>;
-  const label = [...marks.map(m => m.p), hasCar ? "drives to events" : null].filter(Boolean).join(", ");
+  const label = [...marks.map(m => m.p), hasCar ? "drives to events" : null, hasBiz ? "business owner" : null].filter(Boolean).join(", ");
   return (
     <span className="ff-pc-marks" role="img" aria-label={label} title={label}>
       {marks.map((m, i) => {
@@ -69,6 +70,7 @@ function ProfessionMarks({ professions, hasCar, full, color }) {
         );
       })}
       {hasCar && <>{diamond("dc")}<span style={{ width: s, height: s, display: "block", flex: "none" }}><Car size="100%" color={color} strokeWidth={1.7} /></span></>}
+      {hasBiz && Bank169 && <>{diamond("db")}<span style={{ width: s, height: s, display: "block", flex: "none" }}><Bank169 size="100%" color={color} strokeWidth={1.7} /></span></>}
     </span>
   );
 }
