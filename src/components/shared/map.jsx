@@ -252,6 +252,13 @@ const mapLayer19 = (show, hide) => (p) => { const k = layerOf19(p); return !k ? 
 
 /* v1.124 (Alex 20 Nov 00:19): tapping a pin opens its card in a pop-up over a lightly blurred page; Back and View profile sit side by side under it. */
 function MapPop17({ onClose, onView, children }) {
+  const wide = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(min-width:1100px) and (hover:hover) and (pointer:fine)").matches && !!document.querySelector(".ff-nm20");
+  if (wide) return (
+    <div className="ff-mapinl17">
+      <div className="ff-mappop17-card">{children}</div>
+      <button type="button" className="ff-btn primary ff-mapinl17-v" onClick={onView}>View profile</button>
+    </div>
+  );
   useEffect(() => {
     const k = (e) => { if (e.key === "Escape") onClose(); };
     window.addEventListener("keydown", k);

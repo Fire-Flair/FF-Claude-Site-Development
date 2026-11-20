@@ -471,7 +471,7 @@ function VenueCard19({ record: r0, onClick }) {
       aria-label={onClick ? `${r.name}. Open details` : undefined} onClick={onClick} onKeyDown={onClick ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onClick(); } } : undefined}>
       <span className="ic" aria-hidden="true"><Briefcase size={22} strokeWidth={1.8} /></span>
       <span className="bd">
-        <span className="ty">{xd.employer ? r0.name : "Experience"}</span>
+        <span className="ty">{xd.employer ? r0.name : "Venue"}</span>
         <b>{r.name}</b>
         {r.address && <span className="ad">{r.address}</span>}
         {String(r.description || "").trim() && <span className="nt">{r.description}</span>}
@@ -523,7 +523,7 @@ function xpView29(r) {
     const name = d.employer || r.name;
     const where = d.location || "";
     return {
-      kicker: d.employer ? "Employer" : "Experience", name, where, Icon: Briefcase,
+      kicker: d.employer ? "Employer" : "Venue", name, where, Icon: Briefcase,
       role: d.employer ? r.name : "", dates, note: String(r.description || "").trim(),
       foot: "", maps: d.employer ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([name, where].filter(Boolean).join(", "))}` : "",
       hand: false,
@@ -590,7 +590,7 @@ function ExperienceCards29({ items, onOpen }) {
   const list = (items || []).filter(r => xpShown29(r) && !r.hidden && (onOpen || !r.proposed));
   if (!list.length) return null;
   return (
-    <div className="ff-xr29" role="list" aria-label={`Experience, ${list.length}`}>
+    <div className="ff-xr29" role="list" aria-label={`Venues, ${list.length}`}>
       <style>{xpCSS29}</style>
       {list.map(r => <div key={r.id} role="listitem" className="ff-xr29-it"><ExperienceCard29 record={r} onClick={onOpen ? () => onOpen(r) : undefined} /></div>)}
       <span className="ff-xr29-end" aria-hidden="true" />
@@ -619,7 +619,7 @@ function ExperienceSheet29({ record, onClose }) {
     onClose();
   };
   return (
-    <Sheet open center title="Experience" onClose={save}>
+    <Sheet open center title="Venues" onClose={save}>
       <style>{xpCSS29}</style>
       <div className="ff-xs29">
         <div className="ff-xs29-card"><ExperienceCard29 record={record} note={note} onNote={setNote} /></div>

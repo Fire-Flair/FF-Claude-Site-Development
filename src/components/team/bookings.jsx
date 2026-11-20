@@ -421,12 +421,12 @@ const PKC_EXTRA17 = {
       brief: "You perform live music at the client's event with your own instruments and sound system, and agree your set list with the client.",
       points: ["Perform live for the client and their guests", "Agree your set list with the client", "Bring and set up your own equipment"],
       cond: "One act: you, solo or with your band. Power and space for your setup are agreed with the client." },
-    { id: "ent_dj", earn: "£250+", name: "DJ Package", role: "DJ", duration: "4 hours",
-      line: "Play the night they'll remember.", provide: "Your DJ equipment, your music and your read of the room", ideal: "Birthdays, weddings and late-night parties",
+    { id: "ent_dj", earn: "£250+", name: "DJ Package", role: "DJ", duration: "3 hours",
+      line: "Play the night they'll remember.", provide: "Your DJ equipment, your music and the energy to fill a dance floor", ideal: "Birthdays, weddings and late-night parties",
       brief: "You DJ at the client's event with your own equipment, and agree the music and any must-play requests with the client.",
       points: ["DJ the event with your own equipment", "Agree the music and requests with the client", "Keep the dance floor going"],
       cond: "One professional: you. Power and space for your setup are agreed with the client." },
-    { id: "ent_act", earn: "£250+", name: "Entertainer Package", role: "Entertainer", duration: "2 hours",
+    { id: "ent_act", earn: "£150+", name: "Entertainer Package", role: "Entertainer", duration: "1 hour",
       line: "Bring a show of your own.", provide: "Your act: magic, caricatures or a performance of your own", ideal: "Family parties, corporate events and receptions",
       brief: "You entertain the client's guests with your own act, moving between groups or performing a set piece, as agreed with the client.",
       points: ["Perform your act for the client's guests", "Agree the format and timings with the client", "Bring everything your act needs"],
@@ -445,6 +445,11 @@ const PKC_EXTRA17 = {
       brief: "You photograph the client's event and deliver edited photos afterwards, as agreed with the client.",
       points: ["Photograph the event and its guests", "Edit your best shots", "Deliver the photos to the client"],
       cond: "One professional: you. The number of photos and the delivery date are agreed with the client." },
+    { id: "svc_video", earn: "£250+", name: "Videography Package", role: "Videographer", duration: "3 hours",
+      line: "Film the moments they'll rewatch.", provide: "Your camera, your eye and your editing", ideal: "Weddings, launches and brand events",
+      brief: "You film the client's event and deliver an edited film afterwards, as agreed with the client.",
+      points: ["Film the event and its guests", "Edit your best footage", "Deliver the film to the client"],
+      cond: "One professional: you. The length of the film and the delivery date are agreed with the client." },
     { id: "svc_events", earn: "£250+", name: "Event Management Package", role: "Event Manager", duration: "From 4 hours",
       line: "Keep the whole event running smoothly.", provide: "Event experience, organisation and a calm head on the day", ideal: "Larger parties, launches and corporate events",
       brief: "You look after the running of the client's event on the day, from timings and suppliers to guests, so the client can enjoy it.",
@@ -497,7 +502,6 @@ function PkgDoc17({ d, onClose }) {
           {long.map(([k, v]) => <div key={k} className="lg"><i>{k}</i><p>{pkcNoBreak17(v)}</p></div>)}
           {(d.points || []).length > 0 && <ul>{d.points.map(x => <li key={x}>{pkcNoBreak17(x)}</li>)}</ul>}
           {d.cond && <p className="cond">{pkcNoBreak17(d.cond)}</p>}
-          {d.tbc && <p className="cond">{PKC_TBC17}</p>}
         </section>
         <div className="tot"><span>You earn</span>{d.earn ? <b>{d.earn}</b> : <b className="nil">Your amount</b>}</div>
         <section className="tc"><h4>Terms and conditions</h4>
@@ -845,18 +849,17 @@ function TeamBookings({ guest = false }) {
               onKeyDown={e => { const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : e.key === "Home" ? -i : e.key === "End" ? PK_TABS.length - 1 - i : 0; if (!d) return; e.preventDefault(); const nk = PK_TABS[(i + d + PK_TABS.length) % PK_TABS.length][0]; setPkTab(nk); const b = document.getElementById(`ff-pktab-${nk}`); if (b) b.focus(); }}>{l}</button>)}
           </div>
           {pkTab === "bar" ? (<div role="tabpanel" id="ff-pkpanel-bar" aria-labelledby="ff-pktab-bar">
-            <HScroll label="Our bar packages" snap>
+            <HeroFlow20 label="Our bar packages">
               {pkgs.map(sv => <div key={sv.id} className="ff-bkpk-cell"><BkPkgCard17 sv={sv} on={picked.includes(sv.id)} onClick={() => tick(sv)} /></div>)}
               <div className="ff-bkpk-cell"><BkPkgOwn17 tab="bar" /></div>
-            </HScroll>
+            </HeroFlow20>
             <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={!sel} onClick={() => { if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; } setPkgTerms(true); }}><Check size={15} /> Confirm</button>
           </div>) : (
             <div role="tabpanel" id={`ff-pkpanel-${pkTab}`} aria-labelledby={`ff-pktab-${pkTab}`}>
-              <HScroll label={pkTab === "ent" ? "Entertainment packages" : "Services packages"} snap>
-                {(PKC_EXTRA17[pkTab] || []).map(x => <div key={x.id} className="ff-bkpk-cell"><BkPkgCard17 sv={{ id: x.id, title: x.name }} tab={pkTab} on={picked.includes(x.id)} onClick={() => tick({ id: x.id })} /></div>)}
+              <HeroFlow20 label={pkTab === "ent" ? "Entertainment packages" : "Services packages"} key={pkTab}>
                 <div className="ff-bkpk-cell"><BkPkgOwn17 key={pkTab} tab={pkTab} /></div>
-              </HScroll>
-              <p className="ff-bk-tbc">{PKC_TBC17}</p>
+                {(PKC_EXTRA17[pkTab] || []).map(x => <div key={x.id} className="ff-bkpk-cell"><BkPkgCard17 sv={{ id: x.id, title: x.name }} tab={pkTab} on={picked.includes(x.id)} onClick={() => tick({ id: x.id })} /></div>)}
+              </HeroFlow20>
               <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={!sel} onClick={() => { if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; } setPkgTerms(true); }}><Check size={15} /> Confirm</button>
             </div>
           )}

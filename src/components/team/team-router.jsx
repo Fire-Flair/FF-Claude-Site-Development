@@ -4,6 +4,14 @@
    which stays mounted behind it, so Back and the X return to the same place, category and pill. Phone and iPad keep the full page. */
 function ffPopMq() { return typeof matchMedia !== "undefined" && matchMedia("(min-width:1100px) and (hover:hover) and (pointer:fine)").matches; }
 function ffPopOn(state) { return !!(state && state.role === "team" && state.tab === "network" && ffPopMq()); }
+/* v1.125 (Alex 20 Nov 00:29): option 1 back button (squircle, chevron, grey glass), fixed to the edge of the page, not to the photo box. */
+function ProfBack1() {
+  const { state, dispatch } = useStore();
+  const company = !!state.viewingCompany;
+  if (!(state.viewing || state.viewingCompany) || state.role !== "team") return null;
+  const back = () => rt17Back(() => dispatch({ type: company ? "VIEW_COMPANY" : "VIEW", id: null }));
+  return <button type="button" className="ff-pb1" aria-label="Back" onClick={back}><ChevronLeft size={22} /></button>;
+}
 function ProfilePop17({ children }) {
   const { state, dispatch } = useStore();
   const ref = React.useRef(null);
@@ -51,8 +59,8 @@ function TeamRouter() {
      v1.47 (Alex 18 Nov 20:06): not on someone else's profile page.
      v1.96 (Alex 18 Nov 22:22): not on the create-a-profile page either; the finished "Your profile" page keeps it (ProfileGate17). */
   const biz = (page, cls) => <>{page}<div className={"ff-biz-pfa" + (cls ? " " + cls : "")}><V101.BusinessSupport19 /></div></>;
-  if ((state.viewing || state.viewingCompany) && ffPopOn(state)) return <><NetworkScreen /><ProfilePop17>{state.viewingCompany ? <CompanyPublic /> : <PersonProfile />}</ProfilePop17></>;
-  if (state.viewing) return <PersonProfile />;
+  if ((state.viewing || state.viewingCompany) && ffPopOn(state)) return <><NetworkScreen /><ProfilePop17>{state.viewingCompany ? <CompanyPublic /> : <PersonProfile />}</ProfilePop17><ProfBack1 /></>;
+  if (state.viewing) return <><PersonProfile /><ProfBack1 /></>;
   if (tab === "network") return <NetworkScreen />;
   if (tab === "bookings") return biz(<TeamBookings />);
   if (tab === "profile") return <ProfileGate17 kind="team" />;

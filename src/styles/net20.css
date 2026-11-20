@@ -116,13 +116,15 @@
 .ff .ff-nm20-q{margin:14px 0 6px}
 .ff .ff-map-sel{margin-top:6px}
 @media (min-width:1100px){
-  .ff .ff-nm20{grid-template-rows:auto auto auto 1fr auto}
+  .ff .ff-nm20{grid-template-rows:auto auto auto 1fr auto auto}
   .ff .ff-nm20-r,.ff .ff-mapwrap{display:contents}
   .ff .ff-nm20-l{grid-column:1;grid-row:1;position:static}
   .ff .ff-nm20 .ff-map{grid-column:2;grid-row:1 / span 4}
   .ff .ff-nm20 .ff-ml19{grid-column:2;grid-row:5}
-  .ff .ff-nm20 .ff-nm20-q{grid-column:1;grid-row:2;margin:6px 0 4px}
-  .ff .ff-nm20 .ff-map-sel{grid-column:1;grid-row:3;margin-top:10px}
+  .ff .ff-nm20 .ff-nm20-q{grid-column:2;grid-row:6;margin:6px 0 4px}
+  .ff .ff-nm20 .ff-map-sel{grid-column:1;grid-row:2 / span 3;margin-top:10px}
+  .ff .ff-mapinl17{display:flex;flex-direction:column;gap:14px;align-items:stretch;max-width:380px}
+  .ff .ff-mapinl17-v{min-height:46px;border-radius:16px}
 }
 
 /* v1.124: the map pin pop-up. */
@@ -131,3 +133,14 @@
 .ff .ff-mappop17-card{display:flex;justify-content:center}
 .ff .ff-mappop17-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .ff .ff-mappop17-btns .ff-btn{display:flex;align-items:center;justify-content:center;gap:6px;min-height:46px;border-radius:16px}
+
+/* v1.125: the pin card keeps its width inside the pop-up and the desktop preview (it was collapsing to nothing). */
+.ff .ff-mappop17-card,.ff .ff-mapinl17 .ff-mappop17-card{width:100%}
+.ff .ff-mappop17-card > div{width:100%}
+.ff .ff-mappop17-card .ff-deck,.ff .ff-mappop17-card .ff-pc{width:100%;max-width:360px}
+
+/* v1.125: back button 1, fixed to the page edge top-left; the photo count sits bottom-right. */
+.ff .ff-pb1{position:fixed;top:60px;left:12px;z-index:4100;width:44px;height:44px;border-radius:16px;corner-shape:squircle;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.35);background:rgba(90,90,94,.42);color:#fff;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);cursor:pointer;padding:0}
+.ff .ff-pb1:hover{background:rgba(70,70,74,.6)}
+@media (min-width:1100px){.ff .ff-pb1{top:84px;left:22px}}
+.ff-ps-n{top:auto !important;left:auto !important;bottom:10px;right:12px}

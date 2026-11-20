@@ -501,7 +501,7 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
           )}
           {venues.length > 0 && (
             <section className="ff-pp ff-pp21" aria-labelledby="ff-ven-h">
-              <div className="ff-pp-head"><h2 id="ff-ven-h" className="ff-about-h">Experience</h2></div>
+              <div className="ff-pp-head"><h2 id="ff-ven-h" className="ff-about-h">Venues</h2></div>
               <ExperienceCards29 items={venues} />
             </section>
           )}

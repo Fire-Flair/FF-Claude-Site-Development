@@ -4,6 +4,13 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.125
+- **Get booked (FFParty):** Bar, Entertainment and Services packages use the Hero Flow scroll; Create your own is first on Entertainment and Services; the "to be confirmed" line is gone. DJ is 3 hours with new wording; Entertainer is 1 hour, you earn £150+; new Videography package (£250+).
+- **Network, wide screen:** the pin you tap shows its Profile Card on the left with a View profile button under it; the one search sits under the map legend. The pin card no longer collapses to nothing (pop-up on phone and iPad).
+- **Back button:** squircle grey-glass chevron fixed top-left of the page on profiles; photo count moved to the bottom-right.
+- **Profile:** "Experience" is now "Venues".
+- Page saved as `live-v1.125-index.html`. Artifact version 1795135386-422d.
+
 ## v1.124
 - **Map pins:** tapping a person or company pin opens its card in a pop-up over a slightly blurred page, with Back and View profile side by side underneath. Back, Escape or a tap outside closes it; View profile opens the profile (the pop-up profile on desktop).
 - Page saved as `live-v1.124-index.html`. Artifact version 1795134072-2f09.

@@ -325,7 +325,7 @@ function PE2Overview({ records }) {
       </section>
       {SHOW_VENUES_PROFILE17 && (
         <section className="ff-pp ff-pp21 pp-sec pe2-ven" aria-labelledby="pe2-ven-h">
-          <div className="ff-pp-head"><h2 id="pe2-ven-h" className="ff-about-h">Experience</h2></div>
+          <div className="ff-pp-head"><h2 id="pe2-ven-h" className="ff-about-h">Venues</h2></div>
           {/* v1.29: a Google business search per venue, then the Experience cards. */}
           <ExperienceEditor29 items={venAll} onOpen={(r) => setOpenVen(r)} />
         </section>
