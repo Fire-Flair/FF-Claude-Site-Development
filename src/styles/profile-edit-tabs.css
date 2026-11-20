@@ -20,5 +20,3 @@
 .ff .ff-pgem17 .ff-pgem17-c{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;border:1.5px solid #B08D2A;background:transparent}
 .ff .ff-pgem17{margin-top:44px}
 .ff .ff-jflat .ff-pgem17{margin:80px 0 64px}
-/* v1.183 (Alex 20 Nov 22:35): a Company Card has one border, the outer rim. The two inner hairlines are gone. */
-.ff .ff-deck.pc.ff-cocard .fx.hair, .ff .ff-deck.pc.ff-cocard .fx.hair::after { display: none !important; }

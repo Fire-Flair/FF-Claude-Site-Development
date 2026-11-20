@@ -535,7 +535,7 @@ function xpView29(r) {
     const name = d.employer || r.name;
     const where = d.location || "";
     return {
-      kicker: "Venue", name, where, Icon: Briefcase,
+      kicker: "Venue", name, where,
       role: d.employer ? r.name : "", dates, note: String(r.description || "").trim(),
       foot: "", maps: d.employer ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([name, where].filter(Boolean).join(", "))}` : "",
       hand: false,
@@ -545,7 +545,7 @@ function xpView29(r) {
   const street = String(r.address || "").split(",")[0].trim();
   const where = hand ? (r.address || "") : ([street, r.area && r.area.name].filter(Boolean).join(", ") || r.address || "");
   return {
-    kicker: hand ? "Venue" : venTypeLabel17(r.place), name: r.name, where, Icon: venueIcon19(r),
+    kicker: hand ? "Venue" : venTypeLabel17(r.place), name: r.name, where,
     role: String((r.details && r.details.role) || ""), note: String(r.description || "").trim(),
     foot: !hand && r.area ? r.area.name : "", maps: hand ? "" : venueMapsUrl17(r), hand,
   };
@@ -569,19 +569,18 @@ function ExperienceCard29({ record, onClick, note, onNote, tone, role, onRole })
   const v = xpView29(record);
   const tn = XP_TONES29[tone || XP_TONE29] ? (tone || XP_TONE29) : "champagne";
   const typing = typeof onNote === "function";
-  const Icon = v.Icon;
   const key = (e) => { if (onClick && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); onClick(); } };
   return (
     <CardFrame as="div" theme={XP_TONES29[tn]} className={"ff-xc29 t-" + tn + (v.hand ? " hand" : "") + (typing ? " typing" : "")} onClick={onClick}
-      style={{ width: CARD_W.venue, backgroundImage: `${XP_TONES29[tn].bg}, ${XP_TONES29[tn].ring}` }}>
+      ratio="8 / 5" style={{ width: CARD_W.venue, backgroundImage: `${XP_TONES29[tn].bg}, ${XP_TONES29[tn].ring}` }}>
       {onClick && <span className="pe2-pen1 ff-xc29-pen" aria-hidden="true"><Pencil size={15} strokeWidth={2.1} /></span>}
       <div className="ff-xc29-in" role={onClick ? "button" : undefined} tabIndex={onClick ? 0 : undefined}
         aria-label={onClick ? `${v.name}. Open details` : undefined} onKeyDown={onClick ? key : undefined}>
-        <span className="ff-xc29-kr"><span className="k vb" title={v.kicker}><Icon size={17} strokeWidth={1.8} aria-hidden="true" /></span><span className="ff-xc29-kt">Venue card</span></span>
+        <span className="ff-xc29-kr"><span className="k vb" title={v.kicker}><MapPin size={17} strokeWidth={1.8} aria-hidden="true" /></span><span className="ff-xc29-kt">Venue card</span></span>
         <span className="top">
           <span className="nm">
             <b>{v.name}</b>
-            {v.where && <span className="ad"><MapPin size={12} strokeWidth={1.8} aria-hidden="true" />{v.where}</span>}
+            {v.where && <span className="ad"><MapPin size={12} strokeWidth={1.8} aria-hidden="true" /><span className="adt">{v.where}</span></span>}
           </span>
         </span>
         {typing && onRole
@@ -611,12 +610,12 @@ function ExperienceCards29({ items, onOpen, onAdd }) {
     <div className="ff-xr29" role="list" aria-label={`Venues, ${list.length}`}>
       <style>{xpCSS29}</style>
       {list.map(r => <div key={r.id} role="listitem" className="ff-xr29-it"><ExperienceCard29 record={r} onClick={onOpen ? () => onOpen(r) : undefined} /></div>)}
-      {onAdd && <div role="listitem" className="ff-xr29-it"><button type="button" className="ff-xc29-add" style={{ width: CARD_W.venue }} aria-label="Add a venue" onClick={onAdd}>
+      {onAdd && <div role="listitem" className="ff-xr29-it"><button type="button" className="ff-xc29-add" style={{ width: CARD_W.venue }} aria-label="Add a venue" onClick={onAdd}><span className="ff-xca-in">
         <span className="ff-xca-kr"><span className="k vb" aria-hidden="true"><MapPin size={17} strokeWidth={1.8} /></span><span className="ff-xca-kt">Venue card</span></span>
         <span className="ff-xca-bar nm" aria-hidden="true" /><span className="ff-xca-bar rl" aria-hidden="true" />
         <span className="ff-xca-bar nt" aria-hidden="true" /><span className="ff-xca-bar nt s" aria-hidden="true" />
         <span className="ff-xca-ft" aria-hidden="true"><span className="ff-xca-plus"><Plus size={20} strokeWidth={2.6} /></span></span>
-      </button></div>}
+      </span></button></div>}
       <span className="ff-xr29-end" aria-hidden="true" />
     </div>
   );

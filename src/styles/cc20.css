@@ -35,3 +35,6 @@
 /* v1.146 (Alex 20 Nov 04:14): the icon and the word Company sit on one centred line with a clear gap. */
 .ff .ff-cc11 .ff-cc11-plate { display: inline-flex !important; align-items: center; gap: .55em; }
 .ff .ff-cc11 .ff-cc11-plate svg { flex: none; width: 1.25em; height: 1.25em; display: block; margin: 0; }
+/* v1.185 (Alex 20 Nov 23:05): a Company Card has one border, the outer metallic rim. The two inner hairlines (.fx.hair and its ::after) are removed.
+   This lives in cc20.css because that sheet is loaded site-wide; the v1.183 rule sat in a sheet that only loads on the profile edit page. */
+.ff .ff-deck.pc.ff-cocard > .fx.hair, .ff .ff-deck.pc.ff-cocard > .fx.hair::before, .ff .ff-deck.pc.ff-cocard > .fx.hair::after { display: none !important; border: 0 !important; }

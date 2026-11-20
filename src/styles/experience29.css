@@ -144,3 +144,46 @@
 .ff .ff-xc29-kr, .ff .ff-xc29-add .ff-xca-kr { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 13px 0 0; border-radius: 11px; corner-shape: squircle; background: #14110A; border: 1px solid rgba(228,195,106,.5); align-self: flex-start; }
 .ff .ff-xc29 .ff-xc29-kr .k.vb, .ff .ff-xc29-add .ff-xca-kr .k.vb { width: 30px; height: 30px; border: 0; border-radius: 0; background: transparent; margin: 0; position: static; }
 .ff .ff-xc29-kt, .ff .ff-xc29-add .ff-xca-kt { color: #E4C36A; }
+
+/* v1.185 (Alex 20 Nov 23:05): every venue card (row, placeholder, profile, pop-up) is the Company Card shape, 8:5, at any width.
+   Everything inside scales with the card (--u is 1px at a 320px card), text is clamped to whole lines with an ellipsis, the Maps line stays at the bottom. */
+.ff .ff-xr29 { align-items: flex-start; }
+.ff .ff-xc29, .ff .ff-xc29-add { container-type: inline-size; aspect-ratio: 8 / 5; min-height: 0; height: auto; overflow: hidden; }
+.ff .ff-xc29 > *, .ff .ff-xca-in { --u: .3125cqw; }
+.ff .ff-xc29-in { box-sizing: border-box; height: 100%; min-height: 0; overflow: hidden; padding: calc(var(--u) * 12) calc(var(--u) * 15) calc(var(--u) * 10); }
+.ff .ff-xc29-in > * { flex-shrink: 0; }
+.ff .ff-xc29 .ff-xc29-kr { height: calc(var(--u) * 30); gap: calc(var(--u) * 6); padding-right: calc(var(--u) * 12); border-radius: calc(var(--u) * 10); }
+.ff .ff-xc29 .ff-xc29-kr .k.vb { width: calc(var(--u) * 28); height: calc(var(--u) * 28); }
+.ff .ff-xc29 .ff-xc29-kr .k.vb svg { width: calc(var(--u) * 16); height: calc(var(--u) * 16); }
+.ff .ff-xc29 .ff-xc29-kt { font-size: calc(var(--u) * 10); }
+.ff .ff-xc29 .top { margin-top: calc(var(--u) * 6); margin-bottom: 0; }
+.ff .ff-xc29 .nm { gap: calc(var(--u) * 3); }
+.ff .ff-xc29 .nm b { font-size: calc(var(--u) * 15.5); line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.ff .ff-xc29 .ad { font-size: calc(var(--u) * 11.5); line-height: 1.3; gap: calc(var(--u) * 4); align-items: center; }
+.ff .ff-xc29 .ad svg { width: calc(var(--u) * 12); height: calc(var(--u) * 12); margin-top: 0; }
+.ff .ff-xc29 .ad .adt { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ff .ff-xc29 .role { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; margin-top: calc(var(--u) * 4); margin-bottom: 0; font-size: calc(var(--u) * 12); line-height: 1.35; }
+.ff .ff-xc29 .role.typ { display: grid; overflow: visible; }
+.ff .ff-xc29 .nt { margin: calc(var(--u) * 5) 0 0; font-size: calc(var(--u) * 12); line-height: 1.38; -webkit-line-clamp: 3; min-height: 0; }
+.ff .ff-xc29-in:has(.role) .nt { -webkit-line-clamp: 2; }
+.ff .ff-xc29 .ft { padding-top: calc(var(--u) * 5); min-height: 0; margin-top: auto; }
+.ff .ff-xc29 .ar { font-size: calc(var(--u) * 11); }
+.ff .ff-xc29 .gm { font-size: calc(var(--u) * 9); }
+.ff .ff-xc29 .ff-xc29-pen { top: calc(var(--u) * 12); right: calc(var(--u) * 12); width: calc(var(--u) * 28); height: calc(var(--u) * 28); border-radius: calc(var(--u) * 10); }
+.ff .ff-xc29 .ff-xc29-pen svg { width: calc(var(--u) * 14); height: calc(var(--u) * 14); }
+/* typing on the card in the pop-up: the note box takes the space between the role line and the Maps line */
+.ff .ff-xc29.typing .ff-xc29-in > textarea.nt { flex: 1 1 auto; display: block; min-height: 0; margin: calc(var(--u) * 3) 0 calc(var(--u) * 4); font-size: calc(var(--u) * 12); line-height: 1.38; resize: none; padding: calc(var(--u) * 2) 0 calc(var(--u) * 3) !important; }
+.ff .ff-xc29 .role.typ .ff-xc29-in1 { margin: calc(var(--u) * 2) 0 0; padding: calc(var(--u) * 2) 0 calc(var(--u) * 3); font-size: calc(var(--u) * 12.5); }
+/* the empty placeholder card, same shape */
+.ff .ff-xc29-add { padding: 0; align-self: flex-start; }
+.ff .ff-xc29-add .ff-xca-in { box-sizing: border-box; display: flex; flex-direction: column; height: 100%; padding: calc(var(--u) * 12) calc(var(--u) * 15) calc(var(--u) * 10); }
+.ff .ff-xc29-add .ff-xca-kr { height: calc(var(--u) * 30); }
+.ff .ff-xc29-add .ff-xca-bar { height: calc(var(--u) * 8); margin-top: calc(var(--u) * 8); }
+.ff .ff-xc29-add .ff-xca-bar.nm { height: calc(var(--u) * 14); margin-top: calc(var(--u) * 12); }
+.ff .ff-xc29-add .ff-xca-bar.nt { margin-top: calc(var(--u) * 10); }
+.ff .ff-xc29-add .ff-xca-bar.nt.s { margin-top: calc(var(--u) * 7); margin-bottom: 0; }
+.ff .ff-xc29-add .ff-xca-ft { padding-top: calc(var(--u) * 6); }
+.ff .ff-xc29-add .ff-xca-plus { width: calc(var(--u) * 32); height: calc(var(--u) * 32); }
+.ff .ff-xc29-add .ff-xca-plus svg { width: calc(var(--u) * 18); height: calc(var(--u) * 18); }
+/* the pop-up: the same card at pop-up width, controls beneath it */
+.ff .ff-xs29-card .ff-xc29 { aspect-ratio: 8 / 5; height: auto; max-width: 460px; margin: 0 auto; }
