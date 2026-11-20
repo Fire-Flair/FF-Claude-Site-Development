@@ -590,7 +590,7 @@ function timeLeft(expiresAt) {
 
 function useDirectory() {
   const { state } = useStore();
-  const base = state.profile.live ? [meAsStaff(state.profile, state.session), ...state.directory] : state.directory;
+  const base = state.profile.live && !state.profile.cardHidden ? [meAsStaff(state.profile, state.session), ...state.directory] : state.directory;
   /* Network grouping comes from each person's top profession (v1.6). v17.48: groups = every category of their top 3
      public professions (best first, each with the profession that put them there); group stays the top one. */
   const myCats = {};

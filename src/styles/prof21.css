@@ -661,3 +661,10 @@
 .ff .ff-awd17-row { gap: 4px; flex-wrap: nowrap; }
 .ff .ff-awd17-b { width: 56px; height: 60px; }
 .ff .ff-awd17-b svg { width: 56px; height: 60px; }
+
+/* v1.155: Available for hire tick box, and the challenge buttons beside the card ghost */
+.ff .ff-hiretick17 { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin-top: 14px; padding: 8px; background: none; border: 0; color: #F4EFE4; font: 600 15px var(--sans); cursor: pointer; }
+.ff .ff-hiretick17 .bx { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 8px; corner-shape: squircle; border: 1.5px solid rgba(233,208,122,.7); color: #1A1405; }
+.ff .ff-hiretick17.on .bx { background: #E9D07A; border-color: #E9D07A; }
+.ff .ff-walletpair .ff-stackbtn.chal { justify-content: center; gap: 8px; padding: 0 10px; white-space: nowrap; font-size: 14.5px; background: #1C1B1A; color: #F4DC8E; box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 0 0 1px rgba(228,195,106,.35); }
+.ff .ff-cardpreview .ff-walletpair .ff-stackbtn.chal { gap: 6px; padding: 0 8px; }

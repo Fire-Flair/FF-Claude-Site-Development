@@ -172,6 +172,32 @@ function PublicQA({ person }) {
 /* ---- 4c. Share and the wallets, one stack --------------------------------
    Share (WhatsApp) first, then Add to Apple Wallet and Add to Google Wallet:
    the same size and shape. The wallets are locked — no pass is made. */
+/* v1.155 (Alex 20 Nov 04:48): before the profile is published, the box beside the card ghost is about the Launch Challenge:
+   we send you your card, you share it, and you build a team to win. Same look and layout as the wallet buttons. */
+function ChallengeStack() {
+  const { state, dispatch } = useStore();
+  const { share, busy } = useShareCard();
+  const signedIn = state.auth.status === "signedIn";
+  const cardReady = recsOf(state.profile, "professions").some(r => !r.proposed);
+  const why = !signedIn ? "Create your FF Tag first and we will send you your card." : !cardReady ? "Add a profession and your card is ready to share." : null;
+  const prizes = () => {
+    dispatch({ type: "TAB", tab: "home", route: "home" });
+    setTimeout(() => { const el = document.getElementById("ff-competition"); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); else window.scrollTo(0, 0); }, 250);
+  };
+  return (
+    <div className="ff-sharestack">
+      <button type="button" className="ff-stackbtn wa" disabled={!!why || busy} onClick={share}>
+        {busy ? <Loader2 size={18} className="ff-spin" /> : <WhatsAppIcon size={20} />} <span>Share my card</span>
+      </button>
+      {why && <p className="ff-sharestack-note">{why}</p>}
+      <div className="ff-walletpair">
+        <button type="button" className="ff-stackbtn chal" onClick={() => window.dispatchEvent(new Event("ff-invite"))}><Users size={17} strokeWidth={2} aria-hidden="true" /><span>Build my team</span></button>
+        <button type="button" className="ff-stackbtn chal" onClick={prizes}><Trophy size={17} strokeWidth={2} aria-hidden="true" /><span>See the prizes</span></button>
+      </div>
+    </div>
+  );
+}
+
 function ShareStack({ blocker }) {
   const { state, dispatch } = useStore();
   const { share, busy } = useShareCard();

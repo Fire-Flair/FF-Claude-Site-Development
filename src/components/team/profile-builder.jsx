@@ -765,20 +765,23 @@ function SaveShareCard({ onSaved }) {
     });
   };
   useEffect(() => { const h = () => publish(); window.addEventListener("ff-save", h); return () => window.removeEventListener("ff-save", h); });
-  const hireOk = hireReady17(state);
-  const hire = () => {
-    if (!hireOk) return;
-    dispatch({ type: "ROLE", role: "team" });
-    dispatch({ type: "TAB", tab: "bookings" });
-    window.scrollTo(0, 0);
+  /* v1.155: the profile publishes itself when it is saved; "Available for hire" is a tick box that shows or hides the card. */
+  const shown = !p.cardHidden;
+  const toggleHire = () => {
+    const next = !shown;
+    dispatch({ type: "PROFILE", patch: { cardHidden: !next } });
+    dispatch({ type: "TOAST", toast: next ? "Your card is showing" : "Your card is hidden" });
   };
 
   return (
     <div id="ff-sec-share" className="ff-publishcard" style={{ marginTop: 26 }}>
       <div className="ff-save17-row">
-        <button type="button" className="ff-btn gold ff-save17" onClick={save}>Save</button>
-        <button type="button" className="ff-btn ff-save17 hire17" onClick={hire} disabled={!hireOk} aria-disabled={!hireOk}>Available for hire?</button>
+        <button type="button" className="ff-btn gold ff-save17" onClick={publish}>Save</button>
+        <button type="button" className="ff-btn ff-save17 hire17" onClick={publish}>Publish</button>
       </div>
+      <button type="button" className={"ff-hiretick17" + (shown ? " on" : "")} role="checkbox" aria-checked={shown} onClick={toggleHire}>
+        <span className="bx" aria-hidden="true">{shown && <Check size={14} strokeWidth={3} />}</span><span>Available for hire</span>
+      </button>
       {blocker && signedIn && <p style={{ margin: "10px 0 0", fontSize: 12.5, color: "rgba(244,239,228,.72)", textAlign: "center" }}>{blocker}</p>}
       {signedIn && p.savedAt && <p style={{ margin: "10px 0 0", fontSize: 12, color: "rgba(244,239,228,.66)", display: "flex", gap: 5, alignItems: "center", justifyContent: "center" }}>
         <Check size={13} color="#8FDCAE" strokeWidth={2.4} /> Saved {timeOf(p.savedAt)}{p.publishedAt && <> · <button type="button" className="ff-livelink17" onClick={() => { dispatch({ type: "VIEW", id: "me", guest: true }); window.scrollTo(0, 0); }}><Eye size={13} /> Live · view</button></>}</p>}
@@ -1296,7 +1299,7 @@ function NeedHelp34() {
       <section className="ff-way17 ff-way17-int">
         <div className="ff-way17-ctl"><Btn variant="ghost ff-bigcv17" onClick={() => setBook(true)}><Calendar size={16} /> Book a meeting</Btn></div>
         {/* pfa (Alex 03:29): the earlier Book an interview wording, under the heading Need help? */}
-        <div className="ff-help34-t"><h3 className="ff-help34-h">Need help?</h3><p className="ff-way17-line"><span>Meet the FireFlair team and ask us anything.</span></p></div>
+        <div className="ff-help34-t"><h3 className="ff-help34-h">Book a meeting</h3><p className="ff-way17-line"><span>Get help, be interviewed for an FFStory that promotes you, or get verified to move up a level.</span></p></div>
       </section>
       {book && <InterviewBook17 title="Book a meeting" onClose={() => setBook(false)} />}
     </div>

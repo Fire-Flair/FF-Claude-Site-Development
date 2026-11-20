@@ -4,6 +4,12 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.155
+- **Save row:** the "Available for hire?" button is the Publish button again, and saving publishes the profile. "Available for hire" is now a tick box under the buttons: tick it to show your card, untick to hide it.
+- **Card box (before you publish):** same box, card outline and buttons, now about the Launch Challenge: "Join the Launch Challenge, we will send you your card, share it, bring in the people you work with and build a team to win", with Share my card, Build my team and See the prizes.
+- **Book a meeting box:** no longer just "Need help?". It now says you can get help, be interviewed for an FFStory that promotes you, or get verified to move up a level.
+- Page saved as `live-v1.155-index.html`. Artifact version 1795150202-9e54.
+
 ## v1.154
 - **Venue pop-up:** no extra gap under Delete and Done.
 - **Venue card:** the pin now has the words "Venue card" beside it.

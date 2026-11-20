@@ -78,7 +78,7 @@ const ffSeoA = (w) => (/^[aeiou]/i.test(w) ? "an " : "a ") + w;
 /* Everyone who can be opened as a Profile Card — the same list useDirectory() shows. */
 function ffSeoPeople(state) {
   const dir = adminPeople17(state, state.directory || []);
-  return state.profile && state.profile.live ? [meAsStaff(state.profile, state.session), ...dir] : dir;
+  return state.profile && state.profile.live && !state.profile.cardHidden ? [meAsStaff(state.profile, state.session), ...dir] : dir;
 }
 
 

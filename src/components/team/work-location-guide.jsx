@@ -34,10 +34,11 @@ function CardPreviewSoon({ me, themeKey } = {}) {
           <span className="av" /><span className="l1" /><span className="l2" /><span className="l3" /><span className="l4" />
         </div>
         <div className="ff-cardpreview-tx">
-          <b>Your complete card will display here</b>
+          <b>Join the Launch Challenge</b>
+          <p>We will send you your card. Share it, bring in the people you work with and build a team to win.</p>
         </div>
         </>}
-        <ShareStack />
+        {me ? <ShareStack /> : <ChallengeStack />}
       </div>
     </div>
   );
