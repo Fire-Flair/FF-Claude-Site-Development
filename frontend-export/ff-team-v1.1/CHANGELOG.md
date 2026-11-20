@@ -4,6 +4,12 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.141
+- **Share:** on someone else's profile the Share button opens the device's own share sheet (the share menu stays as the fallback on a device without one). The button looks the same signed in and signed out.
+- **FFStaff on Bookings:** no profession type box; each rate box says "Preferred rate" next to the £; the rate boxes sit clear of the category boxes.
+- **Network, FF Event Directory:** the Bar companies box no longer sits on the screen edge.
+- Page saved as `live-v1.141-index.html`. Artifact version 1795143272-23ea.
+
 ## v1.140
 - **FFStaff on Bookings:** the 1, 2, 3 steps and "Get started" are replaced by the profession boxes from the profile (type a profession, or open a category and tap professions). Each profession chosen gets a preferred hourly rate box (£ per hour), and the button says Save. Signed out, Save opens sign-in.
 - **Venue cards:** a pencil sits top right; hand-added venues show a map-pin badge instead of a pencil.

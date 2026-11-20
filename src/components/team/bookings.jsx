@@ -278,7 +278,7 @@ function ProfRates17({ guest }) {
   return (
     <div className="ff-fs5">
       <style>{PE2_CSS}</style>
-      <PE2ProfCats P={P} />
+      <PE2ProfCats P={P} noType />
       {chosen.length > 0 && (
         <div className="ff-fs5-rates">
           {chosen.map(n => {
@@ -288,6 +288,7 @@ function ProfRates17({ guest }) {
               <label key={n} className="ff-fs5-rate">
                 <span className="nm">{n}</span>
                 <span className="rt">
+                  <span className="pr">Preferred rate</span>
                   <span aria-hidden="true">£</span>
                   <input type="text" inputMode="decimal" value={v} aria-label={`Your preferred hourly rate as ${n}, pounds per hour`}
                     onChange={(e) => onVal(n, e.target.value.replace(/[^\d.]/g, "").slice(0, 7))} />

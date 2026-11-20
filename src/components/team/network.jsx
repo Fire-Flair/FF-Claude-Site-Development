@@ -168,7 +168,7 @@ function PersonProfile() {
   const guestNote = guestOfMe ? <div className="ff-guestnote"><Eye size={16} /> This is your profile as a guest sees it.</div> : null;
   const shareTag = String(person.tag || cx17Slug(person.name || person.id) || "");
   const shareBtn = other && shareTag ? (
-      <CardShareBtn17 title={`${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${pc17Tag(shareTag)}`} fileName={"fireflair-" + cx17Slug(shareTag)} label="Share" className="wide"
+      <CardShareBtn17 title={`${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${pc17Tag(shareTag)}`} fileName={"fireflair-" + cx17Slug(shareTag)} label="Share" className="wide" native
         render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={person.theme || "ivory"} />} />) : null;
   const myTag = signedIn ? (state.auth.tag || state.session.tag) : "";
   const shareEl = !other && !guestOfMe && myTag ? <div style={{ marginTop: 8, width: "calc(50% - 4px)", marginInline: "auto" }}><MyShareBtn17 person={person} /></div> : null;
@@ -185,7 +185,7 @@ function PersonProfile() {
     /* A signed-out visitor (and you, previewing your profile as a guest): full-width Back above (as before v1.6x),
        then Join team | Share (olive, WhatsApp logo), equal halves, the Profile Card's width (v1.70, Alex 18 Nov 21:56). */
     const shareIco = guestOfMe ? <MyShareBtn17 person={person} icon onTap={() => preview()} />
-      : other && shareTag ? <CardShareBtn17 title={`${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${pc17Tag(shareTag)}`} fileName={"fireflair-" + cx17Slug(shareTag)} label="Share" className="ff-pub-shico ff-pub-wa11"
+      : other && shareTag ? <CardShareBtn17 title={`${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${pc17Tag(shareTag)}`} fileName={"fireflair-" + cx17Slug(shareTag)} label="Share" className="ff-pub-shico ff-pub-wa11" native
           render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={person.theme || "ivory"} />} /> : null;
     actionsEl = (<div className="ff-pub-acts ff-pub-stack">
       <div className={"ff-pub-joinrow" + (shareIco ? "" : " solo")}>
@@ -207,7 +207,7 @@ function PersonProfile() {
     const staff11 = state.role === "staff";
     const share11 = other && shareTag ? (
       <CardShareBtn17 title={`${person.name} on FireFlair`} url={`https://${CARD_DOMAIN}/${pc17Tag(shareTag)}`}
-        fileName={"fireflair-" + cx17Slug(shareTag)} label="Share" className="ff-pub-wa11 ff-g11-btn"
+        fileName={"fireflair-" + cx17Slug(shareTag)} label="Share" className="ff-pub-shico ff-pub-wa11 ff-g11-btn" native
         render={() => <PlayerCard person={person} format="full" nameAs="div" themeKey={person.theme || "ivory"} />} />
     ) : null;
     /* createElement so the Ask/Availability buttons are spread in as separate grid cells (as on the live page). */

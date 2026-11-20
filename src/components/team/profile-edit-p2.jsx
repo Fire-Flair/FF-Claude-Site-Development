@@ -135,7 +135,7 @@ function PE2Which({ P }) {
 }
 
 /* The add flow: a type box, then every category as an Attribute-sized box. */
-function PE2ProfCats({ P }) {
+function PE2ProfCats({ P, noType }) {
   const [q, setQ] = useState("");
   /* prof-edits (Alex, 18 Nov 20:58): the same search-as-you-type as the rest of the profile (ProfTypeIn): known
      professions that start with what was typed, then ones that contain it; Enter takes the first. */
@@ -159,10 +159,10 @@ function PE2ProfCats({ P }) {
   const openIdx = cats5.findIndex(c => c.key === openCat);
   return (
     <div className="pe2-pc">
-      <form className={"ff-type21 pe2-pc-type" + (q.trim() ? " has" : "")} onSubmit={add}>
+      {!noType && <form className={"ff-type21 pe2-pc-type" + (q.trim() ? " has" : "")} onSubmit={add}>
         <input type="text" value={q} maxLength={PROF_MAX_LEN} autoComplete="off" spellCheck={false} enterKeyHint="enter" placeholder="Type a profession" aria-label="Add a profession"
           onChange={(e) => setQ(e.target.value)} />
-      </form>
+      </form>}
       {hits.length > 0 && (
         <div className="pe2-pc-hits" role="listbox" aria-label="Matching professions">
           {hits.map(x => <button key={x.name} type="button" role="option" aria-selected="false" className="pe2-pc-hit" onClick={() => pickHit(x.name)}><span>{x.name}</span><small>{x.cat}</small></button>)}

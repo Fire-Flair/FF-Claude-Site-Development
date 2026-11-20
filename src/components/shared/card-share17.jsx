@@ -169,11 +169,16 @@ function CardShareView17({ name, onClose, holder, card, err, note, children }) {
 
 /* A Share button that opens the menu over any card. render() returns the card exactly as it appears on the page.
    shareIcon: the square-with-arrow share icon in place of the WhatsApp mark (ported from the live page, v1.29). */
-function CardShareBtn17({ title, url, fileName, render, label = "Share", className = "", shareIcon = false }) {
+function CardShareBtn17({ title, url, fileName, render, label = "Share", className = "", shareIcon = false, native = false }) {
   const [open, setOpen] = useState(false);
+  /* v1.141 (Alex 20 Nov 02:50): on someone's profile Share goes straight to the device's own share sheet; the menu is the fallback where a device has none. */
+  const tap = async () => {
+    if (native && typeof navigator !== "undefined" && navigator.share) { try { await navigator.share({ title, text: title, url }); } catch (e) { /* closed without sharing */ } return; }
+    setOpen(true);
+  };
   return (
     <>
-      <button type="button" className={"ff-csm-btn " + className} onClick={() => setOpen(true)} aria-label={`${label || "Share"} ${title}`}>{shareIcon ? <Share2 size={18} aria-hidden="true" /> : <WhatsAppIcon size={label ? 18 : 22} />}{label ? " " + label : null}</button>
+      <button type="button" className={"ff-csm-btn " + className} onClick={tap} aria-label={`${label || "Share"} ${title}`}>{shareIcon ? <Share2 size={18} aria-hidden="true" /> : <WhatsAppIcon size={label ? 18 : 22} />}{label ? " " + label : null}</button>
       {open ? <CardShareSheet17 open onClose={() => setOpen(false)} title={title} url={url} fileName={fileName}>{render()}</CardShareSheet17> : null}
     </>
   );
