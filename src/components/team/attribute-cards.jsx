@@ -564,7 +564,7 @@ const XP_TONES29 = {
 
 
 /* note / onNote (v1.35): in the pop-up the note is typed straight onto the card. */
-function ExperienceCard29({ record, onClick, note, onNote, tone }) {
+function ExperienceCard29({ record, onClick, note, onNote, tone, role, onRole, dates, onDates }) {
   const v = xpView29(record);
   const tn = XP_TONES29[tone || XP_TONE29] ? (tone || XP_TONE29) : "champagne";
   const typing = typeof onNote === "function";
@@ -583,7 +583,12 @@ function ExperienceCard29({ record, onClick, note, onNote, tone }) {
             {v.where && <span className="ad"><MapPin size={12} strokeWidth={1.8} aria-hidden="true" />{v.where}</span>}
           </span>
         </span>
-        {(v.role || v.dates) && <span className="role">{v.role && <b>{v.role}</b>}{v.dates && <span>{v.dates}</span>}</span>}
+        {typing && onRole
+          ? <span className="role typ">
+              <input className="ff-xc29-tx ff-xc29-in1" value={role || ""} maxLength={80} onChange={(e) => onRole(e.target.value)} aria-label="Your role" placeholder="Your role" />
+              <input className="ff-xc29-tx ff-xc29-in1" value={dates || ""} maxLength={40} onChange={(e) => onDates(e.target.value)} aria-label="Dates" placeholder="Dates, e.g. Oct 2025 to Present" />
+            </span>
+          : (v.role || v.dates) && <span className="role">{v.role && <b>{v.role}</b>}{v.dates && <span>{v.dates}</span>}</span>}
         {typing
           ? <textarea className="nt ff-xc29-tx" rows={3} autoFocus value={note || ""} onChange={(e) => onNote(e.target.value)}
               aria-label={`What you did at ${v.name}`} placeholder="What I did there" />
@@ -619,40 +624,20 @@ function ExperienceCards29({ items, onOpen, onAdd }) {
 /* v1.34 (Alex, 18 Nov 18:39): Experience editing is one Google search box (real businesses, or "Add … as a venue"
    for one Google doesn't know), then the Experience cards. No numbered rows, no X buttons. Tapping a card opens it in
    a pop-up at its real shape and size, with a text box for what they did there; Remove lives in the pop-up. */
-const XP_MONTHS29 = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const xpSplit29 = (t) => { const m = /^([A-Za-z]{3})[a-z]*\.?\s+(\d{4})$/.exec(String(t || "").trim()); return m ? { m: XP_MONTHS29.find(x => x.toLowerCase() === m[1].toLowerCase()) || "", y: m[2] } : { m: "", y: /^\d{4}$/.test(String(t || "").trim()) ? String(t).trim() : "" }; };
-/* v1.152 (Alex 20 Nov 04:34): a venue card also takes the month and year you started and left (the CV gives us these). */
-function XpMonthYear29({ label, value, onChange, extra }) {
-  const v = xpSplit29(value);
-  const yr = new Date().getFullYear();
-  const years = Array.from({ length: 41 }, (_, i) => String(yr - i));
-  const set = (m, y) => onChange(m && y ? `${m} ${y}` : y || "");
-  return (
-    <div className="ff-xs29-dt">
-      <span className="l">{label}</span>
-      <span className="r">
-        <select className="ff-input" aria-label={`${label} month`} value={v.m} onChange={(e) => set(e.target.value, v.y)}><option value="">Month</option>{XP_MONTHS29.map(m => <option key={m} value={m}>{m}</option>)}</select>
-        <select className="ff-input" aria-label={`${label} year`} value={v.y} onChange={(e) => set(v.m, e.target.value)}><option value="">Year</option>{years.map(y => <option key={y} value={y}>{y}</option>)}</select>
-      </span>
-      {extra}
-    </div>
-  );
-}
 function ExperienceSheet29({ record, onClose }) {
   const { dispatch } = useStore();
   const [note, setNote] = useState(String((record && record.description) || ""));
   const d0 = (record && record.details) || {};
+  const isVenue = !!record && record.category !== "experience";
   const [role, setRole] = useState(String(d0.role || ""));
-  const [start, setStart] = useState(String(d0.start || ""));
-  const [end, setEnd] = useState(String(d0.end || ""));
+  const [dates, setDates] = useState([d0.start, d0.end].filter(Boolean).join(" to "));
   if (!record) return null;
   const v = xpView29(record);
-  const isVenue = record.category !== "experience";
   const save = () => {
     const t = note.trim();
     const patch = {};
     if (t !== String(record.description || "").trim()) patch.description = t;
-    if (isVenue && (role.trim() !== String(d0.role || "") || start !== String(d0.start || "") || end !== String(d0.end || ""))) patch.details = { ...d0, role: role.trim(), start, end };
+    if (isVenue && (role.trim() !== String(d0.role || "") || dates.trim() !== [d0.start, d0.end].filter(Boolean).join(" to "))) patch.details = { ...d0, role: role.trim(), start: dates.trim(), end: "" };
     if (Object.keys(patch).length) dispatch({ type: "REC_PATCH", category: record.category, id: record.id, patch });
     onClose();
   };
@@ -662,29 +647,20 @@ function ExperienceSheet29({ record, onClose }) {
     dispatch({ type: "TOAST", toast: `${v.name} removed` });
     onClose();
   };
-  const live = isVenue ? { ...record, details: { ...d0, role: role.trim(), start, end } } : record;
+  /* v1.153 (Alex 20 Nov 04:38): all typing is on the card, the card is nearly the pop-up's full width, and Delete is the same button as the other profile pop-ups. */
   return (
     <Sheet open center title="Venues" onClose={save}>
       <style>{xpCSS29}</style>
       <div className="ff-xs29">
-        <div className="ff-xs29-card"><ExperienceCard29 record={live} note={note} onNote={setNote} /></div>
-        {isVenue && (
-          <div className="ff-xs29-f">
-            <label className="ff-xs29-dt"><span className="l">Your role</span><input className="ff-input" value={role} maxLength={80} placeholder="Bartender" onChange={(e) => setRole(e.target.value)} /></label>
-            <XpMonthYear29 label="From" value={start} onChange={setStart} />
-            <XpMonthYear29 label="To" value={end === "Present" ? "" : end} onChange={setEnd}
-              extra={<label className="ff-xs29-pr"><input type="checkbox" checked={end === "Present"} onChange={(e) => setEnd(e.target.checked ? "Present" : "")} /> I still work here</label>} />
-          </div>
-        )}
+        <div className="ff-xs29-card"><ExperienceCard29 record={record} note={note} onNote={setNote} {...(isVenue ? { role, onRole: setRole, dates, onDates: setDates } : {})} /></div>
         <div className="ff-xs29-act">
-          <button type="button" className="ff-linkbtn ff-xs29-rm" onClick={remove}>Remove</button>
+          <GacDelete17 onDelete={remove} />
           <Btn variant="gold" onClick={save}><Check size={15} strokeWidth={2.4} /> Done</Btn>
         </div>
       </div>
     </Sheet>
   );
 }
-
 
 function ExperienceEditor29({ items }) {
   const { dispatch } = useStore();

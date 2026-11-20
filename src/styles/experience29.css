@@ -100,10 +100,11 @@
 .ff .ff-xc29{position:relative}
 .ff .ff-xc29 .ff-xc29-pen{position:absolute;top:14px;right:14px;z-index:3;width:30px;height:30px;border-radius:10px;corner-shape:squircle;display:grid;place-items:center;color:#E4C36A;background:rgba(0,0,0,.28);border:1px solid rgba(228,195,106,.45)}
 
-/* v1.152: dates on a venue card (month and year) */
-.ff .ff-xs29-f { display: grid; gap: 12px; margin-top: 14px; }
-.ff .ff-xs29-dt { display: grid; gap: 6px; }
-.ff .ff-xs29-dt .l { font: 700 11px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--gold-dk, #7E611D); }
-.ff .ff-xs29-dt .r { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.ff .ff-xs29-dt select.ff-input, .ff .ff-xs29-dt input.ff-input { width: 100%; box-sizing: border-box; border-radius: 14px; corner-shape: squircle; }
-.ff .ff-xs29-pr { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+/* v1.153: typing is on the card; the card is almost the full width of the pop-up */
+.ff .ff-xs29 { justify-items: stretch; }
+.ff .ff-xs29-card .ff-xc29 { width: 100% !important; max-width: 100%; }
+.ff .ff-xc29 .role.typ { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px; }
+.ff .ff-xc29 .role.typ .ff-xc29-in1 { min-height: 0; margin: 4px 0; padding: 4px 0 6px; height: auto; font: 600 14px/1.3 var(--sans); }
+.ff .ff-xc29 input.ff-xc29-tx, .ff .ff-xc29 input.ff-xc29-tx:focus, .ff .ff-xc29 input.ff-xc29-tx:focus-visible { background: transparent; border: 0; border-bottom: 1.5px dashed var(--x-rule, rgba(126,97,29,.4)); border-radius: 0; box-shadow: none; outline: none; color: var(--x-ink, inherit); }
+.ff .ff-xc29 input.ff-xc29-tx:focus, .ff .ff-xc29 input.ff-xc29-tx:focus-visible { border-bottom: 1.5px solid var(--x-acc, #D9BE68); }
+.ff .ff-xs29-act .ff-gac17-b { width: auto; padding: 8px 16px; }
