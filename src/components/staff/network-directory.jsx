@@ -176,7 +176,7 @@ function NetBrowse17(props) {
     return React.createElement(NetQ17.Provider, { value: query },
       /* v1.102: the search stays in the same place in the tree as on the browse view (inside the first section's heading row), so typing never loses the cursor. */
       team20 ? React.createElement(React.Fragment, null, netMapOnly20(props),
-        React.createElement("section", { id: "ff-our-pros", style: { marginTop: 18, scrollMarginTop: 70 } }, React.createElement(HeadRow20, { title: "Search results", k: "pros", search: props.search, grab: true }))) : React.createElement(React.Fragment, null,
+        React.createElement("section", { id: "ff-our-pros", style: { marginTop: 18, scrollMarginTop: 70 } }, React.createElement(HeadRow20, { title: "Search results", k: "pros" }))) : React.createElement(React.Fragment, null,
         props.search ? React.createElement("section", { id: "ff-net-search", style: { marginTop: 4, scrollMarginTop: 70 } }, props.search) : null,
         props.after || null),
       React.createElement(GroupedPeople, { query: query, onPick: props.onPick, scope: props.scope, quietEmpty: anyCo }),
@@ -192,7 +192,7 @@ function NetBrowse17(props) {
     return React.createElement(React.Fragment, null,
             netMapOnly20(props),
       React.createElement("section", { id: "ff-our-pros", style: { marginTop: 18, scrollMarginTop: 70 } },
-        React.createElement(HeadRow20, { title: "Our professionals", k: "pros", search: props.search, grab: true }),
+        React.createElement(HeadRow20, { title: "Our professionals", k: "pros" }),
         React.createElement(TopStaff11, null),
         React.createElement(ProsBrowse20, { onPick: props.onPick })),
       /* Alex 19 Nov 22:00: the search sits in line with each title (Our professionals and the FF Event Directory), on the right on a wide screen. */

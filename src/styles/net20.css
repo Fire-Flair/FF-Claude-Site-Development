@@ -78,7 +78,7 @@
   .ff .ff-nm20 { display: grid; grid-template-columns: 380px minmax(0, 1fr); column-gap: 40px; align-items: start; }
   .ff .ff-nm20-l { position: sticky; top: 80px; }
   .ff .ff-nm20-l .ff-hr20-d { font-size: 17px; }
-  .ff .ff-nm20-l .ff-tl20 h1 { font-size: 40px !important; }
+  .ff .ff-nm20-l .ff-tl20 h1 { font-size: 34px !important; }
 }
 
 /* v1.115 (Alex 19 Nov 22:44): desktop profile pop-up, option C — dimmed background, wide centred card,
@@ -101,3 +101,8 @@
 @media (min-width:1100px){.ff .ff-hf20{padding-inline:calc(50% - 120px);margin:0}.ff }
 .ff .ff-hf20-h{font-family:var(--serif,inherit);font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-dk);margin:14px 0 0;font-weight:600}
 .ff .ff-hf20-sec{margin-top:10px}
+
+/* v1.120: the Network title sits at the same height as Your bookings; one search under the map legend. */
+.ff .ff-nm20 { margin-top: -18px; }
+.ff .ff-nm20-q { margin: 14px 0 6px; }
+@media (min-width:1100px){ .ff .ff-nm20 { margin-top: -35px; } .ff .ff-nm20-l { top: 45px; } }

@@ -185,7 +185,7 @@ function NetDirectory20(props) {
   const tcur = tabs.find(function (t) { return t.k === sub[cur.k]; }) || tabs[0];
   return React.createElement("section", { id: "ff-directory", style: { marginTop: 30, scrollMarginTop: 70 } },
     React.createElement("style", null, NET20_CSS),
-    React.createElement(HeadRow20, { title: "FF Event Directory", k: "dir", desc: NET_DIR_DESC20, search: props && props.search }),
+    React.createElement(HeadRow20, { title: "FF Event Directory", k: "dir", desc: NET_DIR_DESC20, }),
     React.createElement(FeaturedCos20, null),
     React.createElement("div", { className: "ff-br20" },
       React.createElement(CatBoxes20, { label: "Types of company", active: cur.k, onPick: setCat, items: cats.map(function (x) { return { k: x.k, label: x.label, icon: catIcon17(x.k), count: x.list.length }; }) }),
@@ -205,14 +205,23 @@ const NET_MAP_DESC20 = "Everyone in events and hospitality, on one UK map. Our g
 /* The map on its own (the Explore by area drop-downs stay on the other pages). */
 function NetMap20(props) {
   const search = props && props.search;
+  const qref = useRef(null);
+  /* Typing switches the page to the results view, which remounts the map and its search; the box takes the cursor back. */
+  useEffect(function () {
+    if (window.__ffSrchFocus && qref.current) {
+      const i = qref.current.querySelector("textarea,input");
+      if (i) { i.focus(); const n = (i.value || "").length; try { i.setSelectionRange(n, n); } catch (e) { /* not a text field */ } }
+    }
+  }, []);
   return React.createElement("section", { id: "ff-netmap", style: { marginTop: 0, scrollMarginTop: 70 } },
     React.createElement("div", { className: "ff-nm20" },
       React.createElement("div", { className: "ff-nm20-l" },
         React.createElement(LinedHead20, { tag: "h1", title: "Explore our network", k: "page" }),
         React.createElement("p", { className: "ff-hr20-d" }, NET_MAP_DESC20)),
       React.createElement("div", { className: "ff-nm20-r" },
-        search ? React.createElement("div", { id: "ff-net-search", className: "ff-netsrch20", style: { margin: "0 0 14px", scrollMarginTop: 70 } }, search) : null,
-        React.createElement(FFMap, { mode: "network" }))));
+        React.createElement(FFMap, { mode: "network" }),
+        /* v1.120 (Alex 20 Nov 00:06): the one Network search sits below the map legend. */
+        search ? React.createElement("div", { id: "ff-net-search", className: "ff-netsrch20 ff-nm20-q", ref: qref, style: { scrollMarginTop: 70 }, onFocusCapture: function () { window.__ffSrchFocus = true; }, onBlurCapture: function (e) { if (document.body.contains(e.target)) window.__ffSrchFocus = false; } }, search) : null)));
 }
 
 
@@ -227,7 +236,7 @@ function netMapWithSearch20(props) {
 /* The map section without the search, and the search on its own (v1.91: the search sits between Our professionals and the FF Event Directory). */
 function netMapOnly20(props) {
   const after = props.after;
-  return after && after.type === NetMap20 ? React.cloneElement(after, { search: null }) : (after || null);
+  return after && after.type === NetMap20 ? React.cloneElement(after, { search: props.search || null }) : (after || null);
 }
 function netSearch20(props) {
   return props.search ? React.createElement("div", { id: "ff-net-search", className: "ff-netsrch20", style: { margin: "22px 0 18px", scrollMarginTop: 70 } }, props.search) : null;
