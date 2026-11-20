@@ -156,3 +156,18 @@
 .ff .ff-scrim:has(.pe2-attr-pop),.ff .ff-scrim:has(.ff-gac17){align-items:center !important;padding-top:10px !important}
 .ff .ff-scrim:has(.pe2-attr-pop) .ff-sheet,.ff .ff-scrim:has(.ff-gac17) .ff-sheet{max-height:calc(100dvh - 120px)}
 .ff .pe2-rail .ff-agrp .ff-agrp-top{padding-right:32px}
+
+/* v1.134 (Alex 20 Nov 01:30): the pencil sits on the attribute title line, not on the profession selectors. */
+.ff .pe2-rail .pe2-pen1{top:14px;right:12px}
+
+/* v1.134 (Alex 20 Nov 01:30): top-three slots without numbers; the added-profession pencil; the shared editor's button row; subtle grey Delete. */
+.ff .pe2-top3-slot{justify-content:center;text-align:center}
+.ff .pe2-top3-slot .t{text-align:center}
+.ff .ff-pt21{position:relative}
+.ff .pe2-pen-t{top:10px;right:10px;width:26px;height:26px}
+.ff .ff-sec-card-gap{margin-top:34px}
+.ff .ff-gac17-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.ff .ff-gac17-b{display:flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:8px 8px;border-radius:14px;corner-shape:squircle;border:1px solid rgba(126,97,29,.45);background:#fff;color:#2A1E04;font:700 12.5px/1.1 var(--font-sans);cursor:pointer;white-space:nowrap}
+.ff .ff-gac17-b:disabled{opacity:.5;cursor:default}
+.ff .ff-gac17-b.del{border-color:rgba(110,106,98,.4);background:#F1EFEA;color:#6E6A62}
+.ff .ff-gac17-b.del.sure{background:#6E6A62;border-color:#6E6A62;color:#fff}

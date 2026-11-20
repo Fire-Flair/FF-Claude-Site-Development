@@ -810,9 +810,9 @@ function PublishedPanel() {
 
 /* A section heading set large — Section 1 (Join the Team) and Section 5
    (Welcome to the Team) bookend the page. */
-function BigStepHead({ n, title, done, id }) {
+function BigStepHead({ n, title, done, id, space }) {
   return (
-    <div id={id || `ff-step-${n}`} className="ff-stephead" style={{ display: "flex", gap: 12, alignItems: "center", margin: "22px 0 14px", scrollMarginTop: 80 }}>
+    <div id={id || `ff-step-${n}`} className="ff-stephead" style={{ display: "flex", gap: 12, alignItems: "center", margin: (space || 22) + "px 0 14px", scrollMarginTop: 80 }}>
       <span className="ff-stepnum" data-done={done ? "1" : "0"} style={{ cursor: "default" }}>{done ? <Check size={14} /> : String(n).padStart(2, "0")}</span>
       <h1 className="ff-h1" style={{ margin: 0, minWidth: 0 }}>{title}</h1>
     </div>
@@ -1226,7 +1226,7 @@ function ProfileBuilder() {
             <div className="ff-jw-left">
               <BigStepHead n={1} title="Build your profile" done={cardReady} />
               <StartBox17 join={null} />
-              <div id="ff-sec-card"><CardBuilder /></div>
+              <div id="ff-sec-card" className="ff-sec-card-gap"><CardBuilder /></div>
             </div>
             {join && (
               <aside className="ff-jw-right">
@@ -1244,11 +1244,11 @@ function ProfileBuilder() {
         <BigStepHead n={1} title="Let's get started" done={hasCV(p) || cardReady} />
         <StartBox17 join={join} />
 
-        <BigStepHead n={2} title="Your Profile Card" done={cardReady} />
+        <BigStepHead n={2} title="Your Profile Card" done={cardReady} space={56} />
         <div id="ff-sec-card"><CardBuilder /></div>
         </>)}
 
-        <BigStepHead n={wide ? 2 : 3} title="Your Profile Page" done={false} />
+        <BigStepHead n={wide ? 2 : 3} title="Your Profile Page" done={false} space={56} />
         {/* v17.34: FF Tag | Media (stacked on a phone), then About Me, then the tabs. */}
         <div className="ff-tm34">
           <TagSection top join={join} />

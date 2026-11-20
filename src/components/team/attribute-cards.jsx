@@ -313,7 +313,7 @@ function wholeSentences21(text, max) {
 const nbh21 = (t) => String(t || "").replace(/(\w)-(?=\w)/g, "$1\u2011");
 
 
-function ProfTile21({ r, i, editable, open, lifted, dx, onTap, grip, extra, catKey = "professions", compact }) {
+function ProfTile21({ r, i, editable, open, lifted, dx, onTap, grip, extra, catKey = "professions", compact, pen }) {
   const own = String(r.description || "").trim();
   /* Professions show their default description when the member wrote none; other categories have none. */
   const dflt = !own && catKey === "professions" ? professionDefaultDesc(r.name, r.displayCategory) : "";
@@ -354,6 +354,7 @@ function ProfTile21({ r, i, editable, open, lifted, dx, onTap, grip, extra, catK
       <button type="button" className={"ff-agrp prof ff-pt21 " + tierCls17(i) + (open ? " open" : "") + (r.hidden ? " hid" : "")}
         aria-expanded={editable ? open : undefined} aria-label={editable ? `${r.name}. Edit` : `${r.name}. Open details`} onClick={onTap}>
         <span className="ff-agrp-top"><span className="ff-agrp-h">{nbh21(r.name)}</span></span>
+        {pen && <span className="pe2-pen1 pe2-pen-t" aria-hidden="true"><Pencil size={15} strokeWidth={2.1} /></span>}
         {r.hidden && <span className="ff-pt21-hd"><EyeOff size={11} /> Hidden</span>}
         {extra}
         {desc && <span className="ff-agrp-d">{nbh21(desc)}</span>}
@@ -372,7 +373,7 @@ function ProfTile21({ r, i, editable, open, lifted, dx, onTap, grip, extra, catK
 
 /* pb-professions (Alex 19:19): reorder lets the read-only tiles (builder Professions, which open their own editor) be
    dragged into order; top marks the first N as the "top three" that go onto the Profile Card (.ff-top3 + .ff-top3-n). */
-function ProfTiles21({ items, editable, def, onOpen, extra, tail, label = "Professions", catKey = "professions", compact, reorder, top = 0 }) {
+function ProfTiles21({ items, editable, def, onOpen, extra, tail, label = "Professions", catKey = "professions", compact, reorder, top = 0, pen }) {
   const { dispatch } = useStore();
   const rows = editable ? rankedRecords(items || []) : rankedRecords(items || []).filter(r => !r.hidden && !r.proposed);
   const ids = rows.map(r => r.id);
@@ -415,7 +416,7 @@ function ProfTiles21({ items, editable, def, onOpen, extra, tail, label = "Profe
       {rows.map((r, i) => (
         <div role="listitem" key={r.id} className={"ff-pt21-slot" + (i < top ? " ff-top3" : "") + (mark && mark.id === r.id ? " mk-" + mark.side : "")}>
           {i < top && <span className="ff-top3-n" aria-label={`Top ${top}, number ${i + 1}`}>{i + 1}</span>}
-          <ProfTile21 r={r} i={i} editable={editable} catKey={catKey} compact={compact} open={openId === r.id} lifted={drag && drag.id === r.id} dx={drag ? drag.dx : 0}
+          <ProfTile21 r={r} i={i} editable={editable} catKey={catKey} compact={compact} pen={pen} open={openId === r.id} lifted={drag && drag.id === r.id} dx={drag ? drag.dx : 0}
             extra={extra ? extra(r) : null}
             onTap={() => editable ? setOpenId(openId === r.id ? null : r.id) : onOpen && onOpen(r)}
             grip={editable || reorder ? (
@@ -716,6 +717,12 @@ function RecordDetailsField({ details, readOnly, onChange }) {
 
 
 
+/* v1.134 (Alex 20 Nov 01:30): Hide is gone everywhere; a subtle grey Delete sits on the same row as Image and Document (a second tap confirms). */
+function GacDelete17({ onDelete }) {
+  const [sure, setSure] = useState(false);
+  return <button type="button" className={"ff-gac17-b del" + (sure ? " sure" : "")} onClick={() => { if (!sure) { setSure(true); return; } onDelete(); }} onBlur={() => setSure(false)}><Trash2 size={14} /> <span>{sure ? "Sure?" : "Delete"}</span></button>;
+}
+
 function GenericAttributeCardCreator({ open, record, def, category, readOnly, onClose, owner, rank }) {
   const { state, dispatch: rawDispatch } = useStore();
   /* owner "company": the same editor writes to the Company profile's records. */
@@ -803,7 +810,7 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
         </div>
       )}
 
-      {catHas(def, "proficiency") && (
+      {catHas(def, "proficiency") && !["skills", "interests", "qualifications"].includes(category) && (
         <Field label="Level">
           {readOnly ? <div className="ff-serif" style={{ fontSize: 16 }}>{draft.proficiency || "Not stated"}</div> : (
             <select className="ff-input" value={draft.proficiency || ""} onChange={(e) => patch({ proficiency: e.target.value })}>
@@ -868,8 +875,6 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
       )}
 
       <div style={{ marginBottom: 16 }}>
-        <div className="ff-label" style={{ marginBottom: 4 }}>Images and documents</div>
-        {!readOnly && owner !== "company" && <p className="ff-body ff-muted" style={{ fontSize: 12, margin: "0 0 8px" }}>Add up to {maxMedia} images. They show under the card's title, in place of the description.</p>}
         {(draft.media || []).length > 0 && (
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 10 }}>
             {draft.media.map(m => (
@@ -900,13 +905,14 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
         )}
         {readOnly && !(draft.media || []).length && !doc && <p className="ff-body ff-muted" style={{ margin: 0 }}>None.</p>}
         {!readOnly && (
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          <div className="ff-gac17-row">
             <input ref={mediaRef} type="file" accept="image/*" style={{ display: "none" }}
               onChange={(e) => { addMedia(e.target.files?.[0]); e.target.value = ""; }} />
             <input ref={docRef} type="file" accept=".pdf,.doc,.docx,.txt,application/pdf" style={{ display: "none" }}
               onChange={(e) => { addDoc(e.target.files?.[0]); e.target.value = ""; }} />
-            <Btn variant="sm" disabled={(draft.media || []).length >= maxMedia} onClick={() => mediaRef.current?.click()}><Camera size={12} /> Image {(draft.media || []).length}/{maxMedia}</Btn>
-            <Btn variant="sm" onClick={() => docRef.current?.click()}><FileText size={12} /> {doc ? "Replace document" : "Document"}</Btn>
+            <button type="button" className="ff-gac17-b" disabled={(draft.media || []).length >= maxMedia} onClick={() => mediaRef.current?.click()}><Camera size={14} /> <span>Image {(draft.media || []).length}/{maxMedia}</span></button>
+            <button type="button" className="ff-gac17-b" onClick={() => docRef.current?.click()}><FileText size={14} /> <span>{doc ? "Replace" : "Document"}</span></button>
+            {!draft.proposed && <GacDelete17 onDelete={() => { dispatch({ type: "REC_DELETE", category, id: record.id }); onClose(); }} />}
           </div>
         )}
       </div>
@@ -930,13 +936,6 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
             <button type="button" aria-label="Move later" onClick={() => dispatch({ type: "REC_SHIFT", category, id: record.id, dir: 1 })}>Later <ChevronRight size={15} /></button>
           </div>
         )}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 12 }}>
-          <button className="ff-btn sm ghost" onClick={() => { patch({ hidden: !live.hidden }); dispatch({ type: "TOAST", toast: live.hidden ? `${draft.name} shown again` : `${draft.name} hidden — still on your profile` }); }}>
-            {live.hidden ? <><Eye size={12} /> Show {one}</> : <><EyeOff size={12} /> Hide {one}</>}
-          </button>
-          <button className="ff-link" style={{ fontSize: 11, color: "#5E574C", textDecoration: "underline", background: "none" }}
-            onClick={() => { dispatch({ type: "REC_DELETE", category, id: record.id }); onClose(); }}>Delete</button>
-        </div>
       </>)}
     </Sheet>
   );

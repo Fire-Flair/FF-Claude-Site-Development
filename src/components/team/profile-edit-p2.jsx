@@ -12,7 +12,7 @@ const PE2_CSS = __ff_css("styles/profile-edit-p2.css");
    Profile Card. Tapping a filled slot empties it; while a slot is empty, the other professions show underneath and tapping
    one fills the next empty slot. The order is saved as before (REC_MOVE), so the card, the public page and the network all
    follow it. An emptied profession goes to the end of the list, so the card shows the next one in line until it is refilled. */
-function PE2TopSlots({ profs }) {
+function PE2TopSlots({ profs, catKey = "professions", noun = "professions" }) {
   const { dispatch } = useStore();
   const ids = profs.map(r => r.id);
   const nameOf = (id) => (profs.find(r => r.id === id) || {}).name || "";
@@ -30,14 +30,14 @@ function PE2TopSlots({ profs }) {
   }, [ids.join("|")]);
   const save = (next) => {
     const top = next.filter(Boolean);
-    top.forEach((id, i) => dispatch({ type: "REC_MOVE", category: "professions", id, to: i }));
+    top.forEach((id, i) => dispatch({ type: "REC_MOVE", category: catKey, id, to: i }));
   };
   const empty = (i) => {
     const id = slots[i]; if (!id) return;
     const next = slots.map((x, k) => k === i ? null : x);
     cleared.current.add(i);
     setSlots(next);
-    dispatch({ type: "REC_MOVE", category: "professions", id, to: ids.length - 1 });
+    dispatch({ type: "REC_MOVE", category: catKey, id, to: ids.length - 1 });
     save(next);
   };
   const fill = (id) => {
@@ -49,18 +49,17 @@ function PE2TopSlots({ profs }) {
   const rest = ids.filter(id => !slots.includes(id));
   const open = slots.includes(null) && rest.length > 0;
   return (
-    <div className="pe2-top3" role="group" aria-label="Your top three professions, shown on your Profile Card">
+    <div className="pe2-top3" role="group" aria-label={`Your top three ${noun}`}>
       <div className="pe2-top3-slots">
         {slots.map((id, i) => (
           <button key={i} type="button" className={"pe2-top3-slot" + (id ? " on" : "")} onClick={() => empty(i)} disabled={!id}
             aria-label={id ? `Number ${i + 1}: ${nameOf(id)}. Remove from your top three` : `Number ${i + 1}: empty`}>
-            <span className="n">{i + 1}</span>
             <span className="t">{id ? nameOf(id) : ""}</span>
           </button>
         ))}
       </div>
       {open && (
-        <div className="pe2-top3-pick" role="group" aria-label="Choose a profession for your top three">
+        <div className="pe2-top3-pick" role="group" aria-label={`Choose one of your ${noun} for your top three`}>
           {rest.map(id => <button key={id} type="button" className="pe2-top3-chip" onClick={() => fill(id)}>{nameOf(id)}</button>)}
         </div>
       )}
@@ -187,7 +186,6 @@ function PE2ProfCats({ P }) {
                   <span className="ic" aria-hidden="true">{pe2CatIcon(c.key, 22)}</span>
                   <span className="nm" style={{ fontSize: pe2TileFs(groupLabel17(c.key)) }}>{groupLabel17(c.key)}</span>
                   {n > 0 && <span className="ct" aria-hidden="true">{n}</span>}
-                  <span className="pe2-pen1" aria-hidden="true"><Pencil size={13} strokeWidth={2.1} /></span>
               </button>
               {openIdx >= 0 && i === rowEnd && <PE2CatPanel key={"p-" + openCat} P={P} c={cats5[openIdx]} />}
             </React.Fragment>
@@ -255,6 +253,7 @@ function PE2AddProf({ on, onClick }) {
 function PE2Overview({ records }) {
   const P = usePE2Profs();
   const [attrOpen, setAttrOpen] = useState(null);
+  const [attrRec, setAttrRec] = useState(null);
   const [qualOpen, setQualOpen] = useState(null);
   const [openVen, setOpenVen] = useState(null);
   const [openProf, setOpenProf] = useState(null);
@@ -279,7 +278,7 @@ function PE2Overview({ records }) {
           <PE2TopSlots profs={profs} />
         )}
         {profs.length > 0 && (
-          <ProfTiles21 items={profs} def={BASE_CATEGORIES.professions} onOpen={(r) => setOpenProf(r)} top={FEATURE_LIMIT}
+          <ProfTiles21 items={profs} pen def={BASE_CATEGORIES.professions} onOpen={(r) => setOpenProf(r)} 
             tail={<div role="listitem" className="ff-pt21-slot"><PE2AddProf on={adding} onClick={() => setAdding(!adding)} /></div>} />
         )}
         {(adding || !profs.length) && (
@@ -310,15 +309,17 @@ function PE2Overview({ records }) {
           })}
           <span className="ff-acar-end" aria-hidden="true" />
         </div>
-        {attrOpen && BASE_CATEGORIES[attrOpen] && (
+        {attrOpen && BASE_CATEGORIES[attrOpen] && !attrRec && (
           <Sheet open center title={BASE_CATEGORIES[attrOpen].label} onClose={() => setAttrOpen(null)}>
             <div className="pe2-attr-pop">
               <style>{RANK_CSS17}</style>
               <TypeBox21 key={attrOpen} catKey={attrOpen} def={BASE_CATEGORIES[attrOpen]} rows={rankedRecords(records[attrOpen] || [])} />
-              <ProfTiles21 key={"t" + attrOpen} items={records[attrOpen] || []} editable def={BASE_CATEGORIES[attrOpen]} catKey={attrOpen} label={BASE_CATEGORIES[attrOpen].label} compact />
+              {(records[attrOpen] || []).filter(r => !r.proposed).length > 3 && <PE2TopSlots key={"s" + attrOpen} profs={rankedRecords(records[attrOpen] || []).filter(r => !r.proposed)} catKey={attrOpen} noun={BASE_CATEGORIES[attrOpen].label.toLowerCase()} />}
+              <ProfTiles21 key={"t" + attrOpen} items={records[attrOpen] || []} def={BASE_CATEGORIES[attrOpen]} catKey={attrOpen} label={BASE_CATEGORIES[attrOpen].label} pen onOpen={(r) => setAttrRec(r)} />
             </div>
           </Sheet>
         )}
+        {attrRec && attrOpen && <GenericAttributeCardCreator open record={attrRec} def={BASE_CATEGORIES[attrOpen]} category={attrOpen} onClose={() => setAttrRec(null)} />}
       </section>
       {SHOW_VENUES_PROFILE17 && (
         <section className="ff-pp ff-pp21 pp-sec pe2-ven" aria-labelledby="pe2-ven-h">
