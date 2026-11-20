@@ -1663,9 +1663,30 @@
     }, mine ? React.createElement(ShineButton, { onClick: nav.goNetwork }, React.createElement(Users, { size: 15 }), " Build your network") : React.createElement(ShineButton, { onClick: nav.goProfile }, React.createElement(User, { size: 15 }), " Create your Profile Card"))));
   }
 
+  /* v1.163 (Alex 20 Nov 05:31): Welcome back = two stats (Network, Reviews) and a live-style leaderboard of the largest teams.
+     Rival teams are sample data until the real network counts come from the back end. */
+  const LB_TEAMS163 = [["Team Sam", 64], ["Team Georgia", 51], ["Team Marcus", 43], ["Team Priya", 35], ["Team Luca", 27]];
+
+  function Leaderboard163({ mine, netCount }) {
+    const h = React.createElement;
+    const rows = LB_TEAMS163.map(([n, v]) => ({ n, v, me: false }));
+    rows.push({ n: mine ? mine + "'s team" : "Your team", v: netCount, me: true });
+    rows.sort((x, y) => y.v - x.v);
+    const top = Math.max(1, rows[0].v);
+    const rank = rows.findIndex((r) => r.me) + 1;
+    return h("div", { className: "ff-lb163", role: "group", "aria-label": "Largest teams" },
+      h("div", { className: "ff-lb163-h" }, h(Trophy, { size: 20, strokeWidth: 1.7, "aria-hidden": "true" }), h("b", null, "Launch Challenge"), h("span", { className: "live" }, h("i", null), "Live")),
+      h("p", { className: "ff-lb163-s" }, "The largest teams right now"),
+      h("ol", { className: "ff-lb163-l" }, rows.map((r, i) => h("li", { key: r.n, className: r.me ? "me" : "" },
+        h("span", { className: "rk" }, i + 1),
+        h("span", { className: "nm" }, r.n),
+        h("span", { className: "bar" }, h("i", { style: { width: Math.max(4, Math.round(r.v / top * 100)) + "%" } })),
+        h("span", { className: "v" }, r.v)))),
+      h("div", { className: "ff-lb163-f" }, "You are number " + rank));
+  }
+
   function WelcomeBack101() {
     const { state, dispatch } = useStore();
-    const shown = CARD_CATEGORIES.reduce((n, k) => n + featuredCount(state.profile, k), 0);
     const netCount = myNetwork(state, state.directory).list.length;
     const myReviews = reviewRecordsFor(state, "me").length;
     const first = (state.profile.name || "").trim().split(" ")[0];
@@ -1676,8 +1697,8 @@
       className: "ff-h2",
       style: { margin: "0 0 10px" }
     }, `Welcome back${first ? `, ${first}` : ""}`), React.createElement("div", {
-      style: { display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }
-    }, [["On card", shown, "profile"], ["Network", netCount, "network"], ["Reviews", myReviews, "profile"]].map(([l, v, tab]) => React.createElement("button", {
+      style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }
+    }, [["Network", netCount, "network"], ["Reviews", myReviews, "profile"]].map(([l, v, tab]) => React.createElement("button", {
       key: l,
       className: "ff-frame",
       style: { padding: "10px 12px", textAlign: "left" },
@@ -1690,5 +1711,5 @@
       style: { fontSize: 22 }
     }, v), React.createElement("div", {
       className: "ff-label"
-    }, l)))));
+    }, l)))), React.createElement(Leaderboard163, { mine: first, netCount }));
   }

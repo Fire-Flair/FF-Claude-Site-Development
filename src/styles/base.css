@@ -1619,3 +1619,26 @@
   .ff .ff-topbar .ff-authbtn::after { content: ""; position: absolute; inset: -9px -4px; }
   .ff .ff-topbar .ff-desknav button { padding-top: 6px; padding-bottom: 6px; min-height: 0; }
 }
+
+/* v1.163: Welcome back leaderboard, burgundy and gold like the help box */
+.ff .ff-lb163 { margin-top: 12px; padding: 18px 16px 14px; border-radius: 26px; corner-shape: squircle; border: 1.5px solid #B08D2A; color: #F4EFE4;
+  background: radial-gradient(120% 100% at 50% 0, #4A0F1E 0%, #21070E 60%, #140409 100%); box-shadow: 0 14px 30px -16px rgba(92,18,32,.7); }
+.ff .ff-lb163-h { display: flex; align-items: center; gap: 10px; color: #F0D98A; }
+.ff .ff-lb163-h b { flex: 1; font: 700 17px/1.2 var(--sans); color: #F4DC8E; }
+.ff .ff-lb163-h .live { display: inline-flex; align-items: center; gap: 6px; font: 800 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: #F4DC8E; padding: 5px 9px; border-radius: 10px; corner-shape: squircle; border: 1px solid rgba(233,208,122,.5); }
+.ff .ff-lb163-h .live i { width: 7px; height: 7px; border-radius: 50%; background: #E8C65A; animation: ffLb163 1.6s ease-in-out infinite; }
+@keyframes ffLb163 { 50% { opacity: .25; } }
+.ff .ff-lb163-s { margin: 4px 0 12px; font: 500 13.5px/1.4 var(--sans); color: rgba(244,239,228,.8); }
+.ff .ff-lb163-l { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+.ff .ff-lb163-l li { display: grid; grid-template-columns: 22px minmax(0, 92px) minmax(0, 1fr) 28px; align-items: center; gap: 8px; font: 600 13px/1.2 var(--sans); }
+.ff .ff-lb163-l .rk { font: 800 13px/1 var(--sans); color: #E8C65A; text-align: center; }
+.ff .ff-lb163-l .nm { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #F4EFE4; }
+.ff .ff-lb163-l .bar { display: block; height: 14px; border-radius: 8px; corner-shape: squircle; background: rgba(233,208,122,.12); overflow: hidden; }
+.ff .ff-lb163-l .bar i { display: block; height: 100%; border-radius: 8px; background: linear-gradient(90deg, #7A5C16, #D9B54A 70%, #F4DC8E); animation: ffLb163w .9s ease-out both; transform-origin: left; }
+@keyframes ffLb163w { from { transform: scaleX(0); } }
+.ff .ff-lb163-l .v { text-align: right; font-weight: 800; color: #F4DC8E; }
+.ff .ff-lb163-l li.me .nm, .ff .ff-lb163-l li.me .rk { color: #F4DC8E; font-weight: 800; }
+.ff .ff-lb163-l li.me .bar { background: rgba(233,208,122,.22); box-shadow: 0 0 0 1.5px #E8C65A; }
+.ff .ff-lb163-l li.me .bar i { background: linear-gradient(90deg, #F4DC8E, #FFF1B8); }
+.ff .ff-lb163-f { margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(233,208,122,.3); text-align: center; font: 700 14px/1.3 var(--sans); color: #F4DC8E; }
+@media (prefers-reduced-motion: reduce) { .ff .ff-lb163-l .bar i, .ff .ff-lb163-h .live i { animation: none; } }
