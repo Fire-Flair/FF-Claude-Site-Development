@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.119
+- **Champagne cards:** every attribute card (Skills, Qualifications, Interests and the rest) and the profession cards are champagne on every profile, whatever the person's Profile Card theme.
+- Page saved as `live-v1.119-index.html`. Artifact version 1795133111-4b73.
+
 ## v1.118
 - **Attribute cards (profiles):** cards are now filled by the size of their text rather than five entries each, and the entries of a category are shared evenly across its cards, so Skills, Qualifications and Interests cards in a row come out about the same height with no half-empty cards.
 - Page saved as `live-v1.118-index.html`. Artifact version 1795132424-4e8c.

@@ -621,3 +621,9 @@
 .ff .ff-pkc-own2 .ff-pkc-tin.bad { border-color: #A0262E; }
 .ff .ff-pkc-own2 .ff-pkc-tin:is(input) { height: 38px; }
 .ff .ff-pkc-own2 :has(> .ff-pkc-tin) { min-width: 0; }
+
+/* v1.119 (Alex 20 Nov 00:03): every attribute card, and the profession cards, are champagne whatever the person's Profile Card theme. */
+.ff .ff-agrp.t-card, .ff .pbq-card.t-card {
+  --tc-bg: linear-gradient(165deg,#FBEFD9 0%,#EBD4A6 100%); --tc-ink: #2A2010; --tc-sub: #5A4826; --tc-line: rgba(176,141,42,.7);
+  --tc-rule: rgba(42,32,16,.14); --tc-acc: #8A6A1E;
+}
