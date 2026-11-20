@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.131
+- **Profile pages:** the logo's two F's now sit in a small gold-ringed ivory circle between the lines, smaller than before.
+- Page saved as `live-v1.131-index.html`. Artifact version 1795137423-f2a3.
+
 ## v1.130
 - **Profile pages:** the divider between the gold lines is the two F's of the site logo, flat gold, no ring and no spin (person and company profiles and the profile builder). The home page coin is unchanged.
 - Page saved as `live-v1.130-index.html`. Artifact version 1795137348-21ad.

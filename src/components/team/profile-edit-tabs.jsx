@@ -11,19 +11,19 @@ const PROFILE_EDIT_TABS_CSS = __ff_css("styles/profile-edit-tabs.css");
    .ff-ptabs-wrap (public profile, profile builder, own profile edit page, company profile). It is the home page's
    coin (V101.CoinDivider, turned by V101.useCoinSpin as the page scrolls), so it looks and spins the same. */
 /* v1.128 (Alex 20 Nov 01:07, 01:12): the spinning coin is gone from the profile pages; the gold lines stay with the two F's of the site logo
-   between them (flat gold, no ring, no spin). Same place as before: first child of every .ff-ptabs-wrap. */
+   in a small gold-ringed circle between them (no spin). Same place as before: first child of every .ff-ptabs-wrap. */
 function ProfileCoin17() {
   const id = useSimpleId();
   const m = ffLogoMetal("standard");
   return (
     <div className="ff-pcoin17 ff-pgem17" aria-hidden="true">
       <i />
-      <svg width="46" height="31" viewBox="190 318 710 462" focusable="false">
+      <span className="ff-pgem17-c"><svg width="21" height="14" viewBox="190 318 710 462" focusable="false">
         <defs><linearGradient id={`${id}l`} gradientUnits="userSpaceOnUse" x1="0" y1="331" x2="0" y2="768"><stop offset="0" stopColor={m.top} /><stop offset="1" stopColor={m.bottom} /></linearGradient></defs>
         <path d={FF_LOGO_F_SHADE} fill={m.shade} />
         <path d={FF_LOGO_F_FACE} fill={`url(#${id}l)`} />
         <g transform="translate(322 0)"><path d={FF_LOGO_F_SHADE} fill={m.shade} /><path d={FF_LOGO_F_FACE} fill={`url(#${id}l)`} /></g>
-      </svg>
+      </svg></span>
       <i />
     </div>
   );
