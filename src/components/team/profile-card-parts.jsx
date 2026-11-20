@@ -441,10 +441,10 @@ function InformationCard({ record, def, themeKey = "onyx", onClick, width, compa
 
 
 
-function HScroll({ children, label, snap }) {
+function HScroll({ children, label, snap, loose }) {
   const items = React.Children.toArray(children).filter(Boolean);
   return (
-    <div className={`ff-hscroll${snap ? " snapmand" : ""}`} aria-label={label}>
+    <div className={`ff-hscroll${snap ? " snapmand" : ""}${loose ? " loose" : ""}`} aria-label={label}>
       {items.map((c, i) => <div className="ff-hitem" key={i}>{c}</div>)}
     </div>
   );

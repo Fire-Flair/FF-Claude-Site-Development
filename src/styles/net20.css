@@ -151,3 +151,8 @@
 /* v1.145: FF Stories in the Hero Flow (cards are 280px wide) */
 .ff .ff-jr17-hf .ff-hf20{padding:6px calc(50% - 140px) 22px;margin:0 -4px}
 .ff .ff-jr17-hf .ff-hf20-i .ff-jr17-card{width:min(78vw,280px)}
+
+/* v1.159 (Alex 20 Nov 05:07): the Event Directory company cards fling freely: no snapping, momentum scrolling, and a diagonal swipe goes sideways instead of jiggling the card */
+.ff .ff-hscroll.loose { scroll-snap-type: none; scroll-behavior: auto; overscroll-behavior-x: contain; touch-action: pan-x pan-y; -webkit-overflow-scrolling: touch; }
+.ff .ff-hscroll.loose .ff-hitem { scroll-snap-align: none; }
+.ff .ff-hscroll.loose .ff-co11-tile { touch-action: pan-x pan-y; transform: none !important; }

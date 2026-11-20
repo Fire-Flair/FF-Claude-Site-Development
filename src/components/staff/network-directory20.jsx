@@ -196,7 +196,7 @@ function NetDirectory20(props) {
             onClick: function () { setSub(Object.assign({}, sub, { [cur.k]: t.k })); } },
             React.createElement("span", { className: "lb" }, t.label), React.createElement("span", { className: "ct" }, "(" + groups[t.k].length + ")"));
         })) : null,
-      React.createElement(HScroll, { label: tcur ? tcur.label : cur.label, key: cur.k + (tcur ? tcur.k : "") }, (tcur ? groups[tcur.k] : cur.list).map(function (co) { return React.createElement(CoTile20, { key: co.id, co: co }); }))));
+      React.createElement(HScroll, { loose: true, label: tcur ? tcur.label : cur.label, key: cur.k + (tcur ? tcur.k : "") }, (tcur ? groups[tcur.k] : cur.list).map(function (co) { return React.createElement(CoTile20, { key: co.id, co: co }); }))));
 }
 
 const NET_DIR_DESC20 = "Find the companies you want to work for or work with. Around 150 UK bar companies, DJs, caterers and event services, with contact details, so you can find support for your own events, find out more and register your interest.";
