@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.171
+- **Join FF Team box (home):** the line under the title now reads "Get seen, get booked, get paid", on desktop and mobile.
+- Page saved as `live-v1.171-index.html`. Artifact version 1795204833-4d96.
+
 ## v1.170
 - **Business owner row (corrected):** the label, tick box and, once ticked, the bank icon all sit on the right. No camera icon.
 - **Company card (corrected):** the card itself says "Company card" top left, and the postcode is typed straight onto the card beside the pin, like the company name and what you do. The box underneath is gone.
