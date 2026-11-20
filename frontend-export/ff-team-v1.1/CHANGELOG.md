@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.124
+- **Map pins:** tapping a person or company pin opens its card in a pop-up over a slightly blurred page, with Back and View profile side by side underneath. Back, Escape or a tap outside closes it; View profile opens the profile (the pop-up profile on desktop).
+- Page saved as `live-v1.124-index.html`. Artifact version 1795134072-2f09.
+
 ## v1.123
 - **Map pin:** tapping a person on the map shows the same small Profile Card as the rows (no more list bar with Bronze and View profile).
 - **Network, desktop:** the search and the pin you tapped sit on the left under "Explore our network"; the map and its legend stay on the right. Phone and iPad keep the search under the legend.

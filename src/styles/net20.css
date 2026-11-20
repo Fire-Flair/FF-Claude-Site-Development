@@ -124,3 +124,10 @@
   .ff .ff-nm20 .ff-nm20-q{grid-column:1;grid-row:2;margin:6px 0 4px}
   .ff .ff-nm20 .ff-map-sel{grid-column:1;grid-row:3;margin-top:10px}
 }
+
+/* v1.124: the map pin pop-up. */
+.ff .ff-mappop17{position:fixed;inset:0;z-index:4000;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(24,16,10,.28);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+.ff .ff-mappop17-in{width:min(420px,100%);display:flex;flex-direction:column;gap:14px;align-items:stretch}
+.ff .ff-mappop17-card{display:flex;justify-content:center}
+.ff .ff-mappop17-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ff .ff-mappop17-btns .ff-btn{display:flex;align-items:center;justify-content:center;gap:6px;min-height:46px;border-radius:16px}

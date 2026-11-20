@@ -250,6 +250,26 @@ const catsOf19 = (p) => p.kind === "person" ? [...new Set((p.profs17 || [{ group
 const mapLayer19 = (show, hide) => (p) => { const k = layerOf19(p); return !k ? true : show[k] && catsOf19(p).some((c) => !(hide || {})[k + ":" + c]); };
 
 
+/* v1.124 (Alex 20 Nov 00:19): tapping a pin opens its card in a pop-up over a lightly blurred page; Back and View profile sit side by side under it. */
+function MapPop17({ onClose, onView, children }) {
+  useEffect(() => {
+    const k = (e) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", k);
+    return () => window.removeEventListener("keydown", k);
+  }, []);
+  return (
+    <div className="ff-mappop17" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="ff-mappop17-in" role="dialog" aria-modal="true">
+        <div className="ff-mappop17-card">{children}</div>
+        <div className="ff-mappop17-btns">
+          <button type="button" className="ff-btn ghost" onClick={onClose}><ChevronLeft size={16} /> Back</button>
+          <button type="button" className="ff-btn primary" onClick={onView}>View profile</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function MapLegend19({ pins, show, setShow, hide, setHide }) {
   const h = React.createElement;
   const [openK, setOpenK] = useState("");
@@ -504,9 +524,9 @@ function FFMap({ mode = "home" }) {
       {sel ? (
         <div className="ff-map-sel">
           {sel.kind === "company" ? (() => { const co = companyList(state).find(x => x.id === sel.coId) || companyById(state, sel.coId); return co ? (
-            <button type="button" className="ff-co11-tile" style={{ display: "block", margin: "0 auto", maxWidth: 360, width: "100%" }} onClick={() => { dispatch({ type: "VIEW_COMPANY", id: co.id }); window.scrollTo(0, 0); }} aria-label={`${co.name}: open their page`}>
-              <CompanyCardFace c={co} size="sm" />
-            </button>) : null; })()
+            <MapPop17 onClose={() => setSel(null)} onView={() => { dispatch({ type: "VIEW_COMPANY", id: co.id }); setSel(null); window.scrollTo(0, 0); }}>
+              <div style={{ display: "flex", justifyContent: "center" }}><CompanyCardFace c={co} size="sm" /></div>
+            </MapPop17>) : null; })()
             : sel.kind === "business" ? <OrgCard org={{ ...sel, kind: sel.profession }} kindLabel="Company" width="100%" />
             : sel.kind === "venue" ? <a className="ff-ven17-sel" href={venueMapsUrl17(sel.rec)} target="_blank" rel="noopener noreferrer" aria-label={`${sel.name}: view on Google Maps`}><style>{VEN_CSS17}</style><VenueLandscapeCard record={sel.rec} noLink /></a>
             : sel.kind === "event" ? (
@@ -519,7 +539,7 @@ function FFMap({ mode = "home" }) {
             ) : (() => {
               /* v1.123 (Alex 20 Nov 00:17): a person's pin always shows the same small Profile Card as the rows (no list bar). */
               const pp = directory.find(x => x.id === sel.id) || { ...sel, tag: sel.tag, photo: sel.photo, level: sel.level || 3 };
-              return <div style={{ display: "flex", justifyContent: "center" }}><PlayerTile person={pp} onClick={() => { dispatch({ type: "VIEW", id: sel.id }); window.scrollTo(0, 0); }} /></div>;
+              return <MapPop17 onClose={() => setSel(null)} onView={() => { dispatch({ type: "VIEW", id: sel.id }); setSel(null); window.scrollTo(0, 0); }}><div style={{ display: "flex", justifyContent: "center" }}><PlayerTile person={pp} onClick={() => { dispatch({ type: "VIEW", id: sel.id }); setSel(null); window.scrollTo(0, 0); }} /></div></MapPop17>;
             })()}
         </div>
       ) : null}
