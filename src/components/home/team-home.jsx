@@ -93,6 +93,9 @@ function useEqualH22(ref, sel, exclude, deps) {
    release); swiping left or right on the photo steps through that category's photos. No member Profile card yet (the photos belong to no one). */
 const HS175 = __ff_json("content/data/home-slides.json").cats;
 const HS175_IC = { Martini: lucideIcon("Martini"), Headphones: lucideIcon("Headphones"), Camera: lucideIcon("Camera") };
+/* v1.178 (Alex, 20 Nov 22:05): the photo and the slider both slide (same 650 ms, same easing) and the show runs on its own on every device, including
+   phones set to Reduce Motion (v1.177 stopped there). Moving to a category on the right slides left, a category on the left slides right. */
+const HS175_MS = 650;
 
 function HomeSlides175() {
   const { state } = useStore();
@@ -103,25 +106,54 @@ function HomeSlides175() {
   const [held, setHeld] = useState(false);
   const seen = useRef([true, false, false]);
   const drag = useRef(null);
-  const reduce = typeof matchMedia !== "undefined" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const dir = useRef(1);
+  const els = useRef({});
+  const cur = useRef(null);
+  React.useLayoutEffect(() => {
+    const key = cat + "-" + pics[cat];
+    const nx = els.current[key];
+    if (!nx) return;
+    if (cur.current == null) { nx.style.visibility = "visible"; cur.current = key; return; }
+    if (cur.current === key) return;
+    const old = els.current[cur.current];
+    Object.keys(els.current).forEach((k) => {
+      const e = els.current[k];
+      if (e !== nx && e !== old) { e.getAnimations().forEach((x) => x.cancel()); e.style.visibility = "hidden"; }
+    });
+    [nx, old].forEach((e) => e && e.getAnimations().forEach((x) => x.cancel()));
+    const d = dir.current;
+    const o = { duration: HS175_MS, easing: "ease-in-out" };
+    nx.style.visibility = "visible";
+    if (nx.animate) nx.animate([{ transform: "translateX(" + d * 100 + "%)" }, { transform: "translateX(0)" }], o);
+    if (old) {
+      if (old.animate) {
+        const an = old.animate([{ transform: "translateX(0)" }, { transform: "translateX(" + -d * 100 + "%)" }], o);
+        an.onfinish = () => { if (cur.current !== old.dataset.k) old.style.visibility = "hidden"; };
+      } else old.style.visibility = "hidden";
+    }
+    cur.current = key;
+  }, [cat, pics]);
   useEffect(() => {
-    if (held || reduce) return;
+    if (held) return;
     const t = setTimeout(() => {
       const n = (cat + 1) % HS175.length;
+      dir.current = 1;
       if (seen.current[n]) setPics((p) => p.map((v, i) => (i === n ? (v + 1) % HS175[n].slides.length : v)));
       seen.current[n] = true;
       setCat(n);
     }, 5000);
     return () => clearTimeout(t);
-  }, [cat, pics, held, reduce]);
+  }, [cat, pics, held]);
   const pick = (i) => {
     if (i === cat) { setHeld((h) => !h); return; }
+    dir.current = i > cat ? 1 : -1;
     seen.current[i] = true;
     setCat(i);
     setHeld(true);
   };
   const step = (d) => {
     const len = HS175[cat].slides.length;
+    dir.current = d;
     setPics((p) => p.map((v, i) => (i === cat ? (v + d + len) % len : v)));
     setHeld(true);
   };
@@ -139,8 +171,8 @@ function HomeSlides175() {
   return React.createElement("section", { className: "ff-hs175", id: "ff-hero", "aria-labelledby": "ff-hs175-h" },
     React.createElement("div", { className: "ff-hs175-ph", onPointerDown: down, onPointerUp: up, onPointerCancel: () => { drag.current = null; } },
       HS175.map((c, ci) => c.slides.map((s, si) => React.createElement("img", {
-        key: ci + "-" + si, src: s.src, alt: "", decoding: "async", draggable: false,
-        className: ci === cat && si === pics[ci] ? "on" : "",
+        key: ci + "-" + si, src: s.src, alt: "", decoding: "async", draggable: false, "data-k": ci + "-" + si,
+        ref: (e) => { if (e) els.current[ci + "-" + si] = e; else delete els.current[ci + "-" + si]; },
         style: { objectPosition: s.x + "% " + s.y + "%" }
       })))),
     React.createElement("div", { className: "ff-hs175-fade", "aria-hidden": "true" }),

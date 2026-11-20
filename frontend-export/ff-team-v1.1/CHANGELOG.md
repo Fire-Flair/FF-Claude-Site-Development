@@ -4,6 +4,11 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.178
+- **Home slideshow:** the photo and the burgundy slider now slide together every 5 seconds (a swipe, not a fade). The show now runs by itself on every phone, including ones set to Reduce Motion, where v1.177 stood still. Moving to a category on the right slides left; tapping one on the left slides right.
+- **Photos:** Entertainment is all DJs (the woman with her arms out and the singer are gone). Services is now videographers and camera crews, plus the florist; the stills-camera shots are gone. The Hospitality photos are unchanged. The existing site photo library is all bar and cocktail pictures, so nothing from it was suitable for Entertainment or Services.
+- Page saved as `live-v1.178-index.html`. Artifact version 1795212533-c68d.
+
 ## v1.177
 - **FFTeam home screen:** the top of the home page is now a photo slideshow by category: Hospitality, Entertainment, Services (6 photos each, from the approved lookbook). "Welcome to FFTeam" and the Create your Profile Card button sit on a dark panel above the photo, so they read on any picture. A burgundy slider at the foot moves between the three categories every 5 seconds and the photo changes at the same moment. Tap a category to hold it (tap again to let it run on); swipe left or right on the photo to move through that category's photos. Photos have no Profile card yet, because they belong to no member.
 - Page saved as `live-v1.177-index.html`. Artifact version 1795211785-75ae.

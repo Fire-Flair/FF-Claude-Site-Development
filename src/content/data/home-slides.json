@@ -53,24 +53,24 @@
      "y": 28
     },
     {
-     "src": "ffasset:img/332f43be5002b560.webp",
-     "x": 38,
-     "y": 20
-    },
-    {
      "src": "ffasset:img/443dd753e5b41d7f.webp",
      "x": 47,
      "y": 35
     },
     {
-     "src": "ffasset:img/18fc2f2aaa9bb464.webp",
-     "x": 42,
-     "y": 22
-    },
-    {
      "src": "ffasset:img/de79c7846b645ca0.webp",
      "x": 50,
      "y": 28
+    },
+    {
+     "src": "ffasset:img/7b6937ea6066dccf.webp",
+     "x": 52,
+     "y": 27
+    },
+    {
+     "src": "ffasset:img/71611f067b66c85a.webp",
+     "x": 44,
+     "y": 32
     }
    ]
   },
@@ -80,14 +80,14 @@
    "icon": "Camera",
    "slides": [
     {
-     "src": "ffasset:img/b094fcb370ed2871.webp",
-     "x": 46,
-     "y": 12
+     "src": "ffasset:img/133af937085498e6.webp",
+     "x": 40,
+     "y": 25
     },
     {
-     "src": "ffasset:img/01a75b580a7d37dd.webp",
-     "x": 50,
-     "y": 24
+     "src": "ffasset:img/b249be80ba2c85ba.webp",
+     "x": 38,
+     "y": 25
     },
     {
      "src": "ffasset:img/866cf6e0f04b9d26.webp",
@@ -95,19 +95,19 @@
      "y": 28
     },
     {
-     "src": "ffasset:img/3dc58918f5f50d5b.webp",
-     "x": 50,
+     "src": "ffasset:img/2c1d1563f10cd500.webp",
+     "x": 28,
      "y": 30
     },
     {
-     "src": "ffasset:img/350bee6f51cccb3b.webp",
-     "x": 45,
-     "y": 28
+     "src": "ffasset:img/fe2b92e00863e37d.webp",
+     "x": 40,
+     "y": 22
     },
     {
-     "src": "ffasset:img/2805d6c86d9da81f.webp",
-     "x": 38,
-     "y": 32
+     "src": "ffasset:img/83af81c282dee7d7.webp",
+     "x": 33,
+     "y": 30
     }
    ]
   }
