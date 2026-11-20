@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.136
+- **Create a profile, Q&A:** the question cards are shorter (270px instead of 410px), with slightly smaller type and answer buttons.
+- Page saved as `live-v1.136-index.html`. Artifact version 1795140355-5d0a.
+
 ## v1.135
 - **Skills, interests, qualifications:** typing a name and pressing Enter now opens the full detail box straight away (title, description, Image, Document, Delete, update), the same box a profession has, without the level row.
 - Page saved as `live-v1.135-index.html`. Artifact version 1795139711-4953.
