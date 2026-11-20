@@ -478,6 +478,8 @@ function InterestSection({ kind, inner }) {
   const submit = async () => {
     const nextOwn = addOwn();
     if (!picked.length && !nextOwn.length) { setErr(c.empty); return; }
+    /* v1.147: nobody has to log in to look or choose; the log in comes when they send. */
+    if (!who) { login(); return; }
     if (busy) return;
     setBusy(true);
     ref.current = ref.current || qaRef17();
@@ -502,7 +504,7 @@ function InterestSection({ kind, inner }) {
   const goProfile = () => { if (state.role !== "team") dispatch({ type: "ROLE", role: "team" }); dispatch({ type: "TAB", tab: "profile", route: "home" }); window.scrollTo(0, 0); };
   const names = (ids) => ids.map(id => (c.list.find(x => x.id === id) || {}).title).filter(Boolean);
   const count = picked.length + own.length;
-  const showBar = who && (!reg || editing);
+  const showBar = inner ? (!who || !reg || editing) : who && (!reg || editing);
   const Wrap = inner ? InterestInner : Sect;
   return (
     <Wrap id={c.id} boxed={c.boxed} eyebrow={c.eyebrow} title={c.title} lede={c.lede}>
@@ -520,8 +522,8 @@ function InterestSection({ kind, inner }) {
         ))}
       </div>
       )}
-      <div className={`ff-panel ff-champagne ff-ireg ${!who ? "out" : reg && !editing ? "done" : "edit"}`} style={{ marginTop: 16 }}>
-        {!who ? (<>
+      <div className={`ff-panel ff-champagne ff-ireg ${!who && !inner ? "out" : reg && !editing && who ? "done" : "edit"}`} style={{ marginTop: 16 }}>
+        {!who && !inner ? (<>
           <div className="ff-label">Register your interest</div>
           <p className="ff-body" style={{ margin: "6px 0 12px" }}>Log in or create your Profile Card to register your interest.</p>
           <div className="ff-ireg-acts">

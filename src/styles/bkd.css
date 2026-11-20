@@ -329,3 +329,14 @@
 .ff .ff-fs5-rate .rt .pr{font-weight:600;color:#3A3428}
 .ff .ff-fs5-rate{flex-direction:column;align-items:stretch}
 .ff .ff-fs5-rate .rt{justify-content:space-between}
+
+/* v1.147: the Grow with FireFlair cards in the hero scroll; the opened one shows under the row */
+.ff .ff-bkd-hf .ff-hf20 { padding: 10px calc(50% - 140px) 22px; margin: 0 -4px; }
+.ff .ff-bkd-hf .ff-hf20-i > .ff-bkd { width: min(78vw, 280px); height: 100%; display: flex; flex-direction: column; box-shadow: 0 10px 22px -14px rgba(48,36,10,.5); }
+.ff .ff-bkd-hf .ff-hf20-i .bkd-hd { flex: 1; }
+.ff .ff-bkd.ff-bkd-bdwrap { margin-top: 6px; }
+.ff .ff-bkd-bdwrap .bkd-bt { display: block; margin: 0 0 8px; font-family: var(--display); font-size: 22px; line-height: 1.15; color: #16130F; }
+.ff .ff-bkd-bdwrap .bkd-bd { padding: 18px 16px 16px; }
+.ff .ff-bkd.ff-bkd-bdwrap { min-width: 0; max-width: 100%; box-sizing: border-box; }
+.ff .ff-bkd-bdwrap .bkd-bd { min-width: 0; box-sizing: border-box; overflow: hidden; }
+.ff .ff-bkd-bdwrap .bkd-bds { overflow-wrap: break-word; }

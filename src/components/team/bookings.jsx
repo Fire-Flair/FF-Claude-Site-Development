@@ -127,7 +127,7 @@ const BKD_CSS = __ff_css("styles/bkd.css");
 
 
 /* open / onOpen come from TeamBookings so only one of the three boxes is open at a time (onOpen(null) closes). */
-function BkDrop17({ id, title, desc, icon: Icon, photo, children, open: openP, onOpen }) {
+function BkDrop17({ id, title, desc, icon: Icon, photo, children, open: openP, onOpen, headOnly }) {
   const [openS, setOpenS] = useState(false);
   const open = onOpen ? !!openP : openS;
   const setOpen = onOpen ? (f) => onOpen((typeof f === "function" ? f(open) : f) ? id : null) : setOpenS;
@@ -152,7 +152,7 @@ function BkDrop17({ id, title, desc, icon: Icon, photo, children, open: openP, o
           <I11.ChevronDown size={18} className="bkd-chev" />
         </span>
       </button>
-      {open && <div className="bkd-bd"><h3 className="bkd-bt">{title}</h3><p className="bkd-bds">{desc}</p>{children}</div>}
+      {open && !headOnly && <div className="bkd-bd"><h3 className="bkd-bt">{title}</h3><p className="bkd-bds">{desc}</p>{children}</div>}
     </section>
   );
 }
@@ -891,11 +891,23 @@ function TeamBookings({ guest = false }) {
       <section className="ff-bk-sec ff-bkgrow" id="ff-bk-grow">
         {/* bk-titles (Alex, 18 Nov 20:25): a page title like Your bookings (gold underline); the cards below already say Training, Dream jobs and Rewards. */}
         <h1 className="ff-h1 ff-big20 ff-bk-yh" id="ff-bk-grow-h"><span className="t">Grow with FireFlair</span></h1>
-        <div className="ff-bkd-row">
-          <BkDrop17 id="ff-bk-training" open={drop === "ff-bk-training"} onOpen={setDrop} title="Training" icon={E17I.GraduationCap} photo="bk_training" desc="Register your interest and we will notify you with available dates."><InterestSection kind="training" inner /></BkDrop17>
-          <BkDrop17 id="ff-bk-jobs" open={drop === "ff-bk-jobs"} onOpen={setDrop} title="Dream jobs" icon={E17I.Plane} photo="bk_jobs" desc="Tell us your dream jobs and we will help make them happen."><InterestSection kind="jobs" inner /></BkDrop17>
-          <BkDrop17 id="ff-bk-rewards" open={drop === "ff-bk-rewards"} onOpen={setDrop} title="FireFlair rewards" icon={E17I.Gift} photo="bk_rewards" desc="Perks for people who work with FireFlair: kit, tickets and experiences. Register your interest in the ones you want."><InterestSection kind="rewards" inner /></BkDrop17>
-        </div>
+        {/* v1.147 (Alex 20 Nov 04:16): the three Grow cards use the hero scroll; the opened one shows its contents under the row. */}
+        {(() => {
+          const GROW = [
+            { id: "ff-bk-training", title: "Training", icon: E17I.GraduationCap, photo: "bk_training", desc: "Register your interest and we will notify you with available dates.", kind: "training" },
+            { id: "ff-bk-jobs", title: "Dream jobs", icon: E17I.Plane, photo: "bk_jobs", desc: "Tell us your dream jobs and we will help make them happen.", kind: "jobs" },
+            { id: "ff-bk-rewards", title: "FireFlair rewards", icon: E17I.Gift, photo: "bk_rewards", desc: "Perks for people who work with FireFlair: kit, tickets and experiences. Register your interest in the ones you want.", kind: "rewards" },
+          ];
+          const cur = GROW.find((g) => g.id === drop);
+          return (<>
+            <div className="ff-bkd-hf"><style>{NET20_CSS}</style>
+              <HeroFlow20 label="Grow with FireFlair">
+                {GROW.map((g) => <BkDrop17 key={g.id} id={g.id} open={drop === g.id} onOpen={setDrop} title={g.title} icon={g.icon} photo={g.photo} desc={g.desc} headOnly />)}
+              </HeroFlow20>
+            </div>
+            {cur && <div className="ff-bkd open ff-bkd-bdwrap"><div className="bkd-bd"><h3 className="bkd-bt">{cur.title}</h3><p className="bkd-bds">{cur.desc}</p><InterestSection kind={cur.kind} inner /></div></div>}
+          </>);
+        })()}
       </section>
 
     </div>

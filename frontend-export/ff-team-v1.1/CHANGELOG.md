@@ -4,6 +4,11 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.147
+- **Bookings, Grow with FireFlair:** Training, Dream jobs and FireFlair rewards are now a hero scroll row; the opened card shows its choices underneath.
+- Nobody has to log in or create a Profile Card to look at the choices or pick some; the log in comes only when they press Submit.
+- Page saved as `live-v1.147-index.html`. Artifact version 1795148286-f37c.
+
 ## v1.146
 - **Company cards:** the icon beside the word COMPANY is centred on the same line with an even gap.
 - Page saved as `live-v1.146-index.html`. Artifact version 1795148112-4ae0.
