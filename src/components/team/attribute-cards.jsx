@@ -673,8 +673,9 @@ function ExperienceEditor29({ items }) {
     <div className="ff-xe29">
       <style>{VEN_CSS17}</style>
       <style>{xpCSS29}</style>
-      <ExperienceCards29 items={rows} onOpen={(r) => setOpenId(r.id)} onAdd={() => setFinding(true)} />
-      {finding && <Sheet open center title="Venues" onClose={() => setFinding(false)}><div className="ff-xe29-one"><VenueSearch17 key={key} cards autoFocus label="Add a venue" placeholder="Search for a venue" onPick={add} /></div></Sheet>}
+      <ExperienceCards29 items={rows} onOpen={(r) => setOpenId(r.id)} onAdd={() => { const i = document.querySelector(".ff-xe29-one input"); if (i) { i.scrollIntoView({ block: "center", behavior: "smooth" }); i.focus({ preventScroll: true }); } }} />
+      {/* v1.151 (Alex 20 Nov 04:31): the Google type box sits on the page, under the venue cards, not in a pop-up. */}
+      <div className="ff-xe29-one"><VenueSearch17 key={key} cards label="Add a venue" placeholder="Search for a venue" onPick={add} /></div>
       {openRec && <ExperienceSheet29 key={openRec.id} record={openRec} onClose={() => setOpenId(null)} />}
     </div>
   );

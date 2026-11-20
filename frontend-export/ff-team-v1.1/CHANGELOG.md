@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.151
+- **Profile builder, Venues:** the Google type box now sits on the page, directly under the venue cards and above the box that follows, instead of opening in a pop-up. The plus card jumps to it.
+- Page saved as `live-v1.151-index.html`. Artifact version 1795149107-8f67.
+
 ## v1.150
 - **Pencils:** moved further right, clear of the card title (Qualifications and the other attribute cards); on profession cards the pencil sits a little lower.
 - Page saved as `live-v1.150-index.html`. Artifact version 1795148873-8e35.
