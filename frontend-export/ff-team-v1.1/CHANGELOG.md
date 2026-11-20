@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.126
+- **Create a profile:** no Enter key on the type boxes. Attributes, Qualifications, Skills and Interests are boxes with a circle and a plus; tapping one opens a box-sized pop-up where you type. Venues reads "Venues – where have you worked?" and a venue search shows venue cards with a plus. Q&A drops the Question Cards heading, "never on your public card", the category key and To answer / Answered; every question card is the same size; the type box only shows for Other or typed questions. "How useful" is now Very useful, Useful, Not sure.
+- Page saved as `live-v1.126-index.html`. Artifact version 1795136575-5ede.
+
 ## v1.125
 - **Get booked (FFParty):** Bar, Entertainment and Services packages use the Hero Flow scroll; Create your own is first on Entertainment and Services; the "to be confirmed" line is gone. DJ is 3 hours with new wording; Entertainer is 1 hour, you earn £150+; new Videography package (£250+).
 - **Network, wide screen:** the pin you tap shows its Profile Card on the left with a View profile button under it; the one search sits under the map legend. The pin card no longer collapses to nothing (pop-up on phone and iPad).

@@ -164,7 +164,7 @@ const QUESTIONS = [
   { id: "f_ease",      group: "feedback", type: "choice", text: "How easy was it to create your FF Team profile?", options: ["Very easy", "Easy", "Okay", "Difficult", "Very difficult"] },
   { id: "f_confusing", group: "feedback", type: "choice", text: "Was anything confusing when creating your profile?", options: ["Yes", "No"],
     detail: { option: "Yes", label: "What was confusing? (optional)", placeholder: "Tell us what tripped you up", optional: true } },
-  { id: "f_useful",    group: "feedback", type: "choice", text: "How useful do you think your FF Team profile will be?", options: ["Very useful", "Useful", "Not sure", "Not very useful", "Not useful"] },
+  { id: "f_useful",    group: "feedback", type: "choice", text: "How useful do you think your FF Team profile will be?", options: ["Very useful", "Useful", "Not sure"] },
   { id: "f_cv",        group: "feedback", type: "choice", text: "Would you use your FF Team profile as your professional CV?", options: ["Yes", "Maybe", "No"] },
   { id: "f_improve",   group: "feedback", type: "text", text: "What could FireFlair do to make your FF Team profile more useful?", placeholder: "Anything at all" },
 ].map(q => ({ ...q, public: false, xp: XP_VALUES.question }));

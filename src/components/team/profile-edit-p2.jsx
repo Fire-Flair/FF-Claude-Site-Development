@@ -163,7 +163,6 @@ function PE2ProfCats({ P }) {
       <form className={"ff-type21 pe2-pc-type" + (q.trim() ? " has" : "")} onSubmit={add}>
         <input type="text" value={q} maxLength={PROF_MAX_LEN} autoComplete="off" spellCheck={false} enterKeyHint="enter" placeholder="Type a profession" aria-label="Add a profession"
           onChange={(e) => setQ(e.target.value)} />
-        <button type="submit" className="ff-type21-key" aria-label="Add a profession" tabIndex={-1}><span>Enter</span><CornerDownLeft21 size={15} strokeWidth={2.2} aria-hidden="true" /></button>
       </form>
       {hits.length > 0 && (
         <div className="pe2-pc-hits" role="listbox" aria-label="Matching professions">
@@ -230,7 +229,6 @@ function PE2CatPanel({ P, c }) {
       <form className={"ff-type21 pe2-pc-type pe2-cp-type" + (q.trim() ? " has" : "")} onSubmit={add}>
         <input type="text" value={q} maxLength={PROF_MAX_LEN} autoComplete="off" spellCheck={false} enterKeyHint="enter" placeholder="Add your own" aria-label={`Add your own ${label} profession`}
           onChange={(e) => setQ(e.target.value)} />
-        <button type="submit" className="ff-type21-key" aria-label="Add" tabIndex={-1}><span>Enter</span><CornerDownLeft21 size={15} strokeWidth={2.2} aria-hidden="true" /></button>
       </form>
     </div>
   );
@@ -293,9 +291,6 @@ function PE2Overview({ records }) {
         <div className="ff-pp-head"><h2 id="pe2-attr-h" className="ff-about-h">Attributes</h2></div>
         <div className="ff-mrow ff-acar pe2-rail" role="list" aria-label="Attributes">
           {cats.map((k, ci) => {
-            if (k === "qualifications") return <PE2QualCard key={k} records={records.qualifications} openId={qualOpen} onOpen={(id) => { setQualOpen(id); if (id) setAttrOpen(null); }} />;
-            /* pb-typecards: Skills and Interests are typed straight onto their cards (type-cards.jsx). */
-            if (TYPECARD_CATS.includes(k)) return <TypeCards26 key={k} catKey={k} records={records[k] || []} tone={tierCls17(ci)} />;
             const def = BASE_CATEGORIES[k];
             const shown = rankedRecords(records[k] || []).filter(r => !r.hidden && !r.proposed);
             const empty = !shown.length;
@@ -305,27 +300,25 @@ function PE2Overview({ records }) {
                 <span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span>{!empty && <span className="ff-agrp-n">{shown.length}</span>}</span>
                 {empty ? <span className="pe2-empty-fill" aria-hidden="true" /> : <span className="ff-agrp-l">{shown.slice(0, 5).map(r => <span key={r.id}>{nbh21(r.name)}</span>)}</span>}
                 {shown.length > 5 && <span className="ff-agrp-more">{`+${shown.length - 5}`}</span>}
-                <span className="pe2-cardpen" aria-hidden="true"><Pencil size={14} strokeWidth={2} /></span>
+                <span className="pe2-plus1" aria-hidden="true"><Plus size={empty ? 26 : 18} strokeWidth={2.2} /></span>
               </button>
             );
           })}
           <span className="ff-acar-end" aria-hidden="true" />
         </div>
-        {qualOpen && <PE2QualEditor records={records.qualifications} id={qualOpen} onDone={() => setQualOpen(null)} />}
-        {/* pfc (Alex 03:29): the tapped card opens its editor here, in the page, as on the live FF Team site: the type box,
-            then the entries as tiles; a tile opens its own editor under the row. No pop-up. */}
         {attrOpen && BASE_CATEGORIES[attrOpen] && (
-          <div id="pe2-attr-ed" className="ff-pa40-cat pe2-attr-ed" role="region" aria-label={BASE_CATEGORIES[attrOpen].label}>
-            <style>{RANK_CSS17}</style>
-            <div className="pe2-attr-edh">{BASE_CATEGORIES[attrOpen].label}</div>
-            <TypeBox21 key={attrOpen} catKey={attrOpen} def={BASE_CATEGORIES[attrOpen]} rows={rankedRecords(records[attrOpen] || [])} />
-            <ProfTiles21 key={"t" + attrOpen} items={records[attrOpen] || []} editable def={BASE_CATEGORIES[attrOpen]} catKey={attrOpen} label={BASE_CATEGORIES[attrOpen].label} compact />
-          </div>
+          <Sheet open center title={BASE_CATEGORIES[attrOpen].label} onClose={() => setAttrOpen(null)}>
+            <div className="pe2-attr-pop">
+              <style>{RANK_CSS17}</style>
+              <TypeBox21 key={attrOpen} catKey={attrOpen} def={BASE_CATEGORIES[attrOpen]} rows={rankedRecords(records[attrOpen] || [])} />
+              <ProfTiles21 key={"t" + attrOpen} items={records[attrOpen] || []} editable def={BASE_CATEGORIES[attrOpen]} catKey={attrOpen} label={BASE_CATEGORIES[attrOpen].label} compact />
+            </div>
+          </Sheet>
         )}
       </section>
       {SHOW_VENUES_PROFILE17 && (
         <section className="ff-pp ff-pp21 pp-sec pe2-ven" aria-labelledby="pe2-ven-h">
-          <div className="ff-pp-head"><h2 id="pe2-ven-h" className="ff-about-h">Venues</h2></div>
+          <div className="ff-pp-head"><h2 id="pe2-ven-h" className="ff-about-h">Venues – where have you worked?</h2></div>
           {/* v1.29: a Google business search per venue, then the Experience cards. */}
           <ExperienceEditor29 items={venAll} onOpen={(r) => setOpenVen(r)} />
         </section>
@@ -360,6 +353,8 @@ function PE2QCard({ q, value, onAnswer, label }) {
     onAnswer(pre + t);
     setTxt("");
   };
+  /* v1.126 (Alex 20 Nov 00:51): the type box shows only when "Other" (or the question's own typed option) is chosen, or the question is a typed one. */
+  const needsType = q.type === "text" || on("Other") || (q.detail && on(q.detail.option));
   const ph = q.detail && on(q.detail.option) ? (q.detail.placeholder || q.detail.label) : (q.placeholder || "Type");
   return (
     <CardFrame as="div" tier="standard" theme={{ bg: c.bg, ink: c.ink, sub: c.sub, rule: c.rule, dark: true }}
@@ -373,10 +368,9 @@ function PE2QCard({ q, value, onAnswer, label }) {
         <div className="pe2-qc-opts" role="group" aria-label={q.text}>
           {opts.map(o => <button key={o} type="button" className={"pe2-qc-opt" + (on(o) ? " on" : "")} aria-pressed={!!on(o)} onClick={() => onAnswer(o)}>{o}</button>)}
         </div>
-        <form className="pe2-qc-type" onSubmit={(e) => { e.preventDefault(); send(); }}>
+        {needsType && <form className="pe2-qc-type" onSubmit={(e) => { e.preventDefault(); send(); }}>
           <input type="text" value={txt} maxLength={400} placeholder={ph} aria-label={`${q.text} — type your answer`} onChange={(e) => setTxt(e.target.value)} />
-          <button type="submit" className="pe2-qc-go" aria-label="Save answer" disabled={!txt.trim()}><CornerDownLeft21 size={14} strokeWidth={2.4} aria-hidden="true" /></button>
-        </form>
+        </form>}
       </div>
       {q.mine && <PE2QDelete q={q} />}
     </CardFrame>
@@ -415,7 +409,6 @@ function PE2QCreate({ onCreate }) {
         </div>
         <form className="pe2-qc-type" onSubmit={(e) => { e.preventDefault(); make(txt); }}>
           <input type="text" value={txt} maxLength={400} placeholder="Type" aria-label="Type your answer" onChange={(e) => setTxt(e.target.value)} />
-          <button type="submit" className="pe2-qc-go" aria-label="Add question" disabled={!ok || !txt.trim()}><CornerDownLeft21 size={14} strokeWidth={2.4} aria-hidden="true" /></button>
         </form>
       </div>
     </CardFrame>
@@ -434,7 +427,7 @@ function PE2QA() {
   const todo = qs.filter(q => !isDone(q) || (side === "todo" && stay.includes(q.id)));
   const done = qs.filter(q => isDone(q) && !(side === "todo" && stay.includes(q.id)));
   const nTodo = qs.filter(q => !isDone(q)).length, nDone = qs.length - nTodo;
-  const list = side === "todo" ? todo : done;
+  const list = qs;
   const present = QUESTION_GROUPS.filter(g => qs.some(q => q.group === g.key));
   const pick = (t) => { setSide(t); setStay([]); };
   const answer = (q, v) => {
@@ -451,27 +444,13 @@ function PE2QA() {
       <style>{PE2_CSS}</style>
       <div className="ff-pp-head"><h2 id="pe2-qa-h" className="ff-about-h">Q&amp;A</h2></div>
       <div className="ff-qa-panel pe2-qa-panel">
-        <div className="ff-qa-subh">
-          <span className="ff-qa-ic"><HelpCircle size={14} /></span>
-          <b>Question Cards</b>
-          <span className="ff-qa-meta">never on your public card</span>
-        </div>
-        <div className="ff-qa-tabs" role="tablist" aria-label="Question Cards">
-          <button type="button" role="tab" aria-selected={side === "todo"} className={side === "todo" ? "on" : ""} onClick={() => pick("todo")}>To answer <span>{nTodo}</span></button>
-          <button type="button" role="tab" aria-selected={side === "done"} className={`done${side === "done" ? " on" : ""}`} onClick={() => pick("done")}>Answered <span>{nDone}</span></button>
-        </div>
-        <div className="ff-qa-legend">
-          {present.map(g => <span key={g.key}><i style={{ background: questionGroupColor(g.key).bg, borderColor: questionGroupColor(g.key).sub }} />{g.label}</span>)}
-          <span><i style={{ background: QUESTION_DONE.bg, borderColor: "#39C27E" }} />Answered</span>
-        </div>
-        <HScroll label={side === "todo" ? "Question Cards to answer" : "Answered Question Cards"} snap>
+        <HScroll label="Questions" snap>
           {list.map(q => (
             <span key={q.id} data-qid={q.id} className="pe2-qa-cardw">
               <PE2QCard q={q} value={answerOf(state, q)} onAnswer={(v) => answer(q, v)} />
             </span>
           ))}
-          {side === "todo" && canAdd && <span className="pe2-qa-cardw"><PE2QCreate onCreate={create} /></span>}
-          {side === "done" && !list.length && <div className="ff-qa-slot">Answered questions move here.</div>}
+          {canAdd && <span className="pe2-qa-cardw"><PE2QCreate onCreate={create} /></span>}
         </HScroll>
       </div>
     </section>

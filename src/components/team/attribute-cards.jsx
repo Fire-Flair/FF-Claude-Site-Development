@@ -215,7 +215,6 @@ function TypeBox21({ catKey, def, rows, placeholder }) {
     <form className={"ff-type21" + (typed.trim() ? " has" : "")} onSubmit={add}>
       <input type="text" name={`add-${catKey}`} value={typed} autoComplete="off" spellCheck={false} enterKeyHint="enter"
         placeholder={placeholder || `Type ${an} ${one}`} aria-label={`Add ${an} ${one}`} onChange={(e) => setTyped(e.target.value)} />
-      <button type="submit" className="ff-type21-key" aria-label={`Add ${an} ${one}`} tabIndex={-1}><span>Enter</span><CornerDownLeft21 size={15} strokeWidth={2.2} aria-hidden="true" /></button>
     </form>
   );
 }
@@ -653,7 +652,7 @@ function ExperienceEditor29({ items }) {
     <div className="ff-xe29">
       <style>{VEN_CSS17}</style>
       <style>{xpCSS29}</style>
-      <div className="ff-xe29-one"><VenueSearch17 key={key} label="Add a venue" placeholder="Search for a venue" onPick={add} /></div>
+      <div className="ff-xe29-one"><VenueSearch17 key={key} cards label="Add a venue" placeholder="Search for a venue" onPick={add} /></div>
       <ExperienceCards29 items={rows} onOpen={(r) => setOpenId(r.id)} />
       {openRec && <ExperienceSheet29 key={openRec.id} record={openRec} onClose={() => setOpenId(null)} />}
     </div>

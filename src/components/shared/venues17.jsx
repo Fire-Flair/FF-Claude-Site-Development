@@ -160,7 +160,7 @@ const venueReviewKeep17 = (s) => venueReviewList17(s).map(venueReviewSlim17);
 
 
 /* ---- The business search ----------------------------------------------------------------------------- */
-function VenueSearch17({ value, onPick, autoFocus, label, placeholder }) {
+function VenueSearch17({ value, onPick, autoFocus, label, placeholder, cards }) {
   const [q, setQ] = useState(value || "");
   const [list, setList] = useState([]);
   const [live, setLive] = useState(false);
@@ -204,7 +204,18 @@ function VenueSearch17({ value, onPick, autoFocus, label, placeholder }) {
         aria-activedescendant={act >= 0 ? `${boxId}-${act}` : undefined} autoComplete="off" spellCheck={false}
         onChange={(e) => { setQ(e.target.value); setOpen(true); }} onFocus={() => setOpen(true)} onKeyDown={onKey}
         onBlur={() => setTimeout(() => setOpen(false), 150)} />
-      {open && rows.length > 0 && (
+      {cards && t.length >= 2 && rows.length > 0 && (
+        <div className="ff-ven17-cards" role="list">
+          {rows.map((r, i) => (
+            <button key={r.typed ? "typed" : r.s.placeId} type="button" role="listitem" className={"ff-ven17-card" + (r.typed ? " typed" : "")} onClick={() => choose(i)}>
+              <span className="ff-ven17-card-ic" aria-hidden="true">{r.typed ? <Plus size={18} strokeWidth={1.8} /> : <MapPin size={18} strokeWidth={1.6} />}</span>
+              <span className="ff-ven17-card-t">{r.typed ? <b>Add “{t}” as a venue</b> : <><b>{r.s.main}</b><small>{r.s.secondary}</small></>}</span>
+              <span className="ff-ven17-card-plus" aria-hidden="true"><Plus size={20} strokeWidth={2.4} /></span>
+            </button>
+          ))}
+        </div>
+      )}
+      {!cards && open && rows.length > 0 && (
         <ul id={boxId} role="listbox" className="ff-ven17-list">
           {rows.map((r, i) => (
             <li key={r.typed ? "typed" : r.s.placeId} id={`${boxId}-${i}`} role="option" aria-selected={act === i}>
