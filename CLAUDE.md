@@ -48,7 +48,7 @@ This line is the FF Team front-end export ("FF Team version 1.1. Final"), not th
      18 Nov 20:36: without it the artifact takes the page's own `<title>`, "FF Team · FireFlair", which is right for
      FFTeam.uk but renames the artifact), record the artifact version in the changelog, and push to
      `ff-team-v1.1` straight away, so the next chat merges your work.
-- **Who changes what:** the home page (`#/ff-team`) is changed only in Alex's homepage thread. Other pages are updated
+- **Who changes what (Alex, 20 Nov 2026 23:10):** every page is changed in Alex's single fixes thread. The separate Bookings, Network and profile threads are closed and no longer publish. Another thread changes a page only when Alex opens it and asks there.
   in their own separate threads. Don't edit another thread's page.
 
 ## Versions
