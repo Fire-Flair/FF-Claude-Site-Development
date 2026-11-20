@@ -32,3 +32,6 @@
 .ff .ff-cc11-layouts .t-banner .b { left: 6px; top: 29px; width: 40px; height: 3px; opacity: .6; }
 .ff .ff-cc11-layouts .t-banner .c { left: 6px; top: 34px; width: 22px; height: 2px; opacity: .6; }
 .ff .ff-cc11-layouts { grid-template-columns: repeat(4, 1fr); }
+/* v1.146 (Alex 20 Nov 04:14): the icon and the word Company sit on one centred line with a clear gap. */
+.ff .ff-cc11 .ff-cc11-plate { display: inline-flex !important; align-items: center; gap: .55em; }
+.ff .ff-cc11 .ff-cc11-plate svg { flex: none; width: 1.25em; height: 1.25em; display: block; margin: 0; }
