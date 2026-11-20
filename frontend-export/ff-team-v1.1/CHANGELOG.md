@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.129
+- **Profile pages:** the divider gem is now a slim, round-tipped four-point star, outlined (option D, narrower).
+- Page saved as `live-v1.129-index.html`. Artifact version 1795137067-5c59.
+
 ## v1.128
 - **Profile pages:** the spinning FF coin is gone. The gold lines stay with a small gold gem between them (halfway between a diamond and a sparkle), on person and company profiles and the profile builder.
 - Page saved as `live-v1.128-index.html`. Artifact version 1795136926-6de4.

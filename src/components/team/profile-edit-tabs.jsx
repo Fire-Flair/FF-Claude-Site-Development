@@ -11,12 +11,12 @@ const PROFILE_EDIT_TABS_CSS = __ff_css("styles/profile-edit-tabs.css");
    .ff-ptabs-wrap (public profile, profile builder, own profile edit page, company profile). It is the home page's
    coin (V101.CoinDivider, turned by V101.useCoinSpin as the page scrolls), so it looks and spins the same. */
 /* v1.128 (Alex 20 Nov 01:07): the spinning coin is gone from the profile pages; the lines stay with a small gold gem between them
-   (halfway between a diamond and a four-point sparkle). Same place as before: first child of every .ff-ptabs-wrap. */
+   (a slim, round-tipped four-point star, outlined; v1.129). Same place as before: first child of every .ff-ptabs-wrap. */
 function ProfileCoin17() {
   return (
     <div className="ff-pcoin17 ff-pgem17" aria-hidden="true">
       <i />
-      <svg width="24" height="24" viewBox="0 0 24 24"><path d="M12 1.5Q13.4 10.6 22.5 12Q13.4 13.4 12 22.5Q10.6 13.4 1.5 12Q10.6 10.6 12 1.5Z" fill="#B08D2A" stroke="#B08D2A" strokeWidth="1.2" strokeLinejoin="round" /></svg>
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M12 3C12.8 7.6 14.6 11 17.8 12C14.6 13 12.8 16.4 12 21C11.2 16.4 9.4 13 6.2 12C9.4 11 11.2 7.6 12 3Z" stroke="#B08D2A" strokeWidth="1.7" strokeLinejoin="round" /></svg>
       <i />
     </div>
   );
