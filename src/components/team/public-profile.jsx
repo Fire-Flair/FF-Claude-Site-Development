@@ -661,7 +661,7 @@ function AttrGroups({ items, mem, onOpen }) {
         return (
           <button key={c.key} type="button" className={"ff-agrp cat-" + c.g.key + " " + tierCls17(ci)} onClick={() => onOpen(c.g.key)}
             aria-label={`${label}: ${c.g.list.map(it => it.record.name).join(", ")}. View all attributes`}>
-            <span className="ff-agrp-top"><span className="ff-agrp-h">{label}</span><span className="ff-agrp-n">{c.part.length + c.more}</span></span>
+            <span className="ff-agrp-top"><span className="ff-agrp-h">{label}</span><span className="ff-agrp-n" aria-hidden="true"><ChevronDown size={16} strokeWidth={2.2} /></span></span>
             <span className="ff-agrp-l">{c.part.map(it => <span key={it.id}>{it.category === "qualifications" ? <QualNm r={it.record} /> : nbh21(it.record.name)}</span>)}</span>
             {c.more > 0 && <span className="ff-agrp-more">{`+${c.more}`}</span>}
           </button>

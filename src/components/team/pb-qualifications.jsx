@@ -105,7 +105,7 @@ function PE2QualCard({ records, openId, onOpen }) {
   return (
     <div role="listitem" className={"ff-agrp pbq-card " + (empty ? "pe2-agrp-empty" : "cat-qualifications " + tierCls17(0)) + (openId ? " pe2-agrp-on" : "")} aria-label={def.label}>
       <style>{PBQ_CSS}</style>
-      <span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span>{!empty && <span className="ff-agrp-n">{rows.length}</span>}</span>
+      <span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span>{!empty && <span className="ff-agrp-n" aria-hidden="true"><ChevronDown size={16} strokeWidth={2.2} /></span>}</span>
       {!empty && (
         <span className="ff-agrp-l pbq-list">
           {list.map(r => (
@@ -164,7 +164,7 @@ function PubQualCard({ label, part, more, total, cls, onOpen }) {
     <div className={"ff-agrp pbq-pub " + cls}>
       <style>{PBQ_CSS}</style>
       <button type="button" className="pbq-cover" onClick={onOpen} aria-label={`${label}: ${part.map(it => it.record.name).join(", ")}. View all attributes`} />
-      <span className="ff-agrp-top"><span className="ff-agrp-h">{label}</span><span className="ff-agrp-n">{total}</span></span>
+      <span className="ff-agrp-top"><span className="ff-agrp-h">{label}</span><span className="ff-agrp-n" aria-hidden="true"><ChevronDown size={16} strokeWidth={2.2} /></span></span>
       <span className="ff-agrp-l">
         {part.map(it => {
           const href = pubCvHref(it.record);

@@ -210,7 +210,7 @@ function TypeCards26({ catKey, records, tone }) {
           <div key={`${catKey}-${ci}`} role="listitem" className={"ff-agrp tc26 " + (empty ? "pe2-agrp-empty tc26-empty" : tone)}
             data-cat={catKey} data-tc-cat={catKey} aria-label={def.label}
             onClick={last ? () => { const el = inRef.current; if (el && document.activeElement !== el) el.focus(); } : undefined}>
-            <span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span>{!empty && <span className="ff-agrp-n">{part.length}</span>}</span>
+            <span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span>{!empty && <span className="ff-agrp-n" aria-hidden="true"><ChevronDown size={16} strokeWidth={2.2} /></span>}</span>
             <div className={"tc26-list" + (dr.drag ? " dragging" : "")} role="list" aria-label={def.label}>
               {part.map((r, j) => {
                 const pos = base + j;

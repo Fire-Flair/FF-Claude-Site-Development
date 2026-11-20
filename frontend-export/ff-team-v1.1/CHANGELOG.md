@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.144
+- **Attribute cards:** the number on each card (Qualifications 2, Skills 4…) is replaced by a drop-down arrow, on public profiles, the profile builder and the type cards.
+- Page saved as `live-v1.144-index.html`. Artifact version 1795147889-accc.
+
 ## v1.143
 - **Awards:** the five icons are now video-game achievement badges: hexagon medals with a bevelled metal rim and an engraved symbol, grey with a small padlock until earned; the tapped one lifts and glows.
 - **Venues:** the cards scroll sideways on every screen size, desktop included.

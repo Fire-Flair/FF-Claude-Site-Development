@@ -44,4 +44,4 @@ const Briefcase = lucideIcon("Briefcase"), SlidersHorizontal = lucideIcon("Slide
 
 
 
-const UserPlus = lucideIcon("UserPlus"), PartyPopper = lucideIcon("PartyPopper");
+const ChevronDown = lucideIcon("ChevronDown"), UserPlus = lucideIcon("UserPlus"), PartyPopper = lucideIcon("PartyPopper");
