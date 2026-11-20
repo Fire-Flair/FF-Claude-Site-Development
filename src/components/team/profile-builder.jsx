@@ -1293,7 +1293,10 @@ function NeedHelp34() {
   if (!V101.support20Url()) return null;
   return (
     <div className="ff-help34 ff-foot156">
-      <p>Meet our team. Get help, or get featured in an exclusive FFStory that promotes your services.</p>
+      <div className="ff-foot156-two">
+        <div className="ff-foot156-c"><span className="ic" aria-hidden="true"><MessageSquare size={22} strokeWidth={1.7} /></span><b>Need help?</b><span>Talk to our team, we are happy to answer anything</span></div>
+        <div className="ff-foot156-c"><span className="ic" aria-hidden="true"><Sparkles size={22} strokeWidth={1.7} /></span><b>Want to be featured?</b><span>Get an exclusive FFStory, and we will promote your services</span></div>
+      </div>
       <Btn variant="gold" onClick={() => setBook(true)}><Calendar size={16} /> Book a meeting</Btn>
       {book && <InterviewBook17 title="Book a meeting" onClose={() => setBook(false)} />}
     </div>

@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.161
+- **Book a meeting box:** same colours, now a rounded box in two halves, each with an icon: "Need help? Talk to our team, we are happy to answer anything" and "Want to be featured? Get an exclusive FFStory, and we will promote your services", then the Book a meeting button.
+- Page saved as `live-v1.161-index.html`. Artifact version 1795151655-1d73.
+
 ## v1.160
 - **Blank venue card:** now looks like a complete venue card: dark card with the pin and "Venue card", empty name, role and note lines, and a gold plus.
 - Page saved as `live-v1.160-index.html`. Artifact version 1795151607-98b1.
