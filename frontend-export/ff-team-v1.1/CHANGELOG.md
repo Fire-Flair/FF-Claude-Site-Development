@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.176
+- **Back button:** a little larger and more see-through. It now shows on every profile you open, on FFTeam, FFStaff and FFParty, and replaces the wide Back that used to sit above Join team and Share on the other two sites.
+- Page saved as `live-v1.176-index.html`. Artifact version 1795206497-9e75.
+
 ## v1.175
 - **Profile Card:** the Languages (chat bubble) icon is now centred on the flags; the row icons sit exactly in the middle of their rows.
 - **Profile (small):** the dots between the profession icons sit on the line.

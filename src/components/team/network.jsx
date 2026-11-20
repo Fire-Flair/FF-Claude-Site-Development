@@ -155,7 +155,7 @@ function PersonProfile() {
   };
 
   /* v1.166: on FFTeam the floating Back (bottom left) is the only one; the in-page Back stays for the other sites and for your own guest preview. */
-  const backBtn = (state.role === "team" && !guestOfMe) ? null : (
+  const backBtn = true ? null : (
     <button aria-label="Back" onClick={() => rt17Back(() => dispatch({ type: "VIEW", id: null }))} className="ff-pback"
       style={{
         display: "flex", alignItems: "center", justifyContent: "center", gap: 8,

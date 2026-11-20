@@ -8,7 +8,7 @@ function ffPopOn(state) { return !!(state && state.role === "team" && state.tab 
 function ProfBack1() {
   const { state, dispatch } = useStore();
   const company = !!state.viewingCompany;
-  if (!(state.viewing || state.viewingCompany) || state.role !== "team") return null;
+  if (!(state.viewing || state.viewingCompany)) return null;
   const back = () => rt17Back(() => dispatch({ type: company ? "VIEW_COMPANY" : "VIEW", id: null }));
   return <button type="button" className="ff-pb1" aria-label="Back" onClick={back}><ChevronLeft size={22} /></button>;
 }
