@@ -86,7 +86,8 @@
 .ff .ff-pop17{position:fixed;inset:0;z-index:5000;background:rgba(24,14,10,.58);overflow:auto;display:flex;align-items:center;justify-content:center;padding:36px 40px}
 .ff .ff-pop17-card{position:relative;box-sizing:border-box;width:min(1200px,100%);max-height:calc(100vh - 72px);overflow:auto;background:var(--paper,#fbf6ea);border-radius:30px;padding:26px 28px 30px;box-shadow:0 30px 90px rgba(0,0,0,.45),0 0 0 1px rgba(160,120,40,.35)}
 .ff .ff-pop17-card > .ff-pubpage,.ff .ff-pop17-card > .ff-copub{display:grid;grid-template-columns:372px minmax(0,1fr);column-gap:30px;align-items:start;padding:0 !important;margin:0 !important;max-width:none !important;background:none !important}
-.ff .ff-pop17-card .ff-phero{grid-column:1;grid-row:1 / span 12;position:sticky;top:0;margin:0 !important;padding:0 !important;max-width:none !important;width:auto !important}
+.ff .ff-pop17-card .ff-phero{display:contents !important}
+.ff .ff-pop17-card .ff-phero .ff-pcol{grid-column:1;grid-row:1 / span 12;position:sticky;top:0;margin:0 !important;padding:0 !important;max-width:none !important;width:auto !important;order:0}
 .ff .ff-pop17-card .ff-ptabs-wrap{grid-column:2;grid-row:1;min-width:0;margin:0 !important;padding:0 !important;max-width:none !important;width:auto !important}
 .ff .ff-pop17-card .ff-pcoin17,.ff .ff-pop17-card .ff-coindiv{display:none !important}
 .ff .ff-pop17-card .ff-ptabs-wrap [role=tablist]{margin-right:58px !important;margin-top:0 !important}
@@ -106,3 +107,7 @@
 .ff .ff-nm20 { margin-top: -18px; }
 .ff .ff-nm20-q { margin: 14px 0 6px; }
 @media (min-width:1100px){ .ff .ff-nm20 { margin-top: -35px; } }
+
+/* v1.122: a profile with photos shows them to the right of the Profile Card, above the tabs (as before the pop-up). */
+.ff .ff-pop17-card .ff-phero.has-media > :not(.ff-pcol){grid-column:2;grid-row:1;width:100% !important;height:440px !important;min-height:0 !important;margin:0 0 20px !important;order:0}
+.ff .ff-pop17-card > div:has(.ff-phero.has-media) .ff-ptabs-wrap{grid-row:2}

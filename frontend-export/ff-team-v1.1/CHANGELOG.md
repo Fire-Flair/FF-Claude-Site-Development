@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.122
+- **Profile pop-up with photos:** a profile that has pictures shows them to the right of the Profile Card (big picture and thumbnails), with the tabs below them and the close X still in line with the tab bar. Profiles without pictures are unchanged.
+- Page saved as `live-v1.122-index.html`. Artifact version 1795133679-230b.
+
 ## v1.121
 - **No locked text on desktop:** the "Explore our network" title and words (Network) and the "Two minutes" title column (Home) no longer stay fixed while you scroll; they scroll away with the page. The profile pop-up's card column keeps its own stay-in-place inside the pop-up.
 - Page saved as `live-v1.121-index.html`. Artifact version 1795133430-2021.

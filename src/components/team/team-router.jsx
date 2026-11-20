@@ -18,6 +18,22 @@ function ProfilePop17({ children }) {
     return () => { document.body.style.overflow = prev; window.removeEventListener("keydown", k); };
   }, []);
   React.useEffect(() => { const c = ref.current && ref.current.querySelector(".ff-pop17-card"); if (c) c.scrollTop = 0; }, [id]);
+  /* The X sits in line with the tab bar wherever the tab bar is (below the photos when there are some). */
+  React.useEffect(() => {
+    const c = ref.current && ref.current.querySelector(".ff-pop17-card"), x = c && c.querySelector(".ff-pop17-x");
+    if (!c || !x) return;
+    const place = () => {
+      const t = c.querySelector("[role=tablist]");
+      if (!t) { x.style.top = ""; return; }
+      x.style.top = Math.max(0, Math.round(t.getBoundingClientRect().top - c.getBoundingClientRect().top + c.scrollTop)) + "px";
+    };
+    place();
+    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(place) : null;
+    if (ro) { ro.observe(c); Array.from(c.children).forEach(k => ro.observe(k)); }
+    const mo = new MutationObserver(place); mo.observe(c, { childList: true, subtree: true });
+    const t0 = setTimeout(place, 400), t1 = setTimeout(place, 1200);
+    return () => { if (ro) ro.disconnect(); mo.disconnect(); clearTimeout(t0); clearTimeout(t1); };
+  }, [id]);
   return (
     <div className="ff-pop17" ref={ref} onMouseDown={(e) => { if (e.target === e.currentTarget) close(); }}>
       <div className="ff-pop17-card" role="dialog" aria-modal="true" aria-label="Profile">
