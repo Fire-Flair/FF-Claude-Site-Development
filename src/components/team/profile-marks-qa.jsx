@@ -175,15 +175,19 @@ function PublicQA({ person }) {
 /* v1.155 (Alex 20 Nov 04:48): before the profile is published, the box beside the card ghost is about the Launch Challenge:
    we send you your card, you share it, and you build a team to win. Same look and layout as the wallet buttons. */
 function ChallengeStack() {
-  const { state, dispatch } = useStore();
+  const { state } = useStore();
   const { share, busy } = useShareCard();
+  const [open, setOpen] = useState("");
   const signedIn = state.auth.status === "signedIn";
   const cardReady = recsOf(state.profile, "professions").some(r => !r.proposed);
   const why = !signedIn ? "Create your FF Tag first and we will send you your card." : !cardReady ? "Add a profession and your card is ready to share." : null;
-  const prizes = () => {
-    dispatch({ type: "TAB", tab: "home", route: "home" });
-    setTimeout(() => { const el = document.getElementById("ff-competition"); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); else window.scrollTo(0, 0); }, 250);
-  };
+  const prizes = ((CONTENT_ADAPTER.homepageTeamPillars().challenge || {}).rewards || []).filter(r => r[0] === "Top 10" || r[0] === "Overall winner");
+  const tog = (k) => setOpen(open === k ? "" : k);
+  const Dd = ({ k, Ic, t }) => (
+    <button type="button" className={"ff-stackbtn chal" + (open === k ? " open" : "")} aria-expanded={open === k} onClick={() => tog(k)}>
+      <Ic size={17} strokeWidth={2} aria-hidden="true" /><span>{t}</span><ChevronDown size={15} strokeWidth={2.4} aria-hidden="true" className="cv" />
+    </button>
+  );
   return (
     <div className="ff-sharestack">
       <button type="button" className="ff-stackbtn wa" disabled={!!why || busy} onClick={share}>
@@ -191,9 +195,11 @@ function ChallengeStack() {
       </button>
       {why && <p className="ff-sharestack-note">{why}</p>}
       <div className="ff-walletpair">
-        <button type="button" className="ff-stackbtn chal" onClick={() => window.dispatchEvent(new Event("ff-invite"))}><Users size={17} strokeWidth={2} aria-hidden="true" /><span>Build my team</span></button>
-        <button type="button" className="ff-stackbtn chal" onClick={prizes}><Trophy size={17} strokeWidth={2} aria-hidden="true" /><span>See the prizes</span></button>
+        <Dd k="team" Ic={Users} t="Build my team" />
+        <Dd k="prizes" Ic={Trophy} t="See the prizes" />
       </div>
+      {open === "team" && <div className="ff-chal-dd"><p>Every shift you work, when you see someone you want to work with again, send them your card and ask them to join your team.</p></div>}
+      {open === "prizes" && <div className="ff-chal-dd">{prizes.map(r => <div key={r[0]}><b>{r[0]}</b><p>{r[1]}</p></div>)}</div>}
     </div>
   );
 }

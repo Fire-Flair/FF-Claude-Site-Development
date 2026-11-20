@@ -4,6 +4,12 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.157
+- **Profile page line:** the line down the left fades out at the FF monogram. From the monogram down (Overview, Q&A, the buttons and the card box) the page is full width, with no line and no "04".
+- **Launch Challenge box:** Build my team and See the prizes are drop downs: how to build a team (send your card to people you want to work with again) and the Top 10 and Overall winner prizes.
+- **Book a meeting:** now a dark footer band with no title: "Meet our team. Get help, or get featured in an exclusive FFStory that promotes your services." and the Book a meeting button.
+- Page saved as `live-v1.157-index.html`. Artifact version 1795150946-d4eb.
+
 ## v1.156
 - **Questions:** "Very difficult" is gone from "How easy was it to create your FF Team profile?"; "How do you normally travel to events?" now comes after "Do you have event experience?".
 - **Save row:** no Publish button and no tick box. "Available for hire" is the one button, always clickable: the first tap publishes the profile, after that it shows or hides your card (ticked when showing).

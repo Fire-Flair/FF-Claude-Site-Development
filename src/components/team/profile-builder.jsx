@@ -1256,12 +1256,15 @@ function ProfileBuilder() {
           <TagSection top join={join} />
           <CreatorMedia />
         </div>
+      </div>
+
+      {/* v1.157 (Alex 20 Nov 04:59): the left line fades out at the FF monogram; from there the page is full width, with no line and no 04. */}
+      <div className="ff-jflat">
         <ABOUT_TOP34.Provider value={true}>
           {/* about-overview (Alex, 18 Nov 21:17): About Me now sits in the Overview tab (under Professions), where it is on the published profile. */}
           <ProfileEditTabs person={me} />
         </ABOUT_TOP34.Provider>
         <PE2QA />
-      </div>
 
       {/* Section 4 → Save & Share → Section 5. v16.11: everything stays on the
           left-hand line. Section 5 sits level with the middle of Save & Share,
@@ -1269,11 +1272,6 @@ function ProfileBuilder() {
           then the page extends and Section 5 opens below. */}
       <div className={`ff-finale${finished ? " open" : ""}`}>
         <div className="ff-s5row">
-          {!finished && (
-            <div className="ff-s5mark" aria-hidden="true">
-              <span className="ff-stepnum closed" aria-hidden="true">{wide ? "03" : "04"}</span>
-            </div>
-          )}
           <SaveShareCard onSaved={toWelcome} />
         </div>
         {/* v1.96 (Alex, 18 Nov 22:22): the card preview under 04 is back (removed in v17.40), with Share, Add to Apple Wallet and
@@ -1281,6 +1279,7 @@ function ProfileBuilder() {
         {!finished && !editingLive && <CardPreviewSoon />}
         {editingLive && <CardPreviewSoon me={me} themeKey={p.theme} />}
         {finished && !editingLive && <WelcomeSection me={me} />}
+      </div>
       </div>
       <NeedHelp34 />
     </div>
@@ -1294,12 +1293,9 @@ function NeedHelp34() {
   const [book, setBook] = useState(false);
   if (!V101.support20Url()) return null;
   return (
-    <div className="ff-start17 ff-help34">
-      <section className="ff-way17 ff-way17-int">
-        <div className="ff-way17-ctl"><Btn variant="ghost ff-bigcv17" onClick={() => setBook(true)}><Calendar size={16} /> Book a meeting</Btn></div>
-        {/* pfa (Alex 03:29): the earlier Book an interview wording, under the heading Need help? */}
-        <div className="ff-help34-t"><h3 className="ff-help34-h">Book a meeting</h3><p className="ff-way17-line"><span>Meet the FireFlair team. Get help, or get featured in an exclusive FFStory that promotes your services.</span></p></div>
-      </section>
+    <div className="ff-help34 ff-foot156">
+      <p>Meet our team. Get help, or get featured in an exclusive FFStory that promotes your services.</p>
+      <Btn variant="gold" onClick={() => setBook(true)}><Calendar size={16} /> Book a meeting</Btn>
       {book && <InterviewBook17 title="Book a meeting" onClose={() => setBook(false)} />}
     </div>
   );
