@@ -13,7 +13,7 @@
   .ff .ff-landing #ff-two-minutes,
   .ff .ff-landing #ff-guide { display: grid; grid-template-columns: 310px minmax(0, 1fr); column-gap: 40px; align-items: start; }
   .ff .ff-landing #ff-discover > .ff-tlx,
-  .ff .ff-landing #ff-two-minutes > .ff-tlx { grid-column: 1; grid-row: 1; position: sticky; top: 72px; margin: 0; }
+  .ff .ff-landing #ff-two-minutes > .ff-tlx { grid-column: 1; grid-row: 1; margin: 0; }
   /* v1.102 (Alex, 19 Nov 21:17): the Launch Challenge title and words scroll away with the section instead of staying pinned.
      v1.103: relative, not static, so the gold title bar (drawn from the block's left edge) stays beside the title. */
   .ff .ff-landing #ff-competition > .ff-tlx { grid-column: 1; grid-row: 1; position: relative; margin: 0; }

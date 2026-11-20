@@ -76,7 +76,7 @@
   .ff .ff-hr20-l { flex: 1 1 520px; min-width: 0; }
   .ff .ff-hr20-s { flex: 0 1 400px; margin: 4px 0 14px; }
   .ff .ff-nm20 { display: grid; grid-template-columns: 380px minmax(0, 1fr); column-gap: 40px; align-items: start; }
-  .ff .ff-nm20-l { position: sticky; top: 80px; }
+  .ff .ff-nm20-l { position: static; }
   .ff .ff-nm20-l .ff-hr20-d { font-size: 17px; }
   .ff .ff-nm20-l .ff-tl20 h1 { font-size: 34px !important; }
 }
@@ -105,4 +105,4 @@
 /* v1.120: the Network title sits at the same height as Your bookings; one search under the map legend. */
 .ff .ff-nm20 { margin-top: -18px; }
 .ff .ff-nm20-q { margin: 14px 0 6px; }
-@media (min-width:1100px){ .ff .ff-nm20 { margin-top: -35px; } .ff .ff-nm20-l { top: 45px; } }
+@media (min-width:1100px){ .ff .ff-nm20 { margin-top: -35px; } }
