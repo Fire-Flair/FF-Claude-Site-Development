@@ -546,7 +546,7 @@ function xpView29(r) {
   const where = hand ? (r.address || "") : ([street, r.area && r.area.name].filter(Boolean).join(", ") || r.address || "");
   return {
     kicker: hand ? "Venue" : venTypeLabel17(r.place), name: r.name, where, Icon: venueIcon19(r),
-    role: String((r.details && r.details.role) || ""), dates: [(r.details || {}).start, (r.details || {}).end].filter(Boolean).join(" to "), note: String(r.description || "").trim(),
+    role: String((r.details && r.details.role) || ""), note: String(r.description || "").trim(),
     foot: !hand && r.area ? r.area.name : "", maps: hand ? "" : venueMapsUrl17(r), hand,
   };
 }
@@ -564,36 +564,8 @@ const XP_TONES29 = {
 
 
 /* note / onNote (v1.35): in the pop-up the note is typed straight onto the card. */
-/* v1.154 (Alex 20 Nov 04:42): dates without ugly drop boxes: two small pills per date, each opening a sideways-scrolling strip of choices. */
-const XP_MON29 = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-function xpParse29(t) {
-  const m = /^([A-Za-z]{3})[a-z]*\.?\s+(\d{4})$/.exec(String(t || "").trim());
-  if (m) return { m: XP_MON29.find(x => x.toLowerCase() === m[1].toLowerCase()) || "", y: m[2], now: false };
-  if (/^present$/i.test(String(t || "").trim())) return { m: "", y: "", now: true };
-  return { m: "", y: /^\d{4}$/.test(String(t || "").trim()) ? String(t).trim() : "", now: false };
-}
-function xpJoin29({ m, y, now }) { return now ? "Present" : m && y ? `${m} ${y}` : y || m || ""; }
-function XpDates29({ start, end, onChange }) {
-  const [open, setOpen] = useState("");   /* "fm" "fy" "tm" "ty" */
-  const f = xpParse29(start), t = xpParse29(end);
-  const yr = new Date().getFullYear();
-  const years = Array.from({ length: 36 }, (_, i) => String(yr - i));
-  const setF = (x) => onChange(xpJoin29({ ...f, ...x }), xpJoin29(t));
-  const setT = (x) => onChange(xpJoin29(f), xpJoin29({ ...t, ...x }));
-  const pill = (id, txt, ph) => <button type="button" className={"ff-xd29-p" + (txt ? " on" : "") + (open === id ? " open" : "")} onClick={() => setOpen(open === id ? "" : id)}>{txt || ph}<ChevronDown size={14} strokeWidth={2.2} aria-hidden="true" /></button>;
-  const strip = (items, cur, pick) => <div className="ff-xd29-s" role="listbox">{items.map(i => <button key={i} type="button" role="option" aria-selected={cur === i} className={cur === i ? "on" : ""} onClick={() => { pick(i); setOpen(""); }}>{i}</button>)}</div>;
-  return (
-    <div className="ff-xd29">
-      <div className="ff-xd29-r"><span className="l">From</span>{pill("fm", f.m, "Month")}{pill("fy", f.y, "Year")}</div>
-      {open === "fm" && strip(XP_MON29, f.m, (m) => setF({ m }))}
-      {open === "fy" && strip(years, f.y, (y) => setF({ y }))}
-      <div className="ff-xd29-r"><span className="l">To</span>{t.now ? <button type="button" className="ff-xd29-p on" onClick={() => setT({ now: false })}>Present<ChevronDown size={14} strokeWidth={2.2} aria-hidden="true" /></button> : <>{pill("tm", t.m, "Month")}{pill("ty", t.y, "Year")}<button type="button" className="ff-xd29-p now" onClick={() => { setOpen(""); setT({ now: true }); }}>Present</button></>}</div>
-      {open === "tm" && strip(XP_MON29, t.m, (m) => setT({ m }))}
-      {open === "ty" && strip(years, t.y, (y) => setT({ y }))}
-    </div>
-  );
-}
-function ExperienceCard29({ record, onClick, note, onNote, tone, role, onRole, dStart, dEnd, onDates }) {
+/* v1.167 (Alex 20 Nov 19:12): no From and To dates on a venue card. */
+function ExperienceCard29({ record, onClick, note, onNote, tone, role, onRole }) {
   const v = xpView29(record);
   const tn = XP_TONES29[tone || XP_TONE29] ? (tone || XP_TONE29) : "champagne";
   const typing = typeof onNote === "function";
@@ -615,9 +587,8 @@ function ExperienceCard29({ record, onClick, note, onNote, tone, role, onRole, d
         {typing && onRole
           ? <span className="role typ">
               <input className="ff-xc29-tx ff-xc29-in1" value={role || ""} maxLength={80} onChange={(e) => onRole(e.target.value)} aria-label="Your role" placeholder="Your role" />
-              <XpDates29 start={dStart} end={dEnd} onChange={onDates} />
             </span>
-          : (v.role || v.dates) && <span className="role">{v.role && <b>{v.role}</b>}{v.dates && <span>{v.dates}</span>}</span>}
+          : v.role && <span className="role"><b>{v.role}</b></span>}
         {typing
           ? <textarea className="nt ff-xc29-tx" rows={3} autoFocus value={note || ""} onChange={(e) => onNote(e.target.value)}
               aria-label={`What you did at ${v.name}`} placeholder="What I did there" />
@@ -661,15 +632,13 @@ function ExperienceSheet29({ record, onClose }) {
   const d0 = (record && record.details) || {};
   const isVenue = !!record && record.category !== "experience";
   const [role, setRole] = useState(String(d0.role || ""));
-  const [ds, setDs] = useState(String(d0.start || ""));
-  const [de, setDe] = useState(String(d0.end || ""));
   if (!record) return null;
   const v = xpView29(record);
   const save = () => {
     const t = note.trim();
     const patch = {};
     if (t !== String(record.description || "").trim()) patch.description = t;
-    if (isVenue && (role.trim() !== String(d0.role || "") || ds !== String(d0.start || "") || de !== String(d0.end || ""))) patch.details = { ...d0, role: role.trim(), start: ds, end: de };
+    if (isVenue && (role.trim() !== String(d0.role || ""))) patch.details = { ...d0, role: role.trim() };
     if (Object.keys(patch).length) dispatch({ type: "REC_PATCH", category: record.category, id: record.id, patch });
     onClose();
   };
@@ -684,7 +653,7 @@ function ExperienceSheet29({ record, onClose }) {
     <Sheet open center title="Venues" onClose={save}>
       <style>{xpCSS29}</style>
       <div className="ff-xs29">
-        <div className="ff-xs29-card"><ExperienceCard29 record={record} note={note} onNote={setNote} {...(isVenue ? { role, onRole: setRole, dStart: ds, dEnd: de, onDates: (a, b) => { setDs(a); setDe(b); } } : {})} /></div>
+        <div className="ff-xs29-card"><ExperienceCard29 record={record} note={note} onNote={setNote} {...(isVenue ? { role, onRole: setRole } : {})} /></div>
         <div className="ff-xs29-act">
           <GacDelete17 onDelete={remove} />
           <Btn variant="gold" onClick={save}><Check size={15} strokeWidth={2.4} /> Done</Btn>

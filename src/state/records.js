@@ -27,7 +27,7 @@ const BASE_CATEGORIES = {
   skills: {
     label: "Skills", singular: "Skill", icon: "skills",
     onCard: true, cardLimit: 3, fields: ["description", "media"],
-    placeholder: "Cocktail Mixology",
+    placeholder: "Teamwork",
   },
   cocktails: {
     label: "Signature cocktails", singular: "Signature cocktail", cardLabel: "Signature", icon: "cocktails",

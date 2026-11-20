@@ -287,6 +287,7 @@ function PE2Overview({ records }) {
             <PE2ProfCats P={P} />
           </div>
         )}
+        <BizOwner167 />
       </section>
       <section className="ff-pp ff-pp21 pp-sec" aria-labelledby="pe2-attr-h">
         <div className="ff-pp-head"><h2 id="pe2-attr-h" className="ff-about-h">Attributes</h2></div>
@@ -460,3 +461,25 @@ function PE2QA() {
     </section>
   );
 }
+
+
+/* v1.167 (Alex 20 Nov 19:12): at the bottom of Professions, a small tick box, "Are you a business owner?", bank icon, tick on the right.
+   Ticking opens the company card creator (the same card builder FFStaff uses) for the basic company card details. */
+const Landmark167 = lucideIcon("Landmark");
+function BizOwner167() {
+  const { state, dispatch } = useStore();
+  const on = !!(state.profile && state.profile.ownsBusiness);
+  const toggle = () => dispatch({ type: "PROFILE", patch: { ownsBusiness: !on } });
+  return (
+    <div className={"pe2-biz167" + (on ? " on" : "")}>
+      <button type="button" role="checkbox" aria-checked={on} className="pe2-biz167-b" onClick={toggle}>
+        <span className="ic" aria-hidden="true"><Landmark167 size={18} strokeWidth={1.8} /></span>
+        <span className="tx"><FitLabel17>Are you a business owner?</FitLabel17></span>
+        <span className="bx" aria-hidden="true">{on ? <Check size={15} strokeWidth={3} /> : null}</span>
+      </button>
+      {on && <div className="pe2-biz167-card"><EditableCompanyCard plain noType /></div>}
+    </div>
+  );
+}
+
+

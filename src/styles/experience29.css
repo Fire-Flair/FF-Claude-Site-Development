@@ -139,3 +139,8 @@
 .ff .ff-xc29-add .ff-xca-ft { margin-top: auto; padding-top: 12px; position: relative; top: 0; border-top: 1px solid rgba(244,239,228,.14); display: flex; justify-content: flex-end; }
 .ff .ff-xc29-add .ff-xca-plus { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid #E4C36A; color: #14110A; background: linear-gradient(180deg, #F0D98A, #C9A227); box-shadow: 0 4px 10px rgba(0,0,0,.35); }
 .ff .ff-xc29-add:hover { border-color: #E4C36A; }
+
+/* v1.167 (Alex 20 Nov 19:12): the icon and the card title share one dark box, like the other attribute cards */
+.ff .ff-xc29-kr, .ff .ff-xc29-add .ff-xca-kr { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 13px 0 0; border-radius: 11px; corner-shape: squircle; background: #14110A; border: 1px solid rgba(228,195,106,.5); align-self: flex-start; }
+.ff .ff-xc29 .ff-xc29-kr .k.vb, .ff .ff-xc29-add .ff-xca-kr .k.vb { width: 30px; height: 30px; border: 0; border-radius: 0; background: transparent; margin: 0; position: static; }
+.ff .ff-xc29-kt, .ff .ff-xc29-add .ff-xca-kt { color: #E4C36A; }

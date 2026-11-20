@@ -185,3 +185,25 @@
 .ff .pe2-rail .ff-agrp .ff-agrp-top { padding-right: 40px; }
 .ff .ff-agrp .pe2-pen1, .ff .pe2-gt .pe2-pen1 { right: 4px; }
 .ff .ff-pt21 .pe2-pen1, .ff .pe2-pen-t { top: 18px; right: 6px; }
+
+/* v1.167 (Alex 20 Nov 19:12): the Skills and Interests pop-ups stack their cards down the page, not sideways */
+.ff .pe2-attr-pop .ff-pt21-row { flex-direction: column; overflow: visible; scroll-snap-type: none; touch-action: auto; gap: 12px; padding: 2px 0 6px; }
+.ff .pe2-attr-pop .ff-pt21-slot, .ff .pe2-attr-pop .ff-pt21-it { width: 100%; }
+.ff .pe2-attr-pop .ff-agrp.ff-pt21 { width: 100%; aspect-ratio: auto; min-height: 0; }
+.ff .pe2-attr-pop .ff-agrp.ff-pt21 .ff-agrp-h { font-size: 17px; }
+.ff .pe2-attr-pop .ff-agrp.ff-pt21 .ff-agrp-d { font-size: 13px; line-height: 1.45; }
+.ff .pe2-attr-pop .ff-pt21-star, .ff .pe2-attr-pop .ff-agrp.ff-pt21 [class*="star"] { position: static; }
+.ff .pe2-attr-pop .ff-agrp.ff-pt21 .ff-agrp-d { padding-right: 46px; }
+
+/* v1.167: business owner tick box, bank icon on the left of the label, tick box on the right */
+.ff .pe2-biz167 { margin-top: 18px; border-top: 1px solid rgba(176,141,42,.3); padding-top: 12px; }
+.ff .pe2-biz167-b { width: 100%; min-height: 48px; display: flex; align-items: center; gap: 10px; padding: 0 4px; border: 0; background: none; cursor: pointer; text-align: left; font: 600 14.5px var(--sans); color: var(--color-ink, #1B1A17); }
+.ff .pe2-biz167-b .ic { flex: none; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 11px; corner-shape: squircle; background: #14110A; border: 1px solid rgba(228,195,106,.5); color: #E4C36A; }
+.ff .pe2-biz167-b .tx { flex: 1 1 auto; min-width: 0; }
+.ff .pe2-biz167-b .bx { flex: none; width: 26px; height: 26px; display: grid; place-items: center; border-radius: 9px; corner-shape: squircle; border: 1.5px solid #B08D2A; background: #FFFDF8; color: #fff; }
+.ff .pe2-biz167.on .bx { background: #7E611D; border-color: #7E611D; }
+.ff .pe2-biz167-card { margin-top: 12px; padding: 14px; border-radius: 18px; corner-shape: squircle; background: #FFFBEE; border: 1px solid rgba(176,141,42,.4); display: grid; gap: 12px; }
+.ff .pe2-biz167-card .ff-base17-note { display: none; }
+.ff .pe2-biz167-card { display: block; }
+.ff .pe2-biz167-card .ff-cocard { width: 100%; max-width: 460px; }
+.ff .pe2-biz167-card .ff-cc11-base { margin-top: 12px; }

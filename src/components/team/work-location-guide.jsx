@@ -34,7 +34,11 @@ function CardPreviewSoon({ me, themeKey } = {}) {
           <span className="av" /><span className="l1" /><span className="l2" /><span className="l3" /><span className="l4" />
         </div>
         <div className="ff-cardpreview-tx">
-          <b>Join the Launch Challenge</b>
+          <div className="ff-chal-ttl">
+            <svg className="ff-chal-sym" viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="9" width="17" height="12" rx="3.5" /><path d="M8 14h6M8 17.5h4" /><path d="M20 22l6-6m0 0h-4.5M26 16v4.5" /></svg>
+            <b>Join the Launch Challenge</b>
+            <svg className="ff-chal-sym" viewBox="0 0 32 32" aria-hidden="true"><circle cx="9" cy="16" r="3.2" /><circle cx="23" cy="8.5" r="3.2" /><circle cx="23" cy="23.5" r="3.2" /><path d="M11.8 14.4l8.4-4.3M11.8 17.6l8.4 4.3" /></svg>
+          </div>
           <p>We will send you your card. Share it, bring in the people you work with and build a team to win.</p>
         </div>
         </>}

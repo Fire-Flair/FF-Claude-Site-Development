@@ -4,6 +4,14 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.168
+- **Professions:** a small "Are you a business owner?" row at the bottom, bank icon on the left, tick box on the right. Ticking opens the company card creator (the same one FFStaff uses) for the basic company card details.
+- **Venue cards:** the title now sits in the same box as the icon, matching the other URL cards. The From and To dates are gone.
+- **Skills and Interests:** the tap pop-ups stack the cards vertically, no sideways scroll; a skill's description shows under it in a smaller font.
+- **Default skill:** the placeholder is now "Teamwork", not a cocktail skill.
+- **Join the Launch Challenge:** small line symbols either side of the title, a card being passed on and share nodes.
+- Page saved as `live-v1.168-index.html`. Artifact version 1795203539-9a0b.
+
 ## v1.167
 - **Network map legend:** the drop-down arrow is now a clean chevron inside each pill, set off by a thin line, so nothing overlaps the box.
 - Page saved as `live-v1.167-index.html`. Artifact version 1795201340-dd9b.
