@@ -146,3 +146,13 @@
 /* v1.126: every Q&A card is the same size. */
 .ff .pe2-qa .pe2-qa-cardw{display:flex}
 .ff .pe2-qa .pe2-qc{height:410px !important;min-height:410px !important;overflow:auto}
+
+/* v1.133 (Alex 20 Nov 01:20): dotted plus circle; pencil top right on profession and attribute boxes; the pop-ups sit in the middle of the screen. */
+.ff .pe2-plus1{border-style:dotted !important;border-width:2px !important;background:transparent !important}
+.ff .pe2-pen1{position:absolute;top:9px;right:9px;z-index:2;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;color:var(--color-gold-dk);pointer-events:none}
+.ff .pe2-gt{position:relative}
+.ff .pe2-gt .pe2-pen1{top:6px;right:6px;width:22px;height:22px}
+.ff .pe2-rail .ff-agrp{position:relative}
+.ff .ff-scrim:has(.pe2-attr-pop),.ff .ff-scrim:has(.ff-gac17){align-items:center !important;padding-top:10px !important}
+.ff .ff-scrim:has(.pe2-attr-pop) .ff-sheet,.ff .ff-scrim:has(.ff-gac17) .ff-sheet{max-height:calc(100dvh - 120px)}
+.ff .pe2-rail .ff-agrp .ff-agrp-top{padding-right:32px}

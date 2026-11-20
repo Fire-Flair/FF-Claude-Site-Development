@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.133
+- **Create a profile:** the empty attribute boxes (Qualifications, Skills, Interests) have a dotted plus circle; once one has an entry, another empty dotted plus box follows it so you can always add another. A pencil sits top right on every profession and attribute box. The attribute and profession-detail pop-ups sit in the middle of the screen. "Add your own" is only on the Specialist drop box.
+- Page saved as `live-v1.133-index.html`. Artifact version 1795137818-8b5e.
+
 ## v1.132
 - **Profile pages:** the divider monogram is simpler: the logo's two F's, larger and spaced apart, in flat gold inside a thin gold ring with no background fill.
 - Page saved as `live-v1.132-index.html`. Artifact version 1795137664-1c23.

@@ -187,6 +187,7 @@ function PE2ProfCats({ P }) {
                   <span className="ic" aria-hidden="true">{pe2CatIcon(c.key, 22)}</span>
                   <span className="nm" style={{ fontSize: pe2TileFs(groupLabel17(c.key)) }}>{groupLabel17(c.key)}</span>
                   {n > 0 && <span className="ct" aria-hidden="true">{n}</span>}
+                  <span className="pe2-pen1" aria-hidden="true"><Pencil size={13} strokeWidth={2.1} /></span>
               </button>
               {openIdx >= 0 && i === rowEnd && <PE2CatPanel key={"p-" + openCat} P={P} c={cats5[openIdx]} />}
             </React.Fragment>
@@ -226,10 +227,10 @@ function PE2CatPanel({ P, c }) {
           {mineHere.map(r => <PE2Chip key={r.id} name={r.name} on onClick={() => P.remove(r)} />)}
         </div>
       )}
-      <form className={"ff-type21 pe2-pc-type pe2-cp-type" + (q.trim() ? " has" : "")} onSubmit={add}>
+      {c.key === "Other" && <form className={"ff-type21 pe2-pc-type pe2-cp-type" + (q.trim() ? " has" : "")} onSubmit={add}>
         <input type="text" value={q} maxLength={PROF_MAX_LEN} autoComplete="off" spellCheck={false} enterKeyHint="enter" placeholder="Add your own" aria-label={`Add your own ${label} profession`}
           onChange={(e) => setQ(e.target.value)} />
-      </form>
+      </form>}
     </div>
   );
 }
@@ -295,14 +296,17 @@ function PE2Overview({ records }) {
             const shown = rankedRecords(records[k] || []).filter(r => !r.hidden && !r.proposed);
             const empty = !shown.length;
             const on = attrOpen === k;
-            return (
-              <button key={k} type="button" role="listitem" className={"ff-agrp " + (empty ? "pe2-agrp-empty" : tierCls17(ci)) + (on ? " pe2-agrp-on" : "")} aria-label={`Edit ${def.label}`} aria-expanded={on} aria-controls="pe2-attr-ed" onClick={() => { setAttrOpen(on ? null : k); setQualOpen(null); }}>
-                <span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span>{!empty && <span className="ff-agrp-n">{shown.length}</span>}</span>
-                {empty ? <span className="pe2-empty-fill" aria-hidden="true" /> : <span className="ff-agrp-l">{shown.slice(0, 5).map(r => <span key={r.id}>{nbh21(r.name)}</span>)}</span>}
-                {shown.length > 5 && <span className="ff-agrp-more">{`+${shown.length - 5}`}</span>}
-                <span className="pe2-plus1" aria-hidden="true"><Plus size={empty ? 26 : 18} strokeWidth={2.2} /></span>
+            const card = (isEmpty, key) => (
+              <button key={key} type="button" role="listitem" className={"ff-agrp " + (isEmpty ? "pe2-agrp-empty" : tierCls17(ci)) + (on ? " pe2-agrp-on" : "")} aria-label={`${isEmpty && !empty ? "Add another" : "Edit"} ${def.label}`} aria-expanded={on} onClick={() => { setAttrOpen(on ? null : k); setQualOpen(null); }}>
+                <span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span>{!isEmpty && <span className="ff-agrp-n">{shown.length}</span>}</span>
+                {isEmpty ? <span className="pe2-empty-fill" aria-hidden="true" /> : <span className="ff-agrp-l">{shown.slice(0, 5).map(r => <span key={r.id}>{nbh21(r.name)}</span>)}</span>}
+                {!isEmpty && shown.length > 5 && <span className="ff-agrp-more">{`+${shown.length - 5}`}</span>}
+                {isEmpty && <span className="pe2-plus1" aria-hidden="true"><Plus size={26} strokeWidth={2.2} /></span>}
+                <span className="pe2-pen1" aria-hidden="true"><Pencil size={15} strokeWidth={2.1} /></span>
               </button>
             );
+            /* v1.133 (Alex 20 Nov 01:20): once there is an entry, an empty dotted plus box follows it, so there is always one to add to. */
+            return empty ? card(true, k) : <React.Fragment key={k}>{card(false, k)}{card(true, k + "-add")}</React.Fragment>;
           })}
           <span className="ff-acar-end" aria-hidden="true" />
         </div>

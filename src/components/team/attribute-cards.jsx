@@ -764,6 +764,7 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
 
   return (
     <Sheet open onClose={onClose} title={def.singular}>
+      <span className="ff-gac17" hidden />
       <Field label={def.titleLabel || "Title"}>
         {readOnly
           ? <div className="ff-display" style={{ fontSize: 17 }}>{draft.name}</div>
