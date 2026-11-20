@@ -111,3 +111,16 @@
 /* v1.122: a profile with photos shows them to the right of the Profile Card, above the tabs (as before the pop-up). */
 .ff .ff-pop17-card .ff-phero.has-media > :not(.ff-pcol){grid-column:2;grid-row:1;width:100% !important;height:440px !important;min-height:0 !important;margin:0 0 20px !important;order:0}
 .ff .ff-pop17-card > div:has(.ff-phero.has-media) .ff-ptabs-wrap{grid-row:2}
+
+/* v1.123: on a wide screen the search and the pin you tapped sit under the title on the left; the map and its legend on the right. */
+.ff .ff-nm20-q{margin:14px 0 6px}
+.ff .ff-map-sel{margin-top:6px}
+@media (min-width:1100px){
+  .ff .ff-nm20{grid-template-rows:auto auto auto 1fr auto}
+  .ff .ff-nm20-r,.ff .ff-mapwrap{display:contents}
+  .ff .ff-nm20-l{grid-column:1;grid-row:1;position:static}
+  .ff .ff-nm20 .ff-map{grid-column:2;grid-row:1 / span 4}
+  .ff .ff-nm20 .ff-ml19{grid-column:2;grid-row:5}
+  .ff .ff-nm20 .ff-nm20-q{grid-column:1;grid-row:2;margin:6px 0 4px}
+  .ff .ff-nm20 .ff-map-sel{grid-column:1;grid-row:3;margin-top:10px}
+}

@@ -455,7 +455,7 @@ function FFMap({ mode = "home" }) {
   const nLdn = pins.filter(p => p.kind !== "company" || p.ldn).length;
 
   return (
-    <div>
+    <div className="ff-mapwrap">
       {!fallback ? (
         <div className="ff-map ff-map-real ff-map-uk" style={{ height: 440, isolation: "isolate" }}>
           <div ref={boxRef} className="ff-map-uk-in far" style={{ position: "absolute", inset: 0 }} />
@@ -502,7 +502,7 @@ function FFMap({ mode = "home" }) {
       </div>
 
       {sel ? (
-        <div>
+        <div className="ff-map-sel">
           {sel.kind === "company" ? (() => { const co = companyList(state).find(x => x.id === sel.coId) || companyById(state, sel.coId); return co ? (
             <button type="button" className="ff-co11-tile" style={{ display: "block", margin: "0 auto", maxWidth: 360, width: "100%" }} onClick={() => { dispatch({ type: "VIEW_COMPANY", id: co.id }); window.scrollTo(0, 0); }} aria-label={`${co.name}: open their page`}>
               <CompanyCardFace c={co} size="sm" />
@@ -516,14 +516,11 @@ function FFMap({ mode = "home" }) {
                 <span className="ff-display" style={{ fontSize: 15, color: "#F2ECE0" }}>{sel.name}</span>
                 <span className="ff-serif" style={{ fontSize: 13.5, color: "rgba(242,236,224,.75)" }}>{sel.note}</span>
               </div>
-            ) : (<>
-              <PlayerCard person={{ ...sel, tag: sel.tag, photo: sel.photo, level: sel.level || 3 }} format="mini" themeKey={sel.theme || "onyx"} />
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 10 }}>
-                <span className="ff-label" style={{ color: "var(--gold-dk)" }}>{TIERS[sel.tier] ? TIERS[sel.tier].name : ""} · {sel.area}</span>
-                <span style={{ flex: 1, height: 1, background: "var(--rule)" }} />
-                <button onClick={() => { dispatch({ type: "VIEW", id: sel.id }); window.scrollTo(0, 0); }} className="ff-btn sm ghost">View profile</button>
-              </div>
-            </>)}
+            ) : (() => {
+              /* v1.123 (Alex 20 Nov 00:17): a person's pin always shows the same small Profile Card as the rows (no list bar). */
+              const pp = directory.find(x => x.id === sel.id) || { ...sel, tag: sel.tag, photo: sel.photo, level: sel.level || 3 };
+              return <div style={{ display: "flex", justifyContent: "center" }}><PlayerTile person={pp} onClick={() => { dispatch({ type: "VIEW", id: sel.id }); window.scrollTo(0, 0); }} /></div>;
+            })()}
         </div>
       ) : null}
     </div>
