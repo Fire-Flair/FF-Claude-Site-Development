@@ -462,7 +462,7 @@ const venueKind19 = (r) => (r && r.details && r.details.kind === "favourite" ? "
 
 const venueIcon19 = (r) => {
   const t = (r.place && (r.place.primaryType || (r.place.types || [])[0])) || "";
-  if (!r.place) return Pencil;
+  if (!r.place) return MapPin;
   if (/hotel|lodging/.test(t)) return Building2;
   if (/wine/.test(t)) return Wine;
   if (/bar|pub/.test(t)) return Martini;
@@ -573,6 +573,7 @@ function ExperienceCard29({ record, onClick, note, onNote, tone }) {
   return (
     <CardFrame as="div" theme={XP_TONES29[tn]} className={"ff-xc29 t-" + tn + (v.hand ? " hand" : "") + (typing ? " typing" : "")} onClick={onClick}
       style={{ width: CARD_W.venue, backgroundImage: `${XP_TONES29[tn].bg}, ${XP_TONES29[tn].ring}` }}>
+      {onClick && <span className="pe2-pen1 ff-xc29-pen" aria-hidden="true"><Pencil size={15} strokeWidth={2.1} /></span>}
       <div className="ff-xc29-in" role={onClick ? "button" : undefined} tabIndex={onClick ? 0 : undefined}
         aria-label={onClick ? `${v.name}. Open details` : undefined} onKeyDown={onClick ? key : undefined}>
         <span className="k vb" title={v.kicker}><Icon size={17} strokeWidth={1.8} aria-hidden="true" /><span className="ff-sr">{v.kicker}</span></span>

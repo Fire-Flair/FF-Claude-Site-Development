@@ -230,27 +230,27 @@ function FsSteps17() {
 function ProfRates17({ guest }) {
   const { state, dispatch } = useStore();
   const account = guest ? null : qaAccount17(state);
-  const mine = guest ? [] : recsOf(state.profile, "professions").filter(r => !r.proposed).map(r => r.name);
+  const mine = guest ? [] : recsOf(state.profile, "professions").filter(r => !r.proposed && !r.hidden).map(r => r.name);
   const rated = account ? ALL_PROFESSIONS.map(p => p.name).filter(n => prefRateP17(state, account, n) != null) : [];
-  const base = [...new Set([...mine, ...rated])];
-  const [extra, setExtra] = useState([]);
-  const [off, setOff] = useState([]);
-  const [add, setAdd] = useState("");
+  /* v1.140 (Alex 20 Nov 02:46): the profession boxes from the profile, then a rate for each profession chosen, then Save. */
+  const [chosen, setChosen] = useState(() => [...new Set([...mine, ...rated])]);
+  const [cats, setCats] = useState({});
   const [vals, setVals] = useState({});
   const [errs, setErrs] = useState({});
   const [busy, setBusy] = useState(false);
-  const shown = [...new Set([...base, ...extra])];
-  const chosen = shown.filter(n => !off.includes(n));
-  const toggle = (n) => setOff(o => o.includes(n) ? o.filter(x => x !== n) : [...o, n]);
-  const addOne = () => {
-    const t = add.trim().slice(0, 60); if (!t) return;
-    const hit = ALL_PROFESSIONS.find(p => p.name.toLowerCase() === t.toLowerCase());
-    const n = hit ? hit.name : t;
-    if (!shown.includes(n)) setExtra(x => [...x, n]);
-    setOff(o => o.filter(x => x !== n)); setAdd("");
+  const has = (n) => chosen.some(x => x.toLowerCase() === String(n).toLowerCase());
+  const catOf = (n) => professionCategory(n, cats[n]) || "Other";
+  const P = {
+    mine: chosen.map(n => ({ id: n, name: n, displayCategory: cats[n] })),
+    has,
+    toggle: (n, category) => { if (has(n)) setChosen(c => c.filter(x => x.toLowerCase() !== String(n).toLowerCase())); else { setChosen(c => [...c, n]); if (category) setCats(x => ({ ...x, [n]: category })); } },
+    remove: (r) => setChosen(c => c.filter(x => x !== r.name)),
+    catOf: (r) => catOf(r.name),
+    ownIn: (key) => chosen.filter(n => !ALL_PROFESSIONS.some(p => p.name.toLowerCase() === n.toLowerCase()) && catOf(n) === key).map(n => ({ id: n, name: n })),
+    dispatch: (a) => { if (a && a.type === "REC_PATCH" && a.patch && a.patch.displayCategory) setCats(x => ({ ...x, [a.id]: a.patch.displayCategory })); },
   };
-  const onVal = (n, v) => { setVals(x => ({ ...x, [n]: v })); setErrs(x => ({ ...x, [n]: "" })); };
   const savedOf = (n) => account ? prefRateP17(state, account, n) : null;
+  const onVal = (n, v) => { setVals(x => ({ ...x, [n]: v })); setErrs(x => ({ ...x, [n]: "" })); };
   const save = async () => {
     if (busy) return;
     if (!account) { window.dispatchEvent(new Event("ff-login")); return; }
@@ -259,9 +259,10 @@ function ProfRates17({ guest }) {
     if (Object.keys(bad).length) { setErrs(bad); return; }
     setBusy(true);
     let okAll = true;
-    for (const n of shown) {
+    const all = [...new Set([...chosen, ...rated])];
+    for (const n of all) {
       const saved = savedOf(n);
-      const t = chosen.includes(n) ? String(vals[n] != null ? vals[n] : (saved != null ? saved / 100 : "")).trim() : "";
+      const t = has(n) ? String(vals[n] != null ? vals[n] : (saved != null ? saved / 100 : "")).trim() : "";
       if (!t) {
         if (saved != null) { const r2 = await qaWithdraw17(dispatch, { account, questionId: qaRateQid17(n) }); if (!r2.ok) okAll = false; }
         continue;
@@ -276,18 +277,9 @@ function ProfRates17({ guest }) {
   };
   return (
     <div className="ff-fs5">
-      <h4 className="ff-fs5-h">Choose your professions</h4>
-      <div className="ff-fs5-chips" role="group" aria-label="Your professions">
-        {shown.map(n => <button key={n} type="button" className="ff-chip ff-fs5-chip" aria-pressed={!off.includes(n)} onClick={() => toggle(n)}>{!off.includes(n) && <Check size={13} strokeWidth={2.6} aria-hidden="true" />}{n}</button>)}
-      </div>
-      <div className="ff-fs5-add">
-        <input type="text" list="ff-fs5-profs" value={add} placeholder="Add a profession" aria-label="Add a profession" onChange={(e) => setAdd(e.target.value)}
-          onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addOne(); } }} />
-        <button type="button" className="ff-fs5-plus" aria-label="Add" disabled={!add.trim()} onClick={addOne}><Plus size={18} /></button>
-        <datalist id="ff-fs5-profs">{ALL_PROFESSIONS.filter(p => !shown.includes(p.name)).map(p => <option key={p.name} value={p.name} />)}</datalist>
-      </div>
-      {chosen.length > 0 && <>
-        <h4 className="ff-fs5-h">Your preferred hourly rate</h4>
+      <style>{PE2_CSS}</style>
+      <PE2ProfCats P={P} />
+      {chosen.length > 0 && (
         <div className="ff-fs5-rates">
           {chosen.map(n => {
             const saved = savedOf(n);
@@ -306,8 +298,7 @@ function ProfRates17({ guest }) {
             );
           })}
         </div>
-        <p className="ff-fs5-vis">Shown to businesses on FF Staff only</p>
-      </>}
+      )}
       <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={busy} onClick={save}><Check size={15} /> Save</button>
     </div>
   );
@@ -892,7 +883,7 @@ function TeamBookings({ guest = false }) {
           <p>Businesses on FF Staff hire people for shifts. They see your preferred hourly rate for each of your professions before they hire you, and set the pay on each shift card.</p>
           </div>
           {/* v1.46 bookings (Alex, 18 Nov 20:06): signed out, the three steps; signed in, their own professions and rates. */}
-          {guest || !signedIn ? <FsSteps17 /> : <ProfRates17 />}
+          <ProfRates17 guest={guest || !signedIn} />
         </div>
       </section>
 

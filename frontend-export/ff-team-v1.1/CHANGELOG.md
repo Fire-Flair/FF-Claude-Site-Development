@@ -4,6 +4,11 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.140
+- **FFStaff on Bookings:** the 1, 2, 3 steps and "Get started" are replaced by the profession boxes from the profile (type a profession, or open a category and tap professions). Each profession chosen gets a preferred hourly rate box (£ per hour), and the button says Save. Signed out, Save opens sign-in.
+- **Venue cards:** a pencil sits top right; hand-added venues show a map-pin badge instead of a pencil.
+- Page saved as `live-v1.140-index.html`. Artifact version 1795142927-cdf8.
+
 ## v1.139
 - **CV extraction:** the CV now gives Venues, not Experience. Each position becomes a venue card: the venue or employer is the title, the job role goes into the description, and the dates are kept on the card.
 - **Stars:** in the Skills, Interests and Qualifications lists each entry has a star that puts it on the profile card. The first five are starred to begin with; starring or unstarring moves it above or below the starred ones. (The top-three slots stay on Professions.)

@@ -100,3 +100,5 @@
 .ff .ff-xc29-add .k.vb{position:absolute;top:14px;left:14px;display:grid;place-items:center;width:30px;height:30px;border-radius:10px;corner-shape:squircle;background:#14110A;border:1px solid rgba(228,195,106,.5);color:#E4C36A}
 .ff .ff-xc29-add .pe2-plus1{position:absolute;left:50%;top:50%;right:auto;bottom:auto;transform:translate(-50%,-50%);width:58px;height:58px}
 .ff .ff-xc29-add{max-width:100%}
+.ff .ff-xc29{position:relative}
+.ff .ff-xc29 .ff-xc29-pen{position:absolute;top:14px;right:14px;z-index:3;width:30px;height:30px;border-radius:10px;corner-shape:squircle;display:grid;place-items:center;color:#E4C36A;background:rgba(0,0,0,.28);border:1px solid rgba(228,195,106,.45)}
