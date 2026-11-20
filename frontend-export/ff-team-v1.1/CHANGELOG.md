@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.158
+- **Q&A:** now on the Packages tab only, under the terms and conditions. On a live profile it shows the work answers (the website feedback questions are never shown); on the profile builder it is the answer-your-questions area. Gone from Overview, Team and Reviews.
+- Page saved as `live-v1.158-index.html`. Artifact version 1795151025-77ad.
+
 ## v1.157
 - **Profile page line:** the line down the left fades out at the FF monogram. From the monogram down (Overview, Q&A, the buttons and the card box) the page is full width, with no line and no "04".
 - **Launch Challenge box:** Build my team and See the prizes are drop downs: how to build a team (send your card to people you want to work with again) and the Top 10 and Overall winner prizes.

@@ -546,14 +546,14 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
             </section>
           )}
           <FireFlairIntroductions17 person={person} />
-          {/* v1.149 (Alex 20 Nov 04:22): the Q&A lives on the Overview tab only. */}
-          <PkgExtras17 person={person} />
         </>)}
         {/* v1.57 (Alex, 18 Nov 20:51): Work locations are off the Packages tab for now; the slider has the Bookings package cards. */}
         {tab === "services" && (pkgItems.length || own
           ? <ProfilePackages17 person={person} own={own} />
           : <Empty1 icon={<Sparkles size={20} />}>{first} hasn't added any packages yet.</Empty1>)}
         {tab === "services" && packagesTail}
+        {/* v1.158 (Alex 20 Nov 05:02): the Q&A lives on the Packages tab only, under the terms and conditions (work questions; the website feedback ones are never shown). */}
+        {tab === "services" && <PkgExtras17 person={person} />}
         {tab === "teams" && (<><ProfileSocial11 person={person.id === "me" ? { ...person, socials: state.profile.socials } : person} /><div style={{ marginTop: 22 }}><TeamTab17 person={person} /></div></>)}
         {tab === "reviews" && <ReviewsTab35 person={person} />}
       </div>

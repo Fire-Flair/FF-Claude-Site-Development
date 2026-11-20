@@ -1264,7 +1264,6 @@ function ProfileBuilder() {
           {/* about-overview (Alex, 18 Nov 21:17): About Me now sits in the Overview tab (under Professions), where it is on the published profile. */}
           <ProfileEditTabs person={me} />
         </ABOUT_TOP34.Provider>
-        <PE2QA />
 
       {/* Section 4 → Save & Share → Section 5. v16.11: everything stays on the
           left-hand line. Section 5 sits level with the middle of Save & Share,

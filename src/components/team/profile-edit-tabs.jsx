@@ -68,6 +68,7 @@ function ProfileEditTabs({ person }) {
   const bookings = (<>
     <ProfilePackages17 person={person} own />
     <PersonalTerms17 />
+    <PE2QA />
   </>);
 
   /* ---- Team ---- */
