@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.172
+- **Network map legend:** the Professionals and FF Directory symbols are true circles again. A stretch rule on the label text was widening them into ovals; the symbol now has a fixed size.
+- Page saved as `live-v1.172-index.html`. Artifact version 1795204977-5478.
+
 ## v1.171
 - **Join FF Team box (home):** the line under the title now reads "Get seen, get booked, get paid", on desktop and mobile.
 - Page saved as `live-v1.171-index.html`. Artifact version 1795204833-4d96.
