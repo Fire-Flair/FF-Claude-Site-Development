@@ -236,3 +236,34 @@
    bottom. It takes one even squircle radius, the inner rim following it. */
 .ff .ff-deck.pc:not(.pc17):has(> .pc17-plate) { border-radius: 26px !important; corner-shape: squircle; }
 .ff .ff-deck.pc:not(.pc17):has(> .pc17-plate) .fx.hair { border-radius: 23px !important; corner-shape: squircle; }
+
+/* v1.185 (Alex 20 Nov 23:05): every Attributes box is 5:7 and exactly the size of a Professions card (204 x 285.6 at iPad width). */
+.ff .ff-pp21 .ff-acar.pe2-rail .ff-agrp,
+.ff .pp-sec > .ff-pt21-row .ff-agrp.ff-pt21 { width: clamp(168px, 45vw, 204px); aspect-ratio: 5 / 7; height: auto; min-height: 0; box-sizing: border-box; }
+.ff .pe2-rail .ff-agrp-l { padding-right: 0; }
+/* The hidden measuring copy of a box (see PE2AttrCat185): out of the flow and off screen. */
+.ff .pe2-meas { position: fixed; left: -9999px; top: 0; visibility: hidden; pointer-events: none; display: block; }
+.ff .ff-pp21 .ff-acar.pe2-rail .pe2-meas .ff-agrp { overflow: visible; aspect-ratio: 5 / 7; }
+.ff .ff-pp21 .ff-acar.pe2-rail .pe2-meas .ff-agrp:has(.ff-agrp-l) { aspect-ratio: auto; height: auto; }
+
+/* v1.185 (Alex 20 Nov 23:05): Attributes pop-up. The star sits in the top right of its bar, on the title line; the title keeps clear of it.
+   A dotted "+" bar follows the last entry, the dotted box of the page sized as a bar. */
+.ff .pe2-attr-pop .pe2-star-t { top: 10px; bottom: auto; right: 10px; transform: none; }
+.ff .pe2-attr-pop .ff-agrp.ff-pt21 .ff-agrp-top { padding-right: 50px; }
+.ff .pe2-attr-pop .ff-agrp.ff-pt21 .ff-agrp-d { padding-right: 0; }
+.ff .pe2-attr-pop .pe2-bar-slot { width: 100%; }
+.ff .pe2-bar-add { width: 100%; min-height: 64px; display: grid; place-items: center; padding: 0; cursor: pointer; border-radius: 22px; corner-shape: squircle; background: #FFFDF8; border: 1.5px dashed rgba(126,97,29,.55); color: #5A4512; }
+.ff .pe2-bar-add > svg { box-sizing: content-box; padding: 9px; border-radius: 50%; border: 2px dotted rgba(126,97,29,.7); }
+
+/* v1.185 (Alex 20 Nov 23:05): FF Tag and Media sit centred between the page edges. The timeline indents the journey (46px, 34px on a phone),
+   so the two boxes take a 24px gap on the left (clear of the line) and the same 24px on the right. */
+.ff .ff-journey .ff-tm34 { margin-left: calc(24px - 46px); margin-right: 24px; }
+@media (max-width: 520px) { .ff .ff-journey .ff-tm34 { margin-left: calc(24px - 28px); } }
+/* v1.185 (Alex 20 Nov 23:05): Welcome to the Team lives in the full-width part of the page (no timeline indent), so its number badge sits
+   on the left edge like 01, 02 and 03 instead of 46px outside it. */
+.ff .ff-jflat .ff-s5head { margin-left: 0; }
+@media (max-width: 520px) { .ff .ff-jflat .ff-s5head { margin-left: -6px; } .ff .ff-jflat .ff-s5head .ff-stepnum { width: 30px; height: 30px; } }
+
+/* v1.185 (Alex 20 Nov 23:05): the Q&A row keeps its own inner padding on every side, so no card's ring, glow or tick is clipped by the row.
+   (.ff-jflat .ff-hscroll zeroed the left margin and padding for the builder page, which cut the first card.) */
+.ff .pe2-qa-panel .ff-hscroll, .ff .ff-jflat .pe2-qa-panel .ff-hscroll { margin: -10px calc(-1 * var(--pe2-pad)) -18px; padding: 14px var(--pe2-pad) 30px; scroll-padding-inline: var(--pe2-pad); }

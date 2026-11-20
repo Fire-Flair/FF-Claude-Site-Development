@@ -110,7 +110,6 @@
 .ff .ff-sect[id]{ scroll-margin-top: 72px}
 .ff .ff-pill.ondark{ color:#EAD79C; border-color:rgba(234,215,156,.5); background:rgba(201,162,39,.12)}
 .ff .ff-sitecard:hover{ border-color:var(--gold); background:rgba(201,162,39,.08)}
-.ff .ff-confirm-ic.ok{ background:radial-gradient(circle at 35% 30%, #8A2238, #4A0D18); color:#F3DE9C; border:1.5px solid var(--gold); box-shadow:0 6px 16px rgba(74,13,24,.28)}
 .ff .ff-finale.open{ padding-bottom:8px}
 .ff .ff-s5row::before{ content:''; position:absolute; left:-30px; top:-66px; bottom:50%; width:2px; border-radius:2px;
   background:linear-gradient(180deg, rgba(92,18,32,.55), rgba(176,141,42,.6))}
@@ -1489,7 +1488,6 @@ html,body{ overscroll-behavior-y: none}
 .ff :where(.ff-fin) :is(h1,.ff h2,.ff h3){ font-weight: 700}
 .ff .ff-fin .ff-linkbtn{ display: inline-flex; align-items: center; gap: 4px; white-space: nowrap}
 .ff .ff-fin .ff-finale{ padding-left:46px}
-.ff .ff-confirm-ic.ok{ background:radial-gradient(circle at 35% 30%, #8A2238, #4A0D18); color:#E4C36A; border:1.5px solid var(--gold); box-shadow:0 6px 16px rgba(74,13,24,.28)}
 .ff .ff-fin .ff-finale{ position:relative; padding-left:46px; padding-bottom:56px}
 .ff .ff-fin .ff-finale.open{ padding-bottom:8px}
 .ff .ff-fin .ff-finale .ff-publishcard{ margin-left:0; margin-right:0}
