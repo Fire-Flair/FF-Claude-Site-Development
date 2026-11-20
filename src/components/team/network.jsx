@@ -286,8 +286,30 @@ function myNetwork(state, people) {
 const TAKEN_TAGS = ["SAM42", "ALEX424", "GAVRILAS", "CUARTERO", "SIMAO", "DANYG", "JAMESALL", "ADMIN"];
 
 
-function ChipEdit({ values, onChange, placeholder, flags, ink, rule, leadFirst, max }) {
+/* v1.183 (Alex 20 Nov 22:37): no X on the card's chips. Tapping a chip makes it gold (up to GOLD_MAX17 per category); gold entries
+   sit first and stay on the card. Same flag as the star in the Attributes pop-up (record.star; the first five are gold until chosen). */
+const GOLD_MAX17 = 5;
+function useGold17(cat) {
+  const { state, dispatch } = useStore();
+  const rows = rankedRecords(recsOf(state.profile, cat)).filter(r => !r.hidden && !r.proposed && r.name);
+  const flag = (r, i) => r.star !== undefined ? !!r.star : i < GOLD_MAX17;
+  const flags = rows.map(flag);
+  const isGold = (name) => { const i = rows.findIndex(r => r.name.toLowerCase() === String(name).toLowerCase()); return i >= 0 && flags[i]; };
+  const toggle = (name) => {
+    const i = rows.findIndex(r => r.name.toLowerCase() === String(name).toLowerCase());
+    if (i < 0) return;
+    if (!flags[i] && flags.filter(Boolean).length >= GOLD_MAX17) { dispatch({ type: "TOAST", toast: `Up to ${GOLD_MAX17} gold ${cat}` }); return; }
+    rows.forEach((x, k) => dispatch({ type: "REC_PATCH", category: cat, id: x.id, patch: { star: flags[k] } }));
+    dispatch({ type: "REC_PATCH", category: cat, id: rows[i].id, patch: { star: !flags[i] } });
+    dispatch({ type: "REC_MOVE", category: cat, id: rows[i].id, to: flags.filter((f, k) => f && k !== i).length });
+  };
+  return { isGold, toggle };
+}
+
+
+function ChipEdit({ values, onChange, placeholder, flags, ink, rule, leadFirst, max, gold }) {
   const [t, setT] = useState("");
+  const G = useGold17(gold || "skills");
   /* pb-typecards: with max (Skills, Interests) an entry is at most max characters, cut while typing, and saved in Title Case. */
   const add = () => { const v0 = t.trim().replace(/,$/, "").trim(); if (!v0) return; const v = max ? capWords17(v0) : v0; if (!values.some(x => x.toLowerCase() === v.toLowerCase())) onChange([...values, v]); setT(""); };
   return (
@@ -295,7 +317,9 @@ function ChipEdit({ values, onChange, placeholder, flags, ink, rule, leadFirst, 
       {values.length > 0 && (
         <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 6 }}>
           {values.map((v, i) => (
-            <span key={v + i} className={`ff-tagchip${leadFirst && i === 0 ? " lead" : ""}`} style={{ color: ink }}>
+            gold
+              ? <button type="button" key={v + i} className={`ff-tagchip gold17${G.isGold(v) ? " on" : ""}`} aria-pressed={G.isGold(v)} onClick={() => G.toggle(v)} style={{ color: ink, cursor: "pointer" }}>{v}</button>
+              : <span key={v + i} className={`ff-tagchip${leadFirst && i === 0 ? " lead" : ""}`} style={{ color: ink }}>
               {flags && <LangFlag lang={v} />}{v}
               <button onClick={() => onChange(values.filter((_, j) => j !== i))} aria-label={`Remove ${v}`} style={{ color: ink }}><X size={11} /></button>
             </span>
@@ -410,6 +434,7 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
   const { ink, sub, rule } = t;
   const set = (k) => (v) => setDraft({ ...draft, [k]: v });
   const photoRef = useRef(null);
+  const profGold = useGold17("professions");
   const [pickOpen, setPickOpen] = useState(false);
   const profRef = useRef(null);
   useEffect(() => {
@@ -525,18 +550,14 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
     ref: profRef
   }, React.createElement("div", {
     style: { display: "flex", flexWrap: "wrap", gap: 5, justifyContent: "flex-start", marginBottom: 6 }
-  }, profs.map((v, i) => React.createElement("span", {
+  }, profs.map((v, i) => React.createElement("button", {
     key: v + i,
-    className: `ff-tagchip${i === 0 ? " lead" : ""}`,
-    style: { color: ink }
-  }, v, React.createElement("button", {
     type: "button",
-    onClick: () => set("professions")(profs.filter((_, j) => j !== i)),
-    "aria-label": `Remove ${v}`,
-    style: { color: ink }
-  }, React.createElement(X, {
-    size: 11
-  }))))), React.createElement(ProfTypeIn, {
+    className: `ff-tagchip gold17${profGold.isGold(v) ? " on" : ""}${i === 0 ? " lead" : ""}`,
+    "aria-pressed": profGold.isGold(v),
+    onClick: () => profGold.toggle(v),
+    style: { color: ink, cursor: "pointer" }
+  }, v))), React.createElement(ProfTypeIn, {
     profs,
     set,
     ink,
@@ -550,6 +571,7 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
   }, React.createElement(ChipEdit, {
     values: draft.skills,
     onChange: set("skills"),
+    gold: "skills",
     placeholder: "Skill",
     max: TYPECARD_CHARS,
     ink,
@@ -560,6 +582,7 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
   }, React.createElement(ChipEdit, {
     values: draft.interests,
     onChange: set("interests"),
+    gold: "interests",
     placeholder: "Interest",
     max: TYPECARD_CHARS,
     ink,

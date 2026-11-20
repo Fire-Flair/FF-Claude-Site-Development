@@ -302,7 +302,7 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party, links, onCard
   const urlFs = `min(3.3cqw, ${((claimed ? 56 : 86) / Math.max(12, urlText.length * 0.62)).toFixed(2)}cqw)`;
   return (
     <CardFrame tier={(co.theme === "silver" || co.theme === "gold") ? co.theme : (co.tier || "gold")} theme={t} premium ratio="8 / 5" className={`ff-cocard ff-cc11 l-${layout} ${size}${co.logoWide ? " lw" : ""}`} style={{ ...vars, maxWidth: 460, margin: size ? 0 : "0 auto" }}>
-      {(!claimed || party || onCard) && <span className="ff-pc-plate ff-cc11-plate">{party ? "VIP Host Card" : onCard ? "Company card" : <>{React.createElement((typeof NET_CAT_VIEW17 !== "undefined" && I11[(NET_CAT_VIEW17[co.cat || "bar"] || [])[0]]) || I11.Briefcase, { size: 12, color: "currentColor", "aria-hidden": "true" })}Company</>}</span>}
+      {(!claimed || party || onCard) && <span className="ff-pc-plate ff-cc11-plate">{party ? "VIP Host Card" : onCard ? "Company card" : <><I11.Briefcase size={12} color="currentColor" aria-hidden="true" />Company</>}</span>}
       {claimed && <span className="ff-cc11-coin"><FFLogo size="100%" tier={co.theme === "silver" ? "silver" : "gold"} /></span>}
       <div className="ff-cc11-body" ref={bodyRef}>
         {logo}

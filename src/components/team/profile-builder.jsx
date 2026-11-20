@@ -914,7 +914,7 @@ const FFAI_GROUPS17 = [
 
 function ffaiSubLine17(s) {
   const d = s.details || {};
-  if (s.section === "experience") return [d.employer, d.location, [d.start, d.end].filter(Boolean).join(" – ")].filter(Boolean).join(" · ");
+  if (s.section === "experience") return [s.title, d.location, [d.start, d.end].filter(Boolean).join(" – ")].filter(Boolean).join(" · ");
   if (s.section === "qualification") return [d.issuer, d.year].filter(Boolean).join(" · ");
   if (s.section === "language") return s.proficiency || "";
   if (s.section === "profession") return [s.level ? professionLevelTitle(s.level) : "", s.description].filter(Boolean).join(" · ");
@@ -1098,7 +1098,7 @@ function FfaiReview17({ x, src, onDone }) {
     const has = Object.prototype.hasOwnProperty.call(edits, id);
     const val = has ? edits[id] : raw;
     const showT = field === "title" && has ? val : title;
-    const showS = field === "sub" && has ? val : sub;
+    const showS = field === "sub" && has ? [val, opts.suffix].filter(Boolean).join(" · ") : sub;
     const open = editing === id;
     const long = opts.wide || String(raw || "").length > 60;
     const box = open ? (long
@@ -1129,8 +1129,11 @@ function FfaiReview17({ x, src, onDone }) {
         if (!list.length) return null;
         return (
           <section key={sec} className="grp">
-            <h4>{BASE_CATEGORIES[cat].label}</h4>
-            {list.map(s => row(s.id, s.title, ffaiSubLine17(s), { have: s.already_on_profile }))}
+            <h4>{sec === "experience" ? "Venues" : BASE_CATEGORIES[cat].label}</h4>
+            {list.map(s => sec === "experience" && s.details && s.details.employer
+              /* Venues (Alex, 20 Nov 22:34): the venue in bold, the profession small beneath it (editing changes the profession). */
+              ? row(s.id, s.details.employer, ffaiSubLine17(s), { have: s.already_on_profile, field: "sub", value: s.title, suffix: [s.details.location, [s.details.start, s.details.end].filter(Boolean).join(" – ")].filter(Boolean).join(" · ") })
+              : row(s.id, s.title, ffaiSubLine17(s), { have: s.already_on_profile }))}
           </section>
         );
       })}

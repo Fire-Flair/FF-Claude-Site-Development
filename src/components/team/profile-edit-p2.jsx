@@ -7,6 +7,8 @@
    Q&A sits above Save, always open, answered inline. Ported from the p2/profpick drafts; reads and writes the real records. */
 
 const PE2_CSS = __ff_css("styles/profile-edit-p2.css");
+/* Room for text in one Attribute box, in px (the box is 5:7, 164px to 196px wide). */
+const PE2_BOX_PX = 170;
 
 /* top-slots (Alex, 18 Nov 21:02): choosing the top three without dragging. Three slots, 1 to 3, are the three on the
    Profile Card. Tapping a filled slot empties it; while a slot is empty, the other professions show underneath and tapping
@@ -297,17 +299,23 @@ function PE2Overview({ records }) {
             const shown = rankedRecords(records[k] || []).filter(r => !r.hidden && !r.proposed && r.name);
             const empty = !shown.length;
             const on = attrOpen === k;
-            const card = (isEmpty, key) => (
+            /* v1.183 (Alex 20 Nov 22:34): the boxes keep one size. What does not fit carries on in the next box of the same
+               category (no "+14", nothing cut off). Each entry costs its lines of text; a box holds PE2_BOX_PX of them. */
+            const sdOf = (r) => (!r.cv && !/^Uploaded /.test(String(r.description || "")) && String(r.description || "").trim()) ? wholeSentences21(r.description, 70) : "";
+            const cost = (r) => Math.ceil(String(r.name).length / 13) * 17.5 + 14 + (sdOf(r) ? Math.ceil(sdOf(r).length / 17) * 14 + 4 : 0);
+            const chunks = []; let cur = [], used = 0;
+            shown.forEach(r => { const c = cost(r); if (cur.length && used + c > PE2_BOX_PX) { chunks.push(cur); cur = []; used = 0; } cur.push(r); used += c; });
+            if (cur.length) chunks.push(cur);
+            const card = (isEmpty, key, list) => (
               <button key={key} type="button" role="listitem" className={"ff-agrp " + (isEmpty ? "pe2-agrp-empty" : "cat-" + k + " " + tierCls17(ci)) + (on ? " pe2-agrp-on" : "")} aria-label={`${isEmpty && !empty ? "Add another" : "Edit"} ${def.label}`} aria-expanded={on} onClick={() => { setQualOpen(null); if (isEmpty) { const nr = makeRecord(k, ""); dispatch({ type: "REC_ADD", category: k, record: nr }); setAttrOpen(k); setAttrRec(nr); } else { setAttrOpen(on ? null : k); } }}>
                 <span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span></span>
-                {isEmpty ? <span className="pe2-empty-fill" aria-hidden="true" /> : <span className="ff-agrp-l">{shown.slice(0, 5).map(r => <span key={r.id}>{nbh21(r.name)}{!r.cv && !/^Uploaded /.test(String(r.description || "")) && String(r.description || "").trim() && <small className="ff-agrp-sd">{nbh21(wholeSentences21(r.description, 70))}</small>}</span>)}</span>}
-                {!isEmpty && shown.length > 5 && <span className="ff-agrp-more">{`+${shown.length - 5}`}</span>}
+                {isEmpty ? <span className="pe2-empty-fill" aria-hidden="true" /> : <span className="ff-agrp-l">{list.map(r => <span key={r.id}>{nbh21(r.name)}{sdOf(r) && <small className="ff-agrp-sd">{nbh21(sdOf(r))}</small>}</span>)}</span>}
                 {isEmpty && <span className="pe2-plus1" aria-hidden="true"><Plus size={26} strokeWidth={2.2} /></span>}
                 <span className="pe2-pen1" aria-hidden="true"><Pencil size={15} strokeWidth={2.1} /></span>
               </button>
             );
             /* v1.133 (Alex 20 Nov 01:20): once there is an entry, an empty dotted plus box follows it, so there is always one to add to. */
-            return empty ? card(true, k) : <React.Fragment key={k}>{card(false, k)}{card(true, k + "-add")}</React.Fragment>;
+            return empty ? card(true, k) : <React.Fragment key={k}>{chunks.map((l, i) => card(false, k + (i ? "-" + i : ""), l))}{card(true, k + "-add")}</React.Fragment>;
           })}
           <span className="ff-acar-end" aria-hidden="true" />
         </div>
@@ -315,7 +323,7 @@ function PE2Overview({ records }) {
           <Sheet open center title={BASE_CATEGORIES[attrOpen].label} onClose={() => setAttrOpen(null)}>
             <div className="pe2-attr-pop">
               <style>{RANK_CSS17}</style>
-              <ProfTiles21 key={"t" + attrOpen} items={records[attrOpen] || []} def={BASE_CATEGORIES[attrOpen]} catKey={attrOpen} label={BASE_CATEGORIES[attrOpen].label} pen stars={5} onOpen={(r) => setAttrRec(r)} />
+              <ProfTiles21 key={"t" + attrOpen} items={records[attrOpen] || []} def={BASE_CATEGORIES[attrOpen]} catKey={attrOpen} label={BASE_CATEGORIES[attrOpen].label} stars={5} onOpen={(r) => setAttrRec(r)} />
             </div>
           </Sheet>
         )}

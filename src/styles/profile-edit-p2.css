@@ -221,3 +221,18 @@
 .ff .ff-xatt-box[class*=" cat-"] { border-color: rgba(228,195,106,.65); }
 .ff .pe2-biz167-card .ff-cc11-base { background: #FFFDF8; border: 1px solid rgba(228,195,106,.6); border-radius: 16px; corner-shape: squircle; }
 .ff .pe2-biz167-card .ff-cc11-baseh { color: #7E611D; }
+/* v1.183: Attribute boxes never grow with their text; the text is split across boxes in profile-edit-p2.jsx. */
+.ff .pe2-rail .ff-agrp { min-height: 0; overflow: hidden; }
+/* v1.183 (Alex 20 Nov 22:34): in the Attributes pop-up only the star stays (no pencil), centred on its bar. */
+.ff .pe2-attr-pop .ff-pt21-it { position: relative; }
+.ff .pe2-attr-pop .pe2-star-t { top: 50%; bottom: auto; right: 10px; transform: translateY(-50%); }
+/* v1.183 (Alex 20 Nov 22:34): more room between the Venues heading and the search box, and the box inset so it sits under the heading. */
+.ff .pe2-ven .ff-pp-head { margin-bottom: 14px; }
+.ff .pe2-ven .ff-ven17 { margin-top: 6px; margin-inline: 14px; }
+/* v1.183: a chosen (gold) chip on the Profile Card builder; the rest stay plain. */
+.ff .ff-tagchip.gold17 { background: transparent; }
+.ff .ff-deck .ff-tagchip.gold17.on, .ff .ff-tagchip.gold17.on { background: linear-gradient(180deg, #E8C766, #C9A227) !important; border-color: #8A6A1E !important; color: #14110A !important; font-weight: 700; }
+/* v1.183 (Alex 20 Nov 22:37): the editable Profile Card is tall, so the percentage corners (4.2% / 3%) went lopsided at the top and
+   bottom. It takes one even squircle radius, the inner rim following it. */
+.ff .ff-deck.pc:not(.pc17):has(> .pc17-plate) { border-radius: 26px !important; corner-shape: squircle; }
+.ff .ff-deck.pc:not(.pc17):has(> .pc17-plate) .fx.hair { border-radius: 23px !important; corner-shape: squircle; }

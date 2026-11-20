@@ -4,6 +4,17 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.184
+- **Launch Challenge box (profile page):** the two icons either side of "Join the Launch Challenge" are removed.
+- **CV extraction:** the section is headed Venues; each entry shows the venue in bold with the profession small underneath.
+- **Attribute boxes (Qualifications, Skills, etc.):** the boxes keep one size. What does not fit carries on in the next box, so there is no "+14" and nothing is cut off.
+- **Attributes pop-up:** the pencil is gone; only the star stays, centred on its bar.
+- **Venues:** more space under the heading, and the search box is inset.
+- **Company cards:** a briefcase sits left of "Company" in the top-left label; only the outer border remains (the two inner lines are removed).
+- **Profile Card builder:** the × on Professions, Skills and Interests chips is gone. Tapping a chip turns it gold; gold chips sit first and stay on the card (up to 5 per category, the same star as the pop-up).
+- **Profile Card builder:** the card's corners are one even rounded shape at the top and bottom.
+- Page saved as `live-v1.184-index.html`. Artifact version 1795214360-2c98.
+
 ## v1.183
 - **FFStories photos:** every story now has its own photo, picked to match what the story is about and cut to the card shape so glasses, faces and heads are no longer cut off (the espresso martini and wine glass pictures are gone). Photos come from both the original library and the new lookbook. No photo repeats within a site, and "Who would you call to work a Saturday night with you?" now shows a whole bar team. The limes and rosemary photo stays on "The last-minute shifts that changed my bartending career".
 - Page saved as `live-v1.183-index.html`. Artifact version 1795213669-7d18.
