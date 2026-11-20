@@ -147,3 +147,7 @@
 
 /* v1.141 (Alex 20 Nov 02:50): the Bar companies box sat on the screen edge: the row snaps with the page margin kept. */
 .ff .ff-cb20, .ff .ff-br20-pills { scroll-padding-inline: 16px; }
+
+/* v1.145: FF Stories in the Hero Flow (cards are 280px wide) */
+.ff .ff-jr17-hf .ff-hf20{padding:6px calc(50% - 140px) 22px;margin:0 -4px}
+.ff .ff-jr17-hf .ff-hf20-i .ff-jr17-card{width:min(78vw,280px)}

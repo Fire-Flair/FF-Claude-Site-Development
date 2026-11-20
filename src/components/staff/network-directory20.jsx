@@ -283,7 +283,13 @@ function FeaturedCos20() {
   const state = useStore().state;
   const { dispatch } = useStore();
   const all = browseCompanies17(state);
-  const list = all.filter(function (c) { return !c.unclaimed; }).concat(all.filter(function (c) { return c.unclaimed && (c.logo || (c.mediaList || []).length); })).slice(0, 8);
+  const pool = all.filter(function (c) { return !c.unclaimed; }).concat(all.filter(function (c) { return c.unclaimed && (c.logo || (c.mediaList || []).length); }));
+  /* v1.145 (Alex 20 Nov 04:12): a random selection of eight, drawn afresh each time the page opens. */
+  const list = React.useMemo(function () {
+    const a = pool.slice();
+    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; }
+    return a.slice(0, 8);
+  }, [pool.map(function (c) { return c.id; }).join("|")]);
   if (list.length < 2) return null;
   return React.createElement("section", { id: "ff-featured-cos", className: "ff-hf20-sec" },
     React.createElement("h3", { className: "ff-hf20-h" }, "Featured companies"),

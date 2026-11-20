@@ -4,6 +4,11 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.145
+- **Network, Featured companies:** a random selection of eight, drawn afresh each time the page opens.
+- **FFStories (home):** the story cards now use the hero scroll, the same as Featured companies: the middle card sits large, the neighbours step back, swipe sideways to bring the next forward.
+- Page saved as `live-v1.145-index.html`. Artifact version 1795148021-6f4b.
+
 ## v1.144
 - **Attribute cards:** the number on each card (Qualifications 2, Skills 4…) is replaced by a drop-down arrow, on public profiles, the profile builder and the type cards.
 - Page saved as `live-v1.144-index.html`. Artifact version 1795147889-accc.

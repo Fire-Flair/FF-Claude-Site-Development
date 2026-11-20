@@ -287,7 +287,8 @@ function Journal17({ kind = "team" }) {
       React.createElement("svg", { viewBox: "0 0 24 24", width: "18", height: "18" }, React.createElement("path", { d: "M12 2c1 3.5 5 5.5 5 10.5A5 5 0 0 1 7 13c0-2 1-3 2-4 .3 1.3 1 2 2 2-.5-3 0-6 1-9z", fill: "currentColor" })), React.createElement("i", null)),
     React.createElement("div", { className: "ff-jr17-cats", role: "group", "aria-label": "Story categories" },
       cats.map((c) => React.createElement("button", { key: c, type: "button", className: cat === c ? "on" : "", "aria-pressed": cat === c, onClick: () => setCat(c) }, c))),
-    React.createElement("div", { className: "ff-jr17-row" }, shown.map((id) => {
+    /* v1.145 (Alex 20 Nov 04:12): the stories use the Hero Flow scroll, the same as Featured companies. */
+    React.createElement("div", { className: "ff-jr17-hf" }, React.createElement("style", null, NET20_CSS), React.createElement(HeroFlow20, { label: "FF Stories", key: cat }, shown.map((id) => {
       const p = JR17[id], src = img(p.img);
       return React.createElement("a", {
         key: id, className: "ff-jr17-card", href: "/stories/" + id,
@@ -295,7 +296,7 @@ function Journal17({ kind = "team" }) {
       },
         React.createElement("span", { className: "ph" + (src ? "" : " txt") }, src ? React.createElement("img", { src, style: fpos(p.img), alt: p.alt || "", loading: "lazy", draggable: false }) : React.createElement("span", null, storyCat17(p.cat))),
         React.createElement("span", { className: "tx" }, React.createElement("i", { "data-fit22": "" }, storyCat17(p.cat) + " · " + p.date), React.createElement("b", null, p.title), React.createElement("small", null, storyLine22(p))));
-    })),
+    }))),
     React.createElement(Sheet, { open: !!o, onClose: closeStory, title: o ? storyCat17(o.cat) : "", center: true },
       o && React.createElement("article", { className: "ff-jr17-pop ff-jr17-art" },
         React.createElement(BackBtn17, { fallback: closeStory }),
