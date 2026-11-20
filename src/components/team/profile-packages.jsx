@@ -77,29 +77,75 @@ function pkgTermsOf17(it) {
   return { name: "Create your own", cond: "" };
 }
 
+/* v1.185 (Alex 20 Nov 23:05): on your own Packages tab the row is Create your own first, then only the FFParty packages that
+   match your professions. A profession's group is professionCategory (the Get booked rule): Bar professions get the Bar
+   packages, Entertainment the Entertainment packages, Services the Services packages; two groups give both. Sign up works as on
+   Bookings: tick the card, Confirm, accept the package terms (one int.party_package answer, mirrored to profile.serviceInterest). */
+function ownPkgGroups185(state) {
+  const groups = [];
+  recsOf(state.profile, "professions").filter(r => !r.proposed && !r.hidden).forEach(r => {
+    const c = professionCategory(r.name, r.displayCategory);
+    const k = c === "Bar" ? "bar" : c === "Entertainment" ? "ent" : c === "Services" ? "svc" : null;
+    if (k && !groups.includes(k)) groups.push(k);
+  });
+  return ["bar", "ent", "svc"].filter(k => groups.includes(k));
+}
+
+function ownPkgItems185(state) {
+  const groups = ownPkgGroups185(state);
+  const out = [{ id: "pp-create", kind: "create", tab: groups[0] || "bar" }];
+  groups.forEach(k => {
+    if (k === "bar") [...PARTY_SERVICES.filter(sv => sv.id !== "svc_full").reverse(), ...(hid17(state, "packages", "svc_staffing") ? [] : [STAFFING_SERVICE])].forEach(sv => out.push({ id: sv.id, kind: "std", svc: sv }));
+    else (PKC_EXTRA17[k] || []).forEach(x => out.push({ id: x.id, kind: "extra", tab: k, x }));
+  });
+  return out;
+}
+
 function ProfilePackages17({ person, own }) {
   const { state, dispatch } = useStore();
   const mem = useRef({});
   const box = useRef(null);
   const [at, setAt] = useState(0);
   const [tcOpen, setTcOpen] = useState(false);
+  const [sel, setSel] = useState(null);
+  const [pkgTerms, setPkgTerms] = useState(false);
   const signed = state.profile.serviceInterest || [];
-  const items = [...profPkgItems17(state, person), { id: "pp-create", kind: "create" }];
+  const picked = sel || signed;
+  const items = own ? ownPkgItems185(state) : [...profPkgItems17(state, person), { id: "pp-create", kind: "create" }];
   const toBk = () => goPkgBookings17(dispatch);
+  const tick = (id) => setSel(picked.includes(id) ? picked.filter(x => x !== id) : [...picked, id]);
+  const confirmPkgs = async () => {
+    setPkgTerms(false);
+    const account = qaAccount17(state);
+    if (!account) { window.dispatchEvent(new Event("ff-login")); return; }
+    const next = picked;
+    const nm = (id) => { const it = items.find(x => x.id === id); return it ? (it.svc ? it.svc.title : it.x ? it.x.name : "") : ""; };
+    const title = next.length === 1 ? (nm(next[0]) || "the package") : "your packages";
+    const mirror = { type: "PROFILE", patch: { serviceInterest: next } };
+    const r = next.length
+      ? await qaSubmit17(dispatch, { questionId: "int.party_package", account, optionIds: next, visibility: "public", source: "FF Team Profile · Packages" }, mirror)
+      : await qaWithdraw17(dispatch, { questionId: "int.party_package", account }, mirror);
+    dispatch({ type: "TOAST", toast: r.ok ? (next.length ? `Signed up for ${title}` : "Withdrawn from your packages") : "That couldn't be saved. Try again." });
+    if (r.ok) setSel(null);
+  };
   const signUp = (id) => (
     <button type="button" className="ff-pkc-go fit" onClick={toBk} aria-pressed={signed.includes(id)}>
       {signed.includes(id) ? <><S17I.Check size={13} strokeWidth={2.6} /> Signed up</> : "Sign up"}
     </button>
   );
   const card = (it) => {
-    if (it.kind === "std") return <BkPkgCard17 sv={it.svc} on={own && signed.includes(it.svc.id)} onClick={toBk} />;
-    if (it.kind === "extra") return <BkPkgCard17 sv={{ id: it.x.id, title: it.x.name }} tab={it.tab} on={own && signed.includes(it.x.id)} onClick={toBk} />;
+    if (own) {
+      if (it.kind === "std") return <BkPkgCard17 sv={it.svc} on={picked.includes(it.svc.id)} onClick={() => tick(it.svc.id)} />;
+      if (it.kind === "extra") return <BkPkgCard17 sv={{ id: it.x.id, title: it.x.name }} tab={it.tab} on={picked.includes(it.x.id)} onClick={() => tick(it.x.id)} />;
+      return <BkPkgOwn17 tab={it.tab || "bar"} />;
+    }
+    if (it.kind === "std") return <BkPkgCard17 sv={it.svc} on={false} onClick={toBk} />;
+    if (it.kind === "extra") return <BkPkgCard17 sv={{ id: it.x.id, title: it.x.name }} tab={it.tab} on={false} onClick={toBk} />;
     if (it.kind === "own") {
       const x = it.item, tab = /dj|music|act/i.test(x.kind || "") ? "ent" : "svc";
       return <ProfPkgFace17 dataId={"pp-" + x.id} d={{ id: x.id, tab, site: "FF Party", name: x.title, line: x.kind, brief: x.text, provide: x.text, points: [] }}
         rows={[[S17I.Sparkles, "Includes", x.text]]} foot={null} />;
     }
-    if (own) return <BkPkgOwn17 tab="bar" />;
     const pk = PK_SOON17.bar[0];
     return <ProfPkgFace17 dataId="create-bar" d={{ id: "create-bar", tab: "bar", site: "FF Party", name: "Create your own", line: "Your skills, your package, your price.", points: [] }}
       rows={[[S17I.Sparkles, "You provide", pk.inc], [S17I.Users, "Ideal for", pk.ideal], [S17I.Clock, "Duration", "As long as you choose"]]} foot={signUp("pp-create-none")} />;
@@ -117,6 +163,8 @@ function ProfilePackages17({ person, own }) {
           {items.map(it => <div key={it.id} className="ff-svslide std ff-pkt17-cell ff-bkpk-cell">{card(it)}</div>)}
         </HeroFlow20>
       </div>
+      {own && items.length > 1 && <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={!sel} onClick={() => { if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; } setPkgTerms(true); }}><S17I.Check size={15} /> Confirm</button>}
+      {own && pkgTerms && <PkgTerms17 onClose={() => setPkgTerms(false)} onAccept={confirmPkgs} />}
       {/* v1.162 (Alex 20 Nov 05:19): no Terms and conditions box here; the terms are part of each card's Details. */}
       {own && <ProfStaffCards17 />}
     </div>

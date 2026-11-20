@@ -59,9 +59,7 @@ function ProfileEditTabs({ person }) {
     <PE2Overview records={records} />
     {/* v1.185 (Alex 20 Nov 23:05): Q&A sits on Overview, directly under Venues (was on Packages). */}
     <PE2QA />
-    {state.profile.introduction
-      ? <div className="ara-introwrap"><span className="ara-introPen">{pen("intro", "FireFlair Introductions and Awards")}</span><FireFlairIntroductions17 person={person} /></div>
-      : <FireFlairIntroductions17 person={person} />}
+    <FireFlairIntroductions17 person={person} onEdit={() => setSheet("intro")} />
   </>);
 
   /* ---- Packages ---- */
@@ -119,9 +117,9 @@ function ProfileEditTabs({ person }) {
       </div>
 
       {/* One sheet per section, holding the existing editor for it. */}
-      <Sheet open={!!sheet} onClose={() => setSheet(null)} title={({ social: "Social links", intro: "FireFlair Introductions and Awards" })[sheet] || ""}>
+      <Sheet center open={!!sheet} onClose={() => setSheet(null)} title={({ social: "Social links", intro: "FireFlair Introductions" })[sheet] || ""}>
         {sheet === "social" && <div className="ara-sheet"><SocialEdit11 noPhone value={state.profile.socials} onChange={(socials) => dispatch({ type: "PROFILE", patch: { socials } })} /></div>}
-        {sheet === "intro" && <div className="ara-sheet"><IntroEditor17 /></div>}
+        {sheet === "intro" && <div className="ara-sheet"><IntroEditor17 onDone={() => setSheet(null)} /></div>}
       </Sheet>
       <AskForReviewSheet open={asking} onClose={() => setAsking(false)} />
     </div>
