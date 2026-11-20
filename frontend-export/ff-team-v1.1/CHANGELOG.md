@@ -4,6 +4,12 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.154
+- **Venue pop-up:** no extra gap under Delete and Done.
+- **Venue card:** the pin now has the words "Venue card" beside it.
+- **Venue dates:** no drop boxes. From and To are small Month and Year pills; tapping one opens a sideways-scrolling strip to choose from. To also has a Present pill.
+- Page saved as `live-v1.154-index.html`. Artifact version 1795149818-2f96.
+
 ## v1.153
 - **Venue pop-up:** all typing (role, dates, what you did) is now on the card itself, with no separate fields. The card is almost the full width of the pop-up, and Delete is the same grey Delete button (tap twice to confirm) as the other profile pop-ups. Dates are plain typed text, not required.
 - Page saved as `live-v1.153-index.html`. Artifact version 1795149587-3429.

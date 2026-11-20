@@ -108,3 +108,19 @@
 .ff .ff-xc29 input.ff-xc29-tx, .ff .ff-xc29 input.ff-xc29-tx:focus, .ff .ff-xc29 input.ff-xc29-tx:focus-visible { background: transparent; border: 0; border-bottom: 1.5px dashed var(--x-rule, rgba(126,97,29,.4)); border-radius: 0; box-shadow: none; outline: none; color: var(--x-ink, inherit); }
 .ff .ff-xc29 input.ff-xc29-tx:focus, .ff .ff-xc29 input.ff-xc29-tx:focus-visible { border-bottom: 1.5px solid var(--x-acc, #D9BE68); }
 .ff .ff-xs29-act .ff-gac17-b { width: auto; padding: 8px 16px; }
+
+/* v1.154: venue card label beside the pin, and the sideways date picker */
+.ff .ff-xc29-kr { display: flex; align-items: center; gap: 10px; }
+.ff .ff-xc29-kt { font: 700 10.5px var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--x-sub, #B9B6AE); white-space: nowrap; }
+.ff .ff-xd29 { display: grid; gap: 8px; margin: 4px 0 2px; min-width: 0; }
+.ff .ff-xd29-r { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ff .ff-xd29-r .l { width: 42px; font: 700 10px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--x-sub, #B9B6AE); }
+.ff .ff-xd29-p { display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 0 12px; border-radius: 12px; corner-shape: squircle; border: 1px solid var(--x-rule, rgba(228,195,106,.35)); background: rgba(255,255,255,.05); color: var(--x-sub, #B9B6AE); font: 600 14px var(--sans); cursor: pointer; }
+.ff .ff-xd29-p.on { color: var(--x-ink, #F3E7C2); border-color: var(--x-acc, #D9BE68); }
+.ff .ff-xd29-p.open { border-color: var(--x-acc, #D9BE68); background: rgba(228,195,106,.14); }
+.ff .ff-xd29-s { display: flex; gap: 6px; overflow-x: auto; padding: 2px 0 6px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.ff .ff-xd29-s::-webkit-scrollbar { display: none; }
+.ff .ff-xd29-s button { flex: 0 0 auto; min-width: 46px; min-height: 36px; padding: 0 12px; border-radius: 12px; corner-shape: squircle; border: 1px solid var(--x-rule, rgba(228,195,106,.3)); background: transparent; color: var(--x-ink, #EAD79C); font: 600 14px var(--sans); cursor: pointer; }
+.ff .ff-xd29-s button.on { background: var(--x-acc, #D9BE68); color: #1A1405; border-color: transparent; }
+/* v1.154: no extra gap under Delete and Done on the venue pop-up */
+.ff .ff-sheet:has(.ff-xs29) { padding-bottom: 0; }
