@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.164
+- **Network notifications:** a "Notifications" title above the invitations, and "Your network" for the other side. Team invitations show the small Profile card (the Profile Card is the big one, Profile the small one), and Accept is a larger gold button with a shine.
+- Page saved as `live-v1.164-index.html`. Artifact version 1795152957-c65f.
+
 ## v1.163
 - **Welcome back:** the "On card" count is gone. Network and Reviews stay, and below them is a Launch Challenge leaderboard in the burgundy and gold of the help box: horizontal bars of the largest teams against yours, with your rank. The rival teams are sample data until the real network counts come from the back end.
 - Page saved as `live-v1.163-index.html`. Artifact version 1795152844-d1b4.

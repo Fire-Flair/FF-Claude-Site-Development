@@ -1642,3 +1642,16 @@
 .ff .ff-lb163-l li.me .bar i { background: linear-gradient(90deg, #F4DC8E, #FFF1B8); }
 .ff .ff-lb163-f { margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(233,208,122,.3); text-align: center; font: 700 14px/1.3 var(--sans); color: #F4DC8E; }
 @media (prefers-reduced-motion: reduce) { .ff .ff-lb163-l .bar i, .ff .ff-lb163-h .live i { animation: none; } }
+
+/* v1.164: network notifications use the small Profile card; cooler Accept */
+.ff .ff-netn18 { margin-bottom: 36px; }
+.ff .ff-inv18 { max-width: 300px; }
+.ff .ff-inv18-card { width: 190px; margin: 0 auto; }
+.ff .ff-inv18-t, .ff .ff-inv18-s { text-align: center; }
+.ff .ff-inv18-btns { gap: 10px; }
+.ff .ff-inv18-b.ok { position: relative; overflow: hidden; height: 54px; border: 1.5px solid #8A6A1C; color: #1B1203; font-size: 15px; letter-spacing: .06em; text-transform: uppercase;
+  background: linear-gradient(180deg, #F6E2A0 0%, #E3BE55 48%, #C79A2E 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,.65), 0 10px 22px -10px rgba(122,92,22,.75); }
+.ff .ff-inv18-b.ok::after { content: ""; position: absolute; top: 0; bottom: 0; width: 40%; left: -60%; background: linear-gradient(100deg, transparent, rgba(255,255,255,.55), transparent); animation: ffInvShine 3.2s ease-in-out infinite; }
+@keyframes ffInvShine { 60%, 100% { left: 130%; } }
+.ff .ff-inv18-b.ok:hover { background: linear-gradient(180deg, #FAE9B0 0%, #EBC862 48%, #D0A334 100%); }
+@media (prefers-reduced-motion: reduce) { .ff .ff-inv18-b.ok::after { animation: none; } }

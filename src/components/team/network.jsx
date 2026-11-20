@@ -718,7 +718,7 @@ function TeamParts17({ team, companies, network, teamEmpty, renderTeam }) {
    FireFlair.", "Accept to appear on <Name>'s team and show their Profile Card on yours.", then Accept, Not now, Leave a review.
    After Accept the inviter gets "<Name> is now on your team." (View profile) in their notifications (state.teamJoined18).
    ========================================================================== */
-const NetIco18 = { Check: lucideIcon("Check"), X: lucideIcon("X"), Out: lucideIcon("ArrowUpRight"), Gear: lucideIcon("Settings"), Users: lucideIcon("Users"), Briefcase: lucideIcon("Briefcase") };
+const NetIco18 = { Check: lucideIcon("Check"), X: lucideIcon("X"), Out: lucideIcon("ArrowUpRight"), Gear: lucideIcon("Settings"), Users: lucideIcon("Users"), Briefcase: lucideIcon("Briefcase"), Bell: lucideIcon("Bell") };
 
 
 /* One team invitation. A person's shows their Profile Card; a company's shows its Company Card (Accept and Not now only). */
@@ -739,7 +739,7 @@ function TeamInvite18({ x, onReview }) {
   return (
     <li className="ff-inv18" aria-label={`Team invitation from ${x.name}`}>
       <div className="ff-inv18-card">
-        {co ? <CompanyCardFace c={co} size="sm" /> : <PlayerCard person={person} format="full" nameAs="div" themeKey={person.theme || "ivory"} />}
+        {co ? <CompanyCardFace c={co} size="sm" /> : <PlayerCard person={person} format="portrait" nameAs="div" themeKey={person.theme || "paper"} />}
       </div>
       <p className="ff-inv18-t">{first} has invited you to join their team on FireFlair.</p>
       <p className="ff-inv18-s">Accept to appear on {first}&rsquo;s team and show their {co ? "Company Card" : "Profile Card"} on yours.</p>
@@ -777,7 +777,8 @@ function NetNotes18({ onReview }) {
   const joined = joinedNotes18(state);
   if (!invites.length && !joined.length) return null;
   return (
-    <section className="ff-netn18" aria-label="Team invitations and notifications">
+    <section className="ff-netn18" aria-label="Notifications">
+      <SectionHead icon={<NetIco18.Bell size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Notifications" />
       <ul className="ff-inv18-list">
         {invites.map(it => <TeamInvite18 key={it.id} x={it.x} onReview={onReview} />)}
         {joined.map(n => <TeamJoined18 key={n.id} n={n} />)}
@@ -848,9 +849,13 @@ function NetworkScreen({ guest = false }) {
     <div>
 
       {!q && !guest && <NetNotes18 onReview={setReviewing} />}
+      {!q && !guest && (netCos.length > 0 || (state.teamInvites || []).some(i => i.status === "pending")) && (
+        <section className="ff-netco18" aria-label="Your network">
+          <SectionHead icon={<NetIco18.Users size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Your network" />
+        </section>
+      )}
       {!q && !guest && netCos.length > 0 && (
         <section className="ff-netco18" aria-label="Companies in your network">
-          <SectionHead icon={<NetIco18.Briefcase size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Your network" count={netCos.length} />
           <CoTiles17 list={netCos} label="Companies in your network" />
         </section>
       )}
