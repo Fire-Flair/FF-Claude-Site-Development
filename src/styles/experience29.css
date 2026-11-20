@@ -99,3 +99,11 @@
 .ff .ff-xc29-add{max-width:100%}
 .ff .ff-xc29{position:relative}
 .ff .ff-xc29 .ff-xc29-pen{position:absolute;top:14px;right:14px;z-index:3;width:30px;height:30px;border-radius:10px;corner-shape:squircle;display:grid;place-items:center;color:#E4C36A;background:rgba(0,0,0,.28);border:1px solid rgba(228,195,106,.45)}
+
+/* v1.152: dates on a venue card (month and year) */
+.ff .ff-xs29-f { display: grid; gap: 12px; margin-top: 14px; }
+.ff .ff-xs29-dt { display: grid; gap: 6px; }
+.ff .ff-xs29-dt .l { font: 700 11px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--gold-dk, #7E611D); }
+.ff .ff-xs29-dt .r { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ff .ff-xs29-dt select.ff-input, .ff .ff-xs29-dt input.ff-input { width: 100%; box-sizing: border-box; border-radius: 14px; corner-shape: squircle; }
+.ff .ff-xs29-pr { display: flex; align-items: center; gap: 8px; font-size: 14px; }

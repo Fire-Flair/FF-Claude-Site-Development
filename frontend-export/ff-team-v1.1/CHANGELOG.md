@@ -4,6 +4,11 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.152
+- **Venues, profile builder:** the Google type box now sits above the venue cards and is the plain Google search line (suggestions drop down with "Powered by Google"), with no custom design. Adding a venue goes straight on to its details, which now take the month and year you started and left (or "I still work here") and your role; they show on the venue card.
+- **Pop-ups:** every pop-up now opens in the middle of the screen, not at the top.
+- Page saved as `live-v1.152-index.html`. Artifact version 1795149405-497e.
+
 ## v1.151
 - **Profile builder, Venues:** the Google type box now sits on the page, directly under the venue cards and above the box that follows, instead of opening in a pop-up. The plus card jumps to it.
 - Page saved as `live-v1.151-index.html`. Artifact version 1795149107-8f67.
