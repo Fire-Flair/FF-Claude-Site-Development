@@ -710,3 +710,8 @@
 .ff .ff-foot156-c .ic { grid-row: 1 / span 2; }
 .ff .ff-foot156-c + .ff-foot156-c { border-left: 0; border-top: 1px solid rgba(233,208,122,.3); }
 .ff .ff-foot156-c b, .ff .ff-foot156-c span:not(.ic) { text-wrap: balance; }
+
+/* v1.166: Share is the same colour as Join team; Join team has a little shine */
+.ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11, .ff .ff-pub-grid11 > .ff-csm-btn.ff-pub-wa11, .ff .ff-pub-grid11 .ff-csm-btn.ff-pub-wa11 { background: color-mix(in srgb, var(--color-gold) 55%, var(--color-cream)) !important; background-image: none !important; border: 1px solid var(--color-gold-mid) !important; color: var(--color-on-action) !important; box-shadow: none !important; }
+.ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11:hover { background: color-mix(in srgb, var(--color-gold) 65%, var(--color-cream)) !important; }
+.ff .ff-btn.ff-join-mut { background-image: linear-gradient(180deg, rgba(255,255,255,.46) 0%, rgba(255,255,255,.08) 48%, rgba(255,255,255,0) 52%, rgba(120,84,10,.10) 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 4px 10px -8px rgba(110,80,20,.6); }

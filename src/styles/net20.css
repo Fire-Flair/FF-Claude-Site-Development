@@ -171,3 +171,13 @@
 .ff .ff-ml19 label { min-width: 0; }
 .ff .ff-ml19-row { flex-wrap: nowrap; }
 .ff .ff-ml19-row label { flex: 1 1 0; justify-content: space-between; padding-left: 10px; }
+
+/* v1.166 (Alex 20 Nov 05:47): Back tucked into the bottom left corner, smaller to look at, with a larger hit area around it */
+.ff .ff-pb1, .ff .ff-pb1:hover { bottom: calc(60px + env(safe-area-inset-bottom, 0px)); left: 6px; width: 38px; height: 38px; border-radius: 13px; opacity: .94; }
+.ff .ff-pb1 svg { width: 20px; height: 20px; }
+.ff .ff-pb1::after { content: ""; position: absolute; inset: -14px -16px -6px -8px; }
+@media (min-width: 1100px) { .ff .ff-pb1 { bottom: 20px; left: 14px; } }
+/* an edge tab: flush to the left edge, so it sits in the page margin and hides almost nothing */
+.ff .ff-pb1, .ff .ff-pb1:hover { left: 0; width: 30px; height: 40px; border-radius: 0 14px 14px 0; border-left: 0; bottom: calc(60px + env(safe-area-inset-bottom, 0px)); }
+.ff .ff-pb1 svg { width: 18px; height: 18px; margin-left: -2px; }
+@media (min-width: 1100px) { .ff .ff-pb1 { left: 0; bottom: 20px; } }
