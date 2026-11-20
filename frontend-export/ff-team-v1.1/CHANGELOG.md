@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.128
+- **Profile pages:** the spinning FF coin is gone. The gold lines stay with a small gold gem between them (halfway between a diamond and a sparkle), on person and company profiles and the profile builder.
+- Page saved as `live-v1.128-index.html`. Artifact version 1795136926-6de4.
+
 ## v1.127
 - **Building your profile bar:** the same height as the home bar (44px) on a wide screen; the Save button is smaller, so the bar is a little smaller on a phone too.
 - **Upload CV:** the line reads "Create your profile in 1 minute." (no less-than sign, with a full stop).

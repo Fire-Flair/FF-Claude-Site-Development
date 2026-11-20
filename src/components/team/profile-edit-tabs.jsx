@@ -10,10 +10,16 @@ const PROFILE_EDIT_TABS_CSS = __ff_css("styles/profile-edit-tabs.css");
 /* v1.70: the spinning FF coin between the Profile Card buttons and the profile tabs, first child of every
    .ff-ptabs-wrap (public profile, profile builder, own profile edit page, company profile). It is the home page's
    coin (V101.CoinDivider, turned by V101.useCoinSpin as the page scrolls), so it looks and spins the same. */
+/* v1.128 (Alex 20 Nov 01:07): the spinning coin is gone from the profile pages; the lines stay with a small gold gem between them
+   (halfway between a diamond and a four-point sparkle). Same place as before: first child of every .ff-ptabs-wrap. */
 function ProfileCoin17() {
-  const ref = useRef(null);
-  V101.useCoinSpin(ref);
-  return <div ref={ref} className="ff-pcoin17"><V101.CoinDivider /></div>;
+  return (
+    <div className="ff-pcoin17 ff-pgem17" aria-hidden="true">
+      <i />
+      <svg width="24" height="24" viewBox="0 0 24 24"><path d="M12 1.5Q13.4 10.6 22.5 12Q13.4 13.4 12 22.5Q10.6 13.4 1.5 12Q10.6 10.6 12 1.5Z" fill="#B08D2A" stroke="#B08D2A" strokeWidth="1.2" strokeLinejoin="round" /></svg>
+      <i />
+    </div>
+  );
 }
 
 /* The small squircle pencil beside a section heading. */

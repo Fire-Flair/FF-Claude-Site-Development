@@ -12,3 +12,8 @@
 .ff .ara-waitcard { display: flex; flex-direction: column; gap: 8px; }
 .ff .ara-waitacts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .ff .ara-ask { max-width: 360px; margin: 14px auto 0; }
+
+/* v1.128: the divider on the profile pages: gold lines with a small gem. */
+.ff .ff-pgem17{display:flex;align-items:center;gap:14px;margin:18px 0 22px;padding:0 4px}
+.ff .ff-pgem17 i{flex:1;height:1px;background:linear-gradient(90deg,transparent,#B08D2A 35%,#B08D2A 65%,transparent)}
+.ff .ff-pgem17 svg{flex:none;display:block}
