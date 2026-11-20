@@ -896,7 +896,7 @@ function TeamBookings({ guest = false }) {
           const GROW = [
             { id: "ff-bk-training", title: "Training", icon: E17I.GraduationCap, photo: "bk_training", desc: "Register your interest and we will notify you with available dates.", kind: "training" },
             { id: "ff-bk-jobs", title: "Dream jobs", icon: E17I.Plane, photo: "bk_jobs", desc: "Tell us your dream jobs and we will help make them happen.", kind: "jobs" },
-            { id: "ff-bk-rewards", title: "FireFlair rewards", icon: E17I.Gift, photo: "bk_rewards", desc: "Perks for people who work with FireFlair: kit, tickets and experiences. Register your interest in the ones you want.", kind: "rewards" },
+            { id: "ff-bk-rewards", title: "FireFlair rewards", icon: E17I.Gift, photo: "in_rw_bar_shows", desc: "Perks for people who work with FireFlair: kit, tickets and experiences. Register your interest in the ones you want.", kind: "rewards" },
           ];
           const cur = GROW.find((g) => g.id === drop);
           return (<>

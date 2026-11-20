@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.148
+- **Grow with FireFlair pictures:** each card's photo now matches its words. Back to the original AI pictures for Spirit brand training (a spirits back bar), FireFlair Open Class and Open Bar (cocktail making), WSET Wine (wine tasting), Food festivals & markets (a night market), International bar shows (a flight over London) and Professional photoshoot (camera on a tripod). The FireFlair rewards card uses a bar-show photo instead of the copper mug.
+- Page saved as `live-v1.148-index.html`. Artifact version 1795148408-b5e1.
+
 ## v1.147
 - **Bookings, Grow with FireFlair:** Training, Dream jobs and FireFlair rewards are now a hero scroll row; the opened card shows its choices underneath.
 - Nobody has to log in or create a Profile Card to look at the choices or pick some; the log in comes only when they press Submit.

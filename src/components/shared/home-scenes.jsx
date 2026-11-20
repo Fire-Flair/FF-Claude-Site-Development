@@ -256,13 +256,15 @@ const swipeImgs = () => {
     training: { intro_cocktails: I.training_cocktail_basics, mixology: I.training_mixology, wset_spirits: I.training_spirits_qualification, wset_wine: I.training_wine_qualification, brand_training: I.training_brand_training, ff_open_class: I.training_ff_open_class, ff_open_bar: I.training_ff_open_bar, ff_masterclass: I.training_masterclass },
     rewards: { bar_shows: I.reward_bar_shows, training: I.reward_training_tickets, amex: I.reward_amex_card, nfc: I.reward_nfc_card, kit: I.reward_bar_kit, car: I.reward_car_rental, party: I.reward_ff_party, shoot: I.reward_photoshoot },
   };
-  const own = (pre, m) => { const r = {}; for (const k in m) r[k] = F[pre + k] || m[k]; return r; };
+  /* v1.148 (Alex 20 Nov 04:17): the photo has to match the words, so these cards go back to the original (AI) picture. */
+  const AI_BACK = ["in_tr_brand_training", "in_tr_ff_open_class", "in_tr_ff_open_bar", "in_tr_wset_wine", "in_dj_food_festivals", "in_rw_bar_shows", "in_rw_shoot"];
+  const own = (pre, m) => { const r = {}; for (const k in m) r[k] = (AI_BACK.indexOf(pre + k) < 0 && F[pre + k]) || m[k]; return r; };
   /* Where each card photo's subject sits (object-position) when the photo is shown at the card's 4:3 top half:
      heads and the drink stay in frame, above the title. Update the entry when a card's photo is swapped. */
   const pos = {
-    jobs: { music_festivals: "50% 30%", food_festivals: "50% 78%", sports: "50% 40%", motorsport: "50% 20%", international: "50% 30%", yachts: "50% 40%", after_dark: "50% 35%", flair: "50% 35%" },
-    training: { intro_cocktails: "60% 64%", mixology: "50% 6%", wset_spirits: "50% 45%", wset_wine: "50% 40%", brand_training: "77% 72%", ff_open_class: "50% 60%", ff_open_bar: "50% 100%", ff_masterclass: "50% 30%" },
-    rewards: { bar_shows: "50% 30%", training: "50% 50%", kit: "50% 50%", party: "50% 40%", shoot: "49% 58%" },
+    jobs: { music_festivals: "50% 30%", food_festivals: "50% 50%", sports: "50% 40%", motorsport: "50% 20%", international: "50% 30%", yachts: "50% 40%", after_dark: "50% 35%", flair: "50% 35%" },
+    training: { intro_cocktails: "60% 64%", mixology: "50% 6%", wset_spirits: "50% 45%", wset_wine: "50% 55%", brand_training: "50% 35%", ff_open_class: "60% 40%", ff_open_bar: "50% 45%", ff_masterclass: "50% 30%" },
+    rewards: { bar_shows: "50% 50%", training: "50% 50%", kit: "50% 50%", party: "50% 40%", shoot: "50% 50%" },
   };
   return { jobs: own("in_dj_", base.jobs), training: own("in_tr_", base.training), rewards: own("in_rw_", base.rewards), pos };
 };
