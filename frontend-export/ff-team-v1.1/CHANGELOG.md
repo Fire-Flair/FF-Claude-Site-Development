@@ -4,6 +4,11 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.180
+- **Grow with FireFlair (Bookings):** Training, Dream jobs and FireFlair rewards now stack one under the other on anything narrower than 760px (a phone, an iPad split view). They only sit in a row of three when there is room for the text (before, from 470px, which squeezed it into a thin column).
+- **FireFlair rewards:** the "FF staff parties" card is removed.
+- Page saved as `live-v1.180-index.html`. Artifact version 1795212764-a4f2.
+
 ## v1.179
 - **Create your profile page:** more space above and below the FF monogram (80 px above, 64 px below, was 44 and 22).
 - Page saved as `live-v1.179-index.html`. Artifact version 1795212641-765b.

@@ -352,7 +352,6 @@ const XP_REWARDS = [
   { id: "nfc", kind: "Your card", icons: ["Nfc", "Smartphone"], tone: "burgundy", title: "FF NFC business card", note: "A physical FireFlair card: tap it on a phone to share your Profile Card." },
   { id: "kit", kind: "Kit", icons: ["Martini"], tone: "ember", title: "Branded cocktail equipment", note: "High-quality branded bar tools for your own professional kit." },
   { id: "car", kind: "Travel", icons: ["Car"], tone: "racing", title: "Car rental", note: "A car for the jobs that need one: your kit, late finishes and out-of-town events." },
-  { id: "party", kind: "FF party", icons: ["PartyPopper"], tone: "night", title: "FF staff parties", note: "You work everyone else's parties. We throw yours." },
   { id: "shoot", kind: "Profile", icons: ["Camera"], tone: "violet", title: "Professional photoshoot", note: "Headshots and action shots for your Profile Card and media." },
 ];
 

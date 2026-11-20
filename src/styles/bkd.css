@@ -21,8 +21,8 @@
 .ff-bkd .bkd-bd { padding:2px 12px 14px; }
 .ff-bkd .bkd-bt { display:none; }
 /* Wide screens: the three cards share a row; an opened card's contents span the full width below the row.
-   bk-ipad (Alex, 18 Nov 20:25): from 470px wide (the iPad split view included), not only on desktop. */
-@media (min-width:470px) {
+   v1.180 (Alex, 20 Nov 22:11): the row of three needs room for the text, so it starts at 760px wide; narrower (a phone, an iPad split view) they stack. *
+@media (min-width:760px) {
   .ff-bkd-row { grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; align-items:stretch; }
   .ff .ff-bkd-row > .ff-bkd { display:contents; }
   .ff-bkd-row .bkd-hd { order:0; border-radius:22px; corner-shape:squircle; background:#FFFDF8; border:1px solid rgba(126,97,29,.3); overflow:hidden; transition:border-color .2s, box-shadow .2s; }
@@ -151,7 +151,7 @@
 .ff .ff-fs5-rate .er { flex-basis:100%; font-size:12.5px; color:var(--color-ox,#5C1220); }
 .ff .ff-fs5-vis { margin:8px 0 12px; font-size:12.5px; color:#7D786E; }
 .ff .ff-fs5 .ff-bkconfirm17 { margin-top:12px; }
-@media (max-width:469px) {
+@media (max-width:759px) {
   .ff-bkd .bkd-hd { aspect-ratio:1 / 1; }
   .ff-bkd .bkd-ph { flex:1; aspect-ratio:auto; min-height:0; }
   .ff-bkd .bkd-tx { flex:none; }
@@ -299,7 +299,7 @@
 .ff .ff-int-cell > .ff-fc17 .bd .tick { min-height:40px; }
 .ff .ff-int-cell > .ff-fc17 .bd .d { display:none; }
 .ff .ff-bkd .ff-hscroll { align-items:stretch; }
-@media (max-width:469px) {
+@media (max-width:759px) {
   .ff-bkd-row { gap:10px; }
   .ff-bkd .bkd-hd { aspect-ratio:auto; flex-direction:row; align-items:center; min-height:0; }
   .ff-bkd .bkd-ph, .ff-bkd .bkd-ph.none { flex:1 1 auto; aspect-ratio:auto; min-height:0; width:auto; display:flex; align-items:center; gap:14px; padding:10px 0 10px 10px; background:none; overflow:visible; }
@@ -315,7 +315,7 @@
 }
 
 /* v1.95: on wider screens the header already shows the description, so the open body does not repeat it. */
-@media (min-width:470px) { .ff-bkd .bkd-bd > .bkd-bds { display:none; } }
+@media (min-width:760px) { .ff-bkd .bkd-bd > .bkd-bds { display:none; } }
 
 /* v1.138: Create your own: keyword chips for You provide and Ideal for; £ box without a label; static "Your custom package". */
 .ff #ff-bk-party .ff-pkc .ff-pkc-kw{display:flex;flex-wrap:wrap;gap:5px;align-items:center;min-width:0}
