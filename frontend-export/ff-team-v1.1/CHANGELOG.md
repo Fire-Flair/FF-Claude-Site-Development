@@ -4,6 +4,11 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.175
+- **Profile Card:** the Languages (chat bubble) icon is now centred on the flags; the row icons sit exactly in the middle of their rows.
+- **Profile (small):** the dots between the profession icons sit on the line.
+- Page saved as `live-v1.175-index.html`. Artifact version 1795206352-807b.
+
 ## v1.174
 - **Profile Card:** the Languages row is only as tall as the flags, and the other rows share the spare height, so a small gap always sits between the box and the URL bar.
 - Page saved as `live-v1.174-index.html`. Artifact version 1795205971-36db.

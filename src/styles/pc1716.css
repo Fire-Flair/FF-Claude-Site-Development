@@ -86,3 +86,7 @@
 
 /* v1.174 (Alex 20 Nov 20:05): the Languages row is only as tall as the flags, so a small gap always sits between the box and the URL bar */
 .pc17.lg .pc17-row:has(.pc17-flags) { min-height: 0 !important; height: auto !important; padding-top: 1.6cqw; padding-bottom: 1.6cqw; }
+
+/* v1.175 (Alex 20 Nov 20:24): the Languages icon is centred on the flags, and on the small Profile the dots sit on the line */
+.pc17 .pc17-lico svg, .pc17 .pc17-ico svg { display: block; }
+.pc17.sm .ff-pc-rule .ff-pc-dm { position: relative; top: 1.3cqw; }
