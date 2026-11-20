@@ -57,6 +57,8 @@ function ProfileEditTabs({ person }) {
   /* ---- Overview ---- */
   const overview = (<>
     <PE2Overview records={records} />
+    {/* v1.185 (Alex 20 Nov 23:05): Q&A sits on Overview, directly under Venues (was on Packages). */}
+    <PE2QA />
     {state.profile.introduction
       ? <div className="ara-introwrap"><span className="ara-introPen">{pen("intro", "FireFlair Introductions and Awards")}</span><FireFlairIntroductions17 person={person} /></div>
       : <FireFlairIntroductions17 person={person} />}
@@ -68,7 +70,6 @@ function ProfileEditTabs({ person }) {
   const bookings = (<>
     <ProfilePackages17 person={person} own />
     <PersonalTerms17 />
-    <PE2QA />
     <CocktailStudio17 />
   </>);
 

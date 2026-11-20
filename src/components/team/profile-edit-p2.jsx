@@ -7,8 +7,6 @@
    Q&A sits above Save, always open, answered inline. Ported from the p2/profpick drafts; reads and writes the real records. */
 
 const PE2_CSS = __ff_css("styles/profile-edit-p2.css");
-/* Room for text in one Attribute box, in px (the box is 5:7, 164px to 196px wide). */
-const PE2_BOX_PX = 170;
 
 /* top-slots (Alex, 18 Nov 21:02): choosing the top three without dragging. Three slots, 1 to 3, are the three on the
    Profile Card. Tapping a filled slot empties it; while a slot is empty, the other professions show underneath and tapping
@@ -251,6 +249,68 @@ function PE2AddProf({ on, onClick }) {
   return <button type="button" className={"pe2-add-prof" + (on ? " on" : "")} aria-label="Add a profession" aria-expanded={on} aria-controls="pe2-prof-add" onClick={onClick}><span className="pe2-add-ic" aria-hidden="true"><Plus size={26} strokeWidth={2.2} /></span></button>;
 }
 
+/* v1.185 (Alex 20 Nov 23:05): one Attributes category in the rail. Every box is 5:7 (the size of a Professions card) and never grows;
+   the entries are split across boxes of the category by their MEASURED height. A hidden copy of the box and its list (same
+   classes, so the same fonts and widths) gives the room inside one box and the height of each entry; an entry whose description does not
+   fit a box on its own is shown by name only (its description stays in the entry). */
+const pe2Sd185 = (r) => (!r.cv && !/^Uploaded /.test(String(r.description || "")) && String(r.description || "").trim()) ? wholeSentences21(r.description, 70) : "";
+function PE2AttrCat185({ k, ci, def, shown, on, onTap }) {
+  const empty = !shown.length;
+  const meas = useRef(null);
+  const [m, setM] = useState(null);
+  const sig = k + "§" + def.label + "§" + shown.map(r => r.id + "|" + r.name + "|" + pe2Sd185(r)).join("§");
+  React.useLayoutEffect(() => {
+    const run = () => {
+      const el = meas.current; if (!el) return;
+      const head = el.querySelector("[data-m=head]"), la = el.querySelector("[data-m=a]"), lb = el.querySelector("[data-m=b]");
+      if (!head || !la || !lb) return;
+      const cs = getComputedStyle(head), top = head.querySelector(".ff-agrp-top");
+      const gap = parseFloat(cs.rowGap) || 10;
+      const avail = head.getBoundingClientRect().height - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - top.getBoundingClientRect().height - gap - 3;
+      const hs = (l) => [...l.children].map(c => Math.ceil(c.getBoundingClientRect().height) + 1);
+      const next = { avail, a: hs(la), b: hs(lb) };
+      setM(cur => cur && JSON.stringify(cur) === JSON.stringify(next) ? cur : next);
+    };
+    run();
+    window.addEventListener("resize", run);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
+    return () => window.removeEventListener("resize", run);
+  }, [sig]);
+  const chunks = []; const withSd = {};
+  if (shown.length) {
+    let cur = [], used = 0;
+    shown.forEach((r, i) => {
+      let h = m && m.a[i] != null ? m.a[i] : 0, sd = true;
+      if (m && h > m.avail) { h = m.b[i] != null ? m.b[i] : 0; sd = false; }
+      withSd[r.id] = sd;
+      if (m && cur.length && used + h > m.avail) { chunks.push(cur); cur = []; used = 0; }
+      cur.push(r); used += h;
+    });
+    if (cur.length) chunks.push(cur);
+  }
+  const entry = (r, sd) => <span key={r.id}>{nbh21(r.name)}{sd && pe2Sd185(r) && <small className="ff-agrp-sd">{nbh21(pe2Sd185(r))}</small>}</span>;
+  const card = (isEmpty, key, list) => (
+    <button key={key} type="button" role="listitem" className={"ff-agrp " + (isEmpty ? "pe2-agrp-empty" : "cat-" + k + " " + tierCls17(ci)) + (on ? " pe2-agrp-on" : "")} aria-label={`${isEmpty && !empty ? "Add another" : "Edit"} ${def.label}`} aria-expanded={on} onClick={() => onTap(isEmpty)}>
+      <span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span></span>
+      {isEmpty ? <span className="pe2-empty-fill" aria-hidden="true" /> : <span className="ff-agrp-l">{list.map(r => entry(r, withSd[r.id]))}</span>}
+      {isEmpty && <span className="pe2-plus1" aria-hidden="true"><Plus size={26} strokeWidth={2.2} /></span>}
+      <span className="pe2-pen1" aria-hidden="true"><Pencil size={15} strokeWidth={2.1} /></span>
+    </button>
+  );
+  const mcls = "ff-agrp cat-" + k + " " + tierCls17(ci);
+  return (
+    <>
+      <div className="pe2-meas" aria-hidden="true" ref={meas}>
+        <div className={mcls} data-m="head"><span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span></span></div>
+        <div className={mcls}><span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span></span><span className="ff-agrp-l" data-m="a">{shown.map(r => entry(r, true))}</span></div>
+        <div className={mcls}><span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span></span><span className="ff-agrp-l" data-m="b">{shown.map(r => entry(r, false))}</span></div>
+      </div>
+      {/* v1.133 (Alex 20 Nov 01:20): once there is an entry, an empty dotted plus box follows it, so there is always one to add to. */}
+      {empty ? card(true, k) : <>{chunks.map((l, i) => card(false, k + (i ? "-" + i : ""), l))}{card(true, k + "-add")}</>}
+    </>
+  );
+}
+
 /* Professions and Attributes on the edit page, laid out as the finished profile, empty ones as placeholder cards. */
 function PE2Overview({ records }) {
   const P = usePE2Profs();
@@ -295,27 +355,9 @@ function PE2Overview({ records }) {
         <div className="ff-pp-head"><h2 id="pe2-attr-h" className="ff-about-h">Attributes</h2></div>
         <div className="ff-mrow ff-acar pe2-rail" role="list" aria-label="Attributes">
           {cats.map((k, ci) => {
-            const def = BASE_CATEGORIES[k];
             const shown = rankedRecords(records[k] || []).filter(r => !r.hidden && !r.proposed && r.name);
-            const empty = !shown.length;
-            const on = attrOpen === k;
-            /* v1.183 (Alex 20 Nov 22:34): the boxes keep one size. What does not fit carries on in the next box of the same
-               category (no "+14", nothing cut off). Each entry costs its lines of text; a box holds PE2_BOX_PX of them. */
-            const sdOf = (r) => (!r.cv && !/^Uploaded /.test(String(r.description || "")) && String(r.description || "").trim()) ? wholeSentences21(r.description, 70) : "";
-            const cost = (r) => Math.ceil(String(r.name).length / 13) * 17.5 + 14 + (sdOf(r) ? Math.ceil(sdOf(r).length / 17) * 14 + 4 : 0);
-            const chunks = []; let cur = [], used = 0;
-            shown.forEach(r => { const c = cost(r); if (cur.length && used + c > PE2_BOX_PX) { chunks.push(cur); cur = []; used = 0; } cur.push(r); used += c; });
-            if (cur.length) chunks.push(cur);
-            const card = (isEmpty, key, list) => (
-              <button key={key} type="button" role="listitem" className={"ff-agrp " + (isEmpty ? "pe2-agrp-empty" : "cat-" + k + " " + tierCls17(ci)) + (on ? " pe2-agrp-on" : "")} aria-label={`${isEmpty && !empty ? "Add another" : "Edit"} ${def.label}`} aria-expanded={on} onClick={() => { setQualOpen(null); if (isEmpty) { const nr = makeRecord(k, ""); dispatch({ type: "REC_ADD", category: k, record: nr }); setAttrOpen(k); setAttrRec(nr); } else { setAttrOpen(on ? null : k); } }}>
-                <span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span></span>
-                {isEmpty ? <span className="pe2-empty-fill" aria-hidden="true" /> : <span className="ff-agrp-l">{list.map(r => <span key={r.id}>{nbh21(r.name)}{sdOf(r) && <small className="ff-agrp-sd">{nbh21(sdOf(r))}</small>}</span>)}</span>}
-                {isEmpty && <span className="pe2-plus1" aria-hidden="true"><Plus size={26} strokeWidth={2.2} /></span>}
-                <span className="pe2-pen1" aria-hidden="true"><Pencil size={15} strokeWidth={2.1} /></span>
-              </button>
-            );
-            /* v1.133 (Alex 20 Nov 01:20): once there is an entry, an empty dotted plus box follows it, so there is always one to add to. */
-            return empty ? card(true, k) : <React.Fragment key={k}>{chunks.map((l, i) => card(false, k + (i ? "-" + i : ""), l))}{card(true, k + "-add")}</React.Fragment>;
+            return <PE2AttrCat185 key={k} k={k} ci={ci} def={BASE_CATEGORIES[k]} shown={shown} on={attrOpen === k}
+              onTap={(isEmpty) => { setQualOpen(null); if (isEmpty) { const nr = makeRecord(k, ""); dispatch({ type: "REC_ADD", category: k, record: nr }); setAttrOpen(k); setAttrRec(nr); } else { setAttrOpen(attrOpen === k ? null : k); } }} />;
           })}
           <span className="ff-acar-end" aria-hidden="true" />
         </div>
@@ -323,7 +365,9 @@ function PE2Overview({ records }) {
           <Sheet open center title={BASE_CATEGORIES[attrOpen].label} onClose={() => setAttrOpen(null)}>
             <div className="pe2-attr-pop">
               <style>{RANK_CSS17}</style>
-              <ProfTiles21 key={"t" + attrOpen} items={records[attrOpen] || []} def={BASE_CATEGORIES[attrOpen]} catKey={attrOpen} label={BASE_CATEGORIES[attrOpen].label} stars={5} onOpen={(r) => setAttrRec(r)} />
+              <ProfTiles21 key={"t" + attrOpen} items={records[attrOpen] || []} def={BASE_CATEGORIES[attrOpen]} catKey={attrOpen} label={BASE_CATEGORIES[attrOpen].label} stars={5} onOpen={(r) => setAttrRec(r)}
+                tail={<div role="listitem" className="ff-pt21-slot pe2-bar-slot"><button type="button" className="pe2-bar-add" aria-label={`Add another ${BASE_CATEGORIES[attrOpen].label}`}
+                  onClick={() => { const nr = makeRecord(attrOpen, ""); dispatch({ type: "REC_ADD", category: attrOpen, record: nr }); setAttrRec(nr); }}><Plus size={24} strokeWidth={2.2} aria-hidden="true" /></button></div>} />
             </div>
           </Sheet>
         )}
@@ -432,38 +476,36 @@ function PE2QCreate({ onCreate }) {
 function PE2QA() {
   const { state, dispatch } = useStore();
   const qs = allQuestions(state);
-  const [side, setSide] = useState("todo");
-  /* Cards answered while this tab is showing stay where they are until the tab changes, so a card never jumps away mid-answer. */
+  /* v1.185 (Alex 20 Nov 23:05): unanswered cards, then Create your own question, then every answered (ticked) card to its right.
+     A card answered "Other" (or the question's own typed option) stays put until its text is typed, so the type box does not run away from the member. */
   const [stay, setStay] = useState([]);
   const canAdd = qs.filter(q => q.mine).length < CUSTOM_QUESTION_LIMIT;
   const isDone = (q) => isAnswered(answerOf(state, q));
-  const todo = qs.filter(q => !isDone(q) || (side === "todo" && stay.includes(q.id)));
-  const done = qs.filter(q => isDone(q) && !(side === "todo" && stay.includes(q.id)));
-  const nTodo = qs.filter(q => !isDone(q)).length, nDone = qs.length - nTodo;
-  const list = qs;
-  const present = QUESTION_GROUPS.filter(g => qs.some(q => q.group === g.key));
-  const pick = (t) => { setSide(t); setStay([]); };
+  const todo = qs.filter(q => !isDone(q) || stay.includes(q.id));
+  const done = qs.filter(q => isDone(q) && !stay.includes(q.id));
+  const pendingType = (q, v) => v === "Other" || (q.detail && v === q.detail.option);
   const answer = (q, v) => {
     dispatch({ type: "ANSWER", qid: q.id, value: v });
-    setStay(s => s.includes(q.id) ? s : [...s, q.id]);
+    setStay(s => pendingType(q, v) ? (s.includes(q.id) ? s : [...s, q.id]) : s.filter(x => x !== q.id));
   };
   const create = (text, value) => {
     const id = `my_${Date.now().toString(36)}`;
     dispatch({ type: "MY_QUESTION_ADD", question: { id, text, type: "yesno" }, value, visibility: "private" });
-    setStay(s => [...s, id]);
   };
+  const card = (q) => (
+    <span key={q.id} data-qid={q.id} className="pe2-qa-cardw">
+      <PE2QCard q={q} value={answerOf(state, q)} onAnswer={(v) => answer(q, v)} />
+    </span>
+  );
   return (
     <section className="ff-pp ff-pp21 pe2-qa" id="pe2-qa" aria-labelledby="pe2-qa-h">
       <style>{PE2_CSS}</style>
       <div className="ff-pp-head"><h2 id="pe2-qa-h" className="ff-about-h">Q&amp;A</h2></div>
       <div className="ff-qa-panel pe2-qa-panel">
         <HScroll label="Questions" snap>
-          {list.map(q => (
-            <span key={q.id} data-qid={q.id} className="pe2-qa-cardw">
-              <PE2QCard q={q} value={answerOf(state, q)} onAnswer={(v) => answer(q, v)} />
-            </span>
-          ))}
+          {todo.map(card)}
           {canAdd && <span className="pe2-qa-cardw"><PE2QCreate onCreate={create} /></span>}
+          {done.map(card)}
         </HScroll>
       </div>
     </section>

@@ -359,8 +359,3 @@ const XP_REWARDS = [
 
 function P1RewardsSection() { return <InterestSection kind="rewards" />; }
 
-
-
-/* Set by Publish in Save & Publish, read once by Welcome to the Team, which
-   then shows the "published" confirmation. */
-const P1_JUST_PUBLISHED = { v: false };

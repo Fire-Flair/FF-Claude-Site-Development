@@ -1031,11 +1031,6 @@
 .ff .ff-tick:hover { border-color:var(--gold-dk); }
 .ff .ff-tick.on { border-color:var(--burg); background:#FFF8F2; box-shadow:0 0 0 1px var(--burg); }
 .ff .ff-tick.on .box { background:linear-gradient(170deg,#82203A,#4E0E1B); border-color:#4E0E1B; color:#F6E7B4; }
-.ff-confirm { display:flex; flex-direction:column; align-items:center; text-align:center; gap:10px; }
-.ff-confirm-ic { width:52px; height:52px; border-radius:50%; display:grid; place-items:center; color:#fff; background:#1FA855; box-shadow:0 6px 16px rgba(31,168,85,.3); }
-.ff-confirm-ic.ok { background:radial-gradient(circle at 35% 30%, #8A2238, #4A0D18); color:#F3DE9C; border:1.5px solid var(--gold); box-shadow:0 6px 16px rgba(74,13,24,.28); }
-.ff-confirm-main { margin:2px 0 0; font-size:17px; font-weight:700; line-height:1.4; color:#16130F; text-wrap:balance; }
-.ff-confirm-acts { display:grid; gap:8px; width:100%; margin-top:6px; }
 .ff-pendingnote { display:flex; flex-wrap:wrap; align-items:center; gap:6px 12px; margin-top:10px; padding:10px 12px; border-radius:12px;
   background:#FFF8E8; border:1px solid rgba(176,141,42,.45); font-size:13px; color:#3A2E10; }
 .ff-pendingnote span { flex:1 1 220px; }
@@ -1070,7 +1065,6 @@
 .ff-welcome-acts { max-width:372px; margin:16px auto 0; display:grid; gap:10px; }
 .ff-welcome-wallets { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
 .ff-welcome-wallets .ff-walletbtn { flex:1 1 170px; min-width:0; }
-.ff-publishnote { margin:6px 0 0; padding:10px 12px; border-radius:12px; background:#FBF4E2; border:1px solid rgba(201,162,39,.4); font-size:12.5px; line-height:1.45; color:#4A3A0E; text-align:left; }
 /* ==== v16.12 =================================================================
    Square Information Cards: rounded corners, calmer, closer to Apple. Label at
    the top, the title, then the description or up to four images. */

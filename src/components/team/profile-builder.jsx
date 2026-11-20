@@ -747,7 +747,7 @@ function SaveShareCard({ onSaved }) {
   const blocker = !signedIn ? "Create your FF Tag first."
     : !cardReady ? "Add a profession to publish." : null;
   /* v1.2: Publish saves and publishes on FF Team in one step; Welcome to the
-     Team then opens with the confirmation. */
+     Team opens below. */
   const publish = () => {
     if (!signedIn) { save(); return; }
     if (!cardReady) { dispatch({ type: "TOAST", toast: "Add a profession to publish" }); return; }
@@ -758,8 +758,6 @@ function SaveShareCard({ onSaved }) {
       leaveLive();
       if (!p.publishedAt) {
         dispatch({ type: "PUBLISH_XP" });
-        P1_JUST_PUBLISHED.v = true;
-        setTimeout(() => window.dispatchEvent(new Event("ff-published")), 0);
       } else dispatch({ type: "TOAST", toast: "Saved" });
       if (onSaved) onSaved();
     });
@@ -1071,17 +1069,25 @@ function FfaiReview17({ x, src, onDone }) {
     if (Object.keys(out.byCategory).length) dispatch({ type: "RECORDS_MERGE", byCategory: out.byCategory });
     if (Object.keys(out.patch).length) dispatch({ type: "PROFILE", patch: out.patch });
     out.answers.forEach(a => dispatch({ type: "ANSWER", qid: a.qid, value: a.value }));
-    /* Then as before: the sections open with the new cards in them. */
+    /* v1.185 (Alex 20 Nov 23:05): the page stays where the member was. The review list is the tallest thing here and leaves the page
+       when it is added, which used to drop the page to the bottom. The start box (#ff-sec-ffai) is held where it was in the window
+       (or just under the top of the screen if the member had scrolled past its top), through the few frames the layout takes to settle. */
+    const host = document.getElementById("ff-sec-ffai");
+    const t0 = host ? host.getBoundingClientRect().top : null;
+    const want = t0 == null ? null : (t0 < 120 || t0 > window.innerHeight * 0.6 ? 120 : t0);
     dispatch({ type: "PE_START" });
     Object.keys(out.byCategory).forEach(cat => dispatch({ type: "TOGGLE_CATEGORY", key: `edit_attr_${cat}`, visible: true }));
     const n = out.summary.saved;
     dispatch({ type: "TOAST", toast: n ? `${n} added to your profile` : "Nothing added" });
     onDone && onDone();
-    setTimeout(() => {
-      const first = Object.keys(out.byCategory)[0];
-      const el = document.getElementById(first ? `ff-sec-${first}` : "ff-sec-card");
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 120);
+    if (want != null) {
+      const hold = () => {
+        const el = document.getElementById("ff-sec-ffai"); if (!el) return;
+        const d = el.getBoundingClientRect().top - want;
+        if (Math.abs(d) > 1) window.scrollTo({ top: Math.max(0, window.scrollY + d), behavior: "instant" });
+      };
+      [0, 60, 160, 400, 800].forEach(ms => setTimeout(hold, ms));
+    }
   };
 
   const yn = (id, label) => (
@@ -1314,15 +1320,6 @@ function WelcomeSection({ me }) {
   const { state, dispatch } = useStore();
   const p = state.profile;
   const t = state.session.tag;
-  const [published, setPublished] = useState(() => P1_JUST_PUBLISHED.v);
-  useEffect(() => { P1_JUST_PUBLISHED.v = false; const h = () => setPublished(true); window.addEventListener("ff-published", h); return () => window.removeEventListener("ff-published", h); }, []);
-  const publish = () => {
-    const first = !p.publishedAt;
-    dispatch({ type: "PROFILE", patch: { published: true, publishedAt: p.publishedAt || Date.now() } });
-    if (first) dispatch({ type: "PUBLISH_XP" });
-    setPublished(true);
-  };
-  const viewAsGuest = () => { setPublished(false); dispatch({ type: "VIEW", id: "me", guest: true }); window.scrollTo(0, 0); };
   return (
     <div className="ff-s5open">
       <div id="ff-sec-welcome" className="ff-stephead ff-s5head">
@@ -1336,21 +1333,6 @@ function WelcomeSection({ me }) {
         <P1PhotoPrompt />
         <ShareStack />
       </div>
-      {published && (
-        <Sheet open onClose={() => setPublished(false)} title="Your profile is published">
-          <div className="ff-confirm">
-            <span className="ff-confirm-ic ok"><Globe size={22} /></span>
-            <p className="ff-confirm-main">We've published your profile as a website.</p>
-            <p className="ff-body" style={{ margin: 0 }}>See it the way a guest does: your Profile Card first, then your work, network, reviews and the rest of your profile.</p>
-            <div className="ff-confirm-acts">
-              <Btn variant="primary wide" onClick={viewAsGuest}><Eye size={14} /> Click here to view it as a guest</Btn>
-            </div>
-            <p className="ff-publishnote">
-              For now we're publishing on FF Team, to help build the network. Once FF Party goes live, your profile will be ready for B2C bookings.
-            </p>
-          </div>
-        </Sheet>
-      )}
     </div>
   );
 }
