@@ -564,13 +564,12 @@ function ExperienceCard29({ record, onClick, note, onNote, tone }) {
       style={{ width: CARD_W.venue, backgroundImage: `${XP_TONES29[tn].bg}, ${XP_TONES29[tn].ring}` }}>
       <div className="ff-xc29-in" role={onClick ? "button" : undefined} tabIndex={onClick ? 0 : undefined}
         aria-label={onClick ? `${v.name}. Open details` : undefined} onKeyDown={onClick ? key : undefined}>
-        <span className="k">{v.kicker}</span>
+        <span className="k vb" title={v.kicker}><Icon size={17} strokeWidth={1.8} aria-hidden="true" /><span className="ff-sr">{v.kicker}</span></span>
         <span className="top">
           <span className="nm">
             <b>{v.name}</b>
             {v.where && <span className="ad"><MapPin size={12} strokeWidth={1.8} aria-hidden="true" />{v.where}</span>}
           </span>
-          <span className="ic" aria-hidden="true"><Icon size={20} strokeWidth={1.7} /></span>
         </span>
         {(v.role || v.dates) && <span className="role">{v.role && <b>{v.role}</b>}{v.dates && <span>{v.dates}</span>}</span>}
         {typing
@@ -588,13 +587,17 @@ function ExperienceCard29({ record, onClick, note, onNote, tone }) {
 
 
 /* The Experience cards, scrolling across. */
-function ExperienceCards29({ items, onOpen }) {
+function ExperienceCards29({ items, onOpen, onAdd }) {
   const list = (items || []).filter(r => xpShown29(r) && !r.hidden && (onOpen || !r.proposed));
-  if (!list.length) return null;
+  if (!list.length && !onAdd) return null;
   return (
     <div className="ff-xr29" role="list" aria-label={`Venues, ${list.length}`}>
       <style>{xpCSS29}</style>
       {list.map(r => <div key={r.id} role="listitem" className="ff-xr29-it"><ExperienceCard29 record={r} onClick={onOpen ? () => onOpen(r) : undefined} /></div>)}
+      {onAdd && <div role="listitem" className="ff-xr29-it"><button type="button" className="ff-xc29-add" style={{ width: CARD_W.venue }} aria-label="Add a venue" onClick={onAdd}>
+        <span className="k vb" aria-hidden="true"><MapPin size={17} strokeWidth={1.8} /></span>
+        <span className="pe2-plus1" aria-hidden="true"><Plus size={26} strokeWidth={2.2} /></span>
+      </button></div>}
       <span className="ff-xr29-end" aria-hidden="true" />
     </div>
   );
@@ -639,6 +642,7 @@ function ExperienceEditor29({ items }) {
   const { dispatch } = useStore();
   const [key, setKey] = useState(0);
   const [openId, setOpenId] = useState(null);
+  const [finding, setFinding] = useState(false);
   const rows = (items || []).filter(r => xpShown29(r) && !r.hidden && !r.proposed);
   const venues = (items || []).filter(r => r.category !== "experience");
   const same = (r, p) => (r.place && p.place && r.place.id === p.place.id) || String(r.name).toLowerCase() === String(p.name).toLowerCase();
@@ -646,6 +650,8 @@ function ExperienceEditor29({ items }) {
   const add = (p) => {
     setKey(k => k + 1);
     if (!p || !p.name) return;
+    setFinding(false);
+    setTimeout(() => { const r = document.querySelector(".ff-xe29 .ff-xr29"); if (r) r.scrollLeft = 0; }, 120);
     if (taken(p)) { dispatch({ type: "TOAST", toast: `${p.name} is already on your profile` }); return; }
     dispatch({ type: "REC_ADD", category: "venues", record: makeRecord("venues", p.name, { ...p, details: { kind: "worked" } }) });
     dispatch({ type: "TOAST", toast: `${p.name} added` });
@@ -655,8 +661,8 @@ function ExperienceEditor29({ items }) {
     <div className="ff-xe29">
       <style>{VEN_CSS17}</style>
       <style>{xpCSS29}</style>
-      <div className="ff-xe29-one"><VenueSearch17 key={key} cards label="Add a venue" placeholder="Search for a venue" onPick={add} /></div>
-      <ExperienceCards29 items={rows} onOpen={(r) => setOpenId(r.id)} />
+      <ExperienceCards29 items={rows} onOpen={(r) => setOpenId(r.id)} onAdd={() => setFinding(true)} />
+      {finding && <Sheet open center title="Venues" onClose={() => setFinding(false)}><div className="ff-xe29-one"><VenueSearch17 key={key} cards autoFocus label="Add a venue" placeholder="Search for a venue" onPick={add} /></div></Sheet>}
       {openRec && <ExperienceSheet29 key={openRec.id} record={openRec} onClose={() => setOpenId(null)} />}
     </div>
   );

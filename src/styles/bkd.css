@@ -316,3 +316,10 @@
 
 /* v1.95: on wider screens the header already shows the description, so the open body does not repeat it. */
 @media (min-width:470px) { .ff-bkd .bkd-bd > .bkd-bds { display:none; } }
+
+/* v1.138: Create your own: keyword chips for You provide and Ideal for; £ box without a label; static "Your custom package". */
+.ff #ff-bk-party .ff-pkc .ff-pkc-kw{display:flex;flex-wrap:wrap;gap:5px;align-items:center;min-width:0}
+.ff #ff-bk-party .ff-pkc .ff-pkc-kw .kw{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:10px;corner-shape:squircle;border:1px solid rgba(126,97,29,.55);background:rgba(201,162,39,.16);color:#3A2A06;font:600 12.5px/1.2 var(--font-sans);white-space:nowrap}
+.ff #ff-bk-party .ff-pkc .ff-pkc-kw .kw button{all:unset;cursor:pointer;font-size:14px;line-height:1;opacity:.7}
+.ff #ff-bk-party .ff-pkc .ff-pkc-kw input{all:unset;box-sizing:border-box;flex:1 1 110px;min-width:90px;height:30px;padding:0 8px;border-radius:10px;corner-shape:squircle;border:1px solid rgba(126,97,29,.55);background:#fff;font:500 14px var(--font-sans);color:#1b1608;caret-color:#7E611D}
+.ff #ff-bk-party .ff-pkc .ff-pkc-kw input::placeholder{color:#8a8374}

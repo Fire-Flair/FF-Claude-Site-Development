@@ -558,6 +558,25 @@ function BkPkgCard17({ sv, tab = "bar", on, onClick }) {
   );
 }
 
+/* v1.138 (Alex 20 Nov 02:10): "You provide" and "Ideal for" on Create your own are keywords: type one, press Enter, it becomes a chip; stored comma-separated. */
+function PkcKw17({ value, onChange, placeholder, disabled, label }) {
+  const items = String(value || "").split(",").map(x => x.trim()).filter(Boolean);
+  const [t, setT] = useState("");
+  const add = () => {
+    const v = t.trim().replace(/,+$/, "").trim();
+    setT("");
+    if (!v || items.some(x => x.toLowerCase() === v.toLowerCase())) return;
+    onChange([...items, v].join(", "));
+  };
+  return (
+    <span className="ff-pkc-kw">
+      {items.map(k => <span key={k} className="kw">{k}{!disabled && <button type="button" aria-label={`Remove ${k}`} onClick={() => onChange(items.filter(x => x !== k).join(", "))}>×</button>}</span>)}
+      {!disabled && <input type="text" value={t} onChange={(e) => setT(e.target.value)} placeholder={items.length ? "" : placeholder} aria-label={label}
+        onKeyDown={(e) => { if (e.key === "Enter" || e.key === ",") { e.preventDefault(); add(); } }} onBlur={add} />}
+    </span>
+  );
+}
+
 /* Create your own: the same card, every line typed by the professional, including You earn. */
 function BkPkgOwn17({ tab }) {
   const { state, dispatch } = useStore();
@@ -582,7 +601,7 @@ function BkPkgOwn17({ tab }) {
     const miss = { name: !f.name.trim(), earn: !pkcAmtOk17(f.earn) };
     if (miss.name || miss.earn) { setBad(miss); (miss.name ? nameRef : earnRef).current?.focus(); return; }
     setBusy(true);
-    const r = await qaSubmit17(dispatch, { questionId: qid, account, typed: { kind: "own_package", tab, name: f.name.trim(), line: f.line.trim(), provide: f.provide.trim(), ideal: f.ideal.trim(), duration: f.duration.trim(), pence: Math.round(Number(f.earn) * 100) }, visibility: "public", source: "FF Team Bookings · FF Party packages" });
+    const r = await qaSubmit17(dispatch, { questionId: qid, account, typed: { kind: "own_package", tab, name: f.name.trim(), line: "Your custom package", provide: f.provide.trim(), ideal: f.ideal.trim(), duration: f.duration.trim(), pence: Math.round(Number(f.earn) * 100) }, visibility: "public", source: "FF Team Bookings · FF Party packages" });
     setBusy(false);
     dispatch({ type: "TOAST", toast: r.ok ? `Signed up: ${f.name.trim()}` : "That couldn't be saved. Try again." });
   };
@@ -595,14 +614,15 @@ function BkPkgOwn17({ tab }) {
     const fit = () => root.querySelectorAll("textarea.ff-pkc-tin").forEach(el => { el.style.height = "auto"; el.style.height = el.scrollHeight + "px"; });
     fit(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit).catch(() => {});
   });
-  const rows = [[S17I.Sparkles, "You provide", inp("provide", "What you bring", "area")], [S17I.Users, "Ideal for", inp("ideal", "The events it suits", "area")], [S17I.Clock, "Duration", inp("duration", "How long")]];
+  const kw = (k, ph) => <PkcKw17 value={f[k]} onChange={(v) => setF(x => ({ ...x, [k]: v.slice(0, 160) }))} placeholder={ph} disabled={on} label={ph} />;
+  const rows = [[S17I.Sparkles, "You provide", kw("provide", "What you bring")], [S17I.Users, "Ideal for", kw("ideal", "The events it suits")], [S17I.Clock, "Duration", inp("duration", "How long")]];
   return (
     <PkgFace17 d={d} refEl={ref} cls={` ff-pkc-own2${on ? " sel" : ""}`} dataId={"create-" + tab} rows={rows}
       title={<textarea ref={nameRef} rows={1} className={`ff-pkc-tin ti${bad.name ? " bad" : ""}`} value={f.name} onChange={set("name")} onKeyDown={e => { if (e.key === "Enter") e.preventDefault(); }} placeholder="Create your own" aria-label="Package name" disabled={on} />}
-      line={<textarea rows={1} className="ff-pkc-tin tg" value={f.line} onChange={set("line")} onKeyDown={e => { if (e.key === "Enter") e.preventDefault(); }} placeholder="Your skills, your package, your price." aria-label="Package line" disabled={on} />}
+      line={<p className="ff-pkc-tg fit">Your custom package</p>}
       foot={<>
         <label className={`ff-pkc-earn in${bad.earn ? " bad" : ""}`}>
-          <i>You earn</i><span className="cur">£</span>
+          <span className="cur">£</span>
           <input ref={earnRef} type="text" inputMode="decimal" autoComplete="off" value={f.earn} onChange={set("earn")} disabled={on} aria-invalid={!!bad.earn} aria-label="What you want to earn, in pounds" onKeyDown={e => { if (e.key === "Enter") go(); }} />
         </label>
         <button type="button" className="ff-pkc-go fit" onClick={go} disabled={busy} aria-pressed={on} aria-label={`Your package: ${on ? "Signed up" : "Sign up"}`}>
@@ -615,7 +635,7 @@ function BkPkgOwn17({ tab }) {
 /* pkg3 / v17.46: Coming soon package cards. The Bar rail ends with the custom-package card; the Entertainment and
    Services tabs each preview three packages to come. Copy speaks to the professional who will create them. */
 const PK_SOON17 = {
-  bar: [{ id: "custom", eb: "FF Party", ti: "FF Party packages", tg: "Create custom packages. Your skills, your package, your price.",
+  bar: [{ id: "custom", eb: "FF Party", ti: "FF Party packages", tg: "Create custom packages.",
     inc: "Your signature serves, your kit, your style", ideal: "The events you love working" }],
   ent: [
     { id: "dj", eb: "Entertainment · FF Party", ti: "DJ Package", tg: "Your sound, your package, your price.",
@@ -668,7 +688,7 @@ function BkPkgSoon17({ pk = PK_SOON17.bar[0], own = false }) {
       <span className="ff-pkc-logo"><FFLogo size={34} tier="gold" /></span>
       <div className="ff-pkc-hd">
         <h5 className="ff-pkc-ti fit">{title}</h5>
-        <p className="ff-pkc-tg fit">{own ? "Your skills, your package, your price." : pk.tg}</p>
+        <p className="ff-pkc-tg fit">{own ? "Your custom package" : pk.tg}</p>
       </div>
       <div className="ff-pkc-rows">
         {rows.map(([Ic, l, v]) => (
@@ -751,7 +771,7 @@ function ProfPkgCreate17() {
       <div className="ff-pkc-hd">
         <div className="ff-pkc-eb fit">+ FF Party +</div>
         <h5 className="ff-pkc-ti fit">Create your own</h5>
-        <p className="ff-pkc-tg fit">Your skills, your package, your price.</p>
+        <p className="ff-pkc-tg fit">Your custom package</p>
       </div>
       <div className="ff-pkc-rows">
         {rows.map(([Ic, l, v]) => (

@@ -92,3 +92,11 @@
   outline: none !important; box-shadow: none !important; border: 0 !important; background: transparent !important;
   border-bottom: 1px dashed var(--x-rule, rgba(240,238,232,.3)) !important; border-radius: 0 !important; padding: 4px 0 6px !important; }
 .ff .ff-xc29 textarea.ff-xc29-tx:focus, .ff .ff-xc29 textarea.ff-xc29-tx:focus-visible { border-bottom: 1.5px solid var(--x-acc, #D9BE68) !important; }
+
+/* v1.137 (Alex 20 Nov 02:05): venue cards carry a small icon badge like the profile and company cards; an empty dotted plus card is always there. */
+.ff .ff-xc29 .k.vb{display:grid;place-items:center;width:30px;height:30px;border-radius:10px;corner-shape:squircle;background:#14110A;border:1px solid rgba(228,195,106,.5);color:#E4C36A;letter-spacing:0}
+.ff .ff-xc29 .ff-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ff .ff-xc29-add{position:relative;box-sizing:border-box;min-height:190px;align-self:stretch;border-radius:22px;corner-shape:squircle;border:1.5px dashed rgba(138,106,30,.55);background:#FEFCF6;cursor:pointer;display:grid;place-items:center;padding:0}
+.ff .ff-xc29-add .k.vb{position:absolute;top:14px;left:14px;display:grid;place-items:center;width:30px;height:30px;border-radius:10px;corner-shape:squircle;background:#14110A;border:1px solid rgba(228,195,106,.5);color:#E4C36A}
+.ff .ff-xc29-add .pe2-plus1{position:absolute;left:50%;top:50%;right:auto;bottom:auto;transform:translate(-50%,-50%);width:58px;height:58px}
+.ff .ff-xc29-add{max-width:100%}

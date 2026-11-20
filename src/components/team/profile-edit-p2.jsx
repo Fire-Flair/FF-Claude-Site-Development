@@ -252,6 +252,7 @@ function PE2AddProf({ on, onClick }) {
 /* Professions and Attributes on the edit page, laid out as the finished profile, empty ones as placeholder cards. */
 function PE2Overview({ records }) {
   const P = usePE2Profs();
+  const { dispatch } = useStore();
   const [attrOpen, setAttrOpen] = useState(null);
   const [attrRec, setAttrRec] = useState(null);
   const [qualOpen, setQualOpen] = useState(null);
@@ -292,12 +293,12 @@ function PE2Overview({ records }) {
         <div className="ff-mrow ff-acar pe2-rail" role="list" aria-label="Attributes">
           {cats.map((k, ci) => {
             const def = BASE_CATEGORIES[k];
-            const shown = rankedRecords(records[k] || []).filter(r => !r.hidden && !r.proposed);
+            const shown = rankedRecords(records[k] || []).filter(r => !r.hidden && !r.proposed && r.name);
             const empty = !shown.length;
             const on = attrOpen === k;
             const card = (isEmpty, key) => (
-              <button key={key} type="button" role="listitem" className={"ff-agrp " + (isEmpty ? "pe2-agrp-empty" : tierCls17(ci)) + (on ? " pe2-agrp-on" : "")} aria-label={`${isEmpty && !empty ? "Add another" : "Edit"} ${def.label}`} aria-expanded={on} onClick={() => { setAttrOpen(on ? null : k); setQualOpen(null); }}>
-                <span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span>{!isEmpty && <span className="ff-agrp-n">{shown.length}</span>}</span>
+              <button key={key} type="button" role="listitem" className={"ff-agrp " + (isEmpty ? "pe2-agrp-empty" : tierCls17(ci)) + (on ? " pe2-agrp-on" : "")} aria-label={`${isEmpty && !empty ? "Add another" : "Edit"} ${def.label}`} aria-expanded={on} onClick={() => { setQualOpen(null); if (isEmpty) { const nr = makeRecord(k, ""); dispatch({ type: "REC_ADD", category: k, record: nr }); setAttrOpen(k); setAttrRec(nr); } else { setAttrOpen(on ? null : k); } }}>
+                <span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span></span>
                 {isEmpty ? <span className="pe2-empty-fill" aria-hidden="true" /> : <span className="ff-agrp-l">{shown.slice(0, 5).map(r => <span key={r.id}>{nbh21(r.name)}</span>)}</span>}
                 {!isEmpty && shown.length > 5 && <span className="ff-agrp-more">{`+${shown.length - 5}`}</span>}
                 {isEmpty && <span className="pe2-plus1" aria-hidden="true"><Plus size={26} strokeWidth={2.2} /></span>}
@@ -313,13 +314,12 @@ function PE2Overview({ records }) {
           <Sheet open center title={BASE_CATEGORIES[attrOpen].label} onClose={() => setAttrOpen(null)}>
             <div className="pe2-attr-pop">
               <style>{RANK_CSS17}</style>
-              <TypeBox21 key={attrOpen} catKey={attrOpen} def={BASE_CATEGORIES[attrOpen]} rows={rankedRecords(records[attrOpen] || [])} onAdded={(r) => setAttrRec(r)} />
               {(records[attrOpen] || []).filter(r => !r.proposed).length > 3 && <PE2TopSlots key={"s" + attrOpen} profs={rankedRecords(records[attrOpen] || []).filter(r => !r.proposed)} catKey={attrOpen} noun={BASE_CATEGORIES[attrOpen].label.toLowerCase()} />}
               <ProfTiles21 key={"t" + attrOpen} items={records[attrOpen] || []} def={BASE_CATEGORIES[attrOpen]} catKey={attrOpen} label={BASE_CATEGORIES[attrOpen].label} pen onOpen={(r) => setAttrRec(r)} />
             </div>
           </Sheet>
         )}
-        {attrRec && attrOpen && <GenericAttributeCardCreator open record={attrRec} def={BASE_CATEGORIES[attrOpen]} category={attrOpen} onClose={() => setAttrRec(null)} />}
+        {attrRec && attrOpen && <GenericAttributeCardCreator open record={attrRec} def={BASE_CATEGORIES[attrOpen]} category={attrOpen} onClose={() => { const live = ((records[attrOpen] || []).find(x => x.id === attrRec.id)); if (!live || !String(live.name || "").trim()) dispatch({ type: "REC_DELETE", category: attrOpen, id: attrRec.id }); setAttrRec(null); setAttrOpen(null); }} />}
       </section>
       {SHOW_VENUES_PROFILE17 && (
         <section className="ff-pp ff-pp21 pp-sec pe2-ven" aria-labelledby="pe2-ven-h">
