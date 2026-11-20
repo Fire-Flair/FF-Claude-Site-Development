@@ -1,6 +1,6 @@
 /* src/components/home/team-home.jsx — part of the FireFlair prototype script (classic script, shared global scope; files are joined in the order of src/manifest.json). */
 /* homefix: FF Team home layout fixes (pillar rows, Launch Challenge, spacing, equal boxes). Styles scoped under .ff-hf22. */
-const HF22_CSS = __ff_css("styles/home-fix22.css", "styles/home-colours.css", "styles/home-text.css", "styles/home-wide.css");
+const HF22_CSS = __ff_css("styles/home-fix22.css", "styles/home-colours.css", "styles/home-text.css", "styles/home-wide.css", "styles/home-slides175.css");
 /* home-colours (Alex, 18 Nov 14:53): 4 = ivory and burgundy (ivory pillars with a burgundy border, gold-leaf bookings box,
    champagne hero lighting, hero line "Get seen, get booked, get paid."), the applied look; 0 = the v1.18 look. */
 const FF_HOME_COLOUR = 4;
@@ -88,6 +88,76 @@ function useEqualH22(ref, sel, exclude, deps) {
   }, deps);
 }
 
+/* v1.177 (Alex, 20 Nov 21:49): the FFTeam home hero is a slideshow of photos by category. One state change moves the burgundy slider and
+   fades the photo, so they always change together; every 5 seconds it moves to the next category. Tapping a category holds it (tap again to
+   release); swiping left or right on the photo steps through that category's photos. No member Profile card yet (the photos belong to no one). */
+const HS175 = __ff_json("content/data/home-slides.json").cats;
+const HS175_IC = { Martini: lucideIcon("Martini"), Headphones: lucideIcon("Headphones"), Camera: lucideIcon("Camera") };
+
+function HomeSlides175() {
+  const { state } = useStore();
+  const nav = useHomeNav();
+  const mine = state.role === "team" && state.profile.live;
+  const [cat, setCat] = useState(0);
+  const [pics, setPics] = useState([0, 0, 0]);
+  const [held, setHeld] = useState(false);
+  const seen = useRef([true, false, false]);
+  const drag = useRef(null);
+  const reduce = typeof matchMedia !== "undefined" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  useEffect(() => {
+    if (held || reduce) return;
+    const t = setTimeout(() => {
+      const n = (cat + 1) % HS175.length;
+      if (seen.current[n]) setPics((p) => p.map((v, i) => (i === n ? (v + 1) % HS175[n].slides.length : v)));
+      seen.current[n] = true;
+      setCat(n);
+    }, 5000);
+    return () => clearTimeout(t);
+  }, [cat, pics, held, reduce]);
+  const pick = (i) => {
+    if (i === cat) { setHeld((h) => !h); return; }
+    seen.current[i] = true;
+    setCat(i);
+    setHeld(true);
+  };
+  const step = (d) => {
+    const len = HS175[cat].slides.length;
+    setPics((p) => p.map((v, i) => (i === cat ? (v + d + len) % len : v)));
+    setHeld(true);
+  };
+  const down = (e) => { drag.current = e.clientX; };
+  const up = (e) => {
+    if (drag.current == null) return;
+    const dx = e.clientX - drag.current;
+    drag.current = null;
+    if (Math.abs(dx) > 45) step(dx < 0 ? 1 : -1);
+  };
+  const keys = (e) => {
+    if (e.key === "ArrowRight") { e.preventDefault(); pick((cat + 1) % HS175.length); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); pick((cat + HS175.length - 1) % HS175.length); }
+  };
+  return React.createElement("section", { className: "ff-hs175", id: "ff-hero", "aria-labelledby": "ff-hs175-h" },
+    React.createElement("div", { className: "ff-hs175-ph", onPointerDown: down, onPointerUp: up, onPointerCancel: () => { drag.current = null; } },
+      HS175.map((c, ci) => c.slides.map((s, si) => React.createElement("img", {
+        key: ci + "-" + si, src: s.src, alt: "", decoding: "async", draggable: false,
+        className: ci === cat && si === pics[ci] ? "on" : "",
+        style: { objectPosition: s.x + "% " + s.y + "%" }
+      })))),
+    React.createElement("div", { className: "ff-hs175-fade", "aria-hidden": "true" }),
+    React.createElement("div", { className: "ff-hs175-in" },
+      React.createElement("h1", { id: "ff-hs175-h", className: "ff-hs175-h" }, "Welcome to ", React.createElement("span", { className: "br" }, "FFTeam")),
+      React.createElement("p", { className: "ff-hs175-s" }, "Get seen, get booked, get paid"),
+      mine ? React.createElement(ShineButton, { onClick: nav.goNetwork }, React.createElement(Users, { size: 15 }), " Build your network") : React.createElement(ShineButton, { onClick: nav.goProfile }, React.createElement(User, { size: 15 }), " Create your Profile Card")),
+    React.createElement("div", { className: "ff-hs175-seg", role: "tablist", "aria-label": "Categories", onKeyDown: keys },
+      React.createElement("span", { className: "ff-hs175-thumb" + (held ? " held" : ""), style: { left: "calc(5px + " + cat + " * (100% - 10px) / 3)" }, "aria-hidden": "true" },
+        React.createElement("i", { key: cat + "-" + pics[cat] })),
+      HS175.map((c, i) => {
+        const Ic = HS175_IC[c.icon];
+        return React.createElement("button", { key: c.k, type: "button", role: "tab", "aria-selected": i === cat, className: "ff-hs175-tab", onClick: () => pick(i) },
+          React.createElement(Ic, { size: 16, strokeWidth: 2, "aria-hidden": "true" }), c.label);
+      })));
+}
+
 function Home101() {
     const { state } = useStore();
     DIR = useDirectory();
@@ -150,5 +220,5 @@ function Home101() {
       ref: root
     }, React.createElement("style", null, HF22_CSS), React.createElement("div", {
       className: `ff-home17${guest ? " ff-landing" : ""}`
-    }, React.createElement(HomeHero101, null), state.profile.live && React.createElement(WelcomeBack101, null), sections));
+    }, React.createElement(HomeSlides175, null), state.profile.live && React.createElement(WelcomeBack101, null), sections));
   }

@@ -1,0 +1,31 @@
+/* v1.177 (Alex, 20 Nov 21:49): FFTeam home hero = photo slideshow by category (Hospitality, Entertainment, Services). Draft 3: welcome text on the photo, burgundy slider at the foot. */
+.ff .ff-hs175 { position:relative; isolation:isolate; overflow:hidden; border-radius:var(--r-xl); margin:6px 0 4px; height:clamp(540px,92svh,700px); background:#120709; color:#F6E7C1; }
+.ff .ff-hs175 { --hs-top:178px; }
+.ff .ff-hs175-ph { position:absolute; inset:var(--hs-top) 0 0 0; touch-action:pan-y; cursor:grab; user-select:none; -webkit-user-select:none; }
+.ff .ff-hs175-ph img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .6s ease; -webkit-user-drag:none; pointer-events:none; }
+.ff .ff-hs175-ph img.on { opacity:1; }
+.ff .ff-hs175-fade { position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(180deg, #180509 0, #180509 calc(var(--hs-top) - 6px), rgba(24,5,10,.55) calc(var(--hs-top) + 40px), rgba(24,5,10,0) calc(var(--hs-top) + 120px), rgba(0,0,0,0) 62%, rgba(0,0,0,.72) 100%); }
+.ff .ff-hs175-in { position:absolute; z-index:2; top:clamp(24px,4vw,40px); left:0; right:0; padding:0 18px; text-align:center; pointer-events:none; }
+.ff .ff-hs175-in > * { pointer-events:auto; }
+.ff .ff-hs175-h { margin:0; font-family:var(--display); font-weight:700; letter-spacing:.02em; line-height:1.04; font-size:clamp(32px,9vw,44px); color:#F6E7C1; text-wrap:balance; text-shadow:0 2px 14px rgba(0,0,0,.6); }
+.ff .ff-hs175-s { margin:8px 0 16px; font-weight:700; font-size:clamp(16px,4.4vw,20px); color:#E4C36A; text-shadow:0 1px 8px rgba(0,0,0,.7); }
+.ff .ff-hs175-seg { position:absolute; z-index:3; left:12px; right:12px; bottom:14px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); padding:5px; border-radius:20px; background:rgba(20,8,10,.42); border:1px solid rgba(255,255,255,.28); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); }
+.ff .ff-hs175-thumb { position:absolute; top:5px; bottom:5px; width:calc((100% - 10px) / 3); border-radius:16px; background:linear-gradient(170deg,#7A2236,#4A1220); box-shadow:0 6px 14px -8px rgba(74,18,32,.8); transition:left .6s ease; pointer-events:none; overflow:hidden; }
+.ff .ff-hs175-thumb i { position:absolute; left:12px; right:12px; bottom:6px; height:2.5px; border-radius:3px; background:rgba(246,231,193,.25); overflow:hidden; }
+.ff .ff-hs175-thumb i::after { content:''; display:block; height:100%; width:0; background:#E4C36A; animation:ffhs175 5s linear forwards; }
+.ff .ff-hs175-thumb.held i::after { animation:none; width:100%; }
+@keyframes ffhs175 { to { width:100%; } }
+.ff .ff-hs175-tab { position:relative; z-index:1; display:flex; align-items:center; justify-content:center; gap:5px; min-height:48px; padding:0 4px; border:0; background:none; font:600 clamp(12px,3.3vw,14.5px) var(--sans, Inter, sans-serif); color:#F6EEDC; white-space:nowrap; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.ff .ff-hs175-tab[aria-selected="true"] { color:#F6E7C1; }
+.ff .ff-hs175-tab svg { flex:none; }
+@media (max-width:359px) { .ff .ff-hs175-tab svg { display:none; } }
+.ff .ff-hs175-h .br { display:block; }
+@media (min-width:600px) { .ff .ff-hs175-h .br { display:inline; } }
+@media (min-width:900px) {
+  .ff .ff-hs175 { --hs-top:236px; }
+  .ff .ff-hs175 { height:clamp(620px,78vh,720px); }
+  .ff .ff-hs175-h { font-size:clamp(44px,4.4vw,60px); }
+  .ff .ff-hs175-s { font-size:clamp(19px,1.7vw,23px); }
+  .ff .ff-hs175-seg { left:max(24px,calc(50% - 440px)); right:max(24px,calc(50% - 440px)); }
+}
+@media (prefers-reduced-motion:reduce) { .ff .ff-hs175-ph img, .ff .ff-hs175-thumb { transition:none; } .ff .ff-hs175-thumb i::after { animation:none; width:100%; } }

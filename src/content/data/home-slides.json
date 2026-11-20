@@ -1,0 +1,115 @@
+{
+ "cats": [
+  {
+   "k": "hospitality",
+   "label": "Hospitality",
+   "icon": "Martini",
+   "slides": [
+    {
+     "src": "ffasset:img/b59b4b77c0ddc438.webp",
+     "x": 70,
+     "y": 22
+    },
+    {
+     "src": "ffasset:img/238e91a7d9a5fb5e.webp",
+     "x": 52,
+     "y": 20
+    },
+    {
+     "src": "ffasset:img/42d8403375628e5a.webp",
+     "x": 52,
+     "y": 28
+    },
+    {
+     "src": "ffasset:img/97d12584b54a68c4.webp",
+     "x": 48,
+     "y": 45
+    },
+    {
+     "src": "ffasset:img/aa1c08ae6c0b30ad.webp",
+     "x": 50,
+     "y": 25
+    },
+    {
+     "src": "ffasset:img/ebc3c7a2434e4af8.webp",
+     "x": 42,
+     "y": 35
+    }
+   ]
+  },
+  {
+   "k": "entertainment",
+   "label": "Entertainment",
+   "icon": "Headphones",
+   "slides": [
+    {
+     "src": "ffasset:img/5316a642ed145bda.webp",
+     "x": 52,
+     "y": 22
+    },
+    {
+     "src": "ffasset:img/94187effa0610bb7.webp",
+     "x": 53,
+     "y": 28
+    },
+    {
+     "src": "ffasset:img/332f43be5002b560.webp",
+     "x": 38,
+     "y": 20
+    },
+    {
+     "src": "ffasset:img/443dd753e5b41d7f.webp",
+     "x": 47,
+     "y": 35
+    },
+    {
+     "src": "ffasset:img/18fc2f2aaa9bb464.webp",
+     "x": 42,
+     "y": 22
+    },
+    {
+     "src": "ffasset:img/de79c7846b645ca0.webp",
+     "x": 50,
+     "y": 28
+    }
+   ]
+  },
+  {
+   "k": "services",
+   "label": "Services",
+   "icon": "Camera",
+   "slides": [
+    {
+     "src": "ffasset:img/b094fcb370ed2871.webp",
+     "x": 46,
+     "y": 12
+    },
+    {
+     "src": "ffasset:img/01a75b580a7d37dd.webp",
+     "x": 50,
+     "y": 24
+    },
+    {
+     "src": "ffasset:img/866cf6e0f04b9d26.webp",
+     "x": 72,
+     "y": 28
+    },
+    {
+     "src": "ffasset:img/3dc58918f5f50d5b.webp",
+     "x": 50,
+     "y": 30
+    },
+    {
+     "src": "ffasset:img/350bee6f51cccb3b.webp",
+     "x": 45,
+     "y": 28
+    },
+    {
+     "src": "ffasset:img/2805d6c86d9da81f.webp",
+     "x": 38,
+     "y": 32
+    }
+   ]
+  }
+ ]
+}

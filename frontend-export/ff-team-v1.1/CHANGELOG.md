@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.177
+- **FFTeam home screen:** the top of the home page is now a photo slideshow by category: Hospitality, Entertainment, Services (6 photos each, from the approved lookbook). "Welcome to FFTeam" and the Create your Profile Card button sit on a dark panel above the photo, so they read on any picture. A burgundy slider at the foot moves between the three categories every 5 seconds and the photo changes at the same moment. Tap a category to hold it (tap again to let it run on); swipe left or right on the photo to move through that category's photos. Photos have no Profile card yet, because they belong to no member.
+- Page saved as `live-v1.177-index.html`. Artifact version 1795211785-75ae.
+
 ## v1.176
 - **Back button:** a little larger and more see-through. It now shows on every profile you open, on FFTeam, FFStaff and FFParty, and replaces the wide Back that used to sit above Join team and Share on the other two sites.
 - Page saved as `live-v1.176-index.html`. Artifact version 1795206497-9e75.
