@@ -4,6 +4,13 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.156
+- **Questions:** "Very difficult" is gone from "How easy was it to create your FF Team profile?"; "How do you normally travel to events?" now comes after "Do you have event experience?".
+- **Save row:** no Publish button and no tick box. "Available for hire" is the one button, always clickable: the first tap publishes the profile, after that it shows or hides your card (ticked when showing).
+- **Card box:** Build my team and See the prizes restyled as champagne and gold buttons.
+- **Book a meeting box:** "Meet the FireFlair team. Get help, or get featured in an exclusive FFStory that promotes your services."
+- Page saved as `live-v1.156-index.html`. Artifact version 1795150538-929f.
+
 ## v1.155
 - **Save row:** the "Available for hire?" button is the Publish button again, and saving publishes the profile. "Available for hire" is now a tick box under the buttons: tick it to show your card, untick to hide it.
 - **Card box (before you publish):** same box, card outline and buttons, now about the Launch Challenge: "Join the Launch Challenge, we will send you your card, share it, bring in the people you work with and build a team to win", with Share my card, Build my team and See the prizes.

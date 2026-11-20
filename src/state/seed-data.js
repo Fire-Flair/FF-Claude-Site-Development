@@ -154,14 +154,14 @@ const questionGroupColor = (key) => QUESTION_GROUP_COLOR[key] || QUESTION_GROUP_
 
 
 const QUESTIONS = [
-  { id: "g_travel",    group: "generic", type: "choice", text: "How do you normally travel to events?", options: ["I drive", "Public transport", "Other"] },
   { id: "g_freelance", group: "generic", type: "choice", text: "Are you available for freelance work?", options: ["Yes", "No", "Sometimes"] },
   { id: "g_equipment", group: "generic", type: "choice", text: "Do you have your own professional equipment?", options: ["Yes", "Some", "No", "Not applicable"] },
   { id: "g_notice",    group: "generic", type: "choice", text: "Are you available for short-notice work?", options: ["Yes", "No", "I require notice"],
     detail: { option: "I require notice", label: "How much notice do you need?", placeholder: "e.g. 48 hours" } },
   { id: "g_events",    group: "generic", type: "choice", text: "Do you have event experience?", options: ["Yes", "No"] },
+  { id: "g_travel",    group: "generic", type: "choice", text: "How do you normally travel to events?", options: ["I drive", "Public transport", "Other"] },
 
-  { id: "f_ease",      group: "feedback", type: "choice", text: "How easy was it to create your FF Team profile?", options: ["Very easy", "Easy", "Okay", "Difficult", "Very difficult"] },
+  { id: "f_ease",      group: "feedback", type: "choice", text: "How easy was it to create your FF Team profile?", options: ["Very easy", "Easy", "Okay", "Difficult"] },
   { id: "f_confusing", group: "feedback", type: "choice", text: "Was anything confusing when creating your profile?", options: ["Yes", "No"],
     detail: { option: "Yes", label: "What was confusing? (optional)", placeholder: "Tell us what tripped you up", optional: true } },
   { id: "f_useful",    group: "feedback", type: "choice", text: "How useful do you think your FF Team profile will be?", options: ["Very useful", "Useful", "Not sure"] },
