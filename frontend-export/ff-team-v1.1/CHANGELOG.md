@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.183
+- **FFStories photos:** every story now has its own photo, picked to match what the story is about and cut to the card shape so glasses, faces and heads are no longer cut off (the espresso martini and wine glass pictures are gone). Photos come from both the original library and the new lookbook. No photo repeats within a site, and "Who would you call to work a Saturday night with you?" now shows a whole bar team. The limes and rosemary photo stays on "The last-minute shifts that changed my bartending career".
+- Page saved as `live-v1.183-index.html`. Artifact version 1795213669-7d18.
+
 ## v1.182
 - **"Get seen, Get booked, Get paid":** all three G's are capitals, on the home screen, the Join FFTeam box and the invite message people share.
 - Page saved as `live-v1.182-index.html`. Artifact version 1795213092-277f.
