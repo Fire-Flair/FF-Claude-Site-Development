@@ -4273,3 +4273,10 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-way17-line.ff-way17-fast { font: 600 17.5px/1.3 var(--sans); gap: 9px; color: #2A2620; white-space: nowrap; text-wrap: nowrap; }
 /* One line on a phone: the text shrinks a little to fit rather than wrapping. */
 @media (max-width: 560px) { .ff .ff-way17-line.ff-way17-fast { font-size: clamp(13px, 4.2vw, 17.5px); gap: 7px; } }
+
+/* v1.127 (Alex 20 Nov 01:04): the Building your profile bar is the same height as the home bar (44px) on a wide screen; the Save button is smaller, so it is a little smaller on a phone too. */
+.ff-livebar17 .lb { padding:5.5px 13px; font-size:11.5px; }
+.ff-livebar17 .lb.coin { width:40px; height:40px; }
+.ff-livebar17 .lb.xc { width:30px; height:30px; }
+.ff-livebar17.top .in { padding-top:8px; padding-bottom:8px; }
+.ff-livebar17.bottom .in { padding-top:7px; padding-bottom:7px; }

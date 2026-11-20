@@ -1179,7 +1179,7 @@ function CVUpload17() {
             : <Btn variant="gold ff-bigcv17" onClick={() => fileRef.current && fileRef.current.click()}><Upload size={16} strokeWidth={2.2} /> Upload CV</Btn>}
         </div>
       </div>
-      <p className="ff-way17-line ff-way17-fast"><Timer size={21} strokeWidth={2.2} aria-hidden="true" /><span>Create your profile in &lt;1 minute</span></p>
+      <p className="ff-way17-line ff-way17-fast"><Timer size={21} strokeWidth={2.2} aria-hidden="true" /><span>Create your profile in 1 minute.</span></p>
       {r.st.phase === "error" && <div className="ff-way17-wide"><FfaiError17 r={r} /></div>}
       {x && <div className="ff-way17-wide"><FfaiReview17 key={r.st.at} x={x} src={r.st.src} onDone={r.reset} /></div>}
     </section>
