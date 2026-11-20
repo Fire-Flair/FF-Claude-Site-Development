@@ -13,16 +13,12 @@ const PROFILE_EDIT_TABS_CSS = __ff_css("styles/profile-edit-tabs.css");
 /* v1.128 (Alex 20 Nov 01:07, 01:12): the spinning coin is gone from the profile pages; the gold lines stay with the two F's of the site logo
    in a small gold-ringed circle between them (no spin). Same place as before: first child of every .ff-ptabs-wrap. */
 function ProfileCoin17() {
-  const id = useSimpleId();
-  const m = ffLogoMetal("standard");
   return (
     <div className="ff-pcoin17 ff-pgem17" aria-hidden="true">
       <i />
-      <span className="ff-pgem17-c"><svg width="21" height="14" viewBox="190 318 710 462" focusable="false">
-        <defs><linearGradient id={`${id}l`} gradientUnits="userSpaceOnUse" x1="0" y1="331" x2="0" y2="768"><stop offset="0" stopColor={m.top} /><stop offset="1" stopColor={m.bottom} /></linearGradient></defs>
-        <path d={FF_LOGO_F_SHADE} fill={m.shade} />
-        <path d={FF_LOGO_F_FACE} fill={`url(#${id}l)`} />
-        <g transform="translate(322 0)"><path d={FF_LOGO_F_SHADE} fill={m.shade} /><path d={FF_LOGO_F_FACE} fill={`url(#${id}l)`} /></g>
+      <span className="ff-pgem17-c"><svg width="27" height="17" viewBox="190 318 760 462" focusable="false">
+        <path d={FF_LOGO_F_FACE} fill="#B08D2A" />
+        <g transform="translate(362 0)"><path d={FF_LOGO_F_FACE} fill="#B08D2A" /></g>
       </svg></span>
       <i />
     </div>

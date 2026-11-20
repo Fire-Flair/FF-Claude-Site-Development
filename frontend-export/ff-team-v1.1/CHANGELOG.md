@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.132
+- **Profile pages:** the divider monogram is simpler: the logo's two F's, larger and spaced apart, in flat gold inside a thin gold ring with no background fill.
+- Page saved as `live-v1.132-index.html`. Artifact version 1795137664-1c23.
+
 ## v1.131
 - **Profile pages:** the logo's two F's now sit in a small gold-ringed ivory circle between the lines, smaller than before.
 - Page saved as `live-v1.131-index.html`. Artifact version 1795137423-f2a3.
