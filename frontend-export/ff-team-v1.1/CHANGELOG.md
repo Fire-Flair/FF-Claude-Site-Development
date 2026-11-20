@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.179
+- **Create your profile page:** more space above and below the FF monogram (80 px above, 64 px below, was 44 and 22).
+- Page saved as `live-v1.179-index.html`. Artifact version 1795212641-765b.
+
 ## v1.178
 - **Home slideshow:** the photo and the burgundy slider now slide together every 5 seconds (a swipe, not a fade). The show now runs by itself on every phone, including ones set to Reduce Motion, where v1.177 stood still. Moving to a category on the right slides left; tapping one on the left slides right.
 - **Photos:** Entertainment is all DJs (the woman with her arms out and the singer are gone). Services is now videographers and camera crews, plus the florist; the stills-camera shots are gone. The Hospitality photos are unchanged. The existing site photo library is all bar and cocktail pictures, so nothing from it was suitable for Entertainment or Services.
