@@ -344,3 +344,30 @@
 /* v1.162: the choices inside a Grow box are a hero scroll */
 .ff .ff-int-hf { min-width: 0; }
 .ff .ff-int-hf .ff-hf20 { margin: 0 -14px; padding: 8px calc(50% - 84px) 22px; }
+
+/* v1.185 (Alex 20 Nov 23:05): Get booked: FFParty and FFStaff are two separate, evenly framed boxes with a clear gap between them;
+   Confirm and Save only appear after a choice and are compact; the FFStaff rates are one box (Role, Preferred hourly rate). */
+.ff #ff-bk-fireflair > .ff-fb21-box { box-sizing:border-box; padding:20px; border-radius:22px; corner-shape:squircle; background:#FFFDF8; border:1px solid rgba(126,97,29,.32); margin:0 0 26px; }
+.ff #ff-bk-fireflair > .ff-fb21-box:last-of-type { margin-bottom:0; }
+.ff #ff-bk-fireflair > .ff-fb21-box > .ff-tlx > p { margin:0 0 14px; }
+.ff #ff-bk-fireflair > .ff-fb21-box .ff-hscroll { margin-left:-20px; margin-right:-20px; padding-left:20px; padding-right:20px; scroll-padding-left:20px; }
+.ff #ff-bk-party .ff-hf20 { padding-top:14px; padding-bottom:48px; margin-bottom:-26px; }
+.ff .ff-bk185-act { display:flex; justify-content:center; margin:12px 0 0; }
+.ff .ff-bk185-btn.ff-btn { width:auto; min-width:180px; max-width:260px; padding-left:30px; padding-right:30px; margin-top:0; white-space:nowrap; }
+.ff .ff-sr185 { box-sizing:border-box; width:100%; max-width:460px; margin:14px auto 0; padding:6px 16px 8px; background:#fff; border:1px solid rgba(126,97,29,.3); border-radius:16px; corner-shape:squircle; }
+.ff .ff-sr185-hd, .ff .ff-sr185-row { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; column-gap:14px; }
+.ff .ff-sr185-hd { padding:10px 0 8px; border-bottom:1px solid rgba(126,97,29,.25); font:600 11px/1.2 var(--font-display); letter-spacing:.12em; text-transform:uppercase; color:#8A6A14; }
+.ff .ff-sr185-hd > span:last-child { text-align:right; }
+.ff .ff-sr185-row { padding:8px 0; }
+.ff .ff-sr185-row + .ff-sr185-row { border-top:1px solid rgba(126,97,29,.14); }
+.ff .ff-sr185-row .nm { font:600 14.5px/1.25 var(--font-sans); color:#16130F; overflow-wrap:normal; word-break:normal; hyphens:none; }
+.ff .ff-sr185-row .rt { display:inline-flex; align-items:center; gap:6px; justify-self:end; font-size:14px; color:#5B5346; white-space:nowrap; }
+.ff .ff-sr185-row input { box-sizing:border-box; width:78px; min-height:38px; padding:0 10px; font:500 16px/1 var(--font-sans); text-align:right; border:1px solid rgba(126,97,29,.45); border-radius:10px; corner-shape:squircle; background:#FFFDF8; color:#16130F; }
+.ff .ff-sr185-row .er { grid-column:1 / -1; margin-top:4px; font-size:12.5px; color:var(--color-ox,#5C1220); }
+.ff #ff-bk-fireflair > .ff-fb21-box > .ff-tlx > .ff-bk-bh + p { padding-left:0; }
+.ff #ff-bk-fireflair > .ff-fb21-box > .ff-tlx > .ff-bk-bh { padding-left:0; margin-left:0; }
+@media (max-width:520px) {
+  .ff #ff-bk-fireflair > .ff-fb21-box { padding:18px 14px; }
+  .ff #ff-bk-fireflair > .ff-fb21-box .ff-hscroll { margin-left:-14px; margin-right:-14px; padding-left:14px; padding-right:14px; scroll-padding-left:14px; }
+}
+.ff #ff-bk-fireflair > .ff-fb21-box > .ff-tlx > .ff-bk-bh::before { display:none; }
