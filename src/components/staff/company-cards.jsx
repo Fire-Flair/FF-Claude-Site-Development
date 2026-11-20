@@ -255,7 +255,7 @@ const qaShown = (q) => (q.answer ? (q.note ? `${q.answer} — ${q.note}` : q.ans
 
 
 
-function CompanyCardFace({ c, edit, set, onLogo, size = "", party, links }) {
+function CompanyCardFace({ c, edit, set, onLogo, size = "", party, links, onCard }) {
   const co = c || {};
   const t = THEMES[co.theme] || THEMES.onyx;
   const layout = (!co.layout || co.layout === "crest") ? "logo" : co.layout;
@@ -286,7 +286,10 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party, links }) {
     : <span className="nm">{co.name || (party ? "Your name" : "Your company")}</span>;
   const kind = edit ? <span className="kd2"><I11.Briefcase size={12} /><input className="ff-cardin kd" value={co.kind || ""} placeholder="What do you do?" aria-label="What do you do?" maxLength={70} onChange={(e) => set({ kind: e.target.value })} /></span>
     : (String(co.kind || "").trim() ? <span className="kd kd2"><I11.Briefcase size={12} /><span>{co.kind}</span></span> : null);
-  const area = (edit || String(areas || "").trim()) ? (
+  /* v1.170 (Alex 20 Nov 19:52): in the Profile builder the card itself says Company card and takes the postcode typed straight onto it. */
+  const area = (edit && onCard) ? (
+    <span className="ar ar-base"><I11.MapPin size={12} /><BaseField17 ink={t.ink} owner="company" /></span>
+  ) : (edit || String(areas || "").trim()) ? (
     <span className="ar"><I11.MapPin size={12} /><span>{areas || "Where you're based"}</span></span>
   ) : null;
   const sv = socialValues11(co);
@@ -299,7 +302,7 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party, links }) {
   const urlFs = `min(3.3cqw, ${((claimed ? 56 : 86) / Math.max(12, urlText.length * 0.62)).toFixed(2)}cqw)`;
   return (
     <CardFrame tier={(co.theme === "silver" || co.theme === "gold") ? co.theme : (co.tier || "gold")} theme={t} premium ratio="8 / 5" className={`ff-cocard ff-cc11 l-${layout} ${size}${co.logoWide ? " lw" : ""}`} style={{ ...vars, maxWidth: 460, margin: size ? 0 : "0 auto" }}>
-      {(!claimed || party) && <span className="ff-pc-plate ff-cc11-plate">{party ? "VIP Host Card" : <>{React.createElement((typeof NET_CAT_VIEW17 !== "undefined" && I11[(NET_CAT_VIEW17[co.cat || "bar"] || [])[0]]) || I11.Briefcase, { size: 12, color: "currentColor", "aria-hidden": "true" })}Company</>}</span>}
+      {(!claimed || party || onCard) && <span className="ff-pc-plate ff-cc11-plate">{party ? "VIP Host Card" : onCard ? "Company card" : <>{React.createElement((typeof NET_CAT_VIEW17 !== "undefined" && I11[(NET_CAT_VIEW17[co.cat || "bar"] || [])[0]]) || I11.Briefcase, { size: 12, color: "currentColor", "aria-hidden": "true" })}Company</>}</span>}
       {claimed && <span className="ff-cc11-coin"><FFLogo size="100%" tier={co.theme === "silver" ? "silver" : "gold"} /></span>}
       <div className="ff-cc11-body" ref={bodyRef}>
         {logo}
@@ -314,18 +317,18 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party, links }) {
 
 
 
-function EditableCompanyCard({ plain, noType }) {
+function EditableCompanyCard({ plain, noType, onCard }) {
   const { state, dispatch } = useStore();
   const c = state.company || {};
   const set = (p) => dispatch({ type: "COMPANY_SAVE", company: p });
   const party = hireSiteOf(state).party;
   return (
     <>
-      <CompanyCardFace c={c} edit set={set} party={party} />
-      <div className="ff-cc11-base">
+      <CompanyCardFace c={c} edit set={set} party={party} onCard={onCard} />
+      {!onCard && <div className="ff-cc11-base">
         <span className="ff-cc11-baseh">Where are you based?</span>
         <BaseField17 ink="#16130F" owner="company" />
-      </div>
+      </div>}
       {!party && !noType && <div className="ff-cotype17" role="group" aria-label="Company type">
         {[["limited", "Limited company"], ["sole", "Sole trader"]].map(([k, l]) => (
           <button key={k} type="button" aria-pressed={c.companyType === k} onClick={() => set({ companyType: k })}>{l}</button>

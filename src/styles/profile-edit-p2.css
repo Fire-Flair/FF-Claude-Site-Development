@@ -195,22 +195,20 @@
 .ff .pe2-attr-pop .ff-pt21-star, .ff .pe2-attr-pop .ff-agrp.ff-pt21 [class*="star"] { position: static; }
 .ff .pe2-attr-pop .ff-agrp.ff-pt21 .ff-agrp-d { padding-right: 46px; }
 
-/* v1.169: business owner row, label left; bank icon, tick box and logo together on the right */
+/* v1.170: business owner row, all on the right: label, tick box, then the bank icon once ticked */
 .ff .pe2-biz167 { margin-top: 18px; border-top: 1px solid rgba(176,141,42,.3); padding-top: 12px; }
-.ff .pe2-biz167-b { width: 100%; min-height: 48px; display: flex; align-items: center; gap: 10px; padding: 0 2px; font: 600 14.5px var(--sans); color: var(--color-ink, #1B1A17); }
-.ff .pe2-biz167-b .tx { flex: 1 1 auto; min-width: 0; text-align: left; }
-.ff .pe2-biz167-b .ic, .ff .pe2-biz167-b .lg { flex: none; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 11px; corner-shape: squircle; background: #14110A; border: 1px solid rgba(228,195,106,.5); color: #E4C36A; padding: 0; overflow: hidden; cursor: pointer; }
-.ff .pe2-biz167-b .ic { cursor: default; }
-.ff .pe2-biz167-b .lg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ff .pe2-biz167-b { width: 100%; min-height: 48px; display: flex; align-items: center; justify-content: flex-end; gap: 10px; padding: 0 2px; font: 600 14.5px var(--sans); color: var(--color-ink, #1B1A17); }
+.ff .pe2-biz167-b .tx { flex: 0 1 auto; min-width: 0; text-align: right; }
+.ff .pe2-biz167-b .ic { flex: none; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 11px; corner-shape: squircle; background: #14110A; border: 1px solid rgba(228,195,106,.5); color: #E4C36A; }
 .ff .pe2-biz167-b .bx { flex: none; width: 26px; height: 26px; display: grid; place-items: center; padding: 0; border-radius: 9px; corner-shape: squircle; border: 1.5px solid #B08D2A; background: #FFFDF8; color: #fff; cursor: pointer; }
 .ff .pe2-biz167.on .bx { background: #7E611D; border-color: #7E611D; }
-.ff .pe2-biz167-card { position: relative; margin-top: 12px; padding: 38px 14px 14px; border-radius: 20px; corner-shape: squircle; background: linear-gradient(165deg, #1F1A10, #0E0C08); border: 1px solid rgba(228,195,106,.55); }
-.ff .pe2-biz167-card .hd { position: absolute; top: 13px; left: 16px; font: 700 11.5px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: #E4C36A; white-space: nowrap; }
+.ff .pe2-biz167-card { margin-top: 12px; }
 .ff .pe2-biz167-card .ff-cocard { width: 100%; max-width: 460px; }
-.ff .pe2-biz167-card .ff-cc11-base { margin-top: 10px; }
-.ff .pe2-biz167-card .ff-cc11-baseh { color: #E4C36A; }
-.ff .pe2-biz167-card .ff-base17-note { display: none; }
-.ff .pe2-biz167-card .ff-cc11-logo:not(.w) { }
+.ff .pe2-biz167-card .ar-base { align-items: flex-start; }
+.ff .pe2-biz167-card .ar-base .ff-base17 { flex: 1 1 auto; min-width: 0; }
+.ff .pe2-biz167-card .ar-base .ff-base17-in { background: transparent; border: 0; border-bottom: 1px solid var(--rule, rgba(228,195,106,.45)); border-radius: 0; box-shadow: none; padding: 0; min-height: 0; }
+.ff .pe2-biz167-card .ar-base .ff-base17-in input { font-size: 13px; padding: 2px 0; color: var(--ink); background: transparent; }
+.ff .pe2-biz167-card .ar-base .ff-base17-note, .ff .pe2-biz167-card .ar-base .ff-base17-msg { display: none; }
 
 /* v1.169: skill and interest descriptions on the Attributes cards, smaller, under the name */
 .ff .ff-agrp-l > span > .ff-agrp-sd { display: block; margin-top: 2px; font: 400 11px/1.3 var(--sans); opacity: .78; white-space: normal; }

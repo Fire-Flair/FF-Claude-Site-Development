@@ -4,6 +4,14 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.170
+- **Business owner row (corrected):** the label, tick box and, once ticked, the bank icon all sit on the right. No camera icon.
+- **Company card (corrected):** the card itself says "Company card" top left, and the postcode is typed straight onto the card beside the pin, like the company name and what you do. The box underneath is gone.
+- **CV upload:** an uploaded CV no longer carries an "Uploaded on" date on the card.
+- **Alexander Gagnon** is set as a business owner, so the bank icon shows at the right end of the icon row on his Profile Card and Profile, and in the directory.
+- **Network map legend:** the Professionals and FF Directory symbols are true circles, the drop-down arrow has no dividing line, and the drop-down list (Bar, Front of House, Management, Specialist) is larger to read and tap.
+- Page saved as `live-v1.170-index.html`. Artifact version 1795204518-57cf.
+
 ## v1.169
 - **Business owner row:** label on the left; the bank icon, the tick box and, once ticked, the logo button sit together on the right, logo last. The company card is one dark card headed "Company card", with the "Where are you based?" postcode box on it.
 - **Profile cards:** a profile with the box ticked and a company name gets a bank icon at the right end of the icon row, on both the Profile Card and the Profile.

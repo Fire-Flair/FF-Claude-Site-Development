@@ -543,7 +543,7 @@ const DEMO_REVIEW_STATS = (id) => {
   return { reviews: rs.length, rating: rated.length ? Math.round(rated.reduce((a, r) => a + r.rating, 0) / rated.length * 10) / 10 : null };
 };
 
-const DIRECTORY = REAL_MEMBERS.map((o) => staff({ ...o, tier: cardTier17(o), level: null, rating: null, reviews: 0, hasCar: false,
+const DIRECTORY = REAL_MEMBERS.map((o) => staff({ ...o, tier: cardTier17(o), level: null, rating: null, reviews: 0, hasCar: false, hasBiz: o.id === "stf_alex",
   photo: o.id === "stf_simao" ? ((window.FF_IMG || {}).simao_face || "") : "", media: o.media || [], ...DEMO_REVIEW_STATS(o.id) }));
 
 

@@ -79,7 +79,7 @@ function seedDemo17(state, dispatch, kind) {
   const patch = {};
   if (kind === "team" && String(state.profile.name || "").trim() && !state.profile.live) dispatch({ type: "PROFILE", patch: { live: true } });
   if (kind === "team" && !String(state.profile.name || "").trim()) {
-    dispatch({ type: "PROFILE", patch: { name: "Alexander Gagnon", live: true, saved: true, savedAt: Date.now(), theme: "gold", tier: "gold", level: 5, hasCar: true, photo: avatarFor("Alexander Gagnon"), records: DEMO_RECORDS(), about: state.profile.about || "Bartender for fifteen years, building FireFlair." } });
+    dispatch({ type: "PROFILE", patch: { name: "Alexander Gagnon", live: true, saved: true, savedAt: Date.now(), theme: "gold", tier: "gold", level: 5, hasCar: true, ownsBusiness: true, hasBiz: true, photo: avatarFor("Alexander Gagnon"), records: DEMO_RECORDS(), about: state.profile.about || "Bartender for fifteen years, building FireFlair." } });
     dispatch({ type: "SESSION", patch: { tag: "ALEXG", phone: "+44 7700 900412", verified: true } });
   }
   /* No default cocktails or Service Cards: they stay empty until the person adds or signs up. */

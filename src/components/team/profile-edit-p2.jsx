@@ -300,7 +300,7 @@ function PE2Overview({ records }) {
             const card = (isEmpty, key) => (
               <button key={key} type="button" role="listitem" className={"ff-agrp " + (isEmpty ? "pe2-agrp-empty" : "cat-" + k + " " + tierCls17(ci)) + (on ? " pe2-agrp-on" : "")} aria-label={`${isEmpty && !empty ? "Add another" : "Edit"} ${def.label}`} aria-expanded={on} onClick={() => { setQualOpen(null); if (isEmpty) { const nr = makeRecord(k, ""); dispatch({ type: "REC_ADD", category: k, record: nr }); setAttrOpen(k); setAttrRec(nr); } else { setAttrOpen(on ? null : k); } }}>
                 <span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span></span>
-                {isEmpty ? <span className="pe2-empty-fill" aria-hidden="true" /> : <span className="ff-agrp-l">{shown.slice(0, 5).map(r => <span key={r.id}>{nbh21(r.name)}{String(r.description || "").trim() && <small className="ff-agrp-sd">{nbh21(wholeSentences21(r.description, 70))}</small>}</span>)}</span>}
+                {isEmpty ? <span className="pe2-empty-fill" aria-hidden="true" /> : <span className="ff-agrp-l">{shown.slice(0, 5).map(r => <span key={r.id}>{nbh21(r.name)}{!r.cv && !/^Uploaded /.test(String(r.description || "")) && String(r.description || "").trim() && <small className="ff-agrp-sd">{nbh21(wholeSentences21(r.description, 70))}</small>}</span>)}</span>}
                 {!isEmpty && shown.length > 5 && <span className="ff-agrp-more">{`+${shown.length - 5}`}</span>}
                 {isEmpty && <span className="pe2-plus1" aria-hidden="true"><Plus size={26} strokeWidth={2.2} /></span>}
                 <span className="pe2-pen1" aria-hidden="true"><Pencil size={15} strokeWidth={2.1} /></span>
@@ -472,26 +472,16 @@ function BizOwner167() {
   const co = state.company || {};
   const has = on && !!String(co.name || "").trim();
   const toggle = () => dispatch({ type: "PROFILE", patch: { ownsBusiness: !on } });
-  useEffect(() => { if (!!(state.profile && state.profile.hasBiz) !== has) dispatch({ type: "PROFILE", patch: { hasBiz: has } }); }, [has]);
-  const logoRef = useRef(null);
-  const pickLogo = (e) => {
-    const f = e.target.files && e.target.files[0]; e.target.value = ""; if (!f) return;
-    const r = new FileReader(); r.onload = () => dispatch({ type: "COMPANY_SAVE", company: { logo: r.result, logoWide: false, logoRatio: null } }); r.readAsDataURL(f);
-  };
+  const want = on && (has || !!(state.profile && state.profile.hasBiz));
+  useEffect(() => { if (!!(state.profile && state.profile.hasBiz) !== want) dispatch({ type: "PROFILE", patch: { hasBiz: want } }); }, [want]);
   return (
     <div className={"pe2-biz167" + (on ? " on" : "")}>
       <div className="pe2-biz167-b">
         <span className="tx"><FitLabel17>Are you a business owner?</FitLabel17></span>
-        <span className="ic" aria-hidden="true"><Landmark167 size={18} strokeWidth={1.8} /></span>
         <button type="button" role="checkbox" aria-checked={on} aria-label="Are you a business owner?" className="bx" onClick={toggle}>{on ? <Check size={15} strokeWidth={3} /> : null}</button>
-        {on && <>
-          <button type="button" className="lg" aria-label={co.logo ? "Change your logo" : "Add your logo"} onClick={() => logoRef.current && logoRef.current.click()}>
-            {co.logo ? <img decoding="async" src={co.logo} alt="" /> : <Camera size={16} strokeWidth={1.9} />}
-          </button>
-          <input ref={logoRef} type="file" accept="image/*" hidden onChange={pickLogo} />
-        </>}
+        {on && <span className="ic" aria-hidden="true"><Landmark167 size={18} strokeWidth={1.8} /></span>}
       </div>
-      {on && <div className="pe2-biz167-card"><span className="hd">Company card</span><EditableCompanyCard plain noType /></div>}
+      {on && <div className="pe2-biz167-card"><EditableCompanyCard plain noType onCard /></div>}
     </div>
   );
 }

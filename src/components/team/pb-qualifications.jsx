@@ -148,7 +148,7 @@ async function pbqSaveCV(f, profile, dispatch) {
   let dataUrl = null;
   try { dataUrl = f.size > MAX_MEDIA_BYTES ? null : await readFileAsDataUrl(f); } catch (e) { dataUrl = null; }
   const cv = makeRecord("qualifications", "CV", {
-    cv: true, description: `Uploaded ${new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}.`,
+    cv: true,
     document: { name: f.name, size: f.size, type: f.type, dataUrl },
   });
   dispatch({ type: "REC_BULK", category: "qualifications", list: [cv, ...recsOf(profile, "qualifications").filter(r => !r.cv)] });
