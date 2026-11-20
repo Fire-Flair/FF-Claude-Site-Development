@@ -106,12 +106,15 @@ function pc17FitRun(root) {
     const a = ico.getBoundingClientRect().top - pr.top;
     const b = pr.bottom - low;
     const free = bar.getBoundingClientRect().top - pr.bottom;
-    const add = Math.min(free, Math.max(0, free - (a - b)));
-    if (add > 0.5) {
+    /* v1.174 (Alex 20 Nov 20:05): the Languages row is only as tall as the flags; the other rows share the free height, and a small gap always stays above the footer. */
+    const cq0 = root.clientWidth / 100, gap = 3 * cq0 * (pr.width / (panel.offsetWidth || pr.width));
+    const padRows = shown.filter((r) => !r.querySelector(".pc17-flags"));
+    const add = Math.max(0, free - gap);
+    if (add > 0.5 && padRows.length) {
       const s = pr.width / (panel.offsetWidth || pr.width); /* screen px per layout px (1 unless scaled) */
       const cq = root.clientWidth / 100; /* layout px per cqw */
-      const e = add / (2 * shown.length) / s;
-      shown.forEach((r) => {
+      const e = add / (2 * padRows.length) / s;
+      padRows.forEach((r) => {
         const cs = getComputedStyle(r);
         r.style.paddingTop = ((parseFloat(cs.paddingTop) + e) / cq).toFixed(3) + "cqw";
         r.style.paddingBottom = ((parseFloat(cs.paddingBottom) + e) / cq).toFixed(3) + "cqw";

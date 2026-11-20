@@ -248,27 +248,29 @@ const FI_AWARDS = [
 function FIBadge17({ k, uid, got }) {
   return fiH("svg", { viewBox: "0 0 48 52", width: 60, height: 64, "aria-hidden": true, focusable: "false" },
     fiH("defs", null,
-      fiH("linearGradient", { id: uid + "m", x1: "0", y1: "0", x2: "0", y2: "1" }, fiH("stop", { offset: "0", stopColor: "#9A9A9E" }), fiH("stop", { offset: ".5", stopColor: "#5E5E63" }), fiH("stop", { offset: "1", stopColor: "#38383C" })),
-      fiH("linearGradient", { id: uid + "r", x1: "0", y1: "0", x2: "1", y2: "1" }, fiH("stop", { offset: "0", stopColor: "#C8C8CC" }), fiH("stop", { offset: "1", stopColor: "#4A4A4F" }))),
+      fiH("linearGradient", { id: uid + "m", x1: "0", y1: "0", x2: "0", y2: "1" }, fiH("stop", { offset: "0", stopColor: got ? "#F6DC84" : "#9A9A9E" }), fiH("stop", { offset: ".5", stopColor: got ? "#C9A227" : "#5E5E63" }), fiH("stop", { offset: "1", stopColor: got ? "#8A6A1E" : "#38383C" })),
+      fiH("linearGradient", { id: uid + "r", x1: "0", y1: "0", x2: "1", y2: "1" }, fiH("stop", { offset: "0", stopColor: got ? "#FFF0B8" : "#C8C8CC" }), fiH("stop", { offset: "1", stopColor: got ? "#9A7420" : "#4A4A4F" }))),
     fiH("ellipse", { cx: 24, cy: 49, rx: 15, ry: 2.4, fill: "rgba(0,0,0,.22)" }),
     fiH("path", { d: FI_HEX, fill: "url(#" + uid + "m)", stroke: "url(#" + uid + "r)", strokeWidth: 2.4, strokeLinejoin: "round" }),
     fiH("path", { d: "M24 6.6 L39.6 15.3 V32.7 L24 41.4 L8.4 32.7 V15.3 Z", fill: "none", stroke: "rgba(0,0,0,.35)", strokeWidth: 1 }),
     fiH("path", { d: "M24 4.6 L41 14.2", fill: "none", stroke: "rgba(255,255,255,.55)", strokeWidth: 1.2, strokeLinecap: "round" }),
-    fiH("g", { fill: "#E6E6EA", stroke: "#E6E6EA", transform: "translate(0 -.5)", style: { filter: "drop-shadow(0 1px 0.6px rgba(0,0,0,.7))" } }, FI_GLYPH[k]),
+    fiH("g", { fill: got ? "#2A1E04" : "#E6E6EA", stroke: got ? "#2A1E04" : "#E6E6EA", transform: "translate(0 -.5)", style: { filter: "drop-shadow(0 1px 0.6px rgba(0,0,0,.7))" } }, FI_GLYPH[k]),
     got
-      ? fiH("g", { transform: "translate(32 33)" }, fiH("circle", { cx: 5.5, cy: 5.5, r: 6.2, fill: "#C9A227", stroke: "#F2DC8E", strokeWidth: 1 }),
-        fiH("path", { d: "M2.6 5.6 L4.9 7.9 L8.6 3.6", fill: "none", stroke: "#14110A", strokeWidth: 1.8, strokeLinecap: "round", strokeLinejoin: "round" }))
+      ? fiH("g", { transform: "translate(32 33)" }, fiH("circle", { cx: 5.5, cy: 5.5, r: 6.2, fill: "#1F7A3A", stroke: "#BFF0C8", strokeWidth: 1 }),
+        fiH("path", { d: "M2.6 5.6 L4.9 7.9 L8.6 3.6", fill: "none", stroke: "#FFFFFF", strokeWidth: 1.8, strokeLinecap: "round", strokeLinejoin: "round" }))
       : fiH("g", { transform: "translate(32 33)" }, fiH("circle", { cx: 5.5, cy: 5.5, r: 6.2, fill: "#1E1E21", stroke: "#8C8C91", strokeWidth: 1 }),
         fiH("rect", { x: 2.8, y: 5.2, width: 5.4, height: 4, rx: 1, fill: "#B9B9BD" }), fiH("path", { d: "M3.9 5.2 V3.9 a1.6 1.6 0 0 1 3.2 0 V5.2", fill: "none", stroke: "#B9B9BD", strokeWidth: 1.1 })));
 }
 /* v1.169 (Alex 20 Nov 19:44): a complete profile has its Profile complete badge ticked. */
-function fiComplete17(person) {
+function fiComplete17(person, state) {
   const p = person || {};
-  return !!(String(p.name || "").trim() && String(p.about || "").trim() && p.photo && (p.professions || []).length && (p.locations || []).length);
+  if (p.id === "me") return !!(state && state.profile && state.profile.live);
+  return true;   /* every profile someone can open is live, so its Profile complete badge is unlocked */
 }
 function FIAwards17({ person }) {
   const [open, setOpen] = useState(null);
-  const earned = { complete: fiComplete17(person) };
+  const { state: fiSt } = useStore();
+  const earned = { complete: fiComplete17(person, fiSt) };
   const cur = FI_AWARDS.find((a) => a.k === open);
   return fiH("div", { className: "ff-awd17" },
     fiH("div", { className: "ff-awd17-row" }, FI_AWARDS.map((a) =>

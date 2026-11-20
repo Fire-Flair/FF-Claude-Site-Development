@@ -83,3 +83,6 @@
 .pc17.lg .pc17-panel::before{content:"";position:absolute;left:0;top:0;bottom:0;width:8.4cqw;background:linear-gradient(180deg,#1C1C1F,#0B0B0C);z-index:1;pointer-events:none}
 .pc17.lg .pc17-row{grid-template-columns:8.4cqw minmax(0,1fr);column-gap:2.4cqw;padding-left:0;padding-right:2.8cqw}
 .pc17.lg .pc17-lico{position:relative;z-index:2}
+
+/* v1.174 (Alex 20 Nov 20:05): the Languages row is only as tall as the flags, so a small gap always sits between the box and the URL bar */
+.pc17.lg .pc17-row:has(.pc17-flags) { min-height: 0 !important; height: auto !important; padding-top: 1.6cqw; padding-bottom: 1.6cqw; }

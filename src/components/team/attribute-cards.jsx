@@ -535,7 +535,7 @@ function xpView29(r) {
     const name = d.employer || r.name;
     const where = d.location || "";
     return {
-      kicker: d.employer ? "Employer" : "Venue", name, where, Icon: Briefcase,
+      kicker: "Venue", name, where, Icon: Briefcase,
       role: d.employer ? r.name : "", dates, note: String(r.description || "").trim(),
       foot: "", maps: d.employer ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([name, where].filter(Boolean).join(", "))}` : "",
       hand: false,
@@ -577,7 +577,7 @@ function ExperienceCard29({ record, onClick, note, onNote, tone, role, onRole })
       {onClick && <span className="pe2-pen1 ff-xc29-pen" aria-hidden="true"><Pencil size={15} strokeWidth={2.1} /></span>}
       <div className="ff-xc29-in" role={onClick ? "button" : undefined} tabIndex={onClick ? 0 : undefined}
         aria-label={onClick ? `${v.name}. Open details` : undefined} onKeyDown={onClick ? key : undefined}>
-        <span className="ff-xc29-kr"><span className="k vb" title={v.kicker}><Icon size={17} strokeWidth={1.8} aria-hidden="true" /></span><span className="ff-xc29-kt">{v.kicker === "Employer" ? "Employer" : "Venue card"}</span></span>
+        <span className="ff-xc29-kr"><span className="k vb" title={v.kicker}><Icon size={17} strokeWidth={1.8} aria-hidden="true" /></span><span className="ff-xc29-kt">Venue card</span></span>
         <span className="top">
           <span className="nm">
             <b>{v.name}</b>
@@ -725,7 +725,7 @@ function ProfessionLevelPicker({ value, onChange }) {
 function RecordDetailsField({ details, readOnly, onChange }) {
   const d = details || {};
   const [venues, setVenues] = useState((d.venues || []).join(", "));
-  const keys = [["employer", d.type === "education" ? "Where" : "Employer"], ["location", "Location"], ["start", "From"], ["end", "To"], ["issuer", "Issued by"], ["level", "Level as written"]]
+  const keys = [["employer", d.type === "education" ? "Where" : "Venue"], ["location", "Location"], ["start", "From"], ["end", "To"], ["issuer", "Issued by"], ["level", "Level as written"]]
     .filter(([k]) => d[k] !== undefined);
   if (readOnly) return (
     <Field label="Details">

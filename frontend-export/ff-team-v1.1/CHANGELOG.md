@@ -4,6 +4,15 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.174
+- **Profile Card:** the Languages row is only as tall as the flags, and the other rows share the spare height, so a small gap always sits between the box and the URL bar.
+- Page saved as `live-v1.174-index.html`. Artifact version 1795205971-36db.
+
+## v1.173
+- **Venue cards only:** the old Employer cards are gone. Every place someone has worked shows as a Venue card, and the details panel says Venue, not Employer.
+- **Profile complete badge:** unlocked, gold and live on every profile you can open (the lock is now a green tick); your own shows it once your profile is live.
+- Page saved as `live-v1.173-index.html`. Artifact version 1795205129-d5a7.
+
 ## v1.172
 - **Network map legend:** the Professionals and FF Directory symbols are true circles again. A stretch rule on the label text was widening them into ovals; the symbol now has a fixed size.
 - Page saved as `live-v1.172-index.html`. Artifact version 1795204977-5478.
