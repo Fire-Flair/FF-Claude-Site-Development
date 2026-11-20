@@ -4,6 +4,10 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.160
+- **Blank venue card:** now looks like a complete venue card: dark card with the pin and "Venue card", empty name, role and note lines, and a gold plus.
+- Page saved as `live-v1.160-index.html`. Artifact version 1795151607-98b1.
+
 ## v1.159
 - **Event Directory:** the company cards now scroll freely with momentum (no snapping), so you can flick through hundreds of cards quickly, and a diagonal swipe moves them sideways instead of jiggling. The hero scrolls (Featured companies and the others) are unchanged.
 - Page saved as `live-v1.159-index.html`. Artifact version 1795151310-6539.

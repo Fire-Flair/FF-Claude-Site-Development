@@ -641,8 +641,10 @@ function ExperienceCards29({ items, onOpen, onAdd }) {
       <style>{xpCSS29}</style>
       {list.map(r => <div key={r.id} role="listitem" className="ff-xr29-it"><ExperienceCard29 record={r} onClick={onOpen ? () => onOpen(r) : undefined} /></div>)}
       {onAdd && <div role="listitem" className="ff-xr29-it"><button type="button" className="ff-xc29-add" style={{ width: CARD_W.venue }} aria-label="Add a venue" onClick={onAdd}>
-        <span className="k vb" aria-hidden="true"><MapPin size={17} strokeWidth={1.8} /></span>
-        <span className="pe2-plus1" aria-hidden="true"><Plus size={26} strokeWidth={2.2} /></span>
+        <span className="ff-xca-kr"><span className="k vb" aria-hidden="true"><MapPin size={17} strokeWidth={1.8} /></span><span className="ff-xca-kt">Venue card</span></span>
+        <span className="ff-xca-bar nm" aria-hidden="true" /><span className="ff-xca-bar rl" aria-hidden="true" />
+        <span className="ff-xca-bar nt" aria-hidden="true" /><span className="ff-xca-bar nt s" aria-hidden="true" />
+        <span className="ff-xca-ft" aria-hidden="true"><span className="ff-xca-plus"><Plus size={20} strokeWidth={2.6} /></span></span>
       </button></div>}
       <span className="ff-xr29-end" aria-hidden="true" />
     </div>
