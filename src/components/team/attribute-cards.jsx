@@ -315,7 +315,7 @@ function wholeSentences21(text, max) {
 const nbh21 = (t) => String(t || "").replace(/(\w)-(?=\w)/g, "$1\u2011");
 
 
-function ProfTile21({ r, i, editable, open, lifted, dx, onTap, grip, extra, catKey = "professions", compact, pen }) {
+function ProfTile21({ r, i, editable, open, lifted, dx, onTap, grip, extra, catKey = "professions", compact, pen, star }) {
   const own = String(r.description || "").trim();
   /* Professions show their default description when the member wrote none; other categories have none. */
   const dflt = !own && catKey === "professions" ? professionDefaultDesc(r.name, r.displayCategory) : "";
@@ -353,7 +353,7 @@ function ProfTile21({ r, i, editable, open, lifted, dx, onTap, grip, extra, catK
   }
   return (
     <div className={"ff-pt21-it" + (lifted ? " lifted" : "")} data-pt-id={r.id} style={lifted ? { transform: `translateX(${dx}px)` } : undefined}>
-      <button type="button" className={"ff-agrp prof ff-pt21 " + tierCls17(i) + (open ? " open" : "") + (r.hidden ? " hid" : "")}
+      <button type="button" className={"ff-agrp prof ff-pt21 cat-" + catKey + " " + tierCls17(i) + (open ? " open" : "") + (r.hidden ? " hid" : "")}
         aria-expanded={editable ? open : undefined} aria-label={editable ? `${r.name}. Edit` : `${r.name}. Open details`} onClick={onTap}>
         <span className="ff-agrp-top"><span className="ff-agrp-h">{nbh21(r.name)}</span></span>
         {pen && <span className="pe2-pen1 pe2-pen-t" aria-hidden="true"><Pencil size={15} strokeWidth={2.1} /></span>}
@@ -367,6 +367,7 @@ function ProfTile21({ r, i, editable, open, lifted, dx, onTap, grip, extra, catK
           </span>
         )}
       </button>
+      {star && <button type="button" className={"pe2-star-t" + (star.on ? " on" : "")} aria-pressed={star.on} aria-label={`${star.on ? "Remove from" : "Put on"} your profile card: ${r.name}`} onClick={star.toggle}><Star size={16} strokeWidth={2} fill={star.on ? "currentColor" : "none"} aria-hidden="true" /></button>}
       {grip}
     </div>
   );
@@ -375,7 +376,7 @@ function ProfTile21({ r, i, editable, open, lifted, dx, onTap, grip, extra, catK
 
 /* pb-professions (Alex 19:19): reorder lets the read-only tiles (builder Professions, which open their own editor) be
    dragged into order; top marks the first N as the "top three" that go onto the Profile Card (.ff-top3 + .ff-top3-n). */
-function ProfTiles21({ items, editable, def, onOpen, extra, tail, label = "Professions", catKey = "professions", compact, reorder, top = 0, pen }) {
+function ProfTiles21({ items, editable, def, onOpen, extra, tail, label = "Professions", catKey = "professions", compact, reorder, top = 0, pen, stars = 0 }) {
   const { dispatch } = useStore();
   const rows = editable ? rankedRecords(items || []) : rankedRecords(items || []).filter(r => !r.hidden && !r.proposed);
   const ids = rows.map(r => r.id);
@@ -409,6 +410,15 @@ function ProfTiles21({ items, editable, def, onOpen, extra, tail, label = "Profe
     if (e.key === "ArrowLeft" && i > 0) { e.preventDefault(); dispatch({ type: "REC_MOVE", category: catKey, id, to: i - 1 }); }
     else if (e.key === "ArrowRight" && i < rows.length - 1) { e.preventDefault(); dispatch({ type: "REC_MOVE", category: catKey, id, to: i + 1 }); }
   };
+  /* v1.139 (Alex 20 Nov 02:31): a star puts an entry on the profile card. The first `stars` entries are starred to begin with; a starred entry sits above the unstarred ones. */
+  const starOn = (r, i) => r.star !== undefined ? !!r.star : i < stars;
+  const toggleStar = (r, i) => {
+    const cur = rows.map((x, k) => starOn(x, k));
+    rows.forEach((x, k) => dispatch({ type: "REC_PATCH", category: catKey, id: x.id, patch: { star: cur[k] } }));
+    dispatch({ type: "REC_PATCH", category: catKey, id: r.id, patch: { star: !cur[i] } });
+    const at = rows.filter((x, k) => x.id !== r.id && cur[k]).length;
+    dispatch({ type: "REC_MOVE", category: catKey, id: r.id, to: at });
+  };
   const others = drag ? ids.filter(x => x !== drag.id) : [];
   const mark = drag && drag.over !== drag.from ? (drag.over < others.length ? { id: others[drag.over], side: "l" } : { id: others[others.length - 1], side: "r" }) : null;
   const openRec = editable ? rows.find(r => r.id === openId) : null;
@@ -418,7 +428,7 @@ function ProfTiles21({ items, editable, def, onOpen, extra, tail, label = "Profe
       {rows.map((r, i) => (
         <div role="listitem" key={r.id} className={"ff-pt21-slot" + (i < top ? " ff-top3" : "") + (mark && mark.id === r.id ? " mk-" + mark.side : "")}>
           {i < top && <span className="ff-top3-n" aria-label={`Top ${top}, number ${i + 1}`}>{i + 1}</span>}
-          <ProfTile21 r={r} i={i} editable={editable} catKey={catKey} compact={compact} pen={pen} open={openId === r.id} lifted={drag && drag.id === r.id} dx={drag ? drag.dx : 0}
+          <ProfTile21 r={r} i={i} editable={editable} catKey={catKey} compact={compact} pen={pen} star={stars ? { on: starOn(r, i), toggle: () => toggleStar(r, i) } : null} open={openId === r.id} lifted={drag && drag.id === r.id} dx={drag ? drag.dx : 0}
             extra={extra ? extra(r) : null}
             onTap={() => editable ? setOpenId(openId === r.id ? null : r.id) : onOpen && onOpen(r)}
             grip={editable || reorder ? (
@@ -544,8 +554,9 @@ function xpView29(r) {
 
 /* v1.35 (Alex, 18 Nov 18:49): no black — a muted card that suits the finished profile page. One line to switch:
    XP_TONE29 = "champagne" | "rose" | "sage". Colours in experience29.css (.ff-xc29.t-<tone>). */
-const XP_TONE29 = "champagne";
+const XP_TONE29 = "onyx";
 const XP_TONES29 = {
+  onyx: { bg: "linear-gradient(165deg,#2E2D31 0%,#171619 100%)", ring: "linear-gradient(160deg,#EBD58F,#C9A227 50%,#E2C46A)", dark: true },
   champagne: { bg: "linear-gradient(168deg,#F8F0DC,#E9DAB4)", ring: "linear-gradient(160deg,#EBD58F,#C9A227 50%,#E2C46A)", dark: false },
   rose: { bg: "linear-gradient(168deg,#F1E3DF,#DDC5BE)", ring: "linear-gradient(160deg,#E2C4BE,#A86A72 50%,#D9B3AC)", dark: false },
   sage: { bg: "linear-gradient(168deg,#ECEEDC,#D3D8BB)", ring: "linear-gradient(160deg,#D8DDBE,#8C9A6A 50%,#C9D0A8)", dark: false },

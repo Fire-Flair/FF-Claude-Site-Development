@@ -297,7 +297,7 @@ function PE2Overview({ records }) {
             const empty = !shown.length;
             const on = attrOpen === k;
             const card = (isEmpty, key) => (
-              <button key={key} type="button" role="listitem" className={"ff-agrp " + (isEmpty ? "pe2-agrp-empty" : tierCls17(ci)) + (on ? " pe2-agrp-on" : "")} aria-label={`${isEmpty && !empty ? "Add another" : "Edit"} ${def.label}`} aria-expanded={on} onClick={() => { setQualOpen(null); if (isEmpty) { const nr = makeRecord(k, ""); dispatch({ type: "REC_ADD", category: k, record: nr }); setAttrOpen(k); setAttrRec(nr); } else { setAttrOpen(on ? null : k); } }}>
+              <button key={key} type="button" role="listitem" className={"ff-agrp " + (isEmpty ? "pe2-agrp-empty" : "cat-" + k + " " + tierCls17(ci)) + (on ? " pe2-agrp-on" : "")} aria-label={`${isEmpty && !empty ? "Add another" : "Edit"} ${def.label}`} aria-expanded={on} onClick={() => { setQualOpen(null); if (isEmpty) { const nr = makeRecord(k, ""); dispatch({ type: "REC_ADD", category: k, record: nr }); setAttrOpen(k); setAttrRec(nr); } else { setAttrOpen(on ? null : k); } }}>
                 <span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span></span>
                 {isEmpty ? <span className="pe2-empty-fill" aria-hidden="true" /> : <span className="ff-agrp-l">{shown.slice(0, 5).map(r => <span key={r.id}>{nbh21(r.name)}</span>)}</span>}
                 {!isEmpty && shown.length > 5 && <span className="ff-agrp-more">{`+${shown.length - 5}`}</span>}
@@ -314,8 +314,7 @@ function PE2Overview({ records }) {
           <Sheet open center title={BASE_CATEGORIES[attrOpen].label} onClose={() => setAttrOpen(null)}>
             <div className="pe2-attr-pop">
               <style>{RANK_CSS17}</style>
-              {(records[attrOpen] || []).filter(r => !r.proposed).length > 3 && <PE2TopSlots key={"s" + attrOpen} profs={rankedRecords(records[attrOpen] || []).filter(r => !r.proposed)} catKey={attrOpen} noun={BASE_CATEGORIES[attrOpen].label.toLowerCase()} />}
-              <ProfTiles21 key={"t" + attrOpen} items={records[attrOpen] || []} def={BASE_CATEGORIES[attrOpen]} catKey={attrOpen} label={BASE_CATEGORIES[attrOpen].label} pen onOpen={(r) => setAttrRec(r)} />
+              <ProfTiles21 key={"t" + attrOpen} items={records[attrOpen] || []} def={BASE_CATEGORIES[attrOpen]} catKey={attrOpen} label={BASE_CATEGORIES[attrOpen].label} pen stars={5} onOpen={(r) => setAttrRec(r)} />
             </div>
           </Sheet>
         )}

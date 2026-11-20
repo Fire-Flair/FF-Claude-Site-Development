@@ -657,9 +657,9 @@ function AttrGroups({ items, mem, onOpen }) {
     <MemScroll mem={mem} k="overview" label={`Attributes, ${cards.length} card${cards.length === 1 ? "" : "s"}`} className="ff-acar">
       {cards.map((c, ci) => {
         const label = (c.g.def && c.g.def.label) || c.g.key;
-        if (c.g.key === "qualifications") return <PubQualCard key={c.key} label={label} part={c.part} more={c.more} total={c.part.length + c.more} cls={tierCls17(ci)} onOpen={() => onOpen(c.g.key)} />;
+        if (c.g.key === "qualifications") return <PubQualCard key={c.key} label={label} part={c.part} more={c.more} total={c.part.length + c.more} cls={"cat-qualifications " + tierCls17(ci)} onOpen={() => onOpen(c.g.key)} />;
         return (
-          <button key={c.key} type="button" className={"ff-agrp " + tierCls17(ci)} onClick={() => onOpen(c.g.key)}
+          <button key={c.key} type="button" className={"ff-agrp cat-" + c.g.key + " " + tierCls17(ci)} onClick={() => onOpen(c.g.key)}
             aria-label={`${label}: ${c.g.list.map(it => it.record.name).join(", ")}. View all attributes`}>
             <span className="ff-agrp-top"><span className="ff-agrp-h">{label}</span><span className="ff-agrp-n">{c.part.length + c.more}</span></span>
             <span className="ff-agrp-l">{c.part.map(it => <span key={it.id}>{it.category === "qualifications" ? <QualNm r={it.record} /> : nbh21(it.record.name)}</span>)}</span>

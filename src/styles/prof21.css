@@ -627,3 +627,15 @@
   --tc-bg: linear-gradient(165deg,#FBEFD9 0%,#EBD4A6 100%); --tc-ink: #2A2010; --tc-sub: #5A4826; --tc-line: rgba(176,141,42,.7);
   --tc-rule: rgba(42,32,16,.14); --tc-acc: #8A6A1E;
 }
+/* v1.139 (Alex 20 Nov 02:31): no champagne. One colour per kind of card: professions, skills, qualifications, interests, venues.
+   The colour picker comes back after the page updates; these variables are what it will set. */
+.ff .ff-agrp.cat-professions{--tc-bg:linear-gradient(165deg,#5E1A2B 0%,#34101A 100%);--cat-acc:#E4C36A}
+.ff .ff-agrp.cat-skills{--tc-bg:linear-gradient(165deg,#24405F 0%,#12233A 100%)}
+.ff .ff-agrp.cat-qualifications{--tc-bg:linear-gradient(165deg,#25503E 0%,#12291F 100%)}
+.ff .ff-agrp.cat-interests{--tc-bg:linear-gradient(165deg,#573060 0%,#2C1633 100%)}
+.ff .ff-agrp[class*=" cat-"]{--tc-ink:#F7F2E7;--tc-sub:#DCD2BF;--tc-line:rgba(228,195,106,.65);--tc-rule:rgba(247,242,231,.16);--tc-acc:#E4C36A}
+.ff .ff-agrp[class*=" cat-"] .pe2-pen1{color:#E4C36A;background:rgba(0,0,0,.25);border-color:rgba(228,195,106,.45)}
+.ff .ff-agrp[class*=" cat-"] .ff-agrp-l > span,.ff .ff-agrp[class*=" cat-"] .ff-agrp-d{color:rgba(247,242,231,.92)}
+.ff .ff-pt21-it .pe2-star-t{background:rgba(0,0,0,.35);color:#E4C36A;border-color:rgba(228,195,106,.5)}
+.ff .ff-pt21-it .pe2-star-t.on{background:#C9A227;color:#14110A;border-color:#E4C36A}
+.ff .ff-xc29.t-onyx{--x-ink:#F7F2E7;--x-sub:#CFC6B4;--x-acc:#E4C36A;--x-rule:rgba(247,242,231,.16);--x-ic-bg:rgba(228,195,106,.12);--x-ic-ring:rgba(228,195,106,.4);--x-shadow:rgba(0,0,0,.4)}

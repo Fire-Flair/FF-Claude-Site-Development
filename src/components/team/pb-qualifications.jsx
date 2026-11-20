@@ -103,7 +103,7 @@ function PE2QualCard({ records, openId, onOpen }) {
     setTyped("");
   };
   return (
-    <div role="listitem" className={"ff-agrp pbq-card " + (empty ? "pe2-agrp-empty" : tierCls17(0)) + (openId ? " pe2-agrp-on" : "")} aria-label={def.label}>
+    <div role="listitem" className={"ff-agrp pbq-card " + (empty ? "pe2-agrp-empty" : "cat-qualifications " + tierCls17(0)) + (openId ? " pe2-agrp-on" : "")} aria-label={def.label}>
       <style>{PBQ_CSS}</style>
       <span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span>{!empty && <span className="ff-agrp-n">{rows.length}</span>}</span>
       {!empty && (

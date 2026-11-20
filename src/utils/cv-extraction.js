@@ -91,8 +91,7 @@ const namesAttr = (whole, part) => {
 function recordNameFor(s) {
   const d = s.details || {};
   const t = String(s.title || "").trim();
-  if (s.category === "employment" && d.employer && !namesAttr(t, d.employer)) return `${d.employer} — ${t}`;
-  if (s.category === "freelance" && !/freelanc/i.test(t)) return `Freelance — ${t}`;
+  if ((s.category === "employment" || s.category === "freelance") && d.employer && !t) return String(d.employer).trim();
   if (s.category === "education" && d.employer && !namesAttr(t, d.employer)) return `${t} — ${d.employer}`;
   return t;
 }
@@ -161,13 +160,14 @@ function buildSuggestions(x, profile) {
   let merged = 0;
   (x.items || []).forEach(it => {
     const def = CVX_CATEGORIES[it.category] || CVX_CATEGORIES.other;
-    if (!venuesOn17(def.to)) return;   /* v17.47: Venues are off, so a CV venue is not suggested anywhere. */
+    if (def.to === "venues" ? !SHOW_VENUES_PROFILE17 : !venuesOn17(def.to)) return;   /* v1.139: Venues are what a CV gives us (no Experience records). */
     const keep = CVX_KEEP_DETAILS[it.category];
     const details = {};
     Object.entries(it.details || {}).forEach(([dk, dv]) => { if (!keep || keep.includes(dk)) details[dk] = dv; });
     const s = { key: uid("sg"), kind: "record", ...it, details, to: def.to };
+    if (def.to === "venues" && details.role && !String(s.description || "").toLowerCase().includes(String(details.role).toLowerCase())) s.description = `${details.role}.${s.description ? " " + s.description : ""}`;
     const nk = normAttr(recordNameFor(s));
-    const k = `${s.to}|${nk}|${s.category === "employment" ? normAttr(s.details.start || "") : ""}`;
+    const k = `${s.to}|${nk}|${s.category === "employment" && s.to !== "venues" ? normAttr(s.details.start || "") : ""}`;
     /* "other" never repeats something already found under a real category. */
     const twin = s.category === "other" ? list.find(o => normAttr(recordNameFor(o)) === nk || normAttr(o.title) === normAttr(s.title)) : null;
     if (twin || seen.has(k)) { mergeSuggestion(twin || seen.get(k), { ...s, details: twin && twin.to !== s.to ? {} : s.details }); merged++; return; }

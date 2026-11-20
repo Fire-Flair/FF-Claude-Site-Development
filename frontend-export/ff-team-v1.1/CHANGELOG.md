@@ -4,6 +4,13 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.139
+- **CV extraction:** the CV now gives Venues, not Experience. Each position becomes a venue card: the venue or employer is the title, the job role goes into the description, and the dates are kept on the card.
+- **Stars:** in the Skills, Interests and Qualifications lists each entry has a star that puts it on the profile card. The first five are starred to begin with; starring or unstarring moves it above or below the starred ones. (The top-three slots stay on Professions.)
+- **Colours:** no more champagne cards. Professions are burgundy, skills navy, qualifications green, interests plum and venues onyx, on the builder and the profile page. The colour picker returns after the page updates.
+- **FireFlair Introductions and Awards:** the section is renamed.
+- Page saved as `live-v1.139-index.html`. Artifact version 1795142329-ab57.
+
 ## v1.138
 - **Get booked, Create your own:** no "Your skills, your package, your price" and no "You earn" label: the price box is just the pound sign to type into, and the line under Create your own reads "Your custom package". "You provide" and "Ideal for" are keywords: type one and press Enter to make a chip (tap the cross to remove).
 - Page saved as `live-v1.138-index.html`. Artifact version 1795141384-e95c.

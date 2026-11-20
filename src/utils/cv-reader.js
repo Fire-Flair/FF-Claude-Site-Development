@@ -52,8 +52,8 @@ const CVX = {
    so nothing valid is discarded for not fitting a hard-coded list. */
 const CVX_CATEGORIES = {
   profession:    { to: "professions",    label: "Professions" },
-  employment:    { to: "experience",     label: "Employment history" },
-  freelance:     { to: "experience",     label: "Freelance & event work" },
+  employment:    { to: "venues",         label: "Venues you have worked at" },
+  freelance:     { to: "venues",         label: "Venues you have worked at" },
   achievement:   { to: "experience",     label: "Achievements" },
   venue:         { to: "venues",         label: "Venues & employers" },
   skill:         { to: "skills",         label: "Skills" },
@@ -73,7 +73,7 @@ const CVX_PARTS = {
 };
 
 
-const CVX_DETAIL_KEYS = ["employer", "location", "start", "end", "level", "issuer", "group"];
+const CVX_DETAIL_KEYS = ["employer", "role", "location", "start", "end", "level", "issuer", "group"];
 
 
 const CVX_CONFIDENCE = ["high", "medium", "low"];
@@ -82,8 +82,8 @@ const CVX_CONFIDENCE = ["high", "medium", "low"];
 
 const CVX_GUIDE = {
   profession: `each distinct job role the person does or has done ("Head Bartender", "Event Manager"). One item per role, not per employer. Description: where and how they did it.`,
-  employment: `EVERY position in the work history, one item per position, never merged — a promotion at the same employer is its own item, and early or short jobs count too. title = the job title only. details.employer, details.location, details.start and details.end as written ("Present" for a current job). Description: 1–3 sentences on that job's responsibilities and achievements.`,
-  freelance: `freelance, agency, event, pop-up or seasonal work, kept apart from employment. One item per freelance section or engagement. details.venues = every named venue, client, brand or event. Description: the kind of work and where.`,
+  employment: `EVERY position in the work history, one item per position, never merged — early or short jobs count too. The card is the VENUE, not the job: title = the venue or employer name (the place the person worked, e.g. "The Savoy", "Raise the Bar"). details.role = the job title held there. details.employer = the same venue name, details.location, details.start and details.end as written ("Present" for a current job). Description: the role and 1–3 sentences on the responsibilities and achievements.`,
+  freelance: `freelance, agency, event, pop-up or seasonal work. One item per named venue, client, brand or event: title = that venue or client name, details.role = what the person did there, details.start and details.end when given. Description: the role and the kind of work.`,
   achievement: `awards, competition results and other notable achievements. One tied to a job ALSO belongs in that job's employment description.`,
   venue: `every named venue, employer, client or event space the person worked at (bars, restaurants, hotels, clubs, festivals, brands), including the freelance ones. details.location when given. Description: what they did there and when.`,
   skill: `technical, operational, interpersonal and leadership skills — one item per distinct skill, merging near-synonyms ("guest service" and "customer service" are one skill). Include skills stated outright, and skills clearly shown by responsibilities (e.g. stock control shown by "managed weekly ordering": confidence "low"), but don't turn every duty into a skill. Description: where the document shows it.`,
@@ -504,7 +504,7 @@ function cvPrompt({ cats, doc, withHeader, pagePics, candidates, docText, trunca
   const elsewhere = Object.keys(CVX_GUIDE).filter(c => !cats.includes(c));
   const histCats = cats.some(c => CVX_PARTS.history.includes(c));
   const itemDetails = histCats
-    ? `{"employer":"","location":"","start":"","end":"","venues":[],"issuer":""${cats.includes("language") ? `,"level":""` : ""}${cats.includes("other") ? `,"group":""` : ""}}`
+    ? `{"employer":"","role":"","location":"","start":"","end":"","venues":[],"issuer":""${cats.includes("language") ? `,"level":""` : ""}${cats.includes("other") ? `,"group":""` : ""}}`
     : `{"level":"","group":""}`;
   const what = isCV ? "CV" : "self-description";
   const head = withHeader
@@ -532,7 +532,7 @@ CATEGORIES
 ${cats.map(c => `- ${c}: ${CVX_GUIDE[c]}`).join("\n")}
 
 FIELDS
-- title: a short card title in Title Case, at most 80 characters. Employment and profession titles never include the employer.
+- title: a short card title in Title Case, at most 80 characters. Profession titles never include the employer. Employment and freelance titles are the venue name.
 - description: informative and concise, at most 3 sentences, about the person without using their name ("Led bar operations…"). Nothing the document doesn't support.
 - evidence: a short exact quote from the document (at most 160 characters) that supports the item — never a phone number, email or street address.
 - confidence: "high" when stated clearly, "medium" when stated but unclear, "low" when only implied.

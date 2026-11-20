@@ -174,3 +174,8 @@
 .ff .ff-gac17-b:disabled{opacity:.5;cursor:default}
 .ff .ff-gac17-b.del{border-color:rgba(110,106,98,.4);background:#F1EFEA;color:#6E6A62}
 .ff .ff-gac17-b.del.sure{background:#6E6A62;border-color:#6E6A62;color:#fff}
+
+/* v1.139: the star on a tile puts it on the profile card. */
+.ff .ff-pt21-it{position:relative}
+.ff .pe2-star-t{position:absolute;right:12px;bottom:12px;z-index:3;width:34px;height:34px;border-radius:12px;corner-shape:squircle;display:grid;place-items:center;cursor:pointer;color:var(--color-gold-dk,#7E611D);background:rgba(255,255,255,.7);border:1px solid rgba(126,97,29,.45);padding:0}
+.ff .pe2-star-t.on{background:#C9A227;color:#14110A;border-color:#7E611D}
