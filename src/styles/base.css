@@ -1644,7 +1644,7 @@
 @media (prefers-reduced-motion: reduce) { .ff .ff-lb163-l .bar i, .ff .ff-lb163-h .live i { animation: none; } }
 
 /* v1.164: network notifications use the small Profile card; cooler Accept */
-.ff .ff-netn18 { margin-bottom: 36px; }
+.ff .ff-netn18 { margin-bottom: 40px; padding-bottom: 4px; }
 .ff .ff-inv18 { max-width: 300px; }
 .ff .ff-inv18-card { width: 190px; margin: 0 auto; }
 .ff .ff-inv18-t, .ff .ff-inv18-s { text-align: center; }
@@ -1655,3 +1655,16 @@
 @keyframes ffInvShine { 60%, 100% { left: 130%; } }
 .ff .ff-inv18-b.ok:hover { background: linear-gradient(180deg, #FAE9B0 0%, #EBC862 48%, #D0A334 100%); }
 @media (prefers-reduced-motion: reduce) { .ff .ff-inv18-b.ok::after { animation: none; } }
+
+/* v1.165: notifications side by side (small card left, text and buttons right); icons on the small card's rule sit higher */
+.ff .ff-inv18.side { max-width: none; display: grid; grid-template-columns: 148px minmax(0, 1fr); gap: 14px; align-items: center; }
+.ff .ff-inv18.side .ff-inv18-card { width: 148px; margin: 0; }
+.ff .ff-inv18-r { min-width: 0; display: flex; flex-direction: column; }
+.ff .ff-inv18.side .ff-inv18-t { margin: 0; text-align: left; font-size: 14.5px; }
+.ff .ff-inv18.side .ff-inv18-btns { margin-top: 10px; gap: 8px; }
+.ff .ff-inv18.side .ff-inv18-b { height: 40px; font-size: 13px; }
+.ff .ff-inv18.side .ff-inv18-b.ok { height: 46px; font-size: 14px; }
+.ff .ff-inv18-st { margin: 4px 0 0; color: #B08D2A; font-size: 15px; letter-spacing: 2px; }
+.ff .ff-inv18-q { margin: 4px 0 0; font: 400 13px/1.4 Inter, system-ui, sans-serif; color: #3F382B; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.ff .ff-inv18-list { gap: 22px; }
+.pc17.sm .ff-pc-rule > :not(i) { transform: translateY(-1.3cqw); }

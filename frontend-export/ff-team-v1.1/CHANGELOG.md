@@ -4,6 +4,11 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.165
+- **Network notifications:** each one has the small Profile card on the left and the text and buttons on the right, so it takes much less room (the explainer line is gone). New: a notification when someone reviews you, with their rating and words, Accept and Decline.
+- **Small Profile cards:** the profession icons on the rule under the title sit slightly higher.
+- Page saved as `live-v1.165-index.html`. Artifact version 1795153653-24b7.
+
 ## v1.164
 - **Network notifications:** a "Notifications" title above the invitations, and "Your network" for the other side. Team invitations show the small Profile card (the Profile Card is the big one, Profile the small one), and Accept is a larger gold button with a shine.
 - Page saved as `live-v1.164-index.html`. Artifact version 1795152957-c65f.

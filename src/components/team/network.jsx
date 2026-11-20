@@ -737,16 +737,46 @@ function TeamInvite18({ x, onReview }) {
     }
   };
   return (
-    <li className="ff-inv18" aria-label={`Team invitation from ${x.name}`}>
+    <li className="ff-inv18 side" aria-label={`Team invitation from ${x.name}`}>
       <div className="ff-inv18-card">
         {co ? <CompanyCardFace c={co} size="sm" /> : <PlayerCard person={person} format="portrait" nameAs="div" themeKey={person.theme || "paper"} />}
       </div>
-      <p className="ff-inv18-t">{first} has invited you to join their team on FireFlair.</p>
-      <p className="ff-inv18-s">Accept to appear on {first}&rsquo;s team and show their {co ? "Company Card" : "Profile Card"} on yours.</p>
-      <div className="ff-inv18-btns">
-        <button type="button" className="ff-inv18-b ok" onClick={() => reply(true)}><NetIco18.Check size={16} aria-hidden="true" /><FitLabel17>Accept</FitLabel17></button>
-        <button type="button" className="ff-inv18-b" onClick={() => reply(false)}><NetIco18.X size={16} aria-hidden="true" /><FitLabel17>Not now</FitLabel17></button>
-        {person ? <button type="button" className="ff-inv18-b" onClick={() => onReview(person)}><NetIco18.Out size={16} aria-hidden="true" /><FitLabel17>Leave a review</FitLabel17></button> : null}
+      <div className="ff-inv18-r">
+        <p className="ff-inv18-t">{first} has invited you to join their team on FireFlair.</p>
+        <div className="ff-inv18-btns">
+          <button type="button" className="ff-inv18-b ok" onClick={() => reply(true)}><NetIco18.Check size={16} aria-hidden="true" /><FitLabel17>Accept</FitLabel17></button>
+          <button type="button" className="ff-inv18-b" onClick={() => reply(false)}><NetIco18.X size={16} aria-hidden="true" /><FitLabel17>Not now</FitLabel17></button>
+          {person ? <button type="button" className="ff-inv18-b" onClick={() => onReview(person)}><NetIco18.Out size={16} aria-hidden="true" /><FitLabel17>Leave a review</FitLabel17></button> : null}
+        </div>
+      </div>
+    </li>
+  );
+}
+
+
+/* A review someone wrote about you, waiting for you to accept it onto your profile (v1.165). Same side-by-side layout as an invitation. */
+function ReviewNote165({ r }) {
+  const { dispatch } = useStore();
+  const all = useDirectory();
+  const person = all.find(p => p.id === r.byId);
+  const first = firstName(r.byName);
+  const decide = (show) => {
+    dispatch({ type: "REVIEW_DECIDE", id: r.id, show, review: r });
+    if (show) dispatch({ type: "TOAST", toast: `${first}'s review is on your profile` });
+  };
+  return (
+    <li className="ff-inv18 side" aria-label={`Review from ${r.byName}`}>
+      <div className="ff-inv18-card">
+        {person ? <PlayerCard person={person} format="portrait" nameAs="div" themeKey={person.theme || "paper"} /> : <Portrait src={null} name={r.byName} size={90} />}
+      </div>
+      <div className="ff-inv18-r">
+        <p className="ff-inv18-t">{first} reviewed you.</p>
+        {r.rating ? <p className="ff-inv18-st" role="img" aria-label={`${r.rating} out of 5`}>{"\u2605".repeat(r.rating)}</p> : null}
+        {r.text ? <p className="ff-inv18-q">{r.text}</p> : null}
+        <div className="ff-inv18-btns">
+          <button type="button" className="ff-inv18-b ok" onClick={() => decide(true)}><NetIco18.Check size={16} aria-hidden="true" /><FitLabel17>Accept</FitLabel17></button>
+          <button type="button" className="ff-inv18-b" onClick={() => decide(false)}><NetIco18.X size={16} aria-hidden="true" /><FitLabel17>Decline</FitLabel17></button>
+        </div>
       </div>
     </li>
   );
@@ -773,14 +803,17 @@ function TeamJoined18({ n }) {
 function NetNotes18({ onReview }) {
   const { state } = useStore();
   const people = useDirectory();
-  const invites = notesBrief17(state, people).filter(it => it.kind === "team");
+  const brief = notesBrief17(state, people);
+  const invites = brief.filter(it => it.kind === "team");
+  const reviews = brief.filter(it => it.kind === "review");
   const joined = joinedNotes18(state);
-  if (!invites.length && !joined.length) return null;
+  if (!invites.length && !joined.length && !reviews.length) return null;
   return (
     <section className="ff-netn18" aria-label="Notifications">
       <SectionHead icon={<NetIco18.Bell size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Notifications" />
       <ul className="ff-inv18-list">
         {invites.map(it => <TeamInvite18 key={it.id} x={it.x} onReview={onReview} />)}
+        {reviews.map(it => <ReviewNote165 key={it.id} r={it.r} />)}
         {joined.map(n => <TeamJoined18 key={n.id} n={n} />)}
       </ul>
     </section>
