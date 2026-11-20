@@ -4,6 +4,18 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.162
+- **Featured companies:** a random mix of every type of company (bars, DJs, caterers and the rest), not just bars, so all the colours show.
+- **Event Directory text:** no more "around 150"; it now says the list keeps growing.
+- **Back button:** moved from the top left to the bottom left, just above the bottom bar, in the bar's own dark and gold.
+- **Packages on a profile:** the row now uses the same hero scroll as every other hero row (centre card large, neighbours smaller, snaps to the middle); the terms below still follow the centre card.
+- **Packages tab:** the Terms and conditions box under the packages is gone (the terms are part of each card's Details). The Signature cocktail builder is back below the Q&A on your own page: the black and gold cocktail card and its Recipe card, saved to your profile.
+- **Grow with FireFlair:** back to three boxes (Training, Dream jobs, FireFlair rewards). The hero scroll is inside each opened box: the choices (International bar shows, Free training tickets, NFC business cards and the rest) scroll as a hero row.
+- **Book a meeting box:** the two reasons are now stacked, one above the other, icon on the left.
+- **Review pop-up:** fits one screen, no scrolling and no spare gap under Post review; the header stays.
+- **Network map legend:** no numbers; the drop-down arrows are bigger. The counts beside Top staff and the directory tabs are gone too.
+- Page saved as `live-v1.162-index.html`. Artifact version 1795152498-5513.
+
 ## v1.161
 - **Book a meeting box:** same colours, now a rounded box in two halves, each with an icon: "Need help? Talk to our team, we are happy to answer anything" and "Want to be featured? Get an exclusive FFStory, and we will promote your services", then the Book a meeting button.
 - Page saved as `live-v1.161-index.html`. Artifact version 1795151655-1d73.

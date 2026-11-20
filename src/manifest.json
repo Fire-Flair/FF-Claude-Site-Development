@@ -96,6 +96,7 @@
   "components/party/booking-flow.jsx",
   "components/party/hire.jsx",
   "components/party/card-studio.jsx",
+  "components/party/cocktail-studio.jsx",
   "components/party/party-live.jsx",
   "components/party/packages-browse.jsx",
   "components/party/delivery-and-extras.jsx",

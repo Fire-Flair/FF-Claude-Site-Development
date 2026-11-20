@@ -50,3 +50,7 @@
 .ff .ff-pkt17-none { display:flex; align-items:center; gap:12px; padding:14px; background:#fff; border:1px dashed rgba(160,124,30,.55); border-radius:20px; corner-shape:squircle; }
 .ff .ff-pkt17-none .ic { flex:none; display:grid; place-items:center; width:40px; height:40px; border-radius:12px; corner-shape:squircle; background:var(--color-sand,#F3EAD5); color:var(--color-gold-dk,#7E611D); }
 .ff .ff-pkt17-none p { margin:0; font-size:14.5px; line-height:1.45; color:#3A3428; }
+
+/* v1.162: packages on a profile use the Bookings hero row, so each card is one fixed width, centred */
+.ff .ff-pkt17-rail .ff-hf20 { align-items: flex-start; }
+.ff .ff-pkt17-rail .ff-hf20-i.ff-bkpk-cell { width: min(280px, calc(100vw - 96px)); }

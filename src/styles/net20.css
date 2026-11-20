@@ -156,3 +156,18 @@
 .ff .ff-hscroll.loose { scroll-snap-type: none; scroll-behavior: auto; overscroll-behavior-x: contain; touch-action: pan-x pan-y; -webkit-overflow-scrolling: touch; }
 .ff .ff-hscroll.loose .ff-hitem { scroll-snap-align: none; }
 .ff .ff-hscroll.loose .ff-co11-tile { touch-action: pan-x pan-y; transform: none !important; }
+
+/* v1.162 (Alex 20 Nov 05:17): Back sits bottom left, just above the bottom bar, in the bar's own dark and gold, small enough to leave the page readable */
+.ff .ff-pb1, .ff .ff-pb1:hover { top: auto; bottom: calc(68px + env(safe-area-inset-bottom, 0px)); left: 12px; width: 46px; height: 46px; border-radius: 16px; corner-shape: squircle;
+  background: linear-gradient(180deg, #2A2A2F, #121214); border: 1.5px solid var(--gold, #C9A227); color: #E9D07A; -webkit-backdrop-filter: none; backdrop-filter: none;
+  box-shadow: 0 6px 16px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08); }
+.ff .ff-pb1:active { transform: scale(.96); }
+@media (min-width: 1100px) { .ff .ff-pb1 { bottom: 28px; left: 22px; } }
+
+/* v1.162: map legend without numbers, bigger drop-down buttons */
+.ff .ff-ml19 label { padding: 4px 4px 4px 12px; gap: 8px; }
+.ff .ff-ml19 .ff-ml19-x { display: grid; place-items: center; min-width: 44px; min-height: 40px; margin-left: 2px; padding: 0 10px; font-size: 18px; border-radius: 10px; corner-shape: squircle; background: rgba(176,141,42,.14); }
+.ff .ff-nt20 .ct, .ff .ff-cb20 .ct, .ff .ff-dr20-sub .ct { display: none; }
+.ff .ff-ml19 label { min-width: 0; }
+.ff .ff-ml19-row { flex-wrap: nowrap; }
+.ff .ff-ml19-row label { flex: 1 1 0; justify-content: space-between; padding-left: 10px; }

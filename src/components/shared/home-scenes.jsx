@@ -512,11 +512,13 @@ function InterestSection({ kind, inner }) {
     <Wrap id={c.id} boxed={c.boxed} eyebrow={c.eyebrow} title={c.title} lede={c.lede}>
       {inner ? (
         /* Scroll rule (Alex 19 Nov): choosing is left and right. Inside a Bookings drop-down the choices are one swipeable row. */
-        <HScroll label={c.title} snap>
-          {c.list.map(x => (
-            <div key={x.id} className="ff-int-cell"><FlipChoice17 kind={x.kind} title={x.title} note={x.note} img={c.imgs[x.id]} pos={c.pos[x.id]} on={picked.includes(x.id)} onClick={() => toggle(x.id)} /></div>
-          ))}
-        </HScroll>
+        <div className="ff-int-hf"><style>{NET20_CSS}</style>
+          <HeroFlow20 label={c.title}>
+            {c.list.map(x => (
+              <div key={x.id} className="ff-int-cell"><FlipChoice17 kind={x.kind} title={x.title} note={x.note} img={c.imgs[x.id]} pos={c.pos[x.id]} on={picked.includes(x.id)} onClick={() => toggle(x.id)} /></div>
+            ))}
+          </HeroFlow20>
+        </div>
       ) : (
       <div className="ff-courses ff-courses-img">
         {c.list.map(x => (

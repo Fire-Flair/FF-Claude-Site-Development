@@ -703,3 +703,10 @@
 .ff .ff-foot156-c .ic { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 15px; corner-shape: squircle; border: 1.5px solid rgba(233,208,122,.6); color: #F0D98A; background: rgba(233,208,122,.08); }
 .ff .ff-foot156-c b { font: 700 16px/1.25 var(--sans); color: #F4DC8E; }
 .ff .ff-foot156-c span:not(.ic) { font: 500 13.5px/1.45 var(--sans); color: #F4EFE4; }
+
+/* v1.162: footer help box, two reasons stacked */
+.ff .ff-foot156-two { grid-template-columns: 1fr; gap: 0; }
+.ff .ff-foot156-c { grid-template-columns: 46px 1fr; grid-template-rows: auto auto; justify-items: start; align-content: center; align-items: center; column-gap: 14px; row-gap: 2px; text-align: left; padding: 14px 4px; }
+.ff .ff-foot156-c .ic { grid-row: 1 / span 2; }
+.ff .ff-foot156-c + .ff-foot156-c { border-left: 0; border-top: 1px solid rgba(233,208,122,.3); }
+.ff .ff-foot156-c b, .ff .ff-foot156-c span:not(.ic) { text-wrap: balance; }

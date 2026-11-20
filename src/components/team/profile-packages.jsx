@@ -111,20 +111,13 @@ function ProfilePackages17({ person, own }) {
       <style>{BKD_CSS}</style>
       <style>{PROFILE_PACKAGES_CSS}</style>
       <div id="ff-bk-party" className={`pkg3 ff-pkt17-rail${own ? "" : " pub"}`} ref={box}>
-        <CoverFlow items={items} label="Packages" mem={mem} k="pkt17" half={140} onIndex={setAt} onOpen={() => {}}
-          render={(it) => <div className="ff-svslide std ff-pkt17-cell">{card(it)}</div>} />
+        {/* v1.162 (Alex 20 Nov 05:17): the same hero scroll as the other rows (HeroFlow20), instead of the old cover flow. */}
+        <style>{NET20_CSS}</style>
+        <HeroFlow20 label="Packages" onIndex={setAt}>
+          {items.map(it => <div key={it.id} className="ff-svslide std ff-pkt17-cell ff-bkpk-cell">{card(it)}</div>)}
+        </HeroFlow20>
       </div>
-      {t && (
-        <StaffBox id="ff-pkt17-tc" icon={E17I.Layers} title="Terms and conditions" open={tcOpen} onToggle={() => setTcOpen(o => !o)}>
-          <div className="ff-pkt17-tc" aria-live="polite">
-            <h4 className="ff-pkt17-tcn">{t.name}</h4>
-            {t.cond && <p className="ff-pkt17-cond">{pkcNoBreak17(t.cond)}</p>}
-            <div className="ff-tc5">
-              {PARTY_PKG_TERMS17.map((x, i) => <div key={x.k} className="ff-tc5-read"><span><b>{i + 1}</b>{x.label}</span><p>{x.text}</p></div>)}
-            </div>
-          </div>
-        </StaffBox>
-      )}
+      {/* v1.162 (Alex 20 Nov 05:19): no Terms and conditions box here; the terms are part of each card's Details. */}
       {own && <ProfStaffCards17 />}
     </div>
   );

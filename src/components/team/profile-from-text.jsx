@@ -299,7 +299,7 @@ function ReviewForm17({ person, shiftId, onDone, preview }) {
           ))}
         </div>
       )}
-      <textarea className="ty" rows={3} value={text} onChange={(e) => setText(e.target.value)} placeholder="Type a review" aria-label="Review" name="review" autoComplete="off" />
+      <textarea className="ty" rows={2} value={text} onChange={(e) => setText(e.target.value)} placeholder="Type a review" aria-label="Review" name="review" autoComplete="off" />
       <Btn variant="gold wide" disabled={!ready} onClick={post}>Post review</Btn>
     </div>
   );

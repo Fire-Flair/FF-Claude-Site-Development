@@ -543,7 +543,7 @@ function TopStaff11() {
   if (!top.length) return null;
   return (
     <section style={{ marginTop: 18 }}>
-      <SectionHead icon={<I11.Star size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Top staff" count={top.length} />
+      <SectionHead icon={<I11.Star size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Top staff" />
       <HeroFlow20 label="Top staff">
         {top.map(p => <PlayerTile key={p.id} person={p} selected={state.role === "staff" && state.selection.includes(p.id)} onClick={() => { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); }} />)}
       </HeroFlow20>

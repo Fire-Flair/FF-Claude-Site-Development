@@ -340,3 +340,7 @@
 .ff .ff-bkd.ff-bkd-bdwrap { min-width: 0; max-width: 100%; box-sizing: border-box; }
 .ff .ff-bkd-bdwrap .bkd-bd { min-width: 0; box-sizing: border-box; overflow: hidden; }
 .ff .ff-bkd-bdwrap .bkd-bds { overflow-wrap: break-word; }
+
+/* v1.162: the choices inside a Grow box are a hero scroll */
+.ff .ff-int-hf { min-width: 0; }
+.ff .ff-int-hf .ff-hf20 { margin: 0 -14px; padding: 8px calc(50% - 84px) 22px; }

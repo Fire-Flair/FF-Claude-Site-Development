@@ -69,6 +69,7 @@ function ProfileEditTabs({ person }) {
     <ProfilePackages17 person={person} own />
     <PersonalTerms17 />
     <PE2QA />
+    <CocktailStudio17 />
   </>);
 
   /* ---- Team ---- */

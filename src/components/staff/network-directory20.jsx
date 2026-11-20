@@ -199,7 +199,7 @@ function NetDirectory20(props) {
       React.createElement(HScroll, { loose: true, label: tcur ? tcur.label : cur.label, key: cur.k + (tcur ? tcur.k : "") }, (tcur ? groups[tcur.k] : cur.list).map(function (co) { return React.createElement(CoTile20, { key: co.id, co: co }); }))));
 }
 
-const NET_DIR_DESC20 = "Find the companies you want to work for or work with. Around 150 UK bar companies, DJs, caterers and event services, with contact details, so you can find support for your own events, find out more and register your interest.";
+const NET_DIR_DESC20 = "Find the companies you want to work for or work with. UK bar companies, DJs, caterers and event services, a list that keeps growing, with contact details, so you can find support for your own events, find out more and register your interest.";
 const NET_MAP_DESC20 = "Everyone in events and hospitality, on one UK map. Our goal is to put you on it and get you jobs where you want to go.";
 
 /* The map on its own (the Explore by area drop-downs stay on the other pages). */
@@ -248,16 +248,22 @@ function netSearch20(props) {
 function HeroFlow20(props) {
   const items = React.Children.toArray(props.children).filter(Boolean);
   const ref = React.useRef(null);
+  const lastAt = React.useRef(-1);
   const paint = function () {
     const r = ref.current; if (!r) return;
     const mid = r.getBoundingClientRect().left + r.clientWidth / 2;
-    Array.prototype.forEach.call(r.children, function (c) {
+    let best = 0, bestD = 1e9;
+    Array.prototype.forEach.call(r.children, function (c, ci) {
       const b = c.getBoundingClientRect();
-      const d = Math.min(1, Math.abs(b.left + b.width / 2 - mid) / Math.max(1, b.width * 1.4));
+      const raw = Math.abs(b.left + b.width / 2 - mid);
+      if (raw < bestD) { bestD = raw; best = ci; }
+      const d = Math.min(1, raw / Math.max(1, b.width * 1.4));
       c.style.setProperty("--hf-s", (1 - d * 0.2).toFixed(3));
       c.style.setProperty("--hf-o", (1 - d * 0.5).toFixed(3));
       c.style.zIndex = String(10 - Math.round(d * 9));
     });
+    /* v1.162: onIndex tells the page which card is in the middle (the Packages tab shows that card's terms). */
+    if (props.onIndex && best !== lastAt.current) { lastAt.current = best; props.onIndex(best); }
   };
   React.useEffect(function () {
     const r = ref.current; if (!r) return;
@@ -283,12 +289,22 @@ function FeaturedCos20() {
   const state = useStore().state;
   const { dispatch } = useStore();
   const all = browseCompanies17(state);
-  const pool = all.filter(function (c) { return !c.unclaimed; }).concat(all.filter(function (c) { return c.unclaimed && (c.logo || (c.mediaList || []).length); }));
-  /* v1.145 (Alex 20 Nov 04:12): a random selection of eight, drawn afresh each time the page opens. */
+  const pool0 = all.filter(function (c) { return !c.unclaimed; }).concat(all.filter(function (c) { return c.unclaimed && (c.logo || (c.mediaList || []).length); }));
+  /* v1.162: a type of company with no logo yet still gets into the mix, so the featured row shows every type. */
+  const have = {}; pool0.forEach(function (c) { have[c.cat || "bar"] = true; });
+  const pool = pool0.concat(all.filter(function (c) { return c.unclaimed && !have[c.cat || "bar"]; }));
+  /* v1.145 (Alex 20 Nov 04:12): a random selection of eight, drawn afresh each time the page opens.
+     v1.162 (Alex 20 Nov 05:15): a mix of every type of company, not just bars: shuffle, then take one from each type in turn. */
   const list = React.useMemo(function () {
     const a = pool.slice();
     for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; }
-    return a.slice(0, 8);
+    const by = {}; a.forEach(function (c) { const k = c.cat || "bar"; (by[k] = by[k] || []).push(c); });
+    const keys = Object.keys(by).sort(function () { return Math.random() - 0.5; });
+    const out = [];
+    for (let r = 0; out.length < 8 && keys.some(function (k) { return by[k].length > r; }); r++) {
+      keys.forEach(function (k) { if (out.length < 8 && by[k][r]) out.push(by[k][r]); });
+    }
+    return out.sort(function () { return Math.random() - 0.5; });
   }, [pool.map(function (c) { return c.id; }).join("|")]);
   if (list.length < 2) return null;
   return React.createElement("section", { id: "ff-featured-cos", className: "ff-hf20-sec" },
