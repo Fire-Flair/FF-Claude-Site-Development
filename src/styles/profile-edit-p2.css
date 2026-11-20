@@ -179,3 +179,9 @@
 .ff .ff-pt21-it{position:relative}
 .ff .pe2-star-t{position:absolute;right:12px;bottom:12px;z-index:3;width:34px;height:34px;border-radius:12px;corner-shape:squircle;display:grid;place-items:center;cursor:pointer;color:var(--color-gold-dk,#7E611D);background:rgba(255,255,255,.7);border:1px solid rgba(126,97,29,.45);padding:0}
 .ff .pe2-star-t.on{background:#C9A227;color:#14110A;border-color:#7E611D}
+
+/* v1.150 (Alex 20 Nov 04:27): the pencil sits further right, clear of the title (Qualifications) on every card; on profession cards it sits a little lower. */
+.ff .pe2-rail .pe2-pen1 { top: 14px; right: 4px; }
+.ff .pe2-rail .ff-agrp .ff-agrp-top { padding-right: 40px; }
+.ff .ff-agrp .pe2-pen1, .ff .pe2-gt .pe2-pen1 { right: 4px; }
+.ff .ff-pt21 .pe2-pen1, .ff .pe2-pen-t { top: 18px; right: 6px; }

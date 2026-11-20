@@ -13,8 +13,7 @@ const PROFILE_EDIT_TABS_CSS = __ff_css("styles/profile-edit-tabs.css");
 /* v1.128 (Alex 20 Nov 01:07, 01:12): the spinning coin is gone from the profile pages; the gold lines stay with the two F's of the site logo
    in a small gold-ringed circle between them (no spin). Same place as before: first child of every .ff-ptabs-wrap. */
 function ProfileCoin17() {
-  /* v1.142 (Alex 20 Nov 02:54): the gold FF divider is gone. */
-  return null;
+  /* v1.149 (Alex 20 Nov 04:22): a gap and a line with the FF monogram between Back / Share / Join and the tabs. */
   return (
     <div className="ff-pcoin17 ff-pgem17" aria-hidden="true">
       <i />

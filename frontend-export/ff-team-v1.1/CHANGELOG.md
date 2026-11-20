@@ -4,6 +4,16 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.150
+- **Pencils:** moved further right, clear of the card title (Qualifications and the other attribute cards); on profession cards the pencil sits a little lower.
+- Page saved as `live-v1.150-index.html`. Artifact version 1795148873-8e35.
+
+## v1.149
+- **Profile with photos:** a picture that is still loading now counts as on the page, so the Profile Card opens in its lower place straight away instead of clicking down when the picture arrives.
+- **Q&A:** shows on the Overview tab only (it is off the Packages tab). Ask for a review is unchanged.
+- **Profile page:** a gap and a line with the FF monogram between Back / Share / Join and the tabs.
+- Folded into v1.150 (never published on its own); see below..
+
 ## v1.148
 - **Grow with FireFlair pictures:** each card's photo now matches its words. Back to the original AI pictures for Spirit brand training (a spirits back bar), FireFlair Open Class and Open Bar (cocktail making), WSET Wine (wine tasting), Food festivals & markets (a night market), International bar shows (a flight over London) and Professional photoshoot (camera on a tripod). The FireFlair rewards card uses a bar-show photo instead of the copper mug.
 - Page saved as `live-v1.148-index.html`. Artifact version 1795148408-b5e1.

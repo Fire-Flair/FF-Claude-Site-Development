@@ -239,7 +239,8 @@ function PublicHero({ media, card, below, narrow }) {
     return () => { live = false; };
   }, [key]);
   /* A picture counts only once it has really loaded; a blocked or missing one leaves no slide, no dot and no black box. */
-  const list = media.filter(m => seen[m.src] === true);
+  /* v1.149 (Alex 20 Nov 04:22): a picture still loading counts as on the page, so the card opens in its lower place and does not click down when the picture arrives. */
+  const list = media.filter(m => m.src && seen[m.src] !== false);
   const onBad = (src) => setSeen(v => (v[src] === false ? v : { ...v, [src]: false }));
   const has = list.length > 0;
   const atRef = useRef(0);
