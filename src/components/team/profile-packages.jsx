@@ -123,8 +123,7 @@ function ProfilePackages17({ person, own }) {
   );
 }
 
-/* FF Staff on your own Packages tab: a card per profession, each with your preferred hourly rate and your preferred
-   terms. One Save for all of them. Signed out, Save opens sign-in. */
+/* FF Staff on your own Packages tab: one box listing each profession with your preferred hourly rate. One Save for all of them. Signed out, Save opens sign-in. */
 function ProfStaffCards17() {
   const { state, dispatch } = useStore();
   const account = qaAccount17(state);
@@ -132,12 +131,10 @@ function ProfStaffCards17() {
   const rated = account ? ALL_PROFESSIONS.map(p => p.name).filter(n => prefRateP17(state, account, n) != null) : [];
   const profs = [...new Set([...mine, ...rated])];
   const [vals, setVals] = useState({});
-  const [terms, setTerms] = useState({});
   const [errs, setErrs] = useState({});
   const [busy, setBusy] = useState(false);
   const savedRate = (n) => account ? prefRateP17(state, account, n) : null;
   const rateOf = (n) => vals[n] != null ? vals[n] : savedRate(n) != null ? String(savedRate(n) / 100) : "";
-  const termsOf = (n) => terms[n] != null ? terms[n] : staffTermsOf17(state, account, n);
   const save = async () => {
     if (busy) return;
     if (!account) { window.dispatchEvent(new Event("ff-login")); return; }
@@ -153,46 +150,18 @@ function ProfStaffCards17() {
         const r = await qaSubmit17(dispatch, { questionId: qaRateQid17(n), account, typed: { kind: "rate_gbp_hour", pence: Math.round(Number(v) * 100), profession: n }, visibility: "ff-staff", source: "FF Team Profile · Packages · FF Staff" });
         if (!r.ok) { ok = false; setErrs(x => ({ ...x, [n]: "That couldn't be saved." })); }
       }
-      const tx = String(termsOf(n)).trim(), tSaved = staffTermsOf17(state, account, n);
-      if (tx !== tSaved) {
-        const r = tx
-          ? await qaSubmit17(dispatch, { questionId: "staff.terms", subjectId: professionId(n), account, text: tx, visibility: "ff-staff", source: "FF Team Profile · Packages · FF Staff" })
-          : await qaWithdraw17(dispatch, { questionId: "staff.terms", subjectId: professionId(n), account });
-        if (!r.ok) { ok = false; setErrs(x => ({ ...x, [n]: "That couldn't be saved." })); }
-      }
     }
     setBusy(false);
-    if (ok) { setVals({}); setTerms({}); dispatch({ type: "TOAST", toast: "Your rates and terms are saved" }); }
+    if (ok) { setVals({}); dispatch({ type: "TOAST", toast: "Your rates are saved" }); }
   };
   return (
     <section className="ff-pp ff-pp21 ff-pkt17-staff" aria-labelledby="ff-pkt17-staff-h">
       <div className="ff-pp-head"><h2 id="ff-pkt17-staff-h" className="ff-about-h">FF Staff</h2></div>
-      <p className="ff-pkt17-sub">Your preferred hourly rate and terms for each profession, shown to businesses on FF Staff only.</p>
+      <p className="ff-pkt17-sub">Your preferred hourly rate for each profession, shown to businesses on FF Staff only.</p>
       {profs.length === 0 ? (
-        <div className="ff-pkt17-none"><span className="ic" aria-hidden="true"><S17I.Briefcase size={20} strokeWidth={1.7} /></span><p>Your professions show here, each with its own rate and terms.</p></div>
+        <div className="ff-pkt17-none"><span className="ic" aria-hidden="true"><S17I.Briefcase size={20} strokeWidth={1.7} /></span><p>Your professions show here, each with its own rate.</p></div>
       ) : (<>
-        <div className="ff-pkt17-profs">
-          {profs.map(n => (
-            <article key={n} className="ff-pkt17-prof" aria-label={n}>
-              <h3 className="nm">{n}</h3>
-              <label className="ff-pkt17-rate">
-                <span className="l">Preferred hourly rate</span>
-                <span className="rt">
-                  <span aria-hidden="true">£</span>
-                  <input type="text" inputMode="decimal" autoComplete="off" value={rateOf(n)} aria-label={`Your preferred hourly rate as ${n}, pounds per hour`}
-                    onChange={(e) => { const v = e.target.value.replace(/[^\d.]/g, "").slice(0, 7); setVals(x => ({ ...x, [n]: v })); setErrs(x => ({ ...x, [n]: "" })); }} />
-                  <span aria-hidden="true">/hour</span>
-                </span>
-              </label>
-              <label className="ff-pkt17-terms">
-                <span className="l">Preferred terms</span>
-                <textarea rows={3} maxLength={500} value={termsOf(n)} aria-label={`Your preferred terms as ${n}`}
-                  onChange={(e) => { const v = e.target.value; setTerms(x => ({ ...x, [n]: v })); setErrs(x => ({ ...x, [n]: "" })); }} />
-              </label>
-              {errs[n] && <span className="er" role="alert">{errs[n]}</span>}
-            </article>
-          ))}
-        </div>
+        <StaffRatesBox185 names={profs} valueOf={rateOf} onVal={(n, v) => { setVals(x => ({ ...x, [n]: v })); setErrs(x => ({ ...x, [n]: "" })); }} errs={errs} />
         <button type="button" className="ff-btn primary wide ff-pkt17-save" disabled={busy} onClick={save}><S17I.Check size={15} /> Save</button>
       </>)}
     </section>

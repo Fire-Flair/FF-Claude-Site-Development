@@ -227,6 +227,28 @@ function FsSteps17() {
   );
 }
 
+/* v1.185 (Alex 20 Nov 23:05): the member's FFStaff rates are ONE box: a header row (Role, Preferred hourly rate), then one
+   compact row per profession with its name and "£ [ ] /hour". No per-profession cards and no preferred terms. */
+function StaffRatesBox185({ names, valueOf, onVal, errs }) {
+  return (
+    <div className="ff-sr185" role="group" aria-label="Your preferred hourly rates">
+      <div className="ff-sr185-hd"><span>Role</span><span>Preferred hourly rate</span></div>
+      {names.map(n => (
+        <label key={n} className="ff-sr185-row">
+          <span className="nm">{n}</span>
+          <span className="rt">
+            <span aria-hidden="true">£</span>
+            <input type="text" inputMode="decimal" autoComplete="off" value={valueOf(n)} aria-label={`Your preferred hourly rate as ${n}, pounds per hour`}
+              onChange={(e) => onVal(n, e.target.value.replace(/[^\d.]/g, "").slice(0, 7))} />
+            <span aria-hidden="true">/hour</span>
+          </span>
+          {errs && errs[n] && <span className="er" role="alert">{errs[n]}</span>}
+        </label>
+      ))}
+    </div>
+  );
+}
+
 function ProfRates17({ guest }) {
   const { state, dispatch } = useStore();
   const account = guest ? null : qaAccount17(state);
@@ -238,6 +260,8 @@ function ProfRates17({ guest }) {
   const [vals, setVals] = useState({});
   const [errs, setErrs] = useState({});
   const [busy, setBusy] = useState(false);
+  /* v1.185 (Alex 20 Nov): Save only appears when something is unsaved: a profession ticked or unticked, or a rate typed or changed. */
+  const [base, setBase] = useState(() => [...new Set([...mine, ...rated])]);
   const has = (n) => chosen.some(x => x.toLowerCase() === String(n).toLowerCase());
   const catOf = (n) => professionCategory(n, cats[n]) || "Other";
   const P = {
@@ -250,6 +274,10 @@ function ProfRates17({ guest }) {
     dispatch: (a) => { if (a && a.type === "REC_PATCH" && a.patch && a.patch.displayCategory) setCats(x => ({ ...x, [a.id]: a.patch.displayCategory })); },
   };
   const savedOf = (n) => account ? prefRateP17(state, account, n) : null;
+  const lc = (n) => String(n).toLowerCase();
+  const listChanged = chosen.length !== base.length || chosen.some(n => !base.some(b => lc(b) === lc(n)));
+  const rateChanged = chosen.some(n => { if (vals[n] == null) return false; const sv = savedOf(n); return String(vals[n]).trim() !== (sv != null ? String(sv / 100) : ""); });
+  const dirty = listChanged || rateChanged;
   const onVal = (n, v) => { setVals(x => ({ ...x, [n]: v })); setErrs(x => ({ ...x, [n]: "" })); };
   const save = async () => {
     if (busy) return;
@@ -273,34 +301,14 @@ function ProfRates17({ guest }) {
       if (!r.ok) { okAll = false; setErrs(x => ({ ...x, [n]: "That couldn't be saved." })); }
     }
     setBusy(false);
-    if (okAll) { setVals({}); dispatch({ type: "TOAST", toast: "Your rates are saved" }); }
+    if (okAll) { setVals({}); setBase(chosen); dispatch({ type: "TOAST", toast: "Your rates are saved" }); }
   };
   return (
     <div className="ff-fs5">
       <style>{PE2_CSS}</style>
       <PE2ProfCats P={P} noType />
-      {chosen.length > 0 && (
-        <div className="ff-fs5-rates">
-          {chosen.map(n => {
-            const saved = savedOf(n);
-            const v = vals[n] != null ? vals[n] : saved != null ? String(saved / 100) : "";
-            return (
-              <label key={n} className="ff-fs5-rate">
-                <span className="nm">{n}</span>
-                <span className="rt">
-                  <span className="pr">Preferred rate</span>
-                  <span aria-hidden="true">£</span>
-                  <input type="text" inputMode="decimal" value={v} aria-label={`Your preferred hourly rate as ${n}, pounds per hour`}
-                    onChange={(e) => onVal(n, e.target.value.replace(/[^\d.]/g, "").slice(0, 7))} />
-                  <span aria-hidden="true">/hour</span>
-                </span>
-                {errs[n] && <span className="er" role="alert">{errs[n]}</span>}
-              </label>
-            );
-          })}
-        </div>
-      )}
-      <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={busy} onClick={save}><Check size={15} /> Save</button>
+      {chosen.length > 0 && <StaffRatesBox185 names={chosen} valueOf={(n) => { const saved = savedOf(n); return vals[n] != null ? vals[n] : saved != null ? String(saved / 100) : ""; }} onVal={onVal} errs={errs} />}
+      {dirty && <div className="ff-bk185-act"><button type="button" className="ff-btn primary ff-bkconfirm17 ff-bk185-btn" disabled={busy} onClick={save}><Check size={15} /> Save</button></div>}
     </div>
   );
 }
@@ -785,6 +793,8 @@ function TeamBookings({ guest = false }) {
   const [sel, setSel] = useState(null);
   const [pkgTerms, setPkgTerms] = useState(false);
   const picked = sel || svcInterest;
+  /* v1.185 (Alex 20 Nov): Confirm only appears once a package has been signed up to (or withdrawn from) and not yet confirmed. */
+  const pkDirty = sel != null && [...sel].sort().join("|") !== [...svcInterest].sort().join("|");
   const tick = (sv) => setSel(picked.includes(sv.id) ? picked.filter(x => x !== sv.id) : [...picked, sv.id]);
 
   /* v17.4.6: package sign-ups are one Q&A answer (int.party_package, option ids = package ids). */
@@ -865,14 +875,14 @@ function TeamBookings({ guest = false }) {
               {pkgs.map(sv => <div key={sv.id} className="ff-bkpk-cell"><BkPkgCard17 sv={sv} on={picked.includes(sv.id)} onClick={() => tick(sv)} /></div>)}
               <div className="ff-bkpk-cell"><BkPkgOwn17 tab="bar" /></div>
             </HeroFlow20>
-            <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={!sel} onClick={() => { if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; } setPkgTerms(true); }}><Check size={15} /> Confirm</button>
+            {pkDirty && <div className="ff-bk185-act"><button type="button" className="ff-btn primary ff-bkconfirm17 ff-bk185-btn" onClick={() => { if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; } setPkgTerms(true); }}><Check size={15} /> Confirm</button></div>}
           </div>) : (
             <div role="tabpanel" id={`ff-pkpanel-${pkTab}`} aria-labelledby={`ff-pktab-${pkTab}`}>
               <HeroFlow20 label={pkTab === "ent" ? "Entertainment packages" : "Services packages"} key={pkTab}>
                 <div className="ff-bkpk-cell"><BkPkgOwn17 key={pkTab} tab={pkTab} /></div>
                 {(PKC_EXTRA17[pkTab] || []).map(x => <div key={x.id} className="ff-bkpk-cell"><BkPkgCard17 sv={{ id: x.id, title: x.name }} tab={pkTab} on={picked.includes(x.id)} onClick={() => tick({ id: x.id })} /></div>)}
               </HeroFlow20>
-              <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={!sel} onClick={() => { if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; } setPkgTerms(true); }}><Check size={15} /> Confirm</button>
+              {pkDirty && <div className="ff-bk185-act"><button type="button" className="ff-btn primary ff-bkconfirm17 ff-bk185-btn" onClick={() => { if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; } setPkgTerms(true); }}><Check size={15} /> Confirm</button></div>}
             </div>
           )}
           {pkgTerms && <PkgTerms17 onClose={() => setPkgTerms(false)} onAccept={confirmPkgs} />}
