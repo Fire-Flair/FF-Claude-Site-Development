@@ -484,6 +484,10 @@ function PkgDoc17({ d, onClose }) {
   const nil = (s) => <dd className="nil">{s}</dd>;
   const pk = [["Package", d.name], ["Your role", d.role], ["Duration", d.duration]].filter(r => r[1] || r[0] !== "Your role");
   const long = [["What you do", d.brief], ["Shopping list", d.shop]].filter(r => r[1]);
+  /* v1.189 (Alex 21 Nov 10:53): a member's OWN Signature package shows their core five terms, then its own "Package terms" if any. */
+  const own = String(d.id || "").startsWith("own-");
+  const coreTerms = own ? sigCoreTerms189(state) : PARTY_PKG_TERMS17;
+  const pkgText = own ? String((state.sigPkgTerms189 || {})[d.tab] || "").trim() : "";
   return (
     <PkPop17><Sheet open onClose={onClose} title={d.name || "Your package"}>
       <article className="ff-doc17" aria-label="Event brief and invoice">
@@ -505,7 +509,8 @@ function PkgDoc17({ d, onClose }) {
         </section>
         <div className="tot"><span>You earn</span>{d.earn ? <b>{d.earn}</b> : <b className="nil">Your amount</b>}</div>
         <section className="tc"><h4>Terms and conditions</h4>
-          <ol>{PARTY_PKG_TERMS17.map((x, i) => <li key={x.k}><span><b>{i + 1}</b>{x.label}</span><p>{x.text}</p></li>)}</ol>
+          <ol>{coreTerms.map((x, i) => <li key={x.k}><span><b>{i + 1}</b>{x.label}</span><p>{x.text}</p></li>)}</ol>
+          {pkgText && <div className="pkt189"><h4>Package terms</h4><p>{pkgText}</p></div>}
         </section>
         <footer>FireFlair Ltd · FFParty.uk</footer>
       </article>

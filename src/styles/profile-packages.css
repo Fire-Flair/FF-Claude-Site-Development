@@ -93,3 +93,7 @@
 .ff .ff-pk188 .ff-cks17-act { display:flex; align-items:center; justify-content:center; flex-wrap:nowrap; gap:8px; margin-top:14px; }
 .ff .ff-pk188 .ff-cks17-act > * { flex:0 1 auto; min-width:0; white-space:nowrap; }
 .ff .ff-pk188 .ff-cks17-act > :first-child:not(.ff-btn) { min-height:44px; display:inline-flex; align-items:center; padding:0 8px; }
+
+/* v1.189 (Alex 21 Nov 10:53): the "Package terms" block under a member's own package's terms in its Details document */
+.ff .ff-doc17 .tc .pkt189 { margin-top:12px; padding-top:10px; border-top:1px solid #F1EADA; }
+.ff .ff-doc17 .tc .pkt189 p { margin:4px 0 0; font-size:13px; color:#3A3030; white-space:pre-wrap; overflow-wrap:break-word; }
