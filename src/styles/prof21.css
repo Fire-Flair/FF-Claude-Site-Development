@@ -731,3 +731,8 @@
 .ff .ff-pub-joinrow > .ff-csm-btn.ff-pub-wa11 svg,
 .ff .ff-pub-grid11 > .ff-csm-btn.ff-pub-wa11 svg,
 .ff .ff-pub-grid11 .ff-csm-btn.ff-pub-wa11 svg { color: #25D366 !important; fill: #25D366 !important; }
+
+/* v1.188 fix (Aragorn 21 Nov): A3 - the photo-crop pop-up is centred in the area above the Sheet's bottom gap (88px under 900px wide, 84px from 900px, plus the safe area); animation origin centre. */
+.ff.ff-pf17-scrim { align-items:center; padding:calc(14px + env(safe-area-inset-top,0px)) 10px calc(88px + env(safe-area-inset-bottom,0px)); }
+@media (min-width:900px) { .ff.ff-pf17-scrim { padding:calc(28px + env(safe-area-inset-top,0px)) 10px calc(84px + env(safe-area-inset-bottom,0px)); } }
+.ff .ff-pf17 { max-height:100%; transform-origin:50% 50%; }

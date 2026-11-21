@@ -21,7 +21,8 @@ function ProfilePop17({ children }) {
   React.useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const k = (e) => { if (e.key === "Escape") close(); };
+    /* v1.188 (Aragorn 21 Nov, A1): while a pop-up (.ff-scrim) is open in front of the profile, Escape closes only that pop-up. */
+    const k = (e) => { if (e.key === "Escape" && !document.querySelector(".ff .ff-scrim")) close(); };
     window.addEventListener("keydown", k);
     return () => { document.body.style.overflow = prev; window.removeEventListener("keydown", k); };
   }, []);

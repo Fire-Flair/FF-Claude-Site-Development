@@ -1662,3 +1662,6 @@
 .ff .ff-inv18-q { margin: 4px 0 0; font: 400 13px/1.4 Inter, system-ui, sans-serif; color: #3F382B; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .ff .ff-inv18-list { gap: 22px; }
 .pc17.sm .ff-pc-rule > :not(i) { transform: translateY(-1.3cqw); }
+
+/* v1.188 fix (Aragorn 21 Nov): A2 - the Share pop-up's column (card + four buttons) is centred in the screen as one group. */
+.ff .ff-csx-dlg { justify-content:center; }
