@@ -117,9 +117,11 @@ function CoTile20({ co }) {
 function CatBoxes20({ items, active, onPick, label }) {
   return React.createElement("div", { className: "ff-cb20", role: "tablist", "aria-label": label },
     items.map(function (it) {
-      const on = active === it.k;
-      return React.createElement("button", { key: it.k, type: "button", role: "tab", "aria-selected": on, className: "ff-cb20-b" + (on ? " on" : ""), onClick: function (e) {
-        onPick(it.k); const b = e.currentTarget, row = b.parentNode; if (row && row.scrollTo) row.scrollTo({ left: b.offsetLeft - (row.clientWidth - b.offsetWidth) / 2, behavior: "smooth" }); } },
+      const on = active === it.k && !it.disabled;
+      /* v1.187: a box nobody belongs to is greyed and cannot be tapped (the Directory never passes disabled). */
+      return React.createElement("button", Object.assign({ key: it.k, type: "button", role: "tab", "aria-selected": on, className: "ff-cb20-b" + (on ? " on" : "") + (it.disabled ? " off" : "") },
+        it.disabled ? { disabled: true, "aria-disabled": "true" } : { onClick: function (e) {
+        onPick(it.k); const b = e.currentTarget, row = b.parentNode; if (row && row.scrollTo) row.scrollTo({ left: b.offsetLeft - (row.clientWidth - b.offsetWidth) / 2, behavior: "smooth" }); } }),
         React.createElement("span", { className: "ic", "aria-hidden": "true" }, it.icon),
         React.createElement("span", { className: "lb" }, it.label),
         React.createElement("span", { className: "ct" }, it.count));
@@ -143,24 +145,90 @@ function HeadRow20({ title, k, desc, search, grab }) {
     search ? React.createElement("div", { className: "ff-hr20-s", onFocusCapture: function () { window.__ffSrchFocus = true; }, onBlurCapture: function (e) { if (document.body.contains(e.target)) window.__ffSrchFocus = false; } }, search) : null);
 }
 
-/* Our professionals: the same way as the Directory. One box per type of professional, one row of Player Cards below. */
+/* v1.187 (Alex 21 Nov): the four tiles of Our professionals. The one place to change them. A person's top 3 professions
+   (profs17) decide where they appear. Any group not named by the first three tiles belongs to Specialists. */
+const PRO_TILES187 = [
+  { k: "hosp", label: "Hospitality",   icons: ["ConciergeBell", "Martini"], groups: ["Bar", "Front of House", "Management", "Back of House", "Chefs"],
+    pills: [["Bar", "Bar"], ["Front of House", "Front of House"], ["Management", "Management"], ["Back of House", "Back of House"], ["Chefs", "Food"]] },
+  { k: "ent",  label: "Entertainment", icons: ["Music"],  groups: ["Entertainment"] },
+  { k: "svc",  label: "Services",      icons: ["Camera"], groups: ["Services"] },
+  { k: "spec", label: "Specialists",   icons: ["Sparkles", "Award"], groups: null },
+];
+function proTiles187(people) {
+  const norm = function (x) { return String(x || "").trim().toLowerCase(); };
+  const tileOf = function (g) {
+    const i = PRO_TILES187.findIndex(function (t) { return t.groups && t.groups.indexOf(g) >= 0; });
+    return i >= 0 ? i : PRO_TILES187.findIndex(function (t) { return !t.groups; });
+  };
+  /* rows: [{ p, i, e }] sorted by the entry's rank, then by position; a person once, shown as their best entry */
+  const asPeople = function (rows) {
+    return rows.slice().sort(function (a, b) { return a.e.rank - b.e.rank || a.i - b.i; }).map(function (r) { return plateAs17(r.p, r.e.profession); });
+  };
+  const perTile = PRO_TILES187.map(function () { return []; });
+  (people || []).forEach(function (p, i) {
+    const es = p.profs17 && p.profs17.length ? p.profs17 : [{ profession: p.profession || "", rank: 0, group: p.group }];
+    es.forEach(function (e) { perTile[tileOf(e.group)].push({ p: p, i: i, e: e }); });
+  });
+  /* the lowest-rank entry of each person within a list of entries */
+  const bestPer = function (entries) {
+    const m = {};
+    entries.forEach(function (r) { if (!m[r.i] || r.e.rank < m[r.i].e.rank) m[r.i] = r; });
+    return Object.keys(m).map(function (k) { return m[k]; });
+  };
+  return PRO_TILES187.map(function (t, ti) {
+    const entries = perTile[ti];
+    const rows = bestPer(entries);
+    let pills;
+    if (t.pills) {
+      pills = t.pills.map(function (d) {
+        const list = asPeople(bestPer(entries.filter(function (r) { return r.e.group === d[0]; })));
+        return { k: d[0], label: d[1], off: list.length === 0, people: list };
+      });
+    } else {
+      const names = {}, order = [];
+      entries.forEach(function (r) { const n = norm(r.e.profession); if (!n) return; if (!names[n]) { names[n] = { label: String(r.e.profession).trim(), rows: [] }; order.push(n); } names[n].rows.push(r); });
+      pills = order.map(function (n) { return { k: n, label: names[n].label, off: false, people: asPeople(bestPer(names[n].rows)) }; })
+        .sort(function (a, b) { return b.people.length - a.people.length || (a.label < b.label ? -1 : a.label > b.label ? 1 : 0); });
+    }
+    const list = asPeople(rows);
+    return { k: t.k, label: t.label, off: list.length === 0, people: list, pills: pills };
+  });
+}
+const PROS187_CSS = __ff_css("styles/pros187.css");
+
+/* Our professionals: four tiles, nothing chosen until a person taps one. Left and right select; the page only scrolls up and down. */
 function ProsBrowse20({ onPick }) {
   const everyone = useDirectory();
-  const kindOf = function (g) { return (PRO_TYPES17.find(function (t) { return t[2] === g; }) || ["other"])[0]; };
-  const lists = PRO_TYPES17.map(function (t) {
-    const k = t[0], label = t[1];
-    const list = everyone.map(function (p, i) { return [p, (p.groups || [{ group: p.group, profession: p.profession, rank: 0 }]).find(function (x) { return kindOf(x.group) === k; }), i]; })
-      .filter(function (r) { return r[1]; }).sort(function (a, b) { return a[1].rank - b[1].rank || a[2] - b[2]; }).map(function (r) { return plateAs17(r[0], r[1].profession); });
-    return { k: k, label: label, list: list, icon: React.createElement(GroupIcon, { group: t[2] }) };
-  }).filter(function (x) { return x.list.length; });
-  /* v1.115: the chosen type survives opening a profile and coming back. */
+  const tiles = proTiles187(everyone);
+  /* v1.187: the chosen tile and, per tile, the chosen pill survive opening a profile and coming back. Tile and pill are never both required. */
   const [on, setOn0] = useState(function () { return (window.__ffNetSel && window.__ffNetSel.on) || ""; });
+  const [psub, setPsub0] = useState(function () { return (window.__ffNetSel && window.__ffNetSel.psub) || {}; });
   const setOn = function (v) { window.__ffNetSel = Object.assign({}, window.__ffNetSel, { on: v }); setOn0(v); };
-  const cur = lists.find(function (x) { return x.k === on; }) || lists[0];
-  if (!cur) return null;
-  return React.createElement("div", { className: "ff-br20" },
-    React.createElement(CatBoxes20, { label: "Types of professional", active: cur.k, onPick: setOn, items: lists.map(function (x) { return { k: x.k, label: x.label, icon: x.icon, count: x.list.length }; }) }),
-    React.createElement(HScroll, { label: cur.label, snap: true, key: cur.k }, cur.list.map(function (p) { return React.createElement(PlayerTile, { key: p.id, person: p, onClick: function () { onPick(p); } }); })));
+  const setPsub = function (v) { window.__ffNetSel = Object.assign({}, window.__ffNetSel, { psub: v }); setPsub0(v); };
+  const tile = tiles.find(function (x) { return x.k === on && !x.off; }) || null;
+  const pill = tile ? (tile.pills.find(function (x) { return x.k === psub[tile.k] && !x.off; }) || null) : null;
+  const pickTile = function (k) {
+    if (tile && tile.k === k) { setPsub(Object.assign({}, psub, { [k]: "" })); setOn(""); } else setOn(k);
+  };
+  const pickPill = function (k) { setPsub(Object.assign({}, psub, { [tile.k]: pill && pill.k === k ? "" : k })); };
+  const shown = pill ? pill.people : tile ? tile.people : everyone;
+  const items = tiles.map(function (x, i) {
+    const d = PRO_TILES187[i];
+    const nm = d.icons.find(function (n) { return window.lucide && window.lucide.icons && window.lucide.icons[n]; }) || d.icons[0];
+    return { k: x.k, label: x.label, icon: netIc20(nm, 26), count: x.people.length, disabled: x.off };
+  });
+  return React.createElement("div", { className: "ff-br20 ff-pros187" },
+    React.createElement("style", null, PROS187_CSS),
+    React.createElement(CatBoxes20, { label: "Types of professional", active: tile ? tile.k : "", onPick: pickTile, items: items }),
+    tile ? React.createElement("div", { className: "ff-dr20-mid ff-br20-pills", role: "tablist", "aria-label": tile.label + " types" },
+      tile.pills.map(function (x) {
+        const sel = !!pill && pill.k === x.k;
+        return React.createElement("button", Object.assign({ key: x.k, type: "button", role: "tab", "aria-selected": sel, className: "ff-dr20-sub" + (sel ? " on" : "") + (x.off ? " off" : "") },
+          x.off ? { disabled: true, "aria-disabled": "true" } : { onClick: function () { pickPill(x.k); } }),
+          React.createElement("span", { className: "lb" }, x.label));
+      })) : null,
+    React.createElement(HScroll, { label: pill ? pill.label : tile ? tile.label : "Our professionals", snap: true, key: (tile ? tile.k : "") + "|" + (pill ? pill.k : "") },
+      shown.map(function (p) { return React.createElement(PlayerTile, { key: p.id, person: p, onClick: function () { onPick(p); } }); })));
 }
 
 /* The FF Event Directory on the FF Team Network page: a box for each category, its sub-category pills, one row of Company Cards. */
