@@ -97,3 +97,53 @@
 /* v1.189 (Alex 21 Nov 10:53): the "Package terms" block under a member's own package's terms in its Details document */
 .ff .ff-doc17 .tc .pkt189 { margin-top:12px; padding-top:10px; border-top:1px solid #F1EADA; }
 .ff .ff-doc17 .tc .pkt189 p { margin:4px 0 0; font-size:13px; color:#3A3030; white-space:pre-wrap; overflow-wrap:break-word; }
+
+/* v1.190 (Alex 21 Nov 12:52): the standard T's and C's. Box = Aragorn's option B, row = option B, pop-up = option C. Type 12.5 / 16 / 20, spacing 5 / 8 / 13 / 21 / 34 / 55. */
+.ff .tc190-box { position:relative; display:inline-flex; align-items:center; justify-content:center; gap:13px; box-sizing:border-box; width:233px; max-width:100%; height:55px; min-height:44px; padding:0 21px; border:1.5px solid #B08D2A; border-radius:21px; corner-shape:squircle; background:#FFFDF8; color:#0B0B0C; cursor:pointer; box-shadow:0 5px 13px rgba(92,18,32,.08); font-family:var(--display); }
+.ff .tc190-box .ic { display:flex; color:#5C1220; flex:none; }
+.ff .tc190-box .lb { font-weight:600; font-size:16px; letter-spacing:.04em; white-space:nowrap; }
+.ff .tc190-box .st { position:absolute; top:-8px; right:-8px; width:26px; height:26px; border-radius:50%; background:#13733A; color:#fff; display:flex; align-items:center; justify-content:center; border:2px solid #FFFDF8; box-sizing:border-box; }
+.ff .tc190-bar, .ff .tc190-wrap { display:flex; justify-content:center; padding:8px 0; }
+.ff .ff-publishcard .ff-save17-row { flex-wrap:wrap; justify-content:center; align-items:center; }
+.ff .ff-publishcard .tc190-bar { padding:0; }
+.ff .ff-pk188-tcw { padding-top:21px; }
+
+.ff .ff-scrim .ff-sheet.tc190-sheet { max-width:729px; padding-bottom:0; }
+.ff .tc190-sheet .ff-sheet-head { gap:13px; }
+.ff .tc190-badge { width:42px; height:42px; border-radius:13px; corner-shape:squircle; background:linear-gradient(160deg,#6E1A2C,#4A0E1A); color:#EDD58F; display:flex; align-items:center; justify-content:center; flex:none; }
+.ff .tc190 { display:flex; flex-direction:column; gap:13px; min-width:0; }
+.ff .tc190-sets { display:grid; grid-auto-flow:column; grid-auto-columns:1fr; gap:13px; }
+.ff .tc190-set { position:relative; box-sizing:border-box; min-width:0; min-height:89px; padding:13px; border-radius:21px; corner-shape:squircle; border:1.5px solid #D9C99A; background:#fff; display:flex; flex-direction:column; justify-content:space-between; gap:8px; text-align:left; cursor:pointer; color:#0B0B0C; }
+.ff .tc190-set.on { border-color:#C9A227; background:linear-gradient(160deg,#FBF3DA,#F1E2B3); box-shadow:0 5px 13px rgba(126,97,29,.18); }
+.ff .tc190-set .nm { font-family:var(--display); font-weight:700; font-size:16px; letter-spacing:.02em; line-height:1.2; overflow-wrap:normal; word-break:normal; hyphens:none; }
+.ff .tc190-set .row { display:flex; align-items:center; justify-content:space-between; gap:5px; min-height:21px; }
+.ff .tc190-set .pf { display:flex; align-items:center; gap:5px; font-size:12.5px; font-weight:600; color:#5C1220; white-space:nowrap; }
+.ff .tc190-set .st { width:21px; height:21px; display:flex; align-items:center; justify-content:center; flex:none; }
+.ff .tc190-set .st.y { border-radius:50%; background:#13733A; color:#fff; }
+.ff .tc190-set .st.n { color:#8A8376; }
+.ff .tc190-terms { display:flex; flex-direction:column; gap:13px; }
+.ff .tc190-term { display:grid; grid-template-columns:26px minmax(0,1fr) 26px; column-gap:13px; row-gap:5px; padding:13px; background:#fff; border:1px solid #D9C99A; border-radius:21px; corner-shape:squircle; align-items:start; }
+.ff .tc190-term .no { grid-row:1; grid-column:1; width:26px; height:26px; border-radius:50%; background:#0B0B0C; color:#EDD58F; font-size:12.5px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.ff .tc190-term .lb { grid-row:1; grid-column:2; font-size:12.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#7E611D; line-height:26px; overflow-wrap:normal; word-break:normal; }
+.ff .tc190-term .ok { grid-row:1; grid-column:3; width:26px; height:26px; border-radius:50%; background:#13733A; color:#fff; display:flex; align-items:center; justify-content:center; }
+.ff .tc190-term .tx { grid-row:2; grid-column:2 / 4; margin:0; font-size:16px; line-height:1.5; color:#1A1712; min-width:0; }
+.ff .tc190-term.pk .lb { grid-column:1 / 4; }
+.ff .tc190-term.pk .tx { grid-column:1 / 4; }
+.ff .tc190-term textarea { display:block; width:100%; box-sizing:border-box; margin:0; padding:8px 11px; border-radius:14px; corner-shape:squircle; border:1px solid rgba(176,141,42,.5); background:#FFFDF7; font:inherit; font-size:16px; line-height:1.5; color:#16130F; resize:none; overflow:hidden !important; min-height:44px; }
+.ff .tc190-pdf { display:flex; align-items:center; justify-content:center; gap:8px; min-height:55px; font-size:16px; font-weight:600; color:#5C1220; text-decoration:underline; text-underline-offset:5px; text-align:center; }
+.ff .tc190-foot { position:sticky; bottom:0; z-index:2; display:grid; grid-auto-flow:column; grid-auto-columns:1fr; gap:13px; padding:13px 16px 21px; background:var(--paper); border-top:1px solid #D9C99A; border-radius:0 0 24px 24px; }
+.ff .tc190-act { box-sizing:border-box; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; min-height:68px; padding:5px 8px; border-radius:21px; corner-shape:squircle; border:1.5px solid #D9C99A; background:#fff; color:#0B0B0C; font:600 12.5px/1.2 var(--sans); text-align:center; text-decoration:none; cursor:pointer; overflow-wrap:normal; word-break:normal; }
+.ff .tc190-act.yes { border-color:#13733A; background:#EAF5EE; color:#0C4F27; }
+.ff .tc190-act .dot { width:26px; height:26px; border-radius:50%; background:#13733A; color:#fff; display:flex; align-items:center; justify-content:center; }
+.ff .tc190-act:last-child:not(.yes) { border-color:#B08D2A; color:#5C1220; }
+@media (min-width:600px) {
+  .ff .tc190-act { flex-direction:row; gap:8px; min-height:55px; font-size:16px; }
+}
+@media (max-width:600px) {
+  .ff .tc190-sets { gap:8px; } .ff .tc190-set { padding:8px; } .ff .tc190-set .nm { font-size:12.5px; } .ff .tc190-set .pf .w { display:none; }
+  .ff .tc190-foot { gap:8px; padding:8px 13px 13px; }
+  .ff .tc190-term { padding:8px; column-gap:8px; grid-template-columns:26px minmax(0,1fr) 26px; }
+  .ff .tc190-term .tx, .ff .tc190-term textarea { font-size:16px; }
+}
+@media (max-width:360px) { .ff .tc190-set .nm { font-size:11.5px; } .ff .tc190-term .lb { letter-spacing:.06em; font-size:11.5px; } }
+.ff .tc190-sheet .ff-sheet-head .ff-h2 { font-family:var(--display); font-weight:700; font-size:20px; letter-spacing:.03em; }

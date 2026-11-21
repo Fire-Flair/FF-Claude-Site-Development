@@ -238,7 +238,6 @@ function PkRow188({ title, on, soon, open, onToggle, onTick, children }) {
 function PackagesEdit188({ person }) {
   const { state, dispatch } = useStore();
   const [open, setOpen] = useState(null);
-  const [termsSet, setTermsSet] = useState(null);
   const ours = ownPkgItems185(state).filter(it => it.kind !== "create");
   const groups = ownPkgGroups185(state);
   const ownTabs = groups.length ? groups : ["bar"];
@@ -266,7 +265,7 @@ function PackagesEdit188({ person }) {
           {ours.length > 0 && <PkRow188 title="Our packages" on={oursOn} open={open === "ours"} onToggle={tog("ours")} onTick={() => setOpen("ours")}><ProfilePackages17 person={person} own staff={false} items={ours} /></PkRow188>}
           <PkRow188 title="Signature packages" on={ownOn} open={open === "own"} onToggle={tog("own")} onTick={() => setOpen("own")}>
             <div id="ff-bk-party" className="pkg3 ff-pk188-own">{ownCells.length > 1 ? <HScroll label="Signature packages">{ownCells}</HScroll> : ownCells}</div>
-            <div className="ff-pk188-tcw"><button type="button" className="ff-pk188-tcb" onClick={() => setTermsSet("pkg")}>Terms and conditions</button></div>
+            <div className="ff-pk188-tcw"><TcBox190 sets={["mine", "service", "pkg"]} start="pkg" /></div>
           </PkRow188>
         </div>
       </section>
@@ -279,7 +278,6 @@ function PackagesEdit188({ person }) {
           <PkRow188 title="Your extras" on={ids.includes("addons")} onTick={() => interest("addons")} />
         </div>
       </section>
-      {termsSet && <TermsSheet17 set={termsSet} onClose={() => setTermsSet(null)} />}
     </div>
   );
 }

@@ -71,77 +71,116 @@ function GrowTA189({ value, onChange, label, maxLength }) {
   return <textarea ref={ref} data-no-grow rows={1} value={value} maxLength={maxLength} aria-label={label} onChange={onChange} />;
 }
 
-function TermsSheet17({ set, onClose }) {
-  const { state, dispatch } = useStore();
-  const S = TERM_SETS17[set] || TERM_SETS188[set];
-  const [terms, setTerms] = useState(() => ({ ...Object.fromEntries(S.list.map(t => [t.k, t.text])), ...(state[S.key] || {}) }));
-  /* v1.189: the Signature set also holds one optional box per Signature package (state.sigPkgTerms189 { [tab]: text }). */
-  const sig = set === "pkg";
-  const account = sig ? qaAccount17(state) : null;
-  const groups = sig ? ownPkgGroups185(state) : [];
-  const tabs = sig ? (groups.length ? groups : ["bar"]) : [];
-  const pkName = (tab) => { const a = account ? qaAnswer17(state, account, pkcOwnQid17(tab)) : null; const n = a && !a.withdrawnAt && a.typed && a.typed.name; return n ? String(n) : SIG_TAB_LABEL189[tab]; };
-  const [pk, setPk] = useState(() => Object.fromEntries(tabs.map(t => [t, (state.sigPkgTerms189 || {})[t] || ""])));
-  const save = () => {
-    const patch = { [S.key]: terms };
-    if (sig) patch.sigPkgTerms189 = { ...(state.sigPkgTerms189 || {}), ...pk };
-    dispatch({ type: "V11_SET", patch }); dispatch({ type: "TOAST", toast: "Terms saved to your profile" }); onClose();
-  };
-  return (
-    <Sheet center open onClose={onClose} title={S.head}>
-      <div className="ff-tc188" role="list" aria-label={S.head}>
-        {S.list.map((t, i) => (
-          <label key={t.k} role="listitem" className="ff-tc188-c"><span><b>{i + 1}</b>{t.label}</span>
-            <GrowTA189 value={terms[t.k] || ""} maxLength={500} label={t.label} onChange={(e) => setTerms({ ...terms, [t.k]: e.target.value })} /></label>
-        ))}
-        {tabs.map(tab => (
-          <label key={"pk-" + tab} role="listitem" className="ff-tc188-c pk"><span>{pkName(tab)}</span>
-            <GrowTA189 value={pk[tab] || ""} maxLength={600} label={pkName(tab)} onChange={(e) => setPk({ ...pk, [tab]: e.target.value.slice(0, 600) })} /></label>
-        ))}
-      </div>
-      <div className="ff-bsec-acts" style={{ marginTop: 8 }}>
-        <Btn variant="primary" onClick={save}><S17I.Check size={14} /> Save to my profile</Btn>
-        <Btn variant="sm ghost" onClick={() => setTerms(Object.fromEntries(S.list.map(t => [t.k, t.text])))}>Reset</Btn>
-      </div>
-    </Sheet>
-  );
-}
+/* v1.190 (Alex 21 Nov 12:52): the standard T's and C's, one box and one pop-up wherever terms appear.
+   TcBox190 is the closed box (Aragorn's option B); TcPop190 is the pop-up (option C) with the row of term sets from option B on top.
+   Own screens: Personal, Service card and Signature are editable in place; accept mode: the FF Party package terms, read only. */
+const TC190I = {
+  Scroll: lucideIcon("ScrollText"), Check: lucideIcon("Check"), Doc: lucideIcon("FileText"), Cal: lucideIcon("CalendarDays"),
+  XC: (props) => { const A = lucideIcon("CircleX"), B = lucideIcon("XCircle"); return window.lucide && window.lucide.icons && window.lucide.icons.CircleX ? <A {...props} /> : <B {...props} />; },
+};
+const TC190_SETS = {
+  mine: { name: "Personal", pdf: true, key: "myTerms17", list: MY_TERMS17 },
+  service: { name: "Service card", pdf: true, key: "svcTerms17", list: TERMS17 },
+  pkg: { name: "Signature", pdf: false, key: "pkgTerms188", list: SIGNATURE_TERMS189 },
+  party: { name: "FF Party packages", pdf: true, key: null, list: PARTY_PKG_TERMS17 },
+};
+const TC190_PDF = "#";
 
-
-function TermsCards17() {
-  const [open, setOpen] = useState(null);
-  const def = { label: "Terms and conditions", singular: "Terms", icon: "qualification", fields: ["description"] };
+function TcBox190({ sets, start }) {
+  const { state } = useStore();
+  const [open, setOpen] = useState(false);
+  const ag = state.tcAgreed190 || {};
+  const done = ag[start];
   return (
     <>
-      <div className="ff-tc188-list" role="list" aria-label="Terms and conditions">
-        {Object.entries(TERM_SETS17).map(([k, S]) => <div key={k} role="listitem"><InformationCard record={{ ...makeRecord("terms", S.title), id: `tc_${k}`, description: S.note }} def={def} themeKey="onyx" editable onClick={() => setOpen(k)} /></div>)}
-      </div>
-      {open && <TermsSheet17 set={open} onClose={() => setOpen(null)} />}
+      <style>{PROFILE_PACKAGES_CSS}</style>
+      <button type="button" className="tc190-box" onClick={() => setOpen(true)}>
+        <span className="ic"><TC190I.Scroll size={26} aria-hidden="true" /></span><span className="lb">T's and C's</span>
+        {done && <span className="st" aria-label="Agreed"><TC190I.Check size={13} strokeWidth={3} aria-hidden="true" /></span>}
+      </button>
+      {open && <TcPop190 sets={sets} start={start} mode="own" onClose={() => setOpen(false)} />}
     </>
   );
 }
 
-
-/* NET188 (Alex 21 Nov): Terms and conditions from the bar's second button: a centred pop-up holding the two term sets; tapping one swaps it for that set's editor (never two pop-ups at once). v1.189: the cards sit one under the other. */
-function TermsPop188({ open, onClose }) {
-  const [set, setSet] = useState(null);
-  const def = { label: "Terms and conditions", singular: "Terms", icon: "qualification", fields: ["description"] };
-  if (set) return <TermsSheet17 set={set} onClose={() => { setSet(null); onClose(); }} />;
+function TcPop190({ sets, start, mode = "own", onAccept, onClose }) {
+  const { state, dispatch } = useStore();
+  const accept = mode === "accept";
+  const own = !accept;
+  const [sel, setSel] = useState(start || sets[0]);
+  const initTerms = (k) => { const S = TC190_SETS[k]; return { ...Object.fromEntries(S.list.map(t => [t.k, t.text])), ...(S.key ? (state[S.key] || {}) : {}) }; };
+  const [edits, setEdits] = useState(() => Object.fromEntries(sets.filter(k => TC190_SETS[k].key).map(k => [k, initTerms(k)])));
+  const account = own ? qaAccount17(state) : null;
+  const groups = own ? ownPkgGroups185(state) : [];
+  const tabs = groups.length ? groups : ["bar"];
+  const pkName = (tab) => { const a = account ? qaAnswer17(state, account, pkcOwnQid17(tab)) : null; const n = a && !a.withdrawnAt && a.typed && a.typed.name; return n ? String(n) : SIG_TAB_LABEL189[tab]; };
+  const [pk, setPk] = useState(() => Object.fromEntries(tabs.map(t => [t, (state.sigPkgTerms189 || {})[t] || ""])));
+  const ag = state.tcAgreed190 || {};
+  const S = TC190_SETS[sel];
+  const cur = edits[sel] || {};
+  const cal = V101.support20Url();
+  const agree = () => {
+    if (accept) { if (onAccept) onAccept(); return; }
+    const patch = { tcAgreed190: { ...ag, [sel]: true } };
+    sets.forEach(k => { const SS = TC190_SETS[k]; if (SS.key) patch[SS.key] = edits[k]; });
+    if (sets.includes("pkg")) patch.sigPkgTerms189 = { ...(state.sigPkgTerms189 || {}), ...pk };
+    dispatch({ type: "V11_SET", patch }); dispatch({ type: "TOAST", toast: "Terms saved to your profile" }); onClose();
+  };
+  const foot = (
+    <div className="tc190-foot">
+      <button type="button" className="tc190-act yes" onClick={agree}><span className="dot"><TC190I.Check size={13} strokeWidth={3} aria-hidden="true" /></span><span>Agree</span></button>
+      <button type="button" className="tc190-act" onClick={onClose}><TC190I.XC size={21} aria-hidden="true" /><span>Decline</span></button>
+      {cal && <a className="tc190-act" href={cal} target="_blank" rel="noopener noreferrer"><TC190I.Cal size={21} aria-hidden="true" /><span>Book a meeting</span></a>}
+    </div>
+  );
   return (
-    <Sheet center open={open} onClose={onClose} title="Terms and conditions">
-      <div className="ff-tc188-list" role="list" aria-label="Terms and conditions">
-        {Object.entries(TERM_SETS17).map(([k, S]) => <div key={k} role="listitem"><InformationCard record={{ ...makeRecord("terms", S.title), id: `tc_${k}`, description: S.note }} def={def} themeKey="onyx" editable onClick={() => setSet(k)} /></div>)}
+    <Sheet center open onClose={onClose} title="Terms and conditions" noX foot={foot} sheetClass="tc190-sheet" icon={<span className="tc190-badge"><TC190I.Scroll size={21} aria-hidden="true" /></span>}>
+      <div className="tc190">
+        <style>{PROFILE_PACKAGES_CSS}</style>
+        <div className="tc190-sets" role="tablist" aria-label="Terms and conditions">
+          {sets.map(k => { const SS = TC190_SETS[k]; const on = k === sel; const yes = !!ag[k];
+            return (
+              <button key={k} type="button" role="tab" aria-selected={on} className={`tc190-set${on ? " on" : ""}`} onClick={() => setSel(k)}>
+                <span className="nm">{SS.name}</span>
+                <span className="row">
+                  {SS.pdf ? <span className="pf"><TC190I.Doc size={21} aria-hidden="true" /><span className="w">Full PDF</span></span> : <span />}
+                  {own && (yes ? <span className="st y" aria-label="Agreed"><TC190I.Check size={13} strokeWidth={3} aria-hidden="true" /></span> : <span className="st n" aria-label="Not agreed yet"><TC190I.XC size={21} aria-hidden="true" /></span>)}
+                </span>
+              </button>);
+          })}
+        </div>
+        <div className="tc190-terms" role="list" aria-label={S.name}>
+          {S.list.map((t, i) => (
+            <div key={t.k} role="listitem" className="tc190-term">
+              <span className="no">{i + 1}</span><span className="lb">{t.label}</span>
+              <span className="ok" aria-hidden="true"><TC190I.Check size={13} strokeWidth={3} /></span>
+              {own
+                ? <div className="tx"><GrowTA189 value={cur[t.k] || ""} maxLength={500} label={t.label} onChange={(e) => setEdits({ ...edits, [sel]: { ...cur, [t.k]: e.target.value } })} /></div>
+                : <p className="tx">{t.text}</p>}
+            </div>
+          ))}
+          {own && sel === "pkg" && tabs.map(tab => (
+            <div key={"pk-" + tab} role="listitem" className="tc190-term pk">
+              <span className="lb">{pkName(tab)}</span>
+              <div className="tx"><GrowTA189 value={pk[tab] || ""} maxLength={600} label={pkName(tab)} onChange={(e) => setPk({ ...pk, [tab]: e.target.value.slice(0, 600) })} /></div>
+            </div>
+          ))}
+        </div>
+        <a className="tc190-pdf" href={TC190_PDF} onClick={(e) => e.preventDefault()}><TC190I.Doc size={21} aria-hidden="true" /><span>Full terms and conditions (PDF)</span></a>
       </div>
     </Sheet>
   );
 }
 
 
+/* v1.190: the member's finished profile shows the standard box (was two cards). Collapsed by default, as every box on the site. */
 function PersonalTerms17() {
   const [open, setOpen] = useState(false);
+  const { state } = useStore();
+  const sets = ["mine", "service", ...(ownPkgGroups185(state).length > 0 ? ["pkg"] : [])];
   return (
     <section className="ff-cr17 ff-mt17" aria-label="Terms and conditions">
-      <StaffBox id="ff-cr17-terms" icon={E17I.Layers} title="Terms and conditions" open={open} onToggle={() => setOpen(o => !o)}><TermsCards17 /></StaffBox>
+      <StaffBox id="ff-cr17-terms" icon={E17I.Layers} title="Terms and conditions" open={open} onToggle={() => setOpen(o => !o)}><div className="tc190-wrap"><TcBox190 sets={sets} start="mine" /></div></StaffBox>
     </section>
   );
 }

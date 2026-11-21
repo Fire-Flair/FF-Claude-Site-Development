@@ -27,7 +27,7 @@ function Field({ label, hint, children }) {
 
 
 
-function Sheet({ open, onClose, title, children, center = true, newLogo = false }) /* v1.188 (Alex 21 Nov): every pop-up is centred */ {
+function Sheet({ open, onClose, title, children, center = true, newLogo = false, noX = false, foot = null, sheetClass = "", icon = null }) /* v1.188 (Alex 21 Nov): every pop-up is centred. v1.190 (Alex 21 Nov 12:52): optional noX (no X in the title bar), foot (a bar pinned at the bottom), sheetClass, icon; defaults change nothing. */ {
   const ref = useRef(null);
   const closeRef = useRef(onClose); closeRef.current = onClose;
   useEffect(() => {
@@ -55,13 +55,14 @@ function Sheet({ open, onClose, title, children, center = true, newLogo = false 
   const host = typeof document !== "undefined" && (document.querySelector(".ff-shell") || document.querySelector(".ff"));
   const body = (
     <div className="ff-scrim" onClick={onClose}>
-      <div className={`ff-sheet${center ? " center" : ""}`} ref={ref} tabIndex={-1} onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={title}>
+      <div className={`ff-sheet${center ? " center" : ""}${sheetClass ? " " + sheetClass : ""}`} ref={ref} tabIndex={-1} onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={title}>
         <div className="ff-sheet-head">
-          {newLogo ? <FFLogo size={24} tier="gold" /> : <Coin size={22} />}
+          {icon || (newLogo ? <FFLogo size={24} tier="gold" /> : <Coin size={22} />)}
           <span className="ff-h2" style={{ flex: 1 }}>{title}</span>
-          <button onClick={onClose} aria-label="Close"><X size={20} /></button>
+          {!noX && <button onClick={onClose} aria-label="Close"><X size={20} /></button>}
         </div>
         <div style={{ padding: 16 }}>{children}</div>
+        {foot}
       </div>
     </div>
   );

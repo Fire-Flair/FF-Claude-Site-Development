@@ -191,14 +191,8 @@ function PkPop17({ children }) {
 
 /* FF Party package terms, shown after signing in, before packages are saved. */
 function PkgTerms17({ onClose, onAccept }) {
-  return (
-    <PkPop17><Sheet open onClose={onClose} title="FF Party package terms">
-      <div className="ff-tc5 ff-bkterms17">
-        {PARTY_PKG_TERMS17.map((t, i) => <div key={t.k} className="ff-tc5-read"><span><b>{i + 1}</b>{t.label}</span><p>{t.text}</p></div>)}
-      </div>
-      <div className="ff-bsec-acts" style={{ marginTop: 10 }}><Btn variant="primary wide" onClick={onAccept}><Check size={14} /> Accept and confirm</Btn></div>
-    </Sheet></PkPop17>
-  );
+  /* v1.190 (Alex 21 Nov 12:52): the standard T's and C's pop-up in accept mode. */
+  return <PkPop17><TcPop190 sets={["party"]} start="party" mode="accept" onClose={onClose} onAccept={onAccept} /></PkPop17>;
 }
 
 

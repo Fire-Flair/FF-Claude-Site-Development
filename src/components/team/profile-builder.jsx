@@ -720,7 +720,6 @@ function SaveShareCard({ onSaved }) {
   const p = state.profile;
   const signedIn = state.auth.status === "signedIn";
   const { share, busy, tag } = useShareCard();
-  const [terms, setTerms] = useState(false);
   const cardReady = recsOf(p, "professions").some(r => !r.proposed);
   /* v17.40: an existing member edits on this same page; Save takes them back to their finished profile, as the bar's Save does. */
   const leaveLive = () => { if (p.live && state.ed17 === "team") { dispatch({ type: "V11_SET", patch: { ed17: null } }); window.scrollTo(0, 0); } };
@@ -764,9 +763,8 @@ function SaveShareCard({ onSaved }) {
     <div id="ff-sec-share" className="ff-publishcard" style={{ marginTop: 26 }}>
       <div className="ff-save17-row">
         <button type="button" className="ff-btn gold ff-save17" onClick={publish}>Save</button>
-        <button type="button" className="ff-btn ff-save17 terms188" onClick={() => setTerms(true)}>Terms and conditions</button>
+        <div className="tc190-bar"><TcBox190 sets={["mine", "service", ...(ownPkgGroups185(state).length > 0 ? ["pkg"] : [])]} start="mine" /></div>
       </div>
-      <TermsPop188 open={terms} onClose={() => setTerms(false)} />
       {blocker && signedIn && <p style={{ margin: "10px 0 0", fontSize: 12.5, color: "rgba(244,239,228,.72)", textAlign: "center" }}>{blocker}</p>}
       {signedIn && p.savedAt && <p style={{ margin: "10px 0 0", fontSize: 12, color: "rgba(244,239,228,.66)", display: "flex", gap: 5, alignItems: "center", justifyContent: "center" }}>
         <Check size={13} color="#8FDCAE" strokeWidth={2.4} /> Saved {timeOf(p.savedAt)}{p.publishedAt && <> · <button type="button" className="ff-livelink17" onClick={() => { dispatch({ type: "VIEW", id: "me", guest: true }); window.scrollTo(0, 0); }}><Eye size={13} /> Live · view</button></>}</p>}
