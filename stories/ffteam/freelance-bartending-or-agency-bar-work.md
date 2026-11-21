@@ -10,7 +10,7 @@ category: Finding work
 primary_intent: freelance bartender vs agency work
 author: FireFlair editorial team
 published: 2026-11-08
-modified: 2026-11-08
+modified: 2026-11-21
 reviewed: 2026-11-08
 
 cta: {label: Create your profile, destination: FF Team profile creation}
@@ -24,15 +24,13 @@ sources: []
 
 Freelance bartending gives you control over which jobs you take and what you charge, but you handle your own admin and tax. Agency work usually gives you steadier shifts and handled pay, but with less say over terms. Your employment status depends on the real working arrangement, not on what a contract calls it.
 
-## Compare
+## Freelance and agency bar work compared
 
-| | Freelance | Agency |
-|---|---|---|
-| **Choosing shifts** | You decide | Often offered to you; you accept or decline |
-| **Admin and tax** | Yours | Often handled, depending on the arrangement |
-| **Support** | Mostly your own network | An agency contact |
-| **Commitment** | Your choice | Varies by agency |
-| **Pay** | Agreed per job | Often an hourly rate |
+- **Choosing shifts.** As a freelancer, you decide. With an agency, shifts are often offered to you, and you accept or decline.
+- **Admin and tax.** As a freelancer, they are yours. With an agency, they are often handled, depending on the arrangement.
+- **Support.** As a freelancer, it comes mostly from your own network. With an agency, you have an agency contact.
+- **Commitment.** As a freelancer, it is your choice. With an agency, it varies by agency.
+- **Pay.** As a freelancer, it is agreed per job. With an agency, it is often an hourly rate.
 
 ## Status
 
