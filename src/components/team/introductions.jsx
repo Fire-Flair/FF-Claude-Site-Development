@@ -422,7 +422,7 @@ function TeamTab17({ person }) {
 
 /* packagesTail: shown in the Bookings tab (was Packages) below the Q&A (the signed-in member's own page puts Build your packages, Service Cards and Terms and conditions here). */
 /* aboutFirst: kept for callers; since 18 Nov 22:19 every profile shows About Me first, above Professions. */
-function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
+function PublicProfileBody({ person, packagesTail, overviewTail, aboutFirst = false }) {
   const { state, dispatch } = useStore();
   /* The tab is kept in the store so it can be part of the address (#/<site>/<tag>/reviews). */
   const inStore = state.viewing === person.id;
@@ -496,6 +496,8 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
           )}
           <FireFlairIntroductions17 person={person} onEdit={own ? () => setIntroEdit186(true) : undefined} />
           {own && <Sheet center open={introEdit186} onClose={() => setIntroEdit186(false)} title={FI_HEADING}><div className="ara-sheet"><IntroEditor17 onDone={() => setIntroEdit186(false)} /></div></Sheet>}
+          {/* v1.190 (Alex 21 Nov 13:17): the standard T's and C's box, last on the Overview tab. */}
+          {overviewTail}
         </>)}
         {/* v1.57 (Alex, 18 Nov 20:51): Work locations are off the Packages tab for now; the slider has the Bookings package cards. */}
         {tab === "services" && (pkgItems.length || own

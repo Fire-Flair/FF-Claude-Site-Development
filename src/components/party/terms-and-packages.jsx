@@ -85,6 +85,8 @@ const TC190_SETS = {
   party: { name: "FF Party packages", pdf: true, key: null, list: PARTY_PKG_TERMS17 },
 };
 const TC190_PDF = "#";
+/* v1.190 (Alex 21 Nov 13:17): the green tick on each of the five terms is off; the only tick left is on Agree. Set true to show them again. */
+const TC190_TERM_TICKS = false;
 
 function TcBox190({ sets, start }) {
   const { state } = useStore();
@@ -144,16 +146,16 @@ function TcPop190({ sets, start, mode = "own", onAccept, onClose }) {
                 <span className="nm">{SS.name}</span>
                 <span className="row">
                   {SS.pdf ? <span className="pf"><TC190I.Doc size={21} aria-hidden="true" /><span className="w">Full PDF</span></span> : <span />}
-                  {own && (yes ? <span className="st y" aria-label="Agreed"><TC190I.Check size={13} strokeWidth={3} aria-hidden="true" /></span> : <span className="st n" aria-label="Not agreed yet"><TC190I.XC size={21} aria-hidden="true" /></span>)}
+                  {(own && yes) ? <span className="st y" aria-label="Agreed"><TC190I.Check size={13} strokeWidth={3} aria-hidden="true" /></span> : <span className="st n" aria-label="Not agreed yet"><TC190I.XC size={21} aria-hidden="true" /></span>}
                 </span>
               </button>);
           })}
         </div>
-        <div className="tc190-terms" role="list" aria-label={S.name}>
+        <div className={`tc190-terms${TC190_TERM_TICKS ? "" : " no-tick"}`} role="list" aria-label={S.name}>
           {S.list.map((t, i) => (
             <div key={t.k} role="listitem" className="tc190-term">
               <span className="no">{i + 1}</span><span className="lb">{t.label}</span>
-              <span className="ok" aria-hidden="true"><TC190I.Check size={13} strokeWidth={3} /></span>
+              {TC190_TERM_TICKS && <span className="ok" aria-hidden="true"><TC190I.Check size={13} strokeWidth={3} /></span>}
               {own
                 ? <div className="tx"><GrowTA189 value={cur[t.k] || ""} maxLength={500} label={t.label} onChange={(e) => setEdits({ ...edits, [sel]: { ...cur, [t.k]: e.target.value } })} /></div>
                 : <p className="tx">{t.text}</p>}
@@ -291,3 +293,11 @@ function EventHelp21({ d, ev }) {
     </div>);
 }
 
+
+
+/* v1.190 (Alex 21 Nov 13:17): the standard T's and C's box at the bottom of the Overview tab of the finished profile (the Packages tab no longer shows terms boxes; PersonalTerms17 and the term data stay for later reuse). */
+function ProfileTc190() {
+  const { state } = useStore();
+  const sets = ["mine", "service", ...(ownPkgGroups185(state).length > 0 ? ["pkg"] : [])];
+  return <div className="tc190-wrap tc190-ov"><TcBox190 sets={sets} start="mine" /></div>;
+}
