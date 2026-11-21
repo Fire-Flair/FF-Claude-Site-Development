@@ -736,3 +736,25 @@
 .ff.ff-pf17-scrim { align-items:center; padding:calc(14px + env(safe-area-inset-top,0px)) 10px calc(88px + env(safe-area-inset-bottom,0px)); }
 @media (min-width:900px) { .ff.ff-pf17-scrim { padding:calc(28px + env(safe-area-inset-top,0px)) 10px calc(84px + env(safe-area-inset-bottom,0px)); } }
 .ff .ff-pf17 { max-height:100%; transform-origin:50% 50%; }
+
+/* v1.189 (Alex 21 Nov 10:53): View all and the category pop-ups are ONE vertical page in the look of the profile's attribute cards: the name, its whole description in the smaller card text, then the pictures as small squircle squares. Tapping a picture opens it full screen (.ff-iv189) with a Back button. No horizontal scroll, no cut-short text. */
+.ff .ff-xatt.ff-xatt189 { display: flex; flex-direction: column; gap: 12px; padding: 10px 0 8px; overflow: visible; }
+.ff .ff-xatt189 .ff-xatt-box.ff-xe189 { width: 100%; min-width: 0; box-sizing: border-box; padding: 16px 18px 16px; border-radius: 22px; corner-shape: squircle; font-family: var(--sans); color: #F7F2E7; overflow-wrap: normal; word-break: normal; hyphens: none; }
+.ff .ff-xatt189 .ff-xe189.cat-skills { background: linear-gradient(165deg,#24405F 0%,#12233A 100%); }
+.ff .ff-xatt189 .ff-xe189.cat-qualifications { background: linear-gradient(165deg,#25503E 0%,#12291F 100%); }
+.ff .ff-xatt189 .ff-xe189.cat-interests { background: linear-gradient(165deg,#573060 0%,#2C1633 100%); }
+.ff .ff-xatt189 .ff-xe189 .ff-xe189-n { margin: 0; padding: 0 0 8px; font-size: 18px; font-weight: 700; line-height: 1.2; letter-spacing: -.015em; color: #fff; overflow-wrap: normal; word-break: normal; hyphens: none; background: none; }
+.ff .ff-xatt189 .ff-xe189 .ff-xe189-d { margin: 0; font-size: 14px; line-height: 1.45; color: rgba(247,242,231,.9); white-space: pre-wrap; overflow: visible; overflow-wrap: normal; word-break: normal; hyphens: none; display: block; -webkit-line-clamp: none; }
+.ff .ff-xatt189 .ff-xe189 dl { margin: 10px 0 0; font-size: 13px; }
+.ff .ff-xatt189 .ff-xe189 dl > div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; }
+.ff .ff-xatt189 .ff-xe189 dd { overflow-wrap: normal; word-break: normal; }
+.ff .ff-xatt189 .ff-xe189-ph { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
+.ff .ff-xatt189 button.ff-xe189-th { all: unset; box-sizing: border-box; flex: none; width: 60px; height: 60px; min-width: 44px; min-height: 44px; border-radius: 14px; corner-shape: squircle; overflow: hidden; cursor: pointer; border: 1px solid rgba(228,195,106,.5); background: rgba(0,0,0,.25); }
+.ff .ff-xatt189 .ff-xe189-th:focus-visible { outline: 2px solid #E4C36A; outline-offset: 2px; }
+.ff .ff-xatt189 .ff-xe189-th img { display: block; width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; border-radius: 0; }
+.ff .ff-xatt189 .ff-xe189 .ff-xatt-note { overflow-wrap: normal; word-break: normal; }
+.ff .ff-xatt-sec .ff-xatt.ff-xatt189 { padding: 10px 0 8px; }
+.ff-iv189 { position: fixed; inset: 0; z-index: 6000; display: flex; align-items: center; justify-content: center; box-sizing: border-box; background: #000; padding: calc(64px + env(safe-area-inset-top,0px)) 12px calc(16px + env(safe-area-inset-bottom,0px)); animation: ffCsxIn .15s ease-out; }
+.ff-iv189 img { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+.ff .ff-iv189 button.ff-iv189-back { all: unset; box-sizing: border-box; position: absolute; top: calc(10px + env(safe-area-inset-top,0px)); left: 10px; z-index: 2; display: inline-flex; align-items: center; gap: 4px; min-height: 44px; min-width: 44px; padding: 0 16px 0 10px; border-radius: 16px; corner-shape: squircle; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.3); color: #fff; font: 600 16px/1 var(--sans, system-ui, sans-serif); cursor: pointer; white-space: nowrap; }
+.ff .ff-iv189 button.ff-iv189-back:focus-visible { outline: 2px solid #E4C36A; outline-offset: 2px; }

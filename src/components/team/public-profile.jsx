@@ -597,23 +597,70 @@ function attributesOf(state, person, cats) {
 
 
 
-/* One card per attribute category (Skills, Interests, Languages…), listing the
-   titles. A tap opens View all attributes for the full details. */
-/* Every record of one category at full size: all of its text, details and pictures. */
+/* v1.189 (Alex 21 Nov 10:53): the full-screen image viewer. One image, black background, the image contained (never cropped), Back top left.
+   Back, Escape and the system back gesture close only the viewer. It sits above the pop-up (.ff-scrim, 5100 over a member profile) and is drawn into .ff-shell like Sheet. */
+function ImageViewer189({ image, onClose }) {
+  const closeRef = useRef(onClose); closeRef.current = onClose;
+  const backRef = useRef(null);
+  const pushed = useRef(false);
+  const closeFn = useRef(() => {});
+  useEffect(() => {
+    if (!image) return;
+    const prev = document.activeElement;
+    try { window.history.pushState({ ffViewer189: 1 }, "", window.location.href); pushed.current = true; } catch (e) { pushed.current = false; }
+    const k = (e) => {
+      if (e.key === "Escape") { e.stopImmediatePropagation(); e.preventDefault(); close(); return; }
+      if (e.key === "Tab") { e.stopImmediatePropagation(); e.preventDefault(); if (backRef.current) backRef.current.focus(); }
+    };
+    const pop = () => { if (pushed.current) { pushed.current = false; closeRef.current(); } };
+    const close = () => {
+      if (pushed.current) { try { window.history.back(); return; } catch (e) { /* ignore */ } }
+      closeRef.current();
+    };
+    closeFn.current = close;
+    window.addEventListener("keydown", k, true);
+    window.addEventListener("popstate", pop);
+    if (backRef.current) backRef.current.focus({ preventScroll: true });
+    return () => {
+      window.removeEventListener("keydown", k, true);
+      window.removeEventListener("popstate", pop);
+      if (pushed.current) { pushed.current = false; try { window.history.back(); } catch (e) { /* ignore */ } }
+      if (prev && prev.focus && document.contains(prev)) { try { prev.focus({ preventScroll: true }); } catch (e) { /* ignore */ } }
+    };
+  }, [image]);
+  if (!image) return null;
+  const host = typeof document !== "undefined" && (document.querySelector(".ff-shell") || document.querySelector(".ff"));
+  const body = (
+    <div className="ff-iv189" role="dialog" aria-modal="true" aria-label={image.name || "Image"}>
+      <button ref={backRef} type="button" className="ff-iv189-back" onClick={() => closeFn.current()}><ChevronLeft size={20} strokeWidth={2.2} aria-hidden="true" /><span>Back</span></button>
+      <img src={image.dataUrl || image.src} alt={image.name || ""} decoding="async" />
+    </div>
+  );
+  return host && ReactDOM.createPortal ? ReactDOM.createPortal(body, host) : body;
+}
+
+
+/* Every record of one category at full size, on ONE vertical page in the look of the profile's attribute cards (v1.189, Alex 21 Nov 10:53):
+   the name, then all of its text in the smaller description size, then its pictures as small squares. Used by View all and by each category pop-up. */
 function ExpandedAttrs({ list }) {
+  const [viewer, setViewer] = useState(null);
   const cap = (k) => String(k).replace(/([A-Z])/g, " $1").replace(/^./, c => c.toUpperCase());
   return (
-    <div className="ff-xatt">
+    <div className="ff-xatt ff-xatt189">
       {list.map(r => {
         const det = r.details ? Object.entries(r.details).filter(([, v]) => String(v == null ? "" : v).trim()) : [];
         const media = (r.media || []).filter(m => m && (m.dataUrl || m.src));
         return (
-          <article key={r.id} className={"ff-xatt-box cat-" + r.category}>
-            <h3>{r.name}</h3>
+          <article key={r.id} className={"ff-xatt-box ff-xe189 cat-" + r.category}>
+            <h3 className="ff-xe189-n">{nbh21(r.name)}</h3>
             {r.category === "venues" && r.address && <div className="ff-xatt-note">{r.address}{r.place ? <> · <a href={venueMapsUrl17(r)} target="_blank" rel="noopener noreferrer">View on Google Maps</a></> : null}</div>}
-            {!/^Uploaded \d/.test(String(r.description || "")) && String(r.description || "").trim() && <p>{r.description}</p>}
+            {!/^Uploaded \d/.test(String(r.description || "")) && String(r.description || "").trim() && <p className="ff-xe189-d">{nbh21(r.description)}</p>}
             {det.length > 0 && <dl>{det.map(([k, v]) => <div key={k}><dt>{cap(k)}</dt><dd>{String(v)}</dd></div>)}</dl>}
-            {media.length > 0 && <div className="ff-xatt-media">{media.map((m, i) => <img decoding="async" key={i} src={m.dataUrl || m.src} alt={m.name || ""} loading="eager" />)}</div>}
+            {media.length > 0 && <div className="ff-xe189-ph">{media.map((m, i) => (
+              <button key={m.id || i} type="button" className="ff-xe189-th" aria-label={`Open picture${m.name ? ": " + m.name : ""}`} onClick={() => setViewer(m)}>
+                <img decoding="async" src={m.dataUrl || m.src} alt="" loading="eager" />
+              </button>
+            ))}</div>}
             {r.document && r.document.name && (pubCvHref(r)
               ? <div className="ff-xatt-note"><a href={pubCvHref(r)} target="_blank" rel="noopener noreferrer" download={r.document.name} style={{ color: "inherit" }}><FileText size={12} aria-hidden="true" /> Open CV</a></div>
               : <div className="ff-xatt-note">Document: {r.document.name}</div>)}
@@ -621,6 +668,7 @@ function ExpandedAttrs({ list }) {
           </article>
         );
       })}
+      <ImageViewer189 image={viewer} onClose={() => setViewer(null)} />
     </div>
   );
 }
