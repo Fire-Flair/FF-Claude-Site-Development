@@ -281,29 +281,41 @@ function NetDirectory20(props) {
   const [sub, setSub0] = useState(function () { return (window.__ffNetSel && window.__ffNetSel.sub) || {}; });
   const setCat = function (v) { window.__ffNetSel = Object.assign({}, window.__ffNetSel, { cat: v }); setCat0(v); };
   const setSub = function (fn) { setSub0(function (o) { const n = typeof fn === "function" ? fn(o) : fn; window.__ffNetSel = Object.assign({}, window.__ffNetSel, { sub: n }); return n; }); };
-  const cur = cats.find(function (x) { return x.k === cat; }) || cats[0];
+  /* v1.187 (Alex 21 Nov): no category is chosen until a person taps one; tapping the chosen one again clears it. */
+  const cur = cats.find(function (x) { return x.k === cat; }) || null;
   const heading = React.createElement(HeadRow20, { title: "FF Event Directory", k: "dir", desc: NET_DIR_DESC20, search: props.search, q: props.q });
   if (props.results) return React.createElement("section", { id: "ff-directory", style: { marginTop: 30, scrollMarginTop: 70 } }, React.createElement("style", null, NET20_CSS), heading, props.results);
-  if (!cur) return null;
-  const d = NET_DIR_TABS20[cur.k] || NET_DIR_TABS20.bar;
+  if (!cats.length) return null;
+  const d = cur ? (NET_DIR_TABS20[cur.k] || NET_DIR_TABS20.bar) : null;
   const groups = {};
-  cur.list.forEach(function (c) { const k = dirTabOf20(c, cur.k); (groups[k] = groups[k] || []).push(c); });
-  const tabs = d.tabs.filter(function (t) { return (groups[t.k] || []).length; });
-  const tcur = tabs.find(function (t) { return t.k === sub[cur.k]; }) || tabs[0];
+  if (cur) cur.list.forEach(function (c) { const k = dirTabOf20(c, cur.k); (groups[k] = groups[k] || []).push(c); });
+  const tabs = d ? d.tabs.filter(function (t) { return (groups[t.k] || []).length; }) : [];
+  const tcur = cur ? (tabs.find(function (t) { return t.k === sub[cur.k]; }) || null) : null;
+  /* the mix shown with nothing chosen: claimed companies first, then one from each category in turn (directory order), up to 30. Same every render. */
+  let mix = [];
+  if (!cur) {
+    const seen = {};
+    every.filter(function (c) { return !c.unclaimed; }).forEach(function (c) { seen[c.id] = 1; mix.push(c); });
+    const lists = cats.map(function (x) { return x.list.filter(function (c) { return !seen[c.id]; }); });
+    for (let r = 0; mix.length < 30 && lists.some(function (l) { return r < l.length; }); r++) {
+      lists.forEach(function (l) { if (mix.length < 30 && r < l.length) mix.push(l[r]); });
+    }
+    mix = mix.slice(0, 30);
+  }
   return React.createElement("section", { id: "ff-directory", style: { marginTop: 30, scrollMarginTop: 70 } },
     React.createElement("style", null, NET20_CSS),
     heading,
     React.createElement(FeaturedCos20, null),
     React.createElement("div", { className: "ff-br20" },
-      React.createElement(CatBoxes20, { label: "Types of company", active: cur.k, onPick: setCat, items: cats.map(function (x) { return { k: x.k, label: x.label, icon: catIcon17(x.k), count: x.list.length }; }) }),
-      tabs.length > 1 ? React.createElement("div", { className: "ff-dr20-mid ff-br20-pills", role: "tablist", "aria-label": cur.label + " types" },
+      React.createElement(CatBoxes20, { label: "Types of company", active: cur ? cur.k : "", onPick: function (k) { setCat(cur && k === cur.k ? "" : k); }, items: cats.map(function (x) { return { k: x.k, label: x.label, icon: catIcon17(x.k), count: x.list.length }; }) }),
+      cur && tabs.length > 1 ? React.createElement("div", { className: "ff-dr20-mid ff-br20-pills", role: "tablist", "aria-label": cur.label + " types" },
         tabs.map(function (t) {
           const on = tcur && tcur.k === t.k;
           return React.createElement("button", { key: t.k, type: "button", role: "tab", "aria-selected": on, className: "ff-dr20-sub" + (on ? " on" : ""),
-            onClick: function () { setSub(Object.assign({}, sub, { [cur.k]: t.k })); } },
+            onClick: function () { setSub(Object.assign({}, sub, { [cur.k]: on ? "" : t.k })); } },
             React.createElement("span", { className: "lb" }, t.label), React.createElement("span", { className: "ct" }, "(" + groups[t.k].length + ")"));
         })) : null,
-      React.createElement(HScroll, { loose: true, label: tcur ? tcur.label : cur.label, key: cur.k + (tcur ? tcur.k : "") }, (tcur ? groups[tcur.k] : cur.list).map(function (co) { return React.createElement(CoTile20, { key: co.id, co: co }); }))));
+      React.createElement(HScroll, { loose: true, label: cur ? (tcur ? tcur.label : cur.label) : "FF Event Directory", key: cur ? cur.k + (tcur ? tcur.k : "") : "all" }, (cur ? (tcur ? groups[tcur.k] : cur.list) : mix).map(function (co) { return React.createElement(CoTile20, { key: co.id, co: co }); }))));
 }
 
 const NET_DIR_DESC20 = "Find the companies you want to work for or work with. UK bar companies, DJs, caterers and event services, a list that keeps growing, with contact details, so you can find support for your own events, find out more and register your interest.";
