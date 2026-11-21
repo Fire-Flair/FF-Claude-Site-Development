@@ -50,15 +50,15 @@ function LiveActionBar17({ placement }) {
 /* The completed profile is the public page, exactly as anyone else sees it from the network. */
 function DoneProfile17({ kind }) {
   const { state, dispatch } = useStore();
-  const all = useDirectory();
   if (kind === "team") {
     const p = state.profile;
-    const mine = String(p.name || "").trim() && recsOf(p, "professions").length;
-    const person = mine ? { ...meAsStaff(p, state.session), group: "Your profile" } : (["stf_dany", "stf_simao", "stf_gav"].map(id => all.find(x => x.id === id)).find(Boolean) || meAsStaff(p, state.session));
-    const card = <PlayerCard person={person} format="full" nameAs="h1" themeKey={mine ? p.theme : (person.theme || "ivory")} />;
+    /* NET187: always the member's own profile. Before, a profile with no name or no professions fell back to a demo member (Dany Gagnon);
+       with every profession removed the page showed someone else. Now the sections simply stay empty. */
+    const person = { ...meAsStaff(p, state.session), group: "Your profile" };
+    const card = <PlayerCard person={person} format="full" nameAs="h1" themeKey={p.theme} />;
     const dTag = state.auth.status === "signedIn" ? (state.auth.tag || state.session.tag) : "";
     const edit17 = () => { dispatch({ type: "V11_SET", patch: { ed17: "team" } }); dispatch({ type: "PE_START" }); window.scrollTo(0, 0); };
-    const cardShare = dTag && mine ? <div style={{ marginTop: 10, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, maxWidth: 440, marginInline: "auto" }}>
+    const cardShare = dTag ? <div style={{ marginTop: 10, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, maxWidth: 440, marginInline: "auto" }}>
       <Btn variant="wide" onClick={edit17}><S17I.Pencil size={14} /> Edit</Btn>
       <MyShareBtn17 person={person} />
     </div> : null;
@@ -66,7 +66,7 @@ function DoneProfile17({ kind }) {
       <div className="ff-pubpage ff-done17 team">
         <PublicHero media={mediaOf(state, person)} card={<>{card}{cardShare}</>} below={null} />
         <PublicProfileBody person={person} packagesTail={<PersonalTerms17 />} />
-        {mine ? <NeedHelp34 /> : null}
+        <NeedHelp34 />
       </div>
     );
   }
