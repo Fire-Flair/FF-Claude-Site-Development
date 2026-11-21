@@ -97,7 +97,7 @@ function personGroups(p, cats) {
 function plateAs17(p, prof) {
   if (!prof) return p;
   const k = String(prof).toLowerCase();
-  return { ...p, profession: prof, professions: [prof, ...(p.professions || []).filter(x => String(x).toLowerCase() !== k)] };
+  return { ...p, headline: "", profession: prof, professions: [prof, ...(p.professions || []).filter(x => String(x).toLowerCase() !== k)] }; /* v1.188 (Alex 21 Nov): the plate shows this profession, not the person's own headline */
 }
 
 

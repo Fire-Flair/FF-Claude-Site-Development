@@ -220,3 +220,17 @@
   .ff .ff-nm20 .ff-map { margin-top: var(--nm187-top); align-self: start; }
   .ff .ff-nm20 .ff-map-uk.ff-map-real { height: var(--nm187-h) !important; }
 }
+
+/* v1.188 (Alex 21 Nov): Our professionals has its words under the heading, as the Directory; the map legend sits in the left column on a wide screen; the search is full width on a narrow one. */
+.ff .ff-hr20-s[data-srch="pros"] { margin-top: 0; }
+@media (max-width: 1099px) {
+  .ff .ff-hr20-s, .ff .ff-hr20-s[data-srch="pros"] { max-width: none; width: 100%; }
+}
+@media (min-width: 1100px) {
+  .ff .ff-hr20-s, .ff .ff-hr20-s[data-srch="pros"] { margin-top: var(--nh187-top); }
+  .ff .ff-nm20 { grid-template-rows: auto auto 1fr; }
+  .ff .ff-nm20 .ff-map { grid-row: 1 / span 3; }
+  .ff .ff-nm20 .ff-ml19 { grid-column: 1; grid-row: 2; align-self: start; margin: 0 0 10px; justify-content: stretch; }
+  .ff .ff-nm20 .ff-ml19 .ff-ml19-row { flex: 1 1 100%; flex-direction: column; gap: 8px; }
+  .ff .ff-nm20 .ff-map-sel { grid-column: 1; grid-row: 3; margin-top: 0; }
+}

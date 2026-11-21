@@ -884,3 +884,17 @@
 @media (prefers-reduced-motion: reduce) { .ff .ff-pgal-t img { transition:none; } }
 /* v1.185 (review): on published profiles an attribute's description sits on its own line under the title (they ran together). */
 .ff .ff-agrp-l > span > .ff-agrp-sd { display: block; margin-top: 2px; font: 400 11px/1.3 var(--sans); opacity: .78; white-space: normal; }
+
+/* v1.188 (Alex 21 Nov): attribute cards one size everywhere, split by measured content; pop-up cards in their card's colour */
+.ff .ff-pp21 .ff-acar.ff-acar188 .ff-agrp { width: clamp(168px, 45vw, 204px); aspect-ratio: 5 / 7; height: auto; min-height: 0; box-sizing: border-box; flex: none; overflow: hidden; }
+.ff .ff-acar188 .pe2-meas { position: fixed; left: -9999px; top: 0; visibility: hidden; pointer-events: none; display: block; }
+.ff .ff-pp21 .ff-acar.ff-acar188 .pe2-meas .ff-agrp { overflow: visible; aspect-ratio: 5 / 7; }
+.ff .ff-pp21 .ff-acar.ff-acar188 .pe2-meas .ff-agrp:has(.ff-agrp-l) { aspect-ratio: auto; height: auto; }
+.ff .ff-agrp-l > span > .ff-agrp-sd.clamp185 { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
+.ff .ff-acar188 .ff-agrp-l { padding-right: 0; }
+/* The boxes inside the attribute pop-ups take the colour of the card you tapped. */
+.ff .ff-xatt-box.cat-professions { background: linear-gradient(165deg,#5E1A2B 0%,#34101A 100%) !important; }
+.ff .ff-xatt-box.cat-skills { background: linear-gradient(165deg,#24405F 0%,#12233A 100%) !important; }
+.ff .ff-xatt-box.cat-qualifications { background: linear-gradient(165deg,#25503E 0%,#12291F 100%) !important; }
+.ff .ff-xatt-box.cat-interests { background: linear-gradient(165deg,#573060 0%,#2C1633 100%) !important; }
+.ff .ff-xatt-box[class*=" cat-"] { border-color: rgba(228,195,106,.65); }

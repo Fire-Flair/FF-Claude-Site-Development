@@ -213,12 +213,6 @@
 /* v1.169: skill and interest descriptions on the Attributes cards, smaller, under the name */
 .ff .ff-agrp-l > span > .ff-agrp-sd { display: block; margin-top: 2px; font: 400 11px/1.3 var(--sans); opacity: .78; white-space: normal; }
 
-/* v1.169: the boxes inside the pop-ups take the colour of the outer Attributes boxes */
-.ff .ff-xatt-box.cat-professions { background: linear-gradient(165deg,#5E1A2B 0%,#34101A 100%) !important; }
-.ff .ff-xatt-box.cat-skills { background: linear-gradient(165deg,#24405F 0%,#12233A 100%) !important; }
-.ff .ff-xatt-box.cat-qualifications { background: linear-gradient(165deg,#25503E 0%,#12291F 100%) !important; }
-.ff .ff-xatt-box.cat-interests { background: linear-gradient(165deg,#573060 0%,#2C1633 100%) !important; }
-.ff .ff-xatt-box[class*=" cat-"] { border-color: rgba(228,195,106,.65); }
 .ff .pe2-biz167-card .ff-cc11-base { background: #FFFDF8; border: 1px solid rgba(228,195,106,.6); border-radius: 16px; corner-shape: squircle; }
 .ff .pe2-biz167-card .ff-cc11-baseh { color: #7E611D; }
 /* v1.183: Attribute boxes never grow with their text; the text is split across boxes in profile-edit-p2.jsx. */

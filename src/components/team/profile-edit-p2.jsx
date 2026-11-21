@@ -253,43 +253,12 @@ function PE2AddProf({ on, onClick }) {
    the entries are split across boxes of the category by their MEASURED height. A hidden copy of the box and its list (same
    classes, so the same fonts and widths) gives the room inside one box and the height of each entry; an entry whose description does not
    fit a box on its own is shown by name only (its description stays in the entry). */
-const pe2Sd185 = (r) => (!r.cv && !/^Uploaded /.test(String(r.description || "")) && String(r.description || "").trim()) ? wholeSentences21(r.description, 70) : "";
 function PE2AttrCat185({ k, ci, def, shown, on, onTap }) {
   const empty = !shown.length;
-  const meas = useRef(null);
-  const [m, setM] = useState(null);
-  const sig = k + "§" + def.label + "§" + shown.map(r => r.id + "|" + r.name + "|" + pe2Sd185(r)).join("§");
-  React.useLayoutEffect(() => {
-    const run = () => {
-      const el = meas.current; if (!el) return;
-      const head = el.querySelector("[data-m=head]"), la = el.querySelector("[data-m=a]"), lb = el.querySelector("[data-m=b]");
-      if (!head || !la || !lb) return;
-      const cs = getComputedStyle(head), top = head.querySelector(".ff-agrp-top");
-      const gap = parseFloat(cs.rowGap) || 10;
-      const avail = head.getBoundingClientRect().height - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - top.getBoundingClientRect().height - gap - 3;
-      const hs = (l) => [...l.children].map(c => Math.ceil(c.getBoundingClientRect().height) + 1);
-      const next = { avail, a: hs(la), b: hs(lb) };
-      setM(cur => cur && JSON.stringify(cur) === JSON.stringify(next) ? cur : next);
-    };
-    run();
-    window.addEventListener("resize", run);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
-    return () => window.removeEventListener("resize", run);
-  }, [sig]);
-  const chunks = []; const withSd = {};
-  if (shown.length) {
-    let cur = [], used = 0;
-    shown.forEach((r, i) => {
-      let h = m && m.a[i] != null ? m.a[i] : 0, sd = true;
-      /* An entry too long for a box on its own keeps its description, cut to the whole lines that fit and ended with "…" (the full text is in the pop-up). It takes a box to itself. */
-      if (m && h > m.avail) { const nameH = m.b[i] != null ? m.b[i] : 0; const lines = Math.floor((m.avail - nameH - 4) / 14.3); sd = lines >= 1 ? lines : false; h = lines >= 1 ? m.avail : nameH; }
-      withSd[r.id] = sd;
-      if (m && cur.length && used + h > m.avail) { chunks.push(cur); cur = []; used = 0; }
-      cur.push(r); used += h;
-    });
-    if (cur.length) chunks.push(cur);
-  }
-  const entry = (r, sd) => <span key={r.id}>{nbh21(r.name)}{sd && pe2Sd185(r) && <small className={"ff-agrp-sd" + (typeof sd === "number" ? " clamp185" : "")} style={typeof sd === "number" ? { WebkitLineClamp: sd } : undefined}>{nbh21(pe2Sd185(r))}</small>}</span>;
+  const sig = k + "§" + def.label + "§" + shown.map(r => r.id + "|" + r.name + "|" + attrSd188(r)).join("§");
+  const [meas, m] = useAttrMeasure188(sig);
+  const { chunks, withSd } = attrChunks188(shown, m);
+  const entry = (r, sd) => <span key={r.id}>{nbh21(r.name)}{sd && attrSd188(r) && <small className={"ff-agrp-sd" + (typeof sd === "number" ? " clamp185" : "")} style={typeof sd === "number" ? { WebkitLineClamp: sd } : undefined}>{nbh21(attrSd188(r))}</small>}</span>;
   const card = (isEmpty, key, list) => (
     <button key={key} type="button" role="listitem" className={"ff-agrp " + (isEmpty ? "pe2-agrp-empty" : "cat-" + k + " " + tierCls17(ci)) + (on ? " pe2-agrp-on" : "")} aria-label={`${isEmpty && !empty ? "Add another" : "Edit"} ${def.label}`} aria-expanded={on} onClick={() => onTap(isEmpty)}>
       <span className="ff-agrp-top"><span className="ff-agrp-h">{def.label}</span></span>
