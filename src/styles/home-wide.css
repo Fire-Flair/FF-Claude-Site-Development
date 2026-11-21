@@ -47,7 +47,8 @@
   .ff .ff-landing .ff-coin-desk { display: flex; }
 
   /* left-hand headings and their words fit the narrower column */
-  .ff .ff-landing #ff-discover .ff-dx-h, .ff .ff-landing #ff-competition .ff-tlx h2, .ff .ff-landing #ff-two-minutes .ff-tlx h2, .ff .ff-landing #ff-guide .ff-qg-title { font-size: 30px !important; }
+  /* v1.190 (Alex 21 Nov 12:15/12:52): #ff-discover .ff-dx-h (30px) left this list; it is 26px (titles2.css). */
+  .ff .ff-landing #ff-competition .ff-tlx h2, .ff .ff-landing #ff-two-minutes .ff-tlx h2, .ff .ff-landing #ff-guide .ff-qg-title { font-size: 30px !important; }
   .ff .ff-landing #ff-discover .ff-dx-tag, .ff .ff-landing #ff-competition .ff-tlx p, .ff .ff-landing #ff-two-minutes .ff-tlx p { max-width: none !important; }
 
   /* the four pillars sit in one row; titles are smaller so "Our community" fits */

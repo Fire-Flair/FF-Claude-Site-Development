@@ -37,7 +37,7 @@
 /* ---------- intro lines under section titles (home intro, Launch Challenge, FF Party Launch Event) ---------- */
 .ff .ff-hf22 .ff-dx-tag { max-width:62ch; text-wrap:pretty !important; }
 /* the intro fits in three lines on phones (Alex, 18 Nov 17:41) */
-@media (max-width:759px) { .ff .ff-hf22 .ff-dx-tag { font-size:clamp(12.5px,3.45vw,14.5px) !important; } }
+/* v1.190 (Alex 21 Nov 12:15/12:52): the phone rule that shrank this paragraph is gone; it is 16px at every width (titles2.css). */
 .ff .ff-hf22 .ff-sec-intro { margin:-6px 0 16px; padding-left:28px; max-width:62ch; font-family:var(--font-sans,'Inter',sans-serif); font-size:clamp(14px,3.8vw,16px); font-weight:500; line-height:1.5;
   color:var(--color-muted,#6A6253); overflow-wrap:normal; word-break:normal; hyphens:none; text-wrap:pretty; }
 .ff .ff-hf22 .ff-tm20-title { margin-top:0 !important; }

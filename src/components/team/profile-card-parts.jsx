@@ -192,7 +192,7 @@ function PlayerFace17({ person, large, themeKey, tier, onClick, selected, nameAs
           </div>
         </div>
         <FitText17 as={nameAs || "div"} size={7.8} className="pc17-name" style={{ color: ink, marginTop: large ? "2.2cqw" : "3cqw", ...(nameAs ? { marginBottom: 0, marginInline: 0 } : {}) }}>{name}</FitText17>
-        <FitText17 size={4.4} className="pc17-title" style={{ color: dark ? t.accent : "#6A4F12" }}>{headline || " "}</FitText17>
+        <FitText17 size={5.2} /* v1.190 (Alex 21 Nov 12:15/12:52): headline 5.2cqw, a bit smaller than the name (7.8) */ className="pc17-title" style={{ color: dark ? t.accent : "#6A4F12" }}>{headline || " "}</FitText17>
         <div className="ff-pc-rule">
           <i style={{ background: `linear-gradient(90deg, transparent, ${t.accent})` }} />
           <ProfessionMarks professions={pros.slice(0, 3)} hasCar={person.hasCar} hasBiz={person.hasBiz} full={false} color={t.accent} />
