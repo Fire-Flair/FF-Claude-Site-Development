@@ -6,8 +6,8 @@
 .ff .ff-hs175-fade { position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(180deg, #180509 0, #180509 calc(var(--hs-top) - 6px), rgba(24,5,10,.55) calc(var(--hs-top) + 40px), rgba(24,5,10,0) calc(var(--hs-top) + 120px), rgba(0,0,0,0) 62%, rgba(0,0,0,.72) 100%); }
 .ff .ff-hs175-in { position:absolute; z-index:2; top:clamp(24px,4vw,40px); left:0; right:0; padding:0 18px; text-align:center; pointer-events:none; }
 .ff .ff-hs175-in > * { pointer-events:auto; }
-.ff .ff-hs175-h { margin:0; font-family:var(--display); font-weight:700; letter-spacing:.02em; line-height:1.04; font-size:clamp(32px,9vw,44px); color:#F6E7C1; text-wrap:balance; text-shadow:0 2px 14px rgba(0,0,0,.6); }
-.ff .ff-hs175-s { margin:8px 0 16px; font-weight:700; font-size:clamp(16px,4.4vw,20px); color:#E4C36A; text-shadow:0 1px 8px rgba(0,0,0,.7); }
+.ff .ff-hs175-h { margin:0; font-family:var(--display); font-weight:700; letter-spacing:.02em; line-height:1.04; font-size:42px /* v1.190 (Alex 21 Nov 12:15/12:52): golden 42 at every width */; color:#F6E7C1; text-wrap:balance; text-shadow:0 2px 14px rgba(0,0,0,.6); }
+.ff .ff-hs175-s { margin:8px 0 16px; font-weight:700; font-size:26px /* v1.190 (Alex 21 Nov 12:15/12:52): golden 26 at every width */; color:#E4C36A; text-shadow:0 1px 8px rgba(0,0,0,.7); }
 .ff .ff-hs175-seg { position:absolute; z-index:3; left:12px; right:12px; bottom:14px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); padding:5px; border-radius:20px; background:rgba(20,8,10,.42); border:1px solid rgba(255,255,255,.28); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); }
 .ff .ff-hs175-thumb { position:absolute; top:5px; bottom:5px; width:calc((100% - 10px) / 3); border-radius:16px; background:linear-gradient(170deg,#7A2236,#4A1220); box-shadow:0 6px 14px -8px rgba(74,18,32,.8); transition:left .65s ease-in-out !important; pointer-events:none; overflow:hidden; }
 .ff .ff-hs175-thumb i { position:absolute; left:12px; right:12px; bottom:6px; height:2.5px; border-radius:3px; background:rgba(246,231,193,.25); overflow:hidden; }
@@ -23,7 +23,6 @@
 @media (min-width:900px) {
   .ff .ff-hs175 { --hs-top:236px; }
   .ff .ff-hs175 { height:clamp(620px,78vh,720px); }
-  .ff .ff-hs175-h { font-size:clamp(44px,4.4vw,60px); }
-  .ff .ff-hs175-s { font-size:clamp(19px,1.7vw,23px); }
+  /* v1.190 (Alex 21 Nov 12:15/12:52): the wide-screen hero sizes (clamp 44-60 and 19-23) go; 42 and 26 apply at every width. */
   .ff .ff-hs175-seg { left:max(24px,calc(50% - 440px)); right:max(24px,calc(50% - 440px)); }
 }

@@ -23,9 +23,10 @@
   overflow-wrap:normal; word-break:keep-all; hyphens:none; text-wrap:balance;
 }
 .ff h2.ff-big20,
-.ff .ff-hf22 .ff-dx-h.ff-dx-q,
 .ff .ff-hf22 .ff-qg-title,
 .ff .ff-hf22 .ff-lcc-title { font-size:clamp(22px,5.8vw,28px) !important; }
+/* v1.190 (Alex 21 Nov 12:15/12:52): home hero heading "Built for event and hospitality professionals" is 26px at every width (golden); it left the clamp list above */
+.ff .ff-hf22 .ff-dx-h.ff-dx-q { font-size:26px !important; }
 .ff h2.ff-big20::before,
 .ff .ff-hf22 .ff-dx-h.ff-dx-q::before,
 .ff .ff-hf22 .ff-qg-title::before,
@@ -89,7 +90,7 @@
 /* "FF Team is for event and hospitality professionals" (home2): the gold-mark title, with a smaller subheading under it,
    lined up with the title text (after the coin). */
 .ff .ff-hf22 .ff-dx-h.ff-dx-q:has(+ .ff-dx-tag) { margin-bottom:6px !important; }
-.ff .ff-hf22 .ff-dx-tag { margin:0 0 18px; padding-left:28px; font-family:var(--font-sans,'Inter',sans-serif); font-size:clamp(14px,3.8vw,16px); font-weight:500; line-height:1.4; color:var(--color-muted,#6A6253); overflow-wrap:normal; word-break:keep-all; hyphens:none; text-wrap:balance; }
+.ff .ff-hf22 .ff-dx-tag { margin:0 0 18px; padding-left:19px /* v1.190 (Alex 21 Nov 12:15/12:52): lined up with the heading text: 5px gold line + 14px gap */; font-family:var(--font-sans,'Inter',sans-serif); font-size:16px /* v1.190 (Alex 21 Nov 12:15/12:52): 16 at every width */; font-weight:500; line-height:1.4; color:var(--color-muted,#6A6253); overflow-wrap:normal; word-break:keep-all; hyphens:none; text-wrap:balance; }
 /* The bookings box: a drop-down chevron in its top right (the box's own gold squircle chevron), turning when open. */
 .ff .ff-hf22 .ff-hbc-btn { position:relative; }
 .ff .ff-hf22 .ff-hbc-btn .ff-hb23-t { padding-right:46px; }
