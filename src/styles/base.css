@@ -1665,3 +1665,7 @@
 
 /* v1.188 fix (Aragorn 21 Nov): A2 - the Share pop-up's column (card + four buttons) is centred in the screen as one group. */
 .ff .ff-csx-dlg { justify-content:center; }
+
+/* v1.189 (Alex 21 Nov 10:53): the Beta feedback pop-up lists its question cards one under the other (a pop-up never pages left or right). */
+.ff .ff-fb189 { display:flex; flex-direction:column; align-items:center; gap:14px; padding:4px 0 6px; }
+.ff .ff-fb189 > [role="listitem"] { display:flex; justify-content:center; max-width:100%; }
