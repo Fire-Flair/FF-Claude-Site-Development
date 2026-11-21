@@ -10,7 +10,7 @@ category: Before you accept
 primary_intent: bartender shift terms
 author: FireFlair editorial team
 published: 2026-11-07
-modified: 2026-11-07
+modified: 2026-11-21
 reviewed: 2026-11-07
 cta: {label: Create your profile, destination: FF Team profile creation}
 related: [T03, T10, T09]
@@ -23,19 +23,17 @@ Confirm the duties, the total hours including setup and clear-down, the rate, wh
 
 ## The checklist
 
-| Check | Why it matters |
-|---|---|
-| **Duties** | Bar service only, or also barback work, stock, glass collection or setup? |
-| **Total hours** | Do paid hours include setup and finish, or only service? |
-| **Arrival time and place** | Access, parking, loading, who meets you |
-| **Rate and who pays** | Is the pay per hour or for the shift? Who pays, you from the booker or an agency? |
-| **Payment date and method** | When, how, and whether you invoice |
-| **Breaks** | When and how long |
-| **Uniform and kit** | What you wear and what you bring |
-| **Menu** | Cocktail list or simple service? Can you learn it in time? |
-| **Support** | Is there a barback or manager? Who is your contact on the night? |
-| **Transport home** | Late finishes, last trains, paid taxi |
-| **Cancellation** | What happens if the event is cancelled or you cannot attend |
+- **Duties.** Find out whether it is bar service only, or also barback work, stock, glass collection or setup.
+- **Total hours.** Confirm whether the paid hours include setup and finish, or only service.
+- **Arrival time and place.** Know the access, parking and loading, and who meets you.
+- **Rate and who pays.** Confirm whether the pay is per hour or for the shift, and who pays you: the booker or an agency.
+- **Payment date and method.** Agree when and how you are paid, and whether you invoice.
+- **Breaks.** Know when they are and how long.
+- **Uniform and kit.** Know what you wear and what you bring.
+- **Menu.** Check whether it is a cocktail list or simple service, and that you can learn it in time.
+- **Support.** Find out whether there is a barback or manager, and who your contact is on the night.
+- **Transport home.** Plan for late finishes and last trains, and ask about a paid taxi.
+- **Cancellation.** Know what happens if the event is cancelled or you cannot attend.
 
 ## Two sample briefs (fictional)
 

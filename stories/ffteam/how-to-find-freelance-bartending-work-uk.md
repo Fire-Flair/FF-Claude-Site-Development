@@ -10,7 +10,7 @@ category: Finding work
 primary_intent: freelance bartending work UK
 author: FireFlair editorial team
 published: 2026-11-07
-modified: 2026-11-07
+modified: 2026-11-21
 reviewed: 2026-11-07
 cta: {label: Create your profile, destination: FF Team profile creation}
 related: [T02, T04, T08, T12, T13]
@@ -24,13 +24,11 @@ Freelance bartending work comes through five routes: work platforms, staffing ag
 
 ## The five routes
 
-| Route | How it works | Worth knowing |
-|---|---|---|
-| **Work platforms** | You join, set your availability and accept shifts. Examples include Indeed Flex (a dedicated bartender route), Brigad and Stint. | Check what each takes from your pay or charges the business, and what commitment it asks for. |
-| **Staffing agencies** | An agency places you on shifts and usually handles pay. | Some hospitality agencies have a specialist bar division with bartenders, barbacks and flair roles. |
-| **Event bar companies** | Companies that run bars at weddings, parties and corporate events book freelancers for busy dates. | Contact them directly and ask what they look for. |
-| **Referrals** | Other bartenders, managers and past clients pass work on. | The strongest route. See [repeat bookings](/stories/repeat-bookings-freelance-bartender). |
-| **Direct to venues** | You approach bars, hotels and venues for cover shifts. | Slower, and works best when you already know someone. |
+- **Work platforms.** You join, set your availability and accept shifts. Examples include Indeed Flex (a dedicated bartender route), Brigad and Stint. Check what each takes from your pay or charges the business, and what commitment it asks for.
+- **Staffing agencies.** An agency places you on shifts and usually handles pay. Some hospitality agencies have a specialist bar division with bartenders, barbacks and flair roles.
+- **Event bar companies.** Companies that run bars at weddings, parties and corporate events book freelancers for busy dates. Contact them directly and ask what they look for.
+- **Referrals.** Other bartenders, managers and past clients pass work on. This is the strongest route. See [repeat bookings](/stories/repeat-bookings-freelance-bartender).
+- **Direct to venues.** You approach bars, hotels and venues for cover shifts. This route builds more slowly and works best when you already know someone.
 
 Coople closed its UK operations from 1 January 2026, so if you used it before, see [Coople alternatives for UK bar staff](/stories/coople-alternatives-uk-bar-staff) when it is available, and contact Coople for old pay or tax paperwork.
 
