@@ -231,9 +231,10 @@ function FeedbackSheet({ open, onClose }) {
           </div>
         ) : (<>
           <p className="ff-body ff-muted" style={{ fontSize: 12.5, margin: "0 0 10px" }}>{done} of {qs.length} answered. Tap a card to answer.</p>
-          <HScroll label="Feedback questions" snap>
-            {qs.map(x => <QuestionCard key={x.id} q={x} answer={answerOf(state, x)} onClick={() => setQ(x)} />)}
-          </HScroll>
+          {/* v1.189 (Alex 21 Nov 10:53): a pop-up never pages left or right; the question cards are one vertical list. */}
+          <div className="ff-fb189" role="list" aria-label="Feedback questions">
+            {qs.map(x => <div key={x.id} role="listitem"><QuestionCard q={x} answer={answerOf(state, x)} onClick={() => setQ(x)} /></div>)}
+          </div>
         </>)}
       </Sheet>
       <QuestionSheet open={!!q} q={q} onClose={() => setQ(null)} />
