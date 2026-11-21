@@ -286,9 +286,9 @@ function CompanyCardFace({ c, edit, set, onLogo, size = "", party, links, onCard
     : <span className="nm">{co.name || (party ? "Your name" : "Your company")}</span>;
   const kind = edit ? <span className="kd2"><I11.Briefcase size={12} /><input className="ff-cardin kd" value={co.kind || ""} placeholder="What do you do?" aria-label="What do you do?" maxLength={70} onChange={(e) => set({ kind: e.target.value })} /></span>
     : (String(co.kind || "").trim() ? <span className="kd kd2"><I11.Briefcase size={12} /><span>{co.kind}</span></span> : null);
-  /* v1.170 (Alex 20 Nov 19:52): in the Profile builder the card itself says Company card and takes the postcode typed straight onto it. */
+  /* v1.188 (Alex 21 Nov): in the Profile builder the card takes the postcode typed straight onto it; its box says "Where are you based?" (was "Postcode"). */
   const area = (edit && onCard) ? (
-    <span className="ar ar-base"><I11.MapPin size={12} /><BaseField17 ink={t.ink} owner="company" /></span>
+    <span className="ar ar-base"><I11.MapPin size={12} /><BaseField17 ink={t.ink} owner="company" ph="Where are you based?" /></span>
   ) : (edit || String(areas || "").trim()) ? (
     <span className="ar"><I11.MapPin size={12} /><span>{areas || "Where you're based"}</span></span>
   ) : null;

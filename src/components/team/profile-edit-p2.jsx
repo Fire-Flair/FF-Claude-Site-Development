@@ -454,27 +454,69 @@ function PE2QA() {
   const todo = qs.filter(q => !isDone(q) || stay.includes(q.id));
   const done = qs.filter(q => isDone(q) && !stay.includes(q.id));
   const pendingType = (q, v) => v === "Other" || (q.detail && v === q.detail.option);
+  /* v1.188 (Alex 21 Nov): a typed "Other" answer: a tick in a circle shows on the card (reward), held about a second; then the card blurs and fades
+     as it moves to the answered cards; only AFTER that do the remaining cards move left to fill the gap (smooth, the row itself does not slide).
+     Reduced motion: the tick for a moment, then the move with a short fade only. */
+  const [leave, setLeave] = useState({});
+  const [arrive, setArrive] = useState([]);
+  const timers = useRef([]);
+  const flip = useRef(null);
+  const secRef = useRef(null);
+  useEffect(() => () => { timers.current.forEach(clearTimeout); }, []);
+  const later = (fn, ms) => { timers.current.push(setTimeout(fn, ms)); };
+  const reduced = () => !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  const snap = () => {
+    const m = {};
+    if (secRef.current) secRef.current.querySelectorAll("[data-flip188]").forEach(el => { m[el.getAttribute("data-flip188")] = el.getBoundingClientRect().left; });
+    return m;
+  };
+  useLayoutEffect(() => {
+    const before = flip.current;
+    if (!before) return;
+    flip.current = null;
+    if (!secRef.current) return;
+    secRef.current.querySelectorAll("[data-flip188]").forEach(el => {
+      const k = el.getAttribute("data-flip188");
+      if (k === before.skip188 || before[k] == null || !el.animate) return;
+      const dx = before[k] - el.getBoundingClientRect().left;
+      if (Math.abs(dx) > 1) el.animate([{ transform: `translateX(${dx}px)` }, { transform: "none" }], { duration: 420, easing: "cubic-bezier(.3,.7,.2,1)" });
+    });
+  });
   const answer = (q, v) => {
+    const typed = stay.includes(q.id) && !pendingType(q, v) && String(v || "").trim() && !leave[q.id];
     dispatch({ type: "ANSWER", qid: q.id, value: v });
-    setStay(s => pendingType(q, v) ? (s.includes(q.id) ? s : [...s, q.id]) : s.filter(x => x !== q.id));
+    if (!typed) { setStay(s => pendingType(q, v) ? (s.includes(q.id) ? s : [...s, q.id]) : s.filter(x => x !== q.id)); return; }
+    const rm = reduced();
+    setLeave(l => ({ ...l, [q.id]: "ok" }));
+    const move = () => {
+      if (!rm) flip.current = { ...snap(), skip188: q.id };
+      setStay(s => s.filter(x => x !== q.id));
+      setLeave(l => { const n = { ...l }; delete n[q.id]; return n; });
+      setArrive(a => a.includes(q.id) ? a : [...a, q.id]);
+      later(() => setArrive(a => a.filter(x => x !== q.id)), rm ? 300 : 500);
+    };
+    if (rm) { later(move, 800); return; }
+    later(() => setLeave(l => ({ ...l, [q.id]: "out" })), 1000);
+    later(move, 1360);
   };
   const create = (text, value) => {
     const id = `my_${Date.now().toString(36)}`;
     dispatch({ type: "MY_QUESTION_ADD", question: { id, text, type: "yesno" }, value, visibility: "private" });
   };
   const card = (q) => (
-    <span key={q.id} data-qid={q.id} className="pe2-qa-cardw">
+    <span key={q.id} data-qid={q.id} data-flip188={q.id} className={"pe2-qa-cardw" + (leave[q.id] === "ok" ? " leave188 ok188" : leave[q.id] === "out" ? " leave188 out188" : "") + (arrive.includes(q.id) ? " in188" : "")}>
       <PE2QCard q={q} value={answerOf(state, q)} onAnswer={(v) => answer(q, v)} />
+      {leave[q.id] && <span className="pe2-qc-ok188" aria-hidden="true"><TickGlyph size={30} /></span>}
     </span>
   );
   return (
-    <section className="ff-pp ff-pp21 pe2-qa" id="pe2-qa" aria-labelledby="pe2-qa-h">
+    <section className="ff-pp ff-pp21 pe2-qa" id="pe2-qa" aria-labelledby="pe2-qa-h" ref={secRef}>
       <style>{PE2_CSS}</style>
       <div className="ff-pp-head"><h2 id="pe2-qa-h" className="ff-about-h">Q&amp;A</h2></div>
       <div className="ff-qa-panel pe2-qa-panel">
         <HScroll label="Questions" snap>
           {todo.map(card)}
-          {canAdd && <span className="pe2-qa-cardw"><PE2QCreate onCreate={create} /></span>}
+          {canAdd && <span className="pe2-qa-cardw" data-flip188="create"><PE2QCreate onCreate={create} /></span>}
           {done.map(card)}
         </HScroll>
       </div>

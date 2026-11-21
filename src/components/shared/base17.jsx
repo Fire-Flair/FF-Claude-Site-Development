@@ -170,7 +170,7 @@ const BASE17_CSS = `
 
 /* The card's location field: one postcode box. A postcode is looked up and saved at once; a place name can be
    typed instead and is saved as an approximate base. */
-function BaseField17({ ink, owner }) {
+function BaseField17({ ink, owner, ph }) {
   const { state, dispatch } = useStore();
   const co = owner === "company";
   const mk = co ? "base17co" : "base17";
@@ -219,7 +219,7 @@ function BaseField17({ ink, owner }) {
           <div className={`ff-base17-in${ink ? " card" : ""}`}>
             <input value={pc} onChange={(e) => { setPc(e.target.value.slice(0, 40)); setMsg(""); }}
               onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); find(); } }}
-              placeholder="Postcode" aria-label="Postcode" autoComplete="off" spellCheck={false} style={ink ? { color: ink } : undefined} />
+              placeholder={ph || "Postcode"} aria-label={ph || "Postcode"} autoComplete="off" spellCheck={false} style={ink ? { color: ink } : undefined} />
           </div>
           {msg && <p className="ff-base17-msg" role="alert">{msg}</p>}
           {!pcOk && pc.trim().length >= 2 && (hits.length
