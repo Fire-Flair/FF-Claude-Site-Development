@@ -144,7 +144,7 @@ function TcPop190({ sets, start, mode = "own", onAccept, onClose }) {
                 <span className="nm">{SS.name}</span>
                 <span className="row">
                   {SS.pdf ? <span className="pf"><TC190I.Doc size={21} aria-hidden="true" /><span className="w">Full PDF</span></span> : <span />}
-                  {own && (yes ? <span className="st y" aria-label="Agreed"><TC190I.Check size={13} strokeWidth={3} aria-hidden="true" /></span> : <span className="st n" aria-label="Not agreed yet"><TC190I.XC size={21} aria-hidden="true" /></span>)}
+                  {(own && yes) ? <span className="st y" aria-label="Agreed"><TC190I.Check size={13} strokeWidth={3} aria-hidden="true" /></span> : <span className="st n" aria-label="Not agreed yet"><TC190I.XC size={21} aria-hidden="true" /></span>}
                 </span>
               </button>);
           })}
