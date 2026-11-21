@@ -35,25 +35,69 @@ const TERM_SETS17 = {
 };
 
 
-/* NET188 round 2: the terms for the member's own Signature package (five suggested points, all editable). Not in TERM_SETS17, so the bar's pop-up does not list it. */
+/* v1.189 (Alex 21 Nov 10:53): the core terms of a member's OWN Signature packages: ONE set of five for all of them. A separate
+   constant, so PARTY_PKG_TERMS17 (the FFParty package sign-up terms and FireFlair packages' Details) stays word for word.
+   Wording: Elrond's /home/claude/orders/NET189/elrond/signature-terms-v189.md, pasted word for word. */
+const SIGNATURE_TERMS189 = [
+  { k: "how", label: "How packages work", text: "This package is a fixed offer that clients book on FFParty. I set its amount, and it is shown before you book. By offering the package, I agree to that amount." },
+  { k: "boss", label: "Self-employed", text: "I work as a self-employed freelancer. I deal with you directly, and FireFlair supports me. FireFlair is not my employer." },
+  { k: "book", label: "Bookings", text: "When you book this package, FireFlair sends me an invitation on WhatsApp. The booking is confirmed once I accept, and not before." },
+  { k: "cancel", label: "Cancelling", text: "If I cannot make a booking, I will tell you and FireFlair as early as I can. Late cancellations affect my reputation on FireFlair." },
+  { k: "work", label: "Standards and reviews", text: "I will arrive on time, dressed as agreed, and deliver the package as it is described. You can review me afterwards, and your review appears on my profile." },
+];
+
+/* The five core terms as the member has them: saved values (state.pkgTerms188), else the defaults above. */
+const sigCoreTerms189 = (state) => SIGNATURE_TERMS189.map(t => ({ ...t, text: ((state.pkgTerms188 || {})[t.k]) != null ? state.pkgTerms188[t.k] : t.text }));
+
+/* One box per Signature package: the tab's package label, used when the package has no typed name yet. */
+const SIG_TAB_LABEL189 = { bar: "Bar package", ent: "Entertainment package", svc: "Services package" };
+
+
+/* NET188 round 2: the terms for the member's own Signature package (five points, all editable). Not in TERM_SETS17, so the bar's pop-up does not list it. */
 const TERM_SETS188 = {
-  pkg: { key: "pkgTerms188", title: "Signature package T&Cs", note: "", head: "Terms and conditions", list: PARTY_PKG_TERMS17 },
+  pkg: { key: "pkgTerms188", title: "Signature package T&Cs", note: "", head: "Terms and conditions", list: SIGNATURE_TERMS189 },
 };
+
+/* v1.189 (Alex 21 Nov 10:53): a text box that grows with its text, so the whole text shows and nothing scrolls inside it. */
+function GrowTA189({ value, onChange, label, maxLength }) {
+  const ref = useRef(null);
+  const fit = () => { const el = ref.current; if (!el) return; el.style.height = "auto"; el.style.height = el.scrollHeight + 2 + "px"; };
+  React.useLayoutEffect(() => {
+    fit();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit).catch(() => {});
+    window.addEventListener("resize", fit);
+    return () => window.removeEventListener("resize", fit);
+  }, [value]);
+  return <textarea ref={ref} data-no-grow rows={1} value={value} maxLength={maxLength} aria-label={label} onChange={onChange} />;
+}
 
 function TermsSheet17({ set, onClose }) {
   const { state, dispatch } = useStore();
   const S = TERM_SETS17[set] || TERM_SETS188[set];
   const [terms, setTerms] = useState(() => ({ ...Object.fromEntries(S.list.map(t => [t.k, t.text])), ...(state[S.key] || {}) }));
-  const save = () => { dispatch({ type: "V11_SET", patch: { [S.key]: terms } }); dispatch({ type: "TOAST", toast: "Terms saved to your profile" }); onClose(); };
+  /* v1.189: the Signature set also holds one optional box per Signature package (state.sigPkgTerms189 { [tab]: text }). */
+  const sig = set === "pkg";
+  const account = sig ? qaAccount17(state) : null;
+  const groups = sig ? ownPkgGroups185(state) : [];
+  const tabs = sig ? (groups.length ? groups : ["bar"]) : [];
+  const pkName = (tab) => { const a = account ? qaAnswer17(state, account, pkcOwnQid17(tab)) : null; const n = a && !a.withdrawnAt && a.typed && a.typed.name; return n ? String(n) : SIG_TAB_LABEL189[tab]; };
+  const [pk, setPk] = useState(() => Object.fromEntries(tabs.map(t => [t, (state.sigPkgTerms189 || {})[t] || ""])));
+  const save = () => {
+    const patch = { [S.key]: terms };
+    if (sig) patch.sigPkgTerms189 = { ...(state.sigPkgTerms189 || {}), ...pk };
+    dispatch({ type: "V11_SET", patch }); dispatch({ type: "TOAST", toast: "Terms saved to your profile" }); onClose();
+  };
   return (
     <Sheet center open onClose={onClose} title={S.head}>
-      <div className="ff-tc188">
-        <HScroll label={S.head}>
-          {S.list.map((t, i) => (
-            <label key={t.k} className="ff-tc188-c"><span><b>{i + 1}</b>{t.label}</span>
-              <textarea data-no-grow value={terms[t.k] || ""} maxLength={500} aria-label={t.label} onChange={(e) => setTerms({ ...terms, [t.k]: e.target.value })} /></label>
-          ))}
-        </HScroll>
+      <div className="ff-tc188" role="list" aria-label={S.head}>
+        {S.list.map((t, i) => (
+          <label key={t.k} role="listitem" className="ff-tc188-c"><span><b>{i + 1}</b>{t.label}</span>
+            <GrowTA189 value={terms[t.k] || ""} maxLength={500} label={t.label} onChange={(e) => setTerms({ ...terms, [t.k]: e.target.value })} /></label>
+        ))}
+        {tabs.map(tab => (
+          <label key={"pk-" + tab} role="listitem" className="ff-tc188-c pk"><span>{pkName(tab)}</span>
+            <GrowTA189 value={pk[tab] || ""} maxLength={600} label={pkName(tab)} onChange={(e) => setPk({ ...pk, [tab]: e.target.value.slice(0, 600) })} /></label>
+        ))}
       </div>
       <div className="ff-bsec-acts" style={{ marginTop: 8 }}>
         <Btn variant="primary" onClick={save}><S17I.Check size={14} /> Save to my profile</Btn>
@@ -69,25 +113,25 @@ function TermsCards17() {
   const def = { label: "Terms and conditions", singular: "Terms", icon: "qualification", fields: ["description"] };
   return (
     <>
-      <HScroll label="Terms and conditions">
-        {Object.entries(TERM_SETS17).map(([k, S]) => <InformationCard key={k} record={{ ...makeRecord("terms", S.title), id: `tc_${k}`, description: S.note }} def={def} themeKey="onyx" editable onClick={() => setOpen(k)} />)}
-      </HScroll>
+      <div className="ff-tc188-list" role="list" aria-label="Terms and conditions">
+        {Object.entries(TERM_SETS17).map(([k, S]) => <div key={k} role="listitem"><InformationCard record={{ ...makeRecord("terms", S.title), id: `tc_${k}`, description: S.note }} def={def} themeKey="onyx" editable onClick={() => setOpen(k)} /></div>)}
+      </div>
       {open && <TermsSheet17 set={open} onClose={() => setOpen(null)} />}
     </>
   );
 }
 
 
-/* NET188 (Alex 21 Nov): Terms and conditions from the bar's second button: a centred pop-up holding the two term sets; tapping one swaps it for that set's editor (never two pop-ups at once). */
+/* NET188 (Alex 21 Nov): Terms and conditions from the bar's second button: a centred pop-up holding the two term sets; tapping one swaps it for that set's editor (never two pop-ups at once). v1.189: the cards sit one under the other. */
 function TermsPop188({ open, onClose }) {
   const [set, setSet] = useState(null);
   const def = { label: "Terms and conditions", singular: "Terms", icon: "qualification", fields: ["description"] };
   if (set) return <TermsSheet17 set={set} onClose={() => { setSet(null); onClose(); }} />;
   return (
     <Sheet center open={open} onClose={onClose} title="Terms and conditions">
-      <HScroll label="Terms and conditions">
-        {Object.entries(TERM_SETS17).map(([k, S]) => <InformationCard key={k} record={{ ...makeRecord("terms", S.title), id: `tc_${k}`, description: S.note }} def={def} themeKey="onyx" editable onClick={() => setSet(k)} />)}
-      </HScroll>
+      <div className="ff-tc188-list" role="list" aria-label="Terms and conditions">
+        {Object.entries(TERM_SETS17).map(([k, S]) => <div key={k} role="listitem"><InformationCard record={{ ...makeRecord("terms", S.title), id: `tc_${k}`, description: S.note }} def={def} themeKey="onyx" editable onClick={() => setSet(k)} /></div>)}
+      </div>
     </Sheet>
   );
 }
