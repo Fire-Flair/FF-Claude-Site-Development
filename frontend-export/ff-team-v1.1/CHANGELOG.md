@@ -4,6 +4,14 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.190
+- **T's and C's:** one standard box wherever terms appear (profile bar, Signature packages, finished profile Overview, FFParty sign-up): a row of term sets with a green tick or circled X. The pop-up lists the five terms, the "Full terms and conditions (PDF)" link, and pinned Agree, Decline and Book a meeting (opens the meeting page directly). On the finished profile the box sits at the bottom of Overview; the Packages tab no longer has a terms section (content kept for reuse).
+- **Profile Card headline:** in Cinzel, a little smaller than the name, shown exactly as typed (CEO stays CEO). The headline box no longer forces capitals while typing.
+- **Home hero:** current fonts at golden-ratio sizes 42 / 26 / 26 / 16; the "Made for the events industry" paragraph lines up with its heading.
+- **Stories:** the three FF Team stories that used tables are rewritten as lists; no more sideways scrolling in the story reader. Stories no longer use tables.
+- Agreed terms and package terms are kept after a reload.
+- Page saved as `live-v1.190-index.html`. Artifact version 1795271668-e9f1.
+
 ## v1.189
 - **View all and attribute pop-ups:** one vertical scrolling page in the profile style: name, full description in smaller text, picture thumbnails underneath. Tapping a thumbnail opens the picture full screen with a Back button; Back, Escape or the back gesture return to the same place.
 - **Pop-ups never page left or right:** the terms editors and the Beta feedback questions are now vertical lists. The "Tap a card to answer." line is gone.

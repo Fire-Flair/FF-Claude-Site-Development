@@ -154,7 +154,7 @@ function TcPop190({ sets, start, mode = "own", onAccept, onClose }) {
         <div className={`tc190-terms${TC190_TERM_TICKS ? "" : " no-tick"}`} role="list" aria-label={S.name}>
           {S.list.map((t, i) => (
             <div key={t.k} role="listitem" className="tc190-term">
-              <span className="no">{i + 1}</span><span className="lb">{t.label}</span>
+              <span className="no">{i + 1}</span><span className="lb">{String(t.label || "").replace(/(\w)-(?=\w)/g, "$1\u2011")}</span>
               {TC190_TERM_TICKS && <span className="ok" aria-hidden="true"><TC190I.Check size={13} strokeWidth={3} /></span>}
               {own
                 ? <div className="tx"><GrowTA189 value={cur[t.k] || ""} maxLength={500} label={t.label} onChange={(e) => setEdits({ ...edits, [sel]: { ...cur, [t.k]: e.target.value } })} /></div>

@@ -534,7 +534,7 @@ function EditablePlayerCard({ draft, setDraft, themeKey = "onyx", tag = "usernam
     "aria-label": "Headline",
     maxLength: 28,
     onChange: (e) => setDraft({ ...draft, headline: e.target.value }),
-    style: { color: t.dark ? t.accent : "#6A4F12", borderBottomColor: rule, marginTop: 8, textAlign: "center", fontSize: 13.5, textTransform: "uppercase", letterSpacing: ".14em" }
+    style: { color: t.dark ? t.accent : "#6A4F12", borderBottomColor: rule, marginTop: 8, textAlign: "center", fontSize: 13.5, letterSpacing: ".04em" }
   }), React.createElement("div", {
     style: { marginTop: 8 }
   }, React.createElement("div", {
