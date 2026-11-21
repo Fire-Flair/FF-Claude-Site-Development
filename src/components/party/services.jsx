@@ -8,7 +8,7 @@
 const PARTY_SERVICES = pkgServices17({ baseOnly: true });
 
 
-const STAFFING_SERVICE = { ...pkgServices17({ all: true }).find(x => x.id === "svc_staffing"), site: "FF Staff", domain: "FFStaff.uk" };
+const STAFFING_SERVICE = { ...pkgServices17({ all: true }).find(x => x.id === "svc_staffing"), site: "FFStaff", domain: "FFStaff.uk" };
 
 
 
