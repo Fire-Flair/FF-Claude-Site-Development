@@ -147,11 +147,11 @@ function ProfilePackages17({ person, own, staff = true, items: itemsIn }) {
     if (it.kind === "extra") return <BkPkgCard17 sv={{ id: it.x.id, title: it.x.name }} tab={it.tab} on={false} onClick={toBk} />;
     if (it.kind === "own") {
       const x = it.item, tab = /dj|music|act/i.test(x.kind || "") ? "ent" : "svc";
-      return <ProfPkgFace17 dataId={"pp-" + x.id} d={{ id: x.id, tab, site: "FF Party", name: x.title, line: x.kind, brief: x.text, provide: x.text, points: [] }}
+      return <ProfPkgFace17 dataId={"pp-" + x.id} d={{ id: x.id, tab, site: "FFParty", name: x.title, line: x.kind, brief: x.text, provide: x.text, points: [] }}
         rows={[[S17I.Sparkles, "Includes", x.text]]} foot={null} />;
     }
     const pk = PK_SOON17.bar[0];
-    return <ProfPkgFace17 dataId="create-bar" d={{ id: "create-bar", tab: "bar", site: "FF Party", name: "Create your own", line: "Your skills, your package, your price.", points: [] }}
+    return <ProfPkgFace17 dataId="create-bar" d={{ id: "create-bar", tab: "bar", site: "FFParty", name: "Create your own", line: "Your skills, your package, your price.", points: [] }}
       rows={[[S17I.Sparkles, "You provide", pk.inc], [S17I.Users, "Ideal for", pk.ideal], [S17I.Clock, "Duration", "As long as you choose"]]} foot={signUp("pp-create-none")} />;
   };
   usePkcEvenIn17(box, items.map(it => it.id).join(",") + (own ? "1" : "0"));

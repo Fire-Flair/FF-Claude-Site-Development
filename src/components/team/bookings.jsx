@@ -463,9 +463,9 @@ const PKC_TBC17 = "Entertainment and services packages are to be confirmed.";
 /* One shape for every card and its Event brief and invoice. */
 function pkcData17(sv, tab) {
   const x = PKC_EXTRA_BY17[sv.id];
-  if (x) return { ...x, tab, site: "FF Party", tbc: true };
+  if (x) return { ...x, tab, site: "FFParty", tbc: true };
   const p = PKG_BY17[sv.id] || {}, t = PKC_TEAM17[sv.id] || {};
-  return { id: sv.id, tab: sv.id === "svc_staffing" ? "svc" : "bar", site: sv.site || "FF Party", name: p.name || sv.title, role: p.role, duration: p.durationLabel,
+  return { id: sv.id, tab: sv.id === "svc_staffing" ? "svc" : "bar", site: sv.site || "FFParty", name: p.name || sv.title, role: p.role, duration: p.durationLabel,
     line: t.line || p.headline, provide: t.provide || p.capability || p.includes, ideal: t.ideal || p.ideal, brief: t.brief || p.description,
     shop: t.shop, points: t.points || [], cond: t.cond || p.conditions, earn: PAY17[sv.id] != null ? pkgPayLabel17(sv.id) : "" };
 }
@@ -519,7 +519,7 @@ function PkgFace17({ d, rows, title, line, foot, refEl, cls = "", dataId }) {
   const Ico = PKC_ICO17[d.tab] || PKC_ICO17.bar;
   return (
     <div ref={refEl} className={`ff-pkc cmp${cls}`} data-pk17={dataId || d.id}>
-      <span className="ff-pkc-rb"><Ico size={13} strokeWidth={1.8} /> {d.site || "FF Party"}</span>
+      <span className="ff-pkc-rb"><Ico size={13} strokeWidth={1.8} /> {d.site || "FFParty"}</span>
       <span className="ff-pkc-logo"><FFLogo size={34} tier="gold" /></span>
       <div className="ff-pkc-hd">{title}{line}</div>
       <div className="ff-pkc-rows">
@@ -605,7 +605,7 @@ function BkPkgOwn17({ tab }) {
     setBusy(false);
     dispatch({ type: "TOAST", toast: r.ok ? `Signed up: ${f.name.trim()}` : "That couldn't be saved. Try again." });
   };
-  const d = { id: "own-" + tab, tab, site: "FF Party", name: f.name.trim(), line: f.line.trim(), provide: f.provide.trim(), ideal: f.ideal.trim(), duration: f.duration.trim(), earn: pkcGBP17(f.earn), points: [], brief: f.provide.trim() };
+  const d = { id: "own-" + tab, tab, site: "FFParty", name: f.name.trim(), line: f.line.trim(), provide: f.provide.trim(), ideal: f.ideal.trim(), duration: f.duration.trim(), earn: pkcGBP17(f.earn), points: [], brief: f.provide.trim() };
   const inp = (k, ph, el = "input") => React.createElement(el === "area" ? "textarea" : "input", {
     className: `ff-pkc-tin${bad[k] ? " bad" : ""}`, value: f[k], onChange: set(k), placeholder: ph, disabled: on, "aria-label": ph, rows: el === "area" ? 2 : undefined, type: el === "area" ? undefined : "text" });
   /* Every type box grows with its text, so a word is never cut or split. */
@@ -728,12 +728,12 @@ function ProfPkgCard17({ svc }) {
   const p = PKG_BY17[svc.id] || {};
   const ref = useRef(null);
   usePkcFit17(ref, svc.id);
-  const eb = [svc.level === "Bar" ? "" : svc.level, svc.site || "FF Party"].filter(Boolean).join(" · ");
+  const eb = [svc.level === "Bar" ? "" : svc.level, svc.site || "FFParty"].filter(Boolean).join(" · ");
   const line = p.headline || svc.tagline;
   const rows = [[S17I.Sparkles, "Includes", p.includes || svc.includes], [S17I.Users, "Ideal for", p.ideal || svc.ideal], [S17I.Clock, "Duration", p.durationLabel || svc.time]].filter(r => r[2]);
   return (
     <div ref={ref} className="ff-pkc cmp" data-pk17={"pp-" + svc.id}>
-      <span className="ff-pkc-rb"><S17I.Sparkles size={12} /> {svc.site || "FF Party"}</span>
+      <span className="ff-pkc-rb"><S17I.Sparkles size={12} /> {svc.site || "FFParty"}</span>
       <span className="ff-pkc-logo"><FFLogo size={34} tier="gold" /></span>
       <div className="ff-pkc-hd">
         <div className="ff-pkc-eb fit">+ {eb} +</div>

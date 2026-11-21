@@ -224,9 +224,9 @@ function SiteMenu11({ onHome }) {
   return (
     <div className="ff-acct" ref={wrap}>
       <button type="button" ref={btn} className="ff-acct-btn" aria-haspopup="menu" aria-expanded={open} aria-controls="ff-sites11"
-        aria-label="FF Team, FireFlair sites" onClick={() => setOpen((o) => !o)}>
+        aria-label="FFTeam, FireFlair sites" onClick={() => setOpen((o) => !o)}>
         <img decoding="async" className="ff-acct-logo" src={FF_SITE_BRAND.team.icon} width={30} height={30} alt="" draggable={false} />
-        <span className="ff-display" style={{ fontSize: 15, lineHeight: 1.1, letterSpacing: ".06em", color: "#EAD79C", whiteSpace: "nowrap" }}>FF Team</span>
+        <span className="ff-display" style={{ fontSize: 15, lineHeight: 1.1, letterSpacing: ".06em", color: "#EAD79C", whiteSpace: "nowrap" }}>FFTeam</span>
       </button>
       {open && (
         <div id="ff-sites11" className="ff-acct-menu ff-sites11" role="menu" aria-label="FireFlair sites" onKeyDown={move}>

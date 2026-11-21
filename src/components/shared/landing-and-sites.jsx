@@ -94,11 +94,11 @@ const FF_VIP_LOGO = __ff_json("content/data/ff-vip-logo.json");
 
 
 const FF_SITES = [
-  { key: "team",  name: "FF Team",  domain: "ffteam.uk",  url: "https://ffteam.uk",  tier: "bronze",
+  { key: "team",  name: "FFTeam",  domain: "ffteam.uk",  url: "https://ffteam.uk",  tier: "bronze",
     line: "For hospitality professionals", pitch: "Freelancers and the people who work in and run businesses: build your Profile Card and get booked.", cta: "Create your card" },
-  { key: "staff", name: "FF Staff", domain: "ffstaff.uk", url: "https://ffstaff.uk", tier: "silver",
+  { key: "staff", name: "FFStaff", domain: "ffstaff.uk", url: "https://ffstaff.uk", tier: "silver",
     line: "For hospitality businesses", pitch: "Bars, restaurants, venues, caterers and event companies: hire staff for your events and keep the people you trust.", cta: "Hire staff" },
-  { key: "party", name: "FF Party", domain: "ffparty.uk", url: "https://ffparty.uk", tier: "gold",
+  { key: "party", name: "FFParty", domain: "ffparty.uk", url: "https://ffparty.uk", tier: "gold",
     line: "Plan an event and book your team", pitch: "Planning a party? Find your team and create your Event Card in minutes.", cta: "Plan an event" },
   { key: "vip",   name: "FF VIP",   domain: "ffvip.uk",   url: "https://ffvip.uk",   tier: "standard", logo: FF_VIP_LOGO, locked: true,
     line: "Your VIP card, luxury experiences and rewards", pitch: "Create your VIP card, book luxury experiences and VIP tables, and earn FF Rewards. Launch party in Shoreditch, early 2027.", cta: "Join the guest list" },
