@@ -94,7 +94,7 @@
 .ff .ff-pop17-x{position:absolute;top:26px;right:28px;z-index:5;width:46px;height:46px;border-radius:16px;display:flex;align-items:center;justify-content:center;border:1px solid var(--rule,#d9c9a3);background:var(--paper,#fffdf6);color:var(--gold-dk,#8a6a1e);cursor:pointer}
 .ff .ff-pop17-x:hover{background:#f3e9cf}
 
-/* v1.115 Hero Flow (Spotlight) for Top staff and Featured companies. */
+/* v1.115 Hero Flow (Spotlight) for Featured professionals and Featured companies. */
 .ff .ff-hf20{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;padding:14px calc(50% - 110px) 26px;margin:0 -16px;-webkit-overflow-scrolling:touch}
 .ff .ff-hf20::-webkit-scrollbar{display:none}
 .ff .ff-hf20-i{flex:0 0 auto;scroll-snap-align:center;transform:scale(var(--hf-s,.85));opacity:var(--hf-o,.6);transition:transform .12s linear,opacity .12s linear;position:relative}
@@ -105,7 +105,6 @@
 
 /* v1.120: the Network title sits at the same height as Your bookings; one search under the map legend. */
 .ff .ff-nm20 { margin-top: -18px; }
-.ff .ff-nm20-q { margin: 14px 0 6px; }
 @media (min-width:1100px){ .ff .ff-nm20 { margin-top: -35px; } }
 
 /* v1.122: a profile with photos shows them to the right of the Profile Card, above the tabs (as before the pop-up). */
@@ -113,7 +112,6 @@
 .ff .ff-pop17-card > div:has(.ff-phero.has-media) .ff-ptabs-wrap{grid-row:2}
 
 /* v1.123: on a wide screen the search and the pin you tapped sit under the title on the left; the map and its legend on the right. */
-.ff .ff-nm20-q{margin:14px 0 6px}
 .ff .ff-map-sel{margin-top:6px}
 @media (min-width:1100px){
   .ff .ff-nm20{grid-template-rows:auto auto auto 1fr auto auto}
@@ -121,7 +119,6 @@
   .ff .ff-nm20-l{grid-column:1;grid-row:1;position:static}
   .ff .ff-nm20 .ff-map{grid-column:2;grid-row:1 / span 4}
   .ff .ff-nm20 .ff-ml19{grid-column:2;grid-row:5}
-  .ff .ff-nm20 .ff-nm20-q{grid-column:2;grid-row:6;margin:6px 0 4px}
   .ff .ff-nm20 .ff-map-sel{grid-column:1;grid-row:2 / span 3;margin-top:10px}
   .ff .ff-mapinl17{display:flex;flex-direction:column;gap:14px;align-items:stretch;max-width:380px}
   .ff .ff-mapinl17-v{min-height:46px;border-radius:16px}
@@ -206,3 +203,20 @@
 .ff .ff-pb1, .ff .ff-pb1:hover { width: 38px; height: 54px; border-radius: 0 17px 17px 0; opacity: .72; }
 .ff .ff-pb1 svg { width: 24px; height: 24px; margin-left: -2px; }
 .ff .ff-pb1::after { inset: -16px -18px -8px -8px; }
+
+/* v1.187 (Alex 21 Nov): search in the heading rows, pinned to the top; 420px desktop map */
+.ff { --nh187-top: 41px; }
+.ff .ff-hr20-s[data-srch="pros"] { margin-top: -16px; }
+.ff .ff-nsp187 { height: 0; }
+.ff:has(.ff-hr20-s :focus) .ff-nsp187 { height: calc(100vh - 120px); }
+.ff .ff-hf187-h { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+@media (min-width: 1100px) {
+  .ff .ff-hr20-s, .ff .ff-hr20-s[data-srch="pros"] { margin-top: var(--nh187-top); }
+  .ff .ff-nm20 { --nm187-top: 22px; --nm187-h: 420px; grid-template-rows: auto 1fr; }
+  .ff .ff-nm20 .ff-map { grid-row: 1 / span 2; }
+  .ff .ff-nm20 .ff-ml19 { grid-row: 1 / span 2; align-self: start; margin-top: calc(var(--nm187-top) + var(--nm187-h) + 10px); }
+  .ff .ff-nm20 .ff-map-sel { grid-row: 2; }
+  .ff .ff-nm20 .ff-nm20-l .ff-tl20.ff-tl20-pg { margin-top: var(--nm187-top); }
+  .ff .ff-nm20 .ff-map { margin-top: var(--nm187-top); align-self: start; }
+  .ff .ff-nm20 .ff-map-uk.ff-map-real { height: var(--nm187-h) !important; }
+}

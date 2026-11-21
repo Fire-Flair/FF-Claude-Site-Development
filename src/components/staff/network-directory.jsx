@@ -169,6 +169,23 @@ function NetBrowse17(props) {
   const open = state.netPillar17 || "";
   /* v17.20 FF Team: map, then the search box, then the Directory and Venues. No Our professionals banner, no Explore by area. */
   const team20 = !!props.search && !props.noPackages;
+  /* v1.187 (Alex 21 Nov): FF Team has ONE return for browse and results, always the same shape, so the box being typed in is never
+     unmounted and the keyboard stays up. While there is a query only the section holding the box you type in is shown, and every
+     result sits directly under its heading row. */
+  if (team20) {
+    const has = !!query.trim();
+    const origin = has && window.__ffSrchAt === "dir" ? "dir" : "pros";
+    const showPros = !has || origin === "pros", showDir = !has || origin === "dir";
+    const results = React.createElement(NetResults187, { query: query, onPick: props.onPick, scope: props.scope });
+    return React.createElement(NetQ17.Provider, { value: query },
+      netMapOnly20(props),
+      showPros ? React.createElement("section", { id: "ff-our-pros", style: { marginTop: 18, scrollMarginTop: 70 } },
+        React.createElement(HeadRow20, { title: has ? "Search results" : "Our professionals", k: "pros", search: props.search, q: query }),
+        has ? results : React.createElement(React.Fragment, null, React.createElement(TopStaff11, null), React.createElement(ProsBrowse20, { onPick: props.onPick }))) : null,
+      showDir ? React.createElement(NetDirectory20, { search: props.search, q: query, results: has ? results : null }) : null,
+      React.createElement("style", null, NET20_CSS),
+      React.createElement("div", { className: "ff-nsp187", "aria-hidden": "true", style: has ? { height: "calc(100vh - 120px)" } : null }));
+  }
   if (query.trim()) {
     const found = netSearch17(state, query);
     const anyCo = found.cos.length + found.dir.length > 0;
@@ -532,7 +549,7 @@ function CoTiles17({ list, label = "Companies" }) {
 }
 
 
-/* Network pages (FF Team, FF Staff, FF Party): Top staff, then the map. */
+/* Network pages (FF Team, FF Staff, FF Party): Featured professionals, then the map. */
 const TOP_STAFF11 = ["stf_alex", "stf_gav", "stf_bruno", "stf_simao", "stf_dany", "stf_james"];
 
 
@@ -542,9 +559,9 @@ function TopStaff11() {
   const top = TOP_STAFF11.map(id => all.find(p => p.id === id)).filter(Boolean);
   if (!top.length) return null;
   return (
-    <section style={{ marginTop: 18 }}>
-      <SectionHead icon={<I11.Star size={15} color="var(--gold-dk)" strokeWidth={1.6} />} title="Top staff" />
-      <HeroFlow20 label="Top staff">
+    <section id="ff-featured-pros" className="ff-hf20-sec">
+      <h3 className="ff-hf20-h ff-hf187-h"><I11.Star size={14} color="currentColor" strokeWidth={1.8} aria-hidden="true" />Featured professionals</h3>
+      <HeroFlow20 label="Featured professionals">
         {top.map(p => <PlayerTile key={p.id} person={p} selected={state.role === "staff" && state.selection.includes(p.id)} onClick={() => { dispatch({ type: "VIEW", id: p.id }); window.scrollTo(0, 0); }} />)}
       </HeroFlow20>
     </section>
