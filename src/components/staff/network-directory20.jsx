@@ -126,21 +126,58 @@ function CatBoxes20({ items, active, onPick, label }) {
     }));
 }
 
+/* v1.187 (Alex 21 Nov): bring a Network search bar, and its title when the two are close, to the top of the visible
+   screen under the sticky top bar. Works with the iOS keyboard up: visualViewport.offsetTop is where the visible part starts. */
+function netPinTop187(row) {
+  if (!row || !document.body.contains(row)) return;
+  const bar = row.querySelector(".ff-hr20-s"); if (!bar) return;
+  const head = row.querySelector("h1,h2");
+  const vv = window.visualViewport, vvTop = vv ? vv.offsetTop : 0;
+  const tb = document.querySelector(".ff-topbar");
+  const stuck = tb && getComputedStyle(tb).position === "sticky" ? tb.getBoundingClientRect().bottom : 0;
+  const b = bar.getBoundingClientRect(), t = head ? head.getBoundingClientRect() : b;
+  const top = b.bottom - t.top <= 140 ? Math.min(t.top, b.top) : b.top;
+  const dy = Math.round(top - (Math.max(stuck, vvTop) + 10));
+  if (Math.abs(dy) > 2) window.scrollTo({ top: window.scrollY + dy, behavior: "instant" });
+}
+
+/* v1.187: the search results, moved unchanged out of NetBrowse17. They sit under the heading row of the box being typed in. */
+function NetResults187(props) {
+  const state = useStore().state;
+  const found = netSearch17(state, props.query);
+  if (!found) return null;
+  const anyCo = found.cos.length + found.dir.length > 0;
+  return React.createElement(React.Fragment, null,
+    React.createElement(GroupedPeople, { query: props.query, onPick: props.onPick, scope: props.scope, quietEmpty: anyCo }),
+    found.cos.length ? React.createElement(CompaniesSection, { title: "Companies", list: found.cos }) : null,
+    found.dir.length ? React.createElement(CompaniesSection, { title: "FF Event Directory", list: found.dir }) : null);
+}
+
 /* A Network heading with its words under it and, on a wide screen, the search on the right in line with the title. */
-function HeadRow20({ title, k, desc, search, grab }) {
+function HeadRow20({ title, k, desc, search, q }) {
   const ref = useRef(null);
-  /* Typing in one search box switches the page to the results view, which unmounts the box that had the cursor. The first heading's box takes the cursor over. */
+  const timers = useRef([]);
+  const still = function () { return !!(ref.current && ref.current.contains(document.activeElement)); };
   useEffect(function () {
-    if (grab && window.__ffSrchFocus && ref.current) {
-      const i = ref.current.querySelector("textarea,input");
-      if (i) { i.focus(); const n = (i.value || "").length; try { i.setSelectionRange(n, n); } catch (e) { /* not a text field */ } }
-    }
-  }, []);
+    const vv = window.visualViewport;
+    if (!vv || !search) return undefined;
+    const on = function () { if (still()) netPinTop187(ref.current); };
+    vv.addEventListener("resize", on);
+    return function () { vv.removeEventListener("resize", on); };
+  }, [!!search]);
+  useEffect(function () { return function () { timers.current.forEach(clearTimeout); timers.current = []; }; }, []);
+  React.useLayoutEffect(function () { if (still()) netPinTop187(ref.current); }, [q]);
+  const onFocus = function () {
+    window.__ffSrchAt = k;
+    netPinTop187(ref.current);
+    timers.current.forEach(clearTimeout);
+    timers.current = [60, 250, 500, 900].map(function (ms) { return setTimeout(function () { if (still()) netPinTop187(ref.current); }, ms); });
+  };
   return React.createElement("div", { className: "ff-hr20", ref: ref },
     React.createElement("div", { className: "ff-hr20-l" },
       React.createElement(LinedHead20, { title: title, k: k }),
       desc ? React.createElement("p", { className: "ff-hr20-d" }, desc) : null),
-    search ? React.createElement("div", { className: "ff-hr20-s", onFocusCapture: function () { window.__ffSrchFocus = true; }, onBlurCapture: function (e) { if (document.body.contains(e.target)) window.__ffSrchFocus = false; } }, search) : null);
+    search ? React.createElement("div", { className: "ff-hr20-s", id: k === "pros" ? "ff-net-search" : undefined, "data-srch": k, onFocusCapture: onFocus }, search) : null);
 }
 
 /* Our professionals: the same way as the Directory. One box per type of professional, one row of Player Cards below. */
@@ -177,6 +214,8 @@ function NetDirectory20(props) {
   const setCat = function (v) { window.__ffNetSel = Object.assign({}, window.__ffNetSel, { cat: v }); setCat0(v); };
   const setSub = function (fn) { setSub0(function (o) { const n = typeof fn === "function" ? fn(o) : fn; window.__ffNetSel = Object.assign({}, window.__ffNetSel, { sub: n }); return n; }); };
   const cur = cats.find(function (x) { return x.k === cat; }) || cats[0];
+  const heading = React.createElement(HeadRow20, { title: "FF Event Directory", k: "dir", desc: NET_DIR_DESC20, search: props.search, q: props.q });
+  if (props.results) return React.createElement("section", { id: "ff-directory", style: { marginTop: 30, scrollMarginTop: 70 } }, React.createElement("style", null, NET20_CSS), heading, props.results);
   if (!cur) return null;
   const d = NET_DIR_TABS20[cur.k] || NET_DIR_TABS20.bar;
   const groups = {};
@@ -185,7 +224,7 @@ function NetDirectory20(props) {
   const tcur = tabs.find(function (t) { return t.k === sub[cur.k]; }) || tabs[0];
   return React.createElement("section", { id: "ff-directory", style: { marginTop: 30, scrollMarginTop: 70 } },
     React.createElement("style", null, NET20_CSS),
-    React.createElement(HeadRow20, { title: "FF Event Directory", k: "dir", desc: NET_DIR_DESC20, }),
+    heading,
     React.createElement(FeaturedCos20, null),
     React.createElement("div", { className: "ff-br20" },
       React.createElement(CatBoxes20, { label: "Types of company", active: cur.k, onPick: setCat, items: cats.map(function (x) { return { k: x.k, label: x.label, icon: catIcon17(x.k), count: x.list.length }; }) }),
@@ -202,49 +241,26 @@ function NetDirectory20(props) {
 const NET_DIR_DESC20 = "Find the companies you want to work for or work with. UK bar companies, DJs, caterers and event services, a list that keeps growing, with contact details, so you can find support for your own events, find out more and register your interest.";
 const NET_MAP_DESC20 = "Everyone in events and hospitality, on one UK map. Our goal is to put you on it and get you jobs where you want to go.";
 
-/* The map on its own (the Explore by area drop-downs stay on the other pages). */
-function NetMap20(props) {
-  const search = props && props.search;
-  const qref = useRef(null);
-  /* Typing switches the page to the results view, which remounts the map and its search; the box takes the cursor back. */
-  useEffect(function () {
-    if (window.__ffSrchFocus && qref.current) {
-      const i = qref.current.querySelector("textarea,input");
-      if (i) { i.focus(); const n = (i.value || "").length; try { i.setSelectionRange(n, n); } catch (e) { /* not a text field */ } }
-    }
-  }, []);
+/* The map on its own (the Explore by area drop-downs stay on the other pages). v1.187: the search lives in the two heading rows, not here. */
+function NetMap20() {
   return React.createElement("section", { id: "ff-netmap", style: { marginTop: 0, scrollMarginTop: 70 } },
     React.createElement("div", { className: "ff-nm20" },
       React.createElement("div", { className: "ff-nm20-l" },
         React.createElement(LinedHead20, { tag: "h1", title: "Explore our network", k: "page" }),
         React.createElement("p", { className: "ff-hr20-d" }, NET_MAP_DESC20)),
       React.createElement("div", { className: "ff-nm20-r" },
-        React.createElement(FFMap, { mode: "network" }),
-        /* v1.120 (Alex 20 Nov 00:06): the one Network search sits below the map legend. */
-        search ? React.createElement("div", { id: "ff-net-search", className: "ff-netsrch20 ff-nm20-q", ref: qref, style: { scrollMarginTop: 70 }, onFocusCapture: function () { window.__ffSrchFocus = true; }, onBlurCapture: function (e) { if (document.body.contains(e.target)) window.__ffSrchFocus = false; } }, search) : null)));
+        React.createElement(FFMap, { mode: "network" }))));
 }
 
 
-/* Netmap: FF Team's map section with the network search placed under its heading (the search is at the top of the page). */
-function netMapWithSearch20(props) {
-  const after = props.after;
-  if (!after) return props.search ? React.createElement("section", { id: "ff-net-search", style: { marginTop: 18 } }, props.search) : null;
-  return after.type === NetMap20 ? React.cloneElement(after, { search: props.search }) : React.createElement(React.Fragment, null, props.search, after);
-}
-
-
-/* The map section without the search, and the search on its own (v1.91: the search sits between Our professionals and the FF Event Directory). */
+/* The map section on its own. */
 function netMapOnly20(props) {
-  const after = props.after;
-  return after && after.type === NetMap20 ? React.cloneElement(after, { search: props.search || null }) : (after || null);
-}
-function netSearch20(props) {
-  return props.search ? React.createElement("div", { id: "ff-net-search", className: "ff-netsrch20", style: { margin: "22px 0 18px", scrollMarginTop: 70 } }, props.search) : null;
+  return props.after || null;
 }
 
 
 /* v1.115 Hero Flow (Spotlight): the featured row. One card sits large in the middle, its neighbours step back; swipe or
-   scroll sideways to bring the next one forward. Used for Top staff and Featured companies only. */
+   scroll sideways to bring the next one forward. Used for Featured professionals and Featured companies only. */
 function HeroFlow20(props) {
   const items = React.Children.toArray(props.children).filter(Boolean);
   const ref = React.useRef(null);
