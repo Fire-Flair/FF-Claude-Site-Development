@@ -745,12 +745,13 @@ function SaveShareCard({ onSaved }) {
     });
   };
   const blocker = !signedIn ? "Create your FF Tag first."
-    : !cardReady ? "Add a profession to publish." : null;
+    : !cardReady && !p.published ? "Add a profession to publish." : null;
   /* v1.2: Publish saves and publishes on FF Team in one step; Welcome to the
      Team opens below. */
   const publish = () => {
     if (!signedIn) { save(); return; }
-    if (!cardReady) { dispatch({ type: "TOAST", toast: "Add a profession to publish" }); return; }
+    /* NET187: the first publish needs a profession; a member already live can still save with none (their page shows empty professions). */
+    if (!cardReady && !p.published) { dispatch({ type: "TOAST", toast: "Add a profession to publish" }); return; }
     saveWithIntro17(tag, p, state).then(r => {
       const now = Date.now();
       dispatch({ type: "PROFILE", patch: { saved: true, savedAt: r.savedAt, finishedAt: p.finishedAt || r.savedAt, published: true, publishedAt: p.publishedAt || now, introduction: r.intro || null } });

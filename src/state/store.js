@@ -377,7 +377,8 @@ function meAsStaff(profile, session) {
   return {
     id: "me", name: profile.name || session.tag || "Your profile", tag: session.tag || "username", headline: profile.headline || "",
     professions: primaryNames(profile, "professions", 3),
-    profession: primaryNames(profile, "professions", 1)[0] || "Professional",
+    /* NET187: no invented title when every profession is removed. */
+    profession: primaryNames(profile, "professions", 1)[0] || "",
     group: "Your profile",
     tier: cardTier17({ name: profile.name, tag: session.tag }), level: profile.level, years: null, rating: null, reviews: 0,
     skills: primaryNames(profile, "skills", 3),
