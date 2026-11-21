@@ -47,8 +47,8 @@ function professionMark(name) {
 }
 
 
-/* One symbol per profession (up to three, no repeats), the brand diamond
-   between them, and the car when the person drives. */
+/* v1.188 (Alex 21 Nov): the car sits FIRST (far left), then the brand diamond, then one symbol per
+   profession (up to three, no repeats) with diamonds between them, then the bank (business owner) last, far right. */
 const Bank169 = lucideIcon("Landmark");
 function ProfessionMarks({ professions, hasCar, hasBiz, full, color }) {
   const cq = (n) => `${n}cqw`;
@@ -56,10 +56,11 @@ function ProfessionMarks({ professions, hasCar, hasBiz, full, color }) {
   const marks = (professions || []).map(p => ({ p, icon: professionMark(p) })).filter(m => m.icon && !seen.has(m.icon) && seen.add(m.icon)).slice(0, 3);
   const s = cq(full ? 4.4 : 5.4), d = cq(full ? 1.2 : 1.5);
   const diamond = (k) => <span key={k} className="ff-pc-dm" style={{ width: d, height: d, transform: "rotate(45deg)", display: "block", flex: "none", background: color, opacity: .8 }} />;
-  if (!marks.length) return <>{diamond("solo")}{hasCar && <span style={{ width: cq(full ? 3.2 : 4), height: cq(full ? 3.2 : 4), display: "block", flex: "none" }}><Car size="100%" color={color} strokeWidth={1.8} /></span>}</>;
-  const label = [...marks.map(m => m.p), hasCar ? "drives to events" : null, hasBiz ? "business owner" : null].filter(Boolean).join(", ");
+  if (!marks.length) return <>{hasCar && <span style={{ width: cq(full ? 3.2 : 4), height: cq(full ? 3.2 : 4), display: "block", flex: "none" }}><Car size="100%" color={color} strokeWidth={1.8} /></span>}{diamond("solo")}</>;
+  const label = [hasCar ? "drives to events" : null, ...marks.map(m => m.p), hasBiz ? "business owner" : null].filter(Boolean).join(", ");
   return (
     <span className="ff-pc-marks" role="img" aria-label={label} title={label}>
+      {hasCar && <><span style={{ width: s, height: s, display: "block", flex: "none" }}><Car size="100%" color={color} strokeWidth={1.7} /></span>{diamond("dc")}</>}
       {marks.map((m, i) => {
         const I = markIcon(m.icon);
         return (
@@ -69,7 +70,6 @@ function ProfessionMarks({ professions, hasCar, hasBiz, full, color }) {
           </React.Fragment>
         );
       })}
-      {hasCar && <>{diamond("dc")}<span style={{ width: s, height: s, display: "block", flex: "none" }}><Car size="100%" color={color} strokeWidth={1.7} /></span></>}
       {hasBiz && Bank169 && <>{diamond("db")}<span style={{ width: s, height: s, display: "block", flex: "none" }}><Bank169 size="100%" color={color} strokeWidth={1.7} /></span></>}
     </span>
   );

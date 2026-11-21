@@ -271,3 +271,21 @@
 .ff .pe2-rail .ff-agrp:hover, .ff .pe2-rail .ff-agrp:active { transform: none; }
 .ff .pe2-attr-pop .pe2-star-t { z-index: 1; }
 .ff .ff-agrp-l > span > .ff-agrp-sd.clamp185 { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* v1.188 (Alex 21 Nov): company card location wording; Q&A Other tick, fade and move */
+.ff .pe2-qa-cardw.leave188 { pointer-events: none; }
+.ff .pe2-qc-ok188 { position: absolute; left: 50%; top: 50%; width: 60px; height: 60px; margin: -30px 0 0 -30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: linear-gradient(180deg, #F1DB8E, #C9A227); color: #16130F; box-shadow: 0 6px 18px rgba(0,0,0,.35); z-index: 6; animation: pe2-ok188 180ms ease-out both; }
+.ff .pe2-qc-ok188 svg { stroke: #16130F; color: #16130F; }
+.ff .pe2-qa-cardw.out188 { opacity: 0; filter: blur(6px); transform: translateX(14px); transition: opacity 340ms ease, filter 340ms ease, transform 340ms ease; }
+.ff .pe2-qa-cardw.in188 { animation: pe2-in188 300ms ease-out both; }
+@keyframes pe2-ok188 { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: scale(1); } }
+@keyframes pe2-in188 { from { opacity: 0; filter: blur(4px); transform: translateX(-14px); } to { opacity: 1; filter: blur(0); transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .ff .pe2-qc-ok188 { animation: none; }
+  .ff .pe2-qa-cardw.out188 { opacity: 1; filter: none; transform: none; transition: none; }
+  .ff .pe2-qa-cardw.in188 { animation: pe2-in188r 250ms ease-out both; }
+  @keyframes pe2-in188r { from { opacity: 0; } to { opacity: 1; } }
+}
+@media (max-width: 359px) {
+  .ff .pe2-biz167-card .ar-base .ff-base17-in input { font-size: 11px; letter-spacing: 0; }
+  .ff .pe2-biz167-card .ar-base { gap: 2px; } }

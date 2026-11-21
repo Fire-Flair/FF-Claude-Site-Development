@@ -512,7 +512,7 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
       <Sheet center open={!!attrCat} onClose={() => setAttrCat(null)} title={attrCat && cats[attrCat] ? cats[attrCat].label : ""}>
         {attrCat && cats[attrCat] && <ExpandedAttrs list={rankedRecords((records[attrCat] || []).filter(attrCat === "qualifications" ? pubQualOk : (r => !r.hidden && !r.proposed)))} />}
       </Sheet>
-      <Sheet open={allAttrs} onClose={() => setAllAttrs(false)} title="All attributes">
+      <Sheet center open={allAttrs} onClose={() => setAllAttrs(false)} title="All attributes">
         {[...new Set(attrs.map(it => it.category))].map(k => (
           <section key={k} className="ff-xatt-sec">
             <h3 className="ff-about-h">{cats[k] ? cats[k].label : k}</h3>
