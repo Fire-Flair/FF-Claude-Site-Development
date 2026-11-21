@@ -12,7 +12,7 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
 - **FF Event Directory:** opens on a mix of companies; a category filters only once tapped, and tapping it again clears it.
 - **No professions:** removing every profession no longer shows another member's profile; it keeps your own.
 - **Get Booked FFStaff:** the "Which category is...?" question no longer appears there.
-- Page saved as `live-v1.187-index.html`. Artifact version PENDING.
+- Page saved as `live-v1.187-index.html`. Artifact version 1795227050-9152.
 
 ## v1.186
 - **FireFlair Introductions:** the gold Edit button also shows on your own live profile page (it was only in the builder). It opens the same edit pop-up.
