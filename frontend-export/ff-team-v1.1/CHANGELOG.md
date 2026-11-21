@@ -4,6 +4,16 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.187
+- **Network page search:** the search bar sits on the same row as "Our professionals" and as "FF Event Directory" (under the description on a phone). It is no longer under the map. Typing turns "Our professionals" into "Search results". The box you type in is never replaced, so the keyboard stays open, and on focus the bar scrolls to the top of the screen so the keyboard does not cover the results.
+- **Network map:** shorter on a wide screen (420px) and level with the "Explore our network" heading.
+- **Featured professionals:** "Top staff" is renamed and takes the look of "Featured companies", with a star.
+- **Our professionals:** four boxes (Hospitality, Entertainment, Services, Specialists) with gold pills under the chosen one. Pills come from the professions people have; boxes and pills with nobody in them are greyed out. Nothing is chosen at first, so you see everyone.
+- **FF Event Directory:** opens on a mix of companies; a category filters only once tapped, and tapping it again clears it.
+- **No professions:** removing every profession no longer shows another member's profile; it keeps your own.
+- **Get Booked FFStaff:** the "Which category is...?" question no longer appears there.
+- Page saved as `live-v1.187-index.html`. Artifact version PENDING.
+
 ## v1.186
 - **FireFlair Introductions:** the gold Edit button also shows on your own live profile page (it was only in the builder). It opens the same edit pop-up.
 - **Packages:** a Sign up button works on the first tap, also on a card that is not in the middle of the row (it took two taps on wider screens).
