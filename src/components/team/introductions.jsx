@@ -434,6 +434,7 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
   const cats = BASE_CATEGORIES;
   const first = String(person.name || "").split(" ")[0] || "them";
   const pkgItems = profPkgItems17(state, person);
+  const [introEdit186, setIntroEdit186] = useState(false);
   /* Your own page, not viewed as a guest: Create your own has type boxes and FF Staff shows your rates and terms. */
   const own = person.id === "me" && !(state.viewingAsGuest && state.viewing === "me");
   const teamAll_ = useDirectory();
@@ -454,7 +455,8 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
   const asked = person.id === "me" ? [] : [...ASKED_EXAMPLES.filter(q => q.personId === person.id), ...(state.profileQuestions || []).filter(q => q.personId === person.id)];
   const tabs = [
     { key: "overview", label: "Overview" },
-    { key: "services", label: "Packages", count: pkgItems.length },
+    /* v1.186 (Alex 21 Nov): on your own profile page the count is the packages you can sign up to; on a public page, the ones signed up to. */
+    { key: "services", label: "Packages", count: own ? ownPkgItems185(state).length - 1 : pkgItems.length },
     { key: "teams", label: "Team", count: teams.length },
     { key: "reviews", label: "Reviews", count: reviews.length },
   ];
@@ -492,7 +494,8 @@ function PublicProfileBody({ person, packagesTail, aboutFirst = false }) {
               <ExperienceCards29 items={venues} />
             </section>
           )}
-          <FireFlairIntroductions17 person={person} />
+          <FireFlairIntroductions17 person={person} onEdit={own ? () => setIntroEdit186(true) : undefined} />
+          {own && <Sheet center open={introEdit186} onClose={() => setIntroEdit186(false)} title={FI_HEADING}><div className="ara-sheet"><IntroEditor17 onDone={() => setIntroEdit186(false)} /></div></Sheet>}
         </>)}
         {/* v1.57 (Alex, 18 Nov 20:51): Work locations are off the Packages tab for now; the slider has the Bookings package cards. */}
         {tab === "services" && (pkgItems.length || own

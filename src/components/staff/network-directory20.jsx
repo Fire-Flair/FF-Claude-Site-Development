@@ -279,7 +279,7 @@ function HeroFlow20(props) {
   const centre = function (e, i) {
     const r = ref.current, c = r && r.children[i]; if (!c) return;
     const mid = r.getBoundingClientRect().left + r.clientWidth / 2, b = c.getBoundingClientRect();
-    if (Math.abs(b.left + b.width / 2 - mid) > b.width * 0.35) { e.preventDefault(); e.stopPropagation(); r.scrollTo({ left: r.scrollLeft + (b.left + b.width / 2 - mid), behavior: "smooth" }); }
+    if (Math.abs(b.left + b.width / 2 - mid) > b.width * 0.35) { /* v1.186 (Alex 21 Nov): a Sign up button works on the first tap, also on a card that is not in the middle (the card still slides to the middle). */ if (!(e.target && e.target.closest && e.target.closest(".ff-pkc-go"))) { e.preventDefault(); e.stopPropagation(); } r.scrollTo({ left: r.scrollLeft + (b.left + b.width / 2 - mid), behavior: "smooth" }); }
   };
   return React.createElement("div", { className: "ff-hf20", ref: ref, role: "list", "aria-label": props.label },
     items.map(function (c, i) { return React.createElement("div", { className: "ff-hf20-i", role: "listitem", key: i, onClickCapture: function (e) { centre(e, i); } }, c); }));

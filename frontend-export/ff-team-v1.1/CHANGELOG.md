@@ -4,6 +4,13 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.186
+- **FireFlair Introductions:** the gold Edit button also shows on your own live profile page (it was only in the builder). It opens the same edit pop-up.
+- **Packages:** a Sign up button works on the first tap, also on a card that is not in the middle of the row (it took two taps on wider screens).
+- **Packages count:** on your own profile page the tab counts the packages you can sign up to; on a public page it counts the ones signed up to.
+- **Venue cards:** one border only; the two inner lines are removed.
+- Page saved as `live-v1.186-index.html`. Artifact version 1795221409-4f79.
+
 ## v1.185
 Built by four builder agents from written orders, then checked by two separate reviewers on the merged build (Alex, 20 Nov 23:05).
 - **Company cards:** one border only, the outer rim, on every company card (Event Directory, featured row, company page, builder, team invitations). The rule now sits in `cc20.css`, which loads on every page (the v1.184 rule only loaded on the profile page). Directory cards have their category icon back in the "Company" label; the builder's "Company card" label has the briefcase.

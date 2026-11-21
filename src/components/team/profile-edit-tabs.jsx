@@ -48,7 +48,7 @@ function ProfileEditTabs({ person }) {
   const reviews = reviewsOf(state, person);
   const tabs = [
     { key: "overview", label: "Overview" },
-    { key: "services", label: "Packages", count: profPkgItems17(state, person).length },
+    { key: "services", label: "Packages", count: ownPkgItems185(state).length - 1 },
     { key: "teams", label: "Team", count: teams.length + tCos.length + tNet.length },
     { key: "reviews", label: "Reviews", count: reviews.length },
   ];
