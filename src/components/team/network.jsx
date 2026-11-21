@@ -235,7 +235,7 @@ function PersonProfile() {
     <div className={publicView ? "ff-pubpage ff-pp-other" : undefined}>
       <PublicHero media={mediaOf(state, person)} card={cardEl} narrow below={<>{backBtn}{guestNote}{actionsEl}{shareEl}</>} />
       <HireCards11 person={person} />
-      <PublicProfileBody person={person} aboutFirst={publicView} />
+      <PublicProfileBody person={person} aboutFirst={publicView} overviewTail={person.id === "me" ? <ProfileTc190 /> : undefined} />
       <ReviewSheet open={reviewing} person={person} onClose={() => setReviewing(false)} />
       <AskQuestionSheet open={asking} person={person} onClose={() => setAsking(false)} />
       <CheckAvailabilitySheet open={checking} person={person} onClose={() => setChecking(false)} />
