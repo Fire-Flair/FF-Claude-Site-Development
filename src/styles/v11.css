@@ -4008,10 +4008,11 @@ body.ff-dragging { user-select:none; -webkit-user-select:none; cursor:grabbing; 
 .ff .ff-save17-row { gap:8px; }
 .ff .ff-save17-row { grid-template-columns:.8fr 1.2fr; }
 .ff .ff-save17-row { grid-template-columns:1fr 1fr; }
-.ff .ff-publishcard .ff-save17.hire17 { background:transparent; color:#F4DC8E; border:1.5px solid rgba(233,208,122,.7); box-shadow:none; text-shadow:none; }
-.ff .ff-publishcard .ff-save17.hire17::after { display:none; }
-.ff .ff-publishcard .ff-save17.hire17:hover { background:rgba(244,220,142,.12); }
-.ff .ff-publishcard .ff-save17.hire17:disabled { opacity:.42; cursor:not-allowed; background:transparent; }
+.ff .ff-publishcard .ff-save17.terms188 { background:transparent; color:#F4DC8E; border:1.5px solid rgba(233,208,122,.7); box-shadow:none; text-shadow:none; }
+.ff .ff-publishcard .ff-save17.terms188::after { display:none; }
+.ff .ff-publishcard .ff-save17.terms188:hover { background:rgba(244,220,142,.12); }
+.ff .ff-publishcard .ff-save17.terms188 { white-space:normal; line-height:1.15; overflow-wrap:normal; word-break:keep-all; hyphens:none; }
+.ff .ff-publishcard .ff-save17.terms188:disabled { opacity:.42; cursor:not-allowed; background:transparent; }
 .ff .ff-bkconfirm17 { margin-top:12px; }
 .ff .ff-bk .ff-big20:first-child { margin-top:8px; }
 /* FF Staff shifts: stronger profession selector, shifts open as a panel from the chosen profession */

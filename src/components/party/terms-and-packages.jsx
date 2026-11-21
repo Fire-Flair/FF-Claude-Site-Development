@@ -35,18 +35,23 @@ const TERM_SETS17 = {
 };
 
 
+/* NET188 round 2: the terms for the member's own Signature package (five suggested points, all editable). Not in TERM_SETS17, so the bar's pop-up does not list it. */
+const TERM_SETS188 = {
+  pkg: { key: "pkgTerms188", title: "Signature package T&Cs", note: "", head: "Terms and conditions", list: PARTY_PKG_TERMS17, rows: 2 },
+};
+
 function TermsSheet17({ set, onClose }) {
   const { state, dispatch } = useStore();
-  const S = TERM_SETS17[set];
+  const S = TERM_SETS17[set] || TERM_SETS188[set];
   const [terms, setTerms] = useState(() => ({ ...Object.fromEntries(S.list.map(t => [t.k, t.text])), ...(state[S.key] || {}) }));
   const save = () => { dispatch({ type: "V11_SET", patch: { [S.key]: terms } }); dispatch({ type: "TOAST", toast: "Terms saved to your profile" }); onClose(); };
   return (
-    <Sheet open onClose={onClose} title={S.head}>
-      <p className="ff-fp" style={{ margin: "0 0 10px" }}>{S.note}</p>
+    <Sheet center open onClose={onClose} title={S.head}>
+      {S.note && <p className="ff-fp" style={{ margin: "0 0 10px" }}>{S.note}</p>}
       <div className="ff-tc5">
         {S.list.map((t, i) => (
           <label key={t.k}><span><b>{i + 1}</b>{t.label}</span>
-            <textarea rows={3} value={terms[t.k] || ""} maxLength={500} aria-label={t.label} onChange={(e) => setTerms({ ...terms, [t.k]: e.target.value })} /></label>
+            <textarea rows={S.rows || 3} value={terms[t.k] || ""} maxLength={500} aria-label={t.label} onChange={(e) => setTerms({ ...terms, [t.k]: e.target.value })} /></label>
         ))}
       </div>
       <div className="ff-bsec-acts" style={{ marginTop: 8 }}>
@@ -68,6 +73,21 @@ function TermsCards17() {
       </HScroll>
       {open && <TermsSheet17 set={open} onClose={() => setOpen(null)} />}
     </>
+  );
+}
+
+
+/* NET188 (Alex 21 Nov): Terms and conditions from the bar's second button: a centred pop-up holding the two term sets; tapping one swaps it for that set's editor (never two pop-ups at once). */
+function TermsPop188({ open, onClose }) {
+  const [set, setSet] = useState(null);
+  const def = { label: "Terms and conditions", singular: "Terms", icon: "qualification", fields: ["description"] };
+  if (set) return <TermsSheet17 set={set} onClose={() => { setSet(null); onClose(); }} />;
+  return (
+    <Sheet center open={open} onClose={onClose} title="Terms and conditions">
+      <HScroll label="Terms and conditions">
+        {Object.entries(TERM_SETS17).map(([k, S]) => <InformationCard key={k} record={{ ...makeRecord("terms", S.title), id: `tc_${k}`, description: S.note }} def={def} themeKey="onyx" editable onClick={() => setSet(k)} />)}
+      </HScroll>
+    </Sheet>
   );
 }
 

@@ -12,6 +12,8 @@
    - On someone else's page (or yours viewed as a guest) the cards leave out "You earn": it is the member's own business. */
 
 const PROFILE_PACKAGES_CSS = __ff_css("styles/profile-packages.css");
+/* NET188 (Alex 21 Nov): the cocktail menu builder is hidden for now and its code is kept. Set to true to switch it back on. This is the one deliberate exception to "strip by deletion". */
+const MENU_BUILDER_ON188 = true;
 
 if (!QA_Q17["staff.terms"]) QA_Q17["staff.terms"] = { text: "Your preferred terms for this profession", group: "staff" };
 const staffTermsOf17 = (state, account, prof) => {
@@ -101,7 +103,7 @@ function ownPkgItems185(state) {
   return out;
 }
 
-function ProfilePackages17({ person, own }) {
+function ProfilePackages17({ person, own, staff = true, items: itemsIn }) {
   const { state, dispatch } = useStore();
   const mem = useRef({});
   const box = useRef(null);
@@ -113,7 +115,7 @@ function ProfilePackages17({ person, own }) {
   const picked = sel || signed;
   /* v1.185: Confirm shows only while the picks differ from what is saved (same rule as Get booked). */
   const pkDirty185 = sel != null && [...sel].sort().join("|") !== [...signed].sort().join("|");
-  const items = own ? ownPkgItems185(state) : [...profPkgItems17(state, person), { id: "pp-create", kind: "create" }];
+  const items = itemsIn || (own ? ownPkgItems185(state) : [...profPkgItems17(state, person), { id: "pp-create", kind: "create" }]);
   const toBk = () => goPkgBookings17(dispatch);
   const tick = (id) => setSel(picked.includes(id) ? picked.filter(x => x !== id) : [...picked, id]);
   const confirmPkgs = async () => {
@@ -168,7 +170,7 @@ function ProfilePackages17({ person, own }) {
       {own && pkDirty185 && <div className="ff-bk185-act"><button type="button" className="ff-btn primary ff-bkconfirm17 ff-bk185-btn" onClick={() => { if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; } setPkgTerms(true); }}><S17I.Check size={15} /> Confirm</button></div>}
       {own && pkgTerms && <PkgTerms17 onClose={() => setPkgTerms(false)} onAccept={confirmPkgs} />}
       {/* v1.162 (Alex 20 Nov 05:19): no Terms and conditions box here; the terms are part of each card's Details. */}
-      {own && <ProfStaffCards17 />}
+      {own && staff && <ProfStaffCards17 />}
     </div>
   );
 }
@@ -205,9 +207,8 @@ function ProfStaffCards17() {
     if (ok) { setVals({}); dispatch({ type: "TOAST", toast: "Your rates are saved" }); }
   };
   return (
-    <section className="ff-pp ff-pp21 ff-pkt17-staff" aria-labelledby="ff-pkt17-staff-h">
-      <div className="ff-pp-head"><h2 id="ff-pkt17-staff-h" className="ff-about-h">FF Staff</h2></div>
-      <p className="ff-pkt17-sub">Your preferred hourly rate for each profession, shown to businesses on FFStaff only.</p>
+    <section className="ff-pk188-box ff-pkt17-staff" aria-labelledby="ff-pkt17-staff-h">
+      <h2 id="ff-pkt17-staff-h" className="ff-bk-bh ff-bk-bhc fit"><img className="ff-bk-bhlogo" decoding="async" src={FF_SITE_BRAND.staff.icon} width={30} height={30} alt="" draggable={false} /><span>FFStaff</span></h2>
       {profs.length === 0 ? (
         <div className="ff-pkt17-none"><span className="ic" aria-hidden="true"><S17I.Briefcase size={20} strokeWidth={1.7} /></span><p>Your professions show here, each with its own rate.</p></div>
       ) : (<>
@@ -215,5 +216,70 @@ function ProfStaffCards17() {
         {profs.some(n => vals[n] != null && String(vals[n]).trim() !== (savedRate(n) != null ? String(savedRate(n) / 100) : "")) && <div className="ff-bk185-act"><button type="button" className="ff-btn primary ff-bkconfirm17 ff-bk185-btn" disabled={busy} onClick={save}><S17I.Check size={15} /> Save</button></div>}
       </>)}
     </section>
+  );
+}
+
+
+/* NET188 (Alex 21 Nov): one row of the builder's Packages tab: a tick, the name and a chevron (works) or a Coming soon pill. */
+function PkRow188({ title, on, soon, open, onToggle, onTick, children }) {
+  return (
+    <div className={"ff-pk188-row" + (open ? " open" : "")}>
+      <div className="ff-pk188-rh">
+        <button type="button" className="ff-pk188-tk" role="checkbox" aria-checked={!!on} aria-label={title} onClick={onTick}>{on && <S17I.Check size={15} strokeWidth={3} />}</button>
+        <button type="button" className="ff-pk188-nm" aria-expanded={onToggle ? !!open : undefined} onClick={onToggle}>{title}</button>
+        {soon ? <span className="ff-soonbadge sm">{LOCKED_LABEL17}</span> : !onToggle ? null : <I11.ChevronRight size={18} className="ff-pk188-cv" style={{ transform: open ? "rotate(90deg)" : "none", transition: "transform .2s" }} aria-hidden="true" />}
+      </div>
+      {open && children && <div className="ff-pk188-bd">{children}</div>}
+    </div>
+  );
+}
+
+/* NET188 (Alex 21 Nov): the builder's Packages tab: FFStaff, FFParty (Our packages, Your packages, Signature packages), Add-ons (Your add-ons, Your menu). */
+function PackagesEdit188({ person }) {
+  const { state, dispatch } = useStore();
+  const [open, setOpen] = useState(null);
+  const [termsSet, setTermsSet] = useState(null);
+  const ours = ownPkgItems185(state).filter(it => it.kind !== "create");
+  const groups = ownPkgGroups185(state);
+  const ownTabs = groups.length ? groups : ["bar"];
+  const account = qaAccount17(state);
+  const oursOn = (state.profile.serviceInterest || []).length > 0;
+  const ownOn = ownTabs.some(t => { const a = account ? qaAnswer17(state, account, pkcOwnQid17(t)) : null; return !!(a && !a.withdrawnAt && a.typed); });
+  const ans = account ? qaAnswer17(state, account, "int.party_package_new") : null;
+  const ids = ans && !ans.withdrawnAt ? (ans.optionIds || []) : [];
+  const interest = async (id) => {
+    if (!account) { window.dispatchEvent(new Event("ff-login")); return; }
+    const next = ids.includes(id) ? ids.filter(x => x !== id) : [...ids, id];
+    const r = next.length ? await qaSubmit17(dispatch, { questionId: "int.party_package_new", account, optionIds: next, visibility: "public", source: "FF Team Profile · Packages" }) : await qaWithdraw17(dispatch, { questionId: "int.party_package_new", account });
+    if (!r.ok) dispatch({ type: "TOAST", toast: "That couldn't be saved. Try again." });
+  };
+  const tog = (k) => () => setOpen(open === k ? null : k);
+  const ownCells = ownTabs.map(t => <div key={t} className="ff-bkpk-cell"><BkPkgOwn17 tab={t} /></div>);
+  return (
+    <div className="ff-pk188">
+      <style>{BKD_CSS}</style>
+      <style>{PROFILE_PACKAGES_CSS}</style>
+      <ProfStaffCards17 />
+      <section className="ff-pk188-box" aria-labelledby="ff-pk188-party-h">
+        <h2 id="ff-pk188-party-h" className="ff-bk-bh ff-bk-bhc fit"><img className="ff-bk-bhlogo" decoding="async" src={FF_SITE_BRAND.party.icon} width={30} height={30} alt="" draggable={false} /><span>FFParty</span></h2>
+        <div className="ff-pk188-rows">
+          {ours.length > 0 && <PkRow188 title="Our packages" on={oursOn} open={open === "ours"} onToggle={tog("ours")} onTick={() => setOpen("ours")}><ProfilePackages17 person={person} own staff={false} items={ours} /></PkRow188>}
+          <PkRow188 title="Signature packages" on={ownOn} open={open === "own"} onToggle={tog("own")} onTick={() => setOpen("own")}>
+            <div id="ff-bk-party" className="pkg3 ff-pk188-own">{ownCells.length > 1 ? <HScroll label="Signature packages">{ownCells}</HScroll> : ownCells}</div>
+            <div className="ff-pk188-tcw"><button type="button" className="ff-pk188-tcb" onClick={() => setTermsSet("pkg")}>Terms and conditions</button></div>
+          </PkRow188>
+        </div>
+      </section>
+      <section className="ff-pk188-box" aria-labelledby="ff-pk188-add-h">
+        <h2 id="ff-pk188-add-h" className="ff-bk-bh ff-bk-bhc fit"><span className="ff-pk188-plus" aria-hidden="true"><Plus size={16} strokeWidth={2.4} /></span><span>Add-ons</span><span className="ff-soonbadge sm">{LOCKED_LABEL17}</span></h2>
+        <div className="ff-pk188-rows">
+          {MENU_BUILDER_ON188
+            ? <PkRow188 title="Your menu" on={myContent17(state, "cocktails").length > 0} open={open === "menu"} onToggle={tog("menu")} onTick={() => setOpen("menu")}><CocktailStudio17 /></PkRow188>
+            : <PkRow188 title="Your menu" soon on={ids.includes("menu")} onTick={() => interest("menu")} />}
+          <PkRow188 title="Your extras" on={ids.includes("addons")} onTick={() => interest("addons")} />
+        </div>
+      </section>
+      {termsSet && <TermsSheet17 set={termsSet} onClose={() => setTermsSet(null)} />}
+    </div>
   );
 }
