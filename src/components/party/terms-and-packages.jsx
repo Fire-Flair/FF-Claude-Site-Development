@@ -11,7 +11,7 @@ const MY_TERMS17 = [
 
 /* v17.5.1: the terms shown when you sign up to FF Party packages, and when you save your FF Staff shift rates. How the platform works, in five points each. */
 const PARTY_PKG_TERMS17 = [
-  { k: "how", label: "How packages work", text: "A package is a fixed offer that clients book on FF Party. Every package shows what you earn before you sign up: FireFlair sets it on FireFlair packages, and you set it on your own. By signing up you agree to that amount." },
+  { k: "how", label: "How packages work", text: "A package is a fixed offer that clients book on FFParty. Every package shows what you earn before you sign up: FireFlair sets it on FireFlair packages, and you set it on your own. By signing up you agree to that amount." },
   { k: "boss", label: "You are your own boss", text: "You work as a self-employed freelancer. You deal directly with the client, and FireFlair is here to support you. FireFlair is not your employer." },
   { k: "book", label: "Bookings", text: "When a client books a package, FireFlair invites you on WhatsApp. The booking is yours once you accept, and not before." },
   { k: "cancel", label: "Cancelling", text: "If you cannot make a booking, tell the client and FireFlair as early as you can. Late cancellations affect your reputation on FireFlair." },
@@ -20,7 +20,7 @@ const PARTY_PKG_TERMS17 = [
 
 
 const STAFF_SHIFT_TERMS17 = [
-  { k: "how", label: "How shifts work", text: "Businesses create shift cards and set the pay rate for each shift. Your preferred rate is a guide that businesses see on FF Staff. It does not set the rate for a shift." },
+  { k: "how", label: "How shifts work", text: "Businesses create shift cards and set the pay rate for each shift. Your preferred rate is a guide that businesses see on FFStaff. It does not set the rate for a shift." },
   { k: "invite", label: "Invitations", text: "When a business invites you to a shift, FireFlair sends you a WhatsApp message with the details. You are only booked once you accept." },
   { k: "boss", label: "Self-employed", text: "You work as a self-employed freelancer and are responsible for your own tax. The business that books you is not your employer, and neither is FireFlair." },
   { k: "cancel", label: "Cancelling", text: "If you can no longer work a shift, tell the business and FireFlair as early as you can. Late cancellations affect your reputation on FireFlair." },
@@ -37,7 +37,7 @@ const TERM_SETS17 = {
 
 /* NET188 round 2: the terms for the member's own Signature package (five suggested points, all editable). Not in TERM_SETS17, so the bar's pop-up does not list it. */
 const TERM_SETS188 = {
-  pkg: { key: "pkgTerms188", title: "Signature package T&Cs", note: "", head: "Terms and conditions", list: PARTY_PKG_TERMS17, rows: 2 },
+  pkg: { key: "pkgTerms188", title: "Signature package T&Cs", note: "", head: "Terms and conditions", list: PARTY_PKG_TERMS17 },
 };
 
 function TermsSheet17({ set, onClose }) {
@@ -47,12 +47,13 @@ function TermsSheet17({ set, onClose }) {
   const save = () => { dispatch({ type: "V11_SET", patch: { [S.key]: terms } }); dispatch({ type: "TOAST", toast: "Terms saved to your profile" }); onClose(); };
   return (
     <Sheet center open onClose={onClose} title={S.head}>
-      {S.note && <p className="ff-fp" style={{ margin: "0 0 10px" }}>{S.note}</p>}
-      <div className="ff-tc5">
-        {S.list.map((t, i) => (
-          <label key={t.k}><span><b>{i + 1}</b>{t.label}</span>
-            <textarea rows={S.rows || 3} value={terms[t.k] || ""} maxLength={500} aria-label={t.label} onChange={(e) => setTerms({ ...terms, [t.k]: e.target.value })} /></label>
-        ))}
+      <div className="ff-tc188">
+        <HScroll label={S.head}>
+          {S.list.map((t, i) => (
+            <label key={t.k} className="ff-tc188-c"><span><b>{i + 1}</b>{t.label}</span>
+              <textarea data-no-grow value={terms[t.k] || ""} maxLength={500} aria-label={t.label} onChange={(e) => setTerms({ ...terms, [t.k]: e.target.value })} /></label>
+          ))}
+        </HScroll>
       </div>
       <div className="ff-bsec-acts" style={{ marginTop: 8 }}>
         <Btn variant="primary" onClick={save}><S17I.Check size={14} /> Save to my profile</Btn>
