@@ -65,11 +65,8 @@ function ProfileEditTabs({ person }) {
   /* ---- Packages ---- */
   /* v1.57 (Alex, 18 Nov 20:51): Work locations are off this tab for now (their data and editor stay); the slider uses
      the Bookings package cards, then the terms for the centre card and FF Staff (profile-packages.jsx). */
-  const bookings = (<>
-    <ProfilePackages17 person={person} own />
-    <PersonalTerms17 />
-    <CocktailStudio17 />
-  </>);
+  /* NET188 (Alex 21 Nov): FFStaff, FFParty and Add-ons boxes (PackagesEdit188); Terms and conditions is a button on the dark bar. */
+  const bookings = (<PackagesEdit188 person={person} />);
 
   /* ---- Team ---- */
   const team = (<>

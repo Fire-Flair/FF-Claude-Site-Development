@@ -325,8 +325,7 @@ function CocktailStudio17() {
     </div>
   );
   return (
-    <section className="ff-pp ff-pp21 ff-cks17" aria-labelledby="ff-cks17-h" style={{ marginTop: 26 }}>
-      <div className="ff-pp-head"><h2 id="ff-cks17-h" className="ff-about-h">Signature cocktails</h2></div>
+    <section className="ff-pp ff-pp21 ff-cks17" aria-label="Your menu">
       {draft ? (<>
         {pair(draft, true)}
         <div className="ff-cks17-act">
@@ -335,7 +334,7 @@ function CocktailStudio17() {
           <Btn variant="gold" disabled={busy} onClick={save}><Check size={15} strokeWidth={2.4} /> Save</Btn>
         </div>
       </>) : (
-        <HScroll label="Signature cocktails">
+        <HScroll label="Your menu">
           {mine.map(x => <button key={x.id} type="button" className="ff-cks17-it" aria-label={`Edit ${x.name || "cocktail"}`} onClick={() => setDraft(x)}><Card17 kind="cocktail" tone="dark" plate="Signature Cocktail" tag={tag} size="sm"><CocktailFront17 c={x} /></Card17></button>)}
           <button type="button" className="ff-cks17-add" aria-label="New cocktail" onClick={() => setDraft(NEW_COCKTAIL17("signature"))}><S17I.Martini size={22} /><span className="pe2-plus1" aria-hidden="true"><Plus size={22} strokeWidth={2.2} /></span></button>
         </HScroll>

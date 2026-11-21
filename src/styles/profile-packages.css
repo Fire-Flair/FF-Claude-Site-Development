@@ -54,3 +54,23 @@
 /* v1.162: packages on a profile use the Bookings hero row, so each card is one fixed width, centred */
 .ff .ff-pkt17-rail .ff-hf20 { align-items: flex-start; }
 .ff .ff-pkt17-rail .ff-hf20-i.ff-bkpk-cell { width: min(280px, calc(100vw - 96px)); }
+
+/* NET188 (Alex 21 Nov): the builder's Packages tab: FFStaff, FFParty and Add-ons boxes, 26px apart. */
+.ff .ff-pk188 { display:grid; gap:26px; }
+.ff .ff-pk188 > * { margin:0; min-width:0; }
+.ff .ff-pk188-box { padding:16px; border-radius:22px; corner-shape:squircle; background:#FFFDF8; border:1px solid rgba(126,97,29,.3); }
+.ff .ff-pk188-box > .ff-bk-bh { margin:0 0 14px; }
+.ff .ff-pk188-box > .ff-bk-bh::before, .ff .ff-pk188-box > .ff-bk-bh::after { display:none; }
+.ff .ff-pk188-rows { display:grid; gap:10px; }
+.ff .ff-pk188-row { border-radius:16px; corner-shape:squircle; background:#FBF6EA; border:1px solid rgba(126,97,29,.28); overflow:hidden; }
+.ff .ff-pk188-rh { display:flex; align-items:center; gap:12px; min-height:54px; padding:0 14px; }
+.ff .ff-pk188-tk { position:relative; flex:none; width:26px; height:26px; border-radius:9px; corner-shape:squircle; border:1.5px solid #B08D2A; display:grid; place-items:center; background:transparent; color:#16130F; padding:0; cursor:pointer; }
+.ff .ff-pk188-tk[aria-checked="true"] { background:linear-gradient(180deg,#F1DB8E,#C9A227); }
+.ff .ff-pk188-tk::before { content:""; position:absolute; inset:-9px; background:transparent; }
+.ff .ff-pk188-nm { flex:1; min-width:0; min-height:54px; text-align:left; font-family:var(--display); font-size:16.5px; color:#16130F; overflow-wrap:normal; word-break:keep-all; background:transparent; border:0; padding:0; cursor:pointer; }
+.ff .ff-pk188-cv { flex:none; color:#7E611D; }
+.ff .ff-pk188-bd { padding:0 0 14px; }
+.ff .ff-pk188-plus { flex:none; width:30px; height:30px; border-radius:50%; display:grid; place-items:center; background:#16130F; color:#E4C36A; }
+.ff .ff-pk188-own { display:flex; justify-content:center; }
+.ff .ff-pk188-own > .ff-bkpk-cell { min-width:0; }
+@media (max-width:360px) { .ff .ff-pk188-nm { font-size:15px; } }

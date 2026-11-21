@@ -712,11 +712,6 @@ function TagSection({ inSave = false, top = false, onSignedIn, join } = {}) {
 
 
 
-/* "Available for hire?" uses the one rule for a complete profile, profileBasics17 (src/state/invite17.js):
-   signed in, saved once, a name, a photo and one confirmed profession. The same rule decides when an inviter is rewarded. */
-const hireReady17 = (state) => profileBasics17(state);
-
-
 /* SAVE & SHARE — at the foot of the profile. The profile already saves
    itself; Save is the explicit "done" that opens Section 5. Share sends
    the finished card to the person on WhatsApp. */
@@ -725,6 +720,7 @@ function SaveShareCard({ onSaved }) {
   const p = state.profile;
   const signedIn = state.auth.status === "signedIn";
   const { share, busy, tag } = useShareCard();
+  const [terms, setTerms] = useState(false);
   const cardReady = recsOf(p, "professions").some(r => !r.proposed);
   /* v17.40: an existing member edits on this same page; Save takes them back to their finished profile, as the bar's Save does. */
   const leaveLive = () => { if (p.live && state.ed17 === "team") { dispatch({ type: "V11_SET", patch: { ed17: null } }); window.scrollTo(0, 0); } };
@@ -754,7 +750,7 @@ function SaveShareCard({ onSaved }) {
     if (!cardReady && !p.published) { dispatch({ type: "TOAST", toast: "Add a profession to publish" }); return; }
     saveWithIntro17(tag, p, state).then(r => {
       const now = Date.now();
-      dispatch({ type: "PROFILE", patch: { saved: true, savedAt: r.savedAt, finishedAt: p.finishedAt || r.savedAt, published: true, publishedAt: p.publishedAt || now, introduction: r.intro || null } });
+      dispatch({ type: "PROFILE", patch: { saved: true, savedAt: r.savedAt, finishedAt: p.finishedAt || r.savedAt, published: true, publishedAt: p.publishedAt || now, introduction: r.intro || null, cardHidden: false } });
       dispatch({ type: "PE_DONE" });
       leaveLive();
       if (!p.publishedAt) {
@@ -764,22 +760,13 @@ function SaveShareCard({ onSaved }) {
     });
   };
   useEffect(() => { const h = () => publish(); window.addEventListener("ff-save", h); return () => window.removeEventListener("ff-save", h); });
-  /* v1.156: Save saves and publishes; "Available for hire" is the one button for publishing, always clickable. First tap publishes and shows
-     the card; after that it shows or hides the card. */
-  const shown = !p.cardHidden && !!p.published;
-  const hireTap = () => {
-    if (!p.published) { publish(); dispatch({ type: "PROFILE", patch: { cardHidden: false } }); return; }
-    const next = !!p.cardHidden;
-    dispatch({ type: "PROFILE", patch: { cardHidden: !next } });
-    dispatch({ type: "TOAST", toast: next ? "Your card is showing" : "Your card is hidden" });
-  };
-
   return (
     <div id="ff-sec-share" className="ff-publishcard" style={{ marginTop: 26 }}>
       <div className="ff-save17-row">
         <button type="button" className="ff-btn gold ff-save17" onClick={publish}>Save</button>
-        <button type="button" className={"ff-btn ff-save17 hire17" + (shown ? " on" : "")} aria-pressed={shown} onClick={hireTap}>{shown && <Check size={15} strokeWidth={3} aria-hidden="true" />} Available for hire</button>
+        <button type="button" className="ff-btn ff-save17 terms188" onClick={() => setTerms(true)}>Terms and conditions</button>
       </div>
+      <TermsPop188 open={terms} onClose={() => setTerms(false)} />
       {blocker && signedIn && <p style={{ margin: "10px 0 0", fontSize: 12.5, color: "rgba(244,239,228,.72)", textAlign: "center" }}>{blocker}</p>}
       {signedIn && p.savedAt && <p style={{ margin: "10px 0 0", fontSize: 12, color: "rgba(244,239,228,.66)", display: "flex", gap: 5, alignItems: "center", justifyContent: "center" }}>
         <Check size={13} color="#8FDCAE" strokeWidth={2.4} /> Saved {timeOf(p.savedAt)}{p.publishedAt && <> · <button type="button" className="ff-livelink17" onClick={() => { dispatch({ type: "VIEW", id: "me", guest: true }); window.scrollTo(0, 0); }}><Eye size={13} /> Live · view</button></>}</p>}

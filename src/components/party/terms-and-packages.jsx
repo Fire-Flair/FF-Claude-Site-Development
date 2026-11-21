@@ -41,7 +41,7 @@ function TermsSheet17({ set, onClose }) {
   const [terms, setTerms] = useState(() => ({ ...Object.fromEntries(S.list.map(t => [t.k, t.text])), ...(state[S.key] || {}) }));
   const save = () => { dispatch({ type: "V11_SET", patch: { [S.key]: terms } }); dispatch({ type: "TOAST", toast: "Terms saved to your profile" }); onClose(); };
   return (
-    <Sheet open onClose={onClose} title={S.head}>
+    <Sheet center open onClose={onClose} title={S.head}>
       <p className="ff-fp" style={{ margin: "0 0 10px" }}>{S.note}</p>
       <div className="ff-tc5">
         {S.list.map((t, i) => (
@@ -68,6 +68,21 @@ function TermsCards17() {
       </HScroll>
       {open && <TermsSheet17 set={open} onClose={() => setOpen(null)} />}
     </>
+  );
+}
+
+
+/* NET188 (Alex 21 Nov): Terms and conditions from the bar's second button: a centred pop-up holding the two term sets; tapping one swaps it for that set's editor (never two pop-ups at once). */
+function TermsPop188({ open, onClose }) {
+  const [set, setSet] = useState(null);
+  const def = { label: "Terms and conditions", singular: "Terms", icon: "qualification", fields: ["description"] };
+  if (set) return <TermsSheet17 set={set} onClose={() => { setSet(null); onClose(); }} />;
+  return (
+    <Sheet center open={open} onClose={onClose} title="Terms and conditions">
+      <HScroll label="Terms and conditions">
+        {Object.entries(TERM_SETS17).map(([k, S]) => <InformationCard key={k} record={{ ...makeRecord("terms", S.title), id: `tc_${k}`, description: S.note }} def={def} themeKey="onyx" editable onClick={() => setSet(k)} />)}
+      </HScroll>
+    </Sheet>
   );
 }
 
