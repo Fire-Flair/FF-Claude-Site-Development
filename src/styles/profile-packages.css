@@ -79,3 +79,17 @@
 .ff .ff-pk188-tcw { display:flex; justify-content:center; padding:14px 14px 0; }
 .ff .ff-pk188-tcb { min-height:46px; padding:0 22px; border-radius:16px; corner-shape:squircle; border:1.5px solid #B08D2A; background:transparent; color:#16130F; font-family:var(--display); font-size:15px; letter-spacing:.04em; cursor:pointer; overflow-wrap:normal; word-break:keep-all; }
 .ff .ff-pk188-box > .ff-bk-bh .ff-soonbadge { flex:none; margin-left:2px; }
+
+/* v1.188 fix (Aragorn 21 Nov): B4 the box heading may wrap, so the Coming soon pill drops under the title and never overlaps it */
+.ff .ff-pk188-box > .ff-bk-bh { flex-wrap:wrap !important; white-space:normal; overflow:visible; row-gap:6px; }
+.ff .ff-pk188-box > .ff-bk-bh > span:not(.ff-pk188-plus):not(.ff-soonbadge) { flex:0 1 auto; white-space:nowrap; }
+
+/* v1.188 fix (Aragorn 21 Nov): B5 Your menu: add tile, card buttons and the Delete / Cancel / Save row */
+.ff .ff-pk188 .ff-cks17-it { display:block; margin:0; padding:0; border:0; background:transparent; font:inherit; color:inherit; text-align:left; cursor:pointer; border-radius:0; }
+.ff .ff-pk188 .ff-cks17-add { box-sizing:border-box; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; width:330px; max-width:none; aspect-ratio:330 / 462; min-height:44px; padding:0; margin:0; border-radius:26px; corner-shape:squircle; border:1.5px dashed rgba(228,195,106,.65); background:linear-gradient(160deg,#2A2620 0%,#1B1814 55%,#12100C 100%); box-shadow:0 10px 22px -10px rgba(20,17,10,.55); color:#E4C36A; cursor:pointer; align-self:flex-start; }
+.ff .ff-pk188 .ff-cks17-add:hover { border-color:#E4C36A; }
+.ff .ff-pk188 .ff-cks17-add > svg { width:44px; height:44px; stroke-width:1.5; }
+.ff .ff-pk188 .ff-cks17-add .pe2-plus1 { position:static; transform:none; display:grid; place-items:center; width:46px; height:46px; border-radius:50%; border:1.5px solid #E4C36A; color:#14110A; background:linear-gradient(180deg,#F0D98A,#C9A227); box-shadow:0 4px 10px rgba(0,0,0,.35); }
+.ff .ff-pk188 .ff-cks17-act { display:flex; align-items:center; justify-content:center; flex-wrap:nowrap; gap:8px; margin-top:14px; }
+.ff .ff-pk188 .ff-cks17-act > * { flex:0 1 auto; min-width:0; white-space:nowrap; }
+.ff .ff-pk188 .ff-cks17-act > :first-child:not(.ff-btn) { min-height:44px; display:inline-flex; align-items:center; padding:0 8px; }
