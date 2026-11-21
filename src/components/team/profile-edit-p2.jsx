@@ -168,7 +168,7 @@ function PE2ProfCats({ P, noType }) {
           {hits.map(x => <button key={x.name} type="button" role="option" aria-selected="false" className="pe2-pc-hit" onClick={() => pickHit(x.name)}><span>{x.name}</span><small>{x.cat}</small></button>)}
         </div>
       )}
-      <PE2Which P={P} />
+      {!noType && <PE2Which P={P} />}
       {/* prof-grid (Alex, 18 Nov 21:34, option 5): every category on screen as an icon tile (eight, four across), with how
           many of its professions are chosen.
           prof-inline (Alex, 18 Nov 21:49): no pop-up. Tapping a tile opens its professions in a panel straight under that
