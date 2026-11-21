@@ -4,6 +4,20 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.185
+Built by four builder agents from written orders, then checked by two separate reviewers on the merged build (Alex, 20 Nov 23:05).
+- **Company cards:** one border only, the outer rim, on every company card (Event Directory, featured row, company page, builder, team invitations). The rule now sits in `cc20.css`, which loads on every page (the v1.184 rule only loaded on the profile page). Directory cards have their category icon back in the "Company" label; the builder's "Company card" label has the briefcase.
+- **Venue cards:** the label icon is the location pin on every venue card; every venue card is the Company Card shape (8:5) whatever its text; the venue pop-up shows the same card with Delete and Done beneath. A note is at most 140 characters.
+- **Attributes (builder):** boxes are 5 by 7, the same size as the Professions cards. Entries that do not fit carry on in the next box (measured, not estimated). A description too long for a box of its own is cut at whole lines. The pop-up has a dotted plus bar under the last entry and the star top right of each bar; no pencil.
+- **CV extraction:** "Add to my profile" keeps the page where it was (it jumped down the page).
+- **Builder layout:** FF Tag and Media boxes have equal gaps left and right; the "Welcome to the Team" number badge is fully on screen; the "Your profile is published" pop-up is removed (deleted with its state).
+- **Q&A:** moved to the Overview tab, under Venues. Answered cards sit to the right of "Create your own question"; no card border is clipped.
+- **Get booked:** FFParty and FFStaff each sit in their own box. Confirm appears only after a package is ticked or unticked, Save only after a profession or rate changes; both are narrow and centred. FFStaff rates are one box (Role, Preferred hourly rate), one row per profession; "Preferred terms" is removed. The same box and the same button rules are used on the profile's Packages tab.
+- **FireFlair Introductions:** "and Awards" and the five awards are removed (deleted). The member sees an explanation box under the heading and a gold Edit button (was a pencil); the edit pop-up has one title, Save and Cancel, no Regenerate.
+- **Profiles:** Join team and Share are the same gold button. On your own profile the Packages tab shows "Create your own" first, then the FFParty packages matching your professions, with Sign up and Confirm working there.
+- **Repo rule:** all fixes now run through one thread (CLAUDE.md).
+- Page saved as `live-v1.185-index.html`. Artifact version 1795220577-9b8e.
+
 ## v1.184
 - **Launch Challenge box (profile page):** the two icons either side of "Join the Launch Challenge" are removed.
 - **CV extraction:** the section is headed Venues; each entry shows the venue in bold with the profession small underneath.

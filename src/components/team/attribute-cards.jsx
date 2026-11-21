@@ -589,7 +589,7 @@ function ExperienceCard29({ record, onClick, note, onNote, tone, role, onRole })
             </span>
           : v.role && <span className="role"><b>{v.role}</b></span>}
         {typing
-          ? <textarea className="nt ff-xc29-tx" rows={3} autoFocus value={note || ""} onChange={(e) => onNote(e.target.value)}
+          ? <textarea className="nt ff-xc29-tx" rows={3} maxLength={Math.max(140, String(note || "").length)} autoFocus value={note || ""} onChange={(e) => onNote(e.target.value)}
               aria-label={`What you did at ${v.name}`} placeholder="What I did there" />
           : v.note && <span className="nt">{v.note}</span>}
         <span className="ft">

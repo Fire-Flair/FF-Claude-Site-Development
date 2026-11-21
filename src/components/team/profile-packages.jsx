@@ -111,6 +111,8 @@ function ProfilePackages17({ person, own }) {
   const [pkgTerms, setPkgTerms] = useState(false);
   const signed = state.profile.serviceInterest || [];
   const picked = sel || signed;
+  /* v1.185: Confirm shows only while the picks differ from what is saved (same rule as Get booked). */
+  const pkDirty185 = sel != null && [...sel].sort().join("|") !== [...signed].sort().join("|");
   const items = own ? ownPkgItems185(state) : [...profPkgItems17(state, person), { id: "pp-create", kind: "create" }];
   const toBk = () => goPkgBookings17(dispatch);
   const tick = (id) => setSel(picked.includes(id) ? picked.filter(x => x !== id) : [...picked, id]);
@@ -163,7 +165,7 @@ function ProfilePackages17({ person, own }) {
           {items.map(it => <div key={it.id} className="ff-svslide std ff-pkt17-cell ff-bkpk-cell">{card(it)}</div>)}
         </HeroFlow20>
       </div>
-      {own && items.length > 1 && <button type="button" className="ff-btn primary wide ff-bkconfirm17" disabled={!sel} onClick={() => { if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; } setPkgTerms(true); }}><S17I.Check size={15} /> Confirm</button>}
+      {own && pkDirty185 && <div className="ff-bk185-act"><button type="button" className="ff-btn primary ff-bkconfirm17 ff-bk185-btn" onClick={() => { if (!qaAccount17(state)) { window.dispatchEvent(new Event("ff-login")); return; } setPkgTerms(true); }}><S17I.Check size={15} /> Confirm</button></div>}
       {own && pkgTerms && <PkgTerms17 onClose={() => setPkgTerms(false)} onAccept={confirmPkgs} />}
       {/* v1.162 (Alex 20 Nov 05:19): no Terms and conditions box here; the terms are part of each card's Details. */}
       {own && <ProfStaffCards17 />}
@@ -205,12 +207,12 @@ function ProfStaffCards17() {
   return (
     <section className="ff-pp ff-pp21 ff-pkt17-staff" aria-labelledby="ff-pkt17-staff-h">
       <div className="ff-pp-head"><h2 id="ff-pkt17-staff-h" className="ff-about-h">FF Staff</h2></div>
-      <p className="ff-pkt17-sub">Your preferred hourly rate for each profession, shown to businesses on FF Staff only.</p>
+      <p className="ff-pkt17-sub">Your preferred hourly rate for each profession, shown to businesses on FFStaff only.</p>
       {profs.length === 0 ? (
         <div className="ff-pkt17-none"><span className="ic" aria-hidden="true"><S17I.Briefcase size={20} strokeWidth={1.7} /></span><p>Your professions show here, each with its own rate.</p></div>
       ) : (<>
         <StaffRatesBox185 names={profs} valueOf={rateOf} onVal={(n, v) => { setVals(x => ({ ...x, [n]: v })); setErrs(x => ({ ...x, [n]: "" })); }} errs={errs} />
-        <button type="button" className="ff-btn primary wide ff-pkt17-save" disabled={busy} onClick={save}><S17I.Check size={15} /> Save</button>
+        {profs.some(n => vals[n] != null && String(vals[n]).trim() !== (savedRate(n) != null ? String(savedRate(n) / 100) : "")) && <div className="ff-bk185-act"><button type="button" className="ff-btn primary ff-bkconfirm17 ff-bk185-btn" disabled={busy} onClick={save}><S17I.Check size={15} /> Save</button></div>}
       </>)}
     </section>
   );

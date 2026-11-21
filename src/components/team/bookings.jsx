@@ -891,7 +891,7 @@ function TeamBookings({ guest = false }) {
         <div className="ff-bk-sell ff-bkpc ff-fb21-box" id="ff-bk-staff">
           <div className="ff-tlx">
           <h2 className="ff-bk-bh ff-bk-bhc fit"><img className="ff-bk-bhlogo" decoding="async" src={FF_SITE_BRAND.staff.icon} width={30} height={30} alt="" draggable={false} /><span>FFStaff</span></h2>
-          <p>Businesses on FF Staff hire people for shifts. They see your preferred hourly rate for each of your professions before they hire you, and set the pay on each shift card.</p>
+          <p>Businesses on FFStaff hire people for shifts. They see your preferred hourly rate for each of your professions before they hire you, and set the pay on each shift card.</p>
           </div>
           {/* v1.46 bookings (Alex, 18 Nov 20:06): signed out, the three steps; signed in, their own professions and rates. */}
           <ProfRates17 guest={guest || !signedIn} />

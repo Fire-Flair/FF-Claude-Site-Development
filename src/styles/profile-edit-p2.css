@@ -267,3 +267,7 @@
 /* v1.185 (Alex 20 Nov 23:05): the Q&A row keeps its own inner padding on every side, so no card's ring, glow or tick is clipped by the row.
    (.ff-jflat .ff-hscroll zeroed the left margin and padding for the builder page, which cut the first card.) */
 .ff .pe2-qa-panel .ff-hscroll, .ff .ff-jflat .pe2-qa-panel .ff-hscroll { margin: -10px calc(-1 * var(--pe2-pad)) -18px; padding: 14px var(--pe2-pad) 30px; scroll-padding-inline: var(--pe2-pad); }
+/* v1.185 (review): no stuck lift on a tapped Attributes box (touch leaves :hover on); the star stays under the pop-up's title bar when the list scrolls; a too-long description is cut at whole lines. */
+.ff .pe2-rail .ff-agrp:hover, .ff .pe2-rail .ff-agrp:active { transform: none; }
+.ff .pe2-attr-pop .pe2-star-t { z-index: 1; }
+.ff .ff-agrp-l > span > .ff-agrp-sd.clamp185 { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
