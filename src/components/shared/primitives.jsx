@@ -27,7 +27,7 @@ function Field({ label, hint, children }) {
 
 
 
-function Sheet({ open, onClose, title, children, center = false, newLogo = false }) {
+function Sheet({ open, onClose, title, children, center = true, newLogo = false }) /* v1.188 (Alex 21 Nov): every pop-up is centred */ {
   const ref = useRef(null);
   const closeRef = useRef(onClose); closeRef.current = onClose;
   useEffect(() => {
