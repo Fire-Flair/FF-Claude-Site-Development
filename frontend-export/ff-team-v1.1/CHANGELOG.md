@@ -4,6 +4,18 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.188
+- **Network page:** on a wide screen the map filters sit to the left of the map, under the description. "Our professionals" has its own short description. At 820 wide both search bars are full width. Category rows show each person's profession on their card.
+- **Profile page attribute cards:** fixed size (as in the builder), splitting onto a new card by the length of what is written, descriptions included.
+- **Attribute pop-ups:** the cards inside are the colour of the card you tapped (Skills blue, Qualifications green, Interests purple).
+- **Pop-ups:** every pop-up opens centred. On another member's profile, pop-ups open in front of it and tapping away or Escape closes only the pop-up. Share and photo crop are centred; the member profile and map pin card use the standard blur. The stray "None." is gone from profession pop-ups.
+- **Packages (profile builder):** FFStaff first, then FFParty (Our packages, Signature packages), then Add-ons marked Coming soon (Your menu, Your extras). The bottom bar is Save plus Terms and conditions. Terms editors are a left/right row of five cards that fits one screen; Signature packages have their own terms. Your menu shows the cocktail builder with a card-sized add tile.
+- **Company card:** the location box reads "Where are you based?".
+- **Profile Card:** the car icon is on the far left; the bank icon stays on the far right.
+- **Q&A:** an "Other" answer shows a tick, then the card fades into your answered cards and the rest slide left.
+- **Names:** FFParty, FFStaff and FFTeam as one word on package plates, in the top bar, the sites list and the default terms.
+- Page saved as `live-v1.188-index.html`. Artifact version PENDING.
+
 ## v1.187
 - **Network page search:** the search bar sits on the same row as "Our professionals" and as "FF Event Directory" (under the description on a phone). It is no longer under the map. Typing turns "Our professionals" into "Search results". The box you type in is never replaced, so the keyboard stays open, and on focus the bar scrolls to the top of the screen so the keyboard does not cover the results.
 - **Network map:** shorter on a wide screen (420px) and level with the "Explore our network" heading.
