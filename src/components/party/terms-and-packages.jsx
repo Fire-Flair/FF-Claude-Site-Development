@@ -35,18 +35,23 @@ const TERM_SETS17 = {
 };
 
 
+/* NET188 round 2: the terms for the member's own Signature package (five suggested points, all editable). Not in TERM_SETS17, so the bar's pop-up does not list it. */
+const TERM_SETS188 = {
+  pkg: { key: "pkgTerms188", title: "Signature package T&Cs", note: "", head: "Terms and conditions", list: PARTY_PKG_TERMS17, rows: 2 },
+};
+
 function TermsSheet17({ set, onClose }) {
   const { state, dispatch } = useStore();
-  const S = TERM_SETS17[set];
+  const S = TERM_SETS17[set] || TERM_SETS188[set];
   const [terms, setTerms] = useState(() => ({ ...Object.fromEntries(S.list.map(t => [t.k, t.text])), ...(state[S.key] || {}) }));
   const save = () => { dispatch({ type: "V11_SET", patch: { [S.key]: terms } }); dispatch({ type: "TOAST", toast: "Terms saved to your profile" }); onClose(); };
   return (
     <Sheet center open onClose={onClose} title={S.head}>
-      <p className="ff-fp" style={{ margin: "0 0 10px" }}>{S.note}</p>
+      {S.note && <p className="ff-fp" style={{ margin: "0 0 10px" }}>{S.note}</p>}
       <div className="ff-tc5">
         {S.list.map((t, i) => (
           <label key={t.k}><span><b>{i + 1}</b>{t.label}</span>
-            <textarea rows={3} value={terms[t.k] || ""} maxLength={500} aria-label={t.label} onChange={(e) => setTerms({ ...terms, [t.k]: e.target.value })} /></label>
+            <textarea rows={S.rows || 3} value={terms[t.k] || ""} maxLength={500} aria-label={t.label} onChange={(e) => setTerms({ ...terms, [t.k]: e.target.value })} /></label>
         ))}
       </div>
       <div className="ff-bsec-acts" style={{ marginTop: 8 }}>

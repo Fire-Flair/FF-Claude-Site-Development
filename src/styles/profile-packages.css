@@ -74,3 +74,8 @@
 .ff .ff-pk188-own { display:flex; justify-content:center; }
 .ff .ff-pk188-own > .ff-bkpk-cell { min-width:0; }
 @media (max-width:360px) { .ff .ff-pk188-nm { font-size:15px; } }
+
+/* NET188 round 2 (Alex 21 Nov): the Terms and conditions button inside Signature packages; the Coming soon pill beside the Add-ons heading. */
+.ff .ff-pk188-tcw { display:flex; justify-content:center; padding:14px 14px 0; }
+.ff .ff-pk188-tcb { min-height:46px; padding:0 22px; border-radius:16px; corner-shape:squircle; border:1.5px solid #B08D2A; background:transparent; color:#16130F; font-family:var(--display); font-size:15px; letter-spacing:.04em; cursor:pointer; overflow-wrap:normal; word-break:keep-all; }
+.ff .ff-pk188-box > .ff-bk-bh .ff-soonbadge { flex:none; margin-left:2px; }

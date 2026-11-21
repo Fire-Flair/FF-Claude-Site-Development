@@ -13,7 +13,7 @@
 
 const PROFILE_PACKAGES_CSS = __ff_css("styles/profile-packages.css");
 /* NET188 (Alex 21 Nov): the cocktail menu builder is hidden for now and its code is kept. Set to true to switch it back on. This is the one deliberate exception to "strip by deletion". */
-const MENU_BUILDER_ON188 = false;
+const MENU_BUILDER_ON188 = true;
 
 if (!QA_Q17["staff.terms"]) QA_Q17["staff.terms"] = { text: "Your preferred terms for this profession", group: "staff" };
 const staffTermsOf17 = (state, account, prof) => {
@@ -227,7 +227,7 @@ function PkRow188({ title, on, soon, open, onToggle, onTick, children }) {
       <div className="ff-pk188-rh">
         <button type="button" className="ff-pk188-tk" role="checkbox" aria-checked={!!on} aria-label={title} onClick={onTick}>{on && <S17I.Check size={15} strokeWidth={3} />}</button>
         <button type="button" className="ff-pk188-nm" aria-expanded={onToggle ? !!open : undefined} onClick={onToggle}>{title}</button>
-        {soon ? <span className="ff-soonbadge sm">{LOCKED_LABEL17}</span> : <I11.ChevronRight size={18} className="ff-pk188-cv" style={{ transform: open ? "rotate(90deg)" : "none", transition: "transform .2s" }} aria-hidden="true" />}
+        {soon ? <span className="ff-soonbadge sm">{LOCKED_LABEL17}</span> : !onToggle ? null : <I11.ChevronRight size={18} className="ff-pk188-cv" style={{ transform: open ? "rotate(90deg)" : "none", transition: "transform .2s" }} aria-hidden="true" />}
       </div>
       {open && children && <div className="ff-pk188-bd">{children}</div>}
     </div>
@@ -238,6 +238,7 @@ function PkRow188({ title, on, soon, open, onToggle, onTick, children }) {
 function PackagesEdit188({ person }) {
   const { state, dispatch } = useStore();
   const [open, setOpen] = useState(null);
+  const [termsSet, setTermsSet] = useState(null);
   const ours = ownPkgItems185(state).filter(it => it.kind !== "create");
   const groups = ownPkgGroups185(state);
   const ownTabs = groups.length ? groups : ["bar"];
@@ -263,21 +264,22 @@ function PackagesEdit188({ person }) {
         <h2 id="ff-pk188-party-h" className="ff-bk-bh ff-bk-bhc fit"><img className="ff-bk-bhlogo" decoding="async" src={FF_SITE_BRAND.party.icon} width={30} height={30} alt="" draggable={false} /><span>FFParty</span></h2>
         <div className="ff-pk188-rows">
           {ours.length > 0 && <PkRow188 title="Our packages" on={oursOn} open={open === "ours"} onToggle={tog("ours")} onTick={() => setOpen("ours")}><ProfilePackages17 person={person} own staff={false} items={ours} /></PkRow188>}
-          <PkRow188 title="Your packages" on={ownOn} open={open === "own"} onToggle={tog("own")} onTick={() => setOpen("own")}>
-            <div id="ff-bk-party" className="pkg3 ff-pk188-own">{ownCells.length > 1 ? <HScroll label="Your packages">{ownCells}</HScroll> : ownCells}</div>
+          <PkRow188 title="Signature packages" on={ownOn} open={open === "own"} onToggle={tog("own")} onTick={() => setOpen("own")}>
+            <div id="ff-bk-party" className="pkg3 ff-pk188-own">{ownCells.length > 1 ? <HScroll label="Signature packages">{ownCells}</HScroll> : ownCells}</div>
+            <div className="ff-pk188-tcw"><button type="button" className="ff-pk188-tcb" onClick={() => setTermsSet("pkg")}>Terms and conditions</button></div>
           </PkRow188>
-          <PkRow188 title="Signature packages" soon on={ids.includes("signature")} onTick={() => interest("signature")} />
         </div>
       </section>
       <section className="ff-pk188-box" aria-labelledby="ff-pk188-add-h">
-        <h2 id="ff-pk188-add-h" className="ff-bk-bh ff-bk-bhc fit"><span className="ff-pk188-plus" aria-hidden="true"><Plus size={16} strokeWidth={2.4} /></span><span>Add-ons</span></h2>
+        <h2 id="ff-pk188-add-h" className="ff-bk-bh ff-bk-bhc fit"><span className="ff-pk188-plus" aria-hidden="true"><Plus size={16} strokeWidth={2.4} /></span><span>Add-ons</span><span className="ff-soonbadge sm">{LOCKED_LABEL17}</span></h2>
         <div className="ff-pk188-rows">
-          <PkRow188 title="Your add-ons" soon on={ids.includes("addons")} onTick={() => interest("addons")} />
           {MENU_BUILDER_ON188
             ? <PkRow188 title="Your menu" on={myContent17(state, "cocktails").length > 0} open={open === "menu"} onToggle={tog("menu")} onTick={() => setOpen("menu")}><CocktailStudio17 /></PkRow188>
             : <PkRow188 title="Your menu" soon on={ids.includes("menu")} onTick={() => interest("menu")} />}
+          <PkRow188 title="Your extras" on={ids.includes("addons")} onTick={() => interest("addons")} />
         </div>
       </section>
+      {termsSet && <TermsSheet17 set={termsSet} onClose={() => setTermsSet(null)} />}
     </div>
   );
 }
