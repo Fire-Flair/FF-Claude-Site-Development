@@ -938,7 +938,6 @@ function GenericAttributeCardCreator({ open, record, def, category, readOnly, on
             {!readOnly && <button className="ff-btn sm ghost" aria-label="Remove document" onClick={() => patch({ document: null })}><X size={12} /></button>}
           </div>
         )}
-        {readOnly && !(draft.media || []).length && !doc && <p className="ff-body ff-muted" style={{ margin: 0 }}>None.</p>}
         {!readOnly && (
           <div className="ff-gac17-row">
             <input ref={mediaRef} type="file" accept="image/*" style={{ display: "none" }}

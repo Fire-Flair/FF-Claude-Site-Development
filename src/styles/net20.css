@@ -234,3 +234,10 @@
   .ff .ff-nm20 .ff-ml19 .ff-ml19-row { flex: 1 1 100%; flex-direction: column; gap: 8px; }
   .ff .ff-nm20 .ff-map-sel { grid-column: 1; grid-row: 3; margin-top: 0; }
 }
+
+/* v1.188 fix (Aragorn 21 Nov): A1 - while a profile overlay is on screen, a pop-up opened from it sits in front of it (scrim 200 -> 5100; same root stacking context). */
+.ff:has(.ff-pop17) .ff-scrim { z-index:5100; }
+
+/* v1.188 fix (Aragorn 21 Nov): A4 - blur behind the profile overlay and the map pin card, same blur and tint as .ff-scrim (edited as overrides, original rules untouched). */
+.ff .ff-pop17 { -webkit-backdrop-filter:blur(16px) saturate(.85); backdrop-filter:blur(16px) saturate(.85); }
+.ff .ff-mappop17 { background:rgba(10,9,8,.52); -webkit-backdrop-filter:blur(16px) saturate(.85); backdrop-filter:blur(16px) saturate(.85); }
