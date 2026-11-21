@@ -4,6 +4,12 @@ The front-end export of FF Team, taken from the Phase Two prototype (phase-2-fin
 The prototype keeps its own `CHANGELOG.md` at the repo root; this file is the changelog of the export only.
 The newest heading here is the version the page shows (`scripts/build.mjs` reads it).
 
+## v1.189
+- **View all and attribute pop-ups:** one vertical scrolling page in the profile style: name, full description in smaller text, picture thumbnails underneath. Tapping a thumbnail opens the picture full screen with a Back button; Back, Escape or the back gesture return to the same place.
+- **Pop-ups never page left or right:** the terms editors and the Beta feedback questions are now vertical lists. The "Tap a card to answer." line is gone.
+- **Signature package terms:** one set of five core terms for all Signature packages (reworded in the member's voice), plus an optional terms box for each package, shown on that package's Details. FFParty package sign-up terms are unchanged.
+- Page saved as `live-v1.189-index.html`. Artifact version 1795262800-5b7f.
+
 ## v1.188
 - **Network page:** on a wide screen the map filters sit to the left of the map, under the description. "Our professionals" has its own short description. At 820 wide both search bars are full width. Category rows show each person's profession on their card.
 - **Profile page attribute cards:** fixed size (as in the builder), splitting onto a new card by the length of what is written, descriptions included.
