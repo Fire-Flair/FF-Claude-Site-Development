@@ -627,6 +627,91 @@ function ExpandedAttrs({ list }) {
 
 
 
+/* v1.188 (Alex 21 Nov): an attribute card is one fixed size (5:7) everywhere; its entries carry on in the next card of the same category by the MEASURED height of what the card shows (names and the descriptions people write), and nothing else. Shared by the builder (PE2AttrCat185) and the profile page (PubAttrCat188). */
+const attrSd188 = (r) => (!r.cv && !/^Uploaded /.test(String(r.description || "")) && String(r.description || "").trim()) ? wholeSentences21(r.description, 70) : "";
+function useAttrMeasure188(sig) {
+  const meas = useRef(null);
+  const [m, setM] = useState(null);
+  React.useLayoutEffect(() => {
+    const run = () => {
+      const el = meas.current; if (!el) return;
+      const head = el.querySelector("[data-m=head]"), la = el.querySelector("[data-m=a]"), lb = el.querySelector("[data-m=b]");
+      if (!head || !la || !lb) return;
+      const cs = getComputedStyle(head), top = head.querySelector(".ff-agrp-top");
+      const gap = parseFloat(cs.rowGap) || 10;
+      const avail = head.getBoundingClientRect().height - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - top.getBoundingClientRect().height - gap - 3;
+      const hs = (l) => [...l.children].map(c => Math.ceil(c.getBoundingClientRect().height) + 1);
+      const next = { avail, a: hs(la), b: hs(lb) };
+      setM(cur => cur && JSON.stringify(cur) === JSON.stringify(next) ? cur : next);
+    };
+    run();
+    window.addEventListener("resize", run);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
+    return () => window.removeEventListener("resize", run);
+  }, [sig]);
+  return [meas, m];
+}
+function attrChunks188(list, m) {
+  const chunks = []; const withSd = {};
+  if (list.length) {
+    let cur = [], used = 0;
+    list.forEach((r, i) => {
+      let h = m && m.a[i] != null ? m.a[i] : 0, sd = true;
+      /* An entry too long for a box on its own keeps its description, cut to the whole lines that fit and ended with "…" (the full text is in the pop-up). It takes a box to itself. */
+      if (m && h > m.avail) { const nameH = m.b[i] != null ? m.b[i] : 0; const lines = Math.floor((m.avail - nameH - 4) / 14.3); sd = lines >= 1 ? lines : false; h = lines >= 1 ? m.avail : nameH; }
+      withSd[r.id] = sd;
+      if (m && cur.length && used + h > m.avail) { chunks.push(cur); cur = []; used = 0; }
+      cur.push(r); used += h;
+    });
+    if (cur.length) chunks.push(cur);
+  }
+  return { chunks, withSd };
+}
+/* One category of the profile page's Attributes row: a hidden measuring copy, then one fixed-size card per chunk. */
+function PubAttrCat188({ g, ci, onOpen }) {
+  const label = (g.def && g.def.label) || g.key;
+  const isQ = g.key === "qualifications";
+  const list = g.list;
+  const sdOf = (it) => isQ ? "" : attrSd188(it.record);
+  const sig = g.key + "§" + label + "§" + list.map(it => it.id + "|" + it.record.name + "|" + sdOf(it)).join("§");
+  const [meas, m] = useAttrMeasure188(sig);
+  const { chunks, withSd } = attrChunks188(list, m);
+  const entry = (it, sd) => {
+    if (isQ) {
+      const href = pubCvHref(it.record);
+      return <span key={it.id}>{href
+        ? <a className="pbq-cvlink" href={href} target="_blank" rel="noopener noreferrer" download={(it.record.document && it.record.document.name) || "CV"} aria-label="Open CV"><QualNm r={it.record} /></a>
+        : <QualNm r={it.record} />}</span>;
+    }
+    const d = sdOf(it);
+    return <span key={it.id}>{nbh21(it.record.name)}{sd && d && <small className={"ff-agrp-sd" + (typeof sd === "number" ? " clamp185" : "")} style={typeof sd === "number" ? { WebkitLineClamp: sd } : undefined}>{nbh21(d)}</small>}</span>;
+  };
+  const top = <span className="ff-agrp-top"><span className="ff-agrp-h">{label}</span><span className="ff-agrp-n" aria-hidden="true"><ChevronDown size={16} strokeWidth={2.2} /></span></span>;
+  /* Work locations keep their own rule: the areas as they were ticked, three on the card and "+N" for the rest. */
+  const cards = g.key === "locations" ? [{ key: g.key, part: list.slice(0, 3), more: Math.max(0, list.length - 3) }] : chunks.map((c, i) => ({ key: g.key + "-" + i, part: c, more: 0 }));
+  const mcls = "ff-agrp cat-" + g.key + " " + tierCls17(ci) + (isQ ? " pbq-pub" : "");
+  return (
+    <>
+      {g.key !== "locations" && (
+        <div className="pe2-meas" aria-hidden="true" ref={meas}>
+          <div className={mcls} data-m="head">{top}</div>
+          <div className={mcls}>{top}<span className="ff-agrp-l" data-m="a">{list.map(it => entry(it, true))}</span></div>
+          <div className={mcls}>{top}<span className="ff-agrp-l" data-m="b">{list.map(it => entry(it, false))}</span></div>
+        </div>
+      )}
+      {cards.map(c => isQ
+        ? <PubQualCard key={c.key} label={label} part={c.part} more={c.more} total={c.part.length + c.more} cls={"cat-qualifications " + tierCls17(ci)} onOpen={() => onOpen(g.key)} />
+        : (
+          <button key={c.key} type="button" className={"ff-agrp cat-" + g.key + " " + tierCls17(ci)} onClick={() => onOpen(g.key)}
+            aria-label={`${label}: ${list.map(it => it.record.name).join(", ")}. View all attributes`}>
+            {top}
+            <span className="ff-agrp-l">{c.part.map(it => entry(it, g.key === "locations" ? true : withSd[it.id]))}</span>
+            {c.more > 0 && <span className="ff-agrp-more">{`+${c.more}`}</span>}
+          </button>
+        ))}
+    </>
+  );
+}
 function AttrGroups({ items, mem, onOpen }) {
   const groups = [];
   items.forEach(it => {
@@ -636,38 +721,9 @@ function AttrGroups({ items, mem, onOpen }) {
   });
   groups.sort((a, b) => a.ord - b.ord);
   groups.forEach(g => g.list.sort((a, b) => a.at - b.at));
-  /* v17.18: a summary card holds a size of text (v1.118; was five entries); with more, further cards of the same category follow, evenly filled.
-     Work locations are the exception: the areas as they were ticked, three on the card and "+N" for the rest. */
-  const cards = [];
-  groups.forEach(g => {
-    if (g.key === "locations") { cards.push({ g, key: g.key, part: g.list.slice(0, 3), more: Math.max(0, g.list.length - 3) }); return; }
-    /* v1.118 (Alex 19 Nov 23:51): cards are filled by the size of their text, not by a count of entries, so the cards of a row come out about the same height. */
-    const w = (it) => Math.max(1, Math.ceil(String((it.record && it.record.name) || "").length / 20)) + 0.4;
-    const total = g.list.reduce((a, it) => a + w(it), 0);
-    const nCards = Math.max(1, Math.ceil(total / 11));
-    const per = total / nCards;
-    let cur = [], acc = 0, made = 0;
-    g.list.forEach((it, idx) => {
-      cur.push(it); acc += w(it);
-      const left = g.list.length - idx - 1;
-      if (acc >= per - 0.01 && made < nCards - 1 && left > 0) { cards.push({ g, key: `${g.key}-${made}`, part: cur, more: 0 }); made++; cur = []; acc = 0; }
-    });
-    if (cur.length) cards.push({ g, key: `${g.key}-${made}`, part: cur, more: 0 });
-  });
   return (
-    <MemScroll mem={mem} k="overview" label={`Attributes, ${cards.length} card${cards.length === 1 ? "" : "s"}`} className="ff-acar">
-      {cards.map((c, ci) => {
-        const label = (c.g.def && c.g.def.label) || c.g.key;
-        if (c.g.key === "qualifications") return <PubQualCard key={c.key} label={label} part={c.part} more={c.more} total={c.part.length + c.more} cls={"cat-qualifications " + tierCls17(ci)} onOpen={() => onOpen(c.g.key)} />;
-        return (
-          <button key={c.key} type="button" className={"ff-agrp cat-" + c.g.key + " " + tierCls17(ci)} onClick={() => onOpen(c.g.key)}
-            aria-label={`${label}: ${c.g.list.map(it => it.record.name).join(", ")}. View all attributes`}>
-            <span className="ff-agrp-top"><span className="ff-agrp-h">{label}</span><span className="ff-agrp-n" aria-hidden="true"><ChevronDown size={16} strokeWidth={2.2} /></span></span>
-            <span className="ff-agrp-l">{c.part.map(it => <span key={it.id}>{it.category === "qualifications" ? <QualNm r={it.record} /> : nbh21(it.record.name)}{it.category !== "qualifications" && !it.record.cv && String(it.record.description || "").trim() && <small className="ff-agrp-sd">{nbh21(wholeSentences21(it.record.description, 70))}</small>}</span>)}</span>
-            {c.more > 0 && <span className="ff-agrp-more">{`+${c.more}`}</span>}
-          </button>
-        );
-      })}
+    <MemScroll mem={mem} k="overview" label="Attributes" className="ff-acar ff-acar188">
+      {groups.map((g, i) => <PubAttrCat188 key={g.key} g={g} ci={i} onOpen={onOpen} />)}
     </MemScroll>
   );
 }

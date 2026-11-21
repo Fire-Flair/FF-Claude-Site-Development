@@ -180,7 +180,7 @@ function NetBrowse17(props) {
     return React.createElement(NetQ17.Provider, { value: query },
       netMapOnly20(props),
       showPros ? React.createElement("section", { id: "ff-our-pros", style: { marginTop: 18, scrollMarginTop: 70 } },
-        React.createElement(HeadRow20, { title: has ? "Search results" : "Our professionals", k: "pros", search: props.search, q: query }),
+        React.createElement(HeadRow20, { title: has ? "Search results" : "Our professionals", k: "pros", desc: has ? undefined : NET_PROS_DESC188, search: props.search, q: query }),
         has ? results : React.createElement(React.Fragment, null, React.createElement(TopStaff11, null), React.createElement(ProsBrowse20, { onPick: props.onPick }))) : null,
       showDir ? React.createElement(NetDirectory20, { search: props.search, q: query, results: has ? results : null }) : null,
       React.createElement("style", null, NET20_CSS),

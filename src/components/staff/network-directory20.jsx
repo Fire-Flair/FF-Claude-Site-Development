@@ -138,7 +138,8 @@ function netPinTop187(row) {
   const tb = document.querySelector(".ff-topbar");
   const stuck = tb && getComputedStyle(tb).position === "sticky" ? tb.getBoundingClientRect().bottom : 0;
   const b = bar.getBoundingClientRect(), t = head ? head.getBoundingClientRect() : b;
-  const top = b.bottom - t.top <= 140 ? Math.min(t.top, b.top) : b.top;
+  /* v1.188: Our professionals now has its words between the title and the bar, so its title is always the line that goes to the top (the Directory keeps the old rule). */
+  const top = (bar.getAttribute("data-srch") === "pros" || b.bottom - t.top <= 140) ? Math.min(t.top, b.top) : b.top;
   const dy = Math.round(top - (Math.max(stuck, vvTop) + 10));
   if (Math.abs(dy) > 2) window.scrollTo({ top: window.scrollY + dy, behavior: "instant" });
 }
@@ -319,6 +320,7 @@ function NetDirectory20(props) {
 }
 
 const NET_DIR_DESC20 = "Find the companies you want to work for or work with. UK bar companies, DJs, caterers and event services, a list that keeps growing, with contact details, so you can find support for your own events, find out more and register your interest.";
+const NET_PROS_DESC188 = "Bartenders, front of house, managers, chefs, entertainers and event services, plus specialists: any profession at all has a place here. Browse their profiles, see where they work and get in touch.";
 const NET_MAP_DESC20 = "Everyone in events and hospitality, on one UK map. Our goal is to put you on it and get you jobs where you want to go.";
 
 /* The map on its own (the Explore by area drop-downs stay on the other pages). v1.187: the search lives in the two heading rows, not here. */
