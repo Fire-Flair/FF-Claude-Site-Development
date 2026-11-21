@@ -14,7 +14,7 @@ The newest heading here is the version the page shows (`scripts/build.mjs` reads
 - **Profile Card:** the car icon is on the far left; the bank icon stays on the far right.
 - **Q&A:** an "Other" answer shows a tick, then the card fades into your answered cards and the rest slide left.
 - **Names:** FFParty, FFStaff and FFTeam as one word on package plates, in the top bar, the sites list and the default terms.
-- Page saved as `live-v1.188-index.html`. Artifact version PENDING.
+- Page saved as `live-v1.188-index.html`. Artifact version 1795257396-a702.
 
 ## v1.187
 - **Network page search:** the search bar sits on the same row as "Our professionals" and as "FF Event Directory" (under the description on a phone). It is no longer under the map. Typing turns "Our professionals" into "Search results". The box you type in is never replaced, so the keyboard stays open, and on focus the bar scrolls to the top of the screen so the keyboard does not cover the results.
